@@ -3,25 +3,25 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Create a new Tutorial
+  // Create a new Dinoz
   router.post("/", dinozs.create);
 
-  // Retrieve all Tutorials
+  // Retrieve all Dinoz
   router.get("/", dinozs.findAll);
 
-  // Retrieve all published Tutorials
+  // Retrieve all frozen Dinoz
   router.get("/frozen", dinozs.findAllFrozen);
 
-  // Retrieve a single Tutorial with id
+  // Retrieve a single Dinoz with id
   router.get("/:id", dinozs.findOne);
 
-  // Update a Tutorial with id
+  // Update a Dinoz with id
   router.put("/:id", dinozs.update);
 
-  // Delete a Tutorial with id
+  // Delete a Dinoz with id
   router.delete("/:id", dinozs.delete);
 
-  // Create a new Tutorial
+  // Create a new Dinoz
   router.delete("/", dinozs.deleteAll);
 
   app.use('/api/dinozs', router);
