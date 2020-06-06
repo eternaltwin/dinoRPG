@@ -1,5 +1,5 @@
 const db = require("../models");
-const Dinoz = db.dinozs;
+const Dinoz = db.dinoz;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Dinoz

@@ -3,10 +3,10 @@
 # Prérequis
 Les technologies principales utilisées sont:
 - Node.js: v12.18.0
-- npm: v.6.14.4
+- npm: v6.14.4
 - Postgresql: v12
 - pgAdmin4
-- VueJS:
+- Vue/CLI: v4.4.1
 
 Il est préférable d'utiliser ces versions (ou des versions proches).
 
@@ -14,15 +14,17 @@ Il est préférable d'utiliser ces versions (ou des versions proches).
 
 ### Windows
 
-TODO
+Sur Windows, seuls nodeJS, npm et PostgreSQL doivent être installés (voir ci-dessous).
+Une fois ces installations effectuées, aller directement à la partie 'Mode d'emploi'
 
 #### Node.js & npm
 
-Voir `https://nodejs.org/fr/download/`
+NodeJS et npm se téléchargent en même temps, vous pouvez les avoir à cette adresse : `https://nodejs.org/fr/download/` 
+(Rappel : version 12.18.0 pour NodeJS et 6.14.4 pour npm).
 
 #### Postsgresql
 
-Voir `https://www.postgresql.org/download/windows/`
+Voir `https://www.postgresql.org/download/windows/` (Rappel : version 12)
 L'installation proposera de choisir un mot de passe. Il sera utilisé par le projet qui utilise par défaut `EternalDinoSQL`.
 Voir la section `Mise en place de la bade de données` pour plus de détails.
 
@@ -67,6 +69,7 @@ La commande suivante permet d'isntaller pgadmin4:
 Utiliser la commande `npm run install` dans le dossier du front `ed-ui`.
 
 # Mode d'emploi
+
 ##  Démarrage du front
 
 La partie front-end utilise le framework VueJS et est située dans le dossier `ed-ui` (Eternal-Dino User Interface).
@@ -88,10 +91,25 @@ Plus de commandes et d'aides sont visibles dans le `README.md` du dossier `ed-ui
 
 La BDD utilisée est PostGreSQL. Le section `Installation` décrit comment installer l'outil.
 
-Avec Windows, une fois le téléchargement effectué, installez le logiciel et mettre `EternalDinoSQL` en mot de passe (la sélection d'un mot de passe sera proposée pendant l'installation).
+### Avec Windows
+
+Une fois le téléchargement effectué, installez le logiciel et mettez `EternalDinoSQL` en mot de passe (la sélection d'un mot de passe sera proposée pendant l'installation).
 Tapez ensuite `pgAdmin 4` dans la barre de recherche Cortana et vous devriez avoir un exécutable. Lancez-le et il s'ouvrira dans votre navigateur.
 
-Avec Ubuntu, c'est moins directe, voici comment faire en utilisant l'utilisateur par défaut de PostGreSQL appelé très originalement `postgres`:
+Une fois le logiciel ouvert, il faut tout d'abord créer un nouvel utilisateur.
+Pour cela, faire un clic droit sur 'Login/Group Roles' (Chemin : Servers -> PostgreSQL 12 -> Login/Group Roles) puis cliquez sur 'Create -> Login/Group Role).
+Mettez 'eternaldino' dans le champ 'Name' puis allez sur l'onglet 'Privileges'. Cochez tout à cet endroit pour ne pas être restreint, puis cliquer sur 'Save' pour enregistrer.
+
+Maintenant que l'utilisateur est créé, il faut créer une base de données dédiée au projet EternalDino. 
+Pour cela, faites un clic droit sur 'Databases' (Chemin : Servers -> PostgreSQL -> Databases) puis cliquez sur 'Create -> Database'.
+Mettez 'EternalDinoDB' dans le champ 'Database', et mettez 'eternaldino' dans le champ 'Owner' (l'utilisateur créé tout à l'heure).
+Allez ensuite sur l'onglet 'Security' et cliquez sur le petit icône '+' en face du champ 'Privileges'.
+Mettez ensuite 'eternaldino' dans la colonne 'Grantee' et cochez toutes les cases dans la colonne 'Privileges'.
+Enfin, cliquez sur 'Save' pour sauvegarder.
+
+### Avec Ubuntu
+
+Avec Ubuntu, c'est moins direct, voici comment faire en utilisant l'utilisateur par défaut de PostGreSQL appelé très originalement `postgres`:
 - Ouvrez le terminal de PostGreSQL avec l'utilisateur postgres: `sudo -u postgres psql`
 - Dans le terminal de PostGreSQL, définissez le mot de passe de à `EternalDinoSQL`: `ALTER USER postgres WITH PASSWORD 'EternalDinoSQL';`
 - Ouvrez un nouvel onglet dans votre terminal et exécutez `pgadmin4`, une fenêtre s'ouvre dans votre navigateur.

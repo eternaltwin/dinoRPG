@@ -2,7 +2,7 @@
   "name": "ed-ui",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "Jolujolu <lucas.lesven@laposte.net>",
+  "author": "Jolujolu",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

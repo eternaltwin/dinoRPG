@@ -19,6 +19,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.dinozs = require("./dinoz.model.js")(sequelize, Sequelize);
+db.dinoz = require("./dinoz.model.js")(sequelize, Sequelize);
 
 module.exports = db;

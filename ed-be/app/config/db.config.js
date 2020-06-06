@@ -1,8 +1,8 @@
 module.exports = {
   HOST: "localhost",
-  USER: "postgres",
+  USER: "eternaldino",
   PASSWORD: "EternalDinoSQL",
-  DB: "postgres",
+  DB: "EternalDinoDB",
   dialect: "postgres",
   pool: {
     max: 5,
