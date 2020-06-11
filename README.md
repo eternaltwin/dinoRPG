@@ -140,11 +140,11 @@ Si vous n'utilisez pas Visual Studio Code, ouvrez un deuxième node.js command p
 
 La partie front-end est composée de plusieurs parties :
 
-1) Un dossier 'src/assets', qui contient les différentes images de l'application
+1) Un dossier 'src/assets', qui centralise les images de l'application. Ces images seront appelées directement depuis les templates HTML des pages (fichiers '.vue').
 
-2) Un dossier 'src/components' qui contient tous les composants utilisés dans EternalDino (fichier '.vue')
+2) Un dossier 'src/components' qui contient tous les composants utilisés dans EternalDino (fichiers '.vue'). Les composants sont des briques qui sont ensuite assemblées pour former une page web.
 
-3) Un dossier 'src/router' qui contient les différentes routes de l'application
+3) Un dossier 'src/router' qui contient les différentes routes de l'application. C'est le point d'entrée de l'application, dès que l'utilisateur rentre une URL, c'est ce fichier qui va lire l'URL et charger les bons composants en conséquence.
 
 4) Un dossier 'src/services' qui contient les services (logique). Un service sert à centraliser les requêtes vers la partie back-end.
 
@@ -154,9 +154,33 @@ La partie back-end est composée de plusieurs parties :
 
 1) Le dossier 'app/config' qui contient les paramétrages avec la BDD (normalement, personne n'a à y toucher)
 
-2) Le dossier 'app/controllers', qui contient tous les traitement métiers 
+2) Le dossier 'app/controllers', qui contient tous les traitement controllers. Les controllers servent à réaliser tous les traitements métiers. 
 
-3) Le dossier 'app/models', qui contient le modèle. C'est à dire les différentes tables de la BDD.
+3) Le dossier 'app/models', qui contient le modèle. C'est à dire les différentes tables de la BDD ainsi que leurs relations entre elles.
 
 4) Le dossier 'app/routes' qui contient toutes les routes auxquels on peut faire des requêtes. Ces fichiers fonctionnent de pair avec les controllers. En effet, la route va recevoir la requête et la partie controller va se charger de faire tous les traitement métiers et de renvoyer le bon résultat.
+
+## Cycle de vie d'un appel à la BDD 
+
+Prenons un exemple pour simplifier : La récupération d'un dinoz
+
+1) Lorsque l'utilisateur va aller sur l'URL de son dinoz, c'est le router (côté front, contenu dans le dossier src/router) qui va commencer les traitements.
+   Le router va lire cette URL, et charger la bonne page en conséquence (contenu dans le dossier src/components). Cette page est sous la forme d'un fichier '.vue' et fait appel à des sous-composants (fichier .vue)
+
+2) Lorque la page va charger, elle aura besoin de faire des appels vers la partie back-end pour récupérer le dinoz voulu. Le fichier .vue va alors fait un appel au service (DinozService dans notre cas).
+
+3) Le fichier DinozService va centraliser toutes les requêtes qui sont effectuées à propos des Dinoz (trouver un dinoz, trouver tous les dinoz de l'utilisateur, obtenir les compétences d'un dinoz et etc). 
+   Ces requêtes vont être envoyées vers la partie back-end. Dans notre cas, c'est la requête de récupération d'un dinoz qui va être appelée.
+   
+4) Nous arrivons dans la partie back-end, où le fichier DinozRoute (contenu dans le dossier app/routes) va réceptionner la requête. Ce fichier ne sert qu'à réceptionner les URL, aucun traitement n'est effectué là dedans.
+   Pour déléguer ces traitements, il va faire appel à un controller (ici : DinozController).
+   
+5) Le controller va faire une requête à la BDD pour obtenir les informations qu'il veut, puis va les traiter si besoin. Une fois que ces traitements auront été effectués, il va renvoyer la réponse au fichier DinozRoutes.
+
+6) Le fichier DinozRoutes n'effectue toujours aucun traitement métier, il renvoie la réponse (obtenue du controller) à la partie front-end.
+
+7) Le fichier DinozService va renvoyer la réponse qu'il vient d'obtenir au fichier .vue
+
+8) Le fichier .vue va alors afficher les données qu'il a obtenue.
+
 
