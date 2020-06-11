@@ -14,11 +14,17 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   }
 });
 
-const db = {};
+var db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+// Déclaration des tables
 db.dinoz = require("./dinoz.model.js")(sequelize, Sequelize);
+db.dinozRace = require("./dinozRace.model.js")(sequelize, Sequelize);
+
+// Mise en place des Foreign Key
+db.dinoz.associate(db);
+db.dinozRace.associate(db);
 
 module.exports = db;

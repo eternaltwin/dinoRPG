@@ -160,6 +160,8 @@ La partie back-end est composée de plusieurs parties :
 
 4) Le dossier 'app/routes' qui contient toutes les routes auxquels on peut faire des requêtes. Ces fichiers fonctionnent de pair avec les controllers. En effet, la route va recevoir la requête et la partie controller va se charger de faire tous les traitement métiers et de renvoyer le bon résultat.
 
+5) Un dossier 'src/repositories' qui contient tous les fichiers qui feront des appels à la base de donnée.
+
 ## Cycle de vie d'un appel à la BDD 
 
 Prenons un exemple pour simplifier : La récupération d'un dinoz
@@ -175,7 +177,11 @@ Prenons un exemple pour simplifier : La récupération d'un dinoz
 4) Nous arrivons dans la partie back-end, où le fichier DinozRoute (contenu dans le dossier app/routes) va réceptionner la requête. Ce fichier ne sert qu'à réceptionner les URL, aucun traitement n'est effectué là dedans.
    Pour déléguer ces traitements, il va faire appel à un controller (ici : DinozController).
    
-5) Le controller va faire une requête à la BDD pour obtenir les informations qu'il veut, puis va les traiter si besoin. Une fois que ces traitements auront été effectués, il va renvoyer la réponse au fichier DinozRoutes.
+5) Le controller va faire un appel au DinozRepository.
+
+6) Le DinozRepository va faire un appel à la BDD, et va renvoyer les données au controller.
+
+7) Le controller va recevoir les données du repository, puis va effectuer les traitement métiers avant de les renvoyer au fichier DinozRoutes.
 
 6) Le fichier DinozRoutes n'effectue toujours aucun traitement métier, il renvoie la réponse (obtenue du controller) à la partie front-end.
 
