@@ -2,31 +2,31 @@ import http from "../http-common";
 
 class DinozService {
   getAll() {
-    return http.get("/dinozs");
+    return http.get("/dinoz");
   }
 
   get(id) {
-    return http.get(`/dinozs/${id}`);
+    return http.get(`/dinoz/${id}`);
   }
 
   create(data) {
-    return http.post("/dinozs", data);
+    return http.post("/dinoz", data);
   }
 
   update(id, data) {
-    return http.put(`/dinozs/${id}`, data);
+    return http.put(`/dinoz/${id}`, data);
   }
 
   delete(id) {
-    return http.delete(`/dinozs/${id}`);
+    return http.delete(`/dinoz/${id}`);
   }
 
   deleteAll() {
-    return http.delete(`/dinozs`);
+    return http.delete(`/dinoz`);
   }
 
   getFrozen() {
-    return http.get(`/dinozs/frozen`);
+    return http.get(`/dinoz/frozen`);
   }
 }
 

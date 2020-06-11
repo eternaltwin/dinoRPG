@@ -1,6 +1,4 @@
-const db = require("../models");
-const Dinoz = db.dinoz;
-const Op = db.Sequelize.Op;
+const DinozRepository = require("../repositories/dinoz.repository.js");
 
 // Create and Save a new Dinoz
 exports.create = (req, res) => {
@@ -12,15 +10,8 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Tutorial
-  const dinoz = {
-    name: req.body.name,
-    race: req.body.race,
-    isFrozen: req.body.isFrozen
-  };
-
-  // Save Tutorial in the database
-  Dinoz.create(dinoz)
+  // Save Dinoz in the database
+  DinozRepository.create(req.body)
     .then(data => {
       res.send(data);
     })
@@ -33,10 +24,8 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Dinoz from the database.
-exports.findAll = (req, res) => {
-  const name = req.query.name;
-
-  Dinoz.findAll({ where: null })
+exports.findAll = (req, res) => 
+  DinozRepository.findAll()
     .then(data => {
       res.send(data);
     })
@@ -45,8 +34,8 @@ exports.findAll = (req, res) => {
         message:
           err.message || "Some error occurred while retrieving dinoz."
       });
-    });
-};
+});
+
 
 // Find a single Dinoz with an id
 exports.findOne = (req, res) => {
@@ -127,7 +116,7 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// Find all published Dinoz
+// Find all frozen Dinoz
 exports.findAllFrozen = (req, res) => {
   Dinoz.findAll({ where: { isFrozen: true } })
     .then(data => {

@@ -1,28 +1,28 @@
 module.exports = app => {
-  const dinozs = require("../controllers/dinoz.controller.js");
+  const dinoz = require("../controllers/dinoz.controller.js");
 
   var router = require("express").Router();
 
   // Create a new Dinoz
-  router.post("/", dinozs.create);
+  router.post("/", dinoz.create);
 
   // Retrieve all Dinoz
-  router.get("/", dinozs.findAll);
+  router.get("/", dinoz.findAll);
 
   // Retrieve all frozen Dinoz
-  router.get("/frozen", dinozs.findAllFrozen);
+  router.get("/frozen", dinoz.findAllFrozen);
 
   // Retrieve a single Dinoz with id
-  router.get("/:id", dinozs.findOne);
+  router.get("/:id", dinoz.findOne);
 
   // Update a Dinoz with id
-  router.put("/:id", dinozs.update);
+  router.put("/:id", dinoz.update);
 
   // Delete a Dinoz with id
-  router.delete("/:id", dinozs.delete);
+  router.delete("/:id", dinoz.delete);
 
   // Create a new Dinoz
-  router.delete("/", dinozs.deleteAll);
+  router.delete("/", dinoz.deleteAll);
 
-  app.use('/api/dinozs', router);
+  app.use('/api/dinoz', router);
 };
