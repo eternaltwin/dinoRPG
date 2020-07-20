@@ -1,32 +1,87 @@
 module.exports = (sequelize, DataTypes) => {
   var dinoz = sequelize.define("dinoz", {
-    id: {
-      type: DataTypes.INTEGER(11),
+    dinozId: {
+      type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
+    following: {
+      type: DataTypes.BIGINT
+    },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
+    },
+    isFrozen: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     raceId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      references: {
-          model: 'tb_dinoz_race',
-          key: 'id'
-        }
+      type: DataTypes.BIGINT,
+      allowNull: false
     },
-    isFrozen: {
+    levelId: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    missionId: {
+      type: DataTypes.BIGINT
+    },
+    nextUpElementId: {
+      type: DataTypes.BIGINT
+    },
+    nextUpAltElementId: {
+      type: DataTypes.BIGINT
+    },
+    playerId: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    placeId: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    display: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    life: {
+      type: DataTypes.INTEGER
+    },
+    canGather: {
       type: DataTypes.BOOLEAN
+    },
+    nbrUpFire: {
+      type: DataTypes.INTEGER
+    },
+    nbrUpWood: {
+      type: DataTypes.INTEGER
+    },
+    nbrUpWater: {
+      type: DataTypes.INTEGER
+    },
+    nbrUpLight: {
+      type: DataTypes.INTEGER
+    },
+    nbrUpAir: {
+      type: DataTypes.INTEGER
     }
   }, {
     tableName: 'tb_dinoz'
   });
 
   dinoz.associate = function(models){
-    dinoz.belongsTo(models.dinozRace, { foreignKey: 'raceId', targetKey: 'id' });
+    dinoz.belongsTo(models.dinozRace, { foreignKey: 'raceId', as: 'race' });
+    dinoz.belongsToMany(models.skill, { through: 'tb_ass_dinoz_skill', as: 'skills', foreignKey: 'dinozId' });
+    dinoz.belongsToMany(models.status, { through: 'tb_ass_dinoz_status', as: 'status', foreignKey: 'dinozId' });
+    dinoz.belongsToMany(models.object, { through: 'tb_ass_dinoz_object', as: 'objects', foreignKey: 'dinozId' });
+    dinoz.belongsTo(models.level, { foreignKey: 'levelId', as: 'level' });
+    dinoz.belongsTo(models.mission, { foreignKey: 'missionId', as: 'mission' });
+    dinoz.belongsTo(models.element, { foreignKey: 'nextUpElementId', as: 'nextUp' });
+    dinoz.belongsTo(models.element, { foreignKey: 'nextUpAltElementId', as: 'nextUpAlt' });
+    dinoz.belongsTo(models.player, { foreignKey: 'playerId', as: 'player' });
+    dinoz.belongsTo(models.place, { foreignKey: 'placeId', as: 'place' });
+    dinoz.belongsTo(models.dinoz, { foreignKey: 'following', as: 'followingDinoz' });
   }
 
   return dinoz;
