@@ -189,4 +189,14 @@ Prenons un exemple pour simplifier : La récupération d'un dinoz
 
 8) Le fichier .vue va alors afficher les données qu'il a obtenue.
 
+## Appliquer un dump à sa BDD
+
+Pour appliquer un dump :
+
+1) Faire clic droit sur la BDD "EternalDinoDB" puis cliquer sur "Delete/Drop" -> Valider la pop-in de confirmation
+2) Faire un clic droit sur "Databases" puis "Create -> Database"
+3) Nommer la nouvelle BDD "EternalDinoDB" et mettre "eternaldino" comme utilisateur -> Cliquer sur le bouton "Save"
+4) Faire un clic droit sur la BDD créée puis cliquer sur "Restore"
+5) Dans la pop-in, sélectionner le dump voulu puis cliquer sur "Restore"
+
 
