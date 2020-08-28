@@ -1,6 +1,6 @@
 <template>
-	<div id="dinozFiche">
-		<equipement :nbrColonnes="2" :nbrLignes="3" :objects="dinozData.objects" @objectClicked="test"></equipement>
+	<div id="dinozFiche" v-if="!isLoading">
+		<equipement :nbrColonnes="2" :objects="dinozData.objects"></equipement>
 	</div>
 </template>
 
@@ -11,17 +11,14 @@ import Equipement from '@/components/equipement/equipement.vue';
 	export default {
 		data () {
 			return {
-				dinozData: {}
+				dinozData: {},
+				isLoading: true
 			}
 		},
 		created () {
-			DinozService.getDinozFiche(this.$route.params.id).then(res =>
-				this.dinozData = res.data);
-		},
-		methods: {
-			test (valeur) {
-				console.log(valeur);
-			}
+			DinozService.getDinozFiche(this.$route.params.id).then(res => {this.dinozData = res.data;
+				this.isLoading = false;
+			});
 		},
 		components: {
 			Equipement

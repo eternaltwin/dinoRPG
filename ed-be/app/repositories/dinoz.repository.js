@@ -117,7 +117,7 @@ module.exports = {
                 required: false
             }, {
                 model: Objects,
-                attributes: ['name', 'description', 'canBeUsedNow', 'canBeEquiped'],
+                attributes: ['name', 'description', 'canBeUsedNow', 'canBeEquiped', 'price', 'imgName'],
                 through: {
                     attributes: []
                 },

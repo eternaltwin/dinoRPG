@@ -2,9 +2,11 @@
 	<div id="dinozFiche">
 		<table>
 			<tbody>
-				<div v-for="object in objects">
-					<img src="@/assets/logo.png">
-				</div>
+				<tr v-for="object in objectsList">
+					<td v-for="obj in object">
+						<img :src="getImg(obj.imgName)">
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
@@ -14,17 +16,25 @@
 	export default {
 		data () {
 			return {
-
+				objectsList: []
+			}
+		},
+		created () {
+			var row = [];
+			var nbrLignes = parseInt(this.objects.length / this.nbrColonnes) + 1;
+			for (var i = 0; i < nbrLignes; i ++) {
+				row = this.objects.splice(0, this.nbrColonnes);
+				this.objectsList.push(row);
 			}
 		},
 		methods: {
-			objectClicked (colonne) {
-				this.$emit('objectClicked', colonne);
+			getImg (imgName) {
+				var images = require.context('@/assets/', false, /\.png$/);
+			    return images('./' + imgName + '.png');
 			}
 		},
 		props: {
 			nbrColonnes: Number,
-			nbrLignes: Number,
 			objects: Array
 		}
 	}
