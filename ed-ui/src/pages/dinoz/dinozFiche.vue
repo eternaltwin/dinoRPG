@@ -1,6 +1,6 @@
 <template>
 	<div id="dinozFiche" v-if="!isLoading">
-		<equipement :nbrColonnes="2" :objects="dinozData.objects"></equipement>
+		<equipement type="dinoz" :objects="dinozData.objects"></equipement>
 	</div>
 </template>
 

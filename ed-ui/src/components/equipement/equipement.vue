@@ -16,10 +16,19 @@
 	export default {
 		data () {
 			return {
-				objectsList: []
+				objectsList: [],
+				nbrColonnes: 0
 			}
 		},
 		created () {
+			// Définition du nombre de colonnes (nombre différent entre la fiche du dinoz (2) et les marchands (4))
+			if (this.type === 'dinoz') {
+				this.nbrColonnes = 2;
+			} else {
+				this.nbrColonnes = 4;
+			}
+
+			// On refait une liste d'objets en fonction du nombre de colonnes
 			var row = [];
 			var nbrLignes = parseInt(this.objects.length / this.nbrColonnes) + 1;
 			for (var i = 0; i < nbrLignes; i ++) {
@@ -29,12 +38,12 @@
 		},
 		methods: {
 			getImg (imgName) {
-				var images = require.context('@/assets/', false, /\.png$/);
+				var images = require.context('@/assets/objets/', false, /\.png$/);
 			    return images('./' + imgName + '.png');
 			}
 		},
 		props: {
-			nbrColonnes: Number,
+			type: String,
 			objects: Array
 		}
 	}
