@@ -12,4 +12,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-/ed-be/app/config
+/config
