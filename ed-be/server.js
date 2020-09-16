@@ -5,7 +5,7 @@ const db = require("./app/models");
 
 const app = express();
 
-db.sequelize.sync({force:true}).then(() => {
+db.sequelize.sync().then(() => {
 	console.log("Sync db");
 });
 

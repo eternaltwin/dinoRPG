@@ -4,9 +4,9 @@ import Accueil from '@/components/Accueil'
 
 Vue.use(Router);
 
-require(['@/components/Accueil.vue'], function(accueil){
+/*require(['@/components/Accueil.vue'], function(accueil){
 	console.log(accueil);
-});
+});*/
 
 export default new Router({
 	mode: 'history',
@@ -15,6 +15,10 @@ export default new Router({
 		path: '/',
 		name: 'Accueil',
 		component: resolve => require(['@/components/Accueil.vue'], resolve)
+	}, {
+		path: '/dino/:id',
+		name: 'dinozFiche',
+		component: resolve => require(['@/pages/dinoz/dinozFiche.vue'], resolve)
 	}, {
 		path: '*',
 		redirect: '/'

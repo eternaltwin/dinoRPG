@@ -28,6 +28,10 @@ class DinozService {
   getFrozen() {
     return http.get(`/dinoz/frozen`);
   }
+
+  getDinozFiche(id) {
+    return http.get(`/dinoz/fiche/${id}`);
+  }
 }
 
 export default new DinozService();

@@ -129,3 +129,34 @@ exports.findAllFrozen = (req, res) => {
       });
     });
 };
+
+// Renvoie la fiche d'un dinoz
+exports.getDinozFiche = (req, res) => {
+  const id = req.params.id;
+  
+  DinozRepository.getDinozFiche(id).then(data => {
+    var elements = {};
+    // On ajoute les éléments dans un seul objet élément
+    elements.nbrUpFire = data.dataValues.nbrUpFire;
+    elements.nbrUpWood = data.dataValues.nbrUpWood;
+    elements.nbrUpWater = data.dataValues.nbrUpWater;
+    elements.nbrUpLight = data.dataValues.nbrUpLight;
+    elements.nbrUpAir = data.dataValues.nbrUpAir;
+
+    data.dataValues.elements = elements;
+
+    // Suppression des attributs devenus inutiles
+    delete data.dataValues.nbrUpFire;
+    delete data.dataValues.nbrUpWood;
+    delete data.dataValues.nbrUpWater;
+    delete data.dataValues.nbrUpLight;
+    delete data.dataValues.nbrUpAir;
+
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving dinoz data."
+    });
+  });
+};

@@ -1,5 +1,6 @@
 const db = require("../models");
 const { level, player } = require("../models");
+const { getDinozFiche } = require("../controllers/dinoz.controller");
 const Dinoz = db.dinoz;
 const DinozRace = db.dinozRace;
 const Skill = db.skill;
@@ -91,5 +92,39 @@ module.exports = {
 
     create: (newDinoz) => {
         return Dinoz.create(newDinoz);
+    },
+
+    getDinozFiche: (id) => {
+        return Dinoz.findOne({
+            attributes: ['display', 'life', 'nbrUpFire', 'nbrUpWood', 'nbrUpWater', 'nbrUpLight', 'nbrUpAir', 'name'],
+            include: [{
+                model: Place,
+                attributes: ['name', 'description'],
+                as: 'place',
+                required: false
+            }, {
+                model: Level,
+                attributes: ['level', 'experience'],
+                as: 'level',
+                required: false
+            }, {
+                model: Status,
+                attributes: ['name', 'description'],
+                through: {
+                    attributes: []
+                },
+                as: 'status',
+                required: false
+            }, {
+                model: Objects,
+                attributes: ['name', 'description', 'canBeUsedNow', 'canBeEquiped', 'price', 'imgName'],
+                through: {
+                    attributes: []
+                },
+                as: 'objects', 
+                required: false
+            }],
+            where: { dinozId: id }
+        });
     }
 }
