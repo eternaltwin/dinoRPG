@@ -1,13 +1,32 @@
 <template>
   <div id="app">
-    <router-view/>
+    <auth v-if="auth" @idChoisi="leaveAuth()"></auth>
+    <router-view v-else />
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'App'
-  }
+	import auth from '@/components/authentication/authentication.vue'
+
+	export default {
+		name: 'App',
+		data () {
+			return {
+				auth: false
+			}
+		},
+		mounted () {
+			this.auth = this.$session.get('idPlayer') === undefined;
+		},
+		methods: {
+			leaveAuth () {
+				this.auth = false;
+			}
+		},
+		components: {
+			auth
+		}
+	}
 </script>
 
 <style>

@@ -32,6 +32,10 @@ class DinozService {
   getDinozFiche(id) {
     return http.get(`/dinoz/fiche/${id}`);
   }
+
+  getDinozPlayer(id) {
+    return http.get(`/dinoz/player/${id}`);
+  }
 }
 
 export default new DinozService();
