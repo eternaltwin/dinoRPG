@@ -12,4 +12,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-/config/
+**/config/
+**/node_modules
