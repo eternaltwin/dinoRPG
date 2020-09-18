@@ -126,5 +126,19 @@ module.exports = {
             }],
             where: { dinozId: id }
         });
+    },
+
+    // Get all dinoz not frozen from one player
+    getDinozPlayer: (id) => {
+        return Dinoz.findAll({
+            attributes: ['name', 'display', 'following', 'life'],
+            include: [{
+                model: Place,
+                attributes: ['name'],
+                as: 'place',
+                required: false
+            }],
+            where: { playerId: id, isFrozen: false }
+        })
     }
 }

@@ -27,5 +27,8 @@ module.exports = app => {
 	// Get dinoz data from main dinoz page
 	router.get("/fiche/:id", dinoz.getDinozFiche);
 
+	// Get all dinoz not frozen from one player
+	router.get("/player/:id", dinoz.getDinozPlayer);
+
 	app.use('/api/dinoz', router);
 };

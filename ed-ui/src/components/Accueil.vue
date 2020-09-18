@@ -1,30 +1,21 @@
 <template>
 	<div id="accueil">
-		Bienvenue sur DinoRPG 2 !</br>
-		<button @click="getAllDinoz()">Get all dinoz from database</button>
-		<div v-for="dinoz in dinozList">
-			<p>{{ dinoz }}</p>
-		</div>
+		Bienvenue sur DinoRPG 2 !
+		</br>
+		</br>
+		<listeDinoz></listeDinoz>
 	</div>
 </template>
 
 <script>
-import DinozService from '../services/DinozService';
+import listeDinoz from '@/components/dinoz/listeDinoz.vue';
 
 	export default {
-		data () {
-			return {
-				dinozList: []
-			}
-		},
-		methods: {
-			getAllDinoz() {
-				DinozService.getAll().then(res =>
-					this.dinozList = res.data
-				);
-			}
+		components: {
+			listeDinoz
 		}
 	}
+	
 </script>
 
 <style>
