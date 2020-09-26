@@ -29,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     object.associate = function(models){
-        object.belongsToMany(models.dinoz, { through: 'tb_ass_dinoz_object', as: 'dinoz', foreignKey: 'objectId' });
+      object.hasMany(models.assDinozObject, { foreignKey: 'objectId', as: 'assDinozObject' });  
+      //object.belongsToMany(models.dinoz, { through: 'tb_ass_dinoz_object', as: 'dinoz', foreignKey: 'objectId' });
     }
     
     return object;

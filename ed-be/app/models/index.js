@@ -56,5 +56,6 @@ db.ingredientGridType.associate(db);
 db.ingredient.associate(db);
 db.placeAccess.associate(db);
 db.map.associate(db);
+db.assDinozObject.associate(db);
 
 module.exports = db;

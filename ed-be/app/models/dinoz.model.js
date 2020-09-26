@@ -74,7 +74,8 @@ module.exports = (sequelize, DataTypes) => {
     dinoz.belongsTo(models.dinozRace, { foreignKey: 'raceId', as: 'race' });
     dinoz.belongsToMany(models.skill, { through: 'tb_ass_dinoz_skill', as: 'skills', foreignKey: 'dinozId' });
     dinoz.belongsToMany(models.status, { through: 'tb_ass_dinoz_status', as: 'status', foreignKey: 'dinozId' });
-    dinoz.belongsToMany(models.object, { through: 'tb_ass_dinoz_object', as: 'objects', foreignKey: 'dinozId' });
+    dinoz.hasMany(models.assDinozObject, { foreignKey: 'dinozId', as: 'assDinozObject' });
+    //dinoz.belongsToMany(models.object, { through: 'tb_ass_dinoz_object', as: 'objects', foreignKey: 'dinozId' });
     dinoz.belongsTo(models.level, { foreignKey: 'levelId', as: 'level' });
     dinoz.belongsTo(models.mission, { foreignKey: 'missionId', as: 'mission' });
     dinoz.belongsTo(models.element, { foreignKey: 'nextUpElementId', as: 'nextUp' });

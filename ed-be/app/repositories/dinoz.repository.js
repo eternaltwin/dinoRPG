@@ -14,6 +14,7 @@ const Elements = db.element;
 const Player = db.player;
 const Place = db.place;
 const IngredientGrid = db.ingredientGrid;
+const assDinozObject = db.assDinozObject;
 
 module.exports = {
     findAll: () => {
@@ -116,13 +117,16 @@ module.exports = {
                 as: 'status',
                 required: false
             }, {
-                model: Objects,
+                model: assDinozObject,
+                attributes: ['id'],
+                as: 'assDinozObject',
+                required: false,
+                include: {
+                    model: Objects,
                 attributes: ['name', 'description', 'canBeUsedNow', 'canBeEquiped', 'price', 'imgName'],
-                through: {
-                    attributes: []
-                },
-                as: 'objects', 
+                as: 'object', 
                 required: false
+                }
             }],
             where: { dinozId: id }
         });

@@ -136,6 +136,8 @@ exports.getDinozFiche = (req, res) => {
   
   DinozRepository.getDinozFiche(id).then(data => {
     var elements = {};
+    var objects = [];
+
     // On ajoute les éléments dans un seul objet élément
     elements.nbrUpFire = data.dataValues.nbrUpFire;
     elements.nbrUpWood = data.dataValues.nbrUpWood;
@@ -151,6 +153,16 @@ exports.getDinozFiche = (req, res) => {
     delete data.dataValues.nbrUpWater;
     delete data.dataValues.nbrUpLight;
     delete data.dataValues.nbrUpAir;
+
+
+    // On récupère les objets qu'à le dinoz sous une seule variable 'object'
+    data.assDinozObject.forEach(assDinozObject => {
+      objects.push(assDinozObject.object);
+    });
+
+    data.dataValues.objects = objects;
+
+    delete data.dataValues.assDinozObject;
 
     res.send(data);
   }).catch(err => {
