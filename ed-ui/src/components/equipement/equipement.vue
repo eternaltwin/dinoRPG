@@ -4,7 +4,7 @@
 			<tbody>
 				<tr v-for="object in objectsList">
 					<td v-for="obj in object">
-						<img :src="getImg(obj.imgName)">
+						<img :src="getImg(obj.imgName)" @mouseover="displayDescription(obj.description)">
 					</td>
 				</tr>
 			</tbody>
@@ -19,6 +19,10 @@
 				objectsList: [],
 				nbrColonnes: 0
 			}
+		},
+		props: {
+			type: String,
+			objects: Array
 		},
 		created () {
 			// Définition du nombre de colonnes (nombre différent entre la fiche du dinoz (2) et les marchands (4))
@@ -40,11 +44,10 @@
 			getImg (imgName) {
 				var images = require.context('@/assets/objets/', false, /\.png$/);
 			    return images('./' + imgName + '.png');
+			},
+			displayDescription (description) {
+				console.log(description);
 			}
-		},
-		props: {
-			type: String,
-			objects: Array
 		}
 	}
 </script>

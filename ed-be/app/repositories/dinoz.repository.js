@@ -110,7 +110,7 @@ module.exports = {
                 required: false
             }, {
                 model: Status,
-                attributes: ['name', 'description'],
+                attributes: ['name', 'description', 'imgName'],
                 through: {
                     attributes: []
                 },

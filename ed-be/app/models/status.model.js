@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: {
           type: DataTypes.STRING
+      },
+      imgName: {
+        type: DataTypes.STRING
       }
     }, {
       timestamps: false,
