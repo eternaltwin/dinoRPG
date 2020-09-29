@@ -4,6 +4,8 @@
 		<equipement type="dinoz" :objects="dinozData.objects"></equipement>
 		<status :status="dinozData.status"></status>
 		<p>{{ dinozData.level.level }}</p>
+		<p>{{ dinozData.name }}</p>
+		<elements :elements="dinozData.elements"></elements>
 	</div>
 </template>
 
@@ -11,6 +13,7 @@
 import DinozService from '@/services/DinozService';
 import Equipement from '@/components/equipement/equipement.vue';
 import Status from '@/components/status/statusList.vue';
+import Elements from '@/components/elements/elementsFicheDinoz.vue';
 
 	export default {
 		data () {
@@ -26,7 +29,8 @@ import Status from '@/components/status/statusList.vue';
 		},
 		components: {
 			Equipement,
-			Status
+			Status,
+			Elements
 		}
 	}
 </script>

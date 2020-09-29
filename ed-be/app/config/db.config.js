@@ -1,6 +1,6 @@
 module.exports = {
   HOST: "localhost",
-  USER: "eternaldino",
+  USER: "postgres",
   PASSWORD: "EternalDinoSQL",
   DB: "EternalDinoDB",
   dialect: "postgres",

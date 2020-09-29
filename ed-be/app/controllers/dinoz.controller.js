@@ -139,11 +139,11 @@ exports.getDinozFiche = (req, res) => {
     var objects = [];
 
     // On ajoute les éléments dans un seul objet élément
-    elements.nbrUpFire = data.dataValues.nbrUpFire;
-    elements.nbrUpWood = data.dataValues.nbrUpWood;
-    elements.nbrUpWater = data.dataValues.nbrUpWater;
-    elements.nbrUpLight = data.dataValues.nbrUpLight;
-    elements.nbrUpAir = data.dataValues.nbrUpAir;
+    elements.fire = data.dataValues.nbrUpFire;
+    elements.wood = data.dataValues.nbrUpWood;
+    elements.water = data.dataValues.nbrUpWater;
+    elements.light = data.dataValues.nbrUpLight;
+    elements.air = data.dataValues.nbrUpAir;
 
     data.dataValues.elements = elements;
 
