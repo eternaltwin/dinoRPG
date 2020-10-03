@@ -8,11 +8,8 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING
       },
-      description: {
+      type: {
         type: DataTypes.STRING
-      },
-      skillTypeId: {
-        type: DataTypes.BIGINT
       }
     }, {
       timestamps: false,
@@ -21,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
 
     skill.associate = function(models){
         skill.belongsToMany(models.dinoz, { through: 'tb_ass_dinoz_skill', as: 'dinoz', foreignKey: 'skillId' });
-        skill.belongsTo(models.skillType, { foreignKey: 'skillTypeId', as: 'skillType' });
     }
     
     return skill;
