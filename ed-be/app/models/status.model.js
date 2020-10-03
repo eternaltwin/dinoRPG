@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true
       },
-      statusName: {
+      name: {
         type: DataTypes.STRING
       }
     }, {

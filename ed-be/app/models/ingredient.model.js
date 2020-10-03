@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true
       },
-      ingrName: {
+      name: {
         type: DataTypes.STRING
       },
       ingredientGridTypeId: {

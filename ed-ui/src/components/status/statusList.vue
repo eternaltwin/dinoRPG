@@ -4,7 +4,7 @@
 			<tbody>
 				<tr v-for="status in statusList">
 					<td v-for="stat in status">
-						<img :src="getImg(stat.statusName)" @mouseover="displayDescription(stat.description)" />
+						<img :src="getImg(stat.name)" />
 					</td>
 				</tr>
 			</tbody>
@@ -37,9 +37,6 @@ import PopinDescription from '@/components/popin/description.vue';
 			getImg (imgName) {
 				var images = require.context('@/assets/status/', false, /\.png$/);
 			    return images('./' + imgName + '.png');
-			},
-			displayDescription (description) {
-				console.log(description);
 			}
 		},
 		components: {

@@ -1,10 +1,44 @@
 {
 	"object": {
 		"name": {
-			"obj_irma": "Potion d'Irma"
+			"obj_irma": "Potion de Madame Irma",
+			"obj_angel": "Potion d'Ange",
+			"obj_surviv": "Ration de Survie"
 		},
 		"description": {
-			"obj_irma": "Permet de rejouer"
+			"obj_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de jouer une nouvelle action immédiatemment sans devoir attendre le lendemain.",
+			"obj_angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le ressusciter sans pénalité d'expérience.",
+			"obj_surviv": "En cas de blessures graves, la ration de combat peut vous rentre entre 10 et jusqu'à 40 points de vie lors d'un combat."
+		}
+	},
+	"status": {
+		"name": {
+			"fx_matesc": "Matériel d’Escalade",
+			"fx_bouee": "Bouée",
+			"fx_cuzmal": "Malédiction de Cuzcous",
+			"fx_cup4": "Coupe de Diamant",
+			"fx_demon": "Démon",
+			"fx_lantrn": "Lanterne",
+			"fx_medal4": "Médaille de Diamant",
+			"fx_nenuph": "Feuille de Nénuphar",
+			"fx_pelle": "Pelle Porte-Chance",
+			"fx_rasca": "Appeau à Rascaphandre",
+			"fx_palmes": "Palmes des Korgons",
+			"fx_amulst": "La stratégie en 130 leçons"
+		},
+		"description": {
+			"fx_matesc": "Le Materiel d'Escalade permet à ce Dinoz de gravir les pentes escarpées.",
+			"fx_bouee": "La bouée permet à ce Dinoz de traverser certaines petites étendues d'eau sans aucun risque de noyade.",
+			"fx_cuzmal": "Votre Dinoz a été Maudit par le Gardien de Cuzcous...",
+			"fx_cup4": "Cette coupe félicite le capitaine d'une équipe pour sa domination du SuperDom !",
+			"fx_demon": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
+			"fx_lantrn": "La Lanterne permet à ce Dinoz d'explorer les plus profondes cavernes sans risquer de se perdre.",
+			"fx_medal4": "Cette médaille de diamant récompense les dinoz légendaires ayant terminé le tournoi de Forcebrut.",
+			"fx_nenuph": "Ces Feuilles de Nénuphar sont très appréciées des moines Zenzen.",
+			"fx_pelle": "Cette Pelle permet au Dinoz de creuser et de découvrir des trésors cachés.",
+			"fx_rasca": "Cette petite Flute permet d'attirer les Rascaphandres et ainsi d'accéder au Dôme Soulaflotte.",
+			"fx_palmes": "Ces palmes fabriquées par les Korgons permettent à ce Dinoz de traverser de grandes étendues d'eau.",
+			"fx_amulst": "Ce livre, très complet, permet au Dinoz de désactiver à volonté ses compétences de type 'attaque', 'événement' et certaines de type 'spécial' (depuis l'onglet Détails).\nC'est un guide indispensable pour les grands stratèges de Dinoland qui souhaitent s'adapter aux conditions de combat de chaque lieu !"
 		}
 	}
 }

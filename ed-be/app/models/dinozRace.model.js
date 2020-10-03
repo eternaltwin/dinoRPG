@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true
       },
-      raceName: {
+      name: {
         type: DataTypes.STRING
       },
       nbrFireCase: {

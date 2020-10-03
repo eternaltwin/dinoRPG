@@ -4,8 +4,8 @@
 			<tbody>
 				<tr v-for="object in objectsList">
 					<td v-for="obj in object">
-						<img :src="getImg(obj.objectName)">
-						<p>{{ $t('object.name.' + obj.objectName) }}</p>
+						<img :src="getImg(obj.name)">
+						<p>{{ $t('object.name.' + obj.name) }}</p>
 					</td>
 				</tr>
 			</tbody>

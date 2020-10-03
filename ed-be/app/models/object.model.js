@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true
       },
-      objectName: {
+      name: {
         type: DataTypes.STRING
       },
       canBeUsedNow: {
@@ -23,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     object.associate = function(models){
-      object.hasMany(models.assDinozObject, { foreignKey: 'objectId', as: 'assDinozObject' });  
-      //object.belongsToMany(models.dinoz, { through: 'tb_ass_dinoz_object', as: 'dinoz', foreignKey: 'objectId' });
+      object.hasMany(models.assDinozObject, { foreignKey: 'objectId', as: 'assDinozObject' });
     }
     
     return object;

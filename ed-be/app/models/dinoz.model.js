@@ -13,8 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     isFrozen: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
+      type: DataTypes.BOOLEAN
     },
     raceId: {
       type: DataTypes.BIGINT,
@@ -48,6 +47,9 @@ module.exports = (sequelize, DataTypes) => {
     life: {
       type: DataTypes.INTEGER
     },
+    experience: {
+      type: DataTypes.INTEGER
+    },
     canGather: {
       type: DataTypes.BOOLEAN
     },
@@ -75,7 +77,6 @@ module.exports = (sequelize, DataTypes) => {
     dinoz.belongsToMany(models.skill, { through: 'tb_ass_dinoz_skill', as: 'skills', foreignKey: 'dinozId' });
     dinoz.belongsToMany(models.status, { through: 'tb_ass_dinoz_status', as: 'status', foreignKey: 'dinozId' });
     dinoz.hasMany(models.assDinozObject, { foreignKey: 'dinozId', as: 'assDinozObject' });
-    //dinoz.belongsToMany(models.object, { through: 'tb_ass_dinoz_object', as: 'objects', foreignKey: 'dinozId' });
     dinoz.belongsTo(models.level, { foreignKey: 'levelId', as: 'level' });
     dinoz.belongsTo(models.mission, { foreignKey: 'missionId', as: 'mission' });
     dinoz.belongsTo(models.element, { foreignKey: 'nextUpElementId', as: 'nextUp' });

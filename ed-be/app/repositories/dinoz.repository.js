@@ -97,10 +97,10 @@ module.exports = {
 
     getDinozFiche: (id) => {
         return Dinoz.findOne({
-            attributes: ['display', 'life', 'nbrUpFire', 'nbrUpWood', 'nbrUpWater', 'nbrUpLight', 'nbrUpAir', 'name'],
+            attributes: ['display', 'life', 'experience', 'nbrUpFire', 'nbrUpWood', 'nbrUpWater', 'nbrUpLight', 'nbrUpAir', 'name'],
             include: [{
                 model: Place,
-                attributes: ['placeName'],
+                attributes: ['name'],
                 as: 'place',
                 required: false
             }, {
@@ -110,7 +110,7 @@ module.exports = {
                 required: false
             }, {
                 model: Status,
-                attributes: ['statusName'],
+                attributes: ['name'],
                 through: {
                     attributes: []
                 },
@@ -123,7 +123,7 @@ module.exports = {
                 required: false,
                 include: {
                     model: Objects,
-                attributes: ['objectName', 'canBeUsedNow', 'canBeEquiped', 'price'],
+                attributes: ['name', 'canBeUsedNow', 'canBeEquiped', 'price'],
                 as: 'object', 
                 required: false
                 }
@@ -138,7 +138,7 @@ module.exports = {
             attributes: ['name', 'display', 'following', 'life'],
             include: [{
                 model: Place,
-                attributes: ['placeName'],
+                attributes: ['name'],
                 as: 'place',
                 required: false
             }],
