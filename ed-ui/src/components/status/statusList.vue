@@ -4,7 +4,7 @@
 			<tbody>
 				<tr v-for="status in statusList">
 					<td v-for="stat in status">
-						<img :src="getImg(stat.imgName)" @mouseover="displayDescription(stat.description)" />
+						<img :src="getImg(stat.statusName)" @mouseover="displayDescription(stat.description)" />
 					</td>
 				</tr>
 			</tbody>

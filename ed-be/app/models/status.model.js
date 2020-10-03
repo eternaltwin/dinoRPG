@@ -5,13 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true
       },
-      name: {
-        type: DataTypes.STRING
-      },
-      description: {
-          type: DataTypes.STRING
-      },
-      imgName: {
+      statusName: {
         type: DataTypes.STRING
       }
     }, {

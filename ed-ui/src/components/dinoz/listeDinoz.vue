@@ -3,6 +3,7 @@
    	<div v-for="dinoz in dinozList" :key="dinoz.name">
    		{{ dinoz.name }}
    	</div>
+   	<p>{{ $t('test') }}</p>
   </div>
 </template>
 

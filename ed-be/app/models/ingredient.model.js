@@ -5,15 +5,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true
       },
-      name: {
+      ingrName: {
         type: DataTypes.STRING
       },
       ingredientGridTypeId: {
         type: DataTypes.BIGINT,
         allowNull: false
-      },
-      description: {
-        type: DataTypes.STRING
       },
       price: {
         type: DataTypes.INTEGER

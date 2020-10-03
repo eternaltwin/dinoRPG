@@ -100,7 +100,7 @@ module.exports = {
             attributes: ['display', 'life', 'nbrUpFire', 'nbrUpWood', 'nbrUpWater', 'nbrUpLight', 'nbrUpAir', 'name'],
             include: [{
                 model: Place,
-                attributes: ['name', 'description'],
+                attributes: ['placeName'],
                 as: 'place',
                 required: false
             }, {
@@ -110,7 +110,7 @@ module.exports = {
                 required: false
             }, {
                 model: Status,
-                attributes: ['name', 'description', 'imgName'],
+                attributes: ['statusName'],
                 through: {
                     attributes: []
                 },
@@ -123,7 +123,7 @@ module.exports = {
                 required: false,
                 include: {
                     model: Objects,
-                attributes: ['name', 'description', 'canBeUsedNow', 'canBeEquiped', 'price', 'imgName'],
+                attributes: ['objectName', 'canBeUsedNow', 'canBeEquiped', 'price'],
                 as: 'object', 
                 required: false
                 }
@@ -138,7 +138,7 @@ module.exports = {
             attributes: ['name', 'display', 'following', 'life'],
             include: [{
                 model: Place,
-                attributes: ['name'],
+                attributes: ['placeName'],
                 as: 'place',
                 required: false
             }],

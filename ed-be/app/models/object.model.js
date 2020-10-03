@@ -5,10 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true
       },
-      name: {
-        type: DataTypes.STRING
-      },
-      description: {
+      objectName: {
         type: DataTypes.STRING
       },
       canBeUsedNow: {
@@ -19,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       price: {
         type: DataTypes.INTEGER
-      },
-      imgName: {
-        type: DataTypes.STRING
       }
     }, {
       timestamps: false,

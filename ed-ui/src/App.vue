@@ -15,7 +15,7 @@
 				auth: false
 			}
 		},
-		mounted () {
+		created () {
 			this.auth = this.$session.get('idPlayer') === undefined;
 		},
 		methods: {

@@ -4,7 +4,7 @@
 			<tbody>
 				<tr v-for="object in objectsList">
 					<td v-for="obj in object">
-						<img :src="getImg(obj.imgName)" @mouseover="displayDescription(obj.description)">
+						<img :src="getImg(obj.objectName)">
 					</td>
 				</tr>
 			</tbody>
