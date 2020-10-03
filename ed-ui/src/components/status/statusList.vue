@@ -35,7 +35,7 @@ import PopinDescription from '@/components/popin/description.vue';
 		},
 		methods: {
 			getImg (imgName) {
-				var images = require.context('@/assets/statuts/', false, /\.png$/);
+				var images = require.context('@/assets/status/', false, /\.png$/);
 			    return images('./' + imgName + '.png');
 			},
 			displayDescription (description) {

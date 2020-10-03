@@ -1,3 +1,10 @@
 {
-	"test": "test !!!"
+	"object": {
+		"name": {
+			"obj_irma": "Potion d'Irma"
+		},
+		"description": {
+			"obj_irma": "Permet de rejouer"
+		}
+	}
 }

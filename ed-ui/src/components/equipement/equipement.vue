@@ -5,6 +5,7 @@
 				<tr v-for="object in objectsList">
 					<td v-for="obj in object">
 						<img :src="getImg(obj.objectName)">
+						<p>{{ $t('object.name.' + obj.objectName) }}</p>
 					</td>
 				</tr>
 			</tbody>
@@ -42,7 +43,7 @@
 		},
 		methods: {
 			getImg (imgName) {
-				var images = require.context('@/assets/objets/', false, /\.png$/);
+				var images = require.context('@/assets/object/', false, /\.png$/);
 			    return images('./' + imgName + '.png');
 			},
 			displayDescription (description) {
