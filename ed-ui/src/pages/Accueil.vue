@@ -4,6 +4,7 @@
 		</br>
 		</br>
 		<listeDinoz></listeDinoz>
+		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>
 	</div>
 </template>
 
@@ -11,6 +12,11 @@
 import listeDinoz from '@/components/dinoz/listeDinoz.vue';
 
 	export default {
+		methods: {
+			goToDinozShop () {
+				this.$router.push({ name: 'dinozShop' });
+			}
+		},
 		components: {
 			listeDinoz
 		}

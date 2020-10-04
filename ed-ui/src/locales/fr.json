@@ -40,5 +40,12 @@
 			"fx_palmes": "Ces palmes fabriquées par les Korgons permettent à ce Dinoz de traverser de grandes étendues d'eau.",
 			"fx_amulst": "Ce livre, très complet, permet au Dinoz de désactiver à volonté ses compétences de type 'attaque', 'événement' et certaines de type 'spécial' (depuis l'onglet Détails).\nC'est un guide indispensable pour les grands stratèges de Dinoland qui souhaitent s'adapter aux conditions de combat de chaque lieu !"
 		}
+	},
+	"race": {
+		"winks": "Winks",
+		"sirain": "Sirain"
+	},
+	"bouton": {
+		"acheterDinoz": "Acheter un dinoz !"
 	}
 }
