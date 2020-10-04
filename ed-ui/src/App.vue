@@ -16,7 +16,7 @@
 			}
 		},
 		created () {
-			this.auth = this.$session.get('idPlayer') === undefined;
+			this.auth = localStorage.idPlayer === undefined;
 		},
 		methods: {
 			leaveAuth () {

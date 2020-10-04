@@ -17,7 +17,7 @@ import DinozService from '@/services/DinozService';
 			}
 		},
 		mounted() {
-			var idPlayer = parseInt(this.$session.get('idPlayer'));
+			var idPlayer = parseInt(localStorage.idPlayer);
 			DinozService.getDinozPlayer(idPlayer).then(res => {
 				this.dinozList = res.data;
 				}

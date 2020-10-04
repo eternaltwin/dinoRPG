@@ -14,7 +14,7 @@
 		},
 		methods: {
 			validateName () {
-				this.$session.set('idPlayer', this.idPlayer);
+				localStorage.idPlayer = this.idPlayer;
 				this.$emit('idChoisi');
 			}
 		}

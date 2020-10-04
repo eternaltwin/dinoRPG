@@ -17,7 +17,7 @@ import ShopService from '@/services/ShopService';
 			    return images('./' + imgName + '.png');
 			},
 			getDinozFromDinozShop() {
-				ShopService.getDinozFromDinozShop(this.$session.get('idPlayer'));
+				ShopService.getDinozFromDinozShop(localStorage.idPlayer);
 			}
 		}
 	}
