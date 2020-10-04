@@ -14,4 +14,4 @@ yarn-error.log*
 
 /node_modules/
 /ed-ui/node_modules/
-/ed-ui/package-lock.json
+/ed-be/node_modules/
