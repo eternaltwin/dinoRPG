@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       nbrAirCase: {
         type: DataTypes.INTEGER
+      },
+      price: {
+        type: DataTypes.INTEGER
       }
     }, {
       timestamps: false,
@@ -30,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 
     dinozRace.associate = function(models){
       dinozRace.hasMany(models.dinoz, { foreignKey: 'raceId', as: 'dinoz' });
+      dinozRace.hasMany(models.dinozShop, { foreignKey: 'raceId', as: 'race' });
     }
     
     return dinozRace;

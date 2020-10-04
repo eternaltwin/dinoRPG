@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     player.associate = function(models){
         player.hasMany(models.dinoz, { foreignKey: 'playerId', as: 'dinoz' });
         player.hasMany(models.ingredientGrid, { foreignKey: 'playerId', as: 'ingredientGrid' })
+        player.hasMany(models.dinozShop, { foreignKey: 'playerId', as: 'dinozShop' })
     }
     
     return player;
