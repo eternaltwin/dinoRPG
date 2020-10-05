@@ -3,6 +3,10 @@ const DinozShop = db.dinozShop;
 const DinozRace = db.dinozRace;
 
 module.exports = {
+    createMultiple: (dinozArray) => {
+        return DinozShop.bulkCreate(dinozArray);
+    },
+
     getDinozFromDinozShop: (playerId) => {
         return DinozShop.findAll({
             attributes: ['display'],
