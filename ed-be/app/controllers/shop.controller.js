@@ -9,13 +9,13 @@ exports.getDinozFromDinozShop = (req, res) => {
     if (data.length === 0){
 
         var dinoz = {};
-        var raceNumber = 21;
+        var buyableRace = 12;
         var randomRace;
         var dinozArray = [];
 
-        for (var i = 0; i < 30; i ++){
+        for (var i = 0; i < 15; i ++){
             // Dinoz has a random race
-            randomRace = Math.floor(Math.random() * Math.floor(2)) + 1;
+            randomRace = Math.floor(Math.random() * Math.floor(buyableRace)) + 1;
 
             dinoz = {
                 playerId: parseInt(req.params.id),
@@ -26,9 +26,13 @@ exports.getDinozFromDinozShop = (req, res) => {
             dinozArray.push(dinoz);
         }
 
-        ShopRepository.createMultiple(dinozArray);
-
-        res.send(dinozArray);
+        // Save created dinoz in database
+        ShopRepository.createMultiple(dinozArray).then(resp => {
+            // Get created dinoz and their races
+            ShopRepository.getDinozFromDinozShop(req.params.id).then(response => {
+                res.send(response);
+            });
+        });
 
     } else {
         res.send(data);
