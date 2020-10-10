@@ -5,6 +5,7 @@ const db = require("./app/models");
 
 const app = express();
 
+// Database connection
 db.sequelize.sync().then(() => {
 	console.log("Sync db");
 });
@@ -24,6 +25,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes declaration
 require("./app/routes/dinoz.routes")(app);
 require("./app/routes/shop.routes")(app);
+
+// Launch Cron
+var resetDinozShop = require("./app/cron/resetDinozShop.js");
+resetDinozShop.resetDinozShopAtMidnight();
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
