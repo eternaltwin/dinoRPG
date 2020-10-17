@@ -18,6 +18,10 @@ export default new Router({
 		path: '/shop/dinoz',
 		name: 'dinozShop',
 		component: resolve => require(['@/pages/shop/dinozShop.vue'], resolve)
+	}, {
+		path: '/dinoz/create',
+		name: 'createDinoz',
+		component: resolve => require(['@/pages/dinoz/createDino.vue'], resolve)
 	},
 	{
 		path: '*',
