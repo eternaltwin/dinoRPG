@@ -122,12 +122,8 @@
 		          scale: 'noscale',
 		          wmode: 'visible'
 		        },
-		        attrs: {
-		          id: 'myDino',
-		          name: 'myDino'
-		        },
 		        flashVars: {
-		          data: 'BAZcj9xg31OWC000',
+		          data: 'BASF4hxg31OWC000',
 		          chk: 145305914,
 		          damages: 0,
 		          flip: 1
