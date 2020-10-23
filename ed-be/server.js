@@ -22,6 +22,9 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// To send static files to client when '/data' is in URL
+app.use('/api/data', express.static(__dirname + '/app/data'));
+
 // Routes declaration
 require("./app/routes/dinoz.routes")(app);
 require("./app/routes/shop.routes")(app);

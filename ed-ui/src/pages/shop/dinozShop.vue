@@ -2,17 +2,20 @@
 	<div id="dinozShop">
 		<img :src="getImg('shop_dinoz_bg')">
 		<div v-for="dinoz in dinozList">
-			<dinozSWF :height="165" :width="190" url="http://data.dinorpg.com/swf/dino.swf" :params="params" :flashVars="getFlashVars(dinoz.display)"></dinozSWF>
+			<dinozSWF :height="165" :width="190" :url="url" :params="params" :flashVars="getFlashVars(dinoz.display)"></dinozSWF>
 		</div>
 	</div>
 </template>
 
 <script>
 import ShopService from '@/services/ShopService';
+import DinozService from '@/services/DinozService';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
+import Constants from '@/Constants.js';
 
 	export default {
 		async created () {
+			this.url = Constants.getDinozSWF();
 			await this.getDinozFromDinozShop();
 		},
 		data() {
@@ -27,7 +30,7 @@ import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 		        flashVars: {},
         		width: 190,
         		height: 165,
-        		url: 'http://data.dinorpg.com/swf/dino.swf',
+        		url: '',
 				dinozList: undefined
 			}
 		},
@@ -36,7 +39,7 @@ import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 				var images = require.context('@/assets/shop/', false, /\.png$/);
 			    return images('./' + imgName + '.png');
 			},
-			getDinozFromDinozShop() {
+			async getDinozFromDinozShop() {
 				ShopService.getDinozFromDinozShop(localStorage.idPlayer).then(res => {
 					this.dinozList = res.data;
 				});
