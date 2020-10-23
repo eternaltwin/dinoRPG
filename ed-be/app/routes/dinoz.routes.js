@@ -1,8 +1,7 @@
+const dinoz = require("../controllers/dinoz.controller.js");
+const router = require("express").Router();
+
 module.exports = app => {
-	const dinoz = require("../controllers/dinoz.controller.js");
-
-	var router = require("express").Router();
-
 	// Create a new Dinoz
 	router.post("/", dinoz.create);
 

@@ -25,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       price: {
         type: DataTypes.INTEGER
+      },
+      swfLetter: {
+        type: DataTypes.STRING
       }
     }, {
       timestamps: false,
