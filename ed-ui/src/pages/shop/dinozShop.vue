@@ -3,6 +3,13 @@
 		<img :src="getImg('shop_dinoz_bg')">
 		<div v-for="dinoz in dinozList">
 			<dinozSWF :height="165" :width="190" :url="url" :params="params" :flashVars="getFlashVars(dinoz.display)"></dinozSWF>
+			<span>{{ dinoz.race.name }}</span>
+			<span>{{ dinoz.race.price }}</span>
+			<span>{{ dinoz.race.nbrFireCase }}</span>
+			<span>{{ dinoz.race.nbrWoodCase }}</span>
+			<span>{{ dinoz.race.nbrWaterCase }}</span>
+			<span>{{ dinoz.race.nbrLightCase }}</span>
+			<span>{{ dinoz.race.nbrAirCase }}</span>
 		</div>
 	</div>
 </template>

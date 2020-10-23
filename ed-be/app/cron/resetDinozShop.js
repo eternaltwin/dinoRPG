@@ -7,7 +7,7 @@ module.exports = {
     // Truncate table 'tb_dinoz_shop'
     resetDinozShopAtMidnight: () => {
         var resetDinozShop = new CronJob('0 0 0 * * *', function() {
-            DinozShop.destroy({ truncate: true, cascade: false })
+            DinozShop.destroy({ truncate: true, restartIdentity: true })
                 .then(() => {
                     console.log({ status: true });
                 }, (err) => {
