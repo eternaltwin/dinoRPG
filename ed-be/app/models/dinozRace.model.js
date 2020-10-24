@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       swfLetter: {
         type: DataTypes.STRING
+      },
+      skillId: {
+        type: DataTypes.BIGINT
       }
     }, {
       timestamps: false,
@@ -37,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     dinozRace.associate = function(models){
       dinozRace.hasMany(models.dinoz, { foreignKey: 'raceId', as: 'dinoz' });
       dinozRace.hasMany(models.dinozShop, { foreignKey: 'raceId', as: 'race' });
+      dinozRace.belongsTo(models.skill, { foreignKey: 'skillId', as: 'skill' });
     }
     
     return dinozRace;

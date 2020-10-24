@@ -35,8 +35,9 @@ module.exports = (sequelize, DataTypes) => {
 
     player.associate = function(models){
         player.hasMany(models.dinoz, { foreignKey: 'playerId', as: 'dinoz' });
-        player.hasMany(models.ingredientGrid, { foreignKey: 'playerId', as: 'ingredientGrid' })
-        player.hasMany(models.dinozShop, { foreignKey: 'playerId', as: 'dinozShop' })
+        player.hasMany(models.ingredientGrid, { foreignKey: 'playerId', as: 'ingredientGrid' });
+        player.hasMany(models.dinozShop, { foreignKey: 'playerId', as: 'dinozShop' });
+        player.belongsToMany(models.epicReward, { through: 'tb_ass_player_reward', as: 'reward', foreignKey: 'playerId' });
     }
     
     return player;

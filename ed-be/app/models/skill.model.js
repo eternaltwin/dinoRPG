@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 
     skill.associate = function(models){
         skill.belongsToMany(models.dinoz, { through: 'tb_ass_dinoz_skill', as: 'dinoz', foreignKey: 'skillId' });
+        skill.hasOne(models.dinozRace, { foreignKey: 'skillId', as: 'race' });
     }
     
     return skill;

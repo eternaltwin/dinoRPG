@@ -1,6 +1,7 @@
 const db = require("../models");
 const DinozShop = db.dinozShop;
 const DinozRace = db.dinozRace;
+const Skill = db.skill;
 
 module.exports = {
     createMultiple: (dinozArray) => {
@@ -10,12 +11,18 @@ module.exports = {
     getDinozFromDinozShop: (playerId) => {
         return DinozShop.findAll({
             attributes: ['display'],
-            include: [{
+            include: {
                 model: DinozRace,
                 attributes: ['name', 'nbrFireCase', 'nbrWoodCase', 'nbrWaterCase', 'nbrLightCase', 'nbrAirCase', 'price'],
                 as: 'race',
-                required: false
-            }],
+                required: false,
+                include: {
+                    model: Skill,
+                    attributes: ['name'],
+                    as: 'skill',
+                    required: false
+                }
+            },
             where: { playerId: playerId }
         });
     }

@@ -39,6 +39,8 @@ db.ingredient = require("./ingredient.model.js")(sequelize, Sequelize);
 db.placeAccess = require("./placeAccess.model.js")(sequelize, Sequelize);
 db.map = require("./map.model.js")(sequelize, Sequelize);
 db.dinozShop = require("./dinozShop.model.js")(sequelize, Sequelize);
+db.epicReward = require("./epicReward.model.js")(sequelize, Sequelize);
+db.assPlayerReward = require("./assPlayerReward.model.js")(sequelize, Sequelize);
 
 // Création des associations entre les tables
 db.dinoz.associate(db);
@@ -57,5 +59,6 @@ db.placeAccess.associate(db);
 db.map.associate(db);
 db.assDinozObject.associate(db);
 db.dinozShop.associate(db);
+db.epicReward.associate(db);
 
 module.exports = db;

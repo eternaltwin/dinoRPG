@@ -40,9 +40,9 @@ module.exports = {
                 required: false,
                 include: {
                     model: Objects,
-                attributes: ['name', 'canBeUsedNow', 'canBeEquiped', 'price'],
-                as: 'object', 
-                required: false
+                    attributes: ['name', 'canBeUsedNow', 'canBeEquiped', 'price'],
+                    as: 'object', 
+                    required: false
                 }
             }],
             where: { dinozId: id }
