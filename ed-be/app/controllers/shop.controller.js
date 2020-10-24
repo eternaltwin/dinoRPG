@@ -16,9 +16,9 @@ exports.getDinozFromDinozShop = (req, res) => {
         var raceArray = [Constants.dinozRace.winks, Constants.dinozRace.sirain, Constants.dinozRace.castivore, Constants.dinozRace.nuagoz, 
             Constants.dinozRace.gorilloz, Constants.dinozRace.wanwan, Constants.dinozRace.pigmou, Constants.dinozRace.planaille, Constants.dinozRace.moueffe];
         var randomRace;
+        var rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky];
 
         // Check if player has rocky, pteroz or hippoclamp trophy
-        var rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky];
         PlayerRepository.getRewardFromArray(req.params.id, rewardArray).then(function(player){
             player.reward.forEach(reward => {
                 if (reward.name === Constants.reward.tropheeRocky) {

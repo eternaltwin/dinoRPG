@@ -61,13 +61,12 @@ import Constants from '@/Constants.js';
 		          	flip: 1
 				};
 			},
-			openPopinConfirm(dinoz) {
-				var response = confirm('Texte à définir ?');
-				if (response) {
-					console.log('Vous avez choisi le dinoz : ');
-					console.log(dinoz);
+			async openPopinConfirm(dinoz) {
+				var res = confirm('Confirmer cette action ?');
+				if (res) {
+					var dinozCreated = await DinozService.buyDinoz(dinoz);
+					this.$router.push({ name: 'dinozFiche', params: { id: dinozCreated.data }});
 				}
-
 			}
 		},
 		components: {

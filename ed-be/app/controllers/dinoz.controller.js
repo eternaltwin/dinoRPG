@@ -1,4 +1,5 @@
 const DinozRepository = require("../repositories/dinoz.repository.js");
+const PlayerRespository = require("../repositories/player.repository.js");
 
 // Create and Save a new Dinoz
 exports.create = (req, res) => {
@@ -78,4 +79,43 @@ exports.getDinozPlayer = (req, res) => {
         err.message || "Some error occurred while retrieving dinoz from player. Id player = " + id
     });
   });
+}
+
+exports.buyDinoz = async (req, res) => {
+  // Check if player has enough money to buy this dinoz
+  var player = await PlayerRespository.getMoney(parseInt(req.body.playerId));
+  if (parseInt(player.money) > req.body.dinoz.race.price) {
+    var dinoz = {
+      name: '?',
+      isFrozen: false,
+      raceId: req.body.dinoz.race.raceId,
+      levelId: 1,
+      playerId: req.body.playerId,
+      placeId: 1,
+      display: req.body.dinoz.display,
+      life: 100,
+      experience: 0,
+      canGather: false,
+      nbrUpFire: req.body.dinoz.race.nbrFireCase,
+      nbrUpWood: req.body.dinoz.race.nbrWoodCase,
+      nbrUpWater: req.body.dinoz.race.nbrWaterCase,
+      nbrUpLight: req.body.dinoz.race.nbrLightCase,
+      nbrUpAir: req.body.dinoz.race.nbrAirCase
+    };
+
+    // TODO : retirer l'argent au joueur
+
+    DinozRepository.create(dinoz).then(dinoz => {
+      res.send(dinoz.dataValues.dinozId);
+    }).catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating dinoz"
+      });
+    });;
+  } else {
+    return res.status(501).send({
+        message: "You don't have enough money to buy this dinoz"
+    });
+  }
 }

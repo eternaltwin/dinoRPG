@@ -13,7 +13,7 @@ module.exports = {
             attributes: ['display'],
             include: {
                 model: DinozRace,
-                attributes: ['name', 'nbrFireCase', 'nbrWoodCase', 'nbrWaterCase', 'nbrLightCase', 'nbrAirCase', 'price'],
+                attributes: ['raceId', 'name', 'nbrFireCase', 'nbrWoodCase', 'nbrWaterCase', 'nbrLightCase', 'nbrAirCase', 'price'],
                 as: 'race',
                 required: false,
                 include: {

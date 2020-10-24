@@ -18,5 +18,12 @@ module.exports = {
             },
             where: { playerId: playerId }
         });
+    },
+
+    getMoney: (playerId) => {
+        return Player.findOne({
+            attributes: ['money'],
+            where: { playerId: playerId }
+        });
     }
 }

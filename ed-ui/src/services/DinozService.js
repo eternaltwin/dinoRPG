@@ -3,7 +3,7 @@ import http from "../http-common";
 class DinozService {
 
 	create(data) {
-    	return http.post("/dinoz", data);
+    	return http.post('/dinoz', data);
   	}
 
   	getDinozFiche(id) {
@@ -12,6 +12,10 @@ class DinozService {
 
   	getDinozPlayer(id) {
     	return http.get(`/dinoz/player/${id}`);
+  	}
+
+  	buyDinoz(dinoz) {
+  		return http.post('/dinoz/buydinoz', { dinoz: dinoz, playerId: localStorage.idPlayer });
   	}
 }
 

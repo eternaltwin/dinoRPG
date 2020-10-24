@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING
       },
+      money: {
+        type: DataTypes.BIGINT
+      },
       leader: {
         type: DataTypes.BOOLEAN
       }, 

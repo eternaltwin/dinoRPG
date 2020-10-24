@@ -11,5 +11,8 @@ module.exports = app => {
 	// Get all dinoz not frozen from one player
 	router.get("/player/:id", dinoz.getDinozPlayer);
 
+	// When a dinoz is bought in dinoz shop
+	router.post("/buydinoz", dinoz.buyDinoz);
+
 	app.use('/api/dinoz', router);
 };
