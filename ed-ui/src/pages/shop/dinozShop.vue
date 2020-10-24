@@ -10,6 +10,8 @@
 			<span>{{ dinoz.race.nbrWaterCase }}</span>
 			<span>{{ dinoz.race.nbrLightCase }}</span>
 			<span>{{ dinoz.race.nbrAirCase }}</span>
+			<span v-if="dinoz.race.skill">{{ dinoz.race.skill.name }}</span>
+			<button @click="openPopinConfirm(dinoz)">Choisir</button>
 		</div>
 	</div>
 </template>
@@ -58,6 +60,14 @@ import Constants from '@/Constants.js';
 		          	damages: 0,
 		          	flip: 1
 				};
+			},
+			openPopinConfirm(dinoz) {
+				var response = confirm('Texte à définir ?');
+				if (response) {
+					console.log('Vous avez choisi le dinoz : ');
+					console.log(dinoz);
+				}
+
 			}
 		},
 		components: {
