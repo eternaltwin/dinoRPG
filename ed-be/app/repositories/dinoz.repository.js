@@ -14,7 +14,7 @@ module.exports = {
     // Get data from main dinoz page
     getDinozFiche: (id) => {
         return Dinoz.findOne({
-            attributes: ['display', 'life', 'experience', 'nbrUpFire', 'nbrUpWood', 'nbrUpWater', 'nbrUpLight', 'nbrUpAir', 'name'],
+            attributes: ['dinozId', 'display', 'life', 'experience', 'nbrUpFire', 'nbrUpWood', 'nbrUpWater', 'nbrUpLight', 'nbrUpAir', 'name'],
             include: [{
                 model: Place,
                 attributes: ['name'],
@@ -60,6 +60,15 @@ module.exports = {
                 required: false
             }],
             where: { playerId: id, isFrozen: false }
-        })
+        });
+    },
+
+    // Setting dinoz name
+    setDinozName: (dinoz) => {
+        return Dinoz.update({
+            name: dinoz.name
+        },{
+            where: { dinozId: dinoz.dinozId }
+        });
     }
 }

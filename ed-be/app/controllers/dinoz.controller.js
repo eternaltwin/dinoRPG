@@ -1,5 +1,7 @@
 const DinozRepository = require("../repositories/dinoz.repository.js");
 const PlayerRepository = require("../repositories/player.repository.js");
+const db = require("../models");
+const Dinoz = db.dinoz;
 
 // Create and Save a new Dinoz
 exports.create = (req, res) => {
@@ -121,4 +123,16 @@ exports.buyDinoz = async (req, res) => {
         message: "You don't have enough money to buy this dinoz"
     });
   }
+}
+
+// Setting dinoz name
+exports.setDinozName = (req, res) => {
+  DinozRepository.setDinozName(Dinoz.build(req.body.dinoz)).then(function(response) {
+    res.send(response);
+  }).catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while updating dinoz name"
+    });
+  });;
 }

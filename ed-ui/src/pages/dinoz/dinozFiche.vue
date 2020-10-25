@@ -1,7 +1,7 @@
 <template>
 	<div id="dinozFiche" v-if="!isLoading">
 		<div v-if="!dinozData.name">
-			<choose-dinoz-name :display="dinozData.display"></choose-dinoz-name>
+			<choose-dinoz-name :dinozData="dinozData"></choose-dinoz-name>
 		</div>
 		<div v-else>
 			<img src="@/assets/dinoz/dinoz_bg.jpg" alt="background dinoz">

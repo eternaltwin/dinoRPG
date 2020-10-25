@@ -14,5 +14,8 @@ module.exports = app => {
 	// When a dinoz is bought in dinoz shop
 	router.post("/buydinoz", dinoz.buyDinoz);
 
+	// Set dinoz name
+	router.put("/setname", dinoz.setDinozName);
+
 	app.use('/api/dinoz', router);
 };
