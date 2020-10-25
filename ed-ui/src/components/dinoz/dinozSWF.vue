@@ -13,17 +13,47 @@
 </template>
 
 <script>
+import Constants from '@/Constants.js';
+
 	export default {
-		name: 'createDino',
 		props: {
-			params: Object,
+			display: String,
 			attrs: Object,
-			flashVars: Object,
-			width: Number,
-			height: Number,
-			url: String
+			bgColor: String,
+			wmode: String,
+			flip: Number
+		},
+		data() {
+			return {
+				url : '',
+				flashVars: {
+					data: '',
+		         	chk: 0,
+		          	damages: 0,
+		          	flip: null
+				},
+				params: {
+		          allowScriptAccess: 'always',
+		          bgcolor: '#fce3bb',
+		          menu: 'false',
+		          scale: 'noscale',
+		          wmode: 'transparent'
+		        }
+			}
 		},
 		created() {
+			// Set params bgColor and wmode if needed
+			this.params.bgcolor = this.bgColor ? this.bgColor : this.params.bgcolor;
+			this.params.wmode = this.wmode ? this.wmode : this.params.wmode;
+
+			// Set URL to get swf
+			this.url = Constants.getDinozSWF();
+
+			// Set flashVars
+			this.flashVars.data = this.display;
+			this.flashVars.flip = this.flip ? this.flip : this.flashVars.flip;
+
+			// Decode CHK
 			let decoded_data = 0,      
 			data_list = [],            
 			i = -1;   

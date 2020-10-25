@@ -1,11 +1,16 @@
 <template>
 	<div id="dinozFiche" v-if="!isLoading">
-		<img src="./../../assets/dinoz/dinoz_bg.jpg" alt="background dinoz">
-		<equipement type="dinoz" :objects="dinozData.objects"></equipement>
-		<status :status="dinozData.status"></status>
-		<p>{{ dinozData.level.level }}</p>
-		<p>{{ dinozData.name }}</p>
-		<elements :elements="dinozData.elements"></elements>
+		<div v-if="!dinozData.name">
+			<choose-dinoz-name :display="dinozData.display"></choose-dinoz-name>
+		</div>
+		<div v-else>
+			<img src="@/assets/dinoz/dinoz_bg.jpg" alt="background dinoz">
+			<equipement type="dinoz" :objects="dinozData.objects"></equipement>
+			<status :status="dinozData.status"></status>
+			<p>{{ dinozData.level.level }}</p>
+			<p>{{ dinozData.name }}</p>
+			<elements :elements="dinozData.elements"></elements>
+		</div>
 	</div>
 </template>
 
@@ -14,6 +19,7 @@ import DinozService from '@/services/DinozService';
 import Equipement from '@/components/equipement/equipement.vue';
 import Status from '@/components/status/statusList.vue';
 import Elements from '@/components/elements/elementsFicheDinoz.vue';
+import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
 
 	export default {
 		data () {
@@ -30,7 +36,8 @@ import Elements from '@/components/elements/elementsFicheDinoz.vue';
 		components: {
 			Equipement,
 			Status,
-			Elements
+			Elements,
+			ChooseDinozName
 		}
 	}
 </script>

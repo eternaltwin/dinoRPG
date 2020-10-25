@@ -22,8 +22,15 @@ module.exports = {
 
     getMoney: (playerId) => {
         return Player.findOne({
-            attributes: ['money'],
+            attributes: ['playerId', 'money'],
             where: { playerId: playerId }
         });
+    },
+
+    setPlayerMoney: (player) => {
+        return player.save({
+            fields: ['money'],
+            where: { playerId: player.playerId }
+        })
     }
 }
