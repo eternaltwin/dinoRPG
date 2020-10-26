@@ -10,6 +10,7 @@
 			<p>{{ dinozData.level.level }}</p>
 			<p>{{ dinozData.name }}</p>
 			<elements :elements="dinozData.elements"></elements>
+			<dinozSWF :display="dinozData.display" :width="190" :height="165" type="dino"></dinozSWF>
 		</div>
 	</div>
 </template>
@@ -20,6 +21,7 @@ import Equipement from '@/components/equipement/equipement.vue';
 import Status from '@/components/status/statusList.vue';
 import Elements from '@/components/elements/elementsFicheDinoz.vue';
 import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
+import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 
 	export default {
 		data () {
@@ -37,7 +39,8 @@ import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
 			Equipement,
 			Status,
 			Elements,
-			ChooseDinozName
+			ChooseDinozName,
+			DinozSWF
 		}
 	}
 </script>

@@ -1,7 +1,7 @@
 <template>
 	<div id="chooseDinozName">
 		<p>{{ $t('chooseDinoz.information') }}</p>
-		<dinozSWF :display="dinozData.display"></dinozSWF>
+		<dinozSWF :display="dinozData.display" :width="190" :height="165" type="dino"></dinozSWF>
 		<p>{{ $t('chooseDinoz.nomDuDinoz') }}</p>
 		<input type="text" v-model="name">
 		<button @click="nameDinoz()">{{ $t('bouton.nommer') }}</button>

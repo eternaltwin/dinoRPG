@@ -1,7 +1,7 @@
 <template>
 	<div id="createDinoz">
         <div id="myDino">
-	        <object type="application/x-shockwave-flash" :data="url" width="195" height="160">
+	        <object type="application/x-shockwave-flash" :data="url" :width="width" :height="height">
 	            <param name="movie" :value="url">
 	            <param v-for="(value, key) in params" :name="key" :value="value">
 	            <param name="flashvars" :value="serialize(flashVars)">
@@ -21,7 +21,10 @@ import Constants from '@/Constants.js';
 			attrs: Object,
 			bgColor: String,
 			wmode: String,
-			flip: Number
+			flip: Number,
+			width: Number,
+			height: Number,
+			type: String
 		},
 		data() {
 			return {
@@ -47,8 +50,8 @@ import Constants from '@/Constants.js';
 			this.params.wmode = this.wmode ? this.wmode : this.params.wmode;
 
 			// Set URL to get swf
-			this.url = Constants.getDinozSWF();
-
+			this.url = this.type === 'dino' ? Constants.getDinoSWF() : Constants.getSDinoSWF();
+			
 			// Set flashVars
 			this.flashVars.data = this.display;
 			this.flashVars.flip = this.flip ? this.flip : this.flashVars.flip;

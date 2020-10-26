@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import listeDinoz from '@/components/dinoz/listeDinoz.vue';
+import ListeDinoz from '@/components/dinoz/listeDinoz.vue';
 
 	export default {
 		methods: {
@@ -18,7 +18,7 @@ import listeDinoz from '@/components/dinoz/listeDinoz.vue';
 			}
 		},
 		components: {
-			listeDinoz
+			ListeDinoz
 		}
 	}
 	

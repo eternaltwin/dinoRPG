@@ -2,7 +2,7 @@
 	<div id="dinozShop">
 		<img src="@/assets/shop/shop_dinoz_bg.png">
 		<div v-for="dinoz in dinozList">
-			<dinozSWF :display="dinoz.display"></dinozSWF>
+			<dinozSWF :display="dinoz.display" :width="190" :height="165" type="dino"></dinozSWF>
 			<span>{{ dinoz.race.name }}</span>
 			<span>{{ dinoz.race.price }}</span>
 			<span>{{ dinoz.race.nbrFireCase }}</span>

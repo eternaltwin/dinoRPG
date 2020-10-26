@@ -52,7 +52,7 @@ module.exports = {
     // Get all dinoz not frozen from one player
     getDinozPlayer: (id) => {
         return Dinoz.findAll({
-            attributes: ['name', 'display', 'following', 'life'],
+            attributes: ['dinozId', 'name', 'display', 'following', 'life'],
             include: [{
                 model: Place,
                 attributes: ['name'],

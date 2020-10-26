@@ -96,5 +96,10 @@
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
 		"nomDuDinoz": "Nom du dinoz :"
+	},
+	"place": {
+		"dinoville": "Dinoville",
+		"universite": "L'université",
+		"chez papy joe": "Chez Papy Joe"
 	}
 }
