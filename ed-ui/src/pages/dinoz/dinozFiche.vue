@@ -23,26 +23,27 @@ import Elements from '@/components/elements/elementsFicheDinoz.vue';
 import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 
-	export default {
-		data () {
-			return {
-				dinozData: {},
-				isLoading: true
-			}
-		},
-		created () {
-			DinozService.getDinozFiche(this.$route.params.id).then(res => {this.dinozData = res.data;
-				this.isLoading = false;
-			});
-		},
-		components: {
-			Equipement,
-			Status,
-			Elements,
-			ChooseDinozName,
-			DinozSWF
-		}
+export default {
+	data () {
+		return {
+			dinozData: {},
+			isLoading: true
+		};
+	},
+	created () {
+		DinozService.getDinozFiche(this.$route.params.id).then(res => {
+			this.dinozData = res.data;
+			this.isLoading = false;
+		});
+	},
+	components: {
+		Equipement,
+		Status,
+		Elements,
+		ChooseDinozName,
+		DinozSWF
 	}
+};
 </script>
 
 <style>

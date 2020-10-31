@@ -12,38 +12,37 @@
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import DinozService from '@/services/DinozService';
 
-	export default {
-		props: {
-			dinozData: Object
-		},
-		data() {
-			return {
-				name: '',
-				regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-\']{3,}$/
+export default {
+	props: {
+		dinozData: Object
+	},
+	data() {
+		return {
+			name: '',
+			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,}$/
+		};
+	},
+	methods: {
+		async nameDinoz() {
+			// Check if dinoz name matches regex
+			if (this.regexName.test(this.name)) {
+				var dinoz = {
+					dinozId: this.dinozData.dinozId,
+					name: this.name
+				};
+				await DinozService.setDinozName(dinoz).then(res => {
+					this.dinozData.name = this.name;
+				});
+			} else {
+				// TODO : afficher popin d'erreur
+				console.log('Seulement chiffres et lettres ! ');
 			}
-		},
-		methods: {
-			async nameDinoz() {
-				// Check if dinoz name matches regex
-				if (this.regexName.test(this.name)){
-					var dinoz = {
-						dinozId: this.dinozData.dinozId,
-						name: this.name
-					}
-					let res = await DinozService.setDinozName(dinoz).then(res => 
-						{
-							this.dinozData.name = this.name;
-						});
-				} else {
-					//TODO : afficher popin d'erreur
-					console.log('Seulement chiffres et lettres ! ');
-				}
-			}
-		},
-		components: {
-			DinozSWF
 		}
+	},
+	components: {
+		DinozSWF
 	}
+};
 </script>
 
 <style>

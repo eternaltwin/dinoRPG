@@ -3,11 +3,11 @@
 class Constants {
 
 	getDinoSWF() {
-		return "http://localhost:8081/api/data/swf/dino.swf";
+		return 'http://localhost:8081/api/data/swf/dino.swf';
 	}
 
 	getSDinoSWF() {
-		return "http://localhost:8081/api/data/swf/sdino.swf";
+		return 'http://localhost:8081/api/data/swf/sdino.swf';
 	}
 
 }

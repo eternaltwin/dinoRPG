@@ -14,18 +14,17 @@
 </template>
 
 <script>
-	export default {
-		props: {
-			elements: Object
-		},
-		methods: {
-			getImg (index) {
-				var images = require.context('@/assets/elements/', false, /\.png$/);
-			    return images('./elem_' + index + '.png');
-			}
+export default {
+	props: {
+		elements: Object
+	},
+	methods: {
+		getImg (index) {
+			var images = require.context('@/assets/elements/', false, /\.png$/);
+			return images('./elem_' + index + '.png');
 		}
 	}
-	
+};
 </script>
 
 <style>

@@ -91,7 +91,9 @@
 	},
 	"bouton": {
 		"acheterDinoz": "Acheter un dinoz !",
-		"nommer": "Nommer !"
+		"nommer": "Nommer !",
+		"obtenirDeLor": "Obtenir de l'or",
+		"boutique": "Boutique"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",

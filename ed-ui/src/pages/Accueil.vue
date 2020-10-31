@@ -1,8 +1,7 @@
 <template>
 	<div id="accueil">
-		Bienvenue sur DinoRPG 2 !
-		</br>
-		</br>
+		<button>{{ $t('bouton.obtenirDeLor') }}</button>
+		<button>{{ $t('bouton.boutique') }}</button>
 		<listeDinoz></listeDinoz>
 		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>
 	</div>
@@ -11,17 +10,20 @@
 <script>
 import ListeDinoz from '@/components/dinoz/listeDinoz.vue';
 
-	export default {
-		methods: {
-			goToDinozShop () {
-				this.$router.push({ name: 'dinozShop' });
-			}
-		},
-		components: {
-			ListeDinoz
+export default {
+	// S'il ne l'a pas en mémoire, récupère le lieu du premier dinoz de la liste
+	created() {
+
+	},
+	methods: {
+		goToDinozShop () {
+			this.$router.push({ name: 'dinozShop' });
 		}
+	},
+	components: {
+		ListeDinoz
 	}
-	
+};
 </script>
 
 <style>
