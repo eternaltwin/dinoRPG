@@ -2,6 +2,7 @@
 
 const DinozRepository = require("../repositories/dinoz.repository.js");
 const PlayerRepository = require("../repositories/player.repository.js");
+const ShopRepository = require("../repositories/shop.repository.js");
 const db = require("../models");
 const Dinoz = db.dinoz;
 
@@ -73,9 +74,7 @@ exports.getDinozFiche = (req, res) => {
 
 // Get all dinoz not frozen from one player
 exports.getDinozPlayer = (req, res) => {
-  const id = req.params.id;
-
-  DinozRepository.getDinozPlayer(id).then(data => {
+  DinozRepository.getDinozPlayer(req.params.id).then(data => {
     res.send(data);
   }).catch(err => {
     res.status(500).send({
@@ -88,6 +87,7 @@ exports.getDinozPlayer = (req, res) => {
 exports.buyDinoz = async (req, res) => {
   // Check if player has enough money to buy this dinoz
   var player = await PlayerRepository.getMoney(parseInt(req.body.playerId));
+
   if (parseInt(player.money) > req.body.dinoz.race.price) {
     var dinoz = {
       name: '',
@@ -111,9 +111,13 @@ exports.buyDinoz = async (req, res) => {
     player.money = parseInt(player.money) - req.body.dinoz.race.price;
     PlayerRepository.setPlayerMoney(player);
 
+    // Delete choosen dinoz in dinoz shop
+    ShopRepository.deleteDinozFromShop(req.body.dinoz.id);
+
     // Create new dinoz in database
-    DinozRepository.create(dinoz).then(dinoz => {
-      res.send(dinoz.dataValues.dinozId);
+    DinozRepository.create(dinoz).then(async function() {
+      let dinozList = await DinozRepository.getDinozPlayer(req.body.playerId);
+      res.send(dinozList);
     }).catch(err => {
       res.status(500).send({
         message:

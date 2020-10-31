@@ -3,7 +3,7 @@
 		<div v-for="dinoz in dinozList" :key="dinoz.name">
 			<!-- Bouton temporaire, uniquement pour accéder à la fiche du dinoz -->
 			<button @click="goToDinozPage(dinoz.dinozId)">
-			<DinozSWF :display="dinoz.display" :flip="1" :width="40" :height="40" type="sdino"></DinozSWF>
+			<SDinozSWF :display="dinoz.display" :flip="1" :width="40" :height="40" type="sdino"></SDinozSWF>
 			{{ dinoz.name }}
 			{{ $t('place.' + dinoz.place.name) }}
 			</button>
@@ -13,7 +13,7 @@
 
 <script>
 import DinozService from '@/services/DinozService';
-import DinozSWF from '@/components/dinoz/dinozSWF.vue';
+import SDinozSWF from '@/components/dinoz/dinozSWF.vue';
 
 export default {
 	name: 'listeDinoz',
@@ -24,9 +24,16 @@ export default {
 	},
 	created() {
 		var idPlayer = parseInt(localStorage.idPlayer);
-		DinozService.getDinozPlayer(idPlayer).then(res => {
-			this.dinozList = res.data;
-		});
+		// On fait une requête au serveur seulement si la liste des dinoz n'est pas présente dans le localStorage
+		localStorage.listeDinoz = undefined;
+		if (localStorage.listeDinoz === 'undefined') {
+			DinozService.getDinozPlayer(idPlayer).then(res => {
+				this.dinozList = res.data;
+				localStorage.listeDinoz = JSON.stringify(res.data);
+			});
+		} else {
+			this.dinozList = JSON.parse(localStorage.listeDinoz);
+		}
 	},
 	methods: {
 		goToDinozPage(dinozId) {
@@ -34,7 +41,7 @@ export default {
 		}
 	},
 	components: {
-		DinozSWF
+		SDinozSWF
 	}
 };
 </script>

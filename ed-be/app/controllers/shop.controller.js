@@ -1,76 +1,69 @@
 'use strict';
 
 const ShopRepository = require("../repositories/shop.repository.js");
-const DinozRaceRespository = require("../repositories/dinozRace.respository.js");
+const DinozRaceRepository = require("../repositories/dinozRace.respository.js");
 const PlayerRepository = require("../repositories/player.repository.js");
 const Constants = require("../utils/constants.js");
 
 // Get all dinoz from dinoz shop
-exports.getDinozFromDinozShop = (req, res) => {
+exports.getDinozFromDinozShop = async (req, res) => {
     // Retrieve dinoz from dinoz shop if exists
-    ShopRepository.getDinozFromDinozShop(req.params.id).then(data => {
+    let data = await ShopRepository.getDinozFromDinozShop(req.params.id);
 
     // If nothing is found, create 15 dinoz to fill the shop
-    if (data.length === 0){
+    if (data.length === 0) {
 
-        var dinoz = {};
-        var dinozArray = [];
-        var raceArray = [Constants.dinozRace.winks, Constants.dinozRace.sirain, Constants.dinozRace.castivore, Constants.dinozRace.nuagoz, 
+        let dinoz = {};
+        let dinozArray = [];
+        let raceArray = [Constants.dinozRace.winks, Constants.dinozRace.sirain, Constants.dinozRace.castivore, Constants.dinozRace.nuagoz, 
             Constants.dinozRace.gorilloz, Constants.dinozRace.wanwan, Constants.dinozRace.pigmou, Constants.dinozRace.planaille, Constants.dinozRace.moueffe];
-        var randomRace;
-        var rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky];
+        let randomRace;
+        let randomDisplay;
+        let rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky];
 
         // Check if player has rocky, pteroz or hippoclamp trophy
-        PlayerRepository.getRewardFromArray(req.params.id, rewardArray).then(function(player){
-            player.reward.forEach(reward => {
-                if (reward.name === Constants.reward.tropheeRocky) {
-                    raceArray.push(Constants.dinozRace.rocky);
-                }
-                if (reward.name === Constants.reward.tropheeHippoclamp) {
-                    raceArray.push(Constants.dinozRace.hippoclamp);
-                }
-                if (reward.name === Constants.reward.tropheePteroz) {
-                    raceArray.push(Constants.dinozRace.pteroz);
-                }
-            });
-            // Get all buyable races from a dinoz array
-            DinozRaceRespository.getRaceFromArray(raceArray).then(function(races) {
-                for (var i = 0; i < 15; i ++){
-                    // Set a random race to the dinoz
-                    randomRace = getRandomNumber(1, races.length);
-                    // Set a random display to the dinoz
-                    randomDisplay = races[randomRace].swfLetter + '0' + getCosmetique() + '000';
-
-                    // Create dinoz
-                    dinoz = {
-                        playerId: parseInt(req.params.id),
-                        raceId: races[randomRace].raceId,
-                        display: randomDisplay
-                    }
-
-                    dinozArray.push(dinoz);
-                }
-
-                // Save created dinoz in database
-                ShopRepository.createMultiple(dinozArray).then(resp => {
-                    // Get created dinoz and their races
-                    ShopRepository.getDinozFromDinozShop(req.params.id).then(response => {
-                        res.send(response);
-                    });
-                });
-            });
+        let player = await PlayerRepository.getRewardFromArray(req.params.id, rewardArray);
+            
+        player.reward.forEach(reward => {
+            if (reward.name === Constants.reward.tropheeRocky) {
+                raceArray.push(Constants.dinozRace.rocky);
+            }
+            if (reward.name === Constants.reward.tropheeHippoclamp) {
+                raceArray.push(Constants.dinozRace.hippoclamp);
+            }
+            if (reward.name === Constants.reward.tropheePteroz) {
+                raceArray.push(Constants.dinozRace.pteroz);
+            }
         });
+        // Get all buyable races from a dinoz array
+        let races = await DinozRaceRepository.getRaceFromArray(raceArray);
 
+        for (var i = 0; i < 15; i ++){
+            // Set a random race to the dinoz
+            randomRace = getRandomNumber(1, races.length);
+            // Set a random display to the dinoz
+            randomDisplay = races[randomRace].swfLetter + '0' + getCosmetique() + '000';
+
+            // Create dinoz
+            dinoz = {
+                playerId: parseInt(req.params.id),
+                raceId: races[randomRace].raceId,
+                display: randomDisplay
+            }
+
+            dinozArray.push(dinoz);
+        }
+
+        // Save created dinoz in database
+        await ShopRepository.createMultiple(dinozArray);
+        
+        // Get created dinoz and their races
+        ShopRepository.getDinozFromDinozShop(req.params.id).then(response => {
+            res.send(response);
+        });
     } else {
         res.send(data);
     }
-
-    }).catch(err => {
-        res.status(500).send({
-            message:
-                err.message || "Some error occurred while getting dinoz from shop."
-        });
-    });
 };
 
 // Return a String with a length of 11

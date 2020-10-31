@@ -12,7 +12,7 @@ module.exports = {
 
     getDinozFromDinozShop: (playerId) => {
         return DinozShop.findAll({
-            attributes: ['display'],
+            attributes: ['id', 'display'],
             include: {
                 model: DinozRace,
                 attributes: ['raceId', 'name', 'nbrFireCase', 'nbrWoodCase', 'nbrWaterCase', 'nbrLightCase', 'nbrAirCase', 'price'],
@@ -26,6 +26,12 @@ module.exports = {
                 }
             },
             where: { playerId: playerId }
+        });
+    },
+
+    deleteDinozFromShop: (dinozId) => {
+        return DinozShop.destroy({
+            where: { id: dinozId }
         });
     }
 }
