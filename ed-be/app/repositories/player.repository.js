@@ -1,3 +1,5 @@
+'use strict';
+
 const db = require("../models");
 const Player = db.player;
 const EpicReward = db.epicReward;

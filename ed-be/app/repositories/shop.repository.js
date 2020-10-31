@@ -1,3 +1,5 @@
+'use strict';
+
 const db = require("../models");
 const DinozShop = db.dinozShop;
 const DinozRace = db.dinozRace;

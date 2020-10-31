@@ -1,3 +1,5 @@
+'use strict';
+
 const DinozRepository = require("../repositories/dinoz.repository.js");
 const PlayerRepository = require("../repositories/player.repository.js");
 const db = require("../models");

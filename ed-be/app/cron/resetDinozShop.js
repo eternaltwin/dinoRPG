@@ -1,3 +1,5 @@
+'use strict';
+
 const CronJob = require("cron").CronJob;
 const db = require("../models");
 const DinozShop = db.dinozShop;

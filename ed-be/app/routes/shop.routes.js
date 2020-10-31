@@ -1,3 +1,5 @@
+'use strict';
+
 const shop = require("../controllers/shop.controller.js");
 const router = require("express").Router();
 

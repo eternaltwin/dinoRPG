@@ -1,3 +1,5 @@
+'use strict';
+
 const db = require("../models");
 const Dinoz = db.dinoz;
 const Status = db.status;

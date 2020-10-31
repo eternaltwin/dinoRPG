@@ -1,3 +1,5 @@
+'use strict';
+
 const dinoz = require("../controllers/dinoz.controller.js");
 const router = require("express").Router();
 

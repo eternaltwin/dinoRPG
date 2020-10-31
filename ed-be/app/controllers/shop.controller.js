@@ -1,3 +1,5 @@
+'use strict';
+
 const ShopRepository = require("../repositories/shop.repository.js");
 const DinozRaceRespository = require("../repositories/dinozRace.respository.js");
 const PlayerRepository = require("../repositories/player.repository.js");
