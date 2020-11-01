@@ -37,8 +37,11 @@ export default {
 		async openPopinConfirm(dinoz) {
 			var res = confirm('Confirmer cette action ?');
 			if (res) {
+				// Update of player's money and dinoz list
 				localStorage.listeDinoz = undefined;
+				localStorage.money = parseInt(localStorage.money - dinoz.race.price);
 				let dinozCreated = await DinozService.buyDinoz(dinoz);
+				// Redirect to dinoz page
 				this.$router.push({ name: 'dinozFiche', params: { id: dinozCreated.data } });
 			}
 		}
