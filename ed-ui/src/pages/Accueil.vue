@@ -1,5 +1,6 @@
 <template>
 	<div id="accueil">
+		<p>{{ money | beautifulNumber }}</p>
 		<button>{{ $t('bouton.obtenirDeLor') }}</button>
 		<button>{{ $t('bouton.boutique') }}</button>
 		<listeDinoz></listeDinoz>
@@ -12,8 +13,13 @@ import ListeDinoz from '@/components/dinoz/listeDinoz.vue';
 
 export default {
 	// S'il ne l'a pas en mémoire, récupère le lieu du premier dinoz de la liste
+	data() {
+		return {
+			money: 0
+		};
+	},
 	created() {
-
+		this.money = localStorage.money;
 	},
 	methods: {
 		goToDinozShop () {

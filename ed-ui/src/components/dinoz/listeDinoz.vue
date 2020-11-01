@@ -1,11 +1,11 @@
 <template>
 	<div id="listeDinoz">
-		<div v-for="dinoz in dinozList" :key="dinoz.name">
+		<div v-for="(dinoz, index) in dinozList" :key="index">
 			<!-- Bouton temporaire, uniquement pour accéder à la fiche du dinoz -->
-			<button @click="goToDinozPage(dinoz.dinozId)">
-			<SDinozSWF :display="dinoz.display" :flip="1" :width="40" :height="40" type="sdino"></SDinozSWF>
-			{{ dinoz.name }}
-			{{ $t('place.' + dinoz.place.name) }}
+			<button @click="goToDinozPage(dinoz.dinozId)" >
+				<SDinozSWF :display="dinoz.display" :flip="1" :width="40" :height="40" type="sdino"></SDinozSWF>
+				{{ dinoz.name }}
+				{{ $t('place.' + dinoz.place.name) }}
 			</button>
 		</div>
 	</div>
@@ -25,8 +25,7 @@ export default {
 	created() {
 		var idPlayer = parseInt(localStorage.idPlayer);
 		// On fait une requête au serveur seulement si la liste des dinoz n'est pas présente dans le localStorage
-		localStorage.listeDinoz = undefined;
-		if (localStorage.listeDinoz === 'undefined') {
+		if (localStorage.listeDinoz === undefined || localStorage.listeDinoz === 'undefined') {
 			DinozService.getDinozPlayer(idPlayer).then(res => {
 				this.dinozList = res.data;
 				localStorage.listeDinoz = JSON.stringify(res.data);

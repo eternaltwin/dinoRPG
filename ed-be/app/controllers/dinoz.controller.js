@@ -115,15 +115,8 @@ exports.buyDinoz = async (req, res) => {
     ShopRepository.deleteDinozFromShop(req.body.dinoz.id);
 
     // Create new dinoz in database
-    DinozRepository.create(dinoz).then(async function() {
-      let dinozList = await DinozRepository.getDinozPlayer(req.body.playerId);
-      res.send(dinozList);
-    }).catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating dinoz"
-      });
-    });
+    let dinozCreated = await DinozRepository.create(dinoz);
+    res.send(dinozCreated.dinozId);
   } else {
     return res.status(501).send({
         message: "You don't have enough money to buy this dinoz"

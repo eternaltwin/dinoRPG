@@ -7,6 +7,7 @@
 
 <script>
 import auth from '@/components/authentication/authentication.vue';
+import PlayerService from '@/services/PlayerService';
 
 export default {
 	name: 'App',
@@ -19,7 +20,12 @@ export default {
 		this.auth = localStorage.idPlayer === undefined;
 	},
 	methods: {
-		leaveAuth () {
+		async leaveAuth () {
+			// If money isn't in localStorage, get it
+			if (localStorage.money === undefined) {
+				let res = await PlayerService.getMoney(localStorage.idPlayer);
+				localStorage.money = res.data.money;
+			}
 			this.auth = false;
 		}
 	},

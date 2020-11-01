@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Constants from '@/Constants.js';
+import Constants from '@/helpers/Constants.js';
 
 export default {
 	props: {

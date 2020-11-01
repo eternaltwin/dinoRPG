@@ -23,16 +23,17 @@ export default {
 		};
 	},
 	methods: {
-		async nameDinoz() {
+		nameDinoz() {
 			// Check if dinoz name matches regex
 			if (this.regexName.test(this.name)) {
 				var dinoz = {
 					dinozId: this.dinozData.dinozId,
 					name: this.name
 				};
-				await DinozService.setDinozName(dinoz).then(res => {
+				DinozService.setDinozName(dinoz).then(res => {
 					this.dinozData.name = this.name;
 				});
+				localStorage.listeDinoz = undefined;
 			} else {
 				// TODO : afficher popin d'erreur
 				console.log('Seulement chiffres et lettres ! ');

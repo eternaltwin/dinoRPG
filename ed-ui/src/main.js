@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
-import router from './router';
-import i18n from './i18n.js';
+import router from '@/router';
+import i18n from '@/helpers/i18n.js';
+import '@/helpers/filters';
 
 Vue.config.productionTip = false;
 

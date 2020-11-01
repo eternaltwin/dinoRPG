@@ -37,12 +37,9 @@ export default {
 		async openPopinConfirm(dinoz) {
 			var res = confirm('Confirmer cette action ?');
 			if (res) {
-				let listeDinoz = await DinozService.buyDinoz(dinoz);
-				// Put the new dinoz list into localStorage
-				localStorage.listeDinoz = JSON.stringify(listeDinoz.data);
-				let dinozBought = listeDinoz.data.find(elem => elem.display === dinoz.display);
-				// Redirect to dinoz page
-				this.$router.push({ name: 'dinozFiche', params: { id: parseInt(dinozBought.dinozId) } });
+				localStorage.listeDinoz = undefined;
+				let dinozCreated = await DinozService.buyDinoz(dinoz);
+				this.$router.push({ name: 'dinozFiche', params: { id: dinozCreated.data } });
 			}
 		}
 	},
