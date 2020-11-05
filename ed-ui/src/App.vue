@@ -1,13 +1,14 @@
 <template>
 	<div id="app">
 		<auth v-if="auth" @idChoisi="leaveAuth()"></auth>
-		<router-view v-else />
+		<common-elements v-else></common-elements>
 	</div>
 </template>
 
 <script>
 import auth from '@/components/authentication/authentication.vue';
 import PlayerService from '@/services/PlayerService';
+import CommonElements from '@/pages/CommonElements.vue';
 
 export default {
 	name: 'App',
@@ -30,7 +31,8 @@ export default {
 		}
 	},
 	components: {
-		auth
+		auth,
+		CommonElements
 	}
 };
 </script>

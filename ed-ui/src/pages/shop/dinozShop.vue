@@ -20,6 +20,7 @@
 import ShopService from '@/services/ShopService';
 import DinozService from '@/services/DinozService';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
+import { mapActions } from 'vuex';
 
 export default {
 	created () {
@@ -34,15 +35,26 @@ export default {
 		};
 	},
 	methods: {
+		...mapActions(['addDinoz']),
 		async openPopinConfirm(dinoz) {
 			var res = confirm('Confirmer cette action ?');
 			if (res) {
 				// Update of player's money and dinoz list
-				localStorage.listeDinoz = undefined;
 				localStorage.money = parseInt(localStorage.money - dinoz.race.price);
-				let dinozCreated = await DinozService.buyDinoz(dinoz);
+				let dinozId = await DinozService.buyDinoz(dinoz);
+				let dinozCreated = {
+					dinozId: dinozId.data.toString(),
+					name: '',
+					display: dinoz.display,
+					following: null,
+					life: 100,
+					place: {
+						name: 'dinoville'
+					}
+				};
+				this.addDinoz(dinozCreated);
 				// Redirect to dinoz page
-				this.$router.push({ name: 'dinozFiche', params: { id: dinozCreated.data } });
+				this.$router.push({ name: 'dinozFiche', params: { id: dinozCreated.dinozId } });
 			}
 		}
 	},

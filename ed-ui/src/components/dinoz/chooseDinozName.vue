@@ -11,6 +11,7 @@
 <script>
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import DinozService from '@/services/DinozService';
+import { mapActions } from 'vuex';
 
 export default {
 	props: {
@@ -23,6 +24,7 @@ export default {
 		};
 	},
 	methods: {
+		...mapActions(['setDinozName']),
 		nameDinoz() {
 			// Check if dinoz name matches regex
 			if (this.regexName.test(this.name)) {
@@ -32,8 +34,8 @@ export default {
 				};
 				DinozService.setDinozName(dinoz).then(res => {
 					this.dinozData.name = this.name;
+					this.setDinozName(dinoz);
 				});
-				localStorage.listeDinoz = undefined;
 			} else {
 				// TODO : afficher popin d'erreur
 				console.log('Seulement chiffres et lettres ! ');

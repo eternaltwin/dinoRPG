@@ -1,6 +1,6 @@
 <template>
 	<div id="listeDinoz">
-		<div v-for="(dinoz, index) in dinozList" :key="index">
+		<div v-for="(dinoz, index) in getDinozList" :key="index">
 			<!-- Bouton temporaire, uniquement pour accéder à la fiche du dinoz -->
 			<button @click="goToDinozPage(dinoz.dinozId)" >
 				<SDinozSWF :display="dinoz.display" :flip="1" :width="40" :height="40" type="sdino"></SDinozSWF>
@@ -12,31 +12,23 @@
 </template>
 
 <script>
-import DinozService from '@/services/DinozService';
 import SDinozSWF from '@/components/dinoz/dinozSWF.vue';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 	name: 'listeDinoz',
-	data () {
-		return {
-			dinozList: []
-		};
-	},
-	created() {
-		var idPlayer = parseInt(localStorage.idPlayer);
-		// On fait une requête au serveur seulement si la liste des dinoz n'est pas présente dans le localStorage
-		if (localStorage.listeDinoz === undefined || localStorage.listeDinoz === 'undefined') {
-			DinozService.getDinozPlayer(idPlayer).then(res => {
-				this.dinozList = res.data;
-				localStorage.listeDinoz = JSON.stringify(res.data);
-			});
-		} else {
-			this.dinozList = JSON.parse(localStorage.listeDinoz);
-		}
+	computed: {
+		...mapGetters(['getDinozList'])
 	},
 	methods: {
+		...mapActions(['addDinoz']),
 		goToDinozPage(dinozId) {
-			this.$router.push({ name: 'dinozFiche', params: { id: dinozId } });
+			if (this.$router.currentRoute.params.id !== dinozId) {
+				this.$router.push({ name: 'dinozFiche', params: { id: dinozId } });
+				if (this.$router.currentRoute.name === 'dinozFiche') {
+					this.$router.go();
+				}
+			}
 		}
 	},
 	components: {
