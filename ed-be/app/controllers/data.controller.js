@@ -17,7 +17,7 @@ async function getToken(code) {
 	let params = new URLSearchParams();
 
 	params.append('client_id', '373');
-	params.append('client_secret', 'GXrWV0n8lmwx7kGYdJ4j9JLjmQbkWZ4y');
+	params.append('client_secret', '');
 	params.append('redirect_uri', 'http://localhost:8080/api');
 	params.append('code', code);
 	params.append('grant_type', 'authorization_code');
