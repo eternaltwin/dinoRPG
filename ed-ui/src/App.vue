@@ -1,7 +1,9 @@
 <template>
 	<div id="app">
-		<auth v-if="auth" @idChoisi="leaveAuth()"></auth>
-		<common-elements v-else></common-elements>
+		<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>
+		<common-elements v-if="!auth && !collectData"></common-elements>
+		<data-collector v-if="!auth && collectData"></data-collector>
+		<button v-if="!auth && !collectData" @click='showDataCollector()'>Collect data</button>
 	</div>
 </template>
 
@@ -9,12 +11,14 @@
 import auth from '@/components/authentication/authentication.vue';
 import PlayerService from '@/services/PlayerService';
 import CommonElements from '@/pages/CommonElements.vue';
+import DataCollector from '@/pages/data/dataCollector.vue';
 
 export default {
 	name: 'App',
 	data () {
 		return {
-			auth: false
+			auth: false,
+			collectData: false
 		};
 	},
 	created () {
@@ -28,11 +32,15 @@ export default {
 				localStorage.money = res.data.money;
 			}
 			this.auth = false;
+		},
+		showDataCollector () {
+			this.collectData = true;
 		}
 	},
 	components: {
 		auth,
-		CommonElements
+		CommonElements,
+		DataCollector
 	}
 };
 </script>

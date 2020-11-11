@@ -18,6 +18,11 @@ const router = new Router({
 			path: '/shop/dinoz',
 			name: 'dinozShop',
 			component: resolve => require(['@/pages/shop/dinozShop.vue'], resolve)
+		}, {
+			path: '/api',
+			name: 'api',
+			props: (route) => ({ code: route.query.code }),
+			component: resolve => require(['@/pages/api.vue'], resolve)
 		},
 		{
 			path: '*',

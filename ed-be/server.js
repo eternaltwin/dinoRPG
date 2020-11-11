@@ -29,6 +29,7 @@ app.use('/api/data', express.static(__dirname + '/app/data'));
 require("./app/routes/dinoz.routes")(app);
 require("./app/routes/shop.routes")(app);
 require("./app/routes/player.routes")(app);
+require("./app/routes/data.routes")(app)
 
 // Launch Cron
 var resetDinozShop = require("./app/cron/resetDinozShop.js");
