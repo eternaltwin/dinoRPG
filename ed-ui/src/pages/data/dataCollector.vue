@@ -1,7 +1,7 @@
 <template>
 	<div id="dataCollector">
 		<router-view />
-		<button @click="getApiData()">Get Data from API</button>
+		<button @click.prevent="getApiData()">Get Data from API</button>
 	</div>
 </template>
 

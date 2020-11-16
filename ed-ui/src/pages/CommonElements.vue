@@ -5,7 +5,7 @@
 		<button>{{ $t('bouton.boutique') }}</button>
 		<listeDinoz></listeDinoz>
 		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>
-		<router-view @setDinozList="setDinozList"/>-
+		<router-view @setDinozList="setDinozList"/>
 	</div>
 </template>
 
