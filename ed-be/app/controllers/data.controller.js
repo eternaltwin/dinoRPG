@@ -9,12 +9,16 @@ const cheerio = require('cheerio');
 // Get data from Twinoid API
 exports.getApiData = async (req, res) => {
     let code = req.params.code;
+    let imgToGet = [];
     // Get token from Twinoid API (use to communicate with API)
+    
     let token = await getToken(code);
     // Get data from DinoRPG API
     let data = await getAllApiData(token);
 
-    let cookieToSend = 'hcw=1; sid=MIaSWUPkdPMVlyPEnAahuMaZ4XAm0XVz';
+    // let data = {};
+
+    let cookieToSend = 'hcw=1; sid=zgIujRxOTeKJ0ghoN7JaSYtpNVTptcwT';
 
     // Récupération des ingrédients du joueur
     /* await doIngredientsRequest(data, cookieToSend);
@@ -27,24 +31,32 @@ exports.getApiData = async (req, res) => {
     // Si le joueur a le petit missionnaire illustré, on récupère les missions des dinoz
     if (data.collections.find(rec => rec.oid === 'pmi') !== undefined) {
         await doMissionRequest(data, cookieToSend);
-    }
+    }*/
 
     // Récupération des dinoz de la boutique démoniaque
-    await doDeamonShopRequest(data, cookieToSend);
+    // await doDeamonShopRequest(data, cookieToSend);
 
     // Récupération des ingrédients donnés au clan
-    await doIngredientsFromClanRequest(data, cookieToSend);*/
+    if (data.clanUser) {
+        // await doIngredientsFromClanRequest(data, cookieToSend);
 
-    // Récupération des pages du clan
-    let pagesIdArray = [];
-    pagesIdArray = await getClanPagesId(data, cookieToSend, pagesIdArray);
+        // Récupération des pages du clan
+        let pagesIdArray = [];
+        pagesIdArray = await getClanPagesId(data, cookieToSend, pagesIdArray);
 
-    // Récupération du contenu de toutes les pages une à une
-    for (const pageId of pagesIdArray) {
-        await getPageContent(data, cookieToSend, pageId);
+        // Récupération du contenu de toutes les pages une à une
+
+        data.clanUser.clan.pages = [];
+        //for (const pageId of pagesIdArray) {
+            await getPageContent(data, cookieToSend, { id: '58151', portee: 'public', name: 'recrutement [ON]' }, imgToGet);
+        //}
     }
 
-    console.log(pagesIdArray);
+    console.log(imgToGet);
+
+    if (imgToGet.length !== 0) {
+        getImg();
+    }
 
     createFile(data);
 
@@ -78,8 +90,7 @@ async function getAllApiData(token) {
 	'clanUser.fields(clan.fields(ally,announce,announceText,battle,war,money,castle),money,title,attackCount,attackDamages,defenseCount,defenseDamages)' +
     '&access_token=' + token;*/
     
-    var params = '?fields=dinos.fields(display),' +
-	'clanUser.fields(clan.fields(ally,announce,announceText,battle,war,money,castle),money,title,attackCount,attackDamages,defenseCount,defenseDamages)' +
+    var params = '?fields=clanUser.fields(clan.fields(castle),money,title,attackCount,attackDamages,defenseCount,defenseDamages)' +
     '&access_token=' + token;
 
     let response = await fetch(url + params);
@@ -429,7 +440,10 @@ function getClanPagesId(data, cookieToSend, pagesIdArray) {
                 pages.forEach(page => {
                     if (page.attribs) {
                         // On récupère l'ID de la page et on la met dans le tableau
-                        pagesIdArray.push(page.attribs.href.split('page=')[1]);
+                        pagesIdArray.push({ 
+                            id: page.attribs.href.split('page=')[1], 
+                            portee: 'public',
+                            name: page.children[0].data });
                     }
                 });
 
@@ -442,7 +456,9 @@ function getClanPagesId(data, cookieToSend, pagesIdArray) {
                 pages.forEach(page => {
                     if (page.attribs) {
                         // On récupère l'ID de la page et on la met dans le tableau
-                        pagesIdArray.push(page.attribs.href.split('page=')[1]);
+                        pagesIdArray.push({ id: page.attribs.href.split('page=')[1], 
+                        portee: 'prive',
+                        name: page.children[0].data });
                     }
                 });
 
@@ -452,10 +468,14 @@ function getClanPagesId(data, cookieToSend, pagesIdArray) {
     });
 }
 
-function getPageContent(data, cookieToSend, pageId) {
+function getPageContent(data, cookieToSend, page, imgToGet) {
+    let baliseType;
+    let baliseContent;
+    let pageContent = [];
+
     return new Promise(function(resolve, reject) {
         request({
-            url: 'http://www.dinorpg.com/clan/' + data.clanUser.clan.id + '/view?page=' + pageId,
+            url: 'http://www.dinorpg.com/clan/' + data.clanUser.clan.id + '/view?page=' + page.id,
             method: 'GET',
             headers: {
                 'Cookie': cookieToSend
@@ -465,16 +485,64 @@ function getPageContent(data, cookieToSend, pageId) {
                 var $ = cheerio.load(html);
 
                 // TODO : récupérer contenu des pages
-                // $('[class=centre]')[0].children[9].children
+                $('[class=centre]')[0].children[9].children.forEach(line => {
+                    // On récupère le type de la balise
+                    if (line.type === 'text') {
+                        // Si c'est un texte, on récupère simplement son contenu
+                        baliseType = 'text';
+                        baliseContent = line.data;
+                    } else if (line.type === 'tag') {
+                        baliseType = line.name;
+                        // Si c'est une image, on récupère sa valeur et on la stocke aussi dans un tableau
+                        if (line.name === 'img') {
+                            baliseContent = line.attribs.src;
+                            imgToGet.push(line.attribs.src);
+                        }
+                        // Si c'est une balise strong (texte en gras), on récupère le texte
+                        else if (line.name === 'strong') {
+                            baliseContent = line.children[0].children[0].data;
+                        }
+                        // Si c'est un lien, on récupère l'URL du lien
+                        else if (line.name === 'a') {
+                            // Si c'est un bouton, il ne faut pas récupérer le contenu ! (bouton modifier ou supprimer la page)
+                            if (line.attribs.class !== 'button') {
+                                baliseContent = { lien: line.attribs.href, content: line.children[0].data };
+                            }
+                        }
+                        // Si c'est un br, on ne récupère rien
+                        else if (line.name === 'br') {
+                            baliseContent = null;
+                        }
+                    }
+
+                    // On ajoute la ligne à la page
+                    pageContent.push({ baliseType: baliseType, baliseContent: baliseContent });
+                });
+
+                // On ajoute la page aux données du clan
+                data.clanUser.clan.pages.push({ name: page.name, portee: page.portee, content: pageContent});
+
                 resolve(data);
             }
         });   
     });
 }
 
+function getImg() {
+    let path = 'app/playerData/imgCollected.txt';
+    fs.readFile(path, 'utf8' , (err, data) => {
+        if (err) {
+          console.error('Impossible d\'ouvrir le fichier imgCollected, ' + err);
+          return;
+        }
+        console.log(data.toString().split('\n'));
+      });
+}
+
 // Crée le fichier avec les données du joueur s'il n'existe pas déjà
 function createFile(data){
-	var path = 'app/playerData/' + data.name + '.txt'
+    let path = 'app/playerData/' + data.name + '.txt'
+    // let path = 'app/playerData/Jahaa.txt'
 	if (!fs.existsSync(path)){
 		fs.appendFile(path, JSON.stringify(data), (err) => {
 			if (err) throw err;
