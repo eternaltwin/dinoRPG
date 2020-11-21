@@ -3,30 +3,57 @@
 const DinozRepository = require("../repositories/dinoz.repository.js");
 const PlayerRepository = require("../repositories/player.repository.js");
 const ShopRepository = require("../repositories/shop.repository.js");
+const DinozRaceRepository = require("../repositories/dinozRace.respository.js");
+const Constants = require("../utils/constants.js");
 const db = require("../models");
 const Dinoz = db.dinoz;
+const Utils = require("../utils/utils.js");
 
-// Create and Save a new Dinoz
-exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
+// Create new dinoz
+exports.getDinozFromDinozShop = async function(playerId) {
+  let dinoz = {};
+  let dinozArray = [];
+  let raceArray = [Constants.dinozRace.winks, Constants.dinozRace.sirain, Constants.dinozRace.castivore, Constants.dinozRace.nuagoz, 
+      Constants.dinozRace.gorilloz, Constants.dinozRace.wanwan, Constants.dinozRace.pigmou, Constants.dinozRace.planaille, Constants.dinozRace.moueffe];
+  let randomRace;
+  let randomDisplay;
+  let rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky];
+
+  // Check if player has rocky, pteroz or hippoclamp trophy
+  let player = await PlayerRepository.getRewardFromArray(playerId, rewardArray);
+      
+  player.reward.forEach(reward => {
+      if (reward.name === Constants.reward.tropheeRocky) {
+          raceArray.push(Constants.dinozRace.rocky);
+      }
+      if (reward.name === Constants.reward.tropheeHippoclamp) {
+          raceArray.push(Constants.dinozRace.hippoclamp);
+      }
+      if (reward.name === Constants.reward.tropheePteroz) {
+          raceArray.push(Constants.dinozRace.pteroz);
+      }
+  });
+
+  // Get all buyable races from a dinoz array
+  let races = await DinozRaceRepository.getRaceFromArray(raceArray);
+
+  for (var i = 0; i < Constants.nbrDinozInDinozShop; i ++) {
+      // Set a random race to the dinoz
+      randomRace = Utils.getRandomNumber(1, races.length);
+      // Set a random display to the dinoz
+      randomDisplay = races[randomRace].swfLetter + '0' + Utils.getCosmetique() + '000';
+
+      // Create dinoz
+      dinoz = {
+          playerId: parseInt(playerId),
+          raceId: races[randomRace].raceId,
+          display: randomDisplay
+      }
+
+      dinozArray.push(dinoz);
   }
 
-  // Save Dinoz in the database
-  DinozRepository.create(req.body)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Dinoz."
-      });
-    });
+  return dinozArray;
 };
 
 // Renvoie la fiche d'un dinoz
@@ -86,10 +113,10 @@ exports.getDinozPlayer = (req, res) => {
 
 exports.buyDinoz = async (req, res) => {
   // Check if player has enough money to buy this dinoz
-  var player = await PlayerRepository.getMoney(parseInt(req.body.playerId));
+  let player = await PlayerRepository.getMoney(parseInt(req.body.playerId));
 
   if (parseInt(player.money) > req.body.dinoz.race.price) {
-    var dinoz = {
+    let dinoz = {
       name: '',
       isFrozen: false,
       raceId: req.body.dinoz.race.raceId,
@@ -111,11 +138,18 @@ exports.buyDinoz = async (req, res) => {
     player.money = parseInt(player.money) - req.body.dinoz.race.price;
     PlayerRepository.setPlayerMoney(player);
 
-    // Delete choosen dinoz in dinoz shop
-    ShopRepository.deleteDinozFromShop(req.body.dinoz.id);
-
-    // Create new dinoz in database
+    // Create new dinoz in table tb_dinoz
     let dinozCreated = await DinozRepository.create(dinoz);
+
+    // Destroy all dinoz from player shop (tb_dinoz_shop)
+    ShopRepository.deleteDinozFromShop(player.playerId);
+
+    // Get new dinoz to fill the shop again
+    let dinozArray = this.getDinozFromDinozShop(player.playerId);
+
+    // Create new dinoz in dinoz shop (tb_dinoz_shop)
+    ShopRepository.createMultiple(dinozArray);
+
     res.send(dinozCreated.dinozId);
   } else {
     return res.status(501).send({

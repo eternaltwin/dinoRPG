@@ -4,9 +4,7 @@ const dinoz = require("../controllers/dinoz.controller.js");
 const router = require("express").Router();
 
 module.exports = app => {
-	// Create a new Dinoz
-	router.post("/", dinoz.create);
-
+	
 	// Get dinoz data from main dinoz page
 	router.get("/fiche/:id", dinoz.getDinozFiche);
 

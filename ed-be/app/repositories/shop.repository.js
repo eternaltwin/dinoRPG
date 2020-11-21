@@ -29,9 +29,9 @@ module.exports = {
         });
     },
 
-    deleteDinozFromShop: (dinozId) => {
+    deleteDinozFromShop: (playerId) => {
         return DinozShop.destroy({
-            where: { id: dinozId }
+            where: { playerId: playerId }
         });
     }
 }

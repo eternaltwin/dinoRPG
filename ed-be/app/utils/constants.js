@@ -20,3 +20,5 @@ exports.reward = {
     tropheePteroz: 'tropheePteroz',
     tropheeHippoclamp: 'tropheeHippoclam'
 }
+
+exports.nbrDinozInDinozShop = 15;

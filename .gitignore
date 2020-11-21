@@ -15,3 +15,5 @@ yarn-error.log*
 /node_modules/
 /ed-ui/node_modules/
 /ed-be/node_modules/
+
+/ed-be/config.toml
