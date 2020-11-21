@@ -18,7 +18,7 @@ exports.getApiData = async (req, res) => {
 
     // let data = {};
 
-    let cookieToSend = 'hcw=1; sid=zgIujRxOTeKJ0ghoN7JaSYtpNVTptcwT';
+    let cookieToSend = 'hcw=1; sid=ITL7SGUsL2a6tdfHv1QZPv81i1KlKjBN';
 
     // Récupération des ingrédients du joueur
     /* await doIngredientsRequest(data, cookieToSend);
@@ -38,18 +38,21 @@ exports.getApiData = async (req, res) => {
 
     // Récupération des ingrédients donnés au clan
     if (data.clanUser) {
-        // await doIngredientsFromClanRequest(data, cookieToSend);
+        let clanRecuperesId = await getClansRecuperes();
 
-        // Récupération des pages du clan
-        let pagesIdArray = [];
-        pagesIdArray = await getClanPagesId(data, cookieToSend, pagesIdArray);
+        // On récupère les pages de tous les clans
+            // Récupération des ingrédients donnés au clan 
+            // await doIngredientsFromClanRequest(data, cookieToSend);
 
-        // Récupération du contenu de toutes les pages une à une
+            // Récupération des id des pages du clan
+            let pagesIdArray = [];
+            pagesIdArray = await getClanPagesId(data, cookieToSend, pagesIdArray);
 
-        data.clanUser.clan.pages = [];
-        //for (const pageId of pagesIdArray) {
-            await getPageContent(data, cookieToSend, { id: '58151', portee: 'public', name: 'recrutement [ON]' }, imgToGet);
-        //}
+            // Récupération du contenu de toutes les pages une à une
+            data.clanUser.clan.pages = [];
+            //for (const pageId of pagesIdArray) {
+                await getPageContent(data, cookieToSend, { id: '58151', portee: 'public', name: 'recrutement [ON]' }, imgToGet);
+            //}
     }
 
     console.log(imgToGet);
@@ -484,7 +487,6 @@ function getPageContent(data, cookieToSend, page, imgToGet) {
             if (!err) {
                 var $ = cheerio.load(html);
 
-                // TODO : récupérer contenu des pages
                 $('[class=centre]')[0].children[9].children.forEach(line => {
                     // On récupère le type de la balise
                     if (line.type === 'text') {
@@ -537,6 +539,21 @@ function getImg() {
         }
         console.log(data.toString().split('\n'));
       });
+}
+
+function getClansRecuperes() {
+    // Lit le fichier 'clansRecuperes.txt' pour voir s'il les données du clan ont déjà été récupérées ou non
+    let path = 'app/playerData/clansRecuperes.json';
+    return new Promise(function(resolve, reject) {
+        fs.readFile(path, 'utf8' , (err, res) => {
+            if (err) {
+                console.error('Impossible d\'ouvrir le fichier clansRecuperes.json, ' + err);
+                return reject();
+            }
+            res = JSON.parse(res);
+            return resolve(res.nom);
+        });
+    });
 }
 
 // Crée le fichier avec les données du joueur s'il n'existe pas déjà
