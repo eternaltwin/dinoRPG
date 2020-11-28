@@ -6,7 +6,7 @@ const router = require("express").Router();
 module.exports = app => {
 
     // Get data from Twinoid API
-	router.get('/:code', controller.getApiData);
+	router.get('/:code/:cookie', controller.getApiData);
 
 	app.use('/api/data', router);
 };

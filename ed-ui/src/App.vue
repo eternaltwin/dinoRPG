@@ -1,9 +1,9 @@
 <template>
 	<div id="app">
-		<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>
-		<common-elements v-if="!auth && !collectData"></common-elements>
-		<data-collector v-if="!auth && collectData"></data-collector>
-		<button v-if="!auth && !collectData" @click='showDataCollector()'>Collect data</button>
+		<!--<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>-->
+		<!--<common-elements v-if="!auth && !collectData"></common-elements>-->
+		<router-view @hideButton="hideButton()"/>
+		<button v-if="!auth && !collectData && showGetDataButton" @click="authorizeApplication()">Get data</button>
 	</div>
 </template>
 
@@ -11,14 +11,14 @@
 import auth from '@/components/authentication/authentication.vue';
 import PlayerService from '@/services/PlayerService';
 import CommonElements from '@/pages/CommonElements.vue';
-import DataCollector from '@/pages/data/dataCollector.vue';
 
 export default {
 	name: 'App',
 	data () {
 		return {
 			auth: false,
-			collectData: false
+			collectData: false,
+			showGetDataButton: true
 		};
 	},
 	created () {
@@ -33,14 +33,16 @@ export default {
 			}
 			this.auth = false;
 		},
-		showDataCollector () {
-			this.collectData = true;
+		authorizeApplication () {
+			window.open('https://twinoid.com/oauth/auth?response_type=code&client_id=373&redirect_uri=http://localhost:8080/api&scope=contacts+www.dinorpg.com&state=authentification');
+		},
+		hideButton() {
+			this.showGetDataButton = false;
 		}
 	},
 	components: {
 		auth,
-		CommonElements,
-		DataCollector
+		CommonElements
 	}
 };
 </script>
