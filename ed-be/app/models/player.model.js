@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       money: {
         type: DataTypes.BIGINT
       },
+      quetzuBought: {
+        type: DataTypes.INTEGER
+      },
       leader: {
         type: DataTypes.BOOLEAN
       }, 
