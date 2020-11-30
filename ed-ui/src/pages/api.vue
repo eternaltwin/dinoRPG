@@ -1,7 +1,11 @@
 <template>
 	<div id="api">
 		<div id="attention">
-			<span>Attention ! <br> Les développeurs sont des feignants. <br> <br> Une fois que vous aurez appuyé sur ce bouton, celui-ci va se désactiver. Il n'y aura pas de barre de chargement pour indiquer où en est la récupération de votre compte</span>
+			<span><strong>Warning</strong> !<br><br>
+
+			When you will press the "Get account data" button, this one will be disabled. You'll see no loading bar during this process, please do not close this tab. <br>
+
+			Once your account's data will be get, a message is gonna appear below this button. You'll be able to see your account data by opening your console (press F12 or right click -> Inspect)</span>
 		</div>
 		<br>
 		<div>
@@ -13,7 +17,7 @@
 			{{ erreurMessage }}
 		</div>
 		<div id="reussite" v-if="reussite">
-			La récupération de votre compte est une réussite ! Pour voir vos données collectées, ouvrez la console (F12 ou clic droit -> inspecter)
+			Your account recovery is a success.
 		</div>
 	</div>
 </template>
@@ -52,7 +56,7 @@ export default {
 					});
 			} else {
 				this.noCookie = true;
-				this.erreurMessage = 'Merci de bien vouloir renseigner un cookie';
+				this.erreurMessage = 'Please put a valid cookie here';
 			}
 		}
 	}

@@ -27,7 +27,7 @@ exports.getApiData = async (req, res) => {
     const path = 'app/data/playerData/' + data.name + '.json';
 	if (fs.existsSync(path)){
 		return res.status(500).send({
-            message: "You have already retrieved your account data"
+            message: "You already have retrieved your account data"
         });
 	}
 
@@ -128,7 +128,7 @@ function doIngredientsRequest(data, cookieToSend, isCookieCorrect) {
 
                 if ($('#center2')[0]) {
                     isCookieCorrect = false;
-                    reject("The given cookie is not good, account connection could not be etablished");
+                    reject("The given cookie is not correct, account connection could not be etablished");
                 }
 
                 if (isCookieCorrect) {
@@ -400,14 +400,6 @@ function doDeamonShopRequest(data, cookieToSend) {
             }
         });   
     });
-}
-
-// Vérifie que les données du joueur n'ont pas déjà été récupérées
-function checkIfAccountExists(data) {
-    const path = 'app/data/playerData/' + data.name + '.json';
-	if (fs.existsSync(path)){
-		console.log('file already exists');
-	}
 }
 
 // Crée le fichier avec les données du joueur s'il n'existe pas déjà
