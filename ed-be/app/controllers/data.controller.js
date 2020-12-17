@@ -5,10 +5,38 @@ const fs = require('fs');
 const toml = require('toml');
 const request = require('request');
 const cheerio = require('cheerio');
+const btoa = require('btoa');
 
 // Get data from Twinoid API
 exports.getApiData = async (req, res) => {
+
     const code = req.params.code;
+
+    // Appel à l'API EternalTwin
+    let url = 'http://localhost:50320/oauth/token';
+	let params = new URLSearchParams();
+
+	params.append('code', code);
+    params.append('grant_type', 'authorization_code');
+    params.append('redirect_uri', 'http://localhost:8080/api');
+
+    await fetch(url, { 
+        method: 'POST', 
+        headers: new fetch.Headers({
+            'Authorization': 'Basic ' + btoa('dinorpg@clients:dev_secret'),
+            'Content-type': 'application/x-www-form-urlencoded'
+        }),
+        body: params 
+    }).then(response => response.json())
+        .then(data => {
+        console.log(data);
+        res.send(data);
+    }).catch(err => {
+        console.log(err);
+        res.send('Error');
+    });
+
+    /*const code = req.params.code;
     const cookie = req.params.cookie;
 
     // Get token from Twinoid API (use to communicate with API) 
@@ -72,7 +100,7 @@ exports.getApiData = async (req, res) => {
 
             res.send(data);
         }
-    }
+    }*/
 };
 
 async function getToken(code) {

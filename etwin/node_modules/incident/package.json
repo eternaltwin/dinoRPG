@@ -1,0 +1,48 @@
+{
+  "name": "incident",
+  "version": "3.2.1",
+  "description": "Errors with superpowers",
+  "private": false,
+  "main": "index",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/demurgos/incident"
+  },
+  "keywords": [
+    "error"
+  ],
+  "pre-commit": {
+    "run": [
+      "lint"
+    ]
+  },
+  "author": "Charles Samborski <demurgos@demurgos.net> (https://demurgos.net)",
+  "license": "MIT",
+  "dependencies": {
+    "@types/object-inspect": "^1.4.0",
+    "object-inspect": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/gulp": "^4.0.6",
+    "@types/minimist": "^1.2.0",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "codecov": "^3.4.0",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
+    "minimist": "^1.2.0",
+    "pre-commit": "^1.2.2",
+    "ts-node": "^8.1.0",
+    "turbo-gulp": "^0.20.1",
+    "typescript": "^3.4.5"
+  },
+  "c88": {
+    "match": [
+      "build/test/lib/*.{js,mjs}",
+      "build/test/lib/**/*.{js,mjs}"
+    ]
+  },
+  "gitHead": "44dff3abfc8612760fd2dc4434d4085f9f07e5e9"
+}

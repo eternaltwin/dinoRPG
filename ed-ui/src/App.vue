@@ -34,7 +34,7 @@ export default {
 			this.auth = false;
 		},
 		authorizeApplication () {
-			window.open('https://twinoid.com/oauth/auth?response_type=code&client_id=373&redirect_uri=http://localhost:8080/api&scope=contacts+www.dinorpg.com&state=authentification');
+			window.open('http://localhost:50320/oauth/authorize?response_type=code&acess_type=offline&client_id=dinorpg&redirect_uri=http://localhost:8080/api&scope=&state=authentification');
 		},
 		hideButton() {
 			this.showGetDataButton = false;

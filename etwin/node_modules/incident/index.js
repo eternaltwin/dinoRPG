@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const incident_1 = require("./incident");
+var incident_2 = require("./incident");
+exports.format = incident_2.format;
+exports.Incident = incident_2.Incident;
+const DEFAULT = { format: incident_1.format, Incident: incident_1.Incident };
+exports.default = DEFAULT;
+
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIl9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSx5Q0FBOEM7QUFFOUMsdUNBQThDO0FBQXJDLDRCQUFBLE1BQU0sQ0FBQTtBQUFFLDhCQUFBLFFBQVEsQ0FBQTtBQUd6QixNQUFNLE9BQU8sR0FBUSxFQUFDLE1BQU0sRUFBTixpQkFBTSxFQUFFLFFBQVEsRUFBUixtQkFBUSxFQUFDLENBQUM7QUFFcEIsMEJBQU8iLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBmb3JtYXQsIEluY2lkZW50IH0gZnJvbSBcIi4vaW5jaWRlbnRcIjtcblxuZXhwb3J0IHsgZm9ybWF0LCBJbmNpZGVudCB9IGZyb20gXCIuL2luY2lkZW50XCI7XG5leHBvcnQgeyBTdGF0aWNJbmNpZGVudCB9IGZyb20gXCIuL3R5cGVzXCI7XG5cbmNvbnN0IERFRkFVTFQ6IGFueSA9IHtmb3JtYXQsIEluY2lkZW50fTtcblxuZXhwb3J0IHsgREVGQVVMVCBhcyBkZWZhdWx0IH07XG4iXSwic291cmNlUm9vdCI6IiJ9
