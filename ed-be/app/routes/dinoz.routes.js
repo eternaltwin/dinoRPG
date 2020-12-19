@@ -1,23 +1,25 @@
 'use strict';
 
-const dinoz = require("../controllers/dinoz.controller.js");
-const router = require("express").Router();
+import dinozController from '../controllers/dinoz.controller.js';
+import express from 'express';
 
-module.exports = app => {
+export default function(app) {
+	const router = express.Router();
+
 	// Create a new Dinoz
-	router.post("/", dinoz.create);
+	router.post("/", dinozController.create);
 
 	// Get dinoz data from main dinoz page
-	router.get("/fiche/:id", dinoz.getDinozFiche);
+	router.get("/fiche/:id", dinozController.getDinozFiche);
 
 	// Get all dinoz not frozen from one player
-	router.get("/player/:id", dinoz.getDinozPlayer);
+	router.get("/player/:id", dinozController.getDinozPlayer);
 
 	// When a dinoz is bought in dinoz shop
-	router.post("/buydinoz", dinoz.buyDinoz);
+	router.post("/buydinoz", dinozController.buyDinoz);
 
 	// Set dinoz name
-	router.put("/setname", dinoz.setDinozName);
+	router.put("/setname", dinozController.setDinozName);
 
 	app.use('/api/dinoz', router);
 };

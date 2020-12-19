@@ -1,10 +1,10 @@
 'use strict';
 
-const db = require("../models");
+import db from '../models/index.js';
 const Player = db.player;
 const EpicReward = db.epicReward;
 
-module.exports = {
+const playerRepository = {
     getRewardFromArray: (playerId, rewardArray) => {
         return Player.findOne({
             attributes: [],
@@ -36,3 +36,5 @@ module.exports = {
         })
     }
 }
+
+export default playerRepository;

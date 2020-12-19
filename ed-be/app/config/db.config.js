@@ -1,4 +1,4 @@
-module.exports = {
+let dbConfig  = {
   HOST: "localhost",
   USER: "postgres",
   PASSWORD: "EternalDinoSQL",
@@ -11,3 +11,5 @@ module.exports = {
     idle: 10000
   }
 };
+
+export default dbConfig;

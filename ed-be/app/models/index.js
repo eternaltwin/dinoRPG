@@ -1,6 +1,28 @@
-const dbConfig = require("../config/db.config.js");
+import dbConfig from '../config/db.config.js';
+import Sequelize from 'sequelize';
 
-const Sequelize = require("sequelize");
+import dinoz from './dinoz.model.js';
+import dinozRace from './dinozRace.model.js';
+import skill from './skill.model.js';
+import assDinozSkill from './assDinozSkill.model.js';
+import status from './status.model.js';
+import assDinozStatus from './assDinozStatus.model.js';
+import object from './object.model.js';
+import assDinozObject from './assDinozObject.model.js';
+import level from './level.model.js';
+import mission from './mission.model.js';
+import element from './element.model.js';
+import player from './player.model.js';
+import place from './place.model.js';
+import ingredientGrid from './ingredientGrid.model.js';
+import ingredientGridType from './ingredientGridType.model.js';
+import ingredient from './ingredient.model.js';
+import placeAccess from './placeAccess.model.js';
+import map from './map.model.js';
+import dinozShop from './dinozShop.model.js';
+import epicReward from './epicReward.model.js';
+import assPlayerReward from './assPlayerReward.model.js';
+
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -20,27 +42,27 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Déclaration des tables
-db.dinoz = require("./dinoz.model.js")(sequelize, Sequelize);
-db.dinozRace = require("./dinozRace.model.js")(sequelize, Sequelize);
-db.skill = require("./skill.model.js")(sequelize, Sequelize);
-db.assDinozSkill = require("./assDinozSkill.model.js")(sequelize, Sequelize);
-db.status = require("./status.model.js")(sequelize, Sequelize);
-db.assDinozStatus = require("./assDinozStatus.model.js")(sequelize, Sequelize);
-db.object = require("./object.model.js")(sequelize, Sequelize);
-db.assDinozObject = require("./assDinozObject.model.js")(sequelize, Sequelize);
-db.level = require("./level.model.js")(sequelize, Sequelize);
-db.mission = require("./mission.model.js")(sequelize, Sequelize);
-db.element = require("./element.model.js")(sequelize, Sequelize);
-db.player = require("./player.model.js")(sequelize, Sequelize);
-db.place = require("./place.model.js")(sequelize, Sequelize);
-db.ingredientGrid = require("./ingredientGrid.model.js")(sequelize, Sequelize);
-db.ingredientGridType = require("./ingredientGridType.model.js")(sequelize, Sequelize);
-db.ingredient = require("./ingredient.model.js")(sequelize, Sequelize);
-db.placeAccess = require("./placeAccess.model.js")(sequelize, Sequelize);
-db.map = require("./map.model.js")(sequelize, Sequelize);
-db.dinozShop = require("./dinozShop.model.js")(sequelize, Sequelize);
-db.epicReward = require("./epicReward.model.js")(sequelize, Sequelize);
-db.assPlayerReward = require("./assPlayerReward.model.js")(sequelize, Sequelize);
+db.dinoz = dinoz(sequelize, Sequelize);
+db.dinozRace = dinozRace(sequelize, Sequelize);
+db.skill = skill(sequelize, Sequelize);
+db.assDinozSkill = assDinozSkill(sequelize, Sequelize);
+db.status = status(sequelize, Sequelize);
+db.assDinozStatus = assDinozStatus(sequelize, Sequelize);
+db.object = object(sequelize, Sequelize);
+db.assDinozObject = assDinozObject(sequelize, Sequelize);
+db.level = level(sequelize, Sequelize);
+db.mission = mission(sequelize, Sequelize);
+db.element = element(sequelize, Sequelize);
+db.player = player(sequelize, Sequelize);
+db.place = place(sequelize, Sequelize);
+db.ingredientGrid = ingredientGrid(sequelize, Sequelize);
+db.ingredientGridType = ingredientGridType(sequelize, Sequelize);
+db.ingredient = ingredient(sequelize, Sequelize);
+db.placeAccess = placeAccess(sequelize, Sequelize);
+db.map = map(sequelize, Sequelize);
+db.dinozShop = dinozShop(sequelize, Sequelize);
+db.epicReward = epicReward(sequelize, Sequelize);
+db.assPlayerReward = assPlayerReward(sequelize, Sequelize);
 
 // Création des associations entre les tables
 db.dinoz.associate(db);
@@ -61,4 +83,4 @@ db.assDinozObject.associate(db);
 db.dinozShop.associate(db);
 db.epicReward.associate(db);
 
-module.exports = db;
+export default db;

@@ -1,12 +1,13 @@
 'use strict';
 
-const controller = require("../controllers/data.controller.js");
-const router = require("express").Router();
+import dataController from '../controllers/data.controller.js';
+import express from 'express';
 
-module.exports = app => {
-
+export default function(app) {
+	const router = express.Router();
+		
     // Get data from Twinoid API
-	router.get('/:code/:cookie', controller.getApiData);
+	router.get('/:code/:cookie', dataController.getApiData);
 
 	app.use('/api/data', router);
 };

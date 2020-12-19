@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "debug": "node --inspect server.js"
+    "debug": "node --inspect server.js",
+    "etwin": "etwin"
   },
   "keywords": [
     "nodejs",
@@ -19,6 +21,7 @@
   "author": "Jolujolu",
   "license": "ISC",
   "dependencies": {
+    "@eternal-twin/etwin-client-http": "^0.3.2",
     "body-parser": "^1.19.0",
     "btoa": "^1.2.1",
     "cheerio": "^1.0.0-rc.3",
@@ -32,5 +35,8 @@
     "request": "^2.88.2",
     "sequelize": "^5.21.11",
     "toml": "^3.0.0"
+  },
+  "devDependencies": {
+    "@eternal-twin/website": "^0.3.1"
   }
 }

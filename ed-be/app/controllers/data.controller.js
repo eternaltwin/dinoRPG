@@ -1,107 +1,110 @@
 'use strict';
 
-const fetch = require('node-fetch');
-const fs = require('fs');
-const toml = require('toml');
-const request = require('request');
-const cheerio = require('cheerio');
-const btoa = require('btoa');
+import fetch from 'node-fetch';
+import fs from 'fs';
+import toml from 'toml';
+import request from 'request';
+import cheerio from 'cheerio';
+import btoa from 'btoa';
+import { HttpEtwinClient } from "@eternal-twin/etwin-client-http";
 
-// Get data from Twinoid API
-exports.getApiData = async (req, res) => {
+const dataController = {
+    // Get data from Twinoid API
+    getApiData: async (req, res) => {
 
-    const code = req.params.code;
+        const code = req.params.code;
 
-    // Appel à l'API EternalTwin
-    let url = 'http://localhost:50320/oauth/token';
-	let params = new URLSearchParams();
+        // Appel à l'API EternalTwin
+        let url = 'http://localhost:50320/oauth/token';
+        let params = new URLSearchParams();
 
-	params.append('code', code);
-    params.append('grant_type', 'authorization_code');
-    params.append('redirect_uri', 'http://localhost:8080/api');
+        params.append('code', code);
+        params.append('grant_type', 'authorization_code');
+        params.append('redirect_uri', 'http://localhost:8080/api');
 
-    await fetch(url, { 
-        method: 'POST', 
-        headers: new fetch.Headers({
-            'Authorization': 'Basic ' + btoa('dinorpg@clients:dev_secret'),
-            'Content-type': 'application/x-www-form-urlencoded'
-        }),
-        body: params 
-    }).then(response => response.json())
-        .then(data => {
-        console.log(data);
-        res.send(data);
-    }).catch(err => {
-        console.log(err);
-        res.send('Error');
-    });
-
-    /*const code = req.params.code;
-    const cookie = req.params.cookie;
-
-    // Get token from Twinoid API (use to communicate with API) 
-    let token = await getToken(code);
-    // Get data from DinoRPG API
-    let data = await getAllApiData(token);
-
-    // Si le token envoyé à l'API n'est pas bon, on throw une erreur
-    if (data.error) {
-        return res.status(500).send({
-            message: "Invalid token. Please close current page and try again"
-        });
-    }
-
-    // Vérifie que le joueur n'a pas déjà récupéré ses données
-    const path = 'app/data/playerData/' + data.name + '.json';
-	if (fs.existsSync(path)){
-		return res.status(500).send({
-            message: "You already have retrieved your account data"
-        });
-	}
-
-    let cookieToSend = 'hcw=1; sid=' + cookie;
-    let isCookieCorrect = true;
-    let stopRequests = false;
-
-    // Récupération des ingrédients du joueur
-    await doIngredientsRequest(data, cookieToSend, isCookieCorrect)
-        .catch(err => {
-            isCookieCorrect = false;
-            return res.status(500).send({
-                message: err
-            });
-        });
-
-    if (isCookieCorrect) {
-
-        // Récupération des compétences, assauts, défenses et attaques spéciales des dinoz
-        for (const dino of data.dinos) {
-            if (!stopRequests) {
-            await doDinozSkillsRequest(data, cookieToSend, dino.id)
-                .catch(err => {
-                    stopRequests = true;
-                    return res.status(500).send({
-                        message: err
-                    });
-                });
-            }
-        }
-
-        if (!stopRequests) {
-            // Si le joueur a le petit missionnaire illustré, on récupère les missions des dinoz
-            if (data.collections.find(rec => rec.oid === 'pmi') !== undefined) {
-                await doMissionRequest(data, cookieToSend);
-            }
-
-            // Récupération des dinoz de la boutique démoniaque
-            await doDeamonShopRequest(data, cookieToSend);
-
-            createFile(data);
-
+        await fetch(url, { 
+            method: 'POST', 
+            headers: new fetch.Headers({
+                'Authorization': 'Basic ' + btoa('dinorpg@clients:dev_secret'),
+                'Content-type': 'application/x-www-form-urlencoded'
+            }),
+            body: params 
+        }).then(response => response.json())
+            .then(data => {
+            console.log(data);
             res.send(data);
+        }).catch(err => {
+            console.log(err);
+            res.send('Error');
+        });
+
+        /*const code = req.params.code;
+        const cookie = req.params.cookie;
+
+        // Get token from Twinoid API (use to communicate with API) 
+        let token = await getToken(code);
+        // Get data from DinoRPG API
+        let data = await getAllApiData(token);
+
+        // Si le token envoyé à l'API n'est pas bon, on throw une erreur
+        if (data.error) {
+            return res.status(500).send({
+                message: "Invalid token. Please close current page and try again"
+            });
         }
-    }*/
-};
+
+        // Vérifie que le joueur n'a pas déjà récupéré ses données
+        const path = 'app/data/playerData/' + data.name + '.json';
+        if (fs.existsSync(path)){
+            return res.status(500).send({
+                message: "You already have retrieved your account data"
+            });
+        }
+
+        let cookieToSend = 'hcw=1; sid=' + cookie;
+        let isCookieCorrect = true;
+        let stopRequests = false;
+
+        // Récupération des ingrédients du joueur
+        await doIngredientsRequest(data, cookieToSend, isCookieCorrect)
+            .catch(err => {
+                isCookieCorrect = false;
+                return res.status(500).send({
+                    message: err
+                });
+            });
+
+        if (isCookieCorrect) {
+
+            // Récupération des compétences, assauts, défenses et attaques spéciales des dinoz
+            for (const dino of data.dinos) {
+                if (!stopRequests) {
+                await doDinozSkillsRequest(data, cookieToSend, dino.id)
+                    .catch(err => {
+                        stopRequests = true;
+                        return res.status(500).send({
+                            message: err
+                        });
+                    });
+                }
+            }
+
+            if (!stopRequests) {
+                // Si le joueur a le petit missionnaire illustré, on récupère les missions des dinoz
+                if (data.collections.find(rec => rec.oid === 'pmi') !== undefined) {
+                    await doMissionRequest(data, cookieToSend);
+                }
+
+                // Récupération des dinoz de la boutique démoniaque
+                await doDeamonShopRequest(data, cookieToSend);
+
+                createFile(data);
+
+                res.send(data);
+            }
+        }*/
+    }
+}
 
 async function getToken(code) {
     let config = toml.parse(fs.readFileSync('./config.toml', 'utf-8'));
@@ -441,3 +444,5 @@ function createFile(data){
 		console.log('file already exists');
 	}
 }
+
+export default dataController;
