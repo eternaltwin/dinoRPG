@@ -34,7 +34,8 @@
     "pg-hstore": "^2.3.3",
     "request": "^2.88.2",
     "sequelize": "^5.21.11",
-    "toml": "^3.0.0"
+    "toml": "^3.0.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@eternal-twin/website": "^0.3.1"

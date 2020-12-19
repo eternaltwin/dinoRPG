@@ -1,4 +1,4 @@
-let dbConfig  = {
+const dbConfig  = {
   HOST: "localhost",
   USER: "postgres",
   PASSWORD: "EternalDinoSQL",

@@ -6,37 +6,57 @@ import toml from 'toml';
 import request from 'request';
 import cheerio from 'cheerio';
 import btoa from 'btoa';
+import url from 'url';
 import { HttpEtwinClient } from "@eternal-twin/etwin-client-http";
+import { response } from 'express';
 
 const dataController = {
+
     // Get data from Twinoid API
     getApiData: async (req, res) => {
-
         const code = req.params.code;
-
-        // Appel à l'API EternalTwin
-        let url = 'http://localhost:50320/oauth/token';
+        let token = null;
+        let response = null;
+        let eternalTwinURL = 'http://localhost:50320/oauth/token';
         let params = new URLSearchParams();
 
         params.append('code', code);
         params.append('grant_type', 'authorization_code');
         params.append('redirect_uri', 'http://localhost:8080/api');
 
-        await fetch(url, { 
-            method: 'POST', 
-            headers: new fetch.Headers({
-                'Authorization': 'Basic ' + btoa('dinorpg@clients:dev_secret'),
-                'Content-type': 'application/x-www-form-urlencoded'
-            }),
-            body: params 
-        }).then(response => response.json())
-            .then(data => {
-            console.log(data);
-            res.send(data);
-        }).catch(err => {
-            console.log(err);
-            res.send('Error');
+        // Récupération du token d'accès
+        try {
+            response = await fetch(eternalTwinURL, { 
+                method: 'POST', 
+                headers: new fetch.Headers({
+                    'Authorization': 'Basic ' + btoa('dinorpg@clients:dev_secret'),
+                    'Content-type': 'application/x-www-form-urlencoded'
+                }),
+                body: params 
+            });
+        } catch (error) {
+            res.send('An error occured while getting API token : ', err);
+        }
+
+        response = await response.json();
+        token = response.access_token;
+
+        // Récupération de l'ID du joueur
+        let user = await fetch('http://localhost:50320/api/v1/auth/self', {
+            method: 'GET', 
+                headers: new fetch.Headers({
+                    'Authorization': 'Bearer ' + token
+                })
         });
+
+        user = await user.json();
+        const userId = user.user.id;
+        
+        // Récupération des données du joueur
+        const client = new HttpEtwinClient(new url.URL('http://localhost:50320/'));
+        const userDetails = await client.getUserById(token, userId);
+
+        res.send(userDetails);
 
         /*const code = req.params.code;
         const cookie = req.params.cookie;
