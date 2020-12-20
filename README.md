@@ -30,9 +30,10 @@
 [Issue 3]: https://gitlab.com/eternal-twin/dinorpg/-/issues/3
 
 # Prérequis
+
 Les technologies principales utilisées sont:
 - Node.js: v12.18.0
-- npm: v6.14.4
+- Yarn: v1.22.10
 - Postgresql: v12
 - pgAdmin4
 - Vue/CLI: v4.4.1
@@ -43,13 +44,21 @@ Il est préférable d'utiliser ces versions (ou des versions proches).
 
 ### Windows
 
-Sur Windows, seuls nodeJS, npm et PostgreSQL doivent être installés (voir ci-dessous).
+Sur Windows, seuls nodeJS, yarn et PostgreSQL doivent être installés (voir ci-dessous).
 Une fois ces installations effectuées, aller directement à la partie 'Mode d'emploi'
 
 #### Node.js & npm
 
 NodeJS et npm se téléchargent en même temps, vous pouvez les avoir à cette adresse : `https://nodejs.org/fr/download/` 
 (Rappel : version 12.18.0 pour NodeJS et 6.14.4 pour npm).
+
+#### Yarn
+
+Installez `npm` puis lancez la commande:
+
+```
+npm install -g yarn
+```
 
 #### Postsgresql
 
@@ -73,6 +82,14 @@ Pour installer Node.js, utiliser les commandes:
 Vous pouvez vérifier les versions de Node.js et npm avec respectivement
 `node --version` et `npm --version`.
 
+#### Yarn
+
+Installez `npm` puis lancez la commande:
+
+```
+npm install -g yarn
+```
+
 #### nodemon
 
 Nodemon s'installe avec npm via `npm install -g nodemon`.
@@ -95,7 +112,7 @@ La commande suivante permet d'isntaller pgadmin4:
 
 #### VueJS
 
-Utiliser la commande `npm run install` dans le dossier du front `ed-ui`.
+Utiliser la commande `yarn install` dans le dossier du front `ed-ui`.
 
 # Mode d'emploi
 
@@ -105,12 +122,12 @@ La partie front-end utilise le framework VueJS et est située dans le dossier `e
 
 Comment faire fonctionner le front ?
 
-La partie front-end fonctionne avec `Node Package Manager` (npm).
+La partie front-end fonctionne avec `Yarn` (yarn).
 
 Si vous ne l'avez pas, vous pouvez l'obtenir en téléchargeant NodeJS (voir section `Installation`).
 Une fois le logiciel téléchargé et installé
-- Avec Windows, tapez `Node.js command prompt` dans la barre de recherche Cortana. Déplacez vous ensuite dans le dossier `ed-ui` et tapez la commande : `npm run dev`.
-- Avec Ubuntu, ouvrez un terminal, déplacer vous dans le dossier et executer la commande `npm run dev`.
+- Avec Windows, tapez `Node.js command prompt` dans la barre de recherche Cortana. Déplacez vous ensuite dans le dossier `ed-ui` et tapez la commande : `yarn run dev`.
+- Avec Ubuntu, ouvrez un terminal, déplacer vous dans le dossier et executer la commande `yarn run dev`.
 
 Si vous n'obtenez pas d'erreur et que vous obtenez le message `Your application is running here: http://localhost:8080`, rendez-vous sur http://localhost:8080 (comme indiqué) pour accéder à ce magnifique site qu'est EternalDino.
 
@@ -165,6 +182,7 @@ Il y aura normalement dans cette partie un fichier 'package.json' avec deux attr
 Si vous n'utilisez pas Visual Studio Code, ouvrez un deuxième node.js command prompt et déplacez vous dans le dossier `ed-be`. A partir de là, tapez la commande `nodemon server.js` pour démarrer le serveur.
 
 # Structure
+
 ## Comment est structuré la partie front ?
 
 La partie front-end est composée de plusieurs parties :
