@@ -3,7 +3,7 @@
 		<!--<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>-->
 		<!--<common-elements v-if="!auth && !collectData"></common-elements>-->
 		<router-view @hideButton="hideButton()"/>
-		<button v-if="!auth && !collectData && showGetDataButton" @click="authorizeApplication()">Get data</button>
+		<button v-if="!auth && !collectData && showGetDataButton" @click="authorizeApplication()">Log in to Eternal-Twin</button>
 	</div>
 </template>
 
