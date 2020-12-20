@@ -70,7 +70,7 @@ const dataController = {
         // Si le token envoyé à l'API n'est pas bon, on throw une erreur
         if (data.error) {
             return res.status(500).send({
-                message: "Invalid token. Please close current page and try again"
+                message: "Invalid token. Please close the current page and try again."
             });
         }
 
@@ -78,7 +78,7 @@ const dataController = {
         const path = 'app/data/playerData/' + data.name + '.json';
         if (fs.existsSync(path)){
             return res.status(500).send({
-                message: "You already have retrieved your account data"
+                message: "You have already retrieved your account data"
             });
         }
 
@@ -180,7 +180,7 @@ function doIngredientsRequest(data, cookieToSend, isCookieCorrect) {
 
                 if ($('#center2')[0]) {
                     isCookieCorrect = false;
-                    reject("The given cookie is not correct, account connection could not be etablished");
+                    reject("The given cookie is incorrect, the connection to your account could not be etablished. Try again or seek help from the community.");
                 }
 
                 if (isCookieCorrect) {
@@ -276,9 +276,9 @@ function doDinozSkillsRequest(data, cookieToSend, dinozId) {
                     dinoz.competenceSpe = competenceSpe;
 
                     resolve(data);
-                // On throw une erreur si la fiche d'un dinoz n'est pas accessible
                 } else {
-                    reject("Error while getting dinoz data. Are you really sure that all dinoz's pages are accessible ?");
+                    // On throw une erreur si la fiche d'un dinoz n'est pas accessible
+                    reject("Error while getting a dinoz's data. Are you sure that all your dinoz's pages are accessible ?");
                 }
             }
         });   

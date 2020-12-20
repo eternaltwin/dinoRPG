@@ -3,9 +3,12 @@
 		<div id="attention">
 			<span><strong>Warning</strong> !<br><br>
 
-			When you will press the "Get account data" button, this one will be disabled. You'll see no loading bar during this process, please do not close this tab. <br>
+			When you will press the "Get account data" button, it will become disabled until completion.
+			You'll see no loading bar during this process, do NOT close this tab until you see a success or error message. <br>
 
-			Once your account's data will be get, a message is gonna appear below this button. You'll be able to see your account data by opening your console (press F12 or right click -> Inspect)</span>
+			A message will appear below this button once your account data has been retrieved.
+			Then you will be able to consult your account data by opening your console (press F12 or right click -> Inspect).
+</span>
 		</div>
 		<br>
 		<div>
@@ -17,7 +20,7 @@
 			{{ erreurMessage }}
 		</div>
 		<div id="reussite" v-if="reussite">
-			Your account recovery is a success.
+			Your account recovery has been completed successfully
 		</div>
 	</div>
 </template>
