@@ -1,7 +1,7 @@
 'use strict';
 
-class Constants {
-    dinozRace = {
+const Constants = {
+    dinozRace: {
         hippoclamp: 'hippoclamp',
         rocky: 'rocky',
         pteroz: 'pteroz',
@@ -14,9 +14,9 @@ class Constants {
         pigmou: 'pigmou',
         planaille: 'planaille',
         moueffe: 'moueffe'
-    }
+    },
 
-    reward = {
+    reward: {
         tropheeRocky: 'tropheeRocky',
         tropheePteroz: 'tropheePteroz',
         tropheeHippoclamp: 'tropheeHippoclam'

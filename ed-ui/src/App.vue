@@ -34,7 +34,7 @@ export default {
 			this.auth = false;
 		},
 		authorizeApplication () {
-			window.open('http://localhost:50320/oauth/authorize?response_type=code&acess_type=offline&client_id=dinorpg&redirect_uri=http://localhost:8080/api&scope=&state=authentification');
+			window.open(process.env.eternalTwinURI + 'oauth/authorize?response_type=code&access_type=offline&client_id=dinorpg&redirect_uri=' + process.env.publicURI + '&scope=&state=authentification');
 		},
 		hideButton() {
 			this.showGetDataButton = false;

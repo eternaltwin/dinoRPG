@@ -8,7 +8,6 @@ import cheerio from 'cheerio';
 import btoa from 'btoa';
 import url from 'url';
 import { HttpEtwinClient } from "@eternal-twin/etwin-client-http";
-import { response } from 'express';
 
 const dataController = {
 
@@ -17,19 +16,21 @@ const dataController = {
         const code = req.params.code;
         let token = null;
         let response = null;
-        let eternalTwinURL = 'http://localhost:50320/oauth/token';
+        let eternalTwinTokenURL = config.eternalTwinURI + 'oauth/token';
+        const configToml = toml.parse(fs.readFileSync('./config.toml', 'utf-8'));
+        const authorizationHeader = configToml.oauth.client_id + ':' + configToml.oauth.client_secret;
         let params = new URLSearchParams();
 
         params.append('code', code);
         params.append('grant_type', 'authorization_code');
-        params.append('redirect_uri', 'http://localhost:8080/api');
+        params.append('redirect_uri', config.publicURI + 'api');
 
         // Récupération du token d'accès
         try {
-            response = await fetch(eternalTwinURL, { 
+            response = await fetch(eternalTwinTokenURL, { 
                 method: 'POST', 
                 headers: new fetch.Headers({
-                    'Authorization': 'Basic ' + btoa('dinorpg@clients:dev_secret'),
+                    'Authorization': 'Basic ' + btoa(authorizationHeader),
                     'Content-type': 'application/x-www-form-urlencoded'
                 }),
                 body: params 
@@ -42,18 +43,18 @@ const dataController = {
         token = response.access_token;
 
         // Récupération de l'ID du joueur
-        let user = await fetch('http://localhost:50320/api/v1/auth/self', {
+        let user = await fetch(config.eternalTwinURI + 'api/v1/auth/self', {
             method: 'GET', 
                 headers: new fetch.Headers({
                     'Authorization': 'Bearer ' + token
                 })
         });
-
+ 
         user = await user.json();
         const userId = user.user.id;
         
         // Récupération des données du joueur
-        const client = new HttpEtwinClient(new url.URL('http://localhost:50320/'));
+        const client = new HttpEtwinClient(new url.URL(config.eternalTwinURI));
         const userDetails = await client.getUserById(token, userId);
 
         res.send(userDetails);

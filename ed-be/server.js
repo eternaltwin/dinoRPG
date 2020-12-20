@@ -1,20 +1,21 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import db from './app/models/index.js';
+// import db from './app/models/index.js';
 import path from 'path';
 import resetDinozShop from './app/cron/resetDinozShop.js';
 import dataRoutes from './app/routes/data.routes.js';
-import shopRoutes from './app/routes/shop.routes.js';
+/*import shopRoutes from './app/routes/shop.routes.js';
 import playerRoutes from './app/routes/player.routes.js';
-import dinozRoutes from './app/routes/dinoz.routes.js';
+import dinozRoutes from './app/routes/dinoz.routes.js';*/
 
 const app = express();
+const environment = process.env.NODE_ENV || 'development';
 
 // Database connection
-db.sequelize.sync().then(() => {
+/*db.sequelize.sync().then(() => {
 	console.log("Sync db");
-});
+});*/
 
 var corsOptions = {
   origin: "http://localhost:8080"
@@ -34,9 +35,13 @@ app.use('/api/data', express.static(dirname + '/app/data'));
 
 // Routes declaration
 dataRoutes(app);
-shopRoutes(app);
-playerRoutes(app);
-dinozRoutes(app);
+// shopRoutes(app);
+// playerRoutes(app);
+// dinozRoutes(app);
+
+// Importing environment configuration
+const config = await import('./app/config/' + environment + '.js');
+global.config = config.default;
 
 // Launch Cron
 resetDinozShop.resetDinozShopAtMidnight();
