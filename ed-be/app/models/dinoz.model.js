@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default function(sequelize, DataTypes) {
   var dinoz = sequelize.define("dinoz", {
     dinozId: {
       type: DataTypes.BIGINT,
@@ -87,4 +87,4 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   return dinoz;
-};
+}

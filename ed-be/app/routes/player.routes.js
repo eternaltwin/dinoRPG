@@ -1,11 +1,13 @@
 'use strict';
 
-const player = require("../controllers/player.controller.js");
-const router = require("express").Router();
+import playerController from '../controllers/player.controller.js';
+import express from 'express';
 
-module.exports = app => {
+export default function(app) {
+	const router = express.Router();
+
 	// Get all dinoz from dinoz shop
-	router.get("/money/:id", player.getPlayerMoney);
+	router.get("/money/:id", playerController.getPlayerMoney);
 
 	app.use('/api/player', router);
 };

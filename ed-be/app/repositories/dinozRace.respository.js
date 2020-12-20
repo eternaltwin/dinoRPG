@@ -1,12 +1,14 @@
 'use strict';
 
-const db = require("../models");
+import db from '../models/index.js';
 const DinozRace = db.dinozRace;
 
-module.exports = {
+const dinozRaceRepository = {
     getRaceFromArray: (raceArray) => {
         return DinozRace.findAll({
             where: { name: raceArray }
         });
     }
 }
+
+export default dinozRaceRepository;

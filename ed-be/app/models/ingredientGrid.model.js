@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default function(sequelize, DataTypes) {
     var ingredientGrid = sequelize.define("ingredientGrid", {
       gridId: {
         type: DataTypes.BIGINT,

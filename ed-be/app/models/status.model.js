@@ -1,21 +1,21 @@
-module.exports = (sequelize, DataTypes) => {
-    var status = sequelize.define("status", {
-      statusId: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true
-      },
-      name: {
-        type: DataTypes.STRING
-      }
-    }, {
-      timestamps: false,
-      tableName: 'tb_status'
-    });
-
-    status.associate = function(models){
-        status.belongsToMany(models.dinoz, { through: 'tb_ass_dinoz_status', as: 'dinoz', foreignKey: 'statusId'});
+export default function(sequelize, DataTypes) {
+  var status = sequelize.define("status", {
+    statusId: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING
     }
-    
-    return status;
-  };
+  }, {
+    timestamps: false,
+    tableName: 'tb_status'
+  });
+
+  status.associate = function(models){
+      status.belongsToMany(models.dinoz, { through: 'tb_ass_dinoz_status', as: 'dinoz', foreignKey: 'statusId'});
+  }
+  
+  return status;
+};

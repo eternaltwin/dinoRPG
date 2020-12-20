@@ -1,7 +1,9 @@
 <template>
 	<div id="app">
-		<auth v-if="auth" @idChoisi="leaveAuth()"></auth>
-		<common-elements v-else></common-elements>
+		<!--<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>-->
+		<!--<common-elements v-if="!auth && !collectData"></common-elements>-->
+		<router-view @hideButton="hideButton()"/>
+		<button v-if="!auth && !collectData && showGetDataButton" @click="authorizeApplication()">Log in to Eternal-Twin</button>
 	</div>
 </template>
 
@@ -14,7 +16,9 @@ export default {
 	name: 'App',
 	data () {
 		return {
-			auth: false
+			auth: false,
+			collectData: false,
+			showGetDataButton: true
 		};
 	},
 	created () {
@@ -28,6 +32,12 @@ export default {
 				localStorage.money = res.data.money;
 			}
 			this.auth = false;
+		},
+		authorizeApplication () {
+			window.open(process.env.eternalTwinURI + 'oauth/authorize?response_type=code&access_type=offline&client_id=dinorpg&redirect_uri=' + process.env.publicURI + '&scope=&state=authentification');
+		},
+		hideButton() {
+			this.showGetDataButton = false;
 		}
 	},
 	components: {

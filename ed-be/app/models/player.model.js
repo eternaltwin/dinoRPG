@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default function(sequelize, DataTypes) {
     var player = sequelize.define("player", {
       playerId: {
         type: DataTypes.BIGINT,

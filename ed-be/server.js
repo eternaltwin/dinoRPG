@@ -1,14 +1,21 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const db = require("./app/models");
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+// import db from './app/models/index.js';
+import path from 'path';
+import resetDinozShop from './app/cron/resetDinozShop.js';
+import dataRoutes from './app/routes/data.routes.js';
+/*import shopRoutes from './app/routes/shop.routes.js';
+import playerRoutes from './app/routes/player.routes.js';
+import dinozRoutes from './app/routes/dinoz.routes.js';*/
 
 const app = express();
+const environment = process.env.NODE_ENV || 'development';
 
 // Database connection
-db.sequelize.sync().then(() => {
+/*db.sequelize.sync().then(() => {
 	console.log("Sync db");
-});
+});*/
 
 var corsOptions = {
   origin: "http://localhost:8080"
@@ -23,15 +30,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // To send static files to client when '/data' is in URL
-app.use('/api/data', express.static(__dirname + '/app/data'));
+const dirname = path.resolve();
+app.use('/api/data', express.static(dirname + '/app/data'));
 
 // Routes declaration
-require("./app/routes/dinoz.routes")(app);
-require("./app/routes/shop.routes")(app);
-require("./app/routes/player.routes")(app);
+dataRoutes(app);
+// shopRoutes(app);
+// playerRoutes(app);
+// dinozRoutes(app);
+
+// Importing environment configuration
+const config = await import('./app/config/' + environment + '.js');
+global.config = config.default;
 
 // Launch Cron
-var resetDinozShop = require("./app/cron/resetDinozShop.js");
 resetDinozShop.resetDinozShopAtMidnight();
 
 // set port, listen for requests

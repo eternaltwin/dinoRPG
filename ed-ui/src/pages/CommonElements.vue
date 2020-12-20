@@ -1,11 +1,11 @@
 <template>
 	<div id="common">
-		<p>{{ money | beautifulNumber }}</p>
+		<!--<p>{{ money | beautifulNumber }}</p>
 		<button>{{ $t('bouton.obtenirDeLor') }}</button>
 		<button>{{ $t('bouton.boutique') }}</button>
 		<listeDinoz></listeDinoz>
-		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>
-		<router-view @setDinozList="setDinozList"/>
+		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>-->
+		<router-view />
 	</div>
 </template>
 
@@ -16,7 +16,6 @@ import { mapActions } from 'vuex';
 
 export default {
 	name: 'CommonElements',
-	// S'il ne l'a pas en mémoire, récupère le lieu du premier dinoz de la liste
 	data() {
 		return {
 			money: 0

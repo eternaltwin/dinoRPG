@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require("../models");
+import db from '../models/index.js';
 const Dinoz = db.dinoz;
 const Status = db.status;
 const Objects = db.object;
@@ -8,7 +8,8 @@ const Level = db.level;
 const Place = db.place;
 const assDinozObject = db.assDinozObject;
 
-module.exports = {
+const dinozRepository = {
+
     create: (newDinoz) => {
         return Dinoz.create(newDinoz);
     },
@@ -74,3 +75,5 @@ module.exports = {
         });
     }
 }
+
+export default dinozRepository;

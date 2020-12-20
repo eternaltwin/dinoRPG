@@ -5,14 +5,21 @@ import i18n from '@/helpers/i18n.js';
 import store from '@/store/store.js';
 import '@/helpers/filters';
 
-Vue.config.productionTip = false;
+init();
 
-Vue.use(VueResource);
+function init() {
 
-new Vue({
-	el: '#app',
-	i18n,
-	store,
-	router,
-	render: h => h(require('./App.vue').default)
-});
+	const isProduction = process.env.NODE_ENV === 'production';
+
+	Vue.config.productionTip = !isProduction;
+
+	Vue.use(VueResource);
+
+	new Vue({
+		el: '#app',
+		i18n,
+		store,
+		router,
+		render: h => h(require('./App.vue').default)
+	});
+}

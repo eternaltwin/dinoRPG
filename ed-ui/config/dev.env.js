@@ -1,7 +1,7 @@
 'use strict'
-const merge = require('webpack-merge')
-const prodEnv = require('./prod.env')
 
-module.exports = merge(prodEnv, {
-  NODE_ENV: '"development"'
-})
+module.exports = {
+  NODE_ENV: '"development"',
+  eternalTwinURI: '"http://localhost:50320/"',
+  publicURI: '"http://localhost:8080/"'
+}

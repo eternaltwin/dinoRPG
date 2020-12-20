@@ -12,8 +12,10 @@ yarn-error.log*
 *.njsproj
 *.sln
 
+# Node modules
 /node_modules/
 /ed-ui/node_modules/
 /ed-be/node_modules/
 
+# Config file
 /ed-be/config.toml

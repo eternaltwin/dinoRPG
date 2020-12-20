@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default function(sequelize, DataTypes) {
     var assDinozObject = sequelize.define("tb_ass_dinoz_object", { 
         id: {
             type: DataTypes.BIGINT,
@@ -23,6 +23,6 @@ module.exports = (sequelize, DataTypes) => {
         assDinozObject.belongsTo(models.dinoz, { foreignKey: 'dinozId', as: 'dinoz' });
         assDinozObject.belongsTo(models.object, { foreignKey: 'objectId', as: 'object' });
     }
-  
+
     return assDinozObject;
-  };
+};

@@ -1,11 +1,11 @@
 'use strict';
 
-const db = require("../models");
+import db from '../models/index.js';
 const DinozShop = db.dinozShop;
 const DinozRace = db.dinozRace;
 const Skill = db.skill;
 
-module.exports = {
+const shopRepository = {
     createMultiple: (dinozArray) => {
         return DinozShop.bulkCreate(dinozArray);
     },
@@ -35,3 +35,5 @@ module.exports = {
         });
     }
 }
+
+export default shopRepository;
