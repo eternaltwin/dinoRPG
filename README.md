@@ -1,30 +1,33 @@
 ﻿# DinoRPG
 
 # Avancement
-| Titre	 				| Logique Front	| Back	 	| DB	 | CSS	 	| Issue	 | Commentaire					|
-| -----	 				| -----	 		| ----	 	| --	 | ---	 	| -----	 |:-----------	 				|
-| Back       			| N/A    		| 50%   	| N/A    | N/A   	| TBD    | Reste à finaliser    		|
-| BDD       			| N/A    		| N/A   	| 75%    | N/A   	| TBD    | Reste à finaliser    		|
-| CSS       			| N/A    		| N/A  	 	| N/A    | 5%    	| TBD    | Help!              			|
-| Front       			| 75%    		| N/A   	| N/A    | N/A   	| TBD    | Reste à finaliser    		|
-| Aide       			| TODO   		| TODO  	| TODO   | TODO  	| TBD    | Rediriger vers le wiki ? 	|
-| Boutique d'objets 	| TODO   		| TODO  	| TODO   | TODO  	| TBD    |               				|
-| Boutique dinoz    	| 75%    		| 75%   	| 75%    | minimal	| TBD    | Manque Quetzu, fonctionnel   |
-| Boutique démoniaque 	| TODO   		| TODO  	| TODO   | TODO  	| TBD    |               				|
-| Clan       			| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| Classement    		| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| Combat       			| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| Compte       			| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| Dojo       			| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| Fiche Dinoz   		| 20%    		| 20%   	| 20%    | minimal  | TBD    | Fonctionnel, voir avec Jolu  |
-| \|- Dinoz     		| TBD    		| TBD   	| TBD    | minimal  | TBD    | Fonctionnel, voir avec Jolu  |
-| \|- Carte     		| TODO   		| TODO  	| TODO   | TODO     | [Issue 3](https://gitlab.com/eternal-twin/dinorpg/-/issues/3)|               |
-| \|-\|- Dinoland, etc. | TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| \|- PNJs      		| TODO   		| TODO  	| TODO   | TODO     | TBD    |              	 			|
-| \|- Quêtes       		| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| Ingrédients      		| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
-| \|- Récolte       	| TODO   		| TODO  	| TODO   | TODO     | TBD    |              				|
-| \|- Page Ingrédients	| TODO   		| TODO  	| TODO   | TODO     | TBD    |               				|
+
+| Titre                 | Logique Front | Back      | DB     | CSS      | Issue     | Commentaire                 |
+|-----------------------|---------------|-----------|--------|----------|-----------|:----------------------------|
+| Back                  | N/A           | 50%       | N/A    | N/A      | TBD       | Reste à finaliser           |
+| BDD                   | N/A           | N/A       | 75%    | N/A      | TBD       | Reste à finaliser           |
+| CSS                   | N/A           | N/A       | N/A    | 5%       | TBD       | Help!                       |
+| Front                 | 75%           | N/A       | N/A    | N/A      | TBD       | Reste à finaliser           |
+| Aide                  | TODO          | TODO      | TODO   | TODO     | TBD       | Rediriger vers le wiki ?    |
+| Boutique d'objets     | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Boutique dinoz        | 75%           | 75%       | 75%    | minimal  | TBD       | Manque Quetzu, fonctionnel  |
+| Boutique démoniaque   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Clan                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Classement            | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Combat                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Compte                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Dojo                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Fiche Dinoz           | 20%           | 20%       | 20%    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
+| │- Dinoz              | TBD           | TBD       | TBD    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
+| │- Carte              | TODO          | TODO      | TODO   | TODO     | [Issue 3] |                             |
+| │ │- Dinoland, etc.   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| │- PNJs               | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| │- Quêtes             | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| Ingrédients           | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| │- Récolte            | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| │- Page Ingrédients   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+
+[Issue 3]: https://gitlab.com/eternal-twin/dinorpg/-/issues/3
 
 # Prérequis
 Les technologies principales utilisées sont:
