@@ -2,5 +2,5 @@
 client_id = 'dinorpg@clients'
 client_secret = 'dev_secret'
 eternalTwinURI = 'http://localhost:50320/'
-publicUri = 'http://localhost:8080/'
+publicUri = 'http://localhost:8081/'
 redirectURI = 'http://localhost:8080/'

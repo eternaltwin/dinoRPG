@@ -43,7 +43,7 @@ oauthRoutes(app);
 
 // Importing environment configuration
 const config = environment === 'development' ? 'dev' : 'prod';
-global.config = config.default;
+global.config = config;
 
 // Launch Cron
 resetDinozShop.resetDinozShopAtMidnight();

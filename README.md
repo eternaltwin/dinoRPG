@@ -8,6 +8,7 @@
 | BDD                   | N/A           | N/A       | 75%    | N/A      | TBD       | Reste à finaliser           |
 | CSS                   | N/A           | N/A       | N/A    | 5%       | TBD       | Help!                       |
 | Front                 | 75%           | N/A       | N/A    | N/A      | TBD       | Reste à finaliser           |
+| Sécurisation de l'API | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
 | Aide                  | TODO          | TODO      | TODO   | TODO     | TBD       | Rediriger vers le wiki ?    |
 | Boutique d'objets     | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
 | Boutique dinoz        | 75%           | 75%       | 75%    | minimal  | TBD       | Manque Quetzu, fonctionnel  |
@@ -32,7 +33,7 @@
 # Prérequis
 
 Les technologies principales utilisées sont:
-- Node.js: v12.18.0
+- Node.js: v14.15.1
 - Yarn: v1.22.10
 - Postgresql: v12
 - pgAdmin4
@@ -49,8 +50,7 @@ Une fois ces installations effectuées, aller directement à la partie 'Mode d'e
 
 #### Node.js & npm
 
-NodeJS et npm se téléchargent en même temps, vous pouvez les avoir à cette adresse : `https://nodejs.org/fr/download/` 
-(Rappel : version 12.18.0 pour NodeJS et 6.14.4 pour npm).
+NodeJS et npm se téléchargent en même temps, suivez le tutoriel d'installation ici : https://eternal-twin.net/docs/tools/node
 
 #### Yarn
 
@@ -60,41 +60,30 @@ Installez `npm` puis lancez la commande:
 npm install -g yarn
 ```
 
-#### Postsgresql
+#### Postgresql
+
+Installation sous Windows :
 
 Voir `https://www.postgresql.org/download/windows/` (Rappel : version 12)
-L'installation proposera de choisir un mot de passe. Il sera utilisé par le projet qui utilise par défaut `EternalDinoSQL`.
-Voir la section `Mise en place de la bade de données` pour plus de détails.
 
-### Ubuntu
+Une fois le téléchargement de PostGreSQL effectué, installez le logiciel et mettez `EternalDinoSQL` en mot de passe (la sélection d'un mot de passe sera proposée pendant l'installation).
+Tapez ensuite `pgAdmin 4` dans la barre de recherche Cortana et vous devriez avoir un exécutable. Lancez-le et il s'ouvrira dans votre navigateur.
 
-Vérifier que votre environnement est à jour:
+Il faut maintenant créer une base de données dédiée au projet EternalDino. 
+Pour cela, faites un clic droit sur 'Databases' (Chemin : Servers -> PostgreSQL -> Databases) puis cliquez sur 'Create -> Database'.
+Mettez 'EternalDinoDB' dans le champ 'Database', et mettez 'eternaldino' dans le champ 'Owner' (l'utilisateur créé tout à l'heure).
+Allez ensuite sur l'onglet 'Security' et cliquez sur le petit icône '+' en face du champ 'Privileges'.
+Mettez ensuite 'eternaldino' dans la colonne 'Grantee' et cochez toutes les cases dans la colonne 'Privileges'.
+Enfin, cliquez sur 'Save' pour sauvegarder.
+
+Installation sous Linux :
+
+Avant tout, vérifier que votre environnement est à jour:
 1) `sudo apt update`
 2) `sudo apt upgrade`
 Notez que `apt` est le successeur de `apt-get` et s'utilise de la même facon.
 
-#### Node.js & npm
-
-Source: `https://github.com/nodesource/distributions/blob/master/README.md`
-Pour installer Node.js, utiliser les commandes:
-1) `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
-2) `sudo apt install nodejs`
-Vous pouvez vérifier les versions de Node.js et npm avec respectivement
-`node --version` et `npm --version`.
-
-#### Yarn
-
-Installez `npm` puis lancez la commande:
-
-```
-npm install -g yarn
-```
-
-#### nodemon
-
-Nodemon s'installe avec npm via `npm install -g nodemon`.
-
-#### Postgresql
+Ensuite :
 
 Source: `https://www.postgresql.org/download/linux/ubuntu/`
 1) Go to `https://www.postgresql.org/download/linux/ubuntu/` and select your ubuntu version
@@ -105,57 +94,9 @@ Example pour Ubuntu 18:
 4) `sudo apt update`
 5) `sudo apt install postgresql-12`
 
-#### pgAdmin4
+PostGreSQL est installé, il faut maintenant créer une base de données pour le projet :
 
-La commande suivante permet d'isntaller pgadmin4:
-`sudo apt install pgadmin4 pgadmin4-apache2`
-
-#### VueJS
-
-Utiliser la commande `yarn install` dans le dossier du front `ed-ui`.
-
-# Mode d'emploi
-
-##  Démarrage du front
-
-La partie front-end utilise le framework VueJS et est située dans le dossier `ed-ui` (Eternal-Dino User Interface).
-
-Comment faire fonctionner le front ?
-
-La partie front-end fonctionne avec `Yarn` (yarn).
-
-Si vous ne l'avez pas, vous pouvez l'obtenir en téléchargeant NodeJS (voir section `Installation`).
-Une fois le logiciel téléchargé et installé
-- Avec Windows, tapez `Node.js command prompt` dans la barre de recherche Cortana. Déplacez vous ensuite dans le dossier `ed-ui` et tapez la commande : `yarn run dev`.
-- Avec Ubuntu, ouvrez un terminal, déplacer vous dans le dossier et executer la commande `yarn run dev`.
-
-Si vous n'obtenez pas d'erreur et que vous obtenez le message `Your application is running here: http://localhost:8080`, rendez-vous sur http://localhost:8080 (comme indiqué) pour accéder à ce magnifique site qu'est EternalDino.
-
-Plus de commandes et d'aides sont visibles dans le `README.md` du dossier `ed-ui`.
-
-## Mise en place de la base de données (BDD)
-
-La BDD utilisée est PostGreSQL. Le section `Installation` décrit comment installer l'outil.
-
-### Avec Windows
-
-Une fois le téléchargement effectué, installez le logiciel et mettez `EternalDinoSQL` en mot de passe (la sélection d'un mot de passe sera proposée pendant l'installation).
-Tapez ensuite `pgAdmin 4` dans la barre de recherche Cortana et vous devriez avoir un exécutable. Lancez-le et il s'ouvrira dans votre navigateur.
-
-Une fois le logiciel ouvert, il faut tout d'abord créer un nouvel utilisateur.
-Pour cela, faire un clic droit sur 'Login/Group Roles' (Chemin : Servers -> PostgreSQL 12 -> Login/Group Roles) puis cliquez sur 'Create -> Login/Group Role).
-Mettez 'eternaldino' dans le champ 'Name' puis allez sur l'onglet 'Privileges'. Cochez tout à cet endroit pour ne pas être restreint, puis cliquer sur 'Save' pour enregistrer.
-
-Maintenant que l'utilisateur est créé, il faut créer une base de données dédiée au projet EternalDino. 
-Pour cela, faites un clic droit sur 'Databases' (Chemin : Servers -> PostgreSQL -> Databases) puis cliquez sur 'Create -> Database'.
-Mettez 'EternalDinoDB' dans le champ 'Database', et mettez 'eternaldino' dans le champ 'Owner' (l'utilisateur créé tout à l'heure).
-Allez ensuite sur l'onglet 'Security' et cliquez sur le petit icône '+' en face du champ 'Privileges'.
-Mettez ensuite 'eternaldino' dans la colonne 'Grantee' et cochez toutes les cases dans la colonne 'Privileges'.
-Enfin, cliquez sur 'Save' pour sauvegarder.
-
-### Avec Ubuntu
-
-Avec Ubuntu, c'est moins direct, voici comment faire en utilisant l'utilisateur par défaut de PostGreSQL appelé très originalement `postgres`:
+Avec Ubuntu, c'est moins direct qu'avec Windows, voici comment faire en utilisant l'utilisateur par défaut de PostGreSQL appelé très originalement `postgres`:
 - Ouvrez le terminal de PostGreSQL avec l'utilisateur postgres: `sudo -u postgres psql`
 - Dans le terminal de PostGreSQL, définissez le mot de passe de à `EternalDinoSQL`: `ALTER USER postgres WITH PASSWORD 'EternalDinoSQL';`
 - Ouvrez un nouvel onglet dans votre terminal et exécutez `pgadmin4`, une fenêtre s'ouvre dans votre navigateur.
@@ -170,16 +111,32 @@ Avec Ubuntu, c'est moins direct, voici comment faire en utilisant l'utilisateur 
 - Ouvrez le fichier `ed-be/node_modules/sequelize/lib/dialects/postgres/connection-manager.js` et changer le port à `5433` à la ligne 15.
 - C'est bon la BDD est prête pour le back!
 
+Enfin, installez pgAdmin4 pour pouvoir visualiser votre BDD :
+
+La commande suivante permet d'isntaller pgadmin4:
+`sudo apt install pgadmin4 pgadmin4-apache2`
+
+#### Dépendances front
+
+Utiliser la commande `yarn install` dans le dossier du front `ed-ui`.
+
+#### Dépendances back
+
+Utiliser la commande `npm install` dans le dossier du back `ed-be`.
+
+# Mode d'emploi
+
 ## Démarrage du back
 
 La manière la plus simple pour démarrer la partie back-end est d'utiliser Visual Studio Code.
 
-Pour fonctionner, le back nécessite que le serveur de la base de données soit accessible. Le fichier de configuration qui décrit la BDD utilisée est `app/config/db.config.js`.
+Tout d'abord, ouvrir le dossier `ed-be` avec Visual Studio Code.
+Ensuite, cliquer sur l'onglet `Terminal`, puis `New terminal`.
+Dans le terminal qui vient de s'ouvrir, vérifier que vous vous situez dans le dossier `ed-be`, puis taper : `npm run start`
 
-Si vous l'utilisez, ouvrez le dossier `ed-be` (EternalDino - BackEnd) et allez dans la partie `NPM SCRIPTS` (visible en bas à gauche).
-Il y aura normalement dans cette partie un fichier 'package.json' avec deux attributs : 'test' et 'start'. Cliquez sur la flèche en face du start pour démarrer le serveur.
+## Démarrage du front
 
-Si vous n'utilisez pas Visual Studio Code, ouvrez un deuxième node.js command prompt et déplacez vous dans le dossier `ed-be`. A partir de là, tapez la commande `nodemon server.js` pour démarrer le serveur.
+Ouvrir un terminal et taper la commande `npm run dev` dans le dossier `ed-ui`.
 
 # Structure
 
@@ -207,34 +164,7 @@ La partie back-end est composée de plusieurs parties :
 
 4) Le dossier 'app/routes' qui contient toutes les routes auxquels on peut faire des requêtes. Ces fichiers fonctionnent de pair avec les controllers. En effet, la route va recevoir la requête et la partie controller va se charger de faire tous les traitement métiers et de renvoyer le bon résultat.
 
-5) Un dossier 'src/repositories' qui contient tous les fichiers qui feront des appels à la base de donnée.
-
-## Cycle de vie d'un appel à la BDD 
-
-Prenons un exemple pour simplifier : La récupération d'un dinoz
-
-1) Lorsque l'utilisateur va aller sur l'URL de son dinoz, c'est le router (côté front, contenu dans le dossier src/router) qui va commencer les traitements.
-   Le router va lire cette URL, et charger la bonne page en conséquence (contenu dans le dossier src/components). Cette page est sous la forme d'un fichier '.vue' et fait appel à des sous-composants (fichier .vue)
-
-2) Lorque la page va charger, elle aura besoin de faire des appels vers la partie back-end pour récupérer le dinoz voulu. Le fichier .vue va alors fait un appel au service (DinozService dans notre cas).
-
-3) Le fichier DinozService va centraliser toutes les requêtes qui sont effectuées à propos des Dinoz (trouver un dinoz, trouver tous les dinoz de l'utilisateur, obtenir les compétences d'un dinoz et etc). 
-   Ces requêtes vont être envoyées vers la partie back-end. Dans notre cas, c'est la requête de récupération d'un dinoz qui va être appelée.
-   
-4) Nous arrivons dans la partie back-end, où le fichier DinozRoute (contenu dans le dossier app/routes) va réceptionner la requête. Ce fichier ne sert qu'à réceptionner les URL, aucun traitement n'est effectué là dedans.
-   Pour déléguer ces traitements, il va faire appel à un controller (ici : DinozController).
-   
-5) Le controller va faire un appel au DinozRepository.
-
-6) Le DinozRepository va faire un appel à la BDD, et va renvoyer les données au controller.
-
-7) Le controller va recevoir les données du repository, puis va effectuer les traitement métiers avant de les renvoyer au fichier DinozRoutes.
-
-6) Le fichier DinozRoutes n'effectue toujours aucun traitement métier, il renvoie la réponse (obtenue du controller) à la partie front-end.
-
-7) Le fichier DinozService va renvoyer la réponse qu'il vient d'obtenir au fichier .vue
-
-8) Le fichier .vue va alors afficher les données qu'il a obtenue.
+5) Un dossier 'app/repositories' qui contient tous les fichiers qui feront des appels à la base de donnée.
 
 ## Appliquer un dump à sa BDD
 

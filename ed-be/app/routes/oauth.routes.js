@@ -7,7 +7,7 @@ export default function(app) {
 	const router = express.Router();
 
 	router.post('/redirect', (req, res) => {
-		res.redirect(oauthController.getAuthorizationUri().toString());
+		res.redirect(oauthController.getAuthorizationUri());
 	});
 
 	router.get('/callback', oauthController.getAccessToken);

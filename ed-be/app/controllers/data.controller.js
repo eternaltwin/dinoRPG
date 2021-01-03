@@ -5,62 +5,22 @@ import fs from 'fs';
 import toml from 'toml';
 import request from 'request';
 import cheerio from 'cheerio';
-import btoa from 'btoa';
-import url from 'url';
-import { HttpEtwinClient } from "@eternal-twin/etwin-client-http";
+import oauthController from './oauth.controller.js';
 
 const dataController = {
 
-    // Get data from Twinoid API
+    // Get data from EternalTwin API
     getApiData: async (req, res) => {
+
         const code = req.params.code;
-        let token = null;
-        let response = null;
-        let eternalTwinTokenURL = config.eternalTwinURI + 'oauth/token';
-        const configToml = toml.parse(fs.readFileSync('./config.toml', 'utf-8'));
-        const authorizationHeader = configToml.oauth.client_id + ':' + configToml.oauth.client_secret;
-        let params = new URLSearchParams();
+        const token = await oauthController.getAccessToken(code);
+        const user = await oauthController.getUserDetails(token);
 
-        params.append('code', code);
-        params.append('grant_type', 'authorization_code');
-        params.append('redirect_uri', config.publicURI + 'api');
+        console.log(user);
 
-        // Récupération du token d'accès
-        try {
-            response = await fetch(eternalTwinTokenURL, { 
-                method: 'POST', 
-                headers: new fetch.Headers({
-                    'Authorization': 'Basic ' + btoa(authorizationHeader),
-                    'Content-type': 'application/x-www-form-urlencoded'
-                }),
-                body: params 
-            });
-        } catch (error) {
-            res.send('An error occured while getting API token : ', err);
-        }
+        res.send(user);
 
-        response = await response.json();
-        token = response.access_token;
-
-        // Récupération de l'ID du joueur
-        let user = await fetch(config.eternalTwinURI + 'api/v1/auth/self', {
-            method: 'GET', 
-                headers: new fetch.Headers({
-                    'Authorization': 'Bearer ' + token
-                })
-        });
- 
-        user = await user.json();
-        const userId = user.user.id;
-        
-        // Récupération des données du joueur
-        const client = new HttpEtwinClient(new url.URL(config.eternalTwinURI));
-        const userDetails = await client.getUserById(token, userId);
-
-        res.send(userDetails);
-
-        /*const code = req.params.code;
-        const cookie = req.params.cookie;
+        /*const cookie = req.params.cookie;
 
         // Get token from Twinoid API (use to communicate with API) 
         let token = await getToken(code);
