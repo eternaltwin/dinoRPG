@@ -1,4 +1,5 @@
-import dbConfig from '../config/db.config.js';
+import dbConf from '../config/db.config.js';
+import Context from '../utils/context.js';
 import Sequelize from 'sequelize';
 
 import dinoz from './dinoz.model.js';
@@ -22,6 +23,8 @@ import map from './map.model.js';
 import dinozShop from './dinozShop.model.js';
 import epicReward from './epicReward.model.js';
 import assPlayerReward from './assPlayerReward.model.js';
+
+const dbConfig = dbConf(Context.getEnvironnement());
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,

@@ -1,15 +1,23 @@
-const dbConfig  = {
-  HOST: "localhost",
-  USER: "postgres",
-  PASSWORD: "EternalDinoSQL",
-  DB: "EternalDinoDB",
-  dialect: "postgres",
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
-};
+import fs from 'fs';
+import toml from 'toml';
 
-export default dbConfig;
+export default function(config) {
+
+  const configuration = toml.parse(fs.readFileSync('./config_' + config + '.toml', 'utf-8'));
+
+  const dbConfig = {
+    HOST: configuration.db.host,
+    USER: configuration.db.user,
+    PASSWORD: configuration.db.password,
+    DB: configuration.db.dbName,
+    dialect: 'postgres',
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  };
+
+  return dbConfig;
+}

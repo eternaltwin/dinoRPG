@@ -1,6 +1,0 @@
-[oauth]
-client_id = 'dinorpg@clients'
-client_secret = 'dev_secret'
-eternalTwinURI = 'https://eternal-twin.net/'
-publicUri = 'http://eternal-dino.net/'
-redirectURI = 'http://localhost:8080/'

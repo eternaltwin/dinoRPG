@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-// import db from './app/models/index.js';
+import db from './app/models/index.js';
 import path from 'path';
 import resetDinozShop from './app/cron/resetDinozShop.js';
 import dataRoutes from './app/routes/data.routes.js';
@@ -11,7 +11,6 @@ import playerRoutes from './app/routes/player.routes.js';
 import dinozRoutes from './app/routes/dinoz.routes.js';*/
 
 const app = express();
-const environment = process.env.NODE_ENV || 'development';
 
 // Database connection
 /*db.sequelize.sync().then(() => {
@@ -40,10 +39,6 @@ oauthRoutes(app);
 // shopRoutes(app);
 // playerRoutes(app);
 // dinozRoutes(app);
-
-// Importing environment configuration
-const config = environment === 'development' ? 'dev' : 'prod';
-global.config = config;
 
 // Launch Cron
 resetDinozShop.resetDinozShopAtMidnight();
