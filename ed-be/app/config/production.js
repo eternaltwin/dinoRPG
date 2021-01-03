@@ -1,6 +1,3 @@
-const config = {
-    eternalTwinURI: 'https://eternal-twin.net/',
-    publicURI: 'http://eternal-dino.net/'
-}
+const config = {}
 
 export default config;

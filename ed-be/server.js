@@ -5,6 +5,7 @@ import cors from 'cors';
 import path from 'path';
 import resetDinozShop from './app/cron/resetDinozShop.js';
 import dataRoutes from './app/routes/data.routes.js';
+import oauthRoutes from './app/routes/oauth.routes.js';
 /*import shopRoutes from './app/routes/shop.routes.js';
 import playerRoutes from './app/routes/player.routes.js';
 import dinozRoutes from './app/routes/dinoz.routes.js';*/
@@ -35,12 +36,13 @@ app.use('/api/data', express.static(dirname + '/app/data'));
 
 // Routes declaration
 dataRoutes(app);
+oauthRoutes(app);
 // shopRoutes(app);
 // playerRoutes(app);
 // dinozRoutes(app);
 
 // Importing environment configuration
-const config = await import('./app/config/' + environment + '.js');
+const config = environment === 'development' ? 'dev' : 'prod';
 global.config = config.default;
 
 // Launch Cron

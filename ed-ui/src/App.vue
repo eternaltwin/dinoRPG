@@ -3,7 +3,9 @@
 		<!--<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>-->
 		<!--<common-elements v-if="!auth && !collectData"></common-elements>-->
 		<router-view @hideButton="hideButton()"/>
-		<button v-if="!auth && !collectData && showGetDataButton" @click="authorizeApplication()">Log in to Eternal-Twin</button>
+		<form method="POST" action="http://localhost:8081/oauth/redirect">
+			<input type="submit" v-if="!auth && !collectData && showGetDataButton" value="Log in to Eternal-Twin" />
+		</form>
 	</div>
 </template>
 

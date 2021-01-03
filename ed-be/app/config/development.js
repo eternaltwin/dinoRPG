@@ -1,6 +1,3 @@
-const config = {
-    eternalTwinURI: 'http://localhost:50320/',
-    publicURI: 'http://localhost:8080/',
-}
+const config = {}
 
 export default config;

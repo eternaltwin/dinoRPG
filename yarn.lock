@@ -149,6 +149,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@eternal-twin/core@npm:0.3.2":
+  version: 0.3.2
+  resolution: "@eternal-twin/core@npm:0.3.2"
+  dependencies:
+    "@eternal-twin/twinoid-core": 0.3.1
+    jsonwebtoken: ^8.5.1
+    kryo: ^0.11.1
+  checksum: f175bfade97599e0f1af9815b940ff14f951cc56642200fb75999491accfe287fee0eee8dc64ba80f721f5d047b7375f165b273bcab20c3d646765afcd0c7466
+  languageName: node
+  linkType: hard
+
 "@eternal-twin/email-console@npm:0.3.1":
   version: 0.3.1
   resolution: "@eternal-twin/email-console@npm:0.3.1"
@@ -320,6 +331,24 @@ __metadata:
     kryo-json: ^0.11.0
     superagent: ^6.1.0
   checksum: 5f632950c036ba5e9b502a90336ef9739f4500c2ce4184163a46f6556df5565a36e651d89998768a15250c44d39d8f9ad685cccb375606a5252a2efe64525059
+  languageName: node
+  linkType: hard
+
+"@eternal-twin/oauth-client-http@npm:^0.3.4":
+  version: 0.3.4
+  resolution: "@eternal-twin/oauth-client-http@npm:0.3.4"
+  dependencies:
+    "@eternal-twin/core": 0.3.2
+    "@types/auth-header": ^1.0.1
+    "@types/jsonwebtoken": ^8.5.0
+    "@types/jws": ^3.2.2
+    "@types/superagent": ^4.1.10
+    auth-header: ^1.0.0
+    jsonwebtoken: ^8.5.1
+    jws: ^4.0.0
+    kryo-json: ^0.11.0
+    superagent: ^6.1.0
+  checksum: dd4e0cc785628e7b79942a40161baa3aa513e9ae13ec9a0293c3a4901458312f39e67ce183785cb7dedbad0764f8cf7c8622bcc3892c101611f85c4aabfd5e4f
   languageName: node
   linkType: hard
 
@@ -4507,6 +4536,7 @@ __metadata:
   resolution: "ed-be@workspace:ed-be"
   dependencies:
     "@eternal-twin/etwin-client-http": ^0.3.2
+    "@eternal-twin/oauth-client-http": ^0.3.4
     "@eternal-twin/website": ^0.3.1
     body-parser: ^1.19.0
     btoa: ^1.2.1
