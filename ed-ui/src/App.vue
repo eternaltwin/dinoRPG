@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<!--<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>-->
+		<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>
 		<!--<common-elements v-if="!auth && !collectData"></common-elements>-->
 		<router-view @hideButton="hideButton()"/>
 		<form method="POST" :action="getURI()">
@@ -18,13 +18,13 @@ export default {
 	name: 'App',
 	data () {
 		return {
-			auth: false,
+			auth: true,
 			collectData: false,
-			showGetDataButton: true
+			showGetDataButton: false
 		};
 	},
 	created () {
-		this.auth = localStorage.idPlayer === undefined;
+		// this.auth = localStorage.idPlayer === undefined;
 	},
 	methods: {
 		async leaveAuth () {

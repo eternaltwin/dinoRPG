@@ -4,6 +4,7 @@ import { URL } from "url";
 import Context from '../utils/context.js';
 import fs from 'fs';
 import toml from 'toml';
+import request from 'request';
 
 const environment = Context.getEnvironnement();
 
@@ -36,7 +37,33 @@ const oauthController = {
         const self = await apiClient.getAuthSelf(token.accessToken);
         const userDetails = await apiClient.getUserById(null, self.user.id);
         return userDetails;
+    },
+
+    authenticateToET: async (req, res) => {
+        doAuthenticationRequestToET(req.body).then(response => {
+            res.send(response);
+        }).catch(err => {
+            res.status(500).send({
+                message: err || 'Incorrect login or password.'
+            });
+        });
     }
+}
+
+function doAuthenticationRequestToET(params) {
+    return new Promise((resolve, reject) => {
+        request({
+            url: 'http://localhost:50320/api/v1/auth/self?method=Etwin',
+            method: 'PUT',
+            json: params
+        }, (err, response, html) => {
+            if (response.body === 'Internal Server Error') {
+                reject(response);
+            } else {
+                resolve(response);
+            }
+        });   
+    });
 }
 
 export default oauthController;

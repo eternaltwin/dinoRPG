@@ -12,5 +12,7 @@ export default function(app) {
 
 	router.get('/callback', oauthController.getAccessToken);
 
-	app.use('/oauth', router);
+	router.put('/authenticate/eternal-twin', oauthController.authenticateToET);
+
+	app.use('/api/oauth', router);
 };
