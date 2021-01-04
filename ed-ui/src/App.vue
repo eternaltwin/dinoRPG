@@ -3,7 +3,7 @@
 		<!--<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>-->
 		<!--<common-elements v-if="!auth && !collectData"></common-elements>-->
 		<router-view @hideButton="hideButton()"/>
-		<form method="POST" action="http://localhost:8081/oauth/redirect">
+		<form method="POST" :action="getURI()">
 			<input type="submit" v-if="!auth && !collectData && showGetDataButton" value="Log in to Eternal-Twin" />
 		</form>
 	</div>
@@ -35,11 +35,11 @@ export default {
 			}
 			this.auth = false;
 		},
-		authorizeApplication () {
-			window.open(process.env.eternalTwinURI + 'oauth/authorize?response_type=code&access_type=offline&client_id=dinorpg&redirect_uri=' + process.env.publicURI + '&scope=&state=authentification');
-		},
 		hideButton() {
 			this.showGetDataButton = false;
+		},
+		getURI() {
+			return process.env.serverURI + 'oauth/redirect';
 		}
 	},
 	components: {
