@@ -6,16 +6,16 @@ import path from 'path';
 import resetDinozShop from './app/cron/resetDinozShop.js';
 import dataRoutes from './app/routes/data.routes.js';
 import oauthRoutes from './app/routes/oauth.routes.js';
-/*import shopRoutes from './app/routes/shop.routes.js';
+import shopRoutes from './app/routes/shop.routes.js';
 import playerRoutes from './app/routes/player.routes.js';
-import dinozRoutes from './app/routes/dinoz.routes.js';*/
+import dinozRoutes from './app/routes/dinoz.routes.js';
 
 const app = express();
 
 // Database connection
-/*db.sequelize.sync().then(() => {
+db.sequelize.sync().then(() => {
 	console.log("Sync db");
-});*/
+});
 
 var corsOptions = {
   origin: "http://localhost:8080"
@@ -36,9 +36,9 @@ app.use('/api/data', express.static(dirname + '/app/data'));
 // Routes declaration
 dataRoutes(app);
 oauthRoutes(app);
-// shopRoutes(app);
-// playerRoutes(app);
-// dinozRoutes(app);
+shopRoutes(app);
+playerRoutes(app);
+dinozRoutes(app);
 
 // Launch Cron
 resetDinozShop.resetDinozShopAtMidnight();

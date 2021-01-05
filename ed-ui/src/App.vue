@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>
-		<!--<common-elements v-if="!auth && !collectData"></common-elements>-->
+		<common-elements v-if="!auth && !collectData"></common-elements>
 		<router-view @hideButton="hideButton()"/>
 		<form method="POST" :action="getURI()">
 			<input type="submit" v-if="!auth && !collectData && showGetDataButton" value="Log in to Eternal-Twin" />

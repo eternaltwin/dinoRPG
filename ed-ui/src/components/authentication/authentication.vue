@@ -1,10 +1,14 @@
 <template>
 	<div id="auth">
-		<input type="text" name="login" v-model="login">
+		Login : <input type="text" name="login" v-model="login">
 		<br>
-		<input type="password" name="password" v-model="password">
+		Password : <input type="password" name="password" v-model="password">
 		<br>
-		<button @click="authenticateToET()">Validate player ID</button>
+		<div v-if="erreurAuthentification">
+			<span>Incorrect login or password</span>
+			<br>
+		</div>
+		<button @click="authenticateToET()">Authenticate to Eternal-Twin</button>
 	</div>
 </template>
 
@@ -15,21 +19,20 @@ export default {
 	data () {
 		return {
 			login: undefined,
-			password: undefined
+			password: undefined,
+			erreurAuthentification: false
 		};
 	},
 	methods: {
-		validateName () {
-			localStorage.idPlayer = this.login;
-			this.$emit('idChoisi');
-		},
 		authenticateToET() {
 			const loginToSend = this.login.toLowerCase();
 			const passwordToSend = Buffer.from(this.password, 'utf-8').toString('hex');
 
 			return OauthService.authenticateUser(loginToSend, passwordToSend).then(res => {
+				this.$emit('idChoisi');
 				console.log(res);
 			}).catch(err => {
+				this.erreurAuthentification = true;
 				console.log(err);
 			});
 		}
