@@ -1,10 +1,10 @@
 <template>
 	<div id="common">
-		<!--<p>{{ money | beautifulNumber }}</p>
+		<p>{{ money | beautifulNumber }}</p>
 		<button>{{ $t('bouton.obtenirDeLor') }}</button>
 		<button>{{ $t('bouton.boutique') }}</button>
 		<listeDinoz></listeDinoz>
-		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>-->
+		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>
 		<router-view />
 	</div>
 </template>

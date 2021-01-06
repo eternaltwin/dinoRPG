@@ -9,6 +9,7 @@ import oauthRoutes from './app/routes/oauth.routes.js';
 import shopRoutes from './app/routes/shop.routes.js';
 import playerRoutes from './app/routes/player.routes.js';
 import dinozRoutes from './app/routes/dinoz.routes.js';
+import jwt from './app/utils/jwt.js';
 
 const app = express();
 
@@ -32,6 +33,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // To send static files to client when '/data' is in URL
 const dirname = path.resolve();
 app.use('/api/data', express.static(dirname + '/app/data'));
+
+// Use JWT authentication to secure the API
+app.use(jwt.jwtConfig());
 
 // Routes declaration
 dataRoutes(app);

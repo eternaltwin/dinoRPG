@@ -2,10 +2,10 @@
 	<div id="app">
 		<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>
 		<common-elements v-if="!auth && !collectData"></common-elements>
-		<router-view @hideButton="hideButton()"/>
-		<form method="POST" :action="getURI()">
+		<!--<router-view @hideButton="hideButton()"/>-->
+		<!--<form method="POST" :action="getURI()">
 			<input type="submit" v-if="!auth && !collectData && showGetDataButton" value="Log in to Eternal-Twin" />
-		</form>
+		</form>-->
 	</div>
 </template>
 
@@ -13,6 +13,7 @@
 import auth from '@/components/authentication/authentication.vue';
 import PlayerService from '@/services/PlayerService';
 import CommonElements from '@/pages/CommonElements.vue';
+import _ from 'lodash';
 
 export default {
 	name: 'App',
@@ -24,7 +25,7 @@ export default {
 		};
 	},
 	created () {
-		// this.auth = localStorage.idPlayer === undefined;
+		this.auth = _.isNil(localStorage.jwt);
 	},
 	methods: {
 		async leaveAuth () {

@@ -5,6 +5,10 @@ import Context from '../utils/context.js';
 import fs from 'fs';
 import toml from 'toml';
 import request from 'request';
+import jwt from '../utils/jwt.js';
+import playerController from './player.controller.js';
+import PlayerRepository from '../repositories/player.repository.js';
+import _ from 'lodash';
 
 const environment = Context.getEnvironnement();
 
@@ -40,13 +44,34 @@ const oauthController = {
     },
 
     authenticateToET: async (req, res) => {
-        doAuthenticationRequestToET(req.body).then(response => {
-            res.send(response);
-        }).catch(err => {
+        let eternalTwinPlayer;
+        // Send authentication to EternalTwin server.
+        try {
+            eternalTwinPlayer = await doAuthenticationRequestToET(req.body);
+        } catch (error) {
             res.status(500).send({
-                message: err || 'Incorrect login or password.'
+                message: error || 'Incorrect login or password.'
             });
-        });
+        }
+
+        // Check if player already exists in database
+        let player = await PlayerRepository.getPlayerDetails(eternalTwinPlayer.body.id);
+
+        // If player is not found in database, create a new one
+        if (_.isNil(player)) {
+            player = {
+                eternalTwinId: eternalTwinPlayer.body.id,
+                name: eternalTwinPlayer.body.display_name.current.value
+            }
+
+            // Create new player in database
+            player = await PlayerRepository.create(player);
+        }
+
+        // Forge JWT with playerId
+        const JWT = await jwt.forgeJWT(player.dataValues);
+
+        res.send(JWT);
     }
 }
 

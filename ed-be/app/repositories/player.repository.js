@@ -33,7 +33,18 @@ const playerRepository = {
         return player.save({
             fields: ['money'],
             where: { playerId: player.playerId }
-        })
+        });
+    },
+
+    getPlayerDetails: (eternalTwinId) => {
+        return Player.findOne({
+            attributes: ['playerId'],
+            where: { eternalTwinId: eternalTwinId }
+        });
+    },
+
+    create: (newPlayer) => {
+        return Player.create(newPlayer);
     }
 }
 

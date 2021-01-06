@@ -3,7 +3,12 @@ export default function(sequelize, DataTypes) {
       playerId: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
+      },
+      eternalTwinId: {
+        type: DataTypes.UUID,
+        allowNull: false
       },
       name: {
         type: DataTypes.STRING

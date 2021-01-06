@@ -29,6 +29,7 @@ export default {
 			const passwordToSend = Buffer.from(this.password, 'utf-8').toString('hex');
 
 			return OauthService.authenticateUser(loginToSend, passwordToSend).then(res => {
+				localStorage.jwt = res.data;
 				this.$emit('idChoisi');
 				console.log(res);
 			}).catch(err => {

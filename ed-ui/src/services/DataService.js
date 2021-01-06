@@ -3,7 +3,7 @@ import http from '@/helpers/http-common';
 class DataService {
 
 	getApiData(code, cookie) {
-		return http.get(`/data/${code}/${cookie}`);
+		return http().get(`/data/${code}/${cookie}`);
 	}
 }
 
