@@ -134,7 +134,7 @@ const dinozController = {
 
       // Set player money
       player.money = parseInt(player.money) - dinoz.race.price;
-      await PlayerRepository.setPlayerMoney(player);
+      PlayerRepository.setPlayerMoney(player);
 
       // TODO: Refresh shop instead of deleting one dinoz
 

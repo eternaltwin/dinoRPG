@@ -4,7 +4,7 @@
 			<choose-dinoz-name :dinozData="dinozData"></choose-dinoz-name>
 		</div>
 		<div v-else>
-			<img src="@/assets/dinoz/dinoz_bg.jpg" alt="background dinoz">
+			<img src="@/assets/dinoz/dinoz_bg.jpg" alt="background_dinoz">
 			<equipement type="dinoz" :objects="dinozData.objects"></equipement>
 			<status :status="dinozData.status"></status>
 			<p>{{ dinozData.level.level }}</p>
@@ -37,7 +37,6 @@ export default {
 			this.isLoading = false;
 		}).catch(err => {
 			errorHandler.handle(err);
-			this.$router.push({ name: 'Accueil' });
 		});
 	},
 	components: {

@@ -12,6 +12,7 @@
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import DinozService from '@/services/DinozService';
 import { mapActions } from 'vuex';
+import { errorHandler } from '@/helpers/errorHandler';
 
 export default {
 	props: {
@@ -35,6 +36,8 @@ export default {
 				DinozService.setDinozName(dinoz).then(res => {
 					this.dinozData.name = this.name;
 					this.setDinozName(dinoz);
+				}).catch(err => {
+					errorHandler.handle(err);
 				});
 			} else {
 				// TODO : afficher popin d'erreur

@@ -19,7 +19,7 @@ const jwt = {
     },
 
     forgeJWT: (player) => {
-        return jsonwebtoken.sign({ playerId: player.playerId }, configuration.jwt.secretKey, { expiresIn: '7d' });
+        return jsonwebtoken.sign({ playerId: player.playerId }, configuration.jwt.secretKey);
     }
 }
 

@@ -21,6 +21,7 @@ import ShopService from '@/services/ShopService';
 import DinozService from '@/services/DinozService';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import { mapActions } from 'vuex';
+import { errorHandler } from '@/helpers/errorHandler';
 
 export default {
 	created () {
@@ -42,20 +43,23 @@ export default {
 				// Update player's money
 				localStorage.money = parseInt(localStorage.money - dinoz.race.price);
 				// Update dinoz list
-				let dinozId = await DinozService.buyDinoz(dinoz.id);
-				let dinozCreated = {
-					dinozId: dinozId.data.toString(),
-					name: '',
-					display: dinoz.display,
-					following: null,
-					life: 100,
-					place: {
-						name: 'dinoville'
-					}
-				};
-				this.addDinoz(dinozCreated);
-				// Redirect to dinoz page
-				this.$router.push({ name: 'dinozFiche', params: { id: dinozCreated.dinozId } });
+				DinozService.buyDinoz(dinoz.id).then(dinozId => {
+					let dinozCreated = {
+						dinozId: dinozId.data.toString(),
+						name: '',
+						display: dinoz.display,
+						following: null,
+						life: 100,
+						place: {
+							name: 'dinoville'
+						}
+					};
+					this.addDinoz(dinozCreated);
+					// Redirect to dinoz page
+					this.$router.push({ name: 'dinozFiche', params: { id: dinozCreated.dinozId } });
+				}).catch(err => {
+					errorHandler.handle(err);
+				});
 			}
 		}
 	},

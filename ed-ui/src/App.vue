@@ -31,7 +31,7 @@ export default {
 	methods: {
 		async leaveAuth () {
 			// If money isn't in localStorage, get it
-			if (localStorage.money === undefined) {
+			if (_.isNil(localStorage.money)) {
 				let res = await PlayerService.getMoney(localStorage.idPlayer);
 				localStorage.money = res.data.money;
 			}
