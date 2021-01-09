@@ -33,3 +33,10 @@ export const mockedRes = () => {
     mockResponse.send = jest.fn().mockReturnValue(mockResponse);
     return mockResponse;
 };
+
+// Mocked configuration
+export const config = {
+    shop: {
+        buyableQuetzu: 6
+    }
+}

@@ -6,16 +6,15 @@ import request from 'request';
 import jwt from '../utils/jwt.js';
 import PlayerRepository from '../repositories/player.repository.js';
 import _ from 'lodash';
-import constants from '../utils/constants.js';
+import db from '../models/index.js';
 
-var configuration;
-
+const Player = db.player;
 var oauthClient;
 
 const oauthController = {
 
     init: () => {
-        configuration = context.getConfig();
+        const configuration = context.getConfig();
 
         oauthClient = new RfcOauthClient({
             authorizationEndpoint: new URL(configuration.oauth.authorizationURI),
@@ -59,12 +58,14 @@ const oauthController = {
         // Check if player already exists in database
         let player = await PlayerRepository.getPlayerDetails(eternalTwinPlayer.body.id);
 
+        const config = context.getConfig();
+
         // If player is not found in database, create a new one
         if (_.isNil(player)) {
-            player = {
+            player = Player.build({
                 eternalTwinId: eternalTwinPlayer.body.id,
                 name: eternalTwinPlayer.body.display_name.current.value,
-                money: constants.initialMoney,
+                money: config.player.initialMoney,
                 quetzuBought: 0,
                 leader: false,
                 engineer: false,
@@ -73,10 +74,10 @@ const oauthController = {
                 merchant: false,
                 priest: false,
                 teacher: false
-            }
+            });
 
             // Create new player in database
-            player = await PlayerRepository.create(player);
+            player = await PlayerRepository.create(player.dataValues);
         }
 
         // Forge JWT with playerId

@@ -6,6 +6,9 @@ import PlayerRepository from '../repositories/player.repository.js';
 import Constants from '../utils/constants.js';
 import context from '../utils/context.js';
 import _ from 'lodash';
+import db from '../models/index.js';
+
+const Dinoz = db.dinoz;
 
 const shopController = {
     // Get all dinoz from dinoz shop
@@ -14,7 +17,7 @@ const shopController = {
         let data = await ShopRepository.getDinozFromDinozShop(req.user.playerId);
 
         // If nothing is found, create 15 dinoz to fill the shop
-        if (data.length === 0) {
+        if (_.isEmpty(data)) {
 
             let dinoz = {};
             let dinozArray = [];
@@ -23,6 +26,7 @@ const shopController = {
             let randomRace;
             let randomDisplay;
             const rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky, Constants.reward.tropheeQuetzu];
+            const config = context.getConfig();
 
             // Check if player has rocky, pteroz or hippoclamp trophy
             const player = await PlayerRepository.getRewardFromArray(req.user.playerId, rewardArray);
@@ -37,33 +41,32 @@ const shopController = {
                 if (reward.name === Constants.reward.tropheePteroz) {
                     raceArray.push(Constants.dinozRace.pteroz);
                 }
-                if (reward.name === Constants.reward.tropheeQuetzu && player.quetzuBought < 6) {
+                if (reward.name === Constants.reward.tropheeQuetzu && player.quetzuBought < config.shop.buyableQuetzu) {
                     raceArray.push(Constants.dinozRace.quetzu);
                 }
             });
             // Get all buyable races from a dinoz array
             let races = await DinozRaceRepository.getRaceFromArray(raceArray);
 
-            for (var i = 0; i < 15; i ++){
+            for (var i = 0; i < config.shop.dinozInShop; i ++){
 
                 // Set a random race to the dinoz
                 randomRace = getRandomNumber(1, races.length);
                 // Set a random display to the dinoz
                 randomDisplay = races[randomRace].swfLetter + '0' + getCosmetique() + '000';
 
-                // Create dinoz
-                dinoz = {
+                dinoz = Dinoz.build({
                     playerId: parseInt(req.user.playerId),
                     raceId: races[randomRace].raceId,
                     display: randomDisplay
-                }
+                });
 
-                dinozArray.push(dinoz);
+                dinozArray.push(dinoz.dataValues);
 
                 // Don't authorize quetzu selling if player have already reached the limit 
                 if (races[randomRace].name === Constants.dinozRace.quetzu) {
                     player.quetzuBought++;
-                    if (player.quetzuBought === 6) {
+                    if (player.quetzuBought === config.shop.buyableQuetzu) {
                         // Remove Quetzu from buyable races
                         _.remove(races, function(race){
                             return race.name === Constants.dinozRace.quetzu;
@@ -78,11 +81,11 @@ const shopController = {
             // Get created dinoz and their races
             let response = await ShopRepository.getDinozFromDinozShop(req.user.playerId)
             
-            response = _.shuffle(response);
+            response = _.orderBy(response, ['id', 'desc']);
 
             return res.status(200).send(response);
         } else {
-            data = _.shuffle(data);
+            data = _.orderBy(data, ['id', 'desc']);
 
             return res.status(200).send(data);
         }

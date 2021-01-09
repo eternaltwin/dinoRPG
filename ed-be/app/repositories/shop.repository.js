@@ -30,7 +30,7 @@ const shopRepository = {
         });
     },
 
-    deleteDinozFromShop: (playerId) => {
+    deleteDinozInShop: (playerId) => {
         return DinozShop.destroy({
             where: { playerId: playerId }
         });

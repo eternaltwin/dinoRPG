@@ -94,7 +94,7 @@ describe('Test de la fonction buyDinoz() -', function() {
         res = mockedRes();
 
         spyOn(PlayerRepository, 'setPlayerMoney');
-        spyOn(ShopRepository, 'deleteDinozFromShop').and.callThrough();
+        spyOn(ShopRepository, 'deleteDinozInShop').and.callThrough();
         spyOn(DinozRepository, 'create').and.returnValue(basicDinoz2);
         spyOn(res, 'status').and.callThrough();
         spyOn(res, 'send').and.callThrough();
@@ -112,18 +112,19 @@ describe('Test de la fonction buyDinoz() -', function() {
         expect(PlayerRepository.getMoney).toHaveBeenCalledTimes(1);
         expect(ShopRepository.getDinozDetails).toHaveBeenCalledTimes(1);
         expect(PlayerRepository.setPlayerMoney).toHaveBeenCalledTimes(1);
-        expect(ShopRepository.deleteDinozFromShop).toHaveBeenCalledTimes(1);
+        expect(ShopRepository.deleteDinozInShop).toHaveBeenCalledTimes(1);
         expect(DinozRepository.create).toHaveBeenCalledTimes(1);
 
         expect(PlayerRepository.getMoney).toHaveBeenCalledWith(parseInt(playerId));
         expect(ShopRepository.getDinozDetails).toHaveBeenCalledWith(dinozId);
         expect(PlayerRepository.setPlayerMoney).toHaveBeenCalledWith(basicPlayer);
-        expect(ShopRepository.deleteDinozFromShop).toHaveBeenCalledWith(dinozId);
+        expect(ShopRepository.deleteDinozInShop).toHaveBeenCalledWith(req.user.playerId);
     });
 
     it('Cas unauthorized action', async function() {
         const localBasicDinoz = JSON.parse(JSON.stringify(basicDinoz));
         localBasicDinoz.player.playerId = playerId2;
+
         spyOn(ShopRepository, 'getDinozDetails').and.returnValue(localBasicDinoz);
         spyOn(PlayerRepository, 'getMoney').and.returnValue(basicPlayer);
 
@@ -134,6 +135,9 @@ describe('Test de la fonction buyDinoz() -', function() {
         expect(PlayerRepository.getMoney).toHaveBeenCalledTimes(1);
         expect(ShopRepository.getDinozDetails).toHaveBeenCalledTimes(1);
         expect(PlayerRepository.setPlayerMoney).toHaveBeenCalledTimes(0);
+
+        expect(PlayerRepository.getMoney).toHaveBeenCalledWith(parseInt(req.user.playerId));
+        expect(ShopRepository.getDinozDetails).toHaveBeenCalledWith(req.body.dinozId);
     });
 
     it('Player doesn\'t have enough money to buy a dinoz', async function() {

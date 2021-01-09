@@ -80,7 +80,8 @@ const dinozController = {
 
     // TODO: add skill to dinoz
     if (parseInt(player.money) > dinoz.race.price) {
-      const newDinoz = {
+    
+      const newDinoz = Dinoz.build({ 
         name: '?',
         isFrozen: false,
         raceId: dinoz.race.raceId,
@@ -96,25 +97,23 @@ const dinozController = {
         nbrUpWater: dinoz.race.nbrWaterCase,
         nbrUpLight: dinoz.race.nbrLightCase,
         nbrUpAir: dinoz.race.nbrAirCase
-      };
+      });
 
       // Set player money
       player.money = parseInt(player.money) - dinoz.race.price;
-      PlayerRepository.setPlayerMoney(player);
+      await PlayerRepository.setPlayerMoney(player);
 
-      // TODO: Refresh shop instead of deleting one dinoz
-
-      // Delete choosen dinoz in dinoz shop
-      await ShopRepository.deleteDinozFromShop(req.body.dinozId);
+      // Delete all dinoz from dinoz shop
+      await ShopRepository.deleteDinozInShop(req.user.playerId);
 
       // Create a new dinoz that belongs to player 
-      const dinozCreated = await DinozRepository.create(newDinoz);
+      const dinozCreated = await DinozRepository.create(newDinoz.dataValues);
 
       return res.status(200).send(dinozCreated.dinozId);
-    // If player doesn't have enough money, terminate request
     } else {
+      // If player doesn't have enough money, terminate request
       return res.status(500).send({
-          message: "You don't have enough money to buy this dinoz"
+          message: 'You don\'t have enough money to buy this dinoz'
       });
     }
   },
