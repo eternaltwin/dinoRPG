@@ -2,8 +2,8 @@ import http from '@/helpers/http-common';
 
 class ShopService {
 
-	getDinozFromDinozShop(id) {
-		return http().get(`/shop/dinoz/${id}`);
+	getDinozFromDinozShop() {
+		return http().get(`/shop/dinoz`);
 	}
 
 }

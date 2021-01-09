@@ -24,7 +24,7 @@ import { mapActions } from 'vuex';
 
 export default {
 	created () {
-		ShopService.getDinozFromDinozShop(localStorage.idPlayer).then(res => {
+		ShopService.getDinozFromDinozShop().then(res => {
 			this.dinozList = res.data;
 		});
 	},
@@ -39,9 +39,10 @@ export default {
 		async openPopinConfirm(dinoz) {
 			var res = confirm('Confirmer cette action ?');
 			if (res) {
-				// Update of player's money and dinoz list
+				// Update player's money
 				localStorage.money = parseInt(localStorage.money - dinoz.race.price);
-				let dinozId = await DinozService.buyDinoz(dinoz);
+				// Update dinoz list
+				let dinozId = await DinozService.buyDinoz(dinoz.id);
 				let dinozCreated = {
 					dinozId: dinozId.data.toString(),
 					name: '',

@@ -6,9 +6,9 @@ import fs from 'fs';
 import toml from 'toml';
 import request from 'request';
 import jwt from '../utils/jwt.js';
-import playerController from './player.controller.js';
 import PlayerRepository from '../repositories/player.repository.js';
 import _ from 'lodash';
+import constants from '../utils/constants.js';
 
 const environment = Context.getEnvironnement();
 
@@ -61,7 +61,8 @@ const oauthController = {
         if (_.isNil(player)) {
             player = {
                 eternalTwinId: eternalTwinPlayer.body.id,
-                name: eternalTwinPlayer.body.display_name.current.value
+                name: eternalTwinPlayer.body.display_name.current.value,
+                money: constants.initialMoney
             }
 
             // Create new player in database

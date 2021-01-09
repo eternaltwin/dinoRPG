@@ -23,11 +23,10 @@ export default {
 	methods: {
 		...mapActions(['addDinoz']),
 		goToDinozPage(dinozId) {
-			if (this.$router.currentRoute.params.id !== dinozId) {
-				this.$router.push({ name: 'dinozFiche', params: { id: dinozId } });
-				if (this.$router.currentRoute.name === 'dinozFiche') {
-					this.$router.go();
-				}
+			this.$router.push({ name: 'dinozFiche', params: { id: dinozId } }).catch(() => {});
+			// Refresh current page to refresh dinoz SWF
+			if (this.$router.currentRoute.name === 'dinozFiche') {
+				this.$router.go();
 			}
 		}
 	},

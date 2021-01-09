@@ -20,7 +20,9 @@ const Constants = {
         tropheeRocky: 'tropheeRocky',
         tropheePteroz: 'tropheePteroz',
         tropheeHippoclamp: 'tropheeHippoclam'
-    }
+    },
+
+    initialMoney: 20000
 }
 
 export default Constants;

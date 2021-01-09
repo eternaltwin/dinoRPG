@@ -22,6 +22,7 @@ import Status from '@/components/status/statusList.vue';
 import Elements from '@/components/elements/elementsFicheDinoz.vue';
 import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
+import { errorHandler } from '@/helpers/errorHandler';
 
 export default {
 	data () {
@@ -34,6 +35,9 @@ export default {
 		DinozService.getDinozFiche(this.$route.params.id).then(res => {
 			this.dinozData = res.data;
 			this.isLoading = false;
+		}).catch(err => {
+			errorHandler.handle(err);
+			this.$router.push({ name: 'Accueil' });
 		});
 	},
 	components: {

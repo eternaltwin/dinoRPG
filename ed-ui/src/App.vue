@@ -26,6 +26,7 @@ export default {
 	},
 	created () {
 		this.auth = _.isNil(localStorage.jwt);
+		localStorage.money = 0;
 	},
 	methods: {
 		async leaveAuth () {

@@ -10,12 +10,12 @@ class DinozService {
 		return http().get(`/dinoz/fiche/${id}`);
 	}
 
-	getDinozPlayer(id) {
-		return http().get(`/dinoz/player/${id}`);
+	getDinozPlayer() {
+		return http().get(`/dinoz/player`);
 	}
 
-	buyDinoz(dinoz) {
-		return http().post('/dinoz/buydinoz', { dinoz: dinoz, playerId: localStorage.idPlayer });
+	buyDinoz(dinozId) {
+		return http().post('/dinoz/buydinoz', { dinozId: dinozId });
 	}
 
 	setDinozName(dinoz) {

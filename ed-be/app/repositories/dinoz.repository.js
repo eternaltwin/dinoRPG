@@ -6,7 +6,8 @@ const Status = db.status;
 const Objects = db.object;
 const Level = db.level;
 const Place = db.place;
-const assDinozObject = db.assDinozObject;
+const AssDinozObject = db.assDinozObject;
+const Player = db.player;
 
 const dinozRepository = {
 
@@ -37,7 +38,7 @@ const dinozRepository = {
                 as: 'status',
                 required: false
             }, {
-                model: assDinozObject,
+                model: AssDinozObject,
                 attributes: ['id'],
                 as: 'assDinozObject',
                 required: false,
@@ -73,6 +74,20 @@ const dinozRepository = {
         },{
             where: { dinozId: dinoz.dinozId }
         });
+    },
+
+    // Retrieve playerId from dinozId
+    getPlayerFromDinozId: (dinozId) => {
+        return Dinoz.findOne({
+            attributes: [],
+            include: [{
+                model: Player,
+                attributes: ['playerId'],
+                as: 'player',
+                required: false 
+            }],
+            where: { dinozId: dinozId }
+        })
     }
 }
 

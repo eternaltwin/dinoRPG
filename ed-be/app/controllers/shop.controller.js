@@ -9,7 +9,7 @@ const shopController = {
     // Get all dinoz from dinoz shop
     getDinozFromDinozShop: async (req, res) => {
         // Retrieve dinoz from dinoz shop if exists
-        let data = await ShopRepository.getDinozFromDinozShop(req.params.id);
+        let data = await ShopRepository.getDinozFromDinozShop(req.user.playerId);
 
         // If nothing is found, create 15 dinoz to fill the shop
         if (data.length === 0) {
@@ -23,7 +23,7 @@ const shopController = {
             let rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky];
 
             // Check if player has rocky, pteroz or hippoclamp trophy
-            let player = await PlayerRepository.getRewardFromArray(req.params.id, rewardArray);
+            let player = await PlayerRepository.getRewardFromArray(req.user.playerId, rewardArray);
                 
             player.reward.forEach(reward => {
                 if (reward.name === Constants.reward.tropheeRocky) {
@@ -47,7 +47,7 @@ const shopController = {
 
                 // Create dinoz
                 dinoz = {
-                    playerId: parseInt(req.params.id),
+                    playerId: parseInt(req.user.playerId),
                     raceId: races[randomRace].raceId,
                     display: randomDisplay
                 }
@@ -59,7 +59,7 @@ const shopController = {
             await ShopRepository.createMultiple(dinozArray);
             
             // Get created dinoz and their races
-            ShopRepository.getDinozFromDinozShop(req.params.id).then(response => {
+            ShopRepository.getDinozFromDinozShop(req.user.playerId).then(response => {
                 res.send(response);
             });
         } else {

@@ -13,6 +13,7 @@
 import ListeDinoz from '@/components/dinoz/listeDinoz.vue';
 import DinozService from '@/services/DinozService';
 import { mapActions } from 'vuex';
+import { errorHandler } from '@/helpers/errorHandler';
 
 export default {
 	name: 'CommonElements',
@@ -23,21 +24,20 @@ export default {
 	},
 	created() {
 		this.money = localStorage.money;
-		var idPlayer = parseInt(localStorage.idPlayer);
 		// On fait une requête au serveur seulement si la liste des dinoz n'est pas présente dans le store
 		if (this.$store.state.dinozList.length === 0) {
-			DinozService.getDinozPlayer(idPlayer).then(res => {
+			DinozService.getDinozPlayer().then(res => {
 				this.dinozList = res.data;
 				this.setDinozList(res.data);
+			}).catch(err => {
+				errorHandler.handle(err);
 			});
 		}
 	},
 	methods: {
 		...mapActions(['setDinozList']),
 		goToDinozShop () {
-			if (this.$router.currentRoute.name !== 'dinozShop') {
-				this.$router.push({ name: 'dinozShop' });
-			}
+			this.$router.push({ name: 'dinozShop' }).catch(() => {});
 		}
 	},
 	components: {

@@ -29,6 +29,8 @@ module.exports = {
     'space-before-function-paren': 0,
     'no-irregular-whitespace': 0,
     'padded-blocks': 0,
+    'spaced-comment': 0,
+    'eol-last': 0,
     'object-curly-spacing': ['error', 'always'],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'

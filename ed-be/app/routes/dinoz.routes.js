@@ -13,7 +13,7 @@ export default function(app) {
 	router.get("/fiche/:id", dinozController.getDinozFiche);
 
 	// Get all dinoz not frozen from one player
-	router.get("/player/:id", dinozController.getDinozPlayer);
+	router.get("/player", dinozController.getDinozPlayer);
 
 	// When a dinoz is bought in dinoz shop
 	router.post("/buydinoz", dinozController.buyDinoz);
