@@ -4,12 +4,13 @@ import ShopRepository from '../repositories/shop.repository.js';
 import DinozRaceRepository from '../repositories/dinozRace.respository.js';
 import PlayerRepository from '../repositories/player.repository.js';
 import Constants from '../utils/constants.js';
+import _ from 'lodash';
 
 const shopController = {
     // Get all dinoz from dinoz shop
     getDinozFromDinozShop: async (req, res) => {
         // Retrieve dinoz from dinoz shop if exists
-        const data = await ShopRepository.getDinozFromDinozShop(req.user.playerId);
+        let data = await ShopRepository.getDinozFromDinozShop(req.user.playerId);
 
         // If nothing is found, create 15 dinoz to fill the shop
         if (data.length === 0) {
@@ -20,10 +21,10 @@ const shopController = {
                 Constants.dinozRace.gorilloz, Constants.dinozRace.wanwan, Constants.dinozRace.pigmou, Constants.dinozRace.planaille, Constants.dinozRace.moueffe];
             let randomRace;
             let randomDisplay;
-            let rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky];
+            const rewardArray = [Constants.reward.tropheeHippoclamp, Constants.reward.tropheePteroz, Constants.reward.tropheeRocky, Constants.reward.tropheeQuetzu];
 
             // Check if player has rocky, pteroz or hippoclamp trophy
-            let player = await PlayerRepository.getRewardFromArray(req.user.playerId, rewardArray);
+            const player = await PlayerRepository.getRewardFromArray(req.user.playerId, rewardArray);
                 
             player.reward.forEach(reward => {
                 if (reward.name === Constants.reward.tropheeRocky) {
@@ -35,11 +36,15 @@ const shopController = {
                 if (reward.name === Constants.reward.tropheePteroz) {
                     raceArray.push(Constants.dinozRace.pteroz);
                 }
+                if (reward.name === Constants.reward.tropheeQuetzu && player.quetzuBought < 6) {
+                    raceArray.push(Constants.dinozRace.quetzu);
+                }
             });
             // Get all buyable races from a dinoz array
             let races = await DinozRaceRepository.getRaceFromArray(raceArray);
 
             for (var i = 0; i < 15; i ++){
+
                 // Set a random race to the dinoz
                 randomRace = getRandomNumber(1, races.length);
                 // Set a random display to the dinoz
@@ -53,16 +58,30 @@ const shopController = {
                 }
 
                 dinozArray.push(dinoz);
+
+                // Don't authorize quetzu selling if player have already reached the limit 
+                if (races[randomRace].name === Constants.dinozRace.quetzu) {
+                    player.quetzuBought++;
+                    if (player.quetzuBought === 6) {
+                        // Remove Quetzu from buyable races
+                        _.remove(races, function(race){
+                            return race.name === Constants.dinozRace.quetzu;
+                        });
+                    }
+                }
             }
 
             // Save created dinoz in database
             await ShopRepository.createMultiple(dinozArray);
             
             // Get created dinoz and their races
-            const response = await ShopRepository.getDinozFromDinozShop(req.user.playerId)
+            let response = await ShopRepository.getDinozFromDinozShop(req.user.playerId)
             
+            response = _.shuffle(response);
+
             return res.status(200).send(response);
         } else {
+            data = _.shuffle(data);
             return res.status(200).send(data);
         }
     }

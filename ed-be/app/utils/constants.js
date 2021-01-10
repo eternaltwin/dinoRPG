@@ -13,13 +13,15 @@ const Constants = {
         wanwan: 'wanwan',
         pigmou: 'pigmou',
         planaille: 'planaille',
-        moueffe: 'moueffe'
+        moueffe: 'moueffe',
+        quetzu: 'quetzu'
     },
 
     reward: {
         tropheeRocky: 'tropheeRocky',
         tropheePteroz: 'tropheePteroz',
-        tropheeHippoclamp: 'tropheeHippoclam'
+        tropheeHippoclamp: 'tropheeHippoclamp',
+        tropheeQuetzu: 'tropheeQuetzu'
     },
 
     initialMoney: 20000

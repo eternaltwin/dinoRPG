@@ -62,7 +62,15 @@ const oauthController = {
             player = {
                 eternalTwinId: eternalTwinPlayer.body.id,
                 name: eternalTwinPlayer.body.display_name.current.value,
-                money: constants.initialMoney
+                money: constants.initialMoney,
+                quetzuBought: 0,
+                leader: false,
+                engineer: false,
+                cooker: false,
+                shopKeeper: false,
+                merchant: false,
+                priest: false,
+                teacher: false
             }
 
             // Create new player in database

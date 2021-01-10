@@ -7,7 +7,7 @@ const EpicReward = db.epicReward;
 const playerRepository = {
     getRewardFromArray: (playerId, rewardArray) => {
         return Player.findOne({
-            attributes: [],
+            attributes: ['quetzuBought'],
             include: {
                 model: EpicReward,
                 attributes: ['name'],
