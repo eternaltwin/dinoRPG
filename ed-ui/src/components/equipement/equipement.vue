@@ -3,9 +3,9 @@
 		<table>
 			<tbody>
 				<tr v-for="(object, index) in objectsList" :key="index">
-					<td v-for="obj in object" :key="obj.name">
-						<img :src="getImg(obj.name)">
-						<p>{{ $t('object.name.' + obj.name) }}</p>
+					<td v-for="obj in object" :key="obj.id">
+						<img :src="getImg(obj.object.name)">
+						<p>{{ $t('object.name.' + obj.object.name) }}</p>
 					</td>
 				</tr>
 			</tbody>
@@ -43,8 +43,7 @@ export default {
 	},
 	methods: {
 		getImg (imgName) {
-			var images = require.context('@/assets/object/', false, /\.png$/);
-			return images('./' + imgName + '.png');
+			return require('@/assets/object/' + imgName + '.png');
 		},
 		displayDescription (description) {
 			console.log(description);

@@ -1,27 +1,30 @@
 <template>
 	<div id="elementsFicheDinoz">
 		<img :src="getImg(0)">
-		<span>{{ elements.fire }}</span>
+		<span>{{ fire }}</span>
 		<img :src="getImg(1)">
-		<span>{{ elements.wood }}</span>
+		<span>{{ wood }}</span>
 		<img :src="getImg(2)">
-		<span>{{ elements.water }}</span>
+		<span>{{ water }}</span>
 		<img :src="getImg(3)">
-		<span>{{ elements.light }}</span>
+		<span>{{ light }}</span>
 		<img :src="getImg(4)">
-		<span>{{ elements.air }}</span>
+		<span>{{ air }}</span>
 	</div>
 </template>
 
 <script>
 export default {
 	props: {
-		elements: Object
+		fire: Number,
+		wood: Number,
+		water: Number,
+		light: Number,
+		air: Number
 	},
 	methods: {
 		getImg (index) {
-			var images = require.context('@/assets/elements/', false, /\.png$/);
-			return images('./elem_' + index + '.png');
+			return require('@/assets/elements/elem_' + index + '.png');
 		}
 	}
 };

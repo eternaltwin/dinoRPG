@@ -39,50 +39,24 @@ const dinozController = {
     // Retrieve player from dinozId
     const player = await DinozRepository.getPlayerFromDinozId(dinozId);
 
+    // If player found is different from player who do the request, throw exception
     if (player.player.playerId !== req.user.playerId) {
-      res.status(401).send({
-        message: 'Cannot get dinoz details, dinoz : ' + dinozId + ', playerId : ' + req.user.playerId
+      return res.status(401).send({
+        message: 'Cannot get dinoz details, dinozId : ' + dinozId + ', playerId : ' + req.user.playerId
       });
-      return;
     }
 
-    DinozRepository.getDinozFiche(dinozId).then(data => {
-      var elements = {};
-      var objects = [];
+    let dinozDetails;
 
-      // On ajoute les éléments dans un seul objet élément
-      elements.fire = data.dataValues.nbrUpFire;
-      elements.wood = data.dataValues.nbrUpWood;
-      elements.water = data.dataValues.nbrUpWater;
-      elements.light = data.dataValues.nbrUpLight;
-      elements.air = data.dataValues.nbrUpAir;
-
-      data.dataValues.elements = elements;
-
-      // Suppression des attributs devenus inutiles
-      delete data.dataValues.nbrUpFire;
-      delete data.dataValues.nbrUpWood;
-      delete data.dataValues.nbrUpWater;
-      delete data.dataValues.nbrUpLight;
-      delete data.dataValues.nbrUpAir;
-
-
-      // On récupère les objets qu'à le dinoz sous une seule variable 'object'
-      data.assDinozObject.forEach(assDinozObject => {
-        objects.push(assDinozObject.object);
+    try {
+      dinozDetails = await DinozRepository.getDinozFiche(dinozId);
+    } catch (err) {
+      return res.status(500).send({
+        message: 'Some error occurred while retrieving dinoz data, err: ' + err
       });
+    }
 
-      data.dataValues.objects = objects;
-
-      delete data.dataValues.assDinozObject;
-
-      res.send(data);
-    }).catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving dinoz data."
-      });
-    });
+    res.send(dinozDetails);
   },
 
   // Get all dinoz not frozen from one player
@@ -106,10 +80,9 @@ const dinozController = {
 
     // Throw unauthorized error if dinoz doesn't belong to player shop
     if (dinoz.player.playerId !== req.user.playerId) {
-      res.status(401).send({
+      return res.status(401).send({
         message: 'Unauthorized action, you can\'t buy this dinoz'
       });
-      return;
     }
 
     // TODO: add skill to dinoz
@@ -160,10 +133,9 @@ const dinozController = {
 
     // If authenticated player is different from player found, throw exception
     if (player.player.playerId !== req.user.playerId) {
-      res.status(401).send({
+      return res.status(401).send({
         message: 'Unauthorized action from player : ' + req.user.playerId
       });
-      return;
     }
 
     // Update dinoz name

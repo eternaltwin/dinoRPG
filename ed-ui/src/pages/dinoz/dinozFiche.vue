@@ -1,15 +1,15 @@
 <template>
 	<div id="dinozFiche" v-if="!isLoading">
-		<div v-if="!dinozData.name">
+		<div v-if="dinozData.name === '?'">
 			<choose-dinoz-name :dinozData="dinozData"></choose-dinoz-name>
 		</div>
 		<div v-else>
 			<img src="@/assets/dinoz/dinoz_bg.jpg" alt="background_dinoz">
-			<equipement type="dinoz" :objects="dinozData.objects"></equipement>
+			<equipement type="dinoz" :objects="dinozData.assDinozObject"></equipement>
 			<status :status="dinozData.status"></status>
 			<p>{{ dinozData.level.level }}</p>
 			<p>{{ dinozData.name }}</p>
-			<elements :elements="dinozData.elements"></elements>
+			<elements :fire="dinozData.nbrUpFire" :wood="dinozData.nbrUpWood" :water="dinozData.nbrUpWater" :light="dinozData.nbrUpLight" :air="dinozData.nbrUpAir"></elements>
 			<dinozSWF :display="dinozData.display" :width="190" :height="165" type="dino"></dinozSWF>
 		</div>
 	</div>
@@ -31,13 +31,15 @@ export default {
 			isLoading: true
 		};
 	},
-	created () {
-		DinozService.getDinozFiche(this.$route.params.id).then(res => {
-			this.dinozData = res.data;
-			this.isLoading = false;
-		}).catch(err => {
+	async created () {
+		try {
+			const dinozDetails = await DinozService.getDinozFiche(this.$route.params.id);
+			this.dinozData = dinozDetails.data;
+		} catch (err) {
 			errorHandler.handle(err);
-		});
+		}
+
+		this.isLoading = false;
 	},
 	components: {
 		Equipement,
