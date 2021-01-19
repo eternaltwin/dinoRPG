@@ -1,21 +1,210 @@
 import DinozController from '../../app/controllers/dinoz.controller.js';
 import DinozRepository from '../../app/repositories/dinoz.repository.js';
-import { getBasicDinoz, completeDinoz } from '../data/dinozData.js';
-import { getBasicPlayer } from '../data/playerData.js';
+import PlayerRepository from '../../app/repositories/player.repository.js';
+import ShopRepository from '../../app/repositories/shop.repository.js';
+import { basicDinoz, basicDinoz2 } from '../data/dinozData.js';
+import { basicPlayer, basicPlayer2 } from '../data/playerData.js';
+import { HTTP_STATUS_OK, SERVER_ERROR, dinozId, HTTP_STATUS_UNAUTHORIZED, mockedReq, playerId, playerId2 } from '../utils/constants.js';
+import jest from 'jest-mock';
 
-describe('Test du fichier dinozController.js', function() {
+const mockResponse = () => {
+    const mockResponse = {};
+    mockResponse.status = jest.fn().mockReturnValue(mockResponse);
+    mockResponse.send = jest.fn().mockReturnValue(mockResponse);
+    return mockResponse;
+};
+
+let req;
+let res;
+
+describe('Test de la fonction getDinozFiche() -', function() {
 
     beforeEach(function() {
-        spyOn(DinozRepository, 'getPlayerFromDinozId').and.returnValue(getBasicPlayer);
-        spyOn(DinozRepository, 'getDinozFiche').and.returnValue(completeDinoz);
+        req = mockedReq;
+        req.params = basicDinoz;
+        res = mockResponse();
+
+        spyOn(DinozRepository, 'getDinozFiche').and.returnValue(basicDinoz);
+        spyOn(res, 'status').and.callThrough();
+        spyOn(res, 'send').and.callThrough();
     });
 
-    it('Récupération des détails d\'un dinoz - Cas nominal', async function() {
+    it('Cas nominal', async function() {
+        spyOn(DinozRepository, 'getPlayerFromDinozId').and.returnValue(basicPlayer);
+        
+        await DinozController.getDinozFiche(req, res);
 
-        const response = await DinozController.getDinozFiche(getBasicDinoz, '');
+        expect(res.status).toHaveBeenCalledWith(HTTP_STATUS_OK);
+        expect(res.send).toHaveBeenCalledWith(basicDinoz);
 
-        console.log(response);
-        expect(response).not.toBeNull();
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledTimes(1);
+        expect(DinozRepository.getDinozFiche).toHaveBeenCalledTimes(1);
+
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledWith(dinozId);
+        expect(DinozRepository.getDinozFiche).toHaveBeenCalledWith(dinozId);
     });
 
+    it('Cas unauthorized action', async function() {
+        spyOn(DinozRepository, 'getPlayerFromDinozId').and.returnValue(basicPlayer2);
+
+        await DinozController.getDinozFiche(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(HTTP_STATUS_UNAUTHORIZED);
+        
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledTimes(1);
+        expect(DinozRepository.getDinozFiche).toHaveBeenCalledTimes(0);
+
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledWith(dinozId);
+    });
+});
+
+describe('Test de la fonction getDinozPlayer() -', function() {
+
+    beforeEach(function() {
+        req = mockedReq;
+        res = mockResponse();
+
+        spyOn(res, 'status').and.callThrough();
+        spyOn(res, 'send').and.callThrough();
+    });
+
+    it('Cas nominal', async function() {
+        spyOn(DinozRepository, 'getDinozPlayer').and.returnValue(basicDinoz);
+
+        await DinozController.getDinozPlayer(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(HTTP_STATUS_OK);
+        expect(res.send).toHaveBeenCalledWith(basicDinoz);
+
+        expect(DinozRepository.getDinozPlayer).toHaveBeenCalledTimes(1);
+        expect(DinozRepository.getDinozPlayer).toHaveBeenCalledWith(playerId);
+    });
+
+    it('Cas exception', async function() { 
+        spyOn(DinozRepository, 'getDinozPlayer').and.throwError('Cannot get dinoz');
+
+        await DinozController.getDinozPlayer(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(SERVER_ERROR);
+
+        expect(DinozRepository.getDinozPlayer).toHaveBeenCalledTimes(1);
+        expect(DinozRepository.getDinozPlayer).toHaveBeenCalledWith(playerId);
+    });
+});
+
+describe('Test de la fonction buyDinoz() -', function() {
+
+    beforeEach(function() {
+        req = mockedReq;
+        req.body = { 
+            dinozId: dinozId
+        }
+        res = mockResponse();
+
+        spyOn(PlayerRepository, 'setPlayerMoney');
+        spyOn(ShopRepository, 'deleteDinozFromShop').and.callThrough();
+        spyOn(DinozRepository, 'create').and.returnValue(basicDinoz2);
+        spyOn(res, 'status').and.callThrough();
+        spyOn(res, 'send').and.callThrough();
+    });
+
+    it('Cas nominal', async function() {
+        spyOn(ShopRepository, 'getDinozDetails').and.returnValue(basicDinoz);
+        spyOn(PlayerRepository, 'getMoney').and.returnValue(basicPlayer);
+
+        await DinozController.buyDinoz(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(HTTP_STATUS_OK);
+        expect(res.send).toHaveBeenCalledWith(basicDinoz2.dinozId);
+
+        expect(PlayerRepository.getMoney).toHaveBeenCalledTimes(1);
+        expect(ShopRepository.getDinozDetails).toHaveBeenCalledTimes(1);
+        expect(PlayerRepository.setPlayerMoney).toHaveBeenCalledTimes(1);
+        expect(ShopRepository.deleteDinozFromShop).toHaveBeenCalledTimes(1);
+        expect(DinozRepository.create).toHaveBeenCalledTimes(1);
+
+        expect(PlayerRepository.getMoney).toHaveBeenCalledWith(parseInt(playerId));
+        expect(ShopRepository.getDinozDetails).toHaveBeenCalledWith(dinozId);
+        expect(PlayerRepository.setPlayerMoney).toHaveBeenCalledWith(basicPlayer);
+        expect(ShopRepository.deleteDinozFromShop).toHaveBeenCalledWith(dinozId);
+    });
+
+    it('Cas unauthorized action', async function() {
+        const localBasicDinoz = JSON.parse(JSON.stringify(basicDinoz));
+        localBasicDinoz.player.playerId = playerId2;
+        spyOn(ShopRepository, 'getDinozDetails').and.returnValue(localBasicDinoz);
+        spyOn(PlayerRepository, 'getMoney').and.returnValue(basicPlayer);
+
+        await DinozController.buyDinoz(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(HTTP_STATUS_UNAUTHORIZED);
+
+        expect(PlayerRepository.getMoney).toHaveBeenCalledTimes(1);
+        expect(ShopRepository.getDinozDetails).toHaveBeenCalledTimes(1);
+        expect(PlayerRepository.setPlayerMoney).toHaveBeenCalledTimes(0);
+    });
+
+    it('Player doesn\'t have enough money to buy a dinoz', async function() {
+        const localBasicPlayer = JSON.parse(JSON.stringify(basicPlayer));
+        localBasicPlayer.money = 0;
+        spyOn(ShopRepository, 'getDinozDetails').and.returnValue(basicDinoz);
+        spyOn(PlayerRepository, 'getMoney').and.returnValue(localBasicPlayer);
+
+        await DinozController.buyDinoz(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(SERVER_ERROR);
+
+        expect(PlayerRepository.getMoney).toHaveBeenCalledTimes(1);
+        expect(ShopRepository.getDinozDetails).toHaveBeenCalledTimes(1);
+        expect(PlayerRepository.setPlayerMoney).toHaveBeenCalledTimes(0);
+    });
+});
+
+describe('Test de la fonction setDinozName() -', function() {
+
+    beforeEach(function() {
+        req = mockedReq;
+        req.body = { dinoz: { dinozId: dinozId } }
+        res = mockResponse();
+
+        spyOn(res, 'status').and.callThrough();
+        spyOn(res, 'send').and.callThrough();
+    });
+
+    it('Cas nominal', async function() {
+        spyOn(DinozRepository, 'getPlayerFromDinozId').and.returnValue(basicPlayer);
+        spyOn(DinozRepository, 'setDinozName');
+
+        await DinozController.setDinozName(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(HTTP_STATUS_OK);
+
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledTimes(1);
+        expect(DinozRepository.setDinozName).toHaveBeenCalledTimes(1);
+
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledWith(dinozId);
+    });
+
+    it('Unauthorized action', async function() {
+        spyOn(DinozRepository, 'getPlayerFromDinozId').and.returnValue(basicPlayer2);
+        spyOn(DinozRepository, 'setDinozName');
+
+        await DinozController.setDinozName(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(HTTP_STATUS_UNAUTHORIZED);
+
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledTimes(1);
+        expect(DinozRepository.setDinozName).toHaveBeenCalledTimes(0);
+
+        expect(DinozRepository.getPlayerFromDinozId).toHaveBeenCalledWith(dinozId);
+    });
+
+    it('Error occured while setting dinoz name', async function() {
+        spyOn(DinozRepository, 'getPlayerFromDinozId').and.returnValue(basicPlayer);
+        spyOn(DinozRepository, 'setDinozName').and.throwError('An error occured');
+
+        await DinozController.setDinozName(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(SERVER_ERROR);
+    });
 });

@@ -46,29 +46,22 @@ const dinozController = {
       });
     }
 
-    let dinozDetails;
+    const dinozDetails = await DinozRepository.getDinozFiche(dinozId);
 
-    try {
-      dinozDetails = await DinozRepository.getDinozFiche(dinozId);
-    } catch (err) {
-      return res.status(500).send({
-        message: 'Some error occurred while retrieving dinoz data, err: ' + err
-      });
-    }
-
-    res.send(dinozDetails);
+    res.status(200).send(dinozDetails);
   },
 
   // Get all dinoz not frozen from one player
-  getDinozPlayer: (req, res) => {
-    DinozRepository.getDinozPlayer(req.user.playerId).then(data => {
-      res.send(data);
-    }).catch(err => {
-      res.status(500).send({
+  getDinozPlayer: async(req, res) => {
+    try {
+      const data = await DinozRepository.getDinozPlayer(req.user.playerId)
+      return res.status(200).send(data);
+    } catch(err) {
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving dinoz from player. Id player = " + id
       });
-    });
+    }
   },
 
   buyDinoz: async (req, res) => {
@@ -115,12 +108,12 @@ const dinozController = {
       await ShopRepository.deleteDinozFromShop(req.body.dinozId);
 
       // Create a new dinoz that belongs to player 
-      let dinozCreated = await DinozRepository.create(newDinoz);
+      const dinozCreated = await DinozRepository.create(newDinoz);
 
-      res.send(dinozCreated.dinozId);
+      return res.status(200).send(dinozCreated.dinozId);
     // If player doesn't have enough money, terminate request
     } else {
-      return res.status(501).send({
+      return res.status(500).send({
           message: "You don't have enough money to buy this dinoz"
       });
     }
@@ -139,14 +132,15 @@ const dinozController = {
     }
 
     // Update dinoz name
-    DinozRepository.setDinozName(Dinoz.build(req.body.dinoz)).then(function(response) {
-      res.send(response);
-    }).catch(err => {
-      res.status(500).send({
+    try {
+      const response = await DinozRepository.setDinozName(Dinoz.build(req.body.dinoz))
+      return res.status(200).send(response);
+    } catch(err) {
+      return res.status(500).send({
         message:
           err.message || 'Some error occurred while updating dinoz name'
       });
-    });
+    }
   }
 }
 
