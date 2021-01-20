@@ -4,15 +4,7 @@ import PlayerRepository from '../../app/repositories/player.repository.js';
 import ShopRepository from '../../app/repositories/shop.repository.js';
 import { basicDinoz, basicDinoz2 } from '../data/dinozData.js';
 import { basicPlayer, basicPlayer2 } from '../data/playerData.js';
-import { HTTP_STATUS_OK, SERVER_ERROR, dinozId, HTTP_STATUS_UNAUTHORIZED, mockedReq, playerId, playerId2 } from '../utils/constants.js';
-import jest from 'jest-mock';
-
-const mockResponse = () => {
-    const mockResponse = {};
-    mockResponse.status = jest.fn().mockReturnValue(mockResponse);
-    mockResponse.send = jest.fn().mockReturnValue(mockResponse);
-    return mockResponse;
-};
+import { HTTP_STATUS_OK, SERVER_ERROR, dinozId, HTTP_STATUS_UNAUTHORIZED, mockedReq, mockedRes, playerId, playerId2 } from '../utils/constants.js';
 
 let req;
 let res;
@@ -22,7 +14,7 @@ describe('Test de la fonction getDinozFiche() -', function() {
     beforeEach(function() {
         req = mockedReq;
         req.params = basicDinoz;
-        res = mockResponse();
+        res = mockedRes();
 
         spyOn(DinozRepository, 'getDinozFiche').and.returnValue(basicDinoz);
         spyOn(res, 'status').and.callThrough();
@@ -62,7 +54,7 @@ describe('Test de la fonction getDinozPlayer() -', function() {
 
     beforeEach(function() {
         req = mockedReq;
-        res = mockResponse();
+        res = mockedRes();
 
         spyOn(res, 'status').and.callThrough();
         spyOn(res, 'send').and.callThrough();
@@ -99,7 +91,7 @@ describe('Test de la fonction buyDinoz() -', function() {
         req.body = { 
             dinozId: dinozId
         }
-        res = mockResponse();
+        res = mockedRes();
 
         spyOn(PlayerRepository, 'setPlayerMoney');
         spyOn(ShopRepository, 'deleteDinozFromShop').and.callThrough();
@@ -165,7 +157,7 @@ describe('Test de la fonction setDinozName() -', function() {
     beforeEach(function() {
         req = mockedReq;
         req.body = { dinoz: { dinozId: dinozId } }
-        res = mockResponse();
+        res = mockedRes();
 
         spyOn(res, 'status').and.callThrough();
         spyOn(res, 'send').and.callThrough();

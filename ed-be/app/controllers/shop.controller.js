@@ -9,7 +9,7 @@ const shopController = {
     // Get all dinoz from dinoz shop
     getDinozFromDinozShop: async (req, res) => {
         // Retrieve dinoz from dinoz shop if exists
-        let data = await ShopRepository.getDinozFromDinozShop(req.user.playerId);
+        const data = await ShopRepository.getDinozFromDinozShop(req.user.playerId);
 
         // If nothing is found, create 15 dinoz to fill the shop
         if (data.length === 0) {
@@ -59,11 +59,11 @@ const shopController = {
             await ShopRepository.createMultiple(dinozArray);
             
             // Get created dinoz and their races
-            ShopRepository.getDinozFromDinozShop(req.user.playerId).then(response => {
-                res.send(response);
-            });
+            const response = await ShopRepository.getDinozFromDinozShop(req.user.playerId)
+            
+            return res.status(200).send(response);
         } else {
-            res.send(data);
+            return res.status(200).send(data);
         }
     }
 }

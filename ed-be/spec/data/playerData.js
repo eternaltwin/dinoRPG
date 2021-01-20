@@ -1,4 +1,4 @@
-import { playerId, playerId2 } from '../utils/constants.js';
+import { playerId, playerId2, rewardName1, rewardName2 } from '../utils/constants.js';
 
 export const basicPlayer = {
     player: {
@@ -11,4 +11,18 @@ export const basicPlayer2 = {
     player: {
         playerId: playerId2
     }
+}
+
+export const playerWithRewards = {
+    player: {
+        playerId: playerId
+    },
+    reward: [
+        {
+            name: rewardName1
+        },
+        {
+            name: rewardName2
+        }
+    ]
 }
