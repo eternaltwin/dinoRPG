@@ -4,6 +4,7 @@ import ShopRepository from '../repositories/shop.repository.js';
 import DinozRaceRepository from '../repositories/dinozRace.respository.js';
 import PlayerRepository from '../repositories/player.repository.js';
 import Constants from '../utils/constants.js';
+import context from '../utils/context.js';
 import _ from 'lodash';
 
 const shopController = {
@@ -82,6 +83,7 @@ const shopController = {
             return res.status(200).send(response);
         } else {
             data = _.shuffle(data);
+
             return res.status(200).send(data);
         }
     }

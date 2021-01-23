@@ -10,8 +10,13 @@ import shopRoutes from './app/routes/shop.routes.js';
 import playerRoutes from './app/routes/player.routes.js';
 import dinozRoutes from './app/routes/dinoz.routes.js';
 import jwt from './app/utils/jwt.js';
+import context from './app/utils/context.js';
+import oauthController from './app/controllers/oauth.controller.js';
 
 const app = express();
+
+// Load configuration
+await context.loadConfigFile();
 
 // Database connection
 db.sequelize.sync().then(() => {
@@ -46,6 +51,9 @@ dinozRoutes(app);
 
 // Launch Cron
 resetDinozShop.resetDinozShopAtMidnight();
+
+// Initiate controllers
+oauthController.init();
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;

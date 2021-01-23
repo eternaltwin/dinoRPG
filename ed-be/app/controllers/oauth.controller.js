@@ -1,28 +1,30 @@
 import { HttpEtwinClient } from "@eternal-twin/etwin-client-http";
 import { RfcOauthClient } from "@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js";
 import { URL } from "url";
-import Context from '../utils/context.js';
-import fs from 'fs';
-import toml from 'toml';
+import context from '../utils/context.js';
 import request from 'request';
 import jwt from '../utils/jwt.js';
 import PlayerRepository from '../repositories/player.repository.js';
 import _ from 'lodash';
 import constants from '../utils/constants.js';
 
-const environment = Context.getEnvironnement();
+var configuration;
 
-const configuration = toml.parse(fs.readFileSync('./config_' + environment + '.toml', 'utf-8'));
-
-const oauthClient = new RfcOauthClient({
-    authorizationEndpoint: new URL(configuration.oauth.authorizationURI),
-    tokenEndpoint: new URL(configuration.oauth.tokenURI),
-    callbackEndpoint: new URL(configuration.oauth.callbackURI),
-    clientId: configuration.oauth.client_id,
-    clientSecret: configuration.oauth.client_secret
-});
+var oauthClient;
 
 const oauthController = {
+
+    init: () => {
+        configuration = context.getConfig();
+
+        oauthClient = new RfcOauthClient({
+            authorizationEndpoint: new URL(configuration.oauth.authorizationURI),
+            tokenEndpoint: new URL(configuration.oauth.tokenURI),
+            callbackEndpoint: new URL(configuration.oauth.callbackURI),
+            clientId: configuration.oauth.client_id,
+            clientSecret: configuration.oauth.client_secret
+        });
+    },
 
     // Get authorization URI
     getAuthorizationUri: () => {
