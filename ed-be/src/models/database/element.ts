@@ -1,0 +1,27 @@
+import {
+	AllowNull,
+	Column,
+	HasMany,
+	Model,
+	PrimaryKey,
+	Table,
+} from 'sequelize-typescript';
+import { Dinoz } from './dinoz';
+
+@Table({ tableName: 'tb_element', timestamps: false })
+export class Element extends Model {
+	@PrimaryKey
+	@AllowNull(false)
+	@Column
+	elementId!: bigint;
+
+	@HasMany(() => Dinoz, 'nextUpElementId')
+	dinozNextUp!: Array<Dinoz>;
+
+	@HasMany(() => Dinoz, 'nextUpAltElementId')
+	dinozNextUpAlt!: Array<Dinoz>;
+
+	@AllowNull(false)
+	@Column
+	name!: string;
+}

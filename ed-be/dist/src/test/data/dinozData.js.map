@@ -1,0 +1,1 @@
+{"version":3,"file":"dinozData.js","sourceRoot":"","sources":["../../../../src/test/data/dinozData.ts"],"names":[],"mappings":";;;AACA,kDAAqD;AAExC,QAAA,UAAU,GAAG;IACzB,EAAE,EAAE,mBAAO;IACX,MAAM,EAAE;QACP,QAAQ,EAAE,MAAM,CAAC,kBAAM,CAAC,IAAI,CAAC;KAC7B;IACD,IAAI,EAAE;QACL,KAAK,EAAE,KAAK;KACZ;CACQ,CAAC"}

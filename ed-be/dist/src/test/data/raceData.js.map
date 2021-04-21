@@ -1,0 +1,1 @@
+{"version":3,"file":"raceData.js","sourceRoot":"","sources":["../../../../src/test/data/raceData.ts"],"names":[],"mappings":";;;AAEa,QAAA,cAAc,GAAG;IAC7B;QACC,MAAM,EAAE,MAAM,CAAC,IAAI,CAAC;QACpB,IAAI,EAAE,QAAQ;QACd,KAAK,EAAE,KAAK;KACZ;IACD;QACC,MAAM,EAAE,MAAM,CAAC,IAAI,CAAC;QACpB,IAAI,EAAE,OAAO;QACb,KAAK,EAAE,KAAK;KACZ;CACmB,CAAC"}

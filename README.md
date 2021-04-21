@@ -4,21 +4,19 @@
 
 | Titre                 | Logique Front | Back      | DB     | CSS      | Issue     | Commentaire                 |
 |-----------------------|---------------|-----------|--------|----------|-----------|:----------------------------|
-| Back                  | N/A           | 50%       | N/A    | N/A      | TBD       | Reste à finaliser           |
-| BDD                   | N/A           | N/A       | 75%    | N/A      | TBD       | Reste à finaliser           |
-| CSS                   | N/A           | N/A       | N/A    | 5%       | TBD       | Help!                       |
-| Front                 | 75%           | N/A       | N/A    | N/A      | TBD       | Reste à finaliser           |
-| Sécurisation de l'API | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
+| BDD                   | -             | -         | 75%    | -        | TBD       | Évolutions probables        |
+| CSS                   | -             | -         | -      | -        | -         | Help                        |
+| Sécurisation de l'API | -             | 100%      | -      | -        | -         | Fonctionnel                 |
 | Aide                  | TODO          | TODO      | TODO   | TODO     | TBD       | Rediriger vers le wiki ?    |
 | Boutique d'objets     | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Boutique dinoz        | 75%           | 75%       | 75%    | minimal  | TBD       | Manque Quetzu, fonctionnel  |
+| Boutique dinoz        | 100%          | 100%      | 100%   | 0%       | TBD       | Fonctionnel                 |
 | Boutique démoniaque   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
 | Clan                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
 | Classement            | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
 | Combat                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
 | Compte                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
 | Dojo                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Fiche Dinoz           | 20%           | 20%       | 20%    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
+| Fiche Dinoz           | 25%           | 25%       | 20%    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
 | │- Dinoz              | TBD           | TBD       | TBD    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
 | │- Carte              | TODO          | TODO      | TODO   | TODO     | [Issue 3] |                             |
 | │ │- Dinoland, etc.   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
@@ -34,10 +32,11 @@
 
 Les technologies principales utilisées sont:
 - Node.js: v14.15.1
-- Yarn: v1.22.10
+- npm: 6.14.8
+- Yarn: v2.4.1
 - Postgresql: v12
 - pgAdmin4
-- Vue/CLI: v4.4.1
+- Vue: version 3
 
 Il est préférable d'utiliser ces versions (ou des versions proches).
 
@@ -116,64 +115,33 @@ Enfin, installez pgAdmin4 pour pouvoir visualiser votre BDD :
 La commande suivante permet d'isntaller pgadmin4:
 `sudo apt install pgadmin4 pgadmin4-apache2`
 
-#### Dépendances front
+### Appliquer un dump à sa BDD
 
-Utiliser la commande `yarn install` dans le dossier du front `ed-ui`.
-
-#### Dépendances back
-
-Utiliser la commande `npm install` dans le dossier du back `ed-be`.
-
-# Mode d'emploi
-
-## Démarrage du back
-
-La manière la plus simple pour démarrer la partie back-end est d'utiliser Visual Studio Code.
-
-Tout d'abord, ouvrir le dossier `ed-be` avec Visual Studio Code.
-Ensuite, cliquer sur l'onglet `Terminal`, puis `New terminal`.
-Dans le terminal qui vient de s'ouvrir, vérifier que vous vous situez dans le dossier `ed-be`, puis taper : `npm run start`
-
-## Démarrage du front
-
-Ouvrir un terminal et taper la commande `npm run dev` dans le dossier `ed-ui`.
-
-# Structure
-
-## Comment est structuré la partie front ?
-
-La partie front-end est composée de plusieurs parties :
-
-1) Un dossier 'src/assets', qui centralise les images de l'application. Ces images seront appelées directement depuis les templates HTML des pages (fichiers '.vue').
-
-2) Un dossier 'src/components' qui contient tous les composants utilisés dans EternalDino (fichiers '.vue'). Les composants sont des briques qui sont ensuite assemblées pour former une page web.
-
-3) Un dossier 'src/router' qui contient les différentes routes de l'application. C'est le point d'entrée de l'application, dès que l'utilisateur rentre une URL, c'est ce fichier qui va lire l'URL et charger les bons composants en conséquence.
-
-4) Un dossier 'src/services' qui contient les services (logique). Un service sert à centraliser les requêtes vers la partie back-end.
-
-## Comment est structuré la partie back ?
-
-La partie back-end est composée de plusieurs parties :
-
-1) Le dossier 'app/config' qui contient les paramétrages avec la BDD (normalement, personne n'a à y toucher)
-
-2) Le dossier 'app/controllers', qui contient tous les traitement controllers. Les controllers servent à réaliser tous les traitements métiers. 
-
-3) Le dossier 'app/models', qui contient le modèle. C'est à dire les différentes tables de la BDD ainsi que leurs relations entre elles.
-
-4) Le dossier 'app/routes' qui contient toutes les routes auxquels on peut faire des requêtes. Ces fichiers fonctionnent de pair avec les controllers. En effet, la route va recevoir la requête et la partie controller va se charger de faire tous les traitement métiers et de renvoyer le bon résultat.
-
-5) Un dossier 'app/repositories' qui contient tous les fichiers qui feront des appels à la base de donnée.
-
-## Appliquer un dump à sa BDD
-
-Pour appliquer un dump :
+Pour appliquer un dump depuis pgAdmin :
 
 1) Faire clic droit sur la BDD "EternalDinoDB" puis cliquer sur "Delete/Drop" -> Valider la pop-in de confirmation
 2) Faire un clic droit sur "Databases" puis "Create -> Database"
 3) Nommer la nouvelle BDD "EternalDinoDB" et mettre "eternaldino" comme utilisateur -> Cliquer sur le bouton "Save"
 4) Faire un clic droit sur la BDD créée puis cliquer sur "Restore"
 5) Dans la pop-in, sélectionner le dump voulu puis cliquer sur "Restore"
+
+#### Dépendances front & back
+
+Utiliser la commande `yarn install` dans le dossier parent.
+
+# Mode d'emploi
+
+## Démarrage du back
+
+Utiliser la commande `yarn run serve` dans le dossier `ed-be`.
+
+## Démarrage d'eternal-twin'
+
+Ouvrir un terminal et taper la commande `yarn run etwin` dans le dossier `ed-be`.
+Il est nécessaire de faire cette commande afin de pouvoir passer l'authentification.
+
+## Démarrage du front
+
+Ouvrir un terminal et taper la commande `yarn run serve` dans le dossier `ed-ui`.
 
 

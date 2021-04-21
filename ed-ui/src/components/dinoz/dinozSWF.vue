@@ -1,21 +1,41 @@
 <template>
-	<div id="createDinoz">
+	<div id="dinozSWF">
 		<div id="myDino">
-			<object type="application/x-shockwave-flash" :data="url" :width="width" :height="height">
-				<param name="movie" :value="url">
-				<param v-for="(value, key) in params" :key="key" :name="key" :value="value">
-				<param name="flashvars" :value="serialize(flashVars)">
+			<object
+				type="application/x-shockwave-flash"
+				:data="url"
+				:width="width"
+				:height="height"
+			>
+				<param name="movie" :value="url" />
+				<param
+					v-for="(value, key) in params"
+					:key="key"
+					:name="key"
+					:value="value"
+				/>
+				<param name="flashvars" :value="serialize(flashVars)" />
 
-				<embed :src="url" type="application/x-shockwave-flash" v-bind="params" :flashvars="serialize(flashVars)" quality="high" width=100% height=100% />
+				<embed
+					:src="url"
+					type="application/x-shockwave-flash"
+					v-bind="params"
+					:flashvars="serialize(flashVars)"
+					quality="high"
+					width="100%"
+					height="100%"
+				/>
 			</object>
 		</div>
 	</div>
 </template>
 
-<script>
-import Constants from '@/helpers/Constants.js';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { url } from '@/utils/constants';
 
-export default {
+export default defineComponent({
+	name: 'DinozSWF',
 	props: {
 		display: String,
 		attrs: Object,
@@ -28,59 +48,37 @@ export default {
 	},
 	data() {
 		return {
-			url: '',
+			url: '' as string,
 			flashVars: {
 				data: '',
 				chk: 0,
 				damages: 0,
-				flip: null
-			},
+				flip: 0
+			} as FlashVars,
 			params: {
-				allowScriptAccess: 'always',
-				bgcolor: '#fce3bb',
-				menu: 'false',
-				scale: 'noscale',
-				wmode: 'transparent'
+				allowScriptAccess: 'always' as string,
+				bgcolor: '#fce3bb' as string,
+				menu: 'false' as string,
+				scale: 'noscale' as string,
+				wmode: 'transparent' as string
 			}
 		};
 	},
-	created() {
-		// Set params bgColor and wmode if needed
-		this.params.bgcolor = this.bgColor ? this.bgColor : this.params.bgcolor;
-		this.params.wmode = this.wmode ? this.wmode : this.params.wmode;
-
-		// Set URL to get swf
-		this.url = this.type === 'dino' ? Constants.getDinoSWF() : Constants.getSDinoSWF();
-
-		// Set flashVars
-		this.flashVars.data = this.display;
-		this.flashVars.flip = this.flip ? this.flip : this.flashVars.flip;
-
-		// Decode CHK
-		let decodedData = 0;
-		let dataList = [];
-		let i = -1;
-		while (++i < this.flashVars.data.length) {
-			let realCharCode = this.decode62(this.flashVars.data.charCodeAt(i));
-			dataList.push(realCharCode);
-			// Lai nombre magique c supaire
-			realCharCode = realCharCode ^ realCharCode >> 3 & 11795912;
-			realCharCode = (realCharCode << 2) + realCharCode + (realCharCode & 255);
-			decodedData = (decodedData * 5 ^ realCharCode) & 268435455;
-		}
-		this.flashVars.chk = decodedData;
-	},
 	methods: {
-		serialize(obj) {
-			var str = [];
-			for (var p in obj) {
-				if (obj.hasOwnProperty(p)) {
-					str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+		serialize(obj: FlashVars): string {
+			const str: Array<string> = [];
+			for (const p in obj) {
+				if (Object.prototype.hasOwnProperty.call(obj, p)) {
+					str.push(
+						encodeURIComponent(p) +
+							'=' +
+							encodeURIComponent(obj[p as keyof FlashVars])
+					);
 				}
 			}
 			return str.join('&');
 		},
-		decode62(n) {
+		decode62(n: number): number {
 			if (n >= 48 && n <= 58) {
 				return n - 48;
 			}
@@ -92,9 +90,39 @@ export default {
 			}
 			return 63;
 		}
-	}
-};
-</script>
+	},
+	mounted(): void {
+		// Set params bgColor and wmode if needed
+		this.params.bgcolor = this.bgColor ? this.bgColor : this.params.bgcolor;
+		this.params.wmode = this.wmode ? this.wmode : this.params.wmode;
 
-<style>
-</style>
+		// Set URL to get swf
+		this.url = this.type === 'dino' ? url.dinozSWF : url.sDinozSWF;
+
+		// Set flashVars
+		this.flashVars.data = this.display!;
+		this.flashVars.flip = this.flip ? this.flip : this.flashVars.flip;
+
+		// Decode CHK
+		let decodedData = 0;
+		const dataList: Array<number> = [];
+		let i = -1 as number;
+		while (++i < this.flashVars.data.length) {
+			let realCharCode = this.decode62(this.flashVars.data.charCodeAt(i));
+			dataList.push(realCharCode);
+			// Lai nombre magique c supaire
+			realCharCode = realCharCode ^ ((realCharCode >> 3) & 11795912);
+			realCharCode = (realCharCode << 2) + realCharCode + (realCharCode & 255);
+			decodedData = ((decodedData * 5) ^ realCharCode) & 268435455;
+		}
+		this.flashVars.chk = decodedData;
+	}
+});
+
+interface FlashVars {
+	data: string;
+	chk: number;
+	damages: number;
+	flip: number;
+}
+</script>

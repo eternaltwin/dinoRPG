@@ -1,0 +1,108 @@
+{
+	"object": {
+		"name": {
+			"obj_irma": "Potion de Madame Irma",
+			"obj_angel": "Potion d'Ange",
+			"obj_surviv": "Ration de Survie"
+		},
+		"description": {
+			"obj_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de jouer une nouvelle action immédiatemment sans devoir attendre le lendemain.",
+			"obj_angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le ressusciter sans pénalité d'expérience.",
+			"obj_surviv": "En cas de blessures graves, la ration de combat peut vous rentre entre 10 et jusqu'à 40 points de vie lors d'un combat."
+		}
+	},
+	"status": {
+		"name": {
+			"fx_matesc": "Matériel d’Escalade",
+			"fx_bouee": "Bouée",
+			"fx_cuzmal": "Malédiction de Cuzcous",
+			"fx_cup4": "Coupe de Diamant",
+			"fx_demon": "Démon",
+			"fx_lantrn": "Lanterne",
+			"fx_medal4": "Médaille de Diamant",
+			"fx_nenuph": "Feuille de Nénuphar",
+			"fx_pelle": "Pelle Porte-Chance",
+			"fx_rasca": "Appeau à Rascaphandre",
+			"fx_palmes": "Palmes des Korgons",
+			"fx_amulst": "La stratégie en 130 leçons"
+		},
+		"description": {
+			"fx_matesc": "Le Materiel d'Escalade permet à ce Dinoz de gravir les pentes escarpées.",
+			"fx_bouee": "La bouée permet à ce Dinoz de traverser certaines petites étendues d'eau sans aucun risque de noyade.",
+			"fx_cuzmal": "Votre Dinoz a été Maudit par le Gardien de Cuzcous...",
+			"fx_cup4": "Cette coupe félicite le capitaine d'une équipe pour sa domination du SuperDom !",
+			"fx_demon": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
+			"fx_lantrn": "La Lanterne permet à ce Dinoz d'explorer les plus profondes cavernes sans risquer de se perdre.",
+			"fx_medal4": "Cette médaille de diamant récompense les dinoz légendaires ayant terminé le tournoi de Forcebrut.",
+			"fx_nenuph": "Ces Feuilles de Nénuphar sont très appréciées des moines Zenzen.",
+			"fx_pelle": "Cette Pelle permet au Dinoz de creuser et de découvrir des trésors cachés.",
+			"fx_rasca": "Cette petite Flute permet d'attirer les Rascaphandres et ainsi d'accéder au Dôme Soulaflotte.",
+			"fx_palmes": "Ces palmes fabriquées par les Korgons permettent à ce Dinoz de traverser de grandes étendues d'eau.",
+			"fx_amulst": "Ce livre, très complet, permet au Dinoz de désactiver à volonté ses compétences de type 'attaque', 'événement' et certaines de type 'spécial' (depuis l'onglet Détails).\nC'est un guide indispensable pour les grands stratèges de Dinoland qui souhaitent s'adapter aux conditions de combat de chaque lieu !"
+		}
+	},
+	"race": {
+		"name": {
+			"winks": "Winks",
+			"sirain": "Sirain",
+			"castivore": "Castivore",
+			"feross": "Feross",
+			"gorilloz": "Gorilloz",
+			"hippoclamp": "Hippoclamp",
+			"kabuki": "Kabuki",
+			"mahamuti": "Mahamuti",
+			"moueffe": "Moueffe",
+			"nuagoz": "Nuagoz",
+			"pigmou": "Pigmou",
+			"planaille": "Planaille",
+			"pteroz": "Pteroz",
+			"quetzu": "Quetzu",
+			"rocky": "Rocky",
+			"santaz": "Santaz",
+			"smog": "Smog",
+			"soufflet": "Soufflet",
+			"toufufu": "Toufufu",
+			"triceragnon": "Tricéragnon",
+			"wanwan": "Wanwan"
+		},
+		"description": {
+			"winks": "Les Winks ont d'étranges pouvoirs. Ils sont les rares Dinoz à pouvoir effectuer des mutations temporaires ou définitives. Ils ont développé avec le temps une véritable science, transmise de génération en génération.",
+			"sirain": "Les Sirains sont les maîtres des Îles Altantéinées. Ils ont un assez bon sens tactique et savent garder une vision claire du combat à tout moment et exploiter les faiblesses de leurs adversaires.",
+			"castivore": "Couverts de grandes quantités de poils, les Castivores sont de paisibles herbivores. Malgré leurs courtes pattes, leur vitesse de course est très rapide et ils sont dotés d’une grande agilité. Ce sont des fidèles compagnons des Maîtres, qui ne causent pas trop de soucis hormis côté nettoyage quand ils renouvellent leurs poils.",
+			"feross": "Le Feross est un Dinoz particulièrement rare. Son habitat naturel sont les brûmes du Marais Collant, ce qui fait qu'il est très difficile d'en apercevoir et encore plus d'en capturer. Malgré sa douce humeur, sa puissante corne fait des ravages parmi ses ennemis.",
+			"gorilloz": "Les Gorilloz sont les Gardiens des grandes forêts de Dinoland, et en particulier de la Forêt de Grumhel. Ils sont forts, féroces, se montrent rarement et protègent toute altération de leurs territoires par des intrus. Les Gorilloz vivent en parfaite harmonie avec la nature, et derrière leurs visages durs sont doués d’une grande intelligence.",
+			"hippoclamp": "Les Hippoclamps sont une classe de soldats d’élite des Îles Atlantéinées. De nombreux scientifiques les ont étudiés et sont arrivés à la quasi-certitude qu’ils étaient le résultat d’expériences de mutations réussies de Kumps par les Winks.",
+			"kabuki": "Originaire des montagnes de Caushemesh, on ne trouve que très peu de Kabuki dans le Royaume de Dinoville. On raconte pourtant qu'il en existerait un petit groupe, vivant isolé sur une île au Sud... En tout cas, ce sont des combattants redoutables !",
+			"mahamuti": "Disparu depuis des centaines d'années, l'unique moyen de trouver un Mahamuti encore vivant serait de retrouver ce dinoz congelé. En effet, la plupart des représentants de cette espèce furent pris par surprise lors de la grande glaciation datant de la formation des continents... Ils sont réputés pour tout écraser sur leur passage...",
+			"moueffe": "Les Moueffes sont de lointains descendants des Dragons, et ils en sont très fiers. Ils ont conservés d’eux une grande affinité avec le feu, une peau dure et résistante, ainsi qu’un sens du combat hors pair.",
+			"nuagoz": "La vie apparaît parfois dans d'étranges conditions. Les Nuagoz en sont le parfait exemple : constitués majoritairement d'eau, d'air et de foudre, il a fallu certainement beaucoup de chance ou bien un événement mystérieux pour qu'ils prennent vie sans s'évaporer immédiatement. En tout cas, ça marche tellement bien qu'ils sont des combattants très efficaces et très appréciés des Maîtres Dinoz.",
+			"pigmou": "Les Pigmous sont de petits animaux féroces et têtus. Ils ne comprennent qu’une seule chose : une force supérieure à la leur. Ils sont donc difficiles à dresser, mais une fois la supériorité du Maître établie, ils vont alors le défendre sans faillir.",
+			"planaille": "Les Planailles sont d’étranges Dinoz volants. Leur corps est muni d’un grand nombre de petits récepteurs et de muscles leur permettant de contrôler de façon quasi-parfaite chaque centimètre de leurs ailes. Ces dernières leurs permettent de manipuler et d’amplifier le vent et l’électricité, pour en faire des armes redoutables. Ils ne sont pas doués d’une grande intelligence et sont facilement contrôlables par un Maître.",
+			"pteroz": "Les Pteroz sont des Dinoz munis d’ailes qui planent sur les hauteurs du Grand Tout Chaud. Ils ont un grand sens du territoire et il vaut donc mieux ne pas dÃ©ranger une Maman PtÃ©roz protÃ©geant ses oeufs. Ils sont assez difficiles à dresser mais sont de trÃ¨s bons combattants.",
+			"quetzu": "Les Quetzus sont des dinoz originaires de l'île de Nimbao, depuis la fin du règne de Grizorg, l'île étant redevenue accessible par tous les maîtres Dinoz, il est tout naturel d'en trouver de plus en plus. Leur force et leur agilité restent inégalées, on trouve cependant peu de Quetzus à un âge avancé, leur vrai potentiel est libéré à ce moment.",
+			"rocky": "Les Rockys sont parfois confondus avec de grandes pierres taillées par l’homme. Ce sont en fait des êtres vivants mi-animal mi-néral dont la composition du corps est très riche en Magnétite. Cela leur permet de produire de l’électricité quasiment à volonté en frottant leur corps.",
+			"santaz": "Le Santaz est originaire des lointaines montagnes de Caushemesh. Il est extrêmement rare et donc particulièrement recherché par les Maîtres Dinoz de Dinoville. C'est un Dinoz difficile à dresser mais il est très puissant et maîtrise à la perfection l'élément Air.",
+			"smog": "L'ADN des smogs a été dÃ©couvert par le professeur Grand. En extrayant le sang d'une sangsue piégée dans la glace, il a pu recréer génétiquement cette espèce qui faisait partie autrefois des plus redoutables prédateurs de la planète.",
+			"soufflet": "Les soufflets sont des dinozs vraiment uniques, après avoir passé quelques temps sous forme de larve, c'est à l'age adulte ou ils revêtent leurs véritables formes. Un dinoz volant capable de rivaliser avec les meilleurs dinozs ! Originaire de Nimbao ils vivent reclus et ce n'est qu'après les troubles ayant eu lieu sur l'île qu'ils ont commencés à se montrer aux yeux de tous.",
+			"toufufu": "Les Toufufus sont des descendants de leurs lointains ancêtres les Ouistitis, il est très difficile d'en attraper, ils sont futés et rapides, il paraît que quelqu'un leur aurait appris le kung-fu...",
+			"triceragnon": "Récemment importés des terres de Thorgnole, le tricéragnon est un dinoz extrêmement prisé par les maîtres Dinoz. Du fait de son caractère combatif, il est très difficile d'amener un tricéragnon à bon port sans y laisser quelques planches !",
+			"wanwan": "Jadis le meilleur ami de l’Homme, les Wanwan ont muté peu à peu et sont revenus à l’état sauvage. Ce sont des Dinoz très vifs, capables de mener de nombreuses attaques rapides, et dont les longues dents pointues sont redoutées. Leur pelage est conducteur d’électricité, ce qui leur permet de stocker la foudre puis de la décharger à volonté."
+		}
+	},
+	"bouton": {
+		"acheterDinoz": "Acheter un dinoz !",
+		"nommer": "Nommer !",
+		"obtenirDeLor": "Obtenir de l'or",
+		"boutique": "Boutique",
+		"confirmer": "Confirmer cette action ?"
+	},
+	"chooseDinoz": {
+		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
+		"nomDuDinoz": "Nom du dinoz :"
+	},
+	"place": {
+		"dinoville": "Dinoville",
+		"universite": "L'université",
+		"chez papy joe": "Chez Papy Joe"
+	}
+}

@@ -1,55 +1,17 @@
 <template>
-	<div id="app">
-		<auth v-if="auth && !collectData" @idChoisi="leaveAuth()"></auth>
-		<common-elements v-if="!auth && !collectData"></common-elements>
-		<!--<router-view @hideButton="hideButton()"/>-->
-		<!--<form method="POST" :action="getURI()">
-			<input type="submit" v-if="!auth && !collectData && showGetDataButton" value="Log in to Eternal-Twin" />
-		</form>-->
+	<div id="nav">
+		<MainPage></MainPage>
 	</div>
 </template>
 
-<script>
-import auth from '@/components/authentication/authentication.vue';
-import PlayerService from '@/services/PlayerService';
-import CommonElements from '@/pages/CommonElements.vue';
-import _ from 'lodash';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import MainPage from '@/pages/MainPage.vue';
 
-export default {
+export default defineComponent({
 	name: 'App',
-	data () {
-		return {
-			auth: true,
-			collectData: false,
-			showGetDataButton: false
-		};
-	},
-	created () {
-		this.auth = _.isNil(localStorage.jwt);
-		localStorage.money = 0;
-	},
-	methods: {
-		async leaveAuth () {
-			// If money isn't in localStorage, get it
-			if (_.isNil(localStorage.money)) {
-				let res = await PlayerService.getMoney(localStorage.idPlayer);
-				localStorage.money = res.data.money;
-			}
-			this.auth = false;
-		},
-		hideButton() {
-			this.showGetDataButton = false;
-		},
-		getURI() {
-			return process.env.serverURI + 'oauth/redirect';
-		}
-	},
 	components: {
-		auth,
-		CommonElements
+		MainPage
 	}
-};
+});
 </script>
-
-<style>
-</style>

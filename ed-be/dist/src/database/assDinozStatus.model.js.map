@@ -1,0 +1,1 @@
+{"version":3,"file":"assDinozStatus.model.js","sourceRoot":"","sources":["../../../src/database/assDinozStatus.model.ts"],"names":[],"mappings":";;AAEA,mBAAwB,SAAoB;IACxC,IAAI,cAAc,GAAG,SAAS,CAAC,MAAM,CAAC,qBAAqB,EAAE,EAAG,EAAE;QAC9D,UAAU,EAAE,KAAK;QACjB,eAAe,EAAE,IAAI;KACxB,CAAC,CAAC;IAEH,OAAO,cAAc,CAAC;AAC1B,CAAC;AAPD,4BAOC;AAAA,CAAC"}
