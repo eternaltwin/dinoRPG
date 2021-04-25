@@ -1,7 +1,7 @@
 .button {
 	display : block;
-	width: 150px;
-	height: 32px;
+	width: 145px;
+	height: 30px;
 	margin-top: 3px;
 	margin-bottom: 2px;
 	padding-left: 10px;
@@ -16,6 +16,7 @@
 	background-image : url("../button/button.png");
 	background-repeat: no-repeat;
 	border-radius: 0px;
+	border-style: none;
 }
 
 button:first-letter {

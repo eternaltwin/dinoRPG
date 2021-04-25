@@ -1,19 +1,21 @@
 <template>
 	<div id="dinozList">
-		<div v-for="(dinoz, index) in dinozList" :key="index">
-			<!-- Bouton temporaire, uniquement pour accéder à la fiche du dinoz -->
-			<button @click="goToDinozPage(dinoz.dinozId)">
-				<SDinozSWF
+		<table>
+			<tr v-for="(dinoz, index) in dinozList" :key="index">
+				<button @click="goToDinozPage(dinoz.dinozId)">
+					<!--<SDinozSWF
 					:display="dinoz.display"
 					:flip="1"
 					:width="40"
 					:height="40"
 					type="sdino"
-				></SDinozSWF>
-				{{ dinoz.name }}
-				{{ $t('place.' + dinoz.place.name) }}
-			</button>
-		</div>
+				></SDinozSWF>-->
+					{{ dinoz.name }}
+					<br />
+					{{ $t('place.' + dinoz.place.name) }}
+				</button>
+			</tr>
+		</table>
 	</div>
 </template>
 
@@ -21,7 +23,7 @@
 import { defineComponent } from 'vue';
 import { Dinoz } from '@/models';
 import store from '@/store';
-import SDinozSWF from '@/components/dinoz/dinozSWF.vue';
+// import SDinozSWF from '@/components/dinoz/dinozSWF.vue';
 
 export default defineComponent({
 	name: 'DinozList',
@@ -30,9 +32,9 @@ export default defineComponent({
 			dinozList: [] as Array<Dinoz>
 		};
 	},
-	components: {
+	/*components: {
 		SDinozSWF
-	},
+	},*/
 	methods: {
 		goToDinozPage(dinozId: string): void {
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });

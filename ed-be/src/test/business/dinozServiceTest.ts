@@ -29,11 +29,7 @@ describe('Test de la fonction getDinozFiche()', function () {
 			id: dinozId,
 		};
 
-		const dinozBuilt = {
-			setDataValue: jest.fn().mockResolvedValue([])
-		};
-		spyOn(Dinoz, 'build').and.returnValue(dinozBuilt);
-		spyOn(Dinoz, 'create').and.returnValue(dinozBuilt);
+		BasicDinoz.setDataValue = jest.fn().mockResolvedValue([]);
 
 		spyOn(DinozDao, 'getDinozFicheRequest').and.returnValue(BasicDinoz);
 	});

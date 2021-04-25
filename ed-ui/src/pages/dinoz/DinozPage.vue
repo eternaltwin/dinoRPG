@@ -26,8 +26,14 @@
 				type="dino"
 			></dinozSWF>
 			<div v-for="action in dinozData.actions" :key="action.name">
-				<img :src="getActionImg(action.imgName)" />
-				<p>{{ $t(`action.${action.name}`) }}</p>
+				<p>
+					<img
+						class="actionImg"
+						:src="getActionImg(action.imgName)"
+						:alt="action.imgName"
+					/>
+					{{ $t(`action.${action.name}`) }}
+				</p>
 			</div>
 		</div>
 	</div>
@@ -89,3 +95,9 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss">
+.actionImg {
+	vertical-align: middle;
+}
+</style>

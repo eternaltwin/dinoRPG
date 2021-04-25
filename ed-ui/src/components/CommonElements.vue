@@ -1,8 +1,12 @@
 <template>
 	<div id="common">
 		<p>{{ money }}</p>
-		<button>{{ $t('bouton.obtenirDeLor') }}</button>
-		<button>{{ $t('bouton.boutique') }}</button>
+		<div>
+			<button class="actionButton buttonGold"></button>
+			<button class="actionButton buttonShop"></button>
+			<button class="actionButton buttonClan"></button>
+			<button class="actionButton buttonDojo"></button>
+		</div>
 		<dinoz-list></dinoz-list>
 		<button class="button" @click="goToDinozShop()">
 			{{ $t('bouton.acheterDinoz') }}
@@ -72,3 +76,51 @@ interface CommonData {
 	dinoz: Dinoz;
 }
 </script>
+
+<style lang="scss">
+.actionButton {
+	background-repeat: no-repeat;
+	width: 34px;
+	height: 32px;
+	float: left;
+	border-style: none;
+	cursor: pointer;
+}
+
+.actionButton:focus {
+	outline: none;
+}
+
+.buttonGold {
+	background-image: url('../assets/action/act_shop.png');
+}
+
+.buttonGold:hover {
+	background-image: url('../assets/action/act_shop2.png');
+	content: 'test';
+}
+
+.buttonShop {
+	background-image: url('../assets/action/act_boutique.png');
+}
+
+.buttonShop:hover {
+	background-image: url('../assets/action/act_boutique2.png');
+}
+
+.buttonClan {
+	background-image: url('../assets/action/act_castle.png');
+}
+
+.buttonClan:hover {
+	background-image: url('../assets/action/act_castle2.png');
+}
+
+.buttonDojo {
+	background-image: url('../assets/action/act_dojo.png');
+}
+
+.buttonDojo:hover {
+	background-image: url('../assets/action/act_dojo2.png');
+}
+</style>

@@ -44,7 +44,7 @@ const getDinozFiche = async (
 function getActionList(): Array<Action> {
 	const actionsList: Array<Action> = [];
 	const actionAvailable: Array<string> = getAvailableActions();
-	
+
 	actions.forEach((action) => {
 		if (actionAvailable.includes(action.name)) {
 			actionsList.push(action);
@@ -54,7 +54,7 @@ function getActionList(): Array<Action> {
 	return actionsList;
 }
 
-function getAvailableActions(): Array<string> {
+function getAvailableActions(): Array<string> {
 	const actionList: Array<string> = [];
 	actionList.push('fight');
 	actionList.push('follow');
