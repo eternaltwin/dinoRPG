@@ -11,6 +11,7 @@ export interface Dinoz {
 	race?: DinozRace;
 	assDinozObject: Array<Objet>;
 	status: Status;
+	actions: Array<Action>;
 }
 
 export interface DinozRace {
@@ -38,4 +39,9 @@ export interface Objet {
 
 export interface Status {
 	name?: string;
+}
+
+export interface Action {
+	name: string;
+	imgName: string;
 }

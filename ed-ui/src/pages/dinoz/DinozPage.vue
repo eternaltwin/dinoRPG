@@ -25,6 +25,10 @@
 				:height="165"
 				type="dino"
 			></dinozSWF>
+			<div v-for="action in dinozData.actions" :key="action.name">
+				<img :src="getActionImg(action.imgName)" />
+				<p>{{ $t(`action.${action.name}`) }}</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -59,6 +63,9 @@ export default defineComponent({
 	methods: {
 		setNameChoosen(): void {
 			this.nameChoosen = true;
+		},
+		getActionImg(imgName: string): string {
+			return require(`@/assets/action/${imgName}.png`);
 		}
 	},
 	async mounted(): Promise<void> {

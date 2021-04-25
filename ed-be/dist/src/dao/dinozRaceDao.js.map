@@ -1,1 +1,0 @@
-{"version":3,"file":"dinozRaceDao.js","sourceRoot":"","sources":["../../../src/dao/dinozRaceDao.ts"],"names":[],"mappings":";;;AAAA,sCAAsC;AAEtC,MAAM,sBAAsB,GAAG,CAC9B,SAAwB,EACI,EAAE;IAC9B,OAAO,kBAAS,CAAC,OAAO,CAAC;QACxB,KAAK,EAAE,EAAE,IAAI,EAAE,SAAS,EAAE;KAC1B,CAAC,CAAC;AACJ,CAAC,CAAC;AAEO,wDAAsB"}

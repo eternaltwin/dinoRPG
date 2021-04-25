@@ -11,7 +11,7 @@ const resetDinozShopAtMidnight = (): void => {
 				console.log({ status: true });
 			})
 			.catch((err) => {
-				console.log('Cannot truncate table tb_dinoz_shop, err : ', err);
+				console.error('Cannot truncate table tb_dinoz_shop, err : ', err);
 			});
 	});
 

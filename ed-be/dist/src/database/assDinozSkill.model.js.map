@@ -1,1 +1,0 @@
-{"version":3,"file":"assDinozSkill.model.js","sourceRoot":"","sources":["../../../src/database/assDinozSkill.model.ts"],"names":[],"mappings":";;AAEA,mBAAwB,SAAoB;IACxC,IAAI,aAAa,GAAG,SAAS,CAAC,MAAM,CAAC,oBAAoB,EAAE,EAAG,EAAE;QAC5D,UAAU,EAAE,KAAK;QACjB,eAAe,EAAE,IAAI;KACxB,CAAC,CAAC;IAEH,OAAO,aAAa,CAAC;AACzB,CAAC;AAPD,4BAOC;AAAA,CAAC"}

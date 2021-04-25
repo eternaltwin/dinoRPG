@@ -4,7 +4,9 @@
 		<button>{{ $t('bouton.obtenirDeLor') }}</button>
 		<button>{{ $t('bouton.boutique') }}</button>
 		<dinoz-list></dinoz-list>
-		<button @click="goToDinozShop()">{{ $t('bouton.acheterDinoz') }}</button>
+		<button class="button" @click="goToDinozShop()">
+			{{ $t('bouton.acheterDinoz') }}
+		</button>
 	</div>
 </template>
 

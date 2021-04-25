@@ -1,0 +1,29 @@
+.button {
+	display : block;
+	width: 150px;
+	height: 32px;
+	margin-top: 3px;
+	margin-bottom: 2px;
+	padding-left: 10px;
+	padding-top: 0px;
+	font-variant: small-caps;
+	font-size : 10pt;
+	color: #fff1ad;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: left;
+	cursor: pointer;
+	background-image : url("../button/button.png");
+	background-repeat: no-repeat;
+	border-radius: 0px;
+}
+
+button:first-letter {
+	color : white;
+}
+
+.button:hover {
+	color : white;
+	background-image : url("../button/button_hover.png");
+	background-color : transparent;
+}

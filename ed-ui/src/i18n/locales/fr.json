@@ -90,7 +90,7 @@
 		}
 	},
 	"bouton": {
-		"acheterDinoz": "Acheter un dinoz !",
+		"acheterDinoz": "Acheter un Dinoz !",
 		"nommer": "Nommer !",
 		"obtenirDeLor": "Obtenir de l'or",
 		"boutique": "Boutique",
@@ -104,5 +104,9 @@
 		"dinoville": "Dinoville",
 		"universite": "L'université",
 		"chez papy joe": "Chez Papy Joe"
+	},
+	"action": {
+		"fight": "Combattre",
+		"follow": "Suivre"
 	}
 }

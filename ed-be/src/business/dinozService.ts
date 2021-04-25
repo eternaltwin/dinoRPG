@@ -12,7 +12,8 @@ import {
 } from '../dao/dinozDao';
 import { Dinoz, DinozShop } from '../models';
 import { isNull } from 'lodash';
-import { BasicDinoz } from '../models/dinoz/BasicDinoz';
+import { BasicDinoz, DinozFiche, Action } from '../models';
+import { actions } from '../utils/constants';
 
 const getDinozFiche = async (
 	req: Request,
@@ -21,7 +22,7 @@ const getDinozFiche = async (
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
-	const dinozDetails: Dinoz | null = await getDinozFicheRequest(dinozId);
+	const dinozDetails = (await getDinozFicheRequest(dinozId)) as DinozFiche;
 
 	// If player found is different from player who do the request, throw exception
 	if (Number(dinozDetails!.player.playerId) !== Number(req.user!.playerId)) {
@@ -34,8 +35,31 @@ const getDinozFiche = async (
 		});
 	}
 
+	// Set availables actions for this dinoz
+	dinozDetails.setDataValue('actions', getActionList());
+
 	return res.status(200).send(dinozDetails);
 };
+
+function getActionList(): Array<Action> {
+	const actionsList: Array<Action> = [];
+	const actionAvailable: Array<string> = getAvailableActions();
+	
+	actions.forEach((action) => {
+		if (actionAvailable.includes(action.name)) {
+			actionsList.push(action);
+		}
+	});
+
+	return actionsList;
+}
+
+function getAvailableActions(): Array<string> {
+	const actionList: Array<string> = [];
+	actionList.push('fight');
+	actionList.push('follow');
+	return actionList;
+}
 
 const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	// Get dinoz details thanks to his ID

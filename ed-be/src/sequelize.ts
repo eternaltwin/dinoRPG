@@ -12,7 +12,6 @@ export const sequelize = new Sequelize(
 	{
 		host: dbConfig.HOST,
 		dialect: 'postgres',
-		//operatorsAliases: false,
 		models: Object.values(models),
 
 		pool: {

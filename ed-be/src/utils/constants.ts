@@ -28,4 +28,15 @@ const reward = {
 	tropheeQuetzu: 'tropheeQuetzu',
 };
 
-export { apiRoutes, race, reward };
+const actions = [
+	{
+		name: 'fight',
+		imgName: 'act_fight',
+	},
+	{
+		name: 'follow',
+		imgName: 'act_follow',
+	},
+];
+
+export { apiRoutes, race, reward, actions };
