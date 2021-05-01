@@ -1,24 +1,24 @@
 <template>
-	<div id="common">
-		<p>{{ money }}</p>
-		<div>
-			<button class="actionButton buttonGold"></button>
-			<button class="actionButton buttonShop"></button>
-			<button class="actionButton buttonClan"></button>
-			<button class="actionButton buttonDojo"></button>
-		</div>
-		<dinoz-list></dinoz-list>
-		<button class="button" @click="goToDinozShop()">
-			{{ $t('bouton.acheterDinoz') }}
-		</button>
+	<div>
+		<span class="money">{{ beautifulMoney }}</span>
 	</div>
+	<div class="iconMenu">
+		<a class="icon iconGold"></a>
+		<a class="icon iconShop"></a>
+		<a class="icon iconClan"></a>
+		<a class="icon iconDojo"></a>
+	</div>
+	<dinoz-list></dinoz-list>
+	<button class="button" @click="goToDinozShop()">
+		{{ $t('bouton.acheterDinoz') }}
+	</button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import store from '@/store';
 import { isNil } from 'lodash';
-import { errorHandler } from '@/utils';
+import { utils, errorHandler } from '@/utils';
 import { PlayerService } from '@/services';
 import { Dinoz } from '@/models';
 import DinozList from '@/components/dinoz/dinozList.vue';
@@ -27,7 +27,7 @@ export default defineComponent({
 	name: 'CommonElements',
 	data() {
 		return {
-			money: undefined as number | undefined
+			money: 0 as number
 		};
 	},
 	components: {
@@ -59,6 +59,9 @@ export default defineComponent({
 	computed: {
 		storeMoney(): number {
 			return store.getters.getMoney;
+		},
+		beautifulMoney(): string {
+			return utils.beautifulNumber(this.money.toString());
 		}
 	},
 	watch: {
@@ -78,49 +81,67 @@ interface CommonData {
 </script>
 
 <style lang="scss">
-.actionButton {
-	background-repeat: no-repeat;
-	width: 34px;
+.icon {
+	margin-right: 5px;
+	width: 32px;
 	height: 32px;
 	float: left;
-	border-style: none;
-	cursor: pointer;
 }
 
-.actionButton:focus {
+.icon:focus {
 	outline: none;
 }
 
-.buttonGold {
+.iconGold {
 	background-image: url('../assets/action/act_shop.png');
 }
 
-.buttonGold:hover {
+.iconGold:hover {
 	background-image: url('../assets/action/act_shop2.png');
 	content: 'test';
 }
 
-.buttonShop {
+.iconShop {
 	background-image: url('../assets/action/act_boutique.png');
 }
 
-.buttonShop:hover {
+.iconShop:hover {
 	background-image: url('../assets/action/act_boutique2.png');
 }
 
-.buttonClan {
+.iconClan {
 	background-image: url('../assets/action/act_castle.png');
 }
 
-.buttonClan:hover {
+.iconClan:hover {
 	background-image: url('../assets/action/act_castle2.png');
 }
 
-.buttonDojo {
+.iconDojo {
 	background-image: url('../assets/action/act_dojo.png');
 }
 
-.buttonDojo:hover {
+.iconDojo:hover {
 	background-image: url('../assets/action/act_dojo2.png');
+}
+
+.money {
+	display: block;
+	width: 137px;
+	height: 25px;
+	margin-bottom: 34px;
+	padding: 0px;
+	padding-top: 6px;
+	margin-left: -5px;
+	text-align: center;
+	font-size: 10pt;
+	color: #ffee92;
+	border: 0px;
+	background-color: transparent;
+	background-image: url('../assets/background/goldbox2.png');
+	background-repeat: no-repeat;
+	cursor: help;
+	font-weight: bold;
+	font-family: 'Trebuchet MS', Arial, sans-serif;
 }
 </style>

@@ -1,0 +1,196 @@
+.button {
+	display : block;
+	width: 145px;
+	height: 30px;
+	margin-top: 3px;
+	margin-bottom: 2px;
+	padding-left: 10px;
+	padding-top: 0px;
+	font-variant: small-caps;
+	font-size : 10pt;
+	color: #fff1ad;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: left;
+	cursor: pointer;
+	background-image : url("../assets/button/button.png");
+	background-repeat: no-repeat;
+	border-radius: 0px;
+	border-style: none;
+}
+
+button:first-letter {
+	color : white;
+}
+
+.button:hover {
+	color : white;
+	background-image : url("../assets/button/button_hover.png");
+	background-color : transparent;
+}
+
+table#layout {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    width: 100%;
+    min-width: 920px;
+}
+
+#dinozList {
+	float: left;
+    position: relative;
+    padding-left: 60px;
+    padding-top: 35px;
+    padding-bottom: 10px;
+    width: 145px;
+}
+
+#dinozList ul {
+    list-style: none;
+    font-size: 0pt;
+    line-height: 0pt;
+    margin-bottom: 1px;
+    padding: 2px;
+    border: 1px solid #d69e68;
+}
+
+#dinozList ul li a {
+    border: 1px solid #fbdca5;
+    padding: 2px;
+    display: block;
+    font-size: 10pt;
+    line-height: 11pt;
+    text-decoration: none;
+    -webkit-border-radius: 0px;
+    cursor: pointer;
+}
+
+#dinozList ul li.light a {
+	height : 25px;
+}
+
+#dinozList ul li.light a .icon {
+	float : right;
+}
+
+#dinozList ul li.light a .icon .tinyBar {
+	margin-top : 6px;
+}
+
+#dinozList ul li.light em {
+	width : 150px;
+	font-size : 7.5pt;
+}
+
+#dinozList ul li a em {
+    font-variant: normal;
+    font-weight: normal;
+    color: #cf8a51;
+    font-size: 8pt;
+    line-height: 8pt;
+}
+
+#dinozList ul li a em, #dinozList ul li a span.name {
+    display: block;
+    float: left;
+    position: relative;
+    width: 87px;
+}
+
+#dinozList ul li a span.name {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#dinozList ul li a .icon {
+    position: relative;
+    width: 40px;
+    height: 10px;
+    font-size: 0pt;
+    line-height: 0pt;
+}
+
+#dinozList ul li.light a .icon {
+    float: right;
+}
+
+.light object, .light embed {
+	display : none;
+}
+
+.dinorpg a {
+    color: #8e3e26;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+span.tinyBar {
+	display : block;
+	height : 2px;
+	width : 36px;
+	border : 1px solid #bc683c;
+	background-color : black;
+}
+
+span.tinyBar span {
+	display : block;
+	height : 2px;
+	background-color : yellow;
+}
+
+.centerContent {
+	float: left;
+    position: relative;
+    margin-left: 20px;
+    width: 530px;
+    margin-top: 127px;
+    padding-bottom: 50px;
+    text-align: left;
+    min-height: 600px;
+}
+
+div {
+	display: block;
+}
+
+ul {
+	display: block;
+	list-style: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+li {
+	display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+em {
+	font-style: italic;
+}
+
+body, table, td, tr, th, li, ul, a, div, span, img, h1, h2, h3, p, pre, form, label, input, textarea, dl, dt, dd {
+    margin: 0px;
+    padding: 0px;
+}
+
+body, td {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 12pt;
+    text-align: left;
+    color: #52646b;
+}
+
+table {
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+
+.iconMenu {
+	width: 148px;
+    height: 32px;
+}

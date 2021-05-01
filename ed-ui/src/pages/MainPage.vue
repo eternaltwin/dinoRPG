@@ -1,11 +1,26 @@
 <template>
-	<div id="mainPage">
+	<div class="dinorpg">
 		<div v-if="displayAuth">
 			<authentication @leaveAuth="leaveAuth()"></authentication>
 		</div>
 		<div v-else>
-			<common-elements></common-elements>
-			<router-view />
+			<table id="layout">
+				<tbody>
+					<tr>
+						<td id="left"><div></div></td>
+						<td id="center">
+							<div id="centerHeader">
+								<div id="dinozList">
+									<common-elements></common-elements>
+								</div>
+								<div id="centerContent">
+									<router-view />
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </template>

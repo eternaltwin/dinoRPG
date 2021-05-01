@@ -1,22 +1,24 @@
 <template>
-	<div id="dinozList">
-		<table>
-			<tr v-for="(dinoz, index) in dinozList" :key="index">
-				<button @click="goToDinozPage(dinoz.dinozId)">
-					<!--<SDinozSWF
-					:display="dinoz.display"
-					:flip="1"
-					:width="40"
-					:height="40"
-					type="sdino"
-				></SDinozSWF>-->
-					{{ dinoz.name }}
-					<br />
-					{{ $t('place.' + dinoz.place.name) }}
-				</button>
-			</tr>
-		</table>
-	</div>
+	<ul>
+		<li class="light" v-for="(dinoz, index) in dinozList" :key="index">
+			<a @click="goToDinozPage(dinoz.dinozId)">
+				<span class="icon">
+					<span class="tinyBar">
+						<span :style="getLifeBarWidth()"></span>
+					</span>
+				</span>
+				<span class="name">{{ $t(`${dinoz.name}`) }}</span>
+				<em> {{ $t(`place.${dinoz.place.name}`) }} </em>
+			</a>
+			<!--<SDinozSWF
+			:display="dinoz.display"
+			:flip="1"
+			:width="40"
+			:height="40"
+			type="sdino"
+		></SDinozSWF>-->
+		</li>
+	</ul>
 </template>
 
 <script lang="ts">
@@ -38,6 +40,10 @@ export default defineComponent({
 	methods: {
 		goToDinozPage(dinozId: string): void {
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
+		},
+		getLifeBarWidth(): string {
+			// TODO: calculer vie du dinoz (PV actuel / PV max * 36)
+			return 'width : 36px';
 		}
 	},
 	computed: {
