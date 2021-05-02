@@ -1,17 +1,20 @@
 <template>
 	<div>
-		<span class="money">{{ beautifulMoney }}</span>
+		<span class="money"
+			>{{ beautifulMoney }}
+			<img src="@/assets/icons/small_gold.png" alt="or" />
+		</span>
 	</div>
 	<div class="iconMenu">
-		<a class="icon iconGold"></a>
-		<a class="icon iconShop"></a>
-		<a class="icon iconClan"></a>
-		<a class="icon iconDojo"></a>
+		<a id="menu_blank" class="iconor"></a>
+		<a id="menu_shop" class="iconboutik"></a>
+		<a id="menu_clan" class="iconclan"></a>
+		<a id="menu_dojo" class="icondojo"></a>
 	</div>
 	<dinoz-list></dinoz-list>
-	<button class="button" @click="goToDinozShop()">
+	<a class="button" @click="goToDinozShop()">
 		{{ $t('bouton.acheterDinoz') }}
-	</button>
+	</a>
 </template>
 
 <script lang="ts">
@@ -79,69 +82,3 @@ interface CommonData {
 	dinoz: Dinoz;
 }
 </script>
-
-<style lang="scss">
-.icon {
-	margin-right: 5px;
-	width: 32px;
-	height: 32px;
-	float: left;
-}
-
-.icon:focus {
-	outline: none;
-}
-
-.iconGold {
-	background-image: url('../assets/action/act_shop.png');
-}
-
-.iconGold:hover {
-	background-image: url('../assets/action/act_shop2.png');
-	content: 'test';
-}
-
-.iconShop {
-	background-image: url('../assets/action/act_boutique.png');
-}
-
-.iconShop:hover {
-	background-image: url('../assets/action/act_boutique2.png');
-}
-
-.iconClan {
-	background-image: url('../assets/action/act_castle.png');
-}
-
-.iconClan:hover {
-	background-image: url('../assets/action/act_castle2.png');
-}
-
-.iconDojo {
-	background-image: url('../assets/action/act_dojo.png');
-}
-
-.iconDojo:hover {
-	background-image: url('../assets/action/act_dojo2.png');
-}
-
-.money {
-	display: block;
-	width: 137px;
-	height: 25px;
-	margin-bottom: 34px;
-	padding: 0px;
-	padding-top: 6px;
-	margin-left: -5px;
-	text-align: center;
-	font-size: 10pt;
-	color: #ffee92;
-	border: 0px;
-	background-color: transparent;
-	background-image: url('../assets/background/goldbox2.png');
-	background-repeat: no-repeat;
-	cursor: help;
-	font-weight: bold;
-	font-family: 'Trebuchet MS', Arial, sans-serif;
-}
-</style>

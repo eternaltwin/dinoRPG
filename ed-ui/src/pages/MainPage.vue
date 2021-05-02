@@ -9,11 +9,13 @@
 					<tr>
 						<td id="left"><div></div></td>
 						<td id="center">
+							<a href="/" class="linkHome"></a>
 							<div id="centerHeader">
+								<div id="menu"></div>
 								<div id="dinozList">
 									<common-elements></common-elements>
 								</div>
-								<div id="centerContent">
+								<div id="centerContent" class="newsSection">
 									<router-view />
 								</div>
 							</div>

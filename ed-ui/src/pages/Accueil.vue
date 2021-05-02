@@ -1,6 +1,8 @@
 <template>
-	<div id="accueil">
-		<p>Dino-RPG news</p>
+	<div class="section">
+		<div id="titleActualiteDinoland">
+			<p>{{ $t(`news.actualites`) }}</p>
+		</div>
 	</div>
 </template>
 

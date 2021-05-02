@@ -7,7 +7,7 @@
 						<span :style="getLifeBarWidth()"></span>
 					</span>
 				</span>
-				<span class="name">{{ $t(`${dinoz.name}`) }}</span>
+				<span class="name">{{ dinoz.name }}</span>
 				<em> {{ $t(`place.${dinoz.place.name}`) }} </em>
 			</a>
 			<!--<SDinozSWF

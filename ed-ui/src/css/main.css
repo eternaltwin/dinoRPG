@@ -1,22 +1,11 @@
-.button {
-	display : block;
-	width: 145px;
-	height: 30px;
-	margin-top: 3px;
-	margin-bottom: 2px;
-	padding-left: 10px;
-	padding-top: 0px;
-	font-variant: small-caps;
-	font-size : 10pt;
-	color: #fff1ad;
-	font-weight: bold;
-	text-decoration: none;
-	text-align: left;
-	cursor: pointer;
-	background-image : url("../assets/button/button.png");
-	background-repeat: no-repeat;
-	border-radius: 0px;
-	border-style: none;
+.dinorpg a {
+    color: #8e3e26;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+.dinorpg a:hover {
+	color : #fce3bc;
 }
 
 button:first-letter {
@@ -29,13 +18,6 @@ button:first-letter {
 	background-color : transparent;
 }
 
-table#layout {
-    border-collapse: collapse;
-    border-spacing: 0px;
-    width: 100%;
-    min-width: 920px;
-}
-
 #dinozList {
 	float: left;
     position: relative;
@@ -43,6 +25,89 @@ table#layout {
     padding-top: 35px;
     padding-bottom: 10px;
     width: 145px;
+}
+
+#dinozList .iconMenu {
+    width: 143px;
+    height: 32px;
+}
+
+#dinozList .iconMenu a {
+    display: block;
+    background-repeat: no-repeat;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
+
+#dinozList .iconMenu a.iconor {
+    margin-right: 5px;
+    background-image: url("../assets/action/act_shop.png");
+    width: 32px;
+    height: 32px;
+    float: left;
+}
+
+#dinozList .iconMenu a.iconor:hover {
+	margin-right : 5px;
+	background-image : url("../assets/action/act_shop2.png");
+}
+
+#dinozList .iconMenu a.iconboutik {
+	margin-right : 5px;
+	background-image : url("../assets/action/act_boutique.png");
+	width : 32px;
+	height : 32px;
+	float : left;
+}
+
+#dinozList .iconMenu a.iconboutik:hover {
+	background-image : url("../assets/action/act_boutique2.png");
+}
+
+#dinozList .iconMenu a.iconclan {
+	margin-right : 5px;
+	background-image : url("../assets/action/act_castle.png");
+	width : 32px;
+	height : 32px;
+	float : left;
+}
+
+#dinozList .iconMenu a.iconclan:hover {
+	background-image : url("../assets/action/act_castle2.png");
+}
+
+#dinozList .iconMenu a.icondojo {
+	background-image : url("../assets/action/act_dojo.png");
+	width : 32px;
+	height : 32px;
+	float : left;
+}
+
+#dinozList .iconMenu a.icondojo:hover {
+	background-image : url("../assets/action/act_dojo2.png");
+}
+
+#dinozList span.money {
+    display: block;
+    width: 137px;
+    height: 25px;
+    margin-bottom: 34px;
+    padding: 0px;
+    padding-top: 6px;
+    margin-left: -5px;
+    text-align: center;
+    font-size: 10pt;
+    color: #ffee92;
+    border: 0px;
+    background-color: transparent;
+    background-image: url("../assets/background/goldbox2.png");
+    background-repeat: no-repeat;
+    cursor: help;
+}
+
+#dinozList span.money img {
+    vertical-align: -5%;
 }
 
 #dinozList ul {
@@ -114,14 +179,86 @@ table#layout {
     float: right;
 }
 
+#dinozList a.button {
+    width: 135px;
+}
+
+#menu, #langs {
+    position: absolute;
+    z-index: 2;
+    margin-left: 764px;
+    margin-top: 90px;
+    width: 95px;
+    font-size: 8pt;
+}
+
+.newsSection .tid_module {
+	color : white;
+	font-size : 14px;
+}
+
+.newsSection .tid_module li {
+	list-style : square;
+}
+
+.newsSection .tid_module a {
+	color : #ffee92;
+}
+
+.section {
+	height : 45px;
+	margin-left : -15px;
+	margin-bottom : 20px;
+	background-image : url("/img/design/title_h1.gif");
+	background-position : left bottom;
+	background-repeat : no-repeat;
+	margin-left : 5px;
+}
+
+.newsSection .tid_module .tid_safe_story {
+	background-image : url("/img/design/bloc_news_twinoid.jpg");
+	background-repeat : repeat-y;
+	margin-bottom : 10px;
+	margin-right : 10px;
+	border : 1px solid #ffee92;
+	outline : 1px solid #92471F;
+	padding : 10px;
+}
+
+.newsSection .tid_module .tid_safe_story .tid_safe_content .tid_h2 {
+	font-size : 110%;
+	color : #FFEE92;
+	text-transform : uppercase;
+}
+
+.newsSection .tid_module .tid_safe_story .tid_safe_content .tid_h3 {
+	color : #FFEE92;
+}
+
 .light object, .light embed {
 	display : none;
 }
 
-.dinorpg a {
-    color: #8e3e26;
+input.button, a.button {
+    display: block;
+    width: 135px;
+    height: 24px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+    padding-left: 10px;
+    padding-top: 4px;
     font-variant: small-caps;
+    font-size: 10pt;
+    color: #fff1ad;
     font-weight: bold;
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+    background-image: url("../assets/button/button.png");
+    background-repeat: no-repeat;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
 }
 
 span.tinyBar {
@@ -138,8 +275,61 @@ span.tinyBar span {
 	background-color : yellow;
 }
 
-.centerContent {
-	float: left;
+span.tix, span.money {
+    color: #58321d;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+a.linkHome {
+    position: absolute;
+    width: 500px;
+    height: 80px;
+    z-index: 10;
+    margin-top: 25px;
+    margin-left: 240px;
+}
+
+body table#layout {
+    background-image: url("../assets/background/bg_ciel3.png");
+    background-color: white;
+    background-repeat: no-repeat;
+}
+
+body table#layout td#center {
+    width: 900px;
+    background-image: url("../assets/background/sky_core_bg.png");
+    background-repeat: repeat-y;
+    margin-top: 88px;
+}
+
+body table#layout td#center #centerHeader {
+    padding: 1px;
+    background-image: url("../assets/background/core_center_header3.png");
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+table#layout {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    width: 100%;
+    min-width: 920px;
+}
+
+table#layout td#center {
+    width: 900px;
+    background-position: left 378px;
+}
+
+table#layout td#center #centerHeader {
+    padding: 1px;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
+table#layout td#center #centerContent {
+    float: left;
     position: relative;
     margin-left: 20px;
     width: 530px;
@@ -147,6 +337,10 @@ span.tinyBar span {
     padding-bottom: 50px;
     text-align: left;
     min-height: 600px;
+}
+
+table#layout td#left, table#layout td#center, table#layout td#right {
+    vertical-align: top;
 }
 
 div {
@@ -185,12 +379,37 @@ body, td {
 }
 
 table {
+    display: table;
     border-collapse: separate;
+    box-sizing: border-box;
     text-indent: initial;
     border-spacing: 2px;
+    border-color: grey;
 }
 
-.iconMenu {
-	width: 148px;
-    height: 32px;
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+a {
+    color: #bc683c;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
 }

@@ -108,5 +108,8 @@
 	"action": {
 		"fight": "Combattre",
 		"follow": "Suivre"
+	},
+	"news": {
+		"actualites": "L'actualité de Dinoland"
 	}
 }
