@@ -239,6 +239,120 @@ button:first-letter {
 	display : none;
 }
 
+.dinoz {
+    background-image: url("../assets/dinoz/dinoz_bg.jpg");
+    background-repeat: no-repeat;
+    min-height: 265px;
+    margin-top: 5px;
+}
+
+.dinoz .left {
+    position: absolute;
+    margin-left: 205px;
+    margin-top: 69px;
+    background-image: url("../assets/icons/left.png");
+    width: 15px;
+    height: 21px;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
+
+.dinoz .title {
+    position: absolute;
+    text-align: center;
+    width: 232px;
+    margin-left: 240px;
+    margin-top: 67px;
+    font-size: 15pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+    color: #fce3bc;
+    text-shadow: -1px -1px 0px #68361b, 1px 1px 0px #ddad8c;
+}
+
+.dinoz .right {
+    position: absolute;
+    margin-left: 490px;
+    margin-top: 69px;
+    background-image: url("../assets/icons/right.png");
+    width: 15px;
+    height: 21px;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
+
+.dinoz .nameChoosen .avatar {
+    position: absolute;
+    margin-left: 5px;
+    margin-top: 25px;
+}
+
+.dinoz .nameChoosen .level {
+    position: absolute;
+    margin-left: 8px;
+    margin-top: 205px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 17pt;
+    color: #faf1c5;
+    text-shadow: -1px -2px 0px #581a10;
+}
+
+.dinoz .nameChoosen .level .over {
+    cursor: help;
+    position: absolute;
+    width: 40px;
+    letter-spacing: -2pt;
+}
+
+.dinoz .nameChoosen .infos {
+    position: absolute;
+    margin-left: 195px;
+    margin-top: 212px;
+}
+
+.dinoz .nameChoosen .infos ul.elements {
+    position: absolute;
+    width: 230px;
+    margin-top: 2px;
+}
+
+ul.elements {
+    list-style: none;
+    height: 23px;
+}
+
+ul.elements li {
+    float: left;
+    position: relative;
+    width: 42px;
+    height: 23px;
+    margin-right: 2px;
+    font-size: 10pt;
+    font-weight: bold;
+    color: white;
+    text-align: left;
+    letter-spacing: -0.2pt;
+    background-image: url("../assets/icons/element_bg.png");
+    background-position: 7px 5px;
+    background-repeat: no-repeat;
+    cursor: help;
+}
+
+ul.elements li img {
+    margin-right: -3px;
+    vertical-align: -30%;
+}
+
+.swf {
+    display: block;
+    font-size: 0pt;
+    line-height: 0pt;
+}
+
 input.button, a.button {
     display: block;
     width: 135px;
@@ -290,6 +404,10 @@ a.linkHome {
     margin-left: 240px;
 }
 
+body #dinozList span.money {
+    margin-top: 11px;
+}
+
 body table#layout {
     background-image: url("../assets/background/bg_ciel3.png");
     background-color: white;
@@ -308,6 +426,26 @@ body table#layout td#center #centerHeader {
     background-image: url("../assets/background/core_center_header3.png");
     background-repeat: no-repeat;
     min-height: 100vh;
+}
+
+body table#layout td#right div {
+    height: 88px;
+    background-image: url("../assets/background/core_right_header3.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+body .skyfootercore {
+    background-image: url("../assets/background/core_center_footer.png");
+    background-repeat: no-repeat;
+    height: 151px;
+}
+
+body .skyfooterright {
+    height: 151px;
+    background-image: url("../assets/background/core_right_footer.png");
+    background-repeat: no-repeat;
+    background-position: left top;
 }
 
 table#layout {
@@ -337,6 +475,12 @@ table#layout td#center #centerContent {
     padding-bottom: 50px;
     text-align: left;
     min-height: 600px;
+}
+
+table#layout td#right {
+    background-image: url("../assets/background/core_right_bg.png");
+    background-position: left 77px;
+    background-repeat: repeat-y;
 }
 
 table#layout td#left, table#layout td#center, table#layout td#right {

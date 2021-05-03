@@ -20,6 +20,16 @@
 								</div>
 							</div>
 						</td>
+						<td id="right"><div></div></td>
+					</tr>
+					<tr>
+						<td><div></div></td>
+						<td>
+							<div class="skyfootercore"></div>
+						</td>
+						<td>
+							<div class="skyfooterright"></div>
+						</td>
 					</tr>
 				</tbody>
 			</table>

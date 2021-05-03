@@ -1,32 +1,29 @@
 <template>
-	<div id="dinozSWF">
-		<div id="myDino">
-			<object
-				type="application/x-shockwave-flash"
-				:data="url"
-				:width="width"
-				:height="height"
-			>
-				<param name="movie" :value="url" />
-				<param
-					v-for="(value, key) in params"
-					:key="key"
-					:name="key"
-					:value="value"
-				/>
-				<param name="flashvars" :value="serialize(flashVars)" />
+	<div class="swf">
+		<object
+			type="application/x-shockwave-flash"
+			:data="url"
+			:width="width"
+			:height="height"
+		>
+			<param name="movie" :value="url" />
+			<param
+				v-for="(value, key) in params"
+				:key="key"
+				:name="key"
+				:value="value"
+			/>
+			<param name="flashvars" :value="serialize(flashVars)" />
 
-				<embed
-					:src="url"
-					type="application/x-shockwave-flash"
-					v-bind="params"
-					:flashvars="serialize(flashVars)"
-					quality="high"
-					width="100%"
-					height="100%"
-				/>
-			</object>
-		</div>
+			<embed
+				:src="url"
+				v-bind="params"
+				:flashvars="serialize(flashVars)"
+				quality="high"
+				width="100%"
+				height="100%"
+			/>
+		</object>
 	</div>
 </template>
 

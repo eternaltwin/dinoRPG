@@ -1,17 +1,26 @@
 <template>
-	<div id="DinozPage">
+	<div class="dinoz">
+		<a class="left"></a>
+		<div class="title">{{ dinozData.name }}</div>
+		<a class="right"></a>
 		<div v-if="nameChoosen === false">
 			<choose-dinoz-name
 				:dinozData="dinozData"
 				@setNameChoosen="setNameChoosen()"
 			></choose-dinoz-name>
 		</div>
-		<div v-if="nameChoosen === true">
-			<img src="@/assets/dinoz/dinoz_bg.jpg" alt="background_dinoz" />
-			<equipement type="dinoz" :objects="dinozData.assDinozObject"></equipement>
-			<status :status="dinozData.status"></status>
-			<p>Level : {{ dinozData.level.level }}</p>
-			<p>Name : {{ dinozData.name }}</p>
+		<div class="nameChoosen" v-if="nameChoosen === true">
+			<div class="avatar">
+				<dinozSWF
+					:display="dinozData.display"
+					:width="190"
+					:height="165"
+					type="dino"
+				></dinozSWF>
+			</div>
+			<div class="level">
+				<div class="over">{{ dinozData.level.level }}</div>
+			</div>
 			<elements
 				:fire="dinozData.nbrUpFire"
 				:wood="dinozData.nbrUpWood"
@@ -19,12 +28,10 @@
 				:light="dinozData.nbrUpLight"
 				:air="dinozData.nbrUpAir"
 			></elements>
-			<dinozSWF
-				:display="dinozData.display"
-				:width="190"
-				:height="165"
-				type="dino"
-			></dinozSWF>
+			<!--<equipement type="dinoz" :objects="dinozData.assDinozObject"></equipement>
+			<status :status="dinozData.status"></status>
+			<p>Name : {{ dinozData.name }}</p>
+			
 			<div v-for="action in dinozData.actions" :key="action.name">
 				<p>
 					<img
@@ -34,7 +41,7 @@
 					/>
 					{{ $t(`action.${action.name}`) }}
 				</p>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </template>
@@ -46,8 +53,8 @@ import { errorHandler } from '@/utils';
 import { DinozService } from '@/services';
 import { isNil } from 'lodash';
 import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
-import Equipement from '@/components/equipement/equipement.vue';
-import Status from '@/components/status/status.vue';
+//import Equipement from '@/components/equipement/equipement.vue';
+//import Status from '@/components/status/status.vue';
 import Elements from '@/components/elements/elements.vue';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 
@@ -61,8 +68,8 @@ export default defineComponent({
 	},
 	components: {
 		ChooseDinozName,
-		Equipement,
-		Status,
+		//Equipement,
+		//Status,
 		Elements,
 		DinozSWF
 	},

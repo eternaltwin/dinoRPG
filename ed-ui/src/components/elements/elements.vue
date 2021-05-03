@@ -1,15 +1,12 @@
 <template>
-	<div id="elements">
-		<img :src="getImg(0)" />
-		<span>{{ fire }}</span>
-		<img :src="getImg(1)" />
-		<span>{{ wood }}</span>
-		<img :src="getImg(2)" />
-		<span>{{ water }}</span>
-		<img :src="getImg(3)" />
-		<span>{{ light }}</span>
-		<img :src="getImg(4)" />
-		<span>{{ air }}</span>
+	<div class="infos">
+		<ul class="elements">
+			<li><img :src="getImg(0)" alt="fire" />{{ fire }}</li>
+			<li><img :src="getImg(1)" alt="wood" />{{ wood }}</li>
+			<li><img :src="getImg(2)" alt="water" />{{ water }}</li>
+			<li><img :src="getImg(3)" alt="light" />{{ light }}</li>
+			<li><img :src="getImg(4)" alt="air" />{{ air }}</li>
+		</ul>
 	</div>
 </template>
 
