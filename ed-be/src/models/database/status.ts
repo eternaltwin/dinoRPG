@@ -14,7 +14,7 @@ export class Status extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	statusId!: bigint;
+	statusId!: number;
 
 	@BelongsToMany(() => Dinoz, () => AssDinozStatus)
 	dinoz!: Array<Dinoz>;

@@ -15,7 +15,7 @@ export class Ingredient extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	ingredientId!: bigint;
+	ingredientId!: number;
 
 	@AllowNull(false)
 	@Column
@@ -24,7 +24,7 @@ export class Ingredient extends Model {
 	@ForeignKey(() => IngredientGridType)
 	@AllowNull(false)
 	@Column
-	ingredientGridTypeId!: bigint;
+	ingredientGridTypeId!: number;
 
 	@BelongsTo(() => IngredientGridType, 'ingredientGridTypeId')
 	ingredientGridType!: IngredientGridType;

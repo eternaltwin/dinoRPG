@@ -13,9 +13,9 @@ export class Map extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	mapId!: bigint;
+	mapId!: number;
 
-	@HasMany(() => Place, 'placeId')
+	@HasMany(() => Place, 'mapId')
 	place!: Array<Place>;
 
 	@AllowNull(false)

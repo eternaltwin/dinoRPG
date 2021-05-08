@@ -13,7 +13,7 @@ export class Objet extends Model {
 	@AllowNull(false)
 	@PrimaryKey
 	@Column
-	objectId!: bigint;
+	objectId!: number;
 
 	@HasMany(() => AssDinozObject)
 	assDinozObject!: Array<AssDinozObject>;

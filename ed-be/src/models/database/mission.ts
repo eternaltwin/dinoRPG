@@ -13,7 +13,7 @@ export class Mission extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	missionId!: bigint;
+	missionId!: number;
 
 	@HasMany(() => Dinoz)
 	dinoz!: Array<Dinoz>;

@@ -17,18 +17,18 @@ export class DinozShop extends Model {
 	@AllowNull(false)
 	@AutoIncrement
 	@Column
-	id!: bigint;
+	id!: number;
 
 	@ForeignKey(() => Player)
 	@Column
-	playerId!: bigint;
+	playerId!: number;
 
 	@BelongsTo(() => Player, 'playerId')
 	player!: Player;
 
 	@ForeignKey(() => DinozRace)
 	@Column
-	raceId!: bigint;
+	raceId!: number;
 
 	@BelongsTo(() => DinozRace, 'raceId')
 	race!: DinozRace;

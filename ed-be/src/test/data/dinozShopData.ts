@@ -2,14 +2,14 @@ import { DinozShop } from '../../models';
 import { dinozId, player } from '../utils/constants';
 
 export const DinozFromShop = {
-	id: BigInt(dinozId),
+	id: dinozId,
 	display: 'sdf8s165fs',
 	player: {
-		playerId: BigInt(player.id_1),
-		money: BigInt(200000),
+		playerId: player.id_1,
+		money: 200000,
 	},
 	race: {
-		raceId: BigInt(1),
+		raceId: 1,
 		nbrFireCase: 0,
 		nbrWoodCase: 2,
 		nbrWaterCase: 5,

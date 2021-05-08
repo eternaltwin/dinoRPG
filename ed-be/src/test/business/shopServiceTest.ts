@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { BIGINT } from 'sequelize/types';
 import { Dinoz } from '../../models';
-import { DinozFromShop, DinozShopArray } from '../data/dinozShopData';
+import { DinozShopArray } from '../data/dinozShopData';
 import { PlayerWithRewards } from '../data/playerData';
 import { DinozRaceArray } from '../data/raceData';
 import { player } from '../utils/constants';
@@ -28,7 +27,7 @@ describe('Test de la fonction getDinozFromDinozShop', function () {
 	beforeEach(function () {
 		dinozCreated = {
 			playerId: player.id_1,
-			raceId: BigInt(54),
+			raceId: 54,
 			display: '651fdsf68s',
 		};
 

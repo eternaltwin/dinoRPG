@@ -5,4 +5,4 @@ export const player = {
 };
 
 // Dinoz constants
-export const dinozId = '123456789';
+export const dinozId = 123456789;

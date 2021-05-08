@@ -26,7 +26,7 @@ let res = ({
 describe('Test de la fonction getDinozFiche()', function () {
 	beforeEach(function () {
 		req.params = {
-			id: dinozId,
+			id: dinozId.toString(),
 		};
 
 		BasicDinoz.setDataValue = jest.fn().mockResolvedValue([]);
@@ -39,13 +39,11 @@ describe('Test de la fonction getDinozFiche()', function () {
 
 		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(
-			parseInt(dinozId)
-		);
+		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(dinozId);
 	});
 
 	it('Cas unauthorized action', async function () {
-		BasicDinoz.player.playerId = BigInt(player.id_2);
+		BasicDinoz.player.playerId = player.id_2;
 
 		await getDinozFiche(req, res);
 
@@ -58,7 +56,7 @@ describe('Test de la fonction buyDinoz()', function () {
 
 	beforeEach(function () {
 		req.params = {
-			id: dinozId,
+			id: dinozId.toString(),
 		};
 
 		dinozCreated = {
@@ -123,7 +121,7 @@ describe('Test de la fonction buyDinoz()', function () {
 	});
 
 	it("Player doesn't have enough money to buy the dinoz", async function () {
-		DinozFromShop.player.money = BigInt(0);
+		DinozFromShop.player.money = 0;
 		spyOn(DinozShopDao, 'getDinozDetailsRequest').and.returnValue(
 			DinozFromShop
 		);
@@ -139,8 +137,8 @@ describe('Test de la fonction buyDinoz()', function () {
 	});
 
 	it("Dinoz doesn't belong to player who made the request", async function () {
-		DinozFromShop.player.money = BigInt(200000);
-		DinozFromShop.player.playerId = BigInt(player.id_2);
+		DinozFromShop.player.money = 200000;
+		DinozFromShop.player.playerId = player.id_2;
 		spyOn(DinozShopDao, 'getDinozDetailsRequest').and.returnValue(
 			DinozFromShop
 		);
@@ -167,7 +165,7 @@ describe('Test de la fonction setDinozName()', function () {
 		dinozToUpdate = {
 			canChangeName: true,
 			player: {
-				playerId: BigInt(player.id_1),
+				playerId: player.id_1,
 			},
 		} as Dinoz;
 
@@ -192,7 +190,7 @@ describe('Test de la fonction setDinozName()', function () {
 	});
 
 	it("Dinoz doesn't belong to player who made the request", async function () {
-		dinozToUpdate.player.playerId = BigInt(player.id_2);
+		dinozToUpdate.player.playerId = player.id_2;
 
 		await setDinozName(req, res);
 

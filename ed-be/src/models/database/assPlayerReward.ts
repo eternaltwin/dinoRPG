@@ -6,9 +6,9 @@ import { Player } from './player';
 export class AssPlayerReward extends Model {
 	@ForeignKey(() => Player)
 	@Column
-	playerId!: bigint;
+	playerId!: number;
 
 	@ForeignKey(() => EpicReward)
 	@Column
-	rewardId!: bigint;
+	rewardId!: number;
 }

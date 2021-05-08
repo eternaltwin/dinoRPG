@@ -6,9 +6,9 @@ import { Skill } from './skill';
 export class AssDinozSkill extends Model {
 	@ForeignKey(() => Dinoz)
 	@Column
-	dinozId!: bigint;
+	dinozId!: number;
 
 	@ForeignKey(() => Skill)
 	@Column
-	skillId!: bigint;
+	skillId!: number;
 }

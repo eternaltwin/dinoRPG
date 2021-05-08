@@ -18,12 +18,12 @@ export class IngredientGrid extends Model {
 	@AutoIncrement
 	@AllowNull(false)
 	@Column
-	gridId!: bigint;
+	gridId!: number;
 
 	@ForeignKey(() => Player)
 	@AllowNull(false)
 	@Column
-	playerId!: bigint;
+	playerId!: number;
 
 	@BelongsTo(() => Player, 'playerId')
 	player!: Player;
@@ -39,7 +39,7 @@ export class IngredientGrid extends Model {
 	@ForeignKey(() => IngredientGridType)
 	@AllowNull(false)
 	@Column
-	ingredientGridTypeId!: bigint;
+	ingredientGridTypeId!: number;
 
 	@BelongsTo(() => IngredientGridType, 'ingredientGridTypeId')
 	ingredientGridType!: IngredientGridType;
@@ -47,7 +47,7 @@ export class IngredientGrid extends Model {
 	@ForeignKey(() => Place)
 	@AllowNull(false)
 	@Column
-	placeId!: bigint;
+	placeId!: number;
 
 	@BelongsTo(() => Place, 'placeId')
 	place!: Place;

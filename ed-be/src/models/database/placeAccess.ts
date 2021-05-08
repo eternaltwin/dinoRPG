@@ -15,17 +15,17 @@ export class PlaceAccess extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	id!: bigint;
+	id!: number;
 
 	@ForeignKey(() => Place)
 	@AllowNull(false)
 	@Column
-	placeId!: bigint;
+	placeId!: number;
 
 	@BelongsTo(() => Place, 'placeId')
 	place!: Place;
 
 	@AllowNull(false)
 	@Column
-	canGoTo!: bigint;
+	canGoTo!: number;
 }

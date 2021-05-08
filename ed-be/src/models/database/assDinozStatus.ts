@@ -6,9 +6,9 @@ import { Status } from './status';
 export class AssDinozStatus extends Model {
 	@ForeignKey(() => Dinoz)
 	@Column
-	dinozId!: bigint;
+	dinozId!: number;
 
 	@ForeignKey(() => Status)
 	@Column
-	statusId!: bigint;
+	statusId!: number;
 }

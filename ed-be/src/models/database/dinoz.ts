@@ -31,7 +31,7 @@ export class Dinoz extends Model {
 	@AutoIncrement
 	@AllowNull(false)
 	@Column
-	dinozId!: bigint;
+	dinozId!: number;
 
 	@HasMany(() => AssDinozObject)
 	assDinozObject!: Array<AssDinozObject>;
@@ -43,7 +43,7 @@ export class Dinoz extends Model {
 	status!: Array<Status>;
 
 	@Column
-	following!: bigint;
+	following!: number;
 
 	@AllowNull(false)
 	@Column
@@ -56,7 +56,7 @@ export class Dinoz extends Model {
 	@ForeignKey(() => DinozRace)
 	@AllowNull(false)
 	@Column
-	raceId!: bigint;
+	raceId!: number;
 
 	@BelongsTo(() => DinozRace, 'raceId')
 	race!: DinozRace;
@@ -64,28 +64,28 @@ export class Dinoz extends Model {
 	@ForeignKey(() => Level)
 	@AllowNull(false)
 	@Column
-	levelId!: bigint;
+	levelId!: number;
 
 	@BelongsTo(() => Level, 'levelId')
 	level!: Level;
 
 	@ForeignKey(() => Mission)
 	@Column
-	missionId!: bigint;
+	missionId!: number;
 
 	@BelongsTo(() => Mission, 'missionId')
 	mission!: Mission;
 
 	@ForeignKey(() => Element)
 	@Column
-	nextUpElementId!: bigint;
+	nextUpElementId!: number;
 
 	@BelongsTo(() => Element, 'nextUpElementId')
 	nextUp!: Element;
 
 	@ForeignKey(() => Element)
 	@Column
-	nextUpAltElementId!: bigint;
+	nextUpAltElementId!: number;
 
 	@BelongsTo(() => Element, 'nextUpAltElementId')
 	nextUpAlt!: Element;
@@ -93,7 +93,7 @@ export class Dinoz extends Model {
 	@ForeignKey(() => Player)
 	@AllowNull(false)
 	@Column
-	playerId!: bigint;
+	playerId!: number;
 
 	@BelongsTo(() => Player, 'playerId')
 	player!: Player;
@@ -101,7 +101,7 @@ export class Dinoz extends Model {
 	@ForeignKey(() => Place)
 	@AllowNull(false)
 	@Column
-	placeId!: bigint;
+	placeId!: number;
 
 	@BelongsTo(() => Place, 'placeId')
 	place!: Place;

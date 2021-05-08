@@ -63,7 +63,10 @@ export default defineComponent({
 		storeMoney(): number {
 			return store.getters.getMoney;
 		},
-		beautifulMoney(): string {
+		beautifulMoney(): string | undefined {
+			if (isNil(this.money)) {
+				return;
+			}
 			return utils.beautifulNumber(this.money.toString());
 		}
 	},

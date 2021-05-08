@@ -18,7 +18,7 @@ export class Place extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	placeId!: bigint;
+	placeId!: number;
 
 	@AllowNull(false)
 	@Column
@@ -29,7 +29,7 @@ export class Place extends Model {
 
 	@ForeignKey(() => Map)
 	@Column
-	mapId!: bigint;
+	mapId!: number;
 
 	@BelongsTo(() => Map, 'mapId')
 	map!: Map;

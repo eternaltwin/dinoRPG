@@ -14,7 +14,7 @@ export class IngredientGridType extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	ingredientGridTypeId!: bigint;
+	ingredientGridTypeId!: number;
 
 	@HasMany(() => IngredientGrid, 'ingredientGridId')
 	ingredientGrid!: Array<IngredientGrid>;

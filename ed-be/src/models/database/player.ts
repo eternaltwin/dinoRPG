@@ -22,7 +22,7 @@ export class Player extends Model {
 	@AllowNull(false)
 	@AutoIncrement
 	@Column
-	playerId!: bigint;
+	playerId!: number;
 
 	@BelongsToMany(() => EpicReward, () => AssPlayerReward)
 	reward!: Array<EpicReward>;
@@ -46,7 +46,7 @@ export class Player extends Model {
 
 	@AllowNull(false)
 	@Column
-	money!: bigint;
+	money!: number;
 
 	@AllowNull(false)
 	@Column

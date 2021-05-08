@@ -13,7 +13,7 @@ export class Element extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	elementId!: bigint;
+	elementId!: number;
 
 	@HasMany(() => Dinoz, 'nextUpElementId')
 	dinozNextUp!: Array<Dinoz>;

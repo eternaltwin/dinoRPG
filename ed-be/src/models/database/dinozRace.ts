@@ -20,7 +20,7 @@ export class DinozRace extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	raceId!: bigint;
+	raceId!: number;
 
 	@HasMany(() => Dinoz, 'raceId')
 	dinoz!: Array<Dinoz>;
@@ -60,7 +60,7 @@ export class DinozRace extends Model {
 
 	@ForeignKey(() => Skill)
 	@Column
-	skillId!: bigint;
+	skillId!: number;
 
 	@BelongsTo(() => Skill, 'skillId')
 	skill!: Skill;

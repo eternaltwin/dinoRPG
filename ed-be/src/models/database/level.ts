@@ -13,7 +13,7 @@ export class Level extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	levelId!: bigint;
+	levelId!: number;
 
 	@HasMany(() => Dinoz, 'dinozId')
 	dinoz!: Array<Dinoz>;

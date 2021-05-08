@@ -16,7 +16,7 @@ export class Skill extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	skillId!: bigint;
+	skillId!: number;
 
 	@BelongsToMany(() => Dinoz, () => AssDinozSkill)
 	dinoz!: Array<Dinoz>;

@@ -17,18 +17,18 @@ export class AssDinozObject extends Model {
 	@AutoIncrement
 	@AllowNull(false)
 	@Column
-	id!: bigint;
+	id!: number;
 
 	@ForeignKey(() => Dinoz)
 	@Column
-	dinozId!: bigint;
+	dinozId!: number;
 
 	@BelongsTo(() => Dinoz, 'dinozId')
 	dinoz!: Dinoz;
 
 	@ForeignKey(() => Objet)
 	@Column
-	objectId!: bigint;
+	objectId!: number;
 
 	@BelongsTo(() => Objet, 'objectId')
 	object!: Object;

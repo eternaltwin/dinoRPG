@@ -25,7 +25,7 @@ const getDinozFiche = async (
 	const dinozDetails = (await getDinozFicheRequest(dinozId)) as DinozFiche;
 
 	// If player found is different from player who do the request, throw exception
-	if (Number(dinozDetails!.player.playerId) !== Number(req.user!.playerId)) {
+	if (dinozDetails!.player.playerId !== req.user!.playerId) {
 		return res.status(500).send({
 			message:
 				'Cannot get dinoz details, dinozId : ' +
@@ -79,7 +79,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	}
 
 	// Throw unauthorized error if dinoz doesn't belong to player shop
-	if (Number(dinozData.player.playerId) !== Number(req.user!.playerId!)) {
+	if (dinozData.player.playerId !== req.user!.playerId!) {
 		return res
 			.status(500)
 			.send("Unauthorized action, you can't buy this dinoz");
@@ -116,10 +116,10 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	const dinozCreated: Dinoz = await createDinozRequest(newDinoz.get());
 
 	const dinozToSend: BasicDinoz = {
-		dinozId: Number(dinozCreated.dinozId),
+		dinozId: dinozCreated.dinozId,
 		display: dinozCreated.display,
 		experience: dinozCreated.experience,
-		following: Number(dinozCreated.following),
+		following: dinozCreated.following,
 		life: dinozCreated.life,
 		name: dinozCreated.name,
 		place: { name: 'dinoville' },
@@ -135,7 +135,7 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 	);
 
 	// If authenticated player is different from player found, throw exception
-	if (Number(dinoz!.player.playerId) !== Number(req.user!.playerId)) {
+	if (dinoz!.player.playerId !== req.user!.playerId) {
 		return res.status(500).send({
 			message: 'Unauthorized action from player : ' + req.user!.playerId,
 		});

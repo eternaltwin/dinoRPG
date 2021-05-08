@@ -15,7 +15,7 @@ export class EpicReward extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
-	rewardId!: bigint;
+	rewardId!: number;
 
 	@BelongsToMany(() => Player, () => AssPlayerReward)
 	player!: Array<Player>;
