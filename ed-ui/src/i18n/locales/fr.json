@@ -94,7 +94,8 @@
 		"nommer": "Nommer !",
 		"obtenirDeLor": "Obtenir de l'or",
 		"boutique": "Boutique",
-		"confirmer": "Confirmer cette action ?"
+		"confirmer": "Confirmer cette action ?",
+		"choisir": "Choisir"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -111,5 +112,13 @@
 	},
 	"news": {
 		"actualites": "L'actualité de Dinoland"
+	},
+	"shop": {
+		"help": "Bienvenue dans l'enclos à Dinoz ! Ici, <b>chaque jour</b>,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
+	},
+	"skill": {
+		"name": {
+			"chargeCornue": "Charge Cornue"
+		}
 	}
 }

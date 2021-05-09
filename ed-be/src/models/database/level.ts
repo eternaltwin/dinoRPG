@@ -15,7 +15,7 @@ export class Level extends Model {
 	@Column
 	levelId!: number;
 
-	@HasMany(() => Dinoz, 'dinozId')
+	@HasMany(() => Dinoz, 'levelId')
 	dinoz!: Array<Dinoz>;
 
 	@AllowNull(false)

@@ -235,10 +235,9 @@
 	height : 45px;
 	margin-left : -15px;
 	margin-bottom : 20px;
-	// background-image : url("/img/design/title_h1.gif");
+	background-image : url("assets/design/title_h1.png");
 	background-position : left bottom;
 	background-repeat : no-repeat;
-	margin-left : 5px;
 }
 
 .light {
@@ -332,6 +331,109 @@
     }
 }
 
+.enclos {
+	.help {
+		margin-bottom: 40px;
+	}
+
+	.sheet {
+		height: 76px;
+	    padding: 1px;
+	    margin-bottom: 30px;
+	    clear: both;
+	    background-image: url("assets/design/shop_dinoz_bg.png");
+	    background-position: 20px 0px;
+	    background-repeat: no-repeat;
+
+	    a.button {
+	    	margin-top: 20px;
+	    }
+
+	    a.button, .price {
+	    	position: absolute;
+    		margin-left: 225px;
+	    }
+
+	    .swf {
+	    	position: absolute;
+    		margin-top: -70px;
+	    }
+
+	    .infos {
+	    	margin-top: 10px;
+    		padding-left: 200px;
+
+    		.race {
+    			margin-bottom: 1px;
+
+    			strong {
+    				color: white;
+    			}
+    		}
+
+    		.race, .skill {
+    			width: 210px;
+			    height: 18px;
+			    padding-left: 10px;
+			    font-size: 10pt;
+			    color: #ffee92;
+			    background-color: #9a4029;
+			    border-radius: 10px;
+			    -moz-border-radius: 10px;
+			    -webkit-border-radius: 10px;
+			    cursor: help;
+    		}
+	    }
+
+	    .price {
+	    	position: absolute;
+		    margin-left: 225px;
+		    padding-left: 5px;
+		    width: 90px;
+		    height: 18px;
+		    font-size: 10pt;
+		    background-color: #9a4029;
+		    border-radius: 10px;
+		    -moz-border-radius: 10px;
+		    -webkit-border-radius: 10px;
+
+		    .money {
+		    	color: #ffee92;
+		    }
+	    }
+	}
+}
+
+.skill {
+	width: 210px;
+    height: 18px;
+    padding-left: 10px;
+    font-size: 10pt;
+    color: #ffee92;
+    background-color: #9a4029;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    cursor: help;
+}
+
+.price {
+	position: absolute;
+    margin-left: 225px;
+}
+
+.button {
+	&:first-letter {
+		color: white;
+	}
+
+	&:hover {
+		color: white;
+		background-image: url("assets/button/button_hover.png");
+		background-color: transparent;
+	}
+}
+
 .swf {
 	display: block;
     font-size: 0pt;
@@ -367,23 +469,15 @@ ul {
 		    background-repeat: no-repeat;
 		    cursor: help;
 
+		    &.max {
+		    	color: yellow;
+		    }
+
 		    img {
 		    	margin-right: -3px;
    				vertical-align: -30%;
 		    }
     	}
-	}
-}
-
-button {
-	&:first-letter {
-		color : white;
-	}
-
-	&:hover {
-		color : white;
-		background-image : url("assets/button/button_hover.png");
-		background-color : transparent;
 	}
 }
 
@@ -408,6 +502,13 @@ input, a {
 	    border-radius: 0px;
 	    -moz-border-radius: 0px;
 	    -webkit-border-radius: 0px;
+	}
+
+	&.bSmall {
+		width: 80px;
+	    padding-top: 5px;
+	    padding-right: 5px;
+	    background-image: url("assets/design/button_small.png");
 	}
 }
 
@@ -554,6 +655,19 @@ a {
 
 div {
 	display: block;
+
+	&.help {
+		margin-top: 10px;
+	    margin-bottom: 10px;
+	    padding: 5px;
+	    padding-left: 20px;
+	    color: #fce3bc;
+	    font-size: 10pt;
+	    background-color: #bc683c;
+	    background-image: url("assets/icons/small_missAct.png");
+	    background-position: 5px 8px;
+	    background-repeat: no-repeat;
+	}
 }
 
 li {
@@ -592,4 +706,8 @@ tr {
 td {
     display: table-cell;
     vertical-align: inherit;
+}
+
+strong {
+    font-weight: bold;
 }

@@ -33,7 +33,7 @@ loadConfigFile();
 // { alter: true } -> Si besoin
 // { force: true } -> S'il n'y a plus d'espoir
 sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log("Database sync");
   })

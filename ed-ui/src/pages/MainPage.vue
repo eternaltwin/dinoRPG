@@ -15,9 +15,7 @@
 								<div id="dinozList">
 									<common-elements></common-elements>
 								</div>
-								<div id="centerContent" class="newsSection">
-									<router-view />
-								</div>
+								<router-view />
 							</div>
 						</td>
 						<td id="right"><div></div></td>

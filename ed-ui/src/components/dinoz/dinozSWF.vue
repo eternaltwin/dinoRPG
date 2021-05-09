@@ -90,15 +90,15 @@ export default defineComponent({
 	},
 	mounted(): void {
 		// Set params bgColor and wmode if needed
-		this.params.bgcolor = this.bgColor ? this.bgColor : this.params.bgcolor;
-		this.params.wmode = this.wmode ? this.wmode : this.params.wmode;
+		this.params.bgcolor = this.bgColor ?? this.params.bgcolor;
+		this.params.wmode = this.wmode ?? this.params.wmode;
 
 		// Set URL to get swf
 		this.url = this.type === 'dino' ? url.dinozSWF : url.sDinozSWF;
 
 		// Set flashVars
 		this.flashVars.data = this.display!;
-		this.flashVars.flip = this.flip ? this.flip : this.flashVars.flip;
+		this.flashVars.flip = this.flip ?? this.flashVars.flip;
 
 		// Decode CHK
 		let decodedData = 0;

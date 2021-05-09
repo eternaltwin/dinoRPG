@@ -1,33 +1,36 @@
 <template>
-	<div v-if="nameChoosen === false">
-		<choose-dinoz-name
-			:dinozData="dinozData"
-			@setNameChoosen="setNameChoosen()"
-		></choose-dinoz-name>
-	</div>
-	<div class="dinoz" v-if="nameChoosen === true">
-		<a class="left"></a>
-		<div class="title">{{ dinozData.name }}</div>
-		<a class="right"></a>
-		<div class="avatar">
-			<dinozSWF
-				:display="dinozData.display"
-				:width="190"
-				:height="165"
-				type="dino"
-			></dinozSWF>
+	<div id="centerContent">
+		<div v-if="nameChoosen === false">
+			<choose-dinoz-name
+				:dinozData="dinozData"
+				@setNameChoosen="setNameChoosen()"
+			></choose-dinoz-name>
 		</div>
-		<div class="level">
-			<div class="over">{{ dinozData.level.level }}</div>
-		</div>
-		<elements
-			:fire="dinozData.nbrUpFire"
-			:wood="dinozData.nbrUpWood"
-			:water="dinozData.nbrUpWater"
-			:light="dinozData.nbrUpLight"
-			:air="dinozData.nbrUpAir"
-		></elements>
-		<!--<equipement type="dinoz" :objects="dinozData.assDinozObject"></equipement>
+		<div class="dinoz" v-if="nameChoosen === true">
+			<a class="left"></a>
+			<div class="title">{{ dinozData.name }}</div>
+			<a class="right"></a>
+			<div class="avatar">
+				<dinozSWF
+					:display="dinozData.display"
+					:width="190"
+					:height="165"
+					type="dino"
+				></dinozSWF>
+			</div>
+			<div class="level">
+				<div class="over">{{ dinozData.level.level }}</div>
+			</div>
+			<div class="infos">
+				<elements
+					:fire="dinozData.nbrUpFire"
+					:wood="dinozData.nbrUpWood"
+					:water="dinozData.nbrUpWater"
+					:light="dinozData.nbrUpLight"
+					:air="dinozData.nbrUpAir"
+				></elements>
+			</div>
+			<!--<equipement type="dinoz" :objects="dinozData.assDinozObject"></equipement>
 			<status :status="dinozData.status"></status>
 			<p>Name : {{ dinozData.name }}</p>
 			
@@ -41,6 +44,7 @@
 					{{ $t(`action.${action.name}`) }}
 				</p>
 			</div>-->
+		</div>
 	</div>
 </template>
 

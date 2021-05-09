@@ -1,13 +1,11 @@
 <template>
-	<div class="infos">
-		<ul class="elements">
-			<li><img :src="getImg(0)" alt="fire" />{{ fire }}</li>
-			<li><img :src="getImg(1)" alt="wood" />{{ wood }}</li>
-			<li><img :src="getImg(2)" alt="water" />{{ water }}</li>
-			<li><img :src="getImg(3)" alt="light" />{{ light }}</li>
-			<li><img :src="getImg(4)" alt="air" />{{ air }}</li>
-		</ul>
-	</div>
+	<ul class="elements">
+		<li><img :src="getImg(0)" alt="fire" /> {{ fire }}</li>
+		<li><img :src="getImg(1)" alt="wood" /> {{ wood }}</li>
+		<li><img :src="getImg(2)" alt="water" /> {{ water }}</li>
+		<li><img :src="getImg(3)" alt="light" /> {{ light }}</li>
+		<li><img :src="getImg(4)" alt="air" /> {{ air }}</li>
+	</ul>
 </template>
 
 <script lang="ts">

@@ -1,21 +1,51 @@
 <template>
-	<div id="DinozShopPage"></div>
-	<div v-for="dinoz in dinozList" :key="dinoz.dinozId">
-		<dinozSWF
-			:display="dinoz.display"
-			:width="190"
-			:height="165"
-			type="dino"
-		></dinozSWF>
-		<span>{{ dinoz.race.name }}</span>
-		<span>{{ dinoz.race.price }}</span>
-		<span>{{ dinoz.race.nbrFireCase }}</span>
-		<span>{{ dinoz.race.nbrWoodCase }}</span>
-		<span>{{ dinoz.race.nbrWaterCase }}</span>
-		<span>{{ dinoz.race.nbrLightCase }}</span>
-		<span>{{ dinoz.race.nbrAirCase }}</span>
-		<span v-if="dinoz.race.skill">{{ dinoz.race.skill.name }}</span>
-		<button @click="openPopinConfirmChoice(dinoz)">Choisir</button>
+	<div id="centerContent">
+		<div class="enclos">
+			<div class="section">
+				<div>Enclos des dinoz</div>
+			</div>
+			<div class="help">
+				<p v-html="$t('shop.help')"></p>
+			</div>
+			<div
+				class="sheet"
+				:id="'detail_' + index"
+				v-for="(dinoz, index) in dinozList"
+				:key="dinoz.dinozId"
+			>
+				<dinozSWF
+					:display="dinoz.display"
+					:width="190"
+					:height="165"
+					type="dino"
+				></dinozSWF>
+				<div class="infos">
+					<div class="price">
+						<span class="money"
+							>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
+							<img src="@/assets/icons/small_gold.png" />
+						</span>
+					</div>
+					<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{
+						$t('bouton.choisir')
+					}}</a>
+					<div class="race">
+						<strong>Race :</strong> {{ $t(`race.name.${dinoz.race.name}`) }}
+					</div>
+					<elements
+						:fire="dinoz.race.nbrFireCase"
+						:wood="dinoz.race.nbrWoodCase"
+						:water="dinoz.race.nbrWaterCase"
+						:light="dinoz.race.nbrLightCase"
+						:air="dinoz.race.nbrAirCase"
+					></elements>
+					<div class="skill" v-if="dinoz.race.skill?.name">
+						<img src="@/assets/icons/small_follow.png" alt="follow" />
+						{{ $t(`skill.name.${dinoz.race.skill.name}`) }}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -23,19 +53,22 @@
 import { defineComponent } from 'vue';
 import { ShopService, DinozService } from '@/services';
 import { DinozShop, Dinoz } from '@/models';
-import { errorHandler } from '@/utils';
+import { errorHandler, utils } from '@/utils';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
+import Elements from '@/components/elements/elements.vue';
 import store from '@/store';
 
 export default defineComponent({
 	name: 'DinozShopPage',
 	data() {
 		return {
+			utils: utils,
 			dinozList: [] as Array<DinozShop>
 		};
 	},
 	components: {
-		DinozSWF
+		DinozSWF,
+		Elements
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
