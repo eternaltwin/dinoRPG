@@ -6,7 +6,7 @@ import {
 	PrimaryKey,
 	HasMany,
 } from 'sequelize-typescript';
-import { AssDinozObject } from './assDinozObject';
+import { AssDinozObject } from './assDinozObject.js';
 
 @Table({ tableName: 'tb_object', timestamps: false })
 export class Objet extends Model {

@@ -8,10 +8,10 @@ import {
 	PrimaryKey,
 	Table,
 } from 'sequelize-typescript';
-import { Dinoz } from './dinoz';
-import { IngredientGrid } from './ingredientGrid';
-import { Map } from './map';
-import { PlaceAccess } from './placeAccess';
+import { Dinoz } from './dinoz.js';
+import { IngredientGrid } from './ingredientGrid.js';
+import { Map } from './map.js';
+import { PlaceAccess } from './placeAccess.js';
 
 @Table({ tableName: 'tb_place', timestamps: false })
 export class Place extends Model {

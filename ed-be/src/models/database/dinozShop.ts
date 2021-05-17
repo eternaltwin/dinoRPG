@@ -8,8 +8,8 @@ import {
 	ForeignKey,
 	BelongsTo,
 } from 'sequelize-typescript';
-import { DinozRace } from './dinozRace';
-import { Player } from './player';
+import { DinozRace } from './dinozRace.js';
+import { Player } from './player.js';
 
 @Table({ tableName: 'tb_dinoz_shop', timestamps: false })
 export class DinozShop extends Model {

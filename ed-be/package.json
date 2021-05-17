@@ -2,9 +2,10 @@
   "name": "ed-be",
   "version": "1.0.0",
   "description": "EternalDino API",
-  "main": "server.ts",
+  "main": "src/server.ts",
+  "type": "module",
   "scripts": {
-    "serve": "yarn run prettier && concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon server.ts\"",
+    "serve": "tsc && node dist/server.js",
     "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
     "test": "jest --verbose",
     "coverage": "jest --coverage",
@@ -22,8 +23,6 @@
   "author": "Jolujolu",
   "license": "ISC",
   "dependencies": {
-    "@eternal-twin/etwin-client-http": "^0.3.1",
-    "@eternal-twin/oauth-client-http": "^0.3.1",
     "body-parser": "^1.19.0",
     "btoa": "^1.2.1",
     "cheerio": "^1.0.0-rc.3",
@@ -43,6 +42,8 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "@eternal-twin/etwin-client-http": "^0.5.1",
+    "@eternal-twin/oauth-client-http": "^0.5.1",
     "@eternal-twin/website": "^0.3.1",
     "@types/cors": "^2.8.10",
     "@types/cron": "^1.7.2",

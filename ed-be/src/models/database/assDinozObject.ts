@@ -8,8 +8,8 @@ import {
 	BelongsTo,
 	ForeignKey,
 } from 'sequelize-typescript';
-import { Dinoz } from './dinoz';
-import { Objet } from './objet';
+import { Dinoz } from './dinoz.js';
+import { Objet } from './objet.js';
 
 @Table({ tableName: 'tb_ass_dinoz_object', timestamps: false })
 export class AssDinozObject extends Model {

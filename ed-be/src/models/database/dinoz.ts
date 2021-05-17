@@ -12,17 +12,17 @@ import {
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
-import { DinozRace } from './dinozRace';
-import { Element } from './element';
-import { Level } from './level';
-import { Mission } from './mission';
-import { Place } from './place';
-import { Player } from './player';
-import { Skill } from './skill';
-import { Status } from './status';
-import { AssDinozObject } from './assDinozObject';
-import { AssDinozSkill } from './assDinozSkill';
-import { AssDinozStatus } from './assDinozStatus';
+import { DinozRace } from './dinozRace.js';
+import { Element } from './element.js';
+import { Level } from './level.js';
+import { Mission } from './mission.js';
+import { Place } from './place.js';
+import { Player } from './player.js';
+import { Skill } from './skill.js';
+import { Status } from './status.js';
+import { AssDinozObject } from './assDinozObject.js';
+import { AssDinozSkill } from './assDinozSkill.js';
+import { AssDinozStatus } from './assDinozStatus.js';
 
 @Table({ tableName: 'tb_dinoz', timestamps: true })
 export class Dinoz extends Model {

@@ -8,7 +8,7 @@ import {
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
-import { IngredientGridType } from './ingredientGridType';
+import { IngredientGridType } from './ingredientGridType.js';
 
 @Table({ tableName: 'tb_ingredient', timestamps: false })
 export class Ingredient extends Model {

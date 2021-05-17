@@ -6,8 +6,8 @@ import {
 	PrimaryKey,
 	Table,
 } from 'sequelize-typescript';
-import { AssDinozStatus } from './assDinozStatus';
-import { Dinoz } from './dinoz';
+import { AssDinozStatus } from './assDinozStatus.js';
+import { Dinoz } from './dinoz.js';
 
 @Table({ tableName: 'tb_status', timestamps: false })
 export class Status extends Model {

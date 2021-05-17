@@ -10,11 +10,11 @@ import {
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
-import { AssPlayerReward } from './assPlayerReward';
-import { Dinoz } from './dinoz';
-import { DinozShop } from './dinozShop';
-import { EpicReward } from './epicReward';
-import { IngredientGrid } from './ingredientGrid';
+import { AssPlayerReward } from './assPlayerReward.js';
+import { Dinoz } from './dinoz.js';
+import { DinozShop } from './dinozShop.js';
+import { EpicReward } from './epicReward.js';
+import { IngredientGrid } from './ingredientGrid.js';
 
 @Table({ tableName: 'tb_player', timestamps: true })
 export class Player extends Model {

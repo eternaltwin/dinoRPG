@@ -6,7 +6,7 @@ import {
 	PrimaryKey,
 	Table,
 } from 'sequelize-typescript';
-import { Dinoz } from './dinoz';
+import { Dinoz } from './dinoz.js';
 
 @Table({ tableName: 'tb_level', timestamps: false })
 export class Level extends Model {

@@ -6,8 +6,8 @@ import {
 	PrimaryKey,
 	Table,
 } from 'sequelize-typescript';
-import { IngredientGrid } from './ingredientGrid';
-import { Ingredient } from './ingredient';
+import { IngredientGrid } from './ingredientGrid.js';
+import { Ingredient } from './ingredient.js';
 
 @Table({ tableName: 'tb_ingredient_grid_type', timestamps: false })
 export class IngredientGridType extends Model {

@@ -1285,14 +1285,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternal-twin/core@npm:0.3.2":
-  version: 0.3.2
-  resolution: "@eternal-twin/core@npm:0.3.2"
+"@eternal-twin/core@npm:0.5.1":
+  version: 0.5.1
+  resolution: "@eternal-twin/core@npm:0.5.1"
   dependencies:
-    "@eternal-twin/twinoid-core": 0.3.1
     jsonwebtoken: ^8.5.1
-    kryo: ^0.11.1
-  checksum: f175bfade97599e0f1af9815b940ff14f951cc56642200fb75999491accfe287fee0eee8dc64ba80f721f5d047b7375f165b273bcab20c3d646765afcd0c7466
+    kryo: ^0.11.2
+  checksum: cd28541bfd465d619641205c979a766a9055f59d91ce44e7a94f93a88d23753e566377b11e7bb9a2b8e0a3da010e64de1c7a63e68d1b7cef7afeff0e2274b44d
   languageName: node
   linkType: hard
 
@@ -1322,16 +1321,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@eternal-twin/etwin-client-http@npm:^0.3.1":
-  version: 0.3.2
-  resolution: "@eternal-twin/etwin-client-http@npm:0.3.2"
+"@eternal-twin/etwin-client-http@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@eternal-twin/etwin-client-http@npm:0.5.1"
   dependencies:
-    "@eternal-twin/core": 0.3.1
+    "@eternal-twin/core": 0.5.1
     "@types/url-join": ^4.0.0
-    kryo: ^0.11.1
-    kryo-json: ^0.11.0
+    kryo: ^0.11.2
+    kryo-json: ^0.11.2
     url-join: ^4.0.1
-  checksum: 54e20870ad0cfee64fc53786a84cf135006598885a316f8e4c44ff5d3dc067c97b0efea1521264e325743afb281debbd8d2603e23e5e6fe275db60f1958e763a
+  checksum: c83a82197e98419cbab9fbee4463dcf89d3ef7da18fc72e350de4a557ff7e8c0086135f68e9fba144b56be535dcc39be1bb044306353b10299d8d494ab97ae58
   languageName: node
   linkType: hard
 
@@ -1470,21 +1469,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternal-twin/oauth-client-http@npm:^0.3.1":
-  version: 0.3.4
-  resolution: "@eternal-twin/oauth-client-http@npm:0.3.4"
+"@eternal-twin/oauth-client-http@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@eternal-twin/oauth-client-http@npm:0.5.1"
   dependencies:
-    "@eternal-twin/core": 0.3.2
+    "@eternal-twin/core": 0.5.1
     "@types/auth-header": ^1.0.1
-    "@types/jsonwebtoken": ^8.5.0
-    "@types/jws": ^3.2.2
+    "@types/jsonwebtoken": ^8.5.1
+    "@types/jws": ^3.2.3
     "@types/superagent": ^4.1.10
     auth-header: ^1.0.0
     jsonwebtoken: ^8.5.1
     jws: ^4.0.0
-    kryo-json: ^0.11.0
+    kryo-json: ^0.11.2
     superagent: ^6.1.0
-  checksum: dd4e0cc785628e7b79942a40161baa3aa513e9ae13ec9a0293c3a4901458312f39e67ce183785cb7dedbad0764f8cf7c8622bcc3892c101611f85c4aabfd5e4f
+  checksum: 9fad2be5d0a560cbc9fb7443f3f8b29b609956914246241342d20d47ef43b9544e839952f408f6b02b0d36f343a06708f2503345fc93419b297759ce8e8a35a2
   languageName: node
   linkType: hard
 
@@ -2492,12 +2491,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jsonwebtoken@npm:^8.5.1":
+  version: 8.5.1
+  resolution: "@types/jsonwebtoken@npm:8.5.1"
+  dependencies:
+    "@types/node": "*"
+  checksum: f66ee4a12584a699a6dba5daa79d0f87ae77950a332f918c7f485b6d33501be84547fcac992d7f5a8960d04f77f206b118d9a558d8dd49f1aea99c64a17182b0
+  languageName: node
+  linkType: hard
+
 "@types/jws@npm:^3.2.2":
   version: 3.2.2
   resolution: "@types/jws@npm:3.2.2"
   dependencies:
     "@types/node": "*"
   checksum: e93739e74fe8e4d75fe45bd7c06a285d24a5fee6a2fc7a66e670b069143701e9336a595c6fe61e86ea387fab727f86ed30a18916db8f92c83545d3b6326ed351
+  languageName: node
+  linkType: hard
+
+"@types/jws@npm:^3.2.3":
+  version: 3.2.3
+  resolution: "@types/jws@npm:3.2.3"
+  dependencies:
+    "@types/node": "*"
+  checksum: 434879c2543e77513403a61154ddc890fec2b913ae9747adf4dff0f42e06983cd96c523d36b0be74cdc2ce88bd187ad7b5623b4229ad9eb64f83b4be15a51a62
   languageName: node
   linkType: hard
 
@@ -6801,8 +6818,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ed-be@workspace:ed-be"
   dependencies:
-    "@eternal-twin/etwin-client-http": ^0.3.1
-    "@eternal-twin/oauth-client-http": ^0.3.1
+    "@eternal-twin/etwin-client-http": ^0.5.1
+    "@eternal-twin/oauth-client-http": ^0.5.1
     "@eternal-twin/website": ^0.3.1
     "@types/cors": ^2.8.10
     "@types/cron": ^1.7.2
@@ -10993,6 +11010,17 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"kryo-json@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "kryo-json@npm:0.11.2"
+  dependencies:
+    incident: ^3.2.1
+    kryo: ^0.11.0
+    tslib: ^2.0.0
+  checksum: 1e334c10c9f30cdbbe7ff4dcc584a3f68f489a3f84031f7e35f6bb04c1f6d996a7ef875b53d9071bdf1d76938be78577e345dd8e9601f5e48705fa8d76b8836a
+  languageName: node
+  linkType: hard
+
 "kryo-qs@npm:^0.11.0":
   version: 0.11.0
   resolution: "kryo-qs@npm:0.11.0"
@@ -11016,6 +11044,18 @@ fsevents@~2.1.2:
     object-inspect: ^1.7.0
     tslib: ^2.0.0
   checksum: 9b721e4347f0cbe0d98e6cd5a0ad5b864365c4aba89ed85871b2153b8860fc0b084901a2a7c674b6f1e74e1bd86f4b5975b533b3731b8142d266166147a39f2b
+  languageName: node
+  linkType: hard
+
+"kryo@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "kryo@npm:0.11.2"
+  dependencies:
+    "@types/object-inspect": ^1.6.1
+    incident: ^3.2.1
+    object-inspect: ^1.7.0
+    tslib: ^2.0.0
+  checksum: 29b40be2b33eb9abbb87a4243df8accc08ed52601e3b96a168332504da79d5d76659be8feaec36ab5e4d2297e8e76875dd0fec76e375de6373e89fb743a7ef8b
   languageName: node
   linkType: hard
 

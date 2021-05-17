@@ -11,9 +11,9 @@ import {
 	UpdatedAt,
 	HasOne,
 } from 'sequelize-typescript';
-import { Dinoz } from './dinoz';
-import { DinozShop } from './dinozShop';
-import { Skill } from './skill';
+import { Dinoz } from './dinoz.js';
+import { DinozShop } from './dinozShop.js';
+import { Skill } from './skill.js';
 
 @Table({ tableName: 'tb_dinoz_race', timestamps: false })
 export class DinozRace extends Model {

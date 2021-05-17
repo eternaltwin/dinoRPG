@@ -7,8 +7,8 @@ import {
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
-import { AssPlayerReward } from './assPlayerReward';
-import { Player } from './player';
+import { AssPlayerReward } from './assPlayerReward.js';
+import { Player } from './player.js';
 
 @Table({ tableName: 'tb_epic_reward', timestamps: false })
 export class EpicReward extends Model {

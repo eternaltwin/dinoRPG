@@ -1,7 +1,7 @@
-import dbConf from './config/db.config';
-import { getEnvironnement } from './utils/context';
+import dbConf from './config/db.config.js';
+import { getEnvironnement } from './utils/context.js';
 import { Sequelize } from 'sequelize-typescript';
-import * as models from './models/database';
+import * as models from './models/database/index.js';
 
 const dbConfig = dbConf(getEnvironnement());
 

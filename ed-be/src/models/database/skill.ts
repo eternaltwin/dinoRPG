@@ -7,9 +7,9 @@ import {
 	PrimaryKey,
 	Table,
 } from 'sequelize-typescript';
-import { AssDinozSkill } from './assDinozSkill';
-import { Dinoz } from './dinoz';
-import { DinozRace } from './dinozRace';
+import { AssDinozSkill } from './assDinozSkill.js';
+import { Dinoz } from './dinoz.js';
+import { DinozRace } from './dinozRace.js';
 
 @Table({ tableName: 'tb_skill', timestamps: false })
 export class Skill extends Model {

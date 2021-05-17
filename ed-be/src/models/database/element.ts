@@ -6,7 +6,7 @@ import {
 	PrimaryKey,
 	Table,
 } from 'sequelize-typescript';
-import { Dinoz } from './dinoz';
+import { Dinoz } from './dinoz.js';
 
 @Table({ tableName: 'tb_element', timestamps: false })
 export class Element extends Model {

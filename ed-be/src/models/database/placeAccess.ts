@@ -8,7 +8,7 @@ import {
 	Table,
 	Unique,
 } from 'sequelize-typescript';
-import { Place } from './place';
+import { Place } from './place.js';
 
 @Table({ tableName: 'tb_place_access', timestamps: false })
 export class PlaceAccess extends Model {

@@ -6,7 +6,7 @@ import {
 	PrimaryKey,
 	Table,
 } from 'sequelize-typescript';
-import { Place } from './place';
+import { Place } from './place.js';
 
 @Table({ tableName: 'tb_map', timestamps: false })
 export class Map extends Model {

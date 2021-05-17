@@ -5,6 +5,7 @@ import { forgeJWT } from '../utils/jwt';
 import { isNil } from 'lodash';
 import request from 'request';
 import { Player, Config } from '../models';
+import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
 
 const authenticateToET = async (
 	req: Request,
@@ -73,9 +74,21 @@ function doAuthenticationRequestToET(
 	});
 }
 
+const getAccessToken = () => {
+	const configuration = getConfig();
+
+	const oauthClient = new RfcOauthClient({
+		authorizationEndpoint: new URL(configuration.oauth.authorizationURI),
+		tokenEndpoint: new URL(configuration.oauth.tokenURI),
+		callbackEndpoint: new URL(configuration.oauth.callbackURI),
+		clientId: configuration.oauth.client_id,
+		clientSecret: configuration.oauth.client_secret,
+	});
+};
+
 interface Authentication {
 	login: string;
 	password: string;
 }
 
-export { authenticateToET };
+export { authenticateToET, getAccessToken };
