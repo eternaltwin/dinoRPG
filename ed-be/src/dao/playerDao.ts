@@ -37,7 +37,7 @@ const getPlayerId = (eternalTwinId: string): Promise<Player | null> => {
 const getEternalTwinId = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['eternalTwinId'],
-		where: { playerId: playerId }
+		where: { playerId: playerId },
 	});
 };
 

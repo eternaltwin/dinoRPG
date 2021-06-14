@@ -3,7 +3,6 @@ import fs from 'fs';
 import toml from 'toml';
 import request from 'request';
 import cheerio from 'cheerio';
-import { getAccessToken } from './oauthService';
 import { Request, Response } from 'express';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
 import { Url } from 'url';
@@ -12,42 +11,44 @@ import { Config, Player } from '../models';
 import { getEternalTwinId } from '../dao/playerDao.js';
 import fetch from 'node-fetch';
 
-const getApiData = async (req: Request, res: Response): Promise<Response> => {    
-    const cookie: string = req.params.cookie;
-    const config: Config = getConfig();
-    let playerData: any = {};
-    let isCookieCorrect: boolean = true;
+const getApiData = async (req: Request, res: Response): Promise<Response> => {
+	const cookie: string = req.params.cookie;
+	const config: Config = getConfig();
+	let playerData: any = {};
+	let isCookieCorrect: boolean = true;
 
-    const player: Player | null = await getEternalTwinId(req.user!.playerId!);
-    const eternalTwinId = player!.eternalTwinId;
+	const player: Player | null = await getEternalTwinId(req.user!.playerId!);
+	const eternalTwinId = player!.eternalTwinId;
 
-    // Vérifie que le joueur n'a pas déjà récupéré ses données
-    const path: string = `src/data/playerData/${eternalTwinId}.json`;
-    if (fs.existsSync(path)){
-        return res.status(500).send({
-            message: "You have already retrieved your account data"
-        });
-    }
+	// Vérifie que le joueur n'a pas déjà récupéré ses données
+	const path: string = `src/data/playerData/${eternalTwinId}.json`;
+	if (fs.existsSync(path)) {
+		return res.status(500).send({
+			message: 'You have already retrieved your account data',
+		});
+	}
 
-    const cookieToSend: string = `hcw=1; sid=${cookie}`;
+	const cookieToSend: string = `hcw=1; sid=${cookie}`;
 
-    let test;
+	let test;
 
-    try {
-        // Récupération des données via Eternal-Twin
-        test = await getEternalTwinData(config.general.eternalTwinURI, eternalTwinId);
+	try {
+		// Récupération des données via Eternal-Twin
+		test = await getEternalTwinData(
+			config.general.eternalTwinURI,
+			eternalTwinId
+		);
 
-        // Récupération des ingrédients du joueur
-        //await doIngredientsRequest(playerData, cookieToSend, isCookieCorrect);
+		// Récupération des ingrédients du joueur
+		//await doIngredientsRequest(playerData, cookieToSend, isCookieCorrect);
 
-        // Récupération des compétences, assauts, défenses et attaques spéciales des dinoz
-         
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send(err);
-    }
+		// Récupération des compétences, assauts, défenses et attaques spéciales des dinoz
+	} catch (err) {
+		console.error(err);
+		return res.status(500).send(err);
+	}
 
-    /*
+	/*
     // Récupération des compétences, assauts, défenses et attaques spéciales des dinoz
             for (const dino of data.dinos) {
                 if (!stopRequests) {
@@ -61,30 +62,33 @@ const getApiData = async (req: Request, res: Response): Promise<Response> => {
             }
     */
 
-    // createFile(playerData, eternalTwinId);
+	// createFile(playerData, eternalTwinId);
 
-    test = await test.json();
+	test = await test.json();
 
-    return res.status(200).send(test);
+	return res.status(200).send(test);
 };
 
 export { getApiData };
 
-async function getEternalTwinData(eternalTwinURI: string, eternalTwinId: string): Promise<any> {
-    let res;
-    try {
-        res = await fetch(`${eternalTwinURI}api/v1/users/${eternalTwinId}`, {
-            method: 'GET'
-        });
-    } catch (err) {
-        return Promise.reject(err);
-    }
+async function getEternalTwinData(
+	eternalTwinURI: string,
+	eternalTwinId: string
+): Promise<any> {
+	let res;
+	try {
+		res = await fetch(`${eternalTwinURI}api/v1/users/${eternalTwinId}`, {
+			method: 'GET',
+		});
+	} catch (err) {
+		return Promise.reject(err);
+	}
 
-    return res;
+	return res;
 }
 
-    // Get data from EternalTwin API
-    /*getApiData: async (req: Request, res: Response) => {
+// Get data from EternalTwin API
+/*getApiData: async (req: Request, res: Response) => {
 
         const code = req.params.code;
         const token = await getAccessToken(code);
@@ -185,44 +189,59 @@ async function getEternalTwinData(eternalTwinURI: string, eternalTwinId: string)
     return json;
 }*/
 
-function doIngredientsRequest(data: any, cookieToSend: string, isCookieCorrect: boolean) {
-    let ingrName;
-    let ingrQuantity;
-    data.ingredients = [];
+function doIngredientsRequest(
+	data: any,
+	cookieToSend: string,
+	isCookieCorrect: boolean
+) {
+	let ingrName;
+	let ingrQuantity;
+	data.ingredients = [];
 
-    return new Promise((resolve, reject) => {
-        request({
-            url: 'http://www.dinorpg.com/user/ingr',
-            method: 'GET',
-            headers: {
-                'Cookie': cookieToSend
-            }
-        }, (err, response, html) =>{
-            if (!err) {
-                let $: any = cheerio.load(html);
-                
-                // Si le cookie renseigné n'est pas bon, la requête récupère la page d'accueil
-                // Si l'attribut ci-dessous est trouvé, c'est que la requête a récupéré la page d'accueil
-                if ($('#center2')[0]) {
-                    isCookieCorrect = false;
-                    reject("The given cookie is incorrect, the connection to your account could not be etablished. Try again or seek help from the community.");
-                }
+	return new Promise((resolve, reject) => {
+		request(
+			{
+				url: 'http://www.dinorpg.com/user/ingr',
+				method: 'GET',
+				headers: {
+					Cookie: cookieToSend,
+				},
+			},
+			(err, response, html) => {
+				if (!err) {
+					let $: any = cheerio.load(html);
 
-                if (isCookieCorrect) {
-                    $('[class=table]')[0].children[1].children.forEach((ingr: any) => {
-                        if (ingr.attribs) {
-                            if (Object.keys(ingr.attribs).length !== 0) {
-                                ingrName = ingr.children[3].children[0].data;
-                                ingrQuantity = ingr.children[5].children[0].data.substring(5, ingr.children[5].children[0].data.length-4);
-                                data.ingredients.push({ name: ingrName, quantity: ingrQuantity });
-                                resolve(data);
-                            }
-                        }
-                    });
-                }
-            }
-        });   
-    });
+					// Si le cookie renseigné n'est pas bon, la requête récupère la page d'accueil
+					// Si l'attribut ci-dessous est trouvé, c'est que la requête a récupéré la page d'accueil
+					if ($('#center2')[0]) {
+						isCookieCorrect = false;
+						reject(
+							'The given cookie is incorrect, the connection to your account could not be etablished. Try again or seek help from the community.'
+						);
+					}
+
+					if (isCookieCorrect) {
+						$('[class=table]')[0].children[1].children.forEach((ingr: any) => {
+							if (ingr.attribs) {
+								if (Object.keys(ingr.attribs).length !== 0) {
+									ingrName = ingr.children[3].children[0].data;
+									ingrQuantity = ingr.children[5].children[0].data.substring(
+										5,
+										ingr.children[5].children[0].data.length - 4
+									);
+									data.ingredients.push({
+										name: ingrName,
+										quantity: ingrQuantity,
+									});
+									resolve(data);
+								}
+							}
+						});
+					}
+				}
+			}
+		);
+	});
 }
 
 /*function doDinozSkillsRequest(data, cookieToSend, dinozId) {
@@ -480,9 +499,9 @@ function doDeamonShopRequest(data, cookieToSend) {
 }*/
 
 // Crée le fichier avec les données du joueur s'il n'existe pas déjà
-function createFile(data: any, eternalTwinId: string){
-    const path = `src/data/playerData/${eternalTwinId}.json`;
-	if (!fs.existsSync(path)){
+function createFile(data: any, eternalTwinId: string) {
+	const path = `src/data/playerData/${eternalTwinId}.json`;
+	if (!fs.existsSync(path)) {
 		fs.appendFile(path, JSON.stringify(data), (err) => {
 			if (err) throw err;
 		});

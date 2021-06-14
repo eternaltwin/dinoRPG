@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import {
 	getDinozDetailsRequest,
-	deleteDinozInShopRequest
+	deleteDinozInShopRequest,
 } from '../dao/shopDao.js';
 import { setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
@@ -10,7 +10,13 @@ import {
 	getCanDinozChangeName,
 	setDinozNameRequest,
 } from '../dao/dinozDao.js';
-import { Dinoz, DinozShop, BasicDinoz, DinozFiche, Action } from '../models/index.js';
+import {
+	Dinoz,
+	DinozShop,
+	BasicDinoz,
+	DinozFiche,
+	Action,
+} from '../models/index.js';
 import _ from 'lodash';
 import { actions } from '../utils/constants.js';
 

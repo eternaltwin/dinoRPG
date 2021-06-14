@@ -52,17 +52,17 @@ const authenticateToET = async (
 	return res.status(200).send(JWT);
 };
 
-async function getUser(accessToken: string, eternalTwinURI: string) {
+async function getUser(accessToken: string, eternalTwinURI: string) {
 	let res;
 
 	try {
 		res = await fetch(`${eternalTwinURI}api/v1/auth/self`, {
 			method: 'GET',
 			headers: {
-				Authorization: `Bearer ${accessToken}`
-			}
-		})
-	} catch (err) {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+	} catch (err) {
 		console.error(err);
 		return Promise.reject(err);
 	}
@@ -74,11 +74,13 @@ async function getAuthorizationToken(
 	code: string,
 	config: Config
 ): Promise<AccessToken> {
-	const body = { 
+	const body = {
 		code: code,
-		grant_type: 'authorization_code'
+		grant_type: 'authorization_code',
 	};
-	const keyPassword: string = Buffer.from(`${config.oauth.client_id}:${config.oauth.client_secret}`).toString('base64');
+	const keyPassword: string = Buffer.from(
+		`${config.oauth.client_id}:${config.oauth.client_secret}`
+	).toString('base64');
 	let res;
 
 	try {
@@ -87,8 +89,8 @@ async function getAuthorizationToken(
 			body: JSON.stringify(body),
 			headers: {
 				'Content-type': 'application/json',
-				'Authorization': `Basic ${keyPassword}`
-			}
+				Authorization: `Basic ${keyPassword}`,
+			},
 		});
 	} catch (err) {
 		console.error(err);
@@ -102,40 +104,48 @@ const getAuthorizationUri = (req: Request, res: Response): Response => {
 	const config: Config = getConfig();
 
 	const oauthClient: RfcOauthClient = new RfcOauthClient({
-		authorizationEndpoint: new URL(`${config.general.eternalTwinURI}${config.oauth.authorizationURI}`),
-		tokenEndpoint: new URL(`${config.general.eternalTwinURI}${config.oauth.tokenURI}`),
-		callbackEndpoint: new URL(`${config.general.frontUri}${config.oauth.callbackURI}`),
+		authorizationEndpoint: new URL(
+			`${config.general.eternalTwinURI}${config.oauth.authorizationURI}`
+		),
+		tokenEndpoint: new URL(
+			`${config.general.eternalTwinURI}${config.oauth.tokenURI}`
+		),
+		callbackEndpoint: new URL(
+			`${config.general.frontUri}${config.oauth.callbackURI}`
+		),
 		clientId: config.oauth.client_id,
 		clientSecret: config.oauth.client_secret,
 	});
 
-	return res.status(200).send(oauthClient.getAuthorizationUri('base', 'authenticate'));
-}
+	return res
+		.status(200)
+		.send(oauthClient.getAuthorizationUri('base', 'authenticate'));
+};
 
 interface AccessToken {
 	access_token: string;
-	expires_in: number,
-	token_type: string
+	expires_in: number;
+	token_type: string;
 }
 
 interface User {
-	type: string,
-	scope: string,
+	type: string;
+	scope: string;
 	client: {
-	  type: string,
-	  id: string,
-	  key: string,
-	  display_name: string
-	},
+		type: string;
+		id: string;
+		key: string;
+		display_name: string;
+	};
 	user: {
-	  type: string,
-	  id: string,
-	  display_name: {
-		current: {
-		  value: string
-		}
-	  }
-	}
-  }
+		type: string;
+		id: string;
+		display_name: {
+			current: {
+				value: string;
+			};
+		};
+	};
+}
 
 export { authenticateToET, getAuthorizationUri };

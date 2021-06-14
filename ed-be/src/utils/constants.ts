@@ -3,7 +3,7 @@ const apiRoutes = {
 	oauthRoute: '/api/oauth',
 	playerRoute: '/api/player',
 	shopRoutes: '/api/shop',
-	dataRoutes: '/api/data'
+	dataRoutes: '/api/data',
 };
 
 const race = {

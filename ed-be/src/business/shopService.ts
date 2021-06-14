@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
-import { Config, Dinoz, DinozRace, DinozShop, Player } from '../models/index.js';
+import {
+	Config,
+	Dinoz,
+	DinozRace,
+	DinozShop,
+	Player,
+} from '../models/index.js';
 import {
 	getDinozFromDinozShopRequest,
 	createMultipleDinoz,
