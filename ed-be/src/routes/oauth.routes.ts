@@ -1,16 +1,12 @@
 import { Router } from 'express';
-import { authenticateToET } from '../business/oauthService';
-import { apiRoutes } from '../utils/constants';
+import { authenticateToET, getAuthorizationUri } from '../business/oauthService.js';
+import { apiRoutes } from '../utils/constants.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.oauthRoute;
 
-/*routes.post('/redirect', (req, res) => {
-    res.redirect(oauthController.getAuthorizationUri());
-});*/
-
-//routes.get('/callback', oauthController.getAccessToken);
+routes.post(`${commonPath}/redirect`, getAuthorizationUri);
 
 routes.put(`${commonPath}/authenticate/eternal-twin`, authenticateToET);
 

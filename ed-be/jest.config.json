@@ -1,0 +1,13 @@
+{
+  "transform": {"^.+\\.jsx?$": "babel-jest"},
+  "moduleFileExtensions": ["js", "ts"],
+  "testMatch": ["**/test/**/*Test.js"],
+  "testEnvironment": "node",
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "/models/",
+    "/test/",
+    "/dao/",
+    "/utils/"
+  ]
+}

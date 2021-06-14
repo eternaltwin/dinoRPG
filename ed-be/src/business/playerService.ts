@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { getCommonDataRequest } from '../dao/playerDao';
-import { Player } from '../models';
+import { getCommonDataRequest } from '../dao/playerDao.js';
+import { Player } from '../models/index.js';
 
 const getCommonData = async (
 	req: Request,

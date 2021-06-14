@@ -1,4 +1,4 @@
-import { DinozRace } from '../models';
+import { DinozRace } from '../models/index.js';
 
 const getRacesDetailsRequest = (
 	raceArray: Array<string>

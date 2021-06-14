@@ -2257,6 +2257,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cheerio@npm:^0.22.29":
+  version: 0.22.29
+  resolution: "@types/cheerio@npm:0.22.29"
+  dependencies:
+    "@types/node": "*"
+  checksum: 6d230f402cdd033037c5cdf903f364f053196258862ede71265b5c618519f91fef0a891e9d5e47cb20b5660f505cf005c111092ea14822946fdeafc00f9c3476
+  languageName: node
+  linkType: hard
+
 "@types/connect-history-api-fallback@npm:*":
   version: 1.3.4
   resolution: "@types/connect-history-api-fallback@npm:1.3.4"
@@ -2657,6 +2666,16 @@ __metadata:
   version: 1.2.1
   resolution: "@types/minimist@npm:1.2.1"
   checksum: 3a6f5fe35f1656b34a4ccd5a5db1c38509d8d5b59625865b8c2b997994fcb0cfde0d9af7c5507b95dc5a0a32a22886c189e505cd2e52a7ef36d3c9982f07ed5a
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.5.10":
+  version: 2.5.10
+  resolution: "@types/node-fetch@npm:2.5.10"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^3.0.0
+  checksum: 7687038f73cf0f2e4bac8ced3abdfbb77f8b2719de2f180d0064238d7460c8b4dc0b39c08da35a76d7db9f86528599ea0f7cee7c468ad7cfecfe2db1c5863641
   languageName: node
   linkType: hard
 
@@ -4700,15 +4719,6 @@ __metadata:
   dependencies:
     node-int64: ^0.4.0
   checksum: 302af195672988c21be9590b0b4fcacf9bd5bc116a32cbb5f613b21800fce8ee6aa1c57e76bbfa15a60269fe48885d062383e353fbaa821dbf06e92f72cc8b7d
-  languageName: node
-  linkType: hard
-
-"btoa@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "btoa@npm:1.2.1"
-  bin:
-    btoa: bin/btoa.js
-  checksum: d8f863b356706f64d6f9f4ed30711b72b8e76e36dcd25ed14349829f0450a1a06ee8abb8006b1ff7461650933fd9347f0df095c0bacc9ab46c55e4857ce3db21
   languageName: node
   linkType: hard
 
@@ -6821,6 +6831,7 @@ __metadata:
     "@eternal-twin/etwin-client-http": ^0.5.1
     "@eternal-twin/oauth-client-http": ^0.5.1
     "@eternal-twin/website": ^0.3.1
+    "@types/cheerio": ^0.22.29
     "@types/cors": ^2.8.10
     "@types/cron": ^1.7.2
     "@types/express": ^4.17.11
@@ -6828,10 +6839,11 @@ __metadata:
     "@types/jest": ^26.0.22
     "@types/lodash": ^4.14.168
     "@types/node": ^14.14.37
+    "@types/node-fetch": ^2.5.10
     "@types/request": ^2.48.5
     "@types/validator": ^13.1.3
+    babel-jest: ^26.6.3
     body-parser: ^1.19.0
-    btoa: ^1.2.1
     cheerio: ^1.0.0-rc.3
     concurrently: ^6.0.0
     cors: ^2.8.5
@@ -6854,6 +6866,42 @@ __metadata:
     ts-node: ^9.1.1
     typescript: ^4.2.3
     url: ^0.11.0
+  languageName: unknown
+  linkType: soft
+
+"ed-ui@workspace:ed-ui":
+  version: 0.0.0-use.local
+  resolution: "ed-ui@workspace:ed-ui"
+  dependencies:
+    "@types/lodash": ^4.14.168
+    "@typescript-eslint/eslint-plugin": ^2.33.0
+    "@typescript-eslint/parser": ^2.33.0
+    "@vue/cli-plugin-babel": ~4.5.0
+    "@vue/cli-plugin-eslint": ~4.5.0
+    "@vue/cli-plugin-router": ~4.5.0
+    "@vue/cli-plugin-typescript": ~4.5.0
+    "@vue/cli-plugin-vuex": ~4.5.0
+    "@vue/cli-service": ~4.5.0
+    "@vue/compiler-sfc": ^3.0.0
+    "@vue/eslint-config-prettier": ^6.0.0
+    "@vue/eslint-config-typescript": ^5.0.2
+    axios: ^0.21.1
+    buffer: ^6.0.3
+    core-js: ^3.6.5
+    eslint: ^6.7.2
+    eslint-plugin-prettier: ^3.1.3
+    eslint-plugin-vue: ^7.0.0-0
+    lint-staged: ^9.5.0
+    lodash: ^4.17.21
+    prettier: ^1.19.1
+    sass: ^1.26.5
+    sass-loader: ^8.0.2
+    typescript: ~3.9.3
+    vue: ^3.0.0
+    vue-i18n: ^9.0.0
+    vue-router: ^4.0.0-0
+    vuex: ^4.0.0-0
+    vuex-persist: ^3.1.3
   languageName: unknown
   linkType: soft
 
@@ -7370,42 +7418,6 @@ __metadata:
   checksum: f18341a3c12a554ec46c0d4756bc9cae177e92f25a4ebd9ceefebf0ee448b675972fc110879f22b1bf514174713921ae5de9ff77af2062d422b1085588465a57
   languageName: node
   linkType: hard
-
-"eternaldino_3@workspace:ed-ui":
-  version: 0.0.0-use.local
-  resolution: "eternaldino_3@workspace:ed-ui"
-  dependencies:
-    "@types/lodash": ^4.14.168
-    "@typescript-eslint/eslint-plugin": ^2.33.0
-    "@typescript-eslint/parser": ^2.33.0
-    "@vue/cli-plugin-babel": ~4.5.0
-    "@vue/cli-plugin-eslint": ~4.5.0
-    "@vue/cli-plugin-router": ~4.5.0
-    "@vue/cli-plugin-typescript": ~4.5.0
-    "@vue/cli-plugin-vuex": ~4.5.0
-    "@vue/cli-service": ~4.5.0
-    "@vue/compiler-sfc": ^3.0.0
-    "@vue/eslint-config-prettier": ^6.0.0
-    "@vue/eslint-config-typescript": ^5.0.2
-    axios: ^0.21.1
-    buffer: ^6.0.3
-    core-js: ^3.6.5
-    eslint: ^6.7.2
-    eslint-plugin-prettier: ^3.1.3
-    eslint-plugin-vue: ^7.0.0-0
-    lint-staged: ^9.5.0
-    lodash: ^4.17.21
-    prettier: ^1.19.1
-    sass: ^1.26.5
-    sass-loader: ^8.0.2
-    typescript: ~3.9.3
-    vue: ^3.0.0
-    vue-i18n: ^9.0.0
-    vue-router: ^4.0.0-0
-    vuex: ^4.0.0-0
-    vuex-persist: ^3.1.3
-  languageName: unknown
-  linkType: soft
 
 "event-pubsub@npm:4.3.0":
   version: 4.3.0

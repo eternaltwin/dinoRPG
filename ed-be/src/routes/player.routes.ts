@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { apiRoutes } from '../utils/constants';
-import { getCommonData } from '../business/playerService';
+import { apiRoutes } from '../utils/constants.js';
+import { getCommonData } from '../business/playerService.js';
 
 const routes: Router = Router();
 

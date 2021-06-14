@@ -9,6 +9,7 @@ import {
 	UpdatedAt,
 } from 'sequelize-typescript';
 import { IngredientGridType } from './ingredientGridType.js';
+type IngredientGridTypeType = IngredientGridType;
 
 @Table({ tableName: 'tb_ingredient', timestamps: false })
 export class Ingredient extends Model {
@@ -27,5 +28,5 @@ export class Ingredient extends Model {
 	ingredientGridTypeId!: number;
 
 	@BelongsTo(() => IngredientGridType, 'ingredientGridTypeId')
-	ingredientGridType!: IngredientGridType;
+	ingredientGridType!: IngredientGridTypeType;
 }

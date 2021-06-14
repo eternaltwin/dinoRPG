@@ -3,8 +3,8 @@ import {
 	getDinozFiche,
 	buyDinoz,
 	setDinozName,
-} from '../business/dinozService';
-import { apiRoutes } from '../utils/constants';
+} from '../business/dinozService.js';
+import { apiRoutes } from '../utils/constants.js';
 
 const routes: Router = Router();
 

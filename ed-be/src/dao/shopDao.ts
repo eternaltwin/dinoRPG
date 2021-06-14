@@ -1,4 +1,4 @@
-import { DinozRace, DinozShop, Player, Skill } from '../models';
+import { DinozRace, DinozShop, Player, Skill } from '../models/index.js';
 
 const getDinozFromDinozShopRequest = (
 	playerId: number

@@ -6,7 +6,7 @@ import {
 	Place,
 	Player,
 	Status,
-} from '../models';
+} from '../models/index.js';
 
 const createDinozRequest = (newDinoz: Dinoz): Promise<Dinoz> => {
 	return Dinoz.create(newDinoz);

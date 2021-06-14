@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { Dinoz } from '../../models';
-import { DinozShopArray } from '../data/dinozShopData';
-import { PlayerWithRewards } from '../data/playerData';
-import { DinozRaceArray } from '../data/raceData';
-import { player } from '../utils/constants';
-import { getDinozFromDinozShop } from '../../business/shopService';
+import { Dinoz } from '../../models/index.js';
+import { DinozShopArray } from '../data/dinozShopData.js';
+import { PlayerWithRewards } from '../data/playerData.js';
+import { DinozRaceArray } from '../data/raceData.js';
+import { player } from '../utils/constants.js';
+import { getDinozFromDinozShop } from '../../business/shopService.js';
 
 const DinozShopDao = require('../../dao/shopDao');
 const PlayerDao = require('../../dao/playerDao');

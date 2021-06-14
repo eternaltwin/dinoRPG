@@ -1,14 +1,14 @@
 import { http } from '@/utils';
 
 export const DataService = {
-	getAccountData(code: string, cookie: string): Promise<void> {
+	getAccountData(cookie: string): Promise<void> {
 		return http()
-			.get(`/data/${code}/${cookie}`)
+			.get(`/data/${cookie}`)
 			.then(response => response.data)
 			.catch(err => Promise.reject(err));
 	},
 
-	authentication(): Promise<string> {
+	getRedirectUri(): Promise<string> {
 		return http()
 			.post('/oauth/redirect')
 			.then(response => response.data)

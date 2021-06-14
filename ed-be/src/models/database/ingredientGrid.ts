@@ -12,6 +12,10 @@ import { IngredientGridType } from './ingredientGridType.js';
 import { Place } from './place.js';
 import { Player } from './player.js';
 
+type IngredientGridTypeType = IngredientGridType;
+type PlaceType = Place;
+type PlayerType = Player;
+
 @Table({ tableName: 'tb_ingredient_grid', timestamps: false })
 export class IngredientGrid extends Model {
 	@PrimaryKey
@@ -26,7 +30,7 @@ export class IngredientGrid extends Model {
 	playerId!: number;
 
 	@BelongsTo(() => Player, 'playerId')
-	player!: Player;
+	player!: PlayerType;
 
 	/*@AllowNull(false)
   @Column
@@ -42,7 +46,7 @@ export class IngredientGrid extends Model {
 	ingredientGridTypeId!: number;
 
 	@BelongsTo(() => IngredientGridType, 'ingredientGridTypeId')
-	ingredientGridType!: IngredientGridType;
+	ingredientGridType!: IngredientGridTypeType;
 
 	@ForeignKey(() => Place)
 	@AllowNull(false)
@@ -50,5 +54,5 @@ export class IngredientGrid extends Model {
 	placeId!: number;
 
 	@BelongsTo(() => Place, 'placeId')
-	place!: Place;
+	place!: PlaceType;
 }

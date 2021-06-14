@@ -79,7 +79,7 @@ secret = "dev_secret"
 [clients.dinorpg]
 display_name = "DinoRPG"
 app_uri = "http://localhost:8080/"
-callback_uri = "http://localhost:8080/api"
+callback_uri = "http://localhost:8080/authentication"
 secret = "dev_secret"
 
 # Twinoid authentication configuration

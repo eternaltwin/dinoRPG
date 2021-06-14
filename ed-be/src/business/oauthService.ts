@@ -1,37 +1,36 @@
 import { Request, Response } from 'express';
-import { getPlayerId, createPlayer } from '../dao/playerDao';
-import { getConfig } from '../utils/context';
-import { forgeJWT } from '../utils/jwt';
-import { isNil } from 'lodash';
-import request from 'request';
-import { Player, Config } from '../models';
+import { getPlayerId, createPlayer } from '../dao/playerDao.js';
+import { getConfig } from '../utils/context.js';
+import { forgeJWT } from '../utils/jwt.js';
+import _ from 'lodash';
+import { Player, Config } from '../models/index.js';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
+import fetch from 'node-fetch';
 
 const authenticateToET = async (
 	req: Request,
 	res: Response
 ): Promise<Response> => {
-	let eternalTwinPlayer: request.Response;
+	let token: AccessToken;
+	let user: User;
+	const config: Config = getConfig();
 
-	// Send authentication to EternalTwin server.
 	try {
-		eternalTwinPlayer = await doAuthenticationRequestToET(req.body);
-	} catch (error) {
-		return res.status(500).send({
-			message: error || 'Incorrect login or password.',
-		});
+		token = await getAuthorizationToken(req.body.code, config);
+		user = await getUser(token.access_token, config.general.eternalTwinURI);
+	} catch (err) {
+		console.error(err);
+		return res.status(500).send('An error occurred');
 	}
 
 	// Check if player already exists in database
-	let player: Player | null = await getPlayerId(eternalTwinPlayer.body.id);
-
-	const config: Config = getConfig();
+	let player: Player | null = await getPlayerId(user.user.id);
 
 	// If player isn't found in database, create a new one
-	if (isNil(player)) {
+	if (_.isNil(player)) {
 		player = Player.build({
-			eternalTwinId: eternalTwinPlayer.body.id,
-			name: eternalTwinPlayer.body.display_name.current.value,
+			eternalTwinId: user.user.id,
+			name: user.user.display_name.current.value,
 			money: config.player.initialMoney,
 			quetzuBought: 0,
 			leader: false,
@@ -53,42 +52,90 @@ const authenticateToET = async (
 	return res.status(200).send(JWT);
 };
 
-function doAuthenticationRequestToET(
-	params: Authentication
-): Promise<request.Response> {
-	return new Promise((resolve, reject) => {
-		request(
-			{
-				url: 'http://localhost:50320/api/v1/auth/self?method=Etwin',
-				method: 'PUT',
-				json: params,
-			},
-			(err, response, html) => {
-				if (response.body === 'Internal Server Error') {
-					reject(response);
-				} else {
-					resolve(response);
-				}
+async function getUser(accessToken: string, eternalTwinURI: string) {
+	let res;
+
+	try {
+		res = await fetch(`${eternalTwinURI}api/v1/auth/self`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${accessToken}`
 			}
-		);
-	});
+		})
+	} catch (err) {
+		console.error(err);
+		return Promise.reject(err);
+	}
+
+	return await res.json();
 }
 
-const getAccessToken = () => {
-	const configuration = getConfig();
+async function getAuthorizationToken(
+	code: string,
+	config: Config
+): Promise<AccessToken> {
+	const body = { 
+		code: code,
+		grant_type: 'authorization_code'
+	};
+	const keyPassword: string = Buffer.from(`${config.oauth.client_id}:${config.oauth.client_secret}`).toString('base64');
+	let res;
 
-	const oauthClient = new RfcOauthClient({
-		authorizationEndpoint: new URL(configuration.oauth.authorizationURI),
-		tokenEndpoint: new URL(configuration.oauth.tokenURI),
-		callbackEndpoint: new URL(configuration.oauth.callbackURI),
-		clientId: configuration.oauth.client_id,
-		clientSecret: configuration.oauth.client_secret,
-	});
-};
+	try {
+		res = await fetch(`${config.general.eternalTwinURI}oauth/token`, {
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: {
+				'Content-type': 'application/json',
+				'Authorization': `Basic ${keyPassword}`
+			}
+		});
+	} catch (err) {
+		console.error(err);
+		return Promise.reject(err);
+	}
 
-interface Authentication {
-	login: string;
-	password: string;
+	return await res.json();
 }
 
-export { authenticateToET, getAccessToken };
+const getAuthorizationUri = (req: Request, res: Response): Response => {
+	const config: Config = getConfig();
+
+	const oauthClient: RfcOauthClient = new RfcOauthClient({
+		authorizationEndpoint: new URL(`${config.general.eternalTwinURI}${config.oauth.authorizationURI}`),
+		tokenEndpoint: new URL(`${config.general.eternalTwinURI}${config.oauth.tokenURI}`),
+		callbackEndpoint: new URL(`${config.general.frontUri}${config.oauth.callbackURI}`),
+		clientId: config.oauth.client_id,
+		clientSecret: config.oauth.client_secret,
+	});
+
+	return res.status(200).send(oauthClient.getAuthorizationUri('base', 'authenticate'));
+}
+
+interface AccessToken {
+	access_token: string;
+	expires_in: number,
+	token_type: string
+}
+
+interface User {
+	type: string,
+	scope: string,
+	client: {
+	  type: string,
+	  id: string,
+	  key: string,
+	  display_name: string
+	},
+	user: {
+	  type: string,
+	  id: string,
+	  display_name: {
+		current: {
+		  value: string
+		}
+	  }
+	}
+  }
+
+export { authenticateToET, getAuthorizationUri };

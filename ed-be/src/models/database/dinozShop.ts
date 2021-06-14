@@ -11,6 +11,9 @@ import {
 import { DinozRace } from './dinozRace.js';
 import { Player } from './player.js';
 
+type DinozRaceType = DinozRace;
+type PlayerType = Player;
+
 @Table({ tableName: 'tb_dinoz_shop', timestamps: false })
 export class DinozShop extends Model {
 	@PrimaryKey
@@ -24,14 +27,14 @@ export class DinozShop extends Model {
 	playerId!: number;
 
 	@BelongsTo(() => Player, 'playerId')
-	player!: Player;
+	player!: PlayerType;
 
 	@ForeignKey(() => DinozRace)
 	@Column
 	raceId!: number;
 
 	@BelongsTo(() => DinozRace, 'raceId')
-	race!: DinozRace;
+	race!: DinozRaceType;
 
 	@AllowNull(false)
 	@Column

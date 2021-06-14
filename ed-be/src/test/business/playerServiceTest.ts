@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { BasicPlayer } from '../data/playerData';
-import { player } from '../utils/constants';
-import { getCommonData } from '../../business/playerService';
+import { BasicPlayer } from '../data/playerData.js';
+import { player } from '../utils/constants.js';
+import { getCommonData } from '../../business/playerService.js';
 
-const PlayerDao = require('../../dao/playerDao');
+const PlayerDao = require('../../dao/playerDao.js');
 
 let req = {
 	user: {

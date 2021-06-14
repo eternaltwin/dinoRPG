@@ -2,16 +2,16 @@ import {
 	getDinozFiche,
 	buyDinoz,
 	setDinozName,
-} from '../../business/dinozService';
+} from '../../business/dinozService.js';
 import { Request, Response } from 'express';
-import { player, dinozId } from '../utils/constants';
-import { BasicDinoz } from '../data/dinozData';
-import { DinozFromShop } from '../data/dinozShopData';
-import { Dinoz } from '../../models';
+import { player, dinozId } from '../utils/constants.js';
+import { BasicDinoz } from '../data/dinozData.js';
+import { DinozFromShop } from '../data/dinozShopData.js';
+import { Dinoz } from '../../models/index.js';
 
-const DinozDao = require('../../dao/dinozDao');
-const DinozShopDao = require('../../dao/shopDao');
-const PlayerDao = require('../../dao/playerDao');
+const DinozDao = require('../../dao/dinozDao.js');
+const DinozShopDao = require('../../dao/shopDao.js');
+const PlayerDao = require('../../dao/playerDao.js');
 
 let req = {
 	user: {

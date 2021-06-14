@@ -1,11 +1,11 @@
 <template>
 	<div>
+		<span>Cookie : </span>
 		<input type="text" name="cookie" v-model="cookie" />
 		<br />
 		<button :disabled="buttonDisabled" @click="getAccountData()">
 			Get account data
 		</button>
-		<button @click="authentication()">Test connection</button>
 	</div>
 </template>
 
@@ -18,7 +18,8 @@ export default defineComponent({
 	data() {
 		return {
 			cookie: undefined as string | undefined,
-			buttonDisabled: false as boolean
+			buttonDisabled: false as boolean,
+			isJwtPresent: false as boolean
 		};
 	},
 	methods: {
@@ -27,17 +28,12 @@ export default defineComponent({
 				this.buttonDisabled = true;
 
 				try {
-					// await DataService.getAccountData();
+					await DataService.getAccountData(this.cookie);
 				} catch (err) {
 					this.buttonDisabled = false;
 					console.error('Erreur lors de la sauvegarde des données');
 				}
 			}
-		},
-		async authentication(): Promise<void> {
-			const code: string = await DataService.authentication();
-
-			console.log(code);
 		}
 	}
 });

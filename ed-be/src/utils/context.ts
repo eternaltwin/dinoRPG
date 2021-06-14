@@ -1,6 +1,6 @@
 import fs from 'fs';
 import toml from 'toml';
-import { Config } from '../models';
+import { Config } from '../models/index.js';
 
 var config: Config;
 

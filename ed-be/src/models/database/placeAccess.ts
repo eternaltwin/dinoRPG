@@ -9,6 +9,7 @@ import {
 	Unique,
 } from 'sequelize-typescript';
 import { Place } from './place.js';
+type PlaceType = Place;
 
 @Table({ tableName: 'tb_place_access', timestamps: false })
 export class PlaceAccess extends Model {
@@ -23,7 +24,7 @@ export class PlaceAccess extends Model {
 	placeId!: number;
 
 	@BelongsTo(() => Place, 'placeId')
-	place!: Place;
+	place!: PlaceType;
 
 	@AllowNull(false)
 	@Column

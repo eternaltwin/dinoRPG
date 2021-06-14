@@ -9,8 +9,8 @@ export interface Config {
 
 interface GeneralConfig {
 	readonly eternalTwinURI: string;
-	readonly publicUri: string;
-	readonly redirectURI: string;
+	readonly serverUri: string;
+	readonly frontUri: string;
 }
 
 interface OauthConfig {

@@ -6,6 +6,7 @@ import dinozRoutes from './routes/dinoz.routes.js';
 import oauthRoutes from './routes/oauth.routes.js';
 import playerRoutes from './routes/player.routes.js';
 import shopRoutes from './routes/shop.routes.js';
+import dataRoutes from './routes/data.routes.js';
 import { loadConfigFile } from './utils/context.js';
 import { jwtConfig } from './utils/jwt.js';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
@@ -27,7 +28,7 @@ declare global {
 const app = express();
 
 // Load TOML configuration file
-//loadConfigFile();
+loadConfigFile();
 
 // Database connection
 // { alter: true } -> Si besoin
@@ -41,7 +42,7 @@ sequelize
 		console.error('Error while doing database synchronisation');
 	});
 
-/*const corsOptions = {
+const corsOptions = {
 	origin: ['http://localhost:8080'],
 };
 
@@ -65,12 +66,13 @@ app.use(dinozRoutes);
 app.use(oauthRoutes);
 app.use(playerRoutes);
 app.use(shopRoutes);
+app.use(dataRoutes);
 
 // Launch Cron
 resetDinozShopAtMidnight();
 
 // Initiate controllers
-// oauthController.init();*/
+// oauthController.init();
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;

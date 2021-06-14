@@ -1,19 +1,18 @@
 import { Request, Response } from 'express';
 import {
 	getDinozDetailsRequest,
-	deleteDinozInShopRequest,
-} from '../dao/shopDao';
-import { setPlayerMoneyRequest } from '../dao/playerDao';
+	deleteDinozInShopRequest
+} from '../dao/shopDao.js';
+import { setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	createDinozRequest,
 	getDinozFicheRequest,
 	getCanDinozChangeName,
 	setDinozNameRequest,
-} from '../dao/dinozDao';
-import { Dinoz, DinozShop } from '../models';
-import { isNull } from 'lodash';
-import { BasicDinoz, DinozFiche, Action } from '../models';
-import { actions } from '../utils/constants';
+} from '../dao/dinozDao.js';
+import { Dinoz, DinozShop, BasicDinoz, DinozFiche, Action } from '../models/index.js';
+import _ from 'lodash';
+import { actions } from '../utils/constants.js';
 
 const getDinozFiche = async (
 	req: Request,
@@ -67,7 +66,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		parseInt(req.params.id)
 	);
 
-	if (isNull(dinozData)) {
+	if (_.isNull(dinozData)) {
 		return res.status(500).send('Error: dinoz data cannot be null');
 	}
 

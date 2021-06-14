@@ -11,6 +11,9 @@ import { AssDinozSkill } from './assDinozSkill.js';
 import { Dinoz } from './dinoz.js';
 import { DinozRace } from './dinozRace.js';
 
+type DinozType = Dinoz;
+type DinozRaceType = DinozRace;
+
 @Table({ tableName: 'tb_skill', timestamps: false })
 export class Skill extends Model {
 	@PrimaryKey
@@ -19,10 +22,10 @@ export class Skill extends Model {
 	skillId!: number;
 
 	@BelongsToMany(() => Dinoz, () => AssDinozSkill)
-	dinoz!: Array<Dinoz>;
+	dinoz!: Array<DinozType>;
 
 	@HasOne(() => DinozRace, 'skillId')
-	race!: DinozRace;
+	race!: DinozRaceType;
 
 	@AllowNull(false)
 	@Column

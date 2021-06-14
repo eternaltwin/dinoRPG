@@ -1,4 +1,4 @@
-import { Dinoz, EpicReward, Place, Player } from '../models';
+import { Dinoz, EpicReward, Place, Player } from '../models/index.js';
 
 const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
@@ -31,6 +31,13 @@ const getPlayerId = (eternalTwinId: string): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['playerId'],
 		where: { eternalTwinId: eternalTwinId },
+	});
+};
+
+const getEternalTwinId = (playerId: number): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: ['eternalTwinId'],
+		where: { playerId: playerId }
 	});
 };
 
@@ -73,6 +80,7 @@ const setPlayerMoneyRequest = (
 
 export {
 	getPlayerId,
+	getEternalTwinId,
 	createPlayer,
 	getCommonDataRequest,
 	getPlayerRewardsRequest,

@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import { Config, Dinoz, DinozRace, DinozShop, Player } from '../models';
+import { Config, Dinoz, DinozRace, DinozShop, Player } from '../models/index.js';
 import {
 	getDinozFromDinozShopRequest,
 	createMultipleDinoz,
-} from '../dao/shopDao';
-import { getPlayerRewardsRequest } from '../dao/playerDao';
-import { getRacesDetailsRequest } from '../dao/dinozRaceDao';
-import { isEmpty, isNull, orderBy } from 'lodash';
-import { race, reward } from '../utils/constants';
-import { getConfig } from '../utils/context';
+} from '../dao/shopDao.js';
+import { getPlayerRewardsRequest } from '../dao/playerDao.js';
+import { getRacesDetailsRequest } from '../dao/dinozRaceDao.js';
+import _ from 'lodash';
+import { race, reward } from '../utils/constants.js';
+import { getConfig } from '../utils/context.js';
 
 const getDinozFromDinozShop = async (
 	req: Request,
@@ -20,7 +20,7 @@ const getDinozFromDinozShop = async (
 	);
 
 	// If nothing is found, create 15 dinoz to fill the shop
-	if (isEmpty(data)) {
+	if (_.isEmpty(data)) {
 		let dinoz: Dinoz;
 		let dinozArray: Array<DinozShop> = [];
 		let randomRace: number;
@@ -50,7 +50,7 @@ const getDinozFromDinozShop = async (
 			rewardArray
 		);
 
-		if (isNull(player)) {
+		if (_.isNull(player)) {
 			return res.status(500).send('Player not found');
 		}
 
@@ -99,11 +99,11 @@ const getDinozFromDinozShop = async (
 			req.user!.playerId!
 		);
 
-		response = orderBy(response, ['id', 'desc']);
+		response = _.orderBy(response, ['id', 'desc']);
 
 		return res.status(200).send(response);
 	} else {
-		data = orderBy(data, ['id', 'desc']);
+		data = _.orderBy(data, ['id', 'desc']);
 
 		return res.status(200).send(data);
 	}

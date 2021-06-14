@@ -1,24 +1,100 @@
-import fetch from 'node-fetch';
+//import fetch from 'node-fetch';
 import fs from 'fs';
 import toml from 'toml';
 import request from 'request';
 import cheerio from 'cheerio';
 import { getAccessToken } from './oauthService';
+import { Request, Response } from 'express';
+import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
+import { Url } from 'url';
+import { getConfig } from '../utils/context.js';
+import { Config, Player } from '../models';
+import { getEternalTwinId } from '../dao/playerDao.js';
+import fetch from 'node-fetch';
 
-const dataService = {
+const getApiData = async (req: Request, res: Response): Promise<Response> => {    
+    const cookie: string = req.params.cookie;
+    const config: Config = getConfig();
+    let playerData: any = {};
+    let isCookieCorrect: boolean = true;
+
+    const player: Player | null = await getEternalTwinId(req.user!.playerId!);
+    const eternalTwinId = player!.eternalTwinId;
+
+    // Vérifie que le joueur n'a pas déjà récupéré ses données
+    const path: string = `src/data/playerData/${eternalTwinId}.json`;
+    if (fs.existsSync(path)){
+        return res.status(500).send({
+            message: "You have already retrieved your account data"
+        });
+    }
+
+    const cookieToSend: string = `hcw=1; sid=${cookie}`;
+
+    let test;
+
+    try {
+        // Récupération des données via Eternal-Twin
+        test = await getEternalTwinData(config.general.eternalTwinURI, eternalTwinId);
+
+        // Récupération des ingrédients du joueur
+        //await doIngredientsRequest(playerData, cookieToSend, isCookieCorrect);
+
+        // Récupération des compétences, assauts, défenses et attaques spéciales des dinoz
+         
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send(err);
+    }
+
+    /*
+    // Récupération des compétences, assauts, défenses et attaques spéciales des dinoz
+            for (const dino of data.dinos) {
+                if (!stopRequests) {
+                await doDinozSkillsRequest(data, cookieToSend, dino.id)
+                    .catch(err => {
+                        return res.status(500).send({
+                            message: err
+                        });
+                    });
+                }
+            }
+    */
+
+    // createFile(playerData, eternalTwinId);
+
+    test = await test.json();
+
+    return res.status(200).send(test);
+};
+
+export { getApiData };
+
+async function getEternalTwinData(eternalTwinURI: string, eternalTwinId: string): Promise<any> {
+    let res;
+    try {
+        res = await fetch(`${eternalTwinURI}api/v1/users/${eternalTwinId}`, {
+            method: 'GET'
+        });
+    } catch (err) {
+        return Promise.reject(err);
+    }
+
+    return res;
+}
 
     // Get data from EternalTwin API
-    getApiData: async (req, res) => {
+    /*getApiData: async (req: Request, res: Response) => {
 
         const code = req.params.code;
         const token = await getAccessToken(code);
-        //const user = await getUserDetails(token);
+        const user = await getUserDetails(token);
 
-        //console.log(user);
+        console.log(user);
 
         res.send();
 
-        //res.send(user);
+        res.send(user);
 
         /*const cookie = req.params.cookie;
 
@@ -74,17 +150,16 @@ const dataService = {
 
             createFile(data);
 
-            res.send(data);*/
-    }
-}
+            res.send(data);
+    }*/
 
-async function getToken(code) {
-    let config = toml.parse(fs.readFileSync('./config.toml', 'utf-8'));
+/*async function getToken(code: string) {
+    let config: Config = getConfig();
     let url = 'https://twinoid.com/oauth/token';
 	let params = new URLSearchParams();
 
-	params.append('client_id', config.api.client_id);
-	params.append('client_secret', config.api.client_secret);
+	params.append('client_id', config.oauth.client_id);
+	params.append('client_secret', config.oauth.client_secret);
 	params.append('redirect_uri', 'http://localhost:8080/api');
 	params.append('code', code);
 	params.append('grant_type', 'authorization_code');
@@ -92,9 +167,9 @@ async function getToken(code) {
     let response = await fetch(url, { method: 'POST', body: params });
     let json = await response.json();
     return json.access_token;
-}
+}*/
 
-async function getAllApiData(token) {
+/*async function getAllApiData(token) {
     var url = 'http://www.dinorpg.com/tid/graph/me';
 
 	var params = '?fields=dinos.fields(display,life,maxLife,pos,canAct,canGather,xp,elements,equip.fields(desc,name,icon,locked,max,family),status,effects.fields(name,desc,icon,hidden)),' +
@@ -108,9 +183,9 @@ async function getAllApiData(token) {
     let response = await fetch(url + params);
     let json = await response.json();
     return json;
-}
+}*/
 
-function doIngredientsRequest(data, cookieToSend, isCookieCorrect) {
+function doIngredientsRequest(data: any, cookieToSend: string, isCookieCorrect: boolean) {
     let ingrName;
     let ingrQuantity;
     data.ingredients = [];
@@ -124,18 +199,17 @@ function doIngredientsRequest(data, cookieToSend, isCookieCorrect) {
             }
         }, (err, response, html) =>{
             if (!err) {
-                var $ = cheerio.load(html);
+                let $: any = cheerio.load(html);
                 
                 // Si le cookie renseigné n'est pas bon, la requête récupère la page d'accueil
-                // Si l'attribut ci-dessous sera trouvé, c'est que la requête a récupéré la page d'accueil
-
+                // Si l'attribut ci-dessous est trouvé, c'est que la requête a récupéré la page d'accueil
                 if ($('#center2')[0]) {
                     isCookieCorrect = false;
                     reject("The given cookie is incorrect, the connection to your account could not be etablished. Try again or seek help from the community.");
                 }
 
                 if (isCookieCorrect) {
-                    $('[class=table]')[0].children[1].children.forEach(ingr => {
+                    $('[class=table]')[0].children[1].children.forEach((ingr: any) => {
                         if (ingr.attribs) {
                             if (Object.keys(ingr.attribs).length !== 0) {
                                 ingrName = ingr.children[3].children[0].data;
@@ -151,7 +225,7 @@ function doIngredientsRequest(data, cookieToSend, isCookieCorrect) {
     });
 }
 
-function doDinozSkillsRequest(data, cookieToSend, dinozId) {
+/*function doDinozSkillsRequest(data, cookieToSend, dinozId) {
     let compArray = [];
     let assauts = [];
     let defenses = [];
@@ -403,11 +477,11 @@ function doDeamonShopRequest(data, cookieToSend) {
             }
         });   
     });
-}
+}*/
 
 // Crée le fichier avec les données du joueur s'il n'existe pas déjà
-function createFile(data){
-    const path = 'app/data/playerData/' + data.name + '.json';
+function createFile(data: any, eternalTwinId: string){
+    const path = `src/data/playerData/${eternalTwinId}.json`;
 	if (!fs.existsSync(path)){
 		fs.appendFile(path, JSON.stringify(data), (err) => {
 			if (err) throw err;
@@ -417,4 +491,4 @@ function createFile(data){
 	}
 }
 
-export default dataService;
+// export default dataService;
