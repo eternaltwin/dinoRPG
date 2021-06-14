@@ -44,10 +44,8 @@ export default defineComponent({
 					await DinozService.setDinozName(this.dinozData!.dinozId, this.name!);
 				} catch (err) {
 					errorHandler.handle(err);
-					return;
+					return Promise.reject(err);
 				}
-
-				console.log(this.dinozData);
 
 				// Update dinozList in store
 				const dinozList: Array<Dinoz> = store.getters.getDinozList;
@@ -59,7 +57,7 @@ export default defineComponent({
 				store.commit('setDinozList', dinozList);
 
 				// Set parent's data to display dinoz page
-				this.$emit('setNameChoosen');
+				this.$emit('setNameChoosen', this.name);
 			} else {
 				// TODO : afficher popin d'erreur
 				console.log('Seulement chiffres et lettres ! ');

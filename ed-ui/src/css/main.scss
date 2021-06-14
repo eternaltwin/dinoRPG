@@ -329,6 +329,25 @@
 		    margin-top: 2px;
 	    }
     }
+
+    .fx {
+    	font-size: 0pt;
+	    position: absolute;
+	    margin-left: 195px;
+	    margin-top: 115px;
+	    width: 212px;
+
+	    img {
+	    	border: 1px solid transparent;
+		    border-radius: 5px;
+		    -moz-border-radius: 5px;
+		    -webkit-border-radius: 5px;
+
+		    &:hover {
+		    	border-color : white;
+		    }
+	    }
+    }
 }
 
 .enclos {

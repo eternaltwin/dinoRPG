@@ -3,7 +3,7 @@
 		<div v-if="nameChoosen === false">
 			<choose-dinoz-name
 				:dinozData="dinozData"
-				@setNameChoosen="setNameChoosen()"
+				@setNameChoosen="setNameChoosen"
 			></choose-dinoz-name>
 		</div>
 		<div class="dinoz" v-if="nameChoosen === true">
@@ -30,9 +30,15 @@
 					:air="dinozData.nbrUpAir"
 				></elements>
 			</div>
-			<!--<equipement type="dinoz" :objects="dinozData.assDinozObject"></equipement>
-			<status :status="dinozData.status"></status>
-			<p>Name : {{ dinozData.name }}</p>
+			<div class="fx">
+				<img
+					:src="getImg('status', status.name)"
+					v-for="(status, index) in dinozData.status"
+					:key="index"
+				/>
+			</div>
+			<!--<equipement type="dinoz" :objects="dinozData.assDinozObject"></equipement>-->
+			<!--<p>Name : {{ dinozData.name }}</p>
 			
 			<div v-for="action in dinozData.actions" :key="action.name">
 				<p>
@@ -56,7 +62,6 @@ import { DinozService } from '@/services';
 import { isNil } from 'lodash';
 import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
 //import Equipement from '@/components/equipement/equipement.vue';
-//import Status from '@/components/status/status.vue';
 import Elements from '@/components/elements/elements.vue';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 
@@ -71,25 +76,27 @@ export default defineComponent({
 	components: {
 		ChooseDinozName,
 		//Equipement,
-		//Status,
 		Elements,
 		DinozSWF
 	},
 	methods: {
-		setNameChoosen(): void {
+		// Set dinoz name and display dinoz page
+		setNameChoosen(newName: string): void {
 			this.nameChoosen = true;
+			this.dinozData.name = newName;
 		},
-		getActionImg(imgName: string): string {
-			return require(`@/assets/action/${imgName}.png`);
+		getImg(folder: string, imgName: string): string {
+			return require(`@/assets/${folder}/${imgName}.png`);
 		}
 	},
+	// Get dinoz data
 	async mounted(): Promise<void> {
 		try {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(dinozId);
 		} catch (err) {
 			errorHandler.handle(err);
-			return;
+			return Promise.reject(err);
 		}
 
 		this.nameChoosen = this.dinozData.name !== '?';
