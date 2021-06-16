@@ -1,0 +1,330 @@
+.dinorpg {
+	a {
+		color: #8e3e26;
+	    font-variant: small-caps;
+	    font-weight: bold;
+
+	    &:hover {
+	    	color : #fce3bc;
+	    }
+	}	
+}
+
+ul {
+	display: block;
+	list-style: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+
+	&.elements {
+		list-style: none;
+    	height: 23px;
+
+    	li {
+    		float: left;
+		    position: relative;
+		    width: 42px;
+		    height: 23px;
+		    margin-right: 2px;
+		    font-size: 10pt;
+		    font-weight: bold;
+		    color: white;
+		    text-align: left;
+		    letter-spacing: -0.2pt;
+		    background-image: url("assets/icons/element_bg.png");
+		    background-position: 7px 5px;
+		    background-repeat: no-repeat;
+		    cursor: help;
+
+		    &.max {
+		    	color: yellow;
+		    }
+
+		    img {
+		    	margin-right: -3px;
+   				vertical-align: -30%;
+		    }
+    	}
+	}
+}
+
+input, a {
+	&.button {
+		display: block;
+	    width: 135px;
+	    height: 24px;
+	    margin-top: 3px;
+	    margin-bottom: 2px;
+	    padding-left: 10px;
+	    padding-top: 4px;
+	    font-variant: small-caps;
+	    font-size: 10pt;
+	    color: #fff1ad;
+	    font-weight: bold;
+	    text-decoration: none;
+	    text-align: left;
+	    cursor: pointer;
+	    background-image: url("assets/button/button.png");
+	    background-repeat: no-repeat;
+	    border-radius: 0px;
+	    -moz-border-radius: 0px;
+	    -webkit-border-radius: 0px;
+	}
+
+	&.bSmall {
+		width: 80px;
+	    padding-top: 5px;
+	    padding-right: 5px;
+	    background-image: url("assets/design/button_small.png");
+	}
+}
+
+span {
+	&.tinyBar {
+		display : block;
+		height : 2px;
+		width : 36px;
+		border : 1px solid #bc683c;
+		background-color : black;
+
+		span {
+			display : block;
+			height : 2px;
+			background-color : yellow;
+		}
+	}
+
+	&.tix, &.money {
+		color: #58321d;
+	    font-weight: bold;
+	    font-size: 9pt;
+	}
+}
+
+a.linkHome {
+    position: absolute;
+    width: 500px;
+    height: 80px;
+    z-index: 10;
+    margin-top: 25px;
+    margin-left: 240px;
+}
+
+body {
+	table#layout {
+		background-image: url("assets/background/bg_ciel3.png");
+	    background-color: white;
+	    background-repeat: no-repeat;
+
+	    td#center {
+	    	width: 900px;
+		    background-image: url("assets/background/sky_core_bg.png");
+		    background-repeat: repeat-y;
+		    margin-top: 88px;
+
+		    #centerHeader {
+		    	padding: 1px;
+			    background-image: url("assets/background/core_center_header3.png");
+			    background-repeat: no-repeat;
+			    min-height: 100vh;
+		    }
+	    }
+
+	    td#right {
+	    	div {
+	    		height: 88px;
+			    background-image: url("assets/background/core_right_header3.png");
+			    background-repeat: no-repeat;
+			    background-position: left top;
+	    	}
+	    }
+	}
+
+	.skyfootercore {
+		background-image: url("assets/background/core_center_footer.png");
+	    background-repeat: no-repeat;
+	    height: 151px;
+	}
+
+	.skyfooterright {
+		height: 151px;
+	    background-image: url("assets/background/core_right_footer.png");
+	    background-repeat: no-repeat;
+	    background-position: left top;
+	}
+
+	#dinozList {
+		span.money {
+			margin-top: 11px;
+		}
+	}
+}
+
+table {
+	display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: grey;
+
+	&#layout {
+		border-collapse: collapse;
+	    border-spacing: 0px;
+	    width: 100%;
+	    min-width: 920px;
+
+	    td#left {
+	    	vertical-align: top;
+	    }
+
+	    td#center {
+	    	width: 900px;
+    		background-position: left 378px;
+    		vertical-align: top;
+
+    		#centerHeader {
+    			padding: 1px;
+			    background-repeat: no-repeat;
+			    width: 100%;
+    		}
+
+    		#centerContent {
+    			float: left;
+			    position: relative;
+			    margin-left: 20px;
+			    width: 530px;
+			    margin-top: 127px;
+			    padding-bottom: 50px;
+			    text-align: left;
+			    min-height: 600px;
+    		}
+	    }
+
+	    td#right {
+	    	background-image: url("assets/background/core_right_bg.png");
+		    background-position: left 77px;
+		    background-repeat: repeat-y;
+		    vertical-align: top;
+	    }
+	}
+
+	&.action {
+	    margin: 0px;
+	    padding: 0px;
+	    border-collapse: collapse;
+	    border-spacing: 0px;
+	    margin-bottom: 2px;
+	    width: 100%;
+
+	    td {
+			margin: 0px;
+		    padding: 0px;
+		    text-align: left;
+		    cursor: pointer;
+		}
+	}
+}
+
+a {
+    color: #bc683c;
+
+    &:-webkit-any-link {
+	    color: -webkit-link;
+	    cursor: pointer;
+	    text-decoration: underline;
+	}
+
+	&.icon {
+		font-size: 0pt;
+    	line-height: 0pt;
+
+    	img {
+			border: 1px solid #ae6733;
+    	}
+	}
+}
+
+div {
+	display: block;
+
+	&.help {
+		margin-top: 10px;
+	    margin-bottom: 10px;
+	    padding: 5px;
+	    padding-left: 20px;
+	    color: #fce3bc;
+	    font-size: 10pt;
+	    background-color: #bc683c;
+	    background-image: url("assets/icons/small_missAct.png");
+	    background-position: 5px 8px;
+	    background-repeat: no-repeat;
+	}
+}
+
+li {
+	display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+em {
+	font-style: italic;
+}
+
+body, table, td, tr, th, li, ul, a, div, span, img, h1, h2, h3, p, pre, form, label, input, textarea, dl, dt, dd {
+    margin: 0px;
+    padding: 0px;
+}
+
+body, td {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: 12pt;
+    text-align: left;
+    color: #52646b;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+
+    &.icon {
+    	width: 32px;
+	    font-size: 0pt;
+	    line-height: 0pt;
+    }
+
+    &.label {
+    	padding-left: 4px;
+	    padding-right: 4px;
+	    font-weight: bold;
+	    color: white;
+	    font-size: 11pt;
+	    font-variant: small-caps;
+	    line-height: 10.5pt;
+	    border-top-right-radius: 7px;
+	    -moz-border-radius-topright: 7px;
+	    -webkit-border-top-right-radius: 7px;
+	    border-bottom-right-radius: 7px;
+	    -moz-border-radius-bottomright: 7px;
+	    -webkit-border-bottom-right-radius: 7px;
+    }
+}
+
+strong {
+    font-weight: bold;
+}

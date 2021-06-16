@@ -16,6 +16,7 @@ import {
 	BasicDinoz,
 	DinozFiche,
 	Action,
+	Objet,
 } from '../models/index.js';
 import _ from 'lodash';
 import { actions } from '../utils/constants.js';
@@ -39,6 +40,15 @@ const getDinozFiche = async (
 				req.user!.playerId,
 		});
 	}
+
+	// Set object list
+	let objectList: Array<Objet> = [];
+	dinozDetails.assDinozObject.forEach(object => objectList.push(object.object));
+	dinozDetails.setDataValue('object', objectList);
+	dinozDetails.setDataValue('assDinozObject', undefined);
+
+	// Set max life
+	dinozDetails.setDataValue('maxLife', 100);
 
 	// Set availables actions for this dinoz
 	dinozDetails.setDataValue('actions', getActionList());

@@ -38,7 +38,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/css/main.scss';
+@import '@/css/_main.scss';
 
 #data {
 	margin-top: 20px;

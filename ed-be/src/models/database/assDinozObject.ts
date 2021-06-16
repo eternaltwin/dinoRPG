@@ -31,5 +31,5 @@ export class AssDinozObject extends Model {
 	objectId!: number;
 
 	@BelongsTo(() => Objet, 'objectId')
-	object!: Object;
+	object!: Objet;
 }
