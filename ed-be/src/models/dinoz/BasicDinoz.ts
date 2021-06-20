@@ -4,6 +4,7 @@ export interface BasicDinoz {
 	experience: number;
 	following: number | null;
 	life: number;
+	maxLife: number;
 	name: string;
 	place: { name: string };
 }

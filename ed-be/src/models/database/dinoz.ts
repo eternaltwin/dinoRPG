@@ -119,6 +119,10 @@ export class Dinoz extends Model {
 
 	@AllowNull(false)
 	@Column
+	maxLife!: number;
+
+	@AllowNull(false)
+	@Column
 	experience!: number;
 
 	@AllowNull(false)

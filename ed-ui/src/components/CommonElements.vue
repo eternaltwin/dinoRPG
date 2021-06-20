@@ -63,6 +63,7 @@ export default defineComponent({
 		storeMoney(): number {
 			return store.getters.getMoney;
 		},
+		// Format money display (1000000 -> 1.000.000)
 		beautifulMoney(): string | undefined {
 			if (isNil(this.money)) {
 				return;
@@ -71,6 +72,7 @@ export default defineComponent({
 		}
 	},
 	watch: {
+		// Watch money in store. Each time money will change, the display will be updated
 		storeMoney: function(money: number) {
 			this.money = money;
 		}

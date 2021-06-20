@@ -120,5 +120,10 @@
 		"name": {
 			"chargeCornue": "Charge Cornue"
 		}
+	},
+	"tabs": {
+		"carte": "Carte",
+		"inventaire": "Inventaire",
+		"details": "Détails"
 	}
 }

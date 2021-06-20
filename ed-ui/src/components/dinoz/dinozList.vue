@@ -4,7 +4,7 @@
 			<a @click="goToDinozPage(dinoz.dinozId)">
 				<span class="icon">
 					<span class="tinyBar">
-						<span :style="getLifeBarWidth()"></span>
+						<span :style="getLifeBarWidth(dinoz.life, dinoz.maxLife)"></span>
 					</span>
 				</span>
 				<span class="name">{{ dinoz.name }}</span>
@@ -41,9 +41,9 @@ export default defineComponent({
 		goToDinozPage(dinozId: string): void {
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 		},
-		getLifeBarWidth(): string {
-			// TODO: calculer vie du dinoz (PV actuel / PV max * 36)
-			return 'width : 36px';
+		getLifeBarWidth(life: number, maxLife: number): string {
+			const width: number = Math.round((life / maxLife) * 36);
+			return `width : ${width}px`;
 		}
 	},
 	computed: {

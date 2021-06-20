@@ -18,6 +18,7 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 			'dinozId',
 			'display',
 			'life',
+			'maxLife',
 			'experience',
 			'nbrUpFire',
 			'nbrUpWood',

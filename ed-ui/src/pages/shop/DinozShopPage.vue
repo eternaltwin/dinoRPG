@@ -79,14 +79,13 @@ export default defineComponent({
 					dinozCreated = await DinozService.buyDinoz(dinoz.id);
 				} catch (err) {
 					errorHandler.handle(err);
-					return;
+					return Promise.reject(err);
 				}
 
 				// Update player's money
 				const newMoney = (store.getters.getMoney - dinoz.race.price!) as number;
 				store.commit('setMoney', newMoney);
 
-				// TODO : A VOIR si factorisable
 				const dinozStore = store.getters.getDinozList;
 
 				dinozStore.push(dinozCreated);

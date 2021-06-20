@@ -43,12 +43,11 @@ const getDinozFiche = async (
 
 	// Set object list
 	let objectList: Array<Objet> = [];
-	dinozDetails.assDinozObject.forEach(object => objectList.push(object.object));
+	dinozDetails.assDinozObject.forEach((object) =>
+		objectList.push(object.object)
+	);
 	dinozDetails.setDataValue('object', objectList);
 	dinozDetails.setDataValue('assDinozObject', undefined);
-
-	// Set max life
-	dinozDetails.setDataValue('maxLife', 100);
 
 	// Set availables actions for this dinoz
 	dinozDetails.setDataValue('actions', getActionList());
@@ -109,6 +108,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		placeId: 1,
 		display: dinozData.display,
 		life: 100,
+		maxLife: 100,
 		experience: 0,
 		canChangeName: true,
 		canGather: false,
@@ -130,12 +130,14 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	// Create a new dinoz that belongs to player
 	const dinozCreated: Dinoz = await createDinozRequest(newDinoz.get());
 
+	// TODO: calculate max life
 	const dinozToSend: BasicDinoz = {
 		dinozId: dinozCreated.dinozId,
 		display: dinozCreated.display,
 		experience: dinozCreated.experience,
 		following: dinozCreated.following,
 		life: dinozCreated.life,
+		maxLife: dinozCreated.maxLife,
 		name: dinozCreated.name,
 		place: { name: 'dinoville' },
 	};
