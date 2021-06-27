@@ -10,6 +10,18 @@
 	}	
 }
 
+table {
+	a:hover {
+		background-color : #9a4029;
+	}
+	&#layout {
+		border-collapse : collapse;
+		border-spacing : 0px;
+		width : 100%;
+		min-width : 920px;
+	}
+}
+
 ul {
 	display: block;
 	list-style: disc;

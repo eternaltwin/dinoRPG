@@ -1,14 +1,15 @@
+export * from './item.js';
 export * from './level.js';
 export * from './race.js';
 export * from './skill.js';
-export * from './item.js';
 
 export const apiRoutes = {
+	dataRoutes: '/api/data',
 	dinozRoute: '/api/dinoz',
+	inventoryRoute: '/api/inventory',
 	oauthRoute: '/api/oauth',
 	playerRoute: '/api/player',
 	shopRoutes: '/api/shop',
-	dataRoutes: '/api/data',
 };
 
 export const reward = {

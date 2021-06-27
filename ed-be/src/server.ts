@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import dinozRoutes from './routes/dinoz.routes.js';
+import inventoryRoutes from './routes/inventory.routes.js';
 import oauthRoutes from './routes/oauth.routes.js';
 import playerRoutes from './routes/player.routes.js';
 import shopRoutes from './routes/shop.routes.js';
@@ -63,6 +64,7 @@ app.use(jwtConfig());
 
 // Routes declaration
 app.use(dinozRoutes);
+app.use(inventoryRoutes);
 app.use(oauthRoutes);
 app.use(playerRoutes);
 app.use(shopRoutes);

@@ -34,9 +34,18 @@ export interface Skill {
 }
 
 export interface Item {
+	itemId: number;
 	canBeEquipped?: boolean;
 	canBeUsedNow?: boolean;
 	name?: string;
+	price?: number;
+	quantity?: number;
+	maxQuantity?: number;
+}
+
+export interface ItemShop {
+	id: number;
+	display?: string;
 	price?: number;
 }
 

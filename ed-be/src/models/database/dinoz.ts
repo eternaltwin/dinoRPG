@@ -12,6 +12,7 @@ import {
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
+
 import { DinozRace } from './dinozRace.js';
 import { Element } from './element.js';
 import { Mission } from './mission.js';

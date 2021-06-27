@@ -1,0 +1,53 @@
+<template src="./ItemShopPage.html"></template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { ShopService, InventoryService } from '@/services';
+import { Item, ItemShop, Shop } from '@/models';
+import { errorHandler } from '@/utils';
+import store from '@/store';
+
+export default defineComponent({
+	name: 'ItemShopPage',
+	data() {
+		return {
+			shop: 'shop' as string,
+			itemList: [] as Array<Item>
+		};
+	},
+	//components: {
+	//	DinozSWF,
+	//	Elements
+	//},
+	methods: {
+		getImg(folder: string, imgName: string): string {
+			return require(`@/assets/${folder}/${imgName}.png`);
+		},
+		async openPopinConfirmChoice(item: ItemShop): Promise<void> {
+			const res: boolean = confirm(this.$t('button.confirm'));
+			if (res) {
+				let itemCreated: Item;
+				try {
+					itemCreated = await InventoryService.buyItem(item.id);
+				} catch (err) {
+					errorHandler.handle(err);
+					return Promise.reject(err);
+				}
+
+				// Update player's money
+				const newMoney = (store.getters.getMoney - item.price!) as number;
+				store.commit('setMoney', newMoney);
+			}
+		}
+	},
+	async mounted(): Promise<void> {
+		// Get dinoz to display
+		try {
+			// this.itemList = await ShopService.getItemFromItemShop();
+			this.shop = 'shop';
+		} catch (err) {
+			errorHandler.handle(err);
+		}
+	}
+});
+</script>

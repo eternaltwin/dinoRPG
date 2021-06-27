@@ -27,7 +27,7 @@
 						</span>
 					</div>
 					<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{
-						$t('bouton.choisir')
+						$t('button.chose')
 					}}</a>
 					<div class="race">
 						<strong>Race :</strong> {{ $t(`race.name.${dinoz.race.name}`) }}
@@ -72,7 +72,7 @@ export default defineComponent({
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
-			const res: boolean = confirm(this.$t('bouton.confirmer'));
+			const res: boolean = confirm(this.$t('button.confirm'));
 			if (res) {
 				let dinozCreated: Dinoz;
 				try {

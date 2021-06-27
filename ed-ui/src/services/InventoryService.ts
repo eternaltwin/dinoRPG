@@ -1,9 +1,12 @@
 import { http } from '@/utils';
-import { DinozShop, Item } from '@/models';
-export const ShopService = {
-	getDinozFromDinozShop(): Promise<Array<DinozShop>> {
+import { Item } from '@/models';
+
+// For Player's inventory
+
+export const InventoryService = {
+	buyItem(id: number): Promise<Item> {
 		return http()
-			.get(`/shop/dinoz`)
+			.post(`/inventory/buyitem/${id}`)
 			.then(res => {
 				return Promise.resolve(res.data);
 			})
@@ -11,9 +14,10 @@ export const ShopService = {
 				return Promise.reject(err);
 			});
 	},
-	getItemFromItemShop(): Promise<Array<Item>> {
+
+	getAllItemsData(): Promise<Array<Item>> {
 		return http()
-			.get(`/shop/item`)
+			.get('/inventory/all')
 			.then(res => {
 				return Promise.resolve(res.data);
 			})

@@ -1,0 +1,30 @@
+import { Request, Response } from 'express';
+
+import { getAllItemsDataRequest } from '../dao/inventoryDao.js';
+import { ItemFiche } from '../models/item/ItemFiche.js';
+import { listOfAllItems } from '../constants/item.js';
+
+const getAllItemsData = async (
+	req: Request,
+	res: Response
+): Promise<Response> => {
+	const allItemsData = (await getAllItemsDataRequest(
+		req.user!.playerId!
+	)) as Array<ItemFiche> | null;
+
+	let allItemsDataReply: Array<ItemFiche> = [];
+	allItemsData?.forEach((i) => {
+		// Look for item constant with the same id and fill in the rest of the information
+		const tempItem: ItemFiche = listOfAllItems.find(
+			(item) => item.itemId === i.itemId
+		)!;
+		// Change the quantity by the value from the database.
+		tempItem.quantity = i.quantity;
+		// TODO maxQuantity = tempItem?.maxQuantity as number;
+		allItemsDataReply.push(tempItem);
+	});
+
+	return res.status(200).send(allItemsDataReply);
+};
+
+export { getAllItemsData };

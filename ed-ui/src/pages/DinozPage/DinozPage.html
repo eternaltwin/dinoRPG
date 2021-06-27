@@ -49,7 +49,7 @@
 			<ul>
 				<li v-for="(item, index) in dinozData.item" :key="index">
 					<a href="#" class="icon">
-						<img :src="getImg('item', item.name)" :alt="item.name">
+						<img :src="getImg('item', 'item_', item.name)" :alt="item.name">
 					</a>
 				</li>
 			</ul>
@@ -69,7 +69,7 @@
 				<table class="action" v-for="action in dinozData.actions" :key="action.name" :id="action.imgName">
 					<tbody>
 						<tr>
-							<td class="icon"><img :src="getImg('icons', action.imgName)"></td>
+							<td class="icon"><img :src="getImg('icons', '', action.imgName)"></td>
 							<td class="label">{{ $t(`action.${action.name}`) }}</td>
 						</tr>
 					</tbody>
@@ -79,16 +79,51 @@
 
 		<div class="custom" id="dinozPanel">
 			<ul class="tabs">
-				<li class="active">
-					<a href="#">{{ $t('tabs.carte') }}</a>
+				<li :class="(tabSelected === 1) ? 'active' : ''">
+					<a href="#" @click="setTab(1)">{{ $t('tabs.map') }}</a>
 				</li>
-				<li>
-					<a href="#">{{ $t('tabs.inventaire') }}</a>
+				<li :class="(tabSelected === 2) ? 'active' : ''">
+					<a href="#" @click="setTab(2)">{{ $t('tabs.inventory') }}</a>
 				</li>
-				<li>
-					<a href="#">{{ $t('tabs.details') }}</a>
+				<li :class="(tabSelected === 3) ? 'active' : ''">
+					<a href="#" @click="setTab(3)" >{{ $t('tabs.details') }}</a>
 				</li>
 			</ul>
+			<div id="map" class="map" v-if="tabSelected === 1">
+				<th>Map!</th>
+			</div>
+			<div id="inventory" class="inventory" v-if="tabSelected === 2">
+				<table>
+					<tbody>
+						<tr>
+							<th>{{ $t('inventory.itemName') }}</th>
+							<th>{{ $t('inventory.stock') }}</th>
+							<th>{{ $t('inventory.actions') }}</th>
+						</tr>
+						<tr v-for="(item, index) in allItemsData" :class="( (index % 2) === 1 ) ? 'even' : ''" :key="index">
+							<td class="name">
+								<img :src="getImg('item', 'item_', item.name)">
+								{{ $t(`item.name.${item.name}`) }}
+							</td>
+							<td class="qty">{{ item.quantity }}</td>
+							<td class="act">
+								<a id="inv_TODO_use" v-if="item.canBeUsedNow">
+									<img :src="getImg('icons','small_','use')">
+								</a>
+								<img :src="getImg('icons','small_','use_off')" v-else>
+								<a id="inv" v-if="item.canBeEquipped">
+									<img :src="getImg('icons','small_','equip')">
+								</a>
+								<img :src="getImg('icons','small_','equip_off')" v-else>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<a class="button" @click="goToItemShop()">{{ $t(`button.shop`) }}</a>
+			</div>
+			<div id="details" class="details" v-if="tabSelected === 3">
+				<th>Details!</th>
+			</div>	
 		</div>
 
 		<div class="clear"></div>

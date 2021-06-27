@@ -11,47 +11,46 @@
 			"part7": "et de rejoindre la liste de volontaires sur"
 		}
 	},
-	"object": {
+	"action": {
+		"fight": "Combattre",
+		"follow": "Suivre"
+	},
+	"button": {
+		"buyDinoz": "Acheter un Dinoz !",
+		"name": "Nommer !",
+		"getGold": "Obtenir de l'or",
+		"shop": "Boutique",
+		"confirm": "Confirmer cette action ?",
+		"chose": "Choisir"
+	},
+	"chooseDinoz": {
+		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
+		"nomDuDinoz": "Nom du dinoz :"
+	},
+	"inventory": {
+		"itemName": "Nom de l'objet",
+		"stock": "Stock",
+		"actions": "Actions"
+	},
+	"item": {
 		"name": {
-			"obj_irma": "Potion de Madame Irma",
-			"obj_angel": "Potion d'Ange",
-			"obj_surviv": "Ration de Survie"
+			"irma": "Potion de Madame Irma",
+			"angel": "Potion d'Ange",
+			"surviv": "Ration de Survie"
 		},
 		"description": {
-			"obj_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de jouer une nouvelle action immédiatemment sans devoir attendre le lendemain.",
-			"obj_angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le ressusciter sans pénalité d'expérience.",
-			"obj_surviv": "En cas de blessures graves, la ration de combat peut vous rentre entre 10 et jusqu'à 40 points de vie lors d'un combat."
+			"irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de jouer une nouvelle action immédiatemment sans devoir attendre le lendemain.",
+			"angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le ressusciter sans pénalité d'expérience.",
+			"surviv": "En cas de blessures graves, la ration de combat peut vous rentre entre 10 et jusqu'à 40 points de vie lors d'un combat."
 		}
 	},
-	"status": {
-		"name": {
-			"fx_matesc": "Matériel d’Escalade",
-			"fx_bouee": "Bouée",
-			"fx_cuzmal": "Malédiction de Cuzcous",
-			"fx_cup4": "Coupe de Diamant",
-			"fx_demon": "Démon",
-			"fx_lantrn": "Lanterne",
-			"fx_medal4": "Médaille de Diamant",
-			"fx_nenuph": "Feuille de Nénuphar",
-			"fx_pelle": "Pelle Porte-Chance",
-			"fx_rasca": "Appeau à Rascaphandre",
-			"fx_palmes": "Palmes des Korgons",
-			"fx_amulst": "La stratégie en 130 leçons"
-		},
-		"description": {
-			"fx_matesc": "Le Materiel d'Escalade permet à ce Dinoz de gravir les pentes escarpées.",
-			"fx_bouee": "La bouée permet à ce Dinoz de traverser certaines petites étendues d'eau sans aucun risque de noyade.",
-			"fx_cuzmal": "Votre Dinoz a été Maudit par le Gardien de Cuzcous...",
-			"fx_cup4": "Cette coupe félicite le capitaine d'une équipe pour sa domination du SuperDom !",
-			"fx_demon": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
-			"fx_lantrn": "La Lanterne permet à ce Dinoz d'explorer les plus profondes cavernes sans risquer de se perdre.",
-			"fx_medal4": "Cette médaille de diamant récompense les dinoz légendaires ayant terminé le tournoi de Forcebrut.",
-			"fx_nenuph": "Ces Feuilles de Nénuphar sont très appréciées des moines Zenzen.",
-			"fx_pelle": "Cette Pelle permet au Dinoz de creuser et de découvrir des trésors cachés.",
-			"fx_rasca": "Cette petite Flute permet d'attirer les Rascaphandres et ainsi d'accéder au Dôme Soulaflotte.",
-			"fx_palmes": "Ces palmes fabriquées par les Korgons permettent à ce Dinoz de traverser de grandes étendues d'eau.",
-			"fx_amulst": "Ce livre, très complet, permet au Dinoz de désactiver à volonté ses compétences de type 'attaque', 'événement' et certaines de type 'spécial' (depuis l'onglet Détails).\nC'est un guide indispensable pour les grands stratèges de Dinoland qui souhaitent s'adapter aux conditions de combat de chaque lieu !"
-		}
+	"news": {
+		"actualites": "L'actualité de Dinoland"
+	},
+	"place": {
+		"dinoville": "Dinoville",
+		"universite": "L'université",
+		"chez papy joe": "Chez Papy Joe"
 	},
 	"race": {
 		"name": {
@@ -101,41 +100,55 @@
 			"wanwan": "Jadis le meilleur ami de l’Homme, les Wanwan ont muté peu à peu et sont revenus à l’état sauvage. Ce sont des Dinoz très vifs, capables de mener de nombreuses attaques rapides, et dont les longues dents pointues sont redoutées. Leur pelage est conducteur d’électricité, ce qui leur permet de stocker la foudre puis de la décharger à volonté."
 		}
 	},
-	"bouton": {
-		"acheterDinoz": "Acheter un Dinoz !",
-		"nommer": "Nommer !",
-		"obtenirDeLor": "Obtenir de l'or",
-		"boutique": "Boutique",
-		"confirmer": "Confirmer cette action ?",
-		"choisir": "Choisir"
-	},
-	"chooseDinoz": {
-		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
-		"nomDuDinoz": "Nom du dinoz :"
-	},
-	"place": {
-		"dinoville": "Dinoville",
-		"universite": "L'université",
-		"chez papy joe": "Chez Papy Joe"
-	},
-	"action": {
-		"fight": "Combattre",
-		"follow": "Suivre"
-	},
-	"news": {
-		"actualites": "L'actualité de Dinoland"
-	},
 	"shop": {
-		"help": "Bienvenue dans l'enclos à Dinoz ! Ici, <b>chaque jour</b>,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
+		"help": "Bienvenue dans l'enclos à Dinoz ! Ici, <b>chaque jour</b>,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus.",
+		"shop": {
+			"name": "Boutique volante de Dinoland",
+			"description": "La Boutique volante de Dinoland est accessible à tout endroit et permet à tout moment à votre Dinoz de se procurer des objets de base. En général, il suffit de siffler très fort pour qu'elle arrive. Il existe aussi de nombreuses autres Boutiques dans Dinoland, qui vendent chacune des objets spéciaux."
+		},
+		"forge": {
+			"name": "Forge",
+			"descriptioin": "Forge description TBD"
+		}
 	},
 	"skill": {
 		"name": {
 			"chargeCornue": "Charge Cornue"
 		}
 	},
+	"status": {
+		"name": {
+			"fx_matesc": "Matériel d’Escalade",
+			"fx_bouee": "Bouée",
+			"fx_cuzmal": "Malédiction de Cuzcous",
+			"fx_cup4": "Coupe de Diamant",
+			"fx_demon": "Démon",
+			"fx_lantrn": "Lanterne",
+			"fx_medal4": "Médaille de Diamant",
+			"fx_nenuph": "Feuille de Nénuphar",
+			"fx_pelle": "Pelle Porte-Chance",
+			"fx_rasca": "Appeau à Rascaphandre",
+			"fx_palmes": "Palmes des Korgons",
+			"fx_amulst": "La stratégie en 130 leçons"
+		},
+		"description": {
+			"fx_matesc": "Le Materiel d'Escalade permet à ce Dinoz de gravir les pentes escarpées.",
+			"fx_bouee": "La bouée permet à ce Dinoz de traverser certaines petites étendues d'eau sans aucun risque de noyade.",
+			"fx_cuzmal": "Votre Dinoz a été Maudit par le Gardien de Cuzcous...",
+			"fx_cup4": "Cette coupe félicite le capitaine d'une équipe pour sa domination du SuperDom !",
+			"fx_demon": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
+			"fx_lantrn": "La Lanterne permet à ce Dinoz d'explorer les plus profondes cavernes sans risquer de se perdre.",
+			"fx_medal4": "Cette médaille de diamant récompense les dinoz légendaires ayant terminé le tournoi de Forcebrut.",
+			"fx_nenuph": "Ces Feuilles de Nénuphar sont très appréciées des moines Zenzen.",
+			"fx_pelle": "Cette Pelle permet au Dinoz de creuser et de découvrir des trésors cachés.",
+			"fx_rasca": "Cette petite Flute permet d'attirer les Rascaphandres et ainsi d'accéder au Dôme Soulaflotte.",
+			"fx_palmes": "Ces palmes fabriquées par les Korgons permettent à ce Dinoz de traverser de grandes étendues d'eau.",
+			"fx_amulst": "Ce livre, très complet, permet au Dinoz de désactiver à volonté ses compétences de type 'attaque', 'événement' et certaines de type 'spécial' (depuis l'onglet Détails).\nC'est un guide indispensable pour les grands stratèges de Dinoland qui souhaitent s'adapter aux conditions de combat de chaque lieu !"
+		}
+	},
 	"tabs": {
-		"carte": "Carte",
-		"inventaire": "Inventaire",
+		"map": "Carte",
+		"inventory": "Inventaire",
 		"details": "Détails"
 	}
 }
