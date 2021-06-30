@@ -32,7 +32,7 @@ export class Dinoz extends Model {
 	@Column
 	dinozId!: number;
 
-	@HasMany(() => AssDinozObject)
+	@HasMany(() => AssDinozObject, 'dinozId')
 	assDinozObject!: Array<AssDinozObject>;
 
 	@BelongsToMany(() => Skill, () => AssDinozSkill)

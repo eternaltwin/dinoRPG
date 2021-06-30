@@ -10,6 +10,7 @@ import {
 	Table,
 	UpdatedAt,
 } from 'sequelize-typescript';
+import { AssPlayerObject } from './assPlayerObject.js';
 import { AssPlayerReward } from './assPlayerReward.js';
 import { Dinoz } from './dinoz.js';
 import { DinozShop } from './dinozShop.js';
@@ -35,6 +36,9 @@ export class Player extends Model {
 
 	@HasMany(() => DinozShop, 'playerId')
 	dinozShop!: Array<DinozShop>;
+
+	@HasMany(() => AssPlayerObject, 'playerId')
+	assPlayerObject!: Array<AssPlayerObject>;
 
 	@AllowNull(false)
 	@Column

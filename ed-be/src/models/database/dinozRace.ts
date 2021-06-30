@@ -7,9 +7,6 @@ import {
 	HasMany,
 	ForeignKey,
 	BelongsTo,
-	CreatedAt,
-	UpdatedAt,
-	HasOne,
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 import { DinozShop } from './dinozShop.js';

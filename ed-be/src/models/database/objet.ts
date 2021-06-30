@@ -7,6 +7,7 @@ import {
 	HasMany,
 } from 'sequelize-typescript';
 import { AssDinozObject } from './assDinozObject.js';
+import { AssPlayerObject } from './assPlayerObject.js';
 
 @Table({ tableName: 'tb_object', timestamps: false })
 export class Objet extends Model {
@@ -15,8 +16,11 @@ export class Objet extends Model {
 	@Column
 	objectId!: number;
 
-	@HasMany(() => AssDinozObject)
+	@HasMany(() => AssDinozObject, 'objectId')
 	assDinozObject!: Array<AssDinozObject>;
+
+	@HasMany(() => AssPlayerObject, 'objectId')
+	assPlayerObject!: Array<AssPlayerObject>;
 
 	@AllowNull(false)
 	@Column
@@ -33,4 +37,7 @@ export class Objet extends Model {
 	@AllowNull(false)
 	@Column
 	price!: number;
+
+	@Column
+	maxQuantity!: number;
 }
