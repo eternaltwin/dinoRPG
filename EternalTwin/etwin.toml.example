@@ -76,10 +76,10 @@ app_uri = "http://mjrt.localhost"
 callback_uri = "http://mjrt.localhost/oauth/callback"
 secret = "dev_secret"
 
-[clients.emush]
-display_name = "eMush"
-app_uri = "http://localhost"
-callback_uri = "http://localhost:8080/oauth/callback"
+[clients.dinorpg]
+display_name = "DinoRPG"
+app_uri = "http://localhost:8080/"
+callback_uri = "http://localhost:8080/authentication"
 secret = "dev_secret"
 
 # Twinoid authentication configuration
