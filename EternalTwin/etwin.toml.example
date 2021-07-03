@@ -21,15 +21,15 @@ external_uri = "http://localhost:50320"
 # This section is always required, even if it will be ignored when using the `in-memory` API.
 [db]
 # Database service host
-host = "mush_database"
+host = "drpg_database"
 # Database service port
 port = 5432
 # Database name
 name = "eternal_twin"
 # Database user (role). In development, it is recommended to be a superuser to manage extensions.
-user = "mysql"
+user = "postgres"
 # Password for the database user.
-password = "password"
+password = "EternalDinoSQL"
 
 # System Oauth clients configuration
 # You can define any number of OAuth clients using `[clients.<key>]` blocks (one block per client),
