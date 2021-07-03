@@ -52,20 +52,8 @@ services:
     build:
       context: ./back
       dockerfile: Dockerfile
-      args:
-        - YOUR_APP_WEB_HTTP_PORT=8080
     volumes:
       - ../ed-be:/www
-    stdin_open: true
-    tty: true
-    environment:
-      # https://cli.vuejs.org/guide/mode-and-env.html#modes
-      # development is used by vue-cli-service serve
-      - NODE_ENV=development
-      # one way for hot reloading ... see above for details
-      - CHOKIDAR_USEPOLLING=true
-      - CHOKIDAR_INTERVAL=100
-      - YOUR_APP_WEB_HTTP_PORT=8080
 
 networks:
   drpg_network:
