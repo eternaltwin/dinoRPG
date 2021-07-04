@@ -5,19 +5,20 @@ import { forgeJWT } from '../utils/jwt.js';
 import _ from 'lodash';
 import { Player, Config } from '../models/index.js';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
+import { OauthAccessToken } from '@eternal-twin/core/lib/oauth/oauth-access-token.js';
 import fetch from 'node-fetch';
 
 const authenticateToET = async (
 	req: Request,
 	res: Response
 ): Promise<Response> => {
-	let token: AccessToken;
+	let token: OauthAccessToken;
 	let user: User;
 	const config: Config = getConfig();
 
 	try {
-		token = await getAuthorizationToken(req.body.code, config);
-		user = await getUser(token.access_token, config.general.eternalTwinURI);
+		token = await getAuthorizationToken(req.body.code);
+		user = await getUser(token.accessToken, config.general.eternalTwinDockerURI);
 	} catch (err) {
 		console.error(err);
 		return res.status(500).send('An error occurred');
@@ -70,62 +71,37 @@ async function getUser(accessToken: string, eternalTwinURI: string) {
 	return await res.json();
 }
 
-async function getAuthorizationToken(
-	code: string,
-	config: Config
-): Promise<AccessToken> {
-	const body = {
-		code: code,
-		grant_type: 'authorization_code',
-	};
-	const keyPassword: string = Buffer.from(
-		`${config.oauth.client_id}:${config.oauth.client_secret}`
-	).toString('base64');
-	let res;
+async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {
+	const oauthClient: RfcOauthClient = getRfcOauthClient(true);
 
-	try {
-		res = await fetch(`${config.general.eternalTwinURI}oauth/token`, {
-			method: 'POST',
-			body: JSON.stringify(body),
-			headers: {
-				'Content-type': 'application/json',
-				Authorization: `Basic ${keyPassword}`,
-			},
-		});
-	} catch (err) {
-		console.error(err);
-		return Promise.reject(err);
-	}
-
-	return await res.json();
+	return oauthClient.getAccessToken(code);
 }
 
 const getAuthorizationUri = (req: Request, res: Response): Response => {
-	const config: Config = getConfig();
-
-	const oauthClient: RfcOauthClient = new RfcOauthClient({
-		authorizationEndpoint: new URL(
-			`${config.general.eternalTwinURI}${config.oauth.authorizationURI}`
-		),
-		tokenEndpoint: new URL(
-			`${config.general.eternalTwinURI}${config.oauth.tokenURI}`
-		),
-		callbackEndpoint: new URL(
-			`${config.general.frontUri}${config.oauth.callbackURI}`
-		),
-		clientId: config.oauth.client_id,
-		clientSecret: config.oauth.client_secret,
-	});
+	const oauthClient: RfcOauthClient = getRfcOauthClient(false);
 
 	return res
 		.status(200)
 		.send(oauthClient.getAuthorizationUri('base', 'authenticate'));
 };
 
-interface AccessToken {
-	access_token: string;
-	expires_in: number;
-	token_type: string;
+function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {
+	const config: Config = getConfig();
+	const eternalTwinURI: string = useDockerUri
+		? config.general.eternalTwinDockerURI
+		: config.general.eternalTwinURI;
+
+	return new RfcOauthClient({
+		authorizationEndpoint: new URL(
+			`${eternalTwinURI}${config.oauth.authorizationURI}`
+		),
+		tokenEndpoint: new URL(`${eternalTwinURI}${config.oauth.tokenURI}`),
+		callbackEndpoint: new URL(
+			`${config.general.frontUri}${config.oauth.callbackURI}`
+		),
+		clientId: config.oauth.client_id,
+		clientSecret: config.oauth.client_secret,
+	});
 }
 
 interface User {

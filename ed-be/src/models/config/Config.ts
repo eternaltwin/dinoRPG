@@ -9,6 +9,7 @@ export interface Config {
 
 interface GeneralConfig {
 	readonly eternalTwinURI: string;
+	readonly eternalTwinDockerURI: string;
 	readonly serverUri: string;
 	readonly frontUri: string;
 }
