@@ -23,7 +23,7 @@ build:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml build
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --no-start
 
-install: build reset-eternal-twin-database
+install: build install-database
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_front yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn install
@@ -44,3 +44,18 @@ reset-eternal-twin-database:
 	docker start drpg_database &&\
 	cat docker/EternalTwin/drop.sql | docker exec -i drpg_database psql --username postgres eternal_twin &&\
 	cat docker/EternalTwin/dump_12-01-2021_20_33_41.sql | docker exec -i drpg_database psql --username postgres eternal_twin
+
+install-database:
+	docker start drpg_database 
+	sleep 3s
+	cat docker/EternalTwin/drop.sql | docker exec -i drpg_database psql --username postgres eternal_twin 
+	sleep 1s
+	cat docker/EternalTwin/dump_12-01-2021_20_33_41.sql | docker exec -i drpg_database psql --username postgres eternal_twin
+	sleep 1s
+	cat docker/Database/20210630.sql | docker exec -i drpg_database psql --username postgres eternaldinodb
+
+remove-drpg: docker-stop
+	docker rm drpg_back
+	docker rm drpg_database
+	docker rm drpg_eternal_twin
+	docker rm drpg_front

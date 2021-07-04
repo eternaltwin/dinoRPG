@@ -54,6 +54,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../ed-be:/www
+    networks:
+      - drpg_network
 
 networks:
   drpg_network:
