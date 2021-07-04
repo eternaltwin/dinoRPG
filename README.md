@@ -30,118 +30,79 @@
 
 # Prérequis
 
-Les technologies principales utilisées sont:
-- Node.js: v14.15.1
-- npm: 6.14.8
-- Yarn: v2.4.1
-- Postgresql: v12
-- pgAdmin4
-- Vue: version 3
+Il est nécessaire d'avoir docker et docker-compose d'insntallé pour faire tourner l'environnement de dev.
+* [Docker](https://docs.docker.com/get-docker/) 
+  * _(Windows)_ pendant l'installation, suivre la procédure pour WSL2
+* [Docker-compose](https://docs.docker.com/compose/install/) 
 
-Il est préférable d'utiliser ces versions (ou des versions proches).
+Le fichier config_dev.toml doit vous être fournis par les dev.
 
-## Installation
 
-### Windows
+# Installation
 
-Sur Windows, seuls nodeJS, yarn et PostgreSQL doivent être installés (voir ci-dessous).
-Une fois ces installations effectuées, aller directement à la partie 'Mode d'emploi'
 
-#### Node.js & npm
+Pour déployer l'environnement de dev, suivez les étapes suivantes :
 
-NodeJS et npm se téléchargent en même temps, suivez le tutoriel d'installation ici : https://eternal-twin.net/docs/tools/node
-
-#### Yarn
-
-Installez `npm` puis lancez la commande:
-
+Cloner le projet
+```bash
+$ git clone git@gitlab.com:eternal-twin/dinorpg/dinorpg.git
 ```
-npm install -g yarn
+Checkout sur master:
+```bash
+$ git checkout master
 ```
 
-#### Postgresql
-
-Installation sous Windows :
-
-Voir `https://www.postgresql.org/download/windows/` (Rappel : version 12)
-
-Une fois le téléchargement de PostGreSQL effectué, installez le logiciel et mettez `EternalDinoSQL` en mot de passe (la sélection d'un mot de passe sera proposée pendant l'installation).
-Tapez ensuite `pgAdmin 4` dans la barre de recherche Cortana et vous devriez avoir un exécutable. Lancez-le et il s'ouvrira dans votre navigateur.
-
-Il faut maintenant créer une base de données dédiée au projet EternalDino. 
-Pour cela, faites un clic droit sur 'Databases' (Chemin : Servers -> PostgreSQL -> Databases) puis cliquez sur 'Create -> Database'.
-Mettez 'EternalDinoDB' dans le champ 'Database', et mettez 'eternaldino' dans le champ 'Owner' (l'utilisateur créé tout à l'heure).
-Allez ensuite sur l'onglet 'Security' et cliquez sur le petit icône '+' en face du champ 'Privileges'.
-Mettez ensuite 'eternaldino' dans la colonne 'Grantee' et cochez toutes les cases dans la colonne 'Privileges'.
-Enfin, cliquez sur 'Save' pour sauvegarder.
-
-Installation sous Linux :
-
-Avant tout, vérifier que votre environnement est à jour:
-1) `sudo apt update`
-2) `sudo apt upgrade`
-Notez que `apt` est le successeur de `apt-get` et s'utilise de la même facon.
-
-Ensuite :
-
-Source: `https://www.postgresql.org/download/linux/ubuntu/`
-1) Go to `https://www.postgresql.org/download/linux/ubuntu/` and select your ubuntu version
-2) `deb http://apt.postgresql.org/pub/repos/apt/ <YOUR_UBUNTU_VERSION_HERE>-pgdg main`
-Example pour Ubuntu 18:
-`deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main`
-3) `wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -`
-4) `sudo apt update`
-5) `sudo apt install postgresql-12`
-
-PostGreSQL est installé, il faut maintenant créer une base de données pour le projet :
-
-Avec Ubuntu, c'est moins direct qu'avec Windows, voici comment faire en utilisant l'utilisateur par défaut de PostGreSQL appelé très originalement `postgres`:
-- Ouvrez le terminal de PostGreSQL avec l'utilisateur postgres: `sudo -u postgres psql`
-- Dans le terminal de PostGreSQL, définissez le mot de passe de à `EternalDinoSQL`: `ALTER USER postgres WITH PASSWORD 'EternalDinoSQL';`
-- Ouvrez un nouvel onglet dans votre terminal et exécutez `pgadmin4`, une fenêtre s'ouvre dans votre navigateur.
-- Dans cette fenêtre, sélectionner `Add new server` et un pop-up apparaît:
-1) Dans l'onglet `General` choisissez un nom (il n'a pas d'importance)
-2) Allez dans l'onglet `Connection`
-3) Dans `Host name/address` écrivez `localhost`
-4) Dans `Port` écrivez `5433` (le port par défaut semble être 5433 sur Ubuntu au lieu de 5432 sur Windows)
-5) `Maintenance database` et `Username` doivent normanelent tous les 2 contenir `postgres`
-6) Dans `Password`, entrez `EternalDinoSQL`
-7) Sélectionnez `Save` et si tout est bon le serveur est ajouté correctement.
-- Ouvrez le fichier `ed-be/node_modules/sequelize/lib/dialects/postgres/connection-manager.js` et changer le port à `5433` à la ligne 15.
-- C'est bon la BDD est prête pour le back!
-
-Enfin, installez pgAdmin4 pour pouvoir visualiser votre BDD :
-
-La commande suivante permet d'isntaller pgadmin4:
-`sudo apt install pgadmin4 pgadmin4-apache2`
-
-### Appliquer un dump à sa BDD
-
-Pour appliquer un dump depuis pgAdmin :
-
-1) Faire clic droit sur la BDD "EternalDinoDB" puis cliquer sur "Delete/Drop" -> Valider la pop-in de confirmation
-2) Faire un clic droit sur "Databases" puis "Create -> Database"
-3) Nommer la nouvelle BDD "EternalDinoDB" et mettre "eternaldino" comme utilisateur -> Cliquer sur le bouton "Save"
-4) Faire un clic droit sur la BDD créée puis cliquer sur "Restore"
-5) Dans la pop-in, sélectionner le dump voulu puis cliquer sur "Restore"
-
-#### Dépendances front & back
-
-Utiliser la commande `yarn install` dans le dossier parent.
-
-# Mode d'emploi
-
-## Démarrage du back
-
-Utiliser la commande `yarn run serve` dans le dossier `ed-be`.
-
-## Démarrage d'eternal-twin'
-
-Ouvrir un terminal et taper la commande `yarn run etwin` dans le dossier `ed-be`.
-Il est nécessaire de faire cette commande afin de pouvoir passer l'authentification.
-
-## Démarrage du front
-
-Ouvrir un terminal et taper la commande `yarn run serve` dans le dossier `ed-ui`.
+Copier la configuration ET:
+```bash
+$ cp ./EternalTwin/etwin.toml.example ./EternalTwin/etwin.toml
+```
 
 
+Builder les containers:
+```bash
+$ make install
+```
+
+Lancer les container
+```bash
+$ make docker-start
+```
+
+En cas de problèmes, il est possible de les lancer avec la console :
+```bash
+$ make docker-watch
+```
+
+Une fois le lancement terminé vous devriez pouvoir accéder à :
+  - DinoRPG_Front : http://localhost:8080
+  - Eternal Twin local : http://localhost:50320
+
+# Erreurs possible
+
+## Droits
+Si jamais des problèmes de droits apparaissent, vérifiez votre uid et gid :
+```bash
+$ id
+```
+
+Modifiez ensuite ./docker/docker-compose.dev.yml :
+``` yaml
+drpg_back:
+ build:
+  args:
+  - UID=xxxx
+  - GID=xxxx
+```
+Relancez une installation à zero.
+
+# Tips
+## Clean-up
+Il est possible de supprimer tout les container liés à dinorpg avec les commandes :
+```bash
+$ make remove-drpg (supprimera uniquement les container utilisés de dinorpg)
+ou
+$ docker container prune (supprimera tout les container existant sur le poste /!\)
+```
+
+## Comptes
+Il n'est pas nécessaire de recréer un compte ET à chaque fois. Temps que le container drpg_database n'est pas wype, l'environnement est persistant.

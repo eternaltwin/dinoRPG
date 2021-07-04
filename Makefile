@@ -8,9 +8,6 @@ docker-watch:
 docker-stop:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml stop
 
-bash-apache:
-	docker exec -it drpg_apache bash
-
 bash-front:
 	docker exec -it drpg_front bash
 
