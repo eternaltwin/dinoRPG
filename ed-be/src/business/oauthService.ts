@@ -18,7 +18,10 @@ const authenticateToET = async (
 
 	try {
 		token = await getAuthorizationToken(req.body.code);
-		user = await getUser(token.accessToken, config.general.eternalTwinDockerURI);
+		user = await getUser(
+			token.accessToken,
+			config.general.eternalTwinDockerURI
+		);
 	} catch (err) {
 		console.error(err);
 		return res.status(500).send('An error occurred');

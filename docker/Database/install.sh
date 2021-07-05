@@ -20,3 +20,8 @@ if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then
 	done
 	echo "Multiple databases created"
 fi
+
+
+cat /import/drop.sql | psql --username postgres eternal_twin 
+cat /import/dump_12-01-2021_20_33_41.sql | psql --username postgres eternal_twin
+cat /import/20210630.sql | psql --username postgres eternaldinodb

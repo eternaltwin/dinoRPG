@@ -20,10 +20,12 @@ build:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml build
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --no-start
 
-install: build install-database
+install: build
+	docker start drpg_database
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_front yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn install
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d --no-recreate
 
 remove-all: #Warning, it will remove EVERY container, images, volumes and network not only edrpg ones
 	docker system prune --volumes -a

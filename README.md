@@ -35,6 +35,7 @@ Il est nécessaire d'avoir docker et docker-compose d'insntallé pour faire tour
   * _(Windows)_ pendant l'installation, suivre la procédure pour WSL2
 * [Docker-compose](https://docs.docker.com/compose/install/) 
 
+Docker doit être utilisable en temps qu'utilisateur non root sans sudo.
 Le fichier config_dev.toml doit vous être fournis par les dev.
 
 
