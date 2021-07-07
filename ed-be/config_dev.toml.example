@@ -1,8 +1,8 @@
 [general]
-eternalTwinURI = 'http://drpg_eternal_twin:50320/'
+eternalTwinURI = 'http://localhost:50320/'
+eternalTwinDockerURI = 'http://drpg_eternal_twin:50320/'
 serverUri = 'http://localhost:8081/'
 frontUri = 'http://localhost:8080/'
-eternalTwinDockerURI = 'http://drpg_eternal_twin:50320/'
 
 [oauth]
 client_id = 'dinorpg@clients'
@@ -13,9 +13,9 @@ callbackURI = 'data'
 
 [db]
 host = 'drpg_database'
-user = 'postgres'
-password = 'EternalDinoSQL'
-dbName = 'eternaldinodb'
+user = 'user'
+password = 'password'
+dbName = 'dbName'
 
 [jwt]
 secretKey = '6cc98b92-c89d-43e9-82c1-b1254c9965ad'

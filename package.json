@@ -12,7 +12,8 @@
   "workspaces": {
     "packages": [
       "ed-be",
-      "ed-ui"
+      "ed-ui",
+      "EternalTwin"
     ]
   }
 }

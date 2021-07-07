@@ -9,7 +9,6 @@
     "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
     "test": "tsc && jest --verbose --config ./jest.config.json",
     "coverage": "jest --coverage --config ./jest.config.json",
-    "etwin": "etwin",
     "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "keywords": [
@@ -43,7 +42,6 @@
   "devDependencies": {
     "@eternal-twin/etwin-client-http": "^0.5.1",
     "@eternal-twin/oauth-client-http": "^0.5.1",
-    "@eternal-twin/website": "^0.3.1",
     "@types/cheerio": "^0.22.29",
     "@types/cors": "^2.8.10",
     "@types/cron": "^1.7.2",

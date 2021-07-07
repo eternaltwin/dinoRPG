@@ -22,10 +22,15 @@ node_modules/
 # Yarn without Zero-Installs
 # https://yarnpkg.com/advanced/qa#which-files-should-be-gitignored
 .yarn/*
+**/.yarn/*
 !.yarn/releases
+!**/.yarn/releases
 !.yarn/plugins
+!**/.yarn/plugins
 !.yarn/sdks
+!**/.yarn/sdks
 !.yarn/versions
+!**/.yarn/versions
 .pnp.*
 # We only use `yarn.lock` files, ensure npm's `package-lock.json` is not commited
 package-lock.json
