@@ -1,5 +1,5 @@
 import { Player } from '../../models';
-import { reward } from '../../utils/constants';
+import { reward } from '../../constants/index.js';
 import { player } from '../utils/constants';
 
 export const BasicPlayer = {

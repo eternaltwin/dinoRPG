@@ -11,11 +11,16 @@ import {
 	createMultipleDinoz,
 } from '../dao/shopDao.js';
 import { getPlayerRewardsRequest } from '../dao/playerDao.js';
-import { getRacesDetailsRequest } from '../dao/dinozRaceDao.js';
 import _ from 'lodash';
-import { race, reward } from '../utils/constants.js';
 import { getConfig } from '../utils/context.js';
+import { race, reward, skill } from '../constants/index.js';
 
+/**
+ * Get all dinoz data from regular dinoz shop
+ * If no dinoz is found, then fill the shop with X new dinoz -> X is defined is config file
+ *
+ * @return Array<DinozShop>
+ */
 const getDinozFromDinozShop = async (
 	req: Request,
 	res: Response
@@ -32,15 +37,15 @@ const getDinozFromDinozShop = async (
 		let randomRace: number;
 		let randomDisplay: string;
 		const raceArray: Array<string> = [
-			race.winks,
-			race.sirain,
-			race.castivore,
-			race.nuagoz,
-			race.gorilloz,
-			race.wanwan,
-			race.pigmou,
-			race.planaille,
-			race.moueffe,
+			race.WINKS.name,
+			race.SIRAIN.name,
+			race.CASTIVORE.name,
+			race.NUAGOZ.name,
+			race.GORILLOZ.name,
+			race.WANWAN.name,
+			race.PIGMOU.name,
+			race.PLANAILLE.name,
+			race.MOUEFFE.name,
 		];
 		const rewardArray: Array<string> = [
 			reward.tropheeHippoclamp,
@@ -62,24 +67,26 @@ const getDinozFromDinozShop = async (
 
 		player.reward.forEach((playerReward) => {
 			if (playerReward.name === reward.tropheeRocky) {
-				raceArray.push(race.rocky);
+				raceArray.push(race.ROCKY.name);
 			}
 			if (playerReward.name === reward.tropheeHippoclamp) {
-				raceArray.push(race.hippoclamp);
+				raceArray.push(race.HIPPOCLAMP.name);
 			}
 			if (playerReward.name === reward.tropheePteroz) {
-				raceArray.push(race.pteroz);
+				raceArray.push(race.PTEROZ.name);
 			}
 			if (
 				playerReward.name === reward.tropheeQuetzu &&
 				player.quetzuBought < config.shop.buyableQuetzu
 			) {
-				raceArray.push(race.quetzu);
+				raceArray.push(race.QUETZU.name);
 			}
 		});
 
-		// Get all buyable races from a dinoz array
-		let races: Array<DinozRace> = await getRacesDetailsRequest(raceArray);
+		// Get all buyable races details
+		let races: Array<DinozRace> = Object.values(race)
+			.filter((race) => raceArray.includes(race.name))
+			.reduce((acc, current) => [...acc, current], [] as Array<DinozRace>);
 
 		// Make 15 Dinoz object
 		for (let i = 0; i < config.shop.dinozInShop; i++) {
@@ -98,22 +105,42 @@ const getDinozFromDinozShop = async (
 		}
 
 		// Save created dinoz in database
-		await createMultipleDinoz(dinozArray!);
+		let dinozCreatedInShop = await createMultipleDinoz(dinozArray!);
 
-		// Get created dinoz and their races
-		let response: Array<DinozShop> = await getDinozFromDinozShopRequest(
-			req.user!.playerId!
-		);
+		dinozCreatedInShop.forEach((dinoz) => {
+			setDinozRaceAndSkill(dinoz, dinoz.raceId);
+		});
 
-		response = _.orderBy(response, ['id', 'desc']);
+		dinozCreatedInShop = _.orderBy(dinozCreatedInShop, ['id', 'desc']);
 
-		return res.status(200).send(response);
+		return res.status(200).send(dinozCreatedInShop);
 	} else {
+		data.forEach((dinoz) => {
+			setDinozRaceAndSkill(dinoz, dinoz.race.raceId);
+		});
+
 		data = _.orderBy(data, ['id', 'desc']);
 
 		return res.status(200).send(data);
 	}
 };
+
+function setDinozRaceAndSkill(dinoz: DinozShop, raceId: number) {
+	const raceFound: DinozRace = Object.values(race).find(
+		(race) => race.raceId === raceId
+	)!;
+
+	if (raceFound.skillId) {
+		dinoz.setDataValue(
+			'skill',
+			skill.find((skill) => skill.skillId === raceFound.skillId)!.name
+		);
+	}
+
+	dinoz.setDataValue('race', raceFound);
+	dinoz.setDataValue('raceId', undefined);
+	dinoz.setDataValue('playerId', undefined);
+}
 
 // Return a String with a length of 11
 function getCosmetique() {

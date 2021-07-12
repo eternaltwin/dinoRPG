@@ -20,7 +20,7 @@
 			></dinozSWF>
 		</div>
 		<div class="level">
-			<div class="over">{{ dinozData.level.level }}</div>
+			<div class="over">{{ dinozData.level }}</div>
 		</div>
 		<div class="infos">
 			<elements
@@ -40,16 +40,16 @@
 			<div class="lifetext">{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
 			<div class="xp">
 				<div class="bar">
-					<img src="@/assets/bar/bar_xp.png" :style="getBarSize(dinozData.experience, dinozData.level.experience)">
+					<img src="@/assets/bar/bar_xp.png" :style="getBarSize(dinozData.experience, dinozData.maxExperience)">
 				</div>
 			</div>
-			<div class="xptext">{{ dinozData.experience }} / {{ dinozData.level.experience }}</div>
+			<div class="xptext">{{ dinozData.experience }} / {{ dinozData.maxExperience }}</div>
 		</div>
 		<div class="equip" id="equip">
 			<ul>
-				<li v-for="(objet, index) in dinozData.object" :key="index">
+				<li v-for="(item, index) in dinozData.item" :key="index">
 					<a href="#" class="icon">
-						<img :src="getImg('object', objet.name)" :alt="objet.name">
+						<img :src="getImg('item', item.name)" :alt="item.name">
 					</a>
 				</li>
 			</ul>

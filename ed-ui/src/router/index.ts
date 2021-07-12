@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Accueil from '@/pages/Accueil.vue';
-import DinozPage from '@/pages/dinoz/DinozPage/DinozPage.vue';
+import DinozPage from '@/pages/DinozPage/DinozPage.vue';
 import DinozShopPage from '@/pages/shop/DinozShopPage.vue';
 import AuthenticationPage from '@/pages/AuthenticationPage.vue';
 

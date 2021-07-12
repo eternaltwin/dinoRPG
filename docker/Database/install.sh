@@ -24,4 +24,4 @@ fi
 
 cat /import/drop.sql | psql --username postgres eternal_twin 
 cat /import/dump_12-01-2021_20_33_41.sql | psql --username postgres eternal_twin
-cat /import/20210630.sql | psql --username postgres eternaldinodb
+cat /import/20210711.sql | psql --username postgres eternaldinodb

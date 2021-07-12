@@ -9,10 +9,10 @@ import {
 	ForeignKey,
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
-import { Objet } from './objet.js';
+import { Item } from './item.js';
 
-@Table({ tableName: 'tb_ass_dinoz_object', timestamps: false })
-export class AssDinozObject extends Model {
+@Table({ tableName: 'tb_ass_dinoz_item', timestamps: false })
+export class AssDinozItem extends Model {
 	@PrimaryKey
 	@AutoIncrement
 	@AllowNull(false)
@@ -26,10 +26,10 @@ export class AssDinozObject extends Model {
 	@BelongsTo(() => Dinoz, 'dinozId')
 	dinoz!: Dinoz;
 
-	@ForeignKey(() => Objet)
+	@ForeignKey(() => Item)
 	@Column
-	objectId!: number;
+	itemId!: number;
 
-	@BelongsTo(() => Objet, 'objectId')
-	object!: Objet;
+	@BelongsTo(() => Item, 'itemId')
+	item!: Item;
 }

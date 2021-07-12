@@ -16,10 +16,10 @@ import {
 	BasicDinoz,
 	DinozFiche,
 	Action,
-	Objet,
+	Item,
 } from '../models/index.js';
 import _ from 'lodash';
-import { actions } from '../utils/constants.js';
+import { actions, level, race } from '../constants/index.js';
 
 const getDinozFiche = async (
 	req: Request,
@@ -41,13 +41,17 @@ const getDinozFiche = async (
 		});
 	}
 
-	// Set object list
-	let objectList: Array<Objet> = [];
-	dinozDetails.assDinozObject.forEach((object) =>
-		objectList.push(object.object)
+	// Set item list
+	let itemList: Array<Item> = [];
+	dinozDetails.assDinozItem.forEach((item) => itemList.push(item.item));
+	dinozDetails.setDataValue('item', itemList);
+	dinozDetails.setDataValue('assDinozItem', undefined);
+
+	// Set max experience
+	dinozDetails.setDataValue(
+		'maxExperience',
+		level.find((level) => level.id === dinozDetails.level)!.experience
 	);
-	dinozDetails.setDataValue('object', objectList);
-	dinozDetails.setDataValue('assDinozObject', undefined);
 
 	// Set availables actions for this dinoz
 	dinozDetails.setDataValue('actions', getActionList());
@@ -85,6 +89,10 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		return res.status(500).send('Error: dinoz data cannot be null');
 	}
 
+	dinozData.race = Object.values(race).find(
+		(race) => race.raceId === dinozData.raceId
+	)!;
+
 	// Throws an exception if player doesn't have enough money to buy the dinoz
 	if (dinozData.player.money < dinozData.race.price) {
 		return res
@@ -103,7 +111,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		name: '?',
 		isFrozen: false,
 		raceId: dinozData.race.raceId,
-		levelId: 1,
+		level: 1,
 		playerId: req.user!.playerId,
 		placeId: 1,
 		display: dinozData.display,
@@ -130,7 +138,6 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	// Create a new dinoz that belongs to player
 	const dinozCreated: Dinoz = await createDinozRequest(newDinoz.get());
 
-	// TODO: calculate max life
 	const dinozToSend: BasicDinoz = {
 		dinozId: dinozCreated.dinozId,
 		display: dinozCreated.display,

@@ -1,8 +1,7 @@
 import {
-	AssDinozObject,
+	AssDinozItem,
 	Dinoz,
-	Level,
-	Objet,
+	Item,
 	Place,
 	Player,
 	Status,
@@ -26,6 +25,7 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 			'nbrUpLight',
 			'nbrUpAir',
 			'name',
+			'level',
 		],
 		include: [
 			{
@@ -39,11 +39,6 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 				required: false,
 			},
 			{
-				model: Level,
-				attributes: ['level', 'experience'],
-				required: false,
-			},
-			{
 				model: Status,
 				attributes: ['name'],
 				through: {
@@ -52,13 +47,13 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 				required: false,
 			},
 			{
-				model: AssDinozObject,
+				model: AssDinozItem,
 				attributes: ['id'],
 				required: false,
 				include: [
 					{
-						model: Objet,
-						attributes: ['name', 'canBeUsedNow', 'canBeEquiped', 'price'],
+						model: Item,
+						attributes: ['itemId'],
 						required: false,
 					},
 				],

@@ -4,7 +4,7 @@ import {
 	buyDinoz,
 	setDinozName,
 } from '../business/dinozService.js';
-import { apiRoutes } from '../utils/constants.js';
+import { apiRoutes } from '../constants/index.js';
 
 const routes: Router = Router();
 

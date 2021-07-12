@@ -6,7 +6,6 @@ import {
 	Model,
 	PrimaryKey,
 	Table,
-	UpdatedAt,
 } from 'sequelize-typescript';
 import { IngredientGridType } from './ingredientGridType.js';
 type IngredientGridTypeType = IngredientGridType;

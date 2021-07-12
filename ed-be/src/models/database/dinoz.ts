@@ -14,13 +14,12 @@ import {
 } from 'sequelize-typescript';
 import { DinozRace } from './dinozRace.js';
 import { Element } from './element.js';
-import { Level } from './level.js';
 import { Mission } from './mission.js';
 import { Place } from './place.js';
 import { Player } from './player.js';
 import { Skill } from './skill.js';
 import { Status } from './status.js';
-import { AssDinozObject } from './assDinozObject.js';
+import { AssDinozItem } from './assDinozItem.js';
 import { AssDinozSkill } from './assDinozSkill.js';
 import { AssDinozStatus } from './assDinozStatus.js';
 
@@ -32,8 +31,8 @@ export class Dinoz extends Model {
 	@Column
 	dinozId!: number;
 
-	@HasMany(() => AssDinozObject, 'dinozId')
-	assDinozObject!: Array<AssDinozObject>;
+	@HasMany(() => AssDinozItem, 'dinozId')
+	assDinozItem!: Array<AssDinozItem>;
 
 	@BelongsToMany(() => Skill, () => AssDinozSkill)
 	skill!: Array<Skill>;
@@ -60,13 +59,9 @@ export class Dinoz extends Model {
 	@BelongsTo(() => DinozRace, 'raceId')
 	race!: DinozRace;
 
-	@ForeignKey(() => Level)
 	@AllowNull(false)
 	@Column
-	levelId!: number;
-
-	@BelongsTo(() => Level, 'levelId')
-	level!: Level;
+	level!: number;
 
 	@ForeignKey(() => Mission)
 	@Column

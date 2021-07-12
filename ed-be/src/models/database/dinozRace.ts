@@ -29,36 +29,24 @@ export class DinozRace extends Model {
 	@Column
 	name!: string;
 
-	@AllowNull(false)
-	@Column
-	nbrFireCase!: number;
-
-	@AllowNull(false)
-	@Column
-	nbrWoodCase!: number;
-
-	@AllowNull(false)
-	@Column
-	nbrWaterCase!: number;
-
-	@AllowNull(false)
-	@Column
-	nbrLightCase!: number;
-
-	@AllowNull(false)
-	@Column
-	nbrAirCase!: number;
-
-	@Column
-	price!: number;
-
-	@Column
-	swfLetter!: string;
-
 	@ForeignKey(() => Skill)
 	@Column
 	skillId!: number;
 
 	@BelongsTo(() => Skill, 'skillId')
 	skill!: Skill;
+
+	nbrFireCase!: number;
+
+	nbrWoodCase!: number;
+
+	nbrWaterCase!: number;
+
+	nbrLightCase!: number;
+
+	nbrAirCase!: number;
+
+	price!: number;
+
+	swfLetter!: string;
 }

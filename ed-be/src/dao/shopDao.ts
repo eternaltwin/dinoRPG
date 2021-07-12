@@ -7,16 +7,7 @@ const getDinozFromDinozShopRequest = (
 		attributes: ['id', 'display'],
 		include: {
 			model: DinozRace,
-			attributes: [
-				'raceId',
-				'name',
-				'nbrFireCase',
-				'nbrWoodCase',
-				'nbrWaterCase',
-				'nbrLightCase',
-				'nbrAirCase',
-				'price',
-			],
+			attributes: ['raceId', 'name'],
 			required: false,
 			include: [
 				{
@@ -38,24 +29,11 @@ const createMultipleDinoz = (
 
 const getDinozDetailsRequest = (dinozId: number): Promise<DinozShop | null> => {
 	return DinozShop.findOne({
-		attributes: ['display'],
+		attributes: ['display', 'raceId'],
 		include: [
 			{
 				model: Player,
 				attributes: ['playerId', 'money'],
-				required: false,
-			},
-			{
-				model: DinozRace,
-				attributes: [
-					'raceId',
-					'nbrFireCase',
-					'nbrWoodCase',
-					'nbrWaterCase',
-					'nbrLightCase',
-					'nbrAirCase',
-					'price',
-				],
 				required: false,
 			},
 		],

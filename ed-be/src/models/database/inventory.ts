@@ -7,13 +7,13 @@ import {
 	BelongsTo,
 	ForeignKey,
 } from 'sequelize-typescript';
-import { Objet } from './objet.js';
+import { Item } from './item.js';
 import { Player } from './player.js';
 
 type PlayerType = Player;
 
-@Table({ tableName: 'tb_ass_player_object', timestamps: false })
-export class AssPlayerObject extends Model {
+@Table({ tableName: 'tb_inventory', timestamps: false })
+export class Inventory extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column
@@ -26,12 +26,12 @@ export class AssPlayerObject extends Model {
 	@BelongsTo(() => Player, 'playerId')
 	player!: PlayerType;
 
-	@ForeignKey(() => Objet)
+	@ForeignKey(() => Item)
 	@Column
-	objectId!: number;
+	itemId!: number;
 
-	@BelongsTo(() => Objet, 'objectId')
-	object!: Objet;
+	@BelongsTo(() => Item, 'itemId')
+	item!: Item;
 
 	@AllowNull(false)
 	@Column

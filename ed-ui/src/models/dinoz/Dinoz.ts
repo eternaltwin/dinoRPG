@@ -6,10 +6,13 @@ export interface Dinoz {
 	display?: string;
 	following?: string;
 	life?: string;
+	maxLife?: number;
+	experience?: number;
+	maxExperience?: number;
 	canGather?: boolean;
-	place?: Place;
+	place: Place;
 	race?: DinozRace;
-	assDinozObject: Array<Objet>;
+	assDinozItem: Array<Item>;
 	status: Status;
 	actions: Array<Action>;
 }
@@ -30,8 +33,8 @@ export interface Skill {
 	name: string;
 }
 
-export interface Objet {
-	canBeEquiped?: boolean;
+export interface Item {
+	canBeEquipped?: boolean;
 	canBeUsedNow?: boolean;
 	name?: string;
 	price?: number;

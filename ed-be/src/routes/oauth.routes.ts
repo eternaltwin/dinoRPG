@@ -3,7 +3,7 @@ import {
 	authenticateToET,
 	getAuthorizationUri,
 } from '../business/oauthService.js';
-import { apiRoutes } from '../utils/constants.js';
+import { apiRoutes } from '../constants/index.js';
 
 const routes: Router = Router();
 
