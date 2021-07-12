@@ -39,9 +39,9 @@
 						:light="dinoz.race.nbrLightCase"
 						:air="dinoz.race.nbrAirCase"
 					></elements>
-					<div class="skill" v-if="dinoz.race.skill?.name">
+					<div class="skill" v-if="dinoz.skill">
 						<img src="@/assets/icons/small_follow.png" alt="follow" />
-						{{ $t(`skill.name.${dinoz.race.skill.name}`) }}
+						{{ $t(`skill.name.${dinoz.skill}`) }}
 					</div>
 				</div>
 			</div>

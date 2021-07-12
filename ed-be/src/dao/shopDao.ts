@@ -1,22 +1,10 @@
-import { DinozRace, DinozShop, Player, Skill } from '../models/index.js';
+import { DinozShop, Player } from '../models/index.js';
 
 const getDinozFromDinozShopRequest = (
 	playerId: number
 ): Promise<Array<DinozShop>> => {
 	return DinozShop.findAll({
-		attributes: ['id', 'display'],
-		include: {
-			model: DinozRace,
-			attributes: ['raceId', 'name'],
-			required: false,
-			include: [
-				{
-					model: Skill,
-					attributes: ['name'],
-					required: false,
-				},
-			],
-		},
+		attributes: ['id', 'display', 'raceId'],
 		where: { playerId: playerId },
 	});
 };

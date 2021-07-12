@@ -108,7 +108,7 @@ const getDinozFromDinozShop = async (
 		let dinozCreatedInShop = await createMultipleDinoz(dinozArray!);
 
 		dinozCreatedInShop.forEach((dinoz) => {
-			setDinozRaceAndSkill(dinoz, dinoz.raceId);
+			setDinozRaceAndSkill(dinoz);
 		});
 
 		dinozCreatedInShop = _.orderBy(dinozCreatedInShop, ['id', 'desc']);
@@ -116,7 +116,7 @@ const getDinozFromDinozShop = async (
 		return res.status(200).send(dinozCreatedInShop);
 	} else {
 		data.forEach((dinoz) => {
-			setDinozRaceAndSkill(dinoz, dinoz.race.raceId);
+			setDinozRaceAndSkill(dinoz);
 		});
 
 		data = _.orderBy(data, ['id', 'desc']);
@@ -125,9 +125,9 @@ const getDinozFromDinozShop = async (
 	}
 };
 
-function setDinozRaceAndSkill(dinoz: DinozShop, raceId: number) {
+function setDinozRaceAndSkill(dinoz: DinozShop) {
 	const raceFound: DinozRace = Object.values(race).find(
-		(race) => race.raceId === raceId
+		(race) => race.raceId === dinoz.raceId
 	)!;
 
 	if (raceFound.skillId) {
