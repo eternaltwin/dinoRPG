@@ -13,9 +13,9 @@ callbackURI = 'data'
 
 [db]
 host = 'drpg_database'
-user = 'user'
-password = 'password'
-dbName = 'dbName'
+user = 'postgres'
+password = 'EternalDinoSQL'
+dbName = 'eternaldinodb'
 
 [jwt]
 secretKey = '6cc98b92-c89d-43e9-82c1-b1254c9965ad'

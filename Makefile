@@ -21,6 +21,8 @@ build:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --no-start
 
 install: build
+	cp ./EternalTwin/etwin.toml.example ./EternalTwin/etwin.toml
+	cp ./ed-be/config_dev.toml.example ./ed-be/config_dev.toml
 	docker start drpg_database
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_front yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn install
@@ -51,7 +53,7 @@ install-database:
 	sleep 1s
 	cat docker/EternalTwin/dump_12-01-2021_20_33_41.sql | docker exec -i drpg_database psql --username postgres eternal_twin
 	sleep 1s
-	cat docker/Database/20210711.sql | docker exec -i drpg_database psql --username postgres eternaldinodb
+	cat docker/Database/20210712.sql | docker exec -i drpg_database psql --username postgres eternaldinodb
 
 remove-drpg: docker-stop
 	docker rm drpg_back
