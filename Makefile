@@ -21,6 +21,8 @@ build:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --no-start
 
 install: build
+	cp ./EternalTwin/etwin.toml.example ./EternalTwin/etwin.toml
+	cp ./ed-be/config_dev.toml.example ./ed-be/config_dev.toml
 	docker start drpg_database
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_front yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn install

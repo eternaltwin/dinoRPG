@@ -53,13 +53,6 @@ Checkout sur master:
 $ git checkout master
 ```
 
-Copier les de configuration DinoRPG et ET:
-```bash
-$ cp ./EternalTwin/etwin.toml.example ./EternalTwin/etwin.toml
-$ cp ./ed-be/config_dev.toml.example ./ed-be/config_dev.toml
-```
-
-
 Builder les containers:
 ```bash
 $ make install
