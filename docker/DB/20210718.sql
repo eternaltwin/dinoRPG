@@ -5,7 +5,7 @@
 -- Dumped from database version 13.1 (Debian 13.1-1.pgdg100+1)
 -- Dumped by pg_dump version 13.3 (Ubuntu 13.3-1.pgdg20.04+1)
 
--- Started on 2021-07-11 15:53:18 CEST
+-- Started on 2021-07-18 10:23:30 CEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 212 (class 1259 OID 17842)
+-- TOC entry 212 (class 1259 OID 17617)
 -- Name: tb_ass_dinoz_item; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -37,7 +37,7 @@ CREATE TABLE public.tb_ass_dinoz_item (
 ALTER TABLE public.tb_ass_dinoz_item OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 17840)
+-- TOC entry 211 (class 1259 OID 17615)
 -- Name: tb_ass_dinoz_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -53,7 +53,7 @@ CREATE SEQUENCE public.tb_ass_dinoz_item_id_seq
 ALTER TABLE public.tb_ass_dinoz_item_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3121 (class 0 OID 0)
+-- TOC entry 3120 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: tb_ass_dinoz_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -62,7 +62,7 @@ ALTER SEQUENCE public.tb_ass_dinoz_item_id_seq OWNED BY public.tb_ass_dinoz_item
 
 
 --
--- TOC entry 213 (class 1259 OID 17858)
+-- TOC entry 213 (class 1259 OID 17633)
 -- Name: tb_ass_dinoz_skill; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -75,7 +75,7 @@ CREATE TABLE public.tb_ass_dinoz_skill (
 ALTER TABLE public.tb_ass_dinoz_skill OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 17878)
+-- TOC entry 215 (class 1259 OID 17653)
 -- Name: tb_ass_dinoz_status; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -88,7 +88,7 @@ CREATE TABLE public.tb_ass_dinoz_status (
 ALTER TABLE public.tb_ass_dinoz_status OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 17509)
+-- TOC entry 200 (class 1259 OID 17009)
 -- Name: tb_ass_player_item; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -103,7 +103,7 @@ CREATE TABLE public.tb_ass_player_item (
 ALTER TABLE public.tb_ass_player_item OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 17898)
+-- TOC entry 217 (class 1259 OID 17673)
 -- Name: tb_ass_player_reward; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -116,7 +116,7 @@ CREATE TABLE public.tb_ass_player_reward (
 ALTER TABLE public.tb_ass_player_reward OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 17791)
+-- TOC entry 209 (class 1259 OID 17571)
 -- Name: tb_dinoz; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -151,7 +151,7 @@ CREATE TABLE public.tb_dinoz (
 ALTER TABLE public.tb_dinoz OWNER TO postgres;
 
 --
--- TOC entry 208 (class 1259 OID 17789)
+-- TOC entry 208 (class 1259 OID 17569)
 -- Name: tb_dinoz_dinozId_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -167,7 +167,7 @@ CREATE SEQUENCE public."tb_dinoz_dinozId_seq"
 ALTER TABLE public."tb_dinoz_dinozId_seq" OWNER TO postgres;
 
 --
--- TOC entry 3122 (class 0 OID 0)
+-- TOC entry 3121 (class 0 OID 0)
 -- Dependencies: 208
 -- Name: tb_dinoz_dinozId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -176,7 +176,7 @@ ALTER SEQUENCE public."tb_dinoz_dinozId_seq" OWNED BY public.tb_dinoz."dinozId";
 
 
 --
--- TOC entry 203 (class 1259 OID 17758)
+-- TOC entry 202 (class 1259 OID 17533)
 -- Name: tb_dinoz_race; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -190,7 +190,7 @@ CREATE TABLE public.tb_dinoz_race (
 ALTER TABLE public.tb_dinoz_race OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 17915)
+-- TOC entry 219 (class 1259 OID 17690)
 -- Name: tb_dinoz_shop; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -205,7 +205,7 @@ CREATE TABLE public.tb_dinoz_shop (
 ALTER TABLE public.tb_dinoz_shop OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 17913)
+-- TOC entry 218 (class 1259 OID 17688)
 -- Name: tb_dinoz_shop_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -221,7 +221,7 @@ CREATE SEQUENCE public.tb_dinoz_shop_id_seq
 ALTER TABLE public.tb_dinoz_shop_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3123 (class 0 OID 0)
+-- TOC entry 3122 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: tb_dinoz_shop_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -230,7 +230,7 @@ ALTER SEQUENCE public.tb_dinoz_shop_id_seq OWNED BY public.tb_dinoz_shop.id;
 
 
 --
--- TOC entry 205 (class 1259 OID 17773)
+-- TOC entry 204 (class 1259 OID 17548)
 -- Name: tb_element; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -243,7 +243,7 @@ CREATE TABLE public.tb_element (
 ALTER TABLE public.tb_element OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 17893)
+-- TOC entry 216 (class 1259 OID 17668)
 -- Name: tb_epic_reward; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -256,7 +256,7 @@ CREATE TABLE public.tb_epic_reward (
 ALTER TABLE public.tb_epic_reward OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 17936)
+-- TOC entry 221 (class 1259 OID 17711)
 -- Name: tb_ingredient; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -270,7 +270,7 @@ CREATE TABLE public.tb_ingredient (
 ALTER TABLE public.tb_ingredient OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 17953)
+-- TOC entry 223 (class 1259 OID 17728)
 -- Name: tb_ingredient_grid; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -286,7 +286,7 @@ CREATE TABLE public.tb_ingredient_grid (
 ALTER TABLE public.tb_ingredient_grid OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 17951)
+-- TOC entry 222 (class 1259 OID 17726)
 -- Name: tb_ingredient_grid_gridId_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -302,7 +302,7 @@ CREATE SEQUENCE public."tb_ingredient_grid_gridId_seq"
 ALTER TABLE public."tb_ingredient_grid_gridId_seq" OWNER TO postgres;
 
 --
--- TOC entry 3124 (class 0 OID 0)
+-- TOC entry 3123 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: tb_ingredient_grid_gridId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -311,7 +311,7 @@ ALTER SEQUENCE public."tb_ingredient_grid_gridId_seq" OWNED BY public.tb_ingredi
 
 
 --
--- TOC entry 220 (class 1259 OID 17931)
+-- TOC entry 220 (class 1259 OID 17706)
 -- Name: tb_ingredient_grid_type; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -325,7 +325,7 @@ CREATE TABLE public.tb_ingredient_grid_type (
 ALTER TABLE public.tb_ingredient_grid_type OWNER TO postgres;
 
 --
--- TOC entry 224 (class 1259 OID 17979)
+-- TOC entry 224 (class 1259 OID 17754)
 -- Name: tb_inventory; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -340,7 +340,7 @@ CREATE TABLE public.tb_inventory (
 ALTER TABLE public.tb_inventory OWNER TO postgres;
 
 --
--- TOC entry 210 (class 1259 OID 17835)
+-- TOC entry 210 (class 1259 OID 17610)
 -- Name: tb_item; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -353,7 +353,7 @@ CREATE TABLE public.tb_item (
 ALTER TABLE public.tb_item OWNER TO postgres;
 
 --
--- TOC entry 204 (class 1259 OID 17768)
+-- TOC entry 203 (class 1259 OID 17543)
 -- Name: tb_mission; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -366,7 +366,7 @@ CREATE TABLE public.tb_mission (
 ALTER TABLE public.tb_mission OWNER TO postgres;
 
 --
--- TOC entry 201 (class 1259 OID 17745)
+-- TOC entry 207 (class 1259 OID 17564)
 -- Name: tb_place; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -379,7 +379,7 @@ CREATE TABLE public.tb_place (
 ALTER TABLE public.tb_place OWNER TO postgres;
 
 --
--- TOC entry 207 (class 1259 OID 17780)
+-- TOC entry 206 (class 1259 OID 17555)
 -- Name: tb_player; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -404,7 +404,7 @@ CREATE TABLE public.tb_player (
 ALTER TABLE public.tb_player OWNER TO postgres;
 
 --
--- TOC entry 206 (class 1259 OID 17778)
+-- TOC entry 205 (class 1259 OID 17553)
 -- Name: tb_player_playerId_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -420,8 +420,8 @@ CREATE SEQUENCE public."tb_player_playerId_seq"
 ALTER TABLE public."tb_player_playerId_seq" OWNER TO postgres;
 
 --
--- TOC entry 3125 (class 0 OID 0)
--- Dependencies: 206
+-- TOC entry 3124 (class 0 OID 0)
+-- Dependencies: 205
 -- Name: tb_player_playerId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -429,7 +429,7 @@ ALTER SEQUENCE public."tb_player_playerId_seq" OWNED BY public.tb_player."player
 
 
 --
--- TOC entry 202 (class 1259 OID 17750)
+-- TOC entry 201 (class 1259 OID 17525)
 -- Name: tb_skill; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -443,7 +443,7 @@ CREATE TABLE public.tb_skill (
 ALTER TABLE public.tb_skill OWNER TO postgres;
 
 --
--- TOC entry 214 (class 1259 OID 17873)
+-- TOC entry 214 (class 1259 OID 17648)
 -- Name: tb_status; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -456,7 +456,7 @@ CREATE TABLE public.tb_status (
 ALTER TABLE public.tb_status OWNER TO postgres;
 
 --
--- TOC entry 2892 (class 2604 OID 17845)
+-- TOC entry 2892 (class 2604 OID 17620)
 -- Name: tb_ass_dinoz_item id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -464,7 +464,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_item ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
--- TOC entry 2891 (class 2604 OID 17794)
+-- TOC entry 2891 (class 2604 OID 17574)
 -- Name: tb_dinoz dinozId; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -472,7 +472,7 @@ ALTER TABLE ONLY public.tb_dinoz ALTER COLUMN "dinozId" SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 2893 (class 2604 OID 17918)
+-- TOC entry 2893 (class 2604 OID 17693)
 -- Name: tb_dinoz_shop id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -480,7 +480,7 @@ ALTER TABLE ONLY public.tb_dinoz_shop ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 2894 (class 2604 OID 17956)
+-- TOC entry 2894 (class 2604 OID 17731)
 -- Name: tb_ingredient_grid gridId; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -488,7 +488,7 @@ ALTER TABLE ONLY public.tb_ingredient_grid ALTER COLUMN "gridId" SET DEFAULT nex
 
 
 --
--- TOC entry 2890 (class 2604 OID 17783)
+-- TOC entry 2890 (class 2604 OID 17558)
 -- Name: tb_player playerId; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -496,7 +496,7 @@ ALTER TABLE ONLY public.tb_player ALTER COLUMN "playerId" SET DEFAULT nextval('p
 
 
 --
--- TOC entry 3103 (class 0 OID 17842)
+-- TOC entry 3102 (class 0 OID 17617)
 -- Dependencies: 212
 -- Data for Name: tb_ass_dinoz_item; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -506,7 +506,7 @@ COPY public.tb_ass_dinoz_item (id, "dinozId", "itemId") FROM stdin;
 
 
 --
--- TOC entry 3104 (class 0 OID 17858)
+-- TOC entry 3103 (class 0 OID 17633)
 -- Dependencies: 213
 -- Data for Name: tb_ass_dinoz_skill; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -516,7 +516,7 @@ COPY public.tb_ass_dinoz_skill ("dinozId", "skillId") FROM stdin;
 
 
 --
--- TOC entry 3106 (class 0 OID 17878)
+-- TOC entry 3105 (class 0 OID 17653)
 -- Dependencies: 215
 -- Data for Name: tb_ass_dinoz_status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -526,7 +526,7 @@ COPY public.tb_ass_dinoz_status ("dinozId", "statusId") FROM stdin;
 
 
 --
--- TOC entry 3091 (class 0 OID 17509)
+-- TOC entry 3090 (class 0 OID 17009)
 -- Dependencies: 200
 -- Data for Name: tb_ass_player_item; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -536,7 +536,7 @@ COPY public.tb_ass_player_item (id, "playerId", "itemId", quantity) FROM stdin;
 
 
 --
--- TOC entry 3108 (class 0 OID 17898)
+-- TOC entry 3107 (class 0 OID 17673)
 -- Dependencies: 217
 -- Data for Name: tb_ass_player_reward; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -546,7 +546,7 @@ COPY public.tb_ass_player_reward ("playerId", "rewardId") FROM stdin;
 
 
 --
--- TOC entry 3100 (class 0 OID 17791)
+-- TOC entry 3099 (class 0 OID 17571)
 -- Dependencies: 209
 -- Data for Name: tb_dinoz; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -556,8 +556,8 @@ COPY public.tb_dinoz ("dinozId", following, name, "isFrozen", "raceId", level, "
 
 
 --
--- TOC entry 3094 (class 0 OID 17758)
--- Dependencies: 203
+-- TOC entry 3092 (class 0 OID 17533)
+-- Dependencies: 202
 -- Data for Name: tb_dinoz_race; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -587,7 +587,7 @@ COPY public.tb_dinoz_race ("raceId", name, "skillId") FROM stdin;
 
 
 --
--- TOC entry 3110 (class 0 OID 17915)
+-- TOC entry 3109 (class 0 OID 17690)
 -- Dependencies: 219
 -- Data for Name: tb_dinoz_shop; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -597,8 +597,8 @@ COPY public.tb_dinoz_shop (id, "playerId", "raceId", display) FROM stdin;
 
 
 --
--- TOC entry 3096 (class 0 OID 17773)
--- Dependencies: 205
+-- TOC entry 3094 (class 0 OID 17548)
+-- Dependencies: 204
 -- Data for Name: tb_element; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -612,7 +612,7 @@ COPY public.tb_element ("elementId", name) FROM stdin;
 
 
 --
--- TOC entry 3107 (class 0 OID 17893)
+-- TOC entry 3106 (class 0 OID 17668)
 -- Dependencies: 216
 -- Data for Name: tb_epic_reward; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -626,7 +626,7 @@ COPY public.tb_epic_reward ("rewardId", name) FROM stdin;
 
 
 --
--- TOC entry 3112 (class 0 OID 17936)
+-- TOC entry 3111 (class 0 OID 17711)
 -- Dependencies: 221
 -- Data for Name: tb_ingredient; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -636,7 +636,7 @@ COPY public.tb_ingredient ("ingredientId", name, "ingredientGridTypeId") FROM st
 
 
 --
--- TOC entry 3114 (class 0 OID 17953)
+-- TOC entry 3113 (class 0 OID 17728)
 -- Dependencies: 223
 -- Data for Name: tb_ingredient_grid; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -646,7 +646,7 @@ COPY public.tb_ingredient_grid ("gridId", "playerId", "ingredientGridTypeId", "p
 
 
 --
--- TOC entry 3111 (class 0 OID 17931)
+-- TOC entry 3110 (class 0 OID 17706)
 -- Dependencies: 220
 -- Data for Name: tb_ingredient_grid_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -656,7 +656,7 @@ COPY public.tb_ingredient_grid_type ("ingredientGridTypeId", length, width) FROM
 
 
 --
--- TOC entry 3115 (class 0 OID 17979)
+-- TOC entry 3114 (class 0 OID 17754)
 -- Dependencies: 224
 -- Data for Name: tb_inventory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -666,18 +666,21 @@ COPY public.tb_inventory (id, "playerId", "itemId", quantity) FROM stdin;
 
 
 --
--- TOC entry 3101 (class 0 OID 17835)
+-- TOC entry 3100 (class 0 OID 17610)
 -- Dependencies: 210
 -- Data for Name: tb_item; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_item ("itemId", name) FROM stdin;
+1	obj_irma
+2	obj_angel
+3	obj_surviv
 \.
 
 
 --
--- TOC entry 3095 (class 0 OID 17768)
--- Dependencies: 204
+-- TOC entry 3093 (class 0 OID 17543)
+-- Dependencies: 203
 -- Data for Name: tb_mission; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -686,18 +689,20 @@ COPY public.tb_mission ("missionId", name) FROM stdin;
 
 
 --
--- TOC entry 3092 (class 0 OID 17745)
--- Dependencies: 201
+-- TOC entry 3097 (class 0 OID 17564)
+-- Dependencies: 207
 -- Data for Name: tb_place; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_place ("placeId", name) FROM stdin;
+1	dinoville
+2	universite
 \.
 
 
 --
--- TOC entry 3098 (class 0 OID 17780)
--- Dependencies: 207
+-- TOC entry 3096 (class 0 OID 17555)
+-- Dependencies: 206
 -- Data for Name: tb_player; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -706,8 +711,8 @@ COPY public.tb_player ("playerId", name, "eternalTwinId", money, "quetzuBought",
 
 
 --
--- TOC entry 3093 (class 0 OID 17750)
--- Dependencies: 202
+-- TOC entry 3091 (class 0 OID 17525)
+-- Dependencies: 201
 -- Data for Name: tb_skill; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -717,7 +722,7 @@ COPY public.tb_skill ("skillId", name, type) FROM stdin;
 
 
 --
--- TOC entry 3105 (class 0 OID 17873)
+-- TOC entry 3104 (class 0 OID 17648)
 -- Dependencies: 214
 -- Data for Name: tb_status; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -777,7 +782,7 @@ COPY public.tb_status ("statusId", name) FROM stdin;
 
 
 --
--- TOC entry 3126 (class 0 OID 0)
+-- TOC entry 3125 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: tb_ass_dinoz_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -786,7 +791,7 @@ SELECT pg_catalog.setval('public.tb_ass_dinoz_item_id_seq', 1, false);
 
 
 --
--- TOC entry 3127 (class 0 OID 0)
+-- TOC entry 3126 (class 0 OID 0)
 -- Dependencies: 208
 -- Name: tb_dinoz_dinozId_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -795,7 +800,7 @@ SELECT pg_catalog.setval('public."tb_dinoz_dinozId_seq"', 1, false);
 
 
 --
--- TOC entry 3128 (class 0 OID 0)
+-- TOC entry 3127 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: tb_dinoz_shop_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -804,7 +809,7 @@ SELECT pg_catalog.setval('public.tb_dinoz_shop_id_seq', 1, false);
 
 
 --
--- TOC entry 3129 (class 0 OID 0)
+-- TOC entry 3128 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: tb_ingredient_grid_gridId_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -813,8 +818,8 @@ SELECT pg_catalog.setval('public."tb_ingredient_grid_gridId_seq"', 1, false);
 
 
 --
--- TOC entry 3130 (class 0 OID 0)
--- Dependencies: 206
+-- TOC entry 3129 (class 0 OID 0)
+-- Dependencies: 205
 -- Name: tb_player_playerId_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -822,7 +827,7 @@ SELECT pg_catalog.setval('public."tb_player_playerId_seq"', 1, false);
 
 
 --
--- TOC entry 2914 (class 2606 OID 17847)
+-- TOC entry 2914 (class 2606 OID 17622)
 -- Name: tb_ass_dinoz_item tb_ass_dinoz_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -831,7 +836,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_item
 
 
 --
--- TOC entry 2916 (class 2606 OID 17862)
+-- TOC entry 2916 (class 2606 OID 17637)
 -- Name: tb_ass_dinoz_skill tb_ass_dinoz_skill_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -840,7 +845,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_skill
 
 
 --
--- TOC entry 2920 (class 2606 OID 17882)
+-- TOC entry 2920 (class 2606 OID 17657)
 -- Name: tb_ass_dinoz_status tb_ass_dinoz_status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -849,7 +854,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_status
 
 
 --
--- TOC entry 2896 (class 2606 OID 17583)
+-- TOC entry 2896 (class 2606 OID 17089)
 -- Name: tb_ass_player_item tb_ass_player_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -858,7 +863,7 @@ ALTER TABLE ONLY public.tb_ass_player_item
 
 
 --
--- TOC entry 2924 (class 2606 OID 17902)
+-- TOC entry 2924 (class 2606 OID 17677)
 -- Name: tb_ass_player_reward tb_ass_player_reward_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -867,7 +872,7 @@ ALTER TABLE ONLY public.tb_ass_player_reward
 
 
 --
--- TOC entry 2910 (class 2606 OID 17799)
+-- TOC entry 2910 (class 2606 OID 17579)
 -- Name: tb_dinoz tb_dinoz_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -876,7 +881,7 @@ ALTER TABLE ONLY public.tb_dinoz
 
 
 --
--- TOC entry 2902 (class 2606 OID 17762)
+-- TOC entry 2900 (class 2606 OID 17537)
 -- Name: tb_dinoz_race tb_dinoz_race_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -885,7 +890,7 @@ ALTER TABLE ONLY public.tb_dinoz_race
 
 
 --
--- TOC entry 2926 (class 2606 OID 17920)
+-- TOC entry 2926 (class 2606 OID 17695)
 -- Name: tb_dinoz_shop tb_dinoz_shop_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -894,7 +899,7 @@ ALTER TABLE ONLY public.tb_dinoz_shop
 
 
 --
--- TOC entry 2906 (class 2606 OID 17777)
+-- TOC entry 2904 (class 2606 OID 17552)
 -- Name: tb_element tb_element_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -903,7 +908,7 @@ ALTER TABLE ONLY public.tb_element
 
 
 --
--- TOC entry 2922 (class 2606 OID 17897)
+-- TOC entry 2922 (class 2606 OID 17672)
 -- Name: tb_epic_reward tb_epic_reward_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -912,7 +917,7 @@ ALTER TABLE ONLY public.tb_epic_reward
 
 
 --
--- TOC entry 2932 (class 2606 OID 17958)
+-- TOC entry 2932 (class 2606 OID 17733)
 -- Name: tb_ingredient_grid tb_ingredient_grid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -921,7 +926,7 @@ ALTER TABLE ONLY public.tb_ingredient_grid
 
 
 --
--- TOC entry 2928 (class 2606 OID 17935)
+-- TOC entry 2928 (class 2606 OID 17710)
 -- Name: tb_ingredient_grid_type tb_ingredient_grid_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -930,7 +935,7 @@ ALTER TABLE ONLY public.tb_ingredient_grid_type
 
 
 --
--- TOC entry 2930 (class 2606 OID 17940)
+-- TOC entry 2930 (class 2606 OID 17715)
 -- Name: tb_ingredient tb_ingredient_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -939,7 +944,7 @@ ALTER TABLE ONLY public.tb_ingredient
 
 
 --
--- TOC entry 2934 (class 2606 OID 17983)
+-- TOC entry 2934 (class 2606 OID 17758)
 -- Name: tb_inventory tb_inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -948,7 +953,7 @@ ALTER TABLE ONLY public.tb_inventory
 
 
 --
--- TOC entry 2912 (class 2606 OID 17839)
+-- TOC entry 2912 (class 2606 OID 17614)
 -- Name: tb_item tb_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -957,7 +962,7 @@ ALTER TABLE ONLY public.tb_item
 
 
 --
--- TOC entry 2904 (class 2606 OID 17772)
+-- TOC entry 2902 (class 2606 OID 17547)
 -- Name: tb_mission tb_mission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -966,7 +971,7 @@ ALTER TABLE ONLY public.tb_mission
 
 
 --
--- TOC entry 2898 (class 2606 OID 17749)
+-- TOC entry 2908 (class 2606 OID 17568)
 -- Name: tb_place tb_place_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -975,7 +980,7 @@ ALTER TABLE ONLY public.tb_place
 
 
 --
--- TOC entry 2908 (class 2606 OID 17788)
+-- TOC entry 2906 (class 2606 OID 17563)
 -- Name: tb_player tb_player_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -984,7 +989,7 @@ ALTER TABLE ONLY public.tb_player
 
 
 --
--- TOC entry 2900 (class 2606 OID 17757)
+-- TOC entry 2898 (class 2606 OID 17532)
 -- Name: tb_skill tb_skill_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -993,7 +998,7 @@ ALTER TABLE ONLY public.tb_skill
 
 
 --
--- TOC entry 2918 (class 2606 OID 17877)
+-- TOC entry 2918 (class 2606 OID 17652)
 -- Name: tb_status tb_status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1002,7 +1007,7 @@ ALTER TABLE ONLY public.tb_status
 
 
 --
--- TOC entry 2943 (class 2606 OID 17848)
+-- TOC entry 2942 (class 2606 OID 17623)
 -- Name: tb_ass_dinoz_item tb_ass_dinoz_item_dinozId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1011,7 +1016,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_item
 
 
 --
--- TOC entry 2944 (class 2606 OID 17853)
+-- TOC entry 2943 (class 2606 OID 17628)
 -- Name: tb_ass_dinoz_item tb_ass_dinoz_item_itemId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1020,7 +1025,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_item
 
 
 --
--- TOC entry 2945 (class 2606 OID 17863)
+-- TOC entry 2944 (class 2606 OID 17638)
 -- Name: tb_ass_dinoz_skill tb_ass_dinoz_skill_dinozId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1029,7 +1034,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_skill
 
 
 --
--- TOC entry 2946 (class 2606 OID 17868)
+-- TOC entry 2945 (class 2606 OID 17643)
 -- Name: tb_ass_dinoz_skill tb_ass_dinoz_skill_skillId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1038,7 +1043,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_skill
 
 
 --
--- TOC entry 2947 (class 2606 OID 17883)
+-- TOC entry 2946 (class 2606 OID 17658)
 -- Name: tb_ass_dinoz_status tb_ass_dinoz_status_dinozId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1047,7 +1052,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_status
 
 
 --
--- TOC entry 2948 (class 2606 OID 17888)
+-- TOC entry 2947 (class 2606 OID 17663)
 -- Name: tb_ass_dinoz_status tb_ass_dinoz_status_statusId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1056,7 +1061,7 @@ ALTER TABLE ONLY public.tb_ass_dinoz_status
 
 
 --
--- TOC entry 2949 (class 2606 OID 17903)
+-- TOC entry 2948 (class 2606 OID 17678)
 -- Name: tb_ass_player_reward tb_ass_player_reward_playerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1065,7 +1070,7 @@ ALTER TABLE ONLY public.tb_ass_player_reward
 
 
 --
--- TOC entry 2950 (class 2606 OID 17908)
+-- TOC entry 2949 (class 2606 OID 17683)
 -- Name: tb_ass_player_reward tb_ass_player_reward_rewardId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1074,16 +1079,7 @@ ALTER TABLE ONLY public.tb_ass_player_reward
 
 
 --
--- TOC entry 2936 (class 2606 OID 17800)
--- Name: tb_dinoz tb_dinoz_dinozId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_dinoz
-    ADD CONSTRAINT "tb_dinoz_dinozId_fkey" FOREIGN KEY ("dinozId") REFERENCES public.tb_place("placeId") ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 2938 (class 2606 OID 17810)
+-- TOC entry 2937 (class 2606 OID 17585)
 -- Name: tb_dinoz tb_dinoz_missionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1092,7 +1088,7 @@ ALTER TABLE ONLY public.tb_dinoz
 
 
 --
--- TOC entry 2940 (class 2606 OID 17820)
+-- TOC entry 2939 (class 2606 OID 17595)
 -- Name: tb_dinoz tb_dinoz_nextUpAltElementId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1101,7 +1097,7 @@ ALTER TABLE ONLY public.tb_dinoz
 
 
 --
--- TOC entry 2939 (class 2606 OID 17815)
+-- TOC entry 2938 (class 2606 OID 17590)
 -- Name: tb_dinoz tb_dinoz_nextUpElementId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1110,7 +1106,7 @@ ALTER TABLE ONLY public.tb_dinoz
 
 
 --
--- TOC entry 2942 (class 2606 OID 17830)
+-- TOC entry 2941 (class 2606 OID 17605)
 -- Name: tb_dinoz tb_dinoz_placeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1119,7 +1115,7 @@ ALTER TABLE ONLY public.tb_dinoz
 
 
 --
--- TOC entry 2941 (class 2606 OID 17825)
+-- TOC entry 2940 (class 2606 OID 17600)
 -- Name: tb_dinoz tb_dinoz_playerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1128,7 +1124,7 @@ ALTER TABLE ONLY public.tb_dinoz
 
 
 --
--- TOC entry 2937 (class 2606 OID 17805)
+-- TOC entry 2936 (class 2606 OID 17580)
 -- Name: tb_dinoz tb_dinoz_raceId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1137,7 +1133,7 @@ ALTER TABLE ONLY public.tb_dinoz
 
 
 --
--- TOC entry 2935 (class 2606 OID 17763)
+-- TOC entry 2935 (class 2606 OID 17538)
 -- Name: tb_dinoz_race tb_dinoz_race_skillId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1146,7 +1142,7 @@ ALTER TABLE ONLY public.tb_dinoz_race
 
 
 --
--- TOC entry 2951 (class 2606 OID 17921)
+-- TOC entry 2950 (class 2606 OID 17696)
 -- Name: tb_dinoz_shop tb_dinoz_shop_playerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1155,7 +1151,7 @@ ALTER TABLE ONLY public.tb_dinoz_shop
 
 
 --
--- TOC entry 2952 (class 2606 OID 17926)
+-- TOC entry 2951 (class 2606 OID 17701)
 -- Name: tb_dinoz_shop tb_dinoz_shop_raceId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1164,7 +1160,7 @@ ALTER TABLE ONLY public.tb_dinoz_shop
 
 
 --
--- TOC entry 2958 (class 2606 OID 17974)
+-- TOC entry 2957 (class 2606 OID 17749)
 -- Name: tb_ingredient_grid tb_ingredient_grid_ingredientGridId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1173,7 +1169,7 @@ ALTER TABLE ONLY public.tb_ingredient_grid
 
 
 --
--- TOC entry 2956 (class 2606 OID 17964)
+-- TOC entry 2955 (class 2606 OID 17739)
 -- Name: tb_ingredient_grid tb_ingredient_grid_ingredientGridTypeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1182,7 +1178,7 @@ ALTER TABLE ONLY public.tb_ingredient_grid
 
 
 --
--- TOC entry 2957 (class 2606 OID 17969)
+-- TOC entry 2956 (class 2606 OID 17744)
 -- Name: tb_ingredient_grid tb_ingredient_grid_placeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1191,7 +1187,7 @@ ALTER TABLE ONLY public.tb_ingredient_grid
 
 
 --
--- TOC entry 2955 (class 2606 OID 17959)
+-- TOC entry 2954 (class 2606 OID 17734)
 -- Name: tb_ingredient_grid tb_ingredient_grid_playerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1200,7 +1196,7 @@ ALTER TABLE ONLY public.tb_ingredient_grid
 
 
 --
--- TOC entry 2954 (class 2606 OID 17946)
+-- TOC entry 2953 (class 2606 OID 17721)
 -- Name: tb_ingredient tb_ingredient_ingredientGridTypeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1209,7 +1205,7 @@ ALTER TABLE ONLY public.tb_ingredient
 
 
 --
--- TOC entry 2953 (class 2606 OID 17941)
+-- TOC entry 2952 (class 2606 OID 17716)
 -- Name: tb_ingredient tb_ingredient_ingredientId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1218,7 +1214,7 @@ ALTER TABLE ONLY public.tb_ingredient
 
 
 --
--- TOC entry 2960 (class 2606 OID 17989)
+-- TOC entry 2959 (class 2606 OID 17764)
 -- Name: tb_inventory tb_inventory_itemId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1227,7 +1223,7 @@ ALTER TABLE ONLY public.tb_inventory
 
 
 --
--- TOC entry 2959 (class 2606 OID 17984)
+-- TOC entry 2958 (class 2606 OID 17759)
 -- Name: tb_inventory tb_inventory_playerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1235,7 +1231,7 @@ ALTER TABLE ONLY public.tb_inventory
     ADD CONSTRAINT "tb_inventory_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES public.tb_player("playerId") ON UPDATE CASCADE;
 
 
--- Completed on 2021-07-11 15:53:19 CEST
+-- Completed on 2021-07-18 10:23:31 CEST
 
 --
 -- PostgreSQL database dump complete

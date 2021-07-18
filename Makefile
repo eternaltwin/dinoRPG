@@ -53,7 +53,7 @@ install-database:
 	sleep 1s
 	cat docker/EternalTwin/dump_12-01-2021_20_33_41.sql | docker exec -i drpg_database psql --username postgres eternal_twin
 	sleep 1s
-	cat docker/Database/20210712.sql | docker exec -i drpg_database psql --username postgres eternaldinodb
+	cat docker/Database/20210718.sql | docker exec -i drpg_database psql --username postgres eternaldinodb
 
 remove-drpg: docker-stop
 	docker rm drpg_back

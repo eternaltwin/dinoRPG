@@ -36,16 +36,16 @@ const getDinozFromDinozShop = async (
 		let dinozArray: Array<DinozShop> = [];
 		let randomRace: number;
 		let randomDisplay: string;
-		const raceArray: Array<string> = [
-			race.WINKS.name,
-			race.SIRAIN.name,
-			race.CASTIVORE.name,
-			race.NUAGOZ.name,
-			race.GORILLOZ.name,
-			race.WANWAN.name,
-			race.PIGMOU.name,
-			race.PLANAILLE.name,
-			race.MOUEFFE.name,
+		const availableRaces: Array<DinozRace> = [
+			race.WINKS,
+			race.SIRAIN,
+			race.CASTIVORE,
+			race.NUAGOZ,
+			race.GORILLOZ,
+			race.WANWAN,
+			race.PIGMOU,
+			race.PLANAILLE,
+			race.MOUEFFE,
 		];
 		const rewardArray: Array<string> = [
 			reward.tropheeHippoclamp,
@@ -67,37 +67,34 @@ const getDinozFromDinozShop = async (
 
 		player.reward.forEach((playerReward) => {
 			if (playerReward.name === reward.tropheeRocky) {
-				raceArray.push(race.ROCKY.name);
+				availableRaces.push(race.ROCKY);
 			}
 			if (playerReward.name === reward.tropheeHippoclamp) {
-				raceArray.push(race.HIPPOCLAMP.name);
+				availableRaces.push(race.HIPPOCLAMP);
 			}
 			if (playerReward.name === reward.tropheePteroz) {
-				raceArray.push(race.PTEROZ.name);
+				availableRaces.push(race.PTEROZ);
 			}
 			if (
 				playerReward.name === reward.tropheeQuetzu &&
 				player.quetzuBought < config.shop.buyableQuetzu
 			) {
-				raceArray.push(race.QUETZU.name);
+				availableRaces.push(race.QUETZU);
 			}
 		});
-
-		// Get all buyable races details
-		let races: Array<DinozRace> = Object.values(race)
-			.filter((race) => raceArray.includes(race.name))
-			.reduce((acc, current) => [...acc, current], [] as Array<DinozRace>);
 
 		// Make 15 Dinoz object
 		for (let i = 0; i < config.shop.dinozInShop; i++) {
 			// Set a random race to the dinoz
-			randomRace = getRandomNumber(1, races.length);
+			randomRace = getRandomNumber(1, availableRaces.length);
 			// Set a random display to the dinoz
-			randomDisplay = `${races[randomRace].swfLetter}0${getCosmetique()}000`;
+			randomDisplay = `${
+				availableRaces[randomRace].swfLetter
+			}0${getCosmetique()}000`;
 
 			dinoz = Dinoz.build({
 				playerId: req.user!.playerId,
-				raceId: races[randomRace].raceId,
+				raceId: availableRaces[randomRace].raceId,
 				display: randomDisplay,
 			});
 
