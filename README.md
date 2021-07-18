@@ -91,6 +91,11 @@ drpg_back:
 Relancez une installation à zero.
 
 # Tips
+
+## Changement de branche
+Si vous switchez d'une branche à une autre, pensez à faire un `make bash-front`
+puis `./reset.sh` afin de mettre à jour les dépendances yarn
+
 ## Clean-up
 Il est possible de supprimer tout les container liés à dinorpg avec les commandes :
 ```bash
