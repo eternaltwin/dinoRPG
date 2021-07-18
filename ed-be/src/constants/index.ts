@@ -1,6 +1,7 @@
 export * from './level.js';
 export * from './race.js';
 export * from './skill.js';
+export * from './item.js';
 
 export const apiRoutes = {
 	dinozRoute: '/api/dinoz',
