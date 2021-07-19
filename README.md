@@ -1,32 +1,8 @@
-﻿# DinoRPG
+# DinoRPG
 
 # Avancement
 
-| Titre                 | Logique Front | Back      | DB     | CSS      | Issue     | Commentaire                 |
-|-----------------------|---------------|-----------|--------|----------|-----------|:----------------------------|
-| BDD                   | -             | -         | 75%    | -        | TBD       | Évolutions probables        |
-| CSS                   | -             | -         | -      | -        | -         | Help                        |
-| Sécurisation de l'API | -             | 100%      | -      | -        | -         | Fonctionnel                 |
-| Aide                  | TODO          | TODO      | TODO   | TODO     | TBD       | Rediriger vers le wiki ?    |
-| Boutique d'objets     | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Boutique dinoz        | 100%          | 100%      | 100%   | 0%       | TBD       | Fonctionnel                 |
-| Boutique démoniaque   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Clan                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Classement            | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Combat                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Compte                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Dojo                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Fiche Dinoz           | 25%           | 25%       | 20%    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
-| │- Dinoz              | TBD           | TBD       | TBD    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
-| │- Carte              | TODO          | TODO      | TODO   | TODO     | [Issue 3] |                             |
-| │ │- Dinoland, etc.   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- PNJs               | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- Quêtes             | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Ingrédients           | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- Récolte            | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- Page Ingrédients   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-
-[Issue 3]: https://gitlab.com/eternal-twin/dinorpg/-/issues/3
+Un [board](https://gitlab.com/eternal-twin/dinorpg/dinorpg/-/boards/2968003?label_name[]=not_implemented) reprenant les objectifs des milestones est disponible.
 
 # Prérequis
 
