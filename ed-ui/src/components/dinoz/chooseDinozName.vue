@@ -9,7 +9,7 @@
 		></dinozSWF>
 		<p>{{ $t('chooseDinoz.nomDuDinoz') }}</p>
 		<input type="text" v-model="name" />
-		<button @click="nameDinoz()">{{ $t('bouton.nommer') }}</button>
+		<button @click="nameDinoz()">{{ $t('button.name') }}</button>
 	</div>
 </template>
 
