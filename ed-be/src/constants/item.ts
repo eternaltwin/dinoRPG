@@ -3,98 +3,98 @@ export const item = [
 		itemId: 1,
 		name: 'irma',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 450,
+		canBeUsed: true,
+		price: 450,
 	},
-    {
+	{
 		itemId: 2,
 		name: 'angel',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 1000,
-    },
-    {
+		canBeUsed: true,
+		price: 1000,
+	},
+	{
 		itemId: 3,
 		name: 'burger',
 		canBeEquipped: true,
-        canBeUsed: true,
-        price: 350,
-    },
-    {
+		canBeUsed: true,
+		price: 350,
+	},
+	{
 		itemId: 4,
 		name: 'hotpan',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 3000,
-    },
-    {
+		canBeUsed: true,
+		price: 3000,
+	},
+	{
 		itemId: 5,
 		name: 'tartev',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 1000,
-    },
-    {
+		canBeUsed: true,
+		price: 1000,
+	},
+	{
 		itemId: 6,
 		name: 'ration',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 500,
-    },
-    {
+		canBeUsed: false,
+		price: 500,
+	},
+	{
 		itemId: 7,
 		name: 'surviv',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 500, // To double check
-    },
-    {
+		canBeUsed: false,
+		price: 500, // To double check
+	},
+	{
 		itemId: 7,
 		name: 'mergz',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 500, // To double check
-    },
-    {
+		canBeUsed: false,
+		price: 500, // To double check
+	},
+	{
 		itemId: 8,
 		name: 'fruit',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 500, // To double check
-    },
-    {
+		canBeUsed: true,
+		price: 500, // To double check
+	},
+	{
 		itemId: 10,
 		name: 'hlmsos',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsed: false,
+		price: 150,
+	},
+	{
 		itemId: 11,
 		name: 'hlmsos',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsed: false,
+		price: 150,
+	},
+	{
 		itemId: 12,
 		name: 'zippo',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsed: false,
+		price: 150,
+	},
+	{
 		itemId: 12,
 		name: 'flamch',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsed: false,
+		price: 150,
+	},
+	{
 		itemId: 13,
 		name: 'combi',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-]
+		canBeUsed: false,
+		price: 150,
+	},
+];

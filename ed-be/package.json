@@ -7,7 +7,7 @@
   "scripts": {
     "serve": "yarn run prettier && concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/server.js\"",
     "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
-    "test": "tsc && jest --verbose --config ./jest.config.json",
+    "test": "jest --verbose --config ./jest.config.json",
     "coverage": "jest --coverage --config ./jest.config.json",
     "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
@@ -40,6 +40,8 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
     "@eternal-twin/etwin-client-http": "^0.5.1",
     "@eternal-twin/oauth-client-http": "^0.5.1",
     "@types/cheerio": "^0.22.29",

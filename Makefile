@@ -60,3 +60,6 @@ remove-drpg: docker-stop
 	docker rm drpg_database
 	docker rm drpg_eternal_twin
 	docker rm drpg_front
+
+run-test: 
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn run test

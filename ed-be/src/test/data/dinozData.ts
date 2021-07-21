@@ -9,4 +9,5 @@ export const BasicDinoz = {
 	race: {
 		price: 20000,
 	},
+	assDinozItem: [{}]
 } as Dinoz;

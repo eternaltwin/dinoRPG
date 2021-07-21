@@ -68,6 +68,9 @@ Relancez une installation à zero.
 
 # Tips
 
+## Faire tourner les tests unitaires
+Pour faire tourner les tests unitaires, exécutez juste la commande : `make run-test`
+
 ## Changement de branche
 Si vous switchez d'une branche à une autre, pensez à faire un `make bash-front`
 puis `./reset.sh` afin de mettre à jour les dépendances yarn
