@@ -34,7 +34,7 @@ ul {
 		    color: white;
 		    text-align: left;
 		    letter-spacing: -0.2pt;
-		    background-image: url("assets/icons/element_bg.png");
+		    background-image: url("../assets/icons/element_bg.png");
 		    background-position: 7px 5px;
 		    background-repeat: no-repeat;
 		    cursor: help;
@@ -59,7 +59,7 @@ ul {
 	    margin-left: -5px;
 	    margin-right: -5px;
 	    background-color: #9a4029;
-	    background-image: url("assets/design/tabsBg.png");
+	    background-image: url("../assets/design/tabsBg.png");
 	    background-repeat: no-repeat;
 	    border-bottom: 1px solid #ffe7aa;
 
@@ -102,7 +102,7 @@ input, a {
 	    text-decoration: none;
 	    text-align: left;
 	    cursor: pointer;
-	    background-image: url("assets/button/button.png");
+	    background-image: url("../assets/button/button.png");
 	    background-repeat: no-repeat;
 	    border-radius: 0px;
 	    -moz-border-radius: 0px;
@@ -113,7 +113,7 @@ input, a {
 		width: 80px;
 	    padding-top: 5px;
 	    padding-right: 5px;
-	    background-image: url("assets/design/button_small.png");
+	    background-image: url("../assets/design/button_small.png");
 	}
 }
 
@@ -150,19 +150,19 @@ a.linkHome {
 
 body {
 	table#layout {
-		background-image: url("assets/background/bg_ciel3.png");
+		background-image: url("../assets/background/bg_ciel3.png");
 	    background-color: white;
 	    background-repeat: no-repeat;
 
 	    td#center {
 	    	width: 900px;
-		    background-image: url("assets/background/sky_core_bg.png");
+		    background-image: url("../assets/background/sky_core_bg.png");
 		    background-repeat: repeat-y;
 		    margin-top: 88px;
 
 		    #centerHeader {
 		    	padding: 1px;
-			    background-image: url("assets/background/core_center_header3.png");
+			    background-image: url("../assets/background/core_center_header3.png");
 			    background-repeat: no-repeat;
 			    min-height: 100vh;
 		    }
@@ -171,7 +171,7 @@ body {
 	    td#right {
 	    	div {
 	    		height: 88px;
-			    background-image: url("assets/background/core_right_header3.png");
+			    background-image: url("../assets/background/core_right_header3.png");
 			    background-repeat: no-repeat;
 			    background-position: left top;
 	    	}
@@ -179,14 +179,14 @@ body {
 	}
 
 	.skyfootercore {
-		background-image: url("assets/background/core_center_footer.png");
+		background-image: url("../assets/background/core_center_footer.png");
 	    background-repeat: no-repeat;
 	    height: 151px;
 	}
 
 	.skyfooterright {
 		height: 151px;
-	    background-image: url("assets/background/core_right_footer.png");
+	    background-image: url("../assets/background/core_right_footer.png");
 	    background-repeat: no-repeat;
 	    background-position: left top;
 	}
@@ -240,7 +240,7 @@ table {
 	    }
 
 	    td#right {
-	    	background-image: url("assets/background/core_right_bg.png");
+	    	background-image: url("../assets/background/core_right_bg.png");
 		    background-position: left 77px;
 		    background-repeat: repeat-y;
 		    vertical-align: top;
@@ -316,7 +316,7 @@ div {
 	    color: #fce3bc;
 	    font-size: 10pt;
 	    background-color: #bc683c;
-	    background-image: url("assets/icons/small_missAct.png");
+	    background-image: url("../assets/icons/small_missAct.png");
 	    background-position: 5px 8px;
 	    background-repeat: no-repeat;
 	}

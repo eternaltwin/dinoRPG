@@ -62,7 +62,7 @@
 	height : 45px;
 	margin-left : -15px;
 	margin-bottom : 20px;
-	background-image : url("assets/design/title_h1.png");
+	background-image : url("../assets/design/title_h1.png");
 	background-position : left bottom;
 	background-repeat : no-repeat;
 }
@@ -78,7 +78,7 @@
 }
 
 .dinoz {
-	background-image: url("assets/dinoz/dinoz_bg.jpg");
+	background-image: url("../assets/dinoz/dinoz_bg.jpg");
     background-repeat: no-repeat;
     min-height: 265px;
     margin-top: 5px;
@@ -87,7 +87,7 @@
     	position: absolute;
 	    margin-left: 205px;
 	    margin-top: 69px;
-	    background-image: url("assets/icons/left.png");
+	    background-image: url("../assets/icons/left.png");
 	    width: 15px;
 	    height: 21px;
 	    border-radius: 0px;
@@ -113,7 +113,7 @@
     	position: absolute;
 	    margin-left: 490px;
 	    margin-top: 69px;
-	    background-image: url("assets/icons/right.png");
+	    background-image: url("../assets/icons/right.png");
 	    width: 15px;
 	    height: 21px;
 	    border-radius: 0px;
@@ -247,7 +247,7 @@
 }
 
 .dinozPanels {
-	background-image: url("assets/design/dinoz_panels_bg.png");
+	background-image: url("../assets/design/dinoz_panels_bg.png");
     background-repeat: repeat-y;
 
     .actions {
@@ -288,7 +288,7 @@
 
     .footer {
     	height: 24px;
-    	background-image: url("assets/design/dinoz_footer.png");
+    	background-image: url("../assets/design/dinoz_footer.png");
     }
 }
 
@@ -299,7 +299,7 @@
 
 	&:hover {
 		color: white;
-		background-image: url("assets/button/button_hover.png");
+		background-image: url("../assets/button/button_hover.png");
 		background-color: transparent;
 	}
 }

@@ -1,9 +1,7 @@
 <template>
-	<div id="auth">
-		<div v-if="!isCodePresent">
-			<button @click="getRedirectUri()">Sign-in to Eternal-Twin</button>
-		</div>
-	</div>
+	<p v-if="!isCodePresent" class="sign" @click="getRedirectUri()">
+		{{ $t('alpha.login') }}
+	</p>
 </template>
 
 <script lang="ts">

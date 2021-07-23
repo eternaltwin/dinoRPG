@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import { createI18n } from 'vue-i18n';
 import { messages, defaultLocale } from '@/i18n';
+import './css/main.scss';
 
 const i18n = createI18n({
 	messages,

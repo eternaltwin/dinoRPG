@@ -93,7 +93,7 @@
 	    color: #ffee92;
 	    border: 0px;
 	    background-color: transparent;
-	    background-image: url("assets/background/goldbox2.png");
+	    background-image: url("../assets/background/goldbox2.png");
 	    background-repeat: no-repeat;
 	    cursor: help;
 
@@ -115,48 +115,48 @@
 
 		    &.iconor {
 		    	margin-right: 5px;
-			    background-image: url("assets/icons/act_shop.png");
+			    background-image: url("../assets/icons/act_shop.png");
 			    width: 32px;
 			    height: 32px;
 			    float: left;
 
 			    &:hover {
-					background-image : url("assets/icons/act_shop2.png");
+					background-image : url("../assets/icons/act_shop2.png");
 			    }
 		    }
 
 		    &.iconboutik {
 		    	margin-right : 5px;
-				background-image : url("assets/icons/act_boutique.png");
+				background-image : url("../assets/icons/act_boutique.png");
 				width : 32px;
 				height : 32px;
 				float : left;
 
 				&:hover {
-					background-image : url("assets/icons/act_boutique2.png");
+					background-image : url("../assets/icons/act_boutique2.png");
 			    }
 		    }
 
 		    &.iconclan {
 		    	margin-right : 5px;
-				background-image : url("assets/icons/act_castle.png");
+				background-image : url("../assets/icons/act_castle.png");
 				width : 32px;
 				height : 32px;
 				float : left;
 
 				&:hover {
-					background-image : url("assets/icons/act_castle2.png");
+					background-image : url("../assets/icons/act_castle2.png");
 			    }
 		    }
 
 		    &.icondojo {
-		    	background-image : url("assets/icons/act_dojo.png");
+		    	background-image : url("../assets/icons/act_dojo.png");
 				width : 32px;
 				height : 32px;
 				float : left;
 
 				&:hover {
-					background-image : url("assets/icons/act_dojo2.png");
+					background-image : url("../assets/icons/act_dojo2.png");
 				}
 		    }
     	}
