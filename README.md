@@ -50,6 +50,18 @@ Une fois le lancement terminé vous devriez pouvoir accéder à :
 
 # Erreurs possible
 
+## Base de données
+
+Si vous avez l'erreur suivante concernant `drpg_database`:
+```bash
+Error response from daemon: driver failed programming external connectivity on
+endpoint drpg_database [...] bind: address already in use
+```
+Alors arrêter le service postgresql avec la commande suivante:
+```bash
+service postgresql stop
+```
+
 ## Droits
 Si jamais des problèmes de droits apparaissent, vérifiez votre uid et gid :
 ```bash
@@ -65,6 +77,23 @@ drpg_back:
   - GID=xxxx
 ```
 Relancez une installation à zero.
+
+## Front
+
+Il se peut que le front ne soit pas à jour suite à l'ajout d'une dépendance par
+un commit. Dans ce cas, utilisez les commands suivantes:
+```bash
+make docker-start
+make update-front
+```
+
+Si la commande `make update-front` échoue ou donne une erreur, alors utilisez
+les commands suivantes:
+```bash
+make docker-start
+docker exec -it drpg_front bash
+#yarn install
+```
 
 # Tips
 
