@@ -63,7 +63,6 @@ describe('Test de la fonction buyDinoz()', function () {
 			dinozId: 100,
 			display: DinozFromShop.display,
 			experience: 0,
-			following: NaN,
 			life: 100,
 			name: '?',
 			place: { name: 'dinoville' },

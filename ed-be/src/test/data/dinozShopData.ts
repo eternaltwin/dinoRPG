@@ -8,18 +8,11 @@ export const DinozFromShop = {
 		playerId: player.id_1,
 		money: 200000,
 	},
-	race: {
-		raceId: 1,
-		nbrFireCase: 0,
-		nbrWoodCase: 2,
-		nbrWaterCase: 5,
-		nbrLightCase: 3,
-		nbrAirCase: 4,
-		price: 200,
-	},
+	raceId: 1,
 } as DinozShop;
 
 export const DinozShopArray = [
 	DinozFromShop,
-	DinozFromShop,
+	DinozFromShop
+
 ] as Array<DinozShop>;

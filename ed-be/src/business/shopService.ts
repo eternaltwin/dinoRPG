@@ -104,9 +104,7 @@ const getDinozFromDinozShop = async (
 		// Save created dinoz in database
 		let dinozCreatedInShop = await createMultipleDinoz(dinozArray!);
 
-		dinozCreatedInShop.forEach((dinoz) => {
-			setDinozRaceAndSkill(dinoz);
-		});
+		dinozCreatedInShop.forEach((dinoz) => setDinozRaceAndSkill(dinoz));
 
 		dinozCreatedInShop = _.orderBy(dinozCreatedInShop, ['id', 'desc']);
 

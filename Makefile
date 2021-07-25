@@ -49,5 +49,8 @@ remove-drpg: docker-stop
 run-test: 
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn run test
 
+run-coverage:
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn run coverage
+
 update-front:
 	docker exec -i -unode drpg_front yarn install
