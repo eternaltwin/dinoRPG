@@ -279,4 +279,45 @@ export const level = [
 		id: 70,
 		experience: 13670,
 	},
+	{
+		id: 71,
+		experience: 14695,
+	},
+	{
+		id: 72,
+		experience: 15797,
+	},
+	{
+		id: 73,
+		experience: 16982,
+	},
+	{
+		id: 74,
+		experience: 18256,
+	},
+	{
+		id: 75,
+		experience: 19625,
+	},
+	{
+		id: 76,
+		experience: 21097,
+	},
+	{
+		id: 77,
+		experience: 22679,
+	},
+	{
+		id: 78,
+		experience: 24380,
+	},
+	{
+		id: 79,
+		experience: 26209,
+	},
+	// ???
+	{
+		id: 80,
+		experience: 28174,
+	},
 ];
