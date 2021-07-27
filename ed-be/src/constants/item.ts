@@ -210,8 +210,7 @@ export const listOfAllItems: Array<ItemFiche> = [
 		quantity: 0,
 		maxQuantity: 12,
 		price: 1234, // TODO double check
-	}
-
+	},
 	// 
 	{
 		itemId: 999,
