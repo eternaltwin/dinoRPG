@@ -15,7 +15,7 @@
 		</div>
 		<div class="iconMenu">
 			<a id="menu_blank" class="iconor"></a>
-			<a id="menu_shop" class="iconboutik"></a>
+			<a id="menu_shop" @click="goToItemShop()" class="iconboutik"></a>
 			<a id="menu_clan" class="iconclan"></a>
 			<a id="menu_dojo" class="icondojo"></a>
 		</div>
