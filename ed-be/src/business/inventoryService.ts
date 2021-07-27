@@ -21,6 +21,7 @@ const getAllItemsData = async (
 		// Change the quantity by the value from the database.
 		tempItem.quantity = i.quantity;
 		// TODO maxQuantity = tempItem?.maxQuantity as number;
+		// TODO multiply maxQuantity by 1.5 if the player has a dino with shop keeper
 		allItemsDataReply.push(tempItem);
 	});
 
