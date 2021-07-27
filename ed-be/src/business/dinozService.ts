@@ -20,6 +20,7 @@ import {
 } from '../models/index.js';
 import _ from 'lodash';
 import { actions, level, race } from '../constants/index.js';
+import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 
 const getDinozFiche = async (
 	req: Request,
@@ -28,17 +29,23 @@ const getDinozFiche = async (
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
-	const dinozDetails = (await getDinozFicheRequest(dinozId)) as DinozFiche;
+	const dinozDetails = (await getDinozFicheRequest(
+		dinozId
+	)) as DinozFiche | null;
+
+	if (_.isNull(dinozDetails)) {
+		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
+	}
 
 	// If player found is different from player who do the request, throw exception
 	if (dinozDetails!.player.playerId !== req.user!.playerId) {
-		return res.status(500).send({
-			message:
-				'Cannot get dinoz details, dinozId : ' +
-				dinozId +
-				', playerId : ' +
-				req.user!.playerId,
-		});
+		return res
+			.status(500)
+			.send(
+				`Cannot get dinoz details, dinozId : ${dinozId} for player ${
+					req.user!.playerId
+				}`
+			);
 	}
 
 	// Set item list
@@ -128,8 +135,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	});
 
 	// Set player money
-	const newMoney: number =
-		Number(dinozData.player.money) - dinozData.race.price;
+	const newMoney: number = dinozData.player.money - dinozData.race.price;
 	await setPlayerMoneyRequest(req.user!.playerId!, newMoney);
 
 	// Delete all dinoz from dinoz shop
@@ -137,6 +143,11 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated: Dinoz = await createDinozRequest(newDinoz.get());
+
+	// Add skill to created dinoz
+	if (dinozData.race.skillId) {
+		addSkillToDinoz(dinozCreated.dinozId, dinozData.race.skillId);
+	}
 
 	const dinozToSend: BasicDinoz = {
 		dinozId: dinozCreated.dinozId,
