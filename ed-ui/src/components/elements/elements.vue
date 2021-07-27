@@ -1,18 +1,65 @@
 <template>
 	<ul class="elements">
-		<li><img :src="getImg(0)" alt="fire" /> {{ fire }}</li>
-		<li><img :src="getImg(1)" alt="wood" /> {{ wood }}</li>
-		<li><img :src="getImg(2)" alt="water" /> {{ water }}</li>
-		<li><img :src="getImg(3)" alt="light" /> {{ light }}</li>
-		<li><img :src="getImg(4)" alt="air" /> {{ air }}</li>
+		<li>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<img :src="getImg(0)" alt="fire" /> {{ fire }}
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('element.fire'))" />
+				</template>
+			</Tooltip>
+		</li>
+		<li>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<img :src="getImg(1)" alt="wood" /> {{ wood }}
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('element.wood'))" />
+				</template>
+			</Tooltip>
+		</li>
+		<li>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<img :src="getImg(2)" alt="water" /> {{ water }}
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('element.water'))" />
+				</template>
+			</Tooltip>
+		</li>
+		<li>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<img :src="getImg(3)" alt="light" /> {{ light }}
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('element.light'))" />
+				</template>
+			</Tooltip>
+		</li>
+		<li>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<img :src="getImg(4)" alt="air" /> {{ air }}
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('element.air'))" />
+				</template>
+			</Tooltip>
+		</li>
 	</ul>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'Elements',
+	components: { Tooltip },
 	props: {
 		fire: Number,
 		wood: Number,
@@ -27,3 +74,9 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+span {
+	font-size: 10pt !important;
+}
+</style>

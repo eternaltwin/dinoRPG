@@ -13,6 +13,5 @@ export const DinozFromShop = {
 
 export const DinozShopArray = [
 	DinozFromShop,
-	DinozFromShop
-
+	DinozFromShop,
 ] as Array<DinozShop>;

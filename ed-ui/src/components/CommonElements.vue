@@ -1,20 +1,29 @@
 <template>
-	<div>
-		<span class="money"
-			>{{ beautifulMoney }}
-			<img src="@/assets/icons/small_gold.png" alt="or" />
-		</span>
+	<div id="dinozList">
+		<div>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<span class="money"
+						>{{ beautifulMoney }}
+						<img src="@/assets/icons/small_gold.png" alt="or" />
+					</span>
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('tooltip.gold'))" />
+				</template>
+			</Tooltip>
+		</div>
+		<div class="iconMenu">
+			<a id="menu_blank" class="iconor"></a>
+			<a id="menu_shop" class="iconboutik"></a>
+			<a id="menu_clan" class="iconclan"></a>
+			<a id="menu_dojo" class="icondojo"></a>
+		</div>
+		<dinoz-list></dinoz-list>
+		<a class="button" @click="goToDinozShop()">
+			{{ $t('button.buyDinoz') }}
+		</a>
 	</div>
-	<div class="iconMenu">
-		<a id="menu_blank" class="iconor"></a>
-		<a id="menu_shop" @click="goToItemShop()" class="iconboutik"></a>
-		<a id="menu_clan" class="iconclan"></a>
-		<a id="menu_dojo" class="icondojo"></a>
-	</div>
-	<dinoz-list></dinoz-list>
-	<a class="button" @click="goToDinozShop()">
-		{{ $t('button.buyDinoz') }}
-	</a>
 </template>
 
 <script lang="ts">
@@ -25,6 +34,7 @@ import { utils, errorHandler } from '@/utils';
 import { PlayerService } from '@/services';
 import { Dinoz } from '@/models';
 import DinozList from '@/components/dinoz/dinozList.vue';
+import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'CommonElements',
@@ -34,7 +44,8 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DinozList
+		DinozList,
+		Tooltip
 	},
 	methods: {
 		// Get all data displayed on every page (money, dinozList)

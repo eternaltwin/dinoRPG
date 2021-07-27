@@ -1,0 +1,119 @@
+<template>
+	<Tippy
+		:hide-on-click="false"
+		:allow-h-t-m-l="true"
+		:max-width="280"
+		:follow-cursor="true"
+		:inline-positioning="true"
+		placement="bottom-start"
+		:duration="[null, 50]"
+		class="tippy-tooltip"
+	>
+		<slot name="tooltip-trigger" />
+		<template #content>
+			<slot name="tooltip-content" :formatContent="formatContent" />
+		</template>
+	</Tippy>
+</template>
+
+<script lang="ts">
+import { formatText } from '@/utils/formatText';
+import { Tippy } from 'vue-tippy';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+	name: 'Tooltip',
+	components: { Tippy },
+	methods: {
+		formatContent(value: string): string {
+			return !value ? '' : formatText(value.toString());
+		}
+	}
+});
+</script>
+
+<style lang="scss">
+.tippy-box[data-theme~='normal'] {
+	width: 250px;
+	min-height: 56px;
+	background-color: #bc683c;
+	background: url(../../assets/background/tip_header.gif) no-repeat,
+		url(../../assets/background/tip_footer.gif) no-repeat,
+		url(../../assets/background/tip_bg.gif) repeat-y;
+	background-position: top, bottom, center;
+	box-sizing: content-box;
+	box-shadow: 4px 4px 12px var(--clr-shadow);
+	position: sticky;
+	pointer-events: none;
+	z-index: 10;
+	max-width: 250px !important;
+	padding-bottom: 1em;
+	h1 {
+		margin: 0;
+		padding-bottom: 4px;
+		font-size: 10pt !important;
+		font-weight: bold;
+		font-variant: small-caps;
+		text-align: right;
+		padding-right: 0.8em;
+		color: #fbf261;
+	}
+	p {
+		margin: 0;
+		font-size: 10pt !important;
+		line-height: 10.5pt;
+		padding-right: 1em;
+		padding-left: 1em;
+		padding-bottom: 2px;
+		font-weight: normal;
+		color: white;
+		font-size: 10pt;
+		text-align: justify;
+	}
+	strong {
+		color: #fbf261 !important;
+	}
+	img {
+		vertical-align: top;
+		width: 14px;
+	}
+	em {
+		color: #f9f1a6;
+	}
+}
+
+.tippy-box[data-theme~='small'] {
+	background-color: #bc683c;
+	border: 2px solid #86401e;
+	background-position: top, bottom, center;
+	box-sizing: content-box;
+	box-shadow: 4px 4px 12px var(--clr-shadow);
+	position: sticky;
+	pointer-events: none;
+	z-index: 10;
+	max-width: 250px !important;
+	p {
+		margin: 0;
+		padding: 0.5em;
+		padding-left: 0.5em;
+		padding-right: 0.5em;
+		color: white;
+		font-size: 10pt;
+		text-align: justify;
+		line-height: 10.5pt;
+		border: 1px solid #ffcb3d;
+	}
+	strong {
+		color: #fbf261;
+	}
+	em {
+		color: #f9f1a6;
+		font-size: 9pt;
+		font-style: italic;
+	}
+}
+
+span.tippy-tooltip {
+	font-size: initial !important;
+}
+</style>

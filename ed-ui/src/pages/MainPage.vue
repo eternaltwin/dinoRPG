@@ -8,9 +8,7 @@
 						<a href="/" class="linkHome"></a>
 						<div id="centerHeader">
 							<div id="menu"></div>
-							<div id="dinozList">
-								<common-elements></common-elements>
-							</div>
+							<common-elements></common-elements>
 							<router-view />
 						</div>
 					</td>

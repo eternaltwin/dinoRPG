@@ -211,7 +211,7 @@ export const listOfAllItems: Array<ItemFiche> = [
 		maxQuantity: 12,
 		price: 1234, // TODO double check
 	},
-	// 
+	//
 	{
 		itemId: 999,
 		name: 'example',
@@ -221,7 +221,4 @@ export const listOfAllItems: Array<ItemFiche> = [
 		maxQuantity: 123,
 		price: 1234, // TODO double check
 	},
-
-
-
 ];

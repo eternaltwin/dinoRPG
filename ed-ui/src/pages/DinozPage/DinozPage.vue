@@ -52,7 +52,6 @@ export default defineComponent({
 					errorHandler.handle(err);
 					return Promise.reject(err);
 				}
-
 			}
 		}
 	},
@@ -77,5 +76,4 @@ export default defineComponent({
 		}
 	}
 });
-
 </script>

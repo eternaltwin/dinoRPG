@@ -11,6 +11,26 @@
 			"part7": "et de rejoindre la liste de volontaires sur"
 		}
 	},
+	"object": {
+		"name": {
+			"obj_irma": "Potion de Madame Irma",
+			"obj_angel": "Potion d'Ange",
+			"obj_surviv": "Ration de Survie"
+		},
+		"description": {
+			"obj_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de **jouer une nouvelle action immédiatemment** sans devoir attendre le lendemain.",
+			"obj_angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le **ressusciter sans pénalité d'expérience**.",
+			"obj_surviv": "En cas de blessures graves, la ration de combat peut vous rentre entre 10 et jusqu'à 40 points de vie lors d'un combat."
+		}
+	},
+	"element": {
+		"fire":"Element **Feu**",
+		"wood":"Element **Bois**",
+		"water":"Element **Eau**",
+		"light":"Element **Foudre**",
+		"air":"Element **Air**",
+		"neutral":"Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
+	},
 	"action": {
 		"fight": "Combattre",
 		"follow": "Suivre"
@@ -150,5 +170,8 @@
 		"map": "Carte",
 		"inventory": "Inventaire",
 		"details": "Détails"
+	},
+	"tooltip": {
+		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique"
 	}
 }

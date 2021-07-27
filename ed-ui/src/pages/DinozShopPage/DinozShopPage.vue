@@ -30,7 +30,15 @@
 						$t('button.chose')
 					}}</a>
 					<div class="race">
-						<strong>Race :</strong> {{ $t(`race.name.${dinoz.race.name}`) }}
+						<Tooltip theme="normal">
+							<template #tooltip-trigger>
+								<strong>Race :</strong> {{ $t(`race.name.${dinoz.race.name}`) }}
+							</template>
+							<template #tooltip-content>
+								<h1>{{ $t(`race.name.${dinoz.race.name}`) }}</h1>
+								<p>{{ $t(`race.description.${dinoz.race.name}`) }}</p>
+							</template>
+						</Tooltip>
 					</div>
 					<elements
 						:fire="dinoz.race.nbrFireCase"
@@ -57,6 +65,7 @@ import { errorHandler, utils } from '@/utils';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import Elements from '@/components/elements/elements.vue';
 import store from '@/store';
+import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -68,7 +77,8 @@ export default defineComponent({
 	},
 	components: {
 		DinozSWF,
-		Elements
+		Elements,
+		Tooltip
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
