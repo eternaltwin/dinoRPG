@@ -47,10 +47,16 @@ remove-drpg: docker-stop
 	docker rm drpg_front
 
 run-test: 
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn run test
+	docker exec -i -unode drpg_back yarn run test:ci
 
 run-coverage:
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn run coverage
+	docker exec -i -unode drpg_back yarn run coverage
 
 update-front:
 	docker exec -i -unode drpg_front yarn install
+
+test-lint-front
+	docker exec -i -unode drpg_front yarn lint --no-fix
+
+fix-lint-front
+	docker exec -it drpg_front yarn lint
