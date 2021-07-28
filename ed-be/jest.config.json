@@ -3,7 +3,6 @@
   "moduleFileExtensions": ["js", "ts"],
   "testMatch": ["**/*Test.js"],
   "testEnvironment": "node",
-  "collectCoverageFrom": ["src/**/*.js", "!**/node_modules/**"],
   "coverageReporters": ["html", "text", "text-summary", "cobertura"],
   "coveragePathIgnorePatterns": [
     "/node_modules/",
