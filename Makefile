@@ -55,8 +55,8 @@ run-coverage:
 update-front:
 	docker exec -i -unode drpg_front yarn install
 
-test-lint-front
+test-lint-front:
 	docker exec -i -unode drpg_front yarn lint --no-fix
 
-fix-lint-front
+fix-lint-front:
 	docker exec -it drpg_front yarn lint
