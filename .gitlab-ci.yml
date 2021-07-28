@@ -1,5 +1,5 @@
 .node_front: &node_front
-  image: node:15
+  image: node:16
   cache:
     paths:
       - node_modules/
@@ -8,13 +8,15 @@
     - yarn install
 
 .node_back: &node_back
-  image: node:15
+  image: node:16
   cache:
     paths:
       - node_modules/
+      - "ed-be/dist/"
   before_script:
     - cd ed-be
     - yarn install
+    - yarn tsc
 
 front-lint:
   <<: *node_front
@@ -22,3 +24,22 @@ front-lint:
     - yarn lint --no-fix
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+back-coverage:
+  <<: *node_back
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  cache:
+    paths:
+      - "ed-be/coverage/"
+      - junit.xml
+  script:
+    - ls
+    - yarn test:ci
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - ed-be/junit.xml
+      cobertura: ed-be/coverage/cobertura-coverage.xml

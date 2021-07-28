@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="13" failures="0" errors="0" time="1.022">
+  <testsuite name="Test de la fonction getCommonData()" errors="0" failures="0" skipped="0" timestamp="2021-07-27T15:34:13" time="0.778" tests="1">
+    <testcase classname="Test de la fonction getCommonData() Cas nominal" name="Test de la fonction getCommonData() Cas nominal" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test de la fonction getDinozFromDinozShop" errors="0" failures="0" skipped="0" timestamp="2021-07-27T15:34:13" time="0.805" tests="3">
+    <testcase classname="Test de la fonction getDinozFromDinozShop No dinoz found, shop must be initialized" name="Test de la fonction getDinozFromDinozShop No dinoz found, shop must be initialized" time="0.006">
+    </testcase>
+    <testcase classname="Test de la fonction getDinozFromDinozShop Dinoz already exist in shop" name="Test de la fonction getDinozFromDinozShop Dinoz already exist in shop" time="0">
+    </testcase>
+    <testcase classname="Test de la fonction getDinozFromDinozShop Player found is null" name="Test de la fonction getDinozFromDinozShop Player found is null" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test de la fonction getDinozFiche()" errors="0" failures="0" skipped="0" timestamp="2021-07-27T15:34:13" time="0.802" tests="9">
+    <testcase classname="Test de la fonction getDinozFiche() Cas nominal" name="Test de la fonction getDinozFiche() Cas nominal" time="0.003">
+    </testcase>
+    <testcase classname="Test de la fonction getDinozFiche() Cas unauthorized action" name="Test de la fonction getDinozFiche() Cas unauthorized action" time="0">
+    </testcase>
+    <testcase classname="Test de la fonction buyDinoz() Cas nominal" name="Test de la fonction buyDinoz() Cas nominal" time="0.002">
+    </testcase>
+    <testcase classname="Test de la fonction buyDinoz() Dinoz found in database is null" name="Test de la fonction buyDinoz() Dinoz found in database is null" time="0">
+    </testcase>
+    <testcase classname="Test de la fonction buyDinoz() Player doesn&apos;t have enough money to buy the dinoz" name="Test de la fonction buyDinoz() Player doesn&apos;t have enough money to buy the dinoz" time="0.001">
+    </testcase>
+    <testcase classname="Test de la fonction buyDinoz() Dinoz doesn&apos;t belong to player who made the request" name="Test de la fonction buyDinoz() Dinoz doesn&apos;t belong to player who made the request" time="0.001">
+    </testcase>
+    <testcase classname="Test de la fonction setDinozName() Cas nominal" name="Test de la fonction setDinozName() Cas nominal" time="0.001">
+    </testcase>
+    <testcase classname="Test de la fonction setDinozName() Dinoz doesn&apos;t belong to player who made the request" name="Test de la fonction setDinozName() Dinoz doesn&apos;t belong to player who made the request" time="0">
+    </testcase>
+    <testcase classname="Test de la fonction setDinozName() Dinoz name cannot be updated" name="Test de la fonction setDinozName() Dinoz name cannot be updated" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

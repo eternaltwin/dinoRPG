@@ -1,8 +1,10 @@
 {
   "transform": {"^.+\\.jsx?$": "babel-jest"},
   "moduleFileExtensions": ["js", "ts"],
-  "testMatch": ["**/test/**/*Test.js"],
+  "testMatch": ["**/*Test.js"],
   "testEnvironment": "node",
+  "collectCoverageFrom": ["src/**/*.js", "!**/node_modules/**"],
+  "coverageReporters": ["html", "text", "text-summary", "cobertura"],
   "coveragePathIgnorePatterns": [
     "/node_modules/",
     "/models/",
