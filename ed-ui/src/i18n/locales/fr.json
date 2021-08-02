@@ -47,9 +47,9 @@
 			"surviv": "Ration de Survie"
 		},
 		"description": {
-			"irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de jouer une nouvelle action immédiatemment sans devoir attendre le lendemain.",
-			"angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le ressusciter sans pénalité d'expérience.",
-			"surviv": "En cas de blessures graves, la ration de combat peut vous rentre entre 10 et jusqu'à 40 points de vie lors d'un combat."
+			"irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de **jouer une nouvelle action immédiatemment** sans devoir attendre le lendemain.",
+			"angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le **ressusciter sans pénalité d'expérience**.",
+			"surviv": "En cas de blessures graves, la ration de combat peut vous rendre **entre 10 et jusqu'à 40 points de vie** lors d'un combat."
 		}
 	},
 	"news": {
@@ -160,6 +160,13 @@
 		"details": "Détails"
 	},
 	"tooltip": {
-		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique"
+		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique",
+		"maxQuantity": "Quantité maximale:",
+		"itemUse": "Utiliser **immédiatement**",
+		"itemUseOff": "Cet objet ne peut pas être **utilisé**",
+		"itemEquipTitle": "Placer dans **l'équipement de combat**",
+		"itemEquipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
+		"itemEquipOff": "Cet objet ne peut pas être **équipé**"
+
 	}
 }

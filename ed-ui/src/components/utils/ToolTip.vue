@@ -58,6 +58,21 @@ export default defineComponent({
 		padding-right: 0.8em;
 		color: #fbf261;
 	}
+	h2 {
+		margin : 0;
+		padding : 0;
+		background : none;
+		border-radius : 0;
+		font-size : 9pt;
+		font-variant : normal;
+		height : auto;
+		letter-spacing : 0;
+		margin-top : -4px;
+		margin-bottom : 5px;
+		text-align : right;
+		padding-right: 0.8em;
+		color: #fbf261;
+	 }
 	p {
 		margin: 0;
 		font-size: 10pt !important;

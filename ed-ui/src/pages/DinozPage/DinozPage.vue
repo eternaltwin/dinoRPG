@@ -9,6 +9,7 @@ import { isNil } from 'lodash';
 import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
 import Elements from '@/components/elements/elements.vue';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
+import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -24,7 +25,8 @@ export default defineComponent({
 	components: {
 		ChooseDinozName,
 		Elements,
-		DinozSWF
+		DinozSWF,
+		Tooltip
 	},
 	methods: {
 		getBarSize(value: number, maxValue: number): string {

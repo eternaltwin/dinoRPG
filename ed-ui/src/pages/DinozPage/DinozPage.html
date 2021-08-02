@@ -102,19 +102,71 @@
 						</tr>
 						<tr v-for="(item, index) in allItemsData" :class="( (index % 2) === 1 ) ? 'even' : ''" :key="index">
 							<td class="name">
-								<img :src="getImg('item', 'item_', item.name)">
-								{{ $t(`item.name.${item.name}`) }}
+								<Tooltip theme="normal">
+									<template #tooltip-trigger>
+										<span>
+											<img :src="getImg('item', 'item_', item.name)">
+											{{ $t(`item.name.${item.name}`) }}
+										</span>
+									</template>
+									<template #tooltip-content="{ formatContent }">
+										<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
+										<h2>{{ $t(`tooltip.maxQuantity`) }} {{ item.maxQuantity }}</h2>
+										<p v-html="formatContent($t(`item.description.${item.name}`))" />
+									</template>
+								</Tooltip>
 							</td>
 							<td class="qty">{{ item.quantity }}</td>
 							<td class="act">
 								<a id="inv_TODO_use" v-if="item.canBeUsedNow">
-									<img :src="getImg('icons','small_','use')">
+									<Tooltip theme="small">
+										<template #tooltip-trigger>
+											<span>
+												<img :src="getImg('icons','small_','use')">
+											</span>
+										</template>
+										<template #tooltip-content="{ formatContent }">
+											<p v-html="formatContent($t(`tooltip.itemUse`))" />
+										</template>
+									</Tooltip>
 								</a>
-								<img :src="getImg('icons','small_','use_off')" v-else>
+								<a  v-else>
+									<Tooltip theme="small">
+										<template #tooltip-trigger>
+											<span>
+												<img :src="getImg('icons','small_','use_off')">
+											</span>
+										</template>
+										<template #tooltip-content="{ formatContent }">
+											<p v-html="formatContent($t(`tooltip.itemUseOff`))" />
+										</template>
+									</Tooltip>
+								</a>
 								<a id="inv" v-if="item.canBeEquipped">
-									<img :src="getImg('icons','small_','equip')">
+									<Tooltip theme="small">
+										<template #tooltip-trigger>
+											<span>
+												<img :src="getImg('icons','small_','equip')">
+											</span>
+										</template>
+										<template #tooltip-content="{ formatContent }">
+											<p v-html="formatContent($t(`tooltip.itemEquipTitle`))" />
+											<p v-html="formatContent($t(`tooltip.itemEquipDescription`))" />
+										</template>
+									</Tooltip>
 								</a>
-								<img :src="getImg('icons','small_','equip_off')" v-else>
+								<a  v-else>
+									<Tooltip theme="small">
+										<template #tooltip-trigger>
+											<span>
+												<img :src="getImg('icons','small_','equip_off')">
+											</span>
+										</template>
+										<template #tooltip-content="{ formatContent }">
+											<p v-html="formatContent($t(`tooltip.itemEquipOff`))" />
+										</template>
+									</Tooltip>
+								</a>
 							</td>
 						</tr>
 					</tbody>
