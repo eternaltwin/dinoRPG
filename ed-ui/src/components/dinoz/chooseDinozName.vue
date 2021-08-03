@@ -1,12 +1,12 @@
 <template>
 	<div id="chooseDinozName">
 		<p>{{ $t('chooseDinoz.information') }}</p>
-		<dinozSWF
+		<DinozSWF
 			:display="dinozData.display"
 			:width="190"
 			:height="165"
 			type="dino"
-		></dinozSWF>
+		></DinozSWF>
 		<p>{{ $t('chooseDinoz.nomDuDinoz') }}</p>
 		<input type="text" v-model="name" />
 		<button @click="nameDinoz()">{{ $t('button.name') }}</button>

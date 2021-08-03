@@ -7,7 +7,7 @@
 					<td valign="top" align="center">
 						<div class="centerHeader" valign="top" />
 						<div class="menusky">
-							<authentication-page></authentication-page>
+							<AuthenticationPage></AuthenticationPage>
 						</div>
 						<div class="homepage-container">
 							<div class="box">

@@ -58,7 +58,7 @@ import { defineComponent } from 'vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
-	name: 'Elements',
+	name: 'DinozElements',
 	components: { Tooltip },
 	props: {
 		fire: Number,

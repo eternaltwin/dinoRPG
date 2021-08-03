@@ -37,9 +37,9 @@ export default defineComponent({
 	width: 250px;
 	min-height: 56px;
 	background-color: #bc683c;
-	background: url(../../assets/background/tip_header.gif) no-repeat,
-		url(../../assets/background/tip_footer.gif) no-repeat,
-		url(../../assets/background/tip_bg.gif) repeat-y;
+	background: url('~@/assets/background/tip_header.gif') no-repeat,
+		url('~@/assets/background/tip_footer.gif') no-repeat,
+		url('~@/assets/background/tip_bg.gif') repeat-y;
 	background-position: top, bottom, center;
 	box-sizing: content-box;
 	box-shadow: 4px 4px 12px var(--clr-shadow);
@@ -59,20 +59,20 @@ export default defineComponent({
 		color: #fbf261;
 	}
 	h2 {
-		margin : 0;
-		padding : 0;
-		background : none;
-		border-radius : 0;
-		font-size : 9pt;
-		font-variant : normal;
-		height : auto;
-		letter-spacing : 0;
-		margin-top : -4px;
-		margin-bottom : 5px;
-		text-align : right;
+		margin: 0;
+		padding: 0;
+		background: none;
+		border-radius: 0;
+		font-size: 9pt;
+		font-variant: normal;
+		height: auto;
+		letter-spacing: 0;
+		margin-top: -4px;
+		margin-bottom: 5px;
+		text-align: right;
 		padding-right: 0.8em;
 		color: #fbf261;
-	 }
+	}
 	p {
 		margin: 0;
 		font-size: 10pt !important;
@@ -128,7 +128,8 @@ export default defineComponent({
 	}
 }
 
-span.tippy-tooltip {
-	font-size: initial !important;
-}
+// See if needed later
+// span.tippy-tooltip {
+// 	font-size: initial !important ;
+// }
 </style>

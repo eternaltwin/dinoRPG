@@ -1,13 +1,15 @@
 .dinorpg {
-	a {
-		color: #8e3e26;
-	    font-variant: small-caps;
-	    font-weight: bold;
+	.layout{
+		a {
+			color: #8e3e26;
+			font-variant: small-caps;
+			font-weight: bold;
 
-	    &:hover {
-	    	color : #fce3bc;
-	    }
-	}	
+			&:hover {
+				color : #fce3bc;
+			}
+		}
+	}
 }
 
 table {
@@ -91,8 +93,6 @@ ul {
 			    border-top: 1px solid #d39a65;
 			    font-size: 10pt;
 			    border-radius: 0px;
-			    -moz-border-radius: 0px;
-			    -webkit-border-radius: 0px;
 		    }
 	    }
 	}
@@ -117,8 +117,6 @@ input, a {
 	    background-image: url("../assets/button/button.png");
 	    background-repeat: no-repeat;
 	    border-radius: 0px;
-	    -moz-border-radius: 0px;
-	    -webkit-border-radius: 0px;
 	}
 
 	&.bSmall {
@@ -149,15 +147,6 @@ span {
 	    font-weight: bold;
 	    font-size: 9pt;
 	}
-}
-
-a.linkHome {
-    position: absolute;
-    width: 500px;
-    height: 80px;
-    z-index: 10;
-    margin-top: 25px;
-    margin-left: 240px;
 }
 
 body {
@@ -282,11 +271,7 @@ table {
 			    font-variant: small-caps;
 			    line-height: 10.5pt;
 			    border-top-right-radius: 7px;
-			    -moz-border-radius-topright: 7px;
-			    -webkit-border-top-right-radius: 7px;
 			    border-bottom-right-radius: 7px;
-			    -moz-border-radius-bottomright: 7px;
-			    -webkit-border-bottom-right-radius: 7px;
 		    }
 
 		    &.icon {
@@ -300,12 +285,6 @@ table {
 
 a {
     color: #bc683c;
-
-    &:-webkit-any-link {
-	    color: -webkit-link;
-	    cursor: pointer;
-	    text-decoration: underline;
-	}
 
 	&.icon {
 		font-size: 0pt;
@@ -343,7 +322,6 @@ div {
 
 li {
 	display: list-item;
-    text-align: -webkit-match-parent;
 }
 
 em {
@@ -393,11 +371,7 @@ td {
 	    font-variant: small-caps;
 	    line-height: 10.5pt;
 	    border-top-right-radius: 7px;
-	    -moz-border-radius-topright: 7px;
-	    -webkit-border-top-right-radius: 7px;
 	    border-bottom-right-radius: 7px;
-	    -moz-border-radius-bottomright: 7px;
-	    -webkit-border-bottom-right-radius: 7px;
     }
 }
 

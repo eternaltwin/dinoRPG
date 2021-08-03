@@ -61,3 +61,74 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+ul {
+	list-style: none;
+	font-size: 0pt;
+	line-height: 0pt;
+	margin-bottom: 1px;
+	padding: 2px;
+	border: 1px solid #d69e68;
+
+	li {
+		a {
+			border: 1px solid #fbdca5;
+			padding: 2px;
+			display: block;
+			font-size: 10pt;
+			line-height: 11pt;
+			text-decoration: none;
+			cursor: pointer;
+
+			em {
+				font-variant: normal;
+				font-weight: normal;
+				color: #cf8a51;
+				font-size: 8pt;
+				line-height: 8pt;
+				display: block;
+				float: left;
+				position: relative;
+				width: 87px;
+			}
+
+			span.name {
+				display: block;
+				float: left;
+				position: relative;
+				width: 87px;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+
+			.icon {
+				position: relative;
+				width: 40px;
+				height: 10px;
+				font-size: 0pt;
+				line-height: 0pt;
+			}
+		}
+
+		&.light {
+			a {
+				height: 25px;
+
+				.icon {
+					float: right;
+
+					.tinyBar {
+						margin-top: 6px;
+					}
+				}
+			}
+
+			em {
+				width: 150px;
+				font-size: 7.5pt;
+			}
+		}
+	}
+}
+</style>

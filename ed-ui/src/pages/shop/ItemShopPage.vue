@@ -2,8 +2,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShopService, InventoryService } from '@/services';
-import { Item, ItemShop, Shop } from '@/models';
+import { InventoryService } from '@/services';
+import { Item, ItemShop } from '@/models';
 import { errorHandler } from '@/utils';
 import store from '@/store';
 

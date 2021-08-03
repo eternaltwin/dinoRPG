@@ -1,11 +1,7 @@
 <template>
-	<div v-if="displayAuth">
-		<HomePage />
-	</div>
-	<div v-else>
-		<Data v-if="collectData" id="data"></Data>
-		<main-page v-else></main-page>
-	</div>
+	<HomePage v-if="displayAuth" />
+	<Data v-else-if="collectData" id="data" />
+	<MainPage v-else />
 </template>
 
 <script lang="ts">

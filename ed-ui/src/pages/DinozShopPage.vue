@@ -13,12 +13,12 @@
 				v-for="(dinoz, index) in dinozList"
 				:key="dinoz.dinozId"
 			>
-				<dinozSWF
+				<DinozSWF
 					:display="dinoz.display"
 					:width="190"
 					:height="165"
 					type="dino"
-				></dinozSWF>
+				></DinozSWF>
 				<div class="infos">
 					<div class="price">
 						<span class="money"
@@ -40,13 +40,13 @@
 							</template>
 						</Tooltip>
 					</div>
-					<elements
+					<DinozElements
 						:fire="dinoz.race.nbrFireCase"
 						:wood="dinoz.race.nbrWoodCase"
 						:water="dinoz.race.nbrWaterCase"
 						:light="dinoz.race.nbrLightCase"
 						:air="dinoz.race.nbrAirCase"
-					></elements>
+					></DinozElements>
 					<div class="skill" v-if="dinoz.skill">
 						<img src="@/assets/icons/small_follow.png" alt="follow" />
 						{{ $t(`skill.name.${dinoz.skill}`) }}
@@ -63,7 +63,7 @@ import { ShopService, DinozService } from '@/services';
 import { DinozShop, Dinoz } from '@/models';
 import { errorHandler, utils } from '@/utils';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
-import Elements from '@/components/elements/elements.vue';
+import DinozElements from '@/components/dinoz/dinozElements.vue';
 import store from '@/store';
 import Tooltip from '@/components/utils/ToolTip.vue';
 
@@ -77,7 +77,7 @@ export default defineComponent({
 	},
 	components: {
 		DinozSWF,
-		Elements,
+		DinozElements,
 		Tooltip
 	},
 	methods: {

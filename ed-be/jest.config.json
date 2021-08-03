@@ -2,6 +2,7 @@
   "transform": {"^.+\\.jsx?$": "babel-jest"},
   "moduleFileExtensions": ["js", "ts"],
   "testMatch": ["**/*Test.js"],
+  "collectCoverageFrom" : ["**/*.js"],
   "testEnvironment": "node",
   "coverageReporters": ["html", "text", "text-summary", "cobertura"],
   "coveragePathIgnorePatterns": [
@@ -10,6 +11,8 @@
     "/test/",
     "/dao/",
     "/utils/",
-    "/constants/"
+    "/constants/",
+    "/coverage",
+    "/config/"
   ]
 }
