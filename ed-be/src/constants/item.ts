@@ -1,10 +1,12 @@
 import { ItemFiche } from '../models';
 
-export const listOfAllItems: Array<ItemFiche> = [
+// Note:
+// Price is for the players' market. If 0 the item cannot be sold.
+export const listOfAllItems = ({
 	// Irma's Potion: new action
-	{
+	POTION_IRMA: {
 		itemId: 1,
-		name: 'irma',
+		name: 'potion_irma',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		quantity: 0,
@@ -12,9 +14,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 450,
 	},
 	// Angel potion: resurrects a dino
-	{
+	POTION_ANGEL: {
 		itemId: 2,
-		name: 'angel',
+		name: 'potion_angel',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		quantity: 0,
@@ -22,9 +24,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 1000,
 	},
 	// Cloud burger: heals 10
-	{
+	CLOUD_BURGER: {
 		itemId: 3,
-		name: 'burger',
+		name: 'cloud_burger',
 		canBeEquipped: true,
 		canBeUsedNow: true,
 		quantity: 0,
@@ -32,9 +34,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 350,
 	},
 	// Authentic hot bread: heals 100
-	{
+	HOT_BREAD: {
 		itemId: 4,
-		name: 'hotpan',
+		name: 'hot_bread',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		quantity: 0,
@@ -42,9 +44,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 3000,
 	},
 	// Meat pie: heals 30
-	{
+	MEAT_PIE: {
 		itemId: 5,
-		name: 'tartev',
+		name: 'meat_pie',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		quantity: 0,
@@ -52,9 +54,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 1000,
 	},
 	// Fight ration: heals up to 20 during a fight
-	{
+	FIGHT_RATION: {
 		itemId: 6,
-		name: 'ration',
+		name: 'fight_ration',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -62,19 +64,19 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 500,
 	},
 	// Surviving ration: heals between 10 and 40 during a fight
-	{
+	SURVIVING_RATION: {
 		itemId: 7,
-		name: 'surviv',
+		name: 'surviving_ration',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
 		maxQuantity: 8,
 		price: 500, // TODO double check
 	},
-	// Goblin's Sausage: heals ?? during a fight
-	{
-		itemId: 7,
-		name: 'mergz',
+	// Goblin's Merguez: heals ?? during a fight
+	GLOBIN_MERGUEZ: {
+		itemId: 8,
+		name: 'globin_merguez',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -82,9 +84,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 500, // TODO double check
 	},
 	// Pampleboum: heals 15
-	{
-		itemId: 8,
-		name: 'fruit',
+	PAMPLEBOUM: {
+		itemId: 9,
+		name: 'pampleboum',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		quantity: 0,
@@ -92,9 +94,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 500, // TODO double check
 	},
 	// SOS Helmet: increases armor by 1 in a fight
-	{
+	SOS_HELMET: {
 		itemId: 10,
-		name: 'hlmsos',
+		name: 'sos_helmet',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -102,17 +104,17 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 150,
 	},
 	// Little pepper: increases next assault value by 10
-	{
+	LITTLE_PEPPER: {
 		itemId: 11,
-		name: 'ppoiv',
+		name: 'little_pepper',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
 		maxQuantity: 12,
 		price: 150,
 	},
-	// Lighter: Set dino on fire during a fight
-	{
+	// Zippo: Set dino on fire during a fight
+	ZIPPO: {
 		itemId: 12,
 		name: 'zippo',
 		canBeEquipped: true,
@@ -122,9 +124,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 150,
 	},
 	// SOS flame: summons a flame to fight with you
-	{
+	SOS_FLAME: {
 		itemId: 12,
-		name: 'flamch',
+		name: 'sos_flame',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -132,9 +134,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 150,
 	},
 	// Refrigerated Shield: Increases fire defense by 20 during a fight
-	{
+	REFRIGERATED_SHIELD: {
 		itemId: 13,
-		name: 'combi',
+		name: 'refrigerated_shield',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -142,9 +144,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 150,
 	},
 	// Fuca Pill: increases attack speed by 50% during a fight
-	{
+	FUCA_PILL: {
 		itemId: 14,
-		name: 'fuca',
+		name: 'fuca_pill',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -152,19 +154,19 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 150, // TODO double check
 	},
 	// Monochromatic: all standards assault hit of the highest element of the dino during a fight (but speed follows normal rotation)
-	{
+	MONOCHROMATIC: {
 		itemId: 15,
-		name: 'monoch',
+		name: 'monochromatic',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
 		maxQuantity: 4,
 		price: 150, // TODO double check
 	},
-	// Poisonite Sting: heals poison during a fight / prevents to be poisoned during a fight??
-	{
+	// Poisonite Shot: heals poison during a fight / prevents to be poisoned during a fight??
+	POISONITE_SHOT: {
 		itemId: 16,
-		name: 'antip',
+		name: 'poisonite_shot',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -172,9 +174,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 150, // TODO double check
 	},
 	// Loris's Costume: makes an enemy attack someone else on his side during a fight
-	{
+	LORIS_COSTUME: {
 		itemId: 17,
-		name: 'confus',
+		name: 'loris_costume',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -182,9 +184,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 1234, // TODO double check
 	},
 	// Vegetox Guard's Costume: Disguise a dino into a vegetox guard
-	{
+	VEGETOX_COSTUME: {
 		itemId: 18,
-		name: 'costve',
+		name: 'vegetox_costume',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -192,9 +194,9 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 1234, // TODO double check
 	},
 	// Goblin's Costume: Disguise a dino into a gobelin
-	{
+	GOBLIN_COSTUME: {
 		itemId: 19,
-		name: 'costgb',
+		name: 'goblin_costume',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
@@ -202,17 +204,17 @@ export const listOfAllItems: Array<ItemFiche> = [
 		price: 1234, // TODO double check
 	},
 	// Pampleboum Pit: give a bonus to an assault (%, fixed valued??)
-	{
+	PAMPLEBOUM_PIT: {
 		itemId: 20,
-		name: 'noyau',
+		name: 'pampleboum_pit',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		quantity: 0,
 		maxQuantity: 12,
 		price: 1234, // TODO double check
 	},
-	//
-	{
+	// Example to copy paste to add objects
+	EXAMPLE: {
 		itemId: 999,
 		name: 'example',
 		canBeEquipped: true,
@@ -221,4 +223,4 @@ export const listOfAllItems: Array<ItemFiche> = [
 		maxQuantity: 123,
 		price: 1234, // TODO double check
 	},
-];
+} as unknown) as { [name: string]: ItemFiche };

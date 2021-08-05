@@ -15,12 +15,12 @@ const getAllItemsData = async (
 	let allItemsDataReply: Array<ItemFiche> = [];
 	allItemsData?.forEach((i) => {
 		// Look for item constant with the same id and fill in the rest of the information
-		const tempItem: ItemFiche = listOfAllItems.find(
+		// TODO: put a try/catch
+		const tempItem: ItemFiche = Object.values(listOfAllItems).find(
 			(item) => item.itemId === i.itemId
 		)!;
 		// Change the quantity by the value from the database.
 		tempItem.quantity = i.quantity;
-		// TODO maxQuantity = tempItem?.maxQuantity as number;
 		// TODO multiply maxQuantity by 1.5 if the player has a dino with shop keeper
 		allItemsDataReply.push(tempItem);
 	});

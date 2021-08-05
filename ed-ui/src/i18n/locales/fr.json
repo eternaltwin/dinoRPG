@@ -42,14 +42,14 @@
 	},
 	"item": {
 		"name": {
-			"irma": "Potion de Madame Irma",
-			"angel": "Potion d'Ange",
-			"surviv": "Ration de Survie"
+			"potion_irma": "Potion de Madame Irma",
+			"potion_angel": "Potion d'Ange",
+			"surviving_ration": "Ration de Survie"
 		},
 		"description": {
-			"irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de **jouer une nouvelle action immédiatemment** sans devoir attendre le lendemain.",
-			"angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le **ressusciter sans pénalité d'expérience**.",
-			"surviv": "En cas de blessures graves, la ration de combat peut vous rendre **entre 10 et jusqu'à 40 points de vie** lors d'un combat."
+			"potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de **jouer une nouvelle action immédiatemment** sans devoir attendre le lendemain.",
+			"potion_angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le **ressusciter sans pénalité d'expérience**.",
+			"surviving_ration": "En cas de blessures graves, la ration de combat peut vous rendre **entre 10 et jusqu'à 40 points de vie** lors d'un combat."
 		}
 	},
 	"news": {
