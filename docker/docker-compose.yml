@@ -13,8 +13,8 @@ services:
       - drpg_network
     environment:
       POSTGRES_PASSWORD: EternalDinoSQL
-      POSTGRES_USER: postgres
-      POSTGRES_MULTIPLE_DATABASES: EternalDinoDB,eternal_twin
+      POSTGRES_USER: etwin.dev.write
+      POSTGRES_MULTIPLE_DATABASES: eternaldinodb,etwin.dev
 
   drpg_front:
     container_name: drpg_front

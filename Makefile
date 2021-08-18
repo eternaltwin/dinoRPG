@@ -25,6 +25,7 @@ install: build
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_front yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn install
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn etwin db upgrade
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d --no-recreate
 
 install-eternal-twin: reset-eternal-twin-database
