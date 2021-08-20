@@ -7,12 +7,12 @@ const PlayerDao = require('../../dao/playerDao.js');
 
 let req = {
 	user: {
-		playerId: player.id_1,
-	},
+		playerId: player.id_1
+	}
 } as Request;
 let res = ({
 	status: jest.fn().mockReturnThis(),
-	send: jest.fn().mockReturnThis(),
+	send: jest.fn().mockReturnThis()
 } as unknown) as Response;
 
 describe('Test de la fonction getCommonData()', function () {

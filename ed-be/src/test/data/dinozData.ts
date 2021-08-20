@@ -4,11 +4,11 @@ import { player, dinozId } from '../utils/constants';
 export const BasicDinoz = {
 	id: dinozId,
 	player: {
-		playerId: player.id_1,
+		playerId: player.id_1
 	},
 	race: {
-		price: 20000,
+		price: 20000
 	},
 	level: 1,
-	assDinozItem: [{}],
+	assDinozItem: [{}]
 } as Dinoz;

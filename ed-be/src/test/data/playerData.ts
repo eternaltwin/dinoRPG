@@ -3,7 +3,7 @@ import { reward } from '../../constants/index.js';
 import { player } from '../utils/constants';
 
 export const BasicPlayer = {
-	playerId: player.id_1,
+	playerId: player.id_1
 } as Player;
 
 export const PlayerWithRewards = {
@@ -12,19 +12,19 @@ export const PlayerWithRewards = {
 	reward: [
 		{
 			rewardId: 13214,
-			name: reward.tropheeHippoclamp,
+			name: reward.tropheeHippoclamp
 		},
 		{
 			rewardId: 9845,
-			name: reward.tropheePteroz,
+			name: reward.tropheePteroz
 		},
 		{
 			rewardId: 79456,
-			name: reward.tropheeRocky,
+			name: reward.tropheeRocky
 		},
 		{
 			rewardId: 7974,
-			name: reward.tropheeQuetzu,
-		},
-	],
+			name: reward.tropheeQuetzu
+		}
+	]
 } as Player;

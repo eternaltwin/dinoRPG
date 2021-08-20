@@ -5,7 +5,7 @@ import {
 	ForeignKey,
 	Model,
 	PrimaryKey,
-	Table,
+	Table
 } from 'sequelize-typescript';
 import { IngredientGridType } from './ingredientGridType.js';
 type IngredientGridTypeType = IngredientGridType;

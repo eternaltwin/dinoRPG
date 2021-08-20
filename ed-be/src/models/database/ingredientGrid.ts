@@ -6,7 +6,7 @@ import {
 	ForeignKey,
 	Model,
 	PrimaryKey,
-	Table,
+	Table
 } from 'sequelize-typescript';
 import { IngredientGridType } from './ingredientGridType.js';
 import { Place } from './place.js';

@@ -1,22 +1,43 @@
 <template>
 	<div class="fx">
-		<img
-			:src="getImg('status', status.name)"
-			v-for="(status, index) in dinozData.status"
-			:key="index"
-		/>
+		<div class="fx_top">
+			<p>{{ $t('layout.fx') }}</p>
+		</div>
+		<div class="fx_content">
+			<Tooltip
+				theme="normal"
+				v-for="(status, index) in statusList"
+				:key="index"
+			>
+				<template #tooltip-trigger>
+					<img :src="getImg(status.name)" />
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<h1 v-html="formatContent($t(`status.name.${status.name}`))"></h1>
+					<p
+						v-html="formatContent($t(`status.description.${status.name}`))"
+					></p>
+				</template>
+			</Tooltip>
+		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'DinozStatus',
-	props: ['dinozData'],
+	props: {
+		statusList: Array
+	},
+	components: {
+		Tooltip
+	},
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.png`);
+		getImg(imgName: string): string {
+			return require(`@/assets/status/fx_${imgName}.png`);
 		}
 	}
 });
@@ -24,12 +45,45 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .fx {
-	font-size: 0pt;
 	position: absolute;
-	margin-left: 195px;
-	margin-top: 115px;
-	width: 212px;
-
+	margin-left: 192px;
+	margin-top: 101px;
+	width: 223px;
+	// height: 77px !important;
+	// display: flex;
+	// flex-wrap: wrap;
+	background: linear-gradient(
+		180deg,
+		rgba(186, 107, 66, 1) 0%,
+		rgba(211, 152, 96, 1) 100%
+	);
+	// background-position: bottom;
+	background-size: auto;
+	box-shadow: inset 0 0 1px 2px #d3a76a;
+	.fx_top {
+		width: 223px;
+		height: 28px;
+		background: url('~@/assets/background/box_header.gif') no-repeat;
+		p {
+			color: white;
+			padding-left: 2px;
+			font-size: 7.5pt;
+			position: absolute;
+			top: -1.5px;
+			text-shadow: 0.5px 0 1px grey;
+			text-transform: uppercase;
+			font-family: 'Trebuchet MS', Arial, sans-serif;
+			font-weight: bold;
+		}
+	}
+	.fx_content {
+		height: 77px;
+		margin-top: -13px;
+		padding-left: 2px;
+		border-style: hidden solid solid solid;
+		border-width: 0 1px 1px 1px;
+		border-color: #9f5841;
+	}
 	img {
 		border: 1px solid transparent;
 		border-radius: 5px;

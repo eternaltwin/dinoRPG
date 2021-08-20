@@ -8,9 +8,9 @@ import {
 	Model,
 	PrimaryKey,
 	Table,
-	UpdatedAt,
+	UpdatedAt
 } from 'sequelize-typescript';
-import { Inventory } from './inventory.js';
+import { ItemOwn } from './itemOwn.js';
 import { AssPlayerReward } from './assPlayerReward.js';
 import { Dinoz } from './dinoz.js';
 import { DinozShop } from './dinozShop.js';
@@ -37,8 +37,8 @@ export class Player extends Model {
 	@HasMany(() => DinozShop, 'playerId')
 	dinozShop!: Array<DinozShop>;
 
-	@HasMany(() => Inventory, 'playerId')
-	inventory!: Array<Inventory>;
+	@HasMany(() => ItemOwn, 'playerId')
+	itemOwn!: Array<ItemOwn>;
 
 	@AllowNull(false)
 	@Column

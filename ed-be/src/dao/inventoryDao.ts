@@ -1,11 +1,11 @@
-import { Inventory } from '../models/index.js';
+import { ItemOwn } from '../models/index.js';
 
 const getAllItemsDataRequest = (
 	playerId: number
-): Promise<Array<Inventory> | null> => {
-	return Inventory.findAll({
+): Promise<Array<ItemOwn> | null> => {
+	return ItemOwn.findAll({
 		attributes: ['itemId', 'quantity'],
-		where: { playerId: playerId },
+		where: { playerId: playerId }
 	});
 };
 

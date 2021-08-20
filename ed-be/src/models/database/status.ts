@@ -4,7 +4,7 @@ import {
 	Column,
 	Model,
 	PrimaryKey,
-	Table,
+	Table
 } from 'sequelize-typescript';
 import { AssDinozStatus } from './assDinozStatus.js';
 import { Dinoz } from './dinoz.js';

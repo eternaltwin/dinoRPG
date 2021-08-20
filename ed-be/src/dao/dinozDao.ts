@@ -4,7 +4,7 @@ import {
 	Item,
 	Place,
 	Player,
-	Status,
+	Status
 } from '../models/index.js';
 
 const createDinozRequest = (newDinoz: Dinoz): Promise<Dinoz> => {
@@ -25,26 +25,26 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 			'nbrUpLight',
 			'nbrUpAir',
 			'name',
-			'level',
+			'level'
 		],
 		include: [
 			{
 				model: Player,
 				attributes: ['playerId'],
-				required: false,
+				required: false
 			},
 			{
 				model: Place,
 				attributes: ['name'],
-				required: false,
+				required: false
 			},
 			{
 				model: Status,
 				attributes: ['name'],
 				through: {
-					attributes: [],
+					attributes: []
 				},
-				required: false,
+				required: false
 			},
 			{
 				model: AssDinozItem,
@@ -54,12 +54,12 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 					{
 						model: Item,
 						attributes: ['itemId'],
-						required: false,
-					},
-				],
-			},
+						required: false
+					}
+				]
+			}
 		],
-		where: { dinozId: dinozId },
+		where: { dinozId: dinozId }
 	});
 };
 
@@ -70,10 +70,10 @@ const getCanDinozChangeName = (dinozId: number): Promise<Dinoz | null> => {
 			{
 				model: Player,
 				attributes: ['playerId'],
-				required: false,
-			},
+				required: false
+			}
 		],
-		where: { dinozId: dinozId },
+		where: { dinozId: dinozId }
 	});
 };
 
@@ -81,10 +81,10 @@ const setDinozNameRequest = (dinoz: Dinoz): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			name: dinoz.name,
-			canChangeName: false,
+			canChangeName: false
 		},
 		{
-			where: { dinozId: dinoz.dinozId },
+			where: { dinozId: dinoz.dinozId }
 		}
 	);
 };
@@ -93,5 +93,5 @@ export {
 	createDinozRequest,
 	getDinozFicheRequest,
 	getCanDinozChangeName,
-	setDinozNameRequest,
+	setDinozNameRequest
 };

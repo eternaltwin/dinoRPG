@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { isNil } from 'lodash';
 import store from '@/store';
 import config from '@/config';
 
-export const http = function() {
+export const http = function(): AxiosInstance {
 	const jwt: string = store.getters.getJwt;
 
 	if (!isNil(jwt)) {

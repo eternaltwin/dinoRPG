@@ -6,7 +6,7 @@ import {
 	Column,
 	HasMany,
 	ForeignKey,
-	BelongsTo,
+	BelongsTo
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 import { DinozShop } from './dinozShop.js';

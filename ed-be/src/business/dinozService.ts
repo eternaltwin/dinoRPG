@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import {
 	getDinozDetailsRequest,
-	deleteDinozInShopRequest,
+	deleteDinozInShopRequest
 } from '../dao/shopDao.js';
 import { setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	createDinozRequest,
 	getDinozFicheRequest,
 	getCanDinozChangeName,
-	setDinozNameRequest,
+	setDinozNameRequest
 } from '../dao/dinozDao.js';
 import {
 	Dinoz,
@@ -16,7 +16,7 @@ import {
 	BasicDinoz,
 	DinozFiche,
 	Action,
-	Item,
+	Item
 } from '../models/index.js';
 import _ from 'lodash';
 import { actions, level, race } from '../constants/index.js';
@@ -50,14 +50,14 @@ const getDinozFiche = async (
 
 	// Set item list
 	let itemList: Array<Item> = [];
-	dinozDetails.assDinozItem.forEach((item) => itemList.push(item.item));
+	dinozDetails.assDinozItem.forEach(item => itemList.push(item.item));
 	dinozDetails.setDataValue('item', itemList);
 	dinozDetails.setDataValue('assDinozItem', undefined);
 
 	// Set max experience
 	dinozDetails.setDataValue(
 		'maxExperience',
-		level.find((level) => level.id === dinozDetails.level)!.experience
+		level.find(level => level.id === dinozDetails.level)!.experience
 	);
 
 	// Set availables actions for this dinoz
@@ -70,7 +70,7 @@ function getActionList(): Array<Action> {
 	const actionsList: Array<Action> = [];
 	const actionAvailable: Array<string> = getAvailableActions();
 
-	actions.forEach((action) => {
+	actions.forEach(action => {
 		if (actionAvailable.includes(action.name)) {
 			actionsList.push(action);
 		}
@@ -97,7 +97,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	}
 
 	dinozData.race = Object.values(race).find(
-		(race) => race.raceId === dinozData.raceId
+		race => race.raceId === dinozData.raceId
 	)!;
 
 	// Throws an exception if player doesn't have enough money to buy the dinoz
@@ -131,7 +131,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		nbrUpWood: dinozData.race.nbrWoodCase,
 		nbrUpWater: dinozData.race.nbrWaterCase,
 		nbrUpLight: dinozData.race.nbrLightCase,
-		nbrUpAir: dinozData.race.nbrAirCase,
+		nbrUpAir: dinozData.race.nbrAirCase
 	});
 
 	// Set player money
@@ -157,7 +157,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		life: dinozCreated.life,
 		maxLife: dinozCreated.maxLife,
 		name: dinozCreated.name,
-		place: { name: 'dinoville' },
+		place: { name: 'dinoville' }
 	};
 
 	return res.status(200).send(dinozToSend);
@@ -172,17 +172,17 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 	// If authenticated player is different from player found, throw exception
 	if (dinoz!.player.playerId !== req.user!.playerId) {
 		return res.status(500).send({
-			message: 'Unauthorized action from player : ' + req.user!.playerId,
+			message: 'Unauthorized action from player : ' + req.user!.playerId
 		});
 	} else if (!dinoz!.canChangeName) {
 		return res.status(500).send({
-			message: "Can't update dinoz name",
+			message: "Can't update dinoz name"
 		});
 	}
 
 	const dinozToUpdate = Dinoz.build({
 		dinozId: req.params.id,
-		name: req.body.newName,
+		name: req.body.newName
 	});
 
 	await setDinozNameRequest(dinozToUpdate);

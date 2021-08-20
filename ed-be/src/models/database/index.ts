@@ -11,7 +11,7 @@ export * from './ingredientGrid.js';
 export * from './ingredientGridType.js';
 export * from './ingredient.js';
 export * from './item.js';
-export * from './inventory.js';
+export * from './itemOwn.js';
 export * from './mission.js';
 export * from './place.js';
 export * from './player.js';

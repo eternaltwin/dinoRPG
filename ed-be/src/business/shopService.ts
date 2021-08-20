@@ -4,11 +4,11 @@ import {
 	Dinoz,
 	DinozRace,
 	DinozShop,
-	Player,
+	Player
 } from '../models/index.js';
 import {
 	getDinozFromDinozShopRequest,
-	createMultipleDinoz,
+	createMultipleDinoz
 } from '../dao/shopDao.js';
 import { getPlayerRewardsRequest } from '../dao/playerDao.js';
 import _ from 'lodash';
@@ -45,13 +45,13 @@ const getDinozFromDinozShop = async (
 			race.WANWAN,
 			race.PIGMOU,
 			race.PLANAILLE,
-			race.MOUEFFE,
+			race.MOUEFFE
 		];
 		const rewardArray: Array<string> = [
 			reward.tropheeHippoclamp,
 			reward.tropheePteroz,
 			reward.tropheeRocky,
-			reward.tropheeQuetzu,
+			reward.tropheeQuetzu
 		];
 		const config: Config = getConfig();
 
@@ -65,7 +65,7 @@ const getDinozFromDinozShop = async (
 			return res.status(500).send('Player not found');
 		}
 
-		player.reward.forEach((playerReward) => {
+		player.reward.forEach(playerReward => {
 			if (playerReward.name === reward.tropheeRocky) {
 				availableRaces.push(race.ROCKY);
 			}
@@ -95,7 +95,7 @@ const getDinozFromDinozShop = async (
 			dinoz = Dinoz.build({
 				playerId: req.user!.playerId,
 				raceId: availableRaces[randomRace].raceId,
-				display: randomDisplay,
+				display: randomDisplay
 			});
 
 			dinozArray!.push(dinoz.get());
@@ -104,13 +104,13 @@ const getDinozFromDinozShop = async (
 		// Save created dinoz in database
 		let dinozCreatedInShop = await createMultipleDinoz(dinozArray!);
 
-		dinozCreatedInShop.forEach((dinoz) => setDinozRaceAndSkill(dinoz));
+		dinozCreatedInShop.forEach(dinoz => setDinozRaceAndSkill(dinoz));
 
 		dinozCreatedInShop = _.orderBy(dinozCreatedInShop, ['id', 'desc']);
 
 		return res.status(200).send(dinozCreatedInShop);
 	} else {
-		data.forEach((dinoz) => {
+		data.forEach(dinoz => {
 			setDinozRaceAndSkill(dinoz);
 		});
 
@@ -122,13 +122,13 @@ const getDinozFromDinozShop = async (
 
 function setDinozRaceAndSkill(dinoz: DinozShop) {
 	const raceFound: DinozRace = Object.values(race).find(
-		(race) => race.raceId === dinoz.raceId
+		race => race.raceId === dinoz.raceId
 	)!;
 
 	if (raceFound.skillId) {
 		dinoz.setDataValue(
 			'skill',
-			skill.find((skill) => skill.skillId === raceFound.skillId)!.name
+			skill.find(skill => skill.skillId === raceFound.skillId)!.name
 		);
 	}
 
@@ -142,7 +142,7 @@ function getCosmetique() {
 	var params = {
 		includeUpperCase: true,
 		includeNumbers: true,
-		length: 11,
+		length: 11
 	};
 	return strRandom(params);
 }

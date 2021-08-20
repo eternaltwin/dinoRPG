@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-
 import { getAllItemsDataRequest } from '../dao/inventoryDao.js';
 import { ItemFiche } from '../models/item/ItemFiche.js';
 import { listOfAllItems } from '../constants/item.js';
@@ -13,11 +12,11 @@ const getAllItemsData = async (
 	)) as Array<ItemFiche> | null;
 
 	let allItemsDataReply: Array<ItemFiche> = [];
-	allItemsData?.forEach((i) => {
+	allItemsData?.forEach(i => {
 		// Look for item constant with the same id and fill in the rest of the information
 		// TODO: put a try/catch
 		const tempItem: ItemFiche = Object.values(listOfAllItems).find(
-			(item) => item.itemId === i.itemId
+			item => item.itemId === i.itemId
 		)!;
 		// Change the quantity by the value from the database.
 		tempItem.quantity = i.quantity;

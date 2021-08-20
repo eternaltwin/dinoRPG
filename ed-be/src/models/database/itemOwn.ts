@@ -5,15 +5,15 @@ import {
 	AllowNull,
 	Column,
 	BelongsTo,
-	ForeignKey,
+	ForeignKey
 } from 'sequelize-typescript';
 import { Item } from './item.js';
 import { Player } from './player.js';
 
 type PlayerType = Player;
 
-@Table({ tableName: 'tb_inventory', timestamps: false })
-export class Inventory extends Model {
+@Table({ tableName: 'tb_item_own', timestamps: false })
+export class ItemOwn extends Model {
 	@PrimaryKey
 	@AllowNull(false)
 	@Column

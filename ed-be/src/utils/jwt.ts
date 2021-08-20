@@ -7,7 +7,7 @@ const jwtConfig = () => {
 	const config = getConfig() as Config;
 	const secret: string = config.jwt.secretKey;
 	return expressJwt({ secret, algorithms: ['HS256'] }).unless({
-		path: ['/api/oauth/authenticate/eternal-twin', '/api/oauth/redirect'],
+		path: ['/api/oauth/authenticate/eternal-twin', '/api/oauth/redirect']
 	});
 };
 

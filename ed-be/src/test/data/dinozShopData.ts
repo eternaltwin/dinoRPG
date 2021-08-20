@@ -6,12 +6,12 @@ export const DinozFromShop = {
 	display: 'sdf8s165fs',
 	player: {
 		playerId: player.id_1,
-		money: 200000,
+		money: 200000
 	},
-	raceId: 1,
+	raceId: 1
 } as DinozShop;
 
 export const DinozShopArray = [
 	DinozFromShop,
-	DinozFromShop,
+	DinozFromShop
 ] as Array<DinozShop>;

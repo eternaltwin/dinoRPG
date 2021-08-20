@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
 	authenticateToET,
-	getAuthorizationUri,
+	getAuthorizationUri
 } from '../business/oauthService.js';
 import { apiRoutes } from '../constants/index.js';
 

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
 	getDinozFiche,
 	buyDinoz,
-	setDinozName,
+	setDinozName
 } from '../business/dinozService.js';
 import { apiRoutes } from '../constants/index.js';
 

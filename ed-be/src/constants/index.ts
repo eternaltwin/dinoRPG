@@ -2,6 +2,7 @@ export * from './item.js';
 export * from './level.js';
 export * from './race.js';
 export * from './skill.js';
+export * from './status.js';
 
 export const apiRoutes = {
 	dataRoutes: '/api/data',
@@ -9,23 +10,23 @@ export const apiRoutes = {
 	inventoryRoute: '/api/inventory',
 	oauthRoute: '/api/oauth',
 	playerRoute: '/api/player',
-	shopRoutes: '/api/shop',
+	shopRoutes: '/api/shop'
 };
 
 export const reward = {
 	tropheeRocky: 'tropheeRocky',
 	tropheePteroz: 'tropheePteroz',
 	tropheeHippoclamp: 'tropheeHippoclamp',
-	tropheeQuetzu: 'tropheeQuetzu',
+	tropheeQuetzu: 'tropheeQuetzu'
 };
 
 export const actions = [
 	{
 		name: 'fight',
-		imgName: 'act_fight',
+		imgName: 'act_fight'
 	},
 	{
 		name: 'follow',
-		imgName: 'act_follow',
-	},
+		imgName: 'act_follow'
+	}
 ];

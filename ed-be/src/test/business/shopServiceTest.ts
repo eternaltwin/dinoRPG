@@ -12,12 +12,12 @@ const Config = require('../../utils/context');
 
 let req = {
 	user: {
-		playerId: player.id_1,
-	},
+		playerId: player.id_1
+	}
 } as Request;
 let res = ({
 	status: jest.fn().mockReturnThis(),
-	send: jest.fn().mockReturnThis(),
+	send: jest.fn().mockReturnThis()
 } as unknown) as Response;
 
 describe('Test de la fonction getDinozFromDinozShop', function () {
@@ -27,18 +27,18 @@ describe('Test de la fonction getDinozFromDinozShop', function () {
 		dinozCreated = {
 			playerId: player.id_1,
 			raceId: 54,
-			display: '651fdsf68s',
+			display: '651fdsf68s'
 		};
 
 		const dinozBuilt = {
-			get: jest.fn().mockResolvedValue(dinozCreated),
+			get: jest.fn().mockResolvedValue(dinozCreated)
 		};
 
 		DinozFromShop.setDataValue = jest.fn().mockResolvedValue([]);
 
 		spyOn(DinozShopDao, 'createMultipleDinoz').and.returnValue(DinozShopArray);
 		spyOn(Config, 'getConfig').and.returnValue({
-			shop: { dinozInShop: 4, buyableQuetzu: 6 },
+			shop: { dinozInShop: 4, buyableQuetzu: 6 }
 		});
 		spyOn(Dinoz, 'build').and.returnValue(dinozBuilt);
 	});

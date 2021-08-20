@@ -24,7 +24,7 @@ const getApiData = async (req: Request, res: Response): Promise<Response> => {
 	const path: string = `src/data/playerData/${eternalTwinId}.json`;
 	if (fs.existsSync(path)) {
 		return res.status(500).send({
-			message: 'You have already retrieved your account data',
+			message: 'You have already retrieved your account data'
 		});
 	}
 
@@ -78,7 +78,7 @@ async function getEternalTwinData(
 	let res;
 	try {
 		res = await fetch(`${eternalTwinURI}api/v1/users/${eternalTwinId}`, {
-			method: 'GET',
+			method: 'GET'
 		});
 	} catch (err) {
 		return Promise.reject(err);
@@ -204,8 +204,8 @@ function doIngredientsRequest(
 				url: 'http://www.dinorpg.com/user/ingr',
 				method: 'GET',
 				headers: {
-					Cookie: cookieToSend,
-				},
+					Cookie: cookieToSend
+				}
 			},
 			(err, response, html) => {
 				if (!err) {
@@ -231,7 +231,7 @@ function doIngredientsRequest(
 									);
 									data.ingredients.push({
 										name: ingrName,
-										quantity: ingrQuantity,
+										quantity: ingrQuantity
 									});
 									resolve(data);
 								}
@@ -502,7 +502,7 @@ function doDeamonShopRequest(data, cookieToSend) {
 function createFile(data: any, eternalTwinId: string) {
 	const path = `src/data/playerData/${eternalTwinId}.json`;
 	if (!fs.existsSync(path)) {
-		fs.appendFile(path, JSON.stringify(data), (err) => {
+		fs.appendFile(path, JSON.stringify(data), err => {
 			if (err) throw err;
 		});
 	} else {

@@ -5,7 +5,7 @@ import {
 	HasOne,
 	Model,
 	PrimaryKey,
-	Table,
+	Table
 } from 'sequelize-typescript';
 import { AssDinozSkill } from './assDinozSkill.js';
 import { Dinoz } from './dinoz.js';

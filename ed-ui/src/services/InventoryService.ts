@@ -7,22 +7,14 @@ export const InventoryService = {
 	buyItem(id: number): Promise<Item> {
 		return http()
 			.post(`/inventory/buyitem/${id}`)
-			.then(res => {
-				return Promise.resolve(res.data);
-			})
-			.catch(err => {
-				return Promise.reject(err);
-			});
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	},
 
 	getAllItemsData(): Promise<Array<Item>> {
 		return http()
 			.get('/inventory/all')
-			.then(res => {
-				return Promise.resolve(res.data);
-			})
-			.catch(err => {
-				return Promise.reject(err);
-			});
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

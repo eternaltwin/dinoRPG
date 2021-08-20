@@ -4,7 +4,7 @@ import {
 	HasMany,
 	Model,
 	PrimaryKey,
-	Table,
+	Table
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 import { IngredientGrid } from './ingredientGrid.js';

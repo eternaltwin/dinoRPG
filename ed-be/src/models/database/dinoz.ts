@@ -10,7 +10,7 @@ import {
 	Model,
 	PrimaryKey,
 	Table,
-	UpdatedAt,
+	UpdatedAt
 } from 'sequelize-typescript';
 
 import { DinozRace } from './dinozRace.js';

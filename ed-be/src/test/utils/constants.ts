@@ -1,7 +1,7 @@
 // Player constants
 export const player = {
 	id_1: 12345,
-	id_2: 54321,
+	id_2: 54321
 };
 
 // Dinoz constants

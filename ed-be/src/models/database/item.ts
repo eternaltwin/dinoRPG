@@ -4,10 +4,10 @@ import {
 	Column,
 	AllowNull,
 	PrimaryKey,
-	HasMany,
+	HasMany
 } from 'sequelize-typescript';
 import { AssDinozItem } from './assDinozItem.js';
-import { Inventory } from './inventory.js';
+import { ItemOwn } from './itemOwn.js';
 
 @Table({ tableName: 'tb_item', timestamps: false })
 export class Item extends Model {
@@ -19,8 +19,8 @@ export class Item extends Model {
 	@HasMany(() => AssDinozItem, 'itemId')
 	assDinozItem!: Array<AssDinozItem>;
 
-	@HasMany(() => Inventory, 'itemId')
-	inventory!: Array<Inventory>;
+	@HasMany(() => ItemOwn, 'itemId')
+	itemOwn!: Array<ItemOwn>;
 
 	@AllowNull(false)
 	@Column

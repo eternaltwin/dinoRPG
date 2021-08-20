@@ -1,7 +1,7 @@
 import {
 	getDinozFiche,
 	buyDinoz,
-	setDinozName,
+	setDinozName
 } from '../../business/dinozService.js';
 import { Request, Response } from 'express';
 import { player, dinozId } from '../utils/constants.js';
@@ -15,18 +15,18 @@ const PlayerDao = require('../../dao/playerDao.js');
 
 let req = {
 	user: {
-		playerId: player.id_1,
-	},
+		playerId: player.id_1
+	}
 } as Request;
 let res = ({
 	status: jest.fn().mockReturnThis(),
-	send: jest.fn().mockReturnThis(),
+	send: jest.fn().mockReturnThis()
 } as unknown) as Response;
 
 describe('Test de la fonction getDinozFiche()', function () {
 	beforeEach(function () {
 		req.params = {
-			id: dinozId.toString(),
+			id: dinozId.toString()
 		};
 
 		BasicDinoz.setDataValue = jest.fn().mockResolvedValue([]);
@@ -56,7 +56,7 @@ describe('Test de la fonction buyDinoz()', function () {
 
 	beforeEach(function () {
 		req.params = {
-			id: dinozId.toString(),
+			id: dinozId.toString()
 		};
 
 		dinozCreated = {
@@ -65,7 +65,7 @@ describe('Test de la fonction buyDinoz()', function () {
 			experience: 0,
 			life: 100,
 			name: '?',
-			place: { name: 'dinoville' },
+			place: { name: 'dinoville' }
 		};
 
 		spyOn(PlayerDao, 'setPlayerMoneyRequest');
@@ -73,7 +73,7 @@ describe('Test de la fonction buyDinoz()', function () {
 		spyOn(DinozDao, 'createDinozRequest').and.returnValue(dinozCreated);
 		const dinozBuilt = {
 			get: jest.fn().mockResolvedValue(DinozFromShop),
-			create: jest.fn(),
+			create: jest.fn()
 		};
 		spyOn(Dinoz, 'build').and.returnValue(dinozBuilt);
 		spyOn(Dinoz, 'create').and.returnValue(dinozBuilt);
@@ -158,14 +158,14 @@ describe('Test de la fonction setDinozName()', function () {
 
 	beforeEach(function () {
 		req.body = {
-			newName: 'Potato',
+			newName: 'Potato'
 		};
 
 		dinozToUpdate = {
 			canChangeName: true,
 			player: {
-				playerId: player.id_1,
-			},
+				playerId: player.id_1
+			}
 		} as Dinoz;
 
 		spyOn(Dinoz, 'build').and.returnValue(dinozToUpdate);

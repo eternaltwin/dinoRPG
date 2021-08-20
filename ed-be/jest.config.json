@@ -13,6 +13,9 @@
     "/utils/",
     "/constants/",
     "/coverage",
-    "/config/"
+    "/config/",
+    "/sequelize.js",
+    "/server.js",
+    "/routes/"
   ]
 }

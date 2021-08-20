@@ -5,7 +5,7 @@ import {
 	Model,
 	PrimaryKey,
 	Table,
-	UpdatedAt,
+	UpdatedAt
 } from 'sequelize-typescript';
 import { AssPlayerReward } from './assPlayerReward.js';
 import { Player } from './player.js';

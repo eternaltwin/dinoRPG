@@ -5,12 +5,8 @@ export const PlayerService = {
 	getCommonData(): Promise<CommonData> {
 		return http()
 			.get('/player/commondata')
-			.then(res => {
-				return Promise.resolve(res.data);
-			})
-			.catch(err => {
-				return Promise.reject(err);
-			});
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
 

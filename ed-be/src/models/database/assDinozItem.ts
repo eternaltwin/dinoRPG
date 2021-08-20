@@ -6,7 +6,7 @@ import {
 	AutoIncrement,
 	AllowNull,
 	BelongsTo,
-	ForeignKey,
+	ForeignKey
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 import { Item } from './item.js';

@@ -43,7 +43,7 @@ const authenticateToET = async (
 			shopKeeper: false,
 			merchant: false,
 			priest: false,
-			teacher: false,
+			teacher: false
 		});
 
 		// Create new player in database
@@ -63,8 +63,8 @@ async function getUser(accessToken: string, eternalTwinURI: string) {
 		res = await fetch(`${eternalTwinURI}api/v1/auth/self`, {
 			method: 'GET',
 			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
+				Authorization: `Bearer ${accessToken}`
+			}
 		});
 	} catch (err) {
 		console.error(err);
@@ -103,7 +103,7 @@ function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {
 			`${config.general.frontUri}${config.oauth.callbackURI}`
 		),
 		clientId: config.oauth.client_id,
-		clientSecret: config.oauth.client_secret,
+		clientSecret: config.oauth.client_secret
 	});
 }
 

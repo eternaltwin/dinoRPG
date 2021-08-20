@@ -6,7 +6,7 @@ import {
 	PrimaryKey,
 	AutoIncrement,
 	ForeignKey,
-	BelongsTo,
+	BelongsTo
 } from 'sequelize-typescript';
 import { DinozRace } from './dinozRace.js';
 import { Player } from './player.js';

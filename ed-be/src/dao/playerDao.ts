@@ -11,7 +11,7 @@ const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 				'display',
 				'name',
 				'life',
-				'experience',
+				'experience'
 			],
 			where: { isFrozen: false },
 			required: false,
@@ -19,25 +19,25 @@ const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 				{
 					model: Place,
 					attributes: ['name'],
-					required: false,
-				},
-			],
+					required: false
+				}
+			]
 		},
-		where: { playerId: playerId },
+		where: { playerId: playerId }
 	});
 };
 
 const getPlayerId = (eternalTwinId: string): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['playerId'],
-		where: { eternalTwinId: eternalTwinId },
+		where: { eternalTwinId: eternalTwinId }
 	});
 };
 
 const getEternalTwinId = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['eternalTwinId'],
-		where: { playerId: playerId },
+		where: { playerId: playerId }
 	});
 };
 
@@ -56,11 +56,11 @@ const getPlayerRewardsRequest = (
 			attributes: ['name'],
 			where: { name: rewardArray },
 			through: {
-				attributes: [],
+				attributes: []
 			},
-			required: false,
+			required: false
 		},
-		where: { playerId: playerId },
+		where: { playerId: playerId }
 	});
 };
 
@@ -70,10 +70,10 @@ const setPlayerMoneyRequest = (
 ): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
-			money: newMoney,
+			money: newMoney
 		},
 		{
-			where: { playerId: playerId },
+			where: { playerId: playerId }
 		}
 	);
 };
@@ -84,5 +84,5 @@ export {
 	createPlayer,
 	getCommonDataRequest,
 	getPlayerRewardsRequest,
-	setPlayerMoneyRequest,
+	setPlayerMoneyRequest
 };
