@@ -37,7 +37,7 @@ export default defineComponent({
 		async getRedirectUri(): Promise<void> {
 			const urlToRedirect: string = await DataService.getRedirectUri();
 
-			window.open(urlToRedirect);
+			window.location.replace(urlToRedirect);
 		}
 	},
 	mounted(): void {
