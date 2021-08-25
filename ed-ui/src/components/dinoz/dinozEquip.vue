@@ -1,5 +1,5 @@
 <template>
-	<div class="equip" id="equip">
+	<div class="equip">
 		<ul>
 			<li v-for="(item, index) in dinozData.item" :key="index">
 				<a href="#" class="icon">
@@ -29,10 +29,11 @@ export default defineComponent({
 	position: absolute;
 	padding-left: 12px;
 	margin-left: 420px;
-	margin-top: 119px;
+	margin-top: 101px;
 	font-size: 0pt;
-	width: 80px;
-	height: 80px;
+	width: 100px;
+	height: 138px;
+	background: url('~@/assets/background/equipment_box.gif') no-repeat;
 
 	ul {
 		list-style: none;

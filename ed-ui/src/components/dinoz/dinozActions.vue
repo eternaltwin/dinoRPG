@@ -1,8 +1,11 @@
 <template>
-	<div class="actions" id="dinozActions">
+	<div class="actions">
+		<div class="actions_top">
+			<p>{{ $t('layout.action') }}</p>
+		</div>
 		<ul>
 			<table
-				class="action"
+				class="action_button"
 				v-for="action in dinozData.actions"
 				:key="action.name"
 				:id="action.imgName"
@@ -55,12 +58,66 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .actions {
+	background: url('~@/assets/background/banniere_left.png') no-repeat,
+		url('~@/assets/background/banniere_right.png') no-repeat,
+		url('~@/assets/background/banniere_middle.png') repeat-x;
+	background-position-x: left, right;
 	float: left;
+	left: 12px;
+	top: -14px;
 	position: relative;
-	width: 171px;
-	padding-left: 20px;
+	width: 185px;
+	min-height: 90px;
 	color: white;
 	position: relative;
 	flex-grow: 50%;
+	.actions_top {
+		width: 185px;
+		height: 28px;
+		p {
+			color: white;
+			padding-left: 2px;
+			font-size: 7.5pt;
+			position: absolute;
+			top: -1.5px;
+			text-shadow: 0.5px 0 1px grey;
+			text-transform: uppercase;
+			font-family: 'Trebuchet MS', Arial, sans-serif;
+			font-weight: bold;
+		}
+	}
+	.action_button {
+		position: relative;
+		left: 5px;
+		border-collapse: collapse;
+		border-spacing: 0px;
+		margin-bottom: 2px;
+		width: 100%;
+
+		td {
+			margin: 0px;
+			padding: 0px;
+			text-align: left;
+			cursor: pointer;
+
+			&.label {
+				padding-left: 4px;
+				padding-right: 4px;
+				font-weight: bold;
+				color: white;
+				font-size: 11pt;
+				font-variant: small-caps;
+				line-height: 10.5pt;
+				border-top-right-radius: 7px;
+				border-bottom-right-radius: 7px;
+			}
+
+			&.icon {
+				width: 32px;
+				font-size: 0pt;
+				line-height: 0pt;
+			}
+		}
+	}
 }
 </style>

@@ -33,37 +33,6 @@ ul {
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 
-	&.elements {
-		list-style: none;
-    	height: 23px;
-
-    	li {
-    		float: left;
-		    position: relative;
-		    width: 42px;
-		    height: 23px;
-		    margin-right: 2px;
-		    font-size: 10pt !important;
-		    font-weight: bold;
-		    color: white;
-		    text-align: left;
-		    letter-spacing: -0.2pt;
-		    background-image: url("../assets/icons/element_bg.webp");
-		    background-position: 7px 5px;
-		    background-repeat: no-repeat;
-		    cursor: help;
-
-		    &.max {
-		    	color: yellow;
-		    }
-
-		    img {
-		    	margin-right: -3px;
-   				vertical-align: -30%;
-		    }
-    	}
-	}
-
 	&.tabs {
 		list-style: none;
 	    height: 22px;
@@ -246,40 +215,6 @@ table {
 		    background-repeat: repeat-y;
 		    vertical-align: top;
 	    }
-	}
-
-	&.action {
-	    margin: 0px;
-	    padding: 0px;
-	    border-collapse: collapse;
-	    border-spacing: 0px;
-	    margin-bottom: 2px;
-	    width: 100%;
-
-	    td {
-			margin: 0px;
-		    padding: 0px;
-		    text-align: left;
-		    cursor: pointer;
-
-		    &.label {
-		    	padding-left: 4px;
-			    padding-right: 4px;
-			    font-weight: bold;
-			    color: white;
-			    font-size: 11pt;
-			    font-variant: small-caps;
-			    line-height: 10.5pt;
-			    border-top-right-radius: 7px;
-			    border-bottom-right-radius: 7px;
-		    }
-
-		    &.icon {
-		    	width: 32px;
-			    font-size: 0pt;
-			    line-height: 0pt;
-		    }
-		}
 	}
 }
 

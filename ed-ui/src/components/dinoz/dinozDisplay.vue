@@ -1,6 +1,8 @@
 <template>
 	<a class="left" />
-	<div class="title">{{ dinozData.name }}</div>
+	<div class="title">
+		{{ dinozData.name }}
+	</div>
 	<a class="right" />
 	<DinozSWF
 		:display="dinozData.display"
@@ -9,14 +11,7 @@
 		type="dino"
 		class="avatar"
 	></DinozSWF>
-	<DinozElements
-		:fire="dinozData.nbrUpFire"
-		:wood="dinozData.nbrUpWood"
-		:water="dinozData.nbrUpWater"
-		:light="dinozData.nbrUpLight"
-		:air="dinozData.nbrUpAir"
-		class="infos"
-	></DinozElements>
+	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
 	<DinozEquip :dinozData="dinozData" />
 	<DinozStatus :statusList="dinozData.status" />
@@ -67,10 +62,15 @@ export default defineComponent({
 }
 .title {
 	position: absolute;
-	text-align: center;
-	width: 232px;
+	top: -6.5px;
+	background: url('~@/assets/background/name_box.gif') no-repeat;
+	width: 222px;
+	height: 33px;
 	margin-left: 240px;
-	margin-top: 67px;
+	margin-top: 69px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	font-size: 15pt;
 	font-weight: bold;
 	text-transform: uppercase;
@@ -94,16 +94,5 @@ export default defineComponent({
 	position: absolute;
 	margin-left: 5px;
 	margin-top: 25px;
-}
-.infos {
-	position: absolute;
-	margin-left: 195px;
-	margin-top: 212px;
-
-	ul.elements {
-		position: absolute;
-		width: 230px;
-		margin-top: 2px;
-	}
 }
 </style>

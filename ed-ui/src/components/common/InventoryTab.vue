@@ -1,5 +1,5 @@
 <template>
-	<div id="inventory" class="inventory">
+	<div class="inventory">
 		<table>
 			<tbody>
 				<tr>
@@ -119,6 +119,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .inventory {
+	margin: 5px;
 	table {
 		width: 100%;
 		margin-top: 10px;

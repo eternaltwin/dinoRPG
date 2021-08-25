@@ -234,10 +234,17 @@
 		"details": "Détails"
 	},
 	"layout": {
-		"fx": "Statuts"
+		"fx": "Statuts",
+		"elements": "Informations",
+		"action":"Actions",
+		"level": "Ce niveau reflète la puissance de votre dinoz.",
+		"slot":"Cet emplacement est vide, choisissez un objet de l'inventaire à équiper. &&//Les objets équipés pourront être utilisés par votre dinoz en combat.//",
+		"shopButton":"Accéder à la boutique",
+		"clanButton":"Mon clan",
+		"dojoButton":"Mon dojo"
 	},
 	"tooltip": {
-		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique",
+		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
 		"maxQuantity": "Quantité maximale:",
 		"itemUse": "Utiliser **immédiatement**",
 		"itemUseOff": "Cet objet ne peut pas être **utilisé**",

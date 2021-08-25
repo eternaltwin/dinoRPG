@@ -51,15 +51,26 @@ export default defineComponent({
 <style lang="scss" scoped>
 .tabPanel {
 	float: left;
+	left: 16px;
+	top: -14px;
 	position: relative;
-	width: 303px;
-	padding-left: 16px;
+	width: 315px;
 	padding-bottom: 15px;
 	color: white;
+	background: url('~@/assets/background/banniere_left.png') no-repeat,
+		url('~@/assets/background/banniere_right.png') no-repeat,
+		url('~@/assets/background/banniere_middle.png') repeat-x;
+	background-position-x: left, right;
 
-	ul.tabs {
+	.tabs {
+		margin-top: 15px;
+		margin-left: 1px;
+		width: 304px;
 		background-image: none;
 		text-shadow: 1px 1px 0px #9a4029;
+		:hover {
+			color: white;
+		}
 
 		li.active {
 			margin-top: 1px;

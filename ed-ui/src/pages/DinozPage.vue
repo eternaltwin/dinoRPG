@@ -86,6 +86,8 @@ export default defineComponent({
 	background-repeat: repeat-y;
 	display: flex;
 	flex-wrap: wrap;
+	position: relative;
+	top: -11px;
 
 	// For futur implementation of header div
 	// .header {
@@ -102,9 +104,8 @@ export default defineComponent({
 	}
 }
 .dinoz {
-	background-image: url('~@/assets/dinoz/dinoz_bg.webp');
+	background-image: url('~@/assets/background/dinoz_bg_cut.webp');
 	background-repeat: no-repeat;
 	min-height: 265px;
-	margin-top: 5px;
 }
 </style>

@@ -40,13 +40,13 @@
 							</template>
 						</Tooltip>
 					</div>
-					<DinozElements
+					<Elements
 						:fire="dinoz.race.nbrFireCase"
 						:wood="dinoz.race.nbrWoodCase"
 						:water="dinoz.race.nbrWaterCase"
 						:light="dinoz.race.nbrLightCase"
 						:air="dinoz.race.nbrAirCase"
-					></DinozElements>
+					></Elements>
 					<div class="skill" v-if="dinoz.skill">
 						<img src="@/assets/icons/small_follow.webp" alt="follow" />
 						{{ $t(`skill.name.${dinoz.skill}`) }}
@@ -63,7 +63,7 @@ import { ShopService, DinozService } from '@/services';
 import { DinozShop, Dinoz } from '@/models';
 import { errorHandler, utils } from '@/utils';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
-import DinozElements from '@/components/dinoz/dinozElements.vue';
+import Elements from '@/components/data/elements.vue';
 import store from '@/store';
 import Tooltip from '@/components/utils/ToolTip.vue';
 
@@ -77,7 +77,7 @@ export default defineComponent({
 	},
 	components: {
 		DinozSWF,
-		DinozElements,
+		Elements,
 		Tooltip
 	},
 	methods: {

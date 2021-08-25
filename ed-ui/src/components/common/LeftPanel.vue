@@ -10,10 +10,38 @@
 			</template>
 		</Tooltip>
 		<div class="iconMenu">
-			<a id="menu_blank" class="iconor"></a>
-			<a id="menu_shop" @click="goToItemShop()" class="iconboutik"></a>
-			<a id="menu_clan" class="iconclan"></a>
-			<a id="menu_dojo" class="icondojo"></a>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<a id="menu_blank" class="iconor"></a>
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('button.getGold'))" />
+				</template>
+			</Tooltip>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<a id="menu_shop" @click="goToItemShop()" class="iconboutik"></a>
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('layout.shopButton'))" />
+				</template>
+			</Tooltip>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<a id="menu_clan" class="iconclan"></a>
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('layout.clanButton'))" />
+				</template>
+			</Tooltip>
+			<Tooltip theme="small">
+				<template #tooltip-trigger>
+					<a id="menu_dojo" class="icondojo"></a>
+				</template>
+				<template #tooltip-content="{ formatContent }">
+					<p v-html="formatContent($t('layout.dojoButton'))" />
+				</template>
+			</Tooltip>
 		</div>
 		<DinozList></DinozList>
 		<a class="button" @click="goToDinozShop()">
