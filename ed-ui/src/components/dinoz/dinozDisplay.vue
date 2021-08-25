@@ -47,7 +47,7 @@ export default defineComponent({
 	},
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.png`);
+			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
 		}
 	}
 });
@@ -58,7 +58,7 @@ export default defineComponent({
 	position: absolute;
 	margin-left: 205px;
 	margin-top: 69px;
-	background-image: url('~@/assets/icons/left.png');
+	background-image: url('~@/assets/icons/left.webp');
 	background-color: transparent;
 	width: 15px;
 	height: 21px;
@@ -83,7 +83,7 @@ export default defineComponent({
 	position: absolute;
 	margin-left: 490px;
 	margin-top: 69px;
-	background-image: url('~@/assets/icons/right.png');
+	background-image: url('~@/assets/icons/right.webp');
 	background-color: transparent;
 	width: 15px;
 	height: 21px;

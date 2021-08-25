@@ -37,7 +37,7 @@ export default defineComponent({
 	},
 	methods: {
 		getImg(imgName: string): string {
-			return require(`@/assets/status/fx_${imgName}.png`);
+			return require(`@/assets/status/fx_${imgName}.webp`);
 		}
 	}
 });
@@ -63,7 +63,7 @@ export default defineComponent({
 	.fx_top {
 		width: 223px;
 		height: 28px;
-		background: url('~@/assets/background/box_header.gif') no-repeat;
+		background: url('~@/assets/background/box_header.webp') no-repeat;
 		p {
 			color: white;
 			padding-left: 2px;

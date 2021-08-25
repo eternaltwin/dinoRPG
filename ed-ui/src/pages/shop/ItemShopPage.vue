@@ -21,7 +21,7 @@ export default defineComponent({
 	//},
 	methods: {
 		getImg(folder: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgName}.png`);
+			return require(`@/assets/${folder}/${imgName}.webp`);
 		},
 		async openPopinConfirmChoice(item: ItemShop): Promise<void> {
 			const res: boolean = confirm(this.$t('button.confirm'));

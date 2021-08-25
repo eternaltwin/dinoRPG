@@ -134,18 +134,18 @@ export default defineComponent({
 	}
 	.right {
 		background-position: left top;
-		background-image: url('../assets/background/bg_ciel.jpg');
+		background-image: url('../assets/background/bg_ciel.webp');
 		width: 50%;
 		background-repeat: repeat-x;
 	}
 	.left {
 		background-position: right top;
-		background-image: url('../assets/background/bg_ciel.jpg');
+		background-image: url('../assets/background/bg_ciel.webp');
 		width: 50%;
 		background-repeat: repeat-x;
 	}
 	.centerHeader {
-		background-image: url('../assets/background/sky_headerbg.jpg');
+		background-image: url('../assets/background/sky_headerbg.webp');
 		background-repeat: no-repeat;
 		width: 1008px;
 		height: 510px;
@@ -181,7 +181,7 @@ export default defineComponent({
 	}
 }
 .footer {
-	background-image: url('../assets/background/sky_footer_blue.jpg');
+	background-image: url('../assets/background/sky_footer_blue.webp');
 	height: 4em;
 	width: 100%;
 	background-repeat: repeat-x;

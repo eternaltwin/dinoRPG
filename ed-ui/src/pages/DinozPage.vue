@@ -49,7 +49,7 @@ export default defineComponent({
 			return `width : ${width}px ; height : 11px`;
 		},
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.png`);
+			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
 		},
 		// Set dinoz name and display dinoz page
 		setNameChoosen(newName: string): void {
@@ -82,7 +82,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozPanels {
-	background-image: url('~@/assets/design/dinoz_panels_bg.png');
+	background-image: url('~@/assets/design/dinoz_panels_bg.webp');
 	background-repeat: repeat-y;
 	display: flex;
 	flex-wrap: wrap;
@@ -98,11 +98,11 @@ export default defineComponent({
 		flex-grow: 100%;
 		height: 24px;
 		width: 100%;
-		background-image: url('~@/assets/design/dinoz_footer.png');
+		background-image: url('~@/assets/design/dinoz_footer.webp');
 	}
 }
 .dinoz {
-	background-image: url('~@/assets/dinoz/dinoz_bg.jpg');
+	background-image: url('~@/assets/dinoz/dinoz_bg.webp');
 	background-repeat: no-repeat;
 	min-height: 265px;
 	margin-top: 5px;

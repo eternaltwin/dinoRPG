@@ -37,9 +37,9 @@ export default defineComponent({
 	width: 250px;
 	min-height: 56px;
 	background-color: #bc683c;
-	background: url('~@/assets/background/tip_header.gif') no-repeat,
-		url('~@/assets/background/tip_footer.gif') no-repeat,
-		url('~@/assets/background/tip_bg.gif') repeat-y;
+	background: url('~@/assets/background/tip_header.webp') no-repeat,
+		url('~@/assets/background/tip_footer.webp') no-repeat,
+		url('~@/assets/background/tip_bg.webp') repeat-y;
 	background-position: top, bottom, center;
 	box-sizing: content-box;
 	box-shadow: 4px 4px 12px var(--clr-shadow);

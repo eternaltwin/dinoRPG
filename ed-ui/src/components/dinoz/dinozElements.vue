@@ -69,7 +69,7 @@ export default defineComponent({
 	},
 	methods: {
 		getImg(index: number): string {
-			return require(`@/assets/elements/elem_${index}.png`);
+			return require(`@/assets/elements/elem_${index}.webp`);
 		}
 	}
 });

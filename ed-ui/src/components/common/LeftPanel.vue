@@ -2,7 +2,8 @@
 	<div id="accountList">
 		<Tooltip theme="small" class="money">
 			<template #tooltip-trigger>
-				{{ beautifulMoney }}<img src="@/assets/icons/small_gold.png" alt="or" />
+				{{ beautifulMoney }}
+				<img src="@/assets/icons/small_gold.webp" alt="or" />
 			</template>
 			<template #tooltip-content="{ formatContent }">
 				<p v-html="formatContent($t('tooltip.gold'))" />
@@ -126,7 +127,7 @@ interface CommonData {
 		color: #ffee92;
 		border: 0px;
 		background-color: transparent;
-		background-image: url('~@/assets/background/goldbox2.png');
+		background-image: url('~@/assets/background/goldbox2.webp');
 		background-repeat: no-repeat;
 		cursor: help;
 
@@ -146,48 +147,48 @@ interface CommonData {
 
 			&.iconor {
 				margin-right: 5px;
-				background-image: url('~@/assets/icons/act_shop.png');
+				background-image: url('~@/assets/icons/act_shop.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('~@/assets/icons/act_shop2.png');
+					background-image: url('~@/assets/icons/act_shop2.webp');
 				}
 			}
 
 			&.iconboutik {
 				margin-right: 5px;
-				background-image: url('~@/assets/icons/act_boutique.png');
+				background-image: url('~@/assets/icons/act_boutique.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('~@/assets/icons/act_boutique2.png');
+					background-image: url('~@/assets/icons/act_boutique2.webp');
 				}
 			}
 
 			&.iconclan {
 				margin-right: 5px;
-				background-image: url('~@/assets/icons/act_castle.png');
+				background-image: url('~@/assets/icons/act_castle.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('~@/assets/icons/act_castle2.png');
+					background-image: url('~@/assets/icons/act_castle2.webp');
 				}
 			}
 
 			&.icondojo {
-				background-image: url('~@/assets/icons/act_dojo.png');
+				background-image: url('~@/assets/icons/act_dojo.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('~@/assets/icons/act_dojo2.png');
+					background-image: url('~@/assets/icons/act_dojo2.webp');
 				}
 			}
 		}

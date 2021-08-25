@@ -6,7 +6,7 @@
 		<div class="life">
 			<div class="bar">
 				<img
-					src="@/assets/bar/bar_life.png"
+					src="@/assets/bar/bar_life.webp"
 					:style="getBarSize(dinozData.life, dinozData.maxLife)"
 				/>
 			</div>
@@ -15,7 +15,7 @@
 		<div class="xp">
 			<div class="bar">
 				<img
-					src="@/assets/bar/bar_xp.png"
+					src="@/assets/bar/bar_xp.webp"
 					:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
 				/>
 			</div>

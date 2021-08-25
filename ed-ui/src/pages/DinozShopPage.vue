@@ -23,7 +23,7 @@
 					<div class="price">
 						<span class="money"
 							>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
-							<img src="@/assets/icons/small_gold.png" />
+							<img src="@/assets/icons/small_gold.webp" />
 						</span>
 					</div>
 					<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{
@@ -48,7 +48,7 @@
 						:air="dinoz.race.nbrAirCase"
 					></DinozElements>
 					<div class="skill" v-if="dinoz.skill">
-						<img src="@/assets/icons/small_follow.png" alt="follow" />
+						<img src="@/assets/icons/small_follow.webp" alt="follow" />
 						{{ $t(`skill.name.${dinoz.skill}`) }}
 					</div>
 				</div>

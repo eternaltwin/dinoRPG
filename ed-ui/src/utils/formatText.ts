@@ -2,17 +2,17 @@ export const helpers = {
 	computeImageHtml(key: string): string {
 		switch (key) {
 			case 'feu':
-				return `<img src="${require('@/assets/elements/elem_0.png')}" alt="feu">`;
+				return `<img src="${require('@/assets/elements/elem_0.webp')}" alt="feu">`;
 			case 'bois':
-				return `<img src="${require('@/assets/elements/elem_1.png')}" alt="bois">`;
+				return `<img src="${require('@/assets/elements/elem_1.webp')}" alt="bois">`;
 			case 'eau':
-				return `<img src="${require('@/assets/elements/elem_2.png')}" alt="eau">`;
+				return `<img src="${require('@/assets/elements/elem_2.webp')}" alt="eau">`;
 			case 'foudre':
-				return `<img src="${require('@/assets/elements/elem_3.png')}" alt="foudre">`;
+				return `<img src="${require('@/assets/elements/elem_3.webp')}" alt="foudre">`;
 			case 'air':
-				return `<img src="${require('@/assets/elements/elem_4.png')}" alt="air">`;
+				return `<img src="${require('@/assets/elements/elem_4.webp')}" alt="air">`;
 			case 'neutre':
-				return `<img src="${require('@/assets/elements/elem_5.png')}" alt="pmo">`;
+				return `<img src="${require('@/assets/elements/elem_5.webp')}" alt="pmo">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}

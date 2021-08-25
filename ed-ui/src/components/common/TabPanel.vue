@@ -39,7 +39,7 @@ export default defineComponent({
 	},
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.png`);
+			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
 		},
 		async setTab(value: number): Promise<void> {
 			this.tabSelected = value;
