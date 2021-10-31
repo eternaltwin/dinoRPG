@@ -47,6 +47,9 @@
 		<a class="button" @click="goToDinozShop()">
 			{{ $t('button.buyDinoz') }}
 		</a>
+		<a class="button" @click="goToDinozGenerator()">
+			{{ $t('button.generator') }}
+		</a>
 	</div>
 </template>
 
@@ -95,6 +98,9 @@ export default defineComponent({
 		},
 		goToDinozShop() {
 			this.$router.push({ name: 'DinozShopPage' });
+		},
+		goToDinozGenerator(): void {
+			this.$router.push({ name: 'DinozGenerator' });
 		}
 	},
 	computed: {

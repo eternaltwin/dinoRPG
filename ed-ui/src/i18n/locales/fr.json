@@ -29,7 +29,8 @@
 		"getGold": "Obtenir de l'or",
 		"shop": "Boutique",
 		"confirm": "Confirmer cette action ?",
-		"chose": "Choisir"
+		"chose": "Choisir",
+		"generator": "Générateur de dinoz"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
