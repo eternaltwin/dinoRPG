@@ -15,6 +15,7 @@ export interface Dinoz {
 	assDinozItem: Array<Item>;
 	status: Status;
 	actions: Array<Action>;
+	skill: Array<Skill>;
 }
 
 export interface DinozRace {
@@ -30,7 +31,13 @@ export interface DinozRace {
 }
 
 export interface Skill {
+	skillId: number;
 	name: string;
+	type: string;
+	energy: number;
+	element: string;
+	state: boolean;
+	activable?: boolean;
 }
 
 export interface Item {

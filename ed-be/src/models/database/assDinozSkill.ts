@@ -11,4 +11,7 @@ export class AssDinozSkill extends Model {
 	@ForeignKey(() => Skill)
 	@Column
 	skillId!: number;
+
+	@Column
+	state!: boolean;
 }

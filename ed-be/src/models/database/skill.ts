@@ -30,8 +30,4 @@ export class Skill extends Model {
 	@AllowNull(false)
 	@Column
 	name!: string;
-
-	@AllowNull(false)
-	@Column
-	type!: string;
 }

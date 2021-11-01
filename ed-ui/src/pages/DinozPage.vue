@@ -12,7 +12,7 @@
 		<div class="dinozPanels" v-if="nameChoosen === true">
 			<!--<div class="header" />(à implémenter)-->
 			<DinozActions />
-			<TabPanel />
+			<TabPanel :dinozData="dinozData" />
 			<div class="footer" />
 		</div>
 	</div>

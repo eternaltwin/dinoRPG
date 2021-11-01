@@ -154,12 +154,10 @@ export default defineComponent({
 					vertical-align: bottom;
 				}
 			}
-			&.qty {
-				color: white;
+			&.type {
 				font-weight: bold;
 				text-align: center;
-				padding-left: 4px;
-				padding-right: 4px;
+				color: #bc683c;
 			}
 			&.full {
 				color: yellow;

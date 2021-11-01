@@ -1,4 +1,4 @@
-export const status = {
+export const statusList = {
 	CLIMBING_GEAR: 1,
 	BUOY: 2,
 	CUSCOUZ_MALEDICTION: 3,

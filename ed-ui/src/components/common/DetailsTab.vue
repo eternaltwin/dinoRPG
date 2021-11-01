@@ -1,21 +1,246 @@
 <template>
-	<div id="details" class="details">
-		<p>Details!</p>
-		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-		<p>End of Line</p>
-		<!--
-			<Skills />
-			<Caracteristiques />
-			-->
+	<div class="details">
+		<table>
+			<tbody>
+				<tr>
+					<th class="name">{{ $t('details.th.comp') }}</th>
+					<th class="type">{{ $t('details.th.type') }}</th>
+					<template v-for="(status, index) in dinozData.status" :key="index">
+						<th class="state" v-if="status.name == 'amulst'">
+							{{ $t('details.th.active') }}
+						</th>
+					</template>
+				</tr>
+				<tr
+					v-for="skill in dinozSkill"
+					:key="skill.skillId"
+					:class="skill.state === false ? 'disabled' : ''"
+				>
+					<td class="name">
+						<Tooltip theme="normal">
+							<template #tooltip-trigger>
+								<img
+									v-for="(element, index) in skill.element"
+									:key="index"
+									:src="getImg('elements', 'elem_', element)"
+								/>
+								<p>{{ $t(`skill.name.${skill.name}`) }}</p>
+							</template>
+							<template #tooltip-content="{ formatContent }">
+								<h1 v-html="formatContent($t(`skill.name.${skill.name}`))" />
+								<p
+									v-html="formatContent($t(`skill.description.${skill.name}`))"
+								/>
+								<h3
+									v-html="formatContent($t(`skill.energy.${skill.energy}`))"
+								/>
+							</template>
+						</Tooltip>
+					</td>
+					<td class="type">
+						<Tooltip theme="normal">
+							<template #tooltip-trigger>
+								{{ skill.type }}
+							</template>
+							<template #tooltip-content="{ formatContent }">
+								<h1
+									v-html="formatContent($t(`details.type.name.${skill.type}`))"
+								/>
+								<p
+									v-html="
+										formatContent($t(`details.type.description.${skill.type}`))
+									"
+								/>
+							</template>
+						</Tooltip>
+					</td>
+					<template v-if="hasAmulst()">
+						<td class="state">
+							<Tooltip
+								theme="small"
+								v-if="skill.activable"
+								@click="changeState(skill)"
+							>
+								<template #tooltip-trigger>
+									<img :src="getImg('icons', 'small_skill_', skill.state)" />
+								</template>
+								<template #tooltip-content="{ formatContent }">
+									<p
+										v-html="
+											formatContent($t(`details.activate.${skill.state}`))
+										"
+									/>
+								</template>
+							</Tooltip>
+							<Tooltip theme="small" v-else>
+								<template #tooltip-trigger>
+									<img src="@/assets/icons/small_skill_inactive.webp" />
+								</template>
+								<template #tooltip-content="{ formatContent }">
+									<p v-html="formatContent($t(`details.activate.locked`))" />
+								</template>
+							</Tooltip>
+						</td>
+					</template>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </template>
 
 <script lang="ts" scoped>
 import { defineComponent } from 'vue';
+import Tooltip from '@/components/utils/ToolTip.vue';
+import { status } from '@/constants';
+import { Skill, Status } from '@/models';
+import { DinozService } from '@/services';
+import { errorHandler } from '@/utils';
 
 export default defineComponent({
-	name: 'DetailsTab'
+	name: 'DetailsTab',
+	components: { Tooltip },
+	props: { dinozData: Object },
+	data() {
+		return {
+			dinozSkill: [] as Array<Skill>
+		};
+	},
+	methods: {
+		getImg(folder: string, imgPrefix: string, imgName: string): string {
+			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
+		},
+		async changeState(skill: Skill): Promise<void> {
+			const dinozId = this.$route.params.id as string;
+
+			try {
+				await DinozService.setSkillState(dinozId, skill.skillId, !skill.state);
+			} catch (err) {
+				errorHandler.handle(err);
+				return Promise.reject(err);
+			}
+
+			skill.state = !skill.state;
+		},
+		hasAmulst(): boolean {
+			return this.dinozData!.status.some(
+				(dinozStatus: Status) =>
+					dinozStatus.name === status.STRATEGY_IN_130_LESSONS
+			);
+		}
+	},
+	async mounted(): Promise<void> {
+		try {
+			const dinozId = this.$route.params.id as string;
+			this.dinozSkill = await DinozService.getDinozSkill(dinozId);
+		} catch (err) {
+			errorHandler.handle(err);
+			return Promise.reject(err);
+		}
+	}
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.details {
+	margin: 5px;
+	table {
+		width: 100%;
+		margin-top: 10px;
+		margin-bottom: 5px;
+		margin-bottom: 10px;
+		border: 2px solid #bc683c;
+		background-color: #ecbd84;
+		border-collapse: separate;
+		border-spacing: 1px;
+		tr {
+			display: table-row;
+			th {
+				font-size: 8pt;
+				letter-spacing: 0pt;
+				text-shadow: 1px 1px 0px #356847;
+				padding-left: 4px;
+				padding-right: 4px;
+				padding-bottom: 8px;
+				height: 41px;
+				vertical-align: bottom;
+				color: #fffdba;
+				text-transform: uppercase;
+				font-weight: bold;
+				letter-spacing: 1pt;
+				text-align: left;
+				white-space: nowrap;
+				border: 1px solid #356847;
+				background-color: #c64e36;
+				background-image: url('~@/assets/background/table_header.gif');
+				background-position: left bottom;
+				max-width: 222px;
+				&.name {
+					max-width: 200px;
+				}
+				&.type {
+					max-width: 15px;
+				}
+				&.state {
+					max-width: 15px;
+				}
+			}
+			td {
+				font-size: 9pt;
+				padding-right: 5px;
+				padding-top: 1px;
+				padding-bottom: 1px;
+				color: #710;
+				background-color: #f3ca92;
+				border: 1px solid #c88f44;
+				&.name {
+					background-image: url('~@/assets/background/table_cell.gif');
+					background-position: 0px 0px;
+					padding-left: 15px;
+					max-width: 222px;
+					p {
+						padding-top: 4px;
+					}
+					img {
+						float: left;
+						position: relative;
+						margin-right: 5px;
+						vertical-align: bottom;
+					}
+				}
+				&.type {
+					font-weight: bold;
+					text-align: center;
+					color: #bc683c;
+					background-image: url('~@/assets/background/table_cell.gif');
+					background-position: -10px 0px;
+					max-width: 4px;
+				}
+				&.state {
+					vertical-align: top;
+					max-width: 40px;
+					img {
+						float: left;
+						position: relative;
+						left: 17px;
+						top: 5px;
+						cursor: help;
+					}
+					background-image: url('~@/assets/background/table_cell.gif');
+					background-position: -10px 0px;
+				}
+			}
+		}
+		.disabled {
+			td {
+				opacity: 0.4;
+				zoom: 1;
+				&.state {
+					background-color: red;
+					background-image: none;
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+</style>

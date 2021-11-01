@@ -8,7 +8,10 @@ import {
 	createDinozRequest,
 	getDinozFicheRequest,
 	getCanDinozChangeName,
-	setDinozNameRequest
+	setDinozNameRequest,
+	getDinozSkillRequest,
+	getDinozSkillAndStatusRequest,
+	setSkillSetRequest
 } from '../dao/dinozDao.js';
 import {
 	Dinoz,
@@ -16,10 +19,17 @@ import {
 	BasicDinoz,
 	DinozFiche,
 	Action,
-	Item
+	Item,
+	DinozSkill
 } from '../models/index.js';
-import _ from 'lodash';
-import { actions, level, race } from '../constants/index.js';
+import _, { find } from 'lodash';
+import {
+	actions,
+	level,
+	race,
+	skillList,
+	statusList
+} from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 
 const getDinozFiche = async (
@@ -85,6 +95,35 @@ function getAvailableActions(): Array<string> {
 	actionList.push('follow');
 	return actionList;
 }
+
+const getDinozSkill = async (
+	req: Request,
+	res: Response
+): Promise<Response> => {
+	const dinozId: number = parseInt(req.params.id);
+	const dinozSkill: Dinoz | null = await getDinozSkillRequest(dinozId);
+
+	if (dinozSkill === null) {
+		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
+	}
+
+	if (dinozSkill.playerId !== req.user!.playerId) {
+		return res
+			.status(500)
+			.send(`Dinoz ${dinozId} doesn't belong to player ${dinozSkill.playerId}`);
+	}
+
+	const response: Array<DinozSkill> = [];
+	dinozSkill.skill.forEach(skill => {
+		let skillFound: DinozSkill = skillList.find(
+			skillDinoz => skillDinoz.skillId === skill.skillId
+		)!;
+		skillFound.state = skill.getDataValue('AssDinozSkill').state;
+		response.push(skillFound);
+	});
+
+	return res.status(200).send(response);
+};
 
 const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	// Get dinoz details thanks to his ID
@@ -190,4 +229,62 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 	return res.status(200).send();
 };
 
-export { getDinozFiche, buyDinoz, setDinozName };
+const setSkillState = async (
+	req: Request,
+	res: Response
+): Promise<Response> => {
+	const dinozId: number = parseInt(req.params.id);
+	const skillToUpdate: number = parseInt(req.body.skillId);
+	const skillStateToUpdate: boolean = req.body.skillState;
+
+	const dinoz: Dinoz | null = await getDinozSkillAndStatusRequest(dinozId);
+
+	// Check if dinoz exists in database
+	if (dinoz === null) {
+		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
+	}
+
+	// Check if dinoz belongs to player who do the request
+	if (dinoz.playerId !== req.user!.playerId) {
+		return res
+			.status(500)
+			.send(`Dinoz ${dinozId} doesn't belong to player ${dinoz.playerId}`);
+	}
+
+	// Check if dinoz can change his skills
+	const amulst = dinoz.status.some(
+		status => status.statusId === statusList.STATEGY_IN_130_LESSONS
+	);
+
+	if (!amulst) {
+		return res
+			.status(500)
+			.send(`Dinoz ${dinozId} doesn't have the good status`);
+	}
+
+	// Check if dinoz know the skill
+	const dinozKnowThisSkill = dinoz.skill.some(
+		skill => skill.skillId === skillToUpdate
+	);
+
+	if (!dinozKnowThisSkill) {
+		return res
+			.status(500)
+			.send(`Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
+	}
+
+	// Check if skill can be activate / desactivate
+	const skillIsActivable = skillList.find(
+		skill => skill.skillId === skillToUpdate
+	);
+
+	if (!skillIsActivable!.activable) {
+		return res.status(500).send(`Skill ${skillToUpdate} cannot be activated`);
+	}
+
+	await setSkillSetRequest(dinozId, skillToUpdate, skillStateToUpdate);
+
+	return res.status(200).send(!skillStateToUpdate);
+};
+
+export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState };

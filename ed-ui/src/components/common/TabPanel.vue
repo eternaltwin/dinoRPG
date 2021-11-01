@@ -13,7 +13,7 @@
 		</ul>
 		<MapTab v-if="tabSelected === 1" />
 		<InventoryTab v-if="tabSelected === 2" />
-		<DetailsTab v-if="tabSelected === 3" />
+		<DetailsTab v-if="tabSelected === 3" :dinozData="dinozData" />
 	</div>
 </template>
 
@@ -26,6 +26,7 @@ import MapTab from '@/components/common/MapTab.vue';
 
 export default defineComponent({
 	name: 'TabPanel',
+	props: { dinozData: Object },
 	components: {
 		InventoryTab,
 		DetailsTab,

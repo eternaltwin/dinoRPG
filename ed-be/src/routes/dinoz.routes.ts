@@ -2,7 +2,9 @@ import { Router } from 'express';
 import {
 	getDinozFiche,
 	buyDinoz,
-	setDinozName
+	setDinozName,
+	getDinozSkill,
+	setSkillState
 } from '../business/dinozService.js';
 import { apiRoutes } from '../constants/index.js';
 
@@ -18,5 +20,11 @@ routes.post(`${commonPath}/buydinoz/:id`, buyDinoz);
 
 // Set dinoz name
 routes.put(`${commonPath}/setname/:id`, setDinozName);
+
+// Get dinoz Skill
+routes.get(`${commonPath}/skill/:id`, getDinozSkill);
+
+// Set skill State
+routes.put(`${commonPath}/setskillstate/:id`, setSkillState);
 
 export default routes;

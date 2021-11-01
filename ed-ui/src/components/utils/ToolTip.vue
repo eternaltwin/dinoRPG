@@ -73,6 +73,18 @@ export default defineComponent({
 		padding-right: 0.8em;
 		color: #fbf261;
 	}
+	h3 {
+		margin: 0;
+		font-size: 10pt !important;
+		line-height: 10.5pt;
+		padding-right: 1em;
+		padding-left: 1em;
+		padding-bottom: 2px;
+		font-weight: normal;
+		color: white;
+		font-size: 10pt;
+		text-align: justify;
+	}
 	p {
 		margin: 0;
 		font-size: 10pt !important;

@@ -3,7 +3,7 @@
 		<li :class="getMaxElement() === fire ? 'max' : ''">
 			<Tooltip theme="small">
 				<template #tooltip-trigger>
-					<img :src="getImg(0)" alt="fire" /> {{ fire }}
+					<img :src="getImg('fire')" alt="fire" /> {{ fire }}
 				</template>
 				<template #tooltip-content="{ formatContent }">
 					<p v-html="formatContent($t('element.fire'))" />
@@ -13,7 +13,7 @@
 		<li :class="getMaxElement() === wood ? 'max' : ''">
 			<Tooltip theme="small">
 				<template #tooltip-trigger>
-					<img :src="getImg(1)" alt="wood" /> {{ wood }}
+					<img :src="getImg('wood')" alt="wood" /> {{ wood }}
 				</template>
 				<template #tooltip-content="{ formatContent }">
 					<p v-html="formatContent($t('element.wood'))" />
@@ -23,17 +23,17 @@
 		<li :class="getMaxElement() === water ? 'max' : ''">
 			<Tooltip theme="small">
 				<template #tooltip-trigger>
-					<img :src="getImg(2)" alt="water" /> {{ water }}
+					<img :src="getImg('water')" alt="water" /> {{ water }}
 				</template>
 				<template #tooltip-content="{ formatContent }">
 					<p v-html="formatContent($t('element.water'))" />
 				</template>
 			</Tooltip>
 		</li>
-		<li :class="getMaxElement() === fire ? 'max' : ''">
+		<li :class="getMaxElement() === light ? 'max' : ''">
 			<Tooltip theme="small">
 				<template #tooltip-trigger>
-					<img :src="getImg(3)" alt="light" /> {{ light }}
+					<img :src="getImg('light')" alt="light" /> {{ light }}
 				</template>
 				<template #tooltip-content="{ formatContent }">
 					<p v-html="formatContent($t('element.light'))" />
@@ -43,7 +43,7 @@
 		<li :class="getMaxElement() === air ? 'max' : ''">
 			<Tooltip theme="small">
 				<template #tooltip-trigger>
-					<img :src="getImg(4)" alt="air" /> {{ air }}
+					<img :src="getImg('air')" alt="air" /> {{ air }}
 				</template>
 				<template #tooltip-content="{ formatContent }">
 					<p v-html="formatContent($t('element.air'))" />
@@ -68,7 +68,7 @@ export default defineComponent({
 		air: { type: Number, required: true }
 	},
 	methods: {
-		getImg(index: number): string {
+		getImg(index: string): string {
 			return require(`@/assets/elements/elem_${index}.webp`);
 		},
 		getMaxElement(): number {

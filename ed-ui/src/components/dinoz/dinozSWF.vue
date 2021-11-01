@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { url } from '@/utils/constants';
+import { url } from '@/constants';
 
 export default defineComponent({
 	name: 'DinozSWF',

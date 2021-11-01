@@ -13,7 +13,7 @@ import {
 import { getPlayerRewardsRequest } from '../dao/playerDao.js';
 import _ from 'lodash';
 import { getConfig } from '../utils/context.js';
-import { race, reward, skill } from '../constants/index.js';
+import { race, reward, skillList } from '../constants/index.js';
 
 /**
  * Get all dinoz data from regular dinoz shop
@@ -128,7 +128,7 @@ function setDinozRaceAndSkill(dinoz: DinozShop) {
 	if (raceFound.skillId) {
 		dinoz.setDataValue(
 			'skill',
-			skill.find(skill => skill.skillId === raceFound.skillId)!.name
+			skillList.find(skillList => skillList.skillId === raceFound.skillId)!.name
 		);
 	}
 

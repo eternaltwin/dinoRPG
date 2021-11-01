@@ -4,6 +4,8 @@ import {
 	Item,
 	Place,
 	Player,
+	AssDinozSkill,
+	Skill,
 	Status
 } from '../models/index.js';
 
@@ -63,6 +65,47 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 	});
 };
 
+const getDinozSkillRequest = (dinozId: number): Promise<Dinoz | null> => {
+	return Dinoz.findOne({
+		attributes: ['playerId'],
+		include: [
+			{
+				model: Skill,
+				attributes: ['skillId'],
+				through: {
+					attributes: ['state']
+				}
+			}
+		],
+		where: { dinozId: dinozId }
+	});
+};
+
+const getDinozSkillAndStatusRequest = (
+	dinozId: number
+): Promise<Dinoz | null> => {
+	return Dinoz.findOne({
+		attributes: ['playerId'],
+		include: [
+			{
+				model: Skill,
+				attributes: ['skillId'],
+				through: {
+					attributes: []
+				}
+			},
+			{
+				model: Status,
+				attributes: ['statusId'],
+				through: {
+					attributes: []
+				}
+			}
+		],
+		where: { dinozId: dinozId }
+	});
+};
+
 const getCanDinozChangeName = (dinozId: number): Promise<Dinoz | null> => {
 	return Dinoz.findOne({
 		attributes: ['canChangeName'],
@@ -89,9 +132,27 @@ const setDinozNameRequest = (dinoz: Dinoz): Promise<[number, Array<Dinoz>]> => {
 	);
 };
 
+const setSkillSetRequest = (
+	dinozId: number,
+	skillId: number,
+	state: boolean
+): Promise<[number, Array<AssDinozSkill>]> => {
+	return AssDinozSkill.update(
+		{
+			state: state
+		},
+		{
+			where: { dinozId: dinozId, skillId: skillId }
+		}
+	);
+};
+
 export {
 	createDinozRequest,
 	getDinozFicheRequest,
 	getCanDinozChangeName,
-	setDinozNameRequest
+	setDinozNameRequest,
+	getDinozSkillRequest,
+	getDinozSkillAndStatusRequest,
+	setSkillSetRequest
 };
