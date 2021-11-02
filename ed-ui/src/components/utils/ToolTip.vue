@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { formatText } from '@/utils/formatText';
+//import { formatText } from '@/utils/formatText';
 import { Tippy } from 'vue-tippy';
 import { defineComponent } from 'vue';
 
@@ -26,7 +26,7 @@ export default defineComponent({
 	components: { Tippy },
 	methods: {
 		formatContent(value: string): string {
-			return !value ? '' : formatText(value.toString());
+			return value;
 		}
 	}
 });

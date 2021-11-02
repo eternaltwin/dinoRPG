@@ -10,7 +10,8 @@ export const race = ({
 		nbrLightCase: 1,
 		nbrAirCase: 0,
 		price: 20000,
-		swfLetter: '2'
+		swfLetter: '2',
+		skillId: 61102
 	},
 	SIRAIN: {
 		raceId: 2,
@@ -77,7 +78,7 @@ export const race = ({
 		nbrAirCase: 0,
 		price: 20000,
 		swfLetter: '1',
-		skillId: 1
+		skillId: 61103
 	},
 	PLANAILLE: {
 		raceId: 8,
@@ -111,7 +112,8 @@ export const race = ({
 		nbrLightCase: 1,
 		nbrAirCase: 0,
 		price: 16000,
-		swfLetter: '0'
+		swfLetter: '0',
+		skillId: 61104
 	},
 	HIPPOCLAMP: {
 		raceId: 11,
