@@ -16,7 +16,7 @@
   before_script:
     - cd ed-be
     - yarn install
-    - yarn tsc
+    - yarn build
 
 front-lint:
   <<: *node_front
@@ -33,7 +33,6 @@ back-coverage:
       - "ed-be/coverage/"
       - junit.xml
   script:
-    - ls
     - yarn test:ci
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
