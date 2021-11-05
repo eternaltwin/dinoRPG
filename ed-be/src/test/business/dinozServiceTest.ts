@@ -79,7 +79,6 @@ describe('Test de la fonction buyDinoz()', function () {
 		};
 		spyOn(Dinoz, 'build').and.returnValue(dinozBuilt);
 		spyOn(Dinoz, 'create').and.returnValue(dinozBuilt);
-		
 	});
 
 	it('Cas nominal', async function () {
