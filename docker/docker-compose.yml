@@ -42,7 +42,7 @@ services:
       context: ./EternalTwin
       dockerfile: Dockerfile
     volumes:
-      - ../EternalTwin:/www
+      - ../Eternaltwin:/www
     networks:
       - drpg_network
     stdin_open: true
