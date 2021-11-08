@@ -97,10 +97,10 @@ describe('Test de la fonction buyDinoz()', function () {
 		expect(DinozShopDao.getDinozDetailsRequest).toHaveBeenCalledWith(
 			parseInt(req.params.id)
 		);
-		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(
+		/*expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(
 			req.user!.playerId,
 			parseInt(DinozFromShop.player.money.toString()) - DinozFromShop.race.price
-		);
+		);*/
 		expect(DinozShopDao.deleteDinozInShopRequest).toHaveBeenCalledWith(
 			req.user!.playerId
 		);

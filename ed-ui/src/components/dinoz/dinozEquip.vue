@@ -1,9 +1,9 @@
 <template>
 	<div class="equip">
 		<ul>
-			<li v-for="(item, index) in dinozData.item" :key="index">
+			<li v-for="(item, index) in itemList" :key="index">
 				<a href="#" class="icon">
-					<img :src="getImg('item', 'item_', item.name)" :alt="item.name" />
+					<img :src="getImg($t(`item.imgName.${item}`))" :alt="item" />
 				</a>
 			</li>
 		</ul>
@@ -15,10 +15,12 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'DinozEquip',
-	props: ['dinozData'],
+	props: {
+		itemList: Array
+	},
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
+		getImg(imgName: string): string {
+			return require(`@/assets/item/item_${imgName}.webp`);
 		}
 	}
 });

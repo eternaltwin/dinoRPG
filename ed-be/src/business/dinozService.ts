@@ -19,14 +19,13 @@ import {
 	BasicDinoz,
 	DinozFiche,
 	Action,
-	Item,
 	DinozSkill
 } from '../models/index.js';
-import _, { find } from 'lodash';
 import {
 	actions,
-	level,
-	race,
+	levelList,
+	itemList,
+	raceList,
 	skillList,
 	statusList
 } from '../constants/index.js';
@@ -43,12 +42,12 @@ const getDinozFiche = async (
 		dinozId
 	)) as DinozFiche | null;
 
-	if (_.isNull(dinozDetails)) {
+	if (dinozDetails === null) {
 		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
 	}
 
 	// If player found is different from player who do the request, throw exception
-	if (dinozDetails!.player.playerId !== req.user!.playerId) {
+	if (dinozDetails!.playerId !== req.user!.playerId) {
 		return res
 			.status(500)
 			.send(
@@ -58,16 +57,29 @@ const getDinozFiche = async (
 			);
 	}
 
-	// Set item list
-	let itemList: Array<Item> = [];
-	dinozDetails.assDinozItem.forEach(item => itemList.push(item.item));
-	dinozDetails.setDataValue('item', itemList);
-	dinozDetails.setDataValue('assDinozItem', undefined);
+	// Set item list, we just put object name in the list, we don't need other data about items
+	let items: Array<number> = [];
+	dinozDetails.item.forEach(item =>
+		items.push(
+			Object.values(itemList).find(itemList => itemList.itemId === item.itemId)!
+				.itemId
+		)
+	);
+
+	dinozDetails.setDataValue('item', undefined);
+	dinozDetails.setDataValue('items', items);
+
+	// Set status
+	let statusList: Array<number> = [];
+	dinozDetails.status.forEach(status => statusList.push(status.statusId));
+
+	dinozDetails.setDataValue('status', undefined);
+	dinozDetails.setDataValue('statusList', statusList);
 
 	// Set max experience
 	dinozDetails.setDataValue(
 		'maxExperience',
-		level.find(level => level.id === dinozDetails.level)!.experience
+		levelList.find(level => level.id === dinozDetails.level)!.experience
 	);
 
 	// Set availables actions for this dinoz
@@ -118,7 +130,7 @@ const getDinozSkill = async (
 		let skillFound: DinozSkill = skillList.find(
 			skillDinoz => skillDinoz.skillId === skill.skillId
 		)!;
-		skillFound.state = skill.getDataValue('AssDinozSkill').state;
+		skillFound.state = skill.state;
 		response.push(skillFound);
 	});
 
@@ -131,16 +143,16 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		parseInt(req.params.id)
 	);
 
-	if (_.isNull(dinozData)) {
+	if (dinozData === null) {
 		return res.status(500).send('Error: dinoz data cannot be null');
 	}
 
-	dinozData.race = Object.values(race).find(
+	const race = Object.values(raceList).find(
 		race => race.raceId === dinozData.raceId
 	)!;
 
 	// Throws an exception if player doesn't have enough money to buy the dinoz
-	if (dinozData.player.money < dinozData.race.price) {
+	if (dinozData.player.money < race.price) {
 		return res
 			.status(500)
 			.send("You don't have enough money to buy this dinoz");
@@ -156,7 +168,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	const newDinoz: Dinoz = Dinoz.build({
 		name: '?',
 		isFrozen: false,
-		raceId: dinozData.race.raceId,
+		raceId: race.raceId,
 		level: 1,
 		playerId: req.user!.playerId,
 		placeId: 1,
@@ -166,15 +178,15 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		experience: 0,
 		canChangeName: true,
 		canGather: false,
-		nbrUpFire: dinozData.race.nbrFireCase,
-		nbrUpWood: dinozData.race.nbrWoodCase,
-		nbrUpWater: dinozData.race.nbrWaterCase,
-		nbrUpLight: dinozData.race.nbrLightCase,
-		nbrUpAir: dinozData.race.nbrAirCase
+		nbrUpFire: race.nbrFireCase,
+		nbrUpWood: race.nbrWoodCase,
+		nbrUpWater: race.nbrWaterCase,
+		nbrUpLight: race.nbrLightCase,
+		nbrUpAir: race.nbrAirCase
 	});
 
 	// Set player money
-	const newMoney: number = dinozData.player.money - dinozData.race.price;
+	const newMoney: number = dinozData.player.money - race.price;
 	await setPlayerMoneyRequest(req.user!.playerId!, newMoney);
 
 	// Delete all dinoz from dinoz shop
@@ -184,8 +196,8 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	const dinozCreated: Dinoz = await createDinozRequest(newDinoz.get());
 
 	// Add skill to created dinoz
-	if (dinozData.race.skillId) {
-		addSkillToDinoz(dinozCreated.dinozId, dinozData.race.skillId);
+	if (race.skillId) {
+		addSkillToDinoz(dinozCreated.dinozId, race.skillId);
 	}
 
 	const dinozToSend: BasicDinoz = {
@@ -253,7 +265,7 @@ const setSkillState = async (
 
 	// Check if dinoz can change his skills
 	const amulst = dinoz.status.some(
-		status => status.statusId === statusList.STATEGY_IN_130_LESSONS
+		status => status.statusId === statusList.STRATEGY_IN_130_LESSONS
 	);
 
 	if (!amulst) {

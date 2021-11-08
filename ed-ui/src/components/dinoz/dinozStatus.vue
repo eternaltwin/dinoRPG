@@ -6,17 +6,15 @@
 		<div class="fx_content">
 			<Tooltip
 				theme="normal"
-				v-for="(status, index) in statusList"
+				v-for="(status, index) in dinozStatus"
 				:key="index"
 			>
 				<template #tooltip-trigger>
-					<img :src="getImg(status.name)" />
+					<img :src="getImg(statusList.imgName[status])" />
 				</template>
 				<template #tooltip-content="{ formatContent }">
-					<h1 v-html="formatContent($t(`status.name.${status.name}`))"></h1>
-					<p
-						v-html="formatContent($t(`status.description.${status.name}`))"
-					></p>
+					<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
+					<p v-html="formatContent($t(`status.description.${status}`))"></p>
 				</template>
 			</Tooltip>
 		</div>
@@ -26,11 +24,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
+import { statusList } from '@/constants';
 
 export default defineComponent({
 	name: 'DinozStatus',
+	data() {
+		return {
+			statusList: statusList
+		};
+	},
 	props: {
-		statusList: Array
+		dinozStatus: Array
 	},
 	components: {
 		Tooltip

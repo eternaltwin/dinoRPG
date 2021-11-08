@@ -12,7 +12,7 @@ export interface Dinoz {
 	canGather?: boolean;
 	place: Place;
 	race?: DinozRace;
-	assDinozItem: Array<Item>;
+	item: Array<Item>;
 	status: Status;
 	actions: Array<Action>;
 	skill: Array<Skill>;

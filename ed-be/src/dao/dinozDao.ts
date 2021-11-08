@@ -1,12 +1,9 @@
 import {
 	AssDinozItem,
-	Dinoz,
-	Item,
-	Place,
-	Player,
 	AssDinozSkill,
-	Skill,
-	Status
+	AssDinozStatus,
+	Dinoz,
+	Player
 } from '../models/index.js';
 
 const createDinozRequest = (newDinoz: Dinoz): Promise<Dinoz> => {
@@ -27,38 +24,20 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 			'nbrUpLight',
 			'nbrUpAir',
 			'name',
-			'level'
+			'level',
+			'placeId',
+			'playerId'
 		],
 		include: [
 			{
-				model: Player,
-				attributes: ['playerId'],
-				required: false
-			},
-			{
-				model: Place,
-				attributes: ['name'],
-				required: false
-			},
-			{
-				model: Status,
-				attributes: ['name'],
-				through: {
-					attributes: []
-				},
+				model: AssDinozStatus,
+				attributes: ['statusId'],
 				required: false
 			},
 			{
 				model: AssDinozItem,
-				attributes: ['id'],
-				required: false,
-				include: [
-					{
-						model: Item,
-						attributes: ['itemId'],
-						required: false
-					}
-				]
+				attributes: ['itemId'],
+				required: false
 			}
 		],
 		where: { dinozId: dinozId }
@@ -70,11 +49,8 @@ const getDinozSkillRequest = (dinozId: number): Promise<Dinoz | null> => {
 		attributes: ['playerId'],
 		include: [
 			{
-				model: Skill,
-				attributes: ['skillId'],
-				through: {
-					attributes: ['state']
-				}
+				model: AssDinozSkill,
+				attributes: ['skillId', 'state']
 			}
 		],
 		where: { dinozId: dinozId }
@@ -88,18 +64,12 @@ const getDinozSkillAndStatusRequest = (
 		attributes: ['playerId'],
 		include: [
 			{
-				model: Skill,
-				attributes: ['skillId'],
-				through: {
-					attributes: []
-				}
+				model: AssDinozSkill,
+				attributes: ['skillId']
 			},
 			{
-				model: Status,
-				attributes: ['statusId'],
-				through: {
-					attributes: []
-				}
+				model: AssDinozStatus,
+				attributes: ['statusId']
 			}
 		],
 		where: { dinozId: dinozId }

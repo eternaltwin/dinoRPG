@@ -5,9 +5,9 @@ import {
 	AllowNull,
 	Column,
 	BelongsTo,
-	ForeignKey
+	ForeignKey,
+	Max
 } from 'sequelize-typescript';
-import { Item } from './item.js';
 import { Player } from './player.js';
 
 type PlayerType = Player;
@@ -26,12 +26,10 @@ export class ItemOwn extends Model {
 	@BelongsTo(() => Player, 'playerId')
 	player!: PlayerType;
 
-	@ForeignKey(() => Item)
+	@Max(20)
+	@AllowNull(false)
 	@Column
 	itemId!: number;
-
-	@BelongsTo(() => Item, 'itemId')
-	item!: Item;
 
 	@AllowNull(false)
 	@Column

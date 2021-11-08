@@ -2,24 +2,18 @@ import {
 	AllowNull,
 	AutoIncrement,
 	BelongsTo,
-	BelongsToMany,
 	Column,
 	CreatedAt,
 	ForeignKey,
 	HasMany,
+	Max,
 	Model,
 	PrimaryKey,
 	Table,
 	UpdatedAt
 } from 'sequelize-typescript';
 
-import { DinozRace } from './dinozRace.js';
-import { Element } from './element.js';
-import { Mission } from './mission.js';
-import { Place } from './place.js';
 import { Player } from './player.js';
-import { Skill } from './skill.js';
-import { Status } from './status.js';
 import { AssDinozItem } from './assDinozItem.js';
 import { AssDinozSkill } from './assDinozSkill.js';
 import { AssDinozStatus } from './assDinozStatus.js';
@@ -33,13 +27,13 @@ export class Dinoz extends Model {
 	dinozId!: number;
 
 	@HasMany(() => AssDinozItem, 'dinozId')
-	assDinozItem!: Array<AssDinozItem>;
+	item!: Array<AssDinozItem>;
 
-	@BelongsToMany(() => Skill, () => AssDinozSkill)
-	skill!: Array<Skill>;
+	@HasMany(() => AssDinozSkill, 'dinozId')
+	skill!: Array<AssDinozSkill>;
 
-	@BelongsToMany(() => Status, () => AssDinozStatus)
-	status!: Array<Status>;
+	@HasMany(() => AssDinozStatus, 'dinozId')
+	status!: Array<AssDinozStatus>;
 
 	@Column
 	following!: number;
@@ -52,38 +46,25 @@ export class Dinoz extends Model {
 	@Column
 	isFrozen!: boolean;
 
-	@ForeignKey(() => DinozRace)
+	@Max(21)
 	@AllowNull(false)
 	@Column
 	raceId!: number;
-
-	@BelongsTo(() => DinozRace, 'raceId')
-	race!: DinozRace;
 
 	@AllowNull(false)
 	@Column
 	level!: number;
 
-	@ForeignKey(() => Mission)
 	@Column
 	missionId!: number;
 
-	@BelongsTo(() => Mission, 'missionId')
-	mission!: Mission;
-
-	@ForeignKey(() => Element)
+	@Max(5)
 	@Column
 	nextUpElementId!: number;
 
-	@BelongsTo(() => Element, 'nextUpElementId')
-	nextUp!: Element;
-
-	@ForeignKey(() => Element)
+	@Max(5)
 	@Column
 	nextUpAltElementId!: number;
-
-	@BelongsTo(() => Element, 'nextUpAltElementId')
-	nextUpAlt!: Element;
 
 	@ForeignKey(() => Player)
 	@AllowNull(false)
@@ -93,13 +74,10 @@ export class Dinoz extends Model {
 	@BelongsTo(() => Player, 'playerId')
 	player!: Player;
 
-	@ForeignKey(() => Place)
+	@Max(50)
 	@AllowNull(false)
 	@Column
 	placeId!: number;
-
-	@BelongsTo(() => Place, 'placeId')
-	place!: Place;
 
 	@AllowNull(false)
 	@Column

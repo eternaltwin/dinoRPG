@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { Dinoz, DinozShop } from '../../models/index.js';
+import { Dinoz } from '../../models/index.js';
 import { DinozFromShop, DinozShopArray } from '../data/dinozShopData.js';
 import { PlayerWithRewards } from '../data/playerData.js';
-import { DinozRaceArray } from '../data/raceData.js';
 import { player } from '../utils/constants.js';
 import { getDinozFromDinozShop } from '../../business/shopService.js';
 
@@ -59,8 +58,7 @@ describe('Test de la fonction getDinozFromDinozShop', function () {
 			req.user!.playerId!
 		);
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(
-			req.user!.playerId!,
-			expect.any(Array)
+			req.user!.playerId!
 		);
 		expect(DinozShopDao.createMultipleDinoz).toHaveBeenLastCalledWith(
 			expect.any(Array)
@@ -98,8 +96,7 @@ describe('Test de la fonction getDinozFromDinozShop', function () {
 			req.user!.playerId!
 		);
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(
-			req.user!.playerId!,
-			expect.any(Array)
+			req.user!.playerId!
 		);
 	});
 });

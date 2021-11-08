@@ -1,6 +1,6 @@
 import { DinozRace } from '../models';
 
-export const race = ({
+export const raceList = {
 	WINKS: {
 		raceId: 1,
 		name: 'winks',
@@ -148,4 +148,6 @@ export const race = ({
 		price: 16000,
 		swfLetter: '0'
 	}
-} as unknown) as { [name: string]: DinozRace };
+} as { [name: string]: DinozRace };
+
+// 21 races en tout

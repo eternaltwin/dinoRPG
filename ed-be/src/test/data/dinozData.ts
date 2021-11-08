@@ -1,7 +1,7 @@
 import { Dinoz } from '../../models';
 import { player, dinozId } from '../utils/constants';
 
-export const BasicDinoz = {
+export const BasicDinoz = ({
 	id: dinozId,
 	player: {
 		playerId: player.id_1
@@ -11,4 +11,4 @@ export const BasicDinoz = {
 	},
 	level: 1,
 	assDinozItem: [{}]
-} as Dinoz;
+} as unknown) as Dinoz;

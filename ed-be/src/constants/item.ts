@@ -2,7 +2,7 @@ import { ItemFiche } from '../models';
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.
-export const listOfAllItems = ({
+export const itemList = {
 	// Irma's Potion: new action
 	POTION_IRMA: {
 		itemId: 1,
@@ -223,4 +223,4 @@ export const listOfAllItems = ({
 		maxQuantity: 123,
 		price: 1234 // TODO double check
 	}
-} as unknown) as { [name: string]: ItemFiche };
+} as { [name: string]: ItemFiche };

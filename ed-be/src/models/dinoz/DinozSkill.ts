@@ -2,11 +2,12 @@ import {
 	ElementType,
 	Energy,
 	SkillType,
-	Skill,
 	SkillTree
 } from '../../models/index.js';
 
-export interface DinozSkill extends Skill {
+export interface DinozSkill {
+	skillId: number;
+	name: string;
 	type: SkillType;
 	energy: Energy;
 	element: Array<ElementType>;

@@ -29,4 +29,4 @@ EOSQL
 
 #cat /import/drop.sql | psql --username etwin.dev.write etwin.dev
 #cat /import/dump_12-01-2021_20_33_41.sql | psql --username etwin.dev.write etwin.dev
-cat /import/20210820.sql | psql --username etwin.dev.write eternaldinodb
+cat /import/21211105.sql | psql --username etwin.dev.write eternaldinodb

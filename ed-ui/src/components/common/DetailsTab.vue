@@ -91,8 +91,8 @@
 <script lang="ts" scoped>
 import { defineComponent } from 'vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
-import { status } from '@/constants';
-import { Skill, Status } from '@/models';
+import { statusList } from '@/constants';
+import { Skill } from '@/models';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
 
@@ -122,9 +122,8 @@ export default defineComponent({
 			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
-			return this.dinozData!.status.some(
-				(dinozStatus: Status) =>
-					dinozStatus.name === status.STRATEGY_IN_130_LESSONS
+			return this.dinozData!.statusList.includes(
+				statusList.id.STRATEGY_IN_130_LESSONS
 			);
 		}
 	},

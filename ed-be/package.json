@@ -9,7 +9,7 @@
     "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
     "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "test:ci": "jest --config ./jest.config.json --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --watchAll=false",
-    "build":"tsc"
+    "build": "tsc"
   },
   "keywords": [
     "nodejs",

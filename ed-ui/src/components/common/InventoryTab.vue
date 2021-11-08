@@ -15,14 +15,18 @@
 					<td class="name">
 						<Tooltip theme="normal">
 							<template #tooltip-trigger>
-								<img :src="getImg('item', 'item_', item.name)" />
-								{{ $t(`item.name.${item.name}`) }}
+								<img
+									:src="
+										getImg('item', 'item_', $t(`item.imgName.${item.itemId}`))
+									"
+								/>
+								{{ $t(`item.name.${item.itemId}`) }}
 							</template>
 							<template #tooltip-content="{ formatContent }">
-								<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
+								<h1 v-html="formatContent($t(`item.name.${item.itemId}`))" />
 								<h2>{{ $t(`tooltip.maxQuantity`) }} {{ item.maxQuantity }}</h2>
 								<p
-									v-html="formatContent($t(`item.description.${item.name}`))"
+									v-html="formatContent($t(`item.description.${item.itemId}`))"
 								/>
 							</template>
 						</Tooltip>

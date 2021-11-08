@@ -1,7 +1,6 @@
 import {
 	AllowNull,
 	AutoIncrement,
-	BelongsToMany,
 	Column,
 	CreatedAt,
 	HasMany,
@@ -14,8 +13,6 @@ import { ItemOwn } from './itemOwn.js';
 import { AssPlayerReward } from './assPlayerReward.js';
 import { Dinoz } from './dinoz.js';
 import { DinozShop } from './dinozShop.js';
-import { EpicReward } from './epicReward.js';
-import { IngredientGrid } from './ingredientGrid.js';
 
 @Table({ tableName: 'tb_player', timestamps: true })
 export class Player extends Model {
@@ -25,14 +22,11 @@ export class Player extends Model {
 	@Column
 	playerId!: number;
 
-	@BelongsToMany(() => EpicReward, () => AssPlayerReward)
-	reward!: Array<EpicReward>;
+	@HasMany(() => AssPlayerReward, 'playerId')
+	reward!: Array<AssPlayerReward>;
 
 	@HasMany(() => Dinoz, 'playerId')
 	dinoz!: Array<Dinoz>;
-
-	@HasMany(() => IngredientGrid, 'playerId')
-	ingredientGrid!: Array<IngredientGrid>;
 
 	@HasMany(() => DinozShop, 'playerId')
 	dinozShop!: Array<DinozShop>;

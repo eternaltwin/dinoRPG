@@ -1,4 +1,4 @@
-import { Dinoz, EpicReward, Place, Player } from '../models/index.js';
+import { AssPlayerReward, Dinoz, Player } from '../models/index.js';
 
 const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
@@ -11,17 +11,11 @@ const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 				'display',
 				'name',
 				'life',
-				'experience'
+				'experience',
+				'placeId'
 			],
 			where: { isFrozen: false },
-			required: false,
-			include: [
-				{
-					model: Place,
-					attributes: ['name'],
-					required: false
-				}
-			]
+			required: false
 		},
 		where: { playerId: playerId }
 	});
@@ -45,20 +39,12 @@ const createPlayer = (newPlayer: Player): Promise<Player> => {
 	return Player.create(newPlayer);
 };
 
-const getPlayerRewardsRequest = (
-	playerId: number,
-	rewardArray: Array<string>
-): Promise<Player | null> => {
+const getPlayerRewardsRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['quetzuBought'],
 		include: {
-			model: EpicReward,
-			attributes: ['name'],
-			where: { name: rewardArray },
-			through: {
-				attributes: []
-			},
-			required: false
+			model: AssPlayerReward,
+			attributes: ['rewardId']
 		},
 		where: { playerId: playerId }
 	});

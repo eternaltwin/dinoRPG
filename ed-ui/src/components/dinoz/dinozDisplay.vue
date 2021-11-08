@@ -13,8 +13,8 @@
 	></DinozSWF>
 	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
-	<DinozEquip :dinozData="dinozData" />
-	<DinozStatus :statusList="dinozData.status" />
+	<DinozEquip :itemList="dinozData.items" />
+	<DinozStatus :dinozStatus="dinozData.statusList" />
 </template>
 
 <script lang="ts">

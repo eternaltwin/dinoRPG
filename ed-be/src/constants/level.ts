@@ -1,4 +1,4 @@
-export const level = [
+export const levelList = [
 	{
 		id: 1,
 		experience: 100

@@ -6,12 +6,11 @@ import {
 	PrimaryKey,
 	AutoIncrement,
 	ForeignKey,
-	BelongsTo
+	BelongsTo,
+	Max
 } from 'sequelize-typescript';
-import { DinozRace } from './dinozRace.js';
 import { Player } from './player.js';
 
-type DinozRaceType = DinozRace;
 type PlayerType = Player;
 
 @Table({ tableName: 'tb_dinoz_shop', timestamps: false })
@@ -29,12 +28,10 @@ export class DinozShop extends Model {
 	@BelongsTo(() => Player, 'playerId')
 	player!: PlayerType;
 
-	@ForeignKey(() => DinozRace)
+	@Max(21)
+	@AllowNull(false)
 	@Column
 	raceId!: number;
-
-	@BelongsTo(() => DinozRace, 'raceId')
-	race!: DinozRaceType;
 
 	@AllowNull(false)
 	@Column

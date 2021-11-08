@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import {
 	Config,
 	Dinoz,
-	DinozRace,
 	DinozShop,
-	Player
+	Player,
+	DinozRace
 } from '../models/index.js';
 import {
 	getDinozFromDinozShopRequest,
@@ -13,7 +13,7 @@ import {
 import { getPlayerRewardsRequest } from '../dao/playerDao.js';
 import _ from 'lodash';
 import { getConfig } from '../utils/context.js';
-import { race, reward, skillList } from '../constants/index.js';
+import { raceList, rewardList, skillList } from '../constants/index.js';
 
 /**
  * Get all dinoz data from regular dinoz shop
@@ -37,49 +37,43 @@ const getDinozFromDinozShop = async (
 		let randomRace: number;
 		let randomDisplay: string;
 		const availableRaces: Array<DinozRace> = [
-			race.WINKS,
-			race.SIRAIN,
-			race.CASTIVORE,
-			race.NUAGOZ,
-			race.GORILLOZ,
-			race.WANWAN,
-			race.PIGMOU,
-			race.PLANAILLE,
-			race.MOUEFFE
+			raceList.WINKS,
+			raceList.SIRAIN,
+			raceList.CASTIVORE,
+			raceList.NUAGOZ,
+			raceList.GORILLOZ,
+			raceList.WANWAN,
+			raceList.PIGMOU,
+			raceList.PLANAILLE,
+			raceList.MOUEFFE
 		];
-		const rewardArray: Array<string> = [
-			reward.tropheeHippoclamp,
-			reward.tropheePteroz,
-			reward.tropheeRocky,
-			reward.tropheeQuetzu
-		];
+
 		const config: Config = getConfig();
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
 		const player: Player | null = await getPlayerRewardsRequest(
-			req.user!.playerId!,
-			rewardArray
+			req.user!.playerId!
 		);
 
-		if (_.isNull(player)) {
+		if (player === null) {
 			return res.status(500).send('Player not found');
 		}
 
 		player.reward.forEach(playerReward => {
-			if (playerReward.name === reward.tropheeRocky) {
-				availableRaces.push(race.ROCKY);
+			if (playerReward.rewardId === rewardList.TROPHEE_ROCKY) {
+				availableRaces.push(raceList.ROCKY);
 			}
-			if (playerReward.name === reward.tropheeHippoclamp) {
-				availableRaces.push(race.HIPPOCLAMP);
+			if (playerReward.rewardId === rewardList.TROPHEE_HIPPOCLAMP) {
+				availableRaces.push(raceList.HIPPOCLAMP);
 			}
-			if (playerReward.name === reward.tropheePteroz) {
-				availableRaces.push(race.PTEROZ);
+			if (playerReward.rewardId === rewardList.TROPHEE_PTEROZ) {
+				availableRaces.push(raceList.PTEROZ);
 			}
 			if (
-				playerReward.name === reward.tropheeQuetzu &&
+				playerReward.rewardId === rewardList.TROPHEE_QUETZU &&
 				player.quetzuBought < config.shop.buyableQuetzu
 			) {
-				availableRaces.push(race.QUETZU);
+				availableRaces.push(raceList.QUETZU);
 			}
 		});
 
@@ -121,7 +115,7 @@ const getDinozFromDinozShop = async (
 };
 
 function setDinozRaceAndSkill(dinoz: DinozShop) {
-	const raceFound: DinozRace = Object.values(race).find(
+	const raceFound: DinozRace = Object.values(raceList).find(
 		race => race.raceId === dinoz.raceId
 	)!;
 
