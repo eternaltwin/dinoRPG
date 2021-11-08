@@ -8,7 +8,8 @@
 					</span>
 				</span>
 				<span class="name">{{ dinoz.name }}</span>
-				<em> {{ $t(`place.${dinoz.place.name}`) }} </em>
+				<!-- FIXME : À venir avec la map -->
+				<em> {{ $t(`place.dinoville`) }} </em>
 			</a>
 			<!--<SDinozSWF
 			:display="dinoz.display"

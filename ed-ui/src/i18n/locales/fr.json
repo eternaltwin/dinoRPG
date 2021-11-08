@@ -884,5 +884,11 @@
 		"itemEquipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
 		"itemEquipOff": "Cet objet ne peut pas être **équipé**"
 
+	},
+	"pageTitle":{
+		"default":"Dino-RPG [ L'actualité de Dinoland ]",
+		"dinoz":"Dino-RPG [ Fiche de ",
+		"shop":"Dino-RPG [ Marchand : Boutique volante de Dinoland ]",
+		"dinozShop":"Dino-RPG [ Enclos des Dinoz ]"
 	}
 }

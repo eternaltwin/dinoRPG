@@ -43,7 +43,6 @@ sequelize
 		console.error('Error while doing database synchronisation');
 	});
 
-
 app.use(cors());
 
 // parse requests of content-type - application/json

@@ -173,6 +173,9 @@ interface CommonData {
 		width: 143px;
 		height: 32px;
 		margin-bottom: 10px;
+		&:hover {
+			cursor: pointer;
+		}
 
 		a {
 			display: block;

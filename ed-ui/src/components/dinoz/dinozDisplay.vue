@@ -1,4 +1,5 @@
 <template>
+	<Title :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></Title>
 	<a class="left" />
 	<div class="title">
 		{{ dinozData.name }}
@@ -24,6 +25,7 @@ import DinozElements from '@/components/dinoz/dinozElements.vue';
 import DinozBars from '@/components/dinoz/dinozBars.vue';
 import DinozEquip from '@/components/dinoz/dinozEquip.vue';
 import DinozStatus from '@/components/dinoz/dinozStatus.vue';
+import Title from '@/components/utils/Title.vue';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -38,7 +40,8 @@ export default defineComponent({
 		DinozSWF,
 		DinozBars,
 		DinozEquip,
-		DinozStatus
+		DinozStatus,
+		Title
 	},
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {

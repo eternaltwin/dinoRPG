@@ -6,6 +6,7 @@ import { InventoryService } from '@/services';
 import { Item, ItemShop } from '@/models';
 import { errorHandler } from '@/utils';
 import store from '@/store';
+import Title from '@/components/utils/Title.vue';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -15,10 +16,9 @@ export default defineComponent({
 			itemList: [] as Array<Item>
 		};
 	},
-	//components: {
-	//	DinozSWF,
-	//	Elements
-	//},
+	components: {
+		Title
+	},
 	methods: {
 		getImg(folder: string, imgName: string): string {
 			return require(`@/assets/${folder}/${imgName}.webp`);

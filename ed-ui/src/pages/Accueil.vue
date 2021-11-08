@@ -1,8 +1,8 @@
 <template>
 	<div id="centerContent" class="newsSection">
 		<div class="section">
-			<div id="titleActualiteDinoland">
-				<p>{{ $t(`news.actualites`) }}</p>
+			<div class="titlePage">
+				<h3>{{ $t(`news.actualites`) }}</h3>
 			</div>
 		</div>
 	</div>
@@ -15,3 +15,5 @@ export default defineComponent({
 	name: 'Accueil'
 });
 </script>
+
+<style lang="scss" scoped></style>

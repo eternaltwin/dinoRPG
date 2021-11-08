@@ -1,8 +1,9 @@
 <template>
+	<Title :title="$t('pageTitle.dinozShop')" />
 	<div id="centerContent">
 		<div class="enclos">
 			<div class="section">
-				<div>Enclos des dinoz</div>
+				<div class="titlePage">Enclos des dinoz</div>
 			</div>
 			<div class="help">
 				<p v-html="$t('shop.help')"></p>
@@ -66,6 +67,7 @@ import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import Elements from '@/components/data/elements.vue';
 import store from '@/store';
 import Tooltip from '@/components/utils/ToolTip.vue';
+import Title from '@/components/utils/Title.vue';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -78,7 +80,8 @@ export default defineComponent({
 	components: {
 		DinozSWF,
 		Elements,
-		Tooltip
+		Tooltip,
+		Title
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
