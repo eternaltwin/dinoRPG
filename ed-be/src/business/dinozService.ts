@@ -19,7 +19,8 @@ import {
 	BasicDinoz,
 	DinozFiche,
 	Action,
-	DinozSkill
+	DinozSkill,
+	DinozRace
 } from '../models/index.js';
 import {
 	actions,
@@ -30,11 +31,16 @@ import {
 	statusList
 } from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
+import { validationResult } from 'express-validator';
 
 const getDinozFiche = async (
 	req: Request,
 	res: Response
 ): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
@@ -112,11 +118,15 @@ const getDinozSkill = async (
 	req: Request,
 	res: Response
 ): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
 	const dinozId: number = parseInt(req.params.id);
 	const dinozSkill: Dinoz | null = await getDinozSkillRequest(dinozId);
 
 	if (dinozSkill === null) {
-		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
+		return res.status(500).send(`Dinoz ${dinozId} doesn't exist`);
 	}
 
 	if (dinozSkill.playerId !== req.user!.playerId) {
@@ -138,16 +148,21 @@ const getDinozSkill = async (
 };
 
 const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
 	// Get dinoz details thanks to his ID
 	const dinozData: DinozShop | null = await getDinozDetailsRequest(
 		parseInt(req.params.id)
 	);
 
+	// Throw error if dinoz don't exist in database
 	if (dinozData === null) {
-		return res.status(500).send('Error: dinoz data cannot be null');
+		return res.status(500).send(`Dinoz ${req.params.id} doesn't exist`);
 	}
 
-	const race = Object.values(raceList).find(
+	const race: DinozRace = Object.values(raceList).find(
 		race => race.raceId === dinozData.raceId
 	)!;
 
@@ -155,14 +170,14 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	if (dinozData.player.money < race.price) {
 		return res
 			.status(500)
-			.send("You don't have enough money to buy this dinoz");
+			.send(`You don't have enough money to buy dinoz ${req.params.id}`);
 	}
 
 	// Throw unauthorized error if dinoz doesn't belong to player shop
 	if (dinozData.player.playerId !== req.user!.playerId!) {
 		return res
 			.status(500)
-			.send("Unauthorized action, you can't buy this dinoz");
+			.send(`Dinoz ${req.params.id} doesn't belong to your account`);
 	}
 
 	const newDinoz: Dinoz = Dinoz.build({
@@ -215,20 +230,31 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 };
 
 const setDinozName = async (req: Request, res: Response): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
 	// Retrieve player from dinozId
 	const dinoz: Dinoz | null = await getCanDinozChangeName(
 		parseInt(req.params.id)
 	);
 
+	if (dinoz === null) {
+		return res.status(500).send(`Dinoz ${req.params.id} doesn't exist`);
+	}
+
 	// If authenticated player is different from player found, throw exception
 	if (dinoz!.player.playerId !== req.user!.playerId) {
-		return res.status(500).send({
-			message: 'Unauthorized action from player : ' + req.user!.playerId
-		});
-	} else if (!dinoz!.canChangeName) {
-		return res.status(500).send({
-			message: "Can't update dinoz name"
-		});
+		return res
+			.status(500)
+			.send(
+				`Dinoz ${req.params.id} doesn't belong to player ${req.user!.playerId}`
+			);
+	}
+
+	// If player can't change dinoz name, throw exception
+	if (!dinoz!.canChangeName) {
+		return res.status(500).send(`Can't update dinoz name`);
 	}
 
 	const dinozToUpdate = Dinoz.build({
@@ -245,6 +271,10 @@ const setSkillState = async (
 	req: Request,
 	res: Response
 ): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
 	const dinozId: number = parseInt(req.params.id);
 	const skillToUpdate: number = parseInt(req.body.skillId);
 	const skillStateToUpdate: boolean = req.body.skillState;

@@ -26,7 +26,7 @@ export default defineComponent({
 	data() {
 		return {
 			name: undefined as string | undefined,
-			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,}$/
+			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/
 		};
 	},
 	props: {

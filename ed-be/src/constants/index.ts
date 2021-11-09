@@ -15,6 +15,10 @@ export const apiRoutes = {
 	shopRoutes: '/api/shop'
 };
 
+export const regex = {
+	DINOZ_NAME: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/
+};
+
 export const actions = [
 	{
 		name: 'fight',

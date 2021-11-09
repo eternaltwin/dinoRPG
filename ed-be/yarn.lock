@@ -3659,6 +3659,7 @@ __metadata:
     cron: ^1.8.2
     express: ^4.17.1
     express-jwt: ^6.0.0
+    express-validator: ^6.13.0
     jest: ^26.6.3
     jest-junit: ^12.2.0
     jsonwebtoken: ^8.5.1
@@ -3952,6 +3953,16 @@ __metadata:
   version: 0.3.1
   resolution: "express-unless@npm:0.3.1"
   checksum: cf46e3ca59b6fa74528e33c2f94dbf0f43df3fbefeada30cb7b4c39e5656a9acfc318a6b48aa1b0bf2bf6b7f39e41b976858ae80531d691a028554093fe946bf
+  languageName: node
+  linkType: hard
+
+"express-validator@npm:^6.13.0":
+  version: 6.13.0
+  resolution: "express-validator@npm:6.13.0"
+  dependencies:
+    lodash: ^4.17.21
+    validator: ^13.6.0
+  checksum: d0541cfa7719b882bd1c01300f38345a7a3b7c3ca056c256cb19cca8368339434595a8cbf6da89ef6eec69b471bc954f9c9e027334956d1e7e5b71d73ccc3c28
   languageName: node
   linkType: hard
 
@@ -8856,6 +8867,13 @@ typescript@^4.2.3:
   version: 10.11.0
   resolution: "validator@npm:10.11.0"
   checksum: b945e5712af888fc5c984312cf9a7736d16a03f989556291d7984e5747efaaee6cdff671f6b0ef2630a6e2866a2728ab0f341877b878a9ffb8ad770dfcad7170
+  languageName: node
+  linkType: hard
+
+"validator@npm:^13.6.0":
+  version: 13.7.0
+  resolution: "validator@npm:13.7.0"
+  checksum: 2b83283de1222ca549a7ef57f46e8d49c6669213348db78b7045bce36a3b5843ff1e9f709ebf74574e06223461ee1f264f8cc9a26a0060a79a27de079d8286ef
   languageName: node
   linkType: hard
 
