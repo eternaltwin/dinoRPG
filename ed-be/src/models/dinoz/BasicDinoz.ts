@@ -6,5 +6,5 @@ export interface BasicDinoz {
 	life: number;
 	maxLife: number;
 	name: string;
-	place: { name: string };
+	placeId: number;
 }

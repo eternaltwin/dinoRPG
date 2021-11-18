@@ -11,7 +11,9 @@ import {
 	setDinozNameRequest,
 	getDinozSkillRequest,
 	getDinozSkillAndStatusRequest,
-	setSkillSetRequest
+	setSkillSetRequest,
+	getDinozPlaceRequest,
+	setDinozPlaceRequest
 } from '../dao/dinozDao.js';
 import {
 	Dinoz,
@@ -223,7 +225,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		life: dinozCreated.life,
 		maxLife: dinozCreated.maxLife,
 		name: dinozCreated.name,
-		place: { name: 'dinoville' }
+		placeId: dinozCreated.placeId
 	};
 
 	return res.status(200).send(dinozToSend);
@@ -329,4 +331,36 @@ const setSkillState = async (
 	return res.status(200).send(!skillStateToUpdate);
 };
 
-export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState };
+const alphaMove = async (req: Request, res: Response): Promise<Response> => {
+	//FIXME: rework to protect movement to not available place and add payload
+	//Retrieve dinozId
+	const dinozId: number = parseInt(req.params.id);
+	const dinoz: Dinoz | null = await getDinozPlaceRequest(dinozId); //No need to fix it
+
+	// Check if dinoz exists in database
+	if (dinoz === null) {
+		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
+	}
+
+	// // Check if dinoz belongs to player who do the request
+	if (dinoz.playerId !== req.user!.playerId) {
+		return res
+			.status(500)
+			.send(`Dinoz ${dinozId} doesn't belong to player ${dinoz.playerId}`);
+	}
+
+	const placeRand = Math.floor(Math.random() * 8 + 1);
+	await setDinozPlaceRequest(dinozId, placeRand); //No need to fix it, just remove the placeRand
+	const placeString: string = placeRand.toString();
+
+	return res.status(200).send(placeString);
+};
+
+export {
+	getDinozFiche,
+	buyDinoz,
+	setDinozName,
+	getDinozSkill,
+	setSkillState,
+	alphaMove
+};

@@ -2,7 +2,6 @@
 	<Tippy
 		:hide-on-click="false"
 		:allow-h-t-m-l="true"
-		:max-width="280"
 		:follow-cursor="true"
 		:inline-positioning="true"
 		placement="bottom-start"
@@ -112,7 +111,6 @@ export default defineComponent({
 .tippy-box[data-theme~='small'] {
 	background-color: #bc683c;
 	border: 2px solid #86401e;
-	background-position: top, bottom, center;
 	box-sizing: content-box;
 	box-shadow: 4px 4px 12px var(--clr-shadow);
 	position: sticky;
@@ -140,6 +138,32 @@ export default defineComponent({
 	}
 }
 
+.tippy-box[data-theme~='map'] {
+	//Waiting for someone to do it
+	background-color: #bc683c;
+	border: 2px solid #86401e;
+	border-radius: 25px;
+	position: sticky;
+	pointer-events: none;
+	z-index: 10;
+	p {
+		margin: 0;
+		padding: 7px;
+		color: yellow;
+		font-size: 10pt;
+		font-family: Arial;
+		text-align: left;
+		line-height: 10.5pt;
+	}
+	strong {
+		color: #fbf261;
+	}
+	em {
+		color: #f9f1a6;
+		font-size: 9pt;
+		font-style: italic;
+	}
+}
 // See if needed later
 // span.tippy-tooltip {
 // 	font-size: initial !important ;

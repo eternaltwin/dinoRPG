@@ -41,5 +41,12 @@ export const DinozService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	alphaMove(id: string): Promise<void> {
+		//FIXME: rename this function and rework it by adding payload
+		return http()
+			.put(`/dinoz/alphamove/${id}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

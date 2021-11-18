@@ -1,4 +1,5 @@
 <template>
+	<link rel="icon" href="public/favicon.ico" />
 	<Title :title="$t('pageTitle.default')" />
 	<HomePage v-if="displayAuth" />
 	<Data v-else-if="collectData" id="data" />

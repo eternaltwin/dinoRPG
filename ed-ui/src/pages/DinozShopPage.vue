@@ -79,9 +79,9 @@ export default defineComponent({
 	},
 	components: {
 		DinozSWF,
+		Title,
 		Elements,
-		Tooltip,
-		Title
+		Tooltip
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {

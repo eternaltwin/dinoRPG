@@ -3,6 +3,7 @@ import {
 	AssDinozSkill,
 	AssDinozStatus,
 	Dinoz,
+	Place,
 	Player
 } from '../models/index.js';
 
@@ -117,6 +118,26 @@ const setSkillSetRequest = (
 	);
 };
 
+const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz | null> => {
+	return Dinoz.findOne({
+		attributes: ['dinozId', 'placeId', 'playerId'],
+		where: { dinozId: dinozId }
+	});
+};
+
+const setDinozPlaceRequest = (
+	dinozId: number,
+	placeRand: number
+): Promise<[number, Array<Place>]> => {
+	return Dinoz.update(
+		{
+			placeId: placeRand
+		},
+		{
+			where: { dinozId: dinozId }
+		}
+	);
+};
 export {
 	createDinozRequest,
 	getDinozFicheRequest,
@@ -124,5 +145,7 @@ export {
 	setDinozNameRequest,
 	getDinozSkillRequest,
 	getDinozSkillAndStatusRequest,
-	setSkillSetRequest
+	setSkillSetRequest,
+	getDinozPlaceRequest,
+	setDinozPlaceRequest
 };

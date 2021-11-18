@@ -8,8 +8,7 @@
 					</span>
 				</span>
 				<span class="name">{{ dinoz.name }}</span>
-				<!-- FIXME : À venir avec la map -->
-				<em> {{ $t(`place.dinoville`) }} </em>
+				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
 			</a>
 			<!--<SDinozSWF
 			:display="dinoz.display"
@@ -26,6 +25,7 @@
 import { defineComponent } from 'vue';
 import { Dinoz } from '@/models';
 import store from '@/store';
+import { placeList } from '@/constants';
 // import SDinozSWF from '@/components/dinoz/dinozSWF.vue';
 
 export default defineComponent({
@@ -45,6 +45,9 @@ export default defineComponent({
 		getLifeBarWidth(life: number, maxLife: number): string {
 			const width: number = Math.round((life / maxLife) * 36);
 			return `width : ${width}px`;
+		},
+		getPlaceName(placeId: number): string {
+			return placeList.find(place => place.placeId === placeId)!.name;
 		}
 	},
 	computed: {

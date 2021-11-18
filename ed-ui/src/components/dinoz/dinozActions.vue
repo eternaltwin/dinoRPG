@@ -4,6 +4,19 @@
 			<p>{{ $t('layout.action') }}</p>
 		</div>
 		<ul>
+			<!-- FIXME: button is for demo only -->
+			<table class="action_button">
+				<tbody>
+					<tr @click="randomMove(dinozData.dinozId)">
+						<td class="icon">
+							<img :src="getImg('icons', '', 'act_boutique')" />
+						</td>
+						<td class="label">Voyager</td>
+					</tr>
+				</tbody>
+			</table>
+		</ul>
+		<ul>
 			<table
 				class="action_button"
 				v-for="action in dinozData.actions"
@@ -28,6 +41,7 @@ import { defineComponent } from 'vue';
 import { Dinoz } from '@/models';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
+import store from '@/store';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -40,6 +54,23 @@ export default defineComponent({
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
+		},
+		async randomMove(dinoz: string): Promise<void> {
+			// FIXME: This methods should be rework to select the place to move.
+			try {
+				// Get new random placeId
+				let randoma = await DinozService.alphaMove(dinoz);
+				const dinozList: Array<Dinoz> = store.getters.getDinozList;
+				const dinozToUpdate = dinozList.find(
+					dinoz => dinoz.dinozId == this.dinozData!.dinozId
+				)!;
+				let finalPlace: number = +randoma;
+				dinozToUpdate.placeId = finalPlace;
+				store.commit('setDinozList', dinozList);
+			} catch (err) {
+				errorHandler.handle(err);
+				return Promise.reject(err);
+			}
 		}
 	},
 	async mounted(): Promise<void> {

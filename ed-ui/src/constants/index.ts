@@ -1,3 +1,4 @@
+export * from './place';
 export * from './status';
 
 export const url = {

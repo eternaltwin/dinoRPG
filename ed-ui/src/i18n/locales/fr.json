@@ -94,9 +94,28 @@
 		"actualites": "L'actualité de Dinoland"
 	},
 	"place": {
-		"dinoville": "Dinoville",
-		"universite": "L'université",
-		"chez papy joe": "Chez Papy Joe"
+		"name": {
+			"port": "Port de Prêche",
+			"market": "Place du Marché",
+			"dinoville": "Dinoville",
+			"universite": "L'université",
+			"papy": "Chez Papy Joe",
+			"forcebrut": "Forcebrut",
+			"fountj": "La Fontaine de jouvance",
+			"collines":"Collines Escarpées",
+			"oree":"L'Orée de la Forêt"
+		},
+		"description": {
+			"port": "Créé par des moines quelques dizaines d'années auparavant, le Port de Prêche est rapidement devenu florissant grâce aux échanges avec les Iles Atlantéinées. Comme le poisson s'y trouve en grande quantité, aucun bateau n'est jamais disponible pour emmener les Dinoz jusqu'à la première île. Il vous faudra donc soit apprendre à nager à votre Dinoz soit au moins lui trouver une bouée avant de pouvoir traverser.",
+			"market": "Ce lieu est un grand marché à ciel ouvert ou tout s'achète et se vend. On y trouve de nombreux marchands venus des quatre coins de Dinoland, ce qui permet parfois d'obtenir des raretés à un prix très réduit ! Faites attention, c'est aussi parfois le repère de personnages peu scrupuleux qui n'hésiteront pas à vous extorquer vos pièces d'or durement gagnées.",
+			"dinoville": "Bienvenue à Dinoville ! Cette ville a été créée par des éleveurs de Dinoz il y a bien longtemps. Après de nombreux siècles d'existence, elle est aujourd'hui la capitale des Humains de Dinoland et le lieu d'entraînement idéal pour les jeunes Maîtres Dinoz. N'hésitez pas à bien visiter les alentours avant de vous aventurer dans des contrées plus sauvages.",
+			"universite": "L'Université de Dinoville est un lieu rempli de professeurs barbus et d'élèves à l'air sérieux portant la plupart du temps de grosses lunettes rondes. Impossible de comprendre quoi que ce soit à leurs discussions, si ce n'est que la survie du monde dépend de leurs recherches. On croise néanmoins de temps en temps à l'Université un professeur un peu moins agité que les autres qui accepte de vous enseigner quelque chose d'important.",
+			"papy": "Papy Joe est un vieux baroudeur qui a voyagé dans sa jeunesse aux quatre coins de Dinoland. Il est aujourd'hui à la retraite mais continue de raconter ses exploits aux Maîtres Dinoz qui veulent bien l'écouter. Aux plus patients, il propose des petites Missions dans les environs.",
+			"forcebrut": "Le Tournoi de Forcebrut est l'un des lieux les plus fréquentés par les éleveurs de Dinoz. Ici, les Dinoz les plus puissants s'affrontent dans des combats spectaculaires pour le plaisir de tous les spectacteurs. Heureusement, le Tournoi n'est pas réservé qu'à l'élite et de jeunes éleveurs peuvent aussi venir y entraîner leurs Dinoz.",
+			"fountj": "La Fontaine de Jouvence a deux visages. Le jour, c'est un endroit agréable où viennent se reposer les Maîtres Dinoz fatigués par leurs longs voyages. La nuit, c'est un endroit hanté par les amoureux éconduits qui observent les reflets de la Lune dans l'eau de la fontaine en poussant de grands soupirs et en versant de temps en temps quelques larmes. On dit que souvent le matin, l'eau est légèrement salée.",
+			"collines":"Les Collines Escarpées auraient presque mérité le titre de Montagnes, mais comme juste après elles se trouve le volcan nommé \"Le Grand Tout Chaud\", elles paraissent bien minuscules à côté. Leurs pentes n'en sont pas moins impossibles à gravir sans le matériel d'escalade approprié.",
+			"oree":"Au delà de ce point s'étend la plus profonde, la plus mystérieuse, et surtout la plus dangereuse des forêts de Dinoland. Les plus grands aventuriers y ont souvent laissé leur vie, alors préparez bien votre Dinoz avant d'y entrer."
+		}
 	},
 	"race": {
 		"name": {
