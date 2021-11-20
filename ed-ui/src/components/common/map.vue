@@ -148,7 +148,7 @@ export default defineComponent({
 			const dinozToUpdate = dinozList.find(
 				dinoz => dinoz.dinozId == this.$route.params.id
 			)!;
-			let placeUpdate: number = dinozToUpdate.placeId;
+			let placeUpdate: number = dinozToUpdate?.placeId;
 			return placeUpdate;
 		}
 	},

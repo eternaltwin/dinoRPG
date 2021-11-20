@@ -40,7 +40,7 @@ export default defineComponent({
 			const dinozToUpdate = dinozList.find(
 				dinoz => dinoz.dinozId == this.$route.params.id
 			)!;
-			let placeUpdate: number = dinozToUpdate.placeId;
+			let placeUpdate: number = dinozToUpdate?.placeId;
 			return placeUpdate;
 		}
 	},
@@ -70,7 +70,7 @@ export default defineComponent({
 			// Fill placeMap Array with all the place in this map
 			this.places.forEach(place => {
 				if (
-					placeList.find(place => place.placeId === this.placeId)!.map ===
+					placeList.find(place => place.placeId === this.placeId)?.map ===
 					place.map
 				) {
 					this.placeMap.push(place);

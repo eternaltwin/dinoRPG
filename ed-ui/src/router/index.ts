@@ -38,7 +38,7 @@ const router = createRouter({
 			path: '/generator',
 			name: 'DinozGenerator',
 			component: DinozGenerator,
-			props: route => ({ chk: route.query.chk })
+			props: route => ({ chk: route.query.chk, chk2: route.query.chk2 })
 		},
 		{
 			path: '/:pathMatch(.*)',
