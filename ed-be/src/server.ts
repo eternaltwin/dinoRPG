@@ -7,7 +7,6 @@ import inventoryRoutes from './routes/inventory.routes.js';
 import oauthRoutes from './routes/oauth.routes.js';
 import playerRoutes from './routes/player.routes.js';
 import shopRoutes from './routes/shop.routes.js';
-import dataRoutes from './routes/data.routes.js';
 import { loadConfigFile } from './utils/context.js';
 import { jwtConfig } from './utils/jwt.js';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
@@ -64,7 +63,6 @@ app.use(inventoryRoutes);
 app.use(oauthRoutes);
 app.use(playerRoutes);
 app.use(shopRoutes);
-app.use(dataRoutes);
 
 // Launch Cron
 resetDinozShopAtMidnight();

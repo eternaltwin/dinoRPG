@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { OauthService, DataService } from '@/services';
+import { OauthService } from '@/services';
 import { isNil } from 'lodash';
 import store from '@/store';
 
@@ -35,7 +35,7 @@ export default defineComponent({
 			setTimeout(() => this.$router.go(0), 100);
 		},
 		async getRedirectUri(): Promise<void> {
-			const urlToRedirect: string = await DataService.getRedirectUri();
+			const urlToRedirect: string = await OauthService.getRedirectUri();
 
 			window.location.replace(urlToRedirect);
 		}
