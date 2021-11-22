@@ -26,9 +26,8 @@ export default defineComponent({
 		async openPopinConfirmChoice(item: ItemShop): Promise<void> {
 			const res: boolean = confirm(this.$t('button.confirm'));
 			if (res) {
-				let itemCreated: Item;
 				try {
-					itemCreated = await InventoryService.buyItem(item.id);
+					await InventoryService.buyItem(item.id);
 				} catch (err) {
 					errorHandler.handle(err);
 					return Promise.reject(err);
