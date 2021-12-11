@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import path from 'path';
 import dinozRoutes from './routes/dinoz.routes.js';
 import inventoryRoutes from './routes/inventory.routes.js';
 import oauthRoutes from './routes/oauth.routes.js';
@@ -49,10 +48,6 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// To send static files to client when '/data' is in URL
-const dirname = path.resolve();
-app.use('/api/data', express.static(dirname + '/src/data'));
 
 // Use JWT authentication to secure the API
 app.use(jwtConfig());

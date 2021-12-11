@@ -29,6 +29,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import dinozSwf from '@/assets/swf/dino.swf';
+import sdinozSwf from '@/assets/swf/sdino.swf';
 
 export default defineComponent({
 	name: 'DinozSWF',
@@ -93,10 +95,7 @@ export default defineComponent({
 		this.params.wmode = this.wmode ?? this.params.wmode;
 
 		// Set URL to get swf
-		this.url =
-			this.type === 'dino'
-				? `${process.env.VUE_APP_API_URL}/api/data/swf/dino.swf`
-				: `${process.env.VUE_APP_API_URL}/api/data/swf/sdino.swf`;
+		this.url = this.type === 'dino' ? dinozSwf : sdinozSwf;
 
 		// Set flashVars
 		this.flashVars.data = this.display!;

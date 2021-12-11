@@ -7,7 +7,6 @@ export * from './skill.js';
 export * from './status.js';
 
 export const apiRoutes = {
-	dataRoutes: '/api/data',
 	dinozRoute: '/api/dinoz',
 	inventoryRoute: '/api/inventory',
 	oauthRoute: '/api/oauth',

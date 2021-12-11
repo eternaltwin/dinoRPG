@@ -1,4 +1,7 @@
+const STATIC_DIR = 'static';
+
 module.exports = {
+	assetsDir: STATIC_DIR,
 	lintOnSave: true,
 	transpileDependencies: ['vuex-persist'],
 	css: {
@@ -13,5 +16,15 @@ module.exports = {
               `
 			}
 		}
+	},
+	chainWebpack(config) {
+		config.module
+			.rule('swf')
+			.test(/\.swf$/)
+			.use('file-loader')
+			.loader('file-loader')
+			.options({
+				name: `${STATIC_DIR}/swf/[name].[hash:8].[ext]`
+			});
 	}
 };
