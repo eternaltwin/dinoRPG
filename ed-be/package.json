@@ -7,9 +7,9 @@
   "scripts": {
     "serve": "yarn run prettier && concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/server.js\"",
     "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
-    "test": "tsc && jest --verbose --config ./jest.config.json",
-    "coverage": "jest --coverage --config ./jest.config.json",
-    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "test:ci": "jest --config ./jest.config.json --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --watchAll=false",
+    "build": "tsc"
   },
   "keywords": [
     "nodejs",
@@ -28,18 +28,21 @@
     "cron": "^1.8.2",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
+    "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.1",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
-    "sequelize": "^6.6.2",
+    "sequelize": "6.6.2",
     "sequelize-typescript": "^2.1.0",
     "toml": "^3.0.0",
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
     "@eternal-twin/etwin-client-http": "^0.5.1",
     "@eternal-twin/oauth-client-http": "^0.5.1",
     "@types/cheerio": "^0.22.29",
@@ -56,10 +59,12 @@
     "babel-jest": "^26.6.3",
     "concurrently": "^6.0.0",
     "jest": "^26.6.3",
+    "jest-junit": "^12.2.0",
     "nodemon": "^2.0.7",
     "prettier": "2.2.1",
     "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
-  }
+  },
+  "packageManager": "yarn@3.1.0"
 }

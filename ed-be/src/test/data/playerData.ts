@@ -1,30 +1,30 @@
 import { Player } from '../../models';
-import { reward } from '../../constants/index.js';
+import { rewardList } from '../../constants/index.js';
 import { player } from '../utils/constants';
 
 export const BasicPlayer = {
-	playerId: player.id_1,
+	playerId: player.id_1
 } as Player;
 
-export const PlayerWithRewards = {
+export const PlayerWithRewards = ({
 	playerId: player.id_1,
 	quetzuBought: 0,
 	reward: [
 		{
 			rewardId: 13214,
-			name: reward.tropheeHippoclamp,
+			name: rewardList.TROPHEE_HIPPOCLAMP
 		},
 		{
 			rewardId: 9845,
-			name: reward.tropheePteroz,
+			name: rewardList.TROPHEE_PTEROZ
 		},
 		{
 			rewardId: 79456,
-			name: reward.tropheeRocky,
+			name: rewardList.TROPHEE_ROCKY
 		},
 		{
 			rewardId: 7974,
-			name: reward.tropheeQuetzu,
-		},
-	],
-} as Player;
+			name: rewardList.TROPHEE_QUETZU
+		}
+	]
+} as unknown) as Player;

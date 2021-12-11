@@ -1,13 +1,21 @@
 {
   "transform": {"^.+\\.jsx?$": "babel-jest"},
   "moduleFileExtensions": ["js", "ts"],
-  "testMatch": ["**/test/**/*Test.js"],
+  "testMatch": ["**/*Test.js"],
+  "collectCoverageFrom" : ["**/*.js"],
   "testEnvironment": "node",
+  "coverageReporters": ["html", "text", "text-summary", "cobertura"],
   "coveragePathIgnorePatterns": [
     "/node_modules/",
     "/models/",
     "/test/",
     "/dao/",
-    "/utils/"
+    "/utils/",
+    "/constants/",
+    "/coverage",
+    "/config/",
+    "/sequelize.js",
+    "/server.js",
+    "/routes/"
   ]
 }

@@ -2,6 +2,7 @@
 /dist/
 /ed-be/dist/
 /ed-be/coverage/
+/ed-be/junit.xml
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

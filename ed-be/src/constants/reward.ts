@@ -1,0 +1,6 @@
+export const rewardList = {
+	TROPHEE_ROCKY: 1,
+	TROPHEE_PTEROZ: 2,
+	TROPHEE_HIPPOCLAMP: 3,
+	TROPHEE_QUETZU: 4
+};

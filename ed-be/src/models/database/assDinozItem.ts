@@ -7,9 +7,9 @@ import {
 	AllowNull,
 	BelongsTo,
 	ForeignKey,
+	Max
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
-import { Item } from './item.js';
 
 @Table({ tableName: 'tb_ass_dinoz_item', timestamps: false })
 export class AssDinozItem extends Model {
@@ -26,10 +26,8 @@ export class AssDinozItem extends Model {
 	@BelongsTo(() => Dinoz, 'dinozId')
 	dinoz!: Dinoz;
 
-	@ForeignKey(() => Item)
+	@Max(20)
+	@AllowNull(false)
 	@Column
 	itemId!: number;
-
-	@BelongsTo(() => Item, 'itemId')
-	item!: Item;
 }

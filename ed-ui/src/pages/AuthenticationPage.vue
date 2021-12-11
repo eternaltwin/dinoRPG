@@ -1,14 +1,12 @@
 <template>
-	<div id="auth">
-		<div v-if="!isCodePresent">
-			<button @click="getRedirectUri()">Sign-in to Eternal-Twin</button>
-		</div>
-	</div>
+	<p v-if="!isCodePresent" class="sign" @click="getRedirectUri()">
+		{{ $t('alpha.login') }}
+	</p>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { OauthService, DataService } from '@/services';
+import { OauthService } from '@/services';
 import { isNil } from 'lodash';
 import store from '@/store';
 
@@ -37,9 +35,9 @@ export default defineComponent({
 			setTimeout(() => this.$router.go(0), 100);
 		},
 		async getRedirectUri(): Promise<void> {
-			const urlToRedirect: string = await DataService.getRedirectUri();
+			const urlToRedirect: string = await OauthService.getRedirectUri();
 
-			window.open(urlToRedirect);
+			window.location.replace(urlToRedirect);
 		}
 	},
 	mounted(): void {

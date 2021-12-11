@@ -1,24 +1,22 @@
 import { Request, Response } from 'express';
 import { Dinoz } from '../../models/index.js';
-import { DinozShopArray } from '../data/dinozShopData.js';
+import { DinozFromShop, DinozShopArray } from '../data/dinozShopData.js';
 import { PlayerWithRewards } from '../data/playerData.js';
-import { DinozRaceArray } from '../data/raceData.js';
 import { player } from '../utils/constants.js';
 import { getDinozFromDinozShop } from '../../business/shopService.js';
 
 const DinozShopDao = require('../../dao/shopDao');
 const PlayerDao = require('../../dao/playerDao');
-const DinozRaceDao = require('../../dao/dinozRaceDao');
 const Config = require('../../utils/context');
 
 let req = {
 	user: {
-		playerId: player.id_1,
-	},
+		playerId: player.id_1
+	}
 } as Request;
 let res = ({
 	status: jest.fn().mockReturnThis(),
-	send: jest.fn().mockReturnThis(),
+	send: jest.fn().mockReturnThis()
 } as unknown) as Response;
 
 describe('Test de la fonction getDinozFromDinozShop', function () {
@@ -28,19 +26,18 @@ describe('Test de la fonction getDinozFromDinozShop', function () {
 		dinozCreated = {
 			playerId: player.id_1,
 			raceId: 54,
-			display: '651fdsf68s',
+			display: '651fdsf68s'
 		};
 
 		const dinozBuilt = {
-			get: jest.fn().mockResolvedValue(dinozCreated),
+			get: jest.fn().mockResolvedValue(dinozCreated)
 		};
 
-		spyOn(DinozRaceDao, 'getRacesDetailsRequest').and.returnValue(
-			DinozRaceArray
-		);
-		spyOn(DinozShopDao, 'createMultipleDinoz');
+		DinozFromShop.setDataValue = jest.fn().mockResolvedValue([]);
+
+		spyOn(DinozShopDao, 'createMultipleDinoz').and.returnValue(DinozShopArray);
 		spyOn(Config, 'getConfig').and.returnValue({
-			shop: { dinozInShop: 4, buyableQuetzu: 6 },
+			shop: { dinozInShop: 4, buyableQuetzu: 6 }
 		});
 		spyOn(Dinoz, 'build').and.returnValue(dinozBuilt);
 	});
@@ -53,20 +50,15 @@ describe('Test de la fonction getDinozFromDinozShop', function () {
 
 		await getDinozFromDinozShop(req, res);
 
-		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledTimes(2);
+		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledTimes(1);
-		expect(DinozRaceDao.getRacesDetailsRequest).toHaveBeenCalledTimes(1);
 		expect(DinozShopDao.createMultipleDinoz).toHaveBeenCalledTimes(1);
 
 		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledWith(
 			req.user!.playerId!
 		);
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(
-			req.user!.playerId!,
-			expect.any(Array)
-		);
-		expect(DinozRaceDao.getRacesDetailsRequest).toHaveBeenLastCalledWith(
-			expect.any(Array)
+			req.user!.playerId!
 		);
 		expect(DinozShopDao.createMultipleDinoz).toHaveBeenLastCalledWith(
 			expect.any(Array)
@@ -99,14 +91,12 @@ describe('Test de la fonction getDinozFromDinozShop', function () {
 
 		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledTimes(1);
-		expect(DinozRaceDao.getRacesDetailsRequest).toHaveBeenCalledTimes(0);
 
 		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledWith(
 			req.user!.playerId!
 		);
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(
-			req.user!.playerId!,
-			expect.any(Array)
+			req.user!.playerId!
 		);
 	});
 });

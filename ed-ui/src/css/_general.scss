@@ -1,13 +1,27 @@
 .dinorpg {
-	a {
-		color: #8e3e26;
-	    font-variant: small-caps;
-	    font-weight: bold;
+	.layout{
+		a {
+			color: #8e3e26;
+			font-variant: small-caps;
+			font-weight: bold;
 
-	    &:hover {
-	    	color : #fce3bc;
-	    }
-	}	
+			&:hover {
+				color : #fce3bc;
+			}
+		}
+	}
+}
+
+table {
+	a:hover {
+		background-color : #9a4029;
+	}
+	&#layout {
+		border-collapse : collapse;
+		border-spacing : 0px;
+		width : 100%;
+		min-width : 920px;
+	}
 }
 
 ul {
@@ -19,37 +33,6 @@ ul {
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 
-	&.elements {
-		list-style: none;
-    	height: 23px;
-
-    	li {
-    		float: left;
-		    position: relative;
-		    width: 42px;
-		    height: 23px;
-		    margin-right: 2px;
-		    font-size: 10pt;
-		    font-weight: bold;
-		    color: white;
-		    text-align: left;
-		    letter-spacing: -0.2pt;
-		    background-image: url("assets/icons/element_bg.png");
-		    background-position: 7px 5px;
-		    background-repeat: no-repeat;
-		    cursor: help;
-
-		    &.max {
-		    	color: yellow;
-		    }
-
-		    img {
-		    	margin-right: -3px;
-   				vertical-align: -30%;
-		    }
-    	}
-	}
-
 	&.tabs {
 		list-style: none;
 	    height: 22px;
@@ -59,7 +42,7 @@ ul {
 	    margin-left: -5px;
 	    margin-right: -5px;
 	    background-color: #9a4029;
-	    background-image: url("assets/design/tabsBg.png");
+	    background-image: url("../assets/design/tabsBg.webp");
 	    background-repeat: no-repeat;
 	    border-bottom: 1px solid #ffe7aa;
 
@@ -79,8 +62,6 @@ ul {
 			    border-top: 1px solid #d39a65;
 			    font-size: 10pt;
 			    border-radius: 0px;
-			    -moz-border-radius: 0px;
-			    -webkit-border-radius: 0px;
 		    }
 	    }
 	}
@@ -102,18 +83,16 @@ input, a {
 	    text-decoration: none;
 	    text-align: left;
 	    cursor: pointer;
-	    background-image: url("assets/button/button.png");
+	    background-image: url("../assets/button/button.webp");
 	    background-repeat: no-repeat;
 	    border-radius: 0px;
-	    -moz-border-radius: 0px;
-	    -webkit-border-radius: 0px;
 	}
 
 	&.bSmall {
 		width: 80px;
 	    padding-top: 5px;
 	    padding-right: 5px;
-	    background-image: url("assets/design/button_small.png");
+	    background-image: url("../assets/design/button_small.webp");
 	}
 }
 
@@ -139,30 +118,21 @@ span {
 	}
 }
 
-a.linkHome {
-    position: absolute;
-    width: 500px;
-    height: 80px;
-    z-index: 10;
-    margin-top: 25px;
-    margin-left: 240px;
-}
-
 body {
 	table#layout {
-		background-image: url("assets/background/bg_ciel3.png");
+		background-image: url("../assets/background/bg_ciel3.webp");
 	    background-color: white;
 	    background-repeat: no-repeat;
 
 	    td#center {
 	    	width: 900px;
-		    background-image: url("assets/background/sky_core_bg.png");
+		    background-image: url("../assets/background/sky_core_bg.webp");
 		    background-repeat: repeat-y;
 		    margin-top: 88px;
 
 		    #centerHeader {
 		    	padding: 1px;
-			    background-image: url("assets/background/core_center_header3.png");
+			    background-image: url("../assets/background/core_center_header3.webp");
 			    background-repeat: no-repeat;
 			    min-height: 100vh;
 		    }
@@ -171,7 +141,7 @@ body {
 	    td#right {
 	    	div {
 	    		height: 88px;
-			    background-image: url("assets/background/core_right_header3.png");
+			    background-image: url("../assets/background/core_right_header3.webp");
 			    background-repeat: no-repeat;
 			    background-position: left top;
 	    	}
@@ -179,14 +149,14 @@ body {
 	}
 
 	.skyfootercore {
-		background-image: url("assets/background/core_center_footer.png");
+		background-image: url("../assets/background/core_center_footer.webp");
 	    background-repeat: no-repeat;
 	    height: 151px;
 	}
 
 	.skyfooterright {
 		height: 151px;
-	    background-image: url("assets/background/core_right_footer.png");
+	    background-image: url("../assets/background/core_right_footer.webp");
 	    background-repeat: no-repeat;
 	    background-position: left top;
 	}
@@ -240,60 +210,16 @@ table {
 	    }
 
 	    td#right {
-	    	background-image: url("assets/background/core_right_bg.png");
+	    	background-image: url("../assets/background/core_right_bg.webp");
 		    background-position: left 77px;
 		    background-repeat: repeat-y;
 		    vertical-align: top;
 	    }
 	}
-
-	&.action {
-	    margin: 0px;
-	    padding: 0px;
-	    border-collapse: collapse;
-	    border-spacing: 0px;
-	    margin-bottom: 2px;
-	    width: 100%;
-
-	    td {
-			margin: 0px;
-		    padding: 0px;
-		    text-align: left;
-		    cursor: pointer;
-
-		    &.label {
-		    	padding-left: 4px;
-			    padding-right: 4px;
-			    font-weight: bold;
-			    color: white;
-			    font-size: 11pt;
-			    font-variant: small-caps;
-			    line-height: 10.5pt;
-			    border-top-right-radius: 7px;
-			    -moz-border-radius-topright: 7px;
-			    -webkit-border-top-right-radius: 7px;
-			    border-bottom-right-radius: 7px;
-			    -moz-border-radius-bottomright: 7px;
-			    -webkit-border-bottom-right-radius: 7px;
-		    }
-
-		    &.icon {
-		    	width: 32px;
-			    font-size: 0pt;
-			    line-height: 0pt;
-		    }
-		}
-	}
 }
 
 a {
     color: #bc683c;
-
-    &:-webkit-any-link {
-	    color: -webkit-link;
-	    cursor: pointer;
-	    text-decoration: underline;
-	}
 
 	&.icon {
 		font-size: 0pt;
@@ -316,7 +242,7 @@ div {
 	    color: #fce3bc;
 	    font-size: 10pt;
 	    background-color: #bc683c;
-	    background-image: url("assets/icons/small_missAct.png");
+	    background-image: url("../assets/icons/small_missAct.webp");
 	    background-position: 5px 8px;
 	    background-repeat: no-repeat;
 	}
@@ -331,7 +257,6 @@ div {
 
 li {
 	display: list-item;
-    text-align: -webkit-match-parent;
 }
 
 em {
@@ -381,11 +306,7 @@ td {
 	    font-variant: small-caps;
 	    line-height: 10.5pt;
 	    border-top-right-radius: 7px;
-	    -moz-border-radius-topright: 7px;
-	    -webkit-border-top-right-radius: 7px;
 	    border-bottom-right-radius: 7px;
-	    -moz-border-radius-bottomright: 7px;
-	    -webkit-border-bottom-right-radius: 7px;
     }
 }
 

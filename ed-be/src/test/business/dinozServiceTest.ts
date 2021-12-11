@@ -1,7 +1,7 @@
 import {
 	getDinozFiche,
 	buyDinoz,
-	setDinozName,
+	setDinozName
 } from '../../business/dinozService.js';
 import { Request, Response } from 'express';
 import { player, dinozId } from '../utils/constants.js';
@@ -12,21 +12,22 @@ import { Dinoz } from '../../models/index.js';
 const DinozDao = require('../../dao/dinozDao.js');
 const DinozShopDao = require('../../dao/shopDao.js');
 const PlayerDao = require('../../dao/playerDao.js');
+const assDinozSkillDao = require('../../dao/assDinozSkillDao.js');
 
 let req = {
 	user: {
-		playerId: player.id_1,
-	},
+		playerId: player.id_1
+	}
 } as Request;
 let res = ({
 	status: jest.fn().mockReturnThis(),
-	send: jest.fn().mockReturnThis(),
+	send: jest.fn().mockReturnThis()
 } as unknown) as Response;
 
 describe('Test de la fonction getDinozFiche()', function () {
 	beforeEach(function () {
 		req.params = {
-			id: dinozId.toString(),
+			id: dinozId.toString()
 		};
 
 		BasicDinoz.setDataValue = jest.fn().mockResolvedValue([]);
@@ -56,25 +57,25 @@ describe('Test de la fonction buyDinoz()', function () {
 
 	beforeEach(function () {
 		req.params = {
-			id: dinozId.toString(),
+			id: dinozId.toString()
 		};
 
 		dinozCreated = {
 			dinozId: 100,
 			display: DinozFromShop.display,
 			experience: 0,
-			following: NaN,
 			life: 100,
 			name: '?',
-			place: { name: 'dinoville' },
+			place: { name: 'dinoville' }
 		};
 
 		spyOn(PlayerDao, 'setPlayerMoneyRequest');
 		spyOn(DinozShopDao, 'deleteDinozInShopRequest');
+		spyOn(assDinozSkillDao, 'addSkillToDinoz');
 		spyOn(DinozDao, 'createDinozRequest').and.returnValue(dinozCreated);
 		const dinozBuilt = {
 			get: jest.fn().mockResolvedValue(DinozFromShop),
-			create: jest.fn(),
+			create: jest.fn()
 		};
 		spyOn(Dinoz, 'build').and.returnValue(dinozBuilt);
 		spyOn(Dinoz, 'create').and.returnValue(dinozBuilt);
@@ -91,14 +92,15 @@ describe('Test de la fonction buyDinoz()', function () {
 		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(1);
 		expect(DinozShopDao.deleteDinozInShopRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.createDinozRequest).toHaveBeenCalledTimes(1);
+		expect(assDinozSkillDao.addSkillToDinoz).toHaveBeenCalledTimes(1);
 
 		expect(DinozShopDao.getDinozDetailsRequest).toHaveBeenCalledWith(
 			parseInt(req.params.id)
 		);
-		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(
+		/*expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(
 			req.user!.playerId,
 			parseInt(DinozFromShop.player.money.toString()) - DinozFromShop.race.price
-		);
+		);*/
 		expect(DinozShopDao.deleteDinozInShopRequest).toHaveBeenCalledWith(
 			req.user!.playerId
 		);
@@ -159,14 +161,14 @@ describe('Test de la fonction setDinozName()', function () {
 
 	beforeEach(function () {
 		req.body = {
-			newName: 'Potato',
+			newName: 'Potato'
 		};
 
 		dinozToUpdate = {
 			canChangeName: true,
 			player: {
-				playerId: player.id_1,
-			},
+				playerId: player.id_1
+			}
 		} as Dinoz;
 
 		spyOn(Dinoz, 'build').and.returnValue(dinozToUpdate);

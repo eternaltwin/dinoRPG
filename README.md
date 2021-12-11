@@ -1,32 +1,8 @@
-﻿# DinoRPG
+# DinoRPG
 
 # Avancement
 
-| Titre                 | Logique Front | Back      | DB     | CSS      | Issue     | Commentaire                 |
-|-----------------------|---------------|-----------|--------|----------|-----------|:----------------------------|
-| BDD                   | -             | -         | 75%    | -        | TBD       | Évolutions probables        |
-| CSS                   | -             | -         | -      | -        | -         | Help                        |
-| Sécurisation de l'API | -             | 100%      | -      | -        | -         | Fonctionnel                 |
-| Aide                  | TODO          | TODO      | TODO   | TODO     | TBD       | Rediriger vers le wiki ?    |
-| Boutique d'objets     | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Boutique dinoz        | 100%          | 100%      | 100%   | 0%       | TBD       | Fonctionnel                 |
-| Boutique démoniaque   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Clan                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Classement            | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Combat                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Compte                | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Dojo                  | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Fiche Dinoz           | 25%           | 25%       | 20%    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
-| │- Dinoz              | TBD           | TBD       | TBD    | minimal  | TBD       | Fonctionnel, voir avec Jolu |
-| │- Carte              | TODO          | TODO      | TODO   | TODO     | [Issue 3] |                             |
-| │ │- Dinoland, etc.   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- PNJs               | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- Quêtes             | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| Ingrédients           | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- Récolte            | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-| │- Page Ingrédients   | TODO          | TODO      | TODO   | TODO     | TBD       |                             |
-
-[Issue 3]: https://gitlab.com/eternal-twin/dinorpg/-/issues/3
+Un [board](https://gitlab.com/eternal-twin/dinorpg/dinorpg/-/boards/2968003?label_name[]=not_implemented) reprenant les objectifs des milestones est disponible.
 
 # Prérequis
 
@@ -74,6 +50,18 @@ Une fois le lancement terminé vous devriez pouvoir accéder à :
 
 # Erreurs possible
 
+## Base de données
+
+Si vous avez l'erreur suivante concernant `drpg_database`:
+```bash
+Error response from daemon: driver failed programming external connectivity on
+endpoint drpg_database [...] bind: address already in use
+```
+Alors arrêter le service postgresql avec la commande suivante:
+```bash
+service postgresql stop
+```
+
 ## Droits
 Si jamais des problèmes de droits apparaissent, vérifiez votre uid et gid :
 ```bash
@@ -90,7 +78,32 @@ drpg_back:
 ```
 Relancez une installation à zero.
 
+## Front
+
+Il se peut que le front ne soit pas à jour suite à l'ajout d'une dépendance par
+un commit. Dans ce cas, utilisez les commands suivantes:
+```bash
+make docker-start
+make update-front
+```
+
+Si la commande `make update-front` échoue ou donne une erreur, alors utilisez
+les commands suivantes:
+```bash
+make docker-start
+docker exec -it drpg_front bash
+#yarn install
+```
+
 # Tips
+
+## Faire tourner les tests unitaires
+Pour faire tourner les tests unitaires, exécutez juste la commande : `make run-test`
+
+## Changement de branche
+Si vous switchez d'une branche à une autre, pensez à faire un `make bash-front`
+puis `./reset.sh` afin de mettre à jour les dépendances yarn
+
 ## Clean-up
 Il est possible de supprimer tout les container liés à dinorpg avec les commandes :
 ```bash

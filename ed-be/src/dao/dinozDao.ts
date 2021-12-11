@@ -1,10 +1,10 @@
 import {
 	AssDinozItem,
+	AssDinozSkill,
+	AssDinozStatus,
 	Dinoz,
-	Item,
 	Place,
-	Player,
-	Status,
+	Player
 } from '../models/index.js';
 
 const createDinozRequest = (newDinoz: Dinoz): Promise<Dinoz> => {
@@ -26,40 +26,54 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 			'nbrUpAir',
 			'name',
 			'level',
+			'placeId',
+			'playerId'
 		],
 		include: [
 			{
-				model: Player,
-				attributes: ['playerId'],
-				required: false,
-			},
-			{
-				model: Place,
-				attributes: ['name'],
-				required: false,
-			},
-			{
-				model: Status,
-				attributes: ['name'],
-				through: {
-					attributes: [],
-				},
-				required: false,
+				model: AssDinozStatus,
+				attributes: ['statusId'],
+				required: false
 			},
 			{
 				model: AssDinozItem,
-				attributes: ['id'],
-				required: false,
-				include: [
-					{
-						model: Item,
-						attributes: ['itemId'],
-						required: false,
-					},
-				],
-			},
+				attributes: ['itemId'],
+				required: false
+			}
 		],
-		where: { dinozId: dinozId },
+		where: { dinozId: dinozId }
+	});
+};
+
+const getDinozSkillRequest = (dinozId: number): Promise<Dinoz | null> => {
+	return Dinoz.findOne({
+		attributes: ['playerId'],
+		include: [
+			{
+				model: AssDinozSkill,
+				attributes: ['skillId', 'state']
+			}
+		],
+		where: { dinozId: dinozId }
+	});
+};
+
+const getDinozSkillAndStatusRequest = (
+	dinozId: number
+): Promise<Dinoz | null> => {
+	return Dinoz.findOne({
+		attributes: ['playerId'],
+		include: [
+			{
+				model: AssDinozSkill,
+				attributes: ['skillId']
+			},
+			{
+				model: AssDinozStatus,
+				attributes: ['statusId']
+			}
+		],
+		where: { dinozId: dinozId }
 	});
 };
 
@@ -70,10 +84,10 @@ const getCanDinozChangeName = (dinozId: number): Promise<Dinoz | null> => {
 			{
 				model: Player,
 				attributes: ['playerId'],
-				required: false,
-			},
+				required: false
+			}
 		],
-		where: { dinozId: dinozId },
+		where: { dinozId: dinozId }
 	});
 };
 
@@ -81,17 +95,57 @@ const setDinozNameRequest = (dinoz: Dinoz): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			name: dinoz.name,
-			canChangeName: false,
+			canChangeName: false
 		},
 		{
-			where: { dinozId: dinoz.dinozId },
+			where: { dinozId: dinoz.dinozId }
 		}
 	);
 };
 
+const setSkillSetRequest = (
+	dinozId: number,
+	skillId: number,
+	state: boolean
+): Promise<[number, Array<AssDinozSkill>]> => {
+	return AssDinozSkill.update(
+		{
+			state: state
+		},
+		{
+			where: { dinozId: dinozId, skillId: skillId }
+		}
+	);
+};
+
+const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz | null> => {
+	return Dinoz.findOne({
+		attributes: ['dinozId', 'placeId', 'playerId'],
+		where: { dinozId: dinozId }
+	});
+};
+
+const setDinozPlaceRequest = (
+	dinozId: number,
+	placeRand: number
+): Promise<[number, Array<Place>]> => {
+	return Dinoz.update(
+		{
+			placeId: placeRand
+		},
+		{
+			where: { dinozId: dinozId }
+		}
+	);
+};
 export {
 	createDinozRequest,
 	getDinozFicheRequest,
 	getCanDinozChangeName,
 	setDinozNameRequest,
+	getDinozSkillRequest,
+	getDinozSkillAndStatusRequest,
+	setSkillSetRequest,
+	getDinozPlaceRequest,
+	setDinozPlaceRequest
 };

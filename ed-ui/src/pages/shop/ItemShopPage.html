@@ -1,0 +1,55 @@
+<div id="centerContent">
+	<Title :title="$t('pageTitle.shop')" />
+	<div class="shop">
+		<div class="section">
+			<div id="swf_title_Marchand :">
+				<div class="titlePage" style=undefined width=520 height=27>SHOP TITLE</div>
+			</div>
+		</div>
+		<div class="shopDesc">
+			<div class="contain">
+				<div class="art art_shop"><img :src="getImg('icons', 'shop_shop')" alt=""></div>
+				<p>{{ $t(`shop.${shop}.description`) }}</p>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="bg bg2">
+			<div class="list">
+			</div>
+			<div class="details">
+				<div id="shop_guide" style="display: none;">
+					<p>Help</p>
+					<div class="ad">
+						Some text
+					</div>
+				</div>
+				<div class="item " id="item_0" style="display: none;">
+					<div class="stock">
+						43/120
+					</div>
+					<div class="type">
+				
+					<img :src="getImg('icons', 'small_use')" alt="">
+				
+				
+					<img :src="getImg('icons', 'small_use_off')" alt="">
+				
+					</div>
+					<div class="infos">
+						
+					</div>
+					<div class="header">
+						<div class="name">Item Name</div>
+						<div class="value"><span class="money">
+							405	<img :src="getImg('icons', 'small_gold')" alt="or" title="Pièces d'or">
+						</span></div>
+						
+					</div>
+					<div class="clear"></div>
+					
+					<div class="desc">Description</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

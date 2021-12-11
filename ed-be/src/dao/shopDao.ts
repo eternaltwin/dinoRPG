@@ -5,7 +5,7 @@ const getDinozFromDinozShopRequest = (
 ): Promise<Array<DinozShop>> => {
 	return DinozShop.findAll({
 		attributes: ['id', 'display', 'raceId'],
-		where: { playerId: playerId },
+		where: { playerId: playerId }
 	});
 };
 
@@ -22,16 +22,16 @@ const getDinozDetailsRequest = (dinozId: number): Promise<DinozShop | null> => {
 			{
 				model: Player,
 				attributes: ['playerId', 'money'],
-				required: false,
-			},
+				required: false
+			}
 		],
-		where: { id: dinozId },
+		where: { id: dinozId }
 	});
 };
 
 const deleteDinozInShopRequest = (playerId: number): Promise<number> => {
 	return DinozShop.destroy({
-		where: { playerId: playerId },
+		where: { playerId: playerId }
 	});
 };
 
@@ -39,5 +39,5 @@ export {
 	getDinozFromDinozShopRequest,
 	createMultipleDinoz,
 	getDinozDetailsRequest,
-	deleteDinozInShopRequest,
+	deleteDinozInShopRequest
 };

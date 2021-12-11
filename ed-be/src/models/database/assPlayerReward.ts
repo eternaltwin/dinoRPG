@@ -1,14 +1,26 @@
-import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
-import { EpicReward } from './epicReward.js';
+import {
+	AllowNull,
+	AutoIncrement,
+	Column,
+	ForeignKey,
+	Model,
+	PrimaryKey,
+	Table
+} from 'sequelize-typescript';
 import { Player } from './player.js';
 
 @Table({ tableName: 'tb_ass_player_reward', timestamps: false })
 export class AssPlayerReward extends Model {
+	@PrimaryKey
+	@AutoIncrement
+	@AllowNull(false)
+	@Column
+	id!: number;
+
 	@ForeignKey(() => Player)
 	@Column
 	playerId!: number;
 
-	@ForeignKey(() => EpicReward)
 	@Column
 	rewardId!: number;
 }

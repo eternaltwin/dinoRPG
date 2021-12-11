@@ -1,0 +1,110 @@
+@import './_shop.scss';
+@import './_itemShop.scss';
+@import './_general.scss';
+@font-face {
+	font-family: 'Berlin Sans FB Demi';
+	src: url('~@/assets/font/Berlin Sans FB Demi.woff');
+}
+
+#menu {
+	position: absolute;
+    z-index: 2;
+    margin-left: 764px;
+    margin-top: 90px;
+    width: 95px;
+    font-size: 8pt;
+}
+
+#langs {
+	position: absolute;
+    z-index: 2;
+    margin-left: 764px;
+    margin-top: 90px;
+    width: 95px;
+    font-size: 8pt;
+}
+
+.titlePage {
+	color: #71b703;
+	font-family: 'Berlin Sans FB Demi';
+	font-variant: small-caps;
+	font-size: 19px;
+	text-shadow: 1px 0px #FDF1BF, 0px 1px #FDF1BF, -1px 0px #FDF1BF, 0px -1px #FDF1BF, 0px -1px 2px #B25D21;
+	line-height: 28px;
+	margin-left: 12px;
+}
+
+.newsSection {
+
+	.tid_module {
+		color : white;
+		font-size : 14px;
+
+		li {
+			list-style : square;
+		}
+
+		a {
+			color : #ffee92;
+		}
+
+		.tid_safe_story {
+			// background-image : url("/img/design/bloc_news_twinoid.jpg");
+			background-repeat : repeat-y;
+			margin-bottom : 10px;
+			margin-right : 10px;
+			border : 1px solid #ffee92;
+			outline : 1px solid #92471F;
+			padding : 10px;
+
+			.tid_safe_content {
+				.tid_h2 {
+					font-size : 110%;
+					color : #FFEE92;
+					text-transform : uppercase;
+				}
+
+				.tid_h3 {
+					color : #FFEE92;
+				}
+			}
+		}
+	}
+}
+
+.section {
+	height : 45px;
+	margin-left : -15px;
+	margin-bottom : 20px;
+	background-image : url("../assets/design/title_h1.webp");
+	background-position : left bottom;
+	background-repeat : no-repeat;
+}
+
+.light {
+	object {
+		display: none;
+	}
+
+	embed {
+		display: none;
+	}
+}
+
+.button {
+	&:first-letter {
+		color: white;
+	}
+
+	&:hover {
+		color: white;
+		background-image: url("../assets/button/button_hover.webp");
+		background-color: transparent;
+	}
+}
+
+.swf {
+	display: block;
+    font-size: 0pt;
+    line-height: 0pt;
+}

@@ -1,100 +1,226 @@
-export const item = [
-	{
+import { ItemFiche } from '../models';
+
+// Note:
+// Price is for the players' market. If 0 the item cannot be sold.
+export const itemList = {
+	// Irma's Potion: new action
+	POTION_IRMA: {
 		itemId: 1,
-		name: 'irma',
+		name: 'potion_irma',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 450,
+		canBeUsedNow: true,
+		quantity: 0,
+		maxQuantity: 80,
+		price: 450
 	},
-    {
+	// Angel potion: resurrects a dino
+	POTION_ANGEL: {
 		itemId: 2,
-		name: 'angel',
+		name: 'potion_angel',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 1000,
-    },
-    {
+		canBeUsedNow: true,
+		quantity: 0,
+		maxQuantity: 8,
+		price: 1000
+	},
+	// Cloud burger: heals 10
+	CLOUD_BURGER: {
 		itemId: 3,
-		name: 'burger',
+		name: 'cloud_burger',
 		canBeEquipped: true,
-        canBeUsed: true,
-        price: 350,
-    },
-    {
+		canBeUsedNow: true,
+		quantity: 0,
+		maxQuantity: 24,
+		price: 350
+	},
+	// Authentic hot bread: heals 100
+	HOT_BREAD: {
 		itemId: 4,
-		name: 'hotpan',
+		name: 'hot_bread',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 3000,
-    },
-    {
+		canBeUsedNow: true,
+		quantity: 0,
+		maxQuantity: 8,
+		price: 3000
+	},
+	// Meat pie: heals 30
+	MEAT_PIE: {
 		itemId: 5,
-		name: 'tartev',
+		name: 'meat_pie',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 1000,
-    },
-    {
+		canBeUsedNow: true,
+		quantity: 0,
+		maxQuantity: 16,
+		price: 1000
+	},
+	// Fight ration: heals up to 20 during a fight
+	FIGHT_RATION: {
 		itemId: 6,
-		name: 'ration',
+		name: 'fight_ration',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 500,
-    },
-    {
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 8,
+		price: 500
+	},
+	// Surviving ration: heals between 10 and 40 during a fight
+	SURVIVING_RATION: {
 		itemId: 7,
-		name: 'surviv',
+		name: 'surviving_ration',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 500, // To double check
-    },
-    {
-		itemId: 7,
-		name: 'mergz',
-		canBeEquipped: true,
-        canBeUsed: false,
-        price: 500, // To double check
-    },
-    {
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 8,
+		price: 500 // TODO double check
+	},
+	// Goblin's Merguez: heals ?? during a fight
+	GLOBIN_MERGUEZ: {
 		itemId: 8,
-		name: 'fruit',
+		name: 'globin_merguez',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 4,
+		price: 500 // TODO double check
+	},
+	// Pampleboum: heals 15
+	PAMPLEBOUM: {
+		itemId: 9,
+		name: 'pampleboum',
 		canBeEquipped: false,
-        canBeUsed: true,
-        price: 500, // To double check
-    },
-    {
+		canBeUsedNow: true,
+		quantity: 0,
+		maxQuantity: 8,
+		price: 500 // TODO double check
+	},
+	// SOS Helmet: increases armor by 1 in a fight
+	SOS_HELMET: {
 		itemId: 10,
-		name: 'hlmsos',
+		name: 'sos_helmet',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 12,
+		price: 150
+	},
+	// Little pepper: increases next assault value by 10
+	LITTLE_PEPPER: {
 		itemId: 11,
-		name: 'hlmsos',
+		name: 'little_pepper',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 12,
+		price: 150
+	},
+	// Zippo: Set dino on fire during a fight
+	ZIPPO: {
 		itemId: 12,
 		name: 'zippo',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 12,
+		price: 150
+	},
+	// SOS flame: summons a flame to fight with you
+	SOS_FLAME: {
 		itemId: 12,
-		name: 'flamch',
+		name: 'sos_flame',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-    {
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 80,
+		price: 150
+	},
+	// Refrigerated Shield: Increases fire defense by 20 during a fight
+	REFRIGERATED_SHIELD: {
 		itemId: 13,
-		name: 'combi',
+		name: 'refrigerated_shield',
 		canBeEquipped: true,
-        canBeUsed: false,
-        price: 150,
-    },
-]
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 12,
+		price: 150
+	},
+	// Fuca Pill: increases attack speed by 50% during a fight
+	FUCA_PILL: {
+		itemId: 14,
+		name: 'fuca_pill',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 4,
+		price: 150 // TODO double check
+	},
+	// Monochromatic: all standards assault hit of the highest element of the dino during a fight (but speed follows normal rotation)
+	MONOCHROMATIC: {
+		itemId: 15,
+		name: 'monochromatic',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 4,
+		price: 150 // TODO double check
+	},
+	// Poisonite Shot: heals poison during a fight / prevents to be poisoned during a fight??
+	POISONITE_SHOT: {
+		itemId: 16,
+		name: 'poisonite_shot',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 8,
+		price: 150 // TODO double check
+	},
+	// Loris's Costume: makes an enemy attack someone else on his side during a fight
+	LORIS_COSTUME: {
+		itemId: 17,
+		name: 'loris_costume',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 8,
+		price: 1234 // TODO double check
+	},
+	// Vegetox Guard's Costume: Disguise a dino into a vegetox guard
+	VEGETOX_COSTUME: {
+		itemId: 18,
+		name: 'vegetox_costume',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 4,
+		price: 1234 // TODO double check
+	},
+	// Goblin's Costume: Disguise a dino into a gobelin
+	GOBLIN_COSTUME: {
+		itemId: 19,
+		name: 'goblin_costume',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 4,
+		price: 1234 // TODO double check
+	},
+	// Pampleboum Pit: give a bonus to an assault (%, fixed valued??)
+	PAMPLEBOUM_PIT: {
+		itemId: 20,
+		name: 'pampleboum_pit',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 12,
+		price: 1234 // TODO double check
+	},
+	// Example to copy paste to add objects
+	EXAMPLE: {
+		itemId: 999,
+		name: 'example',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		quantity: 0,
+		maxQuantity: 123,
+		price: 1234 // TODO double check
+	}
+} as { [name: string]: ItemFiche };

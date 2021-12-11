@@ -13,8 +13,8 @@ services:
       - drpg_network
     environment:
       POSTGRES_PASSWORD: EternalDinoSQL
-      POSTGRES_USER: postgres
-      POSTGRES_MULTIPLE_DATABASES: EternalDinoDB,eternal_twin
+      POSTGRES_USER: etwin.dev.write
+      POSTGRES_MULTIPLE_DATABASES: eternaldinodb,etwin.dev
 
   drpg_front:
     container_name: drpg_front
@@ -31,10 +31,6 @@ services:
       # https://cli.vuejs.org/guide/mode-and-env.html#modes
       # development is used by vue-cli-service serve
       - NODE_ENV=development
-      # one way for hot reloading ... see above for details
-      - CHOKIDAR_USEPOLLING=true
-      - CHOKIDAR_INTERVAL=100
-      - YOUR_APP_WEB_HTTP_PORT=8080
 
   drpg_eternal_twin:
     container_name: drpg_eternal_twin
@@ -42,7 +38,7 @@ services:
       context: ./EternalTwin
       dockerfile: Dockerfile
     volumes:
-      - ../EternalTwin:/www
+      - ../Eternaltwin:/www
     networks:
       - drpg_network
     stdin_open: true
@@ -57,6 +53,8 @@ services:
       - ../ed-be:/www
     networks:
       - drpg_network
+    environment:
+      - NODE_ENV=development
 
 networks:
   drpg_network:

@@ -1,6 +1,6 @@
 import { DinozRace } from '../models';
 
-export const race = ({
+export const raceList = {
 	WINKS: {
 		raceId: 1,
 		name: 'winks',
@@ -11,6 +11,7 @@ export const race = ({
 		nbrAirCase: 0,
 		price: 20000,
 		swfLetter: '2',
+		skillId: 61102
 	},
 	SIRAIN: {
 		raceId: 2,
@@ -21,7 +22,7 @@ export const race = ({
 		nbrLightCase: 0,
 		nbrAirCase: 0,
 		price: 16000,
-		swfLetter: '8',
+		swfLetter: '8'
 	},
 	CASTIVORE: {
 		raceId: 3,
@@ -32,7 +33,7 @@ export const race = ({
 		nbrLightCase: 0,
 		nbrAirCase: 1,
 		price: 16000,
-		swfLetter: '4',
+		swfLetter: '4'
 	},
 	NUAGOZ: {
 		raceId: 4,
@@ -43,7 +44,7 @@ export const race = ({
 		nbrLightCase: 1,
 		nbrAirCase: 1,
 		price: 16000,
-		swfLetter: '7',
+		swfLetter: '7'
 	},
 	GORILLOZ: {
 		raceId: 5,
@@ -54,7 +55,7 @@ export const race = ({
 		nbrLightCase: 0,
 		nbrAirCase: 0,
 		price: 16000,
-		swfLetter: 'A',
+		swfLetter: 'A'
 	},
 	WANWAN: {
 		raceId: 6,
@@ -65,7 +66,7 @@ export const race = ({
 		nbrLightCase: 1,
 		nbrAirCase: 0,
 		price: 19000,
-		swfLetter: 'B',
+		swfLetter: 'B'
 	},
 	PIGMOU: {
 		raceId: 7,
@@ -77,7 +78,7 @@ export const race = ({
 		nbrAirCase: 0,
 		price: 20000,
 		swfLetter: '1',
-		skillId: 1,
+		skillId: 61103
 	},
 	PLANAILLE: {
 		raceId: 8,
@@ -88,7 +89,7 @@ export const race = ({
 		nbrLightCase: 2,
 		nbrAirCase: 0,
 		price: 16000,
-		swfLetter: '3',
+		swfLetter: '3'
 	},
 	MOUEFFE: {
 		raceId: 9,
@@ -99,7 +100,7 @@ export const race = ({
 		nbrLightCase: 0,
 		nbrAirCase: 0,
 		price: 16000,
-		swfLetter: '0',
+		swfLetter: '0'
 	},
 	// TODO : mettre les bonnes données pour les races ci-dessous
 	ROCKY: {
@@ -112,6 +113,7 @@ export const race = ({
 		nbrAirCase: 0,
 		price: 16000,
 		swfLetter: '0',
+		skillId: 61104
 	},
 	HIPPOCLAMP: {
 		raceId: 11,
@@ -122,7 +124,7 @@ export const race = ({
 		nbrLightCase: 1,
 		nbrAirCase: 1,
 		price: 16000,
-		swfLetter: '0',
+		swfLetter: '0'
 	},
 	PTEROZ: {
 		raceId: 12,
@@ -133,7 +135,7 @@ export const race = ({
 		nbrLightCase: 0,
 		nbrAirCase: 3,
 		price: 16000,
-		swfLetter: '0',
+		swfLetter: '0'
 	},
 	QUETZU: {
 		raceId: 14,
@@ -144,6 +146,8 @@ export const race = ({
 		nbrLightCase: 0,
 		nbrAirCase: 0,
 		price: 16000,
-		swfLetter: '0',
-	},
-} as unknown) as { [name: string]: DinozRace };
+		swfLetter: '0'
+	}
+} as { [name: string]: DinozRace };
+
+// 21 races en tout

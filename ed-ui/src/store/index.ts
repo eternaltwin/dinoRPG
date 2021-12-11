@@ -27,7 +27,7 @@ const getters = {
 };
 
 const vuexLocal = new VuexPersistence<StoreState>({
-	storage: window.localStorage
+	storage: window.sessionStorage
 });
 
 export default createStore({

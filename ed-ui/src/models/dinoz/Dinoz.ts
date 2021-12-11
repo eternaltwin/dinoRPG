@@ -1,5 +1,3 @@
-import { Place } from '@/models';
-
 export interface Dinoz {
 	dinozId?: string;
 	name?: string;
@@ -10,11 +8,12 @@ export interface Dinoz {
 	experience?: number;
 	maxExperience?: number;
 	canGather?: boolean;
-	place: Place;
 	race?: DinozRace;
-	assDinozItem: Array<Item>;
+	item: Array<Item>;
 	status: Status;
 	actions: Array<Action>;
+	skill: Array<Skill>;
+	placeId: number;
 }
 
 export interface DinozRace {
@@ -30,13 +29,28 @@ export interface DinozRace {
 }
 
 export interface Skill {
+	skillId: number;
 	name: string;
+	type: string;
+	energy: number;
+	element: string;
+	state: boolean;
+	activable?: boolean;
 }
 
 export interface Item {
+	itemId: number;
 	canBeEquipped?: boolean;
 	canBeUsedNow?: boolean;
 	name?: string;
+	price?: number;
+	quantity?: number;
+	maxQuantity?: number;
+}
+
+export interface ItemShop {
+	id: number;
+	display?: string;
 	price?: number;
 }
 

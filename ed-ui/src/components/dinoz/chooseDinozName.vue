@@ -1,15 +1,15 @@
 <template>
 	<div id="chooseDinozName">
 		<p>{{ $t('chooseDinoz.information') }}</p>
-		<dinozSWF
+		<DinozSWF
 			:display="dinozData.display"
 			:width="190"
 			:height="165"
 			type="dino"
-		></dinozSWF>
+		></DinozSWF>
 		<p>{{ $t('chooseDinoz.nomDuDinoz') }}</p>
 		<input type="text" v-model="name" />
-		<button @click="nameDinoz()">{{ $t('bouton.nommer') }}</button>
+		<button @click="nameDinoz()">{{ $t('button.name') }}</button>
 	</div>
 </template>
 
@@ -26,7 +26,7 @@ export default defineComponent({
 	data() {
 		return {
 			name: undefined as string | undefined,
-			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,}$/
+			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/
 		};
 	},
 	props: {

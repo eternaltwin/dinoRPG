@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Accueil from '@/pages/Accueil.vue';
-import DinozPage from '@/pages/DinozPage/DinozPage.vue';
-import DinozShopPage from '@/pages/DinozShopPage/DinozShopPage.vue';
+import DinozPage from '@/pages/DinozPage.vue';
+import DinozShopPage from '@/pages/DinozShopPage.vue';
+import ItemShopPage from '@/pages/shop/ItemShopPage.vue';
 import AuthenticationPage from '@/pages/AuthenticationPage.vue';
+import DinozGenerator from '@/pages/DinozGenerator.vue';
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
@@ -18,6 +20,11 @@ const router = createRouter({
 			component: DinozPage
 		},
 		{
+			path: '/shop',
+			name: 'ItemShopPage',
+			component: ItemShopPage
+		},
+		{
 			path: '/shop/dinoz',
 			name: 'DinozShopPage',
 			component: DinozShopPage
@@ -26,6 +33,12 @@ const router = createRouter({
 			path: '/authentication',
 			name: 'AuthenticationPage',
 			component: AuthenticationPage
+		},
+		{
+			path: '/generator',
+			name: 'DinozGenerator',
+			component: DinozGenerator,
+			props: route => ({ chk: route.query.chk, chk2: route.query.chk2 })
 		},
 		{
 			path: '/:pathMatch(.*)',

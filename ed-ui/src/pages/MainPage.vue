@@ -8,10 +8,8 @@
 						<a href="/" class="linkHome"></a>
 						<div id="centerHeader">
 							<div id="menu"></div>
-							<div id="dinozList">
-								<common-elements></common-elements>
-							</div>
-							<router-view />
+							<LeftPanel />
+							<Router-view />
 						</div>
 					</td>
 					<td id="right"><div></div></td>
@@ -32,12 +30,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CommonElements from '@/components/CommonElements.vue';
+import LeftPanel from '@/components/common/LeftPanel.vue';
 
 export default defineComponent({
 	name: 'MainPage',
 	components: {
-		CommonElements
+		LeftPanel
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+a.linkHome {
+	position: absolute;
+	width: 500px;
+	height: 80px;
+	z-index: 10;
+	margin-top: 25px;
+	margin-left: 240px;
+	background-color: transparent;
+}
+</style>
