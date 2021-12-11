@@ -1,24 +1,21 @@
 import axios, { AxiosInstance } from 'axios';
 import { isNil } from 'lodash';
+import urlJoin from 'url-join';
 import store from '@/store';
+
+const API_SERVER = new URL(process.env.VUE_APP_API_URL);
+const API_BASE = urlJoin(API_SERVER.toString(), 'api');
 
 export const http = function(): AxiosInstance {
 	const jwt: string = store.getters.getJwt;
 
-	if (!isNil(jwt)) {
-		return axios.create({
-			baseURL: `${process.env.VUE_APP_API_URL}/api`,
-			headers: {
-				'Content-type': 'application/json',
-				Authorization: `Bearer ${jwt}`
-			}
-		});
-	} else {
-		return axios.create({
-			baseURL: `${process.env.VUE_APP_API_URL}/api`,
-			headers: {
-				'Content-type': 'application/json'
-			}
-		});
-	}
+	const authHeaders = isNil(jwt) ? {} : { Authorization: `Bearer ${jwt}` };
+
+	return axios.create({
+		baseURL: API_BASE,
+		headers: {
+			'Content-type': 'application/json',
+			...authHeaders
+		}
+	});
 };
