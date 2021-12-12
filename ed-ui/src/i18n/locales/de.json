@@ -1,13 +1,13 @@
 {
 	"placeholder":"placeholder",
 	"rightMenu": {
-		"news":"News",
+		"news":"Nouveautés",
 		"gazette":"Gazette",
-		"ranking":"Tanking",
+		"ranking":"Classement",
 		"clans":"Clans",
 		"ingredients":"Ingrédients",
-		"account":"My account",
-		"forum":"Forum",
+		"account":"Mon Compte",
+		"forum":"forum",
 		"faq":"FAQ"
 	},
 	"alpha": {
@@ -890,9 +890,9 @@
 		}
 	},
 	"tabs": {
-		"map": "Flemme",
-		"inventory": "De remplir",
-		"details": "Les json"
+		"map": "Carte",
+		"inventory": "Inventaire",
+		"details": "Détails"
 	},
 	"layout": {
 		"fx": "Statuts",

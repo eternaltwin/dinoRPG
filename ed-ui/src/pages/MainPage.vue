@@ -10,6 +10,7 @@
 							<div id="menu"></div>
 							<LeftPanel />
 							<Router-view />
+							<RightMenu />
 						</div>
 					</td>
 					<td id="right"><div></div></td>
@@ -30,14 +31,45 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { isNil } from 'lodash';
 import LeftPanel from '@/components/common/LeftPanel.vue';
+import RightMenu from '@/components/common/RightMenu.vue';
+import store from '@/store';
+import { Dinoz } from '@/models';
+import { errorHandler } from '@/utils';
+import { PlayerService } from '@/services';
 
 export default defineComponent({
 	name: 'MainPage',
 	components: {
-		LeftPanel
+		LeftPanel,
+		RightMenu
+	},
+	async mounted(): Promise<void> {
+		const money = store.getters.getMoney;
+		const dinozList = store.getters.getDinozList;
+		const dinozCount = store.getters.getDinozCount;
+
+		if (isNil(money) || isNil(dinozList) || isNil(dinozCount)) {
+			try {
+				const commonData: CommonData = await PlayerService.getCommonData();
+
+				// Set data in store
+				store.commit('setMoney', commonData.money);
+				store.commit('setDinozList', commonData.dinoz);
+				store.commit('setDinozCount', commonData.dinozCount);
+			} catch (err) {
+				errorHandler.handle(err);
+			}
+		}
 	}
 });
+
+interface CommonData {
+	money: number;
+	dinoz: Dinoz;
+	dinozCount: number;
+}
 </script>
 
 <style lang="scss" scoped>

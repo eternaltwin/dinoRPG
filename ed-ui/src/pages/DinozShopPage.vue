@@ -106,6 +106,9 @@ export default defineComponent({
 				// Update dinoz list
 				store.commit('setDinozList', dinozStore);
 
+				// Update dinoz count
+				store.commit('setDinozCount', store.getters.getDinozCount + 1);
+
 				// Go to dinoz page
 				this.$router.push({
 					name: 'DinozPage',

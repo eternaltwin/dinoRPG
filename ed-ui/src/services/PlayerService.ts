@@ -13,4 +13,5 @@ export const PlayerService = {
 interface CommonData {
 	money: number;
 	dinoz: Dinoz;
+	dinozCount: number;
 }

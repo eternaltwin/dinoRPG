@@ -138,6 +138,11 @@ const setDinozPlaceRequest = (
 		}
 	);
 };
+
+const getDinozTotalCount = (): Promise<number> => {
+	return Dinoz.count();
+};
+
 export {
 	createDinozRequest,
 	getDinozFicheRequest,
@@ -147,5 +152,6 @@ export {
 	getDinozSkillAndStatusRequest,
 	setSkillSetRequest,
 	getDinozPlaceRequest,
-	setDinozPlaceRequest
+	setDinozPlaceRequest,
+	getDinozTotalCount
 };

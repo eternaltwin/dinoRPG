@@ -20,7 +20,11 @@
 			</Tooltip>
 			<Tooltip theme="small">
 				<template #tooltip-trigger>
-					<a id="menu_shop" @click="goToItemShop()" class="iconboutik"></a>
+					<a
+						id="menu_shop"
+						@click="goToPage('ItemShopPage')"
+						class="iconboutik"
+					></a>
 				</template>
 				<template #tooltip-content="{ formatContent }">
 					<p v-html="formatContent($t('layout.shopButton'))" />
@@ -44,10 +48,10 @@
 			</Tooltip>
 		</div>
 		<DinozList></DinozList>
-		<a class="button" @click="goToDinozShop()">
+		<a class="button" @click="goToPage('DinozShopPage')">
 			{{ $t('button.buyDinoz') }}
 		</a>
-		<a class="button" @click="goToDinozGenerator()">
+		<a class="button" @click="goToPage('DinozGenerator')">
 			{{ $t('button.generator') }}
 		</a>
 	</div>
@@ -57,9 +61,7 @@
 import { defineComponent } from 'vue';
 import store from '@/store';
 import { isNil } from 'lodash';
-import { utils, errorHandler } from '@/utils';
-import { PlayerService } from '@/services';
-import { Dinoz } from '@/models';
+import { utils } from '@/utils';
 import DinozList from '@/components/dinoz/dinozList.vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
 
@@ -75,32 +77,8 @@ export default defineComponent({
 		Tooltip
 	},
 	methods: {
-		// Get all data displayed on every page (money, dinozList)
-		// If datas aren't in store, do an API call
-		async getCommonData(): Promise<void> {
-			this.money = store.getters.getMoney;
-			const dinozList = store.getters.getDinozList;
-
-			if (isNil(this.money) || isNil(dinozList)) {
-				try {
-					const commonData: CommonData = await PlayerService.getCommonData();
-
-					// Set data in store
-					store.commit('setMoney', commonData.money);
-					store.commit('setDinozList', commonData.dinoz);
-				} catch (err) {
-					errorHandler.handle(err);
-				}
-			}
-		},
-		goToItemShop() {
-			this.$router.push({ name: 'ItemShopPage' });
-		},
-		goToDinozShop() {
-			this.$router.push({ name: 'DinozShopPage' });
-		},
-		goToDinozGenerator(): void {
-			this.$router.push({ name: 'DinozGenerator' });
+		goToPage(pageName: string) {
+			this.$router.push({ name: pageName });
 		}
 	},
 	computed: {
@@ -120,16 +98,8 @@ export default defineComponent({
 		storeMoney: function(money: number) {
 			this.money = money;
 		}
-	},
-	mounted(): void {
-		this.getCommonData();
 	}
 });
-
-interface CommonData {
-	money: number;
-	dinoz: Dinoz;
-}
 </script>
 
 <style lang="scss" scoped>

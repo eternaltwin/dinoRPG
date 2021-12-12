@@ -5,7 +5,8 @@ import VuexPersistence from 'vuex-persist';
 const state = {
 	jwt: undefined,
 	money: undefined,
-	dinozList: []
+	dinozList: [],
+	dinozCount: undefined
 } as StoreState;
 
 const mutations = {
@@ -17,13 +18,17 @@ const mutations = {
 	},
 	setDinozList: (state: StoreState, dinozList: Array<Dinoz>) => {
 		state.dinozList = dinozList;
+	},
+	setDinozCount: (state: StoreState, dinozCount: number) => {
+		state.dinozCount = dinozCount;
 	}
 };
 
 const getters = {
 	getJwt: (state: StoreState) => state.jwt,
 	getMoney: (state: StoreState) => state.money,
-	getDinozList: (state: StoreState) => state.dinozList
+	getDinozList: (state: StoreState) => state.dinozList,
+	getDinozCount: (state: StoreState) => state.dinozCount
 };
 
 const vuexLocal = new VuexPersistence<StoreState>({
