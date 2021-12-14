@@ -20,7 +20,7 @@ const authenticateToET = async (
 		token = await getAuthorizationToken(req.body.code);
 		user = await getUser(
 			token.accessToken,
-			config.general.eternalTwinDockerURI
+			config.general.eternalTwinServerUri
 		);
 	} catch (err) {
 		console.error(err);
@@ -91,19 +91,19 @@ const getAuthorizationUri = (req: Request, res: Response): Response => {
 function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {
 	const config: Config = getConfig();
 	const eternalTwinURI: string = useDockerUri
-		? config.general.eternalTwinDockerURI
-		: config.general.eternalTwinURI;
+		? config.general.eternalTwinServerUri
+		: config.general.eternalTwinPublicUri;
 
 	return new RfcOauthClient({
 		authorizationEndpoint: new URL(
-			`${eternalTwinURI}${config.oauth.authorizationURI}`
+			`${eternalTwinURI}${config.oauth.authorizationUri}`
 		),
-		tokenEndpoint: new URL(`${eternalTwinURI}${config.oauth.tokenURI}`),
+		tokenEndpoint: new URL(`${eternalTwinURI}${config.oauth.tokenUri}`),
 		callbackEndpoint: new URL(
-			`${config.general.frontUri}${config.oauth.callbackURI}`
+			`${config.general.frontUri}${config.oauth.callbackUri}`
 		),
-		clientId: config.oauth.client_id,
-		clientSecret: config.oauth.client_secret
+		clientId: config.oauth.clientId,
+		clientSecret: config.oauth.clientSecret
 	});
 }
 

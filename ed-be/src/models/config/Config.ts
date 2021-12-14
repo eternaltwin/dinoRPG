@@ -8,18 +8,18 @@ export interface Config {
 }
 
 interface GeneralConfig {
-	readonly eternalTwinURI: string;
-	readonly eternalTwinDockerURI: string;
+	readonly eternalTwinPublicUri: string;
+	readonly eternalTwinServerUri: string;
 	readonly serverUri: string;
 	readonly frontUri: string;
 }
 
 interface OauthConfig {
-	readonly client_id: string;
-	readonly client_secret: string;
-	readonly authorizationURI: string;
-	readonly tokenURI: string;
-	readonly callbackURI: string;
+	readonly clientId: string;
+	readonly clientSecret: string;
+	readonly authorizationUri: string;
+	readonly tokenUri: string;
+	readonly callbackUri: string;
 }
 
 interface DbConfig {

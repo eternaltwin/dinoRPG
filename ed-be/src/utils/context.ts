@@ -5,8 +5,7 @@ import { Config } from '../models/index.js';
 var config: Config;
 
 const getEnvironnement = (): string => {
-	const environment = process.env.NODE_ENV || 'development';
-	return environment === 'development' ? 'dev' : 'prod';
+	return process.env.NODE_ENV ?? 'development';
 };
 
 const loadConfigFile = (): void => {

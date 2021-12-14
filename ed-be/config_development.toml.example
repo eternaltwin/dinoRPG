@@ -1,15 +1,15 @@
 [general]
-eternalTwinURI = 'http://localhost:50320/'
-eternalTwinDockerURI = 'http://drpg_eternal_twin:50320/'
+eternalTwinPublicUri = 'http://localhost:50320/'
+eternalTwinServerUri = 'http://drpg_eternal_twin:50320/'
 serverUri = 'http://localhost:8081/'
 frontUri = 'http://localhost:8080/'
 
 [oauth]
-client_id = 'dinorpg@clients'
-client_secret = 'dev_secret'
-authorizationURI = 'oauth/authorize'
-tokenURI = 'oauth/token'
-callbackURI = 'authentication'
+clientId = 'dinorpg@clients'
+clientSecret = 'dev_secret'
+authorizationUri = 'oauth/authorize'
+tokenUri = 'oauth/token'
+callbackUri = 'authentication'
 
 [db]
 host = 'drpg_database'
