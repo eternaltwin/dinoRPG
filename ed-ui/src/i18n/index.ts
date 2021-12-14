@@ -21,22 +21,22 @@ export const messages = {
 export const Locales: { [index: string]: LangInfos } = {
 	[LocalesEnum.FR]: {
 		caption: 'Français',
-		icon: require(`@/assets/design/lang_fr.png`),
+		icon: require(`@/assets/design/lang_fr.webp`),
 		short: 'fr'
 	},
 	[LocalesEnum.EN]: {
 		caption: 'English',
-		icon: require(`@/assets/design/lang_en.png`),
+		icon: require(`@/assets/design/lang_en.webp`),
 		short: 'en'
 	},
 	[LocalesEnum.ES]: {
 		caption: 'Spanish',
-		icon: require(`@/assets/design/lang_es.png`),
+		icon: require(`@/assets/design/lang_es.webp`),
 		short: 'es'
 	},
 	[LocalesEnum.DE]: {
 		caption: 'German',
-		icon: require(`@/assets/design/lang_de.png`),
+		icon: require(`@/assets/design/lang_de.webp`),
 		short: 'de'
 	}
 };

@@ -89,9 +89,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .actions {
-	background: url('~@/assets/background/banniere_left.png') no-repeat,
-		url('~@/assets/background/banniere_right.png') no-repeat,
-		url('~@/assets/background/banniere_middle.png') repeat-x;
+	background: url('~@/assets/background/banniere_left.webp') no-repeat,
+		url('~@/assets/background/banniere_right.webp') no-repeat,
+		url('~@/assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left, right;
 	float: left;
 	left: 12px;
