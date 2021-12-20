@@ -98,6 +98,9 @@ export default defineComponent({
 		storeMoney: function(money: number) {
 			this.money = money;
 		}
+	},
+	mounted(): void {
+		this.money = store.getters.getMoney;
 	}
 });
 </script>

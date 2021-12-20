@@ -21,33 +21,33 @@ export const helpers = {
 
 export function formatText(text: string): string {
 	let formattedText = text;
-	formattedText = formattedText.replaceAll(
+	formattedText = formattedText.replace(
 		/\*\*(.[^*]*)\*\*/g,
 		'<strong>$1</strong>'
 	);
-	formattedText = formattedText.replaceAll(/\/\/(.[^*]*)\/\//g, '<em>$1</em>');
-	formattedText = formattedText.replaceAll(/&&/g, '<br>');
-	formattedText = formattedText.replaceAll(
+	formattedText = formattedText.replace(/\/\/(.[^*]*)\/\//g, '<em>$1</em>');
+	formattedText = formattedText.replace(/&&/g, '<br>');
+	formattedText = formattedText.replace(
 		/:feu:/g,
 		helpers.computeImageHtml('feu')
 	);
-	formattedText = formattedText.replaceAll(
+	formattedText = formattedText.replace(
 		/:bois:/g,
 		helpers.computeImageHtml('bois')
 	);
-	formattedText = formattedText.replaceAll(
+	formattedText = formattedText.replace(
 		/:eau:/g,
 		helpers.computeImageHtml('eau')
 	);
-	formattedText = formattedText.replaceAll(
+	formattedText = formattedText.replace(
 		/:foudre:/g,
 		helpers.computeImageHtml('foudre')
 	);
-	formattedText = formattedText.replaceAll(
+	formattedText = formattedText.replace(
 		/:air:/g,
 		helpers.computeImageHtml('air')
 	);
-	formattedText = formattedText.replaceAll(
+	formattedText = formattedText.replace(
 		/:neutre:/g,
 		helpers.computeImageHtml('neutre')
 	);
