@@ -1,57 +1,58 @@
 <template>
 	<Title :title="$t('pageTitle.dinozShop')" />
-	<div id="centerContent">
-		<div class="enclos">
-			<div class="section">
-				<div class="titlePage">Enclos des dinoz</div>
-			</div>
-			<div class="help">
-				<p v-html="$t('shop.help')"></p>
-			</div>
-			<div
-				class="sheet"
-				:id="'detail_' + index"
-				v-for="(dinoz, index) in dinozList"
-				:key="dinoz.dinozId"
-			>
-				<DinozSWF
-					:display="dinoz.display"
-					:width="190"
-					:height="165"
-					type="dino"
-				></DinozSWF>
-				<div class="infos">
-					<div class="price">
-						<span class="money"
-							>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
-							<img src="@/assets/icons/small_gold.webp" />
-						</span>
-					</div>
-					<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{
-						$t('button.chose')
-					}}</a>
-					<div class="race">
-						<Tooltip theme="normal">
-							<template #tooltip-trigger>
-								<strong>Race :</strong> {{ $t(`race.name.${dinoz.race.name}`) }}
-							</template>
-							<template #tooltip-content>
-								<h1>{{ $t(`race.name.${dinoz.race.name}`) }}</h1>
-								<p>{{ $t(`race.description.${dinoz.race.name}`) }}</p>
-							</template>
-						</Tooltip>
-					</div>
-					<Elements
-						:fire="dinoz.race.nbrFireCase"
-						:wood="dinoz.race.nbrWoodCase"
-						:water="dinoz.race.nbrWaterCase"
-						:light="dinoz.race.nbrLightCase"
-						:air="dinoz.race.nbrAirCase"
-					></Elements>
-					<div class="skill" v-if="dinoz.skill">
-						<img src="@/assets/icons/small_follow.webp" alt="follow" />
-						{{ $t(`skill.name.${dinoz.skill}`) }}
-					</div>
+	<div class="enclos">
+		<div class="section">
+			<div class="titlePage">Enclos des dinoz</div>
+		</div>
+		<div class="help">
+			<p v-html="$t('shop.help')"></p>
+		</div>
+		<div
+			class="sheet"
+			:id="'detail_' + index"
+			v-for="(dinoz, index) in dinozList"
+			:key="dinoz.dinozId"
+		>
+			<DinozSWF
+				:display="dinoz.display"
+				:width="190"
+				:height="165"
+				type="dino"
+			></DinozSWF>
+			<div class="infos">
+				<div class="price">
+					<span class="money"
+						>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
+						<img src="@/assets/icons/small_gold.webp" />
+					</span>
+				</div>
+				<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{
+					$t('button.chose')
+				}}</a>
+				<div class="race">
+					<Tooltip theme="normal">
+						<template #tooltip-trigger>
+							<strong>Race :</strong>
+							{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
+						</template>
+						<template #tooltip-content>
+							<h1>{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}</h1>
+							<p>
+								{{ $t(`race.description.${raceList[dinoz.race.raceId]}`) }}
+							</p>
+						</template>
+					</Tooltip>
+				</div>
+				<Elements
+					:fire="dinoz.race.nbrFireCase"
+					:wood="dinoz.race.nbrWoodCase"
+					:water="dinoz.race.nbrWaterCase"
+					:light="dinoz.race.nbrLightCase"
+					:air="dinoz.race.nbrAirCase"
+				></Elements>
+				<div class="skill" v-if="dinoz.skill">
+					<img src="@/assets/icons/small_follow.webp" alt="follow" />
+					{{ $t(`skill.name.${dinoz.skill}`) }}
 				</div>
 			</div>
 		</div>
@@ -68,13 +69,15 @@ import Elements from '@/components/data/elements.vue';
 import store from '@/store';
 import Tooltip from '@/components/utils/ToolTip.vue';
 import Title from '@/components/utils/Title.vue';
+import { raceList } from '@/constants';
 
 export default defineComponent({
 	name: 'DinozShopPage',
 	data() {
 		return {
 			utils: utils,
-			dinozList: [] as Array<DinozShop>
+			dinozList: [] as Array<DinozShop>,
+			raceList: raceList
 		};
 	},
 	components: {

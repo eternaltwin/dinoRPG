@@ -1,5 +1,5 @@
 <template>
-	<div id="centerContent" class="newsSection">
+	<div class="newsSection">
 		<div class="section">
 			<div class="titlePage">
 				<h3>{{ $t(`news.actualites`) }}</h3>

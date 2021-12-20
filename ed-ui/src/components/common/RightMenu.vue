@@ -1,5 +1,5 @@
 <template>
-	<ul>
+	<ul class="rightMenu">
 		<li>
 			<div class="time">{{ time }}</div>
 		</li>
@@ -19,7 +19,9 @@
 			<a @click="goToPage('')">{{ $t('rightMenu.ingredients') }}</a>
 		</li>
 		<li>
-			<a @click="goToPage('')">{{ $t('rightMenu.account') }}</a>
+			<a @click="goToPage('MyAccount', getPlayerId)">{{
+				$t('rightMenu.account')
+			}}</a>
 		</li>
 		<li>
 			<a @click="goToPage('')">{{ $t('rightMenu.forum') }}</a>
@@ -43,6 +45,7 @@
 import { defineComponent } from 'vue';
 import LocaleChange from '@/components/utils/LocaleChange.vue';
 import store from '@/store';
+import { mapGetters } from 'vuex';
 
 export default defineComponent({
 	name: 'RightMenu',
@@ -55,13 +58,14 @@ export default defineComponent({
 		LocaleChange
 	},
 	computed: {
+		...mapGetters(['getPlayerId']),
 		dinozCount(): number {
 			return store.getters.getDinozCount;
 		}
 	},
 	methods: {
-		goToPage(page: string): void {
-			this.$router.push({ name: page });
+		goToPage(page: string, paramId: number): void {
+			this.$router.push({ name: page, params: { id: paramId } });
 		},
 		getTime(): void {
 			let day: Date = new Date();
@@ -81,14 +85,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-ul {
-	position: relative;
+.rightMenu {
+	left: 550px;
+	position: absolute;
 	padding-bottom: 10px;
 	padding-right: 10px;
 	height: auto;
 	width: auto;
-	float: left;
-	top: 100px;
+	top: -25px;
 	padding-left: 15px;
 	padding-top: 15px;
 	background: url('../../assets/design/sideMenu_header.gif') no-repeat,

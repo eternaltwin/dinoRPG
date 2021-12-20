@@ -9,11 +9,15 @@
 						<div id="centerHeader">
 							<div id="menu"></div>
 							<LeftPanel />
-							<Router-view />
-							<RightMenu />
+							<div id="centerContent">
+								<Router-view />
+								<RightMenu />
+							</div>
 						</div>
 					</td>
-					<td id="right"><div></div></td>
+					<td id="right">
+						<div></div>
+					</td>
 				</tr>
 				<tr>
 					<td><div></div></td>
@@ -35,7 +39,7 @@ import { isNil } from 'lodash';
 import LeftPanel from '@/components/common/LeftPanel.vue';
 import RightMenu from '@/components/common/RightMenu.vue';
 import store from '@/store';
-import { Dinoz } from '@/models';
+import { CommonData } from '@/models';
 import { errorHandler } from '@/utils';
 import { PlayerService } from '@/services';
 
@@ -58,18 +62,13 @@ export default defineComponent({
 				store.commit('setMoney', commonData.money);
 				store.commit('setDinozList', commonData.dinoz);
 				store.commit('setDinozCount', commonData.dinozCount);
+				store.commit('setPlayerId', commonData.playerId);
 			} catch (err) {
 				errorHandler.handle(err);
 			}
 		}
 	}
 });
-
-interface CommonData {
-	money: number;
-	dinoz: Dinoz;
-	dinozCount: number;
-}
 </script>
 
 <style lang="scss" scoped>

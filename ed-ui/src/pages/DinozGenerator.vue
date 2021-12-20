@@ -1,66 +1,64 @@
 <template>
-	<div id="centerContent">
+	<div>
+		<!-- Dinoz 1 -->
+		<DinozSWF
+			:display="display"
+			:width="190"
+			:height="165"
+			type="dino"
+			class="avatar"
+			v-if="showDinoz"
+		></DinozSWF>
+		<p>CHK : {{ display }}</p>
+		<br />
 		<div>
-			<!-- Dinoz 1 -->
-			<DinozSWF
-				:display="display"
-				:width="190"
-				:height="165"
-				type="dino"
-				class="avatar"
-				v-if="showDinoz"
-			></DinozSWF>
-			<p>CHK : {{ display }}</p>
-			<br />
-			<div>
-				<label>1ère lettre :</label>&nbsp;
-				<input
-					type="text"
-					:value="display[0]"
-					@change="changeLetterDinozOne($event.target.value, 0)"
-				/>
-			</div>
-			<div v-for="(letter, index) in display.slice(1)" :key="index">
-				<label>{{ index + 2 }}ème lettre: </label>&nbsp;
-				<input
-					type="text"
-					:value="display[index + 1]"
-					@change="changeLetterDinozOne($event.target.value, index + 1)"
-				/>
-			</div>
+			<label>1ère lettre :</label>&nbsp;
+			<input
+				type="text"
+				:value="display[0]"
+				@change="changeLetterDinozOne($event.target.value, 0)"
+			/>
 		</div>
-
-		<div>
-			<!-- Dinoz 2 -->
-			<DinozSWF
-				:display="display2"
-				:width="190"
-				:height="165"
-				type="dino"
-				class="avatar"
-				v-if="showDinoz"
-			></DinozSWF>
-			<p>CHK : {{ display2 }}</p>
-			<br />
-			<div>
-				<label>1ère lettre :</label>&nbsp;
-				<input
-					type="text"
-					:value="display2[0]"
-					@change="changeLetterDinozTwo($event.target.value, 0)"
-				/>
-			</div>
-			<div v-for="(letter, index) in display2.slice(1)" :key="index">
-				<label>{{ index + 2 }}ème lettre: </label>&nbsp;
-				<input
-					type="text"
-					:value="display2[index + 1]"
-					@change="changeLetterDinozTwo($event.target.value, index + 1)"
-				/>
-			</div>
+		<div v-for="(letter, index) in display.slice(1)" :key="index">
+			<label>{{ index + 2 }}ème lettre: </label>&nbsp;
+			<input
+				type="text"
+				:value="display[index + 1]"
+				@change="changeLetterDinozOne($event.target.value, index + 1)"
+			/>
 		</div>
-		<button @click="reload()">Reload</button>
 	</div>
+
+	<div>
+		<!-- Dinoz 2 -->
+		<DinozSWF
+			:display="display2"
+			:width="190"
+			:height="165"
+			type="dino"
+			class="avatar"
+			v-if="showDinoz"
+		></DinozSWF>
+		<p>CHK : {{ display2 }}</p>
+		<br />
+		<div>
+			<label>1ère lettre :</label>&nbsp;
+			<input
+				type="text"
+				:value="display2[0]"
+				@change="changeLetterDinozTwo($event.target.value, 0)"
+			/>
+		</div>
+		<div v-for="(letter, index) in display2.slice(1)" :key="index">
+			<label>{{ index + 2 }}ème lettre: </label>&nbsp;
+			<input
+				type="text"
+				:value="display2[index + 1]"
+				@change="changeLetterDinozTwo($event.target.value, index + 1)"
+			/>
+		</div>
+	</div>
+	<button @click="reload()">Reload</button>
 </template>
 
 <script lang="ts">

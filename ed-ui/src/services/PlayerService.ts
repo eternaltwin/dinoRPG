@@ -1,5 +1,5 @@
 import { http } from '@/utils';
-import { Dinoz } from '@/models';
+import { CommonData, PlayerInfo } from '@/models';
 
 export const PlayerService = {
 	getCommonData(): Promise<CommonData> {
@@ -7,11 +7,11 @@ export const PlayerService = {
 			.get('/player/commondata')
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	getPlayerData(id: number): Promise<PlayerInfo> {
+		return http()
+			.get(`/player/${id}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
-
-interface CommonData {
-	money: number;
-	dinoz: Dinoz;
-	dinozCount: number;
-}

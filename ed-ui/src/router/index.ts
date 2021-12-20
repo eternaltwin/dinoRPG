@@ -5,6 +5,7 @@ import DinozShopPage from '@/pages/DinozShopPage.vue';
 import ItemShopPage from '@/pages/shop/ItemShopPage.vue';
 import AuthenticationPage from '@/pages/AuthenticationPage.vue';
 import DinozGenerator from '@/pages/DinozGenerator.vue';
+import MyAccount from '@/pages/MyAccount.vue';
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
 			path: '/authentication',
 			name: 'AuthenticationPage',
 			component: AuthenticationPage
+		},
+		{
+			path: '/player/:id',
+			name: 'MyAccount',
+			component: MyAccount
 		},
 		{
 			path: '/generator',

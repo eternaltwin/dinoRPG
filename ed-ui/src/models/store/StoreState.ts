@@ -5,4 +5,5 @@ export interface StoreState {
 	jwt?: string;
 	money?: number;
 	dinozList?: Array<Dinoz>;
+	playerId?: number;
 }

@@ -111,7 +111,7 @@
       "universite": "L'université",
       "papy": "Chez Papy Joe",
       "forcebrut": "Forcebrut",
-      "fountj": "La Fontaine de jouvance",
+      "fountj": "La Fontaine de jouvence",
       "collines": "Collines Escarpées",
       "oree": "L'Orée de la Forêt"
     },
@@ -132,24 +132,24 @@
       "winks": "Winks",
       "sirain": "Sirain",
       "castivore": "Castivore",
-      "feross": "Feross",
-      "gorilloz": "Gorilloz",
-      "hippoclamp": "Hippoclamp",
-      "kabuki": "Kabuki",
-      "mahamuti": "Mahamuti",
-      "moueffe": "Moueffe",
       "nuagoz": "Nuagoz",
+      "gorilloz": "Gorilloz",
+      "wanwan": "Wanwan",
       "pigmou": "Pigmou",
       "planaille": "Planaille",
+      "moueffe": "Moueffe",
+      "rocky": "Rocky",
+      "hippoclamp": "Hippoclamp",
       "pteroz": "Pteroz",
       "quetzu": "Quetzu",
-      "rocky": "Rocky",
+      "feross": "Feross",
+      "kabuki": "Kabuki",
+      "mahamuti": "Mahamuti",
       "santaz": "Santaz",
       "smog": "Smog",
       "soufflet": "Soufflet",
       "toufufu": "Toufufu",
-      "triceragnon": "Tricéragnon",
-      "wanwan": "Wanwan"
+      "triceragnon": "Tricéragnon"
     },
     "description": {
       "winks": "Les Winks ont d'étranges pouvoirs. Ils sont les rares Dinoz à pouvoir effectuer des mutations temporaires ou définitives. Ils ont développé avec le temps une véritable science, transmise de génération en génération.",
@@ -917,6 +917,32 @@
     "default": "Dino-RPG [ L'actualité de Dinoland ]",
     "dinoz": "Dino-RPG [ Fiche de ",
     "shop": "Dino-RPG [ Marchand : Boutique volante de Dinoland ]",
-    "dinozShop": "Dino-RPG [ Enclos des Dinoz ]"
+    "dinozShop": "Dino-RPG [ Enclos des Dinoz ]",
+    "account": "Dino-RPG [ Informations personnelles ]"
+  },
+  "myAccount": {
+    "title": "Joueur :",
+    "profil": "Profil EternalDinoRPG",
+    "dinoz": "Dinoz",
+    "ranking": "Classement",
+    "inscription": "Inscrit le",
+    "clan": "Clan",
+    "dojo": "Dojo",
+    "rewards": "Récompenses Epiques",
+    "level": "Niveau",
+    "edit": "Modifier",
+    "quest": "Mes quètes",
+    "editAccount": "Modifier mes Informations",
+    "import": "Importer compte"
+  },
+  "rewards": {
+    "name": {
+      "perle": "Perle de la Fontaine",
+      "pmi":"Petit Missionaire Illustré"
+    },
+    "description": {
+      "perle": "La perle de la Fontaine de Jouvence permet à tous vos Dinoz de pouvoir se régénerer chaque jour à la Fontaine de Jouvence",
+      "pmi":"Le Petit Missionaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz"
+    }
   }
 }

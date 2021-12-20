@@ -1,20 +1,15 @@
 <template>
-	<div id="centerContent">
-		<div v-if="nameChoosen === false">
-			<ChooseDinozName
-				:dinozData="dinozData"
-				@setNameChoosen="setNameChoosen"
-			/>
-		</div>
-		<div class="dinoz" v-if="nameChoosen === true">
-			<DinozDisplay :dinozData="dinozData" />
-		</div>
-		<div class="dinozPanels" v-if="nameChoosen === true">
-			<!--<div class="header" />(à implémenter)-->
-			<DinozActions />
-			<TabPanel :dinozData="dinozData" />
-			<div class="footer" />
-		</div>
+	<div v-if="nameChoosen === false">
+		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
+	</div>
+	<div class="dinoz" v-if="nameChoosen === true">
+		<DinozDisplay :dinozData="dinozData" />
+	</div>
+	<div class="dinozPanels" v-if="nameChoosen === true">
+		<!--<div class="header" />(à implémenter)-->
+		<DinozActions />
+		<TabPanel :dinozData="dinozData" />
+		<div class="footer" />
 	</div>
 </template>
 

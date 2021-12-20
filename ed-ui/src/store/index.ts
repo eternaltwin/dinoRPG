@@ -6,7 +6,8 @@ const state = {
 	jwt: undefined,
 	money: undefined,
 	dinozList: [],
-	dinozCount: undefined
+	dinozCount: undefined,
+	playerId: undefined
 } as StoreState;
 
 const mutations = {
@@ -21,6 +22,9 @@ const mutations = {
 	},
 	setDinozCount: (state: StoreState, dinozCount: number) => {
 		state.dinozCount = dinozCount;
+	},
+	setPlayerId: (state: StoreState, playerId: number) => {
+		state.playerId = playerId;
 	}
 };
 
@@ -28,7 +32,8 @@ const getters = {
 	getJwt: (state: StoreState) => state.jwt,
 	getMoney: (state: StoreState) => state.money,
 	getDinozList: (state: StoreState) => state.dinozList,
-	getDinozCount: (state: StoreState) => state.dinozCount
+	getDinozCount: (state: StoreState) => state.dinozCount,
+	getPlayerId: (state: StoreState) => state.playerId
 };
 
 const vuexLocal = new VuexPersistence<StoreState>({

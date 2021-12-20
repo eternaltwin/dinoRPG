@@ -145,7 +145,7 @@ export default defineComponent({
 		background-repeat: repeat-x;
 	}
 	.centerHeader {
-		background-image: url('../assets/background/sky_headerbg.webp');
+		background-image: url('../assets/background/sky_headerbg_02.webp');
 		background-repeat: no-repeat;
 		width: 1008px;
 		height: 510px;

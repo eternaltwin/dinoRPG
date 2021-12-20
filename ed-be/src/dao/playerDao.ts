@@ -1,8 +1,13 @@
-import { AssPlayerReward, Dinoz, Player } from '../models/index.js';
+import {
+	AssDinozStatus,
+	AssPlayerReward,
+	Dinoz,
+	Player
+} from '../models/index.js';
 
 const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
-		attributes: ['money'],
+		attributes: ['money', 'playerId'],
 		include: {
 			model: Dinoz,
 			attributes: [
@@ -64,11 +69,35 @@ const setPlayerMoneyRequest = (
 	);
 };
 
+const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: ['createdAt', 'name'],
+		include: [
+			{
+				model: AssPlayerReward,
+				attributes: ['rewardId']
+			},
+			{
+				model: Dinoz,
+				attributes: ['dinozId', 'display', 'name', 'level', 'raceId'],
+				include: [
+					{
+						model: AssDinozStatus,
+						attributes: ['statusId']
+					}
+				]
+			}
+		],
+		where: { playerId: playerId }
+	});
+};
+
 export {
 	getPlayerId,
 	getEternalTwinId,
 	createPlayer,
 	getCommonDataRequest,
 	getPlayerRewardsRequest,
-	setPlayerMoneyRequest
+	setPlayerMoneyRequest,
+	getPlayerDataRequest
 };
