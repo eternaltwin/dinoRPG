@@ -1,4 +1,5 @@
 <template>
+	<ErrorMessage />
 	<div class="dinorpg">
 		<table id="layout">
 			<tbody>
@@ -42,12 +43,14 @@ import store from '@/store';
 import { CommonData } from '@/models';
 import { errorHandler } from '@/utils';
 import { PlayerService } from '@/services';
+import ErrorMessage from '@/components/utils/ErrorMessage.vue';
 
 export default defineComponent({
 	name: 'MainPage',
 	components: {
 		LeftPanel,
-		RightMenu
+		RightMenu,
+		ErrorMessage
 	},
 	async mounted(): Promise<void> {
 		const money = store.getters.getMoney;

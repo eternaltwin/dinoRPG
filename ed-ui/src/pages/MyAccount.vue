@@ -28,6 +28,7 @@ import { PlayerInfo } from '@/models';
 import MyDinoz from '@/components/data/MyDinoz.vue';
 import Profile from '@/components/data/Profile.vue';
 import EpicRewards from '@/components/data/EpicRewards.vue';
+import store from '@/store';
 
 export default defineComponent({
 	name: 'MyAccount',
@@ -56,7 +57,12 @@ export default defineComponent({
 	watch: {
 		// Reload page if player click on 'my account' button
 		'$route.params.id': function() {
-			this.$router.go(0);
+			if (
+				this.$router.currentRoute.value.params.id ===
+				store.getters.getPlayerId.toString()
+			) {
+				this.$router.go(0);
+			}
 		}
 	}
 });

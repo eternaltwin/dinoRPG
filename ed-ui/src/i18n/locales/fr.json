@@ -1,5 +1,6 @@
 {
   "placeholder": "placeholder",
+  "error":"Merci de reporter cette erreur aux devs avec le détail de comment cela est arrivé.",
   "rightMenu": {
     "news": "Nouveautés",
     "gazette": "Gazette",
