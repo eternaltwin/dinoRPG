@@ -14,6 +14,7 @@ export interface Dinoz {
 	actions: Array<Action>;
 	skill: Array<Skill>;
 	placeId: number;
+	statusList: Array<number>;
 }
 
 export interface DinozRace {

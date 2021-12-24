@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { errorHandler } from '@/utils';
 import { DinozService } from '@/services';
 import { Dinoz } from '@/models';
@@ -30,7 +30,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozData: Object
+		dinozData: Object as PropType<Dinoz>
 	},
 	components: {
 		DinozSWF
@@ -41,7 +41,7 @@ export default defineComponent({
 			// Check if dinoz name matches regex
 			if (this.regexName.test(this.name!)) {
 				try {
-					await DinozService.setDinozName(this.dinozData!.dinozId, this.name!);
+					await DinozService.setDinozName(this.dinozData!.dinozId!, this.name!);
 				} catch (err) {
 					errorHandler.handle(err);
 					return Promise.reject(err);

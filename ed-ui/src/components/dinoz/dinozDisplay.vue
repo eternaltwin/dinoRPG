@@ -19,17 +19,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import DinozElements from '@/components/dinoz/dinozElements.vue';
 import DinozBars from '@/components/dinoz/dinozBars.vue';
 import DinozEquip from '@/components/dinoz/dinozEquip.vue';
 import DinozStatus from '@/components/dinoz/dinozStatus.vue';
 import Title from '@/components/utils/Title.vue';
+import { Dinoz } from '@/models';
 
 export default defineComponent({
 	name: 'DinozDisplay',
-	props: ['dinozData'],
+	props: { dinozData: Object as PropType<Dinoz> },
 	data() {
 		return {
 			nameChoosen: undefined as boolean | undefined

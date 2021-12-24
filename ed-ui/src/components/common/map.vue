@@ -40,17 +40,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
 import { placeList } from '@/constants';
-import { Dinoz } from '@/models';
+import { Dinoz, Place } from '@/models';
 import store from '@/store';
 
 export default defineComponent({
 	name: 'Map',
 	components: { Tooltip },
 	props: {
-		placeMap: Object,
+		placeMap: Array as PropType<Array<Place>>,
 		placeId: Number
 	},
 	data() {

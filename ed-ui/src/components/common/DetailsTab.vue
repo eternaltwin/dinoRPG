@@ -89,17 +89,17 @@
 </template>
 
 <script lang="ts" scoped>
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
 import { statusList } from '@/constants';
-import { Skill } from '@/models';
+import { Dinoz, Skill } from '@/models';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
 
 export default defineComponent({
 	name: 'DetailsTab',
 	components: { Tooltip },
-	props: { dinozData: Object },
+	props: { dinozData: Object as PropType<Dinoz> },
 	data() {
 		return {
 			dinozSkill: [] as Array<Skill>

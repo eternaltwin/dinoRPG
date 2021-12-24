@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
 	name: 'DinozEquip',
 	props: {
-		itemList: Array
+		itemList: Array as PropType<Array<number>>
 	},
 	methods: {
 		getImg(imgName: string): string {

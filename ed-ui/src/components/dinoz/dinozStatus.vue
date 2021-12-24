@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
 import { statusList } from '@/constants';
 
@@ -34,7 +34,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozStatus: Array
+		dinozStatus: Array as PropType<Array<number>>
 	},
 	components: {
 		Tooltip

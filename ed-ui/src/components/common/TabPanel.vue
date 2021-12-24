@@ -18,15 +18,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { Item } from '@/models';
+import { defineComponent, PropType } from 'vue';
+import { Dinoz, Item } from '@/models';
 import InventoryTab from '@/components/common/InventoryTab.vue';
 import DetailsTab from '@/components/common/DetailsTab.vue';
 import MapTab from '@/components/common/MapTab.vue';
 
 export default defineComponent({
 	name: 'TabPanel',
-	props: { dinozData: Object },
+	props: { dinozData: Object as PropType<Dinoz> },
 	components: {
 		InventoryTab,
 		DetailsTab,

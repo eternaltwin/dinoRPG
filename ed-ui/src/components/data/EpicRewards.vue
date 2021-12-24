@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { epicList } from '@/constants';
 import ToolTip from '@/components/utils/ToolTip.vue';
 
@@ -46,7 +46,7 @@ export default defineComponent({
 	components: { ToolTip },
 	props: {
 		epicRewards: {
-			type: Array
+			type: Array as PropType<Array<number>>
 		}
 	},
 	methods: {

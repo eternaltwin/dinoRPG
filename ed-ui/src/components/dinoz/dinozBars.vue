@@ -36,12 +36,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import Tooltip from '@/components/utils/ToolTip.vue';
+import { Dinoz } from '@/models';
 
 export default defineComponent({
 	name: 'DinozBars',
-	props: { dinozData: Object },
+	props: { dinozData: Object as PropType<Dinoz> },
 	components: { Tooltip },
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
