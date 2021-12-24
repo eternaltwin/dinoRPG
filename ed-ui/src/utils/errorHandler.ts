@@ -5,7 +5,7 @@ import axios from 'axios';
 export const errorHandler = {
 	handle(err: unknown): void {
 		if (axios.isAxiosError(err) && err.response) {
-			if(err.response.status === 401){
+			if (err.response.status === 401) {
 				sessionStorage.clear();
 				router.go(0);
 			} else {

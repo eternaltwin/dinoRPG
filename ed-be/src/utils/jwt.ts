@@ -13,8 +13,11 @@ const jwtConfig = () => {
 
 const forgeJWT = (playerId: number): string => {
 	const config = getConfig() as Config;
-	const exp = Math.round(Date.now()/ 1000) + config.jwt.expiration
-	return jsonwebtoken.sign({ playerId: playerId, exp: exp }, config.jwt.secretKey);
+	const exp = Math.round(Date.now() / 1000) + config.jwt.expiration;
+	return jsonwebtoken.sign(
+		{ playerId: playerId, exp: exp },
+		config.jwt.secretKey
+	);
 };
 
 export { jwtConfig, forgeJWT };

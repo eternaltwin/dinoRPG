@@ -58,7 +58,7 @@ export default defineComponent({
 	transition: all 0.3s;
 	display: flex;
 	justify-content: center;
-  	align-items: center;
+	align-items: center;
 
 	.modal-box {
 		width: 400px;
