@@ -95,6 +95,7 @@ import { statusList } from '@/constants';
 import { Dinoz, Skill } from '@/models';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -111,12 +112,13 @@ export default defineComponent({
 		},
 		async changeState(skill: Skill): Promise<void> {
 			const dinozId = this.$route.params.id as string;
-
+			EventBus.emit('isLoading', true);
 			try {
 				await DinozService.setSkillState(dinozId, skill.skillId, !skill.state);
+				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
-				return Promise.reject(err);
+				return;
 			}
 
 			skill.state = !skill.state;
@@ -128,12 +130,14 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
+		EventBus.emit('isLoading', true);
 		try {
 			const dinozId = this.$route.params.id as string;
 			this.dinozSkill = await DinozService.getDinozSkill(dinozId);
+			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
-			return Promise.reject(err);
+			return;
 		}
 	}
 });

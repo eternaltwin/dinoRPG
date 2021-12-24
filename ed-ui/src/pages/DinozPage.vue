@@ -23,6 +23,7 @@ import { errorHandler } from '@/utils';
 import { DinozService } from '@/services';
 import { isNil } from 'lodash';
 import ChooseDinozName from '@/components/dinoz/chooseDinozName.vue';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -54,12 +55,14 @@ export default defineComponent({
 	},
 	// Get dinoz data
 	async mounted(): Promise<void> {
+		EventBus.emit('isLoading', true);
 		try {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(dinozId);
+			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
-			return Promise.reject(err);
+			return;
 		}
 
 		this.nameChoosen = this.dinozData.name !== '?';

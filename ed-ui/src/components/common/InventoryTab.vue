@@ -90,6 +90,7 @@ import { Item } from '@/models';
 import { InventoryService } from '@/services';
 import { errorHandler } from '@/utils';
 import Tooltip from '@/components/utils/ToolTip.vue';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -111,11 +112,13 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
+		EventBus.emit('isLoading', true);
 		try {
 			this.allItemsData = await InventoryService.getAllItemsData();
+			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
-			return Promise.reject(err);
+			return;
 		}
 	}
 });

@@ -70,6 +70,7 @@ import store from '@/store';
 import Tooltip from '@/components/utils/ToolTip.vue';
 import Title from '@/components/utils/Title.vue';
 import { raceList } from '@/constants';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -90,12 +91,14 @@ export default defineComponent({
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
 			const res: boolean = confirm(this.$t('button.confirm'));
 			if (res) {
+				EventBus.emit('isLoading', true);
 				let dinozCreated: Dinoz;
 				try {
 					dinozCreated = await DinozService.buyDinoz(dinoz.id);
+					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err);
-					return Promise.reject(err);
+					return;
 				}
 
 				// Update player's money
@@ -123,11 +126,14 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
+		EventBus.emit('isLoading', true);
 		// Get dinoz to display
 		try {
 			this.dinozList = await ShopService.getDinozFromDinozShop();
+			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
+			return;
 		}
 	}
 });

@@ -44,6 +44,7 @@ import { CommonData } from '@/models';
 import { errorHandler } from '@/utils';
 import { PlayerService } from '@/services';
 import ErrorMessage from '@/components/utils/ErrorMessage.vue';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'MainPage',
@@ -59,6 +60,7 @@ export default defineComponent({
 
 		if (isNil(money) || isNil(dinozList) || isNil(dinozCount)) {
 			try {
+				EventBus.emit('isLoading', true);
 				const commonData: CommonData = await PlayerService.getCommonData();
 
 				// Set data in store
@@ -66,8 +68,10 @@ export default defineComponent({
 				store.commit('setDinozList', commonData.dinoz);
 				store.commit('setDinozCount', commonData.dinozCount);
 				store.commit('setPlayerId', commonData.playerId);
+				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
+				return;
 			}
 		}
 	}

@@ -9,6 +9,7 @@ import { defineComponent } from 'vue';
 import { OauthService } from '@/services';
 import { isNil } from 'lodash';
 import store from '@/store';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'Authentication',
@@ -19,14 +20,16 @@ export default defineComponent({
 	},
 	methods: {
 		async authenticateToET(): Promise<void> {
+			EventBus.emit('isLoading', true);
 			let jwt: string;
 			try {
 				jwt = await OauthService.authenticateUser(
 					this.$route.query.code as string
 				);
+				EventBus.emit('isLoading', false);
 			} catch (err) {
 				console.error(err);
-				return Promise.reject(err);
+				return;
 			}
 
 			store.commit('setJwt', jwt);

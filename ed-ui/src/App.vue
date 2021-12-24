@@ -3,6 +3,7 @@
 	<Title :title="$t('pageTitle.default')" />
 	<HomePage v-if="displayAuth" />
 	<MainPage v-else />
+	<Spinner />
 </template>
 
 <script lang="ts">
@@ -10,8 +11,9 @@ import { defineComponent } from 'vue';
 import MainPage from '@/pages/MainPage.vue';
 import HomePage from '@/pages/HomePage.vue';
 import Title from '@/components/utils/Title.vue';
-import store from '@/store';
+import Spinner from '@/components/utils/Spinner.vue';
 import { isNil } from 'lodash';
+import store from './store';
 
 export default defineComponent({
 	name: 'App',
@@ -23,7 +25,8 @@ export default defineComponent({
 	components: {
 		MainPage,
 		HomePage,
-		Title
+		Title,
+		Spinner
 	},
 	mounted(): void {
 		this.displayAuth = isNil(store.getters.getJwt);

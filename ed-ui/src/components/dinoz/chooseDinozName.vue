@@ -20,6 +20,7 @@ import { DinozService } from '@/services';
 import { Dinoz } from '@/models';
 import store from '@/store';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
@@ -40,11 +41,13 @@ export default defineComponent({
 		async nameDinoz(): Promise<void> {
 			// Check if dinoz name matches regex
 			if (this.regexName.test(this.name!)) {
+				EventBus.emit('isLoading', true);
 				try {
 					await DinozService.setDinozName(this.dinozData!.dinozId!, this.name!);
+					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err);
-					return Promise.reject(err);
+					return;
 				}
 
 				// Update dinozList in store

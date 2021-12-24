@@ -7,6 +7,7 @@ import { Item, ItemShop } from '@/models';
 import { errorHandler } from '@/utils';
 import store from '@/store';
 import Title from '@/components/utils/Title.vue';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -26,11 +27,13 @@ export default defineComponent({
 		async openPopinConfirmChoice(item: ItemShop): Promise<void> {
 			const res: boolean = confirm(this.$t('button.confirm'));
 			if (res) {
+				EventBus.emit('isLoading', true);
 				try {
 					await InventoryService.buyItem(item.id);
+					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err);
-					return Promise.reject(err);
+					return;
 				}
 
 				// Update player's money
@@ -40,12 +43,15 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
+		EventBus.emit('isLoading', true);
 		// Get dinoz to display
 		try {
 			// this.itemList = await ShopService.getItemFromItemShop();
 			this.shop = 'shop';
+			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
+			return;
 		}
 	}
 });

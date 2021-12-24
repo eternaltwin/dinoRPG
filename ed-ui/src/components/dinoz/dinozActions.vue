@@ -42,6 +42,7 @@ import { Dinoz } from '@/models';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
 import store from '@/store';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -57,6 +58,7 @@ export default defineComponent({
 		},
 		async randomMove(dinoz: string): Promise<void> {
 			// FIXME: This methods should be rework to select the place to move.
+			EventBus.emit('isLoading', true);
 			try {
 				// Get new random placeId
 				let randoma = await DinozService.alphaMove(dinoz);
@@ -67,19 +69,22 @@ export default defineComponent({
 				let finalPlace: number = +randoma;
 				dinozToUpdate.placeId = finalPlace;
 				store.commit('setDinozList', dinozList);
+				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
-				return Promise.reject(err);
+				return;
 			}
 		}
 	},
 	async mounted(): Promise<void> {
+		EventBus.emit('isLoading', true);
 		try {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(dinozId);
+			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
-			return Promise.reject(err);
+			return;
 		}
 
 		this.nameChoosen = this.dinozData.name !== '?';

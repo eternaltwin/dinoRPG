@@ -9,6 +9,7 @@ export const errorHandler = {
 				sessionStorage.clear();
 				router.go(0);
 			} else {
+				EventBus.emit('isLoading', false);
 				EventBus.emit('responseError', err);
 				router.push({ name: 'Accueil' });
 			}

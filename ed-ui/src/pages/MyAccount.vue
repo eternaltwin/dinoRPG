@@ -29,6 +29,7 @@ import MyDinoz from '@/components/data/MyDinoz.vue';
 import Profile from '@/components/data/Profile.vue';
 import EpicRewards from '@/components/data/EpicRewards.vue';
 import store from '@/store';
+import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'MyAccount',
@@ -46,12 +47,14 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		const accountId = parseInt(this.$route.params.id.toString());
+		EventBus.emit('isLoading', true);
 		try {
 			this.accountData = await PlayerService.getPlayerData(accountId);
 			this.dataLoaded = true;
+			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
-			return Promise.reject(err);
+			return;
 		}
 	},
 	watch: {
