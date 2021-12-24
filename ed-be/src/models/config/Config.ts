@@ -31,6 +31,7 @@ interface DbConfig {
 
 interface JwtConfig {
 	readonly secretKey: string;
+	readonly expiration: number;
 }
 
 interface ShopConfig {

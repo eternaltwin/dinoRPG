@@ -19,6 +19,7 @@ dbName = 'eternaldinodb'
 
 [jwt]
 secretKey = '6d927010-33ef-418b-9630-2faed53cbe5e'
+expiration = 2592000
 
 [shop]
 dinozInShop = 4

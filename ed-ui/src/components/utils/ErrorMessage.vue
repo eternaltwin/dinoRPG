@@ -56,13 +56,13 @@ export default defineComponent({
 	left: 0;
 	z-index: 999;
 	transition: all 0.3s;
+	display: flex;
+	justify-content: center;
+  	align-items: center;
 
 	.modal-box {
-		min-width: 400px;
+		width: 400px;
 		position: absolute;
-		top: 40%;
-		left: 35%;
-		transform: translate(-50%, -50%);
 		padding: 2em;
 		font-size: 1.1em;
 		background-color: #fff0d1;

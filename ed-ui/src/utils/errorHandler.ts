@@ -5,8 +5,13 @@ import axios from 'axios';
 export const errorHandler = {
 	handle(err: unknown): void {
 		if (axios.isAxiosError(err) && err.response) {
-			EventBus.emit('responseError', err);
-			router.push({ name: 'Accueil' });
+			if(err.response.status === 401){
+				sessionStorage.clear();
+				router.go(0);
+			} else {
+				EventBus.emit('responseError', err);
+				router.push({ name: 'Accueil' });
+			}
 		}
 	}
 };
