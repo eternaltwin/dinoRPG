@@ -1,6 +1,7 @@
 import {
 	AllowNull,
 	AutoIncrement,
+	BelongsTo,
 	Column,
 	ForeignKey,
 	Model,
@@ -9,8 +10,10 @@ import {
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 
-@Table({ tableName: 'tb_ass_dinoz_status', timestamps: false })
-export class AssDinozStatus extends Model {
+type DinozType = Dinoz;
+
+@Table({ tableName: 'tb_mission_over', timestamps: false })
+export class MissionOver extends Model {
 	@PrimaryKey
 	@AutoIncrement
 	@Column
@@ -20,7 +23,10 @@ export class AssDinozStatus extends Model {
 	@Column
 	dinozId!: number;
 
+	@BelongsTo(() => Dinoz, 'dinozId')
+	dinoz!: DinozType;
+
 	@AllowNull(false)
 	@Column
-	statusId!: number;
+	missionId!: number;
 }

@@ -4,5 +4,8 @@ export * from './assDinozStatus.js';
 export * from './assPlayerReward.js';
 export * from './dinoz.js';
 export * from './dinozShop.js';
+export * from './ingredientOwn.js';
 export * from './itemOwn.js';
+export * from './missionOver.js';
 export * from './player.js';
+export * from './quest.js';

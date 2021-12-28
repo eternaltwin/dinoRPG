@@ -3,6 +3,7 @@ import {
 	AutoIncrement,
 	Column,
 	CreatedAt,
+	DataType,
 	HasMany,
 	Model,
 	PrimaryKey,
@@ -13,11 +14,12 @@ import { ItemOwn } from './itemOwn.js';
 import { AssPlayerReward } from './assPlayerReward.js';
 import { Dinoz } from './dinoz.js';
 import { DinozShop } from './dinozShop.js';
+import { IngredientOwn } from './ingredientOwn.js';
+import { Quest } from './quest.js';
 
 @Table({ tableName: 'tb_player', timestamps: true })
 export class Player extends Model {
 	@PrimaryKey
-	@AllowNull(false)
 	@AutoIncrement
 	@Column
 	playerId!: number;
@@ -33,6 +35,15 @@ export class Player extends Model {
 
 	@HasMany(() => ItemOwn, 'playerId')
 	itemOwn!: Array<ItemOwn>;
+
+	@HasMany(() => IngredientOwn, 'playerId')
+	ingredientOwn!: Array<IngredientOwn>;
+
+	@HasMany(() => Quest, 'playerId')
+	quest!: Array<Quest>;
+
+	@Column(DataType.TEXT)
+	customText!: string;
 
 	@AllowNull(false)
 	@Column

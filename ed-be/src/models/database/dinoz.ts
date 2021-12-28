@@ -4,9 +4,9 @@ import {
 	BelongsTo,
 	Column,
 	CreatedAt,
+	Default,
 	ForeignKey,
 	HasMany,
-	Max,
 	Model,
 	PrimaryKey,
 	Table,
@@ -17,12 +17,12 @@ import { Player } from './player.js';
 import { AssDinozItem } from './assDinozItem.js';
 import { AssDinozSkill } from './assDinozSkill.js';
 import { AssDinozStatus } from './assDinozStatus.js';
+import { MissionOver } from './missionOver.js';
 
 @Table({ tableName: 'tb_dinoz', timestamps: true })
 export class Dinoz extends Model {
 	@PrimaryKey
 	@AutoIncrement
-	@AllowNull(false)
 	@Column
 	dinozId!: number;
 
@@ -35,6 +35,9 @@ export class Dinoz extends Model {
 	@HasMany(() => AssDinozStatus, 'dinozId')
 	status!: Array<AssDinozStatus>;
 
+	@HasMany(() => MissionOver, 'dinozId')
+	mission!: Array<MissionOver>;
+
 	@Column
 	following!: number;
 
@@ -46,7 +49,11 @@ export class Dinoz extends Model {
 	@Column
 	isFrozen!: boolean;
 
-	@Max(21)
+	@AllowNull(false)
+	@Default(false)
+	@Column
+	isSacrified!: boolean;
+
 	@AllowNull(false)
 	@Column
 	raceId!: number;
@@ -58,11 +65,9 @@ export class Dinoz extends Model {
 	@Column
 	missionId!: number;
 
-	@Max(5)
 	@Column
 	nextUpElementId!: number;
 
-	@Max(5)
 	@Column
 	nextUpAltElementId!: number;
 
@@ -74,7 +79,6 @@ export class Dinoz extends Model {
 	@BelongsTo(() => Player, 'playerId')
 	player!: Player;
 
-	@Max(50)
 	@AllowNull(false)
 	@Column
 	placeId!: number;

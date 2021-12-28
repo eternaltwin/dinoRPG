@@ -13,7 +13,6 @@ import { Player } from './player.js';
 export class AssPlayerReward extends Model {
 	@PrimaryKey
 	@AutoIncrement
-	@AllowNull(false)
 	@Column
 	id!: number;
 
@@ -21,6 +20,7 @@ export class AssPlayerReward extends Model {
 	@Column
 	playerId!: number;
 
+	@AllowNull(false)
 	@Column
 	rewardId!: number;
 }

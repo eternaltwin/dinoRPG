@@ -6,8 +6,7 @@ import {
 	AutoIncrement,
 	AllowNull,
 	BelongsTo,
-	ForeignKey,
-	Max
+	ForeignKey
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 
@@ -15,7 +14,6 @@ import { Dinoz } from './dinoz.js';
 export class AssDinozItem extends Model {
 	@PrimaryKey
 	@AutoIncrement
-	@AllowNull(false)
 	@Column
 	id!: number;
 
@@ -26,7 +24,6 @@ export class AssDinozItem extends Model {
 	@BelongsTo(() => Dinoz, 'dinozId')
 	dinoz!: Dinoz;
 
-	@Max(20)
 	@AllowNull(false)
 	@Column
 	itemId!: number;

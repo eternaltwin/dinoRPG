@@ -3,9 +3,9 @@ import {
 	Model,
 	ForeignKey,
 	Column,
-	AllowNull,
 	PrimaryKey,
-	AutoIncrement
+	AutoIncrement,
+	AllowNull
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 
@@ -13,7 +13,6 @@ import { Dinoz } from './dinoz.js';
 export class AssDinozSkill extends Model {
 	@PrimaryKey
 	@AutoIncrement
-	@AllowNull(false)
 	@Column
 	id!: number;
 
