@@ -103,7 +103,7 @@ const setDinozNameRequest = (dinoz: Dinoz): Promise<[number, Array<Dinoz>]> => {
 	);
 };
 
-const setSkillSetRequest = (
+const setSkillStateRequest = (
 	dinozId: number,
 	skillId: number,
 	state: boolean
@@ -150,7 +150,7 @@ export {
 	setDinozNameRequest,
 	getDinozSkillRequest,
 	getDinozSkillAndStatusRequest,
-	setSkillSetRequest,
+	setSkillStateRequest,
 	getDinozPlaceRequest,
 	setDinozPlaceRequest,
 	getDinozTotalCount

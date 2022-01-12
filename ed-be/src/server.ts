@@ -60,7 +60,7 @@ app.use(playerRoutes);
 app.use(shopRoutes);
 
 // Launch Cron
-resetDinozShopAtMidnight();
+resetDinozShopAtMidnight().start();
 
 // Initiate controllers
 // oauthController.init();

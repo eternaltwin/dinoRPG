@@ -11,7 +11,7 @@ import {
 	setDinozNameRequest,
 	getDinozSkillRequest,
 	getDinozSkillAndStatusRequest,
-	setSkillSetRequest,
+	setSkillStateRequest,
 	getDinozPlaceRequest,
 	setDinozPlaceRequest
 } from '../dao/dinozDao.js';
@@ -175,7 +175,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 			.send(`You don't have enough money to buy dinoz ${req.params.id}`);
 	}
 
-	// Throw unauthorized error if dinoz doesn't belong to player shop
+	// Throw error if dinoz doesn't belong to player shop
 	if (dinozData.player.playerId !== req.user!.playerId!) {
 		return res
 			.status(500)
@@ -292,7 +292,7 @@ const setSkillState = async (
 	if (dinoz.playerId !== req.user!.playerId) {
 		return res
 			.status(500)
-			.send(`Dinoz ${dinozId} doesn't belong to player ${dinoz.playerId}`);
+			.send(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	// Check if dinoz can change his skills
@@ -326,7 +326,7 @@ const setSkillState = async (
 		return res.status(500).send(`Skill ${skillToUpdate} cannot be activated`);
 	}
 
-	await setSkillSetRequest(dinozId, skillToUpdate, skillStateToUpdate);
+	await setSkillStateRequest(dinozId, skillToUpdate, skillStateToUpdate);
 
 	return res.status(200).send(!skillStateToUpdate);
 };

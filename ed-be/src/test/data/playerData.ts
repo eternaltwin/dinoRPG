@@ -1,6 +1,6 @@
 import { Player } from '../../models';
 import { rewardList } from '../../constants/index.js';
-import { player } from '../utils/constants';
+import { dinozId, player } from '../utils/constants';
 
 export const BasicPlayer = {
 	playerId: player.id_1
@@ -25,6 +25,19 @@ export const PlayerWithRewards = ({
 		{
 			rewardId: 7974,
 			name: rewardList.TROPHEE_QUETZU
+		}
+	]
+} as unknown) as Player;
+
+export const PlayerData = ({
+	createdAt: '08/01/2021',
+	name: 'Jolujolu',
+	reward: [{ rewardId: 1 }],
+	dinoz: [
+		{
+			dinozId: dinozId,
+			status: [{ statusId: 1 }],
+			setDataValue: jest.fn()
 		}
 	]
 } as unknown) as Player;

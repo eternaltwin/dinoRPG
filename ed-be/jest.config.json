@@ -16,6 +16,7 @@
     "/config/",
     "/sequelize.js",
     "/server.js",
-    "/routes/"
+    "/routes/",
+    "/oauthService.js"
   ]
 }
