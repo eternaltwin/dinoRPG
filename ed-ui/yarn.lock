@@ -1479,10 +1479,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.8.3":
-  version: 2.9.2
-  resolution: "@popperjs/core@npm:2.9.2"
-  checksum: a5916302e706b7dfbbbcd8728bafc1682b450d5ec70dd10da84a07c89a419fa72f83cbf990798589e6e69e1b520d6768176ea4bd360d7450d08a2fbc25a14e1c
+"@popperjs/core@npm:^2.9.0":
+  version: 2.11.2
+  resolution: "@popperjs/core@npm:2.11.2"
+  checksum: 5695bf020eda54636e16a62dc9b5fdd92beaf7b2d19f62fcef049d57c5cff92773562d80cbf760b217c3ec928da310eb24994ab6a00fd39dffa0af9b5dfc01a6
   languageName: node
   linkType: hard
 
@@ -5455,7 +5455,7 @@ __metadata:
     vue: ^3.0.0
     vue-i18n: ^9.0.0
     vue-router: ^4.0.0-0
-    vue-tippy: ^6.0.0-alpha.29
+    vue-tippy: 6.0.0-alpha.43
     vuex: ^4.0.0-0
     vuex-persist: ^3.1.3
     webpack: ^5.46.0
@@ -13143,12 +13143,12 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"tippy.js@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "tippy.js@npm:6.3.1"
+"tippy.js@npm:^6.3.7":
+  version: 6.3.7
+  resolution: "tippy.js@npm:6.3.7"
   dependencies:
-    "@popperjs/core": ^2.8.3
-  checksum: a2e8559590e7149bb08274bc52bca497fc63ee3cac9a28b1ab76a143cebdcddb0f2d01452c7c1be26df2e60d54785bc4f5a2aac7af3628cb76e674e70bfc7381
+    "@popperjs/core": ^2.9.0
+  checksum: cac955318a65288e8d2dca05059878b003c6e66f92c94f7810f5bc5448eb6646abdf7dacc9bd00020e2611592598d0aae3a28ec9a45349a159603c3fdddce5fb
   languageName: node
   linkType: hard
 
@@ -13954,14 +13954,14 @@ typescript@~3.9.3:
   languageName: node
   linkType: hard
 
-"vue-tippy@npm:^6.0.0-alpha.29":
-  version: 6.0.0-alpha.30
-  resolution: "vue-tippy@npm:6.0.0-alpha.30"
+"vue-tippy@npm:6.0.0-alpha.43":
+  version: 6.0.0-alpha.43
+  resolution: "vue-tippy@npm:6.0.0-alpha.43"
   dependencies:
-    tippy.js: ^6.3.1
+    tippy.js: ^6.3.7
   peerDependencies:
     vue: ^3.0.0
-  checksum: 2c72bdcb4780c937a7fe5395d5dfdf0359a6baab6469f96a8ed2fe28d432cea9b34bcb78afb6ccd14093b2238cd14d974a0ab53b82fdde9d5438618cc51d845b
+  checksum: 9d4bfb865d7cf39730d9801a6d5fd31f473df56d38fb1f4263dfaf1749fd6401527af34980ee8db6ae430234368a3fb5538a4b3162b094f3cf866d6a1ba2c4c0
   languageName: node
   linkType: hard
 

@@ -1,14 +1,13 @@
 <template>
 	<div class="dinozBars">
-		<div class="level">
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<div class="over">{{ dinozData.level }}</div>
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('layout.level'))" />
-				</template>
-			</Tooltip>
+		<div
+			class="level"
+			v-tippy="{
+				content: formatContent($t('layout.level')),
+				theme: 'small'
+			}"
+		>
+			<div class="over">{{ dinozData.level }}</div>
 		</div>
 		<div class="bars">
 			<div class="life">
@@ -37,13 +36,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import Tooltip from '@/components/utils/ToolTip.vue';
 import { Dinoz } from '@/models';
 
 export default defineComponent({
 	name: 'DinozBars',
 	props: { dinozData: Object as PropType<Dinoz> },
-	components: { Tooltip },
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
 			const width: number = Math.round((value / maxValue) * 98);

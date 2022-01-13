@@ -7,11 +7,9 @@
 		</h3>
 		<div class="rewards">
 			<template v-for="(rewards, index) in epicRewards" :key="index">
-				<ToolTip theme="normal">
-					<template #tooltip-trigger>
-						<img :src="getEpicImg(epicList.imgName[rewards])" />
-					</template>
-					<template #tooltip-content="{ formatContent }">
+				<Tippy theme="normal">
+					<img :src="getEpicImg(epicList.imgName[rewards])" />
+					<template content>
 						<h1
 							v-html="
 								formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))
@@ -25,7 +23,7 @@
 							"
 						/>
 					</template>
-				</ToolTip>
+				</Tippy>
 			</template>
 		</div>
 	</div>
@@ -34,7 +32,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { epicList } from '@/constants';
-import ToolTip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'EpicRewards',
@@ -43,7 +40,6 @@ export default defineComponent({
 			epicList: epicList
 		};
 	},
-	components: { ToolTip },
 	props: {
 		epicRewards: {
 			type: Array as PropType<Array<number>>

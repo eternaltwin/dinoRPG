@@ -17,18 +17,12 @@
 			}"
 		>
 			<template v-for="(place, index) in placeMap" :key="index">
-				<Tooltip theme="map">
-					<template #tooltip-trigger>
-						<img
-							class="icon"
-							:src="getImg('map', 'icon', place.icon)"
-							:style="{ left: place.posLeft + 'px', top: place.posTop + 'px' }"
-						/>
-					</template>
-					<template #tooltip-content>
-						<p>{{ $t(`place.name.${place.name}`) }}</p>
-					</template>
-				</Tooltip>
+				<img
+					class="icon"
+					:src="getImg('map', 'icon', place.icon)"
+					:style="{ left: place.posLeft + 'px', top: place.posTop + 'px' }"
+					v-tippy="{ content: $t(`place.name.${place.name}`), theme: 'map' }"
+				/>
 			</template>
 			<img
 				class="map-img"
@@ -41,14 +35,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import Tooltip from '@/components/utils/ToolTip.vue';
 import { placeList } from '@/constants';
 import { Dinoz, Place } from '@/models';
 import store from '@/store';
 
 export default defineComponent({
 	name: 'Map',
-	components: { Tooltip },
 	props: {
 		placeMap: Array as PropType<Array<Place>>,
 		placeId: Number

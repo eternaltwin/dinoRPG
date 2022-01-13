@@ -1,51 +1,46 @@
 <template>
 	<div id="accountList">
-		<Tooltip theme="small" class="money">
-			<template #tooltip-trigger>
-				{{ beautifulMoney }}
-				<img src="@/assets/icons/small_gold.webp" alt="or" />
-			</template>
-			<template #tooltip-content="{ formatContent }">
-				<p v-html="formatContent($t('tooltip.gold'))" />
-			</template>
-		</Tooltip>
+		<div
+			class="money"
+			v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }"
+		>
+			{{ beautifulMoney }}
+			<img src="@/assets/icons/small_gold.webp" alt="or" />
+		</div>
 		<div class="iconMenu">
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<a id="menu_blank" class="iconor"></a>
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('button.getGold'))" />
-				</template>
-			</Tooltip>
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<a
-						id="menu_shop"
-						@click="goToPage('ItemShopPage')"
-						class="iconboutik"
-					></a>
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('layout.shopButton'))" />
-				</template>
-			</Tooltip>
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<a id="menu_clan" class="iconclan"></a>
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('layout.clanButton'))" />
-				</template>
-			</Tooltip>
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<a id="menu_dojo" class="icondojo"></a>
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('layout.dojoButton'))" />
-				</template>
-			</Tooltip>
+			<a
+				id="menu_blank"
+				class="iconor"
+				v-tippy="{
+					content: formatContent($t('button.getGold')),
+					theme: 'small'
+				}"
+			></a>
+			<a
+				id="menu_shop"
+				@click="goToPage('ItemShopPage')"
+				class="iconboutik"
+				v-tippy="{
+					content: formatContent($t('layout.shopButton')),
+					theme: 'small'
+				}"
+			></a>
+			<a
+				id="menu_clan"
+				class="iconclan"
+				v-tippy="{
+					content: formatContent($t('layout.clanButton')),
+					theme: 'small'
+				}"
+			></a>
+			<a
+				id="menu_dojo"
+				class="icondojo"
+				v-tippy="{
+					content: formatContent($t('layout.dojoButton')),
+					theme: 'small'
+				}"
+			></a>
 		</div>
 		<DinozList></DinozList>
 		<a class="button" @click="goToPage('DinozShopPage')">
@@ -63,7 +58,6 @@ import store from '@/store';
 import { isNil } from 'lodash';
 import { utils } from '@/utils';
 import DinozList from '@/components/dinoz/dinozList.vue';
-import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -73,8 +67,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DinozList,
-		Tooltip
+		DinozList
 	},
 	methods: {
 		goToPage(pageName: string) {
@@ -137,6 +130,7 @@ export default defineComponent({
 		background-image: url('~@/assets/background/goldbox2.webp');
 		background-repeat: no-repeat;
 		cursor: help;
+		font-weight: bold;
 
 		img {
 			vertical-align: -5%;

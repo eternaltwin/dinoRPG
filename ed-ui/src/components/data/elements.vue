@@ -1,65 +1,58 @@
 <template>
 	<ul class="elements">
-		<li :class="getMaxElement() === fire ? 'max' : ''">
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<img :src="getImg('fire')" alt="fire" /> {{ fire }}
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('element.fire'))" />
-				</template>
-			</Tooltip>
+		<li
+			:class="getMaxElement() === fire ? 'max' : ''"
+			v-tippy="{
+				content: formatContent($t('element.fire')),
+				theme: 'small'
+			}"
+		>
+			<img :src="getImg('fire')" alt="fire" /> {{ fire }}
 		</li>
-		<li :class="getMaxElement() === wood ? 'max' : ''">
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<img :src="getImg('wood')" alt="wood" /> {{ wood }}
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('element.wood'))" />
-				</template>
-			</Tooltip>
+		<li
+			:class="getMaxElement() === wood ? 'wood' : ''"
+			v-tippy="{
+				content: formatContent($t('element.wood')),
+				theme: 'small'
+			}"
+		>
+			<img :src="getImg('wood')" alt="wood" /> {{ wood }}
 		</li>
-		<li :class="getMaxElement() === water ? 'max' : ''">
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<img :src="getImg('water')" alt="water" /> {{ water }}
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('element.water'))" />
-				</template>
-			</Tooltip>
+		<li
+			:class="getMaxElement() === water ? 'water' : ''"
+			v-tippy="{
+				content: formatContent($t('element.water')),
+				theme: 'small'
+			}"
+		>
+			<img :src="getImg('water')" alt="water" /> {{ water }}
 		</li>
-		<li :class="getMaxElement() === light ? 'max' : ''">
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<img :src="getImg('light')" alt="light" /> {{ light }}
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('element.light'))" />
-				</template>
-			</Tooltip>
+		<li
+			:class="getMaxElement() === light ? 'max' : ''"
+			v-tippy="{
+				content: formatContent($t('element.light')),
+				theme: 'small'
+			}"
+		>
+			<img :src="getImg('light')" alt="light" /> {{ light }}
 		</li>
-		<li :class="getMaxElement() === air ? 'max' : ''">
-			<Tooltip theme="small">
-				<template #tooltip-trigger>
-					<img :src="getImg('air')" alt="air" /> {{ air }}
-				</template>
-				<template #tooltip-content="{ formatContent }">
-					<p v-html="formatContent($t('element.air'))" />
-				</template>
-			</Tooltip>
+		<li
+			:class="getMaxElement() === air ? 'max' : ''"
+			v-tippy="{
+				content: formatContent($t('element.air')),
+				theme: 'small'
+			}"
+		>
+			<img :src="getImg('air')" alt="air" /> {{ air }}
 		</li>
 	</ul>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Tooltip from '@/components/utils/ToolTip.vue';
 
 export default defineComponent({
 	name: 'Elements',
-	components: { Tooltip },
 	props: {
 		fire: { type: Number, required: true },
 		wood: { type: Number, required: true },

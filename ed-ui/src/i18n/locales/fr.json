@@ -1,6 +1,6 @@
 {
   "placeholder": "placeholder",
-  "error":"Merci de reporter cette erreur aux devs avec le détail de comment cela est arrivé.",
+  "error": "Merci de reporter cette erreur aux devs avec le détail de comment cela est arrivé.",
   "rightMenu": {
     "news": "Nouveautés",
     "gazette": "Gazette",
@@ -910,7 +910,7 @@
     "maxQuantity": "Quantité maximale:",
     "itemUse": "Utiliser **immédiatement**",
     "itemUseOff": "Cet objet ne peut pas être **utilisé**",
-    "itemEquipTitle": "Placer dans **l'équipement de combat**",
+    "itemEquipTitle": "Placer dans **l'équipement de combat**&&//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
     "itemEquipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
     "itemEquipOff": "Cet objet ne peut pas être **équipé**"
   },
@@ -939,11 +939,11 @@
   "rewards": {
     "name": {
       "perle": "Perle de la Fontaine",
-      "pmi":"Petit Missionaire Illustré"
+      "pmi": "Petit Missionaire Illustré"
     },
     "description": {
       "perle": "La perle de la Fontaine de Jouvence permet à tous vos Dinoz de pouvoir se régénerer chaque jour à la Fontaine de Jouvence",
-      "pmi":"Le Petit Missionaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz"
+      "pmi": "Le Petit Missionaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz"
     }
   }
 }

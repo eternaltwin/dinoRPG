@@ -5,11 +5,9 @@
 				<tr>
 					<th class="name">{{ $t('details.th.comp') }}</th>
 					<th class="type">{{ $t('details.th.type') }}</th>
-					<template v-for="(status, index) in dinozData.status" :key="index">
-						<th class="state" v-if="status.name == 'amulst'">
-							{{ $t('details.th.active') }}
-						</th>
-					</template>
+					<th class="state" v-if="hasAmulst()">
+						{{ $t('details.th.active') }}
+					</th>
 				</tr>
 				<tr
 					v-for="skill in dinozSkill"
@@ -17,16 +15,14 @@
 					:class="skill.state === false ? 'disabled' : ''"
 				>
 					<td class="name">
-						<Tooltip theme="normal">
-							<template #tooltip-trigger>
-								<img
-									v-for="(element, index) in skill.element"
-									:key="index"
-									:src="getImg('elements', 'elem_', element)"
-								/>
-								<p>{{ $t(`skill.name.${skill.name}`) }}</p>
-							</template>
-							<template #tooltip-content="{ formatContent }">
+						<Tippy theme="normal">
+							<img
+								v-for="(element, index) in skill.element"
+								:key="index"
+								:src="getImg('elements', 'elem_', element)"
+							/>
+							<p>{{ $t(`skill.name.${skill.name}`) }}</p>
+							<template #content>
 								<h1 v-html="formatContent($t(`skill.name.${skill.name}`))" />
 								<p
 									v-html="formatContent($t(`skill.description.${skill.name}`))"
@@ -35,14 +31,12 @@
 									v-html="formatContent($t(`skill.energy.${skill.energy}`))"
 								/>
 							</template>
-						</Tooltip>
+						</Tippy>
 					</td>
 					<td class="type">
-						<Tooltip theme="normal">
-							<template #tooltip-trigger>
-								{{ skill.type }}
-							</template>
-							<template #tooltip-content="{ formatContent }">
+						<Tippy theme="normal">
+							{{ skill.type }}
+							<template #content>
 								<h1
 									v-html="formatContent($t(`details.type.name.${skill.type}`))"
 								/>
@@ -52,34 +46,27 @@
 									"
 								/>
 							</template>
-						</Tooltip>
+						</Tippy>
 					</td>
 					<template v-if="hasAmulst()">
 						<td class="state">
-							<Tooltip
-								theme="small"
+							<img
+								:src="getImg('icons', 'small_skill_', skill.state)"
 								v-if="skill.activable"
 								@click="changeState(skill)"
-							>
-								<template #tooltip-trigger>
-									<img :src="getImg('icons', 'small_skill_', skill.state)" />
-								</template>
-								<template #tooltip-content="{ formatContent }">
-									<p
-										v-html="
-											formatContent($t(`details.activate.${skill.state}`))
-										"
-									/>
-								</template>
-							</Tooltip>
-							<Tooltip theme="small" v-else>
-								<template #tooltip-trigger>
-									<img src="@/assets/icons/small_skill_inactive.webp" />
-								</template>
-								<template #tooltip-content="{ formatContent }">
-									<p v-html="formatContent($t(`details.activate.locked`))" />
-								</template>
-							</Tooltip>
+								v-tippy="{
+									content: formatContent($t(`details.activate.${skill.state}`)),
+									theme: 'small'
+								}"
+							/>
+							<img
+								v-else
+								src="@/assets/icons/small_skill_inactive.webp"
+								v-tippy="{
+									content: formatContent($t(`details.activate.locked`)),
+									theme: 'small'
+								}"
+							/>
 						</td>
 					</template>
 				</tr>
@@ -90,7 +77,6 @@
 
 <script lang="ts" scoped>
 import { defineComponent, PropType } from 'vue';
-import Tooltip from '@/components/utils/ToolTip.vue';
 import { statusList } from '@/constants';
 import { Dinoz, Skill } from '@/models';
 import { DinozService } from '@/services';
@@ -99,7 +85,6 @@ import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'DetailsTab',
-	components: { Tooltip },
 	props: { dinozData: Object as PropType<Dinoz> },
 	data() {
 		return {

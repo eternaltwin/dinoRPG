@@ -4,26 +4,19 @@
 			<p>{{ $t('layout.fx') }}</p>
 		</div>
 		<div class="fx_content">
-			<Tooltip
-				theme="normal"
-				v-for="(status, index) in dinozStatus"
-				:key="index"
-			>
-				<template #tooltip-trigger>
-					<img :src="getImg(statusList.imgName[status])" />
-				</template>
-				<template #tooltip-content="{ formatContent }">
+			<Tippy theme="normal" v-for="(status, index) in dinozStatus" :key="index">
+				<img :src="getImg(statusList.imgName[status])" />
+				<template #content>
 					<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
 					<p v-html="formatContent($t(`status.description.${status}`))"></p>
 				</template>
-			</Tooltip>
+			</Tippy>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import Tooltip from '@/components/utils/ToolTip.vue';
 import { statusList } from '@/constants';
 
 export default defineComponent({
@@ -35,9 +28,6 @@ export default defineComponent({
 	},
 	props: {
 		dinozStatus: Array as PropType<Array<number>>
-	},
-	components: {
-		Tooltip
 	},
 	methods: {
 		getImg(imgName: string): string {

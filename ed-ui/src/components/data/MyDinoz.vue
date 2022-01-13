@@ -1,36 +1,30 @@
 <template>
 	<ul style="list-style:none">
-		<ToolTip
-			theme="small"
-			class="dinozList"
+		<Tippy
 			v-for="(dinoz, index) in accountData.dinoz"
 			:key="index"
+			theme="small"
 		>
-			<template #tooltip-trigger>
-				<li>
-					<div class="name">
-						{{ dinoz.name }}
-					</div>
-					<div class="dinozInfo">
-						{{ $t(`race.name.${raceList[dinoz.raceId]}`) }}
-						{{ $t(`myAccount.level`) }} {{ dinoz.level }}
-					</div>
-				</li>
+			<li class="dinozList">
+				<div class="name">
+					{{ dinoz.name }}
+				</div>
+				<div class="dinozInfo">
+					{{ $t(`race.name.${raceList[dinoz.raceId]}`) }}
+					{{ $t(`myAccount.level`) }} {{ dinoz.level }}
+				</div>
+			</li>
+			<template #content>
+				<template v-for="(status, index) in dinoz.statusList" :key="index">
+					<img :src="getStatusImg(statusList.imgName[status])" />
+				</template>
 			</template>
-			<template #tooltip-content>
-				<p>
-					<template v-for="(status, index) in dinoz.status" :key="index">
-						<img :src="getStatusImg(statusList.imgName[status.statusId])" />
-					</template>
-				</p>
-			</template>
-		</ToolTip>
+		</Tippy>
 	</ul>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import ToolTip from '@/components/utils/ToolTip.vue';
 import { raceList, statusList } from '@/constants';
 import { PlayerInfo } from '@/models';
 
@@ -40,9 +34,6 @@ export default defineComponent({
 		accountData: {
 			type: Object as PropType<PlayerInfo>
 		}
-	},
-	components: {
-		ToolTip
 	},
 	data() {
 		return {

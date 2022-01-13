@@ -12,69 +12,62 @@
 					:class="index % 2 === 1 ? 'even' : ''"
 					:key="index"
 				>
-					<td class="name">
-						<Tooltip theme="normal">
-							<template #tooltip-trigger>
-								<img
-									:src="
-										getImg('item', 'item_', $t(`item.imgName.${item.itemId}`))
-									"
-								/>
-								{{ $t(`item.name.${item.itemId}`) }}
-							</template>
-							<template #tooltip-content="{ formatContent }">
+					<Tippy class="name">
+						<Tippy theme="normal">
+							<img
+								:src="
+									getImg('item', 'item_', $t(`item.imgName.${item.itemId}`))
+								"
+							/>
+							{{ $t(`item.name.${item.itemId}`) }}
+							<template #content>
 								<h1 v-html="formatContent($t(`item.name.${item.itemId}`))" />
 								<h2>{{ $t(`tooltip.maxQuantity`) }} {{ item.maxQuantity }}</h2>
 								<p
 									v-html="formatContent($t(`item.description.${item.itemId}`))"
 								/>
 							</template>
-						</Tooltip>
-					</td>
+						</Tippy>
+					</Tippy>
 					<td class="qty">{{ item.quantity }}</td>
 					<td class="act">
-						<a id="inv_TODO_use" v-if="item.canBeUsedNow">
-							<Tooltip theme="small">
-								<template #tooltip-trigger>
-									<img :src="getImg('icons', 'small_', 'use')" />
-								</template>
-								<template #tooltip-content="{ formatContent }">
-									<p v-html="formatContent($t(`tooltip.itemUse`))" />
-								</template>
-							</Tooltip>
+						<a
+							id="inv_TODO_use"
+							v-if="item.canBeUsedNow"
+							v-tippy="{
+								content: formatContent($t('tooltip.itemUse')),
+								theme: 'small'
+							}"
+						>
+							<img :src="getImg('icons', 'small_', 'use')" />
 						</a>
-						<a v-else>
-							<Tooltip theme="small">
-								<template #tooltip-trigger>
-									<img :src="getImg('icons', 'small_', 'use_off')" />
-								</template>
-								<template #tooltip-content="{ formatContent }">
-									<p v-html="formatContent($t(`tooltip.itemUseOff`))" />
-								</template>
-							</Tooltip>
+						<a
+							v-else
+							v-tippy="{
+								content: formatContent($t('tooltip.itemUseOff')),
+								theme: 'small'
+							}"
+						>
+							<img :src="getImg('icons', 'small_', 'use_off')" />
 						</a>
-						<a id="inv" v-if="item.canBeEquipped">
-							<Tooltip theme="small">
-								<template #tooltip-trigger>
-									<img :src="getImg('icons', 'small_', 'equip')" />
-								</template>
-								<template #tooltip-content="{ formatContent }">
-									<p v-html="formatContent($t(`tooltip.itemEquipTitle`))" />
-									<p
-										v-html="formatContent($t(`tooltip.itemEquipDescription`))"
-									/>
-								</template>
-							</Tooltip>
+						<a
+							id="inv"
+							v-if="item.canBeEquipped"
+							v-tippy="{
+								content: formatContent($t('tooltip.itemEquipTitle')),
+								theme: 'small'
+							}"
+						>
+							<img :src="getImg('icons', 'small_', 'equip')" />
 						</a>
-						<a v-else>
-							<Tooltip theme="small">
-								<template #tooltip-trigger>
-									<img :src="getImg('icons', 'small_', 'equip_off')" />
-								</template>
-								<template #tooltip-content="{ formatContent }">
-									<p v-html="formatContent($t(`tooltip.itemEquipOff`))" />
-								</template>
-							</Tooltip>
+						<a
+							v-else
+							v-tippy="{
+								content: formatContent($t('tooltip.itemEquipOff')),
+								theme: 'small'
+							}"
+						>
+							<img :src="getImg('icons', 'small_', 'equip_off')" />
 						</a>
 					</td>
 				</tr>
@@ -89,14 +82,10 @@ import { defineComponent } from 'vue';
 import { Item } from '@/models';
 import { InventoryService } from '@/services';
 import { errorHandler } from '@/utils';
-import Tooltip from '@/components/utils/ToolTip.vue';
 import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'InventoryTab',
-	components: {
-		Tooltip
-	},
 	data() {
 		return {
 			allItemsData: {} as Array<Item>
@@ -173,6 +162,14 @@ export default defineComponent({
 			&.act img {
 				padding-left: 5px;
 				padding-right: 5px;
+			}
+			&.qty {
+				color: white;
+				font-weight: bold;
+				text-align: center;
+				padding-left: 4px;
+				padding-right: 4px;
+				vertical-align: center;
 			}
 		}
 	}
