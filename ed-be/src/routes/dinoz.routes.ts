@@ -6,7 +6,7 @@ import {
 	setDinozName,
 	getDinozSkill,
 	setSkillState,
-	alphaMove
+	betaMove
 } from '../business/dinozService.js';
 import { apiRoutes, regex } from '../constants/index.js';
 
@@ -56,7 +56,14 @@ routes.put(
 	setSkillState
 );
 
-// Change location random
-routes.put(`${commonPath}/alphamove/:id`, alphaMove); //FIXME: rename the API
+// Set skill State
+routes.put(
+	`${commonPath}/betamove/:id`,
+	[
+		param('id').exists().toInt().isNumeric(),
+		body('placeId').exists().toInt().isNumeric()
+	],
+	betaMove
+);
 
 export default routes;

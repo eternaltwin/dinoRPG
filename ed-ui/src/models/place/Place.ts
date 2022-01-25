@@ -8,4 +8,7 @@ export interface Place {
 	icon: PlaceIcon;
 	map: Map;
 	hidden: boolean;
+	alias?: number;
+	xFactor: number;
+	yFactor: number;
 }

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { StoreState, Dinoz } from '@/models';
+import { StoreState, Dinoz, FightResult } from '@/models';
 import VuexPersistence from 'vuex-persist';
 
 const state = {
@@ -7,7 +7,8 @@ const state = {
 	money: undefined,
 	dinozList: [],
 	dinozCount: undefined,
-	playerId: undefined
+	playerId: undefined,
+	fight: undefined
 } as StoreState;
 
 const mutations = {
@@ -25,6 +26,9 @@ const mutations = {
 	},
 	setPlayerId: (state: StoreState, playerId: number) => {
 		state.playerId = playerId;
+	},
+	setFightResult: (state: StoreState, fight: FightResult) => {
+		state.fight = fight;
 	}
 };
 
@@ -33,7 +37,8 @@ const getters = {
 	getMoney: (state: StoreState) => state.money,
 	getDinozList: (state: StoreState) => state.dinozList,
 	getDinozCount: (state: StoreState) => state.dinozCount,
-	getPlayerId: (state: StoreState) => state.playerId
+	getPlayerId: (state: StoreState) => state.playerId,
+	getFightResult: (state: StoreState) => state.fight
 };
 
 const vuexLocal = new VuexPersistence<StoreState>({

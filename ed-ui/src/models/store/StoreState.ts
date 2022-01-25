@@ -1,4 +1,5 @@
 import { Dinoz } from '@/models';
+import { FightResult } from '../dinoz';
 
 export interface StoreState {
 	dinozCount?: number;
@@ -6,4 +7,5 @@ export interface StoreState {
 	money?: number;
 	dinozList?: Array<Dinoz>;
 	playerId?: number;
+	fight?: FightResult;
 }

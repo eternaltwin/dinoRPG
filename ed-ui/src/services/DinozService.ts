@@ -1,5 +1,5 @@
 import { http } from '@/utils';
-import { Dinoz, Skill } from '@/models';
+import { Dinoz, FightResult, Skill } from '@/models';
 
 export const DinozService = {
 	buyDinoz(id: string): Promise<Dinoz> {
@@ -42,10 +42,19 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	alphaMove(id: string): Promise<void> {
-		//FIXME: rename this function and rework it by adding payload
+	betaMove(dinozId: string, placeId: number): Promise<FightResult> {
 		return http()
-			.put(`/dinoz/alphamove/${id}`)
+			.put(`/dinoz/betamove/${dinozId}`, {
+				placeId: placeId
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	betaFight(dinozId: string, placeId: number): Promise<FightResult> {
+		return http()
+			.put(`/dinoz/betafight/${dinozId}`, {
+				placeId: placeId
+			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

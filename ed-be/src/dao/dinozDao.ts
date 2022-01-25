@@ -121,6 +121,12 @@ const setSkillStateRequest = (
 const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz | null> => {
 	return Dinoz.findOne({
 		attributes: ['dinozId', 'placeId', 'playerId'],
+		include: [
+			{
+				model: AssDinozStatus,
+				attributes: ['statusId']
+			}
+		],
 		where: { dinozId: dinozId }
 	});
 };
@@ -128,7 +134,7 @@ const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz | null> => {
 const setDinozPlaceRequest = (
 	dinozId: number,
 	placeRand: number
-): Promise<[number, Array<Place>]> => {
+): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			placeId: placeRand

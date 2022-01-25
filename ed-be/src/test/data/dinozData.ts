@@ -9,7 +9,8 @@ export const DinozFiche = ({
 	},
 	level: 1,
 	item: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }],
-	status: [{ statusId: 1 }]
+	status: [{ statusId: 1 }],
+	placeId: 1
 } as unknown) as Dinoz;
 
 export const DinozWithSkills = {
@@ -22,6 +23,13 @@ export const DinozWithSkillsAndStatus = {
 	playerId: player.id_1,
 	skill: [{ skillId: skillId2 }],
 	status: [{ statusId: 1 }, { statusId: 12 }]
+} as Dinoz;
+
+export const DinozWithSkillsAndStatusReadyToMove = {
+	playerId: player.id_1,
+	placeId: 1,
+	skill: [{ skillId: skillId2 }],
+	status: [{ statusId: 2 }, { statusId: 12 }]
 } as Dinoz;
 
 export const BasicDinoz = {

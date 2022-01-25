@@ -15,6 +15,7 @@ export interface Dinoz {
 	skill: Array<Skill>;
 	placeId: number;
 	statusList: Array<number>;
+	borderPlace: Array<number>;
 }
 
 export interface DinozRace {

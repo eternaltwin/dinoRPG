@@ -4,6 +4,7 @@ export * from './dinoz/BasicDinoz.js';
 export * from './dinoz/DinozFiche.js';
 export * from './dinoz/DinozSkill.js';
 export * from './dinoz/DinozRace.js';
+export * from './dinoz/FightResult.js';
 export * from './item/ItemFiche.js';
 export * from './place/Place.js';
 export * from './player/PlayerInfo.js';

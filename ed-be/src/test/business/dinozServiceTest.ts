@@ -3,7 +3,8 @@ import {
 	buyDinoz,
 	setDinozName,
 	getDinozSkill,
-	setSkillState
+	setSkillState,
+	betaMove
 } from '../../business/dinozService.js';
 import {
 	player,
@@ -12,14 +13,20 @@ import {
 	mockResponse,
 	dinozName,
 	skillId,
-	skillId2
+	skillId2,
+	place1,
+	place1Alias,
+	defaultFight,
+	inexistantPlace,
+	notClosePlace
 } from '../utils/constants.js';
 import {
 	BasicDinoz,
 	DinozFiche,
 	DinozToChangeName,
 	DinozWithSkills,
-	DinozWithSkillsAndStatus
+	DinozWithSkillsAndStatus,
+	DinozWithSkillsAndStatusReadyToMove
 } from '../data/dinozData.js';
 import { DinozFromShop } from '../data/dinozShopData.js';
 import { AssDinozSkill, AssDinozStatus, Dinoz } from '../../models/index.js';
@@ -602,6 +609,184 @@ describe('Function setSkillState', function () {
 		mocked(result.isEmpty).mockImplementation(() => false);
 
 		await setSkillState(req, res);
+
+		expect(DinozDao.getDinozSkillAndStatusRequest).not.toHaveBeenCalled();
+
+		expect(res.status).toHaveBeenCalledWith(400);
+	});
+});
+
+describe('Function betaMove', function () {
+	let req: Request;
+	let res: Response;
+
+	beforeEach(function () {
+		jest.clearAllMocks();
+		req = mockRequest;
+		res = mockResponse;
+
+		const result: Result<ValidationError> = new Result(
+			{} as ErrorFormatter<ValidationError>,
+			[]
+		);
+		mocked(validationResult).mockImplementation(() => result);
+		mocked(result.isEmpty).mockImplementation(() => true);
+
+		req.params = {
+			id: dinozId.toString()
+		};
+		req.body = {
+			placeId: place1
+		};
+
+		DinozDao.getDinozPlaceRequest = jasmine
+			.createSpy()
+			.and.returnValue(DinozWithSkillsAndStatusReadyToMove);
+		DinozDao.getDinozSkillAndStatusRequest = jasmine
+			.createSpy()
+			.and.returnValue(DinozWithSkillsAndStatusReadyToMove);
+		DinozDao.setDinozPlaceRequest = jasmine.createSpy();
+	});
+
+	it('Nominal case', async function () {
+		await betaMove(req, res);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozSkillAndStatusRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozSkillAndStatusRequest).toHaveBeenCalledWith(
+			dinozId
+		);
+		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(
+			dinozId,
+			place1Alias
+		);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.send).toHaveBeenCalledWith(defaultFight);
+	});
+
+	it("Dinoz doesn't exists", async function () {
+		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(null);
+
+		await betaMove(req, res);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith(`Dinoz ${dinozId} doesn't exists`);
+	});
+
+	it("Dinoz doesn't belongs to player who do the request", async function () {
+		const dinozWithNoBouee = cloneDeep(DinozWithSkillsAndStatusReadyToMove);
+		dinozWithNoBouee.playerId = player.id_2;
+
+		DinozDao.getDinozPlaceRequest = jasmine
+			.createSpy()
+			.and.returnValue(dinozWithNoBouee);
+
+		await betaMove(req, res);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith(
+			`Dinoz ${dinozId} doesn't belong to player ${player.id_1}`
+		);
+	});
+
+	it('Dinoz want to go to an inexistant place', async function () {
+		req.body = {
+			placeId: inexistantPlace
+		};
+
+		await betaMove(req, res);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith(
+			`Dinoz ${dinozId} want to go in the void`
+		);
+	});
+
+	it('Dinoz is already at this place', async function () {
+		req.body = {
+			placeId: 1
+		};
+
+		await betaMove(req, res);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith(
+			`Dinoz ${dinozId} is already at port`
+		);
+	});
+
+	it('Dinoz want to go to a non adjascent place', async function () {
+		req.body = {
+			placeId: notClosePlace
+		};
+
+		await betaMove(req, res);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith(`port is not adjascent with ilac2`);
+	});
+
+	it("Dinoz doesn't fullfill requirement to go this place", async function () {
+		const dinozWithNoBouee = cloneDeep(DinozWithSkillsAndStatusReadyToMove);
+		dinozWithNoBouee.status = [{ statusId: 1 }] as Array<AssDinozStatus>;
+
+		DinozDao.getDinozPlaceRequest = jasmine
+			.createSpy()
+			.and.returnValue(dinozWithNoBouee);
+
+		DinozDao.getDinozSkillAndStatusRequest = jasmine
+			.createSpy()
+			.and.returnValue(dinozWithNoBouee);
+
+		await betaMove(req, res);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozSkillAndStatusRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozSkillAndStatusRequest).toHaveBeenCalledWith(
+			dinozId
+		);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith(
+			`Dinoz ${dinozId} doesn't fullfill requirement to go this place`
+		);
+	});
+
+	it('Bad request', async function () {
+		const result: Result<ValidationError> = new Result(
+			{} as ErrorFormatter<ValidationError>,
+			[]
+		);
+		mocked(validationResult).mockImplementation(() => result);
+		mocked(result.isEmpty).mockImplementation(() => false);
+
+		await betaMove(req, res);
 
 		expect(DinozDao.getDinozSkillAndStatusRequest).not.toHaveBeenCalled();
 

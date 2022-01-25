@@ -22,7 +22,9 @@ import {
 	DinozFiche,
 	Action,
 	DinozSkill,
-	DinozRace
+	DinozRace,
+	FightResult,
+	Place
 } from '../models/index.js';
 import {
 	actions,
@@ -30,11 +32,13 @@ import {
 	itemList,
 	raceList,
 	skillList,
-	statusList
+	statusList,
+	placeList
 } from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 import { validationResult } from 'express-validator';
 
+// TODO: refaire cette fonction proprement
 const getDinozFiche = async (
 	req: Request,
 	res: Response
@@ -89,6 +93,22 @@ const getDinozFiche = async (
 		'maxExperience',
 		levelList.find(level => level.id === dinozDetails.level)!.experience
 	);
+
+	// Set accessible places
+	const places: Array<number> = Object.values(placeList)
+		.find(place => place.placeId === dinozDetails.placeId)!
+		.borderPlace.map(placeId =>
+			Object.values(placeList).find(place => place.placeId === placeId)
+		)
+		.filter(
+			place =>
+				!place!.conditions ||
+				dinozDetails.status.some(
+					status => status.statusId === place!.conditions
+				)
+		)
+		.map(place => place!.placeId);
+	dinozDetails.setDataValue('borderPlace', places);
 
 	// Set availables actions for this dinoz
 	dinozDetails.setDataValue('actions', getActionList());
@@ -331,30 +351,95 @@ const setSkillState = async (
 	return res.status(200).send(!skillStateToUpdate);
 };
 
-const alphaMove = async (req: Request, res: Response): Promise<Response> => {
-	//FIXME: rework to protect movement to not available place and add payload
+const betaMove = async (req: Request, res: Response): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
 	//Retrieve dinozId
 	const dinozId: number = parseInt(req.params.id);
-	const dinoz: Dinoz | null = await getDinozPlaceRequest(dinozId); //No need to fix it
+	const dinoz: Dinoz | null = await getDinozPlaceRequest(dinozId);
+	let finalPlace: number;
 
 	// Check if dinoz exists in database
 	if (dinoz === null) {
 		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
 	}
 
-	// // Check if dinoz belongs to player who do the request
+	// Check if dinoz belongs to player who do the request
 	if (dinoz.playerId !== req.user!.playerId) {
 		return res
 			.status(500)
-			.send(`Dinoz ${dinozId} doesn't belong to player ${dinoz.playerId}`);
+			.send(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const placeRand = Math.floor(Math.random() * 8 + 1);
-	await setDinozPlaceRequest(dinozId, placeRand); //No need to fix it, just remove the placeRand
-	const placeString: string = placeRand.toString();
+	const actualPlace: Place | undefined = Object.values(placeList).find(
+		place => place.placeId === dinoz.placeId
+	);
+	const desiredPlace: Place | undefined = Object.values(placeList).find(
+		place => place.placeId === req.body.placeId
+	);
 
-	return res.status(200).send(placeString);
+	// Check if desired and actual place exist and is adjacent to actual place
+	if (!desiredPlace) {
+		return res.status(500).send(`Dinoz ${dinozId} want to go in the void`);
+	}
+
+	if (actualPlace!.placeId === desiredPlace.placeId) {
+		return res
+			.status(500)
+			.send(`Dinoz ${dinozId} is already at ${actualPlace!.name}`);
+	}
+
+	if (!actualPlace!.borderPlace.includes(desiredPlace.placeId)) {
+		return res
+			.status(500)
+			.send(`${actualPlace!.name} is not adjascent with ${desiredPlace.name}`);
+	}
+
+	// Check if condition to go to desired place are fullfill
+	if (desiredPlace.conditions) {
+		const dinozStatus: Dinoz | null = await getDinozSkillAndStatusRequest(
+			dinozId
+		);
+		const canGoToWantedPlace = dinozStatus!.status.some(
+			status => status.statusId === desiredPlace.conditions
+		);
+		if (!canGoToWantedPlace) {
+			return res
+				.status(500)
+				.send(`Dinoz ${dinozId} doesn't fullfill requirement to go this place`);
+		}
+	}
+
+	// If dinoz leave the map, replace by the good place
+	finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
+
+	// Fight at the desired place
+	const fight: FightResult = betaFight(dinoz);
+	if (fight.result) {
+		await setDinozPlaceRequest(dinozId, finalPlace);
+	}
+
+	return res.status(200).send(fight);
 };
+
+function betaFight(dinoz: Dinoz): FightResult {
+	// NOTHING IS GOOD HERE. EVERYTHING IS TO DO
+
+	let goldEarned = 0;
+	let xpEarned = 0;
+	let hpLost = 0;
+	let result = true;
+
+	const infoToSend: FightResult = {
+		goldEarned: goldEarned,
+		xpEarned: xpEarned,
+		hpLost: hpLost,
+		result: result
+	};
+
+	return infoToSend;
+}
 
 export {
 	getDinozFiche,
@@ -362,5 +447,6 @@ export {
 	setDinozName,
 	getDinozSkill,
 	setSkillState,
-	alphaMove
+	betaMove,
+	betaFight
 };

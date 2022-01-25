@@ -11,6 +11,17 @@ export const dinozId = 123456789;
 export const dinozName = 'Potato';
 export const skillId = 11101;
 export const skillId2 = 11102;
+export const place1 = 10;
+export const notClosePlace = 90;
+export const place1Alias = 31;
+export const inexistantPlace = 999;
+
+export const defaultFight = {
+	goldEarned: 0,
+	xpEarned: 0,
+	hpLost: 0,
+	result: true
+};
 
 export const mockRequest = {
 	user: {

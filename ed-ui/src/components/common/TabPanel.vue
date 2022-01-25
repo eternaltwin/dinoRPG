@@ -11,7 +11,7 @@
 				<a href="#" @click="setTab(3)">{{ $t('tabs.details') }}</a>
 			</li>
 		</ul>
-		<MapTab v-if="tabSelected === 1" />
+		<MapTab v-if="tabSelected === 1" :dinozData="dinozData" />
 		<InventoryTab v-if="tabSelected === 2" />
 		<DetailsTab v-if="tabSelected === 3" :dinozData="dinozData" />
 	</div>

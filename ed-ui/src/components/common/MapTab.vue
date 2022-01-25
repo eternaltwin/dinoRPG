@@ -1,6 +1,6 @@
 <template>
 	<div class="boxMap">
-		<Map :placeMap="placeMap" :placeId="placeId" />
+		<Map :dinozData="dinozData" />
 		<p class="placeName">
 			{{ $t(`place.name.${getPlaceName(placeId)}`) }}
 		</p>
@@ -11,72 +11,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { Dinoz, Place } from '@/models';
+import { defineComponent, PropType } from 'vue';
+import { Dinoz } from '@/models';
 import Map from '@/components/common/map.vue';
 import { placeList } from '@/constants';
-import store from '@/store';
 
 export default defineComponent({
 	name: 'MapTab',
-	components: {
-		Map
-	},
 	data() {
 		return {
-			placeId: 1 as number,
-			places: placeList,
-			placeMap: [] as Array<Place>
+			placeId: undefined as number | undefined
 		};
+	},
+	props: { dinozData: Object as PropType<Dinoz> },
+	components: {
+		Map
 	},
 	methods: {
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)!.name;
 		}
 	},
-	computed: {
-		storePlace(): number {
-			const dinozList: Array<Dinoz> = store.getters.getDinozList;
-			const dinozToUpdate = dinozList.find(
-				dinoz => dinoz.dinozId == this.$route.params.id
-			)!;
-			let placeUpdate: number = dinozToUpdate?.placeId;
-			return placeUpdate;
-		}
-	},
-	mounted(): void {
-		const dinozList: Array<Dinoz> = store.getters.getDinozList;
-		const dinozToUpdate = dinozList.find(
-			dinoz => dinoz.dinozId == this.$route.params.id
-		)!;
-		let placeUpdate: number = dinozToUpdate.placeId;
-		this.placeId = placeUpdate;
-
-		this.places.forEach(place => {
-			if (
-				placeList.find(place => place.placeId === this.placeId)!.map ===
-				place.map
-			) {
-				this.placeMap.push(place);
-			}
-		});
-	},
-	watch: {
-		// Watch placeId in store. Each time placeId will change, the display will be updated
-		storePlace: function(placeId: number) {
-			this.placeId = placeId;
-			//Clear the placeMap Array
-			this.placeMap.splice(0, this.placeMap.length);
-			// Fill placeMap Array with all the place in this map
-			this.places.forEach(place => {
-				if (
-					placeList.find(place => place.placeId === this.placeId)?.map ===
-					place.map
-				) {
-					this.placeMap.push(place);
-				}
-			});
-		}
+	created(): void {
+		this.placeId = this.dinozData!.placeId;
 	}
 });
 </script>

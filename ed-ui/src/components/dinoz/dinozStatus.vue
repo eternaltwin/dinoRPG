@@ -4,13 +4,15 @@
 			<p>{{ $t('layout.fx') }}</p>
 		</div>
 		<div class="fx_content">
-			<Tippy theme="normal" v-for="(status, index) in dinozStatus" :key="index">
-				<img :src="getImg(statusList.imgName[status])" />
-				<template #content>
-					<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
-					<p v-html="formatContent($t(`status.description.${status}`))"></p>
-				</template>
-			</Tippy>
+			<template v-for="(status, index) in dinozStatus" :key="index">
+				<Tippy theme="normal" v-if="statusList.displayed[status]">
+					<img :src="getImg(statusList.imgName[status])" />
+					<template #content>
+						<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
+						<p v-html="formatContent($t(`status.description.${status}`))"></p>
+					</template>
+				</Tippy>
+			</template>
 		</div>
 	</div>
 </template>
