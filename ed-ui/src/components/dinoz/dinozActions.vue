@@ -6,7 +6,7 @@
 		<ul>
 			<table
 				class="action_button"
-				v-for="action in dinozData.actions"
+				v-for="action in dinozActions"
 				:key="action.name"
 				:id="action.imgName"
 			>
@@ -24,37 +24,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { Dinoz } from '@/models';
-import { DinozService } from '@/services';
-import { errorHandler } from '@/utils';
-import EventBus from '@/events';
+import { defineComponent, PropType } from 'vue';
+import { Action } from '@/models';
 
 export default defineComponent({
 	name: 'DinozActions',
-	data() {
-		return {
-			nameChoosen: undefined as boolean | undefined,
-			dinozData: {} as Dinoz
-		};
-	},
+	props: { dinozActions: Object as PropType<Array<Action>> },
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
 		}
-	},
-	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		try {
-			const dinozId = this.$route.params.id as string;
-			this.dinozData = await DinozService.getDinozFiche(dinozId);
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err);
-			return;
-		}
-
-		this.nameChoosen = this.dinozData.name !== '?';
 	}
 });
 </script>
