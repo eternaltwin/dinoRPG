@@ -6,17 +6,22 @@
 		<ul>
 			<table
 				class="action_button"
-				v-for="action in dinozActions"
-				:key="action.name"
-				:id="action.imgName"
 			>
 				<tbody>
-					<tr>
+					<Tippy tag="tr" theme="normal" v-for="action in dinozActions"
+                 :key="action.name"
+                 :id="action.imgName">
 						<td class="icon">
 							<img :src="getImg('icons', '', action.imgName)" />
 						</td>
-						<td class="label">{{ $t(`action.${action.name}`) }}</td>
-					</tr>
+						<td class="label">{{ $t(`action.name.${action.name}`) }}</td>
+						<template #content>
+							<h1 v-html="formatContent($t(`action.name.${action.name}`))" />
+							<p
+								v-html="formatContent($t(`action.description.${action.name}`))"
+							/>
+						</template>
+					</Tippy>
 				</tbody>
 			</table>
 		</ul>

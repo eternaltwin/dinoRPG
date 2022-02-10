@@ -32,8 +32,14 @@
 		"neutral":"Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
 	},
 	"action": {
-		"fight": "Combattre",
-		"follow": "Suivre"
+		"description": {
+			"fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer <strong>un déplacement ou un combat par jour</strong> et par Dinoz.",
+			"follow": "Votre Dinoz peut <strong>suivre</strong> un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats."
+		},
+		"name": {
+			"fight": "Fight",
+			"follow": "Follow"
+		}
 	},
 	"button": {
 		"buyDinoz": "Acheter un Dinoz !",
