@@ -39,7 +39,7 @@ import { defineComponent } from 'vue';
 import { isNil } from 'lodash';
 import LeftPanel from '@/components/common/LeftPanel.vue';
 import RightMenu from '@/components/common/RightMenu.vue';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import { CommonData } from '@/models';
 import { errorHandler } from '@/utils';
 import { PlayerService } from '@/services';
@@ -54,20 +54,20 @@ export default defineComponent({
 		ErrorMessage
 	},
 	async mounted(): Promise<void> {
-		const money = store.getters.getMoney;
-		const dinozList = store.getters.getDinozList;
-		const dinozCount = store.getters.getDinozCount;
+		const money = sessionStore.getters.getMoney;
+		const dinozList = sessionStore.getters.getDinozList;
+		const dinozCount = sessionStore.getters.getDinozCount;
 
 		if (isNil(money) || isNil(dinozList) || isNil(dinozCount)) {
 			try {
 				EventBus.emit('isLoading', true);
 				const commonData: CommonData = await PlayerService.getCommonData();
 
-				// Set data in store
-				store.commit('setMoney', commonData.money);
-				store.commit('setDinozList', commonData.dinoz);
-				store.commit('setDinozCount', commonData.dinozCount);
-				store.commit('setPlayerId', commonData.playerId);
+				// Set data in sessionStore
+				sessionStore.commit('setMoney', commonData.money);
+				sessionStore.commit('setDinozList', commonData.dinoz);
+				sessionStore.commit('setDinozCount', commonData.dinozCount);
+				sessionStore.commit('setPlayerId', commonData.playerId);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);

@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Dinoz } from '@/models';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import { placeList } from '@/constants';
 // import SDinozSWF from '@/components/dinoz/dinozSWF.vue';
 
@@ -52,7 +52,7 @@ export default defineComponent({
 	},
 	computed: {
 		storeDinozList(): Array<Dinoz> {
-			return store.getters.getDinozList;
+			return sessionStore.getters.getDinozList;
 		}
 	},
 	watch: {
@@ -61,7 +61,7 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		this.dinozList = store.getters.getDinozList;
+		this.dinozList = sessionStore.getters.getDinozList;
 	}
 });
 </script>

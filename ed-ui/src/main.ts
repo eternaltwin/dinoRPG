@@ -1,16 +1,16 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import { localStore, sessionStore } from './store';
 import { createI18n } from 'vue-i18n';
-import { messages, defaultLocale } from '@/i18n';
+import { messages, defaultLocale, LocalesEnum } from '@/i18n';
 import './css/main.scss';
 import { plugin as VueTippy } from 'vue-tippy';
 import { mixin } from './mixin/mixin';
 
 const i18n = createI18n({
 	messages,
-	locale: defaultLocale,
+	locale: localStore.getters.getLanguage || LocalesEnum.FR,
 	fallbackLocale: defaultLocale
 });
 
@@ -28,7 +28,8 @@ const vueTippyProps = {
 };
 
 createApp(App)
-	.use(store)
+	.use(sessionStore)
+	.use(localStore)
 	.use(router)
 	.use(i18n)
 	.mixin(mixin)

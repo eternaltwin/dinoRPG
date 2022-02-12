@@ -4,13 +4,15 @@
 			<p>{{ $t('layout.action') }}</p>
 		</div>
 		<ul>
-			<table
-				class="action_button"
-			>
+			<table class="action_button">
 				<tbody>
-					<Tippy tag="tr" theme="normal" v-for="action in dinozActions"
-                 :key="action.name"
-                 :id="action.imgName">
+					<Tippy
+						tag="tr"
+						theme="normal"
+						v-for="action in dinozActions"
+						:key="action.name"
+						:id="action.imgName"
+					>
 						<td class="icon">
 							<img :src="getImg('icons', '', action.imgName)" />
 						</td>

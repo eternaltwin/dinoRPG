@@ -8,7 +8,7 @@
 import { defineComponent } from 'vue';
 import { OauthService } from '@/services';
 import { isNil } from 'lodash';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import EventBus from '@/events';
 
 export default defineComponent({
@@ -32,7 +32,7 @@ export default defineComponent({
 				return;
 			}
 
-			store.commit('setJwt', jwt);
+			sessionStore.commit('setJwt', jwt);
 
 			this.$router.push({ name: 'Accueil' });
 			setTimeout(() => this.$router.go(0), 100);

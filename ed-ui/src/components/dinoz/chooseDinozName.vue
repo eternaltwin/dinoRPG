@@ -18,7 +18,7 @@ import { defineComponent, PropType } from 'vue';
 import { errorHandler } from '@/utils';
 import { DinozService } from '@/services';
 import { Dinoz } from '@/models';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import EventBus from '@/events';
 
@@ -51,13 +51,13 @@ export default defineComponent({
 				}
 
 				// Update dinozList in store
-				const dinozList: Array<Dinoz> = store.getters.getDinozList;
+				const dinozList: Array<Dinoz> = sessionStore.getters.getDinozList;
 				const dinozToUpdate = dinozList.find(
 					dinoz => dinoz.dinozId == this.dinozData!.dinozId
 				)!;
 				dinozToUpdate.name = this.name;
 
-				store.commit('setDinozList', dinozList);
+				sessionStore.commit('setDinozList', dinozList);
 
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);

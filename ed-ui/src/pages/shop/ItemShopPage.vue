@@ -5,7 +5,7 @@ import { defineComponent } from 'vue';
 import { InventoryService } from '@/services';
 import { Item, ItemShop } from '@/models';
 import { errorHandler } from '@/utils';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import Title from '@/components/utils/Title.vue';
 import EventBus from '@/events';
 
@@ -37,8 +37,9 @@ export default defineComponent({
 				}
 
 				// Update player's money
-				const newMoney = (store.getters.getMoney - item.price!) as number;
-				store.commit('setMoney', newMoney);
+				const newMoney = (sessionStore.getters.getMoney -
+					item.price!) as number;
+				sessionStore.commit('setMoney', newMoney);
 			}
 		}
 	},

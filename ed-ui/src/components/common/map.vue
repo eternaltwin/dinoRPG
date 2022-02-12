@@ -61,7 +61,7 @@
 import { defineComponent, PropType } from 'vue';
 import { placeList } from '@/constants';
 import { Dinoz, FightResult, Place, svgLines } from '@/models';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import EventBus from '@/events';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
@@ -165,10 +165,10 @@ export default defineComponent({
 					this.dinozData!.dinozId!,
 					placeId
 				);
-				store.commit('setFightResult', moveTry);
+				sessionStore.commit('setFightResult', moveTry);
 				// Update Dinoz Place in the store if fight is win
 				if (moveTry.result) {
-					const dinozList: Array<Dinoz> = store.getters.getDinozList;
+					const dinozList: Array<Dinoz> = sessionStore.getters.getDinozList;
 					const dinozToUpdate = dinozList.find(
 						dinozs => dinozs.dinozId == this.dinozData!.dinozId!
 					)!;
@@ -177,7 +177,7 @@ export default defineComponent({
 							.alias!;
 					}
 					dinozToUpdate.placeId = placeId;
-					store.commit('setDinozList', dinozList);
+					sessionStore.commit('setDinozList', dinozList);
 				}
 				EventBus.emit('isLoading', false);
 				this.$router.push({ name: 'Fight' });

@@ -13,7 +13,7 @@ import HomePage from '@/pages/HomePage.vue';
 import Title from '@/components/utils/Title.vue';
 import Spinner from '@/components/utils/Spinner.vue';
 import { isNil } from 'lodash';
-import store from './store';
+import { sessionStore } from './store';
 
 export default defineComponent({
 	name: 'App',
@@ -29,7 +29,7 @@ export default defineComponent({
 		Spinner
 	},
 	mounted(): void {
-		this.displayAuth = isNil(store.getters.getJwt);
+		this.displayAuth = isNil(sessionStore.getters.getJwt);
 	}
 });
 </script>

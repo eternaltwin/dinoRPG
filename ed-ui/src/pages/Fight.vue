@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { FightResult } from '@/models';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -25,7 +25,7 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		this.fight = store.getters.getFightResult;
+		this.fight = sessionStore.getters.getFightResult;
 	}
 });
 </script>

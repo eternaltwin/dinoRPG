@@ -64,7 +64,7 @@
 import { defineComponent, PropType } from 'vue';
 import { epicList } from '@/constants';
 import { PlayerInfo } from '@/models';
-import store from '@/store';
+import { sessionStore } from '@/store';
 
 export default defineComponent({
 	name: 'Profile',
@@ -81,7 +81,9 @@ export default defineComponent({
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
 		isMyAccount(): boolean {
-			return store.getters.getPlayerId === parseInt(this.$route.params.id[0]);
+			return (
+				sessionStore.getters.getPlayerId === parseInt(this.$route.params.id[0])
+			);
 		}
 	}
 });

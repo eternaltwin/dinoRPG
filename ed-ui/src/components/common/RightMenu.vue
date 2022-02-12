@@ -44,7 +44,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LocaleChange from '@/components/utils/LocaleChange.vue';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import { mapGetters } from 'vuex';
 
 export default defineComponent({
@@ -60,7 +60,7 @@ export default defineComponent({
 	computed: {
 		...mapGetters(['getPlayerId']),
 		dinozCount(): number {
-			return store.getters.getDinozCount;
+			return sessionStore.getters.getDinozCount;
 		}
 	},
 	methods: {

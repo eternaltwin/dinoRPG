@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Locales } from '@/i18n';
+import { localStore } from '@/store';
 
 export default defineComponent({
 	name: 'LocaleChange',
@@ -24,6 +25,7 @@ export default defineComponent({
 		switchLocale(locale: string) {
 			if (this.$i18n.locale !== locale) {
 				this.$i18n.locale = locale;
+				localStore.commit('setLanguage', locale);
 			}
 		}
 	}

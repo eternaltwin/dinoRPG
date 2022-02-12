@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import { isNil } from 'lodash';
 import { utils } from '@/utils';
 import DinozList from '@/components/dinoz/dinozList.vue';
@@ -76,7 +76,7 @@ export default defineComponent({
 	},
 	computed: {
 		storeMoney(): number {
-			return store.getters.getMoney;
+			return sessionStore.getters.getMoney;
 		},
 		// Format money display (1000000 -> 1.000.000)
 		beautifulMoney(): string | undefined {
@@ -93,7 +93,7 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		this.money = store.getters.getMoney;
+		this.money = sessionStore.getters.getMoney;
 	}
 });
 </script>

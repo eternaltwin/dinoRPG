@@ -64,7 +64,7 @@ import { DinozShop, Dinoz } from '@/models';
 import { errorHandler, utils } from '@/utils';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import Elements from '@/components/data/elements.vue';
-import store from '@/store';
+import { sessionStore } from '@/store';
 import Title from '@/components/utils/Title.vue';
 import { raceList } from '@/constants';
 import EventBus from '@/events';
@@ -98,18 +98,22 @@ export default defineComponent({
 				}
 
 				// Update player's money
-				const newMoney = (store.getters.getMoney - dinoz.race.price!) as number;
-				store.commit('setMoney', newMoney);
+				const newMoney = (sessionStore.getters.getMoney -
+					dinoz.race.price!) as number;
+				sessionStore.commit('setMoney', newMoney);
 
-				const dinozStore = store.getters.getDinozList;
+				const dinozStore = sessionStore.getters.getDinozList;
 
 				dinozStore.push(dinozCreated);
 
 				// Update dinoz list
-				store.commit('setDinozList', dinozStore);
+				sessionStore.commit('setDinozList', dinozStore);
 
 				// Update dinoz count
-				store.commit('setDinozCount', store.getters.getDinozCount + 1);
+				sessionStore.commit(
+					'setDinozCount',
+					sessionStore.getters.getDinozCount + 1
+				);
 
 				// Go to dinoz page
 				this.$router.push({
