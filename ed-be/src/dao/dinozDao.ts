@@ -3,6 +3,7 @@ import {
 	AssDinozSkill,
 	AssDinozStatus,
 	Dinoz,
+	MissionOver,
 	Place,
 	Player
 } from '../models/index.js';
@@ -149,6 +150,13 @@ const getDinozTotalCount = (): Promise<number> => {
 	return Dinoz.count();
 };
 
+const getAllDinozFromAccount = (playerId: number): Promise<Array<Dinoz>> => {
+	return Dinoz.findAll({
+		attributes: ['dinozId'],
+		where: { playerId: playerId }
+	});
+};
+
 export {
 	createDinozRequest,
 	getDinozFicheRequest,
@@ -159,5 +167,6 @@ export {
 	setSkillStateRequest,
 	getDinozPlaceRequest,
 	setDinozPlaceRequest,
-	getDinozTotalCount
+	getDinozTotalCount,
+	getAllDinozFromAccount
 };

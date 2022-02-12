@@ -9,4 +9,5 @@ export interface PlayerInfo {
 	playerName: string;
 	epicRewards: Array<number>;
 	dinoz: Array<Dinoz>;
+	customText: string | null;
 }

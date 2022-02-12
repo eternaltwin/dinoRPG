@@ -9,7 +9,7 @@
 			<template v-for="(rewards, index) in epicRewards" :key="index">
 				<Tippy theme="normal">
 					<img :src="getEpicImg(epicList.imgName[rewards])" />
-					<template content>
+					<template #content>
 						<h1
 							v-html="
 								formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))
@@ -50,7 +50,7 @@ export default defineComponent({
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.gif`);
 		},
 		getEpicImg(imgName: string): string {
-			return require(`@/assets/epicRewards/collec_${imgName}.gif`);
+			return require(`@/assets/epicRewards/collec_${imgName}.webp`);
 		}
 	}
 });

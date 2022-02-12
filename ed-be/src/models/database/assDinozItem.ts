@@ -21,7 +21,7 @@ export class AssDinozItem extends Model {
 	@Column
 	dinozId!: number;
 
-	@BelongsTo(() => Dinoz, 'dinozId')
+	@BelongsTo(() => Dinoz, { onDelete: 'CASCADE' })
 	dinoz!: Dinoz;
 
 	@AllowNull(false)

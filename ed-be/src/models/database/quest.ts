@@ -23,7 +23,7 @@ export class Quest extends Model {
 	@Column
 	playerId!: number;
 
-	@BelongsTo(() => Player, 'playerId')
+	@BelongsTo(() => Player, { onDelete: 'CASCADE' })
 	player!: PlayerType;
 
 	@AllowNull(false)

@@ -1,12 +1,19 @@
 import { Request, Response } from 'express';
-import { getDinozTotalCount } from '../dao/dinozDao.js';
+import { getAllDinozFromAccount, getDinozTotalCount } from '../dao/dinozDao.js';
 import { validationResult } from 'express-validator';
 import {
 	getCommonDataRequest,
-	getPlayerDataRequest
+	getImportedData,
+	getPlayerDataRequest,
+	resetUser,
+	setHasImported,
+	editCustomText,
+	getPlayerRewardsRequest
 } from '../dao/playerDao.js';
 
 import { Player, PlayerInfo } from '../models/index.js';
+import { addRewardToPlayer } from '../dao/assPlayerRewardsDao.js';
+import { rewardList } from '../constants/reward.js';
 
 const getCommonData = async (
 	req: Request,
@@ -75,10 +82,76 @@ const getAccountData = async (
 		clan: clan,
 		playerName: playerInfo!.name,
 		epicRewards: epicRewards,
-		dinoz: playerInfo.dinoz
+		dinoz: playerInfo.dinoz,
+		customText: playerInfo.customText
 	};
 
 	return res.status(200).send(infoToSend);
 };
 
-export { getCommonData, getAccountData };
+const importAccount = async (
+	req: Request,
+	res: Response
+): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+	const playerId: number = req.user!.playerId!;
+	const server: string = req.body.server;
+	const importedData: Player | null = await getImportedData(playerId);
+
+	//Check if player exist
+	if (importedData === null) {
+		return res.status(500).send(`Player ${playerId} doesn't exists`);
+	}
+
+	//Check if user has not already imported
+	if (importedData.hasImported) {
+		return res
+			.status(500)
+			.send(`Player ${playerId} has already imported his account`);
+	}
+
+	//Check if user has data in Eternaltwin's API
+
+	//Reset all data for this user except the user's row in tb_player
+	await resetUser(playerId);
+
+	//TODO Import from Eternaltwin's API
+	const userET: string = importedData.eternalTwinId;
+
+	//Give Epic Reward
+	await addRewardToPlayer(playerId, 100);
+
+	//Set hasImported to true
+	await setHasImported(playerId, true);
+
+	return res.status(200).send();
+};
+
+const setCustomText = async (
+	req: Request,
+	res: Response
+): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+	const playerId: number = req.user!.playerId!;
+	const playerProfile: Player | null = await getPlayerRewardsRequest(playerId);
+
+	//Check if player exist
+	if (playerProfile === null) {
+		return res.status(500).send(`Player ${playerId} doesn't exists`);
+	}
+
+	//Check if user can edit
+	if (
+		!playerProfile.reward.some(rewards => rewards.rewardId === rewardList.PLUME)
+	) {
+		return res.status(500).send(`Player ${playerId} cannot edit this field`);
+	}
+	await editCustomText(playerId, req.body.message);
+
+	return res.status(200).send();
+};
+export { getCommonData, getAccountData, importAccount, setCustomText };

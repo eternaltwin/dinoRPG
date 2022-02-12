@@ -24,10 +24,14 @@ export class Player extends Model {
 	@Column
 	playerId!: number;
 
+	@AllowNull(false)
+	@Column
+	hasImported!: boolean;
+
 	@HasMany(() => AssPlayerReward, 'playerId')
 	reward!: Array<AssPlayerReward>;
 
-	@HasMany(() => Dinoz, 'playerId')
+	@HasMany(() => Dinoz, { onDelete: 'CASCADE' })
 	dinoz!: Array<Dinoz>;
 
 	@HasMany(() => DinozShop, 'playerId')

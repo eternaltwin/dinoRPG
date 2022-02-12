@@ -13,5 +13,21 @@ export const PlayerService = {
 			.get(`/player/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	requestImport(server: string): Promise<void> {
+		return http()
+			.put(`/player/import`, {
+				server: server
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	setCustomText(message: string): Promise<void> {
+		return http()
+			.put(`/player/customText`, {
+				message: message
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

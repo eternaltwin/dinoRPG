@@ -1,6 +1,7 @@
 import {
 	AllowNull,
 	AutoIncrement,
+	BelongsTo,
 	Column,
 	ForeignKey,
 	Model,
@@ -8,6 +9,8 @@ import {
 	Table
 } from 'sequelize-typescript';
 import { Player } from './player.js';
+
+type PlayerType = Player;
 
 @Table({ tableName: 'tb_ass_player_reward', timestamps: false })
 export class AssPlayerReward extends Model {
@@ -19,6 +22,9 @@ export class AssPlayerReward extends Model {
 	@ForeignKey(() => Player)
 	@Column
 	playerId!: number;
+
+	@BelongsTo(() => Player, { onDelete: 'CASCADE' })
+	player!: PlayerType;
 
 	@AllowNull(false)
 	@Column

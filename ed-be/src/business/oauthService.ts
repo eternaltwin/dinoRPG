@@ -34,6 +34,7 @@ const authenticateToET = async (
 	if (_.isNil(player)) {
 		player = Player.build({
 			eternalTwinId: user.user.id,
+			hasImported: false,
 			name: user.user.display_name.current.value,
 			money: config.player.initialMoney,
 			quetzuBought: 0,

@@ -45,12 +45,12 @@
 import { defineComponent } from 'vue';
 import LocaleChange from '@/components/utils/LocaleChange.vue';
 import { sessionStore } from '@/store';
-import { mapGetters } from 'vuex';
 
 export default defineComponent({
 	name: 'RightMenu',
 	data() {
 		return {
+			...sessionStore.getters,
 			time: '' as string
 		};
 	},
@@ -58,7 +58,6 @@ export default defineComponent({
 		LocaleChange
 	},
 	computed: {
-		...mapGetters(['getPlayerId']),
 		dinozCount(): number {
 			return sessionStore.getters.getDinozCount;
 		}

@@ -38,24 +38,29 @@
 				PlaceHolder
 			</dd>
 		</dl>
-		<div class="profilContent">
-			<div class="contentTexte">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lectus
-				nulla, pellentesque quis velit ut, mattis sollicitudin purus.
-				Suspendisse vel risus tincidunt, convallis nibh in, vulputate metus.
-				Pellentesque pellentesque consequat arcu in vestibulum. Duis elementum
-				est et lectus iaculis, quis fringilla odio dignissim. Proin hendrerit,
-				leo eget venenatis rutrum, augue nisi auctor enim, quis pretium elit
-				urna eu dui. In quis volutpat massa, ut vehicula lacus. Donec eu aliquet
-				lectus, id dapibus lectus. Mauris elementum commodo augue, sit amet
-				dictum nisi dignissim eget.
-			</div>
+		<div class="profilContent" v-if="!isEditOn">
+			<div v-html="customText" class="contentTexte" />
 		</div>
+		<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
 		<div class="buttonLand" v-if="isMyAccount()">
-			<a v-if="hasPlume()" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
+			<a
+				v-if="hasPlume() && isEditOn"
+				@click="setCustomText(customTextEdit)"
+				class="tinybutton"
+				>OK</a
+			>
+			<a
+				v-if="hasPlume() && !isEditOn"
+				@click="isEditOn = true"
+				class="tinybutton"
+				>{{ $t(`myAccount.edit`) }}</a
+			>
 			<a class="smallbutton">{{ $t(`myAccount.editAccount`) }}</a>
 			<a class="smallbutton">{{ $t(`myAccount.quest`) }}</a>
-			<a class="smallbutton">{{ $t(`myAccount.import`) }}</a>
+			<p v-if="hasImport()" class="smallbutton" @click="openPopinImport = true">
+				{{ $t(`myAccount.import`) }}
+			</p>
+			<ImportAccount v-if="openPopinImport" @closePopin="closePopin" />
 		</div>
 	</div>
 </template>
@@ -64,10 +69,25 @@
 import { defineComponent, PropType } from 'vue';
 import { epicList } from '@/constants';
 import { PlayerInfo } from '@/models';
+import EventBus from '@/events';
+import ImportAccount from '@/components/data/ImportAccount.vue';
+import { PlayerService } from '@/services';
+import { errorHandler } from '@/utils';
 import { sessionStore } from '@/store';
 
 export default defineComponent({
 	name: 'Profile',
+	components: {
+		ImportAccount
+	},
+	data() {
+		return {
+			openPopinImport: false as boolean,
+			isEditOn: false as boolean,
+			customText: this.accountData?.customText as string | null,
+			customTextEdit: this.accountData?.customText as string | null
+		};
+	},
 	props: {
 		accountData: {
 			type: Object as PropType<PlayerInfo>
@@ -84,6 +104,29 @@ export default defineComponent({
 			return (
 				sessionStore.getters.getPlayerId === parseInt(this.$route.params.id[0])
 			);
+		},
+		closePopin(): void {
+			this.openPopinImport = false;
+		},
+		hasImport(): boolean {
+			return !this.accountData!.epicRewards.includes(epicList.id.import);
+		},
+		async setCustomText(message: string): Promise<void> {
+			EventBus.emit('isLoading', true);
+			try {
+				await PlayerService.setCustomText(message);
+				EventBus.emit('isLoading', false);
+				this.customText = message;
+			} catch (err) {
+				errorHandler.handle(err);
+				return;
+			}
+			this.isEditOn = false;
+		}
+	},
+	mounted() {
+		if (this.customText) {
+			this.customText = this.customText.replace(/\n/g, '<br>');
 		}
 	}
 });
@@ -144,7 +187,22 @@ export default defineComponent({
 		}
 	}
 }
-
+.editTexte {
+	width: 245px;
+	height: 167px;
+	overflow: auto;
+	margin: 27px;
+	margin-top: auto;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	position: relative;
+	font-size: 8pt;
+	background-color: #9a4029;
+	border: 1px solid #fbdfba;
+	color: #fce3bb;
+	line-height: 20px;
+	padding-left: 5px;
+}
 .profilContent {
 	// top: 105px;
 	width: 245px;

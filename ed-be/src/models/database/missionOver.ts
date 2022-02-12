@@ -23,7 +23,7 @@ export class MissionOver extends Model {
 	@Column
 	dinozId!: number;
 
-	@BelongsTo(() => Dinoz, 'dinozId')
+	@BelongsTo(() => Dinoz, { onDelete: 'CASCADE' })
 	dinoz!: DinozType;
 
 	@AllowNull(false)

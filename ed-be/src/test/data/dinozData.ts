@@ -47,3 +47,20 @@ export const DinozToChangeName = {
 		playerId: player.id_1
 	}
 } as Dinoz;
+
+export const AllDinozFromAnAccount = [
+	{
+		dinozId: 123456,
+		player: {
+			playerId: player.id_1
+		}
+	},
+	{
+		dinozId: 654321,
+		player: {
+			playerId: player.id_1
+		}
+	}
+] as Array<Dinoz>;
+
+export const AllDinozFromAnAccountArray = [123456, 654321] as Array<number>;

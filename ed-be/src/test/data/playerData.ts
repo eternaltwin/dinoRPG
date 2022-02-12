@@ -6,6 +6,18 @@ export const BasicPlayer = {
 	playerId: player.id_1
 } as Player;
 
+export const BasicNotImportedPlayer = {
+	playerId: player.id_1,
+	hasImported: false,
+	eternalTwinId: '6b60f9d9-74fb-42f7-9e34-73961b407c00'
+} as Player;
+
+export const BasicImportedPlayer = {
+	playerId: player.id_1,
+	hasImported: true,
+	eternalTwinId: '6b60f9d9-74fb-42f7-9e34-73961b407c00'
+} as Player;
+
 export const PlayerWithRewards = ({
 	playerId: player.id_1,
 	quetzuBought: 0,
@@ -32,7 +44,8 @@ export const PlayerWithRewards = ({
 export const PlayerData = ({
 	createdAt: '08/01/2021',
 	name: 'Jolujolu',
-	reward: [{ rewardId: 1 }],
+	reward: [{ rewardId: 1 }, { rewardId: 13 }],
+	customText: '',
 	dinoz: [
 		{
 			dinozId: dinozId,

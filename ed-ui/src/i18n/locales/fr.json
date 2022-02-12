@@ -24,6 +24,11 @@
       "part7": "et de rejoindre la liste de volontaires sur"
     }
   },
+  "import": {
+    "disclaimer1":"Vous pouvez importer votre compte depuis DinoRPG afin de retrouver votre progression ainsi que tout vos dinoz !",
+    "disclaimer2":"Attention, cela remettra à zero votre progression actuelle sur EternalDinoRPG mais ne touchera pas votre compte DinoRPG.",
+    "disclaimer3":"Vous ne pouvez importer qu'un seul compte DinoRPG une seule fois, cette action est définitive est irréversible."
+  },
   "element": {
     "fire": "Element **Feu**",
     "wood": "Element **Bois**",
@@ -1079,7 +1084,7 @@
     "maxQuantity": "Quantité maximale:",
     "itemUse": "Utiliser **immédiatement**",
     "itemUseOff": "Cet objet ne peut pas être **utilisé**",
-    "itemEquipTitle": "Placer dans **l'équipement de combat**&&//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
+    "itemEquipTitle": "Placer dans **l'équipement de combat**",
     "itemEquipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
     "itemEquipOff": "Cet objet ne peut pas être **équipé**"
   },
@@ -1108,11 +1113,13 @@
   "rewards": {
     "name": {
       "perle": "Perle de la Fontaine",
-      "pmi": "Petit Missionaire Illustré"
+      "pmi":"Petit Missionaire Illustré",
+      "import":"Os D'importasaurus"
     },
     "description": {
       "perle": "La perle de la Fontaine de Jouvence permet à tous vos Dinoz de pouvoir se régénerer chaque jour à la Fontaine de Jouvence",
-      "pmi": "Le Petit Missionaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz"
+      "pmi":"Le Petit Missionaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz",
+      "import":"Félicitations ! Vous avez importé votre compte sur EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Peut-être est-ce une erreur finalement ?"
     }
   }
 }

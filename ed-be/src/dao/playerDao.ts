@@ -2,7 +2,11 @@ import {
 	AssDinozStatus,
 	AssPlayerReward,
 	Dinoz,
-	Player
+	DinozShop,
+	IngredientOwn,
+	ItemOwn,
+	Player,
+	Quest
 } from '../models/index.js';
 
 const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
@@ -46,7 +50,7 @@ const createPlayer = (newPlayer: Player): Promise<Player> => {
 
 const getPlayerRewardsRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
-		attributes: ['quetzuBought'],
+		attributes: [],
 		include: {
 			model: AssPlayerReward,
 			attributes: ['rewardId']
@@ -71,7 +75,7 @@ const setPlayerMoneyRequest = (
 
 const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
-		attributes: ['createdAt', 'name'],
+		attributes: ['createdAt', 'name', 'customText'],
 		include: [
 			{
 				model: AssPlayerReward,
@@ -92,6 +96,59 @@ const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
 	});
 };
 
+const getImportedData = (playerId: number): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: ['hasImported', 'eternalTwinId'],
+		where: { playerId: playerId }
+	});
+};
+
+const setHasImported = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			hasImported: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+const resetUser = (playerId: number): Promise<number> => {
+	DinozShop.destroy({
+		where: { playerId: playerId }
+	});
+	Dinoz.destroy({
+		where: { playerId: playerId }
+	});
+	IngredientOwn.destroy({
+		where: { playerId: playerId }
+	});
+	ItemOwn.destroy({
+		where: { playerId: playerId }
+	});
+	return Quest.destroy({
+		where: { playerId: playerId }
+	});
+};
+
+const editCustomText = (
+	playerId: number,
+	text: string
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			customText: text
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
 export {
 	getPlayerId,
 	getEternalTwinId,
@@ -99,5 +156,9 @@ export {
 	getCommonDataRequest,
 	getPlayerRewardsRequest,
 	setPlayerMoneyRequest,
-	getPlayerDataRequest
+	getPlayerDataRequest,
+	getImportedData,
+	setHasImported,
+	resetUser,
+	editCustomText
 };

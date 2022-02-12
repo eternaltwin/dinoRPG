@@ -76,7 +76,7 @@ export class Dinoz extends Model {
 	@Column
 	playerId!: number;
 
-	@BelongsTo(() => Player, 'playerId')
+	@BelongsTo(() => Player, { onDelete: 'CASCADE' })
 	player!: Player;
 
 	@AllowNull(false)

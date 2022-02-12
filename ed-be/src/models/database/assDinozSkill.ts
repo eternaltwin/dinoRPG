@@ -5,9 +5,12 @@ import {
 	Column,
 	PrimaryKey,
 	AutoIncrement,
-	AllowNull
+	AllowNull,
+	BelongsTo
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
+
+type DinozType = Dinoz;
 
 @Table({ tableName: 'tb_ass_dinoz_skill', timestamps: false })
 export class AssDinozSkill extends Model {
@@ -19,6 +22,9 @@ export class AssDinozSkill extends Model {
 	@ForeignKey(() => Dinoz)
 	@Column
 	dinozId!: number;
+
+	@BelongsTo(() => Dinoz, { onDelete: 'CASCADE' })
+	dinoz!: DinozType;
 
 	@AllowNull(false)
 	@Column
