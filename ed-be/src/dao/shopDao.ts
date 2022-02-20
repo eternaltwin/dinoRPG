@@ -1,4 +1,4 @@
-import { DinozShop, Player } from '../models/index.js';
+import { DinozShop, Player, Ranking } from '../models/index.js';
 
 const getDinozFromDinozShopRequest = (
 	playerId: number
@@ -22,7 +22,18 @@ const getDinozDetailsRequest = (dinozId: number): Promise<DinozShop | null> => {
 			{
 				model: Player,
 				attributes: ['playerId', 'money'],
-				required: false
+				include: [
+					{
+						model: Ranking,
+						attributes: [
+							'dinozCount',
+							'sumPointsDisplayed',
+							'sumPoints',
+							'averagePointsDisplayed',
+							'averagePoints'
+						]
+					}
+				]
 			}
 		],
 		where: { id: dinozId }

@@ -9,3 +9,4 @@ export * from './itemOwn.js';
 export * from './missionOver.js';
 export * from './player.js';
 export * from './quest.js';
+export * from './ranking.js';

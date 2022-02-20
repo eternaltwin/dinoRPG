@@ -5,6 +5,7 @@ import {
 	CreatedAt,
 	DataType,
 	HasMany,
+	HasOne,
 	Model,
 	PrimaryKey,
 	Table,
@@ -16,6 +17,7 @@ import { Dinoz } from './dinoz.js';
 import { DinozShop } from './dinozShop.js';
 import { IngredientOwn } from './ingredientOwn.js';
 import { Quest } from './quest.js';
+import { Ranking } from './ranking.js';
 
 @Table({ tableName: 'tb_player', timestamps: true })
 export class Player extends Model {
@@ -27,6 +29,9 @@ export class Player extends Model {
 	@AllowNull(false)
 	@Column
 	hasImported!: boolean;
+
+	@HasOne(() => Ranking, 'playerId')
+	rank!: Ranking;
 
 	@HasMany(() => AssPlayerReward, 'playerId')
 	reward!: Array<AssPlayerReward>;

@@ -6,7 +6,15 @@ export const DinozFromShop = {
 	display: 'sdf8s165fs',
 	player: {
 		playerId: player.id_1,
-		money: 200000
+		money: 200000,
+		rank: {
+			dinozCount: 2,
+			sumPointsDisplayed: 5,
+			sumPoints: 5,
+			averagePointsDisplayed: 4,
+			averagePoints: 4,
+			player: { name: 'Biocat' }
+		}
 	},
 	raceId: 1
 } as DinozShop;

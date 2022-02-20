@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllDinozFromAccount, getDinozTotalCount } from '../dao/dinozDao.js';
+import { getDinozTotalCount } from '../dao/dinozDao.js';
 import { validationResult } from 'express-validator';
 import {
 	getCommonDataRequest,
@@ -41,10 +41,11 @@ const getAccountData = async (
 		return res.status(500).send(`Player ${playerId} doesn't exists`);
 	}
 
-	// Rank TODO
+	//TODO Récuperer via tb_ranking
 	const rank: number = 1;
 
 	// Compte du nombre de point
+	//TODO Récuperer via tb_ranking
 	const pointCount: number = playerInfo.dinoz.reduce(
 		(acc, dinoz) => (acc += dinoz.level),
 		0
@@ -154,4 +155,5 @@ const setCustomText = async (
 
 	return res.status(200).send();
 };
+
 export { getCommonData, getAccountData, importAccount, setCustomText };

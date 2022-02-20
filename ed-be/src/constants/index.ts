@@ -11,6 +11,7 @@ export const apiRoutes = {
 	inventoryRoute: '/api/inventory',
 	oauthRoute: '/api/oauth',
 	playerRoute: '/api/player',
+	rankingRoutes: '/api/ranking',
 	shopRoutes: '/api/shop'
 };
 

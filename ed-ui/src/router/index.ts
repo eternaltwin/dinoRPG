@@ -6,6 +6,7 @@ import ItemShopPage from '@/pages/shop/ItemShopPage.vue';
 import AuthenticationPage from '@/pages/AuthenticationPage.vue';
 import DinozGenerator from '@/pages/DinozGenerator.vue';
 import MyAccount from '@/pages/MyAccount.vue';
+import Ranking from '@/pages/Ranking.vue';
 import Fight from '@/pages/Fight.vue';
 
 const router = createRouter({
@@ -51,6 +52,11 @@ const router = createRouter({
 			name: 'DinozGenerator',
 			component: DinozGenerator,
 			props: route => ({ chk: route.query.chk, chk2: route.query.chk2 })
+		},
+		{
+			path: '/ranking',
+			name: 'Ranking',
+			component: Ranking
 		},
 		{
 			path: '/:pathMatch(.*)',

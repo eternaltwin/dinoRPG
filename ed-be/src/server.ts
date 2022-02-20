@@ -6,10 +6,12 @@ import inventoryRoutes from './routes/inventory.routes.js';
 import oauthRoutes from './routes/oauth.routes.js';
 import playerRoutes from './routes/player.routes.js';
 import shopRoutes from './routes/shop.routes.js';
+import rankingRoutes from './routes/ranking.routes.js';
 import { loadConfigFile } from './utils/context.js';
 import { jwtConfig } from './utils/jwt.js';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
 import { sequelize } from './sequelize.js';
+import { updatePlayersPosition } from './cron/updatePlayersPosition.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -58,9 +60,11 @@ app.use(inventoryRoutes);
 app.use(oauthRoutes);
 app.use(playerRoutes);
 app.use(shopRoutes);
+app.use(rankingRoutes);
 
 // Launch Cron
 resetDinozShopAtMidnight().start();
+updatePlayersPosition().start();
 
 // Initiate controllers
 // oauthController.init();

@@ -7,6 +7,8 @@ export * from './dinoz/DinozRace.js';
 export * from './dinoz/FightResult.js';
 export * from './item/ItemFiche.js';
 export * from './place/Place.js';
+export * from './player/NewPositions.js';
 export * from './player/PlayerInfo.js';
+export * from './player/PlayerRanking.js';
 export * from './enums/index.js';
 export * from './reward/EpicReward.js';

@@ -24,7 +24,8 @@ import {
 	DinozSkill,
 	DinozRace,
 	FightResult,
-	Place
+	Place,
+	Ranking
 } from '../models/index.js';
 import {
 	actions,
@@ -37,6 +38,7 @@ import {
 } from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 import { validationResult } from 'express-validator';
+import { updatePoints } from '../dao/rankingDao.js';
 
 // TODO: refaire cette fonction proprement
 const getDinozFiche = async (
@@ -247,6 +249,13 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		name: dinozCreated.name,
 		placeId: dinozCreated.placeId
 	};
+
+	// Add a point in the ranking to the player
+	const playerRanking: Ranking = dinozData.player.rank;
+	const dinozCount = playerRanking!.dinozCount + 1;
+	const sumPoints = playerRanking!.sumPoints + 1;
+	const averagePoints = Math.round(sumPoints / dinozCount);
+	await updatePoints(req.user!.playerId, sumPoints, averagePoints, dinozCount);
 
 	return res.status(200).send(dinozToSend);
 };

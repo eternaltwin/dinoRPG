@@ -7,6 +7,7 @@ import { Player, Config } from '../models/index.js';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
 import { OauthAccessToken } from '@eternal-twin/core/lib/oauth/oauth-access-token.js';
 import fetch from 'node-fetch';
+import { addPlayerInRanking } from '../dao/rankingDao.js';
 
 const authenticateToET = async (
 	req: Request,
@@ -49,6 +50,8 @@ const authenticateToET = async (
 
 		// Create new player in database
 		player = await createPlayer(player.get());
+		// Create player at position 0 in ranking
+		await addPlayerInRanking(player!.get().playerId);
 	}
 
 	// Forge JWT with playerId

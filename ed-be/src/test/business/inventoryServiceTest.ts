@@ -1,12 +1,5 @@
 import { Response } from 'express';
 import { Request } from 'express';
-import {
-	ErrorFormatter,
-	Result,
-	ValidationError,
-	validationResult
-} from 'express-validator';
-import { mocked } from 'ts-jest/utils';
 import { getAllItemsData } from '../../business/inventoryService';
 import { playerInventory } from '../data/ItemOwnData';
 import { mockRequest, mockResponse, player } from '../utils/constants';

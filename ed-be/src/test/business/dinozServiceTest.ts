@@ -39,6 +39,7 @@ import {
 import { mocked } from 'ts-jest/utils';
 import { Request, Response } from 'express';
 import { cloneDeep } from 'lodash';
+import { playerRanking } from '../data/rankingData.js';
 
 jest.mock('express-validator');
 
@@ -46,6 +47,7 @@ const DinozDao = require('../../dao/dinozDao.js');
 const DinozShopDao = require('../../dao/shopDao.js');
 const PlayerDao = require('../../dao/playerDao.js');
 const AssDinozSkillDao = require('../../dao/assDinozSkillDao.js');
+const RankingDao = require('../../dao/rankingDao.js');
 
 describe('Function getDinozFiche()', function () {
 	let req: Request;
@@ -232,6 +234,7 @@ describe('Test de la fonction buyDinoz()', function () {
 		PlayerDao.setPlayerMoneyRequest = jasmine.createSpy();
 		DinozShopDao.deleteDinozInShopRequest = jasmine.createSpy();
 		AssDinozSkillDao.addSkillToDinoz = jasmine.createSpy();
+		RankingDao.updatePoints = jasmine.createSpy();
 		DinozDao.createDinozRequest = jasmine
 			.createSpy()
 			.and.returnValue(BasicDinoz);
@@ -252,6 +255,7 @@ describe('Test de la fonction buyDinoz()', function () {
 		expect(DinozShopDao.deleteDinozInShopRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.createDinozRequest).toHaveBeenCalledTimes(1);
 		expect(AssDinozSkillDao.addSkillToDinoz).toHaveBeenCalledTimes(1);
+		expect(RankingDao.updatePoints).toHaveBeenCalledTimes(1);
 
 		expect(DinozShopDao.getDinozDetailsRequest).toHaveBeenCalledWith(dinozId);
 		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(
@@ -267,6 +271,12 @@ describe('Test de la fonction buyDinoz()', function () {
 		expect(AssDinozSkillDao.addSkillToDinoz).toHaveBeenLastCalledWith(
 			dinozId,
 			61102
+		);
+		expect(RankingDao.updatePoints).toHaveBeenLastCalledWith(
+			player.id_1,
+			playerRanking.sumPoints + 1,
+			(playerRanking.sumPoints + 1) / (playerRanking.dinozCount + 1),
+			playerRanking.dinozCount + 1
 		);
 
 		expect(res.status).toHaveBeenCalledWith(200);
@@ -420,6 +430,19 @@ describe('Function setDinozName()', function () {
 
 		expect(res.status).toHaveBeenCalledWith(500);
 		expect(res.send).toHaveBeenCalledWith(`Can't update dinoz name`);
+	});
+
+	it('Dinoz not found in database', async function () {
+		DinozDao.getCanDinozChangeName = jasmine.createSpy().and.returnValue(null);
+
+		await setDinozName(req, res);
+
+		expect(DinozDao.getCanDinozChangeName).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getCanDinozChangeName).toHaveBeenCalledWith(dinozId);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.send).toHaveBeenCalledWith(`Dinoz ${dinozId} doesn't exist`);
 	});
 
 	it('Bad request', async function () {

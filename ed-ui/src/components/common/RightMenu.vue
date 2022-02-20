@@ -10,7 +10,7 @@
 			<a @click="goToPage('')">{{ $t('rightMenu.gazette') }}</a>
 		</li>
 		<li>
-			<a @click="goToPage('')">{{ $t('rightMenu.ranking') }}</a>
+			<a @click="goToPage('Ranking')">{{ $t('rightMenu.ranking') }}</a>
 		</li>
 		<li>
 			<a @click="goToPage('')">{{ $t('rightMenu.clans') }}</a>
@@ -19,7 +19,7 @@
 			<a @click="goToPage('')">{{ $t('rightMenu.ingredients') }}</a>
 		</li>
 		<li>
-			<a @click="goToPage('MyAccount', getPlayerId)">{{
+			<a @click="goToMyAccount('MyAccount', getPlayerId)">{{
 				$t('rightMenu.account')
 			}}</a>
 		</li>
@@ -63,8 +63,11 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		goToPage(page: string, paramId: number): void {
+		goToMyAccount(page: string, paramId: number): void {
 			this.$router.push({ name: page, params: { id: paramId } });
+		},
+		goToPage(page: string): void {
+			this.$router.push({ name: page });
 		},
 		getTime(): void {
 			let day: Date = new Date();
