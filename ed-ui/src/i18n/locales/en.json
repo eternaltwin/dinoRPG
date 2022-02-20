@@ -4,12 +4,13 @@
   "rightMenu": {
     "news": "News",
     "gazette": "Gazette",
-    "ranking": "Tanking",
+    "ranking": "Ranking",
     "clans": "Clans",
-    "ingredients": "Ingrédients",
+    "ingredients": "Ingredients",
     "account": "My account",
     "forum": "Forum",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "logout": "Log out"
   },
   "alpha": {
     "login": "Connexion à Eternal-Twin",

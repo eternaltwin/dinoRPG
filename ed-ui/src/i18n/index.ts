@@ -1,5 +1,8 @@
 import en from './locales/en.json';
 import fr from './locales/fr.json';
+import es from './locales/es.json';
+import de from './locales/de.json';
+
 interface LangInfos {
 	caption: string;
 	icon: string;
@@ -15,7 +18,9 @@ export enum LocalesEnum {
 
 export const messages = {
 	[LocalesEnum.EN]: en,
-	[LocalesEnum.FR]: fr
+	[LocalesEnum.FR]: fr,
+	[LocalesEnum.ES]: es,
+	[LocalesEnum.DE]: de
 };
 
 export const Locales: { [index: string]: LangInfos } = {
