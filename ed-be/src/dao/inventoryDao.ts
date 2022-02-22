@@ -1,12 +1,22 @@
 import { ItemOwn } from '../models/index.js';
 
-const getAllItemsDataRequest = (
-	playerId: number
-): Promise<Array<ItemOwn> | null> => {
-	return ItemOwn.findAll({
-		attributes: ['itemId', 'quantity'],
-		where: { playerId: playerId }
-	});
+const createItemDataRequest = (item: ItemOwn): Promise<ItemOwn> => {
+	return ItemOwn.create(item);
 };
 
-export { getAllItemsDataRequest };
+const updateItemDataRequest = (
+	playerId: number,
+	itemId: number,
+	newQuantity: number
+): Promise<[number, Array<ItemOwn>]> => {
+	return ItemOwn.update(
+		{
+			quantity: newQuantity
+		},
+		{
+			where: { playerId: playerId, itemId: itemId }
+		}
+	);
+};
+
+export { createItemDataRequest, updateItemDataRequest };

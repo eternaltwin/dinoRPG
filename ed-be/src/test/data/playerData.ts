@@ -1,5 +1,5 @@
 import { Player } from '../../models';
-import { rewardList } from '../../constants/index.js';
+import { rewardList, placeList, shopList } from '../../constants/index.js';
 import { dinozId, player } from '../utils/constants';
 
 export const BasicPlayer = {
@@ -46,6 +46,11 @@ export const PlayerData = ({
 	name: 'Jolujolu',
 	reward: [{ rewardId: 1 }, { rewardId: 13 }],
 	customText: '',
+	playerId: player.id_1,
+	money: 50000,
+	shopkeeper: false,
+	merchant: false,
+	itemOwn: [],
 	dinoz: [
 		{
 			dinozId: dinozId,

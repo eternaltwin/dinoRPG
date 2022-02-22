@@ -3,67 +3,86 @@
 		<table>
 			<tbody>
 				<tr>
-					<th>{{ $t('inventory.itemName') }}</th>
-					<th>{{ $t('inventory.stock') }}</th>
-					<th>{{ $t('inventory.actions') }}</th>
+					<th class="name">{{ $t('inventory.itemName') }}</th>
+					<th class="qty">{{ $t('inventory.stock') }}</th>
+					<th class="act">{{ $t('inventory.actions') }}</th>
 				</tr>
 				<tr
 					v-for="(item, index) in allItemsData"
 					:class="index % 2 === 1 ? 'even' : ''"
 					:key="index"
 				>
-					<Tippy class="name">
-						<Tippy theme="normal">
-							<img
-								:src="
-									getImg('item', 'item_', $t(`item.imgName.${item.itemId}`))
+					<Tippy class="name" tag="td" theme="normal">
+						<img
+							:src="getImg('item', 'item_', `${itemNameList[item.itemId]}`)"
+						/>
+						<p v-html="$t(`item.name.${itemNameList[item.itemId]}`)" />
+						<template #content>
+							<h1
+								v-html="
+									formatContent($t(`item.name.${itemNameList[item.itemId]}`))
 								"
 							/>
-							{{ $t(`item.name.${item.itemId}`) }}
-							<template #content>
-								<h1 v-html="formatContent($t(`item.name.${item.itemId}`))" />
-								<h2>{{ $t(`tooltip.maxQuantity`) }} {{ item.maxQuantity }}</h2>
-								<p
-									v-html="formatContent($t(`item.description.${item.itemId}`))"
-								/>
-							</template>
-						</Tippy>
+							<h2>
+								{{ $t(`tooltip.item.maxQuantity`) }} {{ item.maxQuantity }}
+							</h2>
+							<p
+								v-html="
+									formatContent(
+										$t(`item.description.${itemNameList[item.itemId]}`)
+									)
+								"
+							/>
+						</template>
 					</Tippy>
-					<td class="qty">{{ item.quantity }}</td>
+					<td
+						class="qty"
+						:class="{
+							full: isFull(item)
+						}"
+						v-tippy="{
+							content: isFull(item) ? formatContent($t(`inventory.full`)) : '',
+							theme: 'small'
+						}"
+					>
+						{{ item.quantity }}
+					</td>
 					<td class="act">
 						<a
-							id="inv_TODO_use"
+							class="on"
 							v-if="item.canBeUsedNow"
 							v-tippy="{
-								content: formatContent($t('tooltip.itemUse')),
+								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
 							}"
 						>
 							<img :src="getImg('icons', 'small_', 'use')" />
 						</a>
 						<a
+							class="off"
 							v-else
 							v-tippy="{
-								content: formatContent($t('tooltip.itemUseOff')),
+								content: formatContent($t('tooltip.item.useOff')),
 								theme: 'small'
 							}"
 						>
 							<img :src="getImg('icons', 'small_', 'use_off')" />
 						</a>
 						<a
-							id="inv"
+							class="on"
 							v-if="item.canBeEquipped"
 							v-tippy="{
-								content: formatContent($t('tooltip.itemEquipTitle')),
+								content: formatContent($t('tooltip.item.equipTitle')),
 								theme: 'small'
 							}"
 						>
 							<img :src="getImg('icons', 'small_', 'equip')" />
 						</a>
 						<a
+							class="off"
 							v-else
 							v-tippy="{
-								content: formatContent($t('tooltip.itemEquipOff')),
+								content: formatContent($t('tooltip.item.equipOff')),
 								theme: 'small'
 							}"
 						>
@@ -80,6 +99,7 @@
 <script lang="ts" scoped>
 import { defineComponent } from 'vue';
 import { Item } from '@/models';
+import { itemNameList } from '@/constants';
 import { InventoryService } from '@/services';
 import { errorHandler } from '@/utils';
 import EventBus from '@/events';
@@ -88,16 +108,19 @@ export default defineComponent({
 	name: 'InventoryTab',
 	data() {
 		return {
-			allItemsData: {} as Array<Item>
+			allItemsData: {} as Array<Item>,
+			itemNameList: itemNameList
 		};
 	},
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
 		},
-
 		goToItemShop() {
 			this.$router.push({ name: 'ItemShopPage' });
+		},
+		isFull(item: Item): boolean {
+			return item.quantity === item.maxQuantity;
 		}
 	},
 	async mounted(): Promise<void> {
@@ -129,49 +152,67 @@ export default defineComponent({
 				padding-left: 5px;
 				border-bottom: 1px solid #874b2e;
 			}
-			&.even td {
+			&.even {
 				background-color: #ddb084;
+			}
+			&:hover td {
+				background-color: #734945;
 			}
 		}
 		td {
 			vertical-align: top;
-			&.name {
-				color: white;
-				padding-right: 4px;
-				font-size: 10pt !important;
-				line-height: 11pt;
-				font-variant: small-caps;
-				cursor: help;
-				img {
-					float: left;
-					position: relative;
-					margin-right: 5px;
-					border: 1px solid #ae6733;
-					vertical-align: bottom;
-				}
-			}
-			&.type {
-				font-weight: bold;
-				text-align: center;
-				color: #bc683c;
-			}
-			&.full {
-				color: yellow;
-				cursor: help;
-			}
-			&.act img {
-				padding-left: 5px;
-				padding-right: 5px;
-			}
-			&.qty {
-				color: white;
-				font-weight: bold;
-				text-align: center;
-				padding-left: 4px;
-				padding-right: 4px;
-				vertical-align: center;
-			}
 		}
 	}
+}
+.name {
+	color: white;
+	padding-right: 4px;
+	font-size: 10pt !important;
+	line-height: 11pt;
+	font-variant: small-caps;
+	cursor: help;
+	img {
+		float: left;
+		position: relative;
+		margin-right: 5px;
+		border: 1px solid #ae6733;
+		vertical-align: bottom;
+	}
+	p {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+}
+.type {
+	font-weight: bold;
+	text-align: center;
+	color: #bc683c;
+}
+.full {
+	color: yellow !important;
+	cursor: help;
+}
+.act {
+	max-width: 30px;
+	padding-left: 5px;
+	img {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+.qty {
+	max-width: 20px;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	padding-left: 4px;
+	padding-right: 4px;
+	vertical-align: center;
+}
+.off:hover {
+	background-color: transparent;
+}
+.on:hover {
+	cursor: pointer;
 }
 </style>

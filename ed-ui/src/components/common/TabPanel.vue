@@ -2,13 +2,13 @@
 	<div class="tabPanel">
 		<ul class="tabs">
 			<li :class="tabSelected === 1 ? 'active' : ''">
-				<a href="#" @click="setTab(1)">{{ $t('tabs.map') }}</a>
+				<a href="#" @click="tabSelected = 1">{{ $t('tabs.map') }}</a>
 			</li>
 			<li :class="tabSelected === 2 ? 'active' : ''">
-				<a href="#" @click="setTab(2)">{{ $t('tabs.inventory') }}</a>
+				<a href="#" @click="tabSelected = 2">{{ $t('tabs.inventory') }}</a>
 			</li>
 			<li :class="tabSelected === 3 ? 'active' : ''">
-				<a href="#" @click="setTab(3)">{{ $t('tabs.details') }}</a>
+				<a href="#" @click="tabSelected = 3">{{ $t('tabs.details') }}</a>
 			</li>
 		</ul>
 		<MapTab v-if="tabSelected === 1" :dinozData="dinozData" />
@@ -41,9 +41,6 @@ export default defineComponent({
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
-		},
-		async setTab(value: number): Promise<void> {
-			this.tabSelected = value;
 		}
 	}
 });

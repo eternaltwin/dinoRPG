@@ -52,7 +52,7 @@ export class Dinoz extends Model {
 	@AllowNull(false)
 	@Default(false)
 	@Column
-	isSacrified!: boolean;
+	isSacrificed!: boolean;
 
 	@AllowNull(false)
 	@Column

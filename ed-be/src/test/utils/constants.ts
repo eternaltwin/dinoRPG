@@ -16,6 +16,24 @@ export const notClosePlace = 90;
 export const place1Alias = 31;
 export const inexistantPlace = 999;
 
+// Shop constants
+export const shop = {
+	id_flying_1: 1,
+	id_negative_1: -1,
+	id_letter_1: 'abc',
+	id_nonexistant_1: 999
+};
+
+// Item constants
+export const item = {
+	id_1: 1,
+	id_negative_1: -1,
+	id_letter_1: 'abc',
+	id_nonexistant_1: 999
+};
+export const itemId = 1;
+export const itemQuantity = 1;
+
 export const defaultFight = {
 	goldEarned: 0,
 	xpEarned: 0,

@@ -2,7 +2,7 @@ import { Dinoz } from '../../models/index.js';
 import { DinozFromShop, DinozShopArray } from '../data/dinozShopData.js';
 import { PlayerWithRewards } from '../data/playerData.js';
 import { mockRequest, mockResponse, player } from '../utils/constants.js';
-import { getDinozFromDinozShop } from '../../business/shopService.js';
+import { getDinozFromDinozShop } from '../../business/dinozShopService.js';
 import { Request } from 'express';
 import { Response } from 'express';
 import {

@@ -1,4 +1,5 @@
 import { Dinoz } from '../../models';
+import { placeList } from '../../constants';
 import { player, dinozId, skillId, skillId2 } from '../utils/constants';
 
 export const DinozFiche = ({
@@ -46,6 +47,13 @@ export const DinozToChangeName = {
 	player: {
 		playerId: player.id_1
 	}
+} as Dinoz;
+
+export const DinozAtForges = {
+	id: dinozId,
+	playerId: player.id_1,
+	level: 1,
+	placeId: placeList.FORGES_DU_GTC.placeId
 } as Dinoz;
 
 export const AllDinozFromAnAccount = [

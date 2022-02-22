@@ -50,12 +50,6 @@ export interface Item {
 	maxQuantity?: number;
 }
 
-export interface ItemShop {
-	id: number;
-	display?: string;
-	price?: number;
-}
-
 export interface Status {
 	name?: string;
 }

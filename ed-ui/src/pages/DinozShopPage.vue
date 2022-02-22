@@ -1,11 +1,11 @@
 <template>
-	<Title :title="$t('pageTitle.dinozShop')" />
 	<div class="enclos">
+		<Title :title="$t('pageTitle.dinozShop')" />
 		<div class="section">
 			<div class="titlePage">Enclos des dinoz</div>
 		</div>
 		<div class="help">
-			<p v-html="$t('shop.help')"></p>
+			<p v-html="$t('shop.dinoz.help')"></p>
 		</div>
 		<div
 			class="sheet"
@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ShopService, DinozService } from '@/services';
+import { DinozShopService, DinozService } from '@/services';
 import { DinozShop, Dinoz } from '@/models';
 import { errorHandler, utils } from '@/utils';
 import DinozSWF from '@/components/dinoz/dinozSWF.vue';
@@ -85,7 +85,7 @@ export default defineComponent({
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
-			const res: boolean = confirm(this.$t('button.confirm'));
+			const res: boolean = confirm(this.$t('popup.confirm'));
 			if (res) {
 				EventBus.emit('isLoading', true);
 				let dinozCreated: Dinoz;
@@ -129,7 +129,7 @@ export default defineComponent({
 		EventBus.emit('isLoading', true);
 		// Get dinoz to display
 		try {
-			this.dinozList = await ShopService.getDinozFromDinozShop();
+			this.dinozList = await DinozShopService.getDinozFromDinozShop();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);

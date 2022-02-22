@@ -1,0 +1,23 @@
+export const itemNameList = {
+	1: 'potion_irma',
+	2: 'potion_angel',
+	3: 'cloud_burger',
+	4: 'hot_bread',
+	5: 'meat_pie',
+	6: 'fight_ration',
+	7: 'surviving_ration',
+	8: 'globin_merguez',
+	9: 'pampleboum',
+	10: 'sos_helmet',
+	11: 'little_pepper',
+	12: 'zippo',
+	13: 'sos_flame',
+	14: 'refrigerated_shield',
+	15: 'fuca_pill',
+	16: 'monochromatic',
+	17: 'poisonite_shot',
+	18: 'loris_costume',
+	19: 'vegetox_costume',
+	20: 'globin_costume',
+	21: 'pampleboum_pit'
+};

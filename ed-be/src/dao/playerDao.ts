@@ -1,3 +1,5 @@
+import pkg from 'sequelize';
+const { Op } = pkg;
 import {
 	AssDinozStatus,
 	AssPlayerReward,
@@ -96,6 +98,86 @@ const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
 	});
 };
 
+/**
+ * Get all the necessary data from the player for itemShopService getItemsFromShop function
+ * That includes: money, shopkeeper, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
+ * all its items and their quantity
+ * @return Array<ItemFiche>
+ */
+
+const getPlayerShopItemsDataRequest = (
+	playerId: number
+): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: ['playerId', 'money', 'shopKeeper', 'merchant'],
+		include: [
+			{
+				model: Dinoz,
+				attributes: ['dinozId', 'placeId'],
+				where: { isFrozen: false, isSacrificed: false },
+				required: false
+			},
+			{
+				model: ItemOwn,
+				attributes: ['itemId', 'quantity']
+			}
+		],
+		where: { playerId: playerId }
+	});
+};
+
+/**
+ * Get all the necessary data from the player for itemShopService buyItem function
+ * That includes: money, shopkeeper, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
+ * and the item and its quantity
+ * @return Array<ItemFiche>
+ */
+
+const getPlayerShopOneItemDataRequest = (
+	playerId: number,
+	itemId: number
+): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: ['playerId', 'money', 'shopKeeper', 'merchant'],
+		include: [
+			{
+				model: Dinoz,
+				attributes: ['dinozId', 'placeId'],
+				where: { isFrozen: false, isSacrificed: false },
+				required: false
+			},
+			{
+				model: ItemOwn,
+				required: false,
+				attributes: ['itemId', 'quantity'],
+				where: { itemId: itemId }
+			}
+		],
+		where: { playerId: playerId }
+	});
+};
+
+const getPlayerInventoryDataRequest = (
+	playerId: number
+): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: ['playerId', 'shopKeeper'],
+		include: [
+			{
+				model: ItemOwn,
+				required: false,
+				attributes: ['itemId', 'quantity'],
+				where: {
+					quantity: {
+						[Op.gt]: 0
+					}
+				}
+			}
+		],
+		where: { playerId: playerId }
+	});
+};
+
 const getImportedData = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['hasImported', 'eternalTwinId'],
@@ -150,14 +232,17 @@ const editCustomText = (
 };
 
 export {
-	getPlayerId,
-	getEternalTwinId,
 	createPlayer,
-	getCommonDataRequest,
-	getPlayerRewardsRequest,
-	setPlayerMoneyRequest,
-	getPlayerDataRequest,
 	getImportedData,
+	getCommonDataRequest,
+	getEternalTwinId,
+	getPlayerId,
+	getPlayerDataRequest,
+	getPlayerInventoryDataRequest,
+	getPlayerRewardsRequest,
+	getPlayerShopItemsDataRequest,
+	getPlayerShopOneItemDataRequest,
+	setPlayerMoneyRequest,
 	setHasImported,
 	resetUser,
 	editCustomText

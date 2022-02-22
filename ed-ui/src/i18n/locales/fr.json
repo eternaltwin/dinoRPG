@@ -52,7 +52,6 @@
     "name": "Nommer !",
     "getGold": "Obtenir de l'or",
     "shop": "Boutique",
-    "confirm": "Confirmer cette action ?",
     "chose": "Choisir",
     "generator": "Générateur de dinoz"
   },
@@ -63,7 +62,8 @@
   "inventory": {
     "itemName": "Nom de l'objet",
     "stock": "Stock",
-    "actions": "Actions"
+    "actions": "Actions",
+    "full": "Stock plein"
   },
   "details": {
     "th": {
@@ -73,7 +73,7 @@
     },
     "type": {
       "name": {
-        "E": "Evenement",
+        "E": "Évenement",
         "P": "Permanent",
         "A": "Attaque",
         "S": "Spécial",
@@ -96,20 +96,21 @@
     }
   },
   "item": {
-    "imgName": {
-      "1": "potion_irma",
-      "2": "potion_angel",
-      "3": "monochromatic"
-    },
     "name": {
-      "1": "Potion de Madame Irma",
-      "2": "Potion d'Ange",
-      "3": "Ration de Survie"
+      "potion_irma": "Potion de Madame Irma",
+      "potion_angel": "Potion d'Ange",
+      "cloud_burger": "Nuage Burger",
+      "hot_bread": "Pain Chaud",
+      "meat_pie": "Tarte à la Viande",
+      "fight_ration": "Ration de Combat"
     },
     "description": {
-      "1": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de **jouer une nouvelle action immédiatemment** sans devoir attendre le lendemain.",
-      "2": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le **ressusciter sans pénalité d'expérience**.",
-      "3": "En cas de blessures graves, la ration de combat peut vous rendre **entre 10 et jusqu'à 40 points de vie** lors d'un combat."
+      "potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de **jouer une nouvelle action immédiatemment** sans devoir attendre le lendemain.",
+      "potion_angel": "Si votre Dinoz est mort, utilisez une Potion d'Ange pour le **ressusciter sans pénalité d'expérience**.",
+      "cloud_burger": "TODO",
+      "hot_bread": "TODO",
+      "meat_pie": "TODO",
+      "fight_ration": "En cas de gros pépin, la ration de combat peut vous rendre **jusqu'à 20 points de vie** lors d'un combat."
     }
   },
   "news": {
@@ -188,14 +189,24 @@
     }
   },
   "shop": {
-    "help": "Bienvenue dans l'enclos à Dinoz ! Ici, <b>chaque jour</b>,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus.",
-    "shop": {
-      "name": "Boutique volante de Dinoland",
-      "description": "La Boutique volante de Dinoland est accessible à tout endroit et permet à tout moment à votre Dinoz de se procurer des objets de base. En général, il suffit de siffler très fort pour qu'elle arrive. Il existe aussi de nombreuses autres Boutiques dans Dinoland, qui vendent chacune des objets spéciaux."
+    "dinoz": {
+      "help": "Bienvenue dans l'enclos à Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
     },
-    "forge": {
-      "name": "Forge",
-      "description": "Forge description TBD"
+    "item": {
+      "help": "Cliquez sur un objet dans la liste de gauche pour l'examiner...",
+      "advice": "**Conseil du jour :** ",
+      "advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma: l'essayer, c'est l'adopter !",
+      "quantity": "Quantité",
+      "buy": "Acheter",
+      "title": "Marchand : ",
+      "flying": {
+        "name": "Boutique volante de Dinoland",
+        "description": "La Boutique volante de Dinoland est accessible à tout endroit et permet à tout moment à votre Dinoz de se procurer des objets de base. En général, il suffit de siffler très fort pour qu'elle arrive. Il existe aussi de nombreuses autres Boutiques dans Dinoland, qui vendent chacune des objets spéciaux."
+      },
+      "forge": {
+        "name": "Forge",
+        "description": "Forge description TBD"
+      }
     }
   },
   "skill": {
@@ -919,14 +930,33 @@
     "clanButton": "Mon clan",
     "dojoButton": "Mon dojo"
   },
+  "popup": {
+    "confirm": "Confirmer cette action ?",
+    "shop": {
+      "buyMaxConfirm_part1": "Voulez-vous vraiment acheter ",
+      "buyMaxConfirm_part2": " exemplaire(s) de cet objet pour un total de ",
+      "buyMaxConfirm_part3": " pièces ?"
+    }
+  },
   "tooltip": {
     "gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
-    "maxQuantity": "Quantité maximale:",
-    "itemUse": "Utiliser **immédiatement**",
-    "itemUseOff": "Cet objet ne peut pas être **utilisé**",
-    "itemEquipTitle": "Placer dans **l'équipement de combat**",
-    "itemEquipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
-    "itemEquipOff": "Cet objet ne peut pas être **équipé**"
+    "item": {
+      "use": "Utiliser **immédiatement**",
+      "useOff": "Cet objet ne peut pas être **utilisé**",
+      "equipTitle": "Placer dans **l'équipement de combat**&&//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
+      "equipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
+      "equip": "Cet objet peut être placé dans **l'équipement de combat**",
+      "equipOff": "Cet objet **ne peut pas être placé** dans l'équipement de combat",
+      "maxQuantity": "Quantité maximale:"
+    },
+    "shop": {
+      "buyMaxTopNote_part1": "Vous possédez ",
+      "buyMaxTopNote_part2": " exemplaire(s) de cet objet, sur ",
+      "buyMaxTopNote_part3": " maximum.",
+      "buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
+      "invalidQuantity": "Veuillez entrer une quantité **valide**.",
+      "invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+    } 
   },
   "pageTitle": {
     "default": "Dino-RPG [ L'actualité de Dinoland ]",
