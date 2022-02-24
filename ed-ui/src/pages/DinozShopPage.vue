@@ -50,7 +50,7 @@
 				></Elements>
 				<div class="skill" v-if="dinoz.skill">
 					<img src="@/assets/icons/small_follow.webp" alt="follow" />
-					{{ $t(`skill.name.${dinoz.skill}`) }}
+					{{ $t(`skill.name.${skillNameList[dinoz.skill]}`) }}
 				</div>
 			</div>
 		</div>
@@ -66,7 +66,7 @@ import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import Elements from '@/components/data/elements.vue';
 import { sessionStore } from '@/store';
 import Title from '@/components/utils/Title.vue';
-import { raceList } from '@/constants';
+import { raceList, skillNameList } from '@/constants';
 import EventBus from '@/events';
 
 export default defineComponent({
@@ -75,7 +75,8 @@ export default defineComponent({
 		return {
 			utils: utils,
 			dinozList: [] as Array<DinozShop>,
-			raceList: raceList
+			raceList: raceList,
+			skillNameList: skillNameList
 		};
 	},
 	components: {

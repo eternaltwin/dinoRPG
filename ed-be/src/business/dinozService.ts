@@ -161,11 +161,17 @@ const getDinozSkill = async (
 
 	const response: Array<DinozSkill> = [];
 	dinozSkill.skill.forEach(skill => {
-		let skillFound: DinozSkill = skillList.find(
+		const skillFound: DinozSkill | undefined = Object.values(skillList).find(
 			skillDinoz => skillDinoz.skillId === skill.skillId
 		)!;
-		skillFound.state = skill.state;
-		response.push(skillFound);
+		response.push({
+			skillId: skillFound.skillId,
+			type: skillFound.type,
+			energy: skillFound.energy,
+			element: skillFound.element,
+			state: skill.state,
+			activatable: skillFound.activatable
+		} as DinozSkill);
 	});
 
 	return res.status(200).send(response);
@@ -347,11 +353,11 @@ const setSkillState = async (
 	}
 
 	// Check if skill can be activate / desactivate
-	const skillIsActivable = skillList.find(
-		skill => skill.skillId === skillToUpdate
-	);
+	const skillIsActivatable: DinozSkill | undefined = Object.values(
+		skillList
+	).find(skill => skill.skillId === skillToUpdate);
 
-	if (!skillIsActivable!.activable) {
+	if (!skillIsActivatable!.activatable) {
 		return res.status(500).send(`Skill ${skillToUpdate} cannot be activated`);
 	}
 

@@ -122,7 +122,9 @@ function setDinozRaceAndSkill(dinoz: DinozShop) {
 	if (raceFound.skillId) {
 		dinoz.setDataValue(
 			'skill',
-			skillList.find(skillList => skillList.skillId === raceFound.skillId)!.name
+			Object.values(skillList).find(
+				skillList => skillList.skillId === raceFound.skillId
+			)!.skillId
 		);
 	}
 

@@ -7,11 +7,10 @@ import {
 
 export interface DinozSkill {
 	skillId: number;
-	name: string;
 	type: SkillType;
 	energy: Energy;
 	element: Array<ElementType>;
-	activable: boolean;
-	state: boolean;
+	activatable: boolean;
+	state?: boolean;
 	tree: SkillTree;
 }

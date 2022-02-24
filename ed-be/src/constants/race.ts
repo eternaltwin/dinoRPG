@@ -1,4 +1,5 @@
 import { DinozRace } from '../models';
+import { skillList } from './index.js';
 
 export const raceList = {
 	WINKS: {

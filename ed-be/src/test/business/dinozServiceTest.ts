@@ -597,7 +597,7 @@ describe('Function setSkillState', function () {
 		);
 	});
 
-	it("Skill ins't activable", async function () {
+	it("Skill ins't activatable", async function () {
 		req.body.skillId = skillId;
 		const dinozWithNotGoodSkill = cloneDeep(DinozWithSkillsAndStatus);
 		dinozWithNotGoodSkill.skill = [

@@ -21,11 +21,21 @@
 								:key="index"
 								:src="getImg('elements', 'elem_', element)"
 							/>
-							<p>{{ $t(`skill.name.${skill.name}`) }}</p>
+							<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
 							<template #content>
-								<h1 v-html="formatContent($t(`skill.name.${skill.name}`))" />
+								<h1
+									v-html="
+										formatContent(
+											$t(`skill.name.${skillNameList[skill.skillId]}`)
+										)
+									"
+								/>
 								<p
-									v-html="formatContent($t(`skill.description.${skill.name}`))"
+									v-html="
+										formatContent(
+											$t(`skill.description.${skillNameList[skill.skillId]}`)
+										)
+									"
 								/>
 								<h3
 									v-html="formatContent($t(`skill.energy.${skill.energy}`))"
@@ -52,7 +62,7 @@
 						<td class="state">
 							<img
 								:src="getImg('icons', 'small_skill_', skill.state)"
-								v-if="skill.activable"
+								v-if="skill.activatable"
 								@click="changeState(skill)"
 								v-tippy="{
 									content: formatContent($t(`details.activate.${skill.state}`)),
@@ -77,7 +87,7 @@
 
 <script lang="ts" scoped>
 import { defineComponent, PropType } from 'vue';
-import { statusList } from '@/constants';
+import { statusList, skillNameList } from '@/constants';
 import { Dinoz, Skill } from '@/models';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
@@ -88,7 +98,8 @@ export default defineComponent({
 	props: { dinozData: Object as PropType<Dinoz> },
 	data() {
 		return {
-			dinozSkill: [] as Array<Skill>
+			dinozSkill: [] as Array<Skill>,
+			skillNameList: skillNameList
 		};
 	},
 	methods: {

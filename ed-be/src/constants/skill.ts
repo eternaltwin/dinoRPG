@@ -12,2642 +12,2356 @@ import {
 // C = Column of the skill
 // DE = Number of the skill in this column
 
-export const skillList = [
-	{
+export const skillList: { [name: string]: DinozSkill } = {
+	// Fire Skills
+	GRIFFES_ENFLAMMEES: {
 		skillId: 11101,
-		name: 'GriffesEnflammees',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COLERE: {
 		skillId: 11102,
-		name: 'Colere',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FORCE: {
 		skillId: 11103,
-		name: 'Force',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BRASERO: {
 		skillId: 11104,
-		name: 'Brasero',
 		type: SkillType.E,
 		energy: Energy.NORMAL,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SOUFFLE_ARDENT: {
 		skillId: 11201,
-		name: 'SouffleArdent',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHARGE: {
 		skillId: 11202,
-		name: 'Charge',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SANG_CHAUD: {
 		skillId: 11203,
-		name: 'SangChaud',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FURIE: {
 		skillId: 11204,
-		name: 'Furie',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHASSEUR_DE_GOUPIGNON: {
 		skillId: 11205,
-		name: 'ChasseurDeGoupignon',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ARTS_MARTIAUX: {
 		skillId: 11206,
-		name: 'ArtsMartiaux',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DETONATION: {
 		skillId: 11207,
-		name: 'Detonation',
 		type: SkillType.E,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PROPULSION_DIVINE: {
 		skillId: 11208,
-		name: 'PropulsionDivine',
 		type: SkillType.P,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VIGILANCE: {
 		skillId: 11301,
-		name: 'Vigilance',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COEUR_ARDENT: {
 		skillId: 11302,
-		name: 'CoeurArdent',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COULEE_DE_LAVE: {
 		skillId: 11303,
-		name: 'CouleeDeLave',
 		type: SkillType.A,
 		energy: Energy.NORMAL,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SIESTE: {
 		skillId: 11304,
-		name: 'Sieste',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	KAMIKAZE: {
 		skillId: 11305,
-		name: 'Kamikaze',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHASSEUR_DE_GEANT: {
 		skillId: 11306,
-		name: 'ChasseurDeGeant',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BOULE_DE_FEU: {
 		skillId: 11307,
-		name: 'BouleDeFeu',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	WAIKIKIDO: {
 		skillId: 11308,
-		name: 'Waikikido',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	AURA_INCANDESCENTE: {
 		skillId: 11309,
-		name: 'AuraIncandescente',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VENGEANCE: {
 		skillId: 11310,
-		name: 'Vengeance',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COMBUSTION: {
 		skillId: 11311,
-		name: 'Combustion',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PAUME_CHALUMEAU: {
 		skillId: 11312,
-		name: 'PaumeChalumeau',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE, ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COEUR_DU_PHOENIX: {
 		skillId: 11313,
-		name: 'CoeurDuPhenix',
 		type: SkillType.P,
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BOUDDHA: {
 		skillId: 11314,
-		name: 'Bouddha',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GRIFFES_INFERNALES: {
 		skillId: 11315,
-		name: 'GriffesInfernales',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHASSEUR_DE_DRAGON: {
 		skillId: 11401,
-		name: 'ChasseurDeDragon',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BELIER: {
 		skillId: 11402,
-		name: 'Belier',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	TORCHE: {
 		skillId: 11403,
-		name: 'Torche',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SELF_CONTROL: {
 		skillId: 11404,
-		name: 'SelfControl',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SPRINT: {
 		skillId: 11405,
-		name: 'Sprint',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VENDETTA: {
 		skillId: 11406,
-		name: 'Vendetta',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	METEORES: {
 		skillId: 11407,
-		name: 'Meteores',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHEF_DE_GUERRE: {
 		skillId: 11408,
-		name: 'ChefDeGuerre',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ARMURE_DE_BASALTE: {
 		skillId: 11409,
-		name: 'ArmureDeBasalte',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MAITRE_ELEMENTAIRE: {
 		skillId: 11410,
-		name: 'MaitreElementaire',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SALAMANDRE: {
 		skillId: 11411,
-		name: 'Salamandre',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VULCAIN: {
 		skillId: 11412,
-		name: 'Vulcain',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ARMURE_DIFRIT: {
 		skillId: 11413,
-		name: 'ArmureDIfrit',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BRAVE: {
 		skillId: 11501,
-		name: 'Brave',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PROTEINES_DINOZIENNES: {
 		skillId: 12101,
-		name: 'ProteinesDinozienne',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	EXTENUATION: {
 		skillId: 12201,
-		name: 'Extenuation',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	ROUGE: {
 		skillId: 12202,
-		name: 'Rouge',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	CARAPACE_DE_MAGMA: {
 		skillId: 12301,
-		name: 'CatapaceDeMagma',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	CRI_DE_GUERRE: {
 		skillId: 12302,
-		name: 'CriDeGuerre',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	FIEVRE_BRULANTE: {
 		skillId: 12401,
-		name: 'FievreBrulante',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	BENEDICTION_DARTEMIS: {
 		skillId: 12402,
-		name: 'BenedictionDArtemis',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	JOKER: {
 		skillId: 12403,
-		name: 'Joker',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	ARMURE_DE_FEU: {
 		skillId: 12404,
-		name: 'ArmureDeFeu',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	PAYS_DE_CENDRE: {
 		skillId: 12501,
-		name: 'PaysDeCendre',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	RECEPTACLE_ROCHEUX: {
 		skillId: 12502,
-		name: 'ReceptacleRocheux',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	PLUMES_DE_PHOENIX: {
 		skillId: 12503,
-		name: 'PlumesDePhoenix',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	ACCLAMATION_FRATERNELLE: {
 		skillId: 12504,
-		name: 'AcclamationFraternelle',
 		type: SkillType.E,
 		energy: Energy.NORMAL,
 		element: [ElementType.FIRE],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	POING_DE_FEU: {
 		skillId: 12505,
-		name: 'PoingDeFeu',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	// WOOD Skills
+	CARAPACE: {
 		skillId: 21101,
-		name: 'Carapace',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SAUVAGERIE: {
 		skillId: 21102,
-		name: 'Sauvagerie',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ENDURANCE: {
 		skillId: 21103,
-		name: 'Endurance',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	LANCEUR_DE_GLAND: {
 		skillId: 21104,
-		name: 'LanceurDeGland',
 		type: SkillType.A,
 		energy: Energy.NORMAL,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VIGNES: {
 		skillId: 21201,
-		name: 'Vignes',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	RENFORTS_KORGON: {
 		skillId: 21202,
-		name: 'RenfortsKorgon',
 		type: SkillType.E,
 		energy: Energy.NORMAL,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SYMPATIQUE: {
 		skillId: 21203,
-		name: 'Sympathique',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	TENACITE: {
 		skillId: 21204,
-		name: 'Tenacite',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FOUILLE: {
 		skillId: 21205,
-		name: 'Fouille',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CROISSANCE: {
 		skillId: 21206,
-		name: 'Croissance',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GRATTEUR: {
 		skillId: 21207,
-		name: 'Gratteur',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ETAT_PRIMAL: {
 		skillId: 21301,
-		name: 'EtatPrimal',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DETECTIVE: {
 		skillId: 21302,
-		name: 'Detective',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COCON: {
 		skillId: 21303,
-		name: 'Cocon',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	INSTINCT_SAUVAGE: {
 		skillId: 21304,
-		name: 'InstinctSauvage',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD, ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	LARGE_MACHOIRE: {
 		skillId: 21305,
-		name: 'LargeMachoire',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD, ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ACROBATE: {
 		skillId: 21306,
-		name: 'Acrobate',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD, ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PRINTEMPS_PRECOCE: {
 		skillId: 21307,
-		name: 'PrintempsPrecoce',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHARISME: {
 		skillId: 21308,
-		name: 'Charisme',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	RESISTANCE_A_LA_MAGIE: {
 		skillId: 21309,
-		name: 'ResistanceALaMagie',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PLANIFICATEUR: {
 		skillId: 21310,
-		name: 'Planificateur',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	HERITAGE_FAROE: {
 		skillId: 21311,
-		name: 'HeritageFaroe',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	EXPERT_EN_FOUILLE: {
 		skillId: 21312,
-		name: 'ExpertEnFouille',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GROSSE_BEIGNE: {
 		skillId: 21313,
-		name: 'GrosseBeigne',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ESPRIT_GORILLOZ: {
 		skillId: 21401,
-		name: 'EspritGorilloz',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	LEADER: {
 		skillId: 21402,
-		name: 'Leader',
 		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	INGENIEUR: {
 		skillId: 21403,
-		name: 'Ingenieur',
 		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GEANT: {
 		skillId: 21404,
-		name: 'Geant',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GARDE_FORESTIER: {
 		skillId: 21405,
-		name: 'GardeForestier',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ARCHEOLOGUE: {
 		skillId: 21406,
-		name: 'Archeologue',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BENEDICTION_DES_FEES: {
 		skillId: 21407,
-		name: 'BenedictionDesFees',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
-		skillId: 21407,
-		name: 'Choc',
-		type: SkillType.P,
-		energy: Energy.NONE,
-		element: [ElementType.WOOD],
-		activable: false,
-		tree: SkillTree.VANILLA
-	},
-	{
+	CHOC: {
 		skillId: 21408,
-		name: 'LoupGarou',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.WOOD],
+		activatable: false,
+		tree: SkillTree.VANILLA
+	},
+	LOUP_GAROU: {
+		skillId: 21409,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COLOSSE: {
 		skillId: 21501,
-		name: 'Colosse',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	OXYGENATION_MUSCULAIRE: {
 		skillId: 22101,
-		name: 'OxygenationMusculaire',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	VERT: {
 		skillId: 22102,
-		name: 'Vert',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	SOURCE_DE_VIE: {
 		skillId: 22201,
-		name: 'SourceDeVie',
 		type: SkillType.S,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	VIDE_ENERGETIQUE: {
 		skillId: 22202,
-		name: 'VideEnergetique',
 		type: SkillType.S,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	BOUCLIER_DINOZ: {
 		skillId: 22203,
-		name: 'BouclierDinoz',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	ACIDE_LACTIQUE: {
 		skillId: 22204,
-		name: 'AcideLactique',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	LANCER_DE_ROCHE: {
 		skillId: 22301,
-		name: 'LancerDeRoche',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	COURBATURES: {
 		skillId: 22302,
-		name: 'Courbatures',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	FORCE_CONTROL: {
 		skillId: 22303,
-		name: 'ForceControl',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	PEAU_DE_FER: {
 		skillId: 22304,
-		name: 'PeauDeFer',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	CHAMPOLLION: {
 		skillId: 22401,
-		name: 'Champollion',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	COURANT_DE_VIE: {
 		skillId: 22402,
-		name: 'CourantDeVie',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	BERSERK: {
 		skillId: 22403,
-		name: 'Berserk',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	RIVIERE_DE_VIE: {
 		skillId: 22404,
-		name: 'RiviereDeVie',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	MUR_DE_BOUE: {
 		skillId: 22501,
-		name: 'MurDeBoue',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	PEAU_DACIER: {
 		skillId: 22502,
-		name: 'PeauDacier',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	SHARIGNAN: {
 		skillId: 22503,
-		name: 'Sharignan',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	AMAZONIE: {
 		skillId: 22504,
-		name: 'Amazonie',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	RECEPTACLE_AQUEUX: {
 		skillId: 22505,
-		name: 'ReceptacleAqueux',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	// Water Skills
+	CANON_A_EAU: {
 		skillId: 31101,
-		name: 'CanonAEau',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PERCEPTION: {
 		skillId: 31102,
-		name: 'Perception',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MUTATION: {
 		skillId: 31103,
-		name: 'Mutation',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VITALITE: {
 		skillId: 31104,
-		name: 'Vitalite',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GEL: {
 		skillId: 31201,
-		name: 'Gel',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
-		skillId: 31201,
-		name: 'MoignonsLiquides',
-		type: SkillType.A,
-		energy: Energy.VHIGH,
-		element: [ElementType.WATER],
-		activable: true,
-		tree: SkillTree.VANILLA
-	},
-	{
+	DOUCHE_ECOSSAISE: {
 		skillId: 31202,
-		name: 'DoucheEcossaise',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COUP_SOURNOIS: {
 		skillId: 31203,
-		name: 'CoupsSournois',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	APPRENTI_PECHEUR: {
 		skillId: 31204,
-		name: 'ApprentiPecheur',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	POCHE_VENTRALE: {
 		skillId: 31205,
-		name: 'PocheVentrale',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	KARATE_SOUS_MARIN: {
 		skillId: 31206,
-		name: 'KarateSousMarin',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ECAILLES_LUMINESCENTES: {
 		skillId: 31207,
-		name: 'EcaillesLuminescentes',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MOIGNONS_LIQUIDES: {
+		skillId: 31208,
+		type: SkillType.A,
+		energy: Energy.VHIGH,
+		element: [ElementType.WATER],
+		activatable: true,
+		tree: SkillTree.VANILLA
+	},
+	ZERO_ABSOLU: {
 		skillId: 31301,
-		name: 'ZeroAbsolu',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PETRIFICATION: {
 		skillId: 31302,
-		name: 'Petrification',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ACUPUNCTURE: {
 		skillId: 31303,
-		name: 'Acupuncture',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SAPEUR: {
 		skillId: 31304,
-		name: 'Sapeur',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COUP_FATAL: {
 		skillId: 31305,
-		name: 'CoupFatal',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER, ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ENTRAINEMENT_SOUS_MARIN: {
 		skillId: 31306,
-		name: 'EntrainementSousMarin',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER, ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PECHEUR_CONFIRME: {
 		skillId: 31307,
-		name: 'PecheurConfirme',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER, ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MARECAGE: {
 		skillId: 31308,
-		name: 'Marecage',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SUMO: {
 		skillId: 31309,
-		name: 'Sumo',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER, ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SANS_PITIE: {
 		skillId: 31310,
-		name: 'SansPitie',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CLONE_AQUEUX: {
 		skillId: 31311,
-		name: 'CloneAqueux',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GRIFFES_EMPOISONNEES: {
 		skillId: 31312,
-		name: 'GriffesEmpoisonnes',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DELUGE: {
 		skillId: 31313,
-		name: 'Deluge',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PEAU_DE_SERPENT: {
 		skillId: 31314,
-		name: 'PeauDeSerpent',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	RAYON_KAAR_SHER: {
 		skillId: 31401,
-		name: 'RayonKaarSher',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MAGASINIER: {
 		skillId: 31402,
-		name: 'Magasinier',
 		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ENTRAINEMENT_SOUS_MARIN_AVANCE: {
 		skillId: 31403,
-		name: 'EntrainementSousMarinAvance',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MAITRE_PECHEUR: {
 		skillId: 31404,
-		name: 'MaitrePecheur',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CUISINIER: {
 		skillId: 31405,
-		name: 'Cuisinier',
 		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SANG_ACIDE: {
 		skillId: 31406,
-		name: 'SangAcide',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BULLE: {
 		skillId: 31407,
-		name: 'Bulle',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	INFATIGUABLE: {
 		skillId: 31408,
-		name: 'Infatiguable',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ONDINE: {
 		skillId: 31409,
-		name: 'Ondine',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MAITRE_NAGEUR: {
 		skillId: 31501,
-		name: 'MaitreNageur',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	LEVIATHAN: {
 		skillId: 31502,
-		name: 'Leviathan',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	EAU_DIVINE: {
 		skillId: 32101,
-		name: 'EauDivine',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	RADIATIONS_GAMMA: {
 		skillId: 32201,
-		name: 'RadiationsGamma',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	BLEU: {
 		skillId: 32202,
-		name: 'Bleu',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	MUE_ACQUEUSE: {
 		skillId: 32301,
-		name: 'MueAcqueuse',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	CARAPACE_BLINDEE: {
 		skillId: 32302,
-		name: 'CarapaceBlindee',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	DIETE_CHROMATIQUE: {
 		skillId: 32303,
-		name: 'DieteChromatique',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	EFFLUVE_APHRODISIAQUE: {
 		skillId: 32401,
-		name: 'EffluveAphrodisiaque',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	NEMO: {
 		skillId: 32402,
-		name: 'Nemo',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	CLEPTOMANE: {
 		skillId: 32403,
-		name: 'Cleptomane',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	ABYSSE: {
 		skillId: 32404,
-		name: 'Abysse',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	BANNI_DES_DIEUX: {
 		skillId: 32405,
-		name: 'BanniDesDieux',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	TOURBILLON_MAGIQUE: {
 		skillId: 32501,
-		name: 'TourbillonMagique',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	HYPERVENTILATION: {
 		skillId: 32502,
-		name: 'Hyperventilation',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	THERAPIE_DE_GROUPE: {
 		skillId: 32503,
-		name: 'TherapieDeGroupe',
 		type: SkillType.E,
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	RECEPTACLE_TESLA: {
 		skillId: 32504,
-		name: 'ReceptacleTesla',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	VITALITE_MARINE: {
 		skillId: 32505,
-		name: 'VitaliteMarine',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	// Lightning Skills
+	INTELLIGENCE: {
 		skillId: 41101,
-		name: 'Intelligence',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FOCUS: {
 		skillId: 41102,
-		name: 'Focus',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CELERITE: {
 		skillId: 41103,
-		name: 'Celerite',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	REFLEX: {
 		skillId: 41104,
-		name: 'Reflex',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CONCENTRATION: {
 		skillId: 41201,
-		name: 'Concentration',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ATTAQUE_ECLAIR: {
 		skillId: 41202,
-		name: 'AttaqueEclair',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PARATONNERRE: {
 		skillId: 41203,
-		name: 'Paratonnerre',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COUP_DOUBLE: {
 		skillId: 41204,
-		name: 'CoupDouble',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	REGENERESCENCE: {
 		skillId: 41205,
-		name: 'Regenerescence',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PREMIERS_SOINS: {
 		skillId: 41206,
-		name: 'PremierSoins',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ECLAIR_SINUEUX: {
 		skillId: 41207,
-		name: 'EclairSinueux',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FOUDRE: {
 		skillId: 41301,
-		name: 'Foudre',
 		type: SkillType.A,
 		energy: Energy.NORMAL,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FISSION_ELEMENTAIRE: {
 		skillId: 41302,
-		name: 'FissionElementaire',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VOIE_DE_KAOS: {
 		skillId: 41303,
-		name: 'VoieDeKaos',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PLAN_DE_CARRIERE: {
 		skillId: 41304,
-		name: 'PlanDeCarriere',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT, ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ADRENALINE: {
 		skillId: 41305,
-		name: 'Adrenaline',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT, ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VOIE_DE_GAIA: {
 		skillId: 41306,
-		name: 'VoieDeGaia',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT, ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MEDECINE: {
 		skillId: 41307,
-		name: 'Medecine',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT, ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DANSE_FOUDROYANTE: {
 		skillId: 41308,
-		name: 'DanseFoudroyante',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	EMBUCHE: {
 		skillId: 41309,
-		name: 'Embuche',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT, ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PUREE_SALVATRICE: {
 		skillId: 41310,
-		name: 'PureeSalvatrice',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	AURA_HERMETIQUE: {
 		skillId: 41311,
-		name: 'AuraHermetique',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CROCS_DIAMANT: {
 		skillId: 41312,
-		name: 'CrocsDiamant',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SURVIE: {
 		skillId: 41313,
-		name: 'Survie',
 		type: SkillType.S,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	AUBE_FEUILLUE: {
 		skillId: 41401,
-		name: 'AubeFeuillue',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BRANCARDIER: {
 		skillId: 41402,
-		name: 'Brancardier',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BENEDICTION: {
 		skillId: 41403,
-		name: 'Benediction',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CREPUSCULE_FLAMBLOYANT: {
 		skillId: 41404,
-		name: 'CrepusculeFlambloyant',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MARCHAND: {
 		skillId: 41405,
-		name: 'Marchand',
 		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	REINCARNATION: {
 		skillId: 41406,
-		name: 'Reincarnation',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SURCHARGE: {
 		skillId: 41408,
-		name: 'Surcharge',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ELECTROLYSE: {
 		skillId: 41409,
-		name: 'Electrolyse',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GOLEM: {
 		skillId: 41410,
-		name: 'Golem',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	RAIJIN: {
 		skillId: 41411,
-		name: 'Raijin',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	QUETZACOATL: {
 		skillId: 41412,
-		name: 'Quetzacoatl',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ROI_DES_SINGES: {
 		skillId: 41413,
-		name: 'RoiDesSinges',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ARCHANGE_CORROSIF: {
 		skillId: 41501,
-		name: 'ArchangeCorrosif',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ARCHANGE_GENESIF: {
 		skillId: 41502,
-		name: 'ArchangeGenesif',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PRETRE: {
 		skillId: 41503,
-		name: 'Pretre',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SOUTIEN_MORAL: {
 		skillId: 42101,
-		name: 'SoutienMoral',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	STIMUALTION_CARDIAQUE: {
 		skillId: 42201,
-		name: 'StimulationCardiaque',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	JAUNE: {
 		skillId: 42202,
-		name: 'Jaune',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	MORSURE_DU_SOLEIL: {
 		skillId: 42301,
-		name: 'MorsureDuSoleil',
 		type: SkillType.E,
 		energy: Energy.NORMAL,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	CRAMPE_CHRONIQUE: {
 		skillId: 42303,
-		name: 'CrampeChronique',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	BATTERIE_SUPPLEMENTAIRE: {
 		skillId: 42401,
-		name: 'BatterieSupplementaire',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	EINSTEIN: {
 		skillId: 42402,
-		name: 'Einstein',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	BARRIERE_ELECTRIFIEE: {
 		skillId: 42403,
-		name: 'BarriereElectrifiee',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	ORACLE: {
 		skillId: 42404,
-		name: 'Oracle',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	RECEPTACLE_AERIEN: {
 		skillId: 42501,
-		name: 'ReceptacleAerien',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	FEU_DE_ST_ELME: {
 		skillId: 42502,
-		name: 'FeuDeStElme',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	FORCE_DE_ZEUS: {
 		skillId: 42503,
-		name: 'ForceDeZeus',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	REMANENCE_HERTZIENNE: {
 		skillId: 42504,
-		name: 'RemanenceHertzienne',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHT],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	// Air Skills
+	AGILITE: {
 		skillId: 51101,
-		name: 'Agilite',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	STRATEGIE: {
 		skillId: 51102,
-		name: 'Strategie',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MISTRAL: {
 		skillId: 51103,
-		name: 'Mistral',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	AIGUILLON: {
 		skillId: 51104,
-		name: 'Aiguillon',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
-		skillId: 51104,
-		name: 'Envol',
+	ENVOL: {
+		skillId: 51105,
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ESQUIVE: {
 		skillId: 51201,
-		name: 'Esquive',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SAUT: {
 		skillId: 51202,
-		name: 'Saut',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ANALYSE: {
 		skillId: 51203,
-		name: 'Analyse',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CUEILLETTE: {
 		skillId: 51204,
-		name: 'Cueillette',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	TAICHI: {
 		skillId: 51205,
-		name: 'TaiChi',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR, ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	TORNADE: {
 		skillId: 51206,
-		name: 'Tornade',
 		type: SkillType.A,
 		energy: Energy.NORMAL,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	AURA_PUANTE: {
 		skillId: 51207,
-		name: 'AuraPuante',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DISQUE_VACUUM: {
 		skillId: 51301,
-		name: 'DisqueVacuum',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ELASTICITE: {
 		skillId: 51302,
-		name: 'Elasticite',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ATTAQUE_PLONGEANTE: {
 		skillId: 51303,
-		name: 'AttaquePlongeante',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FURTIVITE: {
 		skillId: 51304,
-		name: 'Furtivite',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SPECIALISTE: {
 		skillId: 51305,
-		name: 'Specialiste',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR, ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	TALON_DACHILLE: {
 		skillId: 51306,
-		name: 'TalonDAchille',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR, ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	NUAGE_TOXIQUE: {
 		skillId: 51307,
-		name: 'NuageToxique',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	OEIL_DE_LYNX: {
 		skillId: 51308,
-		name: 'OeilDeLynx',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR, ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	EVEIL: {
 		skillId: 51309,
-		name: 'Eveil',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR, ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PAUME_EJECTABLE: {
 		skillId: 51310,
-		name: 'PaumeEjectable',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	VENT_VIF: {
 		skillId: 51311,
-		name: 'VentVif',
 		type: SkillType.E,
 		energy: Energy.NORMAL,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FORME_VAPOREUSE: {
 		skillId: 51312,
-		name: 'FormeVaporeuse',
 		type: SkillType.S,
 		energy: Energy.NORMAL,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	HYPNOSE: {
 		skillId: 51313,
-		name: 'Hypnose',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SECOUSSE: {
 		skillId: 51314,
-		name: 'Secousse',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	TROU_NOIR: {
 		skillId: 51401,
-		name: 'TrouNoir',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MAITRE_LEVITATEUR: {
 		skillId: 51402,
-		name: 'MaitreLevitateur',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	HALEINE_FETIVE: {
 		skillId: 51403,
-		name: 'HalineFetive',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MEDITATION_SOLITAIRE: {
 		skillId: 51404,
-		name: 'MeditationSolitaire',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PROFESSEUR: {
 		skillId: 51405,
-		name: 'Professeur',
 		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	SOUFFLE_DE_VIE: {
 		skillId: 51406,
-		name: 'SouffleDeVie',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	TOTEM_ANCESTRAL_AEROPORTE: {
 		skillId: 51407,
-		name: 'TotemAncestralAeroporte',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FUJIN: {
 		skillId: 51408,
-		name: 'Fujin',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MEDITATION_TRANCHANTE: {
 		skillId: 51501,
-		name: 'MeditationTranchante',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DJINN: {
 		skillId: 51502,
-		name: 'Djinn',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	HADES: {
 		skillId: 51503,
-		name: 'Hades',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FORME_ETHERALE: {
 		skillId: 51601,
-		name: 'FormeEtherale',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	MAITRISE_CORPORELLE: {
 		skillId: 52101,
-		name: 'MaitriseCorporelle',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	BLANC: {
 		skillId: 52201,
-		name: 'Blanc',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	ANAEROBIE: {
 		skillId: 52202,
-		name: 'Anaerobie',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	DOUBLE_FACE: {
 		skillId: 52301,
-		name: 'DoubleFace',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	FLAGELLATION: {
 		skillId: 52302,
-		name: 'Flagellation',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	SOUFFLE_DANGE: {
 		skillId: 52303,
-		name: 'SouffleDange',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	OURAGAN: {
 		skillId: 52304,
-		name: 'Ouragan',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	OURANOS: {
 		skillId: 52401,
-		name: 'Ouranos',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	TWINOID_500MG: {
 		skillId: 52402,
-		name: 'Twinoid500mg',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	LONDUHAUT: {
 		skillId: 52403,
-		name: 'LonDuhaut',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	SURPLIS_DHADES: {
 		skillId: 52404,
-		name: 'SurplisDhades',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	RECEPTABLE_THERMIQUE: {
 		skillId: 52405,
-		name: 'ReceptacleThermique',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	QI_GONG: {
 		skillId: 52501,
-		name: 'QiGong',
 		type: SkillType.E,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	SYLPHIDES: {
 		skillId: 52502,
-		name: 'Sylphides',
 		type: SkillType.A,
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	MESSIE: {
 		skillId: 52503,
-		name: 'Messie',
 		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.ETHER
 	},
-	{
+	MUTINERIE: {
 		skillId: 52504,
-		name: 'Mutinerie',
 		type: SkillType.E,
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	MAINS_COLLANTES: {
 		skillId: 52505,
-		name: 'MainsCollantes',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.ETHER
 	},
-	{
+	// Void Skills
+	COMPETENCE_DOUBLE: {
 		skillId: 61119,
-		name: 'CompetenceDouble',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	LIMITE_BRISEE: {
 		skillId: 61120,
-		name: 'LimiteBrisee',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	INVOCATEUR: {
 		skillId: 61121,
-		name: 'Invocateur',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FRENESIE_COLLECTIVE: {
 		skillId: 61101,
-		name: 'FrenesieCollective',
 		type: SkillType.E,
 		energy: Energy.WEAK,
 		element: [ElementType.VOID],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	COQUE: {
 		skillId: 61102,
-		name: 'Coque',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHARGE_CORNUE: {
 		skillId: 61103,
-		name: 'ChargeCornue',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ROCK: {
 		skillId: 61104,
-		name: 'Rock',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	PIETINEMENT: {
 		skillId: 61105,
-		name: 'Pietinement',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CUIRASSE: {
 		skillId: 61106,
-		name: 'Cuirasse',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	INSAISISSABLE: {
 		skillId: 61107,
-		name: 'Insaisissable',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DEPLACEMENT_INSTANTANE: {
 		skillId: 61108,
-		name: 'DeplacementInstantane',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	NAPOMAGICIEN: {
 		skillId: 61109,
-		name: 'Napomagicien',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	GROS_COSTAUD: {
 		skillId: 61111,
-		name: 'GrosCostaud',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ORIGINE_CAUSHEMESHENNE: {
 		skillId: 61112,
-		name: 'OrigineCaushemeshenne',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	ECRASEMENT: {
 		skillId: 61113,
-		name: 'Ecrasement',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.VOID],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FORCE_DE_LUMIERE: {
 		skillId: 61114,
-		name: 'ForceDeLumiere',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	CHARGE_PIGMOU: {
 		skillId: 61115,
-		name: 'ChargePigmou',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.VOID],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	FORCE_DES_TENEBRES: {
 		skillId: 61116,
-		name: 'ForceDesTenebres',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BIGMAGNON: {
 		skillId: 61117,
-		name: 'Bigmagnon',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	DUR_A_CUIRE: {
 		skillId: 61118,
-		name: 'DurACuire',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activable: false,
+		activatable: false,
 		tree: SkillTree.VANILLA
 	},
-	{
+	// Other Skills (?)
+	HERCOLUBUS: {
 		skillId: 41504,
-		name: 'Hercolubus',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT, ElementType.AIR],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	REINE_DE_LA_RUCHE: {
 		skillId: 41505, //Edit since this
-		name: 'ReineDeLaRuche',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BIG_MAMA: {
 		skillId: 51506,
-		name: 'BigMama',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	YGGDRASIL: {
 		skillId: 41507,
-		name: 'Yggdrasil',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	},
-	{
+	BALEINE_BLANCHE: {
 		skillId: 41508,
-		name: 'BaleineBlanche',
 		type: SkillType.I,
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHT],
-		activable: true,
+		activatable: true,
 		tree: SkillTree.VANILLA
 	}
-] as Array<DinozSkill>;
+};

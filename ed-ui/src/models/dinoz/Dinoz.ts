@@ -32,12 +32,11 @@ export interface DinozRace {
 
 export interface Skill {
 	skillId: number;
-	name: string;
 	type: string;
 	energy: number;
 	element: string;
 	state: boolean;
-	activable?: boolean;
+	activatable?: boolean;
 }
 
 export interface Item {
