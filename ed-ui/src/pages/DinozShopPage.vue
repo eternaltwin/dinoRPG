@@ -13,12 +13,6 @@
 			v-for="(dinoz, index) in dinozList"
 			:key="dinoz.dinozId"
 		>
-			<DinozSWF
-				:display="dinoz.display"
-				:width="190"
-				:height="165"
-				type="dino"
-			></DinozSWF>
 			<div class="infos">
 				<div class="price">
 					<span class="money"
@@ -68,7 +62,6 @@ import { defineComponent } from 'vue';
 import { DinozShopService, DinozService } from '@/services';
 import { DinozShop, Dinoz } from '@/models';
 import { errorHandler, utils } from '@/utils';
-import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import Elements from '@/components/data/elements.vue';
 import { sessionStore } from '@/store';
 import Title from '@/components/utils/Title.vue';
@@ -86,7 +79,6 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DinozSWF,
 		Title,
 		Elements
 	},

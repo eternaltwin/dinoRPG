@@ -1,12 +1,6 @@
 <template>
 	<div id="chooseDinozName">
 		<p>{{ $t('chooseDinoz.information') }}</p>
-		<DinozSWF
-			:display="dinozData.display"
-			:width="190"
-			:height="165"
-			type="dino"
-		></DinozSWF>
 		<p>{{ $t('chooseDinoz.nomDuDinoz') }}</p>
 		<input type="text" v-model="name" />
 		<button @click="nameDinoz()">{{ $t('button.name') }}</button>
@@ -19,7 +13,6 @@ import { errorHandler } from '@/utils';
 import { DinozService } from '@/services';
 import { Dinoz } from '@/models';
 import { sessionStore } from '@/store';
-import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import EventBus from '@/events';
 
 export default defineComponent({
@@ -32,9 +25,6 @@ export default defineComponent({
 	},
 	props: {
 		dinozData: Object as PropType<Dinoz>
-	},
-	components: {
-		DinozSWF
 	},
 	emits: ['setNameChoosen'],
 	methods: {

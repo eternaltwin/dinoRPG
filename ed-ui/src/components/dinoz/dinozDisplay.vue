@@ -5,13 +5,6 @@
 		{{ dinozData.name }}
 	</div>
 	<a class="right" />
-	<DinozSWF
-		:display="dinozData.display"
-		:width="190"
-		:height="165"
-		type="dino"
-		class="avatar"
-	></DinozSWF>
 	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
 	<DinozEquip :itemList="dinozData.items" />
@@ -20,7 +13,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import DinozSWF from '@/components/dinoz/dinozSWF.vue';
 import DinozElements from '@/components/dinoz/dinozElements.vue';
 import DinozBars from '@/components/dinoz/dinozBars.vue';
 import DinozEquip from '@/components/dinoz/dinozEquip.vue';
@@ -38,7 +30,6 @@ export default defineComponent({
 	},
 	components: {
 		DinozElements,
-		DinozSWF,
 		DinozBars,
 		DinozEquip,
 		DinozStatus,
