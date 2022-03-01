@@ -10,7 +10,7 @@
 			<img :src="getImg('fire')" alt="fire" /> {{ fire }}
 		</li>
 		<li
-			:class="getMaxElement() === wood ? 'wood' : ''"
+			:class="getMaxElement() === wood ? 'max' : ''"
 			v-tippy="{
 				content: formatContent($t('element.wood')),
 				theme: 'small'
@@ -19,7 +19,7 @@
 			<img :src="getImg('wood')" alt="wood" /> {{ wood }}
 		</li>
 		<li
-			:class="getMaxElement() === water ? 'water' : ''"
+			:class="getMaxElement() === water ? 'max' : ''"
 			v-tippy="{
 				content: formatContent($t('element.water')),
 				theme: 'small'
