@@ -6,6 +6,7 @@ import {
 	setSkillState,
 	betaMove
 } from '../../business/dinozService.js';
+import { raceList } from '../../constants';
 import {
 	player,
 	dinozId,
@@ -248,6 +249,8 @@ describe('Test de la fonction buyDinoz()', function () {
 	});
 
 	it('Cas nominal', async function () {
+		const expectedMoney: number =
+			DinozFromShop.player.money - raceList.WINKS.price;
 		await buyDinoz(req, res);
 
 		expect(DinozShopDao.getDinozDetailsRequest).toHaveBeenCalledTimes(1);
@@ -260,7 +263,7 @@ describe('Test de la fonction buyDinoz()', function () {
 		expect(DinozShopDao.getDinozDetailsRequest).toHaveBeenCalledWith(dinozId);
 		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(
 			player.id_1,
-			180000
+			expectedMoney
 		);
 		expect(DinozShopDao.deleteDinozInShopRequest).toHaveBeenCalledWith(
 			player.id_1
@@ -270,7 +273,7 @@ describe('Test de la fonction buyDinoz()', function () {
 		);
 		expect(AssDinozSkillDao.addSkillToDinoz).toHaveBeenLastCalledWith(
 			dinozId,
-			61102
+			raceList.WINKS.skillId[0]
 		);
 		expect(RankingDao.updatePoints).toHaveBeenLastCalledWith(
 			player.id_1,

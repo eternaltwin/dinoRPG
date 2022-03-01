@@ -1,10 +1,12 @@
 export * from './item.js';
 export * from './level.js';
 export * from './place.js';
+// Note: skill.js is before race because race.js needs it
+export * from './skill.js';
 export * from './race.js';
 export * from './reward.js';
+// Note: item.js and place.js are before shop.js because shop.js needs them
 export * from './shop.js';
-export * from './skill.js';
 export * from './status.js';
 
 export const apiRoutes = {

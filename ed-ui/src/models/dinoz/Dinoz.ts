@@ -20,14 +20,14 @@ export interface Dinoz {
 
 export interface DinozRace {
 	name?: string;
-	nbrAirCase?: number;
-	nbrFireCase?: number;
-	nbrLightCase?: number;
-	nbrWaterCase?: number;
-	nbrWoodCase?: number;
+	nbrAir?: number;
+	nbrFire?: number;
+	nbrLight?: number;
+	nbrWater?: number;
+	nbrWood?: number;
 	price?: number;
 	raceId?: string;
-	skill?: Skill;
+	skillId?: Array<number>;
 }
 
 export interface Skill {

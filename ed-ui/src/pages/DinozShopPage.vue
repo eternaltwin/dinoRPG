@@ -42,15 +42,21 @@
 					</Tippy>
 				</div>
 				<Elements
-					:fire="dinoz.race.nbrFireCase"
-					:wood="dinoz.race.nbrWoodCase"
-					:water="dinoz.race.nbrWaterCase"
-					:light="dinoz.race.nbrLightCase"
-					:air="dinoz.race.nbrAirCase"
+					:fire="dinoz.race.nbrFire"
+					:wood="dinoz.race.nbrWood"
+					:water="dinoz.race.nbrWater"
+					:light="dinoz.race.nbrLight"
+					:air="dinoz.race.nbrAir"
 				></Elements>
-				<div class="skill" v-if="dinoz.skill">
-					<img src="@/assets/icons/small_follow.webp" alt="follow" />
-					{{ $t(`skill.name.${skillNameList[dinoz.skill]}`) }}
+				<div class="skill" v-if="dinoz.race.skillId.length > 0">
+					<div
+						:id="'detail_' + index"
+						v-for="(skillId, index) in dinoz.race.skillId"
+						:key="skillId"
+					>
+						<img src="@/assets/icons/small_follow.webp" alt="follow" />
+						{{ $t(`skill.name.${skillNameList[skillId]}`) }}
+					</div>
 				</div>
 			</div>
 		</div>

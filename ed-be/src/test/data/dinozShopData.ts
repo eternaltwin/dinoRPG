@@ -1,4 +1,5 @@
 import { DinozShop } from '../../models';
+import { raceList } from '../../constants';
 import { dinozId, player } from '../utils/constants';
 
 export const DinozFromShop = {
@@ -16,7 +17,8 @@ export const DinozFromShop = {
 			player: { name: 'Biocat' }
 		}
 	},
-	raceId: 1
+	// Use a race with a skill for the test
+	raceId: raceList.WINKS.raceId
 } as DinozShop;
 
 export const DinozShopArray = [

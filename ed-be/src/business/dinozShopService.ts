@@ -80,7 +80,7 @@ const getDinozFromDinozShop = async (
 		// Make 15 Dinoz object
 		for (let i = 0; i < config.shop.dinozInShop; i++) {
 			// Set a random race to the dinoz
-			randomRace = getRandomNumber(1, availableRaces.length);
+			randomRace = getRandomNumber(0, availableRaces.length - 1);
 			// Set a random display to the dinoz
 			randomDisplay = `${
 				availableRaces[randomRace].swfLetter
@@ -119,12 +119,14 @@ function setDinozRaceAndSkill(dinoz: DinozShop) {
 		race => race.raceId === dinoz.raceId
 	)!;
 
-	if (raceFound.skillId) {
-		dinoz.setDataValue(
-			'skill',
-			Object.values(skillList).find(
-				skillList => skillList.skillId === raceFound.skillId
-			)!.skillId
+	if (raceFound.skillId.length > 0) {
+		raceFound.skillId.forEach(skillId =>
+			dinoz.setDataValue(
+				'skill',
+				Object.values(skillList).find(
+					skillList => skillList.skillId === skillId
+				)!.skillId
+			)
 		);
 	}
 

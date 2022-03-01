@@ -1,4 +1,4 @@
-import { ShopFiche, ItemFiche } from '../models';
+import { ShopFiche } from '../models';
 import { itemList, placeList } from './index.js';
 
 // Prices are as they were before the abandon of Twinoid (they were lowered to half the price after the game became free)

@@ -223,11 +223,11 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		experience: 0,
 		canChangeName: true,
 		canGather: false,
-		nbrUpFire: race.nbrFireCase,
-		nbrUpWood: race.nbrWoodCase,
-		nbrUpWater: race.nbrWaterCase,
-		nbrUpLight: race.nbrLightCase,
-		nbrUpAir: race.nbrAirCase
+		nbrUpFire: race.nbrFire,
+		nbrUpWood: race.nbrWood,
+		nbrUpWater: race.nbrWater,
+		nbrUpLight: race.nbrLight,
+		nbrUpAir: race.nbrAir
 	});
 
 	// Set player money
@@ -241,8 +241,10 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	const dinozCreated: Dinoz = await createDinozRequest(newDinoz.get());
 
 	// Add skill to created dinoz
-	if (race.skillId) {
-		addSkillToDinoz(dinozCreated.dinozId, race.skillId);
+	if (race.skillId.length > 0) {
+		race.skillId.forEach(skillId =>
+			addSkillToDinoz(dinozCreated.dinozId, skillId)
+		);
 	}
 
 	const dinozToSend: BasicDinoz = {
