@@ -25,6 +25,14 @@
     font-size: 8pt;
 }
 
+p {
+	line-height: 12pt;
+}
+p:first-letter {
+	font-weight: bold;
+	font-size: 115%;
+}
+
 .titlePage {
 	color: #71b703;
 	font-family: 'Berlin Sans FB Demi';
