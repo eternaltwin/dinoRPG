@@ -50,7 +50,6 @@ export default defineComponent({
 	name: 'RightMenu',
 	data() {
 		return {
-			...sessionStore.getters,
 			time: '' as string
 		};
 	},
@@ -60,6 +59,9 @@ export default defineComponent({
 	computed: {
 		dinozCount(): number {
 			return sessionStore.getters.getDinozCount;
+		},
+		getPlayerId(): number {
+			return sessionStore.getters.getPlayerId;
 		}
 	},
 	methods: {
