@@ -161,12 +161,13 @@ export default defineComponent({
 		}
 		td {
 			vertical-align: top;
+			height: 34.5px;
 		}
 	}
 }
 .name {
 	color: white;
-	padding-right: 4px;
+	min-width: 163px;
 	font-size: 10pt !important;
 	line-height: 11pt;
 	font-variant: small-caps;
@@ -193,15 +194,20 @@ export default defineComponent({
 	cursor: help;
 }
 .act {
-	max-width: 30px;
 	padding-left: 5px;
+	display: flex;
+	justify-content: center;
+	align-content: space-evenly;
+	align-items: center;
+	a {
+		height: fit-content;
+	}
 	img {
 		padding-left: 5px;
 		padding-right: 5px;
 	}
 }
 .qty {
-	max-width: 20px;
 	color: white;
 	font-weight: bold;
 	text-align: center;
