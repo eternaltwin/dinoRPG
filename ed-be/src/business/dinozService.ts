@@ -216,7 +216,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		raceId: race.raceId,
 		level: 1,
 		playerId: req.user!.playerId,
-		placeId: 1,
+		placeId: placeList.DINOVILLE.placeId,
 		display: dinozData.display,
 		life: 100,
 		maxLife: 100,
