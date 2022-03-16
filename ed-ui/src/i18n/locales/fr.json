@@ -22,7 +22,8 @@
       "part5": "Toutes les informations sont disponibles sur ",
       "part6": "Pour faire partie de la prochaine alpha, vous aurez besoin d'un compte ",
       "part7": "et de rejoindre la liste de volontaires sur"
-    }
+    },
+    "issue": "Merci de signaler les bugs rencontrés sur "
   },
   "import": {
     "disclaimer1":"Vous pouvez importer votre compte depuis DinoRPG afin de retrouver votre progression ainsi que tout vos dinoz !",

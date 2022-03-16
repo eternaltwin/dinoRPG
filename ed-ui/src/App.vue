@@ -4,6 +4,7 @@
 	<HomePage v-if="displayAuth" />
 	<MainPage v-else />
 	<Spinner />
+	<Version />
 </template>
 
 <script lang="ts">
@@ -14,6 +15,7 @@ import Title from '@/components/utils/Title.vue';
 import Spinner from '@/components/utils/Spinner.vue';
 import { isNil } from 'lodash';
 import { sessionStore } from './store';
+import Version from '@/components/utils/Version.vue';
 
 export default defineComponent({
 	name: 'App',
@@ -26,7 +28,8 @@ export default defineComponent({
 		MainPage,
 		HomePage,
 		Title,
-		Spinner
+		Spinner,
+		Version
 	},
 	mounted(): void {
 		this.displayAuth = isNil(sessionStore.getters.getJwt);
