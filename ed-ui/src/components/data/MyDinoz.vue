@@ -16,7 +16,10 @@
 			</li>
 			<template #content>
 				<template v-for="(status, index) in dinoz.statusList" :key="index">
-					<img :src="getStatusImg(statusList.imgName[status])" />
+					<img
+						v-if="statusList.displayed[status]"
+						:src="getStatusImg(statusList.imgName[status])"
+					/>
 				</template>
 			</template>
 		</Tippy>

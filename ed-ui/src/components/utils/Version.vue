@@ -72,7 +72,7 @@
 					"
 					target="_blank"
 				>
-					{{ release.substring(0,8) }}
+					{{ release.substring(0, 8) }}
 				</a>
 				<br />
 				<svg
