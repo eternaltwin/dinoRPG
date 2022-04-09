@@ -8,7 +8,8 @@ import {
 	resetUser,
 	setHasImported,
 	editCustomText,
-	getPlayerRewardsRequest
+	getPlayerRewardsRequest,
+	searchPlayersByName
 } from '../dao/playerDao.js';
 
 import { Player, PlayerInfo } from '../models/index.js';
@@ -156,4 +157,28 @@ const setCustomText = async (
 	return res.status(200).send();
 };
 
-export { getCommonData, getAccountData, importAccount, setCustomText };
+/**
+ * @summary Fetch a list of player based on a string
+ * @return Array<Player>
+ * @param req
+ * @param req.params.id {string}
+ * @param res
+ */
+const searchPlayers = async (
+	req: Request,
+	res: Response
+): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+	const playerList: Array<Player> = await searchPlayersByName(req.params.name);
+	return res.status(200).send(playerList);
+};
+
+export {
+	getCommonData,
+	getAccountData,
+	importAccount,
+	setCustomText,
+	searchPlayers
+};

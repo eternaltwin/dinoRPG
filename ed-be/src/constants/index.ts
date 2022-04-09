@@ -10,6 +10,7 @@ export * from './shop.js';
 export * from './status.js';
 
 export const apiRoutes = {
+	adminRoute: '/api/admin',
 	dinozRoute: '/api/dinoz',
 	inventoryRoute: '/api/inventory',
 	oauthRoute: '/api/oauth',

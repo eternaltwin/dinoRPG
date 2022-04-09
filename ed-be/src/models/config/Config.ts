@@ -5,6 +5,7 @@ export interface Config {
 	jwt: JwtConfig;
 	shop: ShopConfig;
 	player: PlayerConfig;
+	admin: AdminsConfig;
 }
 
 interface GeneralConfig {
@@ -41,4 +42,10 @@ interface ShopConfig {
 
 interface PlayerConfig {
 	readonly initialMoney: number;
+}
+
+interface AdminsConfig {
+	readonly biocat: string;
+	readonly jahaa: string;
+	readonly jolu: string;
 }

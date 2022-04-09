@@ -4,7 +4,8 @@ import {
 	getAccountData,
 	getCommonData,
 	importAccount,
-	setCustomText
+	setCustomText,
+	searchPlayers
 } from '../business/playerService.js';
 import { body, param } from 'express-validator';
 
@@ -30,6 +31,12 @@ routes.put(
 	`${commonPath}/customText`,
 	[body('message').exists()],
 	setCustomText
+);
+
+routes.get(
+	`${commonPath}/search/:name`,
+	[param('name').exists().isString().isLength({ min: 3 })],
+	searchPlayers
 );
 
 export default routes;

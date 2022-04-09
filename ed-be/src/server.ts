@@ -12,12 +12,14 @@ import { jwtConfig } from './utils/jwt.js';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
 import { sequelize } from './sequelize.js';
 import { updatePlayersPosition } from './cron/updatePlayersPosition.js';
+import adminRoutes from './routes/admin.routes.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
 	namespace Express {
 		interface User {
 			playerId?: number;
+			isAdmin?: boolean;
 		}
 
 		interface Request {
@@ -55,6 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(jwtConfig());
 
 // Routes declaration
+app.use(adminRoutes);
 app.use(dinozRoutes);
 app.use(inventoryRoutes);
 app.use(oauthRoutes);

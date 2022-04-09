@@ -11,6 +11,7 @@ import Fight from '@/pages/Fight.vue';
 import { isNil } from 'lodash';
 import { sessionStore } from '@/store';
 import DinozWithoutFlash from '@/components/dinoz/dinozWithoutFlash.vue';
+import AdminDashBoard from '@/pages/AdminDashBoard.vue';
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
@@ -60,6 +61,11 @@ const router = createRouter({
 					path: '/dinozwithoutflash',
 					name: 'DinozWithoutFlash',
 					component: DinozWithoutFlash
+				},
+				{
+					path: '/admin',
+					name: 'Admin',
+					component: AdminDashBoard
 				}
 			]
 		},

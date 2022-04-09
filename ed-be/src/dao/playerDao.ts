@@ -231,6 +231,177 @@ const editCustomText = (
 	);
 };
 
+const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
+	return Player.findAll({
+		attributes: ['name', 'playerId'],
+		where: {
+			name: {
+				[Op.iLike]: `%${playerName}%`
+			}
+		}
+	});
+};
+
+/**
+ * @summary Set quetzuBought from a player to a certain value
+ * @param playerId {number}
+ * @param value {number}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setQuetzuBought = (
+	playerId: number,
+	value: number
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			quetzuBought: value
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+/**
+ * @summary Set leader from a player to a certain state
+ * @param playerId {number}
+ * @param state {boolean}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setLeader = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			leader: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+/**
+ * @summary Set engineer from a player to a certain state
+ * @param playerId {number}
+ * @param state {boolean}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setEngineer = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			engineer: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+/**
+ * @summary Set cooker from a player to a certain state
+ * @param playerId {number}
+ * @param state {boolean}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setCooker = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			cooker: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+/**
+ * @summary Set shopKeeper from a player to a certain state
+ * @param playerId {number}
+ * @param state {boolean}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setShopKeeper = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			shopKeeper: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+/**
+ * @summary Set merchant from a player to a certain state
+ * @param playerId {number}
+ * @param state {boolean}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setMerchant = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			merchant: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+/**
+ * @summary Set priest from a player to a certain state
+ * @param playerId {number}
+ * @param state {boolean}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setPriest = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			priest: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
+/**
+ * @summary Set teacher from a player to a certain state
+ * @param playerId {number}
+ * @param state {boolean}
+ * @return Promise<[number, Array<Player>]>
+ */
+const setTeacher = (
+	playerId: number,
+	state: boolean
+): Promise<[number, Array<Player>]> => {
+	return Player.update(
+		{
+			teacher: state
+		},
+		{
+			where: { playerId: playerId }
+		}
+	);
+};
+
 export {
 	createPlayer,
 	getImportedData,
@@ -245,5 +416,14 @@ export {
 	setPlayerMoneyRequest,
 	setHasImported,
 	resetUser,
-	editCustomText
+	editCustomText,
+	searchPlayersByName,
+	setQuetzuBought,
+	setLeader,
+	setEngineer,
+	setCooker,
+	setShopKeeper,
+	setMerchant,
+	setPriest,
+	setTeacher
 };

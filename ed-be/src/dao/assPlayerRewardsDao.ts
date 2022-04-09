@@ -10,4 +10,16 @@ const addRewardToPlayer = (
 	});
 };
 
-export { addRewardToPlayer };
+const removeRewardToPlayer = (
+	playerId: number,
+	rewardId: number
+): Promise<number> => {
+	return AssPlayerReward.destroy({
+		where: {
+			playerId: playerId,
+			rewardId: rewardId
+		}
+	});
+};
+
+export { addRewardToPlayer, removeRewardToPlayer };

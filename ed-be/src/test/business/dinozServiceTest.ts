@@ -391,10 +391,13 @@ describe('Function setDinozName()', function () {
 		expect(DinozDao.setDinozNameRequest).toHaveBeenCalledTimes(1);
 
 		expect(DinozDao.getCanDinozChangeName).toHaveBeenLastCalledWith(dinozId);
-		expect(DinozDao.setDinozNameRequest).toHaveBeenLastCalledWith({
-			dinozId: dinozId,
-			name: dinozName
-		});
+		expect(DinozDao.setDinozNameRequest).toHaveBeenLastCalledWith(
+			{
+				dinozId: dinozId,
+				name: dinozName
+			},
+			false
+		);
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();

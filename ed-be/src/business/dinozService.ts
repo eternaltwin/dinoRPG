@@ -301,7 +301,7 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 		name: req.body.newName
 	});
 
-	await setDinozNameRequest(dinozToUpdate);
+	await setDinozNameRequest(dinozToUpdate, false);
 
 	return res.status(200).send();
 };
