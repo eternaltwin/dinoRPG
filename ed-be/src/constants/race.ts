@@ -20,7 +20,26 @@ export const raceList: { [name: string]: DinozRace } = {
 		upAirChance: 3,
 		price: 16000,
 		swfLetter: '0',
-		skillId: []
+		skillId: [],
+		display: {
+			0: '0',
+			1: '9',
+			2: '1', // HasKnee (1 = yes)
+			3: '7', // Head
+			4: '6', // Hair
+			5: '5', // Arm
+			6: '3', // Chest
+			7: 'A', // Tattoo
+			8: '0',
+			9: '0',
+			10: '0',
+			11: '0',
+			12: '0',
+			13: '0',
+			14: '0',
+			15: '0',
+			16: '0'
+		}
 	},
 	MOUEFFE_DEMON: {
 		raceId: 2,

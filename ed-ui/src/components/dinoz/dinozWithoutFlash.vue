@@ -14,7 +14,8 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 export default defineComponent({
 	name: 'DinozWithoutFlash',
 	props: {
-		display: { type: String, required: true }
+		display: { type: String, required: true },
+		life: { type: Number, required: true }
 	},
 	computed: {
 		dinozToDisplay(): string {

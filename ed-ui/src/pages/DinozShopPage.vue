@@ -13,10 +13,12 @@
 			v-for="(dinoz, index) in dinozList"
 			:key="dinoz.dinozId"
 		>
-			<!--<DinozWithoutFlash
-				display="0100000000000000"
-				class="dinoz_display"
-			></DinozWithoutFlash>-->
+			<div class="dinoz_display">
+				<DinozWithoutFlash
+					:display="dinoz.display"
+					:life="parseInt(dinoz.life)"
+				></DinozWithoutFlash>
+			</div>
 			<div class="infos">
 				<div class="price">
 					<span class="money"
@@ -84,6 +86,9 @@ export default defineComponent({
 		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue')),
 		Elements: defineAsyncComponent(() =>
 			import('@/components/data/elements.vue')
+		),
+		DinozWithoutFlash: defineAsyncComponent(() =>
+			import('@/components/dinoz/dinozWithoutFlash.vue')
 		)
 	},
 	methods: {
@@ -145,7 +150,7 @@ export default defineComponent({
 <style type="scss" scoped>
 .dinoz_display {
 	position: relative;
-	left: 150px;
-	top: -10px;
+	left: 130px;
+	top: -20px;
 }
 </style>

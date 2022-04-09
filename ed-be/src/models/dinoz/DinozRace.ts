@@ -17,4 +17,5 @@ export interface DinozRace {
 	price: number;
 	swfLetter: string;
 	skillId: Array<number>;
+	display?: { [letterNumber: number]: string };
 }

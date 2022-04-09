@@ -60,7 +60,8 @@ const router = createRouter({
 				{
 					path: '/dinozwithoutflash',
 					name: 'DinozWithoutFlash',
-					component: DinozWithoutFlash
+					component: DinozWithoutFlash,
+					props: { display: '1900000000000', flip: 1, life: 60 }
 				},
 				{
 					path: '/admin',

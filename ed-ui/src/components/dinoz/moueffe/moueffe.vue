@@ -757,15 +757,16 @@ export default defineComponent({
 		this.secondColor = '#C12B2B';
 		this.thirdColor = '#AC0707';
 
-		this.head = moueffe.head[parseInt(this.display[0])]; // De 0 à 7
-		this.chest = moueffe.chest[parseInt(this.display[1])]; // De 0 à 3
-		this.arm = moueffe.arm[parseInt(this.display[2])]; // De 0 à 5
-		this.hairNumber = parseInt(this.display[3]); // De 0 à 6
-		this.hasKnee = this.display[4] === '1'; // De 0 à 1
+		this.hasKnee = this.display[2] === '1'; // De 0 à 1
+		this.head = moueffe.head[parseInt(this.display[3])]; // De 0 à 7
+		this.hairNumber = parseInt(this.display[4]); // De 0 à 6
+		this.arm = moueffe.arm[parseInt(this.display[5])]; // De 0 à 5
+		this.chest = moueffe.chest[parseInt(this.display[6])]; // De 0 à 3
+		this.tattoo = moueffe.tattoo[this.display[7]]; // De 1 à A
+		this.hasTattoo = this.display[7] !== '0';
+		this.tattooNumber = this.display[7];
+
 		this.leg = moueffe.leg[0]; // Unique
-		this.hasTattoo = this.display[5] !== '0';
-		this.tattoo = moueffe.tattoo[this.display[5]]; // De 1 à A
-		this.tattooNumber = this.display[5];
 
 		// this.childOrAdult = display[1] === '9' ? 'adult' : 'baby';
 		this.childOrAdult = 'adult';

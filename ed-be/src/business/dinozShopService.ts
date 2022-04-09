@@ -13,7 +13,7 @@ import {
 import { getPlayerRewardsRequest } from '../dao/playerDao.js';
 import _ from 'lodash';
 import { getConfig } from '../utils/context.js';
-import { raceList, rewardList, skillList } from '../constants/index.js';
+import { raceList, rewardList } from '../constants/index.js';
 
 /**
  * Get all dinoz data from regular dinoz shop
@@ -37,14 +37,14 @@ const getDinozFromDinozShop = async (
 		let randomRace: number;
 		let randomDisplay: string;
 		const availableRaces: Array<DinozRace> = [
-			raceList.WINKS,
+			/*raceList.WINKS,
 			raceList.SIRAIN,
 			raceList.CASTIVORE,
 			raceList.NUAGOZ,
 			raceList.GORILLOZ,
 			raceList.WANWAN,
 			raceList.PIGMOU,
-			raceList.PLANAILLE,
+			raceList.PLANAILLE,*/
 			raceList.MOUEFFE
 		];
 
@@ -77,18 +77,26 @@ const getDinozFromDinozShop = async (
 			}
 		});
 
-		// Make 15 Dinoz object
+		// Make x Dinoz object to fill shop
 		for (let i = 0; i < config.shop.dinozInShop; i++) {
 			// Set a random race to the dinoz
-			randomRace = getRandomNumber(0, availableRaces.length - 1);
-			// Set a random display to the dinoz
-			randomDisplay = `${
-				availableRaces[randomRace].swfLetter
-			}0${getCosmetique()}000`;
+			randomRace =
+				availableRaces[getRandomNumber(0, availableRaces.length - 1)].raceId;
+
+			const dinozRaceData: DinozRace = Object.values(raceList).find(
+				race => race.raceId === randomRace
+			)!;
+
+			// Make a random display
+			randomDisplay = `${randomRace}9`;
+
+			for (let i = 2; i < 16; i++) {
+				randomDisplay += getRandomLetter(dinozRaceData.display![i]);
+			}
 
 			dinoz = Dinoz.build({
 				playerId: req.user!.playerId,
-				raceId: availableRaces[randomRace].raceId,
+				raceId: randomRace,
 				display: randomDisplay
 			});
 
@@ -120,14 +128,7 @@ function setDinozRaceAndSkill(dinoz: DinozShop) {
 	)!;
 
 	if (raceFound.skillId.length > 0) {
-		raceFound.skillId.forEach(skillId =>
-			dinoz.setDataValue(
-				'skill',
-				Object.values(skillList).find(
-					skillList => skillList.skillId === skillId
-				)!.skillId
-			)
-		);
+		raceFound.skillId.forEach(skillId => dinoz.setDataValue('skill', skillId));
 	}
 
 	dinoz.setDataValue('race', raceFound);
@@ -135,54 +136,22 @@ function setDinozRaceAndSkill(dinoz: DinozShop) {
 	dinoz.setDataValue('playerId', undefined);
 }
 
-// Return a String with a length of 11
-function getCosmetique() {
-	var params = {
-		includeUpperCase: true,
-		includeNumbers: true,
-		length: 11
-	};
-	return strRandom(params);
-}
-
-// Generate random number or letter
-function strRandom(o: {
-	includeUpperCase: boolean;
-	includeNumbers: boolean;
-	startsWithLowerCase?: boolean;
-	length: number;
-}) {
-	var a = 10,
-		b = 'abcdefghijklmnopqrstuvwxyz',
-		c = '',
-		d = 0,
-		e = '' + b;
-	if (o) {
-		if (o.startsWithLowerCase) {
-			c = b[Math.floor(Math.random() * b.length)];
-			d = 1;
-		}
-		if (o.length) {
-			a = o.length;
-		}
-		if (o.includeUpperCase) {
-			e += b.toUpperCase();
-		}
-		if (o.includeNumbers) {
-			e += '1234567890';
-		}
-	}
-	for (; d < a; d++) {
-		c += e[Math.floor(Math.random() * e.length)];
-	}
-	return c;
-}
-
 // Return a random number [min, max[
 function getRandomNumber(min: number, max: number) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function getRandomLetter(maxLetter: string): string {
+	const allLetters: string =
+		'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	const lettersAvailable: string = allLetters.substring(
+		0,
+		allLetters.indexOf(maxLetter) + 1
+	);
+
+	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
 }
 
 export { getDinozFromDinozShop };
