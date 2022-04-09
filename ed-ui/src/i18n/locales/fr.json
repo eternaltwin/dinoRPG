@@ -1150,12 +1150,14 @@
     "name": {
       "perle": "Perle de la Fontaine",
       "pmi": "Petit Missionaire Illustré",
-      "import":"Os D'importasaurus"
+      "import":"Os D'importasaurus",
+      "plume": "Plume Sidérale"
     },
     "description": {
       "perle": "La perle de la Fontaine de Jouvence permet à tous vos Dinoz de pouvoir se régénerer chaque jour à la Fontaine de Jouvence",
       "pmi":"Le Petit Missionaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz",
-      "import":"Félicitations ! Vous avez importé votre compte sur EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Peut-être est-ce une erreur finalement ?"
+      "import":"Félicitations ! Vous avez importé votre compte sur EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Peut-être est-ce une erreur finalement ?",
+      "plume": "Cette plume, cadeau de quelqu'un venu de très loin, permet d'éditer la présentation de la fiche joueur."
     }
   },
   "ranking": {

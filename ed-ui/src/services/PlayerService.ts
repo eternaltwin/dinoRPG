@@ -35,5 +35,15 @@ export const PlayerService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	searchPlayers(name: string): Promise<Array<PlayerSearch>> {
+		return http()
+			.get(`/player/search/${name}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
+interface PlayerSearch {
+	name: string;
+	playerId: number;
+}

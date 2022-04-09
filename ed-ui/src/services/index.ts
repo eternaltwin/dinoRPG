@@ -1,3 +1,4 @@
+export * from './AdminService';
 export * from './OauthService';
 export * from './PlayerService';
 export * from './DinozService';

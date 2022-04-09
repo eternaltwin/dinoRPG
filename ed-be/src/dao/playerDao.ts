@@ -402,6 +402,69 @@ const setTeacher = (
 	);
 };
 
+/**
+ * @summary List all information from a player
+ * @param playerId {number}
+ * @return Promise<Player | null>
+ */
+const getAllInformationFromPlayer = (
+	playerId: number
+): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: [
+			'playerId',
+			'hasImported',
+			'customText',
+			'name',
+			'eternalTwinId',
+			'money',
+			'quetzuBought',
+			'leader',
+			'engineer',
+			'cooker',
+			'shopKeeper',
+			'merchant',
+			'priest',
+			'teacher'
+		],
+		include: [
+			{
+				model: ItemOwn,
+				required: false,
+				attributes: ['itemId', 'quantity'],
+				where: {
+					quantity: {
+						[Op.gt]: 0
+					}
+				}
+			},
+			{
+				model: IngredientOwn,
+				required: false,
+				attributes: ['ingredientId', 'quantity'],
+				where: {
+					quantity: {
+						[Op.gt]: 0
+					}
+				}
+			},
+			{
+				model: AssPlayerReward,
+				required: false,
+				attributes: ['rewardId']
+			}
+		],
+		where: { playerId: playerId }
+	});
+};
+
+const getPlayerMoney = (playerId: number): Promise<Player | null> => {
+	return Player.findOne({
+		attributes: ['money', 'playerId'],
+		where: { playerId: playerId }
+	});
+};
+
 export {
 	createPlayer,
 	getImportedData,
@@ -425,5 +488,7 @@ export {
 	setShopKeeper,
 	setMerchant,
 	setPriest,
-	setTeacher
+	setTeacher,
+	getAllInformationFromPlayer,
+	getPlayerMoney
 };

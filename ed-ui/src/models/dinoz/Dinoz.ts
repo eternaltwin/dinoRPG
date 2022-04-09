@@ -2,8 +2,13 @@ export interface Dinoz {
 	dinozId?: string;
 	name?: string;
 	display?: string;
+	isFrozen?: boolean;
+	isSacrificed?: boolean;
+	level?: number;
+	missionId?: number;
+	canChangeName?: boolean;
 	following?: string;
-	life?: string;
+	life?: number;
 	maxLife?: number;
 	experience?: number;
 	maxExperience?: number;
@@ -13,6 +18,7 @@ export interface Dinoz {
 	status: Status;
 	actions: Array<Action>;
 	skill: Array<Skill>;
+	skillList: Array<number>;
 	placeId: number;
 	statusList: Array<number>;
 	borderPlace: Array<number>;

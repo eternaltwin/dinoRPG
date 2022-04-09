@@ -1,4 +1,4 @@
-import { AssDinozStatus } from '../models/index.js';
+import { AssDinozStatus, DinozStatusEdit } from '../models/index.js';
 
 const addStatusToDinoz = (
 	dinozId: number,
@@ -8,6 +8,12 @@ const addStatusToDinoz = (
 		dinozId: dinozId,
 		statusId: statusId
 	});
+};
+
+const addMultipleStatusToDinoz = (
+	status: Array<DinozStatusEdit>
+): Promise<Array<AssDinozStatus>> => {
+	return AssDinozStatus.bulkCreate(status);
 };
 
 const removeStatusToDinoz = (
@@ -22,4 +28,4 @@ const removeStatusToDinoz = (
 	});
 };
 
-export { addStatusToDinoz, removeStatusToDinoz };
+export { addStatusToDinoz, addMultipleStatusToDinoz, removeStatusToDinoz };

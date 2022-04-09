@@ -1,4 +1,4 @@
-import { AssPlayerReward } from '../models/index.js';
+import { AssPlayerReward, AddMultipleRewardsEdit } from '../models/index.js';
 
 const addRewardToPlayer = (
 	playerId: number,
@@ -8,6 +8,12 @@ const addRewardToPlayer = (
 		playerId: playerId,
 		rewardId: rewardId
 	});
+};
+
+const addMultipleRewardToPlayer = (
+	rewards: Array<AddMultipleRewardsEdit>
+): Promise<Array<AssPlayerReward>> => {
+	return AssPlayerReward.bulkCreate(rewards);
 };
 
 const removeRewardToPlayer = (
@@ -22,4 +28,4 @@ const removeRewardToPlayer = (
 	});
 };
 
-export { addRewardToPlayer, removeRewardToPlayer };
+export { addRewardToPlayer, addMultipleRewardToPlayer, removeRewardToPlayer };

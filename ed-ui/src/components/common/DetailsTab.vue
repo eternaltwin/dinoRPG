@@ -120,9 +120,7 @@ export default defineComponent({
 			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
-			return this.dinozData!.statusList.includes(
-				statusList.id.STRATEGY_IN_130_LESSONS
-			);
+			return this.dinozData!.statusList.includes(statusList.id.amulst);
 		}
 	},
 	async mounted(): Promise<void> {

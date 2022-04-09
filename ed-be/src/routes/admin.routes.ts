@@ -3,10 +3,11 @@ import { apiRoutes } from '../constants/index.js';
 import {
 	getAdminDashBoard,
 	editDinoz,
-	givePlayerEpic,
+	givePlayerEpicReward,
 	listAllDinozFromPlayer,
 	setPlayerMoney,
-	editPlayer
+	editPlayer,
+	listAllPlayerInformationForAdminDashoard
 } from '../business/adminService.js';
 import { body, param } from 'express-validator';
 import { checkIsAdmin } from '../utils/jwt.js';
@@ -21,19 +22,68 @@ routes.put(
 	`${commonPath}/dinoz/:id`,
 	[
 		param('id').exists().toInt().isNumeric(),
-		body('name').default(null).optional().exists().isString(),
-		body('isFrozen').default(null).optional().exists().isBoolean(),
-		body('isSacrificed').default(null).optional().exists().isBoolean(),
-		body('level').default(null).optional().exists().isNumeric(),
-		body('placeId').default(null).optional().exists().isNumeric(),
-		body('canChangeName').default(null).optional().exists().isBoolean(),
-		body('life').default(null).optional().exists().isNumeric(),
-		body('maxLife').default(null).optional().exists().isNumeric(),
-		body('experience').default(null).optional().exists().isNumeric(),
-		body('addStatus').default(null).optional().exists().isNumeric(),
-		body('removeStatus').default(null).optional().exists().isNumeric(),
-		body('addSkill').default(null).optional().exists().isNumeric(),
-		body('removeSkill').default(null).optional().exists().isNumeric()
+		body('name').default(null).optional({ nullable: true }).exists().isString(),
+		body('isFrozen')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.isBoolean(),
+		body('isSacrificed')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.isBoolean(),
+		body('level')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.toInt()
+			.isInt(),
+		body('placeId')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.toInt()
+			.isInt(),
+		body('canChangeName')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.isBoolean(),
+		body('life')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.toInt()
+			.isInt(),
+		body('maxLife')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.toInt()
+			.isInt(),
+		body('experience')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.toInt()
+			.isInt(),
+		body('status')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.isArray(),
+		body('statusOperation')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.isString(),
+		body('skill').default(null).optional({ nullable: true }).exists().isArray(),
+		body('skillOperation')
+			.default(null)
+			.optional({ nullable: true })
+			.exists()
+			.isString()
 	],
 	checkIsAdmin,
 	editDinoz
@@ -55,10 +105,10 @@ routes.put(
 	[
 		param('id').exists().toInt().isNumeric(),
 		body('operation').exists().isString(),
-		body('epicRewardId').exists().toInt().isNumeric()
+		body('epicRewardId').exists().isArray()
 	],
 	checkIsAdmin,
-	givePlayerEpic
+	givePlayerEpicReward
 );
 
 routes.get(
@@ -85,6 +135,13 @@ routes.put(
 	],
 	checkIsAdmin,
 	editPlayer
+);
+
+routes.get(
+	`${commonPath}/playerinfo/:id`,
+	param('id').exists().toInt().isNumeric(),
+	checkIsAdmin,
+	listAllPlayerInformationForAdminDashoard
 );
 
 export default routes;

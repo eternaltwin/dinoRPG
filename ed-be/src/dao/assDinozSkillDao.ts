@@ -1,4 +1,4 @@
-import { AssDinozSkill } from '../models/index.js';
+import { AssDinozSkill, DinozSkillEdit } from '../models/index.js';
 
 const addSkillToDinoz = (
 	dinozId: number,
@@ -8,6 +8,12 @@ const addSkillToDinoz = (
 		dinozId: dinozId,
 		skillId: skillId
 	});
+};
+
+const addMultipleSkillToDinoz = (
+	skills: Array<DinozSkillEdit>
+): Promise<Array<AssDinozSkill>> => {
+	return AssDinozSkill.bulkCreate(skills);
 };
 
 const removeSkillToDinoz = (
@@ -22,4 +28,4 @@ const removeSkillToDinoz = (
 	});
 };
 
-export { addSkillToDinoz, removeSkillToDinoz };
+export { addSkillToDinoz, removeSkillToDinoz, addMultipleSkillToDinoz };

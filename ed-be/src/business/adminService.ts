@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import {
 	editCustomText,
+	getPlayerMoney,
+	getAllInformationFromPlayer,
 	getCommonDataRequest,
 	setCooker,
 	setEngineer,
@@ -15,11 +17,11 @@ import {
 } from '../dao/playerDao.js';
 import { validationResult } from 'express-validator';
 import {
-	addStatusToDinoz,
+	addMultipleStatusToDinoz,
 	removeStatusToDinoz
 } from '../dao/assDinozStatusDao.js';
 import {
-	addRewardToPlayer,
+	addMultipleRewardToPlayer,
 	removeRewardToPlayer
 } from '../dao/assPlayerRewardsDao.js';
 import {
@@ -36,9 +38,15 @@ import {
 	setDinozNameRequest,
 	setDinozPlaceRequest
 } from '../dao/dinozDao.js';
-import { Dinoz, Player } from '../models/index.js';
 import {
-	addSkillToDinoz,
+	Dinoz,
+	DinozSkillEdit,
+	DinozStatusEdit,
+	Player,
+	AddMultipleRewardsEdit
+} from '../models/index.js';
+import {
+	addMultipleSkillToDinoz,
 	removeSkillToDinoz
 } from '../dao/assDinozSkillDao.js';
 
@@ -82,7 +90,6 @@ const editDinoz = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
-
 	if (req.body.name) {
 		const canChangeName: Dinoz | null = await getCanDinozChangeName(
 			parseInt(req.params.id)
@@ -122,23 +129,45 @@ const editDinoz = async (req: Request, res: Response): Promise<Response> => {
 	if (req.body.experience) {
 		await setDinozExperience(parseInt(req.params.id), req.body.experience);
 	}
-	if (req.body.addStatus) {
-		await addStatusToDinoz(parseInt(req.params.id), req.body.addStatus);
-	}
-	if (req.body.removeStatus) {
-		await removeStatusToDinoz(parseInt(req.params.id), req.body.removeStatus);
-	}
-	if (req.body.addSkill) {
-		await addSkillToDinoz(parseInt(req.params.id), req.body.addSkill);
-	}
-	if (req.body.removeSkill) {
-		await removeSkillToDinoz(parseInt(req.params.id), req.body.removeSkill);
+	const statusList: Array<number> = req.body.status;
+	if (statusList.length > 0 && req.body.statusOperation) {
+		switch (req.body.statusOperation) {
+			case 'add':
+				const statusToAdd: Array<DinozStatusEdit> = statusList.map(status => {
+					return { dinozId: parseInt(req.params.id), statusId: status };
+				});
+				await addMultipleStatusToDinoz(statusToAdd);
+				break;
+			case 'remove':
+				for (const status of statusList) {
+					await removeStatusToDinoz(parseInt(req.params.id), status);
+				}
+				break;
+			default:
+				return res.status(400).send(`You need to select an operation.`);
+		}
 	}
 
-	const dinozUpdated: Dinoz | null = await getDinozFicheRequest(
-		parseInt(req.params.id)
-	);
-	return res.status(200).send(dinozUpdated);
+	const skillList: Array<number> = req.body.skill;
+	if (skillList.length > 0 && req.body.skillOperation) {
+		switch (req.body.skillOperation) {
+			case 'add':
+				const skillsToAdd: Array<DinozSkillEdit> = skillList.map(skill => {
+					return { dinozId: parseInt(req.params.id), skillId: skill };
+				});
+				await addMultipleSkillToDinoz(skillsToAdd);
+				break;
+			case 'remove':
+				for (const skill of skillList) {
+					await removeSkillToDinoz(parseInt(req.params.id), skill);
+				}
+				break;
+			default:
+				return res.status(400).send(`You need to select an operation.`);
+		}
+	}
+
+	return res.status(200).send();
 };
 
 /**
@@ -147,8 +176,8 @@ const editDinoz = async (req: Request, res: Response): Promise<Response> => {
  * @param req.params.id {number} PlayerId
  * @param req.body.operation {string} Operation to be realised (add or remove)
  * @param req.body.epic {number} Quantity of gold
- * @param res
- * @return void
+ * @param res {number}
+ * @return number
  */
 const setPlayerMoney = async (
 	req: Request,
@@ -157,7 +186,7 @@ const setPlayerMoney = async (
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
-	const playerGold: Player | null = await getCommonDataRequest(
+	const playerGold: Player | null = await getPlayerMoney(
 		parseInt(req.params.id)
 	);
 
@@ -173,16 +202,21 @@ const setPlayerMoney = async (
 				parseInt(req.params.id),
 				playerGold.money! + req.body.gold
 			);
-			return res.status(200).send();
+			break;
 		case 'remove':
 			await setPlayerMoneyRequest(
 				parseInt(req.params.id),
 				playerGold.money! - req.body.gold
 			);
-			return res.status(200).send();
+			break;
 		default:
 			return res.status(400).send(`You need to select an operation.`);
 	}
+
+	const updatedPlayerGold: Player | null = await getPlayerMoney(
+		parseInt(req.params.id)
+	);
+	return res.sendStatus(200).send(updatedPlayerGold!.money);
 };
 
 /**
@@ -194,23 +228,27 @@ const setPlayerMoney = async (
  * @param res
  * @return void
  */
-const givePlayerEpic = async (
+const givePlayerEpicReward = async (
 	req: Request,
 	res: Response
 ): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
-
+	const rewardList: Array<number> = req.body.epicRewardId;
 	switch (req.body.operation) {
 		case 'add':
-			await addRewardToPlayer(parseInt(req.params.id), req.body.epicRewardId);
+			const rewardsToAdd: Array<AddMultipleRewardsEdit> = rewardList.map(
+				rewards => {
+					return { playerId: parseInt(req.params.id), rewardId: rewards };
+				}
+			);
+			await addMultipleRewardToPlayer(rewardsToAdd);
 			return res.status(200).send();
 		case 'remove':
-			await removeRewardToPlayer(
-				parseInt(req.params.id),
-				req.body.epicRewardId
-			);
+			for (const reward of rewardList) {
+				await removeRewardToPlayer(parseInt(req.params.id), reward);
+			}
 			return res.status(200).send();
 		default:
 			return res.status(400).send(`You need to select an operation.`);
@@ -235,6 +273,18 @@ const listAllDinozFromPlayer = async (
 	const dinozList: Array<Dinoz> = await getAllDinozFromAccount(
 		parseInt(req.params.id)
 	);
+
+	dinozList.forEach(dinoz => {
+		const statusList: Array<number> = dinoz.status.map(
+			status => status.statusId
+		);
+		dinoz.setDataValue('status', undefined);
+		dinoz.setDataValue('statusList', statusList);
+
+		const skillList: Array<number> = dinoz.skill.map(skill => skill.skillId);
+		dinoz.setDataValue('skill', undefined);
+		dinoz.setDataValue('skillList', skillList);
+	});
 	return res.status(200).send(dinozList);
 };
 
@@ -252,14 +302,13 @@ const listAllDinozFromPlayer = async (
  * @param req.body.merchant {boolean}
  * @param req.body.priest {boolean}
  * @param req.body.teacher {boolean}
- * @param res
- * @return void
+ * @param res {Player | null}
+ * @return Player -> Player data
  */
 const editPlayer = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
-
 	if (req.body.hasImported !== null) {
 		await setHasImported(parseInt(req.params.id), req.body.hasImported);
 	}
@@ -291,19 +340,50 @@ const editPlayer = async (req: Request, res: Response): Promise<Response> => {
 		await setTeacher(parseInt(req.params.id), req.body.teacher);
 	}
 
-	//TODO : send this const
-	// const playerUpdated: Player | null = await getAllInformationFromPlayer(
-	// 	parseInt(req.params.id)
-	// );
-
 	return res.status(200).send();
+};
+
+/**
+ * @summary List all information from a player
+ * @param req
+ * @param req.params.id {number} PlayerId
+ * @param res
+ * @return Player
+ */
+const listAllPlayerInformationForAdminDashoard = async (
+	req: Request,
+	res: Response
+): Promise<Response> => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	const player: Player | null = await getAllInformationFromPlayer(
+		parseInt(req.params.id)
+	);
+
+	if (!player) {
+		return res
+			.status(500)
+			.send(`Player ${parseInt(req.params.id)} doesn't exists`);
+	}
+
+	// Set epicRewards as Array<number> rather than AssPlayerRewards Object
+	const epicRewards: Array<number> = player.reward.map(
+		reward => reward.rewardId
+	);
+	player.setDataValue('rewards', epicRewards);
+	player.setDataValue('reward', undefined);
+
+	return res.status(200).send(player);
 };
 
 export {
 	getAdminDashBoard,
 	editDinoz,
 	setPlayerMoney,
-	givePlayerEpic,
+	givePlayerEpicReward,
 	listAllDinozFromPlayer,
-	editPlayer
+	editPlayer,
+	listAllPlayerInformationForAdminDashoard
 };

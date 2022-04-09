@@ -81,6 +81,13 @@ const getDinozSkillAndStatusRequest = (
 const getCanDinozChangeName = (dinozId: number): Promise<Dinoz | null> => {
 	return Dinoz.findOne({
 		attributes: ['canChangeName'],
+		include: [
+			{
+				model: Player,
+				attributes: ['playerId'],
+				required: false
+			}
+		],
 		where: { dinozId: dinozId }
 	});
 };

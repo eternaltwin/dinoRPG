@@ -6,6 +6,7 @@ export const epicList = {
 		100: 'import'
 	},
 	id: {
+		perle: 1,
 		plume: 13,
 		pmi: 16,
 		import: 100
