@@ -20,14 +20,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Title from '@/components/utils/Title.vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { PlayerService } from '@/services';
 import { errorHandler } from '@/utils';
 import { PlayerInfo } from '@/models';
-import MyDinoz from '@/components/data/MyDinoz.vue';
-import Profile from '@/components/data/Profile.vue';
-import EpicRewards from '@/components/data/EpicRewards.vue';
 import { sessionStore } from '@/store';
 import EventBus from '@/events';
 
@@ -40,10 +36,16 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Title,
-		MyDinoz,
-		Profile,
-		EpicRewards
+		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue')),
+		MyDinoz: defineAsyncComponent(() =>
+			import('@/components/data/MyDinoz.vue')
+		),
+		Profile: defineAsyncComponent(() =>
+			import('@/components/data/Profile.vue')
+		),
+		EpicRewards: defineAsyncComponent(() =>
+			import('@/components/data/EpicRewards.vue')
+		)
 	},
 	async created(): Promise<void> {
 		const accountId = parseInt(this.$route.params.id.toString());

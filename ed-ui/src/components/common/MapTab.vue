@@ -11,9 +11,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { Dinoz } from '@/models';
-import Map from '@/components/common/map.vue';
 import { placeList } from '@/constants';
 
 export default defineComponent({
@@ -25,7 +24,7 @@ export default defineComponent({
 	},
 	props: { dinozData: Object as PropType<Dinoz> },
 	components: {
-		Map
+		Map: defineAsyncComponent(() => import('@/components/common/map.vue'))
 	},
 	methods: {
 		getPlaceName(placeId: number): string {

@@ -199,13 +199,12 @@
 </template>
 
 <script lang="ts" scoped>
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { ItemShopService } from '@/services';
 import { Item } from '@/models';
 import { errorHandler } from '@/utils';
 import { itemNameList } from '@/constants';
 import { sessionStore } from '@/store';
-import Title from '@/components/utils/Title.vue';
 import EventBus from '@/events';
 
 export default defineComponent({
@@ -221,7 +220,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Title
+		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue'))
 	},
 	computed: {
 		// Check if the quantity select is valid:

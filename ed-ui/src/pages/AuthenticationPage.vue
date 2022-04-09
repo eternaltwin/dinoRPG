@@ -33,9 +33,7 @@ export default defineComponent({
 			}
 
 			sessionStore.commit('setJwt', jwt);
-
-			this.$router.push({ name: 'Accueil' });
-			setTimeout(() => this.$router.go(0), 100);
+			this.$router.go(0);
 		},
 		async getRedirectUri(): Promise<void> {
 			const urlToRedirect: string = await OauthService.getRedirectUri();

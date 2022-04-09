@@ -15,13 +15,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import Elements from '@/components/data/elements.vue';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { Dinoz } from '@/models';
 
 export default defineComponent({
 	name: 'DinozElements',
-	components: { Elements },
+	components: {
+		Elements: defineAsyncComponent(() =>
+			import('@/components/data/elements.vue')
+		)
+	},
 	props: {
 		dinozData: Object as PropType<Dinoz>
 	}

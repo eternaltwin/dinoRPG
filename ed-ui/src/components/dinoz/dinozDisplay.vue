@@ -12,12 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import DinozElements from '@/components/dinoz/dinozElements.vue';
-import DinozBars from '@/components/dinoz/dinozBars.vue';
-import DinozEquip from '@/components/dinoz/dinozEquip.vue';
-import DinozStatus from '@/components/dinoz/dinozStatus.vue';
-import Title from '@/components/utils/Title.vue';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { Dinoz } from '@/models';
 
 export default defineComponent({
@@ -29,11 +24,19 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DinozElements,
-		DinozBars,
-		DinozEquip,
-		DinozStatus,
-		Title
+		DinozElements: defineAsyncComponent(() =>
+			import('@/components/dinoz/dinozElements.vue')
+		),
+		DinozBars: defineAsyncComponent(() =>
+			import('@/components/dinoz/dinozBars.vue')
+		),
+		DinozEquip: defineAsyncComponent(() =>
+			import('@/components/dinoz/dinozEquip.vue')
+		),
+		DinozStatus: defineAsyncComponent(() =>
+			import('@/components/dinoz/dinozStatus.vue')
+		),
+		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue'))
 	},
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {

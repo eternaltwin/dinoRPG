@@ -58,13 +58,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { DinozShopService, DinozService } from '@/services';
 import { DinozShop, Dinoz } from '@/models';
 import { errorHandler, utils } from '@/utils';
-import Elements from '@/components/data/elements.vue';
 import { sessionStore } from '@/store';
-import Title from '@/components/utils/Title.vue';
 import { raceList, skillNameList } from '@/constants';
 import EventBus from '@/events';
 
@@ -79,8 +77,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Title,
-		Elements
+		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue')),
+		Elements: defineAsyncComponent(() =>
+			import('@/components/data/elements.vue')
+		)
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {

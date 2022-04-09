@@ -1,5 +1,4 @@
 <template>
-	<ErrorMessage />
 	<div class="dinorpg">
 		<table id="layout">
 			<tbody>
@@ -43,15 +42,13 @@ import { sessionStore } from '@/store';
 import { CommonData } from '@/models';
 import { errorHandler } from '@/utils';
 import { PlayerService } from '@/services';
-import ErrorMessage from '@/components/utils/ErrorMessage.vue';
 import EventBus from '@/events';
 
 export default defineComponent({
 	name: 'MainPage',
 	components: {
 		LeftPanel,
-		RightMenu,
-		ErrorMessage
+		RightMenu
 	},
 	async mounted(): Promise<void> {
 		const money = sessionStore.getters.getMoney;

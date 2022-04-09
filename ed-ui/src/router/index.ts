@@ -1,62 +1,66 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Accueil from '@/pages/Accueil.vue';
+import MainPage from '@/pages/MainPage.vue';
 import DinozPage from '@/pages/DinozPage.vue';
 import DinozShopPage from '@/pages/DinozShopPage.vue';
 import ItemShopPage from '@/pages/ItemShopPage.vue';
-import AuthenticationPage from '@/pages/AuthenticationPage.vue';
+import HomePage from '@/pages/HomePage.vue';
 import DinozGenerator from '@/pages/DinozGenerator.vue';
 import MyAccount from '@/pages/MyAccount.vue';
 import Ranking from '@/pages/Ranking.vue';
 import Fight from '@/pages/Fight.vue';
+import { isNil } from 'lodash';
+import { sessionStore } from '@/store';
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes: [
 		{
 			path: '/',
-			name: 'Accueil',
-			component: Accueil
-		},
-		{
-			path: '/dino/:id',
-			name: 'DinozPage',
-			component: DinozPage
-		},
-		{
-			path: '/shop',
-			name: 'ItemShopPage',
-			component: ItemShopPage
-		},
-		{
-			path: '/shop/dinoz',
-			name: 'DinozShopPage',
-			component: DinozShopPage
+			name: 'MainPage',
+			component: MainPage,
+			children: [
+				{
+					path: '/dino/:id',
+					name: 'DinozPage',
+					component: DinozPage
+				},
+				{
+					path: '/shop',
+					name: 'ItemShopPage',
+					component: ItemShopPage
+				},
+				{
+					path: '/shop/dinoz',
+					name: 'DinozShopPage',
+					component: DinozShopPage
+				},
+				{
+					path: '/player/:id',
+					name: 'MyAccount',
+					component: MyAccount
+				},
+				{
+					path: '/fight',
+					name: 'Fight',
+					component: Fight
+				},
+				{
+					path: '/generator',
+					name: 'DinozGenerator',
+					component: DinozGenerator,
+					props: route => ({ chk: route.query.chk, chk2: route.query.chk2 })
+				},
+				{
+					path: '/ranking',
+					name: 'Ranking',
+					component: Ranking
+				}
+			]
 		},
 		{
 			path: '/authentication',
 			name: 'AuthenticationPage',
-			component: AuthenticationPage
-		},
-		{
-			path: '/player/:id',
-			name: 'MyAccount',
-			component: MyAccount
-		},
-		{
-			path: '/fight',
-			name: 'Fight',
-			component: Fight
-		},
-		{
-			path: '/generator',
-			name: 'DinozGenerator',
-			component: DinozGenerator,
-			props: route => ({ chk: route.query.chk, chk2: route.query.chk2 })
-		},
-		{
-			path: '/ranking',
-			name: 'Ranking',
-			component: Ranking
+			component: HomePage
 		},
 		{
 			path: '/:pathMatch(.*)',
@@ -65,4 +69,15 @@ const router = createRouter({
 	]
 });
 
+const displayAuth = isNil(sessionStore.getters.getJwt);
+router.beforeEach(to => {
+	// route to AuthPage if not logged and going to any page
+	if (displayAuth && to.name !== 'AuthenticationPage') {
+		return { name: 'AuthenticationPage' };
+	}
+	// route to MainPage if looged and trying to go to AuthPage (it's the case when user just login)
+	if (!displayAuth && to.name == 'AuthenticationPage') {
+		return { name: 'MainPage' };
+	}
+});
 export default router;
