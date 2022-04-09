@@ -1,0 +1,36 @@
+<template>
+	<svg
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		:height="`${8.75 * size}px`"
+		:width="`${18.7 * size}px`"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<g
+			:transform="
+				`matrix(${1.0 * size}, 0.0, 0.0, ${1.0 * size}, ${9.35 * size}, ${4.35 *
+					size})`
+			"
+		>
+			<path
+				d="M3.95 -4.2 Q6.2 -4.2 7.55 -2.7 L8.4 -1.55 8.9 -2.0 9.35 -1.5 Q9.35 0.35 5.9 2.25 1.95 4.4 -3.3 4.4 -5.75 4.4 -7.7 3.35 -9.25 2.5 -9.25 2.1 L-9.35 1.75 Q-9.35 0.3 -6.95 -1.8 -4.0 -4.35 0.05 -4.35 L1.0 -3.85 3.95 -4.2"
+				fill="#a36a6a"
+				fill-rule="evenodd"
+				stroke="none"
+			/>
+		</g>
+	</svg>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+	name: 'MoueffeRightArmSpecial2',
+	props: {
+		firstColor: String,
+		secondColor: String,
+		thirdColor: String,
+		size: Number
+	}
+});
+</script>

@@ -49,6 +49,9 @@
 		<a class="button" @click="goToPage('DinozGenerator')">
 			{{ $t('button.generator') }}
 		</a>
+		<a class="button" v-if="isDevEnv()" @click="goToPage('DinozWithoutFlash')">
+			Dinoz display
+		</a>
 	</div>
 </template>
 
@@ -72,6 +75,9 @@ export default defineComponent({
 	methods: {
 		goToPage(pageName: string) {
 			this.$router.push({ name: pageName });
+		},
+		isDevEnv(): boolean {
+			return process.env.NODE_ENV === 'development';
 		}
 	},
 	computed: {

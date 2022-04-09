@@ -13,6 +13,10 @@
 			v-for="(dinoz, index) in dinozList"
 			:key="dinoz.dinozId"
 		>
+			<!--<DinozWithoutFlash
+				display="0100000000000000"
+				class="dinoz_display"
+			></DinozWithoutFlash>-->
 			<div class="infos">
 				<div class="price">
 					<span class="money"
@@ -137,3 +141,11 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style type="scss" scoped>
+.dinoz_display {
+	position: relative;
+	left: 150px;
+	top: -10px;
+}
+</style>

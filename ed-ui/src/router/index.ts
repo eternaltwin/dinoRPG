@@ -10,6 +10,7 @@ import Ranking from '@/pages/Ranking.vue';
 import Fight from '@/pages/Fight.vue';
 import { isNil } from 'lodash';
 import { sessionStore } from '@/store';
+import DinozWithoutFlash from '@/components/dinoz/dinozWithoutFlash.vue';
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
@@ -54,6 +55,11 @@ const router = createRouter({
 					path: '/ranking',
 					name: 'Ranking',
 					component: Ranking
+				},
+				{
+					path: '/dinozwithoutflash',
+					name: 'DinozWithoutFlash',
+					component: DinozWithoutFlash
 				}
 			]
 		},

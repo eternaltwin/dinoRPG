@@ -1,4 +1,5 @@
 export * from './epic';
+export * from './moueffe';
 export * from './item';
 export * from './place';
 export * from './race';
