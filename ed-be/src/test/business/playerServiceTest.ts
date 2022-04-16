@@ -3,6 +3,7 @@ import {
 	BasicNotImportedPlayer,
 	BasicPlayer,
 	PlayerData,
+	playerList,
 	PlayerWithRewards
 } from '../data/playerData.js';
 import { mockRequest, mockResponse, player } from '../utils/constants.js';
@@ -10,6 +11,7 @@ import {
 	getAccountData,
 	getCommonData,
 	importAccount,
+	searchPlayers,
 	setCustomText
 } from '../../business/playerService.js';
 import { Request, Response } from 'express';
@@ -20,6 +22,7 @@ import {
 	validationResult
 } from 'express-validator';
 import { mocked } from 'ts-jest/utils';
+import { searchPlayersByName } from '../../dao/playerDao.js';
 
 jest.mock('express-validator');
 
@@ -325,6 +328,58 @@ describe('Function setCustomText', function () {
 		await setCustomText(req, res);
 
 		expect(PlayerDao.getPlayerRewardsRequest).not.toHaveBeenCalled();
+
+		expect(res.status).toHaveBeenCalledWith(400);
+	});
+});
+
+describe('Function searchPlayers', function () {
+	let req: Request;
+	let res: Response;
+
+	beforeEach(function () {
+		jest.clearAllMocks();
+		req = mockRequest;
+		res = mockResponse;
+
+		req.params = {
+			name: 'Bio'
+		};
+
+		const result: Result<ValidationError> = new Result(
+			{} as ErrorFormatter<ValidationError>,
+			[]
+		);
+		mocked(validationResult).mockImplementation(() => result);
+		mocked(result.isEmpty).mockImplementation(() => true);
+
+		PlayerDao.searchPlayersByName = jasmine
+			.createSpy()
+			.and.returnValue(playerList);
+	});
+
+	it('Nominal case', async function () {
+		await searchPlayers(req, res);
+
+		expect(PlayerDao.searchPlayersByName).toHaveBeenCalledTimes(1);
+
+		expect(PlayerDao.searchPlayersByName).toHaveBeenCalledWith(req.params.name);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+		expect(res.send).toHaveBeenCalledWith(playerList);
+	});
+
+	it('Bad request', async function () {
+		const result: Result<ValidationError> = new Result(
+			{} as ErrorFormatter<ValidationError>,
+			[]
+		);
+		mocked(validationResult).mockImplementation(() => result);
+		mocked(result.isEmpty).mockImplementation(() => false);
+
+		await searchPlayers(req, res);
+
+		expect(PlayerDao.searchPlayersByName).not.toHaveBeenCalled();
 
 		expect(res.status).toHaveBeenCalledWith(400);
 	});

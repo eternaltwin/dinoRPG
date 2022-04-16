@@ -59,3 +59,73 @@ export const PlayerData = ({
 		}
 	]
 } as unknown) as Player;
+
+export const playerList = [
+	{
+		name: 'Biosha',
+		playerId: 2
+	},
+	{
+		name: 'biocat',
+		playerId: 1
+	}
+] as Array<Player>;
+
+export const playerMoney = ({
+	playerId: player.id_1,
+	money: 50000
+} as unknown) as Player;
+
+export const playerMoneyPlus = ({
+	playerId: player.id_1,
+	money: 60000
+} as unknown) as Player;
+
+export const playerMoneyLess = ({
+	playerId: player.id_1,
+	money: 40000
+} as unknown) as Player;
+
+export const PlayerAllData = ({
+	playerId: 1,
+	hasImported: false,
+	customText: 'test',
+	name: 'biocat',
+	eternalTwinId: '8e429bed-d99c-40d6-b018-b8f82aff1e60',
+	money: 85910,
+	quetzuBought: 1,
+	leader: false,
+	engineer: false,
+	cooker: false,
+	shopKeeper: false,
+	merchant: false,
+	priest: false,
+	teacher: false,
+	itemOwn: [
+		{
+			itemId: 6,
+			quantity: 1
+		},
+		{
+			itemId: 3,
+			quantity: 1
+		}
+	],
+	ingredientOwn: [
+		{
+			ingredientId: 5,
+			quantity: 10
+		}
+	],
+	reward: [
+		{
+			rewardId: 13
+		},
+		{
+			rewardId: 16
+		},
+		{
+			rewardId: 100
+		}
+	]
+} as unknown) as Player;

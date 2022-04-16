@@ -1,4 +1,4 @@
-import { Dinoz } from '../../models';
+import { AssDinozSkill, AssDinozStatus, Dinoz } from '../../models';
 import { placeList } from '../../constants';
 import { player, dinozId, skillId, skillId2 } from '../utils/constants';
 
@@ -70,5 +70,86 @@ export const AllDinozFromAnAccount = [
 		}
 	}
 ] as Array<Dinoz>;
+
+export const DinozListFromAnAccount = ([
+	{
+		dinozId: 123456,
+		following: null,
+		name: 'Biosha',
+		isFrozen: false,
+		isSacrificed: false,
+		level: 5,
+		missionId: null,
+		placeId: 4,
+		canChangeName: false,
+		life: 45,
+		maxLife: 130,
+		experience: 34,
+		status: [
+			{
+				statusId: 5
+			},
+			{
+				statusId: 4
+			}
+		],
+		skill: [
+			{
+				skillId: 61103,
+				state: null
+			},
+			{
+				skillId: 61103,
+				state: null
+			},
+			{
+				skillId: 61104,
+				state: null
+			}
+		],
+		player: {
+			playerId: player.id_1
+		}
+	},
+	{
+		dinozId: 7894,
+		following: null,
+		name: 'Biocat',
+		isFrozen: true,
+		isSacrificed: false,
+		level: 50,
+		missionId: null,
+		placeId: 35,
+		canChangeName: false,
+		life: 220,
+		maxLife: 300,
+		experience: 451,
+		status: [
+			{
+				statusId: 5
+			},
+			{
+				statusId: 4
+			}
+		],
+		skill: [
+			{
+				skillId: 61103,
+				state: null
+			},
+			{
+				skillId: 61103,
+				state: null
+			},
+			{
+				skillId: 61104,
+				state: null
+			}
+		],
+		player: {
+			playerId: player.id_1
+		}
+	}
+] as unknown) as Array<Dinoz>;
 
 export const AllDinozFromAnAccountArray = [123456, 654321] as Array<number>;

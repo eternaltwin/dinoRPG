@@ -193,7 +193,7 @@ const setPlayerMoney = async (
 	if (!playerGold) {
 		return res
 			.status(500)
-			.send(`Player ${parseInt(req.params.id)} doesn't exists`);
+			.send(`Player ${parseInt(req.params.id)} doesn't exist`);
 	}
 
 	switch (req.body.operation) {
@@ -216,7 +216,7 @@ const setPlayerMoney = async (
 	const updatedPlayerGold: Player | null = await getPlayerMoney(
 		parseInt(req.params.id)
 	);
-	return res.sendStatus(200).send(updatedPlayerGold!.money);
+	return res.status(200).send(updatedPlayerGold!.money);
 };
 
 /**
@@ -365,7 +365,7 @@ const listAllPlayerInformationForAdminDashoard = async (
 	if (!player) {
 		return res
 			.status(500)
-			.send(`Player ${parseInt(req.params.id)} doesn't exists`);
+			.send(`Player ${parseInt(req.params.id)} doesn't exist`);
 	}
 
 	// Set epicRewards as Array<number> rather than AssPlayerRewards Object
