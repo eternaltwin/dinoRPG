@@ -26,7 +26,7 @@
 			/>
 			<path
 				d="M6.1 2.7 L6.25 2.8 Q7.0 3.5 7.05 4.05 L6.7 6.2 Q6.1 8.3 4.65 8.3 1.3 8.3 -0.4 7.1 L1.0 5.5 6.1 2.7 M-14.95 -4.6 L-14.95 -4.65 Q-15.75 -8.45 -14.8 -9.95 L-12.1 -9.75 Q-10.35 -9.1 -8.7 -7.05 L-9.05 -5.65 Q-9.4 -2.5 -10.55 -2.5 -11.85 -2.5 -13.65 -3.7 L-14.95 -4.6"
-				fill="url(#gradient0)"
+				:fill="`url(#${id}-gradient0)`"
 				fill-rule="evenodd"
 				stroke="none"
 			/>
@@ -50,7 +50,7 @@
 			/>
 			<path
 				d="M7.95 -8.05 L5.55 -5.5 Q4.85 -4.85 2.5 -3.35 L-0.85 -1.1 -3.2 1.15 -5.8 3.5 -9.75 6.25 Q-11.25 4.9 -12.7 2.35 L-11.75 0.95 -10.3 -1.1 -7.35 -4.45 -4.0 -7.6 Q-1.1 -10.1 1.4 -10.8 4.35 -10.4 7.15 -8.55 L7.95 -8.05"
-				fill="url(#gradient1)"
+				:fill="`url(#${id}-gradient1)`"
 				fill-rule="evenodd"
 				stroke="none"
 			/>
@@ -67,7 +67,7 @@
 				cy="0"
 				gradientTransform="matrix(0.0201, 0.0, 0.0017, 0.0201, -20.65, -20.25)"
 				gradientUnits="userSpaceOnUse"
-				id="gradient0"
+				:id="`${id}-gradient0`"
 				r="819.2"
 				spreadMethod="pad"
 			>
@@ -79,7 +79,7 @@
 				cy="0"
 				gradientTransform="matrix(0.0201, 0.0, 0.0017, 0.0201, -9.6, -16.2)"
 				gradientUnits="userSpaceOnUse"
-				id="gradient1"
+				:id="`${id}-gradient1`"
 				r="819.2"
 				spreadMethod="pad"
 			>
@@ -96,10 +96,11 @@ import { defineComponent } from 'vue';
 export default defineComponent({
 	name: 'MoueffeChestTattoo0',
 	props: {
-		firstColor: String,
-		secondColor: String,
-		thirdColor: String,
-		size: Number
+		mainFirstColor: String,
+		mainSecondColor: String,
+		mainThirdColor: String,
+		size: Number,
+		id: String
 	}
 });
 </script>

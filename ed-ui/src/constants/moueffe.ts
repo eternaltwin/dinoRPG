@@ -10,7 +10,7 @@ export const moueffe: Moueffe = {
 				imgNumber: 0,
 				top: 20,
 				left: 17,
-				zIndex: 1
+				zIndex: 2
 			},
 			minorInjury: {
 				imgNumber: 0,
@@ -775,8 +775,8 @@ export const moueffe: Moueffe = {
 		7: {
 			imgNumber: 4,
 			default: {
-				top: -1,
-				left: -3
+				top: -3,
+				left: 1
 			},
 			minorInjury: {
 				imgNumber: 0,
@@ -843,7 +843,7 @@ export const moueffe: Moueffe = {
 					left: 30,
 					dependentImage: {
 						imgNumber: 12,
-						top: 4.5,
+						top: 4,
 						left: 46
 					}
 				}
@@ -924,26 +924,30 @@ export const moueffe: Moueffe = {
 			},
 			tail: {
 				size: 0.8,
-				top: 38,
-				left: 16
+				top: 40,
+				left: 27
+			},
+			tailSpecial: {
+				top: 40,
+				left: 19
 			},
 			tailHair: {
 				1: {
 					size: 0.7,
-					top: 40.7,
-					left: 33,
+					top: 42.5,
+					left: 44,
 					rotation: -14
 				},
 				2: {
 					size: 0.7,
-					top: 38.2,
-					left: 33,
+					top: 40.5,
+					left: 43,
 					rotation: -12
 				},
 				3: {
 					size: 0.7,
-					top: 36,
-					left: 31.5,
+					top: 37.7,
+					left: 42.4,
 					rotation: -14
 				}
 			},
@@ -991,6 +995,10 @@ export const moueffe: Moueffe = {
 				size: 1.2,
 				top: 31,
 				left: 16
+			},
+			tailSpecial: {
+				top: 40,
+				left: 19
 			},
 			tailHair: {
 				1: {
@@ -1064,27 +1072,31 @@ export const moueffe: Moueffe = {
 			},
 			tail: {
 				size: 0.8,
-				top: 39,
-				left: 20
+				top: 40,
+				left: 27
+			},
+			tailSpecial: {
+				top: 38,
+				left: 19
 			},
 			tailHair: {
 				1: {
 					size: 0.7,
-					top: 41.3,
-					left: 37,
-					rotation: -12
+					top: 42.5,
+					left: 44,
+					rotation: -14
 				},
 				2: {
 					size: 0.7,
-					top: 39.4,
-					left: 36,
-					rotation: -8
+					top: 40.5,
+					left: 43,
+					rotation: -12
 				},
 				3: {
 					size: 0.7,
-					top: 36.5,
-					left: 35.4,
-					rotation: -10
+					top: 37.7,
+					left: 42.4,
+					rotation: -14
 				}
 			}
 		},
@@ -1138,6 +1150,10 @@ export const moueffe: Moueffe = {
 				top: 31,
 				left: 20
 			},
+			tailSpecial: {
+				top: 38,
+				left: 19
+			},
 			tailHair: {
 				1: {
 					size: 1.1,
@@ -1166,7 +1182,7 @@ export const moueffe: Moueffe = {
 			left: {
 				default: {
 					top: 2,
-					left: -8
+					left: -6
 				},
 				minorInjury: {
 					imgNumber: 0,
@@ -1181,13 +1197,14 @@ export const moueffe: Moueffe = {
 				dependentImage0: {
 					imgNumber: 5,
 					top: 12,
-					left: 6
+					left: 6,
+					zIndex: 0
 				}
 			},
 			right: {
 				default: {
 					top: -4,
-					left: 65
+					left: 64
 				},
 				minorInjury: {
 					imgNumber: 0,
@@ -1278,7 +1295,8 @@ export const moueffe: Moueffe = {
 				dependentImage0: {
 					imgNumber: 5,
 					top: 12,
-					left: 6
+					left: 6,
+					zIndex: 0
 				},
 				dependentImage1: {
 					imgNumber: 4,
@@ -1289,7 +1307,7 @@ export const moueffe: Moueffe = {
 			right: {
 				default: {
 					top: -4,
-					left: 65
+					left: 64
 				},
 				minorInjury: {
 					imgNumber: 0,
@@ -1386,7 +1404,8 @@ export const moueffe: Moueffe = {
 				dependentImage0: {
 					imgNumber: 5,
 					top: 12,
-					left: 6
+					left: 6,
+					zIndex: 0
 				},
 				dependentImage1: {
 					imgNumber: 1,
@@ -1409,7 +1428,7 @@ export const moueffe: Moueffe = {
 			right: {
 				default: {
 					top: -4,
-					left: 65
+					left: 64
 				},
 				minorInjury: {
 					imgNumber: 0,
@@ -1471,7 +1490,8 @@ export const moueffe: Moueffe = {
 				dependentImage0: {
 					imgNumber: 5,
 					top: 12,
-					left: 6
+					left: 6,
+					zIndex: 0
 				},
 				dependentImage1: {
 					imgNumber: 1,
@@ -1499,7 +1519,7 @@ export const moueffe: Moueffe = {
 			right: {
 				default: {
 					top: -4,
-					left: 65
+					left: 64
 				},
 				minorInjury: {
 					imgNumber: 0,
@@ -1571,7 +1591,8 @@ export const moueffe: Moueffe = {
 				dependentImage0: {
 					imgNumber: 0,
 					top: 13,
-					left: 0
+					left: 0,
+					zIndex: -2
 				}
 			},
 			right: {
@@ -1632,8 +1653,8 @@ export const moueffe: Moueffe = {
 			},
 			right: {
 				default: {
-					top: 59,
-					left: 56
+					top: 58,
+					left: 56.5
 				},
 				nail: {
 					top: 10,
@@ -1708,6 +1729,218 @@ export const moueffe: Moueffe = {
 		},
 		A: {
 			hasChestTattoo: true
+		}
+	},
+	color: {
+		body: {
+			0: {
+				mainFirstColor: '#f0dc97',
+				mainSecondColor: '#d2a863',
+				mainThirdColor: '#be8540',
+				chestFirstColor: '#ffffd4',
+				chestSecondColor: '#ffd893',
+				chestThirdColor: '#eead68',
+				chestFourthColor: '#ffe8a3',
+				chestFifthColor: '#e3c782',
+				chestSixthColor: '#ecc07b',
+				chestSeventhColor: '#d69a54',
+				borderColor: '#984828'
+			},
+			1: {
+				mainFirstColor: '#f3b761',
+				mainSecondColor: '#e29742',
+				mainThirdColor: '#ce7520',
+				chestFirstColor: '#ffffb3',
+				chestSecondColor: '#ffc772',
+				chestThirdColor: '#fe9d48',
+				chestFourthColor: '#ffd882',
+				chestFifthColor: '#f3b761',
+				chestSixthColor: '#fcaf5a',
+				chestSeventhColor: '#e68934',
+				borderColor: '#ab4813'
+			},
+			2: {
+				mainFirstColor: '#ffa919',
+				mainSecondColor: '#e27500',
+				mainThirdColor: '#ce5300',
+				chestFirstColor: '#ffe656',
+				chestSecondColor: '#ffa52c',
+				chestThirdColor: '#ff7b24',
+				chestFourthColor: '#ffb626',
+				chestFifthColor: '#f49404',
+				chestSixthColor: '#fc8d13',
+				chestSeventhColor: '#e66710',
+				borderColor: '#830800'
+			},
+			3: {
+				mainFirstColor: '#e17d34',
+				mainSecondColor: '#c24900',
+				mainThirdColor: '#af2700',
+				chestFirstColor: '#ffb970',
+				chestSecondColor: '#f87930',
+				chestThirdColor: '#df4e25',
+				chestFourthColor: '#f48a41',
+				chestFifthColor: '#d4681f',
+				chestSixthColor: '#dc6117',
+				chestSeventhColor: '#c73a11',
+				borderColor: '#740000'
+			},
+			4: {
+				mainFirstColor: '#d0f398',
+				mainSecondColor: '#b2c065',
+				mainThirdColor: '#9e9e42',
+				chestFirstColor: '#ffffd6',
+				chestSecondColor: '#e7f094',
+				chestThirdColor: '#cec66a',
+				chestFourthColor: '#e0fda2',
+				chestFifthColor: '#c3df83',
+				chestSixthColor: '#ccd87c',
+				chestSeventhColor: '#b6b256',
+				borderColor: '#8a5e24'
+			},
+			5: {
+				mainFirstColor: '#badb6e',
+				mainSecondColor: '#9ca73a',
+				mainThirdColor: '#888518',
+				chestFirstColor: '#f7ffaa',
+				chestSecondColor: '#d1d76a',
+				chestThirdColor: '#b8ad40',
+				chestFourthColor: '#cde77a',
+				chestFifthColor: '#aec659',
+				chestSixthColor: '#b6bf52',
+				chestSeventhColor: '#a0992c',
+				borderColor: '#844828'
+			},
+			6: {
+				mainFirstColor: '#96cbff',
+				mainSecondColor: '#7797cd',
+				mainThirdColor: '#6375aa',
+				chestFirstColor: '#d2ffff',
+				chestSecondColor: '#acc7fc',
+				chestThirdColor: '#939dd2',
+				chestFourthColor: '#aad9ff',
+				chestFifthColor: '#89b6eb',
+				chestSixthColor: '#91afe4',
+				chestSeventhColor: '#7c89be',
+				borderColor: '#69475f'
+			},
+			7: {
+				mainFirstColor: '#8aa3d8',
+				mainSecondColor: '#6b6fa4',
+				mainThirdColor: '#584c82',
+				chestFirstColor: '#baccff',
+				chestSecondColor: '#a19fd4',
+				chestThirdColor: '#8874aa',
+				chestFourthColor: '#9db0e5',
+				chestFifthColor: '#7d8ec3',
+				chestSixthColor: '#8687bc',
+				chestSeventhColor: '#706096',
+				borderColor: '#2f0d43'
+			},
+			8: {
+				mainFirstColor: '#ba5e1a',
+				mainSecondColor: '#9b2a00',
+				mainThirdColor: '#870800',
+				chestFirstColor: '#f69a56',
+				chestSecondColor: '#d05a2e',
+				chestThirdColor: '#b73026',
+				chestFourthColor: '#cd6a26',
+				chestFifthColor: '#ad4905',
+				chestSixthColor: '#b54216',
+				chestSeventhColor: '#9f1c12',
+				borderColor: '#2f0d43'
+			},
+			9: {
+				mainFirstColor: '#ce5757',
+				mainSecondColor: '#b02222',
+				mainThirdColor: '#9c0000',
+				chestFirstColor: '#ff9393',
+				chestSecondColor: '#e55252',
+				chestThirdColor: '#cc2828',
+				chestFourthColor: '#e16363',
+				chestFifthColor: '#c14242',
+				chestSixthColor: '#ca3a3a',
+				chestSeventhColor: '#b41414',
+				borderColor: '#892b24'
+			},
+			A: {
+				mainFirstColor: '#fff9ac',
+				mainSecondColor: '#e0c577',
+				mainThirdColor: '#cda355',
+				chestFirstColor: '#ffffe9',
+				chestSecondColor: '#fdca7d',
+				chestThirdColor: '#fdca7d',
+				chestFourthColor: '#ffffb8',
+				chestFifthColor: '#f2e497',
+				chestSixthColor: '#fbdd8f',
+				chestSeventhColor: '#e5b669',
+				borderColor: '#9d542e'
+			}
+		},
+		hair: {
+			0: {
+				hairFirstColor: '#f2ddc9',
+				hairSecondColor: '#e1beab',
+				hairThirdColor: '#cd9b88',
+				hairBorderColor: '#a25948'
+			},
+			1: {
+				hairFirstColor: '#f2e497',
+				hairSecondColor: '#e1c678',
+				hairThirdColor: '#cda355',
+				hairBorderColor: '#9c532f'
+			},
+			2: {
+				hairFirstColor: '#f49404',
+				hairSecondColor: '#e37600',
+				hairThirdColor: '#ce5300',
+				hairBorderColor: '#a43524'
+			},
+			3: {
+				hairFirstColor: '#8a1900',
+				hairSecondColor: '#790100',
+				hairThirdColor: '#640000',
+				hairBorderColor: '#4c0000'
+			},
+			4: {
+				hairFirstColor: '#efb800',
+				hairSecondColor: '#de9900',
+				hairThirdColor: '#ca7600',
+				hairBorderColor: '#9e482e'
+			},
+			5: {
+				hairFirstColor: '#415269',
+				hairSecondColor: '#31344a',
+				hairThirdColor: '#1c1027',
+				hairBorderColor: '#281a1a'
+			},
+			6: {
+				hairFirstColor: '#d4681f',
+				hairSecondColor: '#c24900',
+				hairThirdColor: '#af2700',
+				hairBorderColor: '#981906'
+			},
+			7: {
+				hairFirstColor: '#ad4905',
+				hairSecondColor: '#9b2a00',
+				hairThirdColor: '#870800',
+				hairBorderColor: '#711100'
+			}
+		},
+		tattoo: {
+			0: '#feedd4',
+			1: '#ffb94a',
+			2: '#ff8e0f',
+			3: '#f7fecb',
+			4: '#eafe72',
+			5: '#ede3fe',
+			6: '#d5b9ff',
+			7: '#d185cb',
+			8: '#f55522',
+			9: '#e53f11',
+			A: '#f10e0e',
+			B: '#fef791',
+			C: '#f9d076'
 		}
 	}
 };
@@ -1823,6 +2056,10 @@ interface Moueffe {
 				top: number;
 				left: number;
 			};
+			tailSpecial: {
+				top: number;
+				left: number;
+			};
 			tailHair: {
 				[tailHairNumber: string]: {
 					size: number;
@@ -1859,6 +2096,7 @@ interface Moueffe {
 					imgNumber: number;
 					top: number;
 					left: number;
+					zIndex: number;
 				};
 				dependentImage1?: {
 					imgNumber: number;
@@ -2020,6 +2258,34 @@ interface Moueffe {
 	tattoo: {
 		[tattooNumber: string]: {
 			hasChestTattoo: boolean;
+		};
+	};
+	color: {
+		body: {
+			[colorNumber: string]: {
+				mainFirstColor: string;
+				mainSecondColor: string;
+				mainThirdColor: string;
+				chestFirstColor: string;
+				chestSecondColor: string;
+				chestThirdColor: string;
+				chestFourthColor: string;
+				chestFifthColor: string;
+				chestSixthColor: string;
+				chestSeventhColor: string;
+				borderColor: string;
+			};
+		};
+		hair: {
+			[colorNumber: string]: {
+				hairFirstColor: string;
+				hairSecondColor: string;
+				hairThirdColor: string;
+				hairBorderColor: string;
+			};
+		};
+		tattoo: {
+			[colorNumber: string]: string;
 		};
 	};
 }

@@ -13,7 +13,7 @@
 		>
 			<path
 				d="M-1.95 6.35 Q-2.0 7.75 -2.85 6.9 L-4.4 5.35 -4.85 4.0 Q-1.4 -5.25 1.2 -7.5 L1.35 -7.2 0.55 -5.75 -0.05 -4.75 -0.55 -3.8 -0.55 -3.75 -1.5 -1.75 -3.6 3.5 Q-3.6 4.5 -2.1 6.0 L-2.15 6.0 -1.95 6.15 -1.95 6.35 M4.25 1.9 L4.3 1.85 Q4.75 1.85 4.8 3.2 L4.8 3.3 4.8 4.75 4.7 7.25 4.7 7.4 3.95 7.45 3.45 7.45 3.6 5.85 Q3.85 2.25 4.25 1.9"
-				fill="#a36a6a"
+				:fill="borderColor"
 				fill-rule="evenodd"
 				stroke="none"
 			/>
@@ -25,7 +25,7 @@
 			/>
 			<path
 				d="M-2.1 6.0 Q-3.6 4.5 -3.6 3.5 L-1.5 -1.75 -0.55 -3.75 -0.55 -3.8 -0.5 -3.8 -0.05 -4.75 0.55 -5.75 Q2.9 -7.6 4.25 1.9 3.85 2.25 3.6 5.85 L3.45 7.45 -0.55 6.85 Q-1.5 6.25 -2.1 6.0"
-				fill="#ffffff"
+				:fill="mainFirstColor"
 				fill-rule="evenodd"
 				stroke="none"
 			/>
@@ -39,9 +39,10 @@ import { defineComponent } from 'vue';
 export default defineComponent({
 	name: 'MoueffeLeftArmSpecial1',
 	props: {
-		firstColor: String,
-		secondColor: String,
-		thirdColor: String,
+		mainFirstColor: String,
+		mainSecondColor: String,
+		mainThirdColor: String,
+		borderColor: String,
 		size: Number
 	}
 });

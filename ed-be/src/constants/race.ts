@@ -31,9 +31,9 @@ export const raceList: { [name: string]: DinozRace } = {
 			6: '3', // Chest
 			7: 'A', // Tattoo
 			8: '0',
-			9: '0',
-			10: '0',
-			11: '0',
+			9: 'A', // Body color
+			10: '7', // Hair color
+			11: 'C', // Tattoo color
 			12: '0',
 			13: '0',
 			14: '0',

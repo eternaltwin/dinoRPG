@@ -1,22 +1,34 @@
 <template>
 	<div class="dinoz" v-if="!isLoading">
 		<div class="moueffe_head">
-			<component :is="dinozHead" class="head" :size="size"></component>
+			<component
+				:is="dinozHead"
+				class="head"
+				:id="`${display}-head`"
+				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+			></component>
 			<component
 				:is="headSpecial"
 				class="head_special"
+				:id="`${display}-head_special`"
 				v-if="hasHeadSpecial"
 				:size="size"
 			></component>
 			<component
 				:is="headSpecial2"
 				class="head_special_2"
+				:id="`${display}-head_special_2`"
 				v-if="hasHeadSpecial2"
 				:size="size"
 			></component>
 			<component
 				:is="headInjury"
 				class="head_injury"
+				:id="`${display}-head_injury`"
 				v-if="hasInjury"
 				:size="size"
 			></component>
@@ -24,32 +36,55 @@
 			<component
 				:is="eyeRetina"
 				class="eye_retina"
+				:id="`${display}-eye_retina`"
 				v-if="hasEyeRetina"
 				:size="size"
 			></component>
 			<component
 				:is="dinozHair"
 				class="hair"
+				:id="`${display}-hair`"
 				v-if="hasHair"
+				:hairFirstColor="hairFirstColor"
+				:hairSecondColor="hairSecondColor"
+				:hairThirdColor="hairThirdColor"
+				:hairBorderColor="hairBorderColor"
 				:size="size"
 			></component>
 			<component
 				:is="complementaryHair"
 				class="hair_2"
+				:id="`${display}-hair_2`"
 				v-if="hasComplementaryHair"
 				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+				:hairFirstColor="hairFirstColor"
+				:hairSecondColor="hairSecondColor"
+				:hairBorderColor="hairBorderColor"
 			></component>
 			<component
 				:is="complementaryHair2"
 				class="hair_3"
+				:id="`${display}-hair_3`"
 				v-if="hasComplementaryHair2"
 				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+				:hairFirstColor="hairFirstColor"
+				:hairBorderColor="hairBorderColor"
 			></component>
 			<component
 				:is="headTattoo"
 				class="head_tattoo"
+				:id="`${display}-head_tattoo`"
 				v-if="hasTattoo && hasHeadTattoo"
 				:size="size"
+				:tattooColor="tattooColor"
 			></component>
 		</div>
 
@@ -57,200 +92,324 @@
 			<component
 				:is="chestElement1"
 				class="chest_element_1"
+				:id="`${display}-chest_element_1`"
 				:size="size"
+				:chestFirstColor="chestFirstColor"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:chestFifthColor="chestFifthColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="chestElement2"
 				class="chest_element_2"
+				:id="`${display}-chest_element_2`"
 				:size="size"
+				:chestFirstColor="chestFirstColor"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:chestSecondColor="chestSecondColor"
+				:chestThirdColor="chestThirdColor"
+				:chestFourthColor="chestFourthColor"
+				:chestSeventhColor="chestFourthColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="chestElement3"
 				class="chest_element_3"
+				:id="`${display}-chest_element_3`"
 				v-if="hasChestLastElement"
 				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:chestFourthColor="chestFourthColor"
+				:chestFifthColor="chestFifthColor"
+				:chestSixthColor="chestSixthColor"
+				:chestSeventhColor="chestSeventhColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="chestInjury1"
 				class="chest_injury_1"
+				:id="`${display}-chest_injury_1`"
 				v-if="hasInjury"
 				:size="size"
 			></component>
 			<component
 				:is="chestInjury2"
 				class="chest_injury_2"
+				:id="`${display}-chest_injury_2`"
 				v-if="hasInjury"
 				:size="size"
 			></component>
 			<component
 				:is="chestInjury3"
 				class="chest_injury_3"
+				:id="`${display}-chest_injury_3`"
 				v-if="hasInjury && hasChestThirdInjury"
 				:size="size"
 			></component>
-			<component :is="tail" class="tail" :size="size * tailSize"></component>
+			<component
+				:is="tail"
+				class="tail"
+				:id="`${display}-tail`"
+				:size="size * tailSize"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+			></component>
+			<component
+				:is="tailSpecial"
+				class="tailSpecial"
+				:id="`${display}-tailSpecial`"
+				:size="size"
+				:chestThirdColor="chestThirdColor"
+				:borderColor="borderColor"
+			></component>
 			<component
 				:is="tailHair"
 				class="tail_hair"
+				:id="`${display}-tail_hair`"
 				v-if="hasTailHair"
 				:size="size * tailHairSize"
+				:hairFirstColor="hairFirstColor"
+				:hairBorderColor="hairBorderColor"
 			></component>
 			<component
 				:is="chestTattoo"
 				class="chest_tattoo"
+				:id="`${display}-chest_tattoo`"
 				v-if="hasChestTattoo"
 				:size="size"
 			></component>
 		</div>
 
 		<div class="moueffe_left_arm">
-			<component :is="leftArm" class="left_arm" :size="size"></component>
+			<component
+				:is="leftArm"
+				class="left_arm"
+				:id="`${display}-left_arm`"
+				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+			></component>
 			<component
 				:is="leftArmSpecial0"
 				class="left_arm_special"
+				:id="`${display}-left_arm_special`"
 				v-if="hasArmSpecial"
 				:size="size"
 			></component>
 			<component
 				:is="leftArmSpecial1"
 				class="left_arm_special_1"
+				:id="`${display}-left_arm_special_1`"
 				v-if="hasArmSpecial1"
 				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="leftArmSpecial2"
 				class="left_arm_special_2"
+				:id="`${display}-left_arm_special_2`"
 				v-if="hasArmSpecial2"
 				:size="size"
 			></component>
 			<component
 				:is="leftArmSpecial4"
 				class="left_arm_special_4"
+				:id="`${display}-left_arm_special_4`"
 				v-if="hasArmSpecial4"
 				:size="size"
 			></component>
 			<component
 				:is="leftArmInjury"
 				class="left_arm_injury"
+				:id="`${display}-left_arm_injury`"
 				v-if="hasInjury && hasArmInjury"
 				:size="size"
 			></component>
 		</div>
 
 		<div class="moueffe_right_arm">
-			<component :is="rightArm" class="right_arm" :size="size"></component>
+			<component
+				:is="rightArm"
+				class="right_arm"
+				:id="`${display}-right_arm`"
+				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+			></component>
 			<component
 				:is="rightArmSpecial0"
 				class="right_arm_special"
+				:id="`${display}-right_arm_special`"
 				v-if="hasArmSpecial"
 				:size="size"
 			></component>
 			<component
 				:is="rightArmSpecial1"
 				class="right_arm_special_1"
+				:id="`${display}-right_arm_special_1`"
 				v-if="hasArmSpecial1"
 				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="rightArmSpecial2"
 				class="right_arm_special_2"
+				:id="`${display}-right_arm_special_2`"
 				v-if="hasArmSpecial2"
 				:size="size"
 			></component>
 			<component
 				:is="rightArmSpecial3"
 				class="right_arm_special_3"
+				:id="`${display}-right_arm_special_3`"
 				v-if="hasArmSpecial3"
 				:size="size"
 			></component>
 			<component
 				:is="rightArmSpecial4"
 				class="right_arm_special_4"
+				:id="`${display}-right_arm_special_4`"
 				v-if="hasArmSpecial4"
 				:size="size"
 			></component>
 			<component
 				:is="rightArmInjury"
 				class="right_arm_injury"
+				:id="`${display}-right_arm_injury`"
 				v-if="hasInjury && hasArmInjury"
 				:size="size"
 			></component>
 			<component
 				:is="armTattoo"
 				class="arm_tattoo"
+				:id="`${display}-arm_tattoo`"
 				v-if="hasArmTattoo"
 				:size="size"
+				:tattooColor="tattooColor"
 			></component>
 		</div>
 
 		<div class="moueffe_left_leg">
-			<component :is="leftLeg" class="left_leg" :size="size"></component>
+			<component
+				:is="leftLeg"
+				class="left_leg"
+				:id="`${display}-left_leg`"
+				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+			></component>
 			<component
 				:is="leftLegKneeHorn"
 				class="left_leg_knee_horn"
+				:id="`${display}-left_leg_knee_horn`"
 				v-if="hasKnee"
 				:size="size"
 			></component>
 			<component
 				:is="leftLegKneeSkin"
 				class="left_leg_knee_skin"
+				:id="`${display}-left_leg_knee_skin`"
 				v-if="hasKnee"
 				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="leftLegInjury1"
 				class="left_leg_injury_1"
+				:id="`${display}-left_leg_injury_1`"
 				v-if="hasInjury"
 				:size="size"
 			></component>
 			<component
 				:is="leftLegInjury2"
 				class="left_leg_injury_2"
+				:id="`${display}-left_leg_injury_2`"
 				v-if="hasInjury && hasLegSecondInjury"
 				:size="size"
 			></component>
 			<component
 				:is="leftLegNail"
 				class="left_leg_nail"
+				:id="`${display}-left_leg_nail`"
 				:size="size"
 			></component>
 		</div>
 
 		<div class="moueffe_right_leg">
-			<component :is="rightLeg" class="right_leg" :size="size"></component>
+			<component
+				:is="rightLeg"
+				class="right_leg"
+				:id="`${display}-right_leg`"
+				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:mainThirdColor="mainThirdColor"
+				:borderColor="borderColor"
+			></component>
 			<component
 				:is="rightLegKneeHorn"
 				class="right_leg_knee_horn"
+				:id="`${display}-right_leg_knee_horn`"
 				v-if="hasKnee"
 				:size="size"
 			></component>
 			<component
 				:is="rightLegKneeSkin"
 				class="right_leg_knee_skin"
+				:id="`${display}-right_leg_knee_skin`"
 				v-if="hasKnee"
 				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="rightLegInjury1"
 				class="right_leg_injury_1"
+				:id="`${display}-right_leg_injury_1`"
 				v-if="hasInjury"
 				:size="size"
 			></component>
 			<component
 				:is="rightLegInjury2"
 				class="right_leg_injury_2"
+				:id="`${display}-right_leg_injury_2`"
 				v-if="hasInjury && hasLegSecondInjury"
 				:size="size"
 			></component>
 			<component
 				:is="rightLegInjury3"
 				class="right_leg_injury_3"
+				:id="`${display}-right_leg_injury_3`"
 				v-if="hasInjury && hasLegThirdInjury"
 				:size="size"
 			></component>
 			<component
 				:is="rightLegNail"
 				class="right_leg_nail"
+				:id="`${display}-right_leg_nail`"
 				:size="size"
 			></component>
 		</div>
@@ -270,9 +429,22 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			firstColor: undefined as string | undefined,
-			secondColor: undefined as string | undefined,
-			thirdColor: undefined as string | undefined,
+			chestFirstColor: undefined as string | undefined,
+			mainFirstColor: undefined as string | undefined,
+			mainSecondColor: undefined as string | undefined,
+			mainThirdColor: undefined as string | undefined,
+			chestSecondColor: undefined as string | undefined,
+			chestThirdColor: undefined as string | undefined,
+			chestFourthColor: undefined as string | undefined,
+			chestFifthColor: undefined as string | undefined,
+			chestSixthColor: undefined as string | undefined,
+			chestSeventhColor: undefined as string | undefined,
+			borderColor: undefined as string | undefined,
+			hairFirstColor: undefined as string | undefined,
+			hairSecondColor: undefined as string | undefined,
+			hairThirdColor: undefined as string | undefined,
+			hairBorderColor: undefined as string | undefined,
+			tattooColor: undefined as string | undefined,
 			head: {} as any, // eslint-disable-line
 			chest: {} as any, // eslint-disable-line
 			arm: {} as any, // eslint-disable-line
@@ -310,6 +482,7 @@ export default defineComponent({
 			leftArmInjuryPositionLeft: undefined as string | undefined,
 			leftArmSpecialPositionTop: undefined as string | undefined,
 			leftArmSpecialPositionLeft: undefined as string | undefined,
+			leftArmSpecialPositionZIndex: undefined as string | undefined,
 			leftArmSpecial1PositionTop: undefined as string | undefined,
 			leftArmSpecial1PositionLeft: undefined as string | undefined,
 			leftArmSpecial2PositionTop: undefined as string | undefined,
@@ -359,6 +532,8 @@ export default defineComponent({
 			rightLegNailPositionLeft: undefined as string | undefined,
 			tailPositionTop: undefined as string | undefined,
 			tailPositionLeft: undefined as string | undefined,
+			tailSpecialPositionTop: undefined as string | undefined,
+			tailSpecialPositionLeft: undefined as string | undefined,
 			hairPositionTop: undefined as string | undefined,
 			hairPositionLeft: undefined as string | undefined,
 			hair2PositionTop: undefined as string | undefined,
@@ -531,6 +706,11 @@ export default defineComponent({
 		tail(): string {
 			return defineAsyncComponent(() =>
 				import(`@/components/dinoz/moueffe/chest/tail/${0}.vue`)
+			);
+		},
+		tailSpecial(): string {
+			return defineAsyncComponent(() =>
+				import(`@/components/dinoz/moueffe/chest/tail/special/${0}.vue`)
 			);
 		},
 		tailHair(): string {
@@ -743,20 +923,16 @@ export default defineComponent({
 	},
 	methods: {
 		changeColor(
-			firstColor: string,
-			secondColor: string,
-			thirdColor: string
+			mainFirstColor: string,
+			mainSecondColor: string,
+			mainThirdColor: string
 		): void {
-			this.firstColor = firstColor;
-			this.secondColor = secondColor;
-			this.thirdColor = thirdColor;
+			this.mainFirstColor = mainFirstColor;
+			this.mainSecondColor = mainSecondColor;
+			this.mainThirdColor = mainThirdColor;
 		}
 	},
 	mounted(): void {
-		this.firstColor = '#E16362';
-		this.secondColor = '#C12B2B';
-		this.thirdColor = '#AC0707';
-
 		this.hasKnee = this.display[2] === '1'; // De 0 à 1
 		this.head = moueffe.head[parseInt(this.display[3])]; // De 0 à 7
 		this.hairNumber = parseInt(this.display[4]); // De 0 à 6
@@ -768,6 +944,31 @@ export default defineComponent({
 
 		this.leg = moueffe.leg[0]; // Unique
 
+		const bodyColor = moueffe.color.body[this.display[9]];
+		const hairFirstColor = moueffe.color.hair[this.display[10]];
+
+		this.mainFirstColor = bodyColor.mainFirstColor;
+		this.mainSecondColor = bodyColor.mainSecondColor;
+		this.mainThirdColor = bodyColor.mainThirdColor;
+
+		this.chestFirstColor = bodyColor.chestFirstColor;
+		this.chestSecondColor = bodyColor.chestSecondColor;
+		this.chestThirdColor = bodyColor.chestThirdColor;
+		this.chestFourthColor = bodyColor.chestFourthColor;
+		this.chestFifthColor = bodyColor.chestFifthColor;
+		this.chestSixthColor = bodyColor.chestSixthColor;
+		this.chestSeventhColor = bodyColor.chestSeventhColor;
+		this.borderColor = bodyColor.borderColor;
+
+		this.hairFirstColor = hairFirstColor.hairFirstColor;
+		this.hairSecondColor = hairFirstColor.hairSecondColor;
+		this.hairThirdColor = hairFirstColor.hairThirdColor;
+		this.hairBorderColor = hairFirstColor.hairBorderColor;
+
+		this.tattooColor = moueffe.color.tattoo[this.display[11]];
+
+		this.tailSize = this.chest.tail.size;
+
 		// this.childOrAdult = display[1] === '9' ? 'adult' : 'baby';
 		this.childOrAdult = 'adult';
 
@@ -778,8 +979,6 @@ export default defineComponent({
 			this.injuryType = 'minorInjury';
 			this.hasInjury = true;
 		}
-
-		this.tailSize = this.chest.tail.size;
 
 		// Head
 		this.headDefaultPositionLeft = `${this.head.default.left * this.size}px`;
@@ -921,6 +1120,7 @@ export default defineComponent({
 				this.size}px`;
 			this.leftArmSpecialPositionTop = `${this.arm.left.dependentImage0.top *
 				this.size}px`;
+			this.leftArmSpecialPositionZIndex = `${this.arm.left.dependentImage0.zIndex}`;
 
 			this.rightArmSpecialPositionLeft = `${this.arm.right.dependentImage0
 				.left * this.size}px`;
@@ -1029,8 +1229,13 @@ export default defineComponent({
 		this.tailPositionLeft = `${this.chest.tail.left * this.size}px`;
 		this.tailPositionTop = `${this.chest.tail.top * this.size}px`;
 
+		this.tailSpecialPositionLeft = `${this.chest.tailSpecial.left *
+			this.size}px`;
+		this.tailSpecialPositionTop = `${this.chest.tailSpecial.top * this.size}px`;
+
 		// Tail hair
 		if (this.head.hair[this.hairNumber]?.hasTailHair) {
+			this.hasTailHair = true;
 			this.tailHairSize = this.chest.tailHair[this.hairNumber].size;
 			this.tailHairPositionLeft = `${this.chest.tailHair[this.hairNumber].left *
 				this.size}px`;
@@ -1110,7 +1315,7 @@ export default defineComponent({
 	float: left;
 	position: relative;
 	top: 0px;
-	left: 20px;
+	left: 130px;
 	-webkit-transform: scaleX(v-bind(flip));
 	transform: scaleX(v-bind(flip));
 }
@@ -1137,7 +1342,7 @@ export default defineComponent({
 	position: absolute;
 	top: v-bind(headSpecial2PositionTop);
 	left: v-bind(headSpecial2PositionLeft);
-	z-index: v-bind(2);
+	z-index: 2;
 }
 
 .eye {
@@ -1232,13 +1437,14 @@ export default defineComponent({
 	position: absolute;
 	top: v-bind(leftArmSpecialPositionTop);
 	left: v-bind(leftArmSpecialPositionLeft);
-	z-index: 0;
+	z-index: v-bind(leftArmSpecialPositionZIndex);
 }
 
 .left_arm_special_1 {
 	position: absolute;
 	top: v-bind(leftArmSpecial1PositionTop);
 	left: v-bind(leftArmSpecial1PositionLeft);
+	z-index: -2;
 }
 
 .left_arm_special_2 {
@@ -1252,6 +1458,7 @@ export default defineComponent({
 	position: absolute;
 	top: v-bind(leftArmSpecial4PositionTop);
 	left: v-bind(leftArmSpecial4PositionLeft);
+	z-index: -2;
 }
 
 .moueffe_right_arm {
@@ -1357,13 +1564,14 @@ export default defineComponent({
 	position: absolute;
 	top: v-bind(rightLegKneeHornPositionTop);
 	left: v-bind(rightLegKneeHornPositionLeft);
-	z-index: 1;
+	z-index: 2;
 }
 
 .right_leg_knee_skin {
 	position: absolute;
 	top: v-bind(rightLegKneeSkinPositionTop);
 	left: v-bind(rightLegKneeSkinPositionLeft);
+	z-index: 1;
 }
 
 .right_leg_injury_1 {
@@ -1399,6 +1607,13 @@ export default defineComponent({
 	transform: rotate(-7deg);
 	top: v-bind(tailPositionTop);
 	left: v-bind(tailPositionLeft);
+	z-index: -1;
+}
+
+.tailSpecial {
+	position: absolute;
+	top: v-bind(tailSpecialPositionTop);
+	left: v-bind(tailSpecialPositionLeft);
 	z-index: -1;
 }
 

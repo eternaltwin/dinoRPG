@@ -13,7 +13,7 @@
 		>
 			<path
 				d="M4.45 -1.65 L4.45 -1.6 Q2.65 4.45 1.1 4.4 L1.0 4.35 -0.45 3.55 -4.0 3.15 -4.1 3.1 Q-4.5 2.7 -4.5 1.15 -4.35 -2.65 -2.2 -2.6 L0.65 -2.15 Q1.6 -1.7 1.6 -0.8 1.6 0.2 1.25 0.7 0.85 1.2 0.1 1.2 L-0.5 1.05 Q-0.8 0.9 -0.75 0.55 L-0.7 0.45 -0.7 0.4 0.2 -0.7 Q-0.5 -1.25 -2.1 -1.25 -3.15 -1.2 -3.15 1.05 -3.1 2.0 -1.6 2.0 -0.7 1.95 1.1 2.8 1.9 2.5 3.15 -1.65 2.95 -2.45 -2.95 -3.45 L-3.0 -3.45 -3.1 -3.5 -3.15 -3.65 -2.65 -4.2 -1.4 -4.4 Q0.9 -4.4 2.8 -3.3 4.5 -2.35 4.45 -1.65"
-				fill="#ffffff"
+				:fill="tattooColor"
 				fill-rule="evenodd"
 				stroke="none"
 			/>
@@ -27,9 +27,10 @@ import { defineComponent } from 'vue';
 export default defineComponent({
 	name: 'MoueffeHeadTattoo2',
 	props: {
-		firstColor: String,
-		secondColor: String,
-		thirdColor: String,
+		mainFirstColor: String,
+		mainSecondColor: String,
+		mainThirdColor: String,
+		tattooColor: String,
 		size: Number
 	}
 });

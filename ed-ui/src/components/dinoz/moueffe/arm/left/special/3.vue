@@ -45,9 +45,9 @@ import { defineComponent } from 'vue';
 export default defineComponent({
 	name: 'MoueffeLeftArmSpecial3',
 	props: {
-		firstColor: String,
-		secondColor: String,
-		thirdColor: String,
+		mainFirstColor: String,
+		mainSecondColor: String,
+		mainThirdColor: String,
 		size: Number
 	}
 });

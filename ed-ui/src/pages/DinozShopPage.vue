@@ -150,7 +150,7 @@ export default defineComponent({
 <style type="scss" scoped>
 .dinoz_display {
 	position: relative;
-	left: 130px;
+	left: 40px;
 	top: -20px;
 }
 </style>
