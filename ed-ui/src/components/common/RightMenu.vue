@@ -24,7 +24,11 @@
 			}}</a>
 		</li>
 		<li>
-			<a @click="goToPage('')">{{ $t('rightMenu.forum') }}</a>
+			<a
+				href="https://eternal-twin.net/forum/sections/drpg_main"
+				target="_blank"
+				>{{ $t('rightMenu.forum') }}</a
+			>
 		</li>
 		<li>
 			<a @click="goToPage('')">{{ $t('rightMenu.faq') }}</a>
@@ -114,6 +118,7 @@ export default defineComponent({
 		width: 100px;
 	}
 	a {
+		text-decoration: none;
 		border-collapse: collapse;
 		border-spacing: 0px 0px;
 		color: rgb(142, 62, 38);
