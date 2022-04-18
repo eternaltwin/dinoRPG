@@ -11,7 +11,7 @@ export const errorHandler = {
 			} else {
 				EventBus.emit('isLoading', false);
 				EventBus.emit('responseError', err);
-				router.push({ name: 'Accueil' });
+				router.push({ name: 'MainPage' });
 			}
 		}
 	}

@@ -36,25 +36,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -3,
 					left: 36,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -8,
 					left: 36,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -9,
 					left: 27,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -3,
-					left: 42
+					left: 42,
+					zIndex: -1
 				},
 				5: {
 					top: -16,
 					left: 32,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: -3,
@@ -70,10 +75,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -14,
 					left: 33,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 3,
 						left: 48
+					}
+				},
+				7: {
+					top: 3.5,
+					left: 55,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -5,
+						left: 34,
+						zIndex: 0
 					}
 				}
 			},
@@ -140,25 +157,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -4,
 					left: 31,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -8,
 					left: 32,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -9,
 					left: 23,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -3,
-					left: 37
+					left: 37,
+					zIndex: -1
 				},
 				5: {
 					top: -16,
 					left: 28,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: -3,
@@ -174,10 +196,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -14,
 					left: 29,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 2,
 						left: 44
+					}
+				},
+				7: {
+					top: 3.5,
+					left: 51,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -5,
+						left: 29.5,
+						zIndex: 0
 					}
 				}
 			},
@@ -250,25 +284,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -4,
 					left: 31,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -8,
 					left: 32,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -9,
 					left: 23,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -3,
-					left: 37
+					left: 37,
+					zIndex: -1
 				},
 				5: {
 					top: -16,
 					left: 28,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: -3,
@@ -284,10 +323,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -14,
 					left: 29,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 2,
 						left: 44
+					}
+				},
+				7: {
+					top: 3.5,
+					left: 51,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -5,
+						left: 29.5,
+						zIndex: 0
 					}
 				}
 			},
@@ -359,25 +410,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -1,
 					left: 26,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -6,
 					left: 28,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -7,
 					left: 20,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -1,
-					left: 33
+					left: 33,
+					zIndex: -1
 				},
 				5: {
 					top: -14.5,
 					left: 23,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: -1,
@@ -393,10 +449,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -11,
 					left: 24.5,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 3,
 						left: 40
+					}
+				},
+				7: {
+					top: 5,
+					left: 46,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -4,
+						left: 24,
+						zIndex: 0
 					}
 				}
 			},
@@ -474,25 +542,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -1,
 					left: 26,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -6,
 					left: 28,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -7,
 					left: 20,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -1,
-					left: 33
+					left: 33,
+					zIndex: -1
 				},
 				5: {
 					top: -14.5,
 					left: 23,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: -1,
@@ -508,10 +581,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -11,
 					left: 24.5,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 3,
 						left: 40
+					}
+				},
+				7: {
+					top: 5,
+					left: 46,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -4,
+						left: 24,
+						zIndex: 0
 					}
 				}
 			},
@@ -583,25 +668,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -1,
 					left: 35,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -5,
 					left: 37,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -7,
 					left: 28,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -2,
-					left: 41
+					left: 41,
+					zIndex: -1
 				},
 				5: {
 					top: -15,
 					left: 31,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: -1,
@@ -617,10 +707,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -12,
 					left: 33,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 2.5,
 						left: 48
+					}
+				},
+				7: {
+					top: 5,
+					left: 54.5,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -4,
+						left: 31.5,
+						zIndex: 0
 					}
 				}
 			},
@@ -698,25 +800,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -1,
 					left: 35,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -5,
 					left: 37,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -7,
 					left: 28,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -2,
-					left: 41
+					left: 41,
+					zIndex: -1
 				},
 				5: {
 					top: -15,
 					left: 31,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: -1,
@@ -732,10 +839,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -12,
 					left: 33,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 2.5,
 						left: 48
+					}
+				},
+				7: {
+					top: 5,
+					left: 54.5,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -4,
+						left: 31.5,
+						zIndex: 0
 					}
 				}
 			},
@@ -807,25 +926,30 @@ export const moueffe: Moueffe = {
 				1: {
 					top: -1,
 					left: 32,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				2: {
 					top: -5,
 					left: 33,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				3: {
 					top: -7,
 					left: 25,
+					zIndex: -1,
 					hasTailHair: true
 				},
 				4: {
 					top: -1,
-					left: 40
+					left: 40,
+					zIndex: -1
 				},
 				5: {
 					top: -13,
 					left: 29,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 11,
 						top: 0,
@@ -841,10 +965,22 @@ export const moueffe: Moueffe = {
 				6: {
 					top: -10,
 					left: 30,
+					zIndex: -1,
 					dependentImage: {
 						imgNumber: 12,
 						top: 4,
 						left: 46
+					}
+				},
+				7: {
+					top: 6,
+					left: 53,
+					zIndex: 2,
+					dependentImage2: {
+						imgNumber: 8,
+						top: -3,
+						left: 32,
+						zIndex: 0
 					}
 				}
 			},
@@ -1993,6 +2129,7 @@ interface Moueffe {
 				[hairNumber: string]: {
 					top: number;
 					left: number;
+					zIndex: number;
 					hasTailHair?: boolean;
 					dependentImage?: {
 						imgNumber: number;

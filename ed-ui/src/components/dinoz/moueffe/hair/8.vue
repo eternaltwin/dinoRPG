@@ -1,0 +1,58 @@
+<template>
+	<svg
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		:height="`${10 * size}px`"
+		:width="`${28.8 * size}px`"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<g transform="matrix(1.0, 0.0, 0.0, 1.0, 14.4, 12.0) rotate(-30, 0, 0)">
+			<path
+				d="M-12.1 -0.25 Q-13.2 -0.3 -13.9 -1.85 -14.4 -3.0 -14.4 -3.8 L-14.3 -4.35 -14.15 -4.05 -13.95 -3.8 -13.75 -3.65 -13.3 -3.35 -13.25 -3.3 Q-11.95 -2.55 -9.1 -1.9 L-4.55 -1.15 -2.35 -0.7 3.95 0.05 5.4 -0.1 6.7 0.05 Q4.5 1.6 3.25 2.05 L-2.25 2.5 -3.35 2.5 -11.6 -0.55 -11.85 -0.65 -12.3 -0.8 -12.6 -0.7 -12.6 -0.55 -12.1 -0.25 M1.3 -0.85 L1.85 -0.85 3.0 -0.85 3.05 -0.75 1.3 -0.85 M6.1 2.2 L3.7 3.2 Q3.9 3.0 4.25 2.9 L5.85 2.2 6.1 2.2"
+				:fill="`url(#${id}-gradient0)`"
+				fill-rule="evenodd"
+				stroke="none"
+			/>
+			<path
+				d="M-14.3 -4.35 L-14.4 -4.6 Q-14.4 -4.9 -13.95 -4.9 L-7.45 -3.1 0.85 -2.15 6.75 -2.0 13.95 -2.35 14.4 -1.9 Q14.4 -0.25 8.6 2.4 3.1 4.9 0.95 4.9 -0.5 4.9 -5.05 3.15 -9.5 1.4 -12.1 -0.25 L-12.6 -0.55 -12.6 -0.7 -12.3 -0.8 -11.85 -0.65 -11.6 -0.55 -3.35 2.5 0.65 3.8 3.7 3.2 6.1 2.2 7.0 1.75 12.55 -1.25 3.0 -0.85 1.85 -0.85 1.3 -0.85 -4.55 -1.15 -9.1 -1.9 Q-11.95 -2.55 -13.25 -3.3 L-13.3 -3.35 -13.75 -3.65 -13.95 -3.8 -14.15 -4.05 -14.3 -4.35"
+				:fill="borderColor"
+				fill-rule="evenodd"
+				stroke="none"
+			/>
+			<path
+				d="M-4.55 -1.15 L1.3 -0.85 3.05 -0.75 3.0 -0.85 12.55 -1.25 7.0 1.75 6.1 2.2 5.85 2.2 4.25 2.9 Q3.9 3.0 3.7 3.2 L0.65 3.8 -3.35 2.5 -2.25 2.5 3.25 2.05 Q4.5 1.6 6.7 0.05 L5.4 -0.1 3.95 0.05 -2.35 -0.7 -4.55 -1.15"
+				:fill="mainSecondColor"
+				fill-rule="evenodd"
+				stroke="none"
+			/>
+		</g>
+		<defs>
+			<radialGradient
+				cx="0"
+				cy="0"
+				gradientTransform="matrix(0.0123, 0.0018, -7.0E-4, 0.0048, -4.6, -1.2)"
+				gradientUnits="userSpaceOnUse"
+				:id="`${id}-gradient0`"
+				r="819.2"
+				spreadMethod="pad"
+			>
+				<stop offset="0.0" stop-color="#ffffff" />
+				<stop offset="0.0" :stop-color="mainFirstColor" />
+			</radialGradient>
+		</defs>
+	</svg>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+	name: 'MoueffeHair8',
+	props: {
+		size: Number,
+		id: String,
+		mainFirstColor: String,
+		mainSecondColor: String,
+		borderColor: String
+	}
+});
+</script>

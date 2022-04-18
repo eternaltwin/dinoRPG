@@ -45,11 +45,14 @@
 				class="hair"
 				:id="`${display}-hair`"
 				v-if="hasHair"
+				:size="size"
 				:hairFirstColor="hairFirstColor"
 				:hairSecondColor="hairSecondColor"
 				:hairThirdColor="hairThirdColor"
 				:hairBorderColor="hairBorderColor"
-				:size="size"
+				:mainFirstColor="mainFirstColor"
+				:mainSecondColor="mainSecondColor"
+				:borderColor="borderColor"
 			></component>
 			<component
 				:is="complementaryHair"
@@ -536,6 +539,7 @@ export default defineComponent({
 			tailSpecialPositionLeft: undefined as string | undefined,
 			hairPositionTop: undefined as string | undefined,
 			hairPositionLeft: undefined as string | undefined,
+			hairZIndex: undefined as string | undefined,
 			hair2PositionTop: undefined as string | undefined,
 			hair2PositionLeft: undefined as string | undefined,
 			hair3PositionTop: undefined as string | undefined,
@@ -1242,6 +1246,7 @@ export default defineComponent({
 				this.size}px`;
 			this.hairPositionTop = `${this.head.hair[this.hairNumber].top *
 				this.size}px`;
+			this.hairZIndex = `${this.head.hair[this.hairNumber].zIndex}`;
 
 			// Complementary hair
 			if (this.head.hair[this.hairNumber].dependentImage) {
@@ -1352,7 +1357,7 @@ export default defineComponent({
 	position: absolute;
 	top: v-bind(hairPositionTop);
 	left: v-bind(hairPositionLeft);
-	z-index: -1;
+	z-index: v-bind(hairZIndex);
 }
 
 .hair_2 {
