@@ -538,5 +538,11 @@ export const placeList: { [name: string]: Place } = {
 		placeId: 100,
 		name: 'mcelit',
 		borderPlace: [97, 99]
+	},
+	APPROCHER_SYPHON2: {
+		placeId: 101,
+		name: 'sinto2',
+		borderPlace: [60],
+		alias: 69
 	}
 };
