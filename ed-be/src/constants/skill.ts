@@ -90,7 +90,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11206,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -138,7 +138,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11304,
 		type: SkillType.A,
 		energy: Energy.WEAK,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -146,7 +146,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11305,
 		type: SkillType.A,
 		energy: Energy.WEAK,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -170,7 +170,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11308,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -178,7 +178,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11309,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -186,7 +186,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11310,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -194,7 +194,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11311,
 		type: SkillType.E,
 		energy: Energy.WEAK,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -202,7 +202,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11312,
 		type: SkillType.A,
 		energy: Energy.WEAK,
-		element: [ElementType.FIRE, ElementType.FIRE],
+		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -218,7 +218,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11314,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.LIGHT],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -266,7 +266,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11405,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -274,7 +274,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11406,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -298,7 +298,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11409,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.WOOD],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -306,7 +306,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11410,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -314,7 +314,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11411,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -322,7 +322,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11412,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.LIGHT],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -330,7 +330,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 11413,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.FIRE],
+		element: [ElementType.FIRE, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -571,7 +571,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 21304,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WOOD, ElementType.WOOD],
+		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -579,7 +579,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 21305,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WOOD, ElementType.WOOD],
+		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -587,7 +587,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 21306,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WOOD, ElementType.WOOD],
+		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -699,7 +699,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 21407,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.WOOD],
+		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -707,7 +707,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 21408,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WOOD],
+		element: [ElementType.WOOD, ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -715,7 +715,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 21409,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.WOOD],
+		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1012,7 +1012,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31305,
 		type: SkillType.A,
 		energy: Energy.WEAK,
-		element: [ElementType.WATER, ElementType.WATER],
+		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1020,7 +1020,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31306,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WATER, ElementType.WATER],
+		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1028,7 +1028,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31307,
 		type: SkillType.C,
 		energy: Energy.NONE,
-		element: [ElementType.WATER, ElementType.WATER],
+		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1044,7 +1044,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31309,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WATER, ElementType.WATER],
+		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1140,7 +1140,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31407,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WATER],
+		element: [ElementType.WATER, ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1148,7 +1148,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31408,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WATER],
+		element: [ElementType.WATER, ElementType.WOOD],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1156,7 +1156,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31409,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.WATER],
+		element: [ElementType.WATER, ElementType.LIGHT],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1172,7 +1172,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 31502,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.WATER],
+		element: [ElementType.WATER, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1180,7 +1180,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 32101,
 		type: SkillType.S,
 		energy: Energy.NONE,
-		element: [ElementType.WATER],
+		element: [ElementType.WATER, ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.ETHER
 	},
@@ -1421,7 +1421,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41304,
 		type: SkillType.S,
 		energy: Energy.NONE,
-		element: [ElementType.LIGHT, ElementType.LIGHT],
+		element: [ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1429,7 +1429,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41305,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.LIGHT, ElementType.LIGHT],
+		element: [ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1437,7 +1437,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41306,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.LIGHT, ElementType.LIGHT],
+		element: [ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1445,7 +1445,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41307,
 		type: SkillType.S,
 		energy: Energy.NONE,
-		element: [ElementType.LIGHT, ElementType.LIGHT],
+		element: [ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1461,7 +1461,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41309,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.LIGHT, ElementType.LIGHT],
+		element: [ElementType.LIGHT],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1549,7 +1549,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41408,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.LIGHT],
+		element: [ElementType.LIGHT, ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1565,7 +1565,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41410,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHT],
+		element: [ElementType.LIGHT, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1573,7 +1573,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41411,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHT],
+		element: [ElementType.LIGHT, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1589,7 +1589,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41413,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHT],
+		element: [ElementType.LIGHT, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1798,7 +1798,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51205,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.AIR, ElementType.AIR],
+		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1854,7 +1854,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51305,
 		type: SkillType.S,
 		energy: Energy.NONE,
-		element: [ElementType.AIR, ElementType.AIR],
+		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1862,7 +1862,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51306,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.AIR, ElementType.AIR],
+		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1878,7 +1878,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51308,
 		type: SkillType.C,
 		energy: Energy.NONE,
-		element: [ElementType.AIR, ElementType.AIR],
+		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1886,7 +1886,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51309,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.AIR, ElementType.AIR],
+		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA
 	},
@@ -1926,7 +1926,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51314,
 		type: SkillType.A,
 		energy: Energy.WEAK,
-		element: [ElementType.AIR],
+		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1982,7 +1982,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51407,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.AIR],
+		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -1990,7 +1990,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51408,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.AIR],
+		element: [ElementType.AIR, ElementType.LIGHT],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -2006,7 +2006,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51502,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.AIR],
+		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -2014,7 +2014,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51503,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.AIR],
+		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -2336,7 +2336,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41505, //Edit since this
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHT],
+		element: [ElementType.LIGHT, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -2344,7 +2344,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 51506,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHT],
+		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -2352,7 +2352,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41507,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHT],
+		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	},
@@ -2360,7 +2360,7 @@ export const skillList: { [name: string]: DinozSkill } = {
 		skillId: 41508,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHT],
+		element: [ElementType.WATER, ElementType.LIGHT],
 		activatable: true,
 		tree: SkillTree.VANILLA
 	}

@@ -172,7 +172,7 @@ export default defineComponent({
 				background-position: left bottom;
 				max-width: 222px;
 				&.name {
-					max-width: 200px;
+					width: 200px;
 				}
 				&.type {
 					max-width: 15px;

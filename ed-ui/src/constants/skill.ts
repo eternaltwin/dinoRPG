@@ -294,7 +294,7 @@ export const skillNameList = {
 	61118: 'DurACuire',
 	// Other Skills
 	41504: 'Hercolubus',
-	41505: 'Reine de la ruche',
+	41505: 'ReineDeLaRuche',
 	51506: 'BigMama',
 	41507: 'Yggdrasil',
 	41508: 'BaleineBlanche'
