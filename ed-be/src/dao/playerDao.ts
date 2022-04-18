@@ -85,7 +85,7 @@ const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
 			},
 			{
 				model: Dinoz,
-				attributes: ['dinozId', 'display', 'name', 'level', 'raceId'],
+				attributes: ['dinozId', 'display', 'name', 'level', 'raceId', 'life'],
 				include: [
 					{
 						model: AssDinozStatus,

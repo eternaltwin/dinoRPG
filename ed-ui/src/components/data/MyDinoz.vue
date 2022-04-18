@@ -13,6 +13,12 @@
 					{{ $t(`race.name.${raceList[dinoz.raceId]}`) }}
 					{{ $t(`myAccount.level`) }} {{ dinoz.level }}
 				</div>
+				<DinozWithoutFlash
+					id="dinozToSee"
+					:display="dinoz.display"
+					:life="dinoz.life"
+					:flip="1"
+				/>
 			</li>
 			<template #content>
 				<template v-for="(status, index) in dinoz.statusList" :key="index">
@@ -27,12 +33,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { raceList, statusList } from '@/constants';
 import { PlayerInfo } from '@/models';
 
 export default defineComponent({
 	name: 'MyDinoz',
+	components: {
+		DinozWithoutFlash: defineAsyncComponent(() =>
+			import('@/components/dinoz/dinozWithoutFlash.vue')
+		)
+	},
 	props: {
 		accountData: {
 			type: Object as PropType<PlayerInfo>
@@ -52,6 +63,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+#dinozToSee {
+	position: absolute;
+	left: 22px;
+	top: 20px;
+}
 .dinozList {
 	float: left;
 	position: relative;
@@ -75,6 +91,7 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #52646b;
 	background-color: transparent;
+	margin-top: 145px;
 }
 .dinozInfo {
 	text-align: center;

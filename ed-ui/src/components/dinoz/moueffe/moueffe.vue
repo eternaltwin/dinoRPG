@@ -921,17 +921,6 @@ export default defineComponent({
 			);
 		}
 	},
-	methods: {
-		changeColor(
-			mainFirstColor: string,
-			mainSecondColor: string,
-			mainThirdColor: string
-		): void {
-			this.mainFirstColor = mainFirstColor;
-			this.mainSecondColor = mainSecondColor;
-			this.mainThirdColor = mainThirdColor;
-		}
-	},
 	mounted(): void {
 		this.hasKnee = this.display[2] === '1'; // De 0 à 1
 		this.head = moueffe.head[parseInt(this.display[3])]; // De 0 à 7

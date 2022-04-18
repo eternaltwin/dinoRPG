@@ -2,8 +2,8 @@
 	<component
 		:is="dinozToDisplay"
 		:display="display"
-		:life="60"
-		:flip="-1"
+		:life="life"
+		:flip="flip"
 	></component>
 </template>
 
@@ -15,7 +15,8 @@ export default defineComponent({
 	name: 'DinozWithoutFlash',
 	props: {
 		display: { type: String, required: true },
-		life: { type: Number, required: true }
+		life: { type: Number, required: true },
+		flip: { type: Number, required: true }
 	},
 	computed: {
 		dinozToDisplay(): string {

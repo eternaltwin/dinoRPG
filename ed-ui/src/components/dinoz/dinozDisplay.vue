@@ -5,6 +5,12 @@
 		{{ dinozData.name }}
 	</div>
 	<a class="right" />
+	<DinozWithoutFlash
+		id="dinozToSee"
+		:display="dinozData.display"
+		:life="dinozData.life"
+		:flip="-1"
+	/>
 	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
 	<DinozEquip :itemList="dinozData.items" />
@@ -24,6 +30,9 @@ export default defineComponent({
 		};
 	},
 	components: {
+		DinozWithoutFlash: defineAsyncComponent(() =>
+			import('@/components/dinoz/dinozWithoutFlash.vue')
+		),
 		DinozElements: defineAsyncComponent(() =>
 			import('@/components/dinoz/dinozElements.vue')
 		),
@@ -47,6 +56,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+#dinozToSee {
+	position: absolute;
+	left: 160px;
+	top: 60px;
+}
 .left {
 	position: absolute;
 	margin-left: 205px;

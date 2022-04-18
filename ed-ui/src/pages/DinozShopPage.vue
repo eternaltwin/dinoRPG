@@ -17,6 +17,7 @@
 				<DinozWithoutFlash
 					:display="dinoz.display"
 					:life="parseInt(dinoz.life)"
+					:flip="-1"
 				></DinozWithoutFlash>
 			</div>
 			<div class="infos">
