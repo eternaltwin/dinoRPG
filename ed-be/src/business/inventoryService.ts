@@ -5,10 +5,11 @@ import { itemList } from '../constants/item.js';
 import { validationResult } from 'express-validator';
 
 /**
- * Get all items from the inventory of a player
+ * @summary Get all items from the inventory of a player
+ * @param req
+ * @param res {Array<ItemFiche>}
  * @return Array<ItemFiche>
  */
-
 const getAllItemsData = async (
 	req: Request,
 	res: Response

@@ -14,10 +14,12 @@ import { placeList } from '../constants/place.js';
 import { validationResult } from 'express-validator';
 
 /**
- * Get all items from a shop
+ * @summary Get all items from a shop
+ * @param req
+ * @param req.params.shopId {string} ShopId
+ * @param res {Array<ItemFiche>}
  * @return Array<ItemFiche>
  */
-
 const getItemsFromShop = async (
 	req: Request,
 	res: Response
@@ -82,10 +84,14 @@ const getItemsFromShop = async (
 };
 
 /**
- * Buy an item
+ * @summary Buy an item
+ * @param req
+ * @param req.params.shopId {string} ShopId
+ * @param req.body.itemId {string} Item to buy
+ * @param req.body.quantity {string} Quantity to buy
+ * @param res
  * @return void
  */
-
 const buyItem = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });

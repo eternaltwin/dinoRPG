@@ -16,9 +16,10 @@ import { getConfig } from '../utils/context.js';
 import { raceList, rewardList } from '../constants/index.js';
 
 /**
- * Get all dinoz data from regular dinoz shop
- * If no dinoz is found, then fill the shop with X new dinoz -> X is defined is config file
- *
+ * @summary Get all dinoz data from regular dinoz shop
+ * @description If no dinoz is found, then fill the shop with X new dinoz -> X is defined is config file
+ * @param req
+ * @param res {Array<DinozShop>}
  * @return Array<DinozShop>
  */
 const getDinozFromDinozShop = async (
@@ -122,6 +123,11 @@ const getDinozFromDinozShop = async (
 	}
 };
 
+/**
+ * @summary Map the race and skill to a new dinoz
+ * @param dinoz {DinozShop}
+ * @return void
+ */
 function setDinozRaceAndSkill(dinoz: DinozShop) {
 	const raceFound: DinozRace = Object.values(raceList).find(
 		race => race.raceId === dinoz.raceId
@@ -136,13 +142,23 @@ function setDinozRaceAndSkill(dinoz: DinozShop) {
 	dinoz.setDataValue('playerId', undefined);
 }
 
-// Return a random number [min, max[
+/**
+ * @summary Return a random number
+ * @param min {number}
+ * @param max {number}
+ * @return number
+ */
 function getRandomNumber(min: number, max: number) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
+/**
+ * @summary Return a random letter
+ * @param maxLetter {string}
+ * @return string
+ */
 function getRandomLetter(maxLetter: string): string {
 	const allLetters: string =
 		'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';

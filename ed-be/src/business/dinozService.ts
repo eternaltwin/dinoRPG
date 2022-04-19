@@ -41,6 +41,13 @@ import { validationResult } from 'express-validator';
 import { updatePoints } from '../dao/rankingDao.js';
 
 // TODO: refaire cette fonction proprement
+/**
+ * @summary Get information to display the dinoz of a player
+ * @param req
+ * @param req.params.id {string} PlayerId
+ * @param res {DinozFiche}
+ * @return DinozFiche
+ */
 const getDinozFiche = async (
 	req: Request,
 	res: Response
@@ -118,6 +125,10 @@ const getDinozFiche = async (
 	return res.status(200).send(dinozDetails);
 };
 
+/**
+ * @summary Map available action from dinoz
+ * @return Array<Action>
+ */
 function getActionList(): Array<Action> {
 	const actionsList: Array<Action> = [];
 	const actionAvailable: Array<string> = getAvailableActions();
@@ -131,6 +142,10 @@ function getActionList(): Array<Action> {
 	return actionsList;
 }
 
+/**
+ * @summary Get available action from dinoz
+ * @return Array<String>
+ */
 function getAvailableActions(): Array<string> {
 	const actionList: Array<string> = [];
 	actionList.push('fight');
@@ -138,6 +153,13 @@ function getAvailableActions(): Array<string> {
 	return actionList;
 }
 
+/**
+ * @summary Get all skill and their state
+ * @param req
+ * @param req.params.id {string} DinozId
+ * @param res {DinozSkill}
+ * @return DinozSkill
+ */
 const getDinozSkill = async (
 	req: Request,
 	res: Response
@@ -177,6 +199,13 @@ const getDinozSkill = async (
 	return res.status(200).send(response);
 };
 
+/**
+ * @summary Buy a dinoz from the shop
+ * @param req
+ * @param req.params.id {string} PlayerId
+ * @param res {BasicDinoz}
+ * @return BasicDinoz
+ */
 const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -268,6 +297,13 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	return res.status(200).send(dinozToSend);
 };
 
+/**
+ * @summary Set the name of a dinoz
+ * @param req
+ * @param req.params.id {string} DinozId
+ * @param res
+ * @return void
+ */
 const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -306,6 +342,15 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 	return res.status(200).send();
 };
 
+/**
+ * @summary Activate or desactivate a skill from a dinoz
+ * @param req
+ * @param req.params.id {string} DinozId
+ * @param req.body.skillId {string} SkillId
+ * @param req.body.skillState {boolean} State of the skill
+ * @param res {boolean}
+ * @return boolean
+ */
 const setSkillState = async (
 	req: Request,
 	res: Response
@@ -368,6 +413,13 @@ const setSkillState = async (
 	return res.status(200).send(!skillStateToUpdate);
 };
 
+/**
+ * @summary Move the dinoz to a new place
+ * @param req
+ * @param req.params.id {string} DinozId
+ * @param res {FightResult}
+ * @return FightResult
+ */
 const betaMove = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -440,6 +492,11 @@ const betaMove = async (req: Request, res: Response): Promise<Response> => {
 	return res.status(200).send(fight);
 };
 
+/**
+ * @summary Process a fake fight
+ * @param dinoz {Dinoz}
+ * @return FightResult
+ */
 function betaFight(dinoz: Dinoz): FightResult {
 	// NOTHING IS GOOD HERE. EVERYTHING IS TO DO
 

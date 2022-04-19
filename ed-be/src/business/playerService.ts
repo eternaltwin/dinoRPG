@@ -16,6 +16,12 @@ import { Player, PlayerInfo } from '../models/index.js';
 import { addRewardToPlayer } from '../dao/assPlayerRewardsDao.js';
 import { rewardList } from '../constants/reward.js';
 
+/**
+ * @summary Get data from player on login
+ * @param req
+ * @param res {Player}
+ * @return Player
+ */
 const getCommonData = async (
 	req: Request,
 	res: Response
@@ -27,6 +33,13 @@ const getCommonData = async (
 	return res.status(200).send(commonData);
 };
 
+/**
+ * @summary Get data from an account
+ * @param req
+ * @param req.params.id {string} PlayerId
+ * @param res {PlayerInfo}
+ * @return PlayerInfo
+ */
 const getAccountData = async (
 	req: Request,
 	res: Response
@@ -91,6 +104,13 @@ const getAccountData = async (
 	return res.status(200).send(infoToSend);
 };
 
+/**
+ * @summary Import a specified account
+ * @param req
+ * @param req.body.server {string} Server where the player came from
+ * @param res
+ * @return void
+ */
 const importAccount = async (
 	req: Request,
 	res: Response
@@ -131,6 +151,13 @@ const importAccount = async (
 	return res.status(200).send();
 };
 
+/**
+ * @summary Set custom text for a player
+ * @param req
+ * @param req.body.message {string} Message to set as custom text
+ * @param res
+ * @return void
+ */
 const setCustomText = async (
 	req: Request,
 	res: Response

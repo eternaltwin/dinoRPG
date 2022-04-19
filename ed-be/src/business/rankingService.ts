@@ -7,10 +7,11 @@ import {
 import { PlayerRanking, Ranking } from '../models';
 
 /**
- * Get all the players from a specified page to display their ranking
+ * @summary Get all the players from a specified page to display their ranking
  * @param req
- * @param req.param.sort : string between classic or average
- * @param res
+ * @param req.param.sort {string} between classic or average
+ * @param res {Array<PlayerRanking>}
+ * @return Array<PlayerRanking>
  */
 const getRanking = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {

@@ -9,6 +9,13 @@ import { OauthAccessToken } from '@eternal-twin/core/lib/oauth/oauth-access-toke
 import fetch from 'node-fetch';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 
+/**
+ * @summary Forge a JWT with EternalTwin authentication
+ * @param req
+ * @param req.body.code {string}
+ * @param res {string}
+ * @return string
+ */
 const authenticateToET = async (
 	req: Request,
 	res: Response
@@ -84,6 +91,12 @@ async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {
 	return oauthClient.getAccessToken(code);
 }
 
+/**
+ * @summary Get the URI from the backend
+ * @param req
+ * @param res {string}
+ * @return string
+ */
 const getAuthorizationUri = (req: Request, res: Response): Response => {
 	const oauthClient: RfcOauthClient = getRfcOauthClient(false);
 

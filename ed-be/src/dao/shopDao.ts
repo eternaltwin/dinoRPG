@@ -15,7 +15,7 @@ const createMultipleDinoz = (
 	return DinozShop.bulkCreate(dinozArray);
 };
 
-const getDinozDetailsRequest = (dinozId: number): Promise<DinozShop | null> => {
+const getDinozDetailsRequest = (playerId: number): Promise<DinozShop | null> => {
 	return DinozShop.findOne({
 		attributes: ['display', 'raceId'],
 		include: [
@@ -36,7 +36,7 @@ const getDinozDetailsRequest = (dinozId: number): Promise<DinozShop | null> => {
 				]
 			}
 		],
-		where: { id: dinozId }
+		where: { id: playerId }
 	});
 };
 
