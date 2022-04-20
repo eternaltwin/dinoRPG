@@ -15,13 +15,8 @@
   "alpha": {
     "login": "Connexion à Eternal-Twin",
     "homepage": {
-      "part1": "DinoRPG n'est actuellement pas ouvert au public car le jeu est envahi de hargneux Goupignons.",
-      "part2": "Si vous êtes intéressés par le projet, n'hésitez pas à nous rejoindre sur ",
-      "part3": "et sur les ",
-      "part4": "forums d'Eternal-Twin",
-      "part5": "Toutes les informations sont disponibles sur ",
-      "part6": "Pour faire partie de la prochaine alpha, vous aurez besoin d'un compte ",
-      "part7": "et de rejoindre la liste de volontaires sur"
+      "part1": "DinoRPG is in alpha version open to public. Be carrefull because the game is invaded by Smashrooms.",
+      "part2": "All information are available on "
     },
     "issue": "Merci de signaler les bugs rencontrés sur "
   },

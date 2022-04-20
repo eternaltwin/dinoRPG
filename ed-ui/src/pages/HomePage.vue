@@ -14,18 +14,8 @@
 								<p>
 									{{ $t('alpha.homepage.part1') }}<br /><br />
 									{{ $t('alpha.homepage.part2') }}
-									<a href="https://discord.gg/ERc3svy">Discord</a>
-									{{ $t('alpha.homepage.part3') }}
-									<a href="https://eternal-twin.net/forum">{{
-										$t('alpha.homepage.part4')
-									}}</a
-									>.<br /><br />
-									{{ $t('alpha.homepage.part5') }}
 									<a href="https://eternal-twin.net">Eternal-Twin</a
-									>.<br /><br />
-									{{ $t('alpha.homepage.part6') }}
-									<a href="https://eternal-twin.net/">Eternal-Twin</a>
-									{{ $t('alpha.homepage.part7') }}
+									> /
 									<a href="https://discord.gg/ERc3svy">Discord</a>.
 								</p>
 							</div>

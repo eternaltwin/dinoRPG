@@ -15,13 +15,8 @@
 	"alpha": {
 		"login": "Bei Eternal-Twin anmelden",
 		"homepage": {
-			"part1": "DinoRPG ist derzeit nicht für die Öffentlichkeit zugänglich, da das Spiel von schnippischen Goupignons überrannt wird.",
-			"part2": "Wenn du an dem Projekt interessiert bist, kannst du dich uns anschließen auf ",
-			"part3": "und über das ",
-			"part4": "Eternal-Twin-Forum",
-			"part5": "Alle Informationen sind abrufbar unter ",
-			"part6": "Um Teil der nächsten Alpha zu werden, benötigst du ein Konto ",
-			"part7": "und trage dich in die Liste der Freiwilligen ein auf"
+			"part1": "Die Alpha-Version von DinoRPG ist nun öffentlich verfügbar. Nehmt euch vor den Gupignons in Acht.",
+			"part2": "Alles Weitere findet ihr auf"
 		}
 	},
 	"element": {
