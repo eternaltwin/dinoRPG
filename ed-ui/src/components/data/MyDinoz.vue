@@ -14,7 +14,11 @@
 					{{ $t(`myAccount.level`) }} {{ dinoz.level }}
 				</div>
 				<DinozWithoutFlash
-					id="dinozToSee"
+					:style="{
+						position: `absolute`,
+						left: `${position.noFliped[dinoz.display[1]].left}px`,
+						top: `${position.noFliped[dinoz.display[1]].top}px`
+					}"
 					:display="dinoz.display"
 					:life="dinoz.life"
 					:flip="1"
@@ -36,6 +40,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { raceList, statusList } from '@/constants';
 import { PlayerInfo } from '@/models';
+import { dinozPlacement } from '@/constants';
 
 export default defineComponent({
 	name: 'MyDinoz',
@@ -52,7 +57,8 @@ export default defineComponent({
 	data() {
 		return {
 			raceList: raceList,
-			statusList: statusList
+			statusList: statusList,
+			position: dinozPlacement
 		};
 	},
 	methods: {
@@ -63,11 +69,6 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-#dinozToSee {
-	position: absolute;
-	left: 22px;
-	top: 20px;
-}
 .dinozList {
 	float: left;
 	position: relative;

@@ -6,7 +6,11 @@
 	</div>
 	<a class="right" />
 	<DinozWithoutFlash
-		id="dinozToSee"
+		:style="{
+			position: `absolute`,
+			left: `${position.fliped[dinozData.display[1]].left}px`,
+			top: `${position.fliped[dinozData.display[1]].top}px`
+		}"
 		:display="dinozData.display"
 		:life="dinozData.life"
 		:flip="-1"
@@ -20,13 +24,15 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { Dinoz } from '@/models';
+import { dinozPlacement } from '@/constants';
 
 export default defineComponent({
 	name: 'DinozDisplay',
 	props: { dinozData: Object as PropType<Dinoz> },
 	data() {
 		return {
-			nameChoosen: undefined as boolean | undefined
+			nameChoosen: undefined as boolean | undefined,
+			position: dinozPlacement
 		};
 	},
 	components: {
@@ -56,11 +62,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#dinozToSee {
-	position: absolute;
-	left: 160px;
-	top: 60px;
-}
 .left {
 	position: absolute;
 	margin-left: 205px;

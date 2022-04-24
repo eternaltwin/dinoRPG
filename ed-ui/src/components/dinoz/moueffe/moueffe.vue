@@ -625,7 +625,9 @@ export default defineComponent({
 		eye(): string {
 			return defineAsyncComponent(() =>
 				import(
-					`@/components/dinoz/moueffe/eye/${this.head.eye.adult.imgNumber}.vue`
+					`@/components/dinoz/moueffe/eye/${
+						this.head.eye[this.childOrAdult].imgNumber
+					}.vue`
 				)
 			);
 		},
@@ -925,13 +927,44 @@ export default defineComponent({
 			);
 		}
 	},
+	methods: {
+		getColor(babyColor: string, adultColor: string, size: number): string {
+			let result = '#';
+			let rgbResult: number;
+
+			const babyColorParsed: Array<number> = babyColor
+				.match(/\w./g)!
+				.map(res => parseInt(res, 16));
+			const adultColorParsed: Array<number> = adultColor
+				.match(/\w./g)!
+				.map(res => parseInt(res, 16));
+
+			for (let i = 0; i < 3; i++) {
+				if (babyColorParsed[i] < adultColorParsed[i]) {
+					rgbResult = Math.round(
+						((adultColorParsed[i] - babyColorParsed[i]) / 9) * size +
+							babyColorParsed[i]
+					);
+					result += rgbResult.toString(16).padStart(2, '0');
+				} else {
+					rgbResult = Math.round(
+						((babyColorParsed[i] - adultColorParsed[i]) / 9) * (9 - size) +
+							adultColorParsed[i]
+					);
+					result += rgbResult.toString(16).padStart(2, '0');
+				}
+			}
+
+			return result;
+		}
+	},
 	mounted(): void {
-		this.hasKnee = this.display[2] === '1'; // De 0 à 1
-		this.head = moueffe.head[parseInt(this.display[3])]; // De 0 à 7
-		this.hairNumber = parseInt(this.display[4]); // De 0 à 6
-		this.arm = moueffe.arm[parseInt(this.display[5])]; // De 0 à 5
-		this.chest = moueffe.chest[parseInt(this.display[6])]; // De 0 à 3
-		this.tattoo = moueffe.tattoo[this.display[7]]; // De 1 à A
+		this.hasKnee = this.display[2] === '1';
+		this.head = moueffe.head[parseInt(this.display[3])];
+		this.hairNumber = parseInt(this.display[4]);
+		this.arm = moueffe.arm[parseInt(this.display[5])];
+		this.chest = moueffe.chest[parseInt(this.display[6])];
+		this.tattoo = moueffe.tattoo[this.display[7]];
 		this.hasTattoo = this.display[7] !== '0';
 		this.tattooNumber = this.display[7];
 
@@ -940,18 +973,65 @@ export default defineComponent({
 		const bodyColor = moueffe.color.body[this.display[9]];
 		const hairFirstColor = moueffe.color.hair[this.display[10]];
 
-		this.mainFirstColor = bodyColor.mainFirstColor;
-		this.mainSecondColor = bodyColor.mainSecondColor;
-		this.mainThirdColor = bodyColor.mainThirdColor;
+		const sizeLetter = parseInt(this.display[1]);
+		this.size = (1 / 36) * parseInt(this.display[1]) + 0.75;
 
-		this.chestFirstColor = bodyColor.chestFirstColor;
-		this.chestSecondColor = bodyColor.chestSecondColor;
-		this.chestThirdColor = bodyColor.chestThirdColor;
-		this.chestFourthColor = bodyColor.chestFourthColor;
-		this.chestFifthColor = bodyColor.chestFifthColor;
-		this.chestSixthColor = bodyColor.chestSixthColor;
-		this.chestSeventhColor = bodyColor.chestSeventhColor;
-		this.borderColor = bodyColor.borderColor;
+		this.mainFirstColor = this.getColor(
+			bodyColor.baby.mainFirstColor,
+			bodyColor.adult.mainFirstColor,
+			sizeLetter
+		);
+		this.mainSecondColor = this.getColor(
+			bodyColor.baby.mainSecondColor,
+			bodyColor.adult.mainSecondColor,
+			sizeLetter
+		);
+		this.mainThirdColor = this.getColor(
+			bodyColor.baby.mainThirdColor,
+			bodyColor.adult.mainThirdColor,
+			sizeLetter
+		);
+
+		this.chestFirstColor = this.getColor(
+			bodyColor.baby.chestFirstColor,
+			bodyColor.adult.chestFirstColor,
+			sizeLetter
+		);
+		this.chestSecondColor = this.getColor(
+			bodyColor.baby.chestSecondColor,
+			bodyColor.adult.chestSecondColor,
+			sizeLetter
+		);
+		this.chestThirdColor = this.getColor(
+			bodyColor.baby.chestThirdColor,
+			bodyColor.adult.chestThirdColor,
+			sizeLetter
+		);
+		this.chestFourthColor = this.getColor(
+			bodyColor.baby.chestFourthColor,
+			bodyColor.adult.chestFourthColor,
+			sizeLetter
+		);
+		this.chestFifthColor = this.getColor(
+			bodyColor.baby.chestFifthColor,
+			bodyColor.adult.chestFifthColor,
+			sizeLetter
+		);
+		this.chestSixthColor = this.getColor(
+			bodyColor.baby.chestSixthColor,
+			bodyColor.adult.chestSixthColor,
+			sizeLetter
+		);
+		this.chestSeventhColor = this.getColor(
+			bodyColor.baby.chestSeventhColor,
+			bodyColor.adult.chestSeventhColor,
+			sizeLetter
+		);
+		this.borderColor = this.getColor(
+			bodyColor.baby.borderColor,
+			bodyColor.adult.borderColor,
+			sizeLetter
+		);
 
 		this.hairFirstColor = hairFirstColor.hairFirstColor;
 		this.hairSecondColor = hairFirstColor.hairSecondColor;
@@ -962,8 +1042,7 @@ export default defineComponent({
 
 		this.tailSize = this.chest.tail.size;
 
-		// this.childOrAdult = display[1] === '9' ? 'adult' : 'baby';
-		this.childOrAdult = 'adult';
+		this.childOrAdult = this.display[1] === '9' ? 'adult' : 'baby';
 
 		if (this.life < 20) {
 			this.injuryType = 'heavyInjury';
@@ -997,8 +1076,10 @@ export default defineComponent({
 		}
 
 		// Eyes
-		this.eyePositionLeft = `${this.head.eye.left * this.size}px`;
-		this.eyePositionTop = `${this.head.eye.top * this.size}px`;
+		this.eyePositionLeft = `${this.head.eye[this.childOrAdult].left *
+			this.size}px`;
+		this.eyePositionTop = `${this.head.eye[this.childOrAdult].top *
+			this.size}px`;
 
 		// Eyes retinas
 		if (this.head.eyeRetina) {
@@ -1051,6 +1132,7 @@ export default defineComponent({
 					this.size}px`;
 			}
 
+			// Legs injuries
 			this.leftLegInjury1PositionLeft = `${this.leg.left[this.injuryType][1]
 				.left * this.size}px`;
 			this.leftLegInjury1PositionTop = `${this.leg.left[this.injuryType][1]
@@ -1189,7 +1271,7 @@ export default defineComponent({
 		this.leftLegDefaultPositionTop = `${this.leg.left.default.top *
 			this.size}px`;
 
-		// Left leg
+		// Left leg nails
 		this.leftLegNailPositionLeft = `${this.leg.left.nail.left * this.size}px`;
 		this.leftLegNailPositionTop = `${this.leg.left.nail.top * this.size}px`;
 
@@ -1205,17 +1287,25 @@ export default defineComponent({
 
 		// Knees
 		if (this.hasKnee) {
-			this.leftLegKneeHornPositionLeft = `${this.leg.left.knee.horn.left}px`;
-			this.leftLegKneeHornPositionTop = `${this.leg.left.knee.horn.top}px`;
+			this.leftLegKneeHornPositionLeft = `${this.leg.left.knee.horn.left *
+				this.size}px`;
+			this.leftLegKneeHornPositionTop = `${this.leg.left.knee.horn.top *
+				this.size}px`;
 
-			this.leftLegKneeSkinPositionLeft = `${this.leg.left.knee.skin.left}px`;
-			this.leftLegKneeSkinPositionTop = `${this.leg.left.knee.skin.top}px`;
+			this.leftLegKneeSkinPositionLeft = `${this.leg.left.knee.skin.left *
+				this.size}px`;
+			this.leftLegKneeSkinPositionTop = `${this.leg.left.knee.skin.top *
+				this.size}px`;
 
-			this.rightLegKneeHornPositionLeft = `${this.leg.right.knee.horn.left}px`;
-			this.rightLegKneeHornPositionTop = `${this.leg.right.knee.horn.top}px`;
+			this.rightLegKneeHornPositionLeft = `${this.leg.right.knee.horn.left *
+				this.size}px`;
+			this.rightLegKneeHornPositionTop = `${this.leg.right.knee.horn.top *
+				this.size}px`;
 
-			this.rightLegKneeSkinPositionLeft = `${this.leg.right.knee.skin.left}px`;
-			this.rightLegKneeSkinPositionTop = `${this.leg.right.knee.skin.top}px`;
+			this.rightLegKneeSkinPositionLeft = `${this.leg.right.knee.skin.left *
+				this.size}px`;
+			this.rightLegKneeSkinPositionTop = `${this.leg.right.knee.skin.top *
+				this.size}px`;
 		}
 
 		// Tail
@@ -1515,13 +1605,14 @@ export default defineComponent({
 	position: absolute;
 	top: v-bind(leftLegKneeHornPositionTop);
 	left: v-bind(leftLegKneeHornPositionLeft);
-	z-index: 1;
+	z-index: 0;
 }
 
 .left_leg_knee_skin {
 	position: absolute;
 	top: v-bind(leftLegKneeSkinPositionTop);
 	left: v-bind(leftLegKneeSkinPositionLeft);
+	z-index: -1;
 }
 
 .left_leg_injury_1 {

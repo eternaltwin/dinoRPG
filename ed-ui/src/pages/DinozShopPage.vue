@@ -148,10 +148,10 @@ export default defineComponent({
 });
 </script>
 
-<style type="scss" scoped>
+<style lang="scss" scoped>
 .dinoz_display {
 	position: relative;
-	left: 40px;
-	top: -20px;
+	left: 15px;
+	top: -12px;
 }
 </style>

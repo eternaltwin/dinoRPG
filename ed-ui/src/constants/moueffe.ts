@@ -24,13 +24,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 3
+					imgNumber: 3,
+					top: 7,
+					left: 40
 				},
 				adult: {
-					imgNumber: 4
-				},
-				top: 8,
-				left: 40
+					imgNumber: 4,
+					top: 8,
+					left: 40
+				}
 			},
 			hair: {
 				1: {
@@ -145,13 +147,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 7
+					imgNumber: 7,
+					top: 6,
+					left: 29
 				},
 				adult: {
-					imgNumber: 8
-				},
-				top: 6,
-				left: 29
+					imgNumber: 8,
+					top: 6,
+					left: 29
+				}
 			},
 			hair: {
 				1: {
@@ -272,13 +276,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 7
+					imgNumber: 7,
+					top: 6,
+					left: 29
 				},
 				adult: {
-					imgNumber: 8
-				},
-				top: 6,
-				left: 29
+					imgNumber: 8,
+					top: 6,
+					left: 29
+				}
 			},
 			hair: {
 				1: {
@@ -398,13 +404,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 0
+					imgNumber: 0,
+					top: 5.3,
+					left: 28.2
 				},
 				adult: {
-					imgNumber: 1
-				},
-				top: 5.5,
-				left: 28.5
+					imgNumber: 1,
+					top: 5.5,
+					left: 28.5
+				}
 			},
 			hair: {
 				1: {
@@ -530,13 +538,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 0
+					imgNumber: 0,
+					top: 5.3,
+					left: 28.2
 				},
 				adult: {
-					imgNumber: 1
-				},
-				top: 5.5,
-				left: 28.5
+					imgNumber: 1,
+					top: 5.5,
+					left: 28.5
+				}
 			},
 			hair: {
 				1: {
@@ -651,13 +661,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 11
+					imgNumber: 11,
+					top: 4.5,
+					left: 33
 				},
 				adult: {
-					imgNumber: 12
-				},
-				top: 5.5,
-				left: 35
+					imgNumber: 12,
+					top: 5.5,
+					left: 35
+				}
 			},
 			eyeRetina: {
 				imgNumber: 10,
@@ -783,13 +795,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 11
+					imgNumber: 11,
+					top: 4.5,
+					left: 33
 				},
 				adult: {
-					imgNumber: 12
-				},
-				top: 5.5,
-				left: 35
+					imgNumber: 12,
+					top: 5.5,
+					left: 35
+				}
 			},
 			eyeRetina: {
 				imgNumber: 10,
@@ -909,13 +923,15 @@ export const moueffe: Moueffe = {
 			},
 			eye: {
 				baby: {
-					imgNumber: 15
+					imgNumber: 15,
+					top: 8,
+					left: 28.5
 				},
 				adult: {
-					imgNumber: 16
-				},
-				top: 8.5,
-				left: 29
+					imgNumber: 16,
+					top: 8.5,
+					left: 29
+				}
 			},
 			eyeRetina: {
 				imgNumber: 14,
@@ -1551,8 +1567,8 @@ export const moueffe: Moueffe = {
 				dependentImage2: {
 					baby: {
 						imgNumber: 2,
-						top: 0,
-						left: 0
+						top: 16,
+						left: -1.5
 					},
 					adult: {
 						imgNumber: 3,
@@ -1585,13 +1601,13 @@ export const moueffe: Moueffe = {
 					imgNumber: 1,
 					top: 10.5,
 					left: 49.5,
-					zIndex: 2
+					zIndex: 3
 				},
 				dependentImage2: {
 					baby: {
 						imgNumber: 3,
-						top: 32.7,
-						left: 55.5
+						top: 16,
+						left: 53.5
 					},
 					adult: {
 						imgNumber: 4,
@@ -1637,8 +1653,8 @@ export const moueffe: Moueffe = {
 				dependentImage2: {
 					baby: {
 						imgNumber: 2,
-						top: 0,
-						left: 0
+						top: 16,
+						left: -1.5
 					},
 					adult: {
 						imgNumber: 3,
@@ -1676,13 +1692,13 @@ export const moueffe: Moueffe = {
 					imgNumber: 1,
 					top: 10.5,
 					left: 49.5,
-					zIndex: 2
+					zIndex: 3
 				},
 				dependentImage2: {
 					baby: {
 						imgNumber: 3,
-						top: 32.7,
-						left: 55.5
+						top: 16,
+						left: 53.5
 					},
 					adult: {
 						imgNumber: 4,
@@ -1777,13 +1793,13 @@ export const moueffe: Moueffe = {
 				knee: {
 					horn: {
 						imgNumber: 1,
-						top: -4,
-						left: 19
+						top: -2,
+						left: 18
 					},
 					skin: {
 						imgNumber: 0,
-						top: 0,
-						left: 19
+						top: 1,
+						left: 18
 					}
 				}
 			},
@@ -1823,7 +1839,7 @@ export const moueffe: Moueffe = {
 				knee: {
 					horn: {
 						imgNumber: 1,
-						top: 5,
+						top: 5.5,
 						left: 16
 					},
 					skin: {
@@ -1870,147 +1886,340 @@ export const moueffe: Moueffe = {
 	color: {
 		body: {
 			0: {
-				mainFirstColor: '#f0dc97',
-				mainSecondColor: '#d2a863',
-				mainThirdColor: '#be8540',
-				chestFirstColor: '#ffffd4',
-				chestSecondColor: '#ffd893',
-				chestThirdColor: '#eead68',
-				chestFourthColor: '#ffe8a3',
-				chestFifthColor: '#e3c782',
-				chestSixthColor: '#ecc07b',
-				chestSeventhColor: '#d69a54',
-				borderColor: '#984828'
+				baby: {
+					mainFirstColor: '#fff0a7',
+					mainSecondColor: '#e5b86f',
+					mainThirdColor: '#d0944b',
+					chestFirstColor: '#ffffd7',
+					chestSecondColor: '#ffeca3',
+					chestThirdColor: '#ffbe75',
+					chestFourthColor: '#fffdb4',
+					chestFifthColor: '#f9db92',
+					chestSixthColor: '#ffd188',
+					chestSeventhColor: '#eaa960',
+					borderColor: '#af694e'
+				},
+				adult: {
+					mainFirstColor: '#f0dc97',
+					mainSecondColor: '#d2a863',
+					mainThirdColor: '#be8540',
+					chestFirstColor: '#ffffd4',
+					chestSecondColor: '#ffd893',
+					chestThirdColor: '#eead68',
+					chestFourthColor: '#ffe8a3',
+					chestFifthColor: '#e3c782',
+					chestSixthColor: '#ecc07b',
+					chestSeventhColor: '#d69a54',
+					borderColor: '#984828'
+				}
 			},
 			1: {
-				mainFirstColor: '#f3b761',
-				mainSecondColor: '#e29742',
-				mainThirdColor: '#ce7520',
-				chestFirstColor: '#ffffb3',
-				chestSecondColor: '#ffc772',
-				chestThirdColor: '#fe9d48',
-				chestFourthColor: '#ffd882',
-				chestFifthColor: '#f3b761',
-				chestSixthColor: '#fcaf5a',
-				chestSeventhColor: '#e68934',
-				borderColor: '#ab4813'
+				baby: {
+					mainFirstColor: '#ffdf84',
+					mainSecondColor: '#f6a74c',
+					mainThirdColor: '#e18328',
+					chestFirstColor: '#ffffbb',
+					chestSecondColor: '#ffdb80',
+					chestThirdColor: '#ffad53',
+					chestFourthColor: '#ffec91',
+					chestFifthColor: '#ffc96f',
+					chestSixthColor: '#ffbe64',
+					chestSeventhColor: '#fa983d',
+					borderColor: '#ac5435'
+				},
+				adult: {
+					mainFirstColor: '#f3b761',
+					mainSecondColor: '#e29742',
+					mainThirdColor: '#ce7520',
+					chestFirstColor: '#ffffb3',
+					chestSecondColor: '#ffc772',
+					chestThirdColor: '#fe9d48',
+					chestFourthColor: '#ffd882',
+					chestFifthColor: '#f3b761',
+					chestSixthColor: '#fcaf5a',
+					chestSeventhColor: '#e68934',
+					borderColor: '#ab4813'
+				}
 			},
 			2: {
-				mainFirstColor: '#ffa919',
-				mainSecondColor: '#e27500',
-				mainThirdColor: '#ce5300',
-				chestFirstColor: '#ffe656',
-				chestSecondColor: '#ffa52c',
-				chestThirdColor: '#ff7b24',
-				chestFourthColor: '#ffb626',
-				chestFifthColor: '#f49404',
-				chestSixthColor: '#fc8d13',
-				chestSeventhColor: '#e66710',
-				borderColor: '#830800'
+				baby: {
+					mainFirstColor: '#ffb81f',
+					mainSecondColor: '#f68302',
+					mainThirdColor: '#e25f03',
+					chestFirstColor: '#fff159',
+					chestSecondColor: '#ffb636',
+					chestThirdColor: '#ff892d',
+					chestFourthColor: '#ffc72e',
+					chestFifthColor: '#ffa50c',
+					chestSixthColor: '#ff9c1b',
+					chestSeventhColor: '#fb7418',
+					borderColor: '#b0503e'
+				},
+				adult: {
+					mainFirstColor: '#ffa919',
+					mainSecondColor: '#e27500',
+					mainThirdColor: '#ce5300',
+					chestFirstColor: '#ffe656',
+					chestSecondColor: '#ffa52c',
+					chestThirdColor: '#ff7b24',
+					chestFourthColor: '#ffb626',
+					chestFifthColor: '#f49404',
+					chestSixthColor: '#fc8d13',
+					chestSeventhColor: '#e66710',
+					borderColor: '#830800'
+				}
 			},
 			3: {
-				mainFirstColor: '#e17d34',
-				mainSecondColor: '#c24900',
-				mainThirdColor: '#af2700',
-				chestFirstColor: '#ffb970',
-				chestSecondColor: '#f87930',
-				chestThirdColor: '#df4e25',
-				chestFourthColor: '#f48a41',
-				chestFifthColor: '#d4681f',
-				chestSixthColor: '#dc6117',
-				chestSeventhColor: '#c73a11',
-				borderColor: '#740000'
+				baby: {
+					mainFirstColor: '#e77528',
+					mainSecondColor: '#d45407',
+					mainThirdColor: '#c02f04',
+					chestFirstColor: '#ffc779',
+					chestSecondColor: '#ff873a',
+					chestThirdColor: '#f35b2e',
+					chestFourthColor: '#ff984b',
+					chestFifthColor: '#e57225',
+					chestSixthColor: '#f06e1f',
+					chestSeventhColor: '#da4519',
+					borderColor: '#983e35'
+				},
+				adult: {
+					mainFirstColor: '#e17d34',
+					mainSecondColor: '#c24900',
+					mainThirdColor: '#af2700',
+					chestFirstColor: '#ffb970',
+					chestSecondColor: '#f87930',
+					chestThirdColor: '#df4e25',
+					chestFourthColor: '#f48a41',
+					chestFifthColor: '#d4681f',
+					chestSixthColor: '#dc6117',
+					chestSeventhColor: '#c73a11',
+					borderColor: '#740000'
+				}
 			},
 			4: {
-				mainFirstColor: '#d0f398',
-				mainSecondColor: '#b2c065',
-				mainThirdColor: '#9e9e42',
-				chestFirstColor: '#ffffd6',
-				chestSecondColor: '#e7f094',
-				chestThirdColor: '#cec66a',
-				chestFourthColor: '#e0fda2',
-				chestFifthColor: '#c3df83',
-				chestSixthColor: '#ccd87c',
-				chestSeventhColor: '#b6b256',
-				borderColor: '#8a5e24'
+				baby: {
+					mainFirstColor: '#d6f393',
+					mainSecondColor: '#c2d271',
+					mainThirdColor: '#aeae4d',
+					chestFirstColor: '#ffffe5',
+					chestSecondColor: '#fcffa4',
+					chestThirdColor: '#e1d977',
+					chestFourthColor: '#f7ffb6',
+					chestFifthColor: '#d7f493',
+					chestSixthColor: '#dfec8a',
+					chestSeventhColor: '#c8c362',
+					borderColor: '#955f32'
+				},
+				adult: {
+					mainFirstColor: '#d0f398',
+					mainSecondColor: '#b2c065',
+					mainThirdColor: '#9e9e42',
+					chestFirstColor: '#ffffd6',
+					chestSecondColor: '#e7f094',
+					chestThirdColor: '#cec66a',
+					chestFourthColor: '#e0fda2',
+					chestFifthColor: '#c3df83',
+					chestSixthColor: '#ccd87c',
+					chestSeventhColor: '#b6b256',
+					borderColor: '#8a5e24'
+				}
 			},
 			5: {
-				mainFirstColor: '#badb6e',
-				mainSecondColor: '#9ca73a',
-				mainThirdColor: '#888518',
-				chestFirstColor: '#f7ffaa',
-				chestSecondColor: '#d1d76a',
-				chestThirdColor: '#b8ad40',
-				chestFourthColor: '#cde77a',
-				chestFifthColor: '#aec659',
-				chestSixthColor: '#b6bf52',
-				chestSeventhColor: '#a0992c',
-				borderColor: '#844828'
+				baby: {
+					mainFirstColor: '#bed965',
+					mainSecondColor: '#acb945',
+					mainThirdColor: '#979420',
+					chestFirstColor: '#ffffb8',
+					chestSecondColor: '#e4eb77',
+					chestThirdColor: '#cabe4b',
+					chestFourthColor: '#dffc88',
+					chestFifthColor: '#bdd662',
+					chestSixthColor: '#c8d15e',
+					chestSeventhColor: '#b0a936',
+					borderColor: '#914c35'
+				},
+				adult: {
+					mainFirstColor: '#badb6e',
+					mainSecondColor: '#9ca73a',
+					mainThirdColor: '#888518',
+					chestFirstColor: '#f7ffaa',
+					chestSecondColor: '#d1d76a',
+					chestThirdColor: '#b8ad40',
+					chestFourthColor: '#cde77a',
+					chestFifthColor: '#aec659',
+					chestSixthColor: '#b6bf52',
+					chestSeventhColor: '#a0992c',
+					borderColor: '#844828'
+				}
 			},
 			6: {
-				mainFirstColor: '#96cbff',
-				mainSecondColor: '#7797cd',
-				mainThirdColor: '#6375aa',
-				chestFirstColor: '#d2ffff',
-				chestSecondColor: '#acc7fc',
-				chestThirdColor: '#939dd2',
-				chestFourthColor: '#aad9ff',
-				chestFifthColor: '#89b6eb',
-				chestSixthColor: '#91afe4',
-				chestSeventhColor: '#7c89be',
-				borderColor: '#69475f'
+				baby: {
+					mainFirstColor: '#98c8ff',
+					mainSecondColor: '#85a8e1',
+					mainThirdColor: '#7083bb',
+					chestFirstColor: '#dfffff',
+					chestSecondColor: '#bddaff',
+					chestThirdColor: '#a3ade5',
+					chestFourthColor: '#b9ebff',
+					chestFifthColor: '#96c5fc',
+					chestSixthColor: '#a1c0f9',
+					chestSeventhColor: '#8998d0',
+					borderColor: '#58395f'
+				},
+				adult: {
+					mainFirstColor: '#96cbff',
+					mainSecondColor: '#7797cd',
+					mainThirdColor: '#6375aa',
+					chestFirstColor: '#d2ffff',
+					chestSecondColor: '#acc7fc',
+					chestThirdColor: '#939dd2',
+					chestFourthColor: '#aad9ff',
+					chestFifthColor: '#89b6eb',
+					chestSixthColor: '#91afe4',
+					chestSeventhColor: '#7c89be',
+					borderColor: '#69475f'
+				}
 			},
 			7: {
-				mainFirstColor: '#8aa3d8',
-				mainSecondColor: '#6b6fa4',
-				mainThirdColor: '#584c82',
-				chestFirstColor: '#baccff',
-				chestSecondColor: '#a19fd4',
-				chestThirdColor: '#8874aa',
-				chestFourthColor: '#9db0e5',
-				chestFifthColor: '#7d8ec3',
-				chestSixthColor: '#8687bc',
-				chestSeventhColor: '#706096',
-				borderColor: '#2f0d43'
+				baby: {
+					mainFirstColor: '#99b3ec',
+					mainSecondColor: '#797cb5',
+					mainThirdColor: '#645890',
+					chestFirstColor: '#d6efff',
+					chestSecondColor: '#b1afe7',
+					chestThirdColor: '#9783bb',
+					chestFourthColor: '#acc0f8',
+					chestFifthColor: '#8c9ed6',
+					chestSixthColor: '#9596ce',
+					chestSeventhColor: '#7d6ea6',
+					borderColor: '#462862'
+				},
+				adult: {
+					mainFirstColor: '#8aa3d8',
+					mainSecondColor: '#6b6fa4',
+					mainThirdColor: '#584c82',
+					chestFirstColor: '#baccff',
+					chestSecondColor: '#a19fd4',
+					chestThirdColor: '#8874aa',
+					chestFourthColor: '#9db0e5',
+					chestFifthColor: '#7d8ec3',
+					chestSixthColor: '#8687bc',
+					chestSeventhColor: '#706096',
+					borderColor: '#2f0d43'
+				}
 			},
 			8: {
-				mainFirstColor: '#ba5e1a',
-				mainSecondColor: '#9b2a00',
-				mainThirdColor: '#870800',
-				chestFirstColor: '#f69a56',
-				chestSecondColor: '#d05a2e',
-				chestThirdColor: '#b73026',
-				chestFourthColor: '#cd6a26',
-				chestFifthColor: '#ad4905',
-				chestSixthColor: '#b54216',
-				chestSeventhColor: '#9f1c12',
-				borderColor: '#2f0d43'
+				baby: {
+					mainFirstColor: '#e77528',
+					mainSecondColor: '#d45407',
+					mainThirdColor: '#c02f04',
+					chestFirstColor: '#ffc779',
+					chestSecondColor: '#ff873a',
+					chestThirdColor: '#f35b2e',
+					chestFourthColor: '#ff984b',
+					chestFifthColor: '#e57225',
+					chestSixthColor: '#f06e1f',
+					chestSeventhColor: '#da4519',
+					borderColor: '#a02e23'
+				},
+				adult: {
+					mainFirstColor: '#d4681f',
+					mainSecondColor: '#c24900',
+					mainThirdColor: '#af2700',
+					chestFirstColor: '#ffb970',
+					chestSecondColor: '#f87930',
+					chestThirdColor: '#df4e25',
+					chestFourthColor: '#f48940',
+					chestFifthColor: '#d4681f',
+					chestSixthColor: '#dc6117',
+					chestSeventhColor: '#c73a11',
+					borderColor: '#932922'
+				}
 			},
 			9: {
-				mainFirstColor: '#ce5757',
-				mainSecondColor: '#b02222',
-				mainThirdColor: '#9c0000',
-				chestFirstColor: '#ff9393',
-				chestSecondColor: '#e55252',
-				chestThirdColor: '#cc2828',
-				chestFourthColor: '#e16363',
-				chestFifthColor: '#c14242',
-				chestSixthColor: '#ca3a3a',
-				chestSeventhColor: '#b41414',
-				borderColor: '#892b24'
+				baby: {
+					mainFirstColor: '#be540c',
+					mainSecondColor: '#ac3404',
+					mainThirdColor: '#960e05',
+					chestFirstColor: '#ffa65e',
+					chestSecondColor: '#e36637',
+					chestThirdColor: '#ca392f',
+					chestFourthColor: '#db722a',
+					chestFifthColor: '#bc510b',
+					chestSixthColor: '#c74d1d',
+					chestSeventhColor: '#b0231a',
+					borderColor: '#710d08'
+				},
+				adult: {
+					mainFirstColor: '#ba5e1a',
+					mainSecondColor: '#9b2a00',
+					mainThirdColor: '#870800',
+					chestFirstColor: '#f69a56',
+					chestSecondColor: '#d05a2e',
+					chestThirdColor: '#b73026',
+					chestFourthColor: '#cd6a26',
+					chestFifthColor: '#ad4905',
+					chestSixthColor: '#b54216',
+					chestSeventhColor: '#9f1c12',
+					borderColor: '#2f0d43'
+				}
 			},
 			A: {
-				mainFirstColor: '#fff9ac',
-				mainSecondColor: '#e0c577',
-				mainThirdColor: '#cda355',
-				chestFirstColor: '#ffffe9',
-				chestSecondColor: '#fdca7d',
-				chestThirdColor: '#fdca7d',
-				chestFourthColor: '#ffffb8',
-				chestFifthColor: '#f2e497',
-				chestSixthColor: '#fbdd8f',
-				chestSeventhColor: '#e5b669',
-				borderColor: '#9d542e'
+				baby: {
+					mainFirstColor: '#d44d4d',
+					mainSecondColor: '#c12c2c',
+					mainThirdColor: '#ac0707',
+					chestFirstColor: '#ff9a9a',
+					chestSecondColor: '#f95e5e',
+					chestThirdColor: '#df3131',
+					chestFourthColor: '#f46f6f',
+					chestFifthColor: '#d24a4a',
+					chestSixthColor: '#dd4444',
+					chestSeventhColor: '#c51c1c',
+					borderColor: '#891916'
+				},
+				adult: {
+					mainFirstColor: '#ce5757',
+					mainSecondColor: '#b02222',
+					mainThirdColor: '#9c0000',
+					chestFirstColor: '#ff9393',
+					chestSecondColor: '#e55252',
+					chestThirdColor: '#cc2828',
+					chestFourthColor: '#e16363',
+					chestFifthColor: '#c14242',
+					chestSixthColor: '#ca3a3a',
+					chestSeventhColor: '#b41414',
+					borderColor: '#892b24'
+				}
+			},
+			B: {
+				baby: {
+					mainFirstColor: '#fff8a7',
+					mainSecondColor: '#f5d986',
+					mainThirdColor: '#e0b461',
+					chestFirstColor: '#fffff6',
+					chestSecondColor: '#ffffb9',
+					chestThirdColor: '#ffde8b',
+					chestFourthColor: '#ffffc3',
+					chestFifthColor: '#fff9a7',
+					chestSixthColor: '#fff19f',
+					chestSeventhColor: '#f9c876',
+					borderColor: '#a76042'
+				},
+				adult: {
+					mainFirstColor: '#fff9ac',
+					mainSecondColor: '#e0c577',
+					mainThirdColor: '#cda355',
+					chestFirstColor: '#ffffe9',
+					chestSecondColor: '#fdca7d',
+					chestThirdColor: '#fdca7d',
+					chestFourthColor: '#ffffb8',
+					chestFifthColor: '#f2e497',
+					chestSixthColor: '#fbdd8f',
+					chestSeventhColor: '#e5b669',
+					borderColor: '#9d542e'
+				}
 			}
 		},
 		hair: {
@@ -2113,12 +2322,14 @@ interface Moueffe {
 			eye: {
 				baby: {
 					imgNumber: number;
+					top: number;
+					left: number;
 				};
 				adult: {
 					imgNumber: number;
+					top: number;
+					left: number;
 				};
-				top: number;
-				left: number;
 			};
 			eyeRetina?: {
 				imgNumber: number;
@@ -2400,17 +2611,32 @@ interface Moueffe {
 	color: {
 		body: {
 			[colorNumber: string]: {
-				mainFirstColor: string;
-				mainSecondColor: string;
-				mainThirdColor: string;
-				chestFirstColor: string;
-				chestSecondColor: string;
-				chestThirdColor: string;
-				chestFourthColor: string;
-				chestFifthColor: string;
-				chestSixthColor: string;
-				chestSeventhColor: string;
-				borderColor: string;
+				baby: {
+					mainFirstColor: string;
+					mainSecondColor: string;
+					mainThirdColor: string;
+					chestFirstColor: string;
+					chestSecondColor: string;
+					chestThirdColor: string;
+					chestFourthColor: string;
+					chestFifthColor: string;
+					chestSixthColor: string;
+					chestSeventhColor: string;
+					borderColor: string;
+				};
+				adult: {
+					mainFirstColor: string;
+					mainSecondColor: string;
+					mainThirdColor: string;
+					chestFirstColor: string;
+					chestSecondColor: string;
+					chestThirdColor: string;
+					chestFourthColor: string;
+					chestFifthColor: string;
+					chestSixthColor: string;
+					chestSeventhColor: string;
+					borderColor: string;
+				};
 			};
 		};
 		hair: {

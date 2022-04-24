@@ -89,7 +89,7 @@ const getDinozFromDinozShop = async (
 			)!;
 
 			// Make a random display
-			randomDisplay = `${randomRace}9`;
+			randomDisplay = `${randomRace}0`;
 
 			for (let i = 2; i < 16; i++) {
 				randomDisplay += getRandomLetter(dinozRaceData.display![i]);

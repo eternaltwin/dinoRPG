@@ -1,3 +1,4 @@
+export * from './dinozPlacement';
 export * from './epic';
 export * from './moueffe';
 export * from './item';

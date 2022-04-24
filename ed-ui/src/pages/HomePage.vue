@@ -14,8 +14,7 @@
 								<p>
 									{{ $t('alpha.homepage.part1') }}<br /><br />
 									{{ $t('alpha.homepage.part2') }}
-									<a href="https://eternal-twin.net">Eternal-Twin</a
-									> /
+									<a href="https://eternal-twin.net">Eternal-Twin</a> /
 									<a href="https://discord.gg/ERc3svy">Discord</a>.
 								</p>
 							</div>
