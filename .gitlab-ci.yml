@@ -42,4 +42,6 @@ back-coverage:
     reports:
       junit:
         - ed-be/junit.xml
-      cobertura: ed-be/coverage/cobertura-coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: ed-be/coverage/cobertura-coverage.xml
