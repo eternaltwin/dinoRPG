@@ -7,7 +7,7 @@
 			:fire="dinozData.nbrUpFire"
 			:wood="dinozData.nbrUpWood"
 			:water="dinozData.nbrUpWater"
-			:light="dinozData.nbrUpLight"
+			:lightning="dinozData.nbrUpLightning"
 			:air="dinozData.nbrUpAir"
 			class="elements_content"
 		/>

@@ -28,13 +28,13 @@
 			<img :src="getImg('water')" alt="water" /> {{ water }}
 		</li>
 		<li
-			:class="getMaxElement() === light ? 'max' : ''"
+			:class="getMaxElement() === lightning ? 'max' : ''"
 			v-tippy="{
-				content: formatContent($t('element.light')),
+				content: formatContent($t('element.lightning')),
 				theme: 'small'
 			}"
 		>
-			<img :src="getImg('light')" alt="light" /> {{ light }}
+			<img :src="getImg('lightning')" alt="lightning" /> {{ lightning }}
 		</li>
 		<li
 			:class="getMaxElement() === air ? 'max' : ''"
@@ -57,7 +57,7 @@ export default defineComponent({
 		fire: { type: Number, required: true },
 		wood: { type: Number, required: true },
 		water: { type: Number, required: true },
-		light: { type: Number, required: true },
+		lightning: { type: Number, required: true },
 		air: { type: Number, required: true }
 	},
 	methods: {
@@ -66,7 +66,7 @@ export default defineComponent({
 		},
 		getMaxElement(): number {
 			{
-				return Math.max(this.fire, this.wood, this.water, this.light, this.air);
+				return Math.max(this.fire, this.wood, this.water, this.lightning, this.air);
 			}
 		}
 	}

@@ -2,7 +2,7 @@ export enum ElementType {
 	FIRE = 'fire',
 	WATER = 'water',
 	WOOD = 'wood',
-	LIGHT = 'light',
+	LIGHTNING = 'lightning',
 	AIR = 'air',
 	VOID = 'void'
 }

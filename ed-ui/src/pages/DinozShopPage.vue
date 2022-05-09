@@ -46,7 +46,7 @@
 					:fire="dinoz.race.nbrFire"
 					:wood="dinoz.race.nbrWood"
 					:water="dinoz.race.nbrWater"
-					:light="dinoz.race.nbrLight"
+					:lightning="dinoz.race.nbrLightning"
 					:air="dinoz.race.nbrAir"
 				></Elements>
 				<div class="skill" v-if="dinoz.race.skillId.length > 0">

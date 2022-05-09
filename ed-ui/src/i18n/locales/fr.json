@@ -29,7 +29,7 @@
     "fire": "Element **Feu**",
     "wood": "Element **Bois**",
     "water": "Element **Eau**",
-    "light": "Element **Foudre**",
+    "lightning": "Element **Foudre**",
     "air": "Element **Air**",
     "neutral": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
   },

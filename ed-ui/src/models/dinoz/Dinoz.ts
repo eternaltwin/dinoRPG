@@ -28,7 +28,7 @@ export interface DinozRace {
 	name?: string;
 	nbrAir?: number;
 	nbrFire?: number;
-	nbrLight?: number;
+	nbrLightning?: number;
 	nbrWater?: number;
 	nbrWood?: number;
 	price?: number;

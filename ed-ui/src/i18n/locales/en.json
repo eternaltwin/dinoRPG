@@ -29,7 +29,7 @@
     "fire": "Element **Fire**",
     "wood": "Element **Wood**",
     "water": "Element **Water**",
-    "light": "Element **Lightning**",
+    "Lightning": "Element **Lightning**",
     "air": "Element **Air**",
     "neutral": "Element **Void** && //(this element does not apply on the monsters' normal attacks)//"
   },

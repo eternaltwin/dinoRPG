@@ -21,7 +21,7 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
 			'nbrUpFire',
 			'nbrUpWood',
 			'nbrUpWater',
-			'nbrUpLight',
+			'nbrUpLightning',
 			'nbrUpAir',
 			'name',
 			'level',

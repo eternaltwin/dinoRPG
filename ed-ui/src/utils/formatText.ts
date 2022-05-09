@@ -8,7 +8,7 @@ export const helpers = {
 			case 'eau':
 				return `<img src="${require('@/assets/elements/elem_water.webp')}" alt="eau">`;
 			case 'foudre':
-				return `<img src="${require('@/assets/elements/elem_light.webp')}" alt="foudre">`;
+				return `<img src="${require('@/assets/elements/elem_lightning.webp')}" alt="foudre">`;
 			case 'air':
 				return `<img src="${require('@/assets/elements/elem_air.webp')}" alt="air">`;
 			case 'neutre':

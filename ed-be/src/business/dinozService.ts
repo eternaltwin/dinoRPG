@@ -255,7 +255,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		nbrUpFire: race.nbrFire,
 		nbrUpWood: race.nbrWood,
 		nbrUpWater: race.nbrWater,
-		nbrUpLight: race.nbrLight,
+		nbrUpLightning: race.nbrLightning,
 		nbrUpAir: race.nbrAir
 	});
 

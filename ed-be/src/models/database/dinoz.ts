@@ -121,7 +121,7 @@ export class Dinoz extends Model {
 
 	@AllowNull(false)
 	@Column
-	nbrUpLight!: number;
+	nbrUpLightning!: number;
 
 	@AllowNull(false)
 	@Column

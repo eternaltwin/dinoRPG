@@ -23,7 +23,7 @@
 		"fire":"Element **Feuer**",
 		"wood":"Element **Holz**",
 		"water":"Element **Wasser**",
-		"light":"Element **Blitz**",
+		"lightning":"Element **Blitz**",
 		"air":"Element **Luft**",
 		"neutral":"Element **Leere** && //(Dieses Element wird gegen normale Angriffe von Monstern angewendet.)//"
 	},

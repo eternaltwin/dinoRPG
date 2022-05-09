@@ -23,7 +23,7 @@
 		"fire":"Elemento **Fuego**",
 		"wood":"Elemento **Madera**",
 		"water":"Elemento **Agua**",
-		"light":"Elemento **Rayo**",
+		"lightning":"Elemento **Rayo**",
 		"air":"Elemento **Aire**",
 		"neutral":"Elemento **Vacío** && //(este elemento se aplica en respuesta a los ataques normales de los monstruos)//"
 	},
