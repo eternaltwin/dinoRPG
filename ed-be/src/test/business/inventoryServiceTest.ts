@@ -1,11 +1,6 @@
 import { Response } from 'express';
 import { Request } from 'express';
-import {
-	ErrorFormatter,
-	Result,
-	ValidationError,
-	validationResult
-} from 'express-validator';
+import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
 import { mocked } from 'ts-jest/utils';
 import { Player } from '../../models';
 import { getAllItemsData } from '../../business/inventoryService';
@@ -32,19 +27,14 @@ describe('inventoryService: All test cases of getPlayerInventoryDataRequest()', 
 		res = mockResponse;
 
 		// Mock express-validator
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
 		PlayerTestData = cloneDeep(PlayerData);
 		PlayerTestData.itemOwn = playerFlyingShopInventory;
 
-		PlayerDao.getPlayerInventoryDataRequest = jasmine
-			.createSpy()
-			.and.returnValue(PlayerTestData);
+		PlayerDao.getPlayerInventoryDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 	});
 
 	it('Nominal case', async function () {
@@ -52,9 +42,7 @@ describe('inventoryService: All test cases of getPlayerInventoryDataRequest()', 
 
 		expect(PlayerDao.getPlayerInventoryDataRequest).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.getPlayerInventoryDataRequest).toHaveBeenCalledWith(
-			player.id_1
-		);
+		expect(PlayerDao.getPlayerInventoryDataRequest).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(
@@ -66,28 +54,19 @@ describe('inventoryService: All test cases of getPlayerInventoryDataRequest()', 
 	});
 
 	it('Error case: no player', async function () {
-		PlayerDao.getPlayerInventoryDataRequest = jasmine
-			.createSpy()
-			.and.returnValue(null);
+		PlayerDao.getPlayerInventoryDataRequest = jasmine.createSpy().and.returnValue(null);
 
 		await getAllItemsData(req, res);
 
 		expect(PlayerDao.getPlayerInventoryDataRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getPlayerInventoryDataRequest).toHaveBeenCalledWith(
-			player.id_1
-		);
+		expect(PlayerDao.getPlayerInventoryDataRequest).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${player.id_1} doesn't exist`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exist`);
 	});
 
 	it('Error case: bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 

@@ -1,10 +1,4 @@
-import {
-	DinozSkill,
-	ElementType,
-	Energy,
-	SkillTree,
-	SkillType
-} from '../models/index.js';
+import { DinozSkill, ElementType, Energy, SkillTree, SkillType } from '../models/index.js';
 
 // skillId are counted like this : ABCDE
 // A = Element (from fire to void)

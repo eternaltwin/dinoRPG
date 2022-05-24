@@ -16,20 +16,14 @@ import { addPlayerInRanking } from '../dao/rankingDao.js';
  * @param res {string}
  * @return string
  */
-const authenticateToET = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const authenticateToET = async (req: Request, res: Response): Promise<Response> => {
 	let token: OauthAccessToken;
 	let user: User;
 	const config: Config = getConfig();
 
 	try {
 		token = await getAuthorizationToken(req.body.code);
-		user = await getUser(
-			token.accessToken,
-			config.general.eternalTwinServerUri
-		);
+		user = await getUser(token.accessToken, config.general.eternalTwinServerUri);
 	} catch (err) {
 		console.error(err);
 		return res.status(500).send('An error occurred');
@@ -100,9 +94,7 @@ async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {
 const getAuthorizationUri = (req: Request, res: Response): Response => {
 	const oauthClient: RfcOauthClient = getRfcOauthClient(false);
 
-	return res
-		.status(200)
-		.send(oauthClient.getAuthorizationUri('base', 'authenticate'));
+	return res.status(200).send(oauthClient.getAuthorizationUri('base', 'authenticate'));
 };
 
 function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {
@@ -112,13 +104,9 @@ function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {
 		: config.general.eternalTwinPublicUri;
 
 	return new RfcOauthClient({
-		authorizationEndpoint: new URL(
-			`${eternalTwinURI}${config.oauth.authorizationUri}`
-		),
+		authorizationEndpoint: new URL(`${eternalTwinURI}${config.oauth.authorizationUri}`),
 		tokenEndpoint: new URL(`${eternalTwinURI}${config.oauth.tokenUri}`),
-		callbackEndpoint: new URL(
-			`${config.general.frontUri}${config.oauth.callbackUri}`
-		),
+		callbackEndpoint: new URL(`${config.general.frontUri}${config.oauth.callbackUri}`),
 		clientId: config.oauth.clientId,
 		clientSecret: config.oauth.clientSecret
 	});

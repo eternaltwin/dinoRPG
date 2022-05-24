@@ -1,23 +1,17 @@
 import { DinozShop, Player, Ranking } from '../models/index.js';
 
-const getDinozFromDinozShopRequest = (
-	playerId: number
-): Promise<Array<DinozShop>> => {
+const getDinozFromDinozShopRequest = (playerId: number): Promise<Array<DinozShop>> => {
 	return DinozShop.findAll({
 		attributes: ['id', 'display', 'raceId'],
 		where: { playerId: playerId }
 	});
 };
 
-const createMultipleDinoz = (
-	dinozArray: Array<DinozShop>
-): Promise<Array<DinozShop>> => {
+const createMultipleDinoz = (dinozArray: Array<DinozShop>): Promise<Array<DinozShop>> => {
 	return DinozShop.bulkCreate(dinozArray);
 };
 
-const getDinozDetailsRequest = (
-	playerId: number
-): Promise<DinozShop | null> => {
+const getDinozDetailsRequest = (playerId: number): Promise<DinozShop | null> => {
 	return DinozShop.findOne({
 		attributes: ['display', 'raceId'],
 		include: [
@@ -27,13 +21,7 @@ const getDinozDetailsRequest = (
 				include: [
 					{
 						model: Ranking,
-						attributes: [
-							'dinozCount',
-							'sumPointsDisplayed',
-							'sumPoints',
-							'averagePointsDisplayed',
-							'averagePoints'
-						]
+						attributes: ['dinozCount', 'sumPointsDisplayed', 'sumPoints', 'averagePointsDisplayed', 'averagePoints']
 					}
 				]
 			}
@@ -48,9 +36,4 @@ const deleteDinozInShopRequest = (playerId: number): Promise<number> => {
 	});
 };
 
-export {
-	getDinozFromDinozShopRequest,
-	createMultipleDinoz,
-	getDinozDetailsRequest,
-	deleteDinozInShopRequest
-};
+export { getDinozFromDinozShopRequest, createMultipleDinoz, getDinozDetailsRequest, deleteDinozInShopRequest };

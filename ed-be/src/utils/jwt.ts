@@ -34,10 +34,7 @@ const checkIsAdmin = (req: Request, res: Response, next: Function) => {
 	next();
 };
 
-async function isPlayerAdmin(
-	playerId: number,
-	config: Config
-): Promise<boolean> {
+async function isPlayerAdmin(playerId: number, config: Config): Promise<boolean> {
 	const ETId: Player | null = await getEternalTwinId(playerId);
 	const admins: Array<string | undefined> = Object.values(config.admin);
 	return admins.includes(ETId?.eternalTwinId);

@@ -26,8 +26,6 @@ describe('Cron resetDinozShopAtMidnight', function () {
 		const cronJob: CronJob = await resetDinozShopAtMidnight();
 		cronJob.fireOnTick();
 
-		expect(errorSpy).toBeCalledWith(
-			'Cannot truncate table tb_dinoz_shop, err : Error: Error'
-		);
+		expect(errorSpy).toBeCalledWith('Cannot truncate table tb_dinoz_shop, err : Error: Error');
 	});
 });

@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import {
-	getPlayersSumRanking,
-	getPlayersAverageRanking
-} from '../dao/rankingDao.js';
+import { getPlayersSumRanking, getPlayersAverageRanking } from '../dao/rankingDao.js';
 import { PlayerRanking, Ranking } from '../models';
 
 /**

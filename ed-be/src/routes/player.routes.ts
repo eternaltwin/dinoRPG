@@ -15,28 +15,12 @@ const commonPath: string = apiRoutes.playerRoute;
 
 routes.get(`${commonPath}/commondata`, getCommonData);
 
-routes.get(
-	`${commonPath}/:id`,
-	[param('id').exists().isNumeric()],
-	getAccountData
-);
+routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], getAccountData);
 
-routes.put(
-	`${commonPath}/import`,
-	[body('server').exists().isString()],
-	importAccount
-);
+routes.put(`${commonPath}/import`, [body('server').exists().isString()], importAccount);
 
-routes.put(
-	`${commonPath}/customText`,
-	[body('message').exists()],
-	setCustomText
-);
+routes.put(`${commonPath}/customText`, [body('message').exists()], setCustomText);
 
-routes.get(
-	`${commonPath}/search/:name`,
-	[param('name').exists().isString().isLength({ min: 3 })],
-	searchPlayers
-);
+routes.get(`${commonPath}/search/:name`, [param('name').exists().isString().isLength({ min: 3 })], searchPlayers);
 
 export default routes;

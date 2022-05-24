@@ -26,9 +26,7 @@ const updatePoints = (
 	);
 };
 
-const updateRanking = (
-	newPositions: NewPositions
-): Promise<[number, Array<Ranking>]> => {
+const updateRanking = (newPositions: NewPositions): Promise<[number, Array<Ranking>]> => {
 	return Ranking.update(
 		{
 			sumPosition: newPositions.sumPosition,
@@ -51,13 +49,7 @@ const getPlayersPoints = (): Promise<Array<Ranking>> => {
 
 const getPlayersSumRanking = (page: number): Promise<Array<Ranking>> => {
 	return Ranking.findAll({
-		attributes: [
-			'playerId',
-			'sumPosition',
-			'sumPointsDisplayed',
-			'dinozCountDisplayed',
-			'averagePointsDisplayed'
-		],
+		attributes: ['playerId', 'sumPosition', 'sumPointsDisplayed', 'dinozCountDisplayed', 'averagePointsDisplayed'],
 		include: [
 			{
 				model: Player,
@@ -75,13 +67,7 @@ const getPlayersSumRanking = (page: number): Promise<Array<Ranking>> => {
 
 const getPlayersAverageRanking = (page: number): Promise<Array<Ranking>> => {
 	return Ranking.findAll({
-		attributes: [
-			'playerId',
-			'averagePosition',
-			'sumPointsDisplayed',
-			'dinozCountDisplayed',
-			'averagePointsDisplayed'
-		],
+		attributes: ['playerId', 'averagePosition', 'sumPointsDisplayed', 'dinozCountDisplayed', 'averagePointsDisplayed'],
 		include: [
 			{
 				model: Player,

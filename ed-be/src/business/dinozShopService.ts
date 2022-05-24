@@ -1,15 +1,6 @@
 import { Request, Response } from 'express';
-import {
-	Config,
-	Dinoz,
-	DinozShop,
-	Player,
-	DinozRace
-} from '../models/index.js';
-import {
-	getDinozFromDinozShopRequest,
-	createMultipleDinoz
-} from '../dao/shopDao.js';
+import { Config, Dinoz, DinozShop, Player, DinozRace } from '../models/index.js';
+import { getDinozFromDinozShopRequest, createMultipleDinoz } from '../dao/shopDao.js';
 import { getPlayerRewardsRequest } from '../dao/playerDao.js';
 import _ from 'lodash';
 import { getConfig } from '../utils/context.js';
@@ -22,14 +13,9 @@ import { raceList, rewardList } from '../constants/index.js';
  * @param res {Array<DinozShop>}
  * @return Array<DinozShop>
  */
-const getDinozFromDinozShop = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const getDinozFromDinozShop = async (req: Request, res: Response): Promise<Response> => {
 	// Retrieve dinoz from dinoz shop if exists
-	let data: Array<DinozShop> = await getDinozFromDinozShopRequest(
-		req.user!.playerId!
-	);
+	let data: Array<DinozShop> = await getDinozFromDinozShopRequest(req.user!.playerId!);
 
 	// If nothing is found, create 15 dinoz to fill the shop
 	if (_.isEmpty(data)) {
@@ -52,9 +38,7 @@ const getDinozFromDinozShop = async (
 		const config: Config = getConfig();
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player: Player | null = await getPlayerRewardsRequest(
-			req.user!.playerId!
-		);
+		const player: Player | null = await getPlayerRewardsRequest(req.user!.playerId!);
 
 		if (player === null) {
 			return res.status(500).send('Player not found');
@@ -70,10 +54,7 @@ const getDinozFromDinozShop = async (
 			if (playerReward.rewardId === rewardList.TROPHEE_PTEROZ) {
 				availableRaces.push(raceList.PTEROZ);
 			}
-			if (
-				playerReward.rewardId === rewardList.TROPHEE_QUETZU &&
-				player.quetzuBought < config.shop.buyableQuetzu
-			) {
+			if (playerReward.rewardId === rewardList.TROPHEE_QUETZU && player.quetzuBought < config.shop.buyableQuetzu) {
 				availableRaces.push(raceList.QUETZU);
 			}
 		});
@@ -81,12 +62,9 @@ const getDinozFromDinozShop = async (
 		// Make x Dinoz object to fill shop
 		for (let i = 0; i < config.shop.dinozInShop; i++) {
 			// Set a random race to the dinoz
-			randomRace =
-				availableRaces[getRandomNumber(0, availableRaces.length - 1)].raceId;
+			randomRace = availableRaces[getRandomNumber(0, availableRaces.length - 1)].raceId;
 
-			const dinozRaceData: DinozRace = Object.values(raceList).find(
-				race => race.raceId === randomRace
-			)!;
+			const dinozRaceData: DinozRace = Object.values(raceList).find(race => race.raceId === randomRace)!;
 
 			// Make a random display
 			randomDisplay = `${randomRace}0`;
@@ -129,9 +107,7 @@ const getDinozFromDinozShop = async (
  * @return void
  */
 function setDinozRaceAndSkill(dinoz: DinozShop) {
-	const raceFound: DinozRace = Object.values(raceList).find(
-		race => race.raceId === dinoz.raceId
-	)!;
+	const raceFound: DinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId)!;
 
 	if (raceFound.skillId.length > 0) {
 		raceFound.skillId.forEach(skillId => dinoz.setDataValue('skill', skillId));
@@ -160,12 +136,8 @@ function getRandomNumber(min: number, max: number) {
  * @return string
  */
 function getRandomLetter(maxLetter: string): string {
-	const allLetters: string =
-		'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	const lettersAvailable: string = allLetters.substring(
-		0,
-		allLetters.indexOf(maxLetter) + 1
-	);
+	const allLetters: string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	const lettersAvailable: string = allLetters.substring(0, allLetters.indexOf(maxLetter) + 1);
 
 	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
 }

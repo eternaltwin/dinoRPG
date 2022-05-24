@@ -21,7 +21,4 @@ export const DinozFromShop = {
 	raceId: raceList.WINKS.raceId
 } as DinozShop;
 
-export const DinozShopArray = [
-	DinozFromShop,
-	DinozFromShop
-] as Array<DinozShop>;
+export const DinozShopArray = [DinozFromShop, DinozFromShop] as Array<DinozShop>;

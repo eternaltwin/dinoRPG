@@ -9,9 +9,7 @@ const getEnvironnement = (): string => {
 };
 
 const loadConfigFile = (): void => {
-	config = toml.parse(
-		fs.readFileSync(`./config_${getEnvironnement()}.toml`, 'utf-8')
-	);
+	config = toml.parse(fs.readFileSync(`./config_${getEnvironnement()}.toml`, 'utf-8'));
 };
 
 const getConfig = (): Config => {

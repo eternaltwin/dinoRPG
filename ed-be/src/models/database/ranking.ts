@@ -1,13 +1,4 @@
-import {
-	AutoIncrement,
-	BelongsTo,
-	Column,
-	Default,
-	ForeignKey,
-	Model,
-	PrimaryKey,
-	Table
-} from 'sequelize-typescript';
+import { AutoIncrement, BelongsTo, Column, Default, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import { Player } from './player.js';
 
 type PlayerType = Player;

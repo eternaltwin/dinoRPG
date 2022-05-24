@@ -417,10 +417,7 @@ export const raceList: { [name: string]: DinozRace } = {
 		upAirChance: 8,
 		price: 800,
 		swfLetter: 'E',
-		skillId: [
-			skillList.INSAISISSABLE.skillId,
-			skillList.ORIGINE_CAUSHEMESHENNE.skillId
-		]
+		skillId: [skillList.INSAISISSABLE.skillId, skillList.ORIGINE_CAUSHEMESHENNE.skillId]
 	},
 	MAHAMUTI: {
 		raceId: 23,

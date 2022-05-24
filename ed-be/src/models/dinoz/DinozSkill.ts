@@ -1,9 +1,4 @@
-import {
-	ElementType,
-	Energy,
-	SkillType,
-	SkillTree
-} from '../../models/index.js';
+import { ElementType, Energy, SkillType, SkillTree } from '../../models/index.js';
 
 export interface DinozSkill {
 	skillId: number;

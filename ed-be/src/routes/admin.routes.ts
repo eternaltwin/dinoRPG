@@ -23,67 +23,18 @@ routes.put(
 	[
 		param('id').exists().toInt().isNumeric(),
 		body('name').default(null).optional({ nullable: true }).exists().isString(),
-		body('isFrozen')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.isBoolean(),
-		body('isSacrificed')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.isBoolean(),
-		body('level')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.toInt()
-			.isInt(),
-		body('placeId')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.toInt()
-			.isInt(),
-		body('canChangeName')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.isBoolean(),
-		body('life')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.toInt()
-			.isInt(),
-		body('maxLife')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.toInt()
-			.isInt(),
-		body('experience')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.toInt()
-			.isInt(),
-		body('status')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.isArray(),
-		body('statusOperation')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.isString(),
+		body('isFrozen').default(null).optional({ nullable: true }).exists().isBoolean(),
+		body('isSacrificed').default(null).optional({ nullable: true }).exists().isBoolean(),
+		body('level').default(null).optional({ nullable: true }).exists().toInt().isInt(),
+		body('placeId').default(null).optional({ nullable: true }).exists().toInt().isInt(),
+		body('canChangeName').default(null).optional({ nullable: true }).exists().isBoolean(),
+		body('life').default(null).optional({ nullable: true }).exists().toInt().isInt(),
+		body('maxLife').default(null).optional({ nullable: true }).exists().toInt().isInt(),
+		body('experience').default(null).optional({ nullable: true }).exists().toInt().isInt(),
+		body('status').default(null).optional({ nullable: true }).exists().isArray(),
+		body('statusOperation').default(null).optional({ nullable: true }).exists().isString(),
 		body('skill').default(null).optional({ nullable: true }).exists().isArray(),
-		body('skillOperation')
-			.default(null)
-			.optional({ nullable: true })
-			.exists()
-			.isString()
+		body('skillOperation').default(null).optional({ nullable: true }).exists().isString()
 	],
 	checkIsAdmin,
 	editDinoz

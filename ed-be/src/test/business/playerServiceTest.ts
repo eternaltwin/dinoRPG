@@ -15,12 +15,7 @@ import {
 	setCustomText
 } from '../../business/playerService.js';
 import { Request, Response } from 'express';
-import {
-	ErrorFormatter,
-	Result,
-	ValidationError,
-	validationResult
-} from 'express-validator';
+import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
 import { mocked } from 'ts-jest/utils';
 import { searchPlayersByName } from '../../dao/playerDao.js';
 
@@ -39,16 +34,11 @@ describe('Function getCommonData()', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
-		PlayerDao.getCommonDataRequest = jasmine
-			.createSpy()
-			.and.returnValue(BasicPlayer);
+		PlayerDao.getCommonDataRequest = jasmine.createSpy().and.returnValue(BasicPlayer);
 		DinozDao.getDinozTotalCount = jasmine.createSpy().and.returnValue(2);
 
 		BasicPlayer.setDataValue = jasmine.createSpy().and.returnValue([]);
@@ -60,9 +50,7 @@ describe('Function getCommonData()', function () {
 		expect(PlayerDao.getCommonDataRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.getDinozTotalCount).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.getCommonDataRequest).toHaveBeenCalledWith(
-			req.user!.playerId
-		);
+		expect(PlayerDao.getCommonDataRequest).toHaveBeenCalledWith(req.user!.playerId);
 
 		expect(res.status).toHaveBeenCalledWith(200);
 	});
@@ -81,16 +69,11 @@ describe('Function getAccountData', function () {
 			id: player.id_1.toString()
 		};
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
-		PlayerDao.getPlayerDataRequest = jasmine
-			.createSpy()
-			.and.returnValue(PlayerData);
+		PlayerDao.getPlayerDataRequest = jasmine.createSpy().and.returnValue(PlayerData);
 	});
 
 	it('Nominal case', async function () {
@@ -101,9 +84,7 @@ describe('Function getAccountData', function () {
 		expect(PlayerDao.getPlayerDataRequest).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.send).toHaveBeenCalledWith(
-			expect.objectContaining({ dinozCount: 1 })
-		);
+		expect(res.send).toHaveBeenCalledWith(expect.objectContaining({ dinozCount: 1 }));
 	});
 
 	it("Player doesn't exists", async function () {
@@ -116,16 +97,11 @@ describe('Function getAccountData', function () {
 		expect(PlayerDao.getPlayerDataRequest).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${player.id_1} doesn't exists`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exists`);
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -146,10 +122,7 @@ describe('Function importAccount', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
@@ -160,13 +133,9 @@ describe('Function importAccount', function () {
 			server: 'fr'
 		};
 
-		PlayerDao.getImportedData = jasmine
-			.createSpy()
-			.and.returnValue(BasicNotImportedPlayer);
+		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(BasicNotImportedPlayer);
 		PlayerDao.resetUser = jasmine.createSpy().and.returnValue(true);
-		assPlayerRewardsDao.addRewardToPlayer = jasmine
-			.createSpy()
-			.and.returnValue(true);
+		assPlayerRewardsDao.addRewardToPlayer = jasmine.createSpy().and.returnValue(true);
 		PlayerDao.setHasImported = jasmine.createSpy().and.returnValue(true);
 	});
 
@@ -180,10 +149,7 @@ describe('Function importAccount', function () {
 
 		expect(PlayerDao.getImportedData).toHaveBeenCalledWith(player.id_1);
 		expect(PlayerDao.resetUser).toHaveBeenCalledWith(player.id_1);
-		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledWith(
-			player.id_1,
-			100
-		);
+		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledWith(player.id_1, 100);
 		expect(PlayerDao.setHasImported).toHaveBeenCalledWith(player.id_1, true);
 
 		expect(res.status).toHaveBeenCalledWith(200);
@@ -200,15 +166,11 @@ describe('Function importAccount', function () {
 		expect(PlayerDao.getImportedData).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${player.id_1} doesn't exists`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exists`);
 	});
 
 	it('Player has already imported his account', async function () {
-		PlayerDao.getImportedData = jasmine
-			.createSpy()
-			.and.returnValue(BasicImportedPlayer);
+		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(BasicImportedPlayer);
 
 		await importAccount(req, res);
 
@@ -217,16 +179,11 @@ describe('Function importAccount', function () {
 		expect(PlayerDao.getImportedData).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${player.id_1} has already imported his account`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} has already imported his account`);
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -254,16 +211,11 @@ describe('Function setCustomText', function () {
 			message: 'bonjour'
 		};
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
-		PlayerDao.getPlayerRewardsRequest = jasmine
-			.createSpy()
-			.and.returnValue(PlayerData);
+		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerData);
 		PlayerDao.editCustomText = jasmine.createSpy().and.returnValue(true);
 	});
 
@@ -274,19 +226,14 @@ describe('Function setCustomText', function () {
 		expect(PlayerDao.editCustomText).toHaveBeenCalledTimes(1);
 
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
-		expect(PlayerDao.editCustomText).toHaveBeenCalledWith(
-			player.id_1,
-			req.body.message
-		);
+		expect(PlayerDao.editCustomText).toHaveBeenCalledWith(player.id_1, req.body.message);
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
 
 	it("Player doesn't exists", async function () {
-		PlayerDao.getPlayerRewardsRequest = jasmine
-			.createSpy()
-			.and.returnValue(null);
+		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(null);
 
 		await setCustomText(req, res);
 
@@ -295,15 +242,11 @@ describe('Function setCustomText', function () {
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${player.id_1} doesn't exists`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exists`);
 	});
 
 	it('Player cannot edit', async function () {
-		PlayerDao.getPlayerRewardsRequest = jasmine
-			.createSpy()
-			.and.returnValue(PlayerWithRewards);
+		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerWithRewards);
 
 		await setCustomText(req, res);
 
@@ -312,16 +255,11 @@ describe('Function setCustomText', function () {
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${player.id_1} cannot edit this field`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} cannot edit this field`);
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -346,16 +284,11 @@ describe('Function searchPlayers', function () {
 			name: 'Bio'
 		};
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
-		PlayerDao.searchPlayersByName = jasmine
-			.createSpy()
-			.and.returnValue(playerList);
+		PlayerDao.searchPlayersByName = jasmine.createSpy().and.returnValue(playerList);
 	});
 
 	it('Nominal case', async function () {
@@ -370,10 +303,7 @@ describe('Function searchPlayers', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 

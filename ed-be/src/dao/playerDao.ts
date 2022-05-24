@@ -16,15 +16,7 @@ const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 		attributes: ['money', 'playerId'],
 		include: {
 			model: Dinoz,
-			attributes: [
-				'dinozId',
-				'following',
-				'display',
-				'name',
-				'life',
-				'experience',
-				'placeId'
-			],
+			attributes: ['dinozId', 'following', 'display', 'name', 'life', 'experience', 'placeId'],
 			where: { isFrozen: false },
 			required: false
 		},
@@ -61,10 +53,7 @@ const getPlayerRewardsRequest = (playerId: number): Promise<Player | null> => {
 	});
 };
 
-const setPlayerMoneyRequest = (
-	playerId: number,
-	newMoney: number
-): Promise<[number, Array<Player>]> => {
+const setPlayerMoneyRequest = (playerId: number, newMoney: number): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			money: newMoney
@@ -105,9 +94,7 @@ const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
  * @return Array<ItemFiche>
  */
 
-const getPlayerShopItemsDataRequest = (
-	playerId: number
-): Promise<Player | null> => {
+const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['playerId', 'money', 'shopKeeper', 'merchant'],
 		include: [
@@ -133,10 +120,7 @@ const getPlayerShopItemsDataRequest = (
  * @return Array<ItemFiche>
  */
 
-const getPlayerShopOneItemDataRequest = (
-	playerId: number,
-	itemId: number
-): Promise<Player | null> => {
+const getPlayerShopOneItemDataRequest = (playerId: number, itemId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['playerId', 'money', 'shopKeeper', 'merchant'],
 		include: [
@@ -157,9 +141,7 @@ const getPlayerShopOneItemDataRequest = (
 	});
 };
 
-const getPlayerInventoryDataRequest = (
-	playerId: number
-): Promise<Player | null> => {
+const getPlayerInventoryDataRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: ['playerId', 'shopKeeper'],
 		include: [
@@ -185,10 +167,7 @@ const getImportedData = (playerId: number): Promise<Player | null> => {
 	});
 };
 
-const setHasImported = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setHasImported = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			hasImported: state
@@ -217,10 +196,7 @@ const resetUser = (playerId: number): Promise<number> => {
 	});
 };
 
-const editCustomText = (
-	playerId: number,
-	text: string
-): Promise<[number, Array<Player>]> => {
+const editCustomText = (playerId: number, text: string): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			customText: text
@@ -248,10 +224,7 @@ const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
  * @param value {number}
  * @return Promise<[number, Array<Player>]>
  */
-const setQuetzuBought = (
-	playerId: number,
-	value: number
-): Promise<[number, Array<Player>]> => {
+const setQuetzuBought = (playerId: number, value: number): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			quetzuBought: value
@@ -268,10 +241,7 @@ const setQuetzuBought = (
  * @param state {boolean}
  * @return Promise<[number, Array<Player>]>
  */
-const setLeader = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setLeader = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			leader: state
@@ -288,10 +258,7 @@ const setLeader = (
  * @param state {boolean}
  * @return Promise<[number, Array<Player>]>
  */
-const setEngineer = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setEngineer = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			engineer: state
@@ -308,10 +275,7 @@ const setEngineer = (
  * @param state {boolean}
  * @return Promise<[number, Array<Player>]>
  */
-const setCooker = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setCooker = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			cooker: state
@@ -328,10 +292,7 @@ const setCooker = (
  * @param state {boolean}
  * @return Promise<[number, Array<Player>]>
  */
-const setShopKeeper = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setShopKeeper = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			shopKeeper: state
@@ -348,10 +309,7 @@ const setShopKeeper = (
  * @param state {boolean}
  * @return Promise<[number, Array<Player>]>
  */
-const setMerchant = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setMerchant = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			merchant: state
@@ -368,10 +326,7 @@ const setMerchant = (
  * @param state {boolean}
  * @return Promise<[number, Array<Player>]>
  */
-const setPriest = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setPriest = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			priest: state
@@ -388,10 +343,7 @@ const setPriest = (
  * @param state {boolean}
  * @return Promise<[number, Array<Player>]>
  */
-const setTeacher = (
-	playerId: number,
-	state: boolean
-): Promise<[number, Array<Player>]> => {
+const setTeacher = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
 	return Player.update(
 		{
 			teacher: state
@@ -407,9 +359,7 @@ const setTeacher = (
  * @param playerId {number}
  * @return Promise<Player | null>
  */
-const getAllInformationFromPlayer = (
-	playerId: number
-): Promise<Player | null> => {
+const getAllInformationFromPlayer = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
 		attributes: [
 			'playerId',

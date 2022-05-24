@@ -6,12 +6,7 @@ import {
 	playersRankingSum,
 	playersRankingSumResult
 } from '../data/rankingData.js';
-import {
-	ErrorFormatter,
-	Result,
-	ValidationError,
-	validationResult
-} from 'express-validator';
+import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
 import { mocked } from 'ts-jest/utils';
 import { Request, Response } from 'express';
 
@@ -32,34 +27,25 @@ describe('Function getRanking', function () {
 			page: '1'
 		};
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
 		RankingDao.getPlayersSumRanking = jasmine.createSpy().and.returnValue([]);
-		RankingDao.getPlayersAverageRanking = jasmine
-			.createSpy()
-			.and.returnValue([]);
+		RankingDao.getPlayersAverageRanking = jasmine.createSpy().and.returnValue([]);
 	});
 
 	it('Case Sum', async function () {
 		req.params = {
 			sort: 'classic'
 		};
-		RankingDao.getPlayersSumRanking = jasmine
-			.createSpy()
-			.and.returnValue(playersRankingSum);
+		RankingDao.getPlayersSumRanking = jasmine.createSpy().and.returnValue(playersRankingSum);
 
 		await getRanking(req, res);
 
 		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledTimes(1);
 
-		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(
-			parseInt(req.params.page)
-		);
+		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(parseInt(req.params.page));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playersRankingSumResult);
@@ -69,17 +55,13 @@ describe('Function getRanking', function () {
 		req.params = {
 			sort: 'average'
 		};
-		RankingDao.getPlayersAverageRanking = jasmine
-			.createSpy()
-			.and.returnValue(playersRankingAverage);
+		RankingDao.getPlayersAverageRanking = jasmine.createSpy().and.returnValue(playersRankingAverage);
 
 		await getRanking(req, res);
 
 		expect(RankingDao.getPlayersAverageRanking).toHaveBeenCalledTimes(1);
 
-		expect(RankingDao.getPlayersAverageRanking).toHaveBeenCalledWith(
-			parseInt(req.params.page)
-		);
+		expect(RankingDao.getPlayersAverageRanking).toHaveBeenCalledWith(parseInt(req.params.page));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playersRankingAverageResult);
@@ -89,17 +71,13 @@ describe('Function getRanking', function () {
 		req.params = {
 			sort: 'anything'
 		};
-		RankingDao.getPlayersSumRanking = jasmine
-			.createSpy()
-			.and.returnValue(playersRankingSum);
+		RankingDao.getPlayersSumRanking = jasmine.createSpy().and.returnValue(playersRankingSum);
 
 		await getRanking(req, res);
 
 		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledTimes(1);
 
-		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(
-			parseInt(req.params.page)
-		);
+		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(parseInt(req.params.page));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playersRankingSumResult);
@@ -130,34 +108,25 @@ describe('Function getRanking', function () {
 			page: '1'
 		};
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
 		RankingDao.getPlayersSumRanking = jasmine.createSpy().and.returnValue([]);
-		RankingDao.getPlayersAverageRanking = jasmine
-			.createSpy()
-			.and.returnValue([]);
+		RankingDao.getPlayersAverageRanking = jasmine.createSpy().and.returnValue([]);
 	});
 
 	it('Case Sum', async function () {
 		req.params = {
 			sort: 'classic'
 		};
-		RankingDao.getPlayersSumRanking = jasmine
-			.createSpy()
-			.and.returnValue(playersRankingSum);
+		RankingDao.getPlayersSumRanking = jasmine.createSpy().and.returnValue(playersRankingSum);
 
 		await getRanking(req, res);
 
 		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledTimes(1);
 
-		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(
-			parseInt(req.params.page)
-		);
+		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(parseInt(req.params.page));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playersRankingSumResult);
@@ -167,17 +136,13 @@ describe('Function getRanking', function () {
 		req.params = {
 			sort: 'average'
 		};
-		RankingDao.getPlayersAverageRanking = jasmine
-			.createSpy()
-			.and.returnValue(playersRankingAverage);
+		RankingDao.getPlayersAverageRanking = jasmine.createSpy().and.returnValue(playersRankingAverage);
 
 		await getRanking(req, res);
 
 		expect(RankingDao.getPlayersAverageRanking).toHaveBeenCalledTimes(1);
 
-		expect(RankingDao.getPlayersAverageRanking).toHaveBeenCalledWith(
-			parseInt(req.params.page)
-		);
+		expect(RankingDao.getPlayersAverageRanking).toHaveBeenCalledWith(parseInt(req.params.page));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playersRankingAverageResult);
@@ -187,17 +152,13 @@ describe('Function getRanking', function () {
 		req.params = {
 			sort: 'anything'
 		};
-		RankingDao.getPlayersSumRanking = jasmine
-			.createSpy()
-			.and.returnValue(playersRankingSum);
+		RankingDao.getPlayersSumRanking = jasmine.createSpy().and.returnValue(playersRankingSum);
 
 		await getRanking(req, res);
 
 		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledTimes(1);
 
-		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(
-			parseInt(req.params.page)
-		);
+		expect(RankingDao.getPlayersSumRanking).toHaveBeenCalledWith(parseInt(req.params.page));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playersRankingSumResult);

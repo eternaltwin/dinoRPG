@@ -1,18 +1,7 @@
 import { Request, Response } from 'express';
-import {
-	ErrorFormatter,
-	Result,
-	ValidationError,
-	validationResult
-} from 'express-validator';
+import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
 import { mocked } from 'ts-jest/utils';
-import {
-	dinozId,
-	dinozName,
-	mockRequest,
-	mockResponse,
-	player
-} from '../utils/constants.js';
+import { dinozId, dinozName, mockRequest, mockResponse, player } from '../utils/constants.js';
 import {
 	editDinoz,
 	editPlayer,
@@ -23,12 +12,7 @@ import {
 	setPlayerMoney
 } from '../../business/adminService.js';
 import { DinozListFromAnAccount } from '../data/dinozData.js';
-import {
-	PlayerAllData,
-	playerMoney,
-	playerMoneyLess,
-	playerMoneyPlus
-} from '../data/playerData.js';
+import { PlayerAllData, playerMoney, playerMoneyLess, playerMoneyPlus } from '../data/playerData.js';
 
 jest.mock('express-validator');
 
@@ -47,10 +31,7 @@ describe('Function getAdminDashBoard', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 	});
@@ -62,10 +43,7 @@ describe('Function getAdminDashBoard', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -84,10 +62,7 @@ describe('Function editDinoz', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
@@ -125,10 +100,7 @@ describe('Function editDinoz', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -160,10 +132,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.freezeDinoz).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.freezeDinoz).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.isFrozen
-		);
+		expect(DinozDao.freezeDinoz).toHaveBeenLastCalledWith(dinozId, req.body.isFrozen);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -173,10 +142,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.freezeDinoz).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.freezeDinoz).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.isFrozen
-		);
+		expect(DinozDao.freezeDinoz).toHaveBeenLastCalledWith(dinozId, req.body.isFrozen);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -186,10 +152,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.sacrificeDinoz).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.sacrificeDinoz).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.isSacrificed
-		);
+		expect(DinozDao.sacrificeDinoz).toHaveBeenLastCalledWith(dinozId, req.body.isSacrificed);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -199,10 +162,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.sacrificeDinoz).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.sacrificeDinoz).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.isSacrificed
-		);
+		expect(DinozDao.sacrificeDinoz).toHaveBeenLastCalledWith(dinozId, req.body.isSacrificed);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -212,10 +172,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.setDinozLevel).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.setDinozLevel).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.level
-		);
+		expect(DinozDao.setDinozLevel).toHaveBeenLastCalledWith(dinozId, req.body.level);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -225,10 +182,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.setDinozPlaceRequest).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.placeId
-		);
+		expect(DinozDao.setDinozPlaceRequest).toHaveBeenLastCalledWith(dinozId, req.body.placeId);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -238,10 +192,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.setDinozCanChangeName).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.setDinozCanChangeName).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.canChangeName
-		);
+		expect(DinozDao.setDinozCanChangeName).toHaveBeenLastCalledWith(dinozId, req.body.canChangeName);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -251,10 +202,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.setDinozLife).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.setDinozLife).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.life
-		);
+		expect(DinozDao.setDinozLife).toHaveBeenLastCalledWith(dinozId, req.body.life);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -264,10 +212,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.setDinozMaxLife).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.setDinozMaxLife).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.maxLife
-		);
+		expect(DinozDao.setDinozMaxLife).toHaveBeenLastCalledWith(dinozId, req.body.maxLife);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -277,10 +222,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(DinozDao.setDinozExperience).toHaveBeenCalledTimes(1);
 
-		expect(DinozDao.setDinozExperience).toHaveBeenLastCalledWith(
-			dinozId,
-			req.body.experience
-		);
+		expect(DinozDao.setDinozExperience).toHaveBeenLastCalledWith(dinozId, req.body.experience);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -295,9 +237,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(assDinozStatus.addMultipleStatusToDinoz).toHaveBeenCalledTimes(1);
 
-		expect(assDinozStatus.addMultipleStatusToDinoz).toHaveBeenLastCalledWith(
-			statusToAdd
-		);
+		expect(assDinozStatus.addMultipleStatusToDinoz).toHaveBeenLastCalledWith(statusToAdd);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -341,9 +281,7 @@ describe('Function editDinoz', function () {
 		await editDinoz(req, res);
 		expect(assDinozSkill.addMultipleSkillToDinoz).toHaveBeenCalledTimes(1);
 
-		expect(assDinozSkill.addMultipleSkillToDinoz).toHaveBeenLastCalledWith(
-			skillsToAdd
-		);
+		expect(assDinozSkill.addMultipleSkillToDinoz).toHaveBeenLastCalledWith(skillsToAdd);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -385,10 +323,7 @@ describe('Function setPlayerMoney', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
@@ -399,10 +334,7 @@ describe('Function setPlayerMoney', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -417,17 +349,13 @@ describe('Function setPlayerMoney', function () {
 		await setPlayerMoney(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${parseInt(req.params.id)} doesn't exist`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${parseInt(req.params.id)} doesn't exist`);
 	});
 
 	it('Add gold', async function () {
 		req.body.gold = 10000;
 		req.body.operation = 'add';
-		PlayerDao.getPlayerMoney = jasmine
-			.createSpy()
-			.and.returnValues(playerMoney, playerMoneyPlus);
+		PlayerDao.getPlayerMoney = jasmine.createSpy().and.returnValues(playerMoney, playerMoneyPlus);
 
 		await setPlayerMoney(req, res);
 		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(1);
@@ -437,9 +365,7 @@ describe('Function setPlayerMoney', function () {
 		);
 
 		expect(PlayerDao.getPlayerMoney).toHaveBeenCalledTimes(2);
-		expect(PlayerDao.getPlayerMoney).toHaveBeenLastCalledWith(
-			parseInt(req.params.id)
-		);
+		expect(PlayerDao.getPlayerMoney).toHaveBeenLastCalledWith(parseInt(req.params.id));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playerMoney.money + req.body.gold);
@@ -448,9 +374,7 @@ describe('Function setPlayerMoney', function () {
 	it('Remove gold', async function () {
 		req.body.gold = 10000;
 		req.body.operation = 'remove';
-		PlayerDao.getPlayerMoney = jasmine
-			.createSpy()
-			.and.returnValues(playerMoney, playerMoneyLess);
+		PlayerDao.getPlayerMoney = jasmine.createSpy().and.returnValues(playerMoney, playerMoneyLess);
 
 		await setPlayerMoney(req, res);
 		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(1);
@@ -460,9 +384,7 @@ describe('Function setPlayerMoney', function () {
 		);
 
 		expect(PlayerDao.getPlayerMoney).toHaveBeenCalledTimes(2);
-		expect(PlayerDao.getPlayerMoney).toHaveBeenLastCalledWith(
-			parseInt(req.params.id)
-		);
+		expect(PlayerDao.getPlayerMoney).toHaveBeenLastCalledWith(parseInt(req.params.id));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(playerMoney.money - req.body.gold);
@@ -491,10 +413,7 @@ describe('Function givePlayerEpicReward', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 		assPlayerRewardsDao.addMultipleRewardToPlayer = jasmine.createSpy();
@@ -506,10 +425,7 @@ describe('Function givePlayerEpicReward', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -528,12 +444,8 @@ describe('Function givePlayerEpicReward', function () {
 		];
 
 		await givePlayerEpicReward(req, res);
-		expect(assPlayerRewardsDao.addMultipleRewardToPlayer).toHaveBeenCalledTimes(
-			1
-		);
-		expect(assPlayerRewardsDao.addMultipleRewardToPlayer).toHaveBeenCalledWith(
-			rewardsToAdd
-		);
+		expect(assPlayerRewardsDao.addMultipleRewardToPlayer).toHaveBeenCalledTimes(1);
+		expect(assPlayerRewardsDao.addMultipleRewardToPlayer).toHaveBeenCalledWith(rewardsToAdd);
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
@@ -559,9 +471,7 @@ describe('Function givePlayerEpicReward', function () {
 		req.body.operation = 'wrong';
 
 		await givePlayerEpicReward(req, res);
-		expect(assPlayerRewardsDao.addMultipleRewardToPlayer).toHaveBeenCalledTimes(
-			0
-		);
+		expect(assPlayerRewardsDao.addMultipleRewardToPlayer).toHaveBeenCalledTimes(0);
 		expect(assPlayerRewardsDao.removeRewardToPlayer).toHaveBeenCalledTimes(0);
 
 		expect(res.status).toHaveBeenCalledWith(400);
@@ -578,10 +488,7 @@ describe('Function listAllDinozFromPlayer', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
@@ -591,10 +498,7 @@ describe('Function listAllDinozFromPlayer', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -605,14 +509,10 @@ describe('Function listAllDinozFromPlayer', function () {
 
 	it('Nominal case', async function () {
 		DinozListFromAnAccount.forEach(dinoz => (dinoz.setDataValue = jest.fn));
-		DinozDao.getAllDinozFromAccount = jasmine
-			.createSpy()
-			.and.returnValue(DinozListFromAnAccount);
+		DinozDao.getAllDinozFromAccount = jasmine.createSpy().and.returnValue(DinozListFromAnAccount);
 		await listAllDinozFromPlayer(req, res);
 		expect(DinozDao.getAllDinozFromAccount).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getAllDinozFromAccount).toHaveBeenCalledWith(
-			parseInt(req.params.id)
-		);
+		expect(DinozDao.getAllDinozFromAccount).toHaveBeenCalledWith(parseInt(req.params.id));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(DinozListFromAnAccount);
@@ -628,10 +528,7 @@ describe('Function listAllPlayerInformationForAdminDashoard', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
@@ -641,10 +538,7 @@ describe('Function listAllPlayerInformationForAdminDashoard', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -655,30 +549,22 @@ describe('Function listAllPlayerInformationForAdminDashoard', function () {
 
 	it('Nominal case', async function () {
 		PlayerAllData.setDataValue = jest.fn;
-		PlayerDao.getAllInformationFromPlayer = jasmine
-			.createSpy()
-			.and.returnValue(PlayerAllData);
+		PlayerDao.getAllInformationFromPlayer = jasmine.createSpy().and.returnValue(PlayerAllData);
 		await listAllPlayerInformationForAdminDashoard(req, res);
 		expect(PlayerDao.getAllInformationFromPlayer).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getAllInformationFromPlayer).toHaveBeenCalledWith(
-			parseInt(req.params.id)
-		);
+		expect(PlayerDao.getAllInformationFromPlayer).toHaveBeenCalledWith(parseInt(req.params.id));
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith(PlayerAllData);
 	});
 
 	it("Player doesn't exist", async function () {
-		PlayerDao.getAllInformationFromPlayer = jasmine
-			.createSpy()
-			.and.returnValue(null);
+		PlayerDao.getAllInformationFromPlayer = jasmine.createSpy().and.returnValue(null);
 
 		await listAllPlayerInformationForAdminDashoard(req, res);
 
 		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`Player ${parseInt(req.params.id)} doesn't exist`
-		);
+		expect(res.send).toHaveBeenCalledWith(`Player ${parseInt(req.params.id)} doesn't exist`);
 	});
 });
 
@@ -691,10 +577,7 @@ describe('Function editPlayer', function () {
 		req = mockRequest;
 		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
@@ -726,10 +609,7 @@ describe('Function editPlayer', function () {
 	});
 
 	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result(
-			{} as ErrorFormatter<ValidationError>,
-			[]
-		);
+		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => false);
 
@@ -743,10 +623,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setHasImported).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setHasImported).toHaveBeenCalledWith(
-			parseInt(req.params.id),
-			req.body.hasImported
-		);
+		expect(PlayerDao.setHasImported).toHaveBeenCalledWith(parseInt(req.params.id), req.body.hasImported);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -756,10 +633,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.editCustomText).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.editCustomText).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.customText
-		);
+		expect(PlayerDao.editCustomText).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.customText);
 
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
@@ -770,10 +644,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setQuetzuBought).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setQuetzuBought).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.quetzuBought
-		);
+		expect(PlayerDao.setQuetzuBought).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.quetzuBought);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -783,10 +654,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setLeader).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setLeader).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.leader
-		);
+		expect(PlayerDao.setLeader).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.leader);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -796,10 +664,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setEngineer).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setEngineer).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.engineer
-		);
+		expect(PlayerDao.setEngineer).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.engineer);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -809,10 +674,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setCooker).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setCooker).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.cooker
-		);
+		expect(PlayerDao.setCooker).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.cooker);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -822,10 +684,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setShopKeeper).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setShopKeeper).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.shopKeeper
-		);
+		expect(PlayerDao.setShopKeeper).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.shopKeeper);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -835,10 +694,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setMerchant).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setMerchant).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.merchant
-		);
+		expect(PlayerDao.setMerchant).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.merchant);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -848,10 +704,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setPriest).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setPriest).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.priest
-		);
+		expect(PlayerDao.setPriest).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.priest);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});
@@ -861,10 +714,7 @@ describe('Function editPlayer', function () {
 		await editPlayer(req, res);
 		expect(PlayerDao.setTeacher).toHaveBeenCalledTimes(1);
 
-		expect(PlayerDao.setTeacher).toHaveBeenLastCalledWith(
-			parseInt(req.params.id),
-			req.body.teacher
-		);
+		expect(PlayerDao.setTeacher).toHaveBeenLastCalledWith(parseInt(req.params.id), req.body.teacher);
 		expect(res.status).toHaveBeenCalledWith(200);
 		expect(res.send).toHaveBeenCalledWith();
 	});

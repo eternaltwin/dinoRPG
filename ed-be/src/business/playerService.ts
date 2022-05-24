@@ -22,13 +22,8 @@ import { rewardList } from '../constants/reward.js';
  * @param res {Player}
  * @return Player
  */
-const getCommonData = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
-	const commonData: Player | null = await getCommonDataRequest(
-		req.user!.playerId!
-	);
+const getCommonData = async (req: Request, res: Response): Promise<Response> => {
+	const commonData: Player | null = await getCommonDataRequest(req.user!.playerId!);
 	commonData?.setDataValue('dinozCount', await getDinozTotalCount());
 	return res.status(200).send(commonData);
 };
@@ -40,10 +35,7 @@ const getCommonData = async (
  * @param res {PlayerInfo}
  * @return PlayerInfo
  */
-const getAccountData = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const getAccountData = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -60,17 +52,12 @@ const getAccountData = async (
 
 	// Compte du nombre de point
 	//TODO Récuperer via tb_ranking
-	const pointCount: number = playerInfo.dinoz.reduce(
-		(acc, dinoz) => (acc += dinoz.level),
-		0
-	);
+	const pointCount: number = playerInfo.dinoz.reduce((acc, dinoz) => (acc += dinoz.level), 0);
 
 	// Subscription date
 	const date = playerInfo.createdAt.toLocaleString().split(',')[0].split('/');
 	const formatter = new Intl.DateTimeFormat('fr', { month: 'long' });
-	const month = formatter.format(
-		new Date(parseInt(date[2]), parseInt(date[0]) - 1, parseInt(date[1]))
-	);
+	const month = formatter.format(new Date(parseInt(date[2]), parseInt(date[0]) - 1, parseInt(date[1])));
 	const subscribe: string = `${date[1]} ${month} ${date[2]}`;
 
 	// Clan TODO
@@ -111,10 +98,7 @@ const getAccountData = async (
  * @param res
  * @return void
  */
-const importAccount = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const importAccount = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -129,9 +113,7 @@ const importAccount = async (
 
 	//Check if user has not already imported
 	if (importedData.hasImported) {
-		return res
-			.status(500)
-			.send(`Player ${playerId} has already imported his account`);
+		return res.status(500).send(`Player ${playerId} has already imported his account`);
 	}
 
 	//Check if user has data in Eternaltwin's API
@@ -158,10 +140,7 @@ const importAccount = async (
  * @param res
  * @return void
  */
-const setCustomText = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const setCustomText = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -174,9 +153,7 @@ const setCustomText = async (
 	}
 
 	//Check if user can edit
-	if (
-		!playerProfile.reward.some(rewards => rewards.rewardId === rewardList.PLUME)
-	) {
+	if (!playerProfile.reward.some(rewards => rewards.rewardId === rewardList.PLUME)) {
 		return res.status(500).send(`Player ${playerId} cannot edit this field`);
 	}
 	await editCustomText(playerId, req.body.message);
@@ -191,10 +168,7 @@ const setCustomText = async (
  * @param req.params.id {string}
  * @param res
  */
-const searchPlayers = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const searchPlayers = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -202,10 +176,4 @@ const searchPlayers = async (
 	return res.status(200).send(playerList);
 };
 
-export {
-	getCommonData,
-	getAccountData,
-	importAccount,
-	setCustomText,
-	searchPlayers
-};
+export { getCommonData, getAccountData, importAccount, setCustomText, searchPlayers };

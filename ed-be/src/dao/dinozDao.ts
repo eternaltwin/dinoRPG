@@ -1,10 +1,4 @@
-import {
-	AssDinozItem,
-	AssDinozSkill,
-	AssDinozStatus,
-	Dinoz,
-	Player
-} from '../models/index.js';
+import { AssDinozItem, AssDinozSkill, AssDinozStatus, Dinoz, Player } from '../models/index.js';
 
 const createDinozRequest = (newDinoz: Dinoz): Promise<Dinoz> => {
 	return Dinoz.create(newDinoz);
@@ -59,9 +53,7 @@ const getDinozSkillRequest = (dinozId: number): Promise<Dinoz | null> => {
 	});
 };
 
-const getDinozSkillAndStatusRequest = (
-	dinozId: number
-): Promise<Dinoz | null> => {
+const getDinozSkillAndStatusRequest = (dinozId: number): Promise<Dinoz | null> => {
 	return Dinoz.findOne({
 		attributes: ['playerId'],
 		include: [
@@ -92,10 +84,7 @@ const getCanDinozChangeName = (dinozId: number): Promise<Dinoz | null> => {
 	});
 };
 
-const setDinozNameRequest = (
-	dinoz: Dinoz,
-	canChangeName: boolean
-): Promise<[number, Array<Dinoz>]> => {
+const setDinozNameRequest = (dinoz: Dinoz, canChangeName: boolean): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			name: dinoz.name,
@@ -135,10 +124,7 @@ const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz | null> => {
 	});
 };
 
-const setDinozPlaceRequest = (
-	dinozId: number,
-	placeId: number
-): Promise<[number, Array<Dinoz>]> => {
+const setDinozPlaceRequest = (dinozId: number, placeId: number): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			placeId: placeId
@@ -183,10 +169,7 @@ const getAllDinozFromAccount = (playerId: number): Promise<Array<Dinoz>> => {
 	});
 };
 
-const freezeDinoz = (
-	dinozId: number,
-	isFrozen: boolean
-): Promise<[number, Array<Dinoz>]> => {
+const freezeDinoz = (dinozId: number, isFrozen: boolean): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			isFrozen: isFrozen
@@ -197,10 +180,7 @@ const freezeDinoz = (
 	);
 };
 
-const sacrificeDinoz = (
-	dinozId: number,
-	isSacrificed: boolean
-): Promise<[number, Array<Dinoz>]> => {
+const sacrificeDinoz = (dinozId: number, isSacrificed: boolean): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			isSacrificed: isSacrificed
@@ -211,10 +191,7 @@ const sacrificeDinoz = (
 	);
 };
 
-const setDinozLevel = (
-	dinozId: number,
-	level: number
-): Promise<[number, Array<Dinoz>]> => {
+const setDinozLevel = (dinozId: number, level: number): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			level: level
@@ -236,10 +213,7 @@ const setDinozMission = (dinoz: Dinoz): Promise<[number, Array<Dinoz>]> => {
 	);
 };
 
-const setDinozCanChangeName = (
-	dinozId: number,
-	canChangeName: boolean
-): Promise<[number, Array<Dinoz>]> => {
+const setDinozCanChangeName = (dinozId: number, canChangeName: boolean): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			canChangeName: canChangeName
@@ -250,10 +224,7 @@ const setDinozCanChangeName = (
 	);
 };
 
-const setDinozLife = (
-	dinozId: number,
-	life: number
-): Promise<[number, Array<Dinoz>]> => {
+const setDinozLife = (dinozId: number, life: number): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			life: life
@@ -263,10 +234,7 @@ const setDinozLife = (
 		}
 	);
 };
-const setDinozMaxLife = (
-	dinozId: number,
-	maxLife: number
-): Promise<[number, Array<Dinoz>]> => {
+const setDinozMaxLife = (dinozId: number, maxLife: number): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			maxLife: maxLife
@@ -277,10 +245,7 @@ const setDinozMaxLife = (
 	);
 };
 
-const setDinozExperience = (
-	dinozId: number,
-	experience: number
-): Promise<[number, Array<Dinoz>]> => {
+const setDinozExperience = (dinozId: number, experience: number): Promise<[number, Array<Dinoz>]> => {
 	return Dinoz.update(
 		{
 			experience: experience

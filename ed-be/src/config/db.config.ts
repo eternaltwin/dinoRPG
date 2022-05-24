@@ -2,9 +2,7 @@ import fs from 'fs';
 import toml from 'toml';
 
 export default function (config: string) {
-	const configuration = toml.parse(
-		fs.readFileSync(`./config_${config}.toml`, 'utf-8')
-	);
+	const configuration = toml.parse(fs.readFileSync(`./config_${config}.toml`, 'utf-8'));
 
 	const dbConfig = {
 		HOST: configuration.db.host,

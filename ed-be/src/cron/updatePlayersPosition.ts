@@ -24,9 +24,7 @@ const updatePlayersPosition = (): CronJob => {
 			playersUpdated
 				.sort((a, b) => b.averagePoints - a.averagePoints)
 				.forEach((line, index) => {
-					newPositions.find(
-						players => players.playerId === line.playerId
-					)!.averagePosition = index + 1;
+					newPositions.find(players => players.playerId === line.playerId)!.averagePosition = index + 1;
 				});
 
 			newPositions.forEach(async player => await updateRanking(player));

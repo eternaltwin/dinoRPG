@@ -12,11 +12,7 @@ const commonPath: string = apiRoutes.shopRoutes;
 routes.get(`${commonPath}/dinoz`, getDinozFromDinozShop);
 
 // Get the items from a shop
-routes.get(
-	`${commonPath}/getShop/:shopId`,
-	[param('shopId').exists().toInt().isNumeric()],
-	getItemsFromShop
-);
+routes.get(`${commonPath}/getShop/:shopId`, [param('shopId').exists().toInt().isNumeric()], getItemsFromShop);
 
 // Buy an item from a shop
 routes.put(

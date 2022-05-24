@@ -13,9 +13,7 @@ describe('Cron updatePlayersPosition', function () {
 		logSpy = jest.spyOn(console, 'log');
 		errorSpy = jest.spyOn(console, 'error');
 
-		RankingDao.getPlayersPoints = jasmine
-			.createSpy()
-			.and.returnValue(playersToUpdatePoints);
+		RankingDao.getPlayersPoints = jasmine.createSpy().and.returnValue(playersToUpdatePoints);
 		RankingDao.updateRanking = jasmine.createSpy().and.returnValue([]);
 	});
 

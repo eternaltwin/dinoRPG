@@ -1,8 +1,5 @@
 import { Request, Response } from 'express';
-import {
-	getDinozDetailsRequest,
-	deleteDinozInShopRequest
-} from '../dao/shopDao.js';
+import { getDinozDetailsRequest, deleteDinozInShopRequest } from '../dao/shopDao.js';
 import { setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	createDinozRequest,
@@ -27,15 +24,7 @@ import {
 	Place,
 	Ranking
 } from '../models/index.js';
-import {
-	actions,
-	levelList,
-	itemList,
-	raceList,
-	skillList,
-	statusList,
-	placeList
-} from '../constants/index.js';
+import { actions, levelList, itemList, raceList, skillList, statusList, placeList } from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 import { validationResult } from 'express-validator';
 import { updatePoints } from '../dao/rankingDao.js';
@@ -48,10 +37,7 @@ import { updatePoints } from '../dao/rankingDao.js';
  * @param res {DinozFiche}
  * @return DinozFiche
  */
-const getDinozFiche = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const getDinozFiche = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -59,9 +45,7 @@ const getDinozFiche = async (
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
-	const dinozDetails = (await getDinozFicheRequest(
-		dinozId
-	)) as DinozFiche | null;
+	const dinozDetails = (await getDinozFicheRequest(dinozId)) as DinozFiche | null;
 
 	if (dinozDetails === null) {
 		return res.status(500).send(`Dinoz ${dinozId} doesn't exists`);
@@ -69,22 +53,13 @@ const getDinozFiche = async (
 
 	// If player found is different from player who do the request, throw exception
 	if (dinozDetails!.playerId !== req.user!.playerId) {
-		return res
-			.status(500)
-			.send(
-				`Cannot get dinoz details, dinozId : ${dinozId} for player ${
-					req.user!.playerId
-				}`
-			);
+		return res.status(500).send(`Cannot get dinoz details, dinozId : ${dinozId} for player ${req.user!.playerId}`);
 	}
 
 	// Set item list, we just put object name in the list, we don't need other data about items
 	let items: Array<number> = [];
 	dinozDetails.item.forEach(item =>
-		items.push(
-			Object.values(itemList).find(itemList => itemList.itemId === item.itemId)!
-				.itemId
-		)
+		items.push(Object.values(itemList).find(itemList => itemList.itemId === item.itemId)!.itemId)
 	);
 
 	dinozDetails.setDataValue('item', undefined);
@@ -98,24 +73,13 @@ const getDinozFiche = async (
 	dinozDetails.setDataValue('statusList', statusList);
 
 	// Set max experience
-	dinozDetails.setDataValue(
-		'maxExperience',
-		levelList.find(level => level.id === dinozDetails.level)!.experience
-	);
+	dinozDetails.setDataValue('maxExperience', levelList.find(level => level.id === dinozDetails.level)!.experience);
 
 	// Set accessible places
 	const places: Array<number> = Object.values(placeList)
 		.find(place => place.placeId === dinozDetails.placeId)!
-		.borderPlace.map(placeId =>
-			Object.values(placeList).find(place => place.placeId === placeId)
-		)
-		.filter(
-			place =>
-				!place!.conditions ||
-				dinozDetails.status.some(
-					status => status.statusId === place!.conditions
-				)
-		)
+		.borderPlace.map(placeId => Object.values(placeList).find(place => place.placeId === placeId))
+		.filter(place => !place!.conditions || dinozDetails.status.some(status => status.statusId === place!.conditions))
 		.map(place => place!.placeId);
 	dinozDetails.setDataValue('borderPlace', places);
 
@@ -160,10 +124,7 @@ function getAvailableActions(): Array<string> {
  * @param res {DinozSkill}
  * @return DinozSkill
  */
-const getDinozSkill = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const getDinozSkill = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -176,9 +137,7 @@ const getDinozSkill = async (
 	}
 
 	if (dinozSkill.playerId !== req.user!.playerId) {
-		return res
-			.status(500)
-			.send(`Dinoz ${dinozId} doesn't belong to player ${dinozSkill.playerId}`);
+		return res.status(500).send(`Dinoz ${dinozId} doesn't belong to player ${dinozSkill.playerId}`);
 	}
 
 	const response: Array<DinozSkill> = [];
@@ -212,31 +171,23 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	}
 
 	// Get dinoz details thanks to his ID
-	const dinozData: DinozShop | null = await getDinozDetailsRequest(
-		parseInt(req.params.id)
-	);
+	const dinozData: DinozShop | null = await getDinozDetailsRequest(parseInt(req.params.id));
 
 	// Throw error if dinoz don't exist in database
 	if (dinozData === null) {
 		return res.status(500).send(`Dinoz ${req.params.id} doesn't exist`);
 	}
 
-	const race: DinozRace = Object.values(raceList).find(
-		race => race.raceId === dinozData.raceId
-	)!;
+	const race: DinozRace = Object.values(raceList).find(race => race.raceId === dinozData.raceId)!;
 
 	// Throws an exception if player doesn't have enough money to buy the dinoz
 	if (dinozData.player.money < race.price) {
-		return res
-			.status(500)
-			.send(`You don't have enough money to buy dinoz ${req.params.id}`);
+		return res.status(500).send(`You don't have enough money to buy dinoz ${req.params.id}`);
 	}
 
 	// Throw error if dinoz doesn't belong to player shop
 	if (dinozData.player.playerId !== req.user!.playerId!) {
-		return res
-			.status(500)
-			.send(`Dinoz ${req.params.id} doesn't belong to your account`);
+		return res.status(500).send(`Dinoz ${req.params.id} doesn't belong to your account`);
 	}
 
 	const newDinoz: Dinoz = Dinoz.build({
@@ -271,9 +222,7 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 
 	// Add skill to created dinoz
 	if (race.skillId.length > 0) {
-		race.skillId.forEach(skillId =>
-			addSkillToDinoz(dinozCreated.dinozId, skillId)
-		);
+		race.skillId.forEach(skillId => addSkillToDinoz(dinozCreated.dinozId, skillId));
 	}
 
 	const dinozToSend: BasicDinoz = {
@@ -310,9 +259,7 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 	}
 
 	// Retrieve player from dinozId
-	const dinoz: Dinoz | null = await getCanDinozChangeName(
-		parseInt(req.params.id)
-	);
+	const dinoz: Dinoz | null = await getCanDinozChangeName(parseInt(req.params.id));
 
 	if (dinoz === null) {
 		return res.status(500).send(`Dinoz ${req.params.id} doesn't exist`);
@@ -320,11 +267,7 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
 
 	// If authenticated player is different from player found, throw exception
 	if (dinoz!.player.playerId !== req.user!.playerId) {
-		return res
-			.status(500)
-			.send(
-				`Dinoz ${req.params.id} doesn't belong to player ${req.user!.playerId}`
-			);
+		return res.status(500).send(`Dinoz ${req.params.id} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	// If player can't change dinoz name, throw exception
@@ -351,10 +294,7 @@ const setDinozName = async (req: Request, res: Response): Promise<Response> => {
  * @param res {boolean}
  * @return boolean
  */
-const setSkillState = async (
-	req: Request,
-	res: Response
-): Promise<Response> => {
+const setSkillState = async (req: Request, res: Response): Promise<Response> => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -372,37 +312,27 @@ const setSkillState = async (
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.playerId !== req.user!.playerId) {
-		return res
-			.status(500)
-			.send(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+		return res.status(500).send(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	// Check if dinoz can change his skills
-	const amulst = dinoz.status.some(
-		status => status.statusId === statusList.STRATEGY_IN_130_LESSONS
-	);
+	const amulst = dinoz.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
 
 	if (!amulst) {
-		return res
-			.status(500)
-			.send(`Dinoz ${dinozId} doesn't have the good status`);
+		return res.status(500).send(`Dinoz ${dinozId} doesn't have the good status`);
 	}
 
 	// Check if dinoz know the skill
-	const dinozKnowThisSkill = dinoz.skill.some(
-		skill => skill.skillId === skillToUpdate
-	);
+	const dinozKnowThisSkill = dinoz.skill.some(skill => skill.skillId === skillToUpdate);
 
 	if (!dinozKnowThisSkill) {
-		return res
-			.status(500)
-			.send(`Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
+		return res.status(500).send(`Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
 	}
 
 	// Check if skill can be activate / desactivate
-	const skillIsActivatable: DinozSkill | undefined = Object.values(
-		skillList
-	).find(skill => skill.skillId === skillToUpdate);
+	const skillIsActivatable: DinozSkill | undefined = Object.values(skillList).find(
+		skill => skill.skillId === skillToUpdate
+	);
 
 	if (!skillIsActivatable!.activatable) {
 		return res.status(500).send(`Skill ${skillToUpdate} cannot be activated`);
@@ -436,17 +366,11 @@ const betaMove = async (req: Request, res: Response): Promise<Response> => {
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.playerId !== req.user!.playerId) {
-		return res
-			.status(500)
-			.send(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+		return res.status(500).send(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const actualPlace: Place | undefined = Object.values(placeList).find(
-		place => place.placeId === dinoz.placeId
-	);
-	const desiredPlace: Place | undefined = Object.values(placeList).find(
-		place => place.placeId === req.body.placeId
-	);
+	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const desiredPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);
 
 	// Check if desired and actual place exist and is adjacent to actual place
 	if (!desiredPlace) {
@@ -454,29 +378,19 @@ const betaMove = async (req: Request, res: Response): Promise<Response> => {
 	}
 
 	if (actualPlace!.placeId === desiredPlace.placeId) {
-		return res
-			.status(500)
-			.send(`Dinoz ${dinozId} is already at ${actualPlace!.name}`);
+		return res.status(500).send(`Dinoz ${dinozId} is already at ${actualPlace!.name}`);
 	}
 
 	if (!actualPlace!.borderPlace.includes(desiredPlace.placeId)) {
-		return res
-			.status(500)
-			.send(`${actualPlace!.name} is not adjascent with ${desiredPlace.name}`);
+		return res.status(500).send(`${actualPlace!.name} is not adjascent with ${desiredPlace.name}`);
 	}
 
 	// Check if condition to go to desired place are fullfill
 	if (desiredPlace.conditions) {
-		const dinozStatus: Dinoz | null = await getDinozSkillAndStatusRequest(
-			dinozId
-		);
-		const canGoToWantedPlace = dinozStatus!.status.some(
-			status => status.statusId === desiredPlace.conditions
-		);
+		const dinozStatus: Dinoz | null = await getDinozSkillAndStatusRequest(dinozId);
+		const canGoToWantedPlace = dinozStatus!.status.some(status => status.statusId === desiredPlace.conditions);
 		if (!canGoToWantedPlace) {
-			return res
-				.status(500)
-				.send(`Dinoz ${dinozId} doesn't fullfill requirement to go this place`);
+			return res.status(500).send(`Dinoz ${dinozId} doesn't fullfill requirement to go this place`);
 		}
 	}
 
@@ -515,12 +429,4 @@ function betaFight(dinoz: Dinoz): FightResult {
 	return infoToSend;
 }
 
-export {
-	getDinozFiche,
-	buyDinoz,
-	setDinozName,
-	getDinozSkill,
-	setSkillState,
-	betaMove,
-	betaFight
-};
+export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, betaFight };
