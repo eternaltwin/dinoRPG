@@ -256,6 +256,17 @@ const setDinozExperience = (dinozId: number, experience: number): Promise<[numbe
 	);
 };
 
+const addExperience = (dinozId: number, experience: number): Promise<Dinoz | null> => {
+	return Dinoz.increment(
+		{
+			experience: experience
+		},
+		{
+			where: { dinozId: dinozId }
+		}
+	);
+};
+
 export {
 	createDinozRequest,
 	getDinozFicheRequest,
@@ -275,5 +286,6 @@ export {
 	setDinozCanChangeName,
 	setDinozLife,
 	setDinozMaxLife,
-	setDinozExperience
+	setDinozExperience,
+	addExperience
 };

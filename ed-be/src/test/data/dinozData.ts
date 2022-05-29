@@ -29,6 +29,8 @@ export const DinozWithSkillsAndStatus = {
 export const DinozWithSkillsAndStatusReadyToMove = {
 	playerId: player.id_1,
 	placeId: 1,
+	experience: 99,
+	level: 1,
 	skill: [{ skillId: skillId2 }],
 	status: [{ statusId: 2 }, { statusId: 12 }]
 } as Dinoz;

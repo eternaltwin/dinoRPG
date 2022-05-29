@@ -36,6 +36,7 @@ import { mocked } from 'ts-jest/utils';
 import { Request, Response } from 'express';
 import { cloneDeep } from 'lodash';
 import { playerRanking } from '../data/rankingData.js';
+import { getRandomNumber } from '../../utils/tools.js';
 
 jest.mock('express-validator');
 
@@ -44,6 +45,7 @@ const DinozShopDao = require('../../dao/shopDao.js');
 const PlayerDao = require('../../dao/playerDao.js');
 const AssDinozSkillDao = require('../../dao/assDinozSkillDao.js');
 const RankingDao = require('../../dao/rankingDao.js');
+const tools = require('../../utils/tools.js');
 
 describe('Function getDinozFiche()', function () {
 	let req: Request;
@@ -559,6 +561,10 @@ describe('Function betaMove', function () {
 		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(DinozWithSkillsAndStatusReadyToMove);
 		DinozDao.getDinozSkillAndStatusRequest = jasmine.createSpy().and.returnValue(DinozWithSkillsAndStatusReadyToMove);
 		DinozDao.setDinozPlaceRequest = jasmine.createSpy();
+		DinozDao.getDinozFicheRequest = jasmine.createSpy().and.returnValue(DinozWithSkillsAndStatusReadyToMove);
+		PlayerDao.addPlayerMoney = jasmine.createSpy();
+		DinozDao.addExperience = jasmine.createSpy();
+		jest.spyOn(tools, 'getRandomNumber').mockReturnValue(999);
 	});
 
 	it('Nominal case', async function () {
@@ -567,6 +573,9 @@ describe('Function betaMove', function () {
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.getDinozSkillAndStatusRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(1);
+		expect(DinozDao.addExperience).toHaveBeenCalledTimes(1);
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
 		expect(DinozDao.getDinozSkillAndStatusRequest).toHaveBeenCalledWith(dinozId);

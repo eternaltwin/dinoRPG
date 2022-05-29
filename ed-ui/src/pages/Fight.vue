@@ -26,6 +26,9 @@ export default defineComponent({
 	},
 	mounted(): void {
 		this.fight = sessionStore.getters.getFightResult;
+		const newMoney = (sessionStore.getters.getMoney +
+			this.fight.goldEarned) as number;
+		sessionStore.commit('setMoney', newMoney);
 	}
 });
 </script>

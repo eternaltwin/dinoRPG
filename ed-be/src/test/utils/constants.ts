@@ -35,8 +35,8 @@ export const itemId = 1;
 export const itemQuantity = 1;
 
 export const defaultFight = {
-	goldEarned: 0,
-	xpEarned: 0,
+	goldEarned: 999,
+	xpEarned: 1,
 	hpLost: 0,
 	result: true
 };

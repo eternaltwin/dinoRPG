@@ -5,6 +5,7 @@ import { getPlayerRewardsRequest } from '../dao/playerDao.js';
 import _ from 'lodash';
 import { getConfig } from '../utils/context.js';
 import { raceList, rewardList } from '../constants/index.js';
+import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -116,30 +117,6 @@ function setDinozRaceAndSkill(dinoz: DinozShop) {
 	dinoz.setDataValue('race', raceFound);
 	dinoz.setDataValue('raceId', undefined);
 	dinoz.setDataValue('playerId', undefined);
-}
-
-/**
- * @summary Return a random number
- * @param min {number}
- * @param max {number}
- * @return number
- */
-function getRandomNumber(min: number, max: number) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min)) + min;
-}
-
-/**
- * @summary Return a random letter
- * @param maxLetter {string}
- * @return string
- */
-function getRandomLetter(maxLetter: string): string {
-	const allLetters: string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	const lettersAvailable: string = allLetters.substring(0, allLetters.indexOf(maxLetter) + 1);
-
-	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
 }
 
 export { getDinozFromDinozShop };

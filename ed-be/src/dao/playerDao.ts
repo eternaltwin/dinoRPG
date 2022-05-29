@@ -415,6 +415,10 @@ const getPlayerMoney = (playerId: number): Promise<Player | null> => {
 	});
 };
 
+const addPlayerMoney = (playerId: number, money: number): Promise<Player | null> => {
+	return Player.increment({ money: money }, { where: { playerId: playerId } });
+};
+
 export {
 	createPlayer,
 	getImportedData,
@@ -440,5 +444,6 @@ export {
 	setPriest,
 	setTeacher,
 	getAllInformationFromPlayer,
-	getPlayerMoney
+	getPlayerMoney,
+	addPlayerMoney
 };

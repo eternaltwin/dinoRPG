@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getDinozDetailsRequest, deleteDinozInShopRequest } from '../dao/shopDao.js';
-import { setPlayerMoneyRequest } from '../dao/playerDao.js';
+import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	createDinozRequest,
 	getDinozFicheRequest,
@@ -10,7 +10,8 @@ import {
 	getDinozSkillAndStatusRequest,
 	setSkillStateRequest,
 	getDinozPlaceRequest,
-	setDinozPlaceRequest
+	setDinozPlaceRequest,
+	addExperience
 } from '../dao/dinozDao.js';
 import {
 	Dinoz,
@@ -28,6 +29,7 @@ import { actions, levelList, itemList, raceList, skillList, statusList, placeLis
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 import { validationResult } from 'express-validator';
 import { updatePoints } from '../dao/rankingDao.js';
+import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
 
 // TODO: refaire cette fonction proprement
 /**
@@ -398,7 +400,7 @@ const betaMove = async (req: Request, res: Response): Promise<Response> => {
 	finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
 
 	// Fight at the desired place
-	const fight: FightResult = betaFight(dinoz);
+	const fight: FightResult = await betaFight(dinoz);
 	if (fight.result) {
 		await setDinozPlaceRequest(dinozId, finalPlace);
 	}
@@ -411,14 +413,23 @@ const betaMove = async (req: Request, res: Response): Promise<Response> => {
  * @param dinoz {Dinoz}
  * @return FightResult
  */
-function betaFight(dinoz: Dinoz): FightResult {
+async function betaFight(dinoz: Dinoz): Promise<FightResult> {
 	// NOTHING IS GOOD HERE. EVERYTHING IS TO DO
+	const dinozInFight: Dinoz | null = await getDinozFicheRequest(dinoz.dinozId);
+	const maxExp = levelList.find(level => level.id === dinozInFight?.level)!.experience;
 
-	let goldEarned = 0;
-	let xpEarned = 0;
+	let goldEarned = getRandomNumber(900, 1100);
+	let xpEarned =
+		maxExp - dinozInFight!.experience > 0
+			? ((10 + getRandomNumber(0, maxExp - dinozInFight!.experience)) % (maxExp - dinozInFight!.experience)) + 1
+			: 0;
 	let hpLost = 0;
 	let result = true;
 
+	if (result) {
+		await addPlayerMoney(dinozInFight!.playerId, goldEarned);
+		await addExperience(dinozInFight!.dinozId, xpEarned);
+	}
 	const infoToSend: FightResult = {
 		goldEarned: goldEarned,
 		xpEarned: xpEarned,
