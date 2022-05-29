@@ -1,3 +1,4 @@
+export * from './ingredient.js';
 export * from './item.js';
 export * from './level.js';
 export * from './place.js';
@@ -12,6 +13,7 @@ export * from './status.js';
 export const apiRoutes = {
 	adminRoute: '/api/admin',
 	dinozRoute: '/api/dinoz',
+	ingredientRoute: '/api/ingredients',
 	inventoryRoute: '/api/inventory',
 	oauthRoute: '/api/oauth',
 	playerRoute: '/api/player',

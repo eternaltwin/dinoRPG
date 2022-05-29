@@ -17,7 +17,6 @@ import {
 import { Request, Response } from 'express';
 import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
 import { mocked } from 'ts-jest/utils';
-import { searchPlayersByName } from '../../dao/playerDao.js';
 
 jest.mock('express-validator');
 

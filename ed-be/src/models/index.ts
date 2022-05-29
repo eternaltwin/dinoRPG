@@ -10,6 +10,7 @@ export * from './dinoz/DinozRace.js';
 export * from './dinoz/FightResult.js';
 export * from './enums/index.js';
 export * from './item/ItemFiche.js';
+export * from './ingredient/IngredientFiche.js';
 export * from './place/Place.js';
 export * from './player/NewPositions.js';
 export * from './player/PlayerInfo.js';

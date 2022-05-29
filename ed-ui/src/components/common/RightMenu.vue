@@ -16,7 +16,7 @@
 			<a @click="goToPage('')">{{ $t('rightMenu.clans') }}</a>
 		</li>
 		<li>
-			<a @click="goToPage('')">{{ $t('rightMenu.ingredients') }}</a>
+			<a @click="goToPage('Ingredients')">{{ $t('rightMenu.ingredients') }}</a>
 		</li>
 		<li>
 			<a @click="goToMyAccount('MyAccount', getPlayerId)">{{
