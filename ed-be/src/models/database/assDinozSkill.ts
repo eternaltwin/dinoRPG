@@ -6,7 +6,8 @@ import {
 	PrimaryKey,
 	AutoIncrement,
 	AllowNull,
-	BelongsTo
+	BelongsTo,
+	Default
 } from 'sequelize-typescript';
 import { Dinoz } from './dinoz.js';
 
@@ -30,6 +31,7 @@ export class AssDinozSkill extends Model {
 	@Column
 	skillId!: number;
 
+	@Default(true)
 	@Column
 	state!: boolean;
 }

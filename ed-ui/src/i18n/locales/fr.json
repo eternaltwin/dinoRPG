@@ -92,6 +92,13 @@
       "false": "Actuellement **INACTIF** &&//Une compétence inactive ne sera plus utilisée par votre Dinoz. Cliquez pour activer//",
       "true": "Actuellement **actif** &&//Cliquez pour désactiver//",
       "locked": "Ne peut pas être désactivé"
+    },
+    "sort": {
+      "default": "Défaut",
+      "energy": "Energie",
+      "type": "Type",
+      "state": "État",
+      "title": "Trier les compétences"
     }
   },
   "item": {

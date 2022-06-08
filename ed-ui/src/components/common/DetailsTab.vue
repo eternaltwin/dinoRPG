@@ -1,5 +1,38 @@
 <template>
 	<div class="details">
+		<p class="wrapperMenu" @click="hidden = !hidden">
+			{{ $t('details.sort.title') }}
+		</p>
+		<div ref="butt" class="wrapper" :class="hidden ? 'hidden' : 'shown'">
+			<div class="label">
+				<select name="sort" v-model="selectedSort" @change="sort()">
+					<option value="Default">{{ $t('details.sort.default') }}</option>
+					<option value="Energy">{{ $t('details.sort.energy') }}</option>
+					<option value="Type">{{ $t('details.sort.type') }}</option>
+					<option value="State">{{ $t('details.sort.state') }}</option>
+				</select>
+			</div>
+			<div class="label">
+				<input
+					type="radio"
+					id="Ascendant"
+					value="Ascendant"
+					v-model="picked"
+					@change="reverse()"
+				/>
+				<input
+					type="radio"
+					id="Descendant"
+					value="Descendant"
+					v-model="picked"
+					@change="reverse()"
+				/>
+			</div>
+			<div class="label">
+				<label for="Ascendant">Ascendant</label>
+				<label for="Descendant">Descendant</label>
+			</div>
+		</div>
 		<table>
 			<tbody>
 				<tr>
@@ -99,7 +132,10 @@ export default defineComponent({
 	data() {
 		return {
 			dinozSkill: [] as Array<Skill>,
-			skillNameList: skillNameList
+			skillNameList: skillNameList,
+			selectedSort: 'Default' as string,
+			picked: 'Ascendant' as string,
+			hidden: true as boolean
 		};
 	},
 	methods: {
@@ -121,6 +157,35 @@ export default defineComponent({
 		},
 		hasAmulst(): boolean {
 			return this.dinozData!.statusList.includes(statusList.id.amulst);
+		},
+		sort(): void {
+			switch (this.selectedSort) {
+				case 'Default':
+					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+						a.skillId > b.skillId ? 1 : b.skillId > a.skillId ? -1 : 0
+					);
+					break;
+				case 'Type':
+					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+						a.type > b.type ? 1 : b.type > a.type ? -1 : 0
+					);
+					break;
+				case 'Energy':
+					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+						a.energy > b.energy ? 1 : b.energy > a.energy ? -1 : 0
+					);
+					break;
+				case 'State':
+					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+						a.state > b.state ? 1 : b.state > a.state ? -1 : 0
+					);
+					break;
+				default:
+					break;
+			}
+		},
+		reverse(): void {
+			this.dinozSkill = this.dinozSkill.reverse();
 		}
 	},
 	async mounted(): Promise<void> {
@@ -128,6 +193,7 @@ export default defineComponent({
 		try {
 			const dinozId = this.$route.params.id as string;
 			this.dinozSkill = await DinozService.getDinozSkill(dinozId);
+			this.sort();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
@@ -138,11 +204,49 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.wrapperMenu {
+	zoom: 1;
+	*display: inline;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 8pt;
+	border: 1px dashed rgba(0, 0, 0, 0.1);
+	text-align: center;
+	&:hover {
+		background-color: #9a4029;
+		color: #fce3bc;
+	}
+}
+.hidden {
+	max-height: 0;
+}
+.shown {
+	max-height: 54px;
+}
+.wrapper {
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	zoom: 1;
+	*display: inline;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 8pt;
+	select {
+		margin-bottom: 5px;
+	}
+	.label {
+		display: flex;
+		justify-content: space-around;
+	}
+}
 .details {
 	margin: 5px;
 	table {
 		width: 100%;
-		margin-top: 10px;
 		margin-bottom: 5px;
 		margin-bottom: 10px;
 		border: 2px solid #bc683c;
