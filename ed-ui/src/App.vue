@@ -4,6 +4,7 @@
 	<RouterView />
 	<Spinner />
 	<Version />
+	<Thanks />
 	<ErrorMessage />
 </template>
 
@@ -11,12 +12,14 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import Version from '@/components/utils/Version.vue';
 import Title from '@/components/utils/Title.vue';
+import Thanks from '@/components/utils/Thanks.vue';
 
 export default defineComponent({
 	name: 'App',
 	components: {
 		Title,
 		Version,
+		Thanks,
 		Spinner: defineAsyncComponent(() =>
 			import('@/components/utils/Spinner.vue')
 		),

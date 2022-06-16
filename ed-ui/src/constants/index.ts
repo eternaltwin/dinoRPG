@@ -7,3 +7,4 @@ export * from './race';
 export * from './shop';
 export * from './skill';
 export * from './status';
+export * from './thanks';

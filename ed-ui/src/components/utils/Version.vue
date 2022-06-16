@@ -122,11 +122,11 @@ export default defineComponent({
 	font-family: Nunito, Century Gothic, Arial, Trebuchet MS, Verdana, Open Sans,
 		sans-serif;
 	font-size: 11px;
-	margin-left: 554.167px;
 	position: fixed;
 	bottom: 10px;
 	right: 10px;
 	width: 395.833px;
+	z-index: 10;
 }
 .version_wrapper {
 	align-items: center;
