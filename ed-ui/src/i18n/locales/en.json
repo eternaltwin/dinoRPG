@@ -378,7 +378,8 @@
   },
   "news": {
     "actualites": "Dinoland's actuality",
-    "overload": "Show old updates"
+    "overload": "Show old updates",
+    "overload": "Voir les actualités plus anciennes"
   },
   "place": {
     "name": {
