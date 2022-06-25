@@ -26,6 +26,11 @@
 				Dinoz Edit
 			</a>
 		</li>
+		<li :class="tabSelected === 3 ? 'active' : ''">
+			<a href="#" @click="tabSelected = 3">
+				News
+			</a>
+		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
 	<div v-if="player.name && tabSelected === 2">
@@ -42,6 +47,7 @@
 		:dinozProp="selectedDinoz"
 		:playerId="player.playerId"
 	/>
+	<NewsEdit v-if="tabSelected === 3" />
 </template>
 
 <script lang="ts">
@@ -52,6 +58,7 @@ import { AdminService, PlayerService } from '@/services';
 import { Dinoz, Player } from '@/models/index.js';
 import PlayerEdit from '@/components/admin/PlayerEdit.vue';
 import DinozEdit from '@/components/admin/DinozEdit.vue';
+import NewsEdit from '@/components/admin/NewsEdit.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -60,7 +67,7 @@ interface PlayerSearch {
 
 export default defineComponent({
 	name: 'AdminDashBoard',
-	components: { PlayerEdit, DinozEdit },
+	components: { NewsEdit, PlayerEdit, DinozEdit },
 	data() {
 		return {
 			searchValue: undefined as string | undefined,

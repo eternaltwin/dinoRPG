@@ -13,6 +13,7 @@ import { sessionStore } from '@/store';
 import DinozWithoutFlash from '@/components/dinoz/dinozWithoutFlash.vue';
 import AdminDashBoard from '@/pages/AdminDashBoard.vue';
 import Ingredients from '@/pages/Ingredients.vue';
+import News from '@/components/common/News.vue';
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
@@ -22,6 +23,11 @@ const router = createRouter({
 			name: 'MainPage',
 			component: MainPage,
 			children: [
+				{
+					path: '/',
+					name: 'News',
+					component: News
+				},
 				{
 					path: '/dino/:id',
 					name: 'DinozPage',

@@ -128,7 +128,8 @@
     }
   },
   "news": {
-    "actualites": "L'actualité de Dinoland"
+    "actualites": "L'actualité de Dinoland",
+    "overload": "Voir les actualités plus anciennes"
   },
   "place": {
     "name": {

@@ -66,6 +66,8 @@ export default defineComponent({
 				sessionStore.commit('setDinozCount', commonData.dinozCount);
 				sessionStore.commit('setPlayerId', commonData.playerId);
 				EventBus.emit('isLoading', false);
+
+				this.$router.push({ name: 'News' });
 			} catch (err) {
 				errorHandler.handle(err);
 				return;

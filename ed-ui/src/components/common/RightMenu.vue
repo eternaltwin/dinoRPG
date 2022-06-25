@@ -4,7 +4,7 @@
 			<div class="time">{{ time }}</div>
 		</li>
 		<li>
-			<a @click="goToPage('MainPage')">{{ $t('rightMenu.news') }}</a>
+			<a @click="goToPage('News')">{{ $t('rightMenu.news') }}</a>
 		</li>
 		<li>
 			<a @click="goToPage('')">{{ $t('rightMenu.gazette') }}</a>

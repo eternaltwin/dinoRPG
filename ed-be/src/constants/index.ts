@@ -15,6 +15,7 @@ export const apiRoutes = {
 	dinozRoute: '/api/dinoz',
 	ingredientRoute: '/api/ingredients',
 	inventoryRoute: '/api/inventory',
+	newsRoute: '/api/news',
 	oauthRoute: '/api/oauth',
 	playerRoute: '/api/player',
 	rankingRoutes: '/api/ranking',
