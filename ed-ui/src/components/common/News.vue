@@ -110,7 +110,10 @@ export default defineComponent({
 			try {
 				this.batch = await NewsService.getNewsFromPage(this.page);
 				this.displayedBatch = this.transformLanguage(this.batch);
-				this.displayedBatch[0].hide = false;
+				console.log(this.displayedBatch.length)
+				if (this.displayedBatch.length !== 0) {
+					this.displayedBatch[0].hide = false;
+				}
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
