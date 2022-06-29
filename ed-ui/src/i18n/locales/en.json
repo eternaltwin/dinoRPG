@@ -46,7 +46,7 @@
     "fire": "Element **Fire**",
     "wood": "Element **Wood**",
     "water": "Element **Water**",
-    "lightning": "Element **Foudre**",
+    "lightning": "Element **Lightning**",
     "air": "Element **Air**",
     "neutral": "Element **Void** && //(this element does not apply on the monsters' normal attacks)//"
   },
@@ -379,7 +379,7 @@
   "news": {
     "actualites": "Dinoland's actuality",
     "overload": "Show old updates",
-    "overload": "Voir les actualités plus anciennes"
+    "overload": "Show old updates"
   },
   "place": {
     "name": {
