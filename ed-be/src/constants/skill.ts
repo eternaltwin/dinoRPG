@@ -1,4 +1,5 @@
 import { DinozSkill, ElementType, Energy, SkillTree, SkillType } from '../models/index.js';
+import { raceList } from './race.js';
 
 // skillId are counted like this : ABCDE
 // A = Element (from fire to void)
@@ -6,7 +7,7 @@ import { DinozSkill, ElementType, Energy, SkillTree, SkillType } from '../models
 // C = Column of the skill
 // DE = Number of the skill in this column
 
-export const skillList: { [name: string]: DinozSkill } = {
+export const skillList: Readonly<Record<string, DinozSkill>> = {
 	// Fire Skills
 	GRIFFES_ENFLAMMEES: {
 		skillId: 11101,
@@ -14,7 +15,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COLERE: {
 		skillId: 11102,
@@ -22,7 +26,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FORCE: {
 		skillId: 11103,
@@ -30,7 +37,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BRASERO: {
 		skillId: 11104,
@@ -38,7 +48,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	SOUFFLE_ARDENT: {
 		skillId: 11201,
@@ -46,7 +59,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHARGE: {
 		skillId: 11202,
@@ -54,7 +70,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SANG_CHAUD: {
 		skillId: 11203,
@@ -62,7 +81,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FURIE: {
 		skillId: 11204,
@@ -70,7 +92,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHASSEUR_DE_GOUPIGNON: {
 		skillId: 11205,
@@ -78,7 +103,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ARTS_MARTIAUX: {
 		skillId: 11206,
@@ -86,7 +114,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DETONATION: {
 		skillId: 11207,
@@ -94,7 +125,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11104],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	PROPULSION_DIVINE: {
 		skillId: 11208,
@@ -102,7 +136,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11103],
+		raceId: [raceList.QUETZU.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VIGILANCE: {
 		skillId: 11301,
@@ -110,7 +148,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COEUR_ARDENT: {
 		skillId: 11302,
@@ -118,7 +159,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COULEE_DE_LAVE: {
 		skillId: 11303,
@@ -126,7 +170,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SIESTE: {
 		skillId: 11304,
@@ -134,7 +181,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	KAMIKAZE: {
 		skillId: 11305,
@@ -142,7 +192,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHASSEUR_DE_GEANT: {
 		skillId: 11306,
@@ -150,7 +203,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BOULE_DE_FEU: {
 		skillId: 11307,
@@ -158,7 +214,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	WAIKIKIDO: {
 		skillId: 11308,
@@ -166,7 +225,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	AURA_INCANDESCENTE: {
 		skillId: 11309,
@@ -174,7 +236,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VENGEANCE: {
 		skillId: 11310,
@@ -182,7 +247,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COMBUSTION: {
 		skillId: 11311,
@@ -190,7 +258,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PAUME_CHALUMEAU: {
 		skillId: 11312,
@@ -198,7 +269,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COEUR_DU_PHOENIX: {
 		skillId: 11313,
@@ -206,7 +280,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11207],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	BOUDDHA: {
 		skillId: 11314,
@@ -214,7 +291,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE, ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41201, 11206, 51309],
+		raceId: [raceList.HIPPOCLAMP.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	GRIFFES_INFERNALES: {
 		skillId: 11315,
@@ -222,7 +303,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11208],
+		raceId: [raceList.QUETZU.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHASSEUR_DE_DRAGON: {
 		skillId: 11401,
@@ -230,7 +315,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11306],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BELIER: {
 		skillId: 11402,
@@ -238,7 +326,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11305],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TORCHE: {
 		skillId: 11403,
@@ -246,7 +337,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11311],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SELF_CONTROL: {
 		skillId: 11404,
@@ -254,7 +348,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SPRINT: {
 		skillId: 11405,
@@ -262,7 +359,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11305, 41303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VENDETTA: {
 		skillId: 11406,
@@ -270,7 +370,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11310],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	METEORES: {
 		skillId: 11407,
@@ -278,7 +381,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11309],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHEF_DE_GUERRE: {
 		skillId: 11408,
@@ -286,7 +392,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ARMURE_DE_BASALTE: {
 		skillId: 11409,
@@ -294,7 +403,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11308, 21303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MAITRE_ELEMENTAIRE: {
 		skillId: 11410,
@@ -302,7 +414,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE, ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11311, 31301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SALAMANDRE: {
 		skillId: 11411,
@@ -310,7 +425,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE, ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31305, 11312],
+		raceId: [raceList.FEROSS.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VULCAIN: {
 		skillId: 11412,
@@ -318,7 +437,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE, ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11303, 41312],
+		raceId: [raceList.MOUEFFE.raceId, raceList.MOUEFFE_DEMON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ARMURE_DIFRIT: {
 		skillId: 11413,
@@ -326,7 +449,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.FIRE, ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11307, 21311],
+		raceId: [raceList.PIGMOU.raceId, raceList.PIGMOU_DEMON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BRAVE: {
 		skillId: 11501,
@@ -334,7 +461,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PROTEINES_DINOZIENNES: {
 		skillId: 12101,
@@ -342,7 +472,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	EXTENUATION: {
 		skillId: 12201,
@@ -350,7 +483,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ROUGE: {
 		skillId: 12202,
@@ -358,7 +494,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CARAPACE_DE_MAGMA: {
 		skillId: 12301,
@@ -366,7 +505,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CRI_DE_GUERRE: {
 		skillId: 12302,
@@ -374,7 +516,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FIEVRE_BRULANTE: {
 		skillId: 12401,
@@ -382,7 +527,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BENEDICTION_DARTEMIS: {
 		skillId: 12402,
@@ -390,7 +538,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	JOKER: {
 		skillId: 12403,
@@ -398,7 +549,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ARMURE_DE_FEU: {
 		skillId: 12404,
@@ -406,7 +560,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PAYS_DE_CENDRE: {
 		skillId: 12501,
@@ -414,7 +571,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12401],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RECEPTACLE_ROCHEUX: {
 		skillId: 12502,
@@ -422,7 +582,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12402],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PLUMES_DE_PHOENIX: {
 		skillId: 12503,
@@ -430,7 +593,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12402],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ACCLAMATION_FRATERNELLE: {
 		skillId: 12504,
@@ -438,7 +604,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12403],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	POING_DE_FEU: {
 		skillId: 12505,
@@ -446,7 +615,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [12404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	// WOOD Skills
 	CARAPACE: {
@@ -455,7 +627,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SAUVAGERIE: {
 		skillId: 21102,
@@ -463,7 +638,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ENDURANCE: {
 		skillId: 21103,
@@ -471,7 +649,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LANCEUR_DE_GLAND: {
 		skillId: 21104,
@@ -479,7 +660,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	VIGNES: {
 		skillId: 21201,
@@ -487,7 +671,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RENFORTS_KORGON: {
 		skillId: 21202,
@@ -495,7 +682,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SYMPATIQUE: {
 		skillId: 21203,
@@ -503,7 +693,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TENACITE: {
 		skillId: 21204,
@@ -511,7 +704,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FOUILLE: {
 		skillId: 21205,
@@ -519,7 +715,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CROISSANCE: {
 		skillId: 21206,
@@ -527,7 +726,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	GRATTEUR: {
 		skillId: 21207,
@@ -535,7 +737,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21104],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	ETAT_PRIMAL: {
 		skillId: 21301,
@@ -543,7 +748,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DETECTIVE: {
 		skillId: 21302,
@@ -551,7 +759,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COCON: {
 		skillId: 21303,
@@ -559,7 +770,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	INSTINCT_SAUVAGE: {
 		skillId: 21304,
@@ -567,7 +781,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LARGE_MACHOIRE: {
 		skillId: 21305,
@@ -575,7 +792,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ACROBATE: {
 		skillId: 21306,
@@ -583,7 +803,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PRINTEMPS_PRECOCE: {
 		skillId: 21307,
@@ -591,7 +814,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHARISME: {
 		skillId: 21308,
@@ -599,7 +825,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RESISTANCE_A_LA_MAGIE: {
 		skillId: 21309,
@@ -607,7 +836,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PLANIFICATEUR: {
 		skillId: 21310,
@@ -615,7 +847,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	HERITAGE_FAROE: {
 		skillId: 21311,
@@ -623,7 +858,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	EXPERT_EN_FOUILLE: {
 		skillId: 21312,
@@ -631,7 +869,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	GROSSE_BEIGNE: {
 		skillId: 21313,
@@ -639,7 +880,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21207],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	ESPRIT_GORILLOZ: {
 		skillId: 21401,
@@ -647,7 +891,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21311],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LEADER: {
 		skillId: 21402,
@@ -655,7 +902,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21308],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	INGENIEUR: {
 		skillId: 21403,
@@ -663,7 +913,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	GEANT: {
 		skillId: 21404,
@@ -671,7 +924,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	GARDE_FORESTIER: {
 		skillId: 21405,
@@ -679,7 +935,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21307],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ARCHEOLOGUE: {
 		skillId: 21406,
@@ -687,7 +946,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BENEDICTION_DES_FEES: {
 		skillId: 21407,
@@ -695,7 +957,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11302, 21301],
+		raceId: [raceList.GORILLOZ.raceId, raceList.GORILLOZ_DEMON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHOC: {
 		skillId: 21408,
@@ -703,7 +969,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD, ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21301, 41306],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LOUP_GAROU: {
 		skillId: 21409,
@@ -711,7 +980,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21304, 51311],
+		raceId: [raceList.CASTIVORE.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COLOSSE: {
 		skillId: 21501,
@@ -719,7 +992,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	OXYGENATION_MUSCULAIRE: {
 		skillId: 22101,
@@ -727,7 +1003,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VERT: {
 		skillId: 22102,
@@ -735,7 +1014,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SOURCE_DE_VIE: {
 		skillId: 22201,
@@ -743,7 +1025,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VIDE_ENERGETIQUE: {
 		skillId: 22202,
@@ -751,7 +1036,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BOUCLIER_DINOZ: {
 		skillId: 22203,
@@ -759,7 +1047,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ACIDE_LACTIQUE: {
 		skillId: 22204,
@@ -767,7 +1058,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LANCER_DE_ROCHE: {
 		skillId: 22301,
@@ -775,7 +1069,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COURBATURES: {
 		skillId: 22302,
@@ -783,7 +1080,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FORCE_CONTROL: {
 		skillId: 22303,
@@ -791,7 +1091,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PEAU_DE_FER: {
 		skillId: 22304,
@@ -799,7 +1102,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CHAMPOLLION: {
 		skillId: 22401,
@@ -807,7 +1113,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COURANT_DE_VIE: {
 		skillId: 22402,
@@ -815,7 +1124,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BERSERK: {
 		skillId: 22403,
@@ -823,7 +1135,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RIVIERE_DE_VIE: {
 		skillId: 22404,
@@ -831,7 +1146,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MUR_DE_BOUE: {
 		skillId: 22501,
@@ -839,7 +1157,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22401],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PEAU_DACIER: {
 		skillId: 22502,
@@ -847,7 +1168,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22401],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SHARIGNAN: {
 		skillId: 22503,
@@ -855,7 +1179,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22402],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	AMAZONIE: {
 		skillId: 22504,
@@ -863,7 +1190,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22403],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RECEPTACLE_AQUEUX: {
 		skillId: 22505,
@@ -871,7 +1201,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [22404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	// Water Skills
 	CANON_A_EAU: {
@@ -880,7 +1213,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PERCEPTION: {
 		skillId: 31102,
@@ -888,7 +1224,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MUTATION: {
 		skillId: 31103,
@@ -896,7 +1235,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VITALITE: {
 		skillId: 31104,
@@ -904,7 +1246,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	GEL: {
 		skillId: 31201,
@@ -912,7 +1257,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DOUCHE_ECOSSAISE: {
 		skillId: 31202,
@@ -920,7 +1268,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COUP_SOURNOIS: {
 		skillId: 31203,
@@ -928,7 +1279,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	APPRENTI_PECHEUR: {
 		skillId: 31204,
@@ -936,7 +1290,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	POCHE_VENTRALE: {
 		skillId: 31205,
@@ -944,7 +1301,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	KARATE_SOUS_MARIN: {
 		skillId: 31206,
@@ -952,7 +1312,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ECAILLES_LUMINESCENTES: {
 		skillId: 31207,
@@ -960,7 +1323,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31103],
+		raceId: [raceList.QUETZU.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MOIGNONS_LIQUIDES: {
 		skillId: 31208,
@@ -968,7 +1335,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31104],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	ZERO_ABSOLU: {
 		skillId: 31301,
@@ -976,7 +1346,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PETRIFICATION: {
 		skillId: 31302,
@@ -984,7 +1357,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ACUPUNCTURE: {
 		skillId: 31303,
@@ -992,7 +1368,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SAPEUR: {
 		skillId: 31304,
@@ -1000,7 +1379,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COUP_FATAL: {
 		skillId: 31305,
@@ -1008,7 +1390,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ENTRAINEMENT_SOUS_MARIN: {
 		skillId: 31306,
@@ -1016,7 +1401,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PECHEUR_CONFIRME: {
 		skillId: 31307,
@@ -1024,7 +1412,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MARECAGE: {
 		skillId: 31308,
@@ -1032,7 +1423,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SUMO: {
 		skillId: 31309,
@@ -1040,7 +1434,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SANS_PITIE: {
 		skillId: 31310,
@@ -1048,7 +1445,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CLONE_AQUEUX: {
 		skillId: 31311,
@@ -1056,7 +1456,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	GRIFFES_EMPOISONNEES: {
 		skillId: 31312,
@@ -1064,7 +1467,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DELUGE: {
 		skillId: 31313,
@@ -1072,7 +1478,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31208],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	PEAU_DE_SERPENT: {
 		skillId: 31314,
@@ -1080,7 +1489,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31207],
+		raceId: [raceList.QUETZU.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RAYON_KAAR_SHER: {
 		skillId: 31401,
@@ -1088,7 +1501,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MAGASINIER: {
 		skillId: 31402,
@@ -1096,7 +1512,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ENTRAINEMENT_SOUS_MARIN_AVANCE: {
 		skillId: 31403,
@@ -1104,7 +1523,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31306],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MAITRE_PECHEUR: {
 		skillId: 31404,
@@ -1112,7 +1534,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31307],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CUISINIER: {
 		skillId: 31405,
@@ -1120,7 +1545,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31309],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SANG_ACIDE: {
 		skillId: 31406,
@@ -1128,7 +1556,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31312],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BULLE: {
 		skillId: 31407,
@@ -1136,7 +1567,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER, ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31304, 51312],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	INFATIGUABLE: {
 		skillId: 31408,
@@ -1144,7 +1578,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER, ElementType.WOOD],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31311, 21309],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ONDINE: {
 		skillId: 31409,
@@ -1152,7 +1589,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31310, 31310],
+		raceId: [raceList.SIRAIN.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MAITRE_NAGEUR: {
 		skillId: 31501,
@@ -1160,7 +1601,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31403],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LEVIATHAN: {
 		skillId: 31502,
@@ -1168,7 +1612,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER, ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [31406, 51206],
+		raceId: [raceList.MAHAMUTI.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	EAU_DIVINE: {
 		skillId: 32101,
@@ -1176,7 +1624,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RADIATIONS_GAMMA: {
 		skillId: 32201,
@@ -1184,7 +1635,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BLEU: {
 		skillId: 32202,
@@ -1192,7 +1646,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MUE_ACQUEUSE: {
 		skillId: 32301,
@@ -1200,7 +1657,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CARAPACE_BLINDEE: {
 		skillId: 32302,
@@ -1208,7 +1668,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DIETE_CHROMATIQUE: {
 		skillId: 32303,
@@ -1216,7 +1679,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	EFFLUVE_APHRODISIAQUE: {
 		skillId: 32401,
@@ -1224,7 +1690,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	NEMO: {
 		skillId: 32402,
@@ -1232,7 +1701,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CLEPTOMANE: {
 		skillId: 32403,
@@ -1240,7 +1712,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ABYSSE: {
 		skillId: 32404,
@@ -1248,7 +1723,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BANNI_DES_DIEUX: {
 		skillId: 32405,
@@ -1256,7 +1734,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TOURBILLON_MAGIQUE: {
 		skillId: 32501,
@@ -1264,7 +1745,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32401],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	HYPERVENTILATION: {
 		skillId: 32502,
@@ -1272,7 +1756,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32402],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	THERAPIE_DE_GROUPE: {
 		skillId: 32503,
@@ -1280,7 +1767,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32403],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RECEPTACLE_TESLA: {
 		skillId: 32504,
@@ -1288,7 +1778,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.WATER],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VITALITE_MARINE: {
 		skillId: 32505,
@@ -1296,7 +1789,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [32405],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	// LIGHTNING Skills
 	INTELLIGENCE: {
@@ -1305,7 +1801,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FOCUS: {
 		skillId: 41102,
@@ -1313,7 +1812,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CELERITE: {
 		skillId: 41103,
@@ -1321,7 +1823,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	REFLEX: {
 		skillId: 41104,
@@ -1329,7 +1834,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	CONCENTRATION: {
 		skillId: 41201,
@@ -1337,7 +1845,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ATTAQUE_ECLAIR: {
 		skillId: 41202,
@@ -1345,7 +1856,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PARATONNERRE: {
 		skillId: 41203,
@@ -1353,7 +1867,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	COUP_DOUBLE: {
 		skillId: 41204,
@@ -1361,7 +1878,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	REGENERESCENCE: {
 		skillId: 41205,
@@ -1369,7 +1889,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PREMIERS_SOINS: {
 		skillId: 41206,
@@ -1377,7 +1900,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ECLAIR_SINUEUX: {
 		skillId: 41207,
@@ -1385,7 +1911,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41104],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	FOUDRE: {
 		skillId: 41301,
@@ -1393,7 +1922,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FISSION_ELEMENTAIRE: {
 		skillId: 41302,
@@ -1401,7 +1933,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VOIE_DE_KAOS: {
 		skillId: 41303,
@@ -1409,7 +1944,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PLAN_DE_CARRIERE: {
 		skillId: 41304,
@@ -1417,7 +1955,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ADRENALINE: {
 		skillId: 41305,
@@ -1425,7 +1966,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VOIE_DE_GAIA: {
 		skillId: 41306,
@@ -1433,7 +1977,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MEDECINE: {
 		skillId: 41307,
@@ -1441,7 +1988,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DANSE_FOUDROYANTE: {
 		skillId: 41308,
@@ -1449,7 +1999,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	EMBUCHE: {
 		skillId: 41309,
@@ -1457,7 +2010,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PUREE_SALVATRICE: {
 		skillId: 41310,
@@ -1465,7 +2021,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	AURA_HERMETIQUE: {
 		skillId: 41311,
@@ -1473,7 +2032,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CROCS_DIAMANT: {
 		skillId: 41312,
@@ -1481,7 +2043,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SURVIE: {
 		skillId: 41313,
@@ -1489,7 +2054,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41207],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	AUBE_FEUILLUE: {
 		skillId: 41401,
@@ -1497,7 +2065,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41306],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BRANCARDIER: {
 		skillId: 41402,
@@ -1505,7 +2076,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41307],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BENEDICTION: {
 		skillId: 41403,
@@ -1513,15 +2087,21 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41310],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
-	CREPUSCULE_FLAMBLOYANT: {
+	CREPUSCULE_FLAMBOYANT: {
 		skillId: 41404,
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MARCHAND: {
 		skillId: 41405,
@@ -1529,7 +2109,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	REINCARNATION: {
 		skillId: 41406,
@@ -1537,7 +2120,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SURCHARGE: {
 		skillId: 41408,
@@ -1545,7 +2131,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING, ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51302, 41305],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ELECTROLYSE: {
 		skillId: 41409,
@@ -1553,7 +2142,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41301, 31308],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	GOLEM: {
 		skillId: 41410,
@@ -1561,7 +2153,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING, ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41302, 11309],
+		raceId: [raceList.ROCKY.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RAIJIN: {
 		skillId: 41411,
@@ -1569,7 +2165,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41301, 51302],
+		raceId: [raceList.PLANAILLE.raceId, raceList.PLANAILLE_DEMON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	QUETZACOATL: {
 		skillId: 41412,
@@ -1577,7 +2177,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41301],
+		raceId: [raceList.QUETZU.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ROI_DES_SINGES: {
 		skillId: 41413,
@@ -1585,7 +2189,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING, ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21308, 41308],
+		raceId: [raceList.TOUFUFU.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ARCHANGE_CORROSIF: {
 		skillId: 41501,
@@ -1593,7 +2201,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ARCHANGE_GENESIF: {
 		skillId: 41502,
@@ -1601,7 +2212,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41401],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PRETRE: {
 		skillId: 41503,
@@ -1609,7 +2223,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41403],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SOUTIEN_MORAL: {
 		skillId: 42101,
@@ -1617,15 +2234,21 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
-	STIMUALTION_CARDIAQUE: {
+	STIMULATION_CARDIAQUE: {
 		skillId: 42201,
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	JAUNE: {
 		skillId: 42202,
@@ -1633,7 +2256,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MORSURE_DU_SOLEIL: {
 		skillId: 42301,
@@ -1641,7 +2267,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CRAMPE_CHRONIQUE: {
 		skillId: 42303,
@@ -1649,7 +2278,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BATTERIE_SUPPLEMENTAIRE: {
 		skillId: 42401,
@@ -1657,7 +2289,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	EINSTEIN: {
 		skillId: 42402,
@@ -1665,7 +2300,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BARRIERE_ELECTRIFIEE: {
 		skillId: 42403,
@@ -1673,7 +2311,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ORACLE: {
 		skillId: 42404,
@@ -1681,7 +2322,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RECEPTACLE_AERIEN: {
 		skillId: 42501,
@@ -1689,7 +2333,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42401],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FEU_DE_ST_ELME: {
 		skillId: 42502,
@@ -1697,7 +2344,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42402],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FORCE_DE_ZEUS: {
 		skillId: 42503,
@@ -1705,7 +2355,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42403],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	REMANENCE_HERTZIENNE: {
 		skillId: 42504,
@@ -1713,7 +2366,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [42404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	// Air Skills
 	AGILITE: {
@@ -1722,7 +2378,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	STRATEGIE: {
 		skillId: 51102,
@@ -1730,7 +2389,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MISTRAL: {
 		skillId: 51103,
@@ -1738,7 +2400,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	AIGUILLON: {
 		skillId: 51104,
@@ -1746,7 +2411,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	ENVOL: {
 		skillId: 51105,
@@ -1754,7 +2422,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		raceId: [raceList.PTEROZ.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ESQUIVE: {
 		skillId: 51201,
@@ -1762,7 +2434,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SAUT: {
 		skillId: 51202,
@@ -1770,7 +2445,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ANALYSE: {
 		skillId: 51203,
@@ -1778,7 +2456,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	CUEILLETTE: {
 		skillId: 51204,
@@ -1786,7 +2467,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51102],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TAICHI: {
 		skillId: 51205,
@@ -1794,7 +2478,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TORNADE: {
 		skillId: 51206,
@@ -1802,7 +2489,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51103],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	AURA_PUANTE: {
 		skillId: 51207,
@@ -1810,7 +2500,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51104],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	DISQUE_VACUUM: {
 		skillId: 51301,
@@ -1818,7 +2511,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ELASTICITE: {
 		skillId: 51302,
@@ -1826,7 +2522,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ATTAQUE_PLONGEANTE: {
 		skillId: 51303,
@@ -1834,7 +2533,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FURTIVITE: {
 		skillId: 51304,
@@ -1842,7 +2544,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SPECIALISTE: {
 		skillId: 51305,
@@ -1850,7 +2555,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TALON_DACHILLE: {
 		skillId: 51306,
@@ -1858,7 +2566,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51203],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	NUAGE_TOXIQUE: {
 		skillId: 51307,
@@ -1866,7 +2577,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	OEIL_DE_LYNX: {
 		skillId: 51308,
@@ -1874,7 +2588,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51204],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	EVEIL: {
 		skillId: 51309,
@@ -1882,7 +2599,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PAUME_EJECTABLE: {
 		skillId: 51310,
@@ -1890,7 +2610,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51205],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	VENT_VIF: {
 		skillId: 51311,
@@ -1898,7 +2621,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FORME_VAPOREUSE: {
 		skillId: 51312,
@@ -1906,7 +2632,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NORMAL,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51206],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	HYPNOSE: {
 		skillId: 51313,
@@ -1914,7 +2643,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51207],
+		isBaseSkill: false,
+		isSphereSkill: true
 	},
 	SECOUSSE: {
 		skillId: 51314,
@@ -1922,7 +2654,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51310, 21304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TROU_NOIR: {
 		skillId: 51401,
@@ -1930,7 +2665,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MAITRE_LEVITATEUR: {
 		skillId: 51402,
@@ -1938,7 +2676,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	HALEINE_FETIVE: {
 		skillId: 51403,
@@ -1946,7 +2687,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51307],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MEDITATION_SOLITAIRE: {
 		skillId: 51404,
@@ -1954,7 +2698,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51309],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	PROFESSEUR: {
 		skillId: 51405,
@@ -1962,7 +2709,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51309],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SOUFFLE_DE_VIE: {
 		skillId: 51406,
@@ -1970,7 +2720,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51311],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TOTEM_ANCESTRAL_AEROPORTE: {
 		skillId: 51407,
@@ -1978,7 +2731,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11311, 51309],
+		raceId: [raceList.KABUKI.raceId, raceList.KABUKI_DEMON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FUJIN: {
 		skillId: 51408,
@@ -1986,7 +2743,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR, ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41308, 51301],
+		raceId: [raceList.NUAGOZ.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MEDITATION_TRANCHANTE: {
 		skillId: 51501,
@@ -1994,7 +2755,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DJINN: {
 		skillId: 51502,
@@ -2002,7 +2766,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [11201, 51403],
+		raceId: [raceList.PTEROZ.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	HADES: {
 		skillId: 51503,
@@ -2010,7 +2778,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51403, 21204, 31203],
+		raceId: [raceList.SANTAZ.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FORME_ETHERALE: {
 		skillId: 51601,
@@ -2018,7 +2790,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [51501],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MAITRISE_CORPORELLE: {
 		skillId: 52101,
@@ -2026,7 +2801,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BLANC: {
 		skillId: 52201,
@@ -2034,7 +2812,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	ANAEROBIE: {
 		skillId: 52202,
@@ -2042,7 +2823,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52101],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	DOUBLE_FACE: {
 		skillId: 52301,
@@ -2050,7 +2834,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FLAGELLATION: {
 		skillId: 52302,
@@ -2058,7 +2845,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52201],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SOUFFLE_DANGE: {
 		skillId: 52303,
@@ -2066,7 +2856,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	OURAGAN: {
 		skillId: 52304,
@@ -2074,7 +2867,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52202],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	OURANOS: {
 		skillId: 52401,
@@ -2082,7 +2878,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52301],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	TWINOID_500MG: {
 		skillId: 52402,
@@ -2090,7 +2889,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52302],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LONDUHAUT: {
 		skillId: 52403,
@@ -2098,7 +2900,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52303],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SURPLIS_DHADES: {
 		skillId: 52404,
@@ -2106,7 +2911,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	RECEPTABLE_THERMIQUE: {
 		skillId: 52405,
@@ -2114,7 +2922,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52304],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	QI_GONG: {
 		skillId: 52501,
@@ -2122,7 +2933,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52401],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	SYLPHIDES: {
 		skillId: 52502,
@@ -2130,7 +2944,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52402],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MESSIE: {
 		skillId: 52503,
@@ -2138,7 +2955,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52403],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MUTINERIE: {
 		skillId: 52504,
@@ -2146,7 +2966,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52405],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	MAINS_COLLANTES: {
 		skillId: 52505,
@@ -2154,7 +2977,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.ETHER
+		tree: SkillTree.ETHER,
+		unlockedFrom: [52404],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	// Void Skills
 	COMPETENCE_DOUBLE: {
@@ -2163,7 +2989,9 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	LIMITE_BRISEE: {
 		skillId: 61120,
@@ -2171,7 +2999,9 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	INVOCATEUR: {
 		skillId: 61121,
@@ -2179,7 +3009,9 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	FRENESIE_COLLECTIVE: {
 		skillId: 61101,
@@ -2187,7 +3019,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.VOID],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.WANWAN_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	COQUE: {
 		skillId: 61102,
@@ -2195,7 +3030,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.WINKS.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	CHARGE_CORNUE: {
 		skillId: 61103,
@@ -2203,7 +3041,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.PIGMOU.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	ROCK: {
 		skillId: 61104,
@@ -2211,7 +3052,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.ROCKY.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	PIETINEMENT: {
 		skillId: 61105,
@@ -2219,7 +3063,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.SANTAZ.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	CUIRASSE: {
 		skillId: 61106,
@@ -2227,7 +3074,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.GORILLOZ.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	INSAISISSABLE: {
 		skillId: 61107,
@@ -2235,7 +3085,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.KABUKI.raceId, raceList.KABUKI_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	DEPLACEMENT_INSTANTANE: {
 		skillId: 61108,
@@ -2243,7 +3096,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.TOUFUFU.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	NAPOMAGICIEN: {
 		skillId: 61109,
@@ -2251,7 +3107,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.SOUFFLET.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	GROS_COSTAUD: {
 		skillId: 61111,
@@ -2259,7 +3118,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.GORILLOZ_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	ORIGINE_CAUSHEMESHENNE: {
 		skillId: 61112,
@@ -2267,7 +3129,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.KABUKI_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	ECRASEMENT: {
 		skillId: 61113,
@@ -2275,7 +3140,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.VOID],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.MAHAMUTI.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	FORCE_DE_LUMIERE: {
 		skillId: 61114,
@@ -2283,7 +3151,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.MOUEFFE_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	CHARGE_PIGMOU: {
 		skillId: 61115,
@@ -2291,7 +3162,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.WEAK,
 		element: [ElementType.VOID],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.PIGMOU_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	FORCE_DES_TENEBRES: {
 		skillId: 61116,
@@ -2299,7 +3173,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.PLANAILLE_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	BIGMAGNON: {
 		skillId: 61117,
@@ -2307,7 +3184,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.TRICERAGNON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	DUR_A_CUIRE: {
 		skillId: 61118,
@@ -2315,7 +3195,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		raceId: [raceList.WINKS_DEMON.raceId],
+		isBaseSkill: true,
+		isSphereSkill: false
 	},
 	// Other Skills (?)
 	HERCOLUBUS: {
@@ -2324,7 +3207,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41501, 51312],
+		raceId: [raceList.SMOG.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	REINE_DE_LA_RUCHE: {
 		skillId: 41505, //Edit since this
@@ -2332,7 +3219,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.LIGHTNING, ElementType.WOOD],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21307, 51311],
+		raceId: [raceList.SOUFFLET.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BIG_MAMA: {
 		skillId: 51506,
@@ -2340,7 +3231,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [12502, 22504],
+		raceId: [raceList.TRICERAGNON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	YGGDRASIL: {
 		skillId: 41507,
@@ -2348,7 +3243,11 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [21405, 51204],
+		raceId: [raceList.WANWAN.raceId, raceList.WANWAN_DEMON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	},
 	BALEINE_BLANCHE: {
 		skillId: 41508,
@@ -2356,6 +3255,10 @@ export const skillList: { [name: string]: DinozSkill } = {
 		energy: Energy.VHIGH,
 		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: true,
-		tree: SkillTree.VANILLA
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [41305, 31404],
+		raceId: [raceList.WINKS.raceId, raceList.WINKS_DEMON.raceId],
+		isBaseSkill: false,
+		isSphereSkill: false
 	}
 };

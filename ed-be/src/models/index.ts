@@ -6,6 +6,7 @@ export * from './dinoz/DinozFiche.js';
 export * from './dinoz/DinozStatusEdit.js';
 export * from './dinoz/DinozSkill.js';
 export * from './dinoz/DinozSkillEdit.js';
+export * from './dinoz/DinozSkillOwnAndUnlockable.js';
 export * from './dinoz/DinozRace.js';
 export * from './dinoz/FightResult.js';
 export * from './enums/index.js';

@@ -44,11 +44,13 @@
   "action": {
     "description": {
       "fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer **un déplacement ou un combat par jour** et par Dinoz.",
-      "follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats."
+      "follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
+      "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz."
     },
     "name": {
       "fight": "Combattre",
-      "follow": "Suivre"
+      "follow": "Suivre",
+      "levelup": "Niveau Supplémentaire !"
     }
   },
   "button": {
@@ -1419,7 +1421,8 @@
     "dinozShop": "Dino-RPG [ Enclos des Dinoz ]",
     "account": "Dino-RPG [ Informations personnelles ]",
     "ranking": "Dino-RPG [ Grand Hall de la Gloire ]",
-    "ingredients": "Dino-RPG [ Ingrédients ]"
+    "ingredients": "Dino-RPG [ Ingrédients ]",
+    "levelup": "Dino-RPG [ Niveau supplémentaire pour "
   },
   "myAccount": {
     "title": "Joueur :",
@@ -1435,6 +1438,28 @@
     "quest": "Mes quètes",
     "editAccount": "Modifier mes Informations",
     "import": "Importer compte"
+  },
+  "levelup": {
+    "disclaimer": "Vous pouvez à présent lancer l'animation afin de savoir avec quel élément votre dinoz évolue.",
+    "title": "Niveau supplémentaire pour ",
+    "helper": "Choississez une compétence à apprendre :",
+    "fire": "Gagne +1 en :feu: Feu",
+    "wood": "Gagne +1 en :bois: Bois",
+    "water": "Gagne +1 en :eau: Eau",
+    "lightning": "Gagne +1 en :foudre: Foudre",
+    "air": "Gagne +1 en :air: Air",
+    "void": "Gagne +1 en :neutre: Vide",
+    "level": "Niv.",
+    "learn": "Apprendre",
+    "unlock1": "Débloquer ",
+    "unlock2": " compétences supplémentaires",
+    "unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
+    "small": "Ce dinoz a gagné un niveau !",
+    "pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre possibilité de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
+    "helperUnlock": {
+      "title": "Débloquer",
+      "description": "Vous pouvez choisir entre apprendre une nouvelle compétence à votre Dinoz ou en débloquer plusieurs nouvelles que votre Dinoz **pourra apprendre dès son prochain gain de niveau**."
+    }
   },
   "rewards": {
     "name": {

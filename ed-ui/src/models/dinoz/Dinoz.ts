@@ -40,7 +40,7 @@ export interface Skill {
 	skillId: number;
 	type: string;
 	energy: number;
-	element: string;
+	element: number;
 	state: boolean;
 	activatable?: boolean;
 }

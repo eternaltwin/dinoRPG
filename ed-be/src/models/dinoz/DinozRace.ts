@@ -9,13 +9,15 @@ export interface DinozRace {
 	nbrAir: number;
 	// Chances are in x out of 20
 	// e.g. 5 means 5 chances of out 20 to get that element, i.e 25 %
-	upFireChance: number;
-	upWoodChance: number;
-	upWaterChance: number;
-	upLightningChance: number;
-	upAirChance: number;
+	upChance: {
+		fire: number;
+		wood: number;
+		water: number;
+		lightning: number;
+		air: number;
+	};
 	price: number;
 	swfLetter: string;
-	skillId: Array<number>;
-	display?: { [letterNumber: number]: string };
+	display?: Record<number, string>;
+	skillId?: Array<number>;
 }

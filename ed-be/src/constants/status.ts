@@ -1,4 +1,4 @@
-export const statusList = {
+export const statusList: Record<string, number> = {
 	CLIMBING_GEAR: 1,
 	BUOY: 2,
 	CUSCOUZ_MALEDICTION: 3,

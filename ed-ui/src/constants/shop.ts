@@ -1,4 +1,4 @@
-export const shopNameList = [
+export const shopNameList: Array<string> = [
 	'unknown',
 	'flying',
 	'forge',

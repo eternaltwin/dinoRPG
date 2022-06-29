@@ -1,3 +1,5 @@
+export * from './ElementType';
 export * from './ItemType';
 export * from './Map';
 export * from './PlaceIcon';
+export * from './SkillType';

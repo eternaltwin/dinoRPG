@@ -1,7 +1,7 @@
 import { Place } from '../models';
 import { statusList } from './status.js';
 
-export const placeList: { [name: string]: Place } = {
+export const placeList: Record<string, Place> = {
 	// Useful for the few things accessible from any where like the flying shop
 	ANYWHERE: {
 		placeId: 0,

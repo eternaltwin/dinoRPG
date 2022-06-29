@@ -7,4 +7,5 @@ export interface BasicDinoz {
 	maxLife: number;
 	name: string;
 	placeId: number;
+	level: number;
 }

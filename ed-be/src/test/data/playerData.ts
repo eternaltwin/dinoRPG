@@ -6,6 +6,17 @@ export const BasicPlayer = {
 	playerId: player.id_1
 } as Player;
 
+export const PlayerWithDinoz = ({
+	playerId: player.id_1,
+	dinoz: [
+		{
+			dinozId: dinozId,
+			level: 1,
+			setDataValue: jest.fn()
+		}
+	]
+} as unknown) as Player;
+
 export const BasicNotImportedPlayer = {
 	playerId: player.id_1,
 	hasImported: false,
@@ -129,3 +140,11 @@ export const PlayerAllData = ({
 		}
 	]
 } as unknown) as Player;
+
+export const BasicPlayerWithRank = {
+	playerId: player.id_1,
+	rank: {
+		dinozCount: 2,
+		sumPoints: 5
+	}
+} as Player;

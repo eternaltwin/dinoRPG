@@ -40,8 +40,9 @@ import {
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 import { validationResult } from 'express-validator';
 import { updatePoints } from '../dao/rankingDao.js';
-import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
-import { shop } from '../test/utils/constants.js';
+import _ from 'lodash';
+import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
+import { getRandomNumber } from '../utils/tools.js';
 
 // TODO: refaire cette fonction proprement
 /**
@@ -98,27 +99,10 @@ const getDinozFiche = async (req: Request, res: Response): Promise<Response> => 
 	dinozDetails.setDataValue('borderPlace', places);
 
 	// Set availables actions for this dinoz
-	dinozDetails.setDataValue('actions', getActionList(dinozDetails));
+	dinozDetails.setDataValue('actions', getAvailableActions(dinozDetails));
 
 	return res.status(200).send(dinozDetails);
 };
-
-/**
- * @summary Map available action from dinoz
- * @return Array<Action>
- */
-function getActionList(dinoz: Dinoz): Array<Action> {
-	//const actionsList: Array<Action> = [];
-	const actionAvailable: Array<Action> = getAvailableActions(dinoz);
-
-	/*actionList.forEach(action => {
-		if (actionAvailable.includes(action.name)) {
-			actionsList.push(action);
-		}
-	}); */
-
-	return actionAvailable;
-}
 
 /**
  * @summary Get available action from dinoz
@@ -154,6 +138,16 @@ function getAvailableActions(dinoz: Dinoz): Array<Action> {
 			};
 			availableActions.push(shopAction);
 		}
+	}
+
+	//
+
+	const maxExp: number = levelList.find(level => level.id === dinoz?.level)!.experience;
+	if (maxExp - dinoz.experience <= 0) {
+		availableActions.push({
+			name: actionList.LEVEL_UP.name,
+			imgName: actionList.LEVEL_UP.imgName
+		});
 	}
 
 	return availableActions;
@@ -249,7 +243,9 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		nbrUpWood: race.nbrWood,
 		nbrUpWater: race.nbrWater,
 		nbrUpLightning: race.nbrLightning,
-		nbrUpAir: race.nbrAir
+		nbrUpAir: race.nbrAir,
+		nextUpElementId: getRandomUpElement(race),
+		nextUpAltElementId: getRandomUpElement(race)
 	});
 
 	// Set player money
@@ -262,10 +258,12 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 	// Create a new dinoz that belongs to player
 	const dinozCreated: Dinoz = await createDinozRequest(newDinoz.get());
 
-	// Add skill to created dinoz
-	if (race.skillId.length > 0) {
-		race.skillId.forEach(skillId => addSkillToDinoz(dinozCreated.dinozId, skillId));
-	}
+	const skillsToAdd: Array<DinozSkill> = Object.values(skillList).filter(
+		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
+	);
+
+	// Add base skills to created dinoz
+	skillsToAdd.forEach(async skill => await addSkillToDinoz(dinozCreated.dinozId, skill.skillId));
 
 	const dinozToSend: BasicDinoz = {
 		dinozId: dinozCreated.dinozId,
@@ -275,7 +273,8 @@ const buyDinoz = async (req: Request, res: Response): Promise<Response> => {
 		life: dinozCreated.life,
 		maxLife: dinozCreated.maxLife,
 		name: dinozCreated.name,
-		placeId: dinozCreated.placeId
+		placeId: dinozCreated.placeId,
+		level: dinozCreated.level
 	};
 
 	// Add a point in the ranking to the player
@@ -480,4 +479,4 @@ async function betaFight(dinoz: Dinoz): Promise<FightResult> {
 	return infoToSend;
 }
 
-export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, betaFight };
+export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove };

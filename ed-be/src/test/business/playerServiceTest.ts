@@ -1,9 +1,9 @@
 import {
 	BasicImportedPlayer,
 	BasicNotImportedPlayer,
-	BasicPlayer,
 	PlayerData,
 	playerList,
+	PlayerWithDinoz,
 	PlayerWithRewards
 } from '../data/playerData.js';
 import { mockRequest, mockResponse, player } from '../utils/constants.js';
@@ -37,10 +37,10 @@ describe('Function getCommonData()', function () {
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
-		PlayerDao.getCommonDataRequest = jasmine.createSpy().and.returnValue(BasicPlayer);
+		PlayerDao.getCommonDataRequest = jasmine.createSpy().and.returnValue(PlayerWithDinoz);
 		DinozDao.getDinozTotalCount = jasmine.createSpy().and.returnValue(2);
 
-		BasicPlayer.setDataValue = jasmine.createSpy().and.returnValue([]);
+		PlayerWithDinoz.setDataValue = jasmine.createSpy().and.returnValue([]);
 	});
 
 	it('Nominal case', async function () {

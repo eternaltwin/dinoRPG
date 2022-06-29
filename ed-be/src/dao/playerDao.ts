@@ -17,7 +17,7 @@ const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 		attributes: ['money', 'playerId'],
 		include: {
 			model: Dinoz,
-			attributes: ['dinozId', 'following', 'display', 'name', 'life', 'experience', 'placeId'],
+			attributes: ['dinozId', 'following', 'display', 'name', 'life', 'experience', 'placeId', 'level'],
 			where: { isFrozen: false },
 			required: false
 		},

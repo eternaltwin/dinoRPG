@@ -18,6 +18,7 @@ import { AssDinozItem } from './assDinozItem.js';
 import { AssDinozSkill } from './assDinozSkill.js';
 import { AssDinozStatus } from './assDinozStatus.js';
 import { MissionOver } from './missionOver.js';
+import { AssDinozSkillUnlockable } from './assDinozSkillUnlockable.js';
 
 @Table({ tableName: 'tb_dinoz', timestamps: true })
 export class Dinoz extends Model {
@@ -31,6 +32,9 @@ export class Dinoz extends Model {
 
 	@HasMany(() => AssDinozSkill, 'dinozId')
 	skill!: Array<AssDinozSkill>;
+
+	@HasMany(() => AssDinozSkillUnlockable, 'dinozId')
+	skillUnlockable!: Array<AssDinozSkillUnlockable>;
 
 	@HasMany(() => AssDinozStatus, 'dinozId')
 	status!: Array<AssDinozStatus>;

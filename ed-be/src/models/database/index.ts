@@ -1,5 +1,6 @@
 export * from './assDinozItem.js';
 export * from './assDinozSkill.js';
+export * from './assDinozSkillUnlockable.js';
 export * from './assDinozStatus.js';
 export * from './assPlayerReward.js';
 export * from './dinoz.js';

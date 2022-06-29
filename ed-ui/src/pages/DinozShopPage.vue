@@ -49,7 +49,7 @@
 					:lightning="dinoz.race.nbrLightning"
 					:air="dinoz.race.nbrAir"
 				></Elements>
-				<div class="skill" v-if="dinoz.race.skillId.length > 0">
+				<div class="skill" v-if="dinoz.race.skillId?.length > 0">
 					<div
 						:id="'detail_' + index"
 						v-for="(skillId, index) in dinoz.race.skillId"

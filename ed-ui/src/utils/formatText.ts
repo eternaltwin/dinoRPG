@@ -13,6 +13,8 @@ export const helpers = {
 				return `<img src="${require('@/assets/elements/elem_air.webp')}" alt="air">`;
 			case 'neutre':
 				return `<img src="${require('@/assets/elements/elem_void.webp')}" alt="pmo">`;
+			case 'right':
+				return `<img src="${require('@/assets/icons/small_right.webp')}" alt="pmo">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}
@@ -50,6 +52,10 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(
 		/:neutre:/g,
 		helpers.computeImageHtml('neutre')
+	);
+	formattedText = formattedText.replace(
+		/:right:/g,
+		helpers.computeImageHtml('right')
 	);
 	return formattedText;
 }

@@ -75,6 +75,12 @@ export default defineComponent({
 		},
 		launch(action: Action): void {
 			switch (action.name) {
+				case 'levelup':
+					this.$router.push({
+						name: 'Leveling',
+						params: { id: this.$route.params.id.toString() }
+					});
+					break;
 				case 'shop':
 					this.$router.push({
 						name: 'ItemShopPage',
@@ -125,11 +131,21 @@ export default defineComponent({
 		border-collapse: collapse;
 		border-spacing: 0px;
 		margin-bottom: 2px;
-		width: 100%;
+		width: 175px;
+		tr:hover {
+			td {
+				&.icon {
+					outline: 1px solid white;
+				}
+				&.label {
+					background-color: #9a4029;
+				}
+			}
+		}
 
 		td {
-			margin: 0px;
-			padding: 0px;
+			margin: 0;
+			padding: 0 0 2px;
 			text-align: left;
 			cursor: pointer;
 

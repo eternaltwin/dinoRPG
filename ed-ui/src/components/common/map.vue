@@ -180,7 +180,10 @@ export default defineComponent({
 					sessionStore.commit('setDinozList', dinozList);
 				}
 				EventBus.emit('isLoading', false);
-				this.$router.push({ name: 'Fight' });
+				this.$router.push({
+					name: 'Fight',
+					params: { dinozId: this.dinozData!.dinozId! }
+				});
 			} catch (err) {
 				errorHandler.handle(err);
 				return;

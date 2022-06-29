@@ -8,6 +8,7 @@ import DinozGenerator from '@/pages/DinozGenerator.vue';
 import MyAccount from '@/pages/MyAccount.vue';
 import Ranking from '@/pages/Ranking.vue';
 import Fight from '@/pages/Fight.vue';
+import LevelUp from '@/pages/LevelUp.vue';
 import { isNil } from 'lodash';
 import { sessionStore } from '@/store';
 import DinozWithoutFlash from '@/components/dinoz/dinozWithoutFlash.vue';
@@ -47,6 +48,11 @@ const router = createRouter({
 					path: '/player/:id',
 					name: 'MyAccount',
 					component: MyAccount
+				},
+				{
+					path: '/levelup/:id',
+					name: 'Leveling',
+					component: LevelUp
 				},
 				{
 					path: '/fight',

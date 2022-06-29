@@ -287,29 +287,6 @@ tr {
     border-color: inherit;
 }
 
-td {
-    display: table-cell;
-    vertical-align: inherit;
-
-    &.icon {
-    	width: 32px;
-	    font-size: 0pt;
-	    line-height: 0pt;
-    }
-
-    &.label {
-    	padding-left: 4px;
-	    padding-right: 4px;
-	    font-weight: bold;
-	    color: white;
-	    font-size: 11pt;
-	    font-variant: small-caps;
-	    line-height: 10.5pt;
-	    border-top-right-radius: 7px;
-	    border-bottom-right-radius: 7px;
-    }
-}
-
 strong {
     font-weight: bold;
 	color: white;

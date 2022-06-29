@@ -4,8 +4,8 @@ import { getDinozFromDinozShopRequest, createMultipleDinoz } from '../dao/shopDa
 import { getPlayerRewardsRequest } from '../dao/playerDao.js';
 import _ from 'lodash';
 import { getConfig } from '../utils/context.js';
-import { raceList, rewardList } from '../constants/index.js';
 import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
+import { raceList, rewardList, skillList } from '../constants/index.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -14,6 +14,8 @@ import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
  * @param res {Array<DinozShop>}
  * @return Array<DinozShop>
  */
+
+// TODO: Refaire cette fonction en constuisant un objet de retour
 const getDinozFromDinozShop = async (req: Request, res: Response): Promise<Response> => {
 	// Retrieve dinoz from dinoz shop if exists
 	let data: Array<DinozShop> = await getDinozFromDinozShopRequest(req.user!.playerId!);
@@ -110,9 +112,9 @@ const getDinozFromDinozShop = async (req: Request, res: Response): Promise<Respo
 function setDinozRaceAndSkill(dinoz: DinozShop) {
 	const raceFound: DinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId)!;
 
-	if (raceFound.skillId.length > 0) {
-		raceFound.skillId.forEach(skillId => dinoz.setDataValue('skill', skillId));
-	}
+	raceFound.skillId = Object.values(skillList)
+		.filter(skill => skill.raceId?.some(raceId => raceId === raceFound.raceId) && skill.isBaseSkill)
+		.map(skill => skill.skillId);
 
 	dinoz.setDataValue('race', raceFound);
 	dinoz.setDataValue('raceId', undefined);

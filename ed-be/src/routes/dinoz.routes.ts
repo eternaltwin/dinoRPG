@@ -8,6 +8,7 @@ import {
 	setSkillState,
 	betaMove
 } from '../business/dinozService.js';
+import { getLearnableSkills } from '../business/skillService.js';
 import { apiRoutes, regex } from '../constants/index.js';
 
 const routes: Router = Router();

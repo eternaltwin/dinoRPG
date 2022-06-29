@@ -7,7 +7,16 @@
 						<span :style="getLifeBarWidth(dinoz.life, dinoz.maxLife)"></span>
 					</span>
 				</span>
-				<span class="name">{{ dinoz.name }}</span>
+				<span class="name"
+					>{{ dinoz.name }}
+					<img
+						v-if="dinoz.experience >= dinoz.maxExperience"
+						src="@/assets/icons/small_lup.webp"
+						v-tippy="{
+							content: formatContent($t('levelup.small')),
+							theme: 'small'
+						}"
+				/></span>
 				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
 			</a>
 			<!--<SDinozSWF

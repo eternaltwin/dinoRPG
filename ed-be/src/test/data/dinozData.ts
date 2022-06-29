@@ -1,6 +1,7 @@
-import { Dinoz } from '../../models';
-import { placeList, statusList } from '../../constants';
+import { AssDinozItem, AssDinozSkill, AssDinozSkillUnlockable, AssDinozStatus, Dinoz, ElementType } from '../../models';
+import { itemList, placeList, raceList, skillList, statusList } from '../../constants';
 import { player, dinozId, skillId, skillId2 } from '../utils/constants';
+import { BasicPlayerWithRank } from './playerData';
 
 export const DinozFicheData = ({
 	id: dinozId,
@@ -41,7 +42,8 @@ export const BasicDinoz = {
 	experience: 0,
 	life: 100,
 	name: '?',
-	placeId: 1
+	placeId: 1,
+	level: 1
 } as Dinoz;
 
 export const DinozToChangeName = {
@@ -156,3 +158,101 @@ export const DinozListFromAnAccount = ([
 ] as unknown) as Array<Dinoz>;
 
 export const AllDinozFromAnAccountArray = [123456, 654321] as Array<number>;
+
+export const DinozLevel1LevelUp: Partial<Dinoz> = {
+	raceId: raceList.WINKS.raceId,
+	display: '00d654dfgdsfg',
+	experience: 100,
+	level: 1,
+	nextUpElementId: ElementType.FIRE,
+	nextUpAltElementId: ElementType.FIRE,
+	nbrUpFire: 0,
+	nbrUpWood: 0,
+	nbrUpWater: 1,
+	nbrUpLightning: 1,
+	nbrUpAir: 0,
+	player: BasicPlayerWithRank,
+	skill: [],
+	skillUnlockable: [],
+	item: [],
+	status: []
+};
+
+export const DinozLevel1LevelUpInWood: Partial<Dinoz> = {
+	raceId: raceList.WINKS.raceId,
+	display: '00d654dfgdsfg',
+	experience: 100,
+	level: 1,
+	nextUpElementId: ElementType.WOOD,
+	nextUpAltElementId: ElementType.WOOD,
+	nbrUpFire: 0,
+	nbrUpWood: 0,
+	nbrUpWater: 1,
+	nbrUpLightning: 1,
+	nbrUpAir: 0,
+	player: BasicPlayerWithRank,
+	skill: [],
+	skillUnlockable: [],
+	item: [],
+	status: []
+};
+
+export const DinozLevel2LevelUp: Partial<Dinoz> = {
+	raceId: raceList.WINKS.raceId,
+	display: '00d654dfgdsfg',
+	experience: 107,
+	level: 2,
+	nextUpElementId: ElementType.WATER,
+	nextUpAltElementId: ElementType.WATER,
+	nbrUpFire: 1,
+	nbrUpWood: 0,
+	nbrUpWater: 1,
+	nbrUpLightning: 1,
+	nbrUpAir: 0,
+	player: BasicPlayerWithRank,
+	skill: [{ skillId: skillList.MUTATION.skillId } as AssDinozSkill],
+	skillUnlockable: [
+		{ skillId: skillList.POCHE_VENTRALE.skillId } as AssDinozSkillUnlockable,
+		{ skillId: skillList.KARATE_SOUS_MARIN.skillId } as AssDinozSkillUnlockable
+	],
+	item: [{ itemId: itemList.DINOZ_CUBE.itemId } as AssDinozItem],
+	status: []
+};
+
+export const DinozLevel50LevelUp: Partial<Dinoz> = {
+	raceId: raceList.WINKS.raceId,
+	display: '09d654dfgdsfg',
+	experience: 3444,
+	level: 50,
+	nextUpElementId: ElementType.LIGHTNING,
+	nextUpAltElementId: ElementType.AIR,
+	nbrUpFire: 4,
+	nbrUpWood: 2,
+	nbrUpWater: 23,
+	nbrUpLightning: 22,
+	nbrUpAir: 6,
+	player: BasicPlayerWithRank,
+	skill: [{ skillId: skillList.PLAN_DE_CARRIERE.skillId } as AssDinozSkill],
+	skillUnlockable: [],
+	item: [{ itemId: itemList.DINOZ_CUBE.itemId } as AssDinozItem],
+	status: [{ statusId: statusList.ETHER_DROP } as AssDinozStatus]
+};
+
+export const DinozLevel11LevelUp: Partial<Dinoz> = {
+	raceId: raceList.WINKS.raceId,
+	display: '00d654dfgdsfg',
+	experience: 206,
+	level: 11,
+	nextUpElementId: ElementType.AIR,
+	nextUpAltElementId: ElementType.AIR,
+	nbrUpFire: 1,
+	nbrUpWood: 2,
+	nbrUpWater: 2,
+	nbrUpLightning: 3,
+	nbrUpAir: 0,
+	player: BasicPlayerWithRank,
+	skill: [],
+	skillUnlockable: [],
+	item: [{ itemId: itemList.DINOZ_CUBE.itemId } as AssDinozItem],
+	status: []
+};

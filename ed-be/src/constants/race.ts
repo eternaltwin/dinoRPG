@@ -1,9 +1,8 @@
 import { DinozRace } from '../models';
-import { skillList } from './index.js';
 
 // If price is 0 that means the dinoz cannot be purchased via the dinoz shop.
 // For a demon dinoz, the price is the number of demon tickets.
-export const raceList: { [name: string]: DinozRace } = {
+export const raceList: Record<string, DinozRace> = {
 	MOUEFFE: {
 		raceId: 1,
 		isDemon: false,
@@ -13,17 +12,18 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 0,
 		nbrAir: 0,
-		upFireChance: 10,
-		upWoodChance: 4,
-		upWaterChance: 2,
-		upLightningChance: 1,
-		upAirChance: 3,
+		upChance: {
+			fire: 10,
+			wood: 4,
+			water: 2,
+			lightning: 1,
+			air: 3
+		},
 		price: 16000,
 		swfLetter: '0',
-		skillId: [],
 		display: {
 			0: '0',
-			1: '9',
+			1: '0',
 			2: '1', // HasKnee (1 = yes)
 			3: '7', // Head
 			4: '7', // Hair
@@ -50,14 +50,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 1,
 		nbrAir: 1,
-		upFireChance: 10,
-		upWoodChance: 4,
-		upWaterChance: 2,
-		upLightningChance: 1,
-		upAirChance: 3,
+		upChance: {
+			fire: 10,
+			wood: 4,
+			water: 2,
+			lightning: 1,
+			air: 3
+		},
 		price: 600,
-		swfLetter: '0',
-		skillId: [skillList.FORCE_DE_LUMIERE.skillId]
+		swfLetter: '0'
 	},
 	PIGMOU: {
 		raceId: 3,
@@ -68,14 +69,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 0,
 		nbrAir: 0,
-		upFireChance: 12,
-		upWoodChance: 3,
-		upWaterChance: 2,
-		upLightningChance: 2,
-		upAirChance: 1,
+		upChance: {
+			fire: 12,
+			wood: 3,
+			water: 2,
+			lightning: 2,
+			air: 1
+		},
 		price: 20000,
-		swfLetter: '1',
-		skillId: [skillList.CHARGE_CORNUE.skillId]
+		swfLetter: '1'
 	},
 	PIGMOU_DEMON: {
 		raceId: 4,
@@ -86,14 +88,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 2,
 		nbrLightning: 1,
 		nbrAir: 0,
-		upFireChance: 12,
-		upWoodChance: 3,
-		upWaterChance: 2,
-		upLightningChance: 2,
-		upAirChance: 1,
+		upChance: {
+			fire: 12,
+			wood: 3,
+			water: 2,
+			lightning: 2,
+			air: 1
+		},
 		price: 800,
-		swfLetter: '1',
-		skillId: [skillList.CHARGE_CORNUE.skillId, skillList.CHARGE_PIGMOU.skillId]
+		swfLetter: '1'
 	},
 	WINKS: {
 		raceId: 5,
@@ -104,14 +107,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 1,
 		nbrAir: 0,
-		upFireChance: 1,
-		upWoodChance: 2,
-		upWaterChance: 9,
-		upLightningChance: 6,
-		upAirChance: 2,
+		upChance: {
+			fire: 1,
+			wood: 2,
+			water: 9,
+			lightning: 6,
+			air: 2
+		},
 		price: 20000,
-		swfLetter: '2',
-		skillId: [skillList.COQUE.skillId]
+		swfLetter: '2'
 	},
 	WINKS_DEMON: {
 		raceId: 6,
@@ -122,14 +126,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 5,
 		nbrLightning: 4,
 		nbrAir: 1,
-		upFireChance: 1,
-		upWoodChance: 2,
-		upWaterChance: 9,
-		upLightningChance: 6,
-		upAirChance: 2,
+		upChance: {
+			fire: 1,
+			wood: 2,
+			water: 9,
+			lightning: 6,
+			air: 2
+		},
 		price: 700,
-		swfLetter: '2',
-		skillId: [skillList.COQUE.skillId, skillList.DUR_A_CUIRE.skillId]
+		swfLetter: '2'
 	},
 	PLANAILLE: {
 		raceId: 7,
@@ -140,14 +145,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 2,
 		nbrAir: 0,
-		upFireChance: 2,
-		upWoodChance: 2,
-		upWaterChance: 2,
-		upLightningChance: 10,
-		upAirChance: 4,
+		upChance: {
+			fire: 2,
+			wood: 2,
+			water: 2,
+			lightning: 10,
+			air: 4
+		},
 		price: 16000,
-		swfLetter: '3',
-		skillId: []
+		swfLetter: '3'
 	},
 	PLANAILLE_DEMON: {
 		raceId: 8,
@@ -158,14 +164,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 7,
 		nbrAir: 2,
-		upFireChance: 2,
-		upWoodChance: 2,
-		upWaterChance: 2,
-		upLightningChance: 10,
-		upAirChance: 4,
+		upChance: {
+			fire: 2,
+			wood: 2,
+			water: 2,
+			lightning: 10,
+			air: 4
+		},
 		price: 700,
-		swfLetter: '3',
-		skillId: [skillList.FORCE_DES_TENEBRES.skillId]
+		swfLetter: '3'
 	},
 	CASTIVORE: {
 		raceId: 9,
@@ -176,14 +183,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 0,
 		nbrAir: 1,
-		upFireChance: 2,
-		upWoodChance: 8,
-		upWaterChance: 3,
-		upLightningChance: 2,
-		upAirChance: 5,
+		upChance: {
+			fire: 2,
+			wood: 8,
+			water: 3,
+			lightning: 2,
+			air: 5
+		},
 		price: 16000,
-		swfLetter: '4',
-		skillId: []
+		swfLetter: '4'
 	},
 	ROCKY: {
 		raceId: 10,
@@ -194,14 +202,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 1,
 		nbrAir: 0,
-		upFireChance: 4,
-		upWoodChance: 2,
-		upWaterChance: 2,
-		upLightningChance: 11,
-		upAirChance: 1,
+		upChance: {
+			fire: 4,
+			wood: 2,
+			water: 2,
+			lightning: 11,
+			air: 1
+		},
 		price: 18000,
-		swfLetter: '5',
-		skillId: [skillList.ROCK.skillId]
+		swfLetter: '5'
 	},
 	PTEROZ: {
 		raceId: 11,
@@ -212,14 +221,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 0,
 		nbrAir: 3,
-		upFireChance: 8,
-		upWoodChance: 2,
-		upWaterChance: 1,
-		upLightningChance: 3,
-		upAirChance: 6,
+		upChance: {
+			fire: 8,
+			wood: 2,
+			water: 1,
+			lightning: 3,
+			air: 6
+		},
 		price: 22000,
-		swfLetter: '6',
-		skillId: []
+		swfLetter: '6'
 	},
 	NUAGOZ: {
 		raceId: 12,
@@ -230,14 +240,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 1,
 		nbrAir: 1,
-		upFireChance: 1,
-		upWoodChance: 1,
-		upWaterChance: 6,
-		upLightningChance: 6,
-		upAirChance: 6,
+		upChance: {
+			fire: 1,
+			wood: 1,
+			water: 6,
+			lightning: 6,
+			air: 6
+		},
 		price: 16000,
-		swfLetter: '7',
-		skillId: []
+		swfLetter: '7'
 	},
 	SIRAIN: {
 		raceId: 13,
@@ -248,14 +259,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 2,
 		nbrLightning: 0,
 		nbrAir: 0,
-		upFireChance: 3,
-		upWoodChance: 2,
-		upWaterChance: 11,
-		upLightningChance: 2,
-		upAirChance: 2,
+		upChance: {
+			fire: 3,
+			wood: 2,
+			water: 11,
+			lightning: 2,
+			air: 2
+		},
 		price: 16000,
-		swfLetter: '8',
-		skillId: []
+		swfLetter: '8'
 	},
 	HIPPOCLAMP: {
 		raceId: 14,
@@ -266,14 +278,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 1,
 		nbrAir: 1,
-		upFireChance: 4,
-		upWoodChance: 4,
-		upWaterChance: 4,
-		upLightningChance: 4,
-		upAirChance: 4,
+		upChance: {
+			fire: 4,
+			wood: 4,
+			water: 4,
+			lightning: 4,
+			air: 4
+		},
 		price: 28000,
-		swfLetter: '9',
-		skillId: []
+		swfLetter: '9'
 	},
 	GORILLOZ: {
 		raceId: 15,
@@ -284,14 +297,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 0,
 		nbrAir: 0,
-		upFireChance: 3,
-		upWoodChance: 13,
-		upWaterChance: 1,
-		upLightningChance: 2,
-		upAirChance: 1,
+		upChance: {
+			fire: 3,
+			wood: 13,
+			water: 1,
+			lightning: 2,
+			air: 1
+		},
 		price: 16000,
-		swfLetter: 'A',
-		skillId: []
+		swfLetter: 'A'
 	},
 	GORILLOZ_DEMON: {
 		raceId: 16,
@@ -302,14 +316,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 1,
 		nbrAir: 0,
-		upFireChance: 3,
-		upWoodChance: 13,
-		upWaterChance: 1,
-		upLightningChance: 2,
-		upAirChance: 1,
+		upChance: {
+			fire: 3,
+			wood: 13,
+			water: 1,
+			lightning: 2,
+			air: 1
+		},
 		price: 700,
-		swfLetter: 'A',
-		skillId: [skillList.GROS_COSTAUD.skillId]
+		swfLetter: 'A'
 	},
 	WANWAN: {
 		raceId: 17,
@@ -320,14 +335,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 1,
 		nbrAir: 0,
-		upFireChance: 3,
-		upWoodChance: 6,
-		upWaterChance: 1,
-		upLightningChance: 8,
-		upAirChance: 2,
+		upChance: {
+			fire: 3,
+			wood: 6,
+			water: 1,
+			lightning: 8,
+			air: 2
+		},
 		price: 19000,
-		swfLetter: 'B',
-		skillId: []
+		swfLetter: 'B'
 	},
 	WANWAN_DEMON: {
 		raceId: 18,
@@ -338,14 +354,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 5,
 		nbrAir: 1,
-		upFireChance: 3,
-		upWoodChance: 6,
-		upWaterChance: 1,
-		upLightningChance: 8,
-		upAirChance: 2,
+		upChance: {
+			fire: 2,
+			wood: 6,
+			water: 1,
+			lightning: 8,
+			air: 2
+		},
 		price: 900,
-		swfLetter: 'B',
-		skillId: [skillList.FRENESIE_COLLECTIVE.skillId]
+		swfLetter: 'B'
 	},
 	SANTAZ: {
 		raceId: 19,
@@ -356,14 +373,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 0,
 		nbrAir: 2,
-		upFireChance: 1,
-		upWoodChance: 4,
-		upWaterChance: 2,
-		upLightningChance: 1,
-		upAirChance: 12,
+		upChance: {
+			fire: 1,
+			wood: 4,
+			water: 2,
+			lightning: 1,
+			air: 12
+		},
 		price: 0,
-		swfLetter: 'C',
-		skillId: [skillList.PIETINEMENT.skillId]
+		swfLetter: 'C'
 	},
 	FEROSS: {
 		raceId: 20,
@@ -374,14 +392,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 0,
 		nbrAir: 0,
-		upFireChance: 6,
-		upWoodChance: 6,
-		upWaterChance: 6,
-		upLightningChance: 1,
-		upAirChance: 1,
+		upChance: {
+			fire: 6,
+			wood: 6,
+			water: 6,
+			lightning: 1,
+			air: 1
+		},
 		price: 0,
-		swfLetter: 'D',
-		skillId: [skillList.CUIRASSE.skillId]
+		swfLetter: 'D'
 	},
 	KABUKI: {
 		raceId: 21,
@@ -392,14 +411,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 0,
 		nbrAir: 3,
-		upFireChance: 2,
-		upWoodChance: 2,
-		upWaterChance: 6,
-		upLightningChance: 2,
-		upAirChance: 8,
+		upChance: {
+			fire: 2,
+			wood: 2,
+			water: 6,
+			lightning: 2,
+			air: 8
+		},
 		price: 0,
-		swfLetter: 'E',
-		skillId: [skillList.INSAISISSABLE.skillId]
+		swfLetter: 'E'
 	},
 	KABUKI_DEMON: {
 		raceId: 22,
@@ -410,14 +430,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 4,
 		nbrLightning: 1,
 		nbrAir: 7,
-		upFireChance: 2,
-		upWoodChance: 2,
-		upWaterChance: 6,
-		upLightningChance: 2,
-		upAirChance: 8,
+		upChance: {
+			fire: 2,
+			wood: 2,
+			water: 6,
+			lightning: 2,
+			air: 8
+		},
 		price: 800,
-		swfLetter: 'E',
-		skillId: [skillList.INSAISISSABLE.skillId, skillList.ORIGINE_CAUSHEMESHENNE.skillId]
+		swfLetter: 'E'
 	},
 	MAHAMUTI: {
 		raceId: 23,
@@ -428,14 +449,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 2,
 		nbrLightning: 0,
 		nbrAir: 0,
-		upFireChance: 1,
-		upWoodChance: 8,
-		upWaterChance: 8,
-		upLightningChance: 2,
-		upAirChance: 1,
+		upChance: {
+			fire: 1,
+			wood: 8,
+			water: 8,
+			lightning: 2,
+			air: 1
+		},
 		price: 0,
-		swfLetter: 'F',
-		skillId: [skillList.ECRASEMENT.skillId]
+		swfLetter: 'F'
 	},
 	SOUFFLET: {
 		raceId: 24,
@@ -446,14 +468,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 1,
 		nbrLightning: 1,
 		nbrAir: 2,
-		upFireChance: 0,
-		upWoodChance: 4,
-		upWaterChance: 4,
-		upLightningChance: 4,
-		upAirChance: 8,
+		upChance: {
+			fire: 0,
+			wood: 4,
+			water: 4,
+			lightning: 4,
+			air: 8
+		},
 		price: 0,
-		swfLetter: 'G',
-		skillId: [skillList.NAPOMAGICIEN.skillId]
+		swfLetter: 'G'
 	},
 	TOUFUFU: {
 		raceId: 25,
@@ -464,14 +487,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 2,
 		nbrAir: 0,
-		upFireChance: 2,
-		upWoodChance: 6,
-		upWaterChance: 1,
-		upLightningChance: 6,
-		upAirChance: 5,
+		upChance: {
+			fire: 2,
+			wood: 6,
+			water: 1,
+			lightning: 6,
+			air: 5
+		},
 		price: 0,
-		swfLetter: 'H',
-		skillId: [skillList.DEPLACEMENT_INSTANTANE.skillId]
+		swfLetter: 'H'
 	},
 	QUETZU: {
 		raceId: 26,
@@ -482,14 +506,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 2,
 		nbrLightning: 0,
 		nbrAir: 0,
-		upFireChance: 8,
-		upWoodChance: 2,
-		upWaterChance: 8,
-		upLightningChance: 2,
-		upAirChance: 0,
+		upChance: {
+			fire: 8,
+			wood: 2,
+			water: 8,
+			lightning: 2,
+			air: 0
+		},
 		price: 35000,
-		swfLetter: 'I',
-		skillId: []
+		swfLetter: 'I'
 	},
 	SMOG: {
 		raceId: 27,
@@ -500,14 +525,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 2,
 		nbrAir: 2,
-		upFireChance: 2,
-		upWoodChance: 0,
-		upWaterChance: 4,
-		upLightningChance: 8,
-		upAirChance: 6,
+		upChance: {
+			fire: 2,
+			wood: 0,
+			water: 4,
+			lightning: 8,
+			air: 6
+		},
 		price: 0,
-		swfLetter: 'J',
-		skillId: []
+		swfLetter: 'J'
 	},
 	TRICERAGNON: {
 		raceId: 28,
@@ -518,14 +544,15 @@ export const raceList: { [name: string]: DinozRace } = {
 		nbrWater: 0,
 		nbrLightning: 1,
 		nbrAir: 1,
-		upFireChance: 8,
-		upWoodChance: 8,
-		upWaterChance: 0,
-		upLightningChance: 2,
-		upAirChance: 2,
+		upChance: {
+			fire: 8,
+			wood: 8,
+			water: 0,
+			lightning: 2,
+			air: 2
+		},
 		price: 0,
-		swfLetter: 'K',
-		skillId: [skillList.BIGMAGNON.skillId]
+		swfLetter: 'K'
 	}
 };
 

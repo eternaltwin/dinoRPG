@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { FightResult } from '@/models';
+import { Dinoz, FightResult } from '@/models';
 import { sessionStore } from '@/store';
 import { defineComponent } from 'vue';
 
@@ -29,6 +29,13 @@ export default defineComponent({
 		const newMoney = (sessionStore.getters.getMoney +
 			this.fight.goldEarned) as number;
 		sessionStore.commit('setMoney', newMoney);
+
+		const dinozInStore: Array<Dinoz> = sessionStore.getters.getDinozList;
+		const dinoz: Dinoz = dinozInStore.find(
+			dinoz => dinoz.dinozId!.toString() === this.$route.params.dinozId
+		)!;
+		dinoz.experience! += this.fight.xpEarned;
+		sessionStore.commit('setDinozList', dinozInStore);
 	}
 });
 </script>

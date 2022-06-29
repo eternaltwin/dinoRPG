@@ -1,8 +1,8 @@
 export enum ElementType {
-	FIRE = 'fire',
-	WATER = 'water',
-	WOOD = 'wood',
-	LIGHTNING = 'lightning',
-	AIR = 'air',
-	VOID = 'void'
+	FIRE = 1,
+	WOOD = 2,
+	WATER = 3,
+	LIGHTNING = 4,
+	AIR = 5,
+	VOID = 6
 }

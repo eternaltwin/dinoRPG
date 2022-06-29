@@ -12,5 +12,9 @@ export const actionList: Readonly<Record<string, Action>> = {
 	SHOP: {
 		name: 'shop',
 		imgName: 'act_shop'
+	},
+	LEVEL_UP: {
+		name: 'levelup',
+		imgName: 'act_levelup'
 	}
 };

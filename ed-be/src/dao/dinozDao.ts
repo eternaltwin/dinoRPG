@@ -1,4 +1,12 @@
-import { AssDinozItem, AssDinozSkill, AssDinozStatus, Dinoz, Player } from '../models/index.js';
+import {
+	AssDinozItem,
+	AssDinozSkill,
+	AssDinozSkillUnlockable,
+	AssDinozStatus,
+	Dinoz,
+	Player,
+	Ranking
+} from '../models/index.js';
 
 const createDinozRequest = (newDinoz: Dinoz): Promise<Dinoz> => {
 	return Dinoz.create(newDinoz);
@@ -267,6 +275,65 @@ const addExperience = (dinozId: number, experience: number): Promise<Dinoz | nul
 	);
 };
 
+const getDinozSkillsOwnAndUnlockable = (dinozId: number): Promise<Dinoz | null> => {
+	return Dinoz.findOne({
+		attributes: [
+			'raceId',
+			'display',
+			'experience',
+			'level',
+			'nextUpElementId',
+			'nextUpAltElementId',
+			'nbrUpFire',
+			'nbrUpWood',
+			'nbrUpWater',
+			'nbrUpLightning',
+			'nbrUpAir'
+		],
+		include: [
+			{
+				model: Player,
+				attributes: ['playerId'],
+				required: false,
+				include: [
+					{
+						model: Ranking,
+						attributes: ['sumPoints', 'averagePoints', 'dinozCount'],
+						required: false
+					}
+				]
+			},
+			{
+				model: AssDinozSkill,
+				attributes: ['skillId'],
+				required: false
+			},
+			{
+				model: AssDinozSkillUnlockable,
+				attributes: ['skillId'],
+				required: false
+			},
+			{
+				model: AssDinozStatus,
+				attributes: ['statusId'],
+				required: false
+			},
+			{
+				model: AssDinozItem,
+				attributes: ['itemId'],
+				required: false
+			}
+		],
+		where: { dinozId: dinozId }
+	});
+};
+
+const setLevelUpData = (dinoz: Partial<Dinoz>) => {
+	return Dinoz.update(dinoz, {
+		where: { dinozId: dinoz.dinozId }
+	});
+};
+
 export {
 	createDinozRequest,
 	getDinozFicheRequest,
@@ -287,5 +354,7 @@ export {
 	setDinozLife,
 	setDinozMaxLife,
 	setDinozExperience,
-	addExperience
+	addExperience,
+	getDinozSkillsOwnAndUnlockable,
+	setLevelUpData
 };

@@ -11,10 +11,10 @@ import {
 	getPlayerRewardsRequest,
 	searchPlayersByName
 } from '../dao/playerDao.js';
-
 import { Player, PlayerInfo } from '../models/index.js';
 import { addRewardToPlayer } from '../dao/assPlayerRewardsDao.js';
 import { rewardList } from '../constants/reward.js';
+import { levelList } from '../constants/level.js';
 
 /**
  * @summary Get data from player on login
@@ -25,6 +25,9 @@ import { rewardList } from '../constants/reward.js';
 const getCommonData = async (req: Request, res: Response): Promise<Response> => {
 	const commonData: Player | null = await getCommonDataRequest(req.user!.playerId!);
 	commonData?.setDataValue('dinozCount', await getDinozTotalCount());
+	commonData?.dinoz.forEach(dinoz =>
+		dinoz.setDataValue('maxExperience', levelList.find(level => level.id === dinoz.level)!.experience)
+	);
 	return res.status(200).send(commonData);
 };
 

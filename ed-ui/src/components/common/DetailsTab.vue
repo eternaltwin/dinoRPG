@@ -52,7 +52,7 @@
 							<img
 								v-for="(element, index) in skill.element"
 								:key="index"
-								:src="getImg('elements', 'elem_', element)"
+								:src="getImg('elements', 'elem_', ElementType[element])"
 							/>
 							<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
 							<template #content>
@@ -125,6 +125,7 @@ import { Dinoz, Skill } from '@/models';
 import { DinozService } from '@/services';
 import { errorHandler } from '@/utils';
 import EventBus from '@/events';
+import { ElementType } from '@/enums';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -135,7 +136,8 @@ export default defineComponent({
 			skillNameList: skillNameList,
 			selectedSort: 'Default' as string,
 			picked: 'Ascendant' as string,
-			hidden: true as boolean
+			hidden: true as boolean,
+			ElementType: ElementType
 		};
 	},
 	methods: {
