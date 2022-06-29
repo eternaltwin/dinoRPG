@@ -1,24 +1,41 @@
 <template>
 	<div class="shop">
-		<Title :title="$t('pageTitle.shop')" />
+		<Title
+			:title="
+				$t('pageTitle.shop') +
+					$t(`shop.item.${shopNameList[shopId]}.name`) +
+					` ]`
+			"
+		/>
 		<div class="section">
 			<div
 				class="titlePage"
 				style="undefined"
 				width="520"
 				height="27"
-				v-html="
-					formatContent($t(`shop.item.title`)) +
-						formatContent($t(`shop.item.${shop}.name`))
-				"
+				v-html="formatContent($t(`shop.item.title`))"
+			/>
+			<div
+				class="subTitlePage"
+				style="undefined"
+				width="520"
+				height="27"
+				v-html="formatContent($t(`shop.item.${shopNameList[shopId]}.name`))"
 			/>
 		</div>
 		<div class="shopDesc">
 			<div class="contain">
 				<div class="art art_shop">
-					<img :src="getImg('icons', '', 'shop_flying')" alt="" />
+					<img
+						:src="getImg('shop', 'shop_', `${shopNameList[shopId]}`)"
+						alt=""
+					/>
 				</div>
-				<p v-html="formatContent($t(`shop.item.${shop}.description`))" />
+				<p
+					v-html="
+						formatContent($t(`shop.item.${shopNameList[shopId]}.description`))
+					"
+				/>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -43,7 +60,13 @@
 								formatContent($t(`item.name.${itemNameList[item.itemId]}`))
 							"
 						/>
-						<p>
+						<p v-if="item.itemType === 'magical'">
+							{{ formatContent($t(`shop.item.price`)) }}
+							<img :src="getImg('item', 'item_', 'golden_napodino')" />
+							{{ formatContent($t(`item.name.golden_napodino`)) }}
+							x {{ item.price }}
+						</p>
+						<p v-else>
 							{{ item.price }}
 							<img :src="getImg('icons', '', 'small_gold')" />
 						</p>
@@ -176,7 +199,7 @@
 						<div class="name">
 							{{ $t(`item.name.${itemNameList[selectedItem.itemId]}`) }}
 						</div>
-						<div class="value">
+						<div v-if="selectedItem.itemType !== 'magical'" class="value">
 							<span class="money">
 								{{ selectedItem.price }}
 								<img :src="getImg('icons', '', 'small_gold')" alt="or" />
@@ -184,6 +207,12 @@
 						</div>
 					</div>
 					<div class="clear"></div>
+					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
+						{{ formatContent($t(`shop.item.price`)) }}
+						<img :src="getImg('item', 'item_', 'golden_napodino')" />
+						{{ formatContent($t(`item.name.golden_napodino`)) }}
+						x {{ selectedItem.price }}
+					</div>
 					<div
 						class="desc"
 						v-html="
@@ -203,7 +232,7 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import { ItemShopService } from '@/services';
 import { Item } from '@/models';
 import { errorHandler } from '@/utils';
-import { itemNameList } from '@/constants';
+import { itemNameList, shopNameList } from '@/constants';
 import { sessionStore } from '@/store';
 import EventBus from '@/events';
 
@@ -211,10 +240,9 @@ export default defineComponent({
 	name: 'ItemShopPage',
 	data() {
 		return {
-			// Temporarily forced to flying, later this will be a parameter of the shop to display
-			shop: 'flying' as string,
 			itemList: [] as Array<Item>,
 			itemNameList: itemNameList,
+			shopNameList: shopNameList,
 			selectedItem: {} as Item,
 			selectedQuantity: 1 as number
 		};
@@ -236,6 +264,9 @@ export default defineComponent({
 					Number.isInteger(selectedQuantity)
 				);
 			};
+		},
+		shopId(): number {
+			return shopNameList.indexOf(this.$route.params.name?.toString());
 		}
 	},
 	methods: {
@@ -243,16 +274,12 @@ export default defineComponent({
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
 		},
 		isFull(item: Item): boolean {
-			return item.quantity === item.maxQuantity;
+			return item.quantity! >= item.maxQuantity!;
 		},
 		// Buy n of the selected item
 		async buyItems(itemId: number, quantity: number): Promise<void> {
 			try {
-				await ItemShopService.buyItem(
-					1, // Temporary hardcoded to flying shop ID
-					itemId,
-					quantity
-				);
+				await ItemShopService.buyItem(this.shopId, itemId, quantity);
 				EventBus.emit('isLoading', false);
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string
@@ -263,21 +290,26 @@ export default defineComponent({
 				return;
 			}
 
-			// Update player's money
-			const newMoney = (sessionStore.getters.getMoney -
-				this.selectedItem.price! * quantity) as number;
-			sessionStore.commit('setMoney', newMoney);
+			// Update player's money if the item purchased is non magical
+			if (this.selectedItem.itemType !== 'magical') {
+				const newMoney = (sessionStore.getters.getMoney -
+					this.selectedItem.price! * quantity) as number;
+				sessionStore.commit('setMoney', newMoney);
+			}
 		},
 		async buyMaxItemPopinConfirmChoice(): Promise<void> {
 			const maxQuantity: number =
 				this.selectedItem.maxQuantity! - this.selectedItem.quantity!;
 			const totalPrice: number = maxQuantity * this.selectedItem.price!;
+
 			const res: boolean = confirm(
 				this.$t('popup.shop.buyMaxConfirm_part1') +
 					maxQuantity +
 					this.$t('popup.shop.buyMaxConfirm_part2') +
 					totalPrice +
-					this.$t('popup.shop.buyMaxConfirm_part3')
+					(this.selectedItem.itemType === 'magical'
+						? this.$t('popup.shop.buyMaxConfirm_part3b')
+						: this.$t('popup.shop.buyMaxConfirm_part3a'))
 			);
 			if (res) {
 				EventBus.emit('isLoading', true);
@@ -296,14 +328,29 @@ export default defineComponent({
 		EventBus.emit('isLoading', true);
 		// Get shop and its items to display
 		try {
-			// Temporarily forced to flying/1, later this will be a parameter of the shop to display
-			this.itemList = await ItemShopService.getItemFromItemShop(1);
-			this.shop = 'flying';
+			this.itemList = await ItemShopService.getItemFromItemShop(this.shopId);
 			this.selectedItem.itemId = 0;
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
 			return;
+		}
+	},
+	watch: {
+		// Reload the item list if the player go on another shope page
+		'$route.params.name': async function() {
+			if (this.shopId < 0) {
+				return;
+			}
+			EventBus.emit('isLoading', true);
+			try {
+				this.itemList = await ItemShopService.getItemFromItemShop(this.shopId);
+				this.selectedItem.itemId = 0;
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err);
+				return;
+			}
 		}
 	}
 });
@@ -454,6 +501,17 @@ export default defineComponent({
 					}
 				}
 			}
+			.objValue {
+				margin-top: 4px;
+				padding: 3px;
+				color: #ffee92;
+				font-weight: bold;
+				border-top: 1px solid #9a4029;
+				border-bottom: 1px solid #9a4029;
+				img {
+					vertical-align: -50%;
+				}
+			}
 			.type {
 				position: absolute;
 				z-index: 2;
@@ -469,7 +527,6 @@ export default defineComponent({
 				}
 			}
 			.desc {
-				margin-top: 10px;
 				color: #fce3bc;
 				font-size: 11pt;
 				line-height: 12pt;
@@ -567,6 +624,14 @@ export default defineComponent({
 	}
 	.disabled {
 		opacity: 0.3;
+	}
+	div {
+		.clear {
+			clear: both;
+			height: 1px;
+			font-size: 0pt;
+			line-height: 0pt;
+		}
 	}
 	// Does not work, so I changed in _general.scss
 	/*& strong {

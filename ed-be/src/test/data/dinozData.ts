@@ -1,8 +1,8 @@
-import { AssDinozSkill, AssDinozStatus, Dinoz } from '../../models';
-import { placeList } from '../../constants';
+import { Dinoz } from '../../models';
+import { placeList, statusList } from '../../constants';
 import { player, dinozId, skillId, skillId2 } from '../utils/constants';
 
-export const DinozFiche = ({
+export const DinozFicheData = ({
 	id: dinozId,
 	playerId: player.id_1,
 	race: {
@@ -51,11 +51,12 @@ export const DinozToChangeName = {
 	}
 } as Dinoz;
 
-export const DinozAtForges = {
+export const DinozData = {
 	id: dinozId,
 	playerId: player.id_1,
 	level: 1,
-	placeId: placeList.FORGES_DU_GTC.placeId
+	placeId: placeList.FORGES_DU_GTC.placeId,
+	status: [{ statusId: 1 }]
 } as Dinoz;
 
 export const AllDinozFromAnAccount = [

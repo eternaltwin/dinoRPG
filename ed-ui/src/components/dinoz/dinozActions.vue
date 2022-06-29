@@ -12,14 +12,40 @@
 						v-for="action in dinozActions"
 						:key="action.name"
 						:id="action.imgName"
+						@click="launch(action)"
 					>
 						<td class="icon">
 							<img :src="getImg('icons', '', action.imgName)" />
 						</td>
-						<td class="label">{{ $t(`action.name.${action.name}`) }}</td>
+						<td v-if="action.name === 'shop'" class="label">
+							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
+						</td>
+						<td v-else class="label">
+							{{ $t(`action.name.${action.name}`) }}
+						</td>
 						<template #content>
-							<h1 v-html="formatContent($t(`action.name.${action.name}`))" />
+							<h1
+								v-if="action.name === 'shop'"
+								v-html="
+									formatContent(
+										$t(`shop.item.${shopNameList[action.prop]}.name`)
+									)
+								"
+							/>
+							<h1
+								v-else
+								v-html="formatContent($t(`action.name.${action.name}`))"
+							/>
 							<p
+								v-if="action.name === 'shop'"
+								v-html="
+									formatContent(
+										$t(`shop.item.${shopNameList[action.prop]}.description`)
+									)
+								"
+							/>
+							<p
+								v-else
 								v-html="formatContent($t(`action.description.${action.name}`))"
 							/>
 						</template>
@@ -32,14 +58,32 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { shopNameList } from '@/constants';
 import { Action } from '@/models';
 
 export default defineComponent({
 	name: 'DinozActions',
+	data() {
+		return {
+			shopNameList: shopNameList
+		};
+	},
 	props: { dinozActions: Object as PropType<Array<Action>> },
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
+		},
+		launch(action: Action): void {
+			switch (action.name) {
+				case 'shop':
+					this.$router.push({
+						name: 'ItemShopPage',
+						params: { name: shopNameList[action.prop!] }
+					});
+					break;
+				default:
+					break;
+			}
 		}
 	}
 });

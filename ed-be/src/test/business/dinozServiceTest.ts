@@ -6,7 +6,7 @@ import {
 	setSkillState,
 	betaMove
 } from '../../business/dinozService.js';
-import { raceList } from '../../constants';
+import { actionList, raceList, shopList, statusList } from '../../constants/index.js';
 import {
 	player,
 	dinozId,
@@ -23,20 +23,19 @@ import {
 } from '../utils/constants.js';
 import {
 	BasicDinoz,
-	DinozFiche,
+	DinozFicheData,
 	DinozToChangeName,
 	DinozWithSkills,
 	DinozWithSkillsAndStatus,
 	DinozWithSkillsAndStatusReadyToMove
 } from '../data/dinozData.js';
 import { DinozFromShop } from '../data/dinozShopData.js';
-import { AssDinozSkill, AssDinozStatus, Dinoz } from '../../models/index.js';
+import { Action, AssDinozSkill, AssDinozStatus, Dinoz, ShopType } from '../../models/index.js';
 import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
 import { mocked } from 'ts-jest/utils';
 import { Request, Response } from 'express';
 import { cloneDeep } from 'lodash';
 import { playerRanking } from '../data/rankingData.js';
-import { getRandomNumber } from '../../utils/tools.js';
 
 jest.mock('express-validator');
 
@@ -46,6 +45,7 @@ const PlayerDao = require('../../dao/playerDao.js');
 const AssDinozSkillDao = require('../../dao/assDinozSkillDao.js');
 const RankingDao = require('../../dao/rankingDao.js');
 const tools = require('../../utils/tools.js');
+let DinozTestData: Dinoz;
 
 describe('Function getDinozFiche()', function () {
 	let req: Request;
@@ -65,9 +65,10 @@ describe('Function getDinozFiche()', function () {
 		mocked(validationResult).mockImplementation(() => result);
 		mocked(result.isEmpty).mockImplementation(() => true);
 
-		DinozFiche.setDataValue = jest.fn();
+		DinozTestData = cloneDeep(DinozFicheData);
+		DinozTestData.setDataValue = jasmine.createSpy();
 
-		DinozDao.getDinozFicheRequest = jasmine.createSpy().and.returnValue(DinozFiche);
+		DinozDao.getDinozFicheRequest = jasmine.createSpy().and.returnValue(DinozTestData);
 	});
 
 	it('Nominal case', async function () {
@@ -80,8 +81,44 @@ describe('Function getDinozFiche()', function () {
 		expect(res.status).toHaveBeenCalledWith(200);
 	});
 
+	it.each(Object.values(shopList))('Nominal case - test all shops action: Shop %#', async shopToTest => {
+		// Update dinoz location and status as necessary depending on the shop
+		DinozTestData.placeId = shopToTest.placeId;
+		if (shopToTest.type == ShopType.CURSED) {
+			DinozTestData.status.push({
+				statusId: statusList.CURSED
+			} as AssDinozStatus);
+		}
+
+		// Override this as necessary if you change DinozTestData
+		DinozDao.getDinozFicheRequest = jasmine.createSpy().and.returnValue(DinozTestData);
+
+		await getDinozFiche(req, res);
+
+		// Build expected actions
+		const availableActions: Array<Action> = [];
+
+		// Default actions
+		availableActions.push(actionList.FIGHT);
+		availableActions.push(actionList.FOLLOW);
+		// Shop action
+		availableActions.push({
+			name: actionList.SHOP.name,
+			imgName: actionList.SHOP.imgName,
+			prop: shopToTest.shopId
+		});
+
+		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
+
+		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(dinozId);
+
+		expect(res.status).toHaveBeenCalledWith(200);
+
+		expect(DinozTestData.setDataValue).toHaveBeenNthCalledWith(7, 'actions', availableActions);
+	});
+
 	it('Player different from the one who do the request', async function () {
-		DinozFiche.playerId = player.id_2;
+		DinozTestData.playerId = player.id_2;
 
 		await getDinozFiche(req, res);
 

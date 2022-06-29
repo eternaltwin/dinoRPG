@@ -1,4 +1,15 @@
-export const shopNameList = {
-	0: 'flying',
-	1: 'forge'
-};
+export const shopNameList = [
+	'unknown',
+	'flying',
+	'forge',
+	'magic',
+	'cursed', // picture missing
+	'fruity',
+	'razad',
+	'souk',
+	'neerhel',
+	'barbarian',
+	'secret',
+	'elit', // original game has no picture
+	'chens' // picture missing
+];

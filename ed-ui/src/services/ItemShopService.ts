@@ -9,7 +9,10 @@ export const ItemShopService = {
 	},
 	buyItem(shopId: number, itemId: number, quantity: number): Promise<Item> {
 		return http()
-			.put(`/shop/buyItem/${shopId}`, { itemId: itemId, quantity: quantity })
+			.put(`/shop/buyItem/${shopId}`, {
+				itemId: itemId,
+				quantity: quantity
+			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

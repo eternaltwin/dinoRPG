@@ -117,10 +117,13 @@ export default defineComponent({
 			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
 		},
 		goToItemShop() {
-			this.$router.push({ name: 'ItemShopPage' });
+			this.$router.push({
+				name: 'ItemShopPage',
+				params: { name: 'flying' }
+			});
 		},
 		isFull(item: Item): boolean {
-			return item.quantity === item.maxQuantity;
+			return item.quantity! >= item.maxQuantity!;
 		}
 	},
 	async mounted(): Promise<void> {

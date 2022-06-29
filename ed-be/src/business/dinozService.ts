@@ -23,13 +23,25 @@ import {
 	DinozRace,
 	FightResult,
 	Place,
-	Ranking
+	Ranking,
+	ShopFiche,
+	ShopType
 } from '../models/index.js';
-import { actions, levelList, itemList, raceList, skillList, statusList, placeList } from '../constants/index.js';
+import {
+	actionList,
+	levelList,
+	itemList,
+	raceList,
+	skillList,
+	statusList,
+	shopList,
+	placeList
+} from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
 import { validationResult } from 'express-validator';
 import { updatePoints } from '../dao/rankingDao.js';
 import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
+import { shop } from '../test/utils/constants.js';
 
 // TODO: refaire cette fonction proprement
 /**
@@ -86,7 +98,7 @@ const getDinozFiche = async (req: Request, res: Response): Promise<Response> => 
 	dinozDetails.setDataValue('borderPlace', places);
 
 	// Set availables actions for this dinoz
-	dinozDetails.setDataValue('actions', getActionList());
+	dinozDetails.setDataValue('actions', getActionList(dinozDetails));
 
 	return res.status(200).send(dinozDetails);
 };
@@ -95,28 +107,56 @@ const getDinozFiche = async (req: Request, res: Response): Promise<Response> => 
  * @summary Map available action from dinoz
  * @return Array<Action>
  */
-function getActionList(): Array<Action> {
-	const actionsList: Array<Action> = [];
-	const actionAvailable: Array<string> = getAvailableActions();
+function getActionList(dinoz: Dinoz): Array<Action> {
+	//const actionsList: Array<Action> = [];
+	const actionAvailable: Array<Action> = getAvailableActions(dinoz);
 
-	actions.forEach(action => {
+	/*actionList.forEach(action => {
 		if (actionAvailable.includes(action.name)) {
 			actionsList.push(action);
 		}
-	});
+	}); */
 
-	return actionsList;
+	return actionAvailable;
 }
 
 /**
  * @summary Get available action from dinoz
  * @return Array<String>
  */
-function getAvailableActions(): Array<string> {
-	const actionList: Array<string> = [];
-	actionList.push('fight');
-	actionList.push('follow');
-	return actionList;
+function getAvailableActions(dinoz: Dinoz): Array<Action> {
+	const availableActions: Array<Action> = [];
+
+	// Default actions
+	availableActions.push(actionList.FIGHT);
+	availableActions.push(actionList.FOLLOW);
+
+	// Shop action: check if a shop is available where the dinoz is
+	const shopAvailable = Object.values(shopList).find(shop => shop.placeId == dinoz.placeId) as ShopFiche | undefined;
+	if (shopAvailable) {
+		if (shopAvailable.type == ShopType.CURSED) {
+			const dinozIsCursed = dinoz.status.some(status => status.statusId === statusList.CURSED);
+			if (dinozIsCursed) {
+				// Add the shop id to the action
+				const shopAction: Action = {
+					name: actionList.SHOP.name,
+					imgName: actionList.SHOP.imgName,
+					prop: shopAvailable.shopId
+				};
+				availableActions.push(shopAction);
+			}
+		} else {
+			// Add the shop id to the action
+			const shopAction: Action = {
+				name: actionList.SHOP.name,
+				imgName: actionList.SHOP.imgName,
+				prop: shopAvailable.shopId
+			};
+			availableActions.push(shopAction);
+		}
+	}
+
+	return availableActions;
 }
 
 /**

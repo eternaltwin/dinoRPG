@@ -1,7 +1,8 @@
-import { ItemFiche } from '../item/ItemFiche';
+import { ShopType, ItemFiche } from '../index.js';
 
 export interface ShopFiche {
 	shopId: number;
 	placeId: number;
-	listItemsSold: Array<ItemFiche>;
+	type: ShopType;
+	listItemsSold: Array<Partial<ItemFiche>>;
 }

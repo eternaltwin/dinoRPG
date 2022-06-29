@@ -18,7 +18,7 @@
 			></a>
 			<a
 				id="menu_shop"
-				@click="goToPage('ItemShopPage')"
+				@click="goToPageWithParam('ItemShopPage', 'flying')"
 				class="iconboutik"
 				v-tippy="{
 					content: formatContent($t('layout.shopButton')),
@@ -75,6 +75,12 @@ export default defineComponent({
 	methods: {
 		goToPage(pageName: string) {
 			this.$router.push({ name: pageName });
+		},
+		goToPageWithParam(pageName: string, param: string) {
+			this.$router.push({
+				name: pageName,
+				params: { name: param }
+			});
 		},
 		isDevEnv(): boolean {
 			return process.env.NODE_ENV === 'development';

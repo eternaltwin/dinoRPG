@@ -1,44 +1,34 @@
-import { Response } from 'express';
 import { Request } from 'express';
-import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
-import { mocked } from 'ts-jest/utils';
 // Back imports
 import { getItemsFromShop, buyItem } from '../../business/itemShopService';
-import { ItemFiche, ItemOwn, Player } from '../../models';
-import { itemList, shopList } from '../../constants';
+import { AssDinozStatus, ItemFiche, ItemOwn, Player, Dinoz, ShopType } from '../../models';
+import { itemList, placeList, shopList, statusList } from '../../constants';
 // Test imports
 import { PlayerData } from '../data/playerData';
-import { BasicItem, playerFlyingShopInventory } from '../data/ItemOwnData';
-import { DinozAtForges } from '../data/dinozData';
-import { player, mockRequest, mockResponse, shop, item } from '../utils/constants.js';
+import { DinozData } from '../data/dinozData';
+import { BasicItem, playerFlyingShopInventory, playerMagicShopInventory } from '../data/ItemOwnData';
+import { player, mockRequest, shop, item } from '../utils/constants.js';
 import { cloneDeep } from 'lodash';
-
-jest.mock('express-validator');
+import { getRandomNumber } from '../../utils/tools.js';
 
 const PlayerDao = require('../../dao/playerDao.js');
 const InventoryDao = require('../../dao/inventoryDao.js');
 let PlayerTestData: Player;
-let ItemTestData: ItemOwn;
+let DinozTestData: Dinoz;
 
 /**
  * Test the nominal cases of getItemsFromShop()
  */
 describe('itemShopService: Test nominal cases of getItemsFromShop()', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
-		// Mock express-validator
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
-
-		// Repopulate PlayerTestData before each test to start with clean player data
+		// Repopulate PlayerTestData and DinozData before each test to start with clean data
 		PlayerTestData = cloneDeep(PlayerData);
+		DinozTestData = cloneDeep(DinozData);
 
 		// Default query test parameters
 		req.params = {
@@ -50,27 +40,39 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 	});
 
 	it('Nominal case: flying shop with no inventory', async function () {
-		await getItemsFromShop(req, res);
+		let response: Array<ItemFiche> = [];
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			response = await getItemsFromShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
 
 		// Build the expected result
-		const expectedListItems: Array<ItemFiche> = [];
-		shopList.FLYING_SHOP.listItemsSold.forEach(item => {
-			expectedListItems.push({
-				itemId: item.itemId,
-				price: item.price,
+		const expectedListItems: Array<ItemFiche> = shopList.FLYING_SHOP.listItemsSold.map(itemShop => {
+			// Get the reference of the items from the constants
+			const itemReference: ItemFiche | undefined = Object.values(itemList).find(
+				item => item.itemId === itemShop.itemId
+			)!;
+			return {
+				itemId: itemReference.itemId!,
+				price: itemShop.price!,
 				quantity: 0,
-				maxQuantity: item.maxQuantity,
-				canBeUsedNow: item.canBeUsedNow,
-				canBeEquipped: item.canBeEquipped
-			} as ItemFiche);
+				maxQuantity: itemReference.maxQuantity,
+				canBeUsedNow: itemReference.canBeUsedNow,
+				canBeEquipped: itemReference.canBeEquipped,
+				itemType: itemReference.itemType,
+				isRare: itemReference.isRare
+			};
 		});
 
-		expect(res.status).toHaveBeenCalledWith(200);
 		// Check all expected items from this shop have been received
-		expect(res.send).toHaveBeenCalledWith(expect.arrayContaining(expectedListItems));
+		expect(response).toStrictEqual(expectedListItems);
 	});
 
 	it('Nominal case: flying shop with inventory', async function () {
@@ -78,31 +80,43 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await getItemsFromShop(req, res);
+		let response: Array<ItemFiche> = [];
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			response = await getItemsFromShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
 
-		// Build the expected result, items owned by the player have a different quantity
-		const expectedListItems: Array<ItemFiche> = [];
-		shopList.FLYING_SHOP.listItemsSold.forEach(item => {
-			const tempItem: ItemOwn | undefined = PlayerTestData.itemOwn.find(
-				playerItem => playerItem.itemId === item.itemId
+		// Build the expected result
+		const expectedListItems: Array<ItemFiche> = shopList.FLYING_SHOP.listItemsSold.map(itemShop => {
+			// Get the item from the player
+			const itemPlayer: ItemOwn | undefined = PlayerTestData.itemOwn.find(
+				playerItem => playerItem.itemId === itemShop.itemId
 			);
-			expectedListItems.push({
-				itemId: item.itemId,
-				price: item.price,
-				quantity: tempItem ? tempItem.quantity : 0,
-				maxQuantity: item.maxQuantity,
-				canBeUsedNow: item.canBeUsedNow,
-				canBeEquipped: item.canBeEquipped
-			} as ItemFiche);
+			// Get the reference of the items from the constants
+			const itemReference: ItemFiche | undefined = Object.values(itemList).find(
+				item => item.itemId === itemShop.itemId
+			)!;
+			return {
+				itemId: itemReference.itemId!,
+				price: itemShop.price!,
+				quantity: itemPlayer ? itemPlayer.quantity : 0,
+				maxQuantity: itemReference.maxQuantity,
+				canBeUsedNow: itemReference.canBeUsedNow,
+				canBeEquipped: itemReference.canBeEquipped,
+				itemType: itemReference.itemType,
+				isRare: itemReference.isRare
+			};
 		});
 
-		expect(res.status).toHaveBeenCalledWith(200);
-		// Check all expected items with the relevant modified quantities have been received
-		// If a quantity is wrong, this fails.
-		expect(res.send).toHaveBeenCalledWith(expect.arrayContaining(expectedListItems));
+		// Check all expected items from this shop have been received
+		expect(response).toStrictEqual(expectedListItems);
 	});
 
 	it('Nominal case: flying shop + shopkeeper', async function () {
@@ -110,90 +124,222 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await getItemsFromShop(req, res);
-
-		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
-
-		// Build the expected result, 50 % more maxQuantity
-		const expectedListItems: Array<ItemFiche> = [];
-		shopList.FLYING_SHOP.listItemsSold.forEach(item => {
-			expectedListItems.push({
-				itemId: item.itemId,
-				price: item.price,
-				quantity: 0,
-				maxQuantity: item.maxQuantity * 1.5,
-				canBeUsedNow: item.canBeUsedNow,
-				canBeEquipped: item.canBeEquipped
-			} as ItemFiche);
-		});
-
-		expect(res.status).toHaveBeenCalledWith(200);
-		// Check all expected items with the relevant modified maxQuantities have been received
-		// If a maxQuantity is wrong, this fails
-		expect(res.send).toHaveBeenCalledWith(expect.arrayContaining(expectedListItems));
-	});
-
-	it('Nominal case: flying shop + merchant', async function () {
-		PlayerTestData.merchant = true;
-		// Override this as necessary if you change PlayerTestData
-		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
-
-		await getItemsFromShop(req, res);
-
-		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
-
-		// Build the expected result, price discounted by 10%
-		const expectedListItems: Array<ItemFiche> = [];
-		shopList.FLYING_SHOP.listItemsSold.forEach(item => {
-			expectedListItems.push({
-				itemId: item.itemId,
-				price: item.price * 0.9,
-				quantity: 0,
-				maxQuantity: item.maxQuantity,
-				canBeUsedNow: item.canBeUsedNow,
-				canBeEquipped: item.canBeEquipped
-			} as ItemFiche);
-		});
-
-		expect(res.status).toHaveBeenCalledWith(200);
-		// Check all expected items with the relevant modified prices have been received
-		// If a price is wrong, this fails
-		expect(res.send).toHaveBeenCalledWith(expect.arrayContaining(expectedListItems));
-	});
-
-	// TODO: test all shops as they are created (list of items properly retrieved)
-	it('Nominal case: forges grand tout chaud shop', async function () {
-		// Change shopId to the corresponding one
-		req.params = {
-			shopId: shopList.FORGE_SHOP.shopId.toString()
-		};
-		// Add a dinoz that is at the location of the shop
-		PlayerTestData.dinoz.push(DinozAtForges);
-		// Override this as necessary if you change PlayerTestData
-		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
-
-		await getItemsFromShop(req, res);
+		let response: Array<ItemFiche> = [];
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			response = await getItemsFromShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
 
 		// Build the expected result
-		const expectedListItems: Array<ItemFiche> = [];
-		shopList.FORGE_SHOP.listItemsSold.forEach(item => {
-			expectedListItems.push({
-				itemId: item.itemId,
-				price: item.price,
+		const expectedListItems: Array<ItemFiche> = shopList.FLYING_SHOP.listItemsSold.map(itemShop => {
+			// Get the reference of the items from the constants
+			const itemReference: ItemFiche | undefined = Object.values(itemList).find(
+				item => item.itemId === itemShop.itemId
+			)!;
+			return {
+				itemId: itemReference.itemId!,
+				price: itemShop.price!,
 				quantity: 0,
-				maxQuantity: item.maxQuantity,
-				canBeUsedNow: item.canBeUsedNow,
-				canBeEquipped: item.canBeEquipped
-			} as ItemFiche);
+				maxQuantity: itemReference.maxQuantity * 1.5,
+				canBeUsedNow: itemReference.canBeUsedNow,
+				canBeEquipped: itemReference.canBeEquipped,
+				itemType: itemReference.itemType,
+				isRare: itemReference.isRare
+			};
 		});
-		expect(res.status).toHaveBeenCalledWith(200);
+
 		// Check all expected items from this shop have been received
-		expect(res.send).toHaveBeenCalledWith(expect.arrayContaining(expectedListItems));
+		expect(response).toStrictEqual(expectedListItems);
+	});
+
+	it('Nominal case: magic shop + shopkeeper, no increased capacity', async function () {
+		// Change shopId to the corresponding one
+		req.params.shopId = shopList.MAGIC_SHOP.shopId.toString();
+
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = placeList.DINOVILLE.placeId;
+		PlayerTestData.dinoz.push(DinozTestData);
+		PlayerTestData.shopKeeper = true;
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		let response: Array<ItemFiche> = [];
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			response = await getItemsFromShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
+
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
+
+		// Build the expected result
+		const expectedListItems: Array<ItemFiche> = shopList.MAGIC_SHOP.listItemsSold.map(itemShop => {
+			// Get the reference of the items from the constants
+			const itemReference: ItemFiche | undefined = Object.values(itemList).find(
+				item => item.itemId === itemShop.itemId
+			)!;
+			return {
+				itemId: itemReference.itemId!,
+				price: itemShop.price!,
+				quantity: 0,
+				maxQuantity: itemReference.maxQuantity,
+				canBeUsedNow: itemReference.canBeUsedNow,
+				canBeEquipped: itemReference.canBeEquipped,
+				itemType: itemReference.itemType,
+				isRare: itemReference.isRare
+			};
+		});
+
+		// Check all expected items from this shop have been received
+		expect(response).toStrictEqual(expectedListItems);
+	});
+
+	it('Nominal case: flying shop + merchant, discounted prices', async function () {
+		PlayerTestData.merchant = true;
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		let response: Array<ItemFiche> = [];
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			response = await getItemsFromShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
+
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
+
+		// Build the expected result
+		const expectedListItems: Array<ItemFiche> = shopList.FLYING_SHOP.listItemsSold.map(itemShop => {
+			// Get the reference of the items from the constants
+			const itemReference: ItemFiche | undefined = Object.values(itemList).find(
+				item => item.itemId === itemShop.itemId
+			)!;
+			return {
+				itemId: itemReference.itemId,
+				price: itemShop.price! * 0.9,
+				quantity: 0,
+				maxQuantity: itemReference.maxQuantity,
+				canBeUsedNow: itemReference.canBeUsedNow,
+				canBeEquipped: itemReference.canBeEquipped,
+				itemType: itemReference.itemType,
+				isRare: itemReference.isRare
+			};
+		});
+
+		// Check all expected items from this shop have been received
+		expect(response).toStrictEqual(expectedListItems);
+	});
+
+	it('Nominal case: non-flying shop + merchant, no price change', async function () {
+		// Change shopId to the corresponding one
+		req.params.shopId = shopList.FORGE_SHOP.shopId.toString();
+
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = placeList.FORGES_DU_GTC.placeId;
+		PlayerTestData.dinoz.push(DinozTestData);
+		PlayerTestData.merchant = true;
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		let response: Array<ItemFiche> = [];
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			response = await getItemsFromShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
+
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
+
+		// Build the expected result
+		const expectedListItems: Array<ItemFiche> = shopList.FORGE_SHOP.listItemsSold.map(itemShop => {
+			// Get the reference of the items from the constants
+			const itemReference: ItemFiche | undefined = Object.values(itemList).find(
+				item => item.itemId === itemShop.itemId
+			)!;
+			return {
+				itemId: itemReference.itemId!,
+				price: itemShop.price!,
+				quantity: 0,
+				maxQuantity: itemReference.maxQuantity,
+				canBeUsedNow: itemReference.canBeUsedNow,
+				canBeEquipped: itemReference.canBeEquipped,
+				itemType: itemReference.itemType,
+				isRare: itemReference.isRare
+			};
+		});
+
+		// Check all expected items from this shop have been received
+		expect(response).toStrictEqual(expectedListItems);
+	});
+
+	it.each(Object.values(shopList))('Nominal case - test all shops: getAllItems from Shop %#', async shopToTest => {
+		// Change shopId to the corresponding one
+		req.params.shopId = shopToTest.shopId.toString();
+
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = shopToTest.placeId;
+		// In case of testing the cursed shop, the dinoz also needs to be cursed
+		if (shopToTest.type === ShopType.CURSED) {
+			DinozTestData.status.push({
+				statusId: statusList.CURSED
+			} as AssDinozStatus);
+		}
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		let response: Array<ItemFiche> = [];
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			response = await getItemsFromShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
+
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
+
+		// Build the expected result
+		const expectedListItems: Array<ItemFiche> = shopToTest.listItemsSold.map(itemShop => {
+			// Get the reference of the items from the constants
+			const itemReference: ItemFiche | undefined = Object.values(itemList).find(
+				item => item.itemId === itemShop.itemId
+			)!;
+			return {
+				itemId: itemReference.itemId!,
+				price: itemShop.price!,
+				quantity: 0,
+				maxQuantity: itemReference.maxQuantity,
+				canBeUsedNow: itemReference.canBeUsedNow,
+				canBeEquipped: itemReference.canBeEquipped,
+				itemType: itemReference.itemType,
+				isRare: itemReference.isRare
+			};
+		});
+
+		// Check all expected items from this shop have been received
+		expect(response).toStrictEqual(expectedListItems);
 	});
 });
 
@@ -202,20 +348,14 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
  */
 describe('itemShopService: Test error cases of getItemsFromShop()', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
-
-		// Mock express-validator
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
 
 		// Repopulate PlayerTestData before each test to start with clean player data
 		PlayerTestData = cloneDeep(PlayerData);
+		DinozTestData = cloneDeep(DinozData);
 
 		// Default query test parameters
 		req.params = {
@@ -231,10 +371,13 @@ describe('itemShopService: Test error cases of getItemsFromShop()', function () 
 			shopId: shop.id_negative_1.toString()
 		};
 
-		await getItemsFromShop(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`The shop ${shop.id_negative_1} does not exist`);
+		try {
+			await getItemsFromShop(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`The shop ${shop.id_negative_1.toString()} does not exist`);
+		}
 	});
 
 	it('Error case: letter shopId', async function () {
@@ -242,10 +385,13 @@ describe('itemShopService: Test error cases of getItemsFromShop()', function () 
 			shopId: shop.id_letter_1.toString()
 		};
 
-		await getItemsFromShop(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`The shop NaN does not exist`);
+		try {
+			await getItemsFromShop(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`The shop NaN does not exist`);
+		}
 	});
 
 	it('Error case: non-existant shopId (i.e too big)', async function () {
@@ -253,10 +399,13 @@ describe('itemShopService: Test error cases of getItemsFromShop()', function () 
 			shopId: shop.id_nonexistant_1.toString()
 		};
 
-		await getItemsFromShop(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`The shop ${shop.id_nonexistant_1} does not exist`);
+		try {
+			await getItemsFromShop(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`The shop ${shop.id_nonexistant_1} does not exist`);
+		}
 	});
 
 	it('Error case: no player found', async function () {
@@ -269,35 +418,92 @@ describe('itemShopService: Test error cases of getItemsFromShop()', function () 
 
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(null);
 
-		await getItemsFromShop(req, res);
+		try {
+			await getItemsFromShop(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`Player ${player.id_1} doesn't exist`);
+		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exist`);
 	});
 
-	it('Error case: no dinoz at location of Forges Grand Tout Chaud', async function () {
+	it.each(Object.values(shopList))('Error case - test all shops: getAllItems from Shop %#', async shopToTest => {
 		req.params = {
-			shopId: shopList.FORGE_SHOP.shopId.toString()
+			shopId: shopToTest.shopId.toString()
 		};
 
-		await getItemsFromShop(req, res);
+		try {
+			await getItemsFromShop(req);
+			// Skip test for flying shop
+			if (shopToTest.shopId !== shopList.FLYING_SHOP.shopId) {
+				fail();
+			}
+		} catch (err) {
+			const e: Error = err as Error;
+			// Expected message is different for the cursed shop
+			if (shopToTest.type === ShopType.CURSED) {
+				expect(e.message).toBe(`You need a cursed dinoz at the location of the shop to access it`);
+			} else {
+				expect(e.message).toBe(`You don't have any dinoz at the shop's location ${shopToTest.shopId}`);
+			}
+		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`You cannot access the shop ${shopList.FORGE_SHOP.shopId}`);
 	});
 
-	it('Error case: bad request', async function () {
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
+	// Corner case of the cursed shop
+	it('Error case: dinoz at Ashpouk Ruins is not cursed and cannot access Cursed Shop', async function () {
+		req.params = {
+			shopId: shopList.CURSED_SHOP.shopId.toString()
+		};
 
-		await getItemsFromShop(req, res);
+		// Add a dinoz that is at the location of the shop and cursed
+		DinozTestData.placeId = placeList.RUINES_ASHPOUK.placeId;
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		expect(res.status).toHaveBeenCalledWith(400);
+		try {
+			await getItemsFromShop(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You need a cursed dinoz at the location of the shop to access it`);
+		}
+
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
+	});
+
+	// Corner case of the cursed shop
+	it('Error case: cursed dinoz but not at Ashpouk Ruins and cannot access Cursed Shop', async function () {
+		req.params = {
+			shopId: shopList.CURSED_SHOP.shopId.toString()
+		};
+
+		// Add a dinoz that is at the location of the shop and cursed
+		DinozTestData.placeId = placeList.DINOVILLE.placeId;
+		DinozTestData.status.push({
+			statusId: statusList.CURSED
+		} as AssDinozStatus);
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		try {
+			await getItemsFromShop(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You need a cursed dinoz at the location of the shop to access it`);
+		}
+
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
 	});
 });
 
@@ -306,21 +512,14 @@ describe('itemShopService: Test error cases of getItemsFromShop()', function () 
  */
 describe('itemShopService: Test nominal cases of buyItem()', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
-
-		// Mock express-validator
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
 
 		// Repopulate PlayerTestData before each test to start with clean player data
 		PlayerTestData = cloneDeep(PlayerData);
-		ItemTestData = cloneDeep(BasicItem);
+		DinozTestData = cloneDeep(DinozData);
 
 		// Default query test parameters
 		req.params = {
@@ -358,7 +557,14 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
@@ -370,8 +576,6 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
 		// I don't understand this check
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
-
-		expect(res.status).toHaveBeenCalledWith(200);
 	});
 
 	it('Nominal case: flying shop, player has already some of the item', async function () {
@@ -396,7 +600,14 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await buyItem(req, res);
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
@@ -411,8 +622,57 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 			itemPurchased.itemId,
 			expectedQuantity
 		);
+	});
 
-		expect(res.status).toHaveBeenCalledWith(200);
+	it('Nominal case: magic shop, player has already some of the item', async function () {
+		const itemPurchased = shopList.MAGIC_SHOP.listItemsSold.find(
+			item => item.itemId === itemList.TEAR_OF_LIFE.itemId
+		) as ItemFiche;
+		const quantity: number = 1;
+		const expectedQuantity: number = quantity + playerMagicShopInventory[0].quantity;
+		const expectedNapo: number = 999 - quantity * itemPurchased.price;
+
+		// Change parameters
+		req.params = {
+			shopId: shopList.MAGIC_SHOP.shopId.toString()
+		};
+		req.body = {
+			itemId: itemList.TEAR_OF_LIFE.itemId.toString(),
+			quantity: quantity.toString()
+		};
+
+		// Add some item to the player test data
+		PlayerTestData.itemOwn = playerMagicShopInventory;
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = placeList.DINOVILLE.placeId;
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
+
+		expect(PlayerDao.setPlayerMoneyRequest).not.toHaveBeenCalled();
+		expect(InventoryDao.createItemDataRequest).not.toHaveBeenCalled();
+		expect(InventoryDao.updateItemDataRequest).toHaveBeenCalledTimes(2);
+		expect(InventoryDao.updateItemDataRequest).toHaveBeenNthCalledWith(
+			1,
+			player.id_1,
+			itemList.GOLDEN_NAPODINO.itemId,
+			expectedNapo
+		);
+		expect(InventoryDao.updateItemDataRequest).toHaveBeenNthCalledWith(
+			2,
+			PlayerTestData.playerId,
+			itemPurchased.itemId,
+			expectedQuantity
+		);
 	});
 
 	it('Nominal case: flying shop, player has no item and merchant', async function () {
@@ -430,14 +690,21 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 			quantity: quantity.toString()
 		};
 
-		// Add some item to the player test data, just enough money to buy because he has merchant
+		// Add some money to the player test data, just enough money to buy because he has merchant
 		PlayerTestData.merchant = true;
 		PlayerTestData.money = quantity * itemPurchased.price * 0.9 + 1;
 		const expectedMoney: number = PlayerTestData.money - quantity * itemPurchased.price * 0.9;
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await buyItem(req, res);
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
@@ -449,8 +716,52 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
 		// I don't understand this check
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
+	});
 
-		expect(res.status).toHaveBeenCalledWith(200);
+	it('Nominal case: non-flying shop, player has no item and merchant', async function () {
+		const itemPurchased = shopList.FORGE_SHOP.listItemsSold.find(
+			item => item.itemId === itemList.REFRIGERATED_SHIELD.itemId
+		) as ItemFiche;
+		const quantity: number = 8;
+
+		// Change parameters
+		req.params = {
+			shopId: shopList.FORGE_SHOP.shopId.toString()
+		};
+		req.body = {
+			itemId: itemList.REFRIGERATED_SHIELD.itemId.toString(),
+			quantity: quantity.toString()
+		};
+
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = shopList.FORGE_SHOP.placeId;
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Add some money to the player test data, just enough money to buy
+		PlayerTestData.merchant = true;
+		PlayerTestData.money = quantity * itemPurchased.price + 1;
+		const expectedMoney: number = PlayerTestData.money - quantity * itemPurchased.price;
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
+
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
+
+		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(player.id_1, expectedMoney);
+
+		expect(InventoryDao.updateItemDataRequest).not.toHaveBeenCalled();
+		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
+		// I don't understand this check
+		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
 	});
 
 	it('Nominal case: flying shop, player has no item and shopkeeper', async function () {
@@ -475,7 +786,14 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await buyItem(req, res);
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
@@ -487,45 +805,78 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
 		// I don't understand this check
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
-
-		expect(res.status).toHaveBeenCalledWith(200);
 	});
 
-	it('Nominal case: forges grand tout chaud', async function () {
-		const itemPurchased = shopList.FORGE_SHOP.listItemsSold.find(
-			item => item.itemId === itemList.GLOBIN_MERGUEZ.itemId
-		) as ItemFiche;
-		const quantity: number = 2;
-		const expectedMoney: number = PlayerTestData.money - quantity * itemPurchased.price;
+	it.each(Object.values(shopList))('Nominal case - test all shops: buyItem from Shop %#', async shopToTest => {
+		// Update test data first
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = shopToTest.placeId;
+		// In case of testing the cursed shop, the dinoz also needs to be cursed
+		if (shopToTest.type === ShopType.CURSED) {
+			DinozTestData.status.push({
+				statusId: statusList.CURSED
+			} as AssDinozStatus);
+		}
+		// In case of the magicShop, the player needs golden napodinoz
+		if (shopToTest.type === ShopType.MAGICAL) {
+			PlayerTestData.itemOwn = [
+				{
+					itemId: itemList.GOLDEN_NAPODINO.itemId,
+					quantity: 999
+				}
+			] as Array<ItemOwn>;
+		}
+		PlayerTestData.dinoz.push(DinozTestData);
+		PlayerTestData.money = 500000;
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		// Change parameters
+		const quantity: number = 1;
+		// Get a random item from the shop list
+		const randomNumber: number = getRandomNumber(0, shopToTest.listItemsSold.length - 1);
+		const randomItemPurchased: Partial<ItemFiche> = shopToTest.listItemsSold[randomNumber];
+		const expectedMoney: number = PlayerTestData.money - quantity * randomItemPurchased.price!;
+		const expectedNapo: number = 999 - quantity * randomItemPurchased.price!;
+
+		// Update parameters
 		req.params = {
-			shopId: shopList.FORGE_SHOP.shopId.toString()
+			shopId: shopToTest.shopId.toString()
 		};
 		req.body = {
-			itemId: itemList.GLOBIN_MERGUEZ.itemId.toString(),
+			itemId: randomItemPurchased.itemId!,
 			quantity: quantity.toString()
 		};
 
-		// Add a dinoz that is at the location of the shop
-		PlayerTestData.dinoz.push(DinozAtForges);
-		// Override this as necessary if you change PlayerTestData
-		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
-
-		await buyItem(req, res);
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, randomItemPurchased.itemId);
 
-		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(player.id_1, expectedMoney);
+		// For a magical shop we expect the number of golden napodinoz to change instead of the money
+		if (shopToTest.type === ShopType.MAGICAL) {
+			expect(PlayerDao.setPlayerMoneyRequest).not.toHaveBeenCalled();
+			expect(InventoryDao.updateItemDataRequest).toHaveBeenCalledTimes(1);
+			expect(InventoryDao.updateItemDataRequest).toHaveBeenCalledWith(
+				player.id_1,
+				itemList.GOLDEN_NAPODINO.itemId,
+				expectedNapo
+			);
+		} else {
+			expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(1);
+			expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledWith(player.id_1, expectedMoney);
+			expect(InventoryDao.updateItemDataRequest).not.toHaveBeenCalled();
+		}
 
-		expect(InventoryDao.updateItemDataRequest).not.toHaveBeenCalled();
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
 		// I don't understand this check
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
-
-		expect(res.status).toHaveBeenCalledWith(200);
 	});
 });
 
@@ -534,21 +885,14 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
  */
 describe('itemShopService: Test error cases of buyItem()', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
-
-		// Mock express-validator
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
 
 		// Repopulate PlayerTestData before each test to start with clean player data
 		PlayerTestData = cloneDeep(PlayerData);
-		ItemTestData = cloneDeep(BasicItem);
+		DinozTestData = cloneDeep(DinozData);
 
 		// Default query test parameters
 		req.params = {
@@ -582,10 +926,13 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Invalid quantity of items ${quantity}`);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`Invalid quantity of items ${quantity}`);
+		}
 	});
 
 	it('Error case: invalid quantity, negative number', async function () {
@@ -600,28 +947,32 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Invalid quantity of items ${quantity}`);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`Invalid quantity of items ${quantity}`);
+		}
 	});
 
 	it('Error case: negative shopId', async function () {
 		const quantity: number = 1;
 
 		// Change parameters
-		req.params = {
-			shopId: shop.id_negative_1.toString()
-		};
+		req.params.shopId = shop.id_negative_1.toString();
 		req.body = {
 			itemId: itemList.POTION_IRMA.itemId.toString(),
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`The shop ${shop.id_negative_1} does not exist`);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`The shop ${shop.id_negative_1} does not exist`);
+		}
 	});
 
 	it('Error case: non-existant shopId', async function () {
@@ -636,10 +987,13 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`The shop ${shop.id_nonexistant_1} does not exist`);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`The shop ${shop.id_nonexistant_1} does not exist`);
+		}
 	});
 
 	it('Error case: letter shopId', async function () {
@@ -654,67 +1008,74 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`The shop NaN does not exist`);
+		}
 	});
 
 	it('Error case: negative itemId', async function () {
 		const quantity: number = 1;
 
 		// Change parameters
-		req.params = {
-			shopId: shopList.FLYING_SHOP.shopId.toString()
-		};
+		req.params.shopId = shopList.FLYING_SHOP.shopId.toString();
 		req.body = {
 			itemId: item.id_negative_1.toString(),
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`The item ${item.id_negative_1} does not exist in the shop ${shopList.FLYING_SHOP.shopId}`
-		);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(
+				`The item ${item.id_negative_1} does not exist in the shop ${shopList.FLYING_SHOP.shopId}`
+			);
+		}
 	});
 
 	it('Error case: letter itemId', async function () {
 		const quantity: number = 1;
 
 		// Change parameters
-		req.params = {
-			shopId: shopList.FLYING_SHOP.shopId.toString()
-		};
+		req.params.shopId = shopList.FLYING_SHOP.shopId.toString();
 		req.body = {
 			itemId: item.id_letter_1.toString(),
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`The item NaN does not exist in the shop ${shopList.FLYING_SHOP.shopId}`);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`The item NaN does not exist in the shop ${shopList.FLYING_SHOP.shopId}`);
+		}
 	});
 
 	it('Error case: non-existant itemId', async function () {
 		const quantity: number = 1;
 
 		// Change parameters
-		req.params = {
-			shopId: shopList.FLYING_SHOP.shopId.toString()
-		};
+		req.params.shopId = shopList.FLYING_SHOP.shopId.toString();
 		req.body = {
 			itemId: item.id_nonexistant_1.toString(),
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`The item ${item.id_nonexistant_1} does not exist in the shop ${shopList.FLYING_SHOP.shopId}`
-		);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(
+				`The item ${item.id_nonexistant_1} does not exist in the shop ${shopList.FLYING_SHOP.shopId}`
+			);
+		}
 	});
 
 	it('Error case: no player found', async function () {
@@ -724,9 +1085,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		const quantity: number = 1;
 
 		// Change parameters
-		req.params = {
-			shopId: shopList.FLYING_SHOP.shopId.toString()
-		};
+		req.params.shopId = shopList.FLYING_SHOP.shopId.toString();
 		req.body = {
 			itemId: itemList.POTION_IRMA.itemId.toString(),
 			quantity: quantity.toString()
@@ -735,13 +1094,16 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(null);
 
-		await buyItem(req, res);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`Player ${player.id_1} doesn't exist`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exist`);
 	});
 
 	it('Error case: not enough money', async function () {
@@ -751,9 +1113,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		const quantity: number = 1;
 
 		// Change parameters
-		req.params = {
-			shopId: shopList.FLYING_SHOP.shopId.toString()
-		};
+		req.params.shopId = shopList.FLYING_SHOP.shopId.toString();
 		req.body = {
 			itemId: itemList.POTION_IRMA.itemId.toString(),
 			quantity: quantity.toString()
@@ -764,15 +1124,16 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await buyItem(req, res);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You don't have enough money to buy ${quantity} of the item ${itemPurchased.itemId}`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`You don't have enough money to buy ${quantity} of the item ${itemPurchased.itemId}`
-		);
 	});
 
 	it('Error case: not enough storage available', async function () {
@@ -782,9 +1143,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		const quantity: number = itemList.POTION_IRMA.maxQuantity + 1;
 
 		// Change parameters
-		req.params = {
-			shopId: shopList.FLYING_SHOP.shopId.toString()
-		};
+		req.params.shopId = shopList.FLYING_SHOP.shopId.toString();
 		req.body = {
 			itemId: itemList.POTION_IRMA.itemId.toString(),
 			quantity: quantity.toString()
@@ -795,48 +1154,252 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await buyItem(req, res);
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You don't have enough storage to buy ${quantity} of the item ${itemPurchased.itemId}`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(
-			`You don't have enough storage to buy ${quantity} of the item ${itemPurchased.itemId}`
-		);
 	});
 
-	it('Error case: no dinoz at location of Forges Grand Tout Chaud', async function () {
-		const itemPurchased = shopList.FORGE_SHOP.listItemsSold.find(
-			item => item.itemId === itemList.GLOBIN_MERGUEZ.itemId
+	it('Error case: magic shop & shop keeper, no increased max capcity', async function () {
+		const itemPurchased = shopList.MAGIC_SHOP.listItemsSold.find(
+			item => item.itemId === itemList.TEAR_OF_LIFE.itemId
+		) as ItemFiche;
+		const quantity: number = 5;
+		const expectedQuantity: number = quantity + playerMagicShopInventory[0].quantity;
+		const expectedNapo: number = 999 - quantity * itemPurchased.price;
+
+		// Change parameters
+		req.params = {
+			shopId: shopList.MAGIC_SHOP.shopId.toString()
+		};
+		req.body = {
+			itemId: itemList.TEAR_OF_LIFE.itemId.toString(),
+			quantity: quantity.toString()
+		};
+
+		// Add some item to the player test data
+		PlayerTestData.itemOwn = playerMagicShopInventory;
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = placeList.DINOVILLE.placeId;
+		PlayerTestData.dinoz.push(DinozTestData);
+		PlayerTestData.shopKeeper = true;
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You don't have enough storage to buy ${quantity} of the item ${itemPurchased.itemId}`);
+		}
+
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
+	});
+
+	it.each(Object.values(shopList))('Error case - test all shops access: buyItem from Shop %#', async shopToTest => {
+		// Update test data first
+		// In case of the magicShop, the player needs golden napodinoz
+		if (shopToTest.type === ShopType.MAGICAL) {
+			PlayerTestData.itemOwn = [
+				{
+					itemId: itemList.GOLDEN_NAPODINO.itemId,
+					quantity: 999
+				}
+			] as Array<ItemOwn>;
+		}
+		PlayerTestData.money = 500000;
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		const quantity: number = 1;
+		const itemPurchased: Partial<ItemFiche> = shopToTest.listItemsSold[0];
+
+		// Update parameters
+		req.params = {
+			shopId: shopToTest.shopId.toString()
+		};
+		req.body = {
+			itemId: itemPurchased.itemId!,
+			quantity: quantity.toString()
+		};
+
+		// We need to put the test in a try/catch in case an error is returned for better debugging
+		try {
+			await buyItem(req);
+			// Fails for all except the flying shop
+			if (shopToTest.shopId !== shopList.FLYING_SHOP.shopId) {
+				fail();
+			}
+		} catch (err) {
+			const e: Error = err as Error;
+			if (shopToTest.type === ShopType.CURSED) {
+				expect(e.message).toBe(`You need a cursed dinoz at the location of the shop to access it`);
+			} else {
+				expect(e.message).toBe(`You don't have any dinoz at the shop's location ${shopToTest.shopId}`);
+			}
+		}
+
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
+	});
+
+	// Corner case of the cursed shop
+	it('Error case: dinoz at location of cursed shop but not cursed', async function () {
+		const itemPurchased = shopList.CURSED_SHOP.listItemsSold.find(
+			item => item.itemId === itemList.PIRHANOZ_IN_BAG.itemId
 		) as ItemFiche;
 		const quantity: number = 2;
 
 		// Change parameters
 		req.params = {
-			shopId: shopList.FORGE_SHOP.shopId.toString()
+			shopId: shopList.CURSED_SHOP.shopId.toString()
 		};
 		req.body = {
-			itemId: itemList.GLOBIN_MERGUEZ.itemId.toString(),
+			itemId: itemList.PIRHANOZ_IN_BAG.itemId.toString(),
 			quantity: quantity.toString()
 		};
 
-		await buyItem(req, res);
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = placeList.RUINES_ASHPOUK.placeId;
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You need a cursed dinoz at the location of the shop to access it`);
+		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`You cannot access the shop ${shopList.FORGE_SHOP.shopId}`);
 	});
 
-	it('Error case: bad request', async function () {
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
+	// Corner case of the cursed shop
+	it('Error case: dinoz cursed but not at location of cursed shop', async function () {
+		const itemPurchased = shopList.CURSED_SHOP.listItemsSold.find(
+			item => item.itemId === itemList.PIRHANOZ_IN_BAG.itemId
+		) as ItemFiche;
+		const quantity: number = 2;
 
-		await buyItem(req, res);
+		// Change parameters
+		req.params = {
+			shopId: shopList.CURSED_SHOP.shopId.toString()
+		};
+		req.body = {
+			itemId: itemList.PIRHANOZ_IN_BAG.itemId.toString(),
+			quantity: quantity.toString()
+		};
 
-		expect(res.status).toHaveBeenCalledWith(400);
+		// Add a dinoz that is cursed but not at the location of the shop
+		DinozTestData.status.push({
+			statusId: statusList.CURSED
+		} as AssDinozStatus);
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You need a cursed dinoz at the location of the shop to access it`);
+		}
+
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
+	});
+
+	it('Error case shops: magic shop, not enough golden napo', async function () {
+		// Update test data first
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = shopList.MAGIC_SHOP.placeId;
+
+		const quantityToBuy: number = 1;
+		const napoQuantity: number = 3;
+
+		// Give the player not enough napodinoz
+		PlayerTestData.itemOwn = [
+			{
+				itemId: itemList.GOLDEN_NAPODINO.itemId,
+				quantity: napoQuantity - 1
+			}
+		] as Array<ItemOwn>;
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		// Update parameters
+		req.params = {
+			shopId: shopList.MAGIC_SHOP.shopId.toString()
+		};
+		req.body = {
+			itemId: itemList.TEAR_OF_LIFE.itemId.toString(),
+			quantity: quantityToBuy.toString()
+		};
+
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`You don't have enough golden napodinoz to buy the item ${itemList.TEAR_OF_LIFE.itemId}`);
+		}
+
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemList.TEAR_OF_LIFE.itemId);
+	});
+
+	it('Error case shops: magic shop, not enough storage', async function () {
+		// Update test data first
+		// Add a dinoz that is at the location of the shop
+		DinozTestData.placeId = shopList.MAGIC_SHOP.placeId;
+
+		const quantityToBuy: number = 5;
+		const napoQuantity: number = 999;
+
+		// Give the player enough napodinoz
+		PlayerTestData.itemOwn = [
+			{
+				itemId: itemList.GOLDEN_NAPODINO.itemId,
+				quantity: napoQuantity
+			}
+		] as Array<ItemOwn>;
+		PlayerTestData.dinoz.push(DinozTestData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		// Update parameters
+		req.params = {
+			shopId: shopList.MAGIC_SHOP.shopId.toString()
+		};
+		req.body = {
+			itemId: itemList.TEAR_OF_LIFE.itemId.toString(),
+			quantity: quantityToBuy.toString()
+		};
+
+		try {
+			await buyItem(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(
+				`You don't have enough storage to buy ${quantityToBuy} of the item ${itemList.TEAR_OF_LIFE.itemId}`
+			);
+		}
+
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemList.TEAR_OF_LIFE.itemId);
 	});
 });

@@ -1,33 +1,27 @@
-import { Request, Response } from 'express';
-import { ShopFiche, ItemFiche, Player, ItemOwn } from '../models/index.js';
+import { Request } from 'express';
+import { ShopType, ItemFiche, ShopFiche, Player, ItemOwn, ItemType } from '../models/index.js';
 import { createItemDataRequest, updateItemDataRequest } from '../dao/inventoryDao.js';
 import {
 	getPlayerShopItemsDataRequest,
 	getPlayerShopOneItemDataRequest,
 	setPlayerMoneyRequest
 } from '../dao/playerDao.js';
-import { shopList } from '../constants/shop.js';
-import { placeList } from '../constants/place.js';
-import { validationResult } from 'express-validator';
+import { shopList, itemList, placeList, statusList } from '../constants/index.js';
 
 /**
  * @summary Get all items from a shop
  * @param req
  * @param req.params.shopId {string} ShopId
- * @param res {Array<ItemFiche>}
  * @return Array<ItemFiche>
  */
-const getItemsFromShop = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
 	const playerId: number = req.user!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
-	const tempShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId)!;
+	const tempShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId);
 
 	// Throw an exception if the shop does not exist
 	if (tempShop === undefined) {
-		return res.status(500).send(`The shop ${shopId} does not exist`);
+		throw new Error(`The shop ${shopId} does not exist`);
 	}
 
 	// Get the player's data (money, shopkeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
@@ -35,36 +29,41 @@ const getItemsFromShop = async (req: Request, res: Response): Promise<Response> 
 
 	// Throw an exception if the player does not exist
 	if (playerShopData === null) {
-		return res.status(500).send(`Player ${playerId} doesn't exist`);
+		throw new Error(`Player ${playerId} doesn't exist`);
 	}
 
-	// The check is done for the shops that are not accessible from anywhere (i.e does not apply to the flying shop)
-	if (tempShop.placeId !== placeList.ANYWHERE.placeId) {
-		// Check at least one dinoz that is not frozen or sacrificed is at the location of the shop
-		if (!playerShopData.dinoz.some(dinoz => dinoz.placeId === tempShop.placeId)) {
-			return res.status(500).send(`You cannot access the shop ${shopId}`);
-		}
-	}
+	checkDinozPlace(tempShop, playerShopData, shopId);
 
 	// All checks passed, let's create the list of items with the proper values
-	const listItems: Array<ItemFiche> = [];
-	tempShop.listItemsSold.forEach(item => {
+	const listItems: Array<ItemFiche> = tempShop.listItemsSold.map(itemSold => {
 		// Get the item data if the player has it
-		const playerHasItem: ItemOwn | undefined = playerShopData.itemOwn.find(
-			playerItem => playerItem.itemId === item.itemId
+		const itemPlayer: ItemOwn | undefined = playerShopData.itemOwn.find(
+			playerItem => playerItem.itemId === itemSold.itemId
 		);
-		// Push a new item object with its properties accordingly to the player's unique skills and data
-		listItems.push({
-			itemId: item.itemId,
-			price: playerShopData?.merchant ? Math.round(item.price * 0.9) : item.price,
-			quantity: playerHasItem ? playerHasItem.quantity : 0,
-			maxQuantity: playerShopData?.shopKeeper ? Math.round(item.maxQuantity * 1.5) : item.maxQuantity,
-			canBeUsedNow: item.canBeUsedNow,
-			canBeEquipped: item.canBeEquipped
-		} as ItemFiche);
+		// Get the reference of the items from the constants
+		const itemReference: ItemFiche = Object.values(itemList).find(item => item.itemId === itemSold.itemId)!;
+		// Return a new item object with its properties set accordingly to the player's unique skills and data
+		return {
+			itemId: itemReference.itemId,
+			// Merchant works only for the flying shop also called Dinoland's shop
+			price:
+				playerShopData.merchant && tempShop.shopId === shopList.FLYING_SHOP.shopId
+					? Math.round(itemSold.price! * 0.9)
+					: itemSold.price!,
+			quantity: itemPlayer ? itemPlayer.quantity : 0,
+			// ShopKeeper does not work for magical items
+			maxQuantity:
+				playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
+					? Math.round(itemReference.maxQuantity * 1.5)
+					: itemReference.maxQuantity,
+			canBeUsedNow: itemReference.canBeUsedNow,
+			canBeEquipped: itemReference.canBeEquipped,
+			itemType: itemReference.itemType,
+			isRare: itemReference.isRare
+		};
 	});
 
-	return res.status(200).send(listItems);
+	return listItems;
 };
 
 /**
@@ -73,88 +72,96 @@ const getItemsFromShop = async (req: Request, res: Response): Promise<Response> 
  * @param req.params.shopId {string} ShopId
  * @param req.body.itemId {string} Item to buy
  * @param req.body.quantity {string} Quantity to buy
- * @param res
  * @return void
  */
-const buyItem = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
+const buyItem = async (req: Request): Promise<void> => {
 	const playerId: number = req.user!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
 	const itemId: number = parseInt(req.body.itemId);
 	const quantityBought: number = parseInt(req.body.quantity);
 
-	// Checking all variables first before calling DB
-
-	// Throw an exception if somehow we have a negative or zero quantity
-	if (quantityBought <= 0) {
-		return res.status(500).send(`Invalid quantity of items ${quantityBought}`);
-	}
-
-	const theShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId)!;
-	// Throw an exception if the shop does not exist
-	if (theShop === undefined) {
-		return res.status(500).send(`The shop ${shopId} does not exist`);
-	}
-
-	const theItem: ItemFiche | undefined = theShop.listItemsSold.find(item => item.itemId === itemId)!;
-	// Throw an exception if the item does not exist in the shop list of items
-	if (theItem === undefined) {
-		return res.status(500).send(`The item ${itemId} does not exist in the shop ${shopId}`);
-	}
-
-	// Get the player's data (money, shopkeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
+	// Get the player's data (money, shopkeeper, list of dinoz not frozen and not sacrificed (placeId),
+	// the info about the item, and owned golden napodinos)
 	const playerShopData: Player | null = await getPlayerShopOneItemDataRequest(playerId, itemId);
 
 	// Throw an exception if the player does not exist
 	if (playerShopData === null) {
-		return res.status(500).send(`Player ${playerId} doesn't exist`);
+		throw new Error(`Player ${playerId} doesn't exist`);
 	}
 
 	// Extract item data from player
-	const playerItemData = playerShopData.itemOwn.find(item => item.itemId === itemId) as ItemFiche | undefined;
+	const playerItemData: ItemOwn | undefined = playerShopData.itemOwn.find(item => item.itemId === itemId);
 
-	// Create the item that will be purchased (id, price, quantity, maxQQuantity)
+	// Throw an exception if somehow we have a negative or zero quantity
+	if (quantityBought <= 0) {
+		throw new Error(`Invalid quantity of items ${quantityBought}`);
+	}
+
+	const theShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId);
+	// Throw an exception if the shop does not exist
+	if (!theShop) {
+		throw new Error(`The shop ${shopId} does not exist`);
+	}
+
+	checkDinozPlace(theShop, playerShopData, shopId);
+
+	// Get the item from the shop list
+	const itemSold: Partial<ItemFiche> | undefined = theShop.listItemsSold.find(item => item.itemId === itemId)!;
+	// Throw an exception if the item does not exist in the shop list of items
+	if (itemSold === undefined) {
+		throw new Error(`The item ${itemId} does not exist in the shop ${shopId}`);
+	}
+
+	// All checks passed, now do the checks specific to normal and magic items
+
+	// Get the reference of the item from the constants
+	const itemReference: ItemFiche = Object.values(itemList).find(item => item.itemId === itemId)!;
+
+	// Create the item that will be purchased (id, price, quantity, maxQuantity)
 	// Update its properties accordingly to the player's unique skills and data
-	const itemToBuy = {
-		itemId: theItem.itemId,
-		price: playerShopData.merchant ? Math.round(theItem.price * 0.9) : theItem.price,
+	const itemToBuy: Partial<ItemFiche> = {
+		itemId: itemReference.itemId,
+		// Merchant works only for the flying shop also called Dinoland's shop
+		price:
+			playerShopData.merchant && theShop.shopId === shopList.FLYING_SHOP.shopId
+				? Math.round(itemSold.price! * 0.9)
+				: itemSold.price!,
 		quantity: playerItemData ? quantityBought + playerItemData.quantity! : quantityBought,
-		maxQuantity: playerShopData.shopKeeper ? Math.round(theItem.maxQuantity * 1.5) : theItem.maxQuantity
-	} as ItemFiche;
+		// ShopKeeper does not work for magical items
+		maxQuantity:
+			playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
+				? Math.round(itemReference.maxQuantity * 1.5)
+				: itemReference.maxQuantity
+	};
 
-	// Throws an exception if player doesn't have enough money to buy the items
-	if (playerShopData.money < itemToBuy.price * quantityBought) {
-		return res.status(500).send(`You don't have enough money to buy ${quantityBought} of the item ${itemToBuy.itemId}`);
-	}
-
-	// Throws an exception if the player does not have enough storage space left
-	if (itemToBuy.quantity! > itemToBuy.maxQuantity) {
-		return res
-			.status(500)
-			.send(`You don't have enough storage to buy ${itemToBuy.quantity} of the item ${itemToBuy.itemId}`);
-	}
-
-	// The check is done for the shops that are not accessible from anywhere (i.e does not apply to the flying shop)
-	if (theShop.placeId !== placeList.ANYWHERE.placeId) {
-		// Check at least one dinoz that is not frozen or sacrificed is at the location of the shop
-		if (!playerShopData.dinoz.some(dinoz => dinoz.placeId === theShop.placeId)) {
-			return res.status(500).send(`You cannot access the shop ${shopId}`);
+	// To avoid making this function bigger, use buyMagicItem if the shop is magical
+	if (theShop.type === ShopType.MAGICAL) {
+		await buyMagicItem(playerShopData, itemSold, itemReference, quantityBought, playerItemData);
+	} else {
+		// Throws an exception if player doesn't have enough money to buy the items
+		if (playerShopData.money < itemToBuy.price! * quantityBought) {
+			throw new Error(`You don't have enough money to buy ${quantityBought} of the item ${itemToBuy.itemId}`);
 		}
+
+		// Throws an exception if the player does not have enough storage space left
+		if (itemToBuy.quantity! > itemToBuy.maxQuantity!) {
+			throw new Error(`You don't have enough storage to buy ${itemToBuy.quantity} of the item ${itemToBuy.itemId}`);
+		}
+
+		// All checks passed related to gold, let's update the stuff
+
+		// Set player money
+		const newMoney: number = playerShopData.money - itemToBuy.price! * quantityBought;
+		await setPlayerMoneyRequest(playerId, newMoney);
 	}
 
-	// All checks passed, let's update the stuff
-
-	// Set player money
-	const newMoney: number = playerShopData.money - itemToBuy.price * quantityBought;
-	await setPlayerMoneyRequest(playerId, newMoney);
+	// Continue updating stuff that is common to normal and magic items
 
 	// Add items to the player's inventory
 	// Update entry if it already exists
+	// Note: itemToBuy can be re-used here regardless of the type of shop and item
 	if (playerItemData) {
-		await updateItemDataRequest(playerId, itemToBuy.itemId, itemToBuy.quantity!);
+		await updateItemDataRequest(playerId, itemToBuy.itemId!, itemToBuy.quantity!);
 	}
 	// Else create it
 	else {
@@ -165,8 +172,64 @@ const buyItem = async (req: Request, res: Response): Promise<Response> => {
 		});
 		await createItemDataRequest(newItem.get());
 	}
-
-	return res.status(200).send();
 };
+
+async function buyMagicItem(
+	playerShopData: Player,
+	itemSold: Partial<ItemFiche>,
+	itemReference: ItemFiche,
+	quantityBought: number,
+	playerItemData: ItemOwn | undefined
+): Promise<void> {
+	// Get the number of golden napodinos owned by the player
+	const playerNapoData: ItemOwn | undefined = playerShopData.itemOwn.find(
+		item => item.itemId === itemList.GOLDEN_NAPODINO.itemId
+	);
+
+	// Create the item that will be purchased (id, price, quantity, maxQuantity)
+	const magicalItemToBuy: Partial<ItemFiche> = {
+		itemId: itemReference.itemId,
+		price: itemSold.price!,
+		quantity: playerItemData ? quantityBought + playerItemData.quantity! : quantityBought,
+		maxQuantity: itemReference.maxQuantity
+	};
+
+	// Throws an exception if player doesn't have enough money to buy the items
+	if (playerNapoData === undefined || playerNapoData!.quantity! < magicalItemToBuy.price! * quantityBought) {
+		throw new Error(`You don't have enough golden napodinoz to buy the item ${itemReference.itemId}`);
+	}
+
+	// Throws an exception if the player does not have enough storage space left
+	if (magicalItemToBuy.quantity! > magicalItemToBuy.maxQuantity!) {
+		throw new Error(`You don't have enough storage to buy ${quantityBought} of the item ${itemReference.itemId}`);
+	}
+
+	// All checks passed related to magic item, let's update the stuff
+
+	// Set player golden napodino count
+	const newNapoCount: number = playerNapoData!.quantity! - magicalItemToBuy.price! * quantityBought;
+	await updateItemDataRequest(playerShopData.playerId, itemList.GOLDEN_NAPODINO.itemId, newNapoCount);
+}
+
+// Check if player can access the shop
+// The check is done for the shops that are not accessible from anywhere (i.e does not apply to the flying shop)
+function checkDinozPlace(theShop: ShopFiche, player: Player, shopId: number): void {
+	if (theShop.placeId !== placeList.ANYWHERE.placeId) {
+		// For cursed shops, the player needs a non frozen, non sacrificed dinoz with the curse status at the location of the shop
+		if (theShop.type == ShopType.CURSED) {
+			const hasCursedDinozAtShop = player.dinoz.some(
+				dinoz => dinoz.status.some(status => status.statusId === statusList.CURSED) && dinoz.placeId === theShop.placeId
+			);
+			if (!hasCursedDinozAtShop) {
+				throw new Error(`You need a cursed dinoz at the location of the shop to access it`);
+			}
+		} else {
+			// Check at least one dinoz that is not frozen or sacrificed is at the location of the shop
+			if (!player.dinoz.some(dinoz => dinoz.placeId === theShop.placeId)) {
+				throw new Error(`You don't have any dinoz at the shop's location ${shopId}`);
+			}
+		}
+	}
+}
 
 export { getItemsFromShop, buyItem };

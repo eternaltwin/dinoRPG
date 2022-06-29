@@ -10,6 +10,7 @@ import {
 	Player,
 	Quest
 } from '../models/index.js';
+import { itemList } from '../constants/index.js';
 
 const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 	return Player.findOne({
@@ -100,9 +101,15 @@ const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null>
 		include: [
 			{
 				model: Dinoz,
-				attributes: ['dinozId', 'placeId'],
+				attributes: ['placeId'],
 				where: { isFrozen: false, isSacrificed: false },
-				required: false
+				required: false,
+				include: [
+					{
+						model: AssDinozStatus,
+						attributes: ['statusId']
+					}
+				]
 			},
 			{
 				model: ItemOwn,
@@ -116,7 +123,7 @@ const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null>
 /**
  * Get all the necessary data from the player for itemShopService buyItem function
  * That includes: money, shopkeeper, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
- * and the item and its quantity
+ * the item and its quantity, finally the number of owned golden napodinos
  * @return Array<ItemFiche>
  */
 
@@ -126,15 +133,23 @@ const getPlayerShopOneItemDataRequest = (playerId: number, itemId: number): Prom
 		include: [
 			{
 				model: Dinoz,
-				attributes: ['dinozId', 'placeId'],
+				attributes: ['placeId'],
 				where: { isFrozen: false, isSacrificed: false },
-				required: false
+				required: false,
+				include: [
+					{
+						model: AssDinozStatus,
+						attributes: ['statusId']
+					}
+				]
 			},
 			{
 				model: ItemOwn,
 				required: false,
 				attributes: ['itemId', 'quantity'],
-				where: { itemId: itemId }
+				where: {
+					[Op.or]: [{ itemId: itemId }, { itemId: itemList.GOLDEN_NAPODINO.itemId }]
+				}
 			}
 		],
 		where: { playerId: playerId }

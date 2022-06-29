@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getPlayerInventoryDataRequest } from '../dao/playerDao.js';
-import { Player, ItemFiche, ItemOwn } from '../models/index';
+import { Player, ItemFiche, ItemOwn, ItemType } from '../models/index.js';
 import { itemList } from '../constants/item.js';
 import { validationResult } from 'express-validator';
 
@@ -35,7 +35,10 @@ const getAllItemsData = async (req: Request, res: Response): Promise<Response> =
 		allItemsDataReply.push({
 			itemId: theItem.itemId,
 			quantity: playerInventoryData ? i.quantity : 0,
-			maxQuantity: playerInventoryData.shopKeeper ? Math.round(theItem.maxQuantity * 1.5) : theItem.maxQuantity,
+			maxQuantity:
+				playerInventoryData.shopKeeper && theItem.itemType !== ItemType.MAGICAL
+					? Math.round(theItem.maxQuantity * 1.5)
+					: theItem.maxQuantity,
 			canBeUsedNow: theItem.canBeUsedNow,
 			canBeEquipped: theItem.canBeEquipped
 		} as ItemFiche);

@@ -7,4 +7,5 @@ export interface DinozFiche extends Dinoz {
 export interface Action {
 	name: string;
 	imgName: string;
+	prop?: number;
 }

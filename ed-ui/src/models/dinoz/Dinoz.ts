@@ -52,6 +52,8 @@ export interface Item {
 	name?: string;
 	price?: number;
 	quantity?: number;
+	isRare?: boolean;
+	itemType?: string;
 	maxQuantity?: number;
 }
 
@@ -62,4 +64,5 @@ export interface Status {
 export interface Action {
 	name: string;
 	imgName: string;
+	prop?: number;
 }

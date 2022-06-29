@@ -1,69 +1,85 @@
-import { ItemFiche } from '../models';
+import { ItemFiche, ItemType } from '../models/index.js';
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.
-export const itemList: { [name: string]: ItemFiche } = {
+export const itemList: Readonly<Record<string, ItemFiche>> = {
 	// Irma's Potion: new action
 	POTION_IRMA: {
 		itemId: 1,
 		canBeEquipped: false,
 		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 80,
-		price: 450
+		price: 450 // TODO double check
 	},
 	// Angel potion: resurrects a dino
 	POTION_ANGEL: {
 		itemId: 2,
 		canBeEquipped: false,
 		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 8,
-		price: 1000
+		price: 1000 // TODO double check
 	},
 	// Cloud burger: heals 10
 	CLOUD_BURGER: {
 		itemId: 3,
 		canBeEquipped: true,
 		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 24,
-		price: 350
+		price: 350 // TODO double check
 	},
 	// Authentic hot bread: heals 100
 	HOT_BREAD: {
 		itemId: 4,
 		canBeEquipped: false,
 		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 8,
-		price: 3000
+		price: 3000 // TODO double check
 	},
 	// Meat pie: heals 30
 	MEAT_PIE: {
 		itemId: 5,
 		canBeEquipped: false,
 		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 16,
-		price: 1000
+		price: 1000 // TODO double check
 	},
 	// Fight ration: heals up to 20 during a fight
 	FIGHT_RATION: {
 		itemId: 6,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 8,
-		price: 500
+		price: 500 // TODO double check
 	},
 	// Surviving ration: heals between 10 and 40 during a fight
 	SURVIVING_RATION: {
 		itemId: 7,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 8,
 		price: 500 // TODO double check
 	},
 	// Goblin's Merguez: heals ?? during a fight
-	GLOBIN_MERGUEZ: {
+	GOBLIN_MERGUEZ: {
 		itemId: 8,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 4,
 		price: 500 // TODO double check
 	},
@@ -72,6 +88,8 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 9,
 		canBeEquipped: false,
 		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 8,
 		price: 500 // TODO double check
 	},
@@ -80,46 +98,58 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 10,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 12,
-		price: 150
+		price: 150 // TODO double check
 	},
 	// Little pepper: increases next assault value by 10
 	LITTLE_PEPPER: {
 		itemId: 11,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 12,
-		price: 150
+		price: 150 // TODO double check
 	},
 	// Zippo: Set dino on fire during a fight
 	ZIPPO: {
 		itemId: 12,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 12,
-		price: 150
+		price: 150 // TODO double check
 	},
 	// SOS flame: summons a flame to fight with you
 	SOS_FLAME: {
 		itemId: 13,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 80,
-		price: 150
+		price: 150 // TODO double check
 	},
 	// Refrigerated Shield: Increases fire defense by 20 during a fight
 	REFRIGERATED_SHIELD: {
 		itemId: 14,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 12,
-		price: 150
+		price: 150 // TODO double check
 	},
 	// Fuca Pill: increases attack speed by 50% during a fight
 	FUCA_PILL: {
 		itemId: 15,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 4,
 		price: 150 // TODO double check
 	},
@@ -128,6 +158,8 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 16,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 4,
 		price: 150 // TODO double check
 	},
@@ -136,6 +168,8 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 17,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 8,
 		price: 150 // TODO double check
 	},
@@ -144,6 +178,8 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 18,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 8,
 		price: 1234 // TODO double check
 	},
@@ -152,6 +188,8 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 19,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 4,
 		price: 1234 // TODO double check
 	},
@@ -160,6 +198,8 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 20,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 4,
 		price: 1234 // TODO double check
 	},
@@ -168,14 +208,1036 @@ export const itemList: { [name: string]: ItemFiche } = {
 		itemId: 21,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 12,
 		price: 1234 // TODO double check
 	},
-	// Example to copy paste to add objects
-	EXAMPLE: {
-		itemId: 999,
+	// Portable Love: can attack flying dinoz
+	PORTABLE_LOVE: {
+		itemId: 22,
 		canBeEquipped: true,
 		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 8,
+		price: 1234 // TODO double check
+	},
+	// Danger Detector: protects against an attack that inflicts more than 25 hp
+	DANGER_DETECTOR: {
+		itemId: 23,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 4,
+		price: 1234 // TODO double check
+	},
+	// Pirhanoz in bag: summons a pirhanoz
+	PIRHANOZ_IN_BAG: {
+		itemId: 24,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CURSED,
+		isRare: false,
+		maxQuantity: 8,
+		price: 1234 // TODO double check
+	},
+	// Devil Ointment: removes the curse from a dino, and restoring its ability
+	// to gain XP during fights.
+	DEVIL_OINTMENT: {
+		itemId: 25,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CURSED,
+		isRare: true,
+		maxQuantity: 5, // TODO double check
+		price: 1234 // TODO double check
+	},
+	// Land of Ashes (Ember): turns the combat zone into a suffocating furnace.
+	// All Dinoz with a Fire element of less than 10 points will no longer use elements
+	// A or E for the next three turns.
+	LAND_OF_ASHES: {
+		itemId: 26,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1,
+		price: 1234 // TODO double check
+	},
+	// Abyss: plunges the combat zone into an abyss.
+	// All Dinoz with a Water element of less than 10 points will see the strength
+	// of their attacks and assaults drop by 25% for the next three turns.
+	ABYSS: {
+		itemId: 27,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1,
+		price: 1234 // TODO double check
+	},
+	// Amazon: transports the combat zone into the middle of a tropical jungle.
+	// All Dinoz with a Wood element of less than 10 points will sleep for the
+	// next three turns unless they are subjected to an attack which causes them to lose 10 HP.
+	AMAZON: {
+		itemId: 28,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1,
+		price: 1234 // TODO double check
+	},
+	// St Elma's Fire: surrounds the combat zone with a powerful magnetic field.
+	// All Dinoz with a Lightning element of less than 10 points will lose 5% of
+	// their HP for the next three turns.
+	ST_ELMAS_FIRE: {
+		itemId: 29,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1,
+		price: 1234 // TODO double check
+	},
+	// Uvavu: plunges the combat zone into the middle of a devastating storm.
+	// All Dinoz with an Air element of less than 10 points will lose 50% of
+	// their speed for the next three turns.
+	UVAVU: {
+		itemId: 30,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1,
+		price: 1234 // TODO double check
+	},
+	// Strong Tea: allows you to cancel the effects of beer on the opposing team.
+	STRONG_TEA: {
+		itemId: 31,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 15, // TODO double check
+		price: 1234 // TODO double check
+	},
+	// Temporal Stabiliser: ??
+	TEMPORAL_STABILISER: {
+		itemId: 32,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 15, // TODO double check
+		price: 1234 // TODO double check
+	},
+	// Elixir: heals 200, Chen's shop
+	ELIXIR: {
+		itemId: 33,
+		canBeEquipped: false, // TODO double check
+		canBeUsedNow: true, // TODO double check
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1, // TODO double check
+		price: 1234 // TODO double check
+	},
+
+	// Elixir of Life: quest item to heal the Venerable Dragon
+	ELIXIR_OF_LIFE: {
+		itemId: 34,
+		canBeEquipped: false, // TODO double check
+		canBeUsedNow: false, // TODO double check
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1, // TODO double check
+		price: 1234 // TODO double check
+	},
+	// Banishement: prevents a dinoz from calling reinforcements during a battle
+	BANISHMENT: {
+		itemId: 35,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 3 // TODO double check
+	},
+	// Battering Ram: dinoz attacks castle twice if victorious
+	BATTERING_RAM: {
+		itemId: 36,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 5 // TODO double check
+	},
+	// Ember (braise): increases fire assault of all fighters by 30%
+	EMBER: {
+		itemId: 37,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 5 // TODO double check
+	},
+	// Scale: an enemy dinoz will be killed if your dinoz dies during a fight
+	SCALE: {
+		itemId: 38,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 7 // TODO double check
+	},
+	// Beer: prevents all dinoz from healing during a fight
+	BEER: {
+		itemId: 39,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 3 // TODO double check
+	},
+	// Encyclopedia: increases experience gain by 15%
+	ENCYCLOPEDIA: {
+		itemId: 40,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 6 // TODO double check
+	},
+	// Antichromatic: cancels the effect of monochromatics used by the enemy
+	ANTICHROMATIC: {
+		itemId: 41,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 4 // TODO double check
+	},
+	// Antidote: permanently immunize against poisons
+	ANTIDOTE: {
+		itemId: 42,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 5 // TODO double check
+	},
+	// Time Manipulator (Temporary Manipulator?): prevents all dinoz from using E skills in a fight
+	TIME_MANIPULATOR: {
+		itemId: 43,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 5 // TODO double check
+	},
+	// Dimensional Powder (Parallel Dimension?): if the dinoz HP falls below 10%, it will be engulfed in a black hole
+	// and leave the fight
+	DIMENSIONAL_POWDER: {
+		itemId: 44,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 6 // TODO double check
+	},
+	// Sorcerer's Stick: reduces the hp of a random (enemy?) dinoz by 30% (It replaces an attack)
+	SORCERERS_STICK: {
+		itemId: 45,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 7 // TODO double check
+	},
+	// Friendly Whistle: when the dinoz launches an assault on another dinoz, the other friendly dinoz (without whistle) will
+	// attack it too
+	FRIENDLY_WHISTLE: {
+		itemId: 46,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 8 // TODO double check
+	},
+	// Dinoz Cube: allows the dinoz to redraw from the element grid when it levels up until level 10. Like Career Plan
+	// (Does not cumulate though with Career Plan though)
+	DINOZ_CUBE: {
+		itemId: 47,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 9 // TODO double check
+	},
+	// Temporal Reduction: reduces initiative bonuses and penalties by 50% on the equipped dinoz
+	TEMPORAL_REDUCTION: {
+		itemId: 48,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 5 // TODO double check
+	},
+	// Tear of Life: gives clones 10% of the life of the casting Dinoz
+	TEAR_OF_LIFE: {
+		itemId: 49,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 6 // TODO double check
+	},
+	// Cuzcussian Mask: makes the wearer's teammates immune to Hypnosis
+	CUZCUSSIAN_MASK: {
+		itemId: 50,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 8 // TODO double check
+	},
+	// Anti-grave Suit: makes the wearer's teammates immune to Black Hole
+	ANTI_GRAVE_SUIT: {
+		itemId: 51,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 6 // TODO double check
+	},
+	// Enchanted Steroid: makes the equipped dinoz immune to penalties to max endurance
+	ENCHANTED_STEROID: {
+		itemId: 52,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 6 // TODO double check
+	},
+	// Curse Locker: restricts a random enemy to using their weakest element for 3 turns
+	CURSE_LOCKER: {
+		itemId: 53,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 4 // TODO double check
+	},
+	// Fear Factor (Trouillomètre): a dinoz with the Brave skill but which carries this\
+	// object can now form groups with dinoz with the same key element as they do
+	FEAR_FACTOR: {
+		itemId: 54,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 8 // TODO double check
+	},
+	// Life Stealer: when the wearer's hp falls below 20, it steals 30 hp to a random enemy
+	LIFE_STEALER: {
+		itemId: 55,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 4,
+		price: 0 // TODO double check
+	},
+	// Fire Sphere
+	FIRE_SPHERE: {
+		itemId: 56,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 80,
+		price: 0 // TODO double check
+	},
+	// Wood Sphere
+	WOOD_SPHERE: {
+		itemId: 57,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 80,
+		price: 0 // TODO double check
+	},
+	// Water Sphere
+	WATER_SPHERE: {
+		itemId: 58,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 80,
+		price: 0 // TODO double check
+	},
+	// Lightning Sphere
+	LIGHTNING_SPHERE: {
+		itemId: 59,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 80,
+		price: 0 // TODO double check
+	},
+	// Air Sphere
+	AIR_SPHERE: {
+		itemId: 60,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 80,
+		price: 0 // TODO double check
+	},
+	// Demon Ticket
+	DEMON_TICKET: {
+		itemId: 61,
+		canBeEquipped: false,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 6400,
+		price: 0 // TODO double check
+	},
+	// Treasure Coupon
+	TREASURE_COUPON: {
+		itemId: 62,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 7999,
+		price: 0 // TODO double check
+	},
+	// Some of those eggs may not exist, yet they should be added for consistency
+	// The order matches the order in constants/race.ts
+	// Moueffe Egg
+	MOUEFFE_EGG: {
+		itemId: 63,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Moueffe Egg
+	MOUEFFE_EGG_RARE: {
+		itemId: 64,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Pigmou Egg
+	PIGMOU_EGG: {
+		itemId: 65,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Pigmou Egg
+	PIGMOU_EGG_RARE: {
+		itemId: 66,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Winks Egg
+	WINKS_EGG: {
+		itemId: 67,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Winks Egg
+	WINKS_EGG_RARE: {
+		itemId: 68,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Planaille Egg
+	PLANAILLE_EGG: {
+		itemId: 69,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Planaille Egg
+	PLANAILLE_EGG_RARE: {
+		itemId: 70,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Castivore Egg
+	CASTIVORE_EGG: {
+		itemId: 71,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Castivore Egg
+	CASTIVORE_EGG_RARE: {
+		itemId: 72,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rocky Egg
+	ROCKY_EGG: {
+		itemId: 73,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Rocky Egg
+	ROCKY_EGG_RARE: {
+		itemId: 74,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Pteroz Egg
+	PTEROZ_EGG: {
+		itemId: 75,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Pteroz Egg
+	PTEROZ_EGG_RARE: {
+		itemId: 76,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Nuagoz Egg
+	NUAGOZ_EGG: {
+		itemId: 77,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Nuagoz Egg
+	NUAGOZ_EGG_RARE: {
+		itemId: 78,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Sirain Egg
+	SIRAIN_EGG: {
+		itemId: 79,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Sirain Egg
+	SIRAIN_EGG_RARE: {
+		itemId: 80,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Hippoclamp Egg
+	HIPPOCLAMP_EGG: {
+		itemId: 81,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Hippoclamp Egg
+	HIPPOCLAMP_EGG_RARE: {
+		itemId: 82,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Gorilloz Egg
+	GORILLOZ_EGG: {
+		itemId: 83,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Gorilloz Egg
+	GORILLOZ_EGG_RARE: {
+		itemId: 84,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Wanwan Egg
+	WANWAN_EGG: {
+		itemId: 85,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Wanwan Egg
+	WANWAN_EGG_RARE: {
+		itemId: 86,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Wanwan Baby
+	WANWAN_BABY_RARE: {
+		itemId: 87,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Santaz Egg
+	SANTAZ_EGG: {
+		itemId: 88,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Santaz Egg
+	SANTAZ_EGG_RARE: {
+		itemId: 89,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Feross Egg
+	FEROSS_EGG: {
+		itemId: 90,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Rare Feross Egg
+	FEROSS_EGG_RARE: {
+		itemId: 91,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Christmas Feross Egg
+	FEROSS_EGG_CHRISTMAS: {
+		itemId: 92,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Kabuki Egg
+	KABUKI_EGG: {
+		itemId: 93,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Rare Kabuki Egg
+	RARE_KABUKI_EGG: {
+		itemId: 94,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Mahamuti Egg
+	MAHAMUTI_EGG: {
+		itemId: 95,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Mahamuti Egg
+	RARE_MAHAMUTI_EGG: {
+		itemId: 96,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Soufflet Egg
+	SOUFFLET_EGG: {
+		itemId: 97,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Rare Soufflet Egg
+	SOUFFLET_EGG_RARE: {
+		itemId: 98,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Toufufu Baby
+	TOUFUFU_BABY: {
+		itemId: 99,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 2, // yes it's 2 in game
+		price: 0 // TODO double check
+	},
+	// Rare Toufufu Baby
+	TOUFUFU_BABY_RARE: {
+		itemId: 100,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 2, // yes it's 2 in game
+		price: 0 // TODO double check
+	},
+	// Quetzu Egg
+	QUETZU_EGG: {
+		itemId: 101,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Quetzu Egg
+	QUETZU_EGG_RARE: {
+		itemId: 102,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Smog Egg
+	SMOG_EGG: {
+		itemId: 103,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Anniversary Smog Egg
+	SMOG_EGG_ANNIVERSARY: {
+		itemId: 104,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Christmas Blue Smog Egg
+	SMOG_EGG_CHRISTMAS_BLUE: {
+		itemId: 105,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Christmas Blue Smog Egg
+	SMOG_EGG_CHRISTMAS_GREEN: {
+		itemId: 106,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8,
+		price: 0 // TODO double check
+	},
+	// Triceragnon Baby
+	TRICERAGNON_BABY: {
+		itemId: 107,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Rare Triceragnon Baby
+	TRICERAGNON_EGG_BABY: {
+		itemId: 108,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 8, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Amnesic Rice
+	AMNESIC_RICE: {
+		itemId: 109,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: true,
+		maxQuantity: 5, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Tik Bracelet: heals 10 to the wearer each day
+	TIK_BRACELET: {
+		itemId: 110,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 1,
+		price: 0 // TODO double check
+	},
+	// Magic Star: used for the Strange Creature quest
+	MAGIC_STAR: {
+		itemId: 111,
+		canBeEquipped: false,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 7,
+		price: 0 // TODO double check
+	},
+	// Golden Napodino: currency at the Magic Shop
+	GOLDEN_NAPODINO: {
+		itemId: 112,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 80,
+		price: 0 // TODO double check
+	},
+	// Brings a little bamboo with you in each fight
+	BAMBOO_FRIEND: {
+		itemId: 113,
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 1,
+		price: 0 // TODO double check
+	},
+	// Candle card, don't know what it is related to
+	CANDLE_CARD: {
+		itemId: 114,
+		canBeEquipped: false,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 123, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Tickets to use at the Christmas grid event
+	CHRISTMAS_TICKET: {
+		itemId: 115,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 999, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Tickets to use at ??
+	TICTAC_TICKET: {
+		itemId: 116,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 999, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Tickets to use at the anniversary grid event
+	ANNIVERSARY_TICKET: {
+		itemId: 117,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 999, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Use to obtain ??, obtained during Easter event
+	EASTER_EGG: {
+		itemId: 118,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 999, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Use to obtain ??, obtained during ?? event
+	FIRE_CRACKER: {
+		itemId: 119,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 999, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Like an irma potion, would be obtained daily from the monthly subscription
+	SPECIAL_IRMA_POTION: {
+		itemId: 120,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 6, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Empty item
+	EMPTY: {
+		itemId: 998,
+		canBeEquipped: false,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 123,
+		price: 1234 // TODO double check
+	},
+	// Undefined item
+	UNDEFINED: {
+		itemId: 999,
+		canBeEquipped: false,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
 		maxQuantity: 123,
 		price: 1234 // TODO double check
 	}

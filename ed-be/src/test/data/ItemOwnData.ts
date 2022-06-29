@@ -18,3 +18,15 @@ export const playerFlyingShopInventory = [
 		quantity: 8
 	}
 ] as Array<ItemOwn>;
+
+export const playerMagicShopInventory = [
+	{
+		itemId: 49,
+		quantity: 2
+	},
+	// Golden Napodino
+	{
+		itemId: 112,
+		quantity: 999
+	}
+] as Array<ItemOwn>;
