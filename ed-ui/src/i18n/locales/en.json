@@ -33,9 +33,9 @@
     "developpers": "Development",
     "thanks": "Remerciements",
     "dinorpg": "Eternal DinoRPG",
-    "text1": "Ce jeu est un fan-project pour {DinoRPG} de MotionTwin. Sauf indication contraire, tous les éléments graphiques sont tirés de ces jeux et sont donc la propriété de MotionTwin.",
+    "text1": "This is a fan-project for {DinoRPG} from MotionTwin. Unless otherwise stated, all graphic parts are from these games and thus are MotionTwin's property.",
     "text2": "DinoRPG est Open Source et tout le monde est le bienvenu pour y participer. Vous pouvez consulter le code source sur {Gitlab}.",
-    "text3": "DinoRPG fait partie du projet {EternalTwin}, si vous le souhaitez, vous pouvez faire une donation sur {OpenCollective}."
+    "text3": "DinoRPG is part of {EternalTwin}, if you want, you can donate on {OpenCollective}."
   },
   "import": {
     "disclaimer1": "You can import your account from DinoRPG to get back your progress and all your Dinoz !",
@@ -120,10 +120,10 @@
     },
     "sort": {
       "default": "Défaut",
-      "energy": "Energie",
+      "energy": "Energy",
       "type": "Type",
-      "state": "État",
-      "title": "Trier les compétences"
+      "state": "Status",
+      "title": "Sort skills"
     }
   },
   "item": {
