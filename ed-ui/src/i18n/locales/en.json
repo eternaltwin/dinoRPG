@@ -31,7 +31,7 @@
   },
   "footer": {
     "developpers": "Development",
-    "thanks": "Remerciements",
+    "thanks": "Special Thanks",
     "dinorpg": "Eternal DinoRPG",
     "text1": "This is a fan-project for {DinoRPG} from MotionTwin. Unless otherwise stated, all graphic parts are from these games and thus are MotionTwin's property.",
     "text2": "DinoRPG est Open Source et tout le monde est le bienvenu pour y participer. Vous pouvez consulter le code source sur {Gitlab}.",
@@ -924,7 +924,6 @@
       "SangAcide": "Acid Blood",
       "Regenerescence": "Regeneration",
       "PremierSoins": "First Aid",
-      "PremierSoins": "Premiers Soins",
       "PureeSalvatrice": "Saving Pure",
       "AuraHermetique": "Hermetic Aura",
       "CrepusculeFlambloyant": "Blazing Twilight",
