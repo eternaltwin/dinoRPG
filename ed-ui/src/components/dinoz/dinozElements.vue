@@ -21,9 +21,7 @@ import { Dinoz } from '@/models';
 export default defineComponent({
 	name: 'DinozElements',
 	components: {
-		Elements: defineAsyncComponent(() =>
-			import('@/components/data/elements.vue')
-		)
+		Elements: defineAsyncComponent(() => import('@/components/data/elements.vue'))
 	},
 	props: {
 		dinozData: Object as PropType<Dinoz>
@@ -36,11 +34,7 @@ export default defineComponent({
 	position: absolute;
 	margin-left: 192px;
 	margin-top: 198px;
-	background: linear-gradient(
-		180deg,
-		rgba(186, 107, 66, 1) 0%,
-		rgba(211, 152, 96, 1) 100%
-	);
+	background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
 	background-size: auto;
 	box-shadow: inset 0 0 1px 2px #d3a76a;
 	.elements_content {

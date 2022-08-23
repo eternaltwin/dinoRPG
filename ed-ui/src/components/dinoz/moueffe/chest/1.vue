@@ -5,12 +5,7 @@
 		:width="`${34.3 * size}px`"
 		xmlns="http://www.w3.org/2000/svg"
 	>
-		<g
-			:transform="
-				`matrix(${1.0 * size}, 0.0, 0.0, ${1.0 * size}, ${26.8 *
-					size}, ${25.55 * size})`
-			"
-		>
+		<g :transform="`matrix(${1.0 * size}, 0.0, 0.0, ${1.0 * size}, ${26.8 * size}, ${25.55 * size})`">
 			<path
 				d="M-14.85 -12.2 L-14.7 -12.25 -14.4 -11.9 -14.85 -12.2 M-14.4 12.0 L-14.2 11.95 -14.15 12.0 -14.4 12.0"
 				fill="#ffffff"
@@ -103,16 +98,8 @@
 				r="819.2"
 				spreadMethod="pad"
 			>
-				<stop
-					offset="0.47843137254901963"
-					stop-color="#ffffff"
-					stop-opacity="0.49803922"
-				/>
-				<stop
-					offset="0.7"
-					:stop-color="chestFourthColor"
-					stop-opacity="0.49803922"
-				/>
+				<stop offset="0.47843137254901963" stop-color="#ffffff" stop-opacity="0.49803922" />
+				<stop offset="0.7" :stop-color="chestFourthColor" stop-opacity="0.49803922" />
 			</radialGradient>
 		</defs>
 	</svg>

@@ -1,6 +1,6 @@
 <template>
-	<Title :title="`${$t('pageTitle.account')}`"></Title>
-	<div style="width:auto">
+	<TitleHeader :title="`${$t('pageTitle.account')}`"></TitleHeader>
+	<div style="width: auto">
 		<div class="section">
 			<div class="titlePage">
 				<h3>{{ $t(`myAccount.title`) }} {{ accountData.playerName }}</h3>
@@ -10,11 +10,7 @@
 			<div class="filler"></div>
 			<Profile :accountData="accountData"></Profile>
 			<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
-			<MyDinoz
-				class="dinoz"
-				style="width:690px"
-				:accountData="accountData"
-			></MyDinoz>
+			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData"></MyDinoz>
 		</div>
 	</div>
 </template>
@@ -31,21 +27,16 @@ export default defineComponent({
 	name: 'MyAccount',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			accountData: {} as PlayerInfo,
 			dataLoaded: false as boolean
 		};
 	},
 	components: {
-		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue')),
-		MyDinoz: defineAsyncComponent(() =>
-			import('@/components/data/MyDinoz.vue')
-		),
-		Profile: defineAsyncComponent(() =>
-			import('@/components/data/Profile.vue')
-		),
-		EpicRewards: defineAsyncComponent(() =>
-			import('@/components/data/EpicRewards.vue')
-		)
+		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
+		MyDinoz: defineAsyncComponent(() => import('@/components/data/MyDinoz.vue')),
+		Profile: defineAsyncComponent(() => import('@/components/data/Profile.vue')),
+		EpicRewards: defineAsyncComponent(() => import('@/components/data/EpicRewards.vue'))
 	},
 	async created(): Promise<void> {
 		const accountId = parseInt(this.$route.params.id.toString());
@@ -61,11 +52,8 @@ export default defineComponent({
 	},
 	watch: {
 		// Reload page if player click on 'my account' button
-		'$route.params.id': function() {
-			if (
-				this.$router.currentRoute.value.params.id ===
-				sessionStore.getters.getPlayerId.toString()
-			) {
+		'$route.params.id': function () {
+			if (this.$router.currentRoute.value.params.id === this.sessionStore.getPlayerId!.toString()) {
 				this.$router.go(0);
 			}
 		}

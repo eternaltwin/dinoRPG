@@ -16,6 +16,7 @@ export default defineComponent({
 	name: 'Fight',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			fight: {} as FightResult
 		};
 	},
@@ -25,17 +26,14 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		this.fight = sessionStore.getters.getFightResult;
-		const newMoney = (sessionStore.getters.getMoney +
-			this.fight.goldEarned) as number;
-		sessionStore.commit('setMoney', newMoney);
+		this.fight = this.sessionStore.getFightResult!;
+		const newMoney = (this.sessionStore.getMoney! + this.fight.goldEarned) as number;
+		this.sessionStore.setMoney(newMoney);
 
-		const dinozInStore: Array<Dinoz> = sessionStore.getters.getDinozList;
-		const dinoz: Dinoz = dinozInStore.find(
-			dinoz => dinoz.dinozId!.toString() === this.$route.params.dinozId
-		)!;
+		const dinozInStore: Array<Dinoz> = this.sessionStore.getDinozList!;
+		const dinoz: Dinoz = dinozInStore.find(dinoz => dinoz.dinozId!.toString() === this.$route.params.dinozId)!;
 		dinoz.experience! += this.fight.xpEarned;
-		sessionStore.commit('setDinozList', dinozInStore);
+		this.sessionStore.setDinozList(dinozInStore);
 	}
 });
 </script>

@@ -5,12 +5,7 @@
 		:width="`${37.0 * size}px`"
 		xmlns="http://www.w3.org/2000/svg"
 	>
-		<g
-			:transform="
-				`matrix(${1.0 * size}, 0.0, 0.0, ${1.0 * size}, ${13.5 * size}, ${24.3 *
-					size})`
-			"
-		>
+		<g :transform="`matrix(${1.0 * size}, 0.0, 0.0, ${1.0 * size}, ${13.5 * size}, ${24.3 * size})`">
 			<path
 				d="M12.2 -17.2 L10.7 -16.25 Q12.6 -17.95 14.65 -18.25 L12.2 -17.2"
 				fill="#3c0b4a"

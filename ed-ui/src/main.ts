@@ -1,18 +1,14 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import { localStore, sessionStore } from './store';
+import { localStore } from './store';
 import { createI18n } from 'vue-i18n';
 import { messages, defaultLocale, LocalesEnum } from '@/i18n';
 import './css/main.scss';
 import { plugin as VueTippy } from 'vue-tippy';
 import { mixin } from './mixin/mixin';
-
-const i18n = createI18n({
-	messages,
-	locale: localStore.getters.getLanguage || LocalesEnum.FR,
-	fallbackLocale: defaultLocale
-});
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -28,10 +24,15 @@ const vueTippyProps = {
 };
 
 createApp(App)
-	.use(sessionStore)
-	.use(localStore)
+	.use(createPinia().use(piniaPluginPersistedstate))
 	.use(router)
-	.use(i18n)
+	.use(
+		createI18n({
+			messages,
+			locale: localStore().getLanguage || LocalesEnum.FR,
+			fallbackLocale: defaultLocale
+		})
+	)
 	.mixin(mixin)
 	.use(VueTippy, vueTippyProps)
 	.mount('#app');

@@ -40,10 +40,8 @@
 					></path>
 				</svg>
 				<a
-					style="text-decoration:none; margin-left: 4px"
-					:href="
-						`https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/tags/${version}`
-					"
+					style="text-decoration: none; margin-left: 4px"
+					:href="`https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/tags/${version}`"
 					target="_blank"
 				>
 					{{ version }}
@@ -66,10 +64,8 @@
 					></path>
 				</svg>
 				<a
-					style="text-decoration:none; margin-left: 4px"
-					:href="
-						`https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/commit/${release}`
-					"
+					style="text-decoration: none; margin-left: 4px"
+					:href="`https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/commit/${release}`"
 					target="_blank"
 				>
 					{{ release.substring(0, 8) }}
@@ -99,13 +95,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { version } from '../../../package.json';
 
 export default defineComponent({
 	name: 'Version',
 	data() {
 		return {
-			version: version as string,
+			version: process.env.VERSION as string,
 			release: process.env.VUE_APP_API_RELEASE_COMMIT as string,
 			channel: process.env.VUE_APP_API_RELEASE_CHANNEL as string
 		};
@@ -119,8 +114,7 @@ export default defineComponent({
 	color: rgb(250, 227, 206);
 	display: block;
 	float: left;
-	font-family: Nunito, Century Gothic, Arial, Trebuchet MS, Verdana, Open Sans,
-		sans-serif;
+	font-family: Nunito, Century Gothic, Arial, Trebuchet MS, Verdana, Open Sans, sans-serif;
 	font-size: 11px;
 	position: fixed;
 	bottom: 10px;
@@ -159,8 +153,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	font-family: Nunito, Century Gothic, Arial, Trebuchet MS, Verdana, Open Sans,
-		sans-serif;
+	font-family: Nunito, Century Gothic, Arial, Trebuchet MS, Verdana, Open Sans, sans-serif;
 	font-size: 11px;
 	margin-bottom: 2px;
 	margin-left: 10px;

@@ -1,10 +1,6 @@
 <template>
-	<ul style="list-style:none">
-		<Tippy
-			v-for="(dinoz, index) in accountData.dinoz"
-			:key="index"
-			theme="small"
-		>
+	<ul style="list-style: none">
+		<Tippy v-for="(dinoz, index) in accountData.dinoz" :key="index" theme="small">
 			<li class="dinozList">
 				<div class="name">
 					{{ dinoz.name }}
@@ -26,10 +22,7 @@
 			</li>
 			<template #content>
 				<template v-for="(status, index) in dinoz.statusList" :key="index">
-					<img
-						v-if="statusList.displayed[status]"
-						:src="getStatusImg(statusList.imgName[status])"
-					/>
+					<img v-if="statusList.displayed[status]" :src="getStatusImg(statusList.imgName[status])" />
 				</template>
 			</template>
 		</Tippy>
@@ -45,9 +38,7 @@ import { dinozPlacement } from '@/constants';
 export default defineComponent({
 	name: 'MyDinoz',
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozWithoutFlash.vue')
-		)
+		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
 	},
 	props: {
 		accountData: {

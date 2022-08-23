@@ -48,11 +48,7 @@ export default defineComponent({
 	// height: 77px !important;
 	// display: flex;
 	// flex-wrap: wrap;
-	background: linear-gradient(
-		180deg,
-		rgba(186, 107, 66, 1) 0%,
-		rgba(211, 152, 96, 1) 100%
-	);
+	background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
 	// background-position: bottom;
 	background-size: auto;
 	box-shadow: inset 0 0 1px 2px #d3a76a;

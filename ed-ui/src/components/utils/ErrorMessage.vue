@@ -1,9 +1,7 @@
 <template>
 	<div v-if="isError" class="modal-background">
 		<div class="modal-box">
-			<button class="modal-close" @click="dismiss">
-				Close
-			</button>
+			<button class="modal-close" @click="dismiss">Close</button>
 			{{ $t(`error`) }}
 			<div class="details">
 				Code : {{ errorDisplay.response.status }}<br />

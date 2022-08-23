@@ -1,6 +1,6 @@
 <template>
 	<div class="boxMap">
-		<Map :dinozData="dinozData" />
+		<WorldMap :dinozData="dinozData" />
 		<p class="placeName">
 			{{ $t(`place.name.${getPlaceName(placeId)}`) }}
 		</p>
@@ -24,7 +24,7 @@ export default defineComponent({
 	},
 	props: { dinozData: Object as PropType<Dinoz> },
 	components: {
-		Map: defineAsyncComponent(() => import('@/components/common/map.vue'))
+		WorldMap: defineAsyncComponent(() => import('@/components/common/WorldMap.vue'))
 	},
 	methods: {
 		getPlaceName(placeId: number): string {

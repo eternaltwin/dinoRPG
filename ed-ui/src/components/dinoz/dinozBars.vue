@@ -12,24 +12,16 @@
 		<div class="bars">
 			<div class="life">
 				<div class="bar">
-					<img
-						src="@/assets/bar/bar_life.webp"
-						:style="getBarSize(dinozData.life, dinozData.maxLife)"
-					/>
+					<img src="@/assets/bar/bar_life.webp" :style="getBarSize(dinozData.life, dinozData.maxLife)" />
 				</div>
 			</div>
 			<div class="lifetext">{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
 			<div class="xp">
 				<div class="bar">
-					<img
-						src="@/assets/bar/bar_xp.webp"
-						:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
-					/>
+					<img src="@/assets/bar/bar_xp.webp" :style="getBarSize(dinozData.experience, dinozData.maxExperience)" />
 				</div>
 			</div>
-			<div class="xptext">
-				{{ dinozData.experience }} / {{ dinozData.maxExperience }}
-			</div>
+			<div class="xptext">{{ dinozData.experience }} / {{ dinozData.maxExperience }}</div>
 		</div>
 	</div>
 </template>

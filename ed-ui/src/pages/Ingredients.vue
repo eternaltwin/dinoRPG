@@ -1,5 +1,5 @@
 <template>
-	<Title :title="$t('pageTitle.ingredients')" />
+	<TitleHeader :title="$t('pageTitle.ingredients')" />
 	<div class="section">
 		<div class="titlePage">{{ $t(`rightMenu.ingredients`) }}</div>
 	</div>
@@ -28,22 +28,12 @@
 					<img :src="getImg('ingredients', '', ingredient.name)" />
 				</td>
 				<td class="name">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
-				<td class="stock" v-if="ingredient.quantity !== 0">
-					{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}
-				</td>
-				<td class="stock" v-else>
-					--
-				</td>
+				<td class="stock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
+				<td class="stock" v-else>--</td>
 
 				<template #content>
-					<h1
-						v-html="formatContent($t(`ingredients.name.${ingredient.name}`))"
-					/>
-					<p
-						v-html="
-							formatContent($t(`ingredients.description.${ingredient.name}`))
-						"
-					/>
+					<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
+					<p v-html="formatContent($t(`ingredients.description.${ingredient.name}`))" />
 				</template>
 			</Tippy>
 		</tbody>
@@ -54,14 +44,14 @@
 import { defineComponent } from 'vue';
 import { IngredientFiche } from '@/models';
 import { IngredientsService } from '@/services';
-import Title from '@/components/utils/Title.vue';
+import TitleHeader from '@/components/utils/TitleHeader.vue';
 import EventBus from '@/events';
 import { errorHandler } from '@/utils';
 
 export default defineComponent({
 	name: 'Ingredients',
 	components: {
-		Title
+		TitleHeader
 	},
 	data() {
 		return {

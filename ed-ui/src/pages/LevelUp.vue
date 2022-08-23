@@ -1,6 +1,6 @@
 <template>
-	<Title :title="`${$t('pageTitle.levelup')}${dinozData.name} ]`"></Title>
-	<div style="width:auto">
+	<TitleHeader :title="`${$t('pageTitle.levelup')}${dinozData.name} ]`"></TitleHeader>
+	<div style="width: auto">
 		<div class="section">
 			<div class="titlePage">
 				<h3>{{ $t(`levelup.title`) }} {{ dinozData.name }}</h3>
@@ -33,37 +33,23 @@
 	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'">
 		<div class="result" v-if="ElementType[availableSkills.element]">
 			{{ dinozData.name }}
-			<p
-				v-html="
-					formatContent($t(`levelup.${ElementType[availableSkills.element]}`))
-				"
-			/>
+			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element]}`))" />
 			<Elements
 				:fire="
-					ElementType[availableSkills.element] === 'fire'
-						? availableSkills.nbrUpFire + 1
-						: availableSkills.nbrUpFire
+					ElementType[availableSkills.element] === 'fire' ? availableSkills.nbrUpFire + 1 : availableSkills.nbrUpFire
 				"
 				:wood="
-					ElementType[availableSkills.element] === 'wood'
-						? availableSkills.nbrUpWood + 1
-						: availableSkills.nbrUpWood
+					ElementType[availableSkills.element] === 'wood' ? availableSkills.nbrUpWood + 1 : availableSkills.nbrUpWood
 				"
 				:water="
-					ElementType[availableSkills.element] === 'water'
-						? availableSkills.nbrUpWater + 1
-						: availableSkills.nbrUpWater
+					ElementType[availableSkills.element] === 'water' ? availableSkills.nbrUpWater + 1 : availableSkills.nbrUpWater
 				"
 				:lightning="
 					ElementType[availableSkills.element] === 'lightning'
 						? availableSkills.nbrUpLightning + 1
 						: availableSkills.nbrUpLightning
 				"
-				:air="
-					ElementType[availableSkills.element] === 'air'
-						? availableSkills.nbrUpAir + 1
-						: availableSkills.nbrUpAir
-				"
+				:air="ElementType[availableSkills.element] === 'air' ? availableSkills.nbrUpAir + 1 : availableSkills.nbrUpAir"
 				class="elements"
 			/>
 			{{ $t(`levelup.helper`) }}
@@ -77,11 +63,7 @@
 						<th class="type">{{ $t('levelup.level') }}</th>
 						<th class="type"></th>
 					</tr>
-					<tr
-						v-for="skill in availableSkills.learnableSkills"
-						:key="skill"
-						@click="learnSkill(skill.skillId)"
-					>
+					<tr v-for="skill in availableSkills.learnableSkills" :key="skill" @click="learnSkill(skill.skillId)">
 						<td class="name">
 							<div class="skillName">
 								<img
@@ -99,61 +81,32 @@
 						<Tippy theme="normal" tag="td" class="type">
 							{{ skill.type }}
 							<template #content>
-								<h1
-									v-html="formatContent($t(`details.type.name.${skill.type}`))"
-								/>
-								<p
-									v-html="
-										formatContent($t(`details.type.description.${skill.type}`))
-									"
-								/>
+								<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
+								<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
 							</template>
 						</Tippy>
 						<td class="type">
 							{{ String(skill.skillId)[2] }}
 						</td>
-						<td class="learn">
-							<img src="@/assets/icons/small_right.webp" />{{
-								$t('levelup.learn')
-							}}
-						</td>
+						<td class="learn"><img src="@/assets/icons/small_right.webp" />{{ $t('levelup.learn') }}</td>
 					</tr>
 					<template v-if="availableSkills.unlockableSkills">
-						<tr
-							v-if="availableSkills.unlockableSkills.length > 0"
-							@click="unlockSkill()"
-						>
+						<tr v-if="availableSkills.unlockableSkills.length > 0" @click="unlockSkill()">
 							<td class="name" colspan="4">
 								<div class="skillName">
 									<img src="@/assets/icons/small_right.webp" />
 									{{ $t(`levelup.unlock1`) }}
 									{{ availableSkills.unlockableSkills.length }}
 									{{ $t(`levelup.unlock2`) }}
-									<Tippy
-										tag="img"
-										:src="getImgHelp()"
-										theme="normal"
-										class="help"
-									>
+									<Tippy tag="img" :src="getImgHelp()" theme="normal" class="help">
 										<template #content>
-											<h1
-												v-html="formatContent($t(`levelup.helperUnlock.title`))"
-											/>
-											<p
-												v-html="
-													formatContent($t(`levelup.helperUnlock.description`))
-												"
-											/>
+											<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
+											<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
 										</template>
 									</Tippy>
 								</div>
 								<ul class="unlock">
-									<Tippy
-										tag="li"
-										theme="small"
-										v-for="(skill, index) in availableSkills.unlockableSkills"
-										:key="index"
-									>
+									<Tippy tag="li" theme="small" v-for="(skill, index) in availableSkills.unlockableSkills" :key="index">
 										<img
 											v-for="element in skill.element"
 											:key="element"
@@ -199,19 +152,14 @@ import { sessionStore } from '@/store';
 export default defineComponent({
 	name: 'LevelUp',
 	components: {
-		LevelUpGrid: defineAsyncComponent(() =>
-			import('@/components/dinoz/LevelUpGrid.vue')
-		),
-		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue')),
-		Elements: defineAsyncComponent(() =>
-			import('@/components/data/elements.vue')
-		),
-		DinozWithoutFlash: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozWithoutFlash.vue')
-		)
+		LevelUpGrid: defineAsyncComponent(() => import('@/components/dinoz/LevelUpGrid.vue')),
+		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
+		Elements: defineAsyncComponent(() => import('@/components/data/elements.vue')),
+		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			availableSkills: {} as Partial<DinozSkillOwnAndUnlockable>,
 			dinozData: {} as Dinoz,
 			tryNumber: 1 as number,
@@ -240,9 +188,7 @@ export default defineComponent({
 			if (!this.availableSkills.unlockableSkills) {
 				return;
 			}
-			const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(
-				skill => skill.skillId
-			);
+			const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
 
 			this.learnSkillAndSetStore(skillIdList);
 		},
@@ -251,19 +197,13 @@ export default defineComponent({
 
 			EventBus.emit('isLoading', true);
 			try {
-				const newMaxExperience = await DinozService.learnSkill(
-					dinozId,
-					skillIdList,
-					this.tryNumber
-				);
+				const newMaxExperience = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
 
-				const dinozList: Array<Dinoz> = sessionStore.getters.getDinozList;
-				const dinozToUpdate = dinozList.find(
-					dinoz => dinoz.dinozId!.toString() === dinozId
-				)!;
+				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.dinozId!.toString() === dinozId)!;
 				dinozToUpdate.experience = 0;
 				dinozToUpdate.maxExperience = newMaxExperience;
-				sessionStore.commit('setDinozList', dinozList);
+				this.sessionStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 
 				await this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
@@ -279,16 +219,10 @@ export default defineComponent({
 			this.tryNumber = this.tryNumber === 1 ? 2 : 1;
 			this.getLearnableSkills(dinozId, this.tryNumber);
 		},
-		async getLearnableSkills(
-			dinozId: string,
-			tryNumber: number
-		): Promise<void> {
+		async getLearnableSkills(dinozId: string, tryNumber: number): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.availableSkills = await DinozService.levelUp(
-					dinozId,
-					tryNumber.toString()
-				);
+				this.availableSkills = await DinozService.levelUp(dinozId, tryNumber.toString());
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
@@ -298,10 +232,8 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		const dinozId: string = this.$route.params.id.toString();
-		const dinozList: Array<Dinoz> = sessionStore.getters.getDinozList;
-		this.dinozData = dinozList.find(
-			dinoz => dinoz.dinozId!.toString() === dinozId
-		)!;
+		const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+		this.dinozData = dinozList.find(dinoz => dinoz.dinozId!.toString() === dinozId)!;
 
 		await this.getLearnableSkills(dinozId, 1);
 	}

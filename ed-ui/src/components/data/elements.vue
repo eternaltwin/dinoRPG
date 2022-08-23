@@ -66,13 +66,7 @@ export default defineComponent({
 		},
 		getMaxElement(): number {
 			{
-				return Math.max(
-					this.fire,
-					this.wood,
-					this.water,
-					this.lightning,
-					this.air
-				);
+				return Math.max(this.fire, this.wood, this.water, this.lightning, this.air);
 			}
 		}
 	}

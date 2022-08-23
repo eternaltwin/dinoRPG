@@ -18,7 +18,6 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import { Dinoz } from '@/models';
 import { errorHandler } from '@/utils';
 import { DinozService } from '@/services';
-import { isNil } from 'lodash';
 import EventBus from '@/events';
 
 export default defineComponent({
@@ -30,18 +29,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		ChooseDinozName: defineAsyncComponent(() =>
-			import('@/components/dinoz/chooseDinozName.vue')
-		),
-		DinozDisplay: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozDisplay.vue')
-		),
-		DinozActions: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozActions.vue')
-		),
-		TabPanel: defineAsyncComponent(() =>
-			import('@/components/common/TabPanel.vue')
-		)
+		ChooseDinozName: defineAsyncComponent(() => import('@/components/dinoz/chooseDinozName.vue')),
+		DinozDisplay: defineAsyncComponent(() => import('@/components/dinoz/dinozDisplay.vue')),
+		DinozActions: defineAsyncComponent(() => import('@/components/dinoz/dinozActions.vue')),
+		TabPanel: defineAsyncComponent(() => import('@/components/common/TabPanel.vue'))
 	},
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
@@ -73,8 +64,8 @@ export default defineComponent({
 	},
 	watch: {
 		// Reload page if player go on another dinoz page
-		'$route.params.id': function(to) {
-			if (!isNil(to)) {
+		'$route.params.id': function (to) {
+			if (to !== undefined) {
 				this.$router.go(0);
 			}
 		}

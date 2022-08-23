@@ -1,24 +1,15 @@
 <template>
 	<div class="enclos">
-		<Title :title="$t('pageTitle.dinozShop')" />
+		<TitleHeader :title="$t('pageTitle.dinozShop')" />
 		<div class="section">
 			<div class="titlePage">Enclos des dinoz</div>
 		</div>
 		<div class="help">
 			<p v-html="$t('shop.dinoz.help')"></p>
 		</div>
-		<div
-			class="sheet"
-			:id="'detail_' + index"
-			v-for="(dinoz, index) in dinozList"
-			:key="dinoz.dinozId"
-		>
+		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.dinozId">
 			<div class="dinoz_display">
-				<DinozWithoutFlash
-					:display="dinoz.display"
-					:life="parseInt(dinoz.life)"
-					:flip="-1"
-				></DinozWithoutFlash>
+				<DinozWithoutFlash :display="dinoz.display" :life="parseInt(dinoz.life)" :flip="-1"></DinozWithoutFlash>
 			</div>
 			<div class="infos">
 				<div class="price">
@@ -27,9 +18,7 @@
 						<img src="@/assets/icons/small_gold.webp" />
 					</span>
 				</div>
-				<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{
-					$t('button.chose')
-				}}</a>
+				<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{ $t('button.chose') }}</a>
 				<div class="race">
 					<Tippy theme="normal">
 						<strong>Race :</strong>
@@ -50,11 +39,7 @@
 					:air="dinoz.race.nbrAir"
 				></Elements>
 				<div class="skill" v-if="dinoz.race.skillId?.length > 0">
-					<div
-						:id="'detail_' + index"
-						v-for="(skillId, index) in dinoz.race.skillId"
-						:key="skillId"
-					>
+					<div :id="'detail_' + index" v-for="(skillId, index) in dinoz.race.skillId" :key="skillId">
 						<img src="@/assets/icons/small_follow.webp" alt="follow" />
 						{{ $t(`skill.name.${skillNameList[skillId]}`) }}
 					</div>
@@ -77,6 +62,7 @@ export default defineComponent({
 	name: 'DinozShopPage',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			utils: utils,
 			dinozList: [] as Array<DinozShop>,
 			raceList: raceList,
@@ -84,13 +70,9 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue')),
-		Elements: defineAsyncComponent(() =>
-			import('@/components/data/elements.vue')
-		),
-		DinozWithoutFlash: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozWithoutFlash.vue')
-		)
+		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
+		Elements: defineAsyncComponent(() => import('@/components/data/elements.vue')),
+		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
@@ -107,22 +89,18 @@ export default defineComponent({
 				}
 
 				// Update player's money
-				const newMoney = (sessionStore.getters.getMoney -
-					dinoz.race.price!) as number;
-				sessionStore.commit('setMoney', newMoney);
+				const newMoney = (this.sessionStore.getMoney! - dinoz.race.price!) as number;
+				this.sessionStore.setMoney(newMoney);
 
-				const dinozStore = sessionStore.getters.getDinozList;
+				const dinozStore = this.sessionStore.getDinozList;
 
-				dinozStore.push(dinozCreated);
+				dinozStore!.push(dinozCreated);
 
 				// Update dinoz list
-				sessionStore.commit('setDinozList', dinozStore);
+				this.sessionStore.setDinozList(dinozStore!);
 
 				// Update dinoz count
-				sessionStore.commit(
-					'setDinozCount',
-					sessionStore.getters.getDinozCount + 1
-				);
+				this.sessionStore.setDinozCount(this.sessionStore.getDinozCount! + 1);
 
 				// Go to dinoz page
 				this.$router.push({

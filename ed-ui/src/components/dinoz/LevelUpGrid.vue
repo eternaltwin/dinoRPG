@@ -98,22 +98,13 @@ export default defineComponent({
 		const lightning = new Array(this.grid.lightning).fill('lightning');
 		const air = new Array(this.grid.air).fill('air');
 
-		this.levelUpGrid = this.levelUpGrid
-			.concat(fire)
-			.concat(wood)
-			.concat(water)
-			.concat(lightning)
-			.concat(air);
+		this.levelUpGrid = this.levelUpGrid.concat(fire).concat(wood).concat(water).concat(lightning).concat(air);
 
-		const selectElement = this.levelUpGrid.reduce(
-			(a: Array<number>, e: string, i: number) => {
-				if (e === ElementType[this.element]) a.push(i);
-				return a;
-			},
-			[]
-		);
-		this.selectedIndex =
-			selectElement[Math.floor(Math.random() * selectElement.length)];
+		const selectElement = this.levelUpGrid.reduce((a: Array<number>, e: string, i: number) => {
+			if (e === ElementType[this.element]) a.push(i);
+			return a;
+		}, []);
+		this.selectedIndex = selectElement[Math.floor(Math.random() * selectElement.length)];
 	}
 });
 </script>
@@ -160,8 +151,7 @@ export default defineComponent({
 		height: 30px;
 		border: 2px solid white;
 		border-radius: 4px;
-		box-shadow: 0 0 6px white, 0 0 12px white, 0 0 16px white,
-			0 0 6px 4px inset white;
+		box-shadow: 0 0 6px white, 0 0 12px white, 0 0 16px white, 0 0 6px 4px inset white;
 	}
 }
 @keyframes fadeIn {
@@ -189,11 +179,7 @@ export default defineComponent({
 		width: 100px;
 		height: 50px;
 		background: rgb(255, 255, 255);
-		background: radial-gradient(
-			circle,
-			rgba(255, 255, 255, 1) 10%,
-			rgba(255, 255, 255, 0.2) 100%
-		);
+		background: radial-gradient(circle, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.2) 100%);
 		border-radius: 50%;
 		filter: blur(10px);
 

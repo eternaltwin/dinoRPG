@@ -1,9 +1,6 @@
 <template>
 	<div id="accountList">
-		<div
-			class="money"
-			v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }"
-		>
+		<div class="money" v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }">
 			{{ beautifulMoney }}
 			<img src="@/assets/icons/small_gold.webp" alt="or" />
 		</div>
@@ -49,16 +46,13 @@
 		<a class="button" @click="goToPage('DinozGenerator')">
 			{{ $t('button.generator') }}
 		</a>
-		<a class="button" v-if="isDevEnv()" @click="goToPage('DinozWithoutFlash')">
-			Dinoz display
-		</a>
+		<a class="button" v-if="isDevEnv()" @click="goToPage('DinozWithoutFlash')"> Dinoz display </a>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { sessionStore } from '@/store';
-import { isNil } from 'lodash';
 import { utils } from '@/utils';
 import DinozList from '@/components/dinoz/dinozList.vue';
 
@@ -66,7 +60,8 @@ export default defineComponent({
 	name: 'LeftPanel',
 	data() {
 		return {
-			money: 0 as number
+			sessionStore: sessionStore(),
+			money: undefined as number | undefined
 		};
 	},
 	components: {
@@ -87,12 +82,12 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		storeMoney(): number {
-			return sessionStore.getters.getMoney;
+		storeMoney(): number | undefined {
+			return this.sessionStore.getMoney;
 		},
 		// Format money display (1000000 -> 1.000.000)
 		beautifulMoney(): string | undefined {
-			if (isNil(this.money)) {
+			if (!this.money) {
 				return;
 			}
 			return utils.beautifulNumber(this.money.toString());
@@ -100,12 +95,12 @@ export default defineComponent({
 	},
 	watch: {
 		// Watch money in store. Each time money will change, the display will be updated
-		storeMoney: function(money: number) {
+		storeMoney: function (money: number) {
 			this.money = money;
 		}
 	},
 	mounted(): void {
-		this.money = sessionStore.getters.getMoney;
+		this.money = this.sessionStore.getMoney;
 	}
 });
 </script>

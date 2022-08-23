@@ -352,12 +352,7 @@
 				v-if="hasInjury && hasLegSecondInjury"
 				:size="size"
 			></component>
-			<component
-				:is="leftLegNail"
-				class="left_leg_nail"
-				:id="`${display}-left_leg_nail`"
-				:size="size"
-			></component>
+			<component :is="leftLegNail" class="left_leg_nail" :id="`${display}-left_leg_nail`" :size="size"></component>
 		</div>
 
 		<div class="moueffe_right_leg">
@@ -409,12 +404,7 @@
 				v-if="hasInjury && hasLegThirdInjury"
 				:size="size"
 			></component>
-			<component
-				:is="rightLegNail"
-				class="right_leg_nail"
-				:id="`${display}-right_leg_nail`"
-				:size="size"
-			></component>
+			<component :is="rightLegNail" class="right_leg_nail" :id="`${display}-right_leg_nail`" :size="size"></component>
 		</div>
 	</div>
 </template>
@@ -588,343 +578,271 @@ export default defineComponent({
 	},
 	computed: {
 		dinozHead(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/head/${this.head.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/head/${this.head.imgNumber}.vue`));
 		},
 		headSpecial(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/head/special/${this.head.dependentImage.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/head/special/${this.head.dependentImage.imgNumber}.vue`)
 			);
 		},
 		headSpecial2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/head/special/${this.head.dependentImage2.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/head/special/${this.head.dependentImage2.imgNumber}.vue`)
 			);
 		},
 		headInjury(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/head/injury/${this.injuryType}/${
-						this.head[this.injuryType].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/head/injury/${this.injuryType}/${this.head[this.injuryType].imgNumber}.vue`
+					)
 			);
 		},
 		eyeRetina(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/eye/${this.head.eyeRetina.imgNumber}.vue`
-				)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/eye/${this.head.eyeRetina.imgNumber}.vue`));
 		},
 		eye(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/eye/${
-						this.head.eye[this.childOrAdult].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/eye/${this.head.eye[this.childOrAdult].imgNumber}.vue`)
 			);
 		},
 		dinozHair(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/hair/${this.hairNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/hair/${this.hairNumber}.vue`));
 		},
 		complementaryHair(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/hair/${
-						this.head.hair[this.hairNumber].dependentImage.imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/hair/${this.head.hair[this.hairNumber].dependentImage.imgNumber}.vue`)
 			);
 		},
 		complementaryHair2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/hair/${
-						this.head.hair[this.hairNumber].dependentImage2.imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/hair/${this.head.hair[this.hairNumber].dependentImage2.imgNumber}.vue`)
 			);
 		},
 		headTattoo(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/head/tattoo/${
-						this.head.tattoo[this.tattooNumber].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/head/tattoo/${this.head.tattoo[this.tattooNumber].imgNumber}.vue`)
 			);
 		},
 		chestElement1(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/chest/${this.chest.element1.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/chest/${this.chest.element1.imgNumber}.vue`)
 			);
 		},
 		chestElement2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/chest/${this.chest.element2.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/chest/${this.chest.element2.imgNumber}.vue`)
 			);
 		},
 		chestElement3(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/chest/${4}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/${4}.vue`));
 		},
 		chestInjury1(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${
-						this.chest[this.injuryType][1].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${this.chest[this.injuryType][1].imgNumber}.vue`
+					)
 			);
 		},
 		chestInjury2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${
-						this.chest[this.injuryType][2].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${this.chest[this.injuryType][2].imgNumber}.vue`
+					)
 			);
 		},
 		chestInjury3(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${
-						this.chest[this.injuryType][3].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${this.chest[this.injuryType][3].imgNumber}.vue`
+					)
 			);
 		},
 		tail(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/chest/tail/${0}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/tail/${0}.vue`));
 		},
 		tailSpecial(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/chest/tail/special/${0}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/tail/special/${0}.vue`));
 		},
 		tailHair(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/hair/tail/${this.hairNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/hair/tail/${this.hairNumber}.vue`));
 		},
 		chestTattoo(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/chest/tattoo/${0}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/tattoo/${0}.vue`));
 		},
 		leftArm(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/arm/left/${this.arm.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/arm/left/${this.arm.imgNumber}.vue`));
 		},
 		leftArmSpecial0(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/left/special/${this.arm.left.dependentImage0.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/arm/left/special/${this.arm.left.dependentImage0.imgNumber}.vue`)
 			);
 		},
 		leftArmSpecial1(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/left/special/${this.arm.left.dependentImage1.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/arm/left/special/${this.arm.left.dependentImage1.imgNumber}.vue`)
 			);
 		},
 		leftArmSpecial2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/left/special/${
-						this.arm.left.dependentImage2[this.childOrAdult].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/arm/left/special/${
+							this.arm.left.dependentImage2[this.childOrAdult].imgNumber
+						}.vue`
+					)
 			);
 		},
 		leftArmSpecial4(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`)
 			);
 		},
 		leftArmInjury(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/left/injury/${this.injuryType}/${
-						this.arm.left[this.injuryType].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/arm/left/injury/${this.injuryType}/${
+							this.arm.left[this.injuryType].imgNumber
+						}.vue`
+					)
 			);
 		},
 		armTattoo(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/tattoo/${
-						this.arm.right.tattoo[this.tattooNumber].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/arm/right/tattoo/${this.arm.right.tattoo[this.tattooNumber].imgNumber}.vue`
+					)
 			);
 		},
 		rightArm(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/arm/right/${this.arm.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/arm/right/${this.arm.imgNumber}.vue`));
 		},
 		rightArmSpecial0(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage0.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage0.imgNumber}.vue`)
 			);
 		},
 		rightArmSpecial1(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage1.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage1.imgNumber}.vue`)
 			);
 		},
 		rightArmSpecial2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/special/${
-						this.arm.right.dependentImage2[this.childOrAdult].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/arm/right/special/${
+							this.arm.right.dependentImage2[this.childOrAdult].imgNumber
+						}.vue`
+					)
 			);
 		},
 		rightArmSpecial3(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage3.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage3.imgNumber}.vue`)
 			);
 		},
 		rightArmSpecial4(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`)
 			);
 		},
 		rightArmInjury(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/arm/right/injury/${this.injuryType}/${
-						this.arm.right[this.injuryType].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/arm/right/injury/${this.injuryType}/${
+							this.arm.right[this.injuryType].imgNumber
+						}.vue`
+					)
 			);
 		},
 		leftLeg(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/leg/left/${0}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/left/${0}.vue`));
 		},
 		leftLegKneeHorn(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/left/knee/${this.leg.left.knee.horn.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/leg/left/knee/${this.leg.left.knee.horn.imgNumber}.vue`)
 			);
 		},
 		leftLegKneeSkin(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/left/knee/${this.leg.left.knee.skin.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/leg/left/knee/${this.leg.left.knee.skin.imgNumber}.vue`)
 			);
 		},
 		leftLegInjury1(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/left/injury/${this.injuryType}/${
-						this.leg.left[this.injuryType][1].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/leg/left/injury/${this.injuryType}/${
+							this.leg.left[this.injuryType][1].imgNumber
+						}.vue`
+					)
 			);
 		},
 		leftLegInjury2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/left/injury/${this.injuryType}/${
-						this.leg.left[this.injuryType][2].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/leg/left/injury/${this.injuryType}/${
+							this.leg.left[this.injuryType][2].imgNumber
+						}.vue`
+					)
 			);
 		},
 		leftLegNail(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/leg/left/nail/${0}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/left/nail/${0}.vue`));
 		},
 		rightLeg(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/leg/right/${0}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/right/${0}.vue`));
 		},
 		rightLegKneeHorn(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/right/knee/${this.leg.right.knee.horn.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/leg/right/knee/${this.leg.right.knee.horn.imgNumber}.vue`)
 			);
 		},
 		rightLegKneeSkin(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/right/knee/${this.leg.right.knee.skin.imgNumber}.vue`
-				)
+			return defineAsyncComponent(
+				() => import(`@/components/dinoz/moueffe/leg/right/knee/${this.leg.right.knee.skin.imgNumber}.vue`)
 			);
 		},
 		rightLegInjury1(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
-						this.leg.right[this.injuryType][1].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
+							this.leg.right[this.injuryType][1].imgNumber
+						}.vue`
+					)
 			);
 		},
 		rightLegInjury2(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
-						this.leg.right[this.injuryType][2].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
+							this.leg.right[this.injuryType][2].imgNumber
+						}.vue`
+					)
 			);
 		},
 		rightLegInjury3(): string {
-			return defineAsyncComponent(() =>
-				import(
-					`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
-						this.leg.right[this.injuryType][3].imgNumber
-					}.vue`
-				)
+			return defineAsyncComponent(
+				() =>
+					import(
+						`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
+							this.leg.right[this.injuryType][3].imgNumber
+						}.vue`
+					)
 			);
 		},
 		rightLegNail(): string {
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/moueffe/leg/right/nail/${0}.vue`)
-			);
+			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/right/nail/${0}.vue`));
 		}
 	},
 	methods: {
@@ -932,25 +850,15 @@ export default defineComponent({
 			let result = '#';
 			let rgbResult: number;
 
-			const babyColorParsed: Array<number> = babyColor
-				.match(/\w./g)!
-				.map(res => parseInt(res, 16));
-			const adultColorParsed: Array<number> = adultColor
-				.match(/\w./g)!
-				.map(res => parseInt(res, 16));
+			const babyColorParsed: Array<number> = babyColor.match(/\w./g)!.map(res => parseInt(res, 16));
+			const adultColorParsed: Array<number> = adultColor.match(/\w./g)!.map(res => parseInt(res, 16));
 
 			for (let i = 0; i < 3; i++) {
 				if (babyColorParsed[i] < adultColorParsed[i]) {
-					rgbResult = Math.round(
-						((adultColorParsed[i] - babyColorParsed[i]) / 9) * size +
-							babyColorParsed[i]
-					);
+					rgbResult = Math.round(((adultColorParsed[i] - babyColorParsed[i]) / 9) * size + babyColorParsed[i]);
 					result += rgbResult.toString(16).padStart(2, '0');
 				} else {
-					rgbResult = Math.round(
-						((babyColorParsed[i] - adultColorParsed[i]) / 9) * (9 - size) +
-							adultColorParsed[i]
-					);
+					rgbResult = Math.round(((babyColorParsed[i] - adultColorParsed[i]) / 9) * (9 - size) + adultColorParsed[i]);
 					result += rgbResult.toString(16).padStart(2, '0');
 				}
 			}
@@ -976,62 +884,30 @@ export default defineComponent({
 		const sizeLetter = parseInt(this.display[1]);
 		this.size = (1 / 36) * parseInt(this.display[1]) + 0.75;
 
-		this.mainFirstColor = this.getColor(
-			bodyColor.baby.mainFirstColor,
-			bodyColor.adult.mainFirstColor,
-			sizeLetter
-		);
-		this.mainSecondColor = this.getColor(
-			bodyColor.baby.mainSecondColor,
-			bodyColor.adult.mainSecondColor,
-			sizeLetter
-		);
-		this.mainThirdColor = this.getColor(
-			bodyColor.baby.mainThirdColor,
-			bodyColor.adult.mainThirdColor,
-			sizeLetter
-		);
+		this.mainFirstColor = this.getColor(bodyColor.baby.mainFirstColor, bodyColor.adult.mainFirstColor, sizeLetter);
+		this.mainSecondColor = this.getColor(bodyColor.baby.mainSecondColor, bodyColor.adult.mainSecondColor, sizeLetter);
+		this.mainThirdColor = this.getColor(bodyColor.baby.mainThirdColor, bodyColor.adult.mainThirdColor, sizeLetter);
 
-		this.chestFirstColor = this.getColor(
-			bodyColor.baby.chestFirstColor,
-			bodyColor.adult.chestFirstColor,
-			sizeLetter
-		);
+		this.chestFirstColor = this.getColor(bodyColor.baby.chestFirstColor, bodyColor.adult.chestFirstColor, sizeLetter);
 		this.chestSecondColor = this.getColor(
 			bodyColor.baby.chestSecondColor,
 			bodyColor.adult.chestSecondColor,
 			sizeLetter
 		);
-		this.chestThirdColor = this.getColor(
-			bodyColor.baby.chestThirdColor,
-			bodyColor.adult.chestThirdColor,
-			sizeLetter
-		);
+		this.chestThirdColor = this.getColor(bodyColor.baby.chestThirdColor, bodyColor.adult.chestThirdColor, sizeLetter);
 		this.chestFourthColor = this.getColor(
 			bodyColor.baby.chestFourthColor,
 			bodyColor.adult.chestFourthColor,
 			sizeLetter
 		);
-		this.chestFifthColor = this.getColor(
-			bodyColor.baby.chestFifthColor,
-			bodyColor.adult.chestFifthColor,
-			sizeLetter
-		);
-		this.chestSixthColor = this.getColor(
-			bodyColor.baby.chestSixthColor,
-			bodyColor.adult.chestSixthColor,
-			sizeLetter
-		);
+		this.chestFifthColor = this.getColor(bodyColor.baby.chestFifthColor, bodyColor.adult.chestFifthColor, sizeLetter);
+		this.chestSixthColor = this.getColor(bodyColor.baby.chestSixthColor, bodyColor.adult.chestSixthColor, sizeLetter);
 		this.chestSeventhColor = this.getColor(
 			bodyColor.baby.chestSeventhColor,
 			bodyColor.adult.chestSeventhColor,
 			sizeLetter
 		);
-		this.borderColor = this.getColor(
-			bodyColor.baby.borderColor,
-			bodyColor.adult.borderColor,
-			sizeLetter
-		);
+		this.borderColor = this.getColor(bodyColor.baby.borderColor, bodyColor.adult.borderColor, sizeLetter);
 
 		this.hairFirstColor = hairFirstColor.hairFirstColor;
 		this.hairSecondColor = hairFirstColor.hairSecondColor;
@@ -1059,27 +935,21 @@ export default defineComponent({
 		// Head special 1
 		if (this.head.dependentImage) {
 			this.hasHeadSpecial = true;
-			this.headSpecialPositionLeft = `${this.head.dependentImage.left *
-				this.size}px`;
-			this.headSpecialPositionTop = `${this.head.dependentImage.top *
-				this.size}px`;
+			this.headSpecialPositionLeft = `${this.head.dependentImage.left * this.size}px`;
+			this.headSpecialPositionTop = `${this.head.dependentImage.top * this.size}px`;
 			this.headSpecialZIndexPosition = `${this.head.dependentImage.zIndex}`;
 		}
 
 		// Head special 2
 		if (this.head.dependentImage2) {
 			this.hasHeadSpecial2 = true;
-			this.headSpecial2PositionLeft = `${this.head.dependentImage2.left *
-				this.size}px`;
-			this.headSpecial2PositionTop = `${this.head.dependentImage2.top *
-				this.size}px`;
+			this.headSpecial2PositionLeft = `${this.head.dependentImage2.left * this.size}px`;
+			this.headSpecial2PositionTop = `${this.head.dependentImage2.top * this.size}px`;
 		}
 
 		// Eyes
-		this.eyePositionLeft = `${this.head.eye[this.childOrAdult].left *
-			this.size}px`;
-		this.eyePositionTop = `${this.head.eye[this.childOrAdult].top *
-			this.size}px`;
+		this.eyePositionLeft = `${this.head.eye[this.childOrAdult].left * this.size}px`;
+		this.eyePositionTop = `${this.head.eye[this.childOrAdult].top * this.size}px`;
 
 		// Eyes retinas
 		if (this.head.eyeRetina) {
@@ -1089,197 +959,141 @@ export default defineComponent({
 		}
 
 		// Chest
-		this.chestDefaultPositionLeft = `${moueffe.chest.default.left *
-			this.size}px`;
+		this.chestDefaultPositionLeft = `${moueffe.chest.default.left * this.size}px`;
 		this.chestDefaultPositionTop = `${moueffe.chest.default.top * this.size}px`;
 
-		this.chestElement2PositionLeft = `${this.chest.element2.left *
-			this.size}px`;
+		this.chestElement2PositionLeft = `${this.chest.element2.left * this.size}px`;
 		this.chestElement2PositionTop = `${this.chest.element2.top * this.size}px`;
 
 		// Chest third element
 		if (this.chest.element3) {
 			this.hasChestLastElement = true;
-			this.chestElement3PositionLeft = `${this.chest.element3.left *
-				this.size}px`;
-			this.chestElement3PositionTop = `${this.chest.element3.top *
-				this.size}px`;
+			this.chestElement3PositionLeft = `${this.chest.element3.left * this.size}px`;
+			this.chestElement3PositionTop = `${this.chest.element3.top * this.size}px`;
 		}
 
 		// Injuries
 		if (this.hasInjury) {
-			this.headInjuryPositionLeft = `${this.head[this.injuryType].left *
-				this.size}px`;
-			this.headInjuryPositionTop = `${this.head[this.injuryType].top *
-				this.size}px`;
+			this.headInjuryPositionLeft = `${this.head[this.injuryType].left * this.size}px`;
+			this.headInjuryPositionTop = `${this.head[this.injuryType].top * this.size}px`;
 
-			this.chestInjury1PositionLeft = `${this.chest[this.injuryType][1].left *
-				this.size}px`;
-			this.chestInjury1PositionTop = `${this.chest[this.injuryType][1].top *
-				this.size}px`;
+			this.chestInjury1PositionLeft = `${this.chest[this.injuryType][1].left * this.size}px`;
+			this.chestInjury1PositionTop = `${this.chest[this.injuryType][1].top * this.size}px`;
 
-			this.chestInjury2PositionLeft = `${this.chest[this.injuryType][2].left *
-				this.size}px`;
-			this.chestInjury2PositionTop = `${this.chest[this.injuryType][2].top *
-				this.size}px`;
+			this.chestInjury2PositionLeft = `${this.chest[this.injuryType][2].left * this.size}px`;
+			this.chestInjury2PositionTop = `${this.chest[this.injuryType][2].top * this.size}px`;
 
 			// Chest third injury
 			if (this.chest[this.injuryType][3]) {
 				this.hasChestThirdInjury = true;
-				this.chestInjury3PositionLeft = `${this.chest[this.injuryType][3].left *
-					this.size}px`;
-				this.chestInjury3PositionTop = `${this.chest[this.injuryType][3].top *
-					this.size}px`;
+				this.chestInjury3PositionLeft = `${this.chest[this.injuryType][3].left * this.size}px`;
+				this.chestInjury3PositionTop = `${this.chest[this.injuryType][3].top * this.size}px`;
 			}
 
 			// Legs injuries
-			this.leftLegInjury1PositionLeft = `${this.leg.left[this.injuryType][1]
-				.left * this.size}px`;
-			this.leftLegInjury1PositionTop = `${this.leg.left[this.injuryType][1]
-				.top * this.size}px`;
+			this.leftLegInjury1PositionLeft = `${this.leg.left[this.injuryType][1].left * this.size}px`;
+			this.leftLegInjury1PositionTop = `${this.leg.left[this.injuryType][1].top * this.size}px`;
 
-			this.rightLegInjury1PositionLeft = `${this.leg.right[this.injuryType][1]
-				.left * this.size}px`;
-			this.rightLegInjury1PositionTop = `${this.leg.right[this.injuryType][1]
-				.top * this.size}px`;
+			this.rightLegInjury1PositionLeft = `${this.leg.right[this.injuryType][1].left * this.size}px`;
+			this.rightLegInjury1PositionTop = `${this.leg.right[this.injuryType][1].top * this.size}px`;
 
 			// Leg second injury
 			if (this.leg.left[this.injuryType][2]) {
 				this.hasLegSecondInjury = true;
-				this.leftLegInjury2PositionLeft = `${this.leg.left[this.injuryType][2]
-					.left * this.size}px`;
-				this.leftLegInjury2PositionTop = `${this.leg.left[this.injuryType][2]
-					.top * this.size}px`;
+				this.leftLegInjury2PositionLeft = `${this.leg.left[this.injuryType][2].left * this.size}px`;
+				this.leftLegInjury2PositionTop = `${this.leg.left[this.injuryType][2].top * this.size}px`;
 
-				this.rightLegInjury2PositionLeft = `${this.leg.right[this.injuryType][2]
-					.left * this.size}px`;
-				this.rightLegInjury2PositionTop = `${this.leg.right[this.injuryType][2]
-					.top * this.size}px`;
+				this.rightLegInjury2PositionLeft = `${this.leg.right[this.injuryType][2].left * this.size}px`;
+				this.rightLegInjury2PositionTop = `${this.leg.right[this.injuryType][2].top * this.size}px`;
 			}
 
 			// Leg third injury
 			if (this.leg.right[this.injuryType][3]) {
 				this.hasLegThirdInjury = true;
-				this.rightLegInjury3PositionLeft = `${this.leg.right[this.injuryType][3]
-					.left * this.size}px`;
-				this.rightLegInjury3PositionTop = `${this.leg.right[this.injuryType][3]
-					.top * this.size}px`;
+				this.rightLegInjury3PositionLeft = `${this.leg.right[this.injuryType][3].left * this.size}px`;
+				this.rightLegInjury3PositionTop = `${this.leg.right[this.injuryType][3].top * this.size}px`;
 			}
 
 			// Arms injuries
 			if (this.arm.left[this.injuryType]) {
 				this.hasArmInjury = true;
-				this.leftArmInjuryPositionLeft = `${this.arm.left[this.injuryType]
-					.left * this.size}px`;
-				this.leftArmInjuryPositionTop = `${this.arm.left[this.injuryType].top *
-					this.size}px`;
+				this.leftArmInjuryPositionLeft = `${this.arm.left[this.injuryType].left * this.size}px`;
+				this.leftArmInjuryPositionTop = `${this.arm.left[this.injuryType].top * this.size}px`;
 
-				this.rightArmInjuryPositionLeft = `${this.arm.right[this.injuryType]
-					.left * this.size}px`;
-				this.rightArmInjuryPositionTop = `${this.arm.right[this.injuryType]
-					.top * this.size}px`;
+				this.rightArmInjuryPositionLeft = `${this.arm.right[this.injuryType].left * this.size}px`;
+				this.rightArmInjuryPositionTop = `${this.arm.right[this.injuryType].top * this.size}px`;
 			}
 		}
 
 		// Arms
-		this.leftArmDefaultPositionLeft = `${this.arm.left.default.left *
-			this.size}px`;
-		this.leftArmDefaultPositionTop = `${this.arm.left.default.top *
-			this.size}px`;
+		this.leftArmDefaultPositionLeft = `${this.arm.left.default.left * this.size}px`;
+		this.leftArmDefaultPositionTop = `${this.arm.left.default.top * this.size}px`;
 
 		// Arm special
 		if (this.arm.left.dependentImage0) {
 			this.hasArmSpecial = true;
 
-			this.leftArmSpecialPositionLeft = `${this.arm.left.dependentImage0.left *
-				this.size}px`;
-			this.leftArmSpecialPositionTop = `${this.arm.left.dependentImage0.top *
-				this.size}px`;
+			this.leftArmSpecialPositionLeft = `${this.arm.left.dependentImage0.left * this.size}px`;
+			this.leftArmSpecialPositionTop = `${this.arm.left.dependentImage0.top * this.size}px`;
 			this.leftArmSpecialPositionZIndex = `${this.arm.left.dependentImage0.zIndex}`;
 
-			this.rightArmSpecialPositionLeft = `${this.arm.right.dependentImage0
-				.left * this.size}px`;
-			this.rightArmSpecialPositionTop = `${this.arm.right.dependentImage0.top *
-				this.size}px`;
+			this.rightArmSpecialPositionLeft = `${this.arm.right.dependentImage0.left * this.size}px`;
+			this.rightArmSpecialPositionTop = `${this.arm.right.dependentImage0.top * this.size}px`;
 
 			// Arm special 1
 			if (this.arm.left.dependentImage1) {
 				this.hasArmSpecial1 = true;
-				this.leftArmSpecial1PositionLeft = `${this.arm.left.dependentImage1
-					.left * this.size}px`;
-				this.leftArmSpecial1PositionTop = `${this.arm.left.dependentImage1.top *
-					this.size}px`;
+				this.leftArmSpecial1PositionLeft = `${this.arm.left.dependentImage1.left * this.size}px`;
+				this.leftArmSpecial1PositionTop = `${this.arm.left.dependentImage1.top * this.size}px`;
 
-				this.rightArmSpecial1PositionLeft = `${this.arm.right.dependentImage1
-					.left * this.size}px`;
-				this.rightArmSpecial1PositionTop = `${this.arm.right.dependentImage1
-					.top * this.size}px`;
+				this.rightArmSpecial1PositionLeft = `${this.arm.right.dependentImage1.left * this.size}px`;
+				this.rightArmSpecial1PositionTop = `${this.arm.right.dependentImage1.top * this.size}px`;
 				this.rightArmSpecial1ZIndex = `${this.arm.right.dependentImage1.zIndex}`;
 			}
 
 			// Arm special 2
 			if (this.arm.left.dependentImage2) {
 				this.hasArmSpecial2 = true;
-				this.leftArmSpecial2PositionLeft = `${this.arm.left.dependentImage2[
-					this.childOrAdult
-				].left * this.size}px`;
-				this.leftArmSpecial2PositionTop = `${this.arm.left.dependentImage2[
-					this.childOrAdult
-				].top * this.size}px`;
+				this.leftArmSpecial2PositionLeft = `${this.arm.left.dependentImage2[this.childOrAdult].left * this.size}px`;
+				this.leftArmSpecial2PositionTop = `${this.arm.left.dependentImage2[this.childOrAdult].top * this.size}px`;
 
-				this.rightArmSpecial2PositionLeft = `${this.arm.right.dependentImage2[
-					this.childOrAdult
-				].left * this.size}px`;
-				this.rightArmSpecial2PositionTop = `${this.arm.right.dependentImage2[
-					this.childOrAdult
-				].top * this.size}px`;
+				this.rightArmSpecial2PositionLeft = `${this.arm.right.dependentImage2[this.childOrAdult].left * this.size}px`;
+				this.rightArmSpecial2PositionTop = `${this.arm.right.dependentImage2[this.childOrAdult].top * this.size}px`;
 			}
 
 			// Arm special 3
 			if (this.arm.right.dependentImage3) {
 				this.hasArmSpecial3 = true;
-				this.rightArmSpecial3PositionLeft = `${this.arm.right.dependentImage3
-					.left * this.size}px`;
-				this.rightArmSpecial3PositionTop = `${this.arm.right.dependentImage3
-					.top * this.size}px`;
+				this.rightArmSpecial3PositionLeft = `${this.arm.right.dependentImage3.left * this.size}px`;
+				this.rightArmSpecial3PositionTop = `${this.arm.right.dependentImage3.top * this.size}px`;
 			}
 
 			// Arm special 4
 			if (this.arm.left.dependentImage4) {
 				this.hasArmSpecial4 = true;
-				this.leftArmSpecial4PositionLeft = `${this.arm.left.dependentImage4
-					.left * this.size}px`;
-				this.leftArmSpecial4PositionTop = `${this.arm.left.dependentImage4.top *
-					this.size}px`;
+				this.leftArmSpecial4PositionLeft = `${this.arm.left.dependentImage4.left * this.size}px`;
+				this.leftArmSpecial4PositionTop = `${this.arm.left.dependentImage4.top * this.size}px`;
 
-				this.rightArmSpecial4PositionLeft = `${this.arm.right.dependentImage4
-					.left * this.size}px`;
-				this.rightArmSpecial4PositionTop = `${this.arm.right.dependentImage4
-					.top * this.size}px`;
+				this.rightArmSpecial4PositionLeft = `${this.arm.right.dependentImage4.left * this.size}px`;
+				this.rightArmSpecial4PositionTop = `${this.arm.right.dependentImage4.top * this.size}px`;
 			}
 		}
 
 		// Right arm
-		this.rightArmDefaultPositionLeft = `${this.arm.right.default.left *
-			this.size}px`;
-		this.rightArmDefaultPositionTop = `${this.arm.right.default.top *
-			this.size}px`;
+		this.rightArmDefaultPositionLeft = `${this.arm.right.default.left * this.size}px`;
+		this.rightArmDefaultPositionTop = `${this.arm.right.default.top * this.size}px`;
 
 		// Legs
-		this.leftLegDefaultPositionLeft = `${this.leg.left.default.left *
-			this.size}px`;
-		this.leftLegDefaultPositionTop = `${this.leg.left.default.top *
-			this.size}px`;
+		this.leftLegDefaultPositionLeft = `${this.leg.left.default.left * this.size}px`;
+		this.leftLegDefaultPositionTop = `${this.leg.left.default.top * this.size}px`;
 
 		// Left leg nails
 		this.leftLegNailPositionLeft = `${this.leg.left.nail.left * this.size}px`;
 		this.leftLegNailPositionTop = `${this.leg.left.nail.top * this.size}px`;
 
 		// Right leg
-		this.rightLegDefaultPositionLeft = `${this.leg.right.default.left *
-			this.size}px`;
-		this.rightLegDefaultPositionTop = `${this.leg.right.default.top *
-			this.size}px`;
+		this.rightLegDefaultPositionLeft = `${this.leg.right.default.left * this.size}px`;
+		this.rightLegDefaultPositionTop = `${this.leg.right.default.top * this.size}px`;
 
 		// Right leg nails
 		this.rightLegNailPositionLeft = `${this.leg.right.nail.left * this.size}px`;
@@ -1287,76 +1101,56 @@ export default defineComponent({
 
 		// Knees
 		if (this.hasKnee) {
-			this.leftLegKneeHornPositionLeft = `${this.leg.left.knee.horn.left *
-				this.size}px`;
-			this.leftLegKneeHornPositionTop = `${this.leg.left.knee.horn.top *
-				this.size}px`;
+			this.leftLegKneeHornPositionLeft = `${this.leg.left.knee.horn.left * this.size}px`;
+			this.leftLegKneeHornPositionTop = `${this.leg.left.knee.horn.top * this.size}px`;
 
-			this.leftLegKneeSkinPositionLeft = `${this.leg.left.knee.skin.left *
-				this.size}px`;
-			this.leftLegKneeSkinPositionTop = `${this.leg.left.knee.skin.top *
-				this.size}px`;
+			this.leftLegKneeSkinPositionLeft = `${this.leg.left.knee.skin.left * this.size}px`;
+			this.leftLegKneeSkinPositionTop = `${this.leg.left.knee.skin.top * this.size}px`;
 
-			this.rightLegKneeHornPositionLeft = `${this.leg.right.knee.horn.left *
-				this.size}px`;
-			this.rightLegKneeHornPositionTop = `${this.leg.right.knee.horn.top *
-				this.size}px`;
+			this.rightLegKneeHornPositionLeft = `${this.leg.right.knee.horn.left * this.size}px`;
+			this.rightLegKneeHornPositionTop = `${this.leg.right.knee.horn.top * this.size}px`;
 
-			this.rightLegKneeSkinPositionLeft = `${this.leg.right.knee.skin.left *
-				this.size}px`;
-			this.rightLegKneeSkinPositionTop = `${this.leg.right.knee.skin.top *
-				this.size}px`;
+			this.rightLegKneeSkinPositionLeft = `${this.leg.right.knee.skin.left * this.size}px`;
+			this.rightLegKneeSkinPositionTop = `${this.leg.right.knee.skin.top * this.size}px`;
 		}
 
 		// Tail
 		this.tailPositionLeft = `${this.chest.tail.left * this.size}px`;
 		this.tailPositionTop = `${this.chest.tail.top * this.size}px`;
 
-		this.tailSpecialPositionLeft = `${this.chest.tailSpecial.left *
-			this.size}px`;
+		this.tailSpecialPositionLeft = `${this.chest.tailSpecial.left * this.size}px`;
 		this.tailSpecialPositionTop = `${this.chest.tailSpecial.top * this.size}px`;
 
 		// Tail hair
 		if (this.head.hair[this.hairNumber]?.hasTailHair) {
 			this.hasTailHair = true;
 			this.tailHairSize = this.chest.tailHair[this.hairNumber].size;
-			this.tailHairPositionLeft = `${this.chest.tailHair[this.hairNumber].left *
-				this.size}px`;
-			this.tailHairPositionTop = `${this.chest.tailHair[this.hairNumber].top *
-				this.size}px`;
-			this.tailHairRotation = `${this.chest.tailHair[this.hairNumber].rotation *
-				this.size}deg`;
+			this.tailHairPositionLeft = `${this.chest.tailHair[this.hairNumber].left * this.size}px`;
+			this.tailHairPositionTop = `${this.chest.tailHair[this.hairNumber].top * this.size}px`;
+			this.tailHairRotation = `${this.chest.tailHair[this.hairNumber].rotation * this.size}deg`;
 		}
 
 		// Hair (head and tail)
 		if (this.hairNumber) {
 			this.hasHair = true;
 
-			this.hairPositionLeft = `${this.head.hair[this.hairNumber].left *
-				this.size}px`;
-			this.hairPositionTop = `${this.head.hair[this.hairNumber].top *
-				this.size}px`;
+			this.hairPositionLeft = `${this.head.hair[this.hairNumber].left * this.size}px`;
+			this.hairPositionTop = `${this.head.hair[this.hairNumber].top * this.size}px`;
 			this.hairZIndex = `${this.head.hair[this.hairNumber].zIndex}`;
 
 			// Complementary hair
 			if (this.head.hair[this.hairNumber].dependentImage) {
 				this.hasComplementaryHair = true;
-				this.hair2PositionLeft = `${this.head.hair[this.hairNumber]
-					.dependentImage.left * this.size}px`;
-				this.hair2PositionTop = `${this.head.hair[this.hairNumber]
-					.dependentImage.top * this.size}px`;
+				this.hair2PositionLeft = `${this.head.hair[this.hairNumber].dependentImage.left * this.size}px`;
+				this.hair2PositionTop = `${this.head.hair[this.hairNumber].dependentImage.top * this.size}px`;
 			}
 
 			// Complementary hair 2
 			if (this.head.hair[this.hairNumber].dependentImage2) {
 				this.hasComplementaryHair2 = true;
-				this.hair3PositionLeft = `${this.head.hair[this.hairNumber]
-					.dependentImage2.left * this.size}px`;
-				this.hair3PositionTop = `${this.head.hair[this.hairNumber]
-					.dependentImage2.top * this.size}px`;
-				this.hair3ZIndex = `${
-					this.head.hair[this.hairNumber].dependentImage2.zIndex
-				}`;
+				this.hair3PositionLeft = `${this.head.hair[this.hairNumber].dependentImage2.left * this.size}px`;
+				this.hair3PositionTop = `${this.head.hair[this.hairNumber].dependentImage2.top * this.size}px`;
+				this.hair3ZIndex = `${this.head.hair[this.hairNumber].dependentImage2.zIndex}`;
 			}
 		}
 
@@ -1365,26 +1159,21 @@ export default defineComponent({
 			// Head tattoo
 			if (this.head.tattoo[this.tattooNumber] !== undefined) {
 				this.hasHeadTattoo = true;
-				this.headTattooPositionLeft = `${this.head.tattoo[this.tattooNumber]
-					.left * this.size}px`;
-				this.headTattooPositionTop = `${this.head.tattoo[this.tattooNumber]
-					.top * this.size}px`;
+				this.headTattooPositionLeft = `${this.head.tattoo[this.tattooNumber].left * this.size}px`;
+				this.headTattooPositionTop = `${this.head.tattoo[this.tattooNumber].top * this.size}px`;
 			}
 
 			// Arm tattoo
 			if (this.hasTattoo && this.arm.right.tattoo) {
 				this.hasArmTattoo = true;
-				this.armTattooPositionLeft = `${this.arm.right.tattoo[this.tattooNumber]
-					.left * this.size}px`;
-				this.armTattooPositionTop = `${this.arm.right.tattoo[this.tattooNumber]
-					.top * this.size}px`;
+				this.armTattooPositionLeft = `${this.arm.right.tattoo[this.tattooNumber].left * this.size}px`;
+				this.armTattooPositionTop = `${this.arm.right.tattoo[this.tattooNumber].top * this.size}px`;
 			}
 
 			// Chest tattoo
 			if (this.hasTattoo && this.chest.tattoo && this.tattoo.hasChestTattoo) {
 				this.hasChestTattoo = true;
-				this.chestTattooPositionLeft = `${this.chest.tattoo.left *
-					this.size}px`;
+				this.chestTattooPositionLeft = `${this.chest.tattoo.left * this.size}px`;
 				this.chestTattooPositionTop = `${this.chest.tattoo.top * this.size}px`;
 			}
 		}

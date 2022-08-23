@@ -8,11 +8,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	givePlayerMoney(
-		id: number,
-		gold: number,
-		operation: string
-	): Promise<number> {
+	givePlayerMoney(id: number, gold: number, operation: string): Promise<number> {
 		return http()
 			.put(`/admin/gold/${id}`, {
 				gold: gold,
@@ -21,11 +17,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	givePlayerEpicRewards(
-		id: number,
-		epicRewardList: Array<string>,
-		operation: string
-	): Promise<number> {
+	givePlayerEpicRewards(id: number, epicRewardList: Array<string>, operation: string): Promise<number> {
 		return http()
 			.put(`/admin/epic/${id}`, {
 				epicRewardId: epicRewardList,

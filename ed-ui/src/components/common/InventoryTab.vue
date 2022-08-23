@@ -7,32 +7,14 @@
 					<th class="qty">{{ $t('inventory.stock') }}</th>
 					<th class="act">{{ $t('inventory.actions') }}</th>
 				</tr>
-				<tr
-					v-for="(item, index) in allItemsData"
-					:class="index % 2 === 1 ? 'even' : ''"
-					:key="index"
-				>
+				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
-						<img
-							:src="getImg('item', 'item_', `${itemNameList[item.itemId]}`)"
-						/>
+						<img :src="getImg('item', 'item_', `${itemNameList[item.itemId]}`)" />
 						<p v-html="$t(`item.name.${itemNameList[item.itemId]}`)" />
 						<template #content>
-							<h1
-								v-html="
-									formatContent($t(`item.name.${itemNameList[item.itemId]}`))
-								"
-							/>
-							<h2>
-								{{ $t(`tooltip.item.maxQuantity`) }} {{ item.maxQuantity }}
-							</h2>
-							<p
-								v-html="
-									formatContent(
-										$t(`item.description.${itemNameList[item.itemId]}`)
-									)
-								"
-							/>
+							<h1 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
+							<h2>{{ $t(`tooltip.item.maxQuantity`) }} {{ item.maxQuantity }}</h2>
+							<p v-html="formatContent($t(`item.description.${itemNameList[item.itemId]}`))" />
 						</template>
 					</Tippy>
 					<td

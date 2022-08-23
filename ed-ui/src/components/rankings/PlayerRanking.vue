@@ -10,7 +10,7 @@
 					<th class="points">{{ $t('tabs.average') }}</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
-					<td class="pos" colspan="5" style="text-align:center">
+					<td class="pos" colspan="5" style="text-align: center">
 						{{ $t('ranking.page.previous') }}
 					</td>
 				</tr>
@@ -38,12 +38,8 @@
 					</td>
 				</tr>
 			</tbody>
-			<tr
-				class="select"
-				@click="changePage(1)"
-				:class="{ hidden: ranking.length < 20 }"
-			>
-				<td class="pos" colspan="5" style="text-align:center">
+			<tr class="select" @click="changePage(1)" :class="{ hidden: ranking.length < 20 }">
+				<td class="pos" colspan="5" style="text-align: center">
 					{{ $t('ranking.page.next') }}
 				</td>
 			</tr>
@@ -76,10 +72,7 @@ export default defineComponent({
 		async getRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.ranking = await PlayerService.getPlayersRanking(
-					this.sort!,
-					this.page
-				);
+				this.ranking = await PlayerService.getPlayersRanking(this.sort!, this.page);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);

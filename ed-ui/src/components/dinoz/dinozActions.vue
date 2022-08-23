@@ -26,28 +26,14 @@
 						<template #content>
 							<h1
 								v-if="action.name === 'shop'"
-								v-html="
-									formatContent(
-										$t(`shop.item.${shopNameList[action.prop]}.name`)
-									)
-								"
+								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))"
 							/>
-							<h1
-								v-else
-								v-html="formatContent($t(`action.name.${action.name}`))"
-							/>
+							<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
 							<p
 								v-if="action.name === 'shop'"
-								v-html="
-									formatContent(
-										$t(`shop.item.${shopNameList[action.prop]}.description`)
-									)
-								"
+								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
 							/>
-							<p
-								v-else
-								v-html="formatContent($t(`action.description.${action.name}`))"
-							/>
+							<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 						</template>
 					</Tippy>
 				</tbody>
@@ -98,8 +84,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .actions {
 	background: url('~@/assets/background/banniere_left.webp') no-repeat,
-		url('~@/assets/background/banniere_right.webp') no-repeat,
-		url('~@/assets/background/banniere_middle.webp') repeat-x;
+		url('~@/assets/background/banniere_right.webp') no-repeat, url('~@/assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left, right;
 	float: left;
 	left: 12px;

@@ -34,27 +34,15 @@
 			<dt>
 				{{ $t(`myAccount.dojo`) }}
 			</dt>
-			<dd>
-				PlaceHolder
-			</dd>
+			<dd>PlaceHolder</dd>
 		</dl>
 		<div class="profilContent" v-if="!isEditOn">
 			<div v-html="customText" class="contentTexte" />
 		</div>
 		<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
 		<div class="buttonLand" v-if="isMyAccount()">
-			<a
-				v-if="hasPlume() && isEditOn"
-				@click="setCustomText(customTextEdit)"
-				class="tinybutton"
-				>OK</a
-			>
-			<a
-				v-if="hasPlume() && !isEditOn"
-				@click="isEditOn = true"
-				class="tinybutton"
-				>{{ $t(`myAccount.edit`) }}</a
-			>
+			<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
+			<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
 			<a class="smallbutton">{{ $t(`myAccount.editAccount`) }}</a>
 			<a class="smallbutton">{{ $t(`myAccount.quest`) }}</a>
 			<p v-if="hasImport()" class="smallbutton" @click="openPopinImport = true">
@@ -82,6 +70,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			openPopinImport: false as boolean,
 			isEditOn: false as boolean,
 			customText: this.accountData?.customText as string | null,
@@ -101,9 +90,7 @@ export default defineComponent({
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
 		isMyAccount(): boolean {
-			return (
-				sessionStore.getters.getPlayerId === parseInt(this.$route.params.id[0])
-			);
+			return this.sessionStore.getPlayerId === parseInt(this.$route.params.id[0]);
 		},
 		closePopin(): void {
 			this.openPopinImport = false;
@@ -134,8 +121,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .profil {
-	background: url('../../assets/design/info_header.gif') no-repeat,
-		url('../../assets/design/info_footer.gif') no-repeat,
+	background: url('../../assets/design/info_header.gif') no-repeat, url('../../assets/design/info_footer.gif') no-repeat,
 		url('../../assets/design/info_center.gif') repeat-y;
 	background-position-y: top, bottom;
 	height: auto;

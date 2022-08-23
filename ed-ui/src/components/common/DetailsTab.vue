@@ -13,20 +13,8 @@
 				</select>
 			</div>
 			<div class="label">
-				<input
-					type="radio"
-					id="Ascendant"
-					value="Ascendant"
-					v-model="picked"
-					@change="reverse()"
-				/>
-				<input
-					type="radio"
-					id="Descendant"
-					value="Descendant"
-					v-model="picked"
-					@change="reverse()"
-				/>
+				<input type="radio" id="Ascendant" value="Ascendant" v-model="picked" @change="reverse()" />
+				<input type="radio" id="Descendant" value="Descendant" v-model="picked" @change="reverse()" />
 			</div>
 			<div class="label">
 				<label for="Ascendant">Ascendant</label>
@@ -42,11 +30,7 @@
 						{{ $t('details.th.active') }}
 					</th>
 				</tr>
-				<tr
-					v-for="skill in dinozSkill"
-					:key="skill.skillId"
-					:class="skill.state === false ? 'disabled' : ''"
-				>
+				<tr v-for="skill in dinozSkill" :key="skill.skillId" :class="skill.state === false ? 'disabled' : ''">
 					<td class="name">
 						<Tippy theme="normal">
 							<img
@@ -56,23 +40,9 @@
 							/>
 							<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
 							<template #content>
-								<h1
-									v-html="
-										formatContent(
-											$t(`skill.name.${skillNameList[skill.skillId]}`)
-										)
-									"
-								/>
-								<p
-									v-html="
-										formatContent(
-											$t(`skill.description.${skillNameList[skill.skillId]}`)
-										)
-									"
-								/>
-								<h3
-									v-html="formatContent($t(`skill.energy.${skill.energy}`))"
-								/>
+								<h1 v-html="formatContent($t(`skill.name.${skillNameList[skill.skillId]}`))" />
+								<p v-html="formatContent($t(`skill.description.${skillNameList[skill.skillId]}`))" />
+								<h3 v-html="formatContent($t(`skill.energy.${skill.energy}`))" />
 							</template>
 						</Tippy>
 					</td>
@@ -80,14 +50,8 @@
 						<Tippy theme="normal">
 							{{ skill.type }}
 							<template #content>
-								<h1
-									v-html="formatContent($t(`details.type.name.${skill.type}`))"
-								/>
-								<p
-									v-html="
-										formatContent($t(`details.type.description.${skill.type}`))
-									"
-								/>
+								<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
+								<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
 							</template>
 						</Tippy>
 					</td>

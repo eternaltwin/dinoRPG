@@ -3,7 +3,7 @@
 	<select id="news" v-model="newsEdit" @change="newSelect = true">
 		<template v-for="(news, index) in batchNews" :key="index">
 			<option :value="news">{{ news.title }}</option>
-		</template> </select
+		</template></select
 	><br />
 	<label for="createNews">Or type the name to create a news : </label>
 	<input id="createNews" v-model="newsEdit.title" type="text" />

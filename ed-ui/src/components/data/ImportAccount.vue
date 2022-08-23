@@ -1,9 +1,7 @@
 <template>
 	<div class="modal-background">
 		<div class="modal-box">
-			<button class="modal-close" @click="closePopin()">
-				Close
-			</button>
+			<button class="modal-close" @click="closePopin()">Close</button>
 			<span>
 				{{ $t(`import.disclaimer1`) }} <br /><br />
 				{{ $t(`import.disclaimer2`) }} <br /><br />
@@ -29,6 +27,11 @@ import { sessionStore } from '@/store';
 export default defineComponent({
 	name: 'ImportAccount',
 	emits: ['closePopin'],
+	data() {
+		return {
+			sessionStore: sessionStore()
+		};
+	},
 	methods: {
 		closePopin(): void {
 			this.$emit('closePopin');
@@ -38,7 +41,7 @@ export default defineComponent({
 			this.$emit('closePopin');
 			try {
 				await PlayerService.requestImport(lang);
-				sessionStore.commit('setDinozList', null);
+				this.sessionStore.setDinozList([]);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);

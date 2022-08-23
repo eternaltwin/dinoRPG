@@ -2,7 +2,7 @@ import { Dinoz } from './dinoz';
 
 export interface CommonData {
 	money: number;
-	dinoz: Dinoz;
+	dinoz: Array<Dinoz>;
 	dinozCount: number;
 	playerId: number;
 }

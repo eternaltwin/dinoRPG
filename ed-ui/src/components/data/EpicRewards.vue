@@ -10,18 +10,8 @@
 				<Tippy theme="normal">
 					<img :src="getEpicImg(epicList.imgName[rewards])" />
 					<template #content>
-						<h1
-							v-html="
-								formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))
-							"
-						/>
-						<p
-							v-html="
-								formatContent(
-									$t(`rewards.description.${epicList.imgName[rewards]}`)
-								)
-							"
-						/>
+						<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))" />
+						<p v-html="formatContent($t(`rewards.description.${epicList.imgName[rewards]}`))" />
 					</template>
 				</Tippy>
 			</template>
@@ -58,8 +48,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .profil {
-	background: url('../../assets/design/info_header.gif') no-repeat,
-		url('../../assets/design/info_footer.gif') no-repeat,
+	background: url('../../assets/design/info_header.gif') no-repeat, url('../../assets/design/info_footer.gif') no-repeat,
 		url('../../assets/design/info_center.gif') repeat-y;
 	background-position-y: top, bottom;
 	height: auto;

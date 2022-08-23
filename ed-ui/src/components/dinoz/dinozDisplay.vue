@@ -1,5 +1,5 @@
 <template>
-	<Title :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></Title>
+	<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
 	<a class="left" />
 	<div class="title">
 		{{ dinozData.name }}
@@ -36,22 +36,12 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozWithoutFlash.vue')
-		),
-		DinozElements: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozElements.vue')
-		),
-		DinozBars: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozBars.vue')
-		),
-		DinozEquip: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozEquip.vue')
-		),
-		DinozStatus: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozStatus.vue')
-		),
-		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue'))
+		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue')),
+		DinozElements: defineAsyncComponent(() => import('@/components/dinoz/dinozElements.vue')),
+		DinozBars: defineAsyncComponent(() => import('@/components/dinoz/dinozBars.vue')),
+		DinozEquip: defineAsyncComponent(() => import('@/components/dinoz/dinozEquip.vue')),
+		DinozStatus: defineAsyncComponent(() => import('@/components/dinoz/dinozStatus.vue')),
+		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue'))
 	},
 	methods: {
 		getImg(folder: string, imgPrefix: string, imgName: string): string {

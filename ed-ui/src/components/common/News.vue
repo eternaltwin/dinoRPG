@@ -7,19 +7,10 @@
 		:id="index"
 	>
 		<h1>{{ news.title }}</h1>
-		<img
-			v-if="news.image"
-			:src="`data:image/webp;base64,${transformImage(news.image.data)}`"
-		/>
+		<img v-if="news.image" :src="`data:image/webp;base64,${transformImage(news.image.data)}`" />
 		<p v-html="news.text" />
 	</div>
-	<a
-		v-if="displayedBatch.length % 10 === 0"
-		class="overload"
-		@click="overload(page + 1)"
-	>
-		{{ $t('news.overload') }}</a
-	>
+	<a v-if="displayedBatch.length % 10 === 0" class="overload" @click="overload(page + 1)"> {{ $t('news.overload') }}</a>
 </template>
 
 <script lang="ts">
@@ -34,47 +25,30 @@ export default defineComponent({
 	name: 'News',
 	data() {
 		return {
+			localStore: localStore(),
 			batch: [] as Array<Partial<AllNews>>,
 			displayedBatch: [] as Array<Partial<News>>,
 			page: 1 as number
 		};
 	},
 	computed: {
-		language(): string {
-			return localStore.getters.getLanguage;
+		language(): string | undefined {
+			return this.localStore.getLanguage;
 		}
 	},
 	methods: {
 		transformLanguage(news: Array<Partial<AllNews>>): Array<Partial<News>> {
-			switch (localStore.getters.getLanguage) {
+			switch (this.localStore.getLanguage) {
 				case 'fr':
-					return news.map(news =>
-						this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!)
-					);
+					return news.map(news => this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!));
 				case 'en':
-					return news.map(news =>
-						this.getBatchData(
-							news.englishTitle!,
-							news.image!,
-							news.englishText!
-						)
-					);
+					return news.map(news => this.getBatchData(news.englishTitle!, news.image!, news.englishText!));
 				case 'de':
-					return news.map(news =>
-						this.getBatchData(news.germanTitle!, news.image!, news.germanText!)
-					);
+					return news.map(news => this.getBatchData(news.germanTitle!, news.image!, news.germanText!));
 				case 'es':
-					return news.map(news =>
-						this.getBatchData(
-							news.spanishTitle!,
-							news.image!,
-							news.spanishText!
-						)
-					);
+					return news.map(news => this.getBatchData(news.spanishTitle!, news.image!, news.spanishText!));
 				default:
-					return news.map(news =>
-						this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!)
-					);
+					return news.map(news => this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!));
 			}
 		},
 		getBatchData(title: string, image: Image, text: string): News {
@@ -86,12 +60,7 @@ export default defineComponent({
 			};
 		},
 		transformImage(image: Array<number>): string {
-			return btoa(
-				image.reduce(
-					(data: string, byte: number) => data + String.fromCharCode(byte),
-					''
-				)
-			);
+			return btoa(image.reduce((data: string, byte: number) => data + String.fromCharCode(byte), ''));
 		},
 		async overload(page: number): Promise<void> {
 			EventBus.emit('isLoading', true);

@@ -1,5 +1,5 @@
 <template>
-	<Title :title="`${$t('pageTitle.ranking')}`"></Title>
+	<TitleHeader :title="`${$t('pageTitle.ranking')}`"></TitleHeader>
 	<div class="section">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.ranking`) }}</h3>
@@ -7,10 +7,7 @@
 	</div>
 	<ul class="tabs">
 		<li :class="tabSelected === 1 ? 'active' : ''">
-			<a href="#" @click="setTab(1)"
-				><img :src="getImg('design', 'small_', 'member')" />
-				{{ $t('tabs.players') }}</a
-			>
+			<a href="#" @click="setTab(1)"><img :src="getImg('design', 'small_', 'member')" /> {{ $t('tabs.players') }}</a>
 		</li>
 		<li :class="tabSelected === 2 ? 'active' : ''">
 			<a href="#" @click="setTab(2)">{{ $t('tabs.average') }}</a>
@@ -35,10 +32,8 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 export default defineComponent({
 	name: 'Ranking',
 	components: {
-		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue')),
-		PlayerRanking: defineAsyncComponent(() =>
-			import('@/components/rankings/PlayerRanking.vue')
-		)
+		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
+		PlayerRanking: defineAsyncComponent(() => import('@/components/rankings/PlayerRanking.vue'))
 	},
 	data() {
 		return {

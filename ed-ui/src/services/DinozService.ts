@@ -1,10 +1,5 @@
 import { http } from '@/utils';
-import {
-	Dinoz,
-	FightResult,
-	Skill,
-	DinozSkillOwnAndUnlockable
-} from '@/models';
+import { Dinoz, FightResult, Skill, DinozSkillOwnAndUnlockable } from '@/models';
 
 export const DinozService = {
 	buyDinoz(id: string): Promise<Dinoz> {
@@ -31,11 +26,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	setSkillState(
-		id: string,
-		skillId: number,
-		skillState: boolean
-	): Promise<void> {
+	setSkillState(id: string, skillId: number, skillState: boolean): Promise<void> {
 		return http()
 			.put(`/dinoz/setskillstate/${id}`, {
 				skillId: skillId,
@@ -60,20 +51,13 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	levelUp(
-		dinozId: string,
-		tryNumber: string
-	): Promise<Partial<DinozSkillOwnAndUnlockable>> {
+	levelUp(dinozId: string, tryNumber: string): Promise<Partial<DinozSkillOwnAndUnlockable>> {
 		return http()
 			.get(`/level/learnableskills/${dinozId}/${tryNumber}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	learnSkill(
-		dinozId: string,
-		skillIdList: Array<number>,
-		tryNumber: number
-	): Promise<number | undefined> {
+	learnSkill(dinozId: string, skillIdList: Array<number>, tryNumber: number): Promise<number | undefined> {
 		return http()
 			.post(`/level/learnskill/${dinozId}`, {
 				skillIdList: skillIdList,

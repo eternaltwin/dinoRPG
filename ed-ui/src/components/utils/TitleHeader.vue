@@ -5,14 +5,14 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: 'Title',
+	name: 'TitleHeader',
 	props: {
 		title: String
 	},
 	watch: {
 		title: {
 			immediate: true,
-			handler: function() {
+			handler: function () {
 				return (document.title = this.title!);
 			}
 		}

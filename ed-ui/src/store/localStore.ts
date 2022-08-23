@@ -1,28 +1,19 @@
 import { StoreStateLocal } from '@/models';
-import VuexPersistence from 'vuex-persist';
-import { createStore } from 'vuex';
+import { defineStore } from 'pinia';
 
-const stateLocal = {
-	langue: undefined
-} as StoreStateLocal;
-
-const mutationsLocal = {
-	setLanguage: (state: StoreStateLocal, langue: string) => {
-		state.langue = langue;
+export const localStore = defineStore('localStore', {
+	state: (): StoreStateLocal => ({
+		langue: undefined
+	}),
+	getters: {
+		getLanguage: (state: StoreStateLocal) => state.langue
+	},
+	actions: {
+		setLanguage(langue: string): void {
+			this.langue = langue;
+		}
+	},
+	persist: {
+		storage: window.localStorage
 	}
-};
-
-const gettersLocal = {
-	getLanguage: (state: StoreStateLocal) => state.langue
-};
-
-const vuexLocal = new VuexPersistence<StoreStateLocal>({
-	storage: window.localStorage
-});
-
-export const localStore = createStore({
-	state: stateLocal,
-	getters: gettersLocal,
-	mutations: mutationsLocal,
-	plugins: [vuexLocal.plugin]
 });

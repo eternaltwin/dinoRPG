@@ -35,7 +35,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { isNil } from 'lodash';
 import LeftPanel from '@/components/common/LeftPanel.vue';
 import RightMenu from '@/components/common/RightMenu.vue';
 import { sessionStore } from '@/store';
@@ -50,21 +49,26 @@ export default defineComponent({
 		LeftPanel,
 		RightMenu
 	},
+	data() {
+		return {
+			sessionStore: sessionStore()
+		};
+	},
 	async mounted(): Promise<void> {
-		const money = sessionStore.getters.getMoney;
-		const dinozList = sessionStore.getters.getDinozList;
-		const dinozCount = sessionStore.getters.getDinozCount;
+		const money = this.sessionStore.getMoney;
+		const dinozList = this.sessionStore.getDinozList;
+		const dinozCount = this.sessionStore.getDinozCount;
 
-		if (isNil(money) || isNil(dinozList) || isNil(dinozCount)) {
+		if (!money || !dinozList || !dinozCount) {
 			try {
 				EventBus.emit('isLoading', true);
 				const commonData: CommonData = await PlayerService.getCommonData();
 
 				// Set data in sessionStore
-				sessionStore.commit('setMoney', commonData.money);
-				sessionStore.commit('setDinozList', commonData.dinoz);
-				sessionStore.commit('setDinozCount', commonData.dinozCount);
-				sessionStore.commit('setPlayerId', commonData.playerId);
+				this.sessionStore.setMoney(commonData.money);
+				this.sessionStore.setDinozList(commonData.dinoz);
+				this.sessionStore.setDinozCount(commonData.dinozCount);
+				this.sessionStore.setPlayerId(commonData.playerId);
 				EventBus.emit('isLoading', false);
 
 				this.$router.push({ name: 'News' });

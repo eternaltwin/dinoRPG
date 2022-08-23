@@ -1,5 +1,3 @@
-import { reverse } from 'lodash';
-
 export const utils = {
 	/**
 	 * Ajoute des points tous les trois caractères
@@ -13,6 +11,6 @@ export const utils = {
 			}
 			newNumber += number[number.length - 1 - i];
 		}
-		return reverse(newNumber.split('')).join('');
+		return newNumber.split('').reverse().join('');
 	}
 };

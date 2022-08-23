@@ -7,7 +7,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { OauthService } from '@/services';
-import { isNil } from 'lodash';
 import { sessionStore } from '@/store';
 import EventBus from '@/events';
 
@@ -15,6 +14,7 @@ export default defineComponent({
 	name: 'Authentication',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			isCodePresent: false as boolean
 		};
 	},
@@ -23,16 +23,14 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			let jwt: string;
 			try {
-				jwt = await OauthService.authenticateUser(
-					this.$route.query.code as string
-				);
+				jwt = await OauthService.authenticateUser(this.$route.query.code as string);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				console.error(err);
 				return;
 			}
 
-			sessionStore.commit('setJwt', jwt);
+			this.sessionStore.setJwt(jwt);
 			this.$router.go(0);
 		},
 		async getRedirectUri(): Promise<void> {
@@ -43,7 +41,7 @@ export default defineComponent({
 	},
 	mounted(): void {
 		setTimeout(() => {
-			this.isCodePresent = !isNil(this.$route.query.code);
+			this.isCodePresent = this.$route.query.code !== undefined;
 			if (this.isCodePresent) {
 				this.authenticateToET();
 			}

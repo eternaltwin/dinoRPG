@@ -1,35 +1,23 @@
 <template>
 	<div class="search">
-		<input
-			type="text"
-			placeholder="Search Player"
-			v-model="searchValue"
-			list="players"
-			@keyup.enter="getPlayer()"
-		/>
+		<input type="text" placeholder="Search Player" v-model="searchValue" list="players" @keyup.enter="getPlayer()" />
 		<datalist id="players">
-			<option v-for="(players, index) in playerList" :key="index">{{
-				players.name
-			}}</option>
+			<option v-for="(players, index) in playerList" :key="index">
+				{{ players.name }}
+			</option>
 		</datalist>
 		<input type="submit" @click="getPlayer()" />
 	</div>
 	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
 	<ul class="tabs" style="margin-top: 10px">
 		<li :class="tabSelected === 1 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 1">
-				Player Edit
-			</a>
+			<a href="#" @click="tabSelected = 1"> Player Edit </a>
 		</li>
 		<li :class="tabSelected === 2 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 2">
-				Dinoz Edit
-			</a>
+			<a href="#" @click="tabSelected = 2"> Dinoz Edit </a>
 		</li>
 		<li :class="tabSelected === 3 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 3">
-				News
-			</a>
+			<a href="#" @click="tabSelected = 3"> News </a>
 		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
@@ -42,11 +30,7 @@
 			</select>
 		</form>
 	</div>
-	<DinozEdit
-		v-if="selectedDinoz && tabSelected === 2"
-		:dinozProp="selectedDinoz"
-		:playerId="player.playerId"
-	/>
+	<DinozEdit v-if="selectedDinoz && tabSelected === 2" :dinozProp="selectedDinoz" :playerId="player.playerId" />
 	<NewsEdit v-if="tabSelected === 3" />
 </template>
 
@@ -102,9 +86,7 @@ export default defineComponent({
 		},
 		async getPlayer(): Promise<void> {
 			this.displayErrorMessage = false;
-			const playerId: number | undefined = this.playerList.find(
-				player => player.name === this.searchValue
-			)?.playerId;
+			const playerId: number | undefined = this.playerList.find(player => player.name === this.searchValue)?.playerId;
 
 			if (playerId === undefined) {
 				this.displayErrorMessage = true;

@@ -1,15 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
-import { isNil } from 'lodash';
 import urlJoin from 'url-join';
 import { sessionStore } from '@/store';
 
 const API_SERVER = new URL(process.env.VUE_APP_API_URL);
 const API_BASE = urlJoin(API_SERVER.toString(), 'api');
 
-export const http = function(): AxiosInstance {
-	const jwt: string = sessionStore.getters.getJwt;
+export const http = function (): AxiosInstance {
+	const jwt: string | undefined = sessionStore().getJwt;
 
-	const authHeaders = isNil(jwt) ? {} : { Authorization: `Bearer ${jwt}` };
+	const authHeaders = jwt === undefined ? {} : ({ Authorization: `Bearer ${jwt}` } as Record<string, string>);
 
 	return axios.create({
 		baseURL: API_BASE,

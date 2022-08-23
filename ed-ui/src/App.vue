@@ -1,6 +1,6 @@
 <template>
 	<link rel="icon" href="public/favicon.ico" />
-	<Title :title="$t('pageTitle.default')" />
+	<TitleHeader :title="$t('pageTitle.default')" />
 	<RouterView />
 	<Spinner />
 	<Version />
@@ -11,21 +11,17 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
 import Version from '@/components/utils/Version.vue';
-import Title from '@/components/utils/Title.vue';
+import TitleHeader from '@/components/utils/TitleHeader.vue';
 import Thanks from '@/components/utils/Thanks.vue';
 
 export default defineComponent({
 	name: 'App',
 	components: {
-		Title,
+		TitleHeader,
 		Version,
 		Thanks,
-		Spinner: defineAsyncComponent(() =>
-			import('@/components/utils/Spinner.vue')
-		),
-		ErrorMessage: defineAsyncComponent(() =>
-			import('@/components/utils/ErrorMessage.vue')
-		)
+		Spinner: defineAsyncComponent(() => import('@/components/utils/Spinner.vue')),
+		ErrorMessage: defineAsyncComponent(() => import('@/components/utils/ErrorMessage.vue'))
 	}
 });
 </script>

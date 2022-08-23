@@ -18,21 +18,9 @@
 					<td>isFrozen</td>
 					<td>{{ dinoz.isFrozen }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="isFrozen"
-							v-model="dinozField.isFrozen"
-						/>
+						<input class="radio" type="radio" value="true" name="isFrozen" v-model="dinozField.isFrozen" />
 						<label class="radio">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="isFrozen"
-							v-model="dinozField.isFrozen"
-						/>
+						<input class="radio" type="radio" value="false" name="isFrozen" v-model="dinozField.isFrozen" />
 						<label class="radio">false</label>
 					</td>
 				</tr>
@@ -40,21 +28,9 @@
 					<td>isSacrificed</td>
 					<td>{{ dinoz.isSacrificed }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="isSacrificed"
-							v-model="dinozField.isSacrificed"
-						/>
+						<input class="radio" type="radio" value="true" name="isSacrificed" v-model="dinozField.isSacrificed" />
 						<label class="radio">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="isSacrificed"
-							v-model="dinozField.isSacrificed"
-						/>
+						<input class="radio" type="radio" value="false" name="isSacrificed" v-model="dinozField.isSacrificed" />
 						<label class="radio">false</label>
 					</td>
 				</tr>
@@ -62,21 +38,9 @@
 					<td>canChangeName</td>
 					<td>{{ dinoz.canChangeName }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="canChangeName"
-							v-model="dinozField.canChangeName"
-						/>
+						<input class="radio" type="radio" value="true" name="canChangeName" v-model="dinozField.canChangeName" />
 						<label class="radio">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="canChangeName"
-							v-model="dinozField.canChangeName"
-						/>
+						<input class="radio" type="radio" value="false" name="canChangeName" v-model="dinozField.canChangeName" />
 						<label class="radio">false</label>
 					</td>
 				</tr>
@@ -123,26 +87,18 @@
 								<img :src="getImg(statusList.imgName[status])" />
 								<template #content>
 									<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
-									<p
-										v-html="formatContent($t(`status.description.${status}`))"
-									></p>
+									<p v-html="formatContent($t(`status.description.${status}`))"></p>
 								</template>
 							</Tippy>
-							<p
-								v-if="!statusList.displayed[status]"
-								v-html="statusList.imgName[status]"
-							/>
+							<p v-if="!statusList.displayed[status]" v-html="statusList.imgName[status]" />
 						</template>
 					</td>
 					<td>
 						<select v-model="dinozField.statusList" multiple size="4">
-							<template
-								v-for="(status, index) in statusListFiltered"
-								:key="index"
-							>
-								<option :value="status">{{
-									$t(`status.name.${status}`)
-								}}</option>
+							<template v-for="(status, index) in statusListFiltered" :key="index">
+								<option :value="status">
+									{{ $t(`status.name.${status}`) }}
+								</option>
 							</template>
 						</select>
 						<input
@@ -174,13 +130,10 @@
 					</td>
 					<td>
 						<select v-model="dinozField.skillList" multiple size="10">
-							<template
-								v-for="(skill, index) in skillListFiltered"
-								:key="index"
-							>
-								<option :value="skill">{{
-									$t(`skill.name.${skillNameList[skill]}`)
-								}}</option>
+							<template v-for="(skill, index) in skillListFiltered" :key="index">
+								<option :value="skill">
+									{{ $t(`skill.name.${skillNameList[skill]}`) }}
+								</option>
 							</template>
 						</select>
 						<br />
@@ -281,12 +234,8 @@ export default defineComponent({
 					);
 				}
 
-				const refresh: Array<Dinoz> = await AdminService.listAllDinozFromPlayer(
-					this.playerId
-				);
-				this.dinoz = refresh.find(
-					dinoz => dinoz.dinozId === this.dinozProp.dinozId
-				)!;
+				const refresh: Array<Dinoz> = await AdminService.listAllDinozFromPlayer(this.playerId);
+				this.dinoz = refresh.find(dinoz => dinoz.dinozId === this.dinozProp.dinozId)!;
 			} catch (err) {
 				EventBus.emit('isLoading', false);
 				errorHandler.handle(err);
@@ -317,9 +266,7 @@ export default defineComponent({
 					statusId => !this.dinoz.statusList.includes(parseInt(statusId))
 				);
 			} else {
-				this.statusListFiltered = Object.keys(
-					statusList.imgName
-				).filter(statusId =>
+				this.statusListFiltered = Object.keys(statusList.imgName).filter(statusId =>
 					this.dinoz.statusList.includes(parseInt(statusId))
 				);
 			}

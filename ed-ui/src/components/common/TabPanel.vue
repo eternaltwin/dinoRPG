@@ -25,12 +25,8 @@ export default defineComponent({
 	name: 'TabPanel',
 	props: { dinozData: Object as PropType<Dinoz> },
 	components: {
-		InventoryTab: defineAsyncComponent(() =>
-			import('@/components/common/InventoryTab.vue')
-		),
-		DetailsTab: defineAsyncComponent(() =>
-			import('@/components/common/DetailsTab.vue')
-		),
+		InventoryTab: defineAsyncComponent(() => import('@/components/common/InventoryTab.vue')),
+		DetailsTab: defineAsyncComponent(() => import('@/components/common/DetailsTab.vue')),
 		MapTab: defineAsyncComponent(() => import('@/components/common/MapTab.vue'))
 	},
 	data() {
@@ -57,8 +53,7 @@ export default defineComponent({
 	padding-bottom: 15px;
 	color: white;
 	background: url('~@/assets/background/banniere_left.webp') no-repeat,
-		url('~@/assets/background/banniere_right.webp') no-repeat,
-		url('~@/assets/background/banniere_middle.webp') repeat-x;
+		url('~@/assets/background/banniere_right.webp') no-repeat, url('~@/assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left, right;
 
 	.tabs {

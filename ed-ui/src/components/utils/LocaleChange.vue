@@ -19,13 +19,16 @@ import { localStore } from '@/store';
 export default defineComponent({
 	name: 'LocaleChange',
 	data() {
-		return { langs: Locales };
+		return {
+			localStore: localStore(),
+			langs: Locales
+		};
 	},
 	methods: {
 		switchLocale(locale: string) {
 			if (this.$i18n.locale !== locale) {
 				this.$i18n.locale = locale;
-				localStore.commit('setLanguage', locale);
+				this.localStore.setLanguage(locale);
 			}
 		}
 	}

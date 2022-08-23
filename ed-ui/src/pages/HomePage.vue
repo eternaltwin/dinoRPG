@@ -34,9 +34,7 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 export default defineComponent({
 	name: 'HomePage',
 	components: {
-		AuthenticationPage: defineAsyncComponent(() =>
-			import('@/pages/AuthenticationPage.vue')
-		)
+		AuthenticationPage: defineAsyncComponent(() => import('@/pages/AuthenticationPage.vue'))
 	}
 });
 </script>
@@ -85,14 +83,12 @@ export default defineComponent({
 			font-weight: bold;
 			text-decoration: none;
 			font-variant: small-caps;
-			text-shadow: 0 1px 0 #a5d9ff, 0 -1px 0 #a5d9ff, 1px 0 0 #a5d9ff,
-				-1px 0 0 #a5d9ff, 1px 1px 0 #a5d9ff, -1px -1px 0 #a5d9ff,
-				-1px 1px 0 #a5d9ff, 1px -1px 0 #a5d9ff, 0px 2px 2px #0076cc;
+			text-shadow: 0 1px 0 #a5d9ff, 0 -1px 0 #a5d9ff, 1px 0 0 #a5d9ff, -1px 0 0 #a5d9ff, 1px 1px 0 #a5d9ff,
+				-1px -1px 0 #a5d9ff, -1px 1px 0 #a5d9ff, 1px -1px 0 #a5d9ff, 0px 2px 2px #0076cc;
 			&:hover {
 				color: #52b6ff;
-				text-shadow: 0 1px 0 white, 0 -1px 0 white, 1px 0 0 white,
-					-1px 0 0 white, 1px 1px 0 white, -1px -1px 0 white, -1px 1px 0 white,
-					1px -1px 0 white, 0 2px 2px #0076cc;
+				text-shadow: 0 1px 0 white, 0 -1px 0 white, 1px 0 0 white, -1px 0 0 white, 1px 1px 0 white, -1px -1px 0 white,
+					-1px 1px 0 white, 1px -1px 0 white, 0 2px 2px #0076cc;
 			}
 		}
 		em {
@@ -151,16 +147,14 @@ export default defineComponent({
 		text-decoration: none;
 		cursor: pointer;
 		margin-left: 10px;
-		text-shadow: 0 1px 0 #a5d9ff, 0 -1px 0 #a5d9ff, 1px 0 0 #a5d9ff,
-			-1px 0 0 #a5d9ff, 1px 1px 0 #a5d9ff, -1px -1px 0 #a5d9ff,
-			-1px 1px 0 #a5d9ff, 1px -1px 0 #a5d9ff, 0 2px 2px #0076cc;
+		text-shadow: 0 1px 0 #a5d9ff, 0 -1px 0 #a5d9ff, 1px 0 0 #a5d9ff, -1px 0 0 #a5d9ff, 1px 1px 0 #a5d9ff,
+			-1px -1px 0 #a5d9ff, -1px 1px 0 #a5d9ff, 1px -1px 0 #a5d9ff, 0 2px 2px #0076cc;
 	}
 	.sign:hover {
 		color: #52b6ff;
 		background-color: transparent;
-		text-shadow: 0 1px 0 white, 0 -1px 0 white, 1px 0 0 white, -1px 0 0 white,
-			1px 1px 0 white, -1px -1px 0 white, -1px 1px 0 white, 1px -1px 0 white,
-			0 2px 2px #0076cc;
+		text-shadow: 0 1px 0 white, 0 -1px 0 white, 1px 0 0 white, -1px 0 0 white, 1px 1px 0 white, -1px -1px 0 white,
+			-1px 1px 0 white, 1px -1px 0 white, 0 2px 2px #0076cc;
 	}
 	.bloc {
 		width: 53em;

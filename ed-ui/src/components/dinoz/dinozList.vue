@@ -41,6 +41,7 @@ export default defineComponent({
 	name: 'DinozList',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			dinozList: [] as Array<Dinoz>
 		};
 	},
@@ -61,16 +62,16 @@ export default defineComponent({
 	},
 	computed: {
 		storeDinozList(): Array<Dinoz> {
-			return sessionStore.getters.getDinozList;
+			return this.sessionStore.getDinozList!;
 		}
 	},
 	watch: {
-		storeDinozList: function(dinozList: Array<Dinoz>) {
+		storeDinozList: function (dinozList: Array<Dinoz>) {
 			this.dinozList = dinozList;
 		}
 	},
 	mounted(): void {
-		this.dinozList = sessionStore.getters.getDinozList;
+		this.dinozList = this.sessionStore.getDinozList!;
 	}
 });
 </script>

@@ -1,10 +1,5 @@
 <template>
-	<component
-		:is="dinozToDisplay"
-		:display="display"
-		:life="life"
-		:flip="flip"
-	></component>
+	<component :is="dinozToDisplay" :display="display" :life="life" :flip="flip"></component>
 </template>
 
 <script lang="ts">
@@ -20,12 +15,8 @@ export default defineComponent({
 	},
 	computed: {
 		dinozToDisplay(): string {
-			const raceName: string = Object.entries(raceList).find(
-				race => race[0].toString() === this.display[0]
-			)![1];
-			return defineAsyncComponent(() =>
-				import(`@/components/dinoz/${raceName}/${raceName}.vue`)
-			);
+			const raceName: string = Object.entries(raceList).find(race => race[0].toString() === this.display[0])![1];
+			return defineAsyncComponent(() => import(`@/components/dinoz/${raceName}/${raceName}.vue`));
 		}
 	}
 });

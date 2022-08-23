@@ -45,31 +45,15 @@
 							<Tippy theme="normal">
 								<img :src="getEpicImg(epicList.imgName[reward])" />
 								<template #content>
-									<h1
-										v-html="
-											formatContent(
-												$t(`rewards.name.${epicList.imgName[reward]}`)
-											)
-										"
-									/>
-									<p
-										v-html="
-											formatContent(
-												$t(`rewards.description.${epicList.imgName[reward]}`)
-											)
-										"
-									/>
+									<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward]}`))" />
+									<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward]}`))" />
 								</template>
 							</Tippy>
 						</template>
 					</td>
 					<td>
 						<select v-model="playerFields.rewards" multiple size="4">
-							<option
-								v-for="(reward, index) in epicListFiltered"
-								:key="index"
-								:value="reward"
-							>
+							<option v-for="(reward, index) in epicListFiltered" :key="index" :value="reward">
 								{{ epicList.imgName[reward] }}
 							</option>
 						</select>
@@ -98,14 +82,7 @@
 					<td>{{ player.money }}</td>
 					<td>
 						<input type="number" min="0" v-model="playerFields.money" /><br />
-						<input
-							class="radio"
-							type="radio"
-							id="add"
-							value="add"
-							name="operation"
-							v-model="playerFields.operation"
-						/>
+						<input class="radio" type="radio" id="add" value="add" name="operation" v-model="playerFields.operation" />
 						<label class="radio" for="add">add</label>
 						<input
 							class="radio"
@@ -121,34 +98,15 @@
 				<tr>
 					<td>quetzuBought</td>
 					<td>{{ player.quetzuBought }}</td>
-					<td>
-						<input
-							type="number"
-							min="0"
-							max="6"
-							v-model="playerFields.quetzuBought"
-						/><br />
-					</td>
+					<td><input type="number" min="0" max="6" v-model="playerFields.quetzuBought" /><br /></td>
 				</tr>
 				<tr>
 					<td>leader</td>
 					<td>{{ player.leader }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="leader"
-							v-model="playerFields.leader"
-						/>
+						<input class="radio" type="radio" value="true" name="leader" v-model="playerFields.leader" />
 						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="leader"
-							v-model="playerFields.leader"
-						/>
+						<input class="radio" type="radio" value="false" name="leader" v-model="playerFields.leader" />
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
@@ -156,21 +114,9 @@
 					<td>engineer</td>
 					<td>{{ player.engineer }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="engineer"
-							v-model="playerFields.engineer"
-						/>
+						<input class="radio" type="radio" value="true" name="engineer" v-model="playerFields.engineer" />
 						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="engineer"
-							v-model="playerFields.engineer"
-						/>
+						<input class="radio" type="radio" value="false" name="engineer" v-model="playerFields.engineer" />
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
@@ -178,21 +124,9 @@
 					<td>cooker</td>
 					<td>{{ player.cooker }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="cooker"
-							v-model="playerFields.cooker"
-						/>
+						<input class="radio" type="radio" value="true" name="cooker" v-model="playerFields.cooker" />
 						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="cooker"
-							v-model="playerFields.cooker"
-						/>
+						<input class="radio" type="radio" value="false" name="cooker" v-model="playerFields.cooker" />
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
@@ -200,21 +134,9 @@
 					<td>shopKeeper</td>
 					<td>{{ player.shopKeeper }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="shopKeeper"
-							v-model="playerFields.shopKeeper"
-						/>
+						<input class="radio" type="radio" value="true" name="shopKeeper" v-model="playerFields.shopKeeper" />
 						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="shopKeeper"
-							v-model="playerFields.shopKeeper"
-						/>
+						<input class="radio" type="radio" value="false" name="shopKeeper" v-model="playerFields.shopKeeper" />
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
@@ -222,21 +144,9 @@
 					<td>merchant</td>
 					<td>{{ player.merchant }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="merchant"
-							v-model="playerFields.merchant"
-						/>
+						<input class="radio" type="radio" value="true" name="merchant" v-model="playerFields.merchant" />
 						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="merchant"
-							v-model="playerFields.merchant"
-						/>
+						<input class="radio" type="radio" value="false" name="merchant" v-model="playerFields.merchant" />
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
@@ -244,21 +154,9 @@
 					<td>priest</td>
 					<td>{{ player.priest }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="priest"
-							v-model="playerFields.priest"
-						/>
+						<input class="radio" type="radio" value="true" name="priest" v-model="playerFields.priest" />
 						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="priest"
-							v-model="playerFields.priest"
-						/>
+						<input class="radio" type="radio" value="false" name="priest" v-model="playerFields.priest" />
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
@@ -266,21 +164,9 @@
 					<td>teacher</td>
 					<td>{{ player.teacher }}</td>
 					<td>
-						<input
-							class="radio"
-							type="radio"
-							value="true"
-							name="teacher"
-							v-model="playerFields.teacher"
-						/>
+						<input class="radio" type="radio" value="true" name="teacher" v-model="playerFields.teacher" />
 						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							value="false"
-							name="teacher"
-							v-model="playerFields.teacher"
-						/>
+						<input class="radio" type="radio" value="false" name="teacher" v-model="playerFields.teacher" />
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
@@ -341,26 +227,17 @@ export default defineComponent({
 			}
 
 			if (this.playerFields.money && this.playerFields.operation) {
-				await AdminService.givePlayerMoney(
-					this.player.playerId,
-					this.playerFields.money,
-					this.playerFields.operation
-				);
+				await AdminService.givePlayerMoney(this.player.playerId, this.playerFields.money, this.playerFields.operation);
 			}
 
-			if (
-				this.playerFields.rewards!.length > 0 &&
-				this.playerFields.epicOperation
-			) {
+			if (this.playerFields.rewards!.length > 0 && this.playerFields.epicOperation) {
 				await AdminService.givePlayerEpicRewards(
 					this.player.playerId,
 					this.playerFields.rewards!,
 					this.playerFields.epicOperation
 				);
 			}
-			this.player = await AdminService.getplayerInformation(
-				this.player.playerId
-			);
+			this.player = await AdminService.getplayerInformation(this.player.playerId);
 
 			this.playerFields.rewards = [];
 			this.filterEpicList(this.playerFields.epicOperation!);
@@ -374,9 +251,7 @@ export default defineComponent({
 					epicRewardId => !this.player.rewards.includes(parseInt(epicRewardId))
 				);
 			} else {
-				this.epicListFiltered = Object.keys(
-					epicList.imgName
-				).filter(epicRewardId =>
+				this.epicListFiltered = Object.keys(epicList.imgName).filter(epicRewardId =>
 					this.player.rewards.includes(parseInt(epicRewardId))
 				);
 			}

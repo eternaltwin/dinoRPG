@@ -19,16 +19,10 @@
 			<a @click="goToPage('Ingredients')">{{ $t('rightMenu.ingredients') }}</a>
 		</li>
 		<li>
-			<a @click="goToMyAccount('MyAccount', getPlayerId)">{{
-				$t('rightMenu.account')
-			}}</a>
+			<a @click="goToMyAccount('MyAccount', getPlayerId)">{{ $t('rightMenu.account') }}</a>
 		</li>
 		<li>
-			<a
-				href="https://eternal-twin.net/forum/sections/drpg_main"
-				target="_blank"
-				>{{ $t('rightMenu.forum') }}</a
-			>
+			<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank">{{ $t('rightMenu.forum') }}</a>
 		</li>
 		<li>
 			<a @click="goToPage('')">{{ $t('rightMenu.faq') }}</a>
@@ -54,6 +48,7 @@ export default defineComponent({
 	name: 'RightMenu',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			time: '' as string
 		};
 	},
@@ -61,11 +56,11 @@ export default defineComponent({
 		LocaleChange
 	},
 	computed: {
-		dinozCount(): number {
-			return sessionStore.getters.getDinozCount;
+		dinozCount(): number | undefined {
+			return this.sessionStore.getDinozCount;
 		},
-		getPlayerId(): number {
-			return sessionStore.getters.getPlayerId;
+		getPlayerId(): number | undefined {
+			return this.sessionStore.getPlayerId;
 		}
 	},
 	methods: {
@@ -76,7 +71,7 @@ export default defineComponent({
 			this.$router.push({ name: page });
 		},
 		getTime(): void {
-			let day: Date = new Date();
+			const day: Date = new Date();
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris' });
 		},
 		logOff(): void {
@@ -104,8 +99,7 @@ export default defineComponent({
 	padding-left: 15px;
 	padding-top: 15px;
 	background: url('../../assets/design/sideMenu_header.gif') no-repeat,
-		url('../../assets/design/sideMenu_footer.gif') no-repeat,
-		url('../../assets/design/sideMenu_bg.gif') repeat-y;
+		url('../../assets/design/sideMenu_footer.gif') no-repeat, url('../../assets/design/sideMenu_bg.gif') repeat-y;
 	background-position-y: top, bottom;
 	display: block;
 	list-style: none;

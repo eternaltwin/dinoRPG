@@ -1,20 +1,8 @@
 <template>
 	<div class="shop">
-		<Title
-			:title="
-				$t('pageTitle.shop') +
-					$t(`shop.item.${shopNameList[shopId]}.name`) +
-					` ]`
-			"
-		/>
+		<TitleHeader :title="$t('pageTitle.shop') + $t(`shop.item.${shopNameList[shopId]}.name`) + ` ]`" />
 		<div class="section">
-			<div
-				class="titlePage"
-				style="undefined"
-				width="520"
-				height="27"
-				v-html="formatContent($t(`shop.item.title`))"
-			/>
+			<div class="titlePage" style="undefined" width="520" height="27" v-html="formatContent($t(`shop.item.title`))" />
 			<div
 				class="subTitlePage"
 				style="undefined"
@@ -26,16 +14,9 @@
 		<div class="shopDesc">
 			<div class="contain">
 				<div class="art art_shop">
-					<img
-						:src="getImg('shop', 'shop_', `${shopNameList[shopId]}`)"
-						alt=""
-					/>
+					<img :src="getImg('shop', 'shop_', `${shopNameList[shopId]}`)" alt="" />
 				</div>
-				<p
-					v-html="
-						formatContent($t(`shop.item.${shopNameList[shopId]}.description`))
-					"
-				/>
+				<p v-html="formatContent($t(`shop.item.${shopNameList[shopId]}.description`))" />
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -49,17 +30,9 @@
 					:key="index"
 					tag="a"
 				>
-					<img
-						:src="getImg('item', 'item_', `${itemNameList[item.itemId]}`)"
-						alt="icon"
-						@click="selectedItem = item"
-					/>
+					<img :src="getImg('item', 'item_', `${itemNameList[item.itemId]}`)" alt="icon" @click="selectedItem = item" />
 					<template #content>
-						<h2
-							v-html="
-								formatContent($t(`item.name.${itemNameList[item.itemId]}`))
-							"
-						/>
+						<h2 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
 						<p v-if="item.itemType === 'magical'">
 							{{ formatContent($t(`shop.item.price`)) }}
 							<img :src="getImg('item', 'item_', 'golden_napodino')" />
@@ -76,19 +49,9 @@
 			<div class="details">
 				<div v-if="selectedItem.itemId === 0" id="shop_guide">
 					<p v-html="formatContent($t('shop.item.help'))" />
-					<div
-						class="ad"
-						v-html="
-							formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))
-						"
-					/>
+					<div class="ad" v-html="formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))" />
 				</div>
-				<div
-					v-if="selectedItem.itemId !== 0"
-					id="item_"
-					class="item"
-					style="display: block;"
-				>
+				<div v-if="selectedItem.itemId !== 0" id="item_" class="item" style="display: block">
 					<Tippy
 						theme="small"
 						tag="div"
@@ -103,15 +66,13 @@
 							<div
 								v-html="
 									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-										selectedItem.quantity +
-										formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-										selectedItem.maxQuantity +
-										formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+									selectedItem.quantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
+									selectedItem.maxQuantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
 								"
 							/>
-							<div
-								v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))"
-							/>
+							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
 						</template>
 					</Tippy>
 					<div class="type">
@@ -126,13 +87,7 @@
 								<p v-html="formatContent($t('tooltip.item.use'))" />
 							</template>
 						</Tippy>
-						<Tippy
-							theme="small"
-							tag="img"
-							v-else
-							:src="getImg('icons', 'small_', 'use_off')"
-							alt=""
-						>
+						<Tippy theme="small" tag="img" v-else :src="getImg('icons', 'small_', 'use_off')" alt="">
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.useOff'))" />
 							</template>
@@ -148,13 +103,7 @@
 								<p v-html="formatContent($t('tooltip.item.equip'))" />
 							</template>
 						</Tippy>
-						<Tippy
-							theme="small"
-							tag="img"
-							v-else
-							:src="getImg('icons', 'small_', 'equip_off')"
-							alt=""
-						>
+						<Tippy theme="small" tag="img" v-else :src="getImg('icons', 'small_', 'equip_off')" alt="">
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.equipOff'))" />
 							</template>
@@ -165,37 +114,21 @@
 						<input type="number" v-model="selectedQuantity" />
 						<a
 							class="button"
-							v-if="
-								isSelectedQuantityValid(
-									parseFloat(selectedQuantity),
-									selectedItem
-								)
-							"
+							v-if="isSelectedQuantityValid(parseFloat(selectedQuantity), selectedItem)"
 							@click="buyItemPopinConfirmChoice()"
 						>
 							{{ $t(`shop.item.buy`) }}
 						</a>
 						<Tippy theme="small" tag="a" class="button disabled" v-else>
 							<template #content>
-								<div
-									v-html="formatContent($t('tooltip.shop.invalidQuantity'))"
-								/>
-								<div
-									v-html="
-										formatContent($t('tooltip.shop.invalidQuantity_foot'))
-									"
-								/>
+								<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
+								<div v-html="formatContent($t('tooltip.shop.invalidQuantity_foot'))" />
 							</template>
 							{{ $t(`shop.item.buy`) }}
 						</Tippy>
 					</div>
 					<div class="header">
-						<img
-							class="icon"
-							:src="
-								getImg('item', 'item_', `${itemNameList[selectedItem.itemId]}`)
-							"
-						/>
+						<img class="icon" :src="getImg('item', 'item_', `${itemNameList[selectedItem.itemId]}`)" />
 						<div class="name">
 							{{ $t(`item.name.${itemNameList[selectedItem.itemId]}`) }}
 						</div>
@@ -213,14 +146,7 @@
 						{{ formatContent($t(`item.name.golden_napodino`)) }}
 						x {{ selectedItem.price }}
 					</div>
-					<div
-						class="desc"
-						v-html="
-							formatContent(
-								$t(`item.description.${itemNameList[selectedItem.itemId]}`)
-							)
-						"
-					/>
+					<div class="desc" v-html="formatContent($t(`item.description.${itemNameList[selectedItem.itemId]}`))" />
 				</div>
 			</div>
 		</div>
@@ -240,6 +166,7 @@ export default defineComponent({
 	name: 'ItemShopPage',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			itemList: [] as Array<Item>,
 			itemNameList: itemNameList,
 			shopNameList: shopNameList,
@@ -248,7 +175,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Title: defineAsyncComponent(() => import('@/components/utils/Title.vue'))
+		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue'))
 	},
 	computed: {
 		// Check if the quantity select is valid:
@@ -259,8 +186,7 @@ export default defineComponent({
 			return (selectedQuantity: number, selectedItem: Item) => {
 				return (
 					selectedQuantity > 0 &&
-					selectedQuantity <=
-						selectedItem.maxQuantity! - selectedItem.quantity! &&
+					selectedQuantity <= selectedItem.maxQuantity! - selectedItem.quantity! &&
 					Number.isInteger(selectedQuantity)
 				);
 			};
@@ -283,8 +209,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string
-				this.selectedItem.quantity =
-					Number(this.selectedItem.quantity!) + Number(quantity);
+				this.selectedItem.quantity = Number(this.selectedItem.quantity!) + Number(quantity);
 			} catch (err) {
 				errorHandler.handle(err);
 				return;
@@ -292,14 +217,12 @@ export default defineComponent({
 
 			// Update player's money if the item purchased is non magical
 			if (this.selectedItem.itemType !== 'magical') {
-				const newMoney = (sessionStore.getters.getMoney -
-					this.selectedItem.price! * quantity) as number;
-				sessionStore.commit('setMoney', newMoney);
+				const newMoney = (this.sessionStore.getMoney! - this.selectedItem.price! * quantity) as number;
+				this.sessionStore.setMoney(newMoney);
 			}
 		},
 		async buyMaxItemPopinConfirmChoice(): Promise<void> {
-			const maxQuantity: number =
-				this.selectedItem.maxQuantity! - this.selectedItem.quantity!;
+			const maxQuantity: number = this.selectedItem.maxQuantity! - this.selectedItem.quantity!;
 			const totalPrice: number = maxQuantity * this.selectedItem.price!;
 
 			const res: boolean = confirm(
@@ -338,7 +261,7 @@ export default defineComponent({
 	},
 	watch: {
 		// Reload the item list if the player go on another shope page
-		'$route.params.name': async function() {
+		'$route.params.name': async function () {
 			if (this.shopId < 0) {
 				return;
 			}

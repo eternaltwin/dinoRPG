@@ -9,7 +9,6 @@ import MyAccount from '@/pages/MyAccount.vue';
 import Ranking from '@/pages/Ranking.vue';
 import Fight from '@/pages/Fight.vue';
 import LevelUp from '@/pages/LevelUp.vue';
-import { isNil } from 'lodash';
 import { sessionStore } from '@/store';
 import DinozWithoutFlash from '@/components/dinoz/dinozWithoutFlash.vue';
 import AdminDashBoard from '@/pages/AdminDashBoard.vue';
@@ -100,8 +99,8 @@ const router = createRouter({
 	]
 });
 
-const displayAuth = isNil(sessionStore.getters.getJwt);
 router.beforeEach(to => {
+	const displayAuth = sessionStore().getJwt === undefined;
 	// route to AuthPage if not logged and going to any page
 	if (displayAuth && to.name !== 'AuthenticationPage') {
 		return { name: 'AuthenticationPage' };

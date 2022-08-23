@@ -1,28 +1,11 @@
 <template>
 	<div class="swf">
-		<object
-			type="application/x-shockwave-flash"
-			:data="url"
-			:width="width"
-			:height="height"
-		>
+		<object type="application/x-shockwave-flash" :data="url" :width="width" :height="height">
 			<param name="movie" :value="url" />
-			<param
-				v-for="(value, key) in params"
-				:key="key"
-				:name="key"
-				:value="value"
-			/>
+			<param v-for="(value, key) in params" :key="key" :name="key" :value="value" />
 			<param name="flashvars" :value="serialize(flashVars)" />
 
-			<embed
-				:src="url"
-				v-bind="params"
-				:flashvars="serialize(flashVars)"
-				quality="high"
-				width="100%"
-				height="100%"
-			/>
+			<embed :src="url" v-bind="params" :flashvars="serialize(flashVars)" quality="high" width="100%" height="100%" />
 		</object>
 	</div>
 </template>
@@ -67,11 +50,7 @@ export default defineComponent({
 			const str: Array<string> = [];
 			for (const p in obj) {
 				if (Object.prototype.hasOwnProperty.call(obj, p)) {
-					str.push(
-						encodeURIComponent(p) +
-							'=' +
-							encodeURIComponent(obj[p as keyof FlashVars])
-					);
+					str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p as keyof FlashVars]));
 				}
 			}
 			return str.join('&');

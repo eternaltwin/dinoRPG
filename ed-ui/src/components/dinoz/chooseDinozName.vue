@@ -2,11 +2,7 @@
 	<div id="chooseDinozName">
 		<p>{{ $t('chooseDinoz.information') }}</p>
 		<div class="dinoz_display">
-			<DinozWithoutFlash
-				:display="dinozData.display"
-				:life="dinozData.life"
-				:flip="-1"
-			></DinozWithoutFlash>
+			<DinozWithoutFlash :display="dinozData.display" :life="dinozData.life" :flip="-1"></DinozWithoutFlash>
 		</div>
 		<div>
 			<p>{{ $t('chooseDinoz.nomDuDinoz') }}</p>
@@ -27,12 +23,11 @@ import EventBus from '@/events';
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() =>
-			import('@/components/dinoz/dinozWithoutFlash.vue')
-		)
+		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			name: undefined as string | undefined,
 			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/
 		};
@@ -55,13 +50,11 @@ export default defineComponent({
 				}
 
 				// Update dinozList in store
-				const dinozList: Array<Dinoz> = sessionStore.getters.getDinozList;
-				const dinozToUpdate = dinozList.find(
-					dinoz => dinoz.dinozId == this.dinozData!.dinozId
-				)!;
+				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.dinozId == this.dinozData!.dinozId)!;
 				dinozToUpdate.name = this.name;
 
-				sessionStore.commit('setDinozList', dinozList);
+				this.sessionStore.setDinozList(dinozList);
 
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);
