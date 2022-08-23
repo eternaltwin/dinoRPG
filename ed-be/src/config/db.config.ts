@@ -1,7 +1,7 @@
 import fs from 'fs';
 import toml from 'toml';
 
-export default function (config: string) {
+export default (config: string) => {
 	const configuration = toml.parse(fs.readFileSync(`./config_${config}.toml`, 'utf-8'));
 
 	const dbConfig = {
