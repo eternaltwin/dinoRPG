@@ -1,7 +1,7 @@
 import { DinozRace } from '@/models';
 
 export interface DinozShop {
-	id: string;
+	id: number;
 	display: string;
 	race: DinozRace;
 }

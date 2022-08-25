@@ -1,83 +1,83 @@
-import { Dinoz } from '../../models/index.js';
-import { DinozFromShop, DinozShopArray } from '../data/dinozShopData.js';
-import { PlayerWithRewards } from '../data/playerData.js';
-import { mockRequest, mockResponse, player } from '../utils/constants.js';
+import { DinozShopArray } from '../data/dinozShopData.js';
+import { PlayerWithoutDinozShop, PlayerWithDinozShop, PlayerWithRewards } from '../data/playerData.js';
+import { mockRequest, player } from '../utils/constants.js';
+import { raceList, skillList } from '../../constants/index.js';
+import { DinozShopFiche, DinozRace } from '../../models/index.js';
 import { getDinozFromDinozShop } from '../../business/dinozShopService.js';
 import { Request } from 'express';
-import { Response } from 'express';
-import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
-import { mocked } from 'ts-jest/utils';
-import { DinozWithSkills } from '../data/dinozData.js';
 
-jest.mock('express-validator');
-
-const DinozShopDao = require('../../dao/shopDao');
-const PlayerDao = require('../../dao/playerDao');
+const DinozShopDao = require('../../dao/playerDinozShopDao.js');
+const PlayerDao = require('../../dao/playerDao.js');
 const Config = require('../../utils/context');
 
 describe('Function getDinozFromDinozShop()', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
-
-		DinozShopDao.createMultipleDinoz = jasmine.createSpy().and.returnValue(DinozShopArray);
-		DinozShopDao.getDinozFromDinozShopRequest = jasmine.createSpy().and.returnValue([]);
+		PlayerDao.getPlayerDinozShopRequest = jasmine.createSpy().and.returnValue(PlayerWithoutDinozShop);
 		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerWithRewards);
+		DinozShopDao.createMultipleDinoz = jasmine.createSpy().and.returnValue(DinozShopArray);
 		Config.getConfig = jasmine.createSpy().and.returnValue({
 			shop: { dinozInShop: 4, buyableQuetzu: 6 }
 		});
-
-		DinozFromShop.setDataValue = jasmine.createSpy().and.returnValue([]);
-		Dinoz.build = jasmine.createSpy().and.returnValue({ get: jest.fn().mockResolvedValue(DinozWithSkills) });
 	});
 
 	it('No dinoz found, shop must be initialized', async function () {
-		await getDinozFromDinozShop(req, res);
+		try {
+			await getDinozFromDinozShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
-		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerDinozShopRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerDinozShopRequest).toHaveBeenCalledWith(player.id_1);
+
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledTimes(1);
-		expect(DinozShopDao.createMultipleDinoz).toHaveBeenCalledTimes(1);
-
-		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledWith(player.id_1);
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
-		expect(DinozShopDao.createMultipleDinoz).toHaveBeenCalledWith(expect.any(Array));
 
-		expect(res.status).toHaveBeenCalledWith(200);
+		expect(DinozShopDao.createMultipleDinoz).toHaveBeenCalledTimes(1);
+		expect(DinozShopDao.createMultipleDinoz).toHaveBeenCalledWith(expect.any(Array));
 	});
 
-	it('Dinoz already exist in shop', async function () {
-		DinozShopDao.getDinozFromDinozShopRequest = jasmine.createSpy().and.returnValue(DinozShopArray);
+	it('Dinoz already exists in shop', async function () {
+		PlayerDao.getPlayerDinozShopRequest = jasmine.createSpy().and.returnValue(PlayerWithDinozShop);
 
-		await getDinozFromDinozShop(req, res);
+		const expectedResult: Array<DinozShopFiche> = PlayerWithDinozShop.dinozShop.map(dinozShop => {
+			const raceFound: DinozRace = Object.values(raceList).find(race => race.raceId === dinozShop.raceId)!;
 
-		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledTimes(1);
+			raceFound.skillId = Object.values(skillList)
+				.filter(skill => skill.raceId?.some(raceId => raceId === raceFound.raceId) && skill.isBaseSkill)
+				.map(skill => skill.skillId);
+
+			return {
+				id: dinozShop.id.toString(),
+				race: raceFound,
+				display: dinozShop.display
+			};
+		});
+
+		let result: Array<DinozShopFiche> = [];
+
+		try {
+			result = await getDinozFromDinozShop(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
+
+		expect(PlayerDao.getPlayerDinozShopRequest).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getPlayerDinozShopRequest).toHaveBeenCalledWith(player.id_1);
+
 		expect(PlayerDao.getPlayerRewardsRequest).not.toHaveBeenCalled();
 
-		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledWith(player.id_1);
-
-		expect(res.status).toHaveBeenCalledWith(200);
+		expect(result).toStrictEqual(expectedResult);
 	});
 
-	it('Player found is null', async function () {
-		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(null);
-
-		await getDinozFromDinozShop(req, res);
-
-		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledTimes(1);
-
-		expect(DinozShopDao.getDinozFromDinozShopRequest).toHaveBeenCalledWith(player.id_1);
-		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith('Player not found');
-	});
+	// No need to test that the DAO can return a null player. It will throw an error if no player is found.
 });

@@ -9,9 +9,10 @@
     "ingredients": "Ingrédients",
     "account": "Mon Compte",
     "forum": "Forum",
-    "faq": "FAQ",
+    "api": "API",
     "logout": "Déconnexion"
   },
+  "api": "Il vous est possible de consulter notre API afin de la tester. N'oubliez pas de prendre vos token d'authentification JWT :",
   "alpha": {
     "login": "Connexion à Eternal-Twin",
     "homepage": {

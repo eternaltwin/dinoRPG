@@ -14,9 +14,12 @@
     "/constants/",
     "/coverage",
     "/config/",
-    "/sequelize.js",
+    "/data-source.js",
     "/server.js",
     "/routes/",
-    "/oauthService.js"
+    "/oauthService.js",
+    "/entity/",
+    "/migration/",
+    "/swagger-setup.js"
   ]
 }

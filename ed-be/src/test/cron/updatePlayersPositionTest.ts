@@ -27,7 +27,7 @@ describe('Cron updatePlayersPosition', function () {
 		expect(RankingDao.updateRanking).toHaveBeenNthCalledWith(
 			1,
 			expect.objectContaining({
-				playerId: player.id_2,
+				id: player.id_2,
 				sumPosition: 1,
 				averagePosition: 1,
 				sumPointsDisplayed: 12,
@@ -39,7 +39,7 @@ describe('Cron updatePlayersPosition', function () {
 		expect(RankingDao.updateRanking).toHaveBeenNthCalledWith(
 			2,
 			expect.objectContaining({
-				playerId: player.id_1,
+				id: player.id_1,
 				sumPosition: 2,
 				averagePosition: 2,
 				sumPointsDisplayed: 11,
@@ -60,6 +60,6 @@ describe('Cron updatePlayersPosition', function () {
 		expect(RankingDao.getPlayersPoints).toHaveBeenCalledTimes(1);
 		expect(RankingDao.updateRanking).not.toHaveBeenCalled();
 
-		expect(errorSpy).toHaveBeenCalledWith('Cannot update table tb_ranking');
+		expect(errorSpy).toHaveBeenCalledWith('Cannot update table ranking');
 	});
 });

@@ -42,7 +42,7 @@ export default defineComponent({
 			if (this.regexName.test(this.name!)) {
 				EventBus.emit('isLoading', true);
 				try {
-					await DinozService.setDinozName(this.dinozData!.dinozId!, this.name!);
+					await DinozService.setDinozName(this.dinozData!.id!, this.name!);
 					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err);
@@ -51,7 +51,7 @@ export default defineComponent({
 
 				// Update dinozList in store
 				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.dinozId == this.dinozData!.dinozId)!;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.id == this.dinozData!.id)!;
 				dinozToUpdate.name = this.name;
 
 				this.sessionStore.setDinozList(dinozList);

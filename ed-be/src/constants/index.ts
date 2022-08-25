@@ -11,16 +11,16 @@ export * from './status.js';
 export * from './action.js';
 
 export const apiRoutes = {
-	adminRoute: '/api/admin',
-	dinozRoute: '/api/dinoz',
-	ingredientRoute: '/api/ingredients',
-	inventoryRoute: '/api/inventory',
-	levelRoute: '/api/level',
-	newsRoute: '/api/news',
-	oauthRoute: '/api/oauth',
-	playerRoute: '/api/player',
-	rankingRoutes: '/api/ranking',
-	shopRoutes: '/api/shop'
+	adminRoute: '/api/v1/admin',
+	dinozRoute: '/api/v1/dinoz',
+	ingredientRoute: '/api/v1/ingredients',
+	inventoryRoute: '/api/v1/inventory',
+	levelRoute: '/api/v1/level',
+	newsRoute: '/api/v1/news',
+	oauthRoute: '/api/v1/oauth',
+	playerRoute: '/api/v1/player',
+	rankingRoutes: '/api/v1/ranking',
+	shopRoutes: '/api/v1/shop'
 };
 
 export const regex = {

@@ -31,7 +31,7 @@ export default defineComponent({
 		this.sessionStore.setMoney(newMoney);
 
 		const dinozInStore: Array<Dinoz> = this.sessionStore.getDinozList!;
-		const dinoz: Dinoz = dinozInStore.find(dinoz => dinoz.dinozId!.toString() === this.$route.params.dinozId)!;
+		const dinoz: Dinoz = dinozInStore.find(dinoz => dinoz.id!.toString() === this.$route.params.id)!;
 		dinoz.experience! += this.fight.xpEarned;
 		this.sessionStore.setDinozList(dinozInStore);
 	}

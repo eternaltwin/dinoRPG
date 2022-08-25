@@ -1,4 +1,4 @@
-import { ItemType } from '../../models/index.js';
+import { ItemType } from '../enums/index.js';
 
 export interface ItemFiche {
 	itemId: number;

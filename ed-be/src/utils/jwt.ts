@@ -2,14 +2,15 @@ import { Request, Response } from 'express';
 import expressJwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
 import { getConfig } from './context.js';
-import { Config, Player } from '../models/index.js';
+import { Config } from '../models/index.js';
 import { getEternalTwinId } from '../dao/playerDao.js';
+import { Player } from '../entity/index.js';
 
 const jwtConfig = () => {
 	const config = getConfig() as Config;
 	const secret: string = config.jwt.secretKey;
 	return expressJwt({ secret, algorithms: ['HS256'] }).unless({
-		path: ['/api/oauth/authenticate/eternal-twin', '/api/oauth/redirect']
+		path: [/\/api\/v1\/oauth*/, /\/api-docs*/]
 	});
 };
 

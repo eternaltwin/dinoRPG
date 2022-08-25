@@ -4,5 +4,5 @@ export interface CommonData {
 	money: number;
 	dinoz: Array<Dinoz>;
 	dinozCount: number;
-	playerId: number;
+	id: number;
 }

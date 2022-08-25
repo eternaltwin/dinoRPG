@@ -1,5 +1,5 @@
 export interface Dinoz {
-	dinozId?: string;
+	id?: number;
 	name?: string;
 	display?: string;
 	isFrozen?: boolean;
@@ -7,24 +7,28 @@ export interface Dinoz {
 	level?: number;
 	missionId?: number;
 	canChangeName?: boolean;
-	following?: string;
+	following?: number;
 	life?: number;
 	maxLife?: number;
 	experience?: number;
 	maxExperience?: number;
 	canGather?: boolean;
 	race?: DinozRace;
-	item: Array<Item>;
-	status: Status;
-	actions: Array<Action>;
-	skill: Array<Skill>;
-	skillList: Array<number>;
-	placeId: number;
-	statusList: Array<number>;
-	borderPlace: Array<number>;
+	placeId?: number;
+	actions?: Array<Action>;
+	items?: Array<number>;
+	skills?: Array<number>;
+	status?: Array<number>;
+	borderPlace?: Array<number>;
+	nbrUpFire?: number;
+	nbrUpWood?: number;
+	nbrUpWater?: number;
+	nbrUpLightning?: number;
+	nbrUpAir?: number;
 }
 
 export interface DinozRace {
+	raceId?: string;
 	name?: string;
 	nbrAir?: number;
 	nbrFire?: number;
@@ -32,7 +36,6 @@ export interface DinozRace {
 	nbrWater?: number;
 	nbrWood?: number;
 	price?: number;
-	raceId?: string;
 	skillId?: Array<number>;
 }
 

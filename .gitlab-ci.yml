@@ -15,6 +15,7 @@
       - "ed-be/dist/"
   before_script:
     - cd ed-be
+    - cp config_development.toml.example config_development.toml
     - yarn install
     - yarn build
 

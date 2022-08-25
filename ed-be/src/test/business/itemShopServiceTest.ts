@@ -1,18 +1,19 @@
 import { Request } from 'express';
 // Back imports
 import { getItemsFromShop, buyItem } from '../../business/itemShopService';
-import { AssDinozStatus, ItemFiche, ItemOwn, Player, Dinoz, ShopType } from '../../models';
+import { ItemFiche, ShopType } from '../../models';
+import { Dinoz, Player, PlayerItem, DinozStatus } from '../../entity';
 import { itemList, placeList, shopList, statusList } from '../../constants';
 // Test imports
 import { PlayerData } from '../data/playerData';
 import { DinozData } from '../data/dinozData';
-import { BasicItem, playerFlyingShopInventory, playerMagicShopInventory } from '../data/ItemOwnData';
+import { BasicItem, playerFlyingShopInventory, playerMagicShopInventory } from '../data/itemsData';
 import { player, mockRequest, shop, item } from '../utils/constants.js';
 import { cloneDeep } from 'lodash';
 import { getRandomNumber } from '../../utils/tools.js';
 
 const PlayerDao = require('../../dao/playerDao.js');
-const InventoryDao = require('../../dao/inventoryDao.js');
+const InventoryDao = require('../../dao/playerItemDao.js');
 let PlayerTestData: Player;
 let DinozTestData: Dinoz;
 
@@ -47,7 +48,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
@@ -76,7 +77,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 	});
 
 	it('Nominal case: flying shop with inventory', async function () {
-		PlayerTestData.itemOwn = playerFlyingShopInventory;
+		PlayerTestData.items = playerFlyingShopInventory;
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
@@ -87,7 +88,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
@@ -96,7 +97,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		// Build the expected result
 		const expectedListItems: Array<ItemFiche> = shopList.FLYING_SHOP.listItemsSold.map(itemShop => {
 			// Get the item from the player
-			const itemPlayer: ItemOwn | undefined = PlayerTestData.itemOwn.find(
+			const itemPlayer: PlayerItem | undefined = PlayerTestData.items.find(
 				playerItem => playerItem.itemId === itemShop.itemId
 			);
 			// Get the reference of the items from the constants
@@ -119,7 +120,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		expect(response).toStrictEqual(expectedListItems);
 	});
 
-	it('Nominal case: flying shop + shopkeeper', async function () {
+	it('Nominal case: flying shop + shopKeeper', async function () {
 		PlayerTestData.shopKeeper = true;
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
@@ -131,7 +132,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
@@ -159,7 +160,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		expect(response).toStrictEqual(expectedListItems);
 	});
 
-	it('Nominal case: magic shop + shopkeeper, no increased capacity', async function () {
+	it('Nominal case: magic shop + shopKeeper, no increased capacity', async function () {
 		// Change shopId to the corresponding one
 		req.params.shopId = shopList.MAGIC_SHOP.shopId.toString();
 
@@ -177,7 +178,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
@@ -217,7 +218,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
@@ -263,7 +264,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
@@ -301,7 +302,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		if (shopToTest.type === ShopType.CURSED) {
 			DinozTestData.status.push({
 				statusId: statusList.CURSED
-			} as AssDinozStatus);
+			} as DinozStatus);
 		}
 		PlayerTestData.dinoz.push(DinozTestData);
 		// Override this as necessary if you change PlayerTestData
@@ -314,7 +315,7 @@ describe('itemShopService: Test nominal cases of getItemsFromShop()', function (
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
@@ -408,27 +409,7 @@ describe('itemShopService: Test error cases of getItemsFromShop()', function () 
 		}
 	});
 
-	it('Error case: no player found', async function () {
-		req.user = {
-			playerId: player.id_1
-		};
-		req.params = {
-			shopId: shop.id_flying_1.toString()
-		};
-
-		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(null);
-
-		try {
-			await getItemsFromShop(req);
-			fail();
-		} catch (err) {
-			const e: Error = err as Error;
-			expect(e.message).toBe(`Player ${player.id_1} doesn't exist`);
-		}
-
-		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getPlayerShopItemsDataRequest).toHaveBeenCalledWith(player.id_1);
-	});
+	// No need to test that the DAO can return a null player. It will throw an error if no player is found.
 
 	it.each(Object.values(shopList))('Error case - test all shops: getAllItems from Shop %#', async shopToTest => {
 		req.params = {
@@ -489,7 +470,7 @@ describe('itemShopService: Test error cases of getItemsFromShop()', function () 
 		DinozTestData.placeId = placeList.DINOVILLE.placeId;
 		DinozTestData.status.push({
 			statusId: statusList.CURSED
-		} as AssDinozStatus);
+		} as DinozStatus);
 		PlayerTestData.dinoz.push(DinozTestData);
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
@@ -537,8 +518,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		InventoryDao.createItemDataRequest = jasmine.createSpy();
 		InventoryDao.updateItemDataRequest = jasmine.createSpy();
 
-		ItemOwn.build = jasmine.createSpy().and.returnValue({ get: jest.fn().mockReturnValue(BasicItem) });
-		ItemOwn.create = jasmine.createSpy().and.returnValue({ get: jest.fn().mockReturnValue(BasicItem) });
+		PlayerItem.constructor = jasmine.createSpy().and.returnValue({ get: jest.fn().mockReturnValue(BasicItem) });
 	});
 
 	it('Nominal case: flying shop, player has none of the item', async function () {
@@ -547,6 +527,12 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		) as ItemFiche;
 		const quantity: number = 31;
 		const expectedMoney: number = PlayerTestData.money - quantity * itemPurchased.price;
+
+		const expectedItem: Partial<PlayerItem> = {
+			itemId: itemPurchased.itemId,
+			player: PlayerTestData,
+			quantity: quantity
+		};
 
 		// Change parameters
 		req.params = {
@@ -563,7 +549,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -574,8 +560,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 
 		expect(InventoryDao.updateItemDataRequest).not.toHaveBeenCalled();
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
-		// I don't understand this check
-		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
+		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(expectedItem);
 	});
 
 	it('Nominal case: flying shop, player has already some of the item', async function () {
@@ -596,7 +581,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		};
 
 		// Add some item to the player test data
-		PlayerTestData.itemOwn = playerFlyingShopInventory;
+		PlayerTestData.items = playerFlyingShopInventory;
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
@@ -606,7 +591,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -618,7 +603,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		expect(InventoryDao.createItemDataRequest).not.toHaveBeenCalled();
 		expect(InventoryDao.updateItemDataRequest).toHaveBeenCalledTimes(1);
 		expect(InventoryDao.updateItemDataRequest).toHaveBeenCalledWith(
-			PlayerTestData.playerId,
+			PlayerTestData.id,
 			itemPurchased.itemId,
 			expectedQuantity
 		);
@@ -642,7 +627,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		};
 
 		// Add some item to the player test data
-		PlayerTestData.itemOwn = playerMagicShopInventory;
+		PlayerTestData.items = playerMagicShopInventory;
 		// Add a dinoz that is at the location of the shop
 		DinozTestData.placeId = placeList.DINOVILLE.placeId;
 		PlayerTestData.dinoz.push(DinozTestData);
@@ -655,7 +640,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.setPlayerMoneyRequest).not.toHaveBeenCalled();
@@ -669,7 +654,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		);
 		expect(InventoryDao.updateItemDataRequest).toHaveBeenNthCalledWith(
 			2,
-			PlayerTestData.playerId,
+			PlayerTestData.id,
 			itemPurchased.itemId,
 			expectedQuantity
 		);
@@ -680,6 +665,11 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 			item => item.itemId === itemList.POTION_IRMA.itemId
 		) as ItemFiche;
 		const quantity: number = 31;
+		const expectedItem: Partial<PlayerItem> = {
+			itemId: itemPurchased.itemId,
+			player: PlayerTestData,
+			quantity: quantity
+		};
 
 		// Change parameters
 		req.params = {
@@ -703,7 +693,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -714,8 +704,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 
 		expect(InventoryDao.updateItemDataRequest).not.toHaveBeenCalled();
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
-		// I don't understand this check
-		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
+		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(expectedItem);
 	});
 
 	it('Nominal case: non-flying shop, player has no item and merchant', async function () {
@@ -723,6 +712,11 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 			item => item.itemId === itemList.REFRIGERATED_SHIELD.itemId
 		) as ItemFiche;
 		const quantity: number = 8;
+		const expectedItem: Partial<PlayerItem> = {
+			itemId: itemPurchased.itemId,
+			player: PlayerTestData,
+			quantity: quantity
+		};
 
 		// Change parameters
 		req.params = {
@@ -749,7 +743,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -760,15 +754,19 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 
 		expect(InventoryDao.updateItemDataRequest).not.toHaveBeenCalled();
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
-		// I don't understand this check
-		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
+		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(expectedItem);
 	});
 
-	it('Nominal case: flying shop, player has no item and shopkeeper', async function () {
+	it('Nominal case: flying shop, player has no item and shopKeeper', async function () {
 		const itemPurchased = shopList.FLYING_SHOP.listItemsSold.find(
 			item => item.itemId === itemList.POTION_IRMA.itemId
 		) as ItemFiche;
 		const quantity: number = itemList.POTION_IRMA.maxQuantity + 1;
+		const expectedItem: Partial<PlayerItem> = {
+			itemId: itemPurchased.itemId,
+			player: PlayerTestData,
+			quantity: quantity
+		};
 
 		// Change parameters
 		req.params = {
@@ -792,7 +790,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -803,8 +801,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 
 		expect(InventoryDao.updateItemDataRequest).not.toHaveBeenCalled();
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
-		// I don't understand this check
-		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
+		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(expectedItem);
 	});
 
 	it.each(Object.values(shopList))('Nominal case - test all shops: buyItem from Shop %#', async shopToTest => {
@@ -815,16 +812,16 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		if (shopToTest.type === ShopType.CURSED) {
 			DinozTestData.status.push({
 				statusId: statusList.CURSED
-			} as AssDinozStatus);
+			} as DinozStatus);
 		}
 		// In case of the magicShop, the player needs golden napodinoz
 		if (shopToTest.type === ShopType.MAGICAL) {
-			PlayerTestData.itemOwn = [
+			PlayerTestData.items = [
 				{
 					itemId: itemList.GOLDEN_NAPODINO.itemId,
 					quantity: 999
 				}
-			] as Array<ItemOwn>;
+			] as Array<PlayerItem>;
 		}
 		PlayerTestData.dinoz.push(DinozTestData);
 		PlayerTestData.money = 500000;
@@ -837,6 +834,11 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		const randomItemPurchased: Partial<ItemFiche> = shopToTest.listItemsSold[randomNumber];
 		const expectedMoney: number = PlayerTestData.money - quantity * randomItemPurchased.price!;
 		const expectedNapo: number = 999 - quantity * randomItemPurchased.price!;
+		const expectedItem: Partial<PlayerItem> = {
+			itemId: randomItemPurchased.itemId,
+			player: PlayerTestData,
+			quantity: quantity
+		};
 
 		// Update parameters
 		req.params = {
@@ -853,7 +855,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occured during the test, check the test logs`);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -875,8 +877,7 @@ describe('itemShopService: Test nominal cases of buyItem()', function () {
 		}
 
 		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledTimes(1);
-		// I don't understand this check
-		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(BasicItem);
+		expect(InventoryDao.createItemDataRequest).toHaveBeenCalledWith(expectedItem);
 	});
 });
 
@@ -910,8 +911,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		InventoryDao.createItemDataRequest = jasmine.createSpy();
 		InventoryDao.updateItemDataRequest = jasmine.createSpy();
 
-		ItemOwn.build = jasmine.createSpy().and.returnValue({ get: jest.fn().mockResolvedValue(BasicItem) });
-		ItemOwn.create = jasmine.createSpy().and.returnValue({ get: jest.fn().mockResolvedValue(BasicItem) });
+		PlayerItem.constructor = jasmine.createSpy().and.returnValue({ get: jest.fn().mockResolvedValue(BasicItem) });
 	});
 
 	it('Error case: invalid quantity, 0 quantity', async function () {
@@ -1078,33 +1078,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		}
 	});
 
-	it('Error case: no player found', async function () {
-		const itemPurchased = shopList.FLYING_SHOP.listItemsSold.find(
-			item => item.itemId === itemList.POTION_IRMA.itemId
-		) as ItemFiche;
-		const quantity: number = 1;
-
-		// Change parameters
-		req.params.shopId = shopList.FLYING_SHOP.shopId.toString();
-		req.body = {
-			itemId: itemList.POTION_IRMA.itemId.toString(),
-			quantity: quantity.toString()
-		};
-
-		// Override this as necessary if you change PlayerTestData
-		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(null);
-
-		try {
-			await buyItem(req);
-			fail();
-		} catch (err) {
-			const e: Error = err as Error;
-			expect(e.message).toBe(`Player ${player.id_1} doesn't exist`);
-		}
-
-		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledWith(player.id_1, itemPurchased.itemId);
-	});
+	// No need to test that the DAO can return a null player. It will throw an error if no player is found.
 
 	it('Error case: not enough money', async function () {
 		const itemPurchased = shopList.FLYING_SHOP.listItemsSold.find(
@@ -1184,7 +1158,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		};
 
 		// Add some item to the player test data
-		PlayerTestData.itemOwn = playerMagicShopInventory;
+		PlayerTestData.items = playerMagicShopInventory;
 		// Add a dinoz that is at the location of the shop
 		DinozTestData.placeId = placeList.DINOVILLE.placeId;
 		PlayerTestData.dinoz.push(DinozTestData);
@@ -1208,12 +1182,12 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		// Update test data first
 		// In case of the magicShop, the player needs golden napodinoz
 		if (shopToTest.type === ShopType.MAGICAL) {
-			PlayerTestData.itemOwn = [
+			PlayerTestData.items = [
 				{
 					itemId: itemList.GOLDEN_NAPODINO.itemId,
 					quantity: 999
 				}
-			] as Array<ItemOwn>;
+			] as Array<PlayerItem>;
 		}
 		PlayerTestData.money = 500000;
 		// Override this as necessary if you change PlayerTestData
@@ -1304,7 +1278,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		// Add a dinoz that is cursed but not at the location of the shop
 		DinozTestData.status.push({
 			statusId: statusList.CURSED
-		} as AssDinozStatus);
+		} as DinozStatus);
 		PlayerTestData.dinoz.push(DinozTestData);
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopOneItemDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
@@ -1330,12 +1304,12 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		const napoQuantity: number = 3;
 
 		// Give the player not enough napodinoz
-		PlayerTestData.itemOwn = [
+		PlayerTestData.items = [
 			{
 				itemId: itemList.GOLDEN_NAPODINO.itemId,
 				quantity: napoQuantity - 1
 			}
-		] as Array<ItemOwn>;
+		] as Array<PlayerItem>;
 		PlayerTestData.dinoz.push(DinozTestData);
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
@@ -1370,12 +1344,12 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		const napoQuantity: number = 999;
 
 		// Give the player enough napodinoz
-		PlayerTestData.itemOwn = [
+		PlayerTestData.items = [
 			{
 				itemId: itemList.GOLDEN_NAPODINO.itemId,
 				quantity: napoQuantity
 			}
-		] as Array<ItemOwn>;
+		] as Array<PlayerItem>;
 		PlayerTestData.dinoz.push(DinozTestData);
 		// Override this as necessary if you change PlayerTestData
 		PlayerDao.getPlayerShopItemsDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);

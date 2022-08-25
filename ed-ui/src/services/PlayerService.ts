@@ -45,5 +45,5 @@ export const PlayerService = {
 };
 interface PlayerSearch {
 	name: string;
-	playerId: number;
+	id: number;
 }

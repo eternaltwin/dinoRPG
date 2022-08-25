@@ -1,5 +1,5 @@
 export interface Player {
-	playerId: number;
+	id: number;
 	hasImported: boolean;
 	name: string;
 	eternalTwinId: string;

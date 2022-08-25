@@ -128,7 +128,6 @@ export default defineComponent({
 	border: 1px solid #ffee92;
 	outline: 1px solid #92471f;
 	transition: max-height 0.9s ease-out;
-	max-height: 250px;
 	padding: 10px;
 	h1 {
 		height: auto;

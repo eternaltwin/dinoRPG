@@ -1,8 +1,8 @@
-import { DinozSkill } from './DinozSkill.js';
+import { DinozSkillFiche } from './DinozSkillFiche.js';
 
 export interface DinozSkillOwnAndUnlockable {
-	learnableSkills: Array<Partial<DinozSkill>>;
-	unlockableSkills: Array<Partial<DinozSkill>>;
+	learnableSkills: Array<Partial<DinozSkillFiche>>;
+	unlockableSkills: Array<Partial<DinozSkillFiche>>;
 	element: number;
 	canRelaunch: boolean;
 	nbrUpFire: number;

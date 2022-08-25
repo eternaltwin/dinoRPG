@@ -1,5 +1,5 @@
 export interface NewPositions {
-	playerId: number;
+	id: number;
 	sumPosition: number;
 	averagePosition: number;
 	sumPointsDisplayed: number;

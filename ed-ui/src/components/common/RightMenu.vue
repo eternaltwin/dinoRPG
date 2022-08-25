@@ -25,7 +25,17 @@
 			<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank">{{ $t('rightMenu.forum') }}</a>
 		</li>
 		<li>
-			<a @click="goToPage('')">{{ $t('rightMenu.faq') }}</a>
+			<a v-if="isDevEnv()" href="http://localhost:8081/api-docs" target="_blank" class="smallbutton" @click="jwt()"
+				>API</a
+			>
+			<a
+				v-if="!isDevEnv()"
+				href="https://dinorpg.eternaltwin.org/api-docs"
+				target="_blank"
+				class="smallbutton"
+				@click="jwt()"
+				>API</a
+			>
 		</li>
 		<li>
 			<p>{{ dinozCount }} Dinoz</p>
@@ -77,6 +87,12 @@ export default defineComponent({
 		logOff(): void {
 			sessionStorage.clear();
 			this.$router.go(0);
+		},
+		isDevEnv(): boolean {
+			return process.env.NODE_ENV === 'development';
+		},
+		async jwt(): Promise<void> {
+			await navigator.clipboard.writeText(this.sessionStore.getJwt!);
 		}
 	},
 	mounted(): void {

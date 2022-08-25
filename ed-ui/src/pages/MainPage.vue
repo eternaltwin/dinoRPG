@@ -68,10 +68,10 @@ export default defineComponent({
 				this.sessionStore.setMoney(commonData.money);
 				this.sessionStore.setDinozList(commonData.dinoz);
 				this.sessionStore.setDinozCount(commonData.dinozCount);
-				this.sessionStore.setPlayerId(commonData.playerId);
+				this.sessionStore.setPlayerId(commonData.id);
 				EventBus.emit('isLoading', false);
 
-				this.$router.push({ name: 'News' });
+				await this.$router.push({ name: 'News' });
 			} catch (err) {
 				errorHandler.handle(err);
 				return;

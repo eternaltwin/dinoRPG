@@ -1,6 +1,6 @@
-import { Action } from '../models';
+import { ActionFiche } from '../models';
 
-export const actionList: Readonly<Record<string, Action>> = {
+export const actionList: Readonly<Record<string, ActionFiche>> = {
 	FIGHT: {
 		name: 'fight',
 		imgName: 'act_fight'

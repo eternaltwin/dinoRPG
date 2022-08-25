@@ -1,7 +1,7 @@
 <template>
 	<ul>
 		<li class="light" v-for="(dinoz, index) in dinozList" :key="index">
-			<a @click="goToDinozPage(dinoz.dinozId)">
+			<a @click="goToDinozPage(dinoz.id)">
 				<span class="icon">
 					<span class="tinyBar">
 						<span :style="getLifeBarWidth(dinoz.life, dinoz.maxLife)"></span>

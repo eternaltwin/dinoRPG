@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
 import {
 	getAdminDashBoard,
@@ -7,37 +7,62 @@ import {
 	listAllDinozFromPlayer,
 	setPlayerMoney,
 	editPlayer,
-	listAllPlayerInformationForAdminDashoard
+	listAllPlayerInformationForAdminDashboard
 } from '../business/adminService.js';
-import { body, param } from 'express-validator';
+import { body, param, validationResult } from 'express-validator';
 import { checkIsAdmin } from '../utils/jwt.js';
+import { DinozFiche, PlayerTypeToSend } from '../models/index.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.adminRoute;
 
-routes.get(`${commonPath}/dashboard`, checkIsAdmin, getAdminDashBoard);
+routes.get(`${commonPath}/dashboard`, checkIsAdmin, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response: boolean = await getAdminDashBoard(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		console.error(err.message);
+		return res.status(500).send(err.message);
+	}
+});
 
 routes.put(
 	`${commonPath}/dinoz/:id`,
 	[
 		param('id').exists().toInt().isNumeric(),
-		body('name').default(null).optional({ nullable: true }).exists().isString(),
-		body('isFrozen').default(null).optional({ nullable: true }).exists().isBoolean(),
-		body('isSacrificed').default(null).optional({ nullable: true }).exists().isBoolean(),
-		body('level').default(null).optional({ nullable: true }).exists().toInt().isInt(),
-		body('placeId').default(null).optional({ nullable: true }).exists().toInt().isInt(),
-		body('canChangeName').default(null).optional({ nullable: true }).exists().isBoolean(),
-		body('life').default(null).optional({ nullable: true }).exists().toInt().isInt(),
-		body('maxLife').default(null).optional({ nullable: true }).exists().toInt().isInt(),
-		body('experience').default(null).optional({ nullable: true }).exists().toInt().isInt(),
-		body('status').default(null).optional({ nullable: true }).exists().isArray(),
-		body('statusOperation').default(null).optional({ nullable: true }).exists().isString(),
-		body('skill').default(null).optional({ nullable: true }).exists().isArray(),
-		body('skillOperation').default(null).optional({ nullable: true }).exists().isString()
+		body('name').default(undefined).optional({ nullable: true }).exists().isString(),
+		body('isFrozen').default(undefined).optional({ nullable: true }).exists().toBoolean(),
+		body('isSacrificed').default(undefined).optional({ nullable: true }).exists().toBoolean(),
+		body('level').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('placeId').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('canChangeName').default(undefined).optional({ nullable: true }).exists().toBoolean(),
+		body('life').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('maxLife').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('experience').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('status').default(undefined).optional({ nullable: true }).exists().isArray(),
+		body('statusOperation').default(undefined).optional({ nullable: true }).exists().isString(),
+		body('skill').default(undefined).optional({ nullable: true }).exists().isArray(),
+		body('skillOperation').default(undefined).optional({ nullable: true }).exists().isString()
 	],
 	checkIsAdmin,
-	editDinoz
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await editDinoz(req);
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
 routes.put(
@@ -48,7 +73,19 @@ routes.put(
 		body('gold').exists().toInt().isNumeric()
 	],
 	checkIsAdmin,
-	setPlayerMoney
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: string = await setPlayerMoney(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
 routes.put(
@@ -59,40 +96,88 @@ routes.put(
 		body('epicRewardId').exists().isArray()
 	],
 	checkIsAdmin,
-	givePlayerEpicReward
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await givePlayerEpicReward(req);
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
 routes.get(
 	`${commonPath}/playerdinoz/:id`,
 	param('id').exists().toInt().isNumeric(),
 	checkIsAdmin,
-	listAllDinozFromPlayer
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: Array<DinozFiche> = await listAllDinozFromPlayer(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
 routes.put(
 	`${commonPath}/player/:id`,
 	[
 		param('id').exists().toInt().isNumeric(),
-		body('hasImported').default(null).optional().exists().isBoolean(),
-		body('customText').default(null).optional().exists(),
-		body('quetzuBought').default(null).optional().exists().isNumeric(),
-		body('leader').default(null).optional().exists().isBoolean(),
-		body('engineer').default(null).optional().exists().isBoolean(),
-		body('cooker').default(null).optional().exists().isBoolean(),
-		body('shopKeeper').default(null).optional().exists().isBoolean(),
-		body('merchant').default(null).optional().exists().isBoolean(),
-		body('priest').default(null).optional().exists().isBoolean(),
-		body('teacher').default(null).optional().exists().isBoolean()
+		body('hasImported').default(undefined).optional().exists().toBoolean(),
+		body('customText').default(undefined).optional().exists(),
+		body('quetzuBought').default(undefined).optional().exists().isNumeric(),
+		body('leader').default(undefined).optional().exists().toBoolean(),
+		body('engineer').default(undefined).optional().exists().toBoolean(),
+		body('cooker').default(undefined).optional().exists().toBoolean(),
+		body('shopKeeper').default(undefined).optional().exists().toBoolean(),
+		body('merchant').default(undefined).optional().exists().toBoolean(),
+		body('priest').default(undefined).optional().exists().toBoolean(),
+		body('teacher').default(undefined).optional().exists().toBoolean()
 	],
 	checkIsAdmin,
-	editPlayer
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await editPlayer(req);
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
 routes.get(
 	`${commonPath}/playerinfo/:id`,
 	param('id').exists().toInt().isNumeric(),
 	checkIsAdmin,
-	listAllPlayerInformationForAdminDashoard
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: Partial<PlayerTypeToSend> = await listAllPlayerInformationForAdminDashboard(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
 export default routes;

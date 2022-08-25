@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import { body, param } from 'express-validator';
+import { Request, Response, Router } from 'express';
+import { body, param, validationResult } from 'express-validator';
 import {
 	getDinozFiche,
 	buyDinoz,
@@ -8,30 +8,219 @@ import {
 	setSkillState,
 	betaMove
 } from '../business/dinozService.js';
-import { getLearnableSkills } from '../business/skillService.js';
 import { apiRoutes, regex } from '../constants/index.js';
+import { DinozFiche, DinozSkillFiche, FightResult } from '../models/index.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.dinozRoute;
 
-// Get dinoz data from main dinoz page
-routes.get(`${commonPath}/fiche/:id`, [param('id').exists().toInt().isNumeric()], getDinozFiche);
+/**
+ * @openapi
+ * /api/v1/dinoz/fiche/{dinozId}:
+ *   get:
+ *     summary: Get the fiche of a dinoz
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz to GET.
+ *     responses:
+ *       200:
+ *         description: Returns a dinoz fiche.
+ */
+routes.get(
+	`${commonPath}/fiche/:id`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-// When a dinoz is bought in dinoz shop
-routes.post(`${commonPath}/buydinoz/:id`, [param('id').exists().toInt().isNumeric()], buyDinoz);
+		try {
+			const response: DinozFiche = await getDinozFiche(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
+);
 
-// Set dinoz name
+/**
+ * @openapi
+ * /api/v1/dinoz/buydinoz/{dinozId}:
+ *   post:
+ *     summary: Buy a dinoz in the shop
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz to buy.
+ *     responses:
+ *       200:
+ *         description: Returns a dinoz fiche.
+ */
+routes.post(
+	`${commonPath}/buydinoz/:id`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: DinozFiche = await buyDinoz(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/dinoz/setname/{dinozId}:
+ *   put:
+ *     summary: Change the name of a selected dinoz
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz to buy.
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - newName
+ *           properties:
+ *             newName:
+ *               type: string
+ *               description: New name of the dinoz
+ *     responses:
+ *       200:
+ *         description: Returns a dinoz fiche.
+ */
 routes.put(
 	`${commonPath}/setname/:id`,
 	[param('id').exists().toInt().isNumeric(), body('newName').exists().isString().matches(regex.DINOZ_NAME)],
-	setDinozName
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await setDinozName(req);
+			return res.status(200).send();
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
-// Get dinoz Skill
-routes.get(`${commonPath}/skill/:id`, [param('id').exists().toInt().isNumeric()], getDinozSkill);
+/**
+ * @openapi
+ * /api/v1/dinoz/skill/{dinozId}:
+ *   get:
+ *     summary: Get all the skill of a selected dinoz
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz.
+ *     responses:
+ *       200:
+ *         description: Array of the skills known
+ */
+routes.get(
+	`${commonPath}/skill/:id`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-// Set skill State
+		try {
+			const response: Array<DinozSkillFiche> = await getDinozSkill(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/dinoz/setskillstate/{dinozId}:
+ *   put:
+ *     summary: Change the state of a skill
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz.
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - skillId
+ *             - skillState
+ *           properties:
+ *             skillId:
+ *               type: number
+ *               description: Id of the skill
+ *             skillState:
+ *               type: boolean
+ *               description: state of the skill
+ *               enum: [true, false]
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
 routes.put(
 	`${commonPath}/setskillstate/:id`,
 	[
@@ -39,14 +228,72 @@ routes.put(
 		body('skillId').exists().toInt().isNumeric(),
 		body('skillState').exists().isBoolean()
 	],
-	setSkillState
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: boolean = await setSkillState(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
-// Set skill State
+/**
+ * @openapi
+ * /api/v1/dinoz/betamove/{dinozId}:
+ *   put:
+ *     summary: Change the place of a dinoz
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz.
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - placeId
+ *           properties:
+ *             placeId:
+ *               type: number
+ *               description: Id of the destination
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
 routes.put(
 	`${commonPath}/betamove/:id`,
 	[param('id').exists().toInt().isNumeric(), body('placeId').exists().toInt().isNumeric()],
-	betaMove
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: FightResult = await betaMove(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
 );
 
 export default routes;

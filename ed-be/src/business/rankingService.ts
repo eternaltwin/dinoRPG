@@ -1,44 +1,42 @@
-import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import { Request } from 'express';
 import { getPlayersSumRanking, getPlayersAverageRanking } from '../dao/rankingDao.js';
-import { PlayerRanking, Ranking } from '../models';
+import { PlayerRanking } from '../models';
+import { Ranking } from '../entity/index.js';
 
 /**
  * @summary Get all the players from a specified page to display their ranking
  * @param req
  * @param req.param.sort {string} between classic or average
- * @param res {Array<PlayerRanking>}
  * @return Array<PlayerRanking>
  */
-const getRanking = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+const getRanking = async (req: Request): Promise<Array<PlayerRanking>> => {
 	const page: number = parseInt(req.params.page);
-	let PlayersRanking: Array<Ranking>;
+	let playersRanking: Array<Ranking>;
 
 	switch (req.params.sort) {
 		case 'classic':
-			PlayersRanking = await getPlayersSumRanking(page);
+			playersRanking = await getPlayersSumRanking(page);
 			break;
 		case 'average':
-			PlayersRanking = await getPlayersAverageRanking(page);
+			playersRanking = await getPlayersAverageRanking(page);
 			break;
 		default:
-			PlayersRanking = await getPlayersSumRanking(page);
+			playersRanking = await getPlayersSumRanking(page);
 			break;
 	}
-	const infoToSend: Array<PlayerRanking> = PlayersRanking.map(player => {
+
+	const infoToSend: Array<PlayerRanking> = playersRanking.map(player => {
 		return {
 			dinozCount: player.dinozCountDisplayed,
 			pointCount: player.sumPointsDisplayed,
 			playerName: player.player.name,
-			playerId: player.playerId,
+			playerId: player.player.id,
 			pointAverage: player.averagePointsDisplayed,
 			position: player.sumPosition || player.averagePosition
 		};
 	});
-	return res.status(200).send(infoToSend);
+
+	return infoToSend;
 };
 
 export { getRanking };

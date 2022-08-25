@@ -62,6 +62,27 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.smallbutton {
+	display: inline-block;
+	background-image: url('~@/assets/design/button_small.gif');
+	font-size: 9pt;
+	width: 80px;
+	padding-top: 5px;
+	padding-right: 5px;
+	color: white;
+	font-weight: normal;
+	font-variant: small-caps;
+	height: 24px;
+	margin-top: 3px;
+	margin-bottom: 2px;
+	padding-left: 10px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	&:hover {
+		background-image: url('~@/assets/design/button_small_hover.gif');
+	}
+}
 .filler {
 	height: 180px;
 	width: 550px;

@@ -1,9 +1,7 @@
-import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import { Request } from 'express';
 import { createNews, getBatchOfNews, updateAnyNews } from '../dao/newsDao.js';
-import { News } from '../models/index.js';
+import { News } from '../entity/news.js';
 
-//TODO : edit to match the new table with Title and Text
 /**
  * @summary Create a news
  * @param req
@@ -17,17 +15,12 @@ import { News } from '../models/index.js';
  * @param req.body.englishText {string} English text
  * @param req.body.spanishText {string} Spanish text
  * @param req.body.germanText {string} German text
- * @param res
  * @return void
  *  */
-const postNews = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	const postedNews: News = News.build({
+const postNews = async (req: Request): Promise<void> => {
+	const postedNews: Partial<News> = {
 		title: req.params.title,
-		image: req.file?.buffer,
+		image: req.file?.buffer as Buffer,
 		frenchTitle: req.body.frenchTitle,
 		englishTitle: req.body.englishTitle,
 		spanishTitle: req.body.spanishTitle,
@@ -36,10 +29,9 @@ const postNews = async (req: Request, res: Response): Promise<Response> => {
 		englishText: req.body.englishText,
 		spanishText: req.body.spanishText,
 		germanText: req.body.germanText
-	});
+	};
 
-	await createNews(postedNews.get());
-	return res.status(200).send();
+	await createNews(postedNews);
 };
 
 /**
@@ -49,16 +41,12 @@ const postNews = async (req: Request, res: Response): Promise<Response> => {
  * @param res
  * @return Array<News>
  */
-const getNews = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
+const getNews = async (req: Request): Promise<Array<News>> => {
 	const batch: Array<News> = await getBatchOfNews(parseInt(req.params.page));
-	return res.status(200).send(batch);
+
+	return batch;
 };
 
-//TODO : edit to match the new table with Title and Text
 /**
  * @summary Update a selected news
  * @param req
@@ -72,15 +60,10 @@ const getNews = async (req: Request, res: Response): Promise<Response> => {
  * @param req.body.englishText {string} English text to update
  * @param req.body.spanishText {string} Spanish text to update
  * @param req.body.germanText {string} German text to update
- * @param res
  * @return void
  */
-const updateNews = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	const UpdatedNews: Partial<News> = {
+const updateNews = async (req: Request): Promise<void> => {
+	const updatedNews: Partial<News> = {
 		image: req.file?.buffer,
 		frenchTitle: req.body.frenchTitle,
 		englishTitle: req.body.englishTitle,
@@ -92,8 +75,6 @@ const updateNews = async (req: Request, res: Response): Promise<Response> => {
 		germanText: req.body.germanText
 	};
 
-	await updateAnyNews(req.params.title, UpdatedNews);
-
-	return res.status(200).send();
+	await updateAnyNews(req.params.title, updatedNews);
 };
 export { postNews, getNews, updateNews };

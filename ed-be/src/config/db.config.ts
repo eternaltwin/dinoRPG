@@ -4,7 +4,7 @@ import toml from 'toml';
 export default (config: string) => {
 	const configuration = toml.parse(fs.readFileSync(`./config_${config}.toml`, 'utf-8'));
 
-	const dbConfig = {
+	return {
 		HOST: configuration.db.host,
 		USER: configuration.db.user,
 		PASSWORD: configuration.db.password,
@@ -17,6 +17,4 @@ export default (config: string) => {
 			idle: 10000
 		}
 	};
-
-	return dbConfig;
-}
+};

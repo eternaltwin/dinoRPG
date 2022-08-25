@@ -1,360 +1,186 @@
-import {
-	AssDinozItem,
-	AssDinozSkill,
-	AssDinozSkillUnlockable,
-	AssDinozStatus,
-	Dinoz,
-	Player,
-	Ranking
-} from '../models/index.js';
+import { UpdateResult } from 'typeorm';
+import { AppDataSource } from '../data-source.js';
+import { Dinoz } from '../entity/index.js';
 
-const createDinozRequest = (newDinoz: Dinoz): Promise<Dinoz> => {
-	return Dinoz.create(newDinoz);
-};
+const dinozRepository = AppDataSource.getRepository(Dinoz);
 
-const getDinozFicheRequest = (dinozId: number): Promise<Dinoz | null> => {
-	return Dinoz.findOne({
-		attributes: [
-			'dinozId',
-			'display',
-			'life',
-			'maxLife',
-			'experience',
-			'nbrUpFire',
-			'nbrUpWood',
-			'nbrUpWater',
-			'nbrUpLightning',
-			'nbrUpAir',
-			'name',
-			'level',
-			'placeId',
-			'playerId',
-			'isFrozen',
-			'isSacrificed'
-		],
-		include: [
-			{
-				model: AssDinozStatus,
-				attributes: ['statusId'],
-				required: false
-			},
-			{
-				model: AssDinozItem,
-				attributes: ['itemId'],
-				required: false
-			}
-		],
-		where: { dinozId: dinozId }
-	});
-};
+// Getters
 
-const getDinozSkillRequest = (dinozId: number): Promise<Dinoz | null> => {
-	return Dinoz.findOne({
-		attributes: ['playerId'],
-		include: [
-			{
-				model: AssDinozSkill,
-				attributes: ['skillId', 'state']
-			}
-		],
-		where: { dinozId: dinozId }
-	});
-};
-
-const getDinozSkillAndStatusRequest = (dinozId: number): Promise<Dinoz | null> => {
-	return Dinoz.findOne({
-		attributes: ['playerId'],
-		include: [
-			{
-				model: AssDinozSkill,
-				attributes: ['skillId']
-			},
-			{
-				model: AssDinozStatus,
-				attributes: ['statusId']
-			}
-		],
-		where: { dinozId: dinozId }
-	});
-};
-
-const getCanDinozChangeName = (dinozId: number): Promise<Dinoz | null> => {
-	return Dinoz.findOne({
-		attributes: ['canChangeName'],
-		include: [
-			{
-				model: Player,
-				attributes: ['playerId'],
-				required: false
-			}
-		],
-		where: { dinozId: dinozId }
-	});
-};
-
-const setDinozNameRequest = (dinoz: Dinoz, canChangeName: boolean): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			name: dinoz.name,
-			canChangeName: canChangeName
-		},
-		{
-			where: { dinozId: dinoz.dinozId }
-		}
-	);
-};
-
-const setSkillStateRequest = (
-	dinozId: number,
-	skillId: number,
-	state: boolean
-): Promise<[number, Array<AssDinozSkill>]> => {
-	return AssDinozSkill.update(
-		{
-			state: state
-		},
-		{
-			where: { dinozId: dinozId, skillId: skillId }
-		}
-	);
-};
-
-const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz | null> => {
-	return Dinoz.findOne({
-		attributes: ['dinozId', 'placeId', 'playerId'],
-		include: [
-			{
-				model: AssDinozStatus,
-				attributes: ['statusId']
-			}
-		],
-		where: { dinozId: dinozId }
-	});
-};
-
-const setDinozPlaceRequest = (dinozId: number, placeId: number): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			placeId: placeId
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
-};
-
-const getDinozTotalCount = (): Promise<number> => {
-	return Dinoz.count();
+const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id', 'dinoz.placeId'])
+		.addSelect(['player.id'])
+		.addSelect(['status.statusId'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.status', 'status')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 };
 
 const getAllDinozFromAccount = (playerId: number): Promise<Array<Dinoz>> => {
-	return Dinoz.findAll({
-		attributes: [
-			'dinozId',
-			'following',
-			'name',
-			'isFrozen',
-			'isSacrificed',
-			'level',
-			'missionId',
-			'placeId',
-			'canChangeName',
-			'life',
-			'maxLife',
-			'experience'
-		],
-		include: [
-			{
-				model: AssDinozStatus,
-				attributes: ['statusId']
-			},
-			{
-				model: AssDinozSkill,
-				attributes: ['skillId', 'state']
-			}
-		],
-		where: { playerId: playerId }
-	});
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select([
+			'dinoz.id',
+			'dinoz.following',
+			'dinoz.name',
+			'dinoz.isFrozen',
+			'dinoz.isSacrificed',
+			'dinoz.level',
+			'dinoz.missionId',
+			'dinoz.placeId',
+			'dinoz.canChangeName',
+			'dinoz.life',
+			'dinoz.maxLife',
+			'dinoz.experience'
+		])
+		.leftJoinAndSelect('dinoz.status', 'status')
+		.leftJoinAndSelect('dinoz.skills', 'skill')
+		.innerJoin('dinoz.player', 'player', 'player.id = :pId', { pId: playerId })
+		.getMany();
 };
 
-const freezeDinoz = (dinozId: number, isFrozen: boolean): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			isFrozen: isFrozen
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
+const getCanDinozChangeName = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.canChangeName'])
+		.addSelect(['player.id'])
+		.innerJoin('dinoz.player', 'player')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 };
 
-const sacrificeDinoz = (dinozId: number, isSacrificed: boolean): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			isSacrificed: isSacrificed
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
+const getDinozFicheRequest = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select([
+			'dinoz.id',
+			'dinoz.display',
+			'dinoz.life',
+			'dinoz.maxLife',
+			'dinoz.experience',
+			'dinoz.nbrUpAir',
+			'dinoz.nbrUpFire',
+			'dinoz.nbrUpLightning',
+			'dinoz.nbrUpWater',
+			'dinoz.nbrUpWood',
+			'dinoz.name',
+			'dinoz.level',
+			'dinoz.placeId'
+		])
+		.addSelect(['player.id'])
+		.addSelect(['items.itemId'])
+		.addSelect(['status.statusId'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.items', 'items')
+		.leftJoin('dinoz.status', 'status')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 };
 
-const setDinozLevel = (dinozId: number, level: number): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			level: level
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
+const getDinozSkillRequest = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id'])
+		.addSelect(['player.id'])
+		.addSelect(['skills.skillId', 'skills.state'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.skills', 'skills')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 };
 
-const setDinozMission = (dinoz: Dinoz): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			missionId: dinoz.missionId
-		},
-		{
-			where: { dinozId: dinoz.dinozId }
-		}
-	);
+const getDinozSkillAndStatusRequest = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id'])
+		.addSelect(['player.id'])
+		.addSelect(['skills.skillId'])
+		.addSelect(['status.statusId'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.skills', 'skills')
+		.leftJoin('dinoz.status', 'status')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 };
 
-const setDinozCanChangeName = (dinozId: number, canChangeName: boolean): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			canChangeName: canChangeName
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
+const getDinozSkillAndUnlockablesRequest = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select([
+			'dinoz.id',
+			'dinoz.raceId',
+			'dinoz.display',
+			'dinoz.experience',
+			'dinoz.level',
+			'dinoz.nextUpElementId',
+			'dinoz.nextUpAltElementId',
+			'dinoz.nbrUpFire',
+			'dinoz.nbrUpWood',
+			'dinoz.nbrUpWater',
+			'dinoz.nbrUpLightning',
+			'dinoz.nbrUpAir'
+		])
+		.addSelect(['player.id'])
+		.addSelect(['ranking.sumPoints', 'ranking.averagePoints', 'ranking.dinozCount'])
+		.addSelect(['items.itemId'])
+		.addSelect(['skills.skillId'])
+		.addSelect(['skillsUnlockable.skillId'])
+		.addSelect(['status.statusId'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('player.rank', 'ranking')
+		.leftJoin('dinoz.items', 'items')
+		.leftJoin('dinoz.skills', 'skills')
+		.leftJoin('dinoz.skillsUnlockable', 'skillsUnlockable')
+		.leftJoin('dinoz.status', 'status')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 };
 
-const setDinozLife = (dinozId: number, life: number): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			life: life
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
-};
-const setDinozMaxLife = (dinozId: number, maxLife: number): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			maxLife: maxLife
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
+const getDinozTotalCount = (): Promise<number> => {
+	return dinozRepository.count();
 };
 
-const setDinozExperience = (dinozId: number, experience: number): Promise<[number, Array<Dinoz>]> => {
-	return Dinoz.update(
-		{
-			experience: experience
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
+// Setters
+//TODO
+const setDinoz = (dinoz: Partial<Dinoz>): Promise<Dinoz> => {
+	return dinozRepository.save(dinoz);
 };
 
-const addExperience = (dinozId: number, experience: number): Promise<Dinoz | null> => {
-	return Dinoz.increment(
-		{
-			experience: experience
-		},
-		{
-			where: { dinozId: dinozId }
-		}
-	);
+//TODO
+const setDinozPlaceRequest = (dinoz: Dinoz, placeId: number): Promise<Dinoz> => {
+	dinoz.placeId = placeId;
+	return dinozRepository.save(dinoz);
 };
 
-const getDinozSkillsOwnAndUnlockable = (dinozId: number): Promise<Dinoz | null> => {
-	return Dinoz.findOne({
-		attributes: [
-			'raceId',
-			'display',
-			'experience',
-			'level',
-			'nextUpElementId',
-			'nextUpAltElementId',
-			'nbrUpFire',
-			'nbrUpWood',
-			'nbrUpWater',
-			'nbrUpLightning',
-			'nbrUpAir'
-		],
-		include: [
-			{
-				model: Player,
-				attributes: ['playerId'],
-				required: false,
-				include: [
-					{
-						model: Ranking,
-						attributes: ['sumPoints', 'averagePoints', 'dinozCount'],
-						required: false
-					}
-				]
-			},
-			{
-				model: AssDinozSkill,
-				attributes: ['skillId'],
-				required: false
-			},
-			{
-				model: AssDinozSkillUnlockable,
-				attributes: ['skillId'],
-				required: false
-			},
-			{
-				model: AssDinozStatus,
-				attributes: ['statusId'],
-				required: false
-			},
-			{
-				model: AssDinozItem,
-				attributes: ['itemId'],
-				required: false
-			}
-		],
-		where: { dinozId: dinozId }
-	});
+//TODO
+const setDinozNameRequest = (olddinoz: Dinoz, canChangeName: boolean): Promise<Dinoz> => {
+	olddinoz.canChangeName = canChangeName;
+	return dinozRepository.save(olddinoz);
 };
 
-const setLevelUpData = (dinoz: Partial<Dinoz>) => {
-	return Dinoz.update(dinoz, {
-		where: { dinozId: dinoz.dinozId }
-	});
+const addExperience = (dinozId: number, experience: number): Promise<UpdateResult> => {
+	return dinozRepository
+		.createQueryBuilder()
+		.update(Dinoz)
+		.set({ experience: () => 'experience + :addExperience' })
+		.setParameter('addExperience', experience)
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.execute();
 };
 
 export {
-	createDinozRequest,
-	getDinozFicheRequest,
-	getCanDinozChangeName,
-	setDinozNameRequest,
-	getDinozSkillRequest,
-	getDinozSkillAndStatusRequest,
-	setSkillStateRequest,
-	getDinozPlaceRequest,
-	setDinozPlaceRequest,
-	getDinozTotalCount,
 	getAllDinozFromAccount,
-	freezeDinoz,
-	sacrificeDinoz,
-	setDinozLevel,
-	setDinozMission,
-	setDinozCanChangeName,
-	setDinozLife,
-	setDinozMaxLife,
-	setDinozExperience,
-	addExperience,
-	getDinozSkillsOwnAndUnlockable,
-	setLevelUpData
+	getCanDinozChangeName,
+	getDinozFicheRequest,
+	getDinozPlaceRequest,
+	getDinozTotalCount,
+	getDinozSkillRequest,
+	getDinozSkillAndUnlockablesRequest,
+	getDinozSkillAndStatusRequest,
+	setDinoz,
+	setDinozNameRequest,
+	setDinozPlaceRequest,
+	addExperience
 };

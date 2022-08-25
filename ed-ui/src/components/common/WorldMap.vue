@@ -132,18 +132,18 @@ export default defineComponent({
 			}
 		},
 		async moveTo(placeId: number): Promise<void> {
-			if (!this.dinozData!.borderPlace.includes(placeId)) {
+			if (!this.dinozData!.borderPlace?.includes(placeId)) {
 				return;
 			}
 
 			EventBus.emit('isLoading', true);
 			try {
-				const moveTry: FightResult = await DinozService.betaMove(this.dinozData!.dinozId!, placeId);
+				const moveTry: FightResult = await DinozService.betaMove(this.dinozData!.id!, placeId);
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				if (moveTry.result) {
 					const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
-					const dinozToUpdate = dinozList.find(dinozs => dinozs.dinozId == this.dinozData!.dinozId!)!;
+					const dinozToUpdate = dinozList.find(dinozs => dinozs.id == this.dinozData!.id!)!;
 					if (placeList.find(place => place.placeId === placeId)?.alias) {
 						placeId = placeList.find(place => place.placeId === placeId)!.alias!;
 					}
@@ -151,9 +151,9 @@ export default defineComponent({
 					this.sessionStore.setDinozList(dinozList);
 				}
 				EventBus.emit('isLoading', false);
-				this.$router.push({
+				await this.$router.push({
 					name: 'Fight',
-					params: { dinozId: this.dinozData!.dinozId! }
+					params: { id: this.dinozData!.id! }
 				});
 			} catch (err) {
 				errorHandler.handle(err);
@@ -164,7 +164,7 @@ export default defineComponent({
 			return placeId === this.dinozData!.placeId;
 		},
 		canGo(placeId: number): boolean {
-			return this.dinozData!.borderPlace.includes(placeId);
+			return this.dinozData!.borderPlace!.includes(placeId);
 		},
 		svgMagic(mapImage: DOMRect): void {
 			let mapX = 0;
@@ -182,7 +182,7 @@ export default defineComponent({
 			const x1 = ((actualPlace!.posLeft + 8.5) / mapImage.width) * mapX;
 			const y1 = ((actualPlace!.posTop + 8.5) / mapImage.height) * mapY;
 
-			this.dinozData!.borderPlace.forEach(closePlace => {
+			this.dinozData!.borderPlace!.forEach(closePlace => {
 				const place: Place = placeList.find(place => place.placeId === closePlace)!;
 				const x2: number = ((place.posLeft! + 8.5) / mapImage.width) * mapX;
 				const y2: number = ((place.posTop! + 8.5) / mapImage.height) * mapY;
@@ -211,7 +211,7 @@ export default defineComponent({
 		const map = placeList.find(place => place.placeId === this.dinozData!.placeId)!.map;
 		// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
 		this.placeMap = placeList.filter(
-			place => place.map === map && (!place.hidden || this.dinozData!.borderPlace.includes(place.placeId))
+			place => place.map === map && (!place.hidden || this.dinozData!.borderPlace!.includes(place.placeId))
 		);
 
 		this.waitForImageToLoad();

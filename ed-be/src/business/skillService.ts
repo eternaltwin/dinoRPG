@@ -1,20 +1,12 @@
 import { Request } from 'express';
 import _ from 'lodash';
 import { itemList, levelList, raceList, skillList, statusList } from '../constants/index.js';
-import { addSkillToDinoz } from '../dao/assDinozSkillDao.js';
-import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../dao/assDinozSkillUnlockable.js';
-import { getDinozSkillsOwnAndUnlockable, setLevelUpData } from '../dao/dinozDao.js';
-import {
-	AssDinozSkillUnlockable,
-	Dinoz,
-	DinozRace,
-	DinozSkill,
-	DinozSkillOwnAndUnlockable,
-	ElementType,
-	Ranking,
-	SkillTree
-} from '../models/index.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
+import { Dinoz, DinozSkill, DinozSkillUnlockable, Ranking } from '../entity/index.js';
+import { DinozRace, DinozSkillFiche, DinozSkillOwnAndUnlockable, ElementType, SkillTree } from '../models/index.js';
+import { getDinozSkillAndUnlockablesRequest, setDinoz } from '../dao/dinozDao.js';
+import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../dao/dinozSkillUnlockableDao.js';
+import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 
 /**
@@ -29,11 +21,7 @@ import { updatePoints } from '../dao/rankingDao.js';
 const getLearnableSkills = async (req: Request): Promise<Partial<DinozSkillOwnAndUnlockable> | undefined> => {
 	const dinozId: number = parseInt(req.params.id);
 
-	const dinozSkills: Dinoz | null = await getDinozSkillsOwnAndUnlockable(dinozId);
-
-	if (dinozSkills === null) {
-		throw new Error(`Dinoz ${dinozId} doesn't exist`);
-	}
+	const dinozSkills: Dinoz = await getDinozSkillAndUnlockablesRequest(dinozId);
 
 	const dinozRace: DinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId)!;
 
@@ -54,11 +42,7 @@ const learnSkill = async (req: Request): Promise<string> => {
 	const dinozId: number = parseInt(req.params.id);
 	const skillIdList: Array<number> = req.body.skillIdList;
 
-	const dinozSkills: Dinoz | null = await getDinozSkillsOwnAndUnlockable(dinozId);
-
-	if (dinozSkills === null) {
-		throw new Error(`Dinoz ${dinozId} doesn't exist`);
-	}
+	const dinozSkills: Dinoz = await getDinozSkillAndUnlockablesRequest(dinozId);
 
 	const ranking: Ranking | undefined = dinozSkills.player.rank;
 
@@ -86,27 +70,22 @@ const learnSkill = async (req: Request): Promise<string> => {
 	if (isUnlockableSkills) {
 		await removeUnlockableSkillsToDinoz(dinozId, skillIdList);
 	} else {
-		await addSkillToDinoz(dinozId, skillIdList[0]);
+		await addSkillToDinoz(new DinozSkill(new Dinoz(dinozId), skillIdList[0]));
 
 		// Get all new unlockables skills
 		// First filter : get skills that required skill send in body to be learn
 		// Second filter : Keep only skills that dinoz can learn (dinoz have every unlock condition)
 		// Third filter : Remove race skills (ex : fly from Pteroz)
-		const newUnlockableSkills: Array<AssDinozSkillUnlockable> = Object.values(skillList)
+		const newUnlockableSkills: Array<DinozSkillUnlockable> = Object.values(skillList)
 			.filter(skill => skill.unlockedFrom?.some(skillId => skillIdList.includes(skillId)))
 			.filter(skill =>
 				skill.unlockedFrom?.every(
 					skillId =>
-						skillIdList.includes(skillId) || dinozSkills.skill.some(dinozSkill => dinozSkill.skillId === skillId)
+						skillIdList.includes(skillId) || dinozSkills.skills.some(dinozSkill => dinozSkill.skillId === skillId)
 				)
 			)
 			.filter(skill => !skill.raceId || skill.raceId.includes(dinozSkills.raceId))
-			.map(skill =>
-				AssDinozSkillUnlockable.build({
-					dinozId: dinozId,
-					skillId: skill.skillId
-				}).get()
-			);
+			.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.skillId));
 
 		await addMultipleUnlockableSkills(newUnlockableSkills);
 	}
@@ -118,7 +97,7 @@ const learnSkill = async (req: Request): Promise<string> => {
 		dinozRace
 	);
 
-	await setLevelUpData(newDinozData);
+	await setDinoz(newDinozData);
 
 	const newMaxExperience: string | undefined = levelList
 		.find(level => level.id === dinozSkills.level + 1)
@@ -141,7 +120,7 @@ function getDinozLearnableSkills(
 ): Partial<DinozSkillOwnAndUnlockable> | undefined {
 	let skills: Partial<DinozSkillOwnAndUnlockable> = {};
 
-	if (dinoz.player.playerId !== req.user!.playerId) {
+	if (dinoz.player.id !== req.user!.playerId) {
 		throw new Error(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
@@ -153,14 +132,14 @@ function getDinozLearnableSkills(
 
 	// Check if dinoz has 'Plan de carrière' skill or cube object
 	const hasCubeOrPdc: boolean =
-		dinoz.skill.some(skill => skill.skillId === skillList.PLAN_DE_CARRIERE.skillId) ||
-		(dinoz.item.some(item => item.itemId === itemList.DINOZ_CUBE.itemId) && dinoz.level <= 10);
+		dinoz.skills.some(skill => skill.skillId === skillList.PLAN_DE_CARRIERE.skillId) ||
+		(dinoz.items.some(item => item.itemId === itemList.DINOZ_CUBE.itemId) && dinoz.level <= 10);
 
 	if (tryNumber < 1 || tryNumber > 2 || (tryNumber === 2 && !hasCubeOrPdc)) {
 		throw new Error(`tryNumber ${tryNumber} is invalid`);
 	}
 
-	const learnableSkills: Array<DinozSkill> = _.cloneDeep(Object.values(skillList));
+	const learnableSkills: Array<DinozSkillFiche> = _.cloneDeep(Object.values(skillList));
 
 	const treeType: SkillTree = dinoz.status.some(status => status.statusId === statusList.ETHER_DROP)
 		? SkillTree.ETHER
@@ -179,10 +158,10 @@ function getDinozLearnableSkills(
 		.filter(skill => skill.element.some(element => element === learnableElement))
 		.filter(skill => skill.tree === treeType)
 		.filter(skill =>
-			skill.unlockedFrom?.every(skillId => dinoz.skill.some(dinozSkill => dinozSkill.skillId === skillId))
+			skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
 		)
-		.filter(skill => !dinoz.skill.some(dinozSkill => dinozSkill.skillId === skill.skillId))
-		.filter(skill => !dinoz.skillUnlockable.some(dinozSkill => dinozSkill.skillId === skill.skillId))
+		.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.skillId))
+		.filter(skill => !dinoz.skillsUnlockable.some(dinozSkill => dinozSkill.skillId === skill.skillId))
 		.filter(skill => !skill.isSphereSkill)
 		.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
 		.map(skill => {
@@ -194,7 +173,7 @@ function getDinozLearnableSkills(
 		});
 
 	// Get all unlockable skills
-	skills.unlockableSkills = dinoz.skillUnlockable
+	skills.unlockableSkills = dinoz.skillsUnlockable
 		.map(skill => Object.values(skillList).find(skills => skills.skillId === skill.skillId)!)
 		.filter(skill => skill.element.some(element => element === learnableElement))
 		.filter(skill => skill.tree === treeType)
@@ -225,7 +204,7 @@ function getNewDinozDataFromLevelUp(
 	dinozRace: DinozRace
 ): Partial<Dinoz> {
 	const dinoz: Partial<Dinoz> = {
-		dinozId: dinozId,
+		id: dinozId,
 		experience: 0,
 		level: dinozSkills.level + 1,
 		nextUpElementId: getRandomUpElement(dinozRace)!,

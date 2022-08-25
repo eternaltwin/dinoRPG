@@ -18,7 +18,7 @@
 	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
 	<DinozEquip :itemList="dinozData.items" />
-	<DinozStatus :dinozStatus="dinozData.statusList" />
+	<DinozStatus :dinozStatus="dinozData.status" />
 </template>
 
 <script lang="ts">

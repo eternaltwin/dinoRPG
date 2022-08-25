@@ -1,29 +1,27 @@
-import { Request, Response } from 'express';
-import { Config, Dinoz, DinozShop, Player, DinozRace } from '../models/index.js';
-import { getDinozFromDinozShopRequest, createMultipleDinoz } from '../dao/shopDao.js';
-import { getPlayerRewardsRequest } from '../dao/playerDao.js';
-import _ from 'lodash';
+import { Request } from 'express';
+import { Config, DinozRace, DinozShopFiche } from '../models/index.js';
+import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
+import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { getConfig } from '../utils/context.js';
 import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
 import { raceList, rewardList, skillList } from '../constants/index.js';
+import { Player, PlayerDinozShop } from '../entity/index.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
  * @description If no dinoz is found, then fill the shop with X new dinoz -> X is defined is config file
  * @param req
- * @param res {Array<DinozShop>}
- * @return Array<DinozShop>
+ * @return Array<DinozShopFiche>
  */
 
-// TODO: Refaire cette fonction en constuisant un objet de retour
-const getDinozFromDinozShop = async (req: Request, res: Response): Promise<Response> => {
-	// Retrieve dinoz from dinoz shop if exists
-	let data: Array<DinozShop> = await getDinozFromDinozShopRequest(req.user!.playerId!);
+// TODO: Refaire cette fonction en construisant un objet de retour
+const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche>> => {
+	// Retrieve player with dinoz shop info
+	const playerData: Player = await getPlayerDinozShopRequest(req.user!.playerId!);
 
-	// If nothing is found, create 15 dinoz to fill the shop
-	if (_.isEmpty(data)) {
-		let dinoz: Dinoz;
-		let dinozArray: Array<DinozShop> = [];
+	// If nothing is found, create 15 (?) dinoz to fill the shop
+	if (playerData.dinozShop.length === 0) {
+		let dinozArray: Array<PlayerDinozShop> = [];
 		let randomRace: number;
 		let randomDisplay: string;
 		const availableRaces: Array<DinozRace> = [
@@ -41,13 +39,9 @@ const getDinozFromDinozShop = async (req: Request, res: Response): Promise<Respo
 		const config: Config = getConfig();
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player: Player | null = await getPlayerRewardsRequest(req.user!.playerId!);
+		const player: Player = await getPlayerRewardsRequest(req.user!.playerId!);
 
-		if (player === null) {
-			return res.status(500).send('Player not found');
-		}
-
-		player.reward.forEach(playerReward => {
+		player.rewards.forEach(playerReward => {
 			if (playerReward.rewardId === rewardList.TROPHEE_ROCKY) {
 				availableRaces.push(raceList.ROCKY);
 			}
@@ -76,49 +70,48 @@ const getDinozFromDinozShop = async (req: Request, res: Response): Promise<Respo
 				randomDisplay += getRandomLetter(dinozRaceData.display![i]);
 			}
 
-			dinoz = Dinoz.build({
-				playerId: req.user!.playerId,
-				raceId: randomRace,
-				display: randomDisplay
-			});
+			let dinoz: PlayerDinozShop = new PlayerDinozShop();
+			dinoz.player = playerData;
+			dinoz.raceId = randomRace;
+			dinoz.display = randomDisplay;
 
-			dinozArray!.push(dinoz.get());
+			dinozArray.push(dinoz);
 		}
 
 		// Save created dinoz in database
-		let dinozCreatedInShop = await createMultipleDinoz(dinozArray!);
+		const dinozCreatedInShop: PlayerDinozShop[] = await createMultipleDinoz(dinozArray);
 
-		dinozCreatedInShop.forEach(dinoz => setDinozRaceAndSkill(dinoz));
+		const listDinozShop: DinozShopFiche[] = dinozCreatedInShop
+			.map(dinozShop => setDinozShopFiche(dinozShop))
+			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
 
-		dinozCreatedInShop = _.orderBy(dinozCreatedInShop, ['id', 'desc']);
-
-		return res.status(200).send(dinozCreatedInShop);
+		return listDinozShop;
 	} else {
-		data.forEach(dinoz => {
-			setDinozRaceAndSkill(dinoz);
-		});
+		const listDinozShop: DinozShopFiche[] = playerData.dinozShop
+			.map(dinozShop => setDinozShopFiche(dinozShop))
+			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
 
-		data = _.orderBy(data, ['id', 'desc']);
-
-		return res.status(200).send(data);
+		return listDinozShop;
 	}
 };
 
 /**
  * @summary Map the race and skill to a new dinoz
- * @param dinoz {DinozShop}
+ * @param dinozShop {PlayerDinozShop}
  * @return void
  */
-function setDinozRaceAndSkill(dinoz: DinozShop) {
-	const raceFound: DinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId)!;
+function setDinozShopFiche(dinozShop: PlayerDinozShop): DinozShopFiche {
+	const raceFound: DinozRace = Object.values(raceList).find(race => race.raceId === dinozShop.raceId)!;
 
 	raceFound.skillId = Object.values(skillList)
 		.filter(skill => skill.raceId?.some(raceId => raceId === raceFound.raceId) && skill.isBaseSkill)
 		.map(skill => skill.skillId);
 
-	dinoz.setDataValue('race', raceFound);
-	dinoz.setDataValue('raceId', undefined);
-	dinoz.setDataValue('playerId', undefined);
+	return {
+		id: dinozShop.id.toString(),
+		race: raceFound,
+		display: dinozShop.display
+	};
 }
 
 export { getDinozFromDinozShop };

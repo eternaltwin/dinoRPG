@@ -197,10 +197,10 @@ export default defineComponent({
 
 			EventBus.emit('isLoading', true);
 			try {
-				const newMaxExperience = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
+				const newMaxExperience = await DinozService.learnSkill(parseInt(dinozId), skillIdList, this.tryNumber);
 
 				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.dinozId!.toString() === dinozId)!;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 				dinozToUpdate.experience = 0;
 				dinozToUpdate.maxExperience = newMaxExperience;
 				this.sessionStore.setDinozList(dinozList);
@@ -222,7 +222,7 @@ export default defineComponent({
 		async getLearnableSkills(dinozId: string, tryNumber: number): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.availableSkills = await DinozService.levelUp(dinozId, tryNumber.toString());
+				this.availableSkills = await DinozService.levelUp(parseInt(dinozId), tryNumber.toString());
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
@@ -233,7 +233,7 @@ export default defineComponent({
 	async created(): Promise<void> {
 		const dinozId: string = this.$route.params.id.toString();
 		const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
-		this.dinozData = dinozList.find(dinoz => dinoz.dinozId!.toString() === dinozId)!;
+		this.dinozData = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 
 		await this.getLearnableSkills(dinozId, 1);
 	}

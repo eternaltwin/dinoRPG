@@ -1,13 +1,14 @@
 import cron, { CronJob } from 'cron';
-import { DinozShop } from '../models/index.js';
+import { AppDataSource } from '../data-source.js';
+import { PlayerDinozShop } from '../entity/index.js';
 
-// Truncate table 'tb_dinoz_shop' at midnight
+// Truncate table 'player_dinoz_shop' at midnight
 const resetDinozShopAtMidnight = (): CronJob => {
 	const CronJob = cron.CronJob;
 
-	return new CronJob('0 0 0 * * *', function () {
+	return new CronJob('0 0 0 * * *', async () => {
 		try {
-			DinozShop.destroy({ truncate: true, restartIdentity: true });
+			await AppDataSource.getRepository(PlayerDinozShop).clear();
 			console.log({ status: true });
 		} catch (err) {
 			console.error(`Cannot truncate table tb_dinoz_shop, err : ${err}`);

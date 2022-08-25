@@ -30,7 +30,7 @@
 			</select>
 		</form>
 	</div>
-	<DinozEdit v-if="selectedDinoz && tabSelected === 2" :dinozProp="selectedDinoz" :playerId="player.playerId" />
+	<DinozEdit v-if="selectedDinoz && tabSelected === 2" :dinozProp="selectedDinoz" :playerId="player.id" />
 	<NewsEdit v-if="tabSelected === 3" />
 </template>
 
@@ -46,7 +46,7 @@ import NewsEdit from '@/components/admin/NewsEdit.vue';
 
 interface PlayerSearch {
 	name: string;
-	playerId: number;
+	id: number;
 }
 
 export default defineComponent({
@@ -86,7 +86,7 @@ export default defineComponent({
 		},
 		async getPlayer(): Promise<void> {
 			this.displayErrorMessage = false;
-			const playerId: number | undefined = this.playerList.find(player => player.name === this.searchValue)?.playerId;
+			const playerId: number | undefined = this.playerList.find(player => player.name === this.searchValue)?.id;
 
 			if (playerId === undefined) {
 				this.displayErrorMessage = true;

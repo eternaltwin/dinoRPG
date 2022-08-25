@@ -1,4 +1,4 @@
-import { ItemOwn } from '../../models';
+import { PlayerItem } from '../../entity';
 import { item, itemId, itemQuantity, player } from '../utils/constants';
 
 export const BasicItem = ({
@@ -6,7 +6,7 @@ export const BasicItem = ({
 	itemId: item.id_1,
 	playerId: player.id_1,
 	quantity: itemQuantity
-} as unknown) as ItemOwn;
+} as unknown) as PlayerItem;
 
 export const playerFlyingShopInventory = [
 	{
@@ -17,7 +17,7 @@ export const playerFlyingShopInventory = [
 		itemId: 2,
 		quantity: 8
 	}
-] as Array<ItemOwn>;
+] as Array<PlayerItem>;
 
 export const playerMagicShopInventory = [
 	{
@@ -29,4 +29,4 @@ export const playerMagicShopInventory = [
 		itemId: 112,
 		quantity: 999
 	}
-] as Array<ItemOwn>;
+] as Array<PlayerItem>;

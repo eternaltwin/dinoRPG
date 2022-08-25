@@ -3,14 +3,27 @@ import { apiRoutes } from '../constants/index.js';
 import { getDinozFromDinozShop } from '../business/dinozShopService.js';
 import { getItemsFromShop, buyItem } from '../business/itemShopService.js';
 import { body, param, validationResult } from 'express-validator';
-import { ItemFiche } from '../models/index.js';
+import { DinozShopFiche, ItemFiche } from '../models/index.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.shopRoutes;
 
 // Get the Dinoz shop
-routes.get(`${commonPath}/dinoz`, getDinozFromDinozShop);
+routes.get(`${commonPath}/dinoz`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const listItems: Array<DinozShopFiche> = await getDinozFromDinozShop(req);
+		res.status(200).send(listItems);
+	} catch (err) {
+		const e: Error = err as Error;
+		console.error(e.message);
+		res.status(500).send(e.message);
+	}
+});
 
 // Get the items from a shop
 routes.get(

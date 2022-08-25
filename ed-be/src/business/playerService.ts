@@ -1,122 +1,107 @@
-import { Request, Response } from 'express';
-import { getDinozTotalCount } from '../dao/dinozDao.js';
-import { validationResult } from 'express-validator';
+import { Request } from 'express';
 import {
 	getCommonDataRequest,
 	getImportedData,
 	getPlayerDataRequest,
-	resetUser,
-	setHasImported,
-	editCustomText,
 	getPlayerRewardsRequest,
-	searchPlayersByName
+	resetUser,
+	searchPlayersByName,
+	setPlayer
 } from '../dao/playerDao.js';
-import { Player, PlayerInfo } from '../models/index.js';
-import { addRewardToPlayer } from '../dao/assPlayerRewardsDao.js';
 import { rewardList } from '../constants/reward.js';
-import { levelList } from '../constants/level.js';
+import { Player } from '../entity/player.js';
+import { PlayerInfo, PlayerCommonData } from '../models/index.js';
+import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
+import { getDinozTotalCount } from '../dao/dinozDao.js';
+import { levelList } from '../constants/index.js';
 
 /**
  * @summary Get data from player on login
  * @param req
- * @param res {Player}
  * @return Player
  */
-const getCommonData = async (req: Request, res: Response): Promise<Response> => {
-	const commonData: Player | null = await getCommonDataRequest(req.user!.playerId!);
-	commonData?.setDataValue('dinozCount', await getDinozTotalCount());
-	commonData?.dinoz.forEach(dinoz =>
-		dinoz.setDataValue('maxExperience', levelList.find(level => level.id === dinoz.level)!.experience)
-	);
-	return res.status(200).send(commonData);
+const getCommonData = async (req: Request): Promise<PlayerCommonData> => {
+	const playerCommonData: Player = await getCommonDataRequest(req.user!.playerId!);
+
+	const commonData: PlayerCommonData = {
+		money: playerCommonData.money,
+		dinozCount: await getDinozTotalCount(),
+		dinoz: playerCommonData.dinoz.map(dinoz => {
+			return {
+				id: dinoz.id,
+				following: dinoz.following,
+				display: dinoz.display,
+				name: dinoz.name,
+				life: dinoz.life,
+				experience: dinoz.experience,
+				maxExperience: levelList.find(level => level.id === dinoz.level)!.experience,
+				placeId: dinoz.placeId,
+				level: dinoz.level
+			};
+		}),
+		id: playerCommonData.id
+	};
+	return commonData;
 };
 
 /**
  * @summary Get data from an account
  * @param req
  * @param req.params.id {string} PlayerId
- * @param res {PlayerInfo}
  * @return PlayerInfo
  */
-const getAccountData = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
+const getAccountData = async (req: Request): Promise<PlayerInfo> => {
 	const playerId: number = parseInt(req.params.id);
-	const playerInfo: Player | null = await getPlayerDataRequest(playerId);
-
-	if (playerInfo === null) {
-		return res.status(500).send(`Player ${playerId} doesn't exists`);
-	}
-
-	//TODO Récuperer via tb_ranking
-	const rank: number = 1;
-
-	// Compte du nombre de point
-	//TODO Récuperer via tb_ranking
-	const pointCount: number = playerInfo.dinoz.reduce((acc, dinoz) => (acc += dinoz.level), 0);
+	const playerInfo: Player = await getPlayerDataRequest(playerId);
 
 	// Subscription date
-	const date = playerInfo.createdAt.toLocaleString().split(',')[0].split('/');
+	const date: Array<string> = playerInfo.createdDate.toLocaleString().split(',')[0].split('/');
 	const formatter = new Intl.DateTimeFormat('fr', { month: 'long' });
-	const month = formatter.format(new Date(parseInt(date[2]), parseInt(date[0]) - 1, parseInt(date[1])));
+	const month: string = formatter.format(new Date(parseInt(date[2]), parseInt(date[0]) - 1, parseInt(date[1])));
 	const subscribe: string = `${date[1]} ${month} ${date[2]}`;
 
 	// Clan TODO
 	const clan: string | undefined = undefined;
 
-	// Rewards
-	let epicRewards: Array<number> = [];
-	playerInfo.reward.forEach(reward => epicRewards.push(reward.rewardId));
-
-	// Status
-	playerInfo.dinoz.forEach(dinoz => {
-		dinoz.setDataValue(
-			'statusList',
-			dinoz.status.map(status => status.statusId)
-		);
-		dinoz.setDataValue('status', undefined);
-	});
-
 	const infoToSend: PlayerInfo = {
-		dinozCount: playerInfo.dinoz.length,
-		rank: rank,
-		pointCount: pointCount,
+		dinozCount: playerInfo.rank.dinozCountDisplayed,
+		rank: playerInfo.rank.sumPosition,
+		pointCount: playerInfo.rank.sumPointsDisplayed,
 		subscribeAt: subscribe,
 		clan: clan,
 		playerName: playerInfo!.name,
-		epicRewards: epicRewards,
-		dinoz: playerInfo.dinoz,
+		epicRewards: playerInfo.rewards.map(reward => reward.rewardId),
+		dinoz: playerInfo.dinoz.map(dinoz => {
+			return {
+				id: dinoz.id,
+				display: dinoz.display,
+				name: dinoz.name,
+				level: dinoz.level,
+				raceId: dinoz.raceId,
+				life: dinoz.life,
+				status: dinoz.status.map(status => status.statusId)
+			};
+		}),
 		customText: playerInfo.customText
 	};
 
-	return res.status(200).send(infoToSend);
+	return infoToSend;
 };
 
 /**
  * @summary Import a specified account
  * @param req
  * @param req.body.server {string} Server where the player came from
- * @param res
  * @return void
  */
-const importAccount = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+const importAccount = async (req: Request): Promise<void> => {
 	const playerId: number = req.user!.playerId!;
-	const server: string = req.body.server;
-	const importedData: Player | null = await getImportedData(playerId);
-
-	//Check if player exist
-	if (importedData === null) {
-		return res.status(500).send(`Player ${playerId} doesn't exists`);
-	}
+	//const server: string = req.body.server;
+	const importedData: Player = await getImportedData(playerId);
 
 	//Check if user has not already imported
 	if (importedData.hasImported) {
-		return res.status(500).send(`Player ${playerId} has already imported his account`);
+		throw new Error(`Player ${playerId} has already imported his account`);
 	}
 
 	//Check if user has data in Eternaltwin's API
@@ -124,59 +109,44 @@ const importAccount = async (req: Request, res: Response): Promise<Response> => 
 	//Reset all data for this user except the user's row in tb_player
 	await resetUser(playerId);
 
-	//TODO Import from Eternaltwin's API
-	const userET: string = importedData.eternalTwinId;
+	// TODO Import from Eternaltwin's API
+	// const userET: string = importedData.eternalTwinId;
 
 	//Give Epic Reward
 	await addRewardToPlayer(playerId, 100);
 
 	//Set hasImported to true
-	await setHasImported(playerId, true);
-
-	return res.status(200).send();
+	await setPlayer({ id: playerId, hasImported: true });
 };
 
 /**
  * @summary Set custom text for a player
  * @param req
  * @param req.body.message {string} Message to set as custom text
- * @param res
  * @return void
  */
-const setCustomText = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+const setCustomText = async (req: Request): Promise<void> => {
 	const playerId: number = req.user!.playerId!;
-	const playerProfile: Player | null = await getPlayerRewardsRequest(playerId);
-
-	//Check if player exist
-	if (playerProfile === null) {
-		return res.status(500).send(`Player ${playerId} doesn't exists`);
-	}
+	const playerProfile: Player = await getPlayerRewardsRequest(playerId);
 
 	//Check if user can edit
-	if (!playerProfile.reward.some(rewards => rewards.rewardId === rewardList.PLUME)) {
-		return res.status(500).send(`Player ${playerId} cannot edit this field`);
+	if (!playerProfile.rewards.some(reward => reward.rewardId === rewardList.PLUME)) {
+		throw new Error(`Player ${playerId} cannot edit this field`);
 	}
-	await editCustomText(playerId, req.body.message);
 
-	return res.status(200).send();
+	await setPlayer({ id: playerId, customText: req.body.message });
 };
 
 /**
  * @summary Fetch a list of player based on a string
- * @return Array<Player>
  * @param req
  * @param req.params.id {string}
- * @param res
+ * @return Array<Player>
  */
-const searchPlayers = async (req: Request, res: Response): Promise<Response> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+const searchPlayers = async (req: Request): Promise<Array<Player>> => {
 	const playerList: Array<Player> = await searchPlayersByName(req.params.name);
-	return res.status(200).send(playerList);
+
+	return playerList;
 };
 
 export { getCommonData, getAccountData, importAccount, setCustomText, searchPlayers };

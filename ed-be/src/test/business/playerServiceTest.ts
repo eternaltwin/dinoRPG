@@ -1,12 +1,7 @@
-import {
-	BasicImportedPlayer,
-	BasicNotImportedPlayer,
-	PlayerData,
-	playerList,
-	PlayerWithDinoz,
-	PlayerWithRewards
-} from '../data/playerData.js';
-import { mockRequest, mockResponse, player } from '../utils/constants.js';
+import { cloneDeep } from 'lodash';
+import { Request } from 'express';
+import { PlayerAllData, playerList } from '../data/playerData.js';
+import { mockRequest, player } from '../utils/constants.js';
 import {
 	getAccountData,
 	getCommonData,
@@ -14,116 +9,93 @@ import {
 	searchPlayers,
 	setCustomText
 } from '../../business/playerService.js';
-import { Request, Response } from 'express';
-import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
-import { mocked } from 'ts-jest/utils';
-
-jest.mock('express-validator');
+import { Player } from '../../entity/player.js';
+import { rewardList } from '../../constants/reward.js';
+import { PlayerReward } from '../../entity/playerReward.js';
 
 const PlayerDao = require('../../dao/playerDao.js');
 const DinozDao = require('../../dao/dinozDao.js');
-const assPlayerRewardsDao = require('../../dao/assPlayerRewardsDao.js');
+const assPlayerRewardsDao = require('../../dao/playerRewardsDao.js');
+
+let PlayerTestData: Player;
 
 describe('Function getCommonData()', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
+		// Repopulate PlayerTestData and DinozData before each test to start with clean data
+		PlayerTestData = cloneDeep(PlayerAllData);
 
-		PlayerDao.getCommonDataRequest = jasmine.createSpy().and.returnValue(PlayerWithDinoz);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getCommonDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 		DinozDao.getDinozTotalCount = jasmine.createSpy().and.returnValue(2);
 
-		PlayerWithDinoz.setDataValue = jasmine.createSpy().and.returnValue([]);
+		// PlayerWithDinoz.setDataValue = jasmine.createSpy().and.returnValue([]);
 	});
 
 	it('Nominal case', async function () {
-		await getCommonData(req, res);
+		try {
+			await getCommonData(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getCommonDataRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozTotalCount).toHaveBeenCalledTimes(1);
-
 		expect(PlayerDao.getCommonDataRequest).toHaveBeenCalledWith(req.user!.playerId);
 
-		expect(res.status).toHaveBeenCalledWith(200);
+		expect(DinozDao.getDinozTotalCount).toHaveBeenCalledTimes(1);
 	});
 });
 
 describe('Function getAccountData', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
 		req.params = {
 			id: player.id_1.toString()
 		};
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
+		// Repopulate PlayerTestData and DinozData before each test to start with clean data
+		PlayerTestData = cloneDeep(PlayerAllData);
 
-		PlayerDao.getPlayerDataRequest = jasmine.createSpy().and.returnValue(PlayerData);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerDataRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 	});
 
 	it('Nominal case', async function () {
-		await getAccountData(req, res);
+		try {
+			await getAccountData(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerDataRequest).toHaveBeenCalledTimes(1);
-
 		expect(PlayerDao.getPlayerDataRequest).toHaveBeenCalledWith(player.id_1);
 
-		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.send).toHaveBeenCalledWith(expect.objectContaining({ dinozCount: 1 }));
+		// expect(res.send).toHaveBeenCalledWith(expect.objectContaining({ dinozCount: 1 }));
 	});
 
-	it("Player doesn't exists", async function () {
-		PlayerDao.getPlayerDataRequest = jasmine.createSpy().and.returnValue(null);
+	// No need to test that the DAO can return a null player. It will throw an error if no player is found.
 
-		await getAccountData(req, res);
-
-		expect(PlayerDao.getPlayerDataRequest).toHaveBeenCalledTimes(1);
-
-		expect(PlayerDao.getPlayerDataRequest).toHaveBeenCalledWith(player.id_1);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exists`);
-	});
-
-	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
-
-		await getAccountData(req, res);
-
-		expect(PlayerDao.getPlayerDataRequest).not.toHaveBeenCalled();
-
-		expect(res.status).toHaveBeenCalledWith(400);
-	});
+	// Bad requests are handled in routes
 });
 
 describe('Function importAccount', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
-
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
 
 		req.user = {
 			playerId: player.id_1
@@ -132,76 +104,72 @@ describe('Function importAccount', function () {
 			server: 'fr'
 		};
 
-		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(BasicNotImportedPlayer);
-		PlayerDao.resetUser = jasmine.createSpy().and.returnValue(true);
-		assPlayerRewardsDao.addRewardToPlayer = jasmine.createSpy().and.returnValue(true);
-		PlayerDao.setHasImported = jasmine.createSpy().and.returnValue(true);
+		// Repopulate PlayerTestData and DinozData before each test to start with clean data
+		PlayerTestData = cloneDeep(PlayerAllData);
+
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(PlayerTestData);
+		PlayerDao.resetUser = jasmine.createSpy();
+		assPlayerRewardsDao.addRewardToPlayer = jasmine.createSpy();
+		PlayerDao.setPlayer = jasmine.createSpy();
 	});
 
 	it('Nominal case', async function () {
-		await importAccount(req, res);
+		PlayerTestData.hasImported = false;
+		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		try {
+			await importAccount(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getImportedData).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.getImportedData).toHaveBeenCalledWith(player.id_1);
+
 		expect(PlayerDao.resetUser).toHaveBeenCalledTimes(1);
-		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.setHasImported).toHaveBeenCalledTimes(1);
-
-		expect(PlayerDao.getImportedData).toHaveBeenCalledWith(player.id_1);
 		expect(PlayerDao.resetUser).toHaveBeenCalledWith(player.id_1);
+
+		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledTimes(1);
 		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledWith(player.id_1, 100);
-		expect(PlayerDao.setHasImported).toHaveBeenCalledWith(player.id_1, true);
 
-		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.send).toHaveBeenCalledWith();
+		expect(PlayerDao.setPlayer).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.setPlayer).toHaveBeenCalledWith({
+			id: player.id_1,
+			hasImported: true
+		});
 	});
 
-	it("Player doesn't exists", async function () {
-		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(null);
-
-		await importAccount(req, res);
-
-		expect(PlayerDao.getImportedData).toHaveBeenCalledTimes(1);
-
-		expect(PlayerDao.getImportedData).toHaveBeenCalledWith(player.id_1);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exists`);
-	});
+	// No need to test that the DAO can return a null player. It will throw an error if no player is found.
 
 	it('Player has already imported his account', async function () {
-		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(BasicImportedPlayer);
+		PlayerTestData.hasImported = true;
+		PlayerDao.getImportedData = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await importAccount(req, res);
+		try {
+			await importAccount(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`Player ${player.id_1} has already imported his account`);
+		}
 
 		expect(PlayerDao.getImportedData).toHaveBeenCalledTimes(1);
 
 		expect(PlayerDao.getImportedData).toHaveBeenCalledWith(player.id_1);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} has already imported his account`);
 	});
 
-	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
-
-		await importAccount(req, res);
-
-		expect(PlayerDao.getImportedData).not.toHaveBeenCalled();
-
-		expect(res.status).toHaveBeenCalledWith(400);
-	});
+	// Bad requests are handled in routes
 });
 
 describe('Function setCustomText', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
 		req.params = {
 			id: player.id_1.toString()
@@ -210,106 +178,91 @@ describe('Function setCustomText', function () {
 			message: 'bonjour'
 		};
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
+		// Repopulate PlayerTestData and DinozData before each test to start with clean data
+		PlayerTestData = cloneDeep(PlayerAllData);
 
-		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerData);
-		PlayerDao.editCustomText = jasmine.createSpy().and.returnValue(true);
+		// Override this as necessary if you change PlayerTestData
+		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+		PlayerDao.setPlayer = jasmine.createSpy();
 	});
 
 	it('Nominal case', async function () {
-		await setCustomText(req, res);
+		PlayerTestData.rewards = [
+			({
+				rewardId: rewardList.PLUME
+			} as unknown) as PlayerReward
+		];
+		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
+
+		try {
+			await setCustomText(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.editCustomText).toHaveBeenCalledTimes(1);
+		expect(PlayerDao.setPlayer).toHaveBeenCalledTimes(1);
 
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
-		expect(PlayerDao.editCustomText).toHaveBeenCalledWith(player.id_1, req.body.message);
-
-		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.send).toHaveBeenCalledWith();
+		expect(PlayerDao.setPlayer).toHaveBeenCalledWith({
+			id: player.id_1,
+			customText: req.body.message
+		});
 	});
 
-	it("Player doesn't exists", async function () {
-		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(null);
-
-		await setCustomText(req, res);
-
-		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledTimes(1);
-
-		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} doesn't exists`);
-	});
+	// No need to test that the DAO can return a null player. It will throw an error if no player is found.
 
 	it('Player cannot edit', async function () {
-		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerWithRewards);
+		PlayerTestData.rewards = [];
+		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 
-		await setCustomText(req, res);
+		try {
+			await setCustomText(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`Player ${player.id_1} cannot edit this field`);
+		}
 
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledTimes(1);
 
 		expect(PlayerDao.getPlayerRewardsRequest).toHaveBeenCalledWith(player.id_1);
-
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.send).toHaveBeenCalledWith(`Player ${player.id_1} cannot edit this field`);
 	});
 
-	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
-
-		await setCustomText(req, res);
-
-		expect(PlayerDao.getPlayerRewardsRequest).not.toHaveBeenCalled();
-
-		expect(res.status).toHaveBeenCalledWith(400);
-	});
+	// Bad requests are handled in routes
 });
 
 describe('Function searchPlayers', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
 		req.params = {
 			name: 'Bio'
 		};
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
-
 		PlayerDao.searchPlayersByName = jasmine.createSpy().and.returnValue(playerList);
 	});
 
 	it('Nominal case', async function () {
-		await searchPlayers(req, res);
+		try {
+			await searchPlayers(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
 		expect(PlayerDao.searchPlayersByName).toHaveBeenCalledTimes(1);
 
 		expect(PlayerDao.searchPlayersByName).toHaveBeenCalledWith(req.params.name);
 
-		expect(res.status).toHaveBeenCalledWith(200);
-		expect(res.send).toHaveBeenCalledWith(playerList);
+		//expect(res.send).toHaveBeenCalledWith(playerList);
 	});
 
-	it('Bad request', async function () {
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
-
-		await searchPlayers(req, res);
-
-		expect(PlayerDao.searchPlayersByName).not.toHaveBeenCalled();
-
-		expect(res.status).toHaveBeenCalledWith(400);
-	});
+	// Bad requests are handled in routes
 });

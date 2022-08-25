@@ -53,7 +53,7 @@ export default defineComponent({
 		EventBus.emit('isLoading', true);
 		try {
 			const dinozId = this.$route.params.id as string;
-			this.dinozData = await DinozService.getDinozFiche(dinozId);
+			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);

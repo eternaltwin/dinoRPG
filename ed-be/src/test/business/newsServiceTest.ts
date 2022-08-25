@@ -1,24 +1,17 @@
-import { Request, Response } from 'express';
-import { ErrorFormatter, Result, ValidationError, validationResult } from 'express-validator';
-import { mocked } from 'ts-jest/utils';
-import { mockRequest, mockResponse } from '../utils/constants.js';
+import { Request } from 'express';
+import { mockRequest } from '../utils/constants.js';
 import { getNews, postNews, updateNews } from '../../business/newsService.js';
-import { batchOfNews, editedNews, postedNews } from '../data/newsData.js';
-import { News } from '../../models/index.js';
-import { updateAnyNews } from '../../dao/newsDao.js';
-
-jest.mock('express-validator');
+import { batchOfNews, editedNews } from '../data/newsData.js';
+import { News } from '../../entity/index.js';
 
 const NewsDao = require('../../dao/newsDao.js');
 
 describe('Function postNews', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
 		req.params = {
 			title: 'title'
@@ -34,82 +27,74 @@ describe('Function postNews', function () {
 			germanText: 'req.body.germanText'
 		};
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
 		NewsDao.createNews = jasmine.createSpy();
-
-		News.build = jasmine.createSpy().and.returnValue({ get: jest.fn().mockResolvedValue(postedNews) });
-		News.create = jasmine.createSpy().and.returnValue({ get: jest.fn().mockResolvedValue(postedNews) });
 	});
 
 	it('Nominal Case', async function () {
-		await postNews(req, res);
+		try {
+			await postNews(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
+
+		const expectedPartialNews: Partial<News> = {
+			title: req.params.title,
+			image: undefined,
+			frenchTitle: req.body.frenchTitle,
+			englishTitle: req.body.englishTitle,
+			spanishTitle: req.body.spanishTitle,
+			germanTitle: req.body.germanTitle,
+			frenchText: req.body.frenchText,
+			englishText: req.body.englishText,
+			spanishText: req.body.spanishText,
+			germanText: req.body.germanText
+		};
 
 		expect(NewsDao.createNews).toHaveBeenCalledTimes(1);
-		expect(NewsDao.createNews).toHaveBeenCalledWith(Promise.resolve(postedNews));
-
-		expect(res.status).toHaveBeenCalledWith(200);
+		expect(NewsDao.createNews).toHaveBeenCalledWith(expectedPartialNews);
 	});
 
-	it('Bad request', async function () {
-		const result = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
-
-		await postNews(req, res);
-
-		expect(NewsDao.createNews).not.toHaveBeenCalled();
-		expect(res.status).toHaveBeenCalledWith(400);
-	});
+	// Bad requests are handled in routes
 });
 
 describe('Function getNews', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
 		req.params.page = '1';
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
 		NewsDao.getBatchOfNews = jasmine.createSpy().and.returnValue(batchOfNews);
 	});
 
 	it('Nominal Case', async function () {
-		await getNews(req, res);
+		let response: Array<News> = [];
+		try {
+			response = await getNews(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
 		expect(NewsDao.getBatchOfNews).toHaveBeenCalledTimes(1);
 		expect(NewsDao.getBatchOfNews).toHaveBeenCalledWith(parseInt(req.params.page));
-
-		expect(res.status).toHaveBeenCalledWith(200);
+		expect(response).toStrictEqual(batchOfNews);
 	});
 
-	it('Bad request', async function () {
-		const result = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
-
-		await getNews(req, res);
-
-		expect(NewsDao.getBatchOfNews).not.toHaveBeenCalled();
-		expect(res.status).toHaveBeenCalledWith(400);
-	});
+	// Bad requests are handled in routes
 });
 
 describe('Function updateNews', function () {
 	let req: Request;
-	let res: Response;
 
 	beforeEach(function () {
 		jest.clearAllMocks();
 		req = mockRequest;
-		res = mockResponse;
 
 		req.params = {
 			title: 'title'
@@ -125,29 +110,21 @@ describe('Function updateNews', function () {
 			germanText: 'req.body.germanText'
 		};
 
-		const result: Result<ValidationError> = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => true);
 		NewsDao.updateAnyNews = jasmine.createSpy();
 	});
 
 	it('Nominal Case', async function () {
-		await updateNews(req, res);
+		try {
+			await updateNews(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
 
 		expect(NewsDao.updateAnyNews).toHaveBeenCalledTimes(1);
 		expect(NewsDao.updateAnyNews).toHaveBeenCalledWith(req.params.title, editedNews);
-
-		expect(res.status).toHaveBeenCalledWith(200);
 	});
 
-	it('Bad request', async function () {
-		const result = new Result({} as ErrorFormatter<ValidationError>, []);
-		mocked(validationResult).mockImplementation(() => result);
-		mocked(result.isEmpty).mockImplementation(() => false);
-
-		await updateNews(req, res);
-
-		expect(NewsDao.updateAnyNews).not.toHaveBeenCalled();
-		expect(res.status).toHaveBeenCalledWith(400);
-	});
+	// Bad requests are handled in routes
 });

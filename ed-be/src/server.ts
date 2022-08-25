@@ -13,9 +13,11 @@ import rankingRoutes from './routes/ranking.routes.js';
 import { loadConfigFile } from './utils/context.js';
 import { jwtConfig } from './utils/jwt.js';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
-import { sequelize } from './sequelize.js';
 import { updatePlayersPosition } from './cron/updatePlayersPosition.js';
 import adminRoutes from './routes/admin.routes.js';
+import 'reflect-metadata';
+import { AppDataSource } from './data-source.js';
+import swaggerUi from 'swagger-ui-express';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -37,15 +39,12 @@ const app = express();
 loadConfigFile();
 
 // Database connection
-// { alter: true } -> Si besoin
-// { force: true } -> S'il n'y a plus d'espoir
-sequelize
-	.sync()
+AppDataSource.initialize()
 	.then(() => {
-		console.log('Database sync');
+		console.log('Data Source has been initialized successfully.');
 	})
-	.catch(() => {
-		console.error('Error while doing database synchronisation');
+	.catch(err => {
+		console.error('Error during Data Source initialization:', err);
 	});
 
 app.use(cors());
@@ -71,11 +70,84 @@ app.use(playerRoutes);
 app.use(shopRoutes);
 app.use(rankingRoutes);
 
+const swaggerDefinition = {
+	openapi: '3.0.0',
+	info: {
+		title: 'API REST de EternalDinoRPG',
+		description: "Yep, it's the API",
+		version: '1.0.0'
+	},
+	components: {
+		securitySchemes: {
+			bearerAuth: {
+				type: 'http',
+				scheme: 'bearer',
+				bearerFormat: 'JWT'
+			}
+		}
+	},
+	servers: [
+		{
+			url: process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : 'https://dinorpg.eternaltwin.org'
+		}
+	],
+	tags: [
+		{
+			name: 'Oauth',
+			description: 'Request made for authenticate the player'
+		},
+		{
+			name: 'Dinoz',
+			description: 'Requests made about the dinoz'
+		},
+		{
+			name: 'Player',
+			description: 'Requests made about the player'
+		},
+		{
+			name: 'Shop',
+			description: 'Requests made about the shops'
+		},
+		{
+			name: 'Ingredients',
+			description: 'Requests made about the ingredient'
+		},
+		{
+			name: 'Inventory',
+			description: "Requests made about the player's inventory"
+		},
+		{
+			name: 'Level',
+			description: 'Requests made about the dinoz leveling'
+		},
+		{
+			name: 'News',
+			description: 'Requests made about the news of the website'
+		},
+		{
+			name: 'Ranking',
+			description: 'Requests made about the ranking'
+		},
+		{
+			name: 'Admin',
+			description: 'Requests requiring to be administrator'
+		}
+	]
+};
+const swaggerOptions = {
+	swaggerDefinition,
+	apis: ['dist/routes/*.js']
+};
+import swaggerJsDoc from 'swagger-jsdoc';
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
+
 // Launch Cron
 resetDinozShopAtMidnight().start();
 updatePlayersPosition().start();
 
 // Initiate controllers
+//TODO: what is the purpose ?
+
 // oauthController.init();
 
 // set port, listen for requests

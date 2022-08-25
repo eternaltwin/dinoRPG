@@ -1,6 +1,7 @@
 import cron, { CronJob } from 'cron';
 import { getPlayersPoints, updateRanking } from '../dao/rankingDao.js';
-import { NewPositions, Ranking } from '../models/index.js';
+import { Ranking } from '../entity/ranking.js';
+import { NewPositions } from '../models/index.js';
 
 const updatePlayersPosition = (): CronJob => {
 	const CronJob = cron.CronJob;
@@ -12,7 +13,7 @@ const updatePlayersPosition = (): CronJob => {
 				.sort((a, b) => b.sumPoints - a.sumPoints)
 				.map((line, index) => {
 					return {
-						playerId: line.playerId,
+						id: line.player.id,
 						sumPosition: index + 1,
 						averagePosition: 0,
 						sumPointsDisplayed: line.sumPoints,
@@ -24,13 +25,13 @@ const updatePlayersPosition = (): CronJob => {
 			playersUpdated
 				.sort((a, b) => b.averagePoints - a.averagePoints)
 				.forEach((line, index) => {
-					newPositions.find(players => players.playerId === line.playerId)!.averagePosition = index + 1;
+					newPositions.find(players => players.id === line.player.id)!.averagePosition = index + 1;
 				});
 
 			newPositions.forEach(async player => await updateRanking(player));
 			console.log('Ranking updated');
 		} catch (err) {
-			console.error('Cannot update table tb_ranking');
+			console.error('Cannot update table ranking');
 		}
 	});
 };

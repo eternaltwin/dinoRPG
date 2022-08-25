@@ -112,7 +112,7 @@ export default defineComponent({
 			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
 			try {
-				await DinozService.setSkillState(dinozId, skill.skillId, !skill.state);
+				await DinozService.setSkillState(parseInt(dinozId), skill.skillId, !skill.state);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
@@ -122,7 +122,7 @@ export default defineComponent({
 			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
-			return this.dinozData!.statusList.includes(statusList.id.amulst);
+			return this.dinozData!.status!.includes(statusList.id.amulst);
 		},
 		sort(): void {
 			switch (this.selectedSort) {
@@ -158,7 +158,7 @@ export default defineComponent({
 		EventBus.emit('isLoading', true);
 		try {
 			const dinozId = this.$route.params.id as string;
-			this.dinozSkill = await DinozService.getDinozSkill(dinozId);
+			this.dinozSkill = await DinozService.getDinozSkill(parseInt(dinozId));
 			this.sort();
 			EventBus.emit('isLoading', false);
 		} catch (err) {

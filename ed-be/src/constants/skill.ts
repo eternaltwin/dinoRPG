@@ -1,4 +1,4 @@
-import { DinozSkill, ElementType, Energy, SkillTree, SkillType } from '../models/index.js';
+import { DinozSkillFiche, ElementType, Energy, SkillTree, SkillType } from '../models/index.js';
 import { raceList } from './race.js';
 
 // skillId are counted like this : ABCDE
@@ -7,7 +7,7 @@ import { raceList } from './race.js';
 // C = Column of the skill
 // DE = Number of the skill in this column
 
-export const skillList: Readonly<Record<string, DinozSkill>> = {
+export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 	// Fire Skills
 	GRIFFES_ENFLAMMEES: {
 		skillId: 11101,

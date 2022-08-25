@@ -3,7 +3,7 @@ import urlJoin from 'url-join';
 import { sessionStore } from '@/store';
 
 const API_SERVER = new URL(process.env.VUE_APP_API_URL);
-const API_BASE = urlJoin(API_SERVER.toString(), 'api');
+const API_BASE = urlJoin(API_SERVER.toString(), 'api/v1');
 
 export const http = function (): AxiosInstance {
 	const jwt: string | undefined = sessionStore().getJwt;

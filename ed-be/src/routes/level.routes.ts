@@ -1,6 +1,5 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { Request, Response } from 'express';
 import { getLearnableSkills, learnSkill } from '../business/skillService.js';
 import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
@@ -9,6 +8,37 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.levelRoute;
 
+/**
+ * @openapi
+ * /api/v1/level/learnableskills/{dinozId}/{tryNumber}:
+ *   get:
+ *     summary: Get the available skill for level up
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Level
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz.
+ *       - in: path
+ *         name: tryNumber
+ *         type: string
+ *         required: true
+ *         description: Number of the try
+ *         enum: [1, 2]
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
 routes.get(
 	`${commonPath}/learnableskills/:id/:tryNumber`,
 	[param('id').exists().toInt().isNumeric(), param('tryNumber').exists().toInt().isNumeric()],
@@ -21,11 +51,52 @@ routes.get(
 			const response = await getLearnableSkills(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			return res.status(500).send(err.message);
+			const e: Error = err as Error;
+			console.error(e.message);
+			res.status(500).send(e.message);
 		}
 	}
 );
 
+/**
+ * @openapi
+ * /api/v1/level/learnskill/{dinozId}:
+ *   post:
+ *     summary: Learn a specified skill
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Level
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz.
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - skillIdList
+ *             - tryNumber
+ *           properties:
+ *             skillIdList:
+ *               type: Array<number>
+ *               description: Array of the skill learned or unlocked
+ *             tryNumber:
+ *               type: number
+ *               description: Number of the attempt
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
 routes.post(
 	`${commonPath}/learnskill/:id`,
 	[
@@ -46,8 +117,9 @@ routes.post(
 			const response: string = await learnSkill(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: Error = err as Error;
+			console.error(e.message);
+			return res.status(500).send(e.message);
 		}
 	}
 );

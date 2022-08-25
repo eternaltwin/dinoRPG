@@ -1,12 +1,12 @@
-import { DinozShop } from '../../models';
+import { PlayerDinozShop } from '../../entity';
 import { raceList } from '../../constants';
 import { dinozId, player } from '../utils/constants';
 
-export const DinozFromShop = {
+export const DinozFromShop: PlayerDinozShop = {
 	id: dinozId,
 	display: 'sdf8s165fs',
 	player: {
-		playerId: player.id_1,
+		id: player.id_1,
 		money: 200000,
 		rank: {
 			dinozCount: 2,
@@ -19,6 +19,6 @@ export const DinozFromShop = {
 	},
 	// Use a race with a skill for the test
 	raceId: raceList.WINKS.raceId
-} as DinozShop;
+} as PlayerDinozShop;
 
-export const DinozShopArray = [DinozFromShop, DinozFromShop] as Array<DinozShop>;
+export const DinozShopArray = [DinozFromShop, DinozFromShop] as Array<PlayerDinozShop>;

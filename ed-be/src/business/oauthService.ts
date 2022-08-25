@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
-import { getPlayerId, createPlayer } from '../dao/playerDao.js';
+import { Request } from 'express';
+import { createPlayer, getPlayerId } from '../dao/playerDao.js';
 import { getConfig } from '../utils/context.js';
 import { forgeJWT } from '../utils/jwt.js';
-import _ from 'lodash';
-import { Player, Config } from '../models/index.js';
+import { Config } from '../models/index.js';
+import { Player } from '../entity/index.js';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
 import { OauthAccessToken } from '@eternal-twin/core/lib/oauth/oauth-access-token.js';
 import fetch from 'node-fetch';
@@ -16,7 +16,7 @@ import { addPlayerInRanking } from '../dao/rankingDao.js';
  * @param res {string}
  * @return string
  */
-const authenticateToET = async (req: Request, res: Response): Promise<Response> => {
+const authenticateToET = async (req: Request): Promise<string> => {
 	let token: OauthAccessToken;
 	let user: User;
 	const config: Config = getConfig();
@@ -26,15 +26,15 @@ const authenticateToET = async (req: Request, res: Response): Promise<Response> 
 		user = await getUser(token.accessToken, config.general.eternalTwinServerUri);
 	} catch (err) {
 		console.error(err);
-		return res.status(500).send('An error occurred');
+		throw new Error('An error occurred');
 	}
 
 	// Check if player already exists in database
 	let player: Player | null = await getPlayerId(user.user.id);
 
 	// If player isn't found in database, create a new one
-	if (_.isNil(player)) {
-		player = Player.build({
+	if (player === null) {
+		player = {
 			eternalTwinId: user.user.id,
 			hasImported: false,
 			name: user.user.display_name.current.value,
@@ -47,18 +47,17 @@ const authenticateToET = async (req: Request, res: Response): Promise<Response> 
 			merchant: false,
 			priest: false,
 			teacher: false
-		});
+		} as Player;
 
 		// Create new player in database
-		player = await createPlayer(player.get());
+		player = await createPlayer(player);
 		// Create player at position 0 in ranking
-		await addPlayerInRanking(player!.get().playerId);
+		await addPlayerInRanking(player!.id);
 	}
 
 	// Forge JWT with playerId
-	const JWT = await forgeJWT(player!.get().playerId);
-
-	return res.status(200).send(JWT);
+	const JWT = await forgeJWT(player!.id);
+	return JWT;
 };
 
 async function getUser(accessToken: string, eternalTwinURI: string) {
@@ -87,14 +86,13 @@ async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {
 
 /**
  * @summary Get the URI from the backend
- * @param req
- * @param res {string}
- * @return string
+ * @param _req
+ * @return URL
  */
-const getAuthorizationUri = (req: Request, res: Response): Response => {
+const getAuthorizationUri = (): URL => {
 	const oauthClient: RfcOauthClient = getRfcOauthClient(false);
 
-	return res.status(200).send(oauthClient.getAuthorizationUri('base', 'authenticate'));
+	return oauthClient.getAuthorizationUri('base', 'authenticate');
 };
 
 function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {

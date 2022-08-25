@@ -1,11 +1,12 @@
-import { IngredientFiche, IngredientOwn } from '../../models/index.js';
+import { IngredientFiche } from '../../models/index.js';
+import { PlayerIngredient } from '../../entity/index.js';
 
 export const allIngredientData = [
 	{
 		ingredientId: 5,
 		quantity: 5
 	}
-] as Array<IngredientOwn>;
+] as Array<PlayerIngredient>;
 
 export const ingredientResponse: Array<Partial<IngredientFiche>> = [
 	{

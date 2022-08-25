@@ -1,4 +1,4 @@
-import { Dinoz } from '../database/index.js';
+import { DinozFiche } from '../index.js';
 
 export interface PlayerInfo {
 	dinozCount: number;
@@ -7,7 +7,7 @@ export interface PlayerInfo {
 	subscribeAt: string;
 	clan?: string;
 	playerName: string;
+	dinoz: Array<DinozFiche>;
 	epicRewards: Array<number>;
-	dinoz: Array<Dinoz>;
 	customText: string | null;
 }

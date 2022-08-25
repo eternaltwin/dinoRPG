@@ -1,12 +1,13 @@
 import { Request } from 'express';
-import { ShopType, ItemFiche, ShopFiche, Player, ItemOwn, ItemType } from '../models/index.js';
-import { createItemDataRequest, updateItemDataRequest } from '../dao/inventoryDao.js';
+import { ItemFiche, ItemType, ShopFiche, ShopType } from '../models/index.js';
+import { Player, PlayerItem } from '../entity/index.js';
+import { createItemDataRequest, updateItemDataRequest } from '../dao/playerItemDao.js';
 import {
 	getPlayerShopItemsDataRequest,
 	getPlayerShopOneItemDataRequest,
 	setPlayerMoneyRequest
 } from '../dao/playerDao.js';
-import { shopList, itemList, placeList, statusList } from '../constants/index.js';
+import { itemList, placeList, shopList, statusList } from '../constants/index.js';
 
 /**
  * @summary Get all items from a shop
@@ -24,20 +25,15 @@ const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
 		throw new Error(`The shop ${shopId} does not exist`);
 	}
 
-	// Get the player's data (money, shopkeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
-	const playerShopData: Player | null = await getPlayerShopItemsDataRequest(playerId);
-
-	// Throw an exception if the player does not exist
-	if (playerShopData === null) {
-		throw new Error(`Player ${playerId} doesn't exist`);
-	}
+	// Get the player's data (money, shopKeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
+	const playerShopData: Player = await getPlayerShopItemsDataRequest(playerId);
 
 	checkDinozPlace(tempShop, playerShopData, shopId);
 
 	// All checks passed, let's create the list of items with the proper values
-	const listItems: Array<ItemFiche> = tempShop.listItemsSold.map(itemSold => {
+	return tempShop.listItemsSold.map(itemSold => {
 		// Get the item data if the player has it
-		const itemPlayer: ItemOwn | undefined = playerShopData.itemOwn.find(
+		const itemPlayer: PlayerItem | undefined = playerShopData.items.find(
 			playerItem => playerItem.itemId === itemSold.itemId
 		);
 		// Get the reference of the items from the constants
@@ -62,8 +58,6 @@ const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
 			isRare: itemReference.isRare
 		};
 	});
-
-	return listItems;
 };
 
 /**
@@ -80,17 +74,12 @@ const buyItem = async (req: Request): Promise<void> => {
 	const itemId: number = parseInt(req.body.itemId);
 	const quantityBought: number = parseInt(req.body.quantity);
 
-	// Get the player's data (money, shopkeeper, list of dinoz not frozen and not sacrificed (placeId),
+	// Get the player's data (money, shopKeeper, list of dinoz not frozen and not sacrificed (placeId),
 	// the info about the item, and owned golden napodinos)
-	const playerShopData: Player | null = await getPlayerShopOneItemDataRequest(playerId, itemId);
-
-	// Throw an exception if the player does not exist
-	if (playerShopData === null) {
-		throw new Error(`Player ${playerId} doesn't exist`);
-	}
+	const playerShopData: Player = await getPlayerShopOneItemDataRequest(playerId, itemId);
 
 	// Extract item data from player
-	const playerItemData: ItemOwn | undefined = playerShopData.itemOwn.find(item => item.itemId === itemId);
+	const playerItemData: PlayerItem | undefined = playerShopData.items.find(item => item.itemId === itemId);
 
 	// Throw an exception if somehow we have a negative or zero quantity
 	if (quantityBought <= 0) {
@@ -165,24 +154,32 @@ const buyItem = async (req: Request): Promise<void> => {
 	}
 	// Else create it
 	else {
-		const newItem: ItemOwn = ItemOwn.build({
-			playerId: playerId,
-			itemId: itemToBuy.itemId,
-			quantity: itemToBuy.quantity
-		});
-		await createItemDataRequest(newItem.get());
+		const newItem = new PlayerItem();
+		newItem.player = playerShopData;
+		newItem.itemId = itemToBuy.itemId!;
+		newItem.quantity = itemToBuy.quantity!;
+		await createItemDataRequest(newItem);
 	}
 };
 
+/**
+ * @summary Buy an item
+ * @param playerShopData {Player} the data of the player
+ * @param itemSold {Partial<ItemFiche>} The item that the player is trying to buy
+ * @param itemReference{ItemFiche} Reference of the item from the constants
+ * @param quantityBought {number} Quantity to buy
+ * @param playerItemData {PlayerItem | undefined} data of the item if the player already has some
+ * @return void
+ */
 async function buyMagicItem(
 	playerShopData: Player,
 	itemSold: Partial<ItemFiche>,
 	itemReference: ItemFiche,
 	quantityBought: number,
-	playerItemData: ItemOwn | undefined
+	playerItemData: PlayerItem | undefined
 ): Promise<void> {
 	// Get the number of golden napodinos owned by the player
-	const playerNapoData: ItemOwn | undefined = playerShopData.itemOwn.find(
+	const playerNapoData: PlayerItem | undefined = playerShopData.items.find(
 		item => item.itemId === itemList.GOLDEN_NAPODINO.itemId
 	);
 
@@ -208,7 +205,7 @@ async function buyMagicItem(
 
 	// Set player golden napodino count
 	const newNapoCount: number = playerNapoData!.quantity! - magicalItemToBuy.price! * quantityBought;
-	await updateItemDataRequest(playerShopData.playerId, itemList.GOLDEN_NAPODINO.itemId, newNapoCount);
+	await updateItemDataRequest(playerShopData.id, itemList.GOLDEN_NAPODINO.itemId, newNapoCount);
 }
 
 // Check if player can access the shop

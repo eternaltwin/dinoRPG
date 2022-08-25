@@ -1,43 +1,52 @@
-import { AssDinozItem, AssDinozSkill, AssDinozSkillUnlockable, AssDinozStatus, Dinoz, ElementType } from '../../models';
+import { ElementType, DinozFiche } from '../../models';
+import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable } from '../../entity';
 import { itemList, placeList, raceList, skillList, statusList } from '../../constants';
 import { player, dinozId, skillId, skillId2 } from '../utils/constants';
-import { BasicPlayerWithRank } from './playerData';
+import { PlayerData, BasicPlayerWithRank } from './playerData';
 
 export const DinozFicheData = ({
 	id: dinozId,
-	playerId: player.id_1,
+	player: PlayerData,
 	race: {
 		price: 20000
 	},
 	level: 1,
-	item: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }],
+	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }],
 	status: [{ statusId: 1 }],
 	placeId: 1
 } as unknown) as Dinoz;
 
 export const DinozWithSkills = {
 	id: dinozId,
-	playerId: player.id_1,
-	skill: [{ skillId: skillId }]
+	player: {
+		id: player.id_1
+	},
+	skills: [{ skillId: skillId }]
 } as Dinoz;
 
 export const DinozWithSkillsAndStatus = {
-	playerId: player.id_1,
-	skill: [{ skillId: skillId2 }],
+	id: dinozId,
+	player: {
+		id: player.id_1
+	},
+	skills: [{ skillId: skillId2 }],
 	status: [{ statusId: 1 }, { statusId: 12 }]
 } as Dinoz;
 
 export const DinozWithSkillsAndStatusReadyToMove = {
-	playerId: player.id_1,
+	id: dinozId,
+	player: {
+		id: player.id_1
+	},
 	placeId: 1,
 	experience: 99,
 	level: 1,
-	skill: [{ skillId: skillId2 }],
+	skills: [{ skillId: skillId2 }],
 	status: [{ statusId: 2 }, { statusId: 12 }]
 } as Dinoz;
 
 export const BasicDinoz = {
-	dinozId: dinozId,
+	id: dinozId,
 	display: '63cvi4d1fs',
 	experience: 0,
 	life: 100,
@@ -47,15 +56,18 @@ export const BasicDinoz = {
 } as Dinoz;
 
 export const DinozToChangeName = {
+	id: dinozId,
 	canChangeName: true,
 	player: {
-		playerId: player.id_1
+		id: player.id_1
 	}
 } as Dinoz;
 
 export const DinozData = {
 	id: dinozId,
-	playerId: player.id_1,
+	player: {
+		id: player.id_1
+	},
 	level: 1,
 	placeId: placeList.FORGES_DU_GTC.placeId,
 	status: [{ statusId: 1 }]
@@ -63,22 +75,22 @@ export const DinozData = {
 
 export const AllDinozFromAnAccount = [
 	{
-		dinozId: 123456,
+		id: 123456,
 		player: {
-			playerId: player.id_1
+			id: player.id_1
 		}
 	},
 	{
-		dinozId: 654321,
+		id: 654321,
 		player: {
-			playerId: player.id_1
+			id: player.id_1
 		}
 	}
 ] as Array<Dinoz>;
 
 export const DinozListFromAnAccount = ([
 	{
-		dinozId: 123456,
+		id: 123456,
 		following: null,
 		name: 'Biosha',
 		isFrozen: false,
@@ -98,7 +110,7 @@ export const DinozListFromAnAccount = ([
 				statusId: 4
 			}
 		],
-		skill: [
+		skills: [
 			{
 				skillId: 61103,
 				state: null
@@ -117,7 +129,7 @@ export const DinozListFromAnAccount = ([
 		}
 	},
 	{
-		dinozId: 7894,
+		id: 7894,
 		following: null,
 		name: 'Biocat',
 		isFrozen: true,
@@ -137,7 +149,7 @@ export const DinozListFromAnAccount = ([
 				statusId: 4
 			}
 		],
-		skill: [
+		skills: [
 			{
 				skillId: 61103,
 				state: null
@@ -157,9 +169,45 @@ export const DinozListFromAnAccount = ([
 	}
 ] as unknown) as Array<Dinoz>;
 
+export const DinozFicheListFromAnAccount = ([
+	{
+		id: 123456,
+		following: null,
+		name: 'Biosha',
+		isFrozen: false,
+		isSacrificed: false,
+		level: 5,
+		missionId: null,
+		placeId: 4,
+		canChangeName: false,
+		life: 45,
+		maxLife: 130,
+		experience: 34,
+		status: [5, 4],
+		skills: [61103, 61103, 61104]
+	},
+	{
+		id: 7894,
+		following: null,
+		name: 'Biocat',
+		isFrozen: true,
+		isSacrificed: false,
+		level: 50,
+		missionId: null,
+		placeId: 35,
+		canChangeName: false,
+		life: 220,
+		maxLife: 300,
+		experience: 451,
+		status: [5, 4],
+		skills: [61103, 61103, 61104]
+	}
+] as unknown) as Array<DinozFiche>;
+
 export const AllDinozFromAnAccountArray = [123456, 654321] as Array<number>;
 
 export const DinozLevel1LevelUp: Partial<Dinoz> = {
+	id: dinozId,
 	raceId: raceList.WINKS.raceId,
 	display: '00d654dfgdsfg',
 	experience: 100,
@@ -172,13 +220,14 @@ export const DinozLevel1LevelUp: Partial<Dinoz> = {
 	nbrUpLightning: 1,
 	nbrUpAir: 0,
 	player: BasicPlayerWithRank,
-	skill: [],
-	skillUnlockable: [],
-	item: [],
+	skills: [],
+	skillsUnlockable: [],
+	items: [],
 	status: []
 };
 
 export const DinozLevel1LevelUpInWood: Partial<Dinoz> = {
+	id: dinozId,
 	raceId: raceList.WINKS.raceId,
 	display: '00d654dfgdsfg',
 	experience: 100,
@@ -191,13 +240,14 @@ export const DinozLevel1LevelUpInWood: Partial<Dinoz> = {
 	nbrUpLightning: 1,
 	nbrUpAir: 0,
 	player: BasicPlayerWithRank,
-	skill: [],
-	skillUnlockable: [],
-	item: [],
+	skills: [],
+	skillsUnlockable: [],
+	items: [],
 	status: []
 };
 
 export const DinozLevel2LevelUp: Partial<Dinoz> = {
+	id: dinozId,
 	raceId: raceList.WINKS.raceId,
 	display: '00d654dfgdsfg',
 	experience: 107,
@@ -210,16 +260,17 @@ export const DinozLevel2LevelUp: Partial<Dinoz> = {
 	nbrUpLightning: 1,
 	nbrUpAir: 0,
 	player: BasicPlayerWithRank,
-	skill: [{ skillId: skillList.MUTATION.skillId } as AssDinozSkill],
-	skillUnlockable: [
-		{ skillId: skillList.POCHE_VENTRALE.skillId } as AssDinozSkillUnlockable,
-		{ skillId: skillList.KARATE_SOUS_MARIN.skillId } as AssDinozSkillUnlockable
+	skills: [{ skillId: skillList.MUTATION.skillId } as DinozSkill],
+	skillsUnlockable: [
+		{ skillId: skillList.POCHE_VENTRALE.skillId } as DinozSkillUnlockable,
+		{ skillId: skillList.KARATE_SOUS_MARIN.skillId } as DinozSkillUnlockable
 	],
-	item: [{ itemId: itemList.DINOZ_CUBE.itemId } as AssDinozItem],
+	items: [{ itemId: itemList.DINOZ_CUBE.itemId } as DinozItem],
 	status: []
 };
 
 export const DinozLevel50LevelUp: Partial<Dinoz> = {
+	id: dinozId,
 	raceId: raceList.WINKS.raceId,
 	display: '09d654dfgdsfg',
 	experience: 3444,
@@ -232,13 +283,14 @@ export const DinozLevel50LevelUp: Partial<Dinoz> = {
 	nbrUpLightning: 22,
 	nbrUpAir: 6,
 	player: BasicPlayerWithRank,
-	skill: [{ skillId: skillList.PLAN_DE_CARRIERE.skillId } as AssDinozSkill],
-	skillUnlockable: [],
-	item: [{ itemId: itemList.DINOZ_CUBE.itemId } as AssDinozItem],
-	status: [{ statusId: statusList.ETHER_DROP } as AssDinozStatus]
+	skills: [{ skillId: skillList.PLAN_DE_CARRIERE.skillId } as DinozSkill],
+	skillsUnlockable: [],
+	items: [{ itemId: itemList.DINOZ_CUBE.itemId } as DinozItem],
+	status: [{ statusId: statusList.ETHER_DROP } as DinozStatus]
 };
 
 export const DinozLevel11LevelUp: Partial<Dinoz> = {
+	id: dinozId,
 	raceId: raceList.WINKS.raceId,
 	display: '00d654dfgdsfg',
 	experience: 206,
@@ -251,8 +303,8 @@ export const DinozLevel11LevelUp: Partial<Dinoz> = {
 	nbrUpLightning: 3,
 	nbrUpAir: 0,
 	player: BasicPlayerWithRank,
-	skill: [],
-	skillUnlockable: [],
-	item: [{ itemId: itemList.DINOZ_CUBE.itemId } as AssDinozItem],
+	skills: [],
+	skillsUnlockable: [],
+	items: [{ itemId: itemList.DINOZ_CUBE.itemId } as DinozItem],
 	status: []
 };

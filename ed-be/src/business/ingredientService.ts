@@ -1,26 +1,17 @@
-import { Request, Response } from 'express';
-import { getAllIngredientsDataRequest } from '../dao/ingredientDao.js';
-import { IngredientFiche, IngredientOwn } from '../models/index.js';
+import { Request } from 'express';
+import { getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
+import { PlayerIngredient } from '../entity/index.js';
+import { IngredientFiche } from '../models/index.js';
 import { ingredientList } from '../constants/index.js';
-import { validationResult } from 'express-validator';
 
 /**
  * Get all the ingredients from a player
  * @param req
- * @param res
  * @returns Array<IngredientFiche>
  * 				An array with all ingredients that player owns
  */
-const getAllIngredientsData = async (req: Request, res: Response): Promise<Response<Array<IngredientFiche>>> => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	const allIngredientsData: Array<IngredientOwn> | null = await getAllIngredientsDataRequest(req.user!.playerId!);
-
-	if (allIngredientsData === null) {
-		return res.status(500).send(`Player ${req.user!.playerId!} doesn't exist`);
-	}
+const getAllIngredientsData = async (req: Request): Promise<Array<Partial<IngredientFiche>>> => {
+	const allIngredientsData: Array<PlayerIngredient> = await getAllIngredientsDataRequest(req.user!.playerId!);
 
 	const ingredients: Array<Partial<IngredientFiche>> = allIngredientsData.map(ingr => {
 		const ingredientFound: [string, IngredientFiche] = Object.entries(ingredientList).find(
@@ -34,7 +25,7 @@ const getAllIngredientsData = async (req: Request, res: Response): Promise<Respo
 		};
 	});
 
-	return res.status(200).send(ingredients);
+	return ingredients;
 };
 
 export { getAllIngredientsData };

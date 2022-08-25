@@ -7,7 +7,7 @@
 		<div class="help">
 			<p v-html="$t('shop.dinoz.help')"></p>
 		</div>
-		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.dinozId">
+		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
 			<div class="dinoz_display">
 				<DinozWithoutFlash :display="dinoz.display" :life="parseInt(dinoz.life)" :flip="-1"></DinozWithoutFlash>
 			</div>
@@ -103,10 +103,10 @@ export default defineComponent({
 				this.sessionStore.setDinozCount(this.sessionStore.getDinozCount! + 1);
 
 				// Go to dinoz page
-				this.$router.push({
+				await this.$router.push({
 					name: 'DinozPage',
 					params: {
-						id: dinozCreated.dinozId!
+						id: dinozCreated.id!
 					}
 				});
 			}

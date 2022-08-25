@@ -212,7 +212,7 @@ export default defineComponent({
 				this.playerFields.teacher !== undefined
 			) {
 				await AdminService.updatePlayer(
-					this.player.playerId,
+					this.player.id,
 					this.playerFields.customText,
 					this.playerFields.hasImported,
 					this.playerFields.quetzuBought,
@@ -227,17 +227,17 @@ export default defineComponent({
 			}
 
 			if (this.playerFields.money && this.playerFields.operation) {
-				await AdminService.givePlayerMoney(this.player.playerId, this.playerFields.money, this.playerFields.operation);
+				await AdminService.givePlayerMoney(this.player.id, this.playerFields.money, this.playerFields.operation);
 			}
 
 			if (this.playerFields.rewards!.length > 0 && this.playerFields.epicOperation) {
 				await AdminService.givePlayerEpicRewards(
-					this.player.playerId,
+					this.player.id,
 					this.playerFields.rewards!,
 					this.playerFields.epicOperation
 				);
 			}
-			this.player = await AdminService.getplayerInformation(this.player.playerId);
+			this.player = await AdminService.getplayerInformation(this.player.id);
 
 			this.playerFields.rewards = [];
 			this.filterEpicList(this.playerFields.epicOperation!);

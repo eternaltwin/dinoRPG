@@ -1,4 +1,4 @@
-import { News } from '../../models/';
+import { News } from '../../entity';
 
 export const postedNews = {
 	title: 'title',

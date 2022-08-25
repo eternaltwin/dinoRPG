@@ -1,464 +1,309 @@
-import pkg from 'sequelize';
-const { Op } = pkg;
 import {
-	AssDinozStatus,
-	AssPlayerReward,
 	Dinoz,
-	DinozShop,
-	IngredientOwn,
-	ItemOwn,
 	Player,
-	Quest
-} from '../models/index.js';
+	PlayerDinozShop,
+	PlayerIngredient,
+	PlayerItem,
+	PlayerQuest,
+	PlayerReward
+} from '../entity/index.js';
+import { AppDataSource } from '../data-source.js';
 import { itemList } from '../constants/index.js';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
-const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['money', 'playerId'],
-		include: {
-			model: Dinoz,
-			attributes: ['dinozId', 'following', 'display', 'name', 'life', 'experience', 'placeId', 'level'],
-			where: { isFrozen: false },
-			required: false
-		},
-		where: { playerId: playerId }
-	});
+const playerRepository = AppDataSource.getRepository(Player);
+
+const createPlayer = (newPlayer: Player): Promise<Player> => {
+	return playerRepository.save(newPlayer);
 };
 
+//TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
+const resetUser = (playerId: number): Promise<DeleteResult> => {
+	const dinozRepository = AppDataSource.getRepository(Dinoz);
+	const dinozShopRepository = AppDataSource.getRepository(PlayerDinozShop);
+	const ingredientRepository = AppDataSource.getRepository(PlayerIngredient);
+	const itemRepository = AppDataSource.getRepository(PlayerItem);
+	const questRepository = AppDataSource.getRepository(PlayerQuest);
+	const rewardRepository = AppDataSource.getRepository(PlayerReward);
+
+	dinozRepository.createQueryBuilder().delete().from(Dinoz).where('player.id = :pId', { pId: playerId }).execute();
+
+	dinozShopRepository
+		.createQueryBuilder()
+		.delete()
+		.from(PlayerDinozShop)
+		.where('player.id = :pId', { pId: playerId })
+		.execute();
+
+	ingredientRepository
+		.createQueryBuilder()
+		.delete()
+		.from(PlayerIngredient)
+		.where('player.id = :pId', { pId: playerId })
+		.execute();
+
+	itemRepository.createQueryBuilder().delete().from(PlayerItem).where('player.id = :pId', { pId: playerId }).execute();
+
+	questRepository
+		.createQueryBuilder()
+		.delete()
+		.from(PlayerQuest)
+		.where('player.id = :pId', { pId: playerId })
+		.execute();
+
+	return rewardRepository
+		.createQueryBuilder()
+		.delete()
+		.from(PlayerReward)
+		.where('player.id = :pId', { pId: playerId })
+		.execute();
+};
+
+// Getters
+
 const getPlayerId = (eternalTwinId: string): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['playerId'],
-		where: { eternalTwinId: eternalTwinId }
-	});
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id'])
+		.where('player.eternalTwinId = :eId', { eId: eternalTwinId })
+		.getOne();
 };
 
 const getEternalTwinId = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['eternalTwinId'],
-		where: { playerId: playerId }
-	});
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.eternalTwinId'])
+		.where('player.id = :pId', { pId: playerId })
+		.getOne();
 };
 
-const createPlayer = (newPlayer: Player): Promise<Player> => {
-	return Player.create(newPlayer);
+const getCommonDataRequest = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id', 'player.money'])
+		.addSelect([
+			'dinoz.id',
+			'dinoz.following',
+			'dinoz.display',
+			'dinoz.name',
+			'dinoz.life',
+			'dinoz.experience',
+			'dinoz.placeId',
+			'dinoz.level'
+		])
+		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
 };
 
-const getPlayerRewardsRequest = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: [],
-		include: {
-			model: AssPlayerReward,
-			attributes: ['rewardId']
-		},
-		where: { playerId: playerId }
-	});
+const getAllInformationFromPlayer = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select()
+		.leftJoinAndSelect('player.items', 'items')
+		.leftJoinAndSelect('player.ingredients', 'ingredient')
+		.leftJoinAndSelect('player.rewards', 'rewards')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
 };
 
-const setPlayerMoneyRequest = (playerId: number, newMoney: number): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			money: newMoney
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
+const getImportedData = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.hasImported', 'player.eternalTwinId'])
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
 };
 
-const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['createdAt', 'name', 'customText'],
-		include: [
-			{
-				model: AssPlayerReward,
-				attributes: ['rewardId']
-			},
-			{
-				model: Dinoz,
-				attributes: ['dinozId', 'display', 'name', 'level', 'raceId', 'life'],
-				include: [
-					{
-						model: AssDinozStatus,
-						attributes: ['statusId']
-					}
-				]
-			}
-		],
-		where: { playerId: playerId }
-	});
+const getPlayerMoney = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id', 'player.money'])
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
+};
+
+const getPlayerDataRequest = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.createdDate', 'player.name', 'player.customText'])
+		.addSelect(['rewards.rewardId'])
+		.addSelect(['dinoz.id', 'dinoz.display', 'dinoz.name', 'dinoz.level', 'dinoz.raceId', 'dinoz.life'])
+		.addSelect(['status.statusId'])
+		.addSelect(['rank.dinozCountDisplayed', 'rank.sumPosition', 'rank.sumPointsDisplayed'])
+		.leftJoin('player.rewards', 'rewards')
+		.leftJoin('player.dinoz', 'dinoz')
+		.leftJoin('dinoz.status', 'status')
+		.leftJoin('player.rank', 'rank')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
+};
+
+const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id', 'player.eternalTwinId', 'player.name'])
+		.where('player.name iLike :playerId')
+		.setParameter('playerId', `%${playerName}%`)
+		.getMany();
+};
+
+/**
+ * Get all the necessary data from the player for inventoryService getAllItemsData function
+ * That includes:  merchant, all its items and their quantity (if above 0)
+ * Throws an error if the player does not exist.
+ * @return Player
+ */
+const getPlayerInventoryDataRequest = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id', 'player.shopKeeper'])
+		.addSelect(['items.itemId', 'items.quantity'])
+		.leftJoin('player.items', 'items', 'items.quantity > 0')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
+};
+
+/**
+ * Get all the necessary data from the player for dinozShopService getDinozFromDinozShop function
+ * That includes:  platerId and its list of dinoz in the shop
+ * Throws an error if the player does not exist.
+ * @return Player
+ */
+const getPlayerDinozShopRequest = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id'])
+		.addSelect(['dinozShop.id', 'dinozShop.raceId', 'dinozShop.display'])
+		.leftJoin('player.dinozShop', 'dinozShop')
+		.leftJoinAndSelect('player.rewards', 'rewards')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
+};
+
+const getPlayerRewardsRequest = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id'])
+		.addSelect(['rewards.rewardId'])
+		.leftJoin('player.rewards', 'rewards')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
+};
+
+/**
+ * Get all the necessary data from the player for dinozService buyDinoz function
+ * That includes:  platerId and the dinoz from the shop that it is trying to buy
+ * @return Player
+ */
+const getPlayerSpecificDinozShopRequest = (playerId: number, dinozId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id', 'player.money'])
+		.addSelect(['dinozShop.id', 'dinozShop.raceId', 'dinozShop.display'])
+		.leftJoin('player.dinozShop', 'dinozShop', 'dinozShop.id = :dId', { dId: dinozId })
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
 };
 
 /**
  * Get all the necessary data from the player for itemShopService getItemsFromShop function
- * That includes: money, shopkeeper, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
+ * That includes: money, shopKeeper, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
  * all its items and their quantity
- * @return Array<ItemFiche>
+ * Throws an error if the player does not exist.
+ * @return Player
  */
-
-const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['playerId', 'money', 'shopKeeper', 'merchant'],
-		include: [
-			{
-				model: Dinoz,
-				attributes: ['placeId'],
-				where: { isFrozen: false, isSacrificed: false },
-				required: false,
-				include: [
-					{
-						model: AssDinozStatus,
-						attributes: ['statusId']
-					}
-				]
-			},
-			{
-				model: ItemOwn,
-				attributes: ['itemId', 'quantity']
-			}
-		],
-		where: { playerId: playerId }
-	});
+const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
+		.addSelect(['items.itemId', 'items.quantity'])
+		.addSelect(['dinoz.placeId'])
+		.addSelect(['status.statusId'])
+		.leftJoin('player.items', 'items')
+		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false AND dinoz.isSacrificed = false')
+		.leftJoin('dinoz.status', 'status')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
 };
 
 /**
  * Get all the necessary data from the player for itemShopService buyItem function
- * That includes: money, shopkeeper, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
- * the item and its quantity, finally the number of owned golden napodinos
- * @return Array<ItemFiche>
+ * That includes: money, shopKeeper, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
+ * its items and its quantity, finally the number of owned golden napodinos
+ * Throws an error if the player does not exist.
+ * @return Player
  */
-
-const getPlayerShopOneItemDataRequest = (playerId: number, itemId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['playerId', 'money', 'shopKeeper', 'merchant'],
-		include: [
-			{
-				model: Dinoz,
-				attributes: ['placeId'],
-				where: { isFrozen: false, isSacrificed: false },
-				required: false,
-				include: [
-					{
-						model: AssDinozStatus,
-						attributes: ['statusId']
-					}
-				]
-			},
-			{
-				model: ItemOwn,
-				required: false,
-				attributes: ['itemId', 'quantity'],
-				where: {
-					[Op.or]: [{ itemId: itemId }, { itemId: itemList.GOLDEN_NAPODINO.itemId }]
-				}
-			}
-		],
-		where: { playerId: playerId }
-	});
+const getPlayerShopOneItemDataRequest = async (playerId: number, itemId: number): Promise<Player> => {
+	return await playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
+		.addSelect(['items.itemId', 'items.quantity'])
+		.addSelect(['dinoz.placeId'])
+		.addSelect(['status.statusId'])
+		.leftJoin('player.items', 'items', 'items.itemId = :itemId OR items.itemId = :napoId', {
+			itemId: itemId,
+			napoId: itemList.GOLDEN_NAPODINO.itemId
+		})
+		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false AND dinoz.isSacrificed = false')
+		.leftJoin('dinoz.status', 'status')
+		.where('player.id = :playerId', { playerId: playerId })
+		.getOneOrFail();
 };
 
-const getPlayerInventoryDataRequest = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['playerId', 'shopKeeper'],
-		include: [
-			{
-				model: ItemOwn,
-				required: false,
-				attributes: ['itemId', 'quantity'],
-				where: {
-					quantity: {
-						[Op.gt]: 0
-					}
-				}
-			}
-		],
-		where: { playerId: playerId }
-	});
+// Setters
+//TODO
+const setPlayer = (player: Partial<Player>): Promise<Player> => {
+	return playerRepository.save(player);
 };
 
-const getImportedData = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['hasImported', 'eternalTwinId'],
-		where: { playerId: playerId }
-	});
+const addPlayerMoney = (playerId: number, money: number): Promise<UpdateResult> => {
+	return playerRepository
+		.createQueryBuilder()
+		.update(Player)
+		.set({ money: () => 'money + :addedMoney' })
+		.setParameter('addedMoney', money)
+		.where('player.id = :pId', { pId: playerId })
+		.execute();
 };
 
-const setHasImported = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			hasImported: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
+const editCustomText = (playerId: number, text: string): Promise<UpdateResult> => {
+	return playerRepository
+		.createQueryBuilder()
+		.update(Player)
+		.set({ customText: text })
+		.where('player.id = :pId', { pId: playerId })
+		.execute();
 };
 
-const resetUser = (playerId: number): Promise<number> => {
-	DinozShop.destroy({
-		where: { playerId: playerId }
-	});
-	Dinoz.destroy({
-		where: { playerId: playerId }
-	});
-	IngredientOwn.destroy({
-		where: { playerId: playerId }
-	});
-	ItemOwn.destroy({
-		where: { playerId: playerId }
-	});
-	return Quest.destroy({
-		where: { playerId: playerId }
-	});
-};
-
-const editCustomText = (playerId: number, text: string): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			customText: text
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
-	return Player.findAll({
-		attributes: ['name', 'playerId'],
-		where: {
-			name: {
-				[Op.iLike]: `%${playerName}%`
-			}
-		}
-	});
-};
-
-/**
- * @summary Set quetzuBought from a player to a certain value
- * @param playerId {number}
- * @param value {number}
- * @return Promise<[number, Array<Player>]>
- */
-const setQuetzuBought = (playerId: number, value: number): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			quetzuBought: value
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary Set leader from a player to a certain state
- * @param playerId {number}
- * @param state {boolean}
- * @return Promise<[number, Array<Player>]>
- */
-const setLeader = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			leader: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary Set engineer from a player to a certain state
- * @param playerId {number}
- * @param state {boolean}
- * @return Promise<[number, Array<Player>]>
- */
-const setEngineer = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			engineer: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary Set cooker from a player to a certain state
- * @param playerId {number}
- * @param state {boolean}
- * @return Promise<[number, Array<Player>]>
- */
-const setCooker = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			cooker: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary Set shopKeeper from a player to a certain state
- * @param playerId {number}
- * @param state {boolean}
- * @return Promise<[number, Array<Player>]>
- */
-const setShopKeeper = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			shopKeeper: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary Set merchant from a player to a certain state
- * @param playerId {number}
- * @param state {boolean}
- * @return Promise<[number, Array<Player>]>
- */
-const setMerchant = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			merchant: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary Set priest from a player to a certain state
- * @param playerId {number}
- * @param state {boolean}
- * @return Promise<[number, Array<Player>]>
- */
-const setPriest = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			priest: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary Set teacher from a player to a certain state
- * @param playerId {number}
- * @param state {boolean}
- * @return Promise<[number, Array<Player>]>
- */
-const setTeacher = (playerId: number, state: boolean): Promise<[number, Array<Player>]> => {
-	return Player.update(
-		{
-			teacher: state
-		},
-		{
-			where: { playerId: playerId }
-		}
-	);
-};
-
-/**
- * @summary List all information from a player
- * @param playerId {number}
- * @return Promise<Player | null>
- */
-const getAllInformationFromPlayer = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: [
-			'playerId',
-			'hasImported',
-			'customText',
-			'name',
-			'eternalTwinId',
-			'money',
-			'quetzuBought',
-			'leader',
-			'engineer',
-			'cooker',
-			'shopKeeper',
-			'merchant',
-			'priest',
-			'teacher'
-		],
-		include: [
-			{
-				model: ItemOwn,
-				required: false,
-				attributes: ['itemId', 'quantity'],
-				where: {
-					quantity: {
-						[Op.gt]: 0
-					}
-				}
-			},
-			{
-				model: IngredientOwn,
-				required: false,
-				attributes: ['ingredientId', 'quantity'],
-				where: {
-					quantity: {
-						[Op.gt]: 0
-					}
-				}
-			},
-			{
-				model: AssPlayerReward,
-				required: false,
-				attributes: ['rewardId']
-			}
-		],
-		where: { playerId: playerId }
-	});
-};
-
-const getPlayerMoney = (playerId: number): Promise<Player | null> => {
-	return Player.findOne({
-		attributes: ['money', 'playerId'],
-		where: { playerId: playerId }
-	});
-};
-
-const addPlayerMoney = (playerId: number, money: number): Promise<Player | null> => {
-	return Player.increment({ money: money }, { where: { playerId: playerId } });
+const setPlayerMoneyRequest = (playerId: number, newMoney: number): Promise<UpdateResult> => {
+	return playerRepository
+		.createQueryBuilder('player')
+		.update(Player)
+		.set({ money: newMoney })
+		.where('player.id = :pId', { pId: playerId })
+		.execute();
 };
 
 export {
+	addPlayerMoney,
 	createPlayer,
-	getImportedData,
+	editCustomText,
+	getAllInformationFromPlayer,
 	getCommonDataRequest,
 	getEternalTwinId,
-	getPlayerId,
+	getImportedData,
 	getPlayerDataRequest,
+	getPlayerDinozShopRequest,
+	getPlayerId,
 	getPlayerInventoryDataRequest,
+	getPlayerMoney,
+	setPlayer,
+	setPlayerMoneyRequest,
 	getPlayerRewardsRequest,
 	getPlayerShopItemsDataRequest,
 	getPlayerShopOneItemDataRequest,
-	setPlayerMoneyRequest,
-	setHasImported,
+	getPlayerSpecificDinozShopRequest,
 	resetUser,
-	editCustomText,
-	searchPlayersByName,
-	setQuetzuBought,
-	setLeader,
-	setEngineer,
-	setCooker,
-	setShopKeeper,
-	setMerchant,
-	setPriest,
-	setTeacher,
-	getAllInformationFromPlayer,
-	getPlayerMoney,
-	addPlayerMoney
+	searchPlayersByName
 };

@@ -2,7 +2,7 @@ import fs from 'fs';
 import toml from 'toml';
 import { Config } from '../models/index.js';
 
-var config: Config;
+let config: Config;
 
 const getEnvironnement = (): string => {
 	return process.env.NODE_ENV ?? 'development';
