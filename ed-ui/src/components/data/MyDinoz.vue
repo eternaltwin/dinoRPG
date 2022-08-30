@@ -22,7 +22,10 @@
 			</li>
 			<template #content>
 				<template v-for="(status, index) in dinoz.statusList" :key="index">
-					<img v-if="statusList.displayed[status]" :src="getStatusImg(statusList.imgName[status])" />
+					<img
+						v-if="statusList.displayed[status]"
+						:src="`../../../src/assets/status/fx_${statusList.imgName[status]}.webp`"
+					/>
 				</template>
 			</template>
 		</Tippy>
@@ -51,11 +54,6 @@ export default defineComponent({
 			statusList: statusList,
 			position: dinozPlacement
 		};
-	},
-	methods: {
-		getStatusImg(imgName: string): string {
-			return require(`@/assets/status/fx_${imgName}.webp`);
-		}
 	}
 });
 </script>

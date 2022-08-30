@@ -15,7 +15,7 @@
 						@click="launch(action)"
 					>
 						<td class="icon">
-							<img :src="getImg('icons', '', action.imgName)" />
+							<img :src="`../../src/assets/icons/${action.imgName}.webp`" />
 						</td>
 						<td v-if="action.name === 'shop'" class="label">
 							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
@@ -56,9 +56,6 @@ export default defineComponent({
 	},
 	props: { dinozActions: Object as PropType<Array<Action>> },
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
-		},
 		launch(action: Action): void {
 			switch (action.name) {
 				case 'levelup':
@@ -83,8 +80,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .actions {
-	background: url('~@/assets/background/banniere_left.webp') no-repeat,
-		url('~@/assets/background/banniere_right.webp') no-repeat, url('~@/assets/background/banniere_middle.webp') repeat-x;
+	background: url('@/assets/background/banniere_left.webp') no-repeat,
+		url('@/assets/background/banniere_right.webp') no-repeat, url('@/assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left, right;
 	float: left;
 	left: 12px;

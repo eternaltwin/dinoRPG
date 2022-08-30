@@ -12,9 +12,9 @@
     "sourceMap": true,
     "baseUrl": ".",
     "resolveJsonModule": true,
-    "types": [
-      "webpack-env"
-    ],
+    "types": ["node", "vite/client"],
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
     "paths": {
       "@/*": [
         "src/*"

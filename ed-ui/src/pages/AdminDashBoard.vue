@@ -39,7 +39,7 @@ import { defineComponent } from 'vue';
 import EventBus from '@/events';
 import { errorHandler } from '@/utils';
 import { AdminService, PlayerService } from '@/services';
-import { Dinoz, Player } from '@/models/index.js';
+import { Dinoz, Player } from '@/models';
 import PlayerEdit from '@/components/admin/PlayerEdit.vue';
 import DinozEdit from '@/components/admin/DinozEdit.vue';
 import NewsEdit from '@/components/admin/NewsEdit.vue';

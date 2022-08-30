@@ -58,10 +58,10 @@ update-front:
 	docker exec -i -unode drpg_front yarn install
 
 test-lint-front:
-	docker exec -i -unode drpg_front yarn lint --no-fix
+	docker exec -i -unode drpg_front yarn lint:test
 
 fix-lint-front:
-	docker exec -it drpg_front yarn lint
+	docker exec -it drpg_front yarn lint:fix
 
 update-schema:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn run:migration

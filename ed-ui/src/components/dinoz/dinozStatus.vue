@@ -6,7 +6,7 @@
 		<div class="fx_content">
 			<template v-for="(status, index) in dinozStatus" :key="index">
 				<Tippy theme="normal" v-if="statusList.displayed[status]">
-					<img :src="getImg(statusList.imgName[status])" />
+					<img :src="`../../../src/assets/status/fx_${statusList.imgName[status]}.webp`" />
 					<template #content>
 						<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
 						<p v-html="formatContent($t(`status.description.${status}`))"></p>
@@ -30,11 +30,6 @@ export default defineComponent({
 	},
 	props: {
 		dinozStatus: Array as PropType<Array<number>>
-	},
-	methods: {
-		getImg(imgName: string): string {
-			return require(`@/assets/status/fx_${imgName}.webp`);
-		}
 	}
 });
 </script>
@@ -55,7 +50,7 @@ export default defineComponent({
 	.fx_top {
 		width: 223px;
 		height: 28px;
-		background: url('~@/assets/background/box_header.webp') no-repeat;
+		background: url('@/assets/background/box_header.webp') no-repeat;
 		p {
 			color: white;
 			padding-left: 2px;

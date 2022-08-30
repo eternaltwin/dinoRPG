@@ -25,7 +25,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		switchLocale(locale: string) {
+		switchLocale(locale: string): void {
 			if (this.$i18n.locale !== locale) {
 				this.$i18n.locale = locale;
 				this.localStore.setLanguage(locale);

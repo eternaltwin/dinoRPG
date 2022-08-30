@@ -3,7 +3,7 @@
 		<ul>
 			<li v-for="(item, index) in itemList" :key="index">
 				<a href="#" class="icon">
-					<img :src="getImg($t(`item.imgName.${item}`))" :alt="item" />
+					<img :src="`../../../src/assets/item/item_${$t(`item.imgName.${item}`)}.webp`" :alt="item" />
 				</a>
 			</li>
 		</ul>
@@ -17,11 +17,6 @@ export default defineComponent({
 	name: 'DinozEquip',
 	props: {
 		itemList: Array as PropType<Array<number>>
-	},
-	methods: {
-		getImg(imgName: string): string {
-			return require(`@/assets/item/item_${imgName}.webp`);
-		}
 	}
 });
 </script>
@@ -35,7 +30,7 @@ export default defineComponent({
 	font-size: 0pt;
 	width: 100px;
 	height: 138px;
-	background: url('~@/assets/background/equipment_box.gif') no-repeat;
+	background: url('@/assets/background/equipment_box.gif') no-repeat;
 
 	ul {
 		list-style: none;

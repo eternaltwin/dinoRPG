@@ -1,14 +1,14 @@
 <template>
 	<div class="profil">
 		<h3>
-			<img :src="getImg('design', 'info_', 'button')" />
+			<img :src="`../../../src/assets/design/info_button.gif`" />
 			{{ $t(`myAccount.rewards`) }}
-			<img :src="getImg('design', 'info_', 'button')" />
+			<img :src="`../../../src/assets/design/info_button.gif`" />
 		</h3>
 		<div class="rewards">
 			<template v-for="(rewards, index) in epicRewards" :key="index">
 				<Tippy theme="normal">
-					<img :src="getEpicImg(epicList.imgName[rewards])" />
+					<img :src="`../../../src/assets/epicRewards/collec_${epicList.imgName[rewards]}.webp`" />
 					<template #content>
 						<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))" />
 						<p v-html="formatContent($t(`rewards.description.${epicList.imgName[rewards]}`))" />
@@ -34,22 +34,14 @@ export default defineComponent({
 		epicRewards: {
 			type: Array as PropType<Array<number>>
 		}
-	},
-	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.gif`);
-		},
-		getEpicImg(imgName: string): string {
-			return require(`@/assets/epicRewards/collec_${imgName}.webp`);
-		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
 .profil {
-	background: url('../../assets/design/info_header.gif') no-repeat, url('../../assets/design/info_footer.gif') no-repeat,
-		url('../../assets/design/info_center.gif') repeat-y;
+	background: url('@/assets/design/info_header.gif') no-repeat, url('@/assets/design/info_footer.gif') no-repeat,
+		url('@/assets/design/info_center.gif') repeat-y;
 	background-position-y: top, bottom;
 	height: auto;
 	width: 304px;

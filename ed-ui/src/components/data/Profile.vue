@@ -1,9 +1,9 @@
 <template class="profil">
 	<div class="profil">
 		<h3>
-			<img :src="getImg('design', 'info_', 'button')" />
+			<img :src="`../../../src/assets/design/info_button.gif`" />
 			{{ $t(`myAccount.profil`) }}
-			<img :src="getImg('design', 'info_', 'button')" />
+			<img :src="`../../../src/assets/design/info_button.gif`" />
 		</h3>
 		<dl>
 			<dt>
@@ -83,9 +83,6 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.gif`);
-		},
 		hasPlume(): boolean {
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
@@ -223,7 +220,7 @@ export default defineComponent({
 	margin-bottom: 5px;
 }
 .smallbutton {
-	background-image: url('~@/assets/design/button_small.gif');
+	background-image: url('@/assets/design/button_small.gif');
 	padding-top: 4px;
 	font-size: 9pt;
 	line-height: 7pt;
@@ -239,7 +236,7 @@ export default defineComponent({
 	padding-left: 10px;
 	cursor: pointer;
 	&:hover {
-		background-image: url('~@/assets/design/button_small_hover.gif');
+		background-image: url('@/assets/design/button_small_hover.gif');
 	}
 }
 .tinybutton {

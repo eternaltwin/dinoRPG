@@ -55,7 +55,7 @@ export default defineComponent({
 			color: white;
 			text-align: left;
 			letter-spacing: -0.2pt;
-			background-image: url('~@/assets/icons/element_bg.webp');
+			background-image: url('src/assets/icons/element_bg.webp');
 			background-position: 7px 5px;
 			background-repeat: no-repeat;
 			cursor: help;
@@ -76,7 +76,7 @@ export default defineComponent({
 	.elements_top {
 		width: 223px;
 		height: 28px;
-		background: url('~@/assets/background/box_header.webp') no-repeat;
+		background: url('@/assets/background/box_header.webp') no-repeat;
 		p {
 			color: white;
 			padding-left: 2px;

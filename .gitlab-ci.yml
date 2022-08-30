@@ -22,7 +22,7 @@
 front-lint:
   <<: *node_front
   script:
-    - yarn lint --no-fix
+    - yarn lint:test
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 

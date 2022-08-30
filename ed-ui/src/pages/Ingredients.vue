@@ -25,7 +25,7 @@
 				}"
 			>
 				<td class="icon">
-					<img :src="getImg('ingredients', '', ingredient.name)" />
+					<img :src="`@/assets/ingredients/${ingredient.name}.webp`" />
 				</td>
 				<td class="name">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
 				<td class="stock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
@@ -57,11 +57,6 @@ export default defineComponent({
 		return {
 			ingredientList: [] as Array<IngredientFiche>
 		};
-	},
-	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
-		}
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
@@ -110,7 +105,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('~@/assets/background/table_header.gif');
+			background-image: url('@/assets/background/table_header.gif');
 			background-position: left bottom;
 			max-width: 222px;
 			&.name {
@@ -135,7 +130,7 @@ table {
 			color: #710;
 			background-color: #f3ca92;
 			border: 1px solid #c88f44;
-			background-image: url('~@/assets/background/table_cell.gif');
+			background-image: url('@/assets/background/table_cell.gif');
 			background-position: -10px 0px;
 			&.name {
 				padding: 1px 5px;
@@ -147,12 +142,12 @@ table {
 			}
 		}
 		&.full td {
-			background-image: url('~@/assets/background/table_cell_hover.gif') !important;
+			background-image: url('@/assets/background/table_cell_hover.gif') !important;
 			background-position: -10px 0px;
 			color: #fffdba;
 		}
 		&.even td {
-			background-image: url('~@/assets/background/table_cell_even.gif');
+			background-image: url('@/assets/background/table_cell_even.gif');
 			background-position: -10px 0px;
 		}
 	}

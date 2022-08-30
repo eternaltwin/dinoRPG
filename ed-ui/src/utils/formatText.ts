@@ -2,19 +2,19 @@ export const helpers = {
 	computeImageHtml(key: string): string {
 		switch (key) {
 			case 'feu':
-				return `<img src="${require('@/assets/elements/elem_fire.webp')}" alt="feu">`;
+				return `<img src="${import('@/assets/elements/elem_fire.webp')}" alt="feu">`;
 			case 'bois':
-				return `<img src="${require('@/assets/elements/elem_wood.webp')}" alt="bois">`;
+				return `<img src="${import('@/assets/elements/elem_wood.webp')}" alt="bois">`;
 			case 'eau':
-				return `<img src="${require('@/assets/elements/elem_water.webp')}" alt="eau">`;
+				return `<img src="${import('@/assets/elements/elem_water.webp')}" alt="eau">`;
 			case 'foudre':
-				return `<img src="${require('@/assets/elements/elem_lightning.webp')}" alt="foudre">`;
+				return `<img src="${import('@/assets/elements/elem_lightning.webp')}" alt="foudre">`;
 			case 'air':
-				return `<img src="${require('@/assets/elements/elem_air.webp')}" alt="air">`;
+				return `<img src="${import('@/assets/elements/elem_air.webp')}" alt="air">`;
 			case 'neutre':
-				return `<img src="${require('@/assets/elements/elem_void.webp')}" alt="pmo">`;
+				return `<img src="${import('@/assets/elements/elem_void.webp')}" alt="pmo">`;
 			case 'right':
-				return `<img src="${require('@/assets/icons/small_right.webp')}" alt="pmo">`;
+				return `<img src="${import('@/assets/icons/small_right.webp')}" alt="pmo">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}

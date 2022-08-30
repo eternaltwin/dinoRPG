@@ -9,7 +9,7 @@
 				</tr>
 				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
-						<img :src="getImg('item', 'item_', `${itemNameList[item.itemId]}`)" />
+						<img :src="`../../../src/assets/item/item_${itemNameList[item.itemId]}.webp`" />
 						<p v-html="$t(`item.name.${itemNameList[item.itemId]}`)" />
 						<template #content>
 							<h1 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
@@ -38,7 +38,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImg('icons', 'small_', 'use')" />
+							<img src="../../../src/assets/icons/small_use.webp" />
 						</a>
 						<a
 							class="off"
@@ -48,7 +48,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImg('icons', 'small_', 'use_off')" />
+							<img src="../../../src/assets/icons/small_use_off.webp" />
 						</a>
 						<a
 							class="on"
@@ -58,7 +58,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImg('icons', 'small_', 'equip')" />
+							<img src="../../../src/assets/icons/small_equip.webp" />
 						</a>
 						<a
 							class="off"
@@ -68,7 +68,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImg('icons', 'small_', 'equip_off')" />
+							<img src="../../../src/assets/icons/small_equip_off.webp" />
 						</a>
 					</td>
 				</tr>
@@ -95,9 +95,6 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
-		},
 		goToItemShop() {
 			this.$router.push({
 				name: 'ItemShopPage',

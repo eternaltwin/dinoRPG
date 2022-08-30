@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import urlJoin from 'url-join';
 import { sessionStore } from '@/store';
 
-const API_SERVER = new URL(process.env.VUE_APP_API_URL);
+const API_SERVER = new URL(import.meta.env.VITE_API_URL);
 const API_BASE = urlJoin(API_SERVER.toString(), 'api/v1');
 
 export const http = function (): AxiosInstance {

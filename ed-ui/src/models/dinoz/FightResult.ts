@@ -3,4 +3,5 @@ export interface FightResult {
 	xpEarned: number;
 	hpLost: number;
 	result: boolean;
+	dinozId: number;
 }

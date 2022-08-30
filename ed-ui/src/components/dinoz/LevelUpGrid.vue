@@ -2,7 +2,7 @@
 	<div class="container" ref="grid" @click="!isSpinning && spin()">
 		<template v-for="(cell, index) in levelUpGrid" :key="index">
 			<div class="box" :class="isSelected(index) && isSpinning ? 'active' : ''">
-				<img :src="getImg(cell)" :alt="cell" :id="index" />
+				<img :src="`../../../src/assets/elements/elem_${cell}.webp`" :alt="cell" :id="index" />
 				<div class="effect" v-if="isSelected(index) && isSpinOver">
 					<div></div>
 					<div></div>
@@ -53,9 +53,6 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		getImg(index: string): string {
-			return require(`@/assets/elements/elem_${index}.webp`);
-		},
 		spin(): void {
 			this.isSpinning = true;
 

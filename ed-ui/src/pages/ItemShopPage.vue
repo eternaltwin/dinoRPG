@@ -14,7 +14,7 @@
 		<div class="shopDesc">
 			<div class="contain">
 				<div class="art art_shop">
-					<img :src="getImg('shop', 'shop_', `${shopNameList[shopId]}`)" alt="" />
+					<img :src="`../../src/assets/shop/shop_${shopNameList[shopId]}.webp`" alt="" />
 				</div>
 				<p v-html="formatContent($t(`shop.item.${shopNameList[shopId]}.description`))" />
 				<div class="clear"></div>
@@ -30,18 +30,22 @@
 					:key="index"
 					tag="a"
 				>
-					<img :src="getImg('item', 'item_', `${itemNameList[item.itemId]}`)" alt="icon" @click="selectedItem = item" />
+					<img
+						:src="`../../src/assets/item/item_${itemNameList[item.itemId]}.webp`"
+						alt="icon"
+						@click="selectedItem = item"
+					/>
 					<template #content>
 						<h2 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
 						<p v-if="item.itemType === 'magical'">
 							{{ formatContent($t(`shop.item.price`)) }}
-							<img :src="getImg('item', 'item_', 'golden_napodino')" />
+							<img src="@/assets/item/item_golden_napodino.webp" />
 							{{ formatContent($t(`item.name.golden_napodino`)) }}
 							x {{ item.price }}
 						</p>
 						<p v-else>
 							{{ item.price }}
-							<img :src="getImg('icons', '', 'small_gold')" />
+							<img src="@/assets/icons/small_gold.webp" />
 						</p>
 					</template>
 				</Tippy>
@@ -80,14 +84,14 @@
 							theme="small"
 							tag="img"
 							v-if="selectedItem.canBeUsedNow"
-							:src="getImg('icons', 'small_', 'use')"
+							src="../../src/assets/icons/small_use.webp"
 							alt=""
 						>
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.use'))" />
 							</template>
 						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImg('icons', 'small_', 'use_off')" alt="">
+						<Tippy theme="small" tag="img" v-else src="../../src/assets/icons/small_use_off.webp" alt="">
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.useOff'))" />
 							</template>
@@ -96,14 +100,14 @@
 							theme="small"
 							tag="img"
 							v-if="selectedItem.canBeEquipped"
-							:src="getImg('icons', 'small_', 'equip')"
+							src="../../src/assets/icons/small_equip.webp"
 							alt=""
 						>
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.equip'))" />
 							</template>
 						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImg('icons', 'small_', 'equip_off')" alt="">
+						<Tippy theme="small" tag="img" v-else src="../../src/assets/icons/small_equip_off.webp" alt="">
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.equipOff'))" />
 							</template>
@@ -128,21 +132,21 @@
 						</Tippy>
 					</div>
 					<div class="header">
-						<img class="icon" :src="getImg('item', 'item_', `${itemNameList[selectedItem.itemId]}`)" />
+						<img class="icon" :src="`../../src/assets/item/item_${itemNameList[selectedItem.itemId]}.webp`" />
 						<div class="name">
 							{{ $t(`item.name.${itemNameList[selectedItem.itemId]}`) }}
 						</div>
 						<div v-if="selectedItem.itemType !== 'magical'" class="value">
 							<span class="money">
 								{{ selectedItem.price }}
-								<img :src="getImg('icons', '', 'small_gold')" alt="or" />
+								<img src="@/assets/icons/small_gold.webp" alt="or" />
 							</span>
 						</div>
 					</div>
 					<div class="clear"></div>
 					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
 						{{ formatContent($t(`shop.item.price`)) }}
-						<img :src="getImg('item', 'item_', 'golden_napodino')" />
+						<img src="@/assets/item/item_golden_napodino.webp" />
 						{{ formatContent($t(`item.name.golden_napodino`)) }}
 						x {{ selectedItem.price }}
 					</div>
@@ -196,9 +200,6 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
-		},
 		isFull(item: Item): boolean {
 			return item.quantity! >= item.maxQuantity!;
 		},

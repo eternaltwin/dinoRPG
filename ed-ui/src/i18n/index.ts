@@ -23,25 +23,25 @@ export const messages = {
 	[LocalesEnum.DE]: de
 };
 
-export const Locales: { [index: string]: LangInfos } = {
+export const Locales: Record<string, LangInfos> = {
 	[LocalesEnum.FR]: {
 		caption: 'Français',
-		icon: require(`@/assets/design/lang_fr.webp`),
+		icon: '../src/assets/design/lang_fr.webp',
 		short: 'fr'
 	},
 	[LocalesEnum.EN]: {
 		caption: 'English',
-		icon: require(`@/assets/design/lang_en.webp`),
+		icon: '../src/assets/design/lang_en.webp',
 		short: 'en'
 	},
 	[LocalesEnum.ES]: {
 		caption: 'Spanish',
-		icon: require(`@/assets/design/lang_es.webp`),
+		icon: '../src/assets/design/lang_es.webp',
 		short: 'es'
 	},
 	[LocalesEnum.DE]: {
 		caption: 'German',
-		icon: require(`@/assets/design/lang_de.webp`),
+		icon: '../src/assets/design/lang_de.webp',
 		short: 'de'
 	}
 };

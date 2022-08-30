@@ -100,9 +100,9 @@ export default defineComponent({
 	name: 'Version',
 	data() {
 		return {
-			version: process.env.VERSION as string,
-			release: process.env.VUE_APP_API_RELEASE_COMMIT as string,
-			channel: process.env.VUE_APP_API_RELEASE_CHANNEL as string
+			version: import.meta.env.VERSION as string,
+			release: import.meta.env.VITE_API_RELEASE_COMMIT as string,
+			channel: import.meta.env.VITE_API_RELEASE_CHANNEL as string
 		};
 	}
 });

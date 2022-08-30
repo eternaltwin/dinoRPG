@@ -44,7 +44,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozBars {
-	background: url('~@/assets/background/stats_box.gif') no-repeat;
+	background: url('@/assets/background/stats_box.gif') no-repeat;
 	width: 180px;
 	height: 40px;
 	position: absolute;

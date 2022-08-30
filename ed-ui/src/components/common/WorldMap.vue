@@ -17,7 +17,7 @@
 						myPos: myPos(place.placeId),
 						canGo: canGo(place.placeId)
 					}"
-					:src="getImg('map', 'icon', place.icon)"
+					:src="`../../src/assets/map/icon/${place.icon}.webp`"
 					:style="{ left: place.posLeft + 'px', top: place.posTop + 'px' }"
 					@click="moveTo(place.placeId)"
 					@mouseenter="isHover(place.name, place.placeId, true)"
@@ -41,7 +41,7 @@
 					<line :x1="line.x1" :y1="line.y1" :x2="line.x2" :y2="line.y2" :id="line.name" class="svgLine" />
 				</template>
 			</svg>
-			<img class="map-img" ref="carte" :src="getImg('map', 'map', getPlaceMap())" />
+			<img class="map-img" ref="carte" :src="`../../src/assets/map/map/${getPlaceMap()}.webp`" />
 		</div>
 	</div>
 </template>
@@ -75,9 +75,6 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}/${imgName}.webp`);
-		},
 		parallax(e: MouseEvent) {
 			const rect: DOMRect = document.querySelector('.map_container')!.getBoundingClientRect(); //taille du wrapper (250*300)
 			const mapImage = document.querySelector('.full_map')!.getBoundingClientRect(); //taille de l'image de la map
@@ -109,7 +106,7 @@ export default defineComponent({
 			return placeList.find(place => place.placeId === this.dinozData!.placeId)!.map;
 		},
 		centerPos(mapImage: DOMRect) {
-			const rect: DOMRect = document.querySelector('.map_container')!.getBoundingClientRect(); //taille du wrapper (250*300)
+			const rect: DOMRect = document.querySelector('.map_container')!.getBoundingClientRect(); // taille du wrapper (250*300)
 			const centerMapY: number = mapImage.height - rect.height;
 			const centerMapX: number = mapImage.width - rect.width;
 			const centerX: number = rect.width / 2;
@@ -139,6 +136,7 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				const moveTry: FightResult = await DinozService.betaMove(this.dinozData!.id!, placeId);
+				moveTry.dinozId = this.dinozData!.id!;
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				if (moveTry.result) {
@@ -151,9 +149,8 @@ export default defineComponent({
 					this.sessionStore.setDinozList(dinozList);
 				}
 				EventBus.emit('isLoading', false);
-				await this.$router.push({
-					name: 'Fight',
-					params: { id: this.dinozData!.id! }
+				this.$router.push({
+					name: 'Fight'
 				});
 			} catch (err) {
 				errorHandler.handle(err);

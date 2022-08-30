@@ -16,7 +16,7 @@ import Ingredients from '@/pages/Ingredients.vue';
 import News from '@/components/common/News.vue';
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
+	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
 			path: '/',
@@ -56,7 +56,8 @@ const router = createRouter({
 				{
 					path: '/fight',
 					name: 'Fight',
-					component: Fight
+					component: Fight,
+					props: true
 				},
 				{
 					path: '/generator',

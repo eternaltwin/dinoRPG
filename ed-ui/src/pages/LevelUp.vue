@@ -69,7 +69,7 @@
 								<img
 									v-for="element in skill.element"
 									:key="element"
-									:src="getImg(ElementType[element])"
+									:src="`../../src/assets/elements/elem_${ElementType[element]}.webp`"
 									alt="elementUp"
 								/>
 								<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
@@ -98,7 +98,7 @@
 									{{ $t(`levelup.unlock1`) }}
 									{{ availableSkills.unlockableSkills.length }}
 									{{ $t(`levelup.unlock2`) }}
-									<Tippy tag="img" :src="getImgHelp()" theme="normal" class="help">
+									<Tippy tag="img" src="../../src/assets/icons/helpFR.webp" theme="normal" class="help">
 										<template #content>
 											<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
 											<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
@@ -110,7 +110,7 @@
 										<img
 											v-for="element in skill.element"
 											:key="element"
-											:src="getImg(ElementType[element])"
+											:src="`../../src/assets/elements/elem_${ElementType[element]}.webp`"
 											alt="elementUp"
 										/>
 										{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}
@@ -172,12 +172,6 @@ export default defineComponent({
 	methods: {
 		spinOver(): void {
 			this.isSpinOver = true;
-		},
-		getImg(index: string): string {
-			return require(`@/assets/elements/elem_${index}.webp`);
-		},
-		getImgHelp(): string {
-			return require(`@/assets/icons/helpFR.webp`);
 		},
 		learnSkill(skillId: number): void {
 			const skillIdList: Array<number> = [skillId];
@@ -417,7 +411,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('~@/assets/background/table_header.gif');
+				background-image: url('@/assets/background/table_header.gif');
 				background-position: left bottom;
 				&.name {
 					width: 330px;
@@ -435,7 +429,7 @@ export default defineComponent({
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
 				&.name {
-					background-image: url('~@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.gif');
 					background-position: 0px 0px;
 					//padding-left: 15px;
 					max-width: 337px;
@@ -453,7 +447,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('~@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.gif');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
@@ -461,7 +455,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('~@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.gif');
 					background-position: -10px 0px;
 					text-decoration: underline;
 					background-repeat: no-repeat;

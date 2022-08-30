@@ -578,271 +578,177 @@ export default defineComponent({
 	},
 	computed: {
 		dinozHead(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/head/${this.head.imgNumber}.vue`));
+			return defineAsyncComponent(() => import(`./head/${this.head.imgNumber}.vue`));
 		},
 		headSpecial(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/head/special/${this.head.dependentImage.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./head/special/${this.head.dependentImage.imgNumber}.vue`));
 		},
 		headSpecial2(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/head/special/${this.head.dependentImage2.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./head/special/${this.head.dependentImage2.imgNumber}.vue`));
 		},
 		headInjury(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/head/injury/${this.injuryType}/${this.head[this.injuryType].imgNumber}.vue`
-					)
+				() => import(`./head/injury/${this.injuryType}/${this.head[this.injuryType].imgNumber}.vue`)
 			);
 		},
 		eyeRetina(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/eye/${this.head.eyeRetina.imgNumber}.vue`));
+			return defineAsyncComponent(() => import(`./eye/${this.head.eyeRetina.imgNumber}.vue`));
 		},
 		eye(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/eye/${this.head.eye[this.childOrAdult].imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./eye/${this.head.eye[this.childOrAdult].imgNumber}.vue`));
 		},
 		dinozHair(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/hair/${this.hairNumber}.vue`));
+			return defineAsyncComponent(() => import(`./hair/${this.hairNumber}.vue`));
 		},
 		complementaryHair(): string {
 			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/hair/${this.head.hair[this.hairNumber].dependentImage.imgNumber}.vue`)
+				() => import(`./hair/${this.head.hair[this.hairNumber].dependentImage.imgNumber}.vue`)
 			);
 		},
 		complementaryHair2(): string {
 			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/hair/${this.head.hair[this.hairNumber].dependentImage2.imgNumber}.vue`)
+				() => import(`./hair/${this.head.hair[this.hairNumber].dependentImage2.imgNumber}.vue`)
 			);
 		},
 		headTattoo(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/head/tattoo/${this.head.tattoo[this.tattooNumber].imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./head/tattoo/${this.head.tattoo[this.tattooNumber].imgNumber}.vue`));
 		},
 		chestElement1(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/chest/${this.chest.element1.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./chest/${this.chest.element1.imgNumber}.vue`));
 		},
 		chestElement2(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/chest/${this.chest.element2.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./chest/${this.chest.element2.imgNumber}.vue`));
 		},
 		chestElement3(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/${4}.vue`));
+			return defineAsyncComponent(() => import(`./chest/${4}.vue`));
 		},
 		chestInjury1(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${this.chest[this.injuryType][1].imgNumber}.vue`
-					)
+				() => import(`./chest/injury/${this.injuryType}/${this.chest[this.injuryType][1].imgNumber}.vue`)
 			);
 		},
 		chestInjury2(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${this.chest[this.injuryType][2].imgNumber}.vue`
-					)
+				() => import(`./chest/injury/${this.injuryType}/${this.chest[this.injuryType][2].imgNumber}.vue`)
 			);
 		},
 		chestInjury3(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/chest/injury/${this.injuryType}/${this.chest[this.injuryType][3].imgNumber}.vue`
-					)
+				() => import(`./chest/injury/${this.injuryType}/${this.chest[this.injuryType][3].imgNumber}.vue`)
 			);
 		},
 		tail(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/tail/${0}.vue`));
+			return defineAsyncComponent(() => import(`./chest/tail/${0}.vue`));
 		},
 		tailSpecial(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/tail/special/${0}.vue`));
+			return defineAsyncComponent(() => import(`./chest/tail/special/${0}.vue`));
 		},
 		tailHair(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/hair/tail/${this.hairNumber}.vue`));
+			return defineAsyncComponent(() => import(`./hair/tail/${this.hairNumber}.vue`));
 		},
 		chestTattoo(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/chest/tattoo/${0}.vue`));
+			return defineAsyncComponent(() => import(`./chest/tattoo/${0}.vue`));
 		},
 		leftArm(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/arm/left/${this.arm.imgNumber}.vue`));
+			return defineAsyncComponent(() => import(`./arm/left/${this.arm.imgNumber}.vue`));
 		},
 		leftArmSpecial0(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/arm/left/special/${this.arm.left.dependentImage0.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./arm/left/special/${this.arm.left.dependentImage0.imgNumber}.vue`));
 		},
 		leftArmSpecial1(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/arm/left/special/${this.arm.left.dependentImage1.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./arm/left/special/${this.arm.left.dependentImage1.imgNumber}.vue`));
 		},
 		leftArmSpecial2(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/arm/left/special/${
-							this.arm.left.dependentImage2[this.childOrAdult].imgNumber
-						}.vue`
-					)
+				() => import(`./arm/left/special/${this.arm.left.dependentImage2[this.childOrAdult].imgNumber}.vue`)
 			);
 		},
 		leftArmSpecial4(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`));
 		},
 		leftArmInjury(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/arm/left/injury/${this.injuryType}/${
-							this.arm.left[this.injuryType].imgNumber
-						}.vue`
-					)
+				() => import(`./arm/left/injury/${this.injuryType}/${this.arm.left[this.injuryType].imgNumber}.vue`)
 			);
 		},
 		armTattoo(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/arm/right/tattoo/${this.arm.right.tattoo[this.tattooNumber].imgNumber}.vue`
-					)
+				() => import(`./arm/right/tattoo/${this.arm.right.tattoo[this.tattooNumber].imgNumber}.vue`)
 			);
 		},
 		rightArm(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/arm/right/${this.arm.imgNumber}.vue`));
+			return defineAsyncComponent(() => import(`./arm/right/${this.arm.imgNumber}.vue`));
 		},
 		rightArmSpecial0(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage0.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./arm/right/special/${this.arm.right.dependentImage0.imgNumber}.vue`));
 		},
 		rightArmSpecial1(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage1.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./arm/right/special/${this.arm.right.dependentImage1.imgNumber}.vue`));
 		},
 		rightArmSpecial2(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/arm/right/special/${
-							this.arm.right.dependentImage2[this.childOrAdult].imgNumber
-						}.vue`
-					)
+				() => import(`./arm/right/special/${this.arm.right.dependentImage2[this.childOrAdult].imgNumber}.vue`)
 			);
 		},
 		rightArmSpecial3(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage3.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./arm/right/special/${this.arm.right.dependentImage3.imgNumber}.vue`));
 		},
 		rightArmSpecial4(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./arm/right/special/${this.arm.right.dependentImage4.imgNumber}.vue`));
 		},
 		rightArmInjury(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/arm/right/injury/${this.injuryType}/${
-							this.arm.right[this.injuryType].imgNumber
-						}.vue`
-					)
+				() => import(`./arm/right/injury/${this.injuryType}/${this.arm.right[this.injuryType].imgNumber}.vue`)
 			);
 		},
 		leftLeg(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/left/${0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/left/${0}.vue`));
 		},
 		leftLegKneeHorn(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/leg/left/knee/${this.leg.left.knee.horn.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./leg/left/knee/${this.leg.left.knee.horn.imgNumber}.vue`));
 		},
 		leftLegKneeSkin(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/leg/left/knee/${this.leg.left.knee.skin.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./leg/left/knee/${this.leg.left.knee.skin.imgNumber}.vue`));
 		},
 		leftLegInjury1(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/leg/left/injury/${this.injuryType}/${
-							this.leg.left[this.injuryType][1].imgNumber
-						}.vue`
-					)
+				() => import(`./leg/left/injury/${this.injuryType}/${this.leg.left[this.injuryType][1].imgNumber}.vue`)
 			);
 		},
 		leftLegInjury2(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/leg/left/injury/${this.injuryType}/${
-							this.leg.left[this.injuryType][2].imgNumber
-						}.vue`
-					)
+				() => import(`./leg/left/injury/${this.injuryType}/${this.leg.left[this.injuryType][2].imgNumber}.vue`)
 			);
 		},
 		leftLegNail(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/left/nail/${0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/left/nail/${0}.vue`));
 		},
 		rightLeg(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/right/${0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/right/${0}.vue`));
 		},
 		rightLegKneeHorn(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/leg/right/knee/${this.leg.right.knee.horn.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./leg/right/knee/${this.leg.right.knee.horn.imgNumber}.vue`));
 		},
 		rightLegKneeSkin(): string {
-			return defineAsyncComponent(
-				() => import(`@/components/dinoz/moueffe/leg/right/knee/${this.leg.right.knee.skin.imgNumber}.vue`)
-			);
+			return defineAsyncComponent(() => import(`./leg/right/knee/${this.leg.right.knee.skin.imgNumber}.vue`));
 		},
 		rightLegInjury1(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
-							this.leg.right[this.injuryType][1].imgNumber
-						}.vue`
-					)
+				() => import(`./leg/right/injury/${this.injuryType}/${this.leg.right[this.injuryType][1].imgNumber}.vue`)
 			);
 		},
 		rightLegInjury2(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
-							this.leg.right[this.injuryType][2].imgNumber
-						}.vue`
-					)
+				() => import(`./leg/right/injury/${this.injuryType}/${this.leg.right[this.injuryType][2].imgNumber}.vue`)
 			);
 		},
 		rightLegInjury3(): string {
 			return defineAsyncComponent(
-				() =>
-					import(
-						`@/components/dinoz/moueffe/leg/right/injury/${this.injuryType}/${
-							this.leg.right[this.injuryType][3].imgNumber
-						}.vue`
-					)
+				() => import(`./leg/right/injury/${this.injuryType}/${this.leg.right[this.injuryType][3].imgNumber}.vue`)
 			);
 		},
 		rightLegNail(): string {
-			return defineAsyncComponent(() => import(`@/components/dinoz/moueffe/leg/right/nail/${0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/right/nail/${0}.vue`));
 		}
 	},
 	methods: {

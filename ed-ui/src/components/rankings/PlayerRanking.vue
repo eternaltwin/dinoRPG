@@ -121,7 +121,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('~@/assets/background/table_header.gif');
+				background-image: url('@/assets/background/table_header.gif');
 				background-position: left bottom;
 				max-width: 222px;
 				&.pos {
@@ -147,24 +147,24 @@ export default defineComponent({
 				border: 1px solid #c88f44;
 				cursor: pointer;
 				&.pos {
-					background-image: url('~@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.gif');
 					background-position: 0px 0px;
 					padding-left: 1.2em;
 				}
 				&.other {
 					padding-left: 1em;
-					background-image: url('~@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.gif');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
 			}
 			&.even {
 				td.pos {
-					background-image: url('~@/assets/background/table_cell_even.gif');
+					background-image: url('@/assets/background/table_cell_even.gif');
 					background-position: 0px 0px;
 				}
 				td.other {
-					background-image: url('~@/assets/background/table_cell_even.gif');
+					background-image: url('@/assets/background/table_cell_even.gif');
 					background-position: -10px 0px;
 				}
 			}

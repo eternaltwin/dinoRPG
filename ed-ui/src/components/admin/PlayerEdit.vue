@@ -43,7 +43,7 @@
 					<td>
 						<template v-for="(reward, index) in player.rewards" :key="index">
 							<Tippy theme="normal">
-								<img :src="getEpicImg(epicList.imgName[reward])" />
+								<img :src="`@/assets/epicRewards/collec_${epicList.imgName[reward]}.webp`" />
 								<template #content>
 									<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward]}`))" />
 									<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward]}`))" />
@@ -180,7 +180,7 @@
 import { defineComponent, PropType } from 'vue';
 import { AdminService } from '@/services';
 import { epicList } from '@/constants';
-import { Player, PlayerEdit } from '@/models/index.js';
+import { Player, PlayerEdit } from '@/models';
 
 export default defineComponent({
 	name: 'PlayerEdit',
@@ -241,9 +241,6 @@ export default defineComponent({
 
 			this.playerFields.rewards = [];
 			this.filterEpicList(this.playerFields.epicOperation!);
-		},
-		getEpicImg(imgName: string): string {
-			return require(`@/assets/epicRewards/collec_${imgName}.webp`);
 		},
 		filterEpicList(operation: string): void {
 			if (operation === 'add') {
@@ -306,7 +303,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('~@/assets/background/table_header.gif');
+			background-image: url('@/assets/background/table_header.gif');
 			background-position: left bottom;
 			max-width: 222px;
 		}

@@ -7,7 +7,7 @@
 				theme: 'small'
 			}"
 		>
-			<img :src="getImg('fire')" alt="fire" /> {{ fire }}
+			<img src="@/assets/elements/elem_fire.webp" alt="fire" /> {{ fire }}
 		</li>
 		<li
 			:class="getMaxElement() === wood ? 'max' : ''"
@@ -16,7 +16,7 @@
 				theme: 'small'
 			}"
 		>
-			<img :src="getImg('wood')" alt="wood" /> {{ wood }}
+			<img src="@/assets/elements/elem_wood.webp" alt="wood" /> {{ wood }}
 		</li>
 		<li
 			:class="getMaxElement() === water ? 'max' : ''"
@@ -25,7 +25,7 @@
 				theme: 'small'
 			}"
 		>
-			<img :src="getImg('water')" alt="water" /> {{ water }}
+			<img src="@/assets/elements/elem_water.webp" alt="water" /> {{ water }}
 		</li>
 		<li
 			:class="getMaxElement() === lightning ? 'max' : ''"
@@ -34,7 +34,7 @@
 				theme: 'small'
 			}"
 		>
-			<img :src="getImg('lightning')" alt="lightning" /> {{ lightning }}
+			<img src="@/assets/elements/elem_lightning.webp" alt="lightning" /> {{ lightning }}
 		</li>
 		<li
 			:class="getMaxElement() === air ? 'max' : ''"
@@ -43,7 +43,7 @@
 				theme: 'small'
 			}"
 		>
-			<img :src="getImg('air')" alt="air" /> {{ air }}
+			<img src="@/assets/elements/elem_air.webp" alt="air" /> {{ air }}
 		</li>
 	</ul>
 </template>
@@ -61,9 +61,6 @@ export default defineComponent({
 		air: { type: Number, required: true }
 	},
 	methods: {
-		getImg(index: string): string {
-			return require(`@/assets/elements/elem_${index}.webp`);
-		},
 		getMaxElement(): number {
 			{
 				return Math.max(this.fire, this.wood, this.water, this.lightning, this.air);
@@ -96,7 +93,7 @@ span {
 		color: white;
 		text-align: left;
 		letter-spacing: -0.2pt;
-		background-image: url('~@/assets/icons/element_bg.webp');
+		background-image: url('@/assets/icons/element_bg.webp');
 		background-position: 7px 5px;
 		background-repeat: no-repeat;
 		cursor: help;

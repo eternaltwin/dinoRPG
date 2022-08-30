@@ -165,7 +165,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('~@/assets/background/table_header.gif');
+			background-image: url('@/assets/background/table_header.gif');
 			background-position: left bottom;
 			max-width: 222px;
 		}

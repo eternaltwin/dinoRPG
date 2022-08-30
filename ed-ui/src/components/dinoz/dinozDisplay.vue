@@ -42,11 +42,6 @@ export default defineComponent({
 		DinozEquip: defineAsyncComponent(() => import('@/components/dinoz/dinozEquip.vue')),
 		DinozStatus: defineAsyncComponent(() => import('@/components/dinoz/dinozStatus.vue')),
 		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue'))
-	},
-	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.webp`);
-		}
 	}
 });
 </script>
@@ -56,7 +51,7 @@ export default defineComponent({
 	position: absolute;
 	margin-left: 205px;
 	margin-top: 69px;
-	background-image: url('~@/assets/icons/left.webp');
+	background-image: url('@/assets/icons/left.webp');
 	background-color: transparent;
 	width: 15px;
 	height: 21px;
@@ -66,7 +61,7 @@ export default defineComponent({
 .title {
 	position: absolute;
 	top: -6.5px;
-	background: url('~@/assets/background/name_box.gif') no-repeat;
+	background: url('@/assets/background/name_box.gif') no-repeat;
 	width: 222px;
 	height: 33px;
 	margin-left: 240px;
@@ -86,7 +81,7 @@ export default defineComponent({
 	position: absolute;
 	margin-left: 490px;
 	margin-top: 69px;
-	background-image: url('~@/assets/icons/right.webp');
+	background-image: url('@/assets/icons/right.webp');
 	background-color: transparent;
 	width: 15px;
 	height: 21px;

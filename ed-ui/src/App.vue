@@ -1,5 +1,4 @@
 <template>
-	<link rel="icon" href="public/favicon.ico" />
 	<TitleHeader :title="$t('pageTitle.default')" />
 	<RouterView />
 	<Spinner />

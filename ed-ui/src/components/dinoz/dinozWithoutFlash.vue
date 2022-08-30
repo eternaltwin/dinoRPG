@@ -16,7 +16,7 @@ export default defineComponent({
 	computed: {
 		dinozToDisplay(): string {
 			const raceName: string = Object.entries(raceList).find(race => race[0].toString() === this.display[0])![1];
-			return defineAsyncComponent(() => import(`@/components/dinoz/${raceName}/${raceName}.vue`));
+			return defineAsyncComponent(() => import(`./${raceName}/${raceName}.vue`));
 		}
 	}
 });

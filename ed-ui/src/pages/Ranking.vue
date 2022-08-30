@@ -7,7 +7,7 @@
 	</div>
 	<ul class="tabs">
 		<li :class="tabSelected === 1 ? 'active' : ''">
-			<a href="#" @click="setTab(1)"><img :src="getImg('design', 'small_', 'member')" /> {{ $t('tabs.players') }}</a>
+			<a href="#" @click="setTab(1)"><img src="@/assets/design/small_member.gif" /> {{ $t('tabs.players') }}</a>
 		</li>
 		<li :class="tabSelected === 2 ? 'active' : ''">
 			<a href="#" @click="setTab(2)">{{ $t('tabs.average') }}</a>
@@ -41,9 +41,6 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		getImg(folder: string, imgPrefix: string, imgName: string): string {
-			return require(`@/assets/${folder}/${imgPrefix}${imgName}.gif`);
-		},
 		async setTab(value: number): Promise<void> {
 			this.tabSelected = value;
 		}
