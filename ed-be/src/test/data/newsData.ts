@@ -1,4 +1,4 @@
-import { News } from '../../entity';
+import { News } from '../../entity/index.js';
 
 export const postedNews = {
 	title: 'title',

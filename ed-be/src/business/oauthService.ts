@@ -4,8 +4,8 @@ import { getConfig } from '../utils/context.js';
 import { forgeJWT } from '../utils/jwt.js';
 import { Config } from '../models/index.js';
 import { Player } from '../entity/index.js';
-import { RfcOauthClient } from '@eternal-twin/oauth-client-http/lib/rfc-oauth-client.js';
-import { OauthAccessToken } from '@eternal-twin/core/lib/oauth/oauth-access-token.js';
+import { RfcOauthClient } from '@eternal-twin/oauth-client-http/rfc-oauth-client';
+import { OauthAccessToken } from '@eternal-twin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 
@@ -64,6 +64,7 @@ async function getUser(accessToken: string, eternalTwinURI: string) {
 	let res;
 
 	try {
+		//@ts-ignore
 		res = await fetch(`${eternalTwinURI}api/v1/auth/self`, {
 			method: 'GET',
 			headers: {

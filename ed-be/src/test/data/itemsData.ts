@@ -1,5 +1,5 @@
-import { PlayerItem } from '../../entity';
-import { item, itemId, itemQuantity, player } from '../utils/constants';
+import { PlayerItem } from '../../entity/index.js';
+import { item, itemId, itemQuantity, player } from '../utils/constants.js';
 
 export const BasicItem = ({
 	id: itemId,

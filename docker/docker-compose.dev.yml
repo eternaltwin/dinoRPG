@@ -6,18 +6,11 @@ services:
     ports:
       - "5432:5432"
 
-  drpg_back:
+  drpg:
     ports:
       - 8081:8081
-    build:
-      args:
-        - UID=1000
-        - GID=1000
-
-  drpg_front:
-    ports:
-      - "8080:8080"
-      - "8000:8000"  # only needed if using vue-cli UI
+      - 8080:8080
+      - 8000:8000
     build:
       args:
         - UID=1000

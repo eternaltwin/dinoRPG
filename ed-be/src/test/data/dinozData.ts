@@ -1,8 +1,8 @@
-import { ElementType, DinozFiche } from '../../models';
-import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable } from '../../entity';
-import { itemList, placeList, raceList, skillList, statusList } from '../../constants';
-import { player, dinozId, skillId, skillId2 } from '../utils/constants';
-import { PlayerData, BasicPlayerWithRank } from './playerData';
+import { ElementType, DinozFiche } from '../../models/index.js';
+import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable } from '../../entity/index.js';
+import { itemList, placeList, raceList, skillList, statusList } from '../../constants/index.js';
+import { player, dinozId, skillId, skillId2 } from '../utils/constants.js';
+import { PlayerData, BasicPlayerWithRank } from './playerData.js';
 
 export const DinozFicheData = ({
 	id: dinozId,

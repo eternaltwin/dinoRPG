@@ -1,4 +1,4 @@
-import { IngredientFiche } from '../models';
+import { IngredientFiche } from '../models/index.js';
 
 export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	MEROU_LUJIDANE: {

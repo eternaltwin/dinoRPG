@@ -1,17 +1,17 @@
 import { Request } from 'express';
 import _ from 'lodash';
-import { getLearnableSkills, learnSkill } from '../../business/skillService';
-import { itemList, levelList, raceList, skillList } from '../../constants';
-import { DinozSkillOwnAndUnlockable } from '../../models';
-import { DinozItem, DinozSkill, Dinoz } from '../../entity';
+import { getLearnableSkills, learnSkill } from '../../business/skillService.js';
+import { itemList, levelList, raceList, skillList } from '../../constants/index.js';
+import { DinozSkillOwnAndUnlockable } from '../../models/index.js';
+import { DinozItem, DinozSkill, Dinoz } from '../../entity/index.js';
 import {
 	DinozLevel11LevelUp,
 	DinozLevel1LevelUp,
 	DinozLevel1LevelUpInWood,
 	DinozLevel2LevelUp,
 	DinozLevel50LevelUp
-} from '../data/dinozData';
-import { dinozId, mockRequest, player } from '../utils/constants';
+} from '../data/dinozData.js';
+import { dinozId, mockRequest, player } from '../utils/constants.js';
 
 const DinozDao = require('../../dao/dinozDao.js');
 const DinozSkillUnlockableDao = require('../../dao/dinozSkillUnlockableDao.js');

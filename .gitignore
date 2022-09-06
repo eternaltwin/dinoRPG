@@ -15,6 +15,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+*.iml
 
 ###############################################################################
 # Dependencies                                                                #
@@ -38,4 +39,6 @@ node_modules/
 package-lock.json
 
 # Config file
-**.toml
+etwin.toml
+config_development.toml
+

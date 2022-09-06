@@ -16,17 +16,19 @@ services:
       POSTGRES_USER: etwin.dev.write
       POSTGRES_MULTIPLE_DATABASES: eternaldinodb,etwin.dev
 
-  drpg_front:
-    container_name: drpg_front
+  drpg:
+    container_name: drpg
     build:
-      context: ./front
+      context: ./container
       dockerfile: Dockerfile
       args:
         - YOUR_APP_WEB_HTTP_PORT=8080
     volumes:
-      - ../ed-ui:/www
+      - ../.:/www
     stdin_open: true
     tty: true
+    networks:
+      - drpg_network
     environment:
       # https://cli.vuejs.org/guide/mode-and-env.html#modes
       # development is used by vue-cli-service serve
@@ -43,18 +45,6 @@ services:
       - drpg_network
     stdin_open: true
     tty: true
-
-  drpg_back:
-    container_name: drpg_back
-    build:
-      context: ./back
-      dockerfile: Dockerfile
-    volumes:
-      - ../ed-be:/www
-    networks:
-      - drpg_network
-    environment:
-      - NODE_ENV=development
 
 networks:
   drpg_network:

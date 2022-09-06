@@ -1,6 +1,6 @@
-import { PlayerDinozShop } from '../../entity';
-import { raceList } from '../../constants';
-import { dinozId, player } from '../utils/constants';
+import { PlayerDinozShop } from '../../entity/index.js';
+import { raceList } from '../../constants/index.js';
+import { dinozId, player } from '../utils/constants.js';
 
 export const DinozFromShop: PlayerDinozShop = {
 	id: dinozId,

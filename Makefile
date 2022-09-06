@@ -7,8 +7,8 @@ docker-watch:
 docker-stop:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml stop
 
-bash-front:
-	docker exec -it drpg_front bash
+bash:
+	docker exec -it drpg bash
 
 bash-DB:
 	docker exec -it drpg_database bash
@@ -22,20 +22,12 @@ install: build
 	cp ./Eternaltwin/etwin.toml.example ./Eternaltwin/etwin.toml
 	cp ./ed-be/config_development.toml.example ./ed-be/config_development.toml
 	docker start drpg_database
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_front yarn install
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn install
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn migration:run
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn etwin db upgrade
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn build:native
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn migration
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d --no-recreate
-
-install-eternal-twin: reset-eternal-twin-database
-	docker start drpg_eternal_twin
-	docker exec -i -unode drpg_eternal_twin yarn install
-
-install-front:
-	docker start drpg_front &&\
-	docker exec -i -unode drpg_front yarn install
 
 reset-eternal-twin-database:
 	docker start drpg_database &&\
@@ -43,25 +35,24 @@ reset-eternal-twin-database:
 	cat docker/EternalTwin/dump_12-01-2021_20_33_41.sql | docker exec -i drpg_database psql --username postgres eternal_twin
 
 remove-drpg: docker-stop
-	docker rm drpg_back
+	docker rm drpg
 	docker rm drpg_database
 	docker rm drpg_eternal_twin
-	docker rm drpg_front
 
 run-test: 
-	docker exec -i -unode drpg_back yarn run test:ci
+	docker exec -i -unode drpg yarn run test:ci
 
 run-coverage:
-	docker exec -i -unode drpg_back yarn run coverage
+	docker exec -i -unode drpg yarn run coverage
 
-update-front:
-	docker exec -i -unode drpg_front yarn install
+update:
+	docker exec -i -unode drpg yarn install
 
 test-lint-front:
-	docker exec -i -unode drpg_front yarn lint:test
+	docker exec -i -unode drpg yarn lint:test
 
 fix-lint-front:
-	docker exec -it drpg_front yarn lint:fix
+	docker exec -it drpg yarn lint:fix
 
 update-schema:
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_back yarn run:migration
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn run:migration

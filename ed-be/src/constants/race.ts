@@ -1,4 +1,4 @@
-import { DinozRace } from '../models';
+import { DinozRace } from '../models/index.js';
 
 // If price is 0 that means the dinoz cannot be purchased via the dinoz shop.
 // For a demon dinoz, the price is the number of demon tickets.

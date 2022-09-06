@@ -1,6 +1,6 @@
-import { PlayerRanking } from '../../models';
-import { Ranking } from '../../entity';
-import { player } from '../utils/constants';
+import { PlayerRanking } from '../../models/index.js';
+import { Ranking } from '../../entity/index.js';
+import { player } from '../utils/constants.js';
 
 export const playerRanking = {
 	dinozCount: 2,

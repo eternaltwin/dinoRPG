@@ -1,13 +1,13 @@
 import { Request } from 'express';
 // Back imports
-import { getItemsFromShop, buyItem } from '../../business/itemShopService';
-import { ItemFiche, ShopType } from '../../models';
-import { Dinoz, Player, PlayerItem, DinozStatus } from '../../entity';
-import { itemList, placeList, shopList, statusList } from '../../constants';
+import { getItemsFromShop, buyItem } from '../../business/itemShopService.js';
+import { ItemFiche, ShopType } from '../../models/index.js';
+import { Dinoz, Player, PlayerItem, DinozStatus } from '../../entity/index.js';
+import { itemList, placeList, shopList, statusList } from '../../constants/index.js';
 // Test imports
-import { PlayerData } from '../data/playerData';
-import { DinozData } from '../data/dinozData';
-import { BasicItem, playerFlyingShopInventory, playerMagicShopInventory } from '../data/itemsData';
+import { PlayerData } from '../data/playerData.js';
+import { DinozData } from '../data/dinozData.js';
+import { BasicItem, playerFlyingShopInventory, playerMagicShopInventory } from '../data/itemsData.js';
 import { player, mockRequest, shop, item } from '../utils/constants.js';
 import { cloneDeep } from 'lodash';
 import { getRandomNumber } from '../../utils/tools.js';

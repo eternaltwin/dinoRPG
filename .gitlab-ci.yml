@@ -1,39 +1,54 @@
-.node_front: &node_front
-  image: node:16
+stages:
+  - build
+  - test
+
+.drpg: &drpg
+  image: "demurgos/node:2022.1"
+  variables:
+    CARGO_HOME: ".cargo"
+    RUSTFLAGS: "-C target-feature=-crt-static"
   cache:
-    paths:
-      - node_modules/
+    - key:
+        files:
+          - "yarn.lock"
+      paths:
+        - ".yarn/cache/"
   before_script:
-    - cd ed-ui
+    - cp ed-be/config_development.toml.example ed-be/config_development.toml
+    - "node --version"
+    - "yarn --version"
+    - "rustc --version"
+    - "cargo --version"
     - yarn install
 
-.node_back: &node_back
-  image: node:16
-  cache:
-    paths:
-      - node_modules/
-      - "ed-be/dist/"
-  before_script:
-    - cd ed-be
-    - cp config_development.toml.example config_development.toml
-    - yarn install
-    - yarn build
+container-build:
+  <<: *drpg
+  stage: build
+  script:
+    - yarn build:gitlab
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 front-lint:
-  <<: *node_front
+  <<: *drpg
+  stage: test
+  needs: [container-build]
   script:
     - yarn lint:test
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 back-coverage:
-  <<: *node_back
+  <<: *drpg
+  stage: test
+  needs: [container-build]
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   cache:
     paths:
       - "ed-be/coverage/"
       - junit.xml
   script:
+    - yarn build:ci
     - yarn test:ci
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

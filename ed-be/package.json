@@ -26,6 +26,9 @@
    "author": "Jolujolu",
    "license": "ISC",
    "dependencies": {
+      "@eternal-twin/core": "^0.10.3",
+      "@eternal-twin/etwin-client-http": "^0.10.3",
+      "@eternal-twin/oauth-client-http": "^0.10.3",
       "@types/swagger-jsdoc": "^6.0.1",
       "@types/swagger-ui-express": "^4.1.3",
       "body-parser": "^1.19.0",
@@ -37,6 +40,7 @@
       "express-validator": "^6.13.0",
       "jsonwebtoken": "^8.5.1",
       "multer": "^1.4.4-lts.1",
+      "native-dinorpg": "workspace:^*",
       "node-fetch": "^2.6.1",
       "pg": "^8.4.0",
       "pg-hstore": "^2.3.3",
@@ -51,8 +55,6 @@
    "devDependencies": {
       "@babel/cli": "^7.14.8",
       "@babel/preset-env": "^7.14.8",
-      "@eternal-twin/etwin-client-http": "^0.5.1",
-      "@eternal-twin/oauth-client-http": "^0.5.1",
       "@types/cheerio": "^0.22.29",
       "@types/cors": "^2.8.10",
       "@types/cron": "^1.7.2",
@@ -73,7 +75,7 @@
       "prettier": "2.2.1",
       "ts-jest": "^26.5.5",
       "ts-node": "10.7.0",
-      "typescript": "4.5.2"
+      "typescript": "4.7.4"
    },
    "packageManager": "yarn@3.1.0"
 }

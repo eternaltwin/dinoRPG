@@ -1,4 +1,4 @@
-import { ActionFiche } from '../models';
+import { ActionFiche } from '../models/index.js';
 
 export const actionList: Readonly<Record<string, ActionFiche>> = {
 	FIGHT: {

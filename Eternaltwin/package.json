@@ -6,6 +6,6 @@
     "etwin": "etwin"
   },
   "devDependencies": {
-    "@eternal-twin/cli": "^0.9"
+    "@eternal-twin/cli": "^0.10.3"
   }
 }

@@ -1,4 +1,4 @@
-import { Place } from '../models';
+import { Place } from '../models/index.js';
 import { statusList } from './status.js';
 
 export const placeList: Record<string, Place> = {

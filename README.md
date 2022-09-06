@@ -70,7 +70,7 @@ $ id
 
 Modifiez ensuite ./docker/docker-compose.dev.yml :
 ``` yaml
-drpg_back:
+drpg:
  build:
   args:
   - UID=xxxx
@@ -91,7 +91,7 @@ Si la commande `make update-front` échoue ou donne une erreur, alors utilisez
 les commands suivantes:
 ```bash
 make docker-start
-docker exec -it drpg_front bash
+docker exec -it drpg bash
 #yarn install
 ```
 

@@ -1,9 +1,9 @@
 import { Request } from 'express';
-import { Player } from '../../entity';
-import { getAllItemsData } from '../../business/inventoryService';
-import { PlayerData } from '../data/playerData';
-import { playerFlyingShopInventory } from '../data/itemsData';
-import { mockRequest, player } from '../utils/constants';
+import { Player } from '../../entity/index.js';
+import { getAllItemsData } from '../../business/inventoryService.js';
+import { PlayerData } from '../data/playerData.js';
+import { playerFlyingShopInventory } from '../data/itemsData.js';
+import { mockRequest, player } from '../utils/constants.js';
 import { cloneDeep } from 'lodash';
 
 const PlayerDao = require('../../dao/playerDao.js');
