@@ -27,7 +27,7 @@ container-build:
   script:
     - yarn build:gitlab
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "develop"'
 
 front-lint:
   <<: *drpg
@@ -52,7 +52,6 @@ back-coverage:
     - yarn test:ci
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH == "develop"'
   artifacts:
     when: always
     reports:
