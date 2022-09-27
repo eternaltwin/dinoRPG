@@ -55,4 +55,5 @@ fix-lint-front:
 	docker exec -it drpg yarn lint:fix
 
 update-schema:
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn run:migration
+	docker start drpg_database &&\
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn migration:run
