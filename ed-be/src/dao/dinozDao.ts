@@ -79,6 +79,22 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz> => {
 		.getOneOrFail();
 };
 
+const getDinozNPCRequest = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name', 'dinoz.level', 'dinoz.placeId'])
+		.addSelect(['player.id'])
+		.addSelect(['items.itemId'])
+		.addSelect(['status.statusId'])
+		.addSelect(['npc.npcId', 'npc.step'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.items', 'items')
+		.leftJoin('dinoz.status', 'status')
+		.leftJoin('dinoz.NPC', 'npc')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
+};
+
 const getDinozSkillRequest = (dinozId: number): Promise<Dinoz> => {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
@@ -160,6 +176,11 @@ const setDinozNameRequest = (olddinoz: Dinoz, canChangeName: boolean): Promise<D
 	return dinozRepository.save(olddinoz);
 };
 
+const setDinozNextElement = (dinoz: Dinoz, elementIdd: number): Promise<Dinoz> => {
+	dinoz.nextUpElementId = elementIdd;
+	return dinozRepository.save(dinoz);
+};
+
 const addExperience = (dinozId: number, experience: number): Promise<UpdateResult> => {
 	return dinozRepository
 		.createQueryBuilder()
@@ -174,6 +195,7 @@ export {
 	getAllDinozFromAccount,
 	getCanDinozChangeName,
 	getDinozFicheRequest,
+	getDinozNPCRequest,
 	getDinozPlaceRequest,
 	getDinozTotalCount,
 	getDinozSkillRequest,
@@ -182,5 +204,6 @@ export {
 	setDinoz,
 	setDinozNameRequest,
 	setDinozPlaceRequest,
-	addExperience
+	addExperience,
+	setDinozNextElement
 };

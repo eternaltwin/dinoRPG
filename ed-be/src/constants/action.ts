@@ -16,5 +16,9 @@ export const actionList: Readonly<Record<string, ActionFiche>> = {
 	LEVEL_UP: {
 		name: 'levelup',
 		imgName: 'act_levelup'
+	},
+	NPC: {
+		name: 'npc',
+		imgName: 'act_talk'
 	}
 };

@@ -1,33 +1,34 @@
 import { Request } from 'express';
-import { getDinozShopDetailsRequest, deleteDinozInShopRequest } from '../dao/playerDinozShopDao.js';
+import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
-	getDinozFicheRequest,
+	addExperience,
 	getCanDinozChangeName,
-	getDinozSkillRequest,
-	getDinozSkillAndStatusRequest,
+	getDinozFicheRequest,
 	getDinozPlaceRequest,
-	setDinozPlaceRequest,
+	getDinozSkillAndStatusRequest,
+	getDinozSkillRequest,
 	setDinoz,
-	addExperience
+	setDinozPlaceRequest
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import {
-	DinozFiche,
 	ActionFiche,
+	DinozFiche,
 	DinozRace,
 	DinozSkillFiche,
 	FightResult,
+	Npc,
 	Place,
 	ShopFiche,
 	ShopType
 } from '../models/index.js';
-import { actionList, levelList, raceList, skillList, statusList, shopList, placeList } from '../constants/index.js';
+import { actionList, levelList, placeList, raceList, shopList, skillList, statusList } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
-import _ from 'lodash';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { getRandomNumber } from '../utils/tools.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js';
+import { npcList } from '../constants/npc.js';
 
 /**
  * @summary Get available action from dinoz
@@ -65,6 +66,17 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 		}
 	}
 
+	const npcAvailable: Array<Npc> = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
+	if (npcAvailable.length > 0) {
+		npcAvailable.forEach(npc => {
+			availableActions.push({
+				name: actionList.NPC.name,
+				imgName: actionList.NPC.imgName,
+				prop: npc.id
+			});
+		});
+	}
+
 	//
 
 	const maxExp: number = levelList.find(level => level.id === dinoz?.level)!.experience;
@@ -100,7 +112,7 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 	}
 
 	// Create the answer that will be sent back
-	const dinozDetails: DinozFiche = {
+	return {
 		id: dinozData.id,
 		name: dinozData.name,
 		display: dinozData.display,
@@ -131,8 +143,6 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 		nbrUpLightning: dinozData.nbrUpLightning,
 		nbrUpAir: dinozData.nbrUpAir
 	};
-
-	return dinozDetails;
 };
 
 /**
@@ -148,7 +158,7 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
 		throw new Error(`Dinoz ${dinozId} doesn't belong to player ${dinozSkillData.player.id}`);
 	}
 
-	const dinozSkillList: Array<DinozSkillFiche> = dinozSkillData.skills.map(skill => {
+	return dinozSkillData.skills.map(skill => {
 		const skillFound: DinozSkillFiche | undefined = Object.values(skillList).find(
 			skillDinoz => skillDinoz.skillId === skill.skillId
 		)!;
@@ -164,8 +174,6 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
 			isSphereSkill: skillFound.isSphereSkill
 		};
 	});
-
-	return dinozSkillList;
 };
 
 /**
@@ -404,14 +412,12 @@ async function betaFight(dinoz: Dinoz): Promise<FightResult> {
 		await addPlayerMoney(dinozInFight!.player.id, goldEarned);
 		await addExperience(dinozInFight.id, xpEarned);
 	}
-	const infoToSend: FightResult = {
+	return {
 		goldEarned: goldEarned,
 		xpEarned: xpEarned,
 		hpLost: hpLost,
 		result: result
 	};
-
-	return infoToSend;
 }
 
-export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove };
+export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, betaFight };

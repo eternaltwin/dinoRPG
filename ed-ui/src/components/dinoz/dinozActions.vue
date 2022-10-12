@@ -20,7 +20,10 @@
 						<td v-if="action.name === 'shop'" class="label">
 							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
 						</td>
-						<td v-else class="label">
+						<td v-else-if="action.name === 'npc'" class="label">
+							{{ $t(`npc.name.${npcNameList[action.prop]}`) }}
+						</td>
+						<td v-else-if="action.name !== 'npc' && action.name !== 'shop'" class="label">
 							{{ $t(`action.name.${action.name}`) }}
 						</td>
 						<template #content>
@@ -28,12 +31,20 @@
 								v-if="action.name === 'shop'"
 								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))"
 							/>
-							<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
+							<h1
+									v-else-if="action.name === 'npc'"
+									v-html="formatContent($t(`npc.name.${npcNameList[action.prop]}`))"
+							/>
+							<h1 v-else-if="action.name !== 'npc' && action.name !== 'shop'" v-html="formatContent($t(`action.name.${action.name}`))" />
 							<p
 								v-if="action.name === 'shop'"
 								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
 							/>
-							<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
+							<p
+									v-else-if="action.name === 'npc'"
+									v-html="formatContent($t(`npc.description`))"
+							/>
+							<p v-else-if="action.name !== 'npc' && action.name !== 'shop'" v-html="formatContent($t(`action.description.${action.name}`))" />
 						</template>
 					</Tippy>
 				</tbody>
@@ -44,14 +55,15 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { shopNameList } from '@/constants';
+import { shopNameList, npcNameList } from '@/constants';
 import { Action } from '@/models';
 
 export default defineComponent({
 	name: 'DinozActions',
 	data() {
 		return {
-			shopNameList: shopNameList
+			shopNameList: shopNameList,
+			npcNameList: npcNameList
 		};
 	},
 	props: { dinozActions: Object as PropType<Array<Action>> },
@@ -68,6 +80,12 @@ export default defineComponent({
 					this.$router.push({
 						name: 'ItemShopPage',
 						params: { name: shopNameList[action.prop!] }
+					});
+					break;
+				case 'npc':
+					this.$router.push({
+						name: 'NPC',
+						params: { id: this.$route.params.id.toString(), npc: npcNameList[action.prop!] }
 					});
 					break;
 				default:

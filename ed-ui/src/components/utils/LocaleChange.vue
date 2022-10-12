@@ -1,13 +1,12 @@
 <template>
 	<ol>
-		<img
+		<a
 			v-for="(lang, i) in langs"
 			:key="`Lang${i}`"
-			:value="lang.caption"
 			@click="switchLocale(i)"
-			:src="lang.icon"
-			:class="$i18n.locale === lang.short ? 'selected' : ''"
-		/>
+			:class="[$i18n.locale === lang.short ? 'selected' : '', lang.short]"
+			class="flag"
+		></a>
 	</ol>
 </template>
 
@@ -42,13 +41,25 @@ ol {
 	padding-right: 10px;
 	padding-bottom: 5px;
 }
-img {
-	width: auto;
-	height: auto;
+.flag {
+	width: 12px;
+	height: 7px;
 	margin: 0.6em auto 0.1em;
 	padding: 2px;
 }
+.fr {
+	background-image: url('/src/assets/design/lang_fr.webp');
+}
+.en {
+	background-image: url('/src/assets/design/lang_en.webp');
+}
+.de {
+	background-image: url('/src/assets/design/lang_de.webp');
+}
+.es {
+	background-image: url('/src/assets/design/lang_es.webp');
+}
 .selected {
-	background-color: #9a4029;
+	outline: #9a4029 solid 3px;
 }
 </style>

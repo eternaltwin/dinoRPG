@@ -212,6 +212,7 @@ export const DinozLevel1LevelUp: Partial<Dinoz> = {
 	display: '00d654dfgdsfg',
 	experience: 100,
 	level: 1,
+	placeId: 5,
 	nextUpElementId: ElementType.FIRE,
 	nextUpAltElementId: ElementType.FIRE,
 	nbrUpFire: 0,
@@ -223,7 +224,8 @@ export const DinozLevel1LevelUp: Partial<Dinoz> = {
 	skills: [],
 	skillsUnlockable: [],
 	items: [],
-	status: []
+	status: [],
+	NPC: []
 };
 
 export const DinozLevel1LevelUpInWood: Partial<Dinoz> = {

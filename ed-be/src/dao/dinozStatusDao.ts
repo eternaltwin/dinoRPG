@@ -1,13 +1,13 @@
 import { AppDataSource } from '../data-source.js';
-import { DinozStatus } from '../entity/index.js';
-import { DeleteResult } from 'typeorm';
+import { Dinoz, DinozStatus } from '../entity/index.js';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 const statusRepository = AppDataSource.getRepository(DinozStatus);
 
 //TODO
-const addStatusToDinoz = (dinozId: number, statusId: number): Promise<DinozStatus> => {
+const addStatusToDinoz = (dinoz: Dinoz, statusId: number): Promise<DinozStatus> => {
 	return statusRepository.save({
-		dinozId: dinozId,
+		dinoz: dinoz,
 		statusId: statusId
 	});
 };

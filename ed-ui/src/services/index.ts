@@ -5,5 +5,6 @@ export * from './IngredientsService';
 export * from './InventoryService';
 export * from './ItemShopService';
 export * from './NewsService';
+export * from './NPCService.js';
 export * from './OauthService';
 export * from './PlayerService';

@@ -12,7 +12,7 @@ import {
 	Relation
 } from 'typeorm';
 import { Player } from './player.js';
-import { DinozItem, DinozMission, DinozSkill, DinozSkillUnlockable, DinozStatus } from './index.js';
+import { DinozItem, DinozMission, DinozSkill, DinozSkillUnlockable, DinozStatus, NPC } from './index.js';
 
 @Entity()
 export class Dinoz {
@@ -34,6 +34,11 @@ export class Dinoz {
 		cascade: true
 	})
 	skillsUnlockable: Relation<DinozSkillUnlockable[]>;
+
+	@OneToMany(() => NPC, NPC => NPC.dinoz, {
+		cascade: true
+	})
+	NPC: Relation<NPC[]>;
 
 	@OneToMany(() => DinozStatus, status => status.dinoz, {
 		cascade: true

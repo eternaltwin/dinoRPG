@@ -17,6 +17,7 @@ export const apiRoutes = {
 	inventoryRoute: '/api/v1/inventory',
 	levelRoute: '/api/v1/level',
 	newsRoute: '/api/v1/news',
+	npcRoute: '/api/v1/npc',
 	oauthRoute: '/api/v1/oauth',
 	playerRoute: '/api/v1/player',
 	rankingRoutes: '/api/v1/ranking',

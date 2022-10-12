@@ -14,6 +14,7 @@ import DinozWithoutFlash from '@/components/dinoz/dinozWithoutFlash.vue';
 import AdminDashBoard from '@/pages/AdminDashBoard.vue';
 import Ingredients from '@/pages/Ingredients.vue';
 import News from '@/components/common/News.vue';
+import NPC from '@/pages/NPC.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
 					path: '/dino/:id',
 					name: 'DinozPage',
 					component: DinozPage
+				},
+				{
+					path: '/dino/:id/:npc',
+					name: 'NPC',
+					component: NPC
 				},
 				{
 					path: '/shop/:name',

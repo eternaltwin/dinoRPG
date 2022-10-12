@@ -2,6 +2,7 @@ export * from './dinozPlacement';
 export * from './epic';
 export * from './moueffe';
 export * from './item';
+export * from './npcNameList.js';
 export * from './place';
 export * from './race';
 export * from './shop';

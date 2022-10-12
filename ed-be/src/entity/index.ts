@@ -5,6 +5,7 @@ export * from './playerIngredient.js';
 export * from './playerItem.js';
 export * from './dinozMission.js';
 export * from './news.js';
+export * from './npc.js';
 export * from './player.js';
 export * from './playerQuest.js';
 export * from './ranking.js';
