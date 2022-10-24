@@ -7,7 +7,7 @@
 				theme: 'small'
 			}"
 		>
-			<img src="@/assets/elements/elem_fire.webp" alt="fire" /> {{ fire }}
+			<img :src="getImgURL('elements', 'elem_fire')" alt="fire" /> {{ fire }}
 		</li>
 		<li
 			:class="getMaxElement() === wood ? 'max' : ''"
@@ -16,7 +16,7 @@
 				theme: 'small'
 			}"
 		>
-			<img src="@/assets/elements/elem_wood.webp" alt="wood" /> {{ wood }}
+			<img :src="getImgURL('elements', 'elem_wood')" alt="wood" /> {{ wood }}
 		</li>
 		<li
 			:class="getMaxElement() === water ? 'max' : ''"
@@ -25,7 +25,7 @@
 				theme: 'small'
 			}"
 		>
-			<img src="@/assets/elements/elem_water.webp" alt="water" /> {{ water }}
+			<img :src="getImgURL('elements', 'elem_water')" alt="water" /> {{ water }}
 		</li>
 		<li
 			:class="getMaxElement() === lightning ? 'max' : ''"
@@ -34,7 +34,7 @@
 				theme: 'small'
 			}"
 		>
-			<img src="@/assets/elements/elem_lightning.webp" alt="lightning" /> {{ lightning }}
+			<img :src="getImgURL('elements', 'elem_lightning')" alt="lightning" /> {{ lightning }}
 		</li>
 		<li
 			:class="getMaxElement() === air ? 'max' : ''"
@@ -43,7 +43,7 @@
 				theme: 'small'
 			}"
 		>
-			<img src="@/assets/elements/elem_air.webp" alt="air" /> {{ air }}
+			<img :src="getImgURL('elements', 'elem_air')" alt="air" /> {{ air }}
 		</li>
 	</ul>
 </template>

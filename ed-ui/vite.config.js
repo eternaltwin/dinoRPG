@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
-const STATIC_DIR = 'static';
+const STATIC_DIR = 'public';
 
 export default defineConfig(() => {
   return {

@@ -84,7 +84,7 @@
 					<td>
 						<template v-for="(status, index) in dinoz.status" :key="index">
 							<Tippy theme="normal" v-if="statusList.displayed[status]">
-								<img :src="`@/assets/status/fx_${statusList.imgName[status]}.webp`" />
+								<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
 								<template #content>
 									<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
 									<p v-html="formatContent($t(`status.description.${status}`))"></p>
@@ -318,7 +318,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('@/assets/background/table_header.gif');
+			background-image: url('@/assets/background/table_header.webp');
 			background-position: left bottom;
 			max-width: 222px;
 		}

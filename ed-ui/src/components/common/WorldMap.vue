@@ -17,7 +17,8 @@
 						myPos: myPos(place.placeId),
 						canGo: canGo(place.placeId)
 					}"
-					:src="`../../src/assets/map/icon/${place.icon}.webp`"
+					:src="getImgURL('map/icon', place.icon)"
+					:alt="place.icon"
 					:style="{ left: place.posLeft + 'px', top: place.posTop + 'px' }"
 					@click="moveTo(place.placeId)"
 					@mouseenter="isHover(place.name, place.placeId, true)"
@@ -41,7 +42,7 @@
 					<line :x1="line.x1" :y1="line.y1" :x2="line.x2" :y2="line.y2" :id="line.name" class="svgLine" />
 				</template>
 			</svg>
-			<img class="map-img" ref="carte" :src="`../../src/assets/map/map/${getPlaceMap()}.webp`" />
+			<img class="map-img" ref="carte" :src="getImgURL('map/map', getPlaceMap())" :alt="getPlaceMap()" />
 		</div>
 	</div>
 </template>

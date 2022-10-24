@@ -3,8 +3,6 @@ export interface Config {
 	oauth: OauthConfig;
 	db: DbConfig;
 	jwt: JwtConfig;
-	shop: ShopConfig;
-	player: PlayerConfig;
 	admin: AdminsConfig;
 }
 
@@ -33,15 +31,6 @@ interface DbConfig {
 interface JwtConfig {
 	readonly secretKey: string;
 	readonly expiration: number;
-}
-
-interface ShopConfig {
-	readonly dinozInShop: number;
-	readonly buyableQuetzu: number;
-}
-
-interface PlayerConfig {
-	readonly initialMoney: number;
 }
 
 interface AdminsConfig {

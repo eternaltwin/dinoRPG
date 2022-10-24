@@ -24,7 +24,8 @@
 				<template v-for="(status, index) in dinoz.statusList" :key="index">
 					<img
 						v-if="statusList.displayed[status]"
-						:src="`../../../src/assets/status/fx_${statusList.imgName[status]}.webp`"
+						:src="getImgURL('status', `fx_${statusList.imgName[status]}`)"
+						:alt="statusList.imgName[status]"
 					/>
 				</template>
 			</template>

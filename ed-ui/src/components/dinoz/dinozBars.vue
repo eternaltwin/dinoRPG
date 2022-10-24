@@ -12,13 +12,13 @@
 		<div class="bars">
 			<div class="life">
 				<div class="bar">
-					<img src="@/assets/bar/bar_life.webp" :style="getBarSize(dinozData.life, dinozData.maxLife)" />
+					<img :src="getImgURL('bar', 'bar_life')" alt="life" :style="getBarSize(dinozData.life, dinozData.maxLife)" />
 				</div>
 			</div>
 			<div class="lifetext">{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
 			<div class="xp">
 				<div class="bar">
-					<img src="@/assets/bar/bar_xp.webp" :style="getBarSize(dinozData.experience, dinozData.maxExperience)" />
+					<img :src="getImgURL('bar', 'bar_xp')" alt="xp" :style="getBarSize(dinozData.experience, dinozData.maxExperience)" />
 				</div>
 			</div>
 			<div class="xptext">{{ dinozData.experience }} / {{ dinozData.maxExperience }}</div>
@@ -36,6 +36,9 @@ export default defineComponent({
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
 			const width: number = Math.round((value / maxValue) * 98);
+			if (maxValue === 0) {
+				return `width : 0px ; height : 11px`;
+			}
 			return `width : ${width}px ; height : 11px`;
 		}
 	}
@@ -44,7 +47,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozBars {
-	background: url('@/assets/background/stats_box.gif') no-repeat;
+	background: url('@/assets/background/stats_box.webp') no-repeat;
 	width: 180px;
 	height: 40px;
 	position: absolute;

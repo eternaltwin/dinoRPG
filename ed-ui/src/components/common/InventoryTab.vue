@@ -9,7 +9,7 @@
 				</tr>
 				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
-						<img :src="`../../../src/assets/item/item_${itemNameList[item.itemId]}.webp`" />
+						<img :src="getImgURL('item', `item_${itemNameList[item.itemId]}`)" :alt="itemNameList[item.itemId]" />
 						<p v-html="$t(`item.name.${itemNameList[item.itemId]}`)" />
 						<template #content>
 							<h1 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
@@ -38,7 +38,7 @@
 								theme: 'small'
 							}"
 						>
-							<img src="../../../src/assets/icons/small_use.webp" />
+							<img :src="getImgURL('icons', 'small_use')" alt="small_use" />
 						</a>
 						<a
 							class="off"
@@ -48,7 +48,7 @@
 								theme: 'small'
 							}"
 						>
-							<img src="../../../src/assets/icons/small_use_off.webp" />
+							<img :src="getImgURL('icons' ,'small_use_off')" alt="small_use_off"/>
 						</a>
 						<a
 							class="on"
@@ -58,7 +58,7 @@
 								theme: 'small'
 							}"
 						>
-							<img src="../../../src/assets/icons/small_equip.webp" />
+							<img :src="getImgURL('icons', 'small_equip')" alt="small_equip" />
 						</a>
 						<a
 							class="off"
@@ -68,7 +68,7 @@
 								theme: 'small'
 							}"
 						>
-							<img src="../../../src/assets/icons/small_equip_off.webp" />
+							<img :src="getImgURL('icons', 'small_equip_off')" alt="small_equip_off"/>
 						</a>
 					</td>
 				</tr>

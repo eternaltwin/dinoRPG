@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import _ from 'lodash';
-import { getLearnableSkills, learnSkill } from '../../business/skillService.js';
+import { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill } from '../../business/skillService.js';
 import { itemList, levelList, raceList, skillList } from '../../constants/index.js';
 import { DinozSkillOwnAndUnlockable } from '../../models/index.js';
 import { DinozItem, DinozSkill, Dinoz } from '../../entity/index.js';
@@ -38,7 +38,7 @@ describe('Function getLearnableSkills', () => {
 	it('Dinoz up to level 2, up element is fire', async () => {
 		let response: Partial<DinozSkillOwnAndUnlockable> | undefined = {};
 		try {
-			response = await getLearnableSkills(req);
+			response = await getLearnableAndUnlockableSkills(req);
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
@@ -69,7 +69,7 @@ describe('Function getLearnableSkills', () => {
 		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozToOtherPlayer);
 
 		try {
-			await getLearnableSkills(req);
+			await getLearnableAndUnlockableSkills(req);
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
@@ -86,7 +86,7 @@ describe('Function getLearnableSkills', () => {
 		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozWithoutXp);
 
 		try {
-			await getLearnableSkills(req);
+			await getLearnableAndUnlockableSkills(req);
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
@@ -101,7 +101,7 @@ describe('Function getLearnableSkills', () => {
 		req.params.tryNumber = '3';
 
 		try {
-			await getLearnableSkills(req);
+			await getLearnableAndUnlockableSkills(req);
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
@@ -116,7 +116,7 @@ describe('Function getLearnableSkills', () => {
 		req.params.tryNumber = '2';
 
 		try {
-			await getLearnableSkills(req);
+			await getLearnableAndUnlockableSkills(req);
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
@@ -133,11 +133,28 @@ describe('Function getLearnableSkills', () => {
 		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel11LevelUp);
 
 		try {
-			await getLearnableSkills(req);
+			await getLearnableAndUnlockableSkills(req);
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`tryNumber ${req.params.tryNumber} is invalid`);
+
+			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		}
+	});
+
+	it('Dinoz is alreay at max level', async () => {
+		const dinozLevel80 = _.cloneDeep(DinozLevel1LevelUp);
+		dinozLevel80.level = 80;
+		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozLevel80);
+
+		try {
+			await getLearnableAndUnlockableSkills(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`Dinoz ${dinozLevel80.id} is already at max level.`);
 
 			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
 			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
@@ -151,7 +168,7 @@ describe('Function getLearnableSkills', () => {
 		dinozLevel11withPDC.skills = [{ skillId: skillList.PLAN_DE_CARRIERE.skillId } as DinozSkill];
 		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozLevel11withPDC);
 
-		const response = await getLearnableSkills(req);
+		const response = await getLearnableAndUnlockableSkills(req);
 
 		expect(response!.canRelaunch).toBe(true);
 		expect(response!.element).toBe(5);
@@ -176,7 +193,7 @@ describe('Function getLearnableSkills', () => {
 		dinozLevel1WithCube.items = [{ itemId: itemList.DINOZ_CUBE.itemId } as DinozItem];
 		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozLevel1WithCube);
 
-		const response = await getLearnableSkills(req);
+		const response = await getLearnableAndUnlockableSkills(req);
 
 		expect(response!.canRelaunch).toBe(true);
 		expect(response!.element).toBe(1);

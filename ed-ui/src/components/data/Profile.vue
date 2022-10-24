@@ -1,9 +1,9 @@
 <template class="profil">
 	<div class="profil">
 		<h3>
-			<img :src="`../../../src/assets/design/info_button.gif`" />
+			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 			{{ $t(`myAccount.profil`) }}
-			<img :src="`../../../src/assets/design/info_button.gif`" />
+			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 		</h3>
 		<dl>
 			<dt>
@@ -118,8 +118,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .profil {
-	background: url('../../assets/design/info_header.gif') no-repeat, url('../../assets/design/info_footer.gif') no-repeat,
-		url('../../assets/design/info_center.gif') repeat-y;
+	background: url('../../assets/design/info_header.webp') no-repeat, url('../../assets/design/info_footer.webp') no-repeat,
+		url('../../assets/design/info_center.webp') repeat-y;
 	background-position-y: top, bottom;
 	height: auto;
 	width: 304px;
@@ -220,7 +220,7 @@ export default defineComponent({
 	margin-bottom: 5px;
 }
 .smallbutton {
-	background-image: url('@/assets/design/button_small.gif');
+	background-image: url('@/assets/design/button_small.webp');
 	padding-top: 4px;
 	font-size: 9pt;
 	line-height: 7pt;
@@ -236,7 +236,7 @@ export default defineComponent({
 	padding-left: 10px;
 	cursor: pointer;
 	&:hover {
-		background-image: url('@/assets/design/button_small_hover.gif');
+		background-image: url('@/assets/design/button_small_hover.webp');
 	}
 }
 .tinybutton {

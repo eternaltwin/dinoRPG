@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { getLearnableSkills, learnSkill } from '../business/skillService.js';
+import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
 import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
 
@@ -48,7 +48,7 @@ routes.get(
 		}
 
 		try {
-			const response = await getLearnableSkills(req);
+			const response = await getLearnableAndUnlockableSkills(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e: Error = err as Error;

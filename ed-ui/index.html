@@ -2,13 +2,38 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="./public/favicon.ico" />
+    <link rel="icon" href="./favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eternal Dino-RPG</title>
-    <script src="/public/ruffle/ruffle.js"></script>
+      <script defer async>
+          function hasFlashSupport() {
+              for (const plugin of navigator.plugins) {
+                  if (plugin["application/x-shockwave-flash"] !== undefined) {
+                      return true;
+                  }
+              }
+              return false;
+          }
+          if (!hasFlashSupport()) {
+              const doc = document.documentElement;
+              const script = document.createElement("script");
+              script.type = "text/javascript";
+              window.RufflePlayer = window.RufflePlayer || {};
+              window.RufflePlayer.config = {
+                  "contextMenu": false,
+                  "menu": false,
+                  "autoplay": "on",
+                  "unmuteOverlay": "hidden",
+                  "preloader": false
+              };
+              script.src = `${window.location.origin}/ruffle/ruffle.js`;
+              doc.appendChild(script);
+          }
+      </script>
+
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="./src/main.ts"></script>
   </body>
 </html>

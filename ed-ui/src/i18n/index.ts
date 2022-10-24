@@ -26,22 +26,22 @@ export const messages = {
 export const Locales: Record<string, LangInfos> = {
 	[LocalesEnum.FR]: {
 		caption: 'Français',
-		icon: '../src/assets/design/lang_fr.webp',
+		icon: '/src/assets/design/lang_fr.webp',
 		short: 'fr'
 	},
 	[LocalesEnum.EN]: {
 		caption: 'English',
-		icon: '../src/assets/design/lang_en.webp',
+		icon: '/src/assets/design/lang_en.webp',
 		short: 'en'
 	},
 	[LocalesEnum.ES]: {
 		caption: 'Spanish',
-		icon: '../src/assets/design/lang_es.webp',
+		icon: '/src/assets/design/lang_es.webp',
 		short: 'es'
 	},
 	[LocalesEnum.DE]: {
 		caption: 'German',
-		icon: '../src/assets/design/lang_de.webp',
+		icon: '/src/assets/design/lang_de.webp',
 		short: 'de'
 	}
 };

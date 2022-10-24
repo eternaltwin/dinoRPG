@@ -1,22 +1,32 @@
 <template>
-	<component :is="NPCToDisplay" :key="NPC" v-if="NPC !== undefined"></component>
+	<object v-if="NPC !== undefined" class="swf" type="application/x-shockwave-flash" :data="getSWFUrl('swf', NPC)">
+		<embed :src="getSWFUrl('swf', NPC)" />
+	</object>
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: "AnimatedNPC",
+	name: 'AnimatedNPC',
 	props: {
-		NPC: String
-	},
-	computed: {
-		NPCToDisplay(): string {
-			return defineAsyncComponent(() => import(`@/components/NPC/${this.NPC}.vue`))
-		}
+		NPC: String,
 	}
 });
 </script>
 
 <style lang="scss" scoped>
+.swf {
+	float: right;
+	position: relative;
+	width: 100px;
+	height: 100px;
+	margin-right: 10px;
+	margin-top: -1px;
+	font-size: 0pt;
+	line-height: 0pt;
+	border: 1px solid #ffe044;
+	background-color: #9a4029;
+	padding: 1px;
+}
 </style>

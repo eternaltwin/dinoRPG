@@ -88,7 +88,6 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 		// If there is a condition non-met, replace it with enmpty string
 		return condition === undefined || checkCondition(condition, dinoz);
 	});
-	console.log(`nextStepWantedData.nextStep : ${nextStepWantedData.nextStep}\n playerChoices: ${playerChoices}`);
 
 	return {
 		name: npcName,

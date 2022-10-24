@@ -1,20 +1,22 @@
+import { mixin } from '../mixin/mixin';
+
 export const helpers = {
 	computeImageHtml(key: string): string {
 		switch (key) {
 			case 'feu':
-				return `<img src="${import('@/assets/elements/elem_fire.webp')}" alt="feu">`;
+				return `<img src="${mixin.methods.getImgURL('elements', 'elem_fire')}" alt="feu">`;
 			case 'bois':
-				return `<img src="${import('@/assets/elements/elem_wood.webp')}" alt="bois">`;
+				return `<img src="${mixin.methods.getImgURL('elements', 'elem_wood')}" alt="bois">`;
 			case 'eau':
-				return `<img src="${import('@/assets/elements/elem_water.webp')}" alt="eau">`;
+				return `<img src="${mixin.methods.getImgURL('elements', 'elem_water')}" alt="eau">`;
 			case 'foudre':
-				return `<img src="${import('@/assets/elements/elem_lightning.webp')}" alt="foudre">`;
+				return `<img src="${mixin.methods.getImgURL('elements', 'elem_lightning')}" alt="foudre">`;
 			case 'air':
-				return `<img src="${import('@/assets/elements/elem_air.webp')}" alt="air">`;
+				return `<img src="${mixin.methods.getImgURL('elements', 'elem_air')}" alt="air">`;
 			case 'neutre':
-				return `<img src="${import('@/assets/elements/elem_void.webp')}" alt="pmo">`;
+				return `<img src="${mixin.methods.getImgURL('elements', 'elem_void')}" alt="pmo">`;
 			case 'right':
-				return `<img src="${import('@/assets/icons/small_right.webp')}" alt="pmo">`;
+				return `<img src="${mixin.methods.getImgURL('icons', 'small_right')}" alt="pmo">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}

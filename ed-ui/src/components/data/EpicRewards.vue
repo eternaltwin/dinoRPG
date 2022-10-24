@@ -1,14 +1,14 @@
 <template>
 	<div class="profil">
 		<h3>
-			<img :src="`../../../src/assets/design/info_button.gif`" />
+			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 			{{ $t(`myAccount.rewards`) }}
-			<img :src="`../../../src/assets/design/info_button.gif`" />
+			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 		</h3>
 		<div class="rewards">
 			<template v-for="(rewards, index) in epicRewards" :key="index">
 				<Tippy theme="normal">
-					<img :src="`../../../src/assets/epicRewards/collec_${epicList.imgName[rewards]}.webp`" />
+					<img :src="getImgURL('epicRewards', `collec_${epicList.imgName[rewards]}`)" :alt="epicList.imgName[rewards]" />
 					<template #content>
 						<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))" />
 						<p v-html="formatContent($t(`rewards.description.${epicList.imgName[rewards]}`))" />
@@ -40,8 +40,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .profil {
-	background: url('@/assets/design/info_header.gif') no-repeat, url('@/assets/design/info_footer.gif') no-repeat,
-		url('@/assets/design/info_center.gif') repeat-y;
+	background: url('@/assets/design/info_header.webp') no-repeat, url('@/assets/design/info_footer.webp') no-repeat,
+		url('@/assets/design/info_center.webp') repeat-y;
 	background-position-y: top, bottom;
 	height: auto;
 	width: 304px;

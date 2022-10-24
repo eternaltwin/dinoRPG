@@ -2,7 +2,7 @@
 	<div id="accountList">
 		<div class="money" v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }">
 			{{ beautifulMoney }}
-			<img src="@/assets/icons/small_gold.webp" alt="or" />
+			<img :src="getImgURL('icons', 'small_gold')" alt="or" />
 		</div>
 		<div class="iconMenu">
 			<a

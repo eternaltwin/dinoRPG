@@ -8,6 +8,7 @@ import { RfcOauthClient } from '@eternal-twin/oauth-client-http/rfc-oauth-client
 import { OauthAccessToken } from '@eternal-twin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
+import gameConfig from '../config/game.config.js';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -38,7 +39,7 @@ const authenticateToET = async (req: Request): Promise<string> => {
 			eternalTwinId: user.user.id,
 			hasImported: false,
 			name: user.user.display_name.current.value,
-			money: config.player.initialMoney,
+			money: gameConfig.general.initialMoney,
 			quetzuBought: 0,
 			leader: false,
 			engineer: false,
@@ -56,8 +57,7 @@ const authenticateToET = async (req: Request): Promise<string> => {
 	}
 
 	// Forge JWT with playerId
-	const JWT = await forgeJWT(player!.id);
-	return JWT;
+	return await forgeJWT(player!.id);
 };
 
 async function getUser(accessToken: string, eternalTwinURI: string) {

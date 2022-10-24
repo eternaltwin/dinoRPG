@@ -36,7 +36,8 @@
 							<img
 								v-for="(element, index) in skill.element"
 								:key="index"
-								:src="`../../../src/assets/elements/elem_${ElementType[element]}.webp`"
+								:src="getImgURL('elements', `elem_${ElementType[element]}`)"
+								:alt="ElementType[element]"
 							/>
 							<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
 							<template #content>
@@ -58,7 +59,8 @@
 					<template v-if="hasAmulst()">
 						<td class="state">
 							<img
-								:src="`../../../src/assets/icons/small_skill_${skill.state}.webp`"
+								:src="getImgURL('icons', `small_skill_${skill.state}`)"
+								:alt="skill.state"
 								v-if="skill.activatable"
 								@click="changeState(skill)"
 								v-tippy="{
@@ -235,7 +237,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('@/assets/background/table_header.gif');
+				background-image: url('@/assets/background/table_header.webp');
 				background-position: left bottom;
 				max-width: 222px;
 				&.name {
@@ -257,7 +259,7 @@ export default defineComponent({
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
 				&.name {
-					background-image: url('@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					padding-left: 15px;
 					max-width: 222px;
@@ -275,7 +277,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
@@ -289,7 +291,7 @@ export default defineComponent({
 						top: 5px;
 						cursor: help;
 					}
-					background-image: url('@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.webp');
 					background-position: -10px 0px;
 				}
 			}

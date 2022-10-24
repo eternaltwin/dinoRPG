@@ -3,7 +3,7 @@
 		<ul>
 			<li v-for="(item, index) in itemList" :key="index">
 				<a href="#" class="icon">
-					<img :src="`../../../src/assets/item/item_${$t(`item.imgName.${item}`)}.webp`" :alt="item" />
+					<img :src="getImgURL('item', `item_${$t(`item.imgName.${item}`)}`)" :alt="item" />
 				</a>
 			</li>
 		</ul>
@@ -30,7 +30,7 @@ export default defineComponent({
 	font-size: 0pt;
 	width: 100px;
 	height: 138px;
-	background: url('@/assets/background/equipment_box.gif') no-repeat;
+	background: url('@/assets/background/equipment_box.webp') no-repeat;
 
 	ul {
 		list-style: none;

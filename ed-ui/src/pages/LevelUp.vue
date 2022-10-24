@@ -69,7 +69,7 @@
 								<img
 									v-for="element in skill.element"
 									:key="element"
-									:src="`../../src/assets/elements/elem_${ElementType[element]}.webp`"
+									:src="getImgURL('elements', `elem_${ElementType[element]}`)"
 									alt="elementUp"
 								/>
 								<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
@@ -88,17 +88,17 @@
 						<td class="type">
 							{{ String(skill.skillId)[2] }}
 						</td>
-						<td class="learn"><img src="@/assets/icons/small_right.webp" />{{ $t('levelup.learn') }}</td>
+						<td class="learn"><img :src="getImgURL('icons', 'small_right')" alt="right" />{{ $t('levelup.learn') }}</td>
 					</tr>
 					<template v-if="availableSkills.unlockableSkills">
 						<tr v-if="availableSkills.unlockableSkills.length > 0" @click="unlockSkill()">
 							<td class="name" colspan="4">
 								<div class="skillName">
-									<img src="@/assets/icons/small_right.webp" />
+									<img :src="getImgURL('icons', 'small_right')" alt="right" />
 									{{ $t(`levelup.unlock1`) }}
 									{{ availableSkills.unlockableSkills.length }}
 									{{ $t(`levelup.unlock2`) }}
-									<Tippy tag="img" src="../../src/assets/icons/helpFR.webp" theme="normal" class="help">
+									<Tippy tag="img" :src="getImgURL('icons', 'helpFR')" theme="normal" class="help">
 										<template #content>
 											<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
 											<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
@@ -110,7 +110,7 @@
 										<img
 											v-for="element in skill.element"
 											:key="element"
-											:src="`../../src/assets/elements/elem_${ElementType[element]}.webp`"
+											:src="getImgURL('elements', `elem_${ElementType[element]}`)"
 											alt="elementUp"
 										/>
 										{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}
@@ -174,17 +174,21 @@ export default defineComponent({
 			this.isSpinOver = true;
 		},
 		learnSkill(skillId: number): void {
-			const skillIdList: Array<number> = [skillId];
+			if (confirm()) {
+				const skillIdList: Array<number> = [skillId];
 
-			this.learnSkillAndSetStore(skillIdList);
+				this.learnSkillAndSetStore(skillIdList);
+			}
 		},
 		unlockSkill(): void {
-			if (!this.availableSkills.unlockableSkills) {
-				return;
-			}
-			const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
+			if (confirm()) {
+				if (!this.availableSkills.unlockableSkills) {
+					return;
+				}
+				const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
 
-			this.learnSkillAndSetStore(skillIdList);
+				this.learnSkillAndSetStore(skillIdList);
+			}
 		},
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
 			const dinozId: string = this.$route.params.id.toString();
@@ -200,7 +204,7 @@ export default defineComponent({
 				this.sessionStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 
-				await this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
+				this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 			} catch (err) {
 				errorHandler.handle(err);
 				return;
@@ -411,7 +415,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('@/assets/background/table_header.gif');
+				background-image: url('@/assets/background/table_header.webp');
 				background-position: left bottom;
 				&.name {
 					width: 330px;
@@ -429,7 +433,7 @@ export default defineComponent({
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
 				&.name {
-					background-image: url('@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					//padding-left: 15px;
 					max-width: 337px;
@@ -447,7 +451,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
@@ -455,7 +459,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.gif');
+					background-image: url('@/assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					text-decoration: underline;
 					background-repeat: no-repeat;

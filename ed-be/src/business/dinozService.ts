@@ -29,6 +29,7 @@ import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { getRandomNumber } from '../utils/tools.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js';
 import { npcList } from '../constants/npc.js';
+import gameConfig from '../config/game.config.js';
 
 /**
  * @summary Get available action from dinoz
@@ -67,20 +68,16 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	}
 
 	const npcAvailable: Array<Npc> = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
-	if (npcAvailable.length > 0) {
-		npcAvailable.forEach(npc => {
-			availableActions.push({
-				name: actionList.NPC.name,
-				imgName: actionList.NPC.imgName,
-				prop: npc.id
-			});
+	npcAvailable.forEach(npc => {
+		availableActions.push({
+			name: actionList.NPC.name,
+			imgName: actionList.NPC.imgName,
+			prop: npc.id
 		});
-	}
-
-	//
+	});
 
 	const maxExp: number = levelList.find(level => level.id === dinoz?.level)!.experience;
-	if (maxExp - dinoz.experience <= 0) {
+	if (maxExp - dinoz.experience <= 0 && dinoz.level < gameConfig.dinoz.maxLevel) {
 		availableActions.push({
 			name: actionList.LEVEL_UP.name,
 			imgName: actionList.LEVEL_UP.imgName
@@ -217,8 +214,8 @@ const buyDinoz = async (req: Request): Promise<DinozFiche> => {
 		nbrUpWater: race.nbrWater,
 		nbrUpLightning: race.nbrLightning,
 		nbrUpAir: race.nbrAir,
-		nextUpElementId: getRandomUpElement(race)!,
-		nextUpAltElementId: getRandomUpElement(race)!
+		nextUpElementId: getRandomUpElement(race.upChance)!,
+		nextUpAltElementId: getRandomUpElement(race.upChance)!
 	};
 
 	// Set player money

@@ -10,12 +10,13 @@
 				<span class="name"
 					>{{ dinoz.name }}
 					<img
-						v-if="dinoz.experience >= dinoz.maxExperience"
+						v-if="dinoz.experience >= dinoz.maxExperience && dinoz.maxExperience !== 0"
 						src="@/assets/icons/small_lup.webp"
 						v-tippy="{
 							content: formatContent($t('levelup.small')),
 							theme: 'small'
 						}"
+						alt="lvlup"
 				/></span>
 				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
 			</a>

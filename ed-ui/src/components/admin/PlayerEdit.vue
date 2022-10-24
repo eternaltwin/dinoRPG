@@ -43,7 +43,10 @@
 					<td>
 						<template v-for="(reward, index) in player.rewards" :key="index">
 							<Tippy theme="normal">
-								<img :src="`@/assets/epicRewards/collec_${epicList.imgName[reward]}.webp`" />
+								<img
+									:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward]}`)"
+									:alt="epicList.imgName[reward]"
+								/>
 								<template #content>
 									<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward]}`))" />
 									<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward]}`))" />
@@ -303,7 +306,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('@/assets/background/table_header.gif');
+			background-image: url('@/assets/background/table_header.webp');
 			background-position: left bottom;
 			max-width: 222px;
 		}

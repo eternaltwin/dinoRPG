@@ -55,11 +55,15 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
+		// const externalScript = document.createElement('script');
+		// // const ruffle = new URL(`/public/ruffle/ruffle.js`, import.meta.url) as string;
+		// externalScript.setAttribute('src', '/public/ruffle/ruffle.js');
+		// document.head.appendChild(externalScript);
 		try {
 			this.npcName = this.$route.params.npc as string;
 			this.dinozId = parseInt(this.$route.params.id as string);
 			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, 'begin');
-			this.loaded = true
+			this.loaded = true;
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);

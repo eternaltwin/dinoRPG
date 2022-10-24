@@ -6,7 +6,7 @@
 		<div class="fx_content">
 			<template v-for="(status, index) in dinozStatus" :key="index">
 				<Tippy theme="normal" v-if="statusList.displayed[status]">
-					<img :src="`../../../src/assets/status/fx_${statusList.imgName[status]}.webp`" />
+					<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
 					<template #content>
 						<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
 						<p v-html="formatContent($t(`status.description.${status}`))"></p>

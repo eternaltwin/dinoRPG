@@ -6,6 +6,7 @@ import { getConfig } from '../utils/context.js';
 import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
 import { raceList, rewardList, skillList } from '../constants/index.js';
 import { Player, PlayerDinozShop } from '../entity/index.js';
+import gameConfig from '../config/game.config.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -51,13 +52,13 @@ const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche
 			if (playerReward.rewardId === rewardList.TROPHEE_PTEROZ) {
 				availableRaces.push(raceList.PTEROZ);
 			}
-			if (playerReward.rewardId === rewardList.TROPHEE_QUETZU && player.quetzuBought < config.shop.buyableQuetzu) {
+			if (playerReward.rewardId === rewardList.TROPHEE_QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
 				availableRaces.push(raceList.QUETZU);
 			}
 		});
 
 		// Make x Dinoz object to fill shop
-		for (let i = 0; i < config.shop.dinozInShop; i++) {
+		for (let i = 0; i < gameConfig.shop.dinozNumber; i++) {
 			// Set a random race to the dinoz
 			randomRace = availableRaces[getRandomNumber(0, availableRaces.length - 1)].raceId;
 

@@ -15,7 +15,7 @@
 						@click="launch(action)"
 					>
 						<td class="icon">
-							<img :src="`../../src/assets/icons/${action.imgName}.webp`" />
+							<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
 						</td>
 						<td v-if="action.name === 'shop'" class="label">
 							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
@@ -32,19 +32,22 @@
 								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))"
 							/>
 							<h1
-									v-else-if="action.name === 'npc'"
-									v-html="formatContent($t(`npc.name.${npcNameList[action.prop]}`))"
+								v-else-if="action.name === 'npc'"
+								v-html="formatContent($t(`npc.name.${npcNameList[action.prop]}`))"
 							/>
-							<h1 v-else-if="action.name !== 'npc' && action.name !== 'shop'" v-html="formatContent($t(`action.name.${action.name}`))" />
+							<h1
+								v-else-if="action.name !== 'npc' && action.name !== 'shop'"
+								v-html="formatContent($t(`action.name.${action.name}`))"
+							/>
 							<p
 								v-if="action.name === 'shop'"
 								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
 							/>
+							<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
 							<p
-									v-else-if="action.name === 'npc'"
-									v-html="formatContent($t(`npc.description`))"
+								v-else-if="action.name !== 'npc' && action.name !== 'shop'"
+								v-html="formatContent($t(`action.description.${action.name}`))"
 							/>
-							<p v-else-if="action.name !== 'npc' && action.name !== 'shop'" v-html="formatContent($t(`action.description.${action.name}`))" />
 						</template>
 					</Tippy>
 				</tbody>

@@ -130,7 +130,7 @@ export default defineComponent({
 	margin-bottom: 5px;
 }
 .smallbutton {
-	background-image: url('@/assets/design/button_small.gif');
+	background-image: url('@/assets/design/button_small.webp');
 	padding-top: 4px;
 	font-size: 9pt;
 	line-height: 7pt;
@@ -147,7 +147,7 @@ export default defineComponent({
 	padding-left: 10px;
 	cursor: pointer;
 	&:hover {
-		background-image: url('@/assets/design/button_small_hover.gif');
+		background-image: url('@/assets/design/button_small_hover.webp');
 	}
 }
 </style>

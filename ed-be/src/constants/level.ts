@@ -318,6 +318,6 @@ export const levelList = [
 	// ???
 	{
 		id: 80,
-		experience: 28174
+		experience: 0
 	}
 ];

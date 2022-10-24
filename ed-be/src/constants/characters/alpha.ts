@@ -13,6 +13,7 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	},
 	element: {
 		stepName: 'element',
+		condition: '!level(80)',
 		nextStep: ['fire', 'water', 'lightning', 'wood', 'air']
 	},
 	fire: {
@@ -124,6 +125,7 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	},
 	experience: {
 		stepName: 'experience',
+		condition: '!level(80)',
 		nextStep: ['maxExperience']
 	},
 	maxExperience: {

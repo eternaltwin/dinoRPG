@@ -64,7 +64,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .smallbutton {
 	display: inline-block;
-	background-image: url('~@/assets/design/button_small.gif');
+	background-image: url('~@/assets/design/button_small.webp');
 	font-size: 9pt;
 	width: 80px;
 	padding-top: 5px;
@@ -80,7 +80,7 @@ export default defineComponent({
 	text-align: center;
 	text-decoration: none;
 	&:hover {
-		background-image: url('~@/assets/design/button_small_hover.gif');
+		background-image: url('~@/assets/design/button_small_hover.webp');
 	}
 }
 .filler {

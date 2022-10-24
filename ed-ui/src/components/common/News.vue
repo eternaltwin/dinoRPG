@@ -121,7 +121,7 @@ export default defineComponent({
 	}
 }
 .bloc {
-	background-image: url('src/assets/background/bloc_news.jpg');
+	background-image: url('@/assets/background/bloc_news.webp');
 	background-repeat: repeat-y;
 	margin-bottom: 10px;
 	margin-right: 10px;

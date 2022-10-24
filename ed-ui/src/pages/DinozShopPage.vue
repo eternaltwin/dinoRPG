@@ -15,7 +15,7 @@
 				<div class="price">
 					<span class="money"
 						>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
-						<img src="@/assets/icons/small_gold.webp" />
+						<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
 					</span>
 				</div>
 				<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{ $t('button.chose') }}</a>
@@ -40,7 +40,7 @@
 				></Elements>
 				<div class="skill" v-if="dinoz.race.skillId?.length > 0">
 					<div :id="'detail_' + index" v-for="(skillId, index) in dinoz.race.skillId" :key="skillId">
-						<img src="@/assets/icons/small_follow.webp" alt="follow" />
+						<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
 						{{ $t(`skill.name.${skillNameList[skillId]}`) }}
 					</div>
 				</div>

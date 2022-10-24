@@ -61,7 +61,7 @@ export default defineComponent({
 .title {
 	position: absolute;
 	top: -6.5px;
-	background: url('@/assets/background/name_box.gif') no-repeat;
+	background: url('@/assets/background/name_box.webp') no-repeat;
 	width: 222px;
 	height: 33px;
 	margin-left: 240px;

@@ -5,7 +5,7 @@
 			<div class="content">
 				<i18n-t keypath="footer.text1" tag="div" class="text">
 					<template v-slot:DinoRPG>
-						<a href="https://www.google.com/" target="_blank"> DinoRPG </a>
+						<a href="http://www.dinorpg.com/" target="_blank"> DinoRPG </a>
 					</template>
 				</i18n-t>
 				<i18n-t keypath="footer.text2" tag="div" class="text">

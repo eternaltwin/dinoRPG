@@ -34,6 +34,7 @@ const getPlayersAverageRanking = (page: number): Promise<Array<Ranking>> => {
 		.addSelect(['player.id', 'player.name'])
 		.leftJoin('ranking.player', 'player')
 		.where('"averagePosition" >= (:page - 1) * 20 + 1 AND "averagePosition" <= :page * 20', { page: page })
+		.orderBy('ranking.averagePosition', 'ASC')
 		.getMany();
 };
 
@@ -48,7 +49,8 @@ const getPlayersSumRanking = (page: number): Promise<Array<Ranking>> => {
 		])
 		.addSelect(['player.id', 'player.name'])
 		.leftJoin('ranking.player', 'player')
-		.where('"averagePosition" >= (:page - 1) * 20 + 1 AND "averagePosition" <= :page * 20', { page: page })
+		.where('"sumPosition" >= (:page - 1) * 20 + 1 AND "sumPosition" <= :page * 20', { page: page })
+		.orderBy('ranking.sumPosition', 'ASC')
 		.getMany();
 };
 
