@@ -54,7 +54,8 @@
     "description": {
       "fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer **un déplacement ou un combat par jour** et par Dinoz.",
       "follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
-    "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz."},
+      "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz."
+    },
     "name": {
       "fight": "Fight",
       "follow": "Follow",
