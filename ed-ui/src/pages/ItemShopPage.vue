@@ -84,30 +84,29 @@
 							theme="small"
 							tag="img"
 							v-if="selectedItem.canBeUsedNow"
-							src="/src/assets/icons/small_use.webp"
-							alt=""
+							:src="getImgURL('icons', 'small_use')"
+							alt="use"
 						>
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.use'))" />
 							</template>
 						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="use">
+						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="no use">
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.useOff'))" />
 							</template>
 						</Tippy>
 						<Tippy
-							theme="small"
-							tag="img"
+							theme="small" tag="img"
 							v-if="selectedItem.canBeEquipped"
-							src="/src/assets/icons/small_equip.webp"
-							alt=""
+							:src="getImgURL('icons', 'small_equip')"
+							alt="equip"
 						>
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.equip'))" />
 							</template>
 						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="equip">
+						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="un-equip">
 							<template #content>
 								<p v-html="formatContent($t('tooltip.item.equipOff'))" />
 							</template>
@@ -143,7 +142,7 @@
 						<div v-if="selectedItem.itemType !== 'magical'" class="value">
 							<span class="money">
 								{{ selectedItem.price }}
-								<img :src="getImgURL('icons', 'small_gold.webp')" alt="or" />
+								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
 							</span>
 						</div>
 					</div>

@@ -130,7 +130,7 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
 		isRare: false,
-		maxQuantity: 80,
+		maxQuantity: 12,
 		price: 150 // TODO double check
 	},
 	// Refrigerated Shield: Increases fire defense by 20 during a fight
