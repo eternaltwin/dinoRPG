@@ -4,6 +4,7 @@ import { statusList } from '../constants/status.js';
 import { addExperience, setDinozNextElement } from '../dao/dinozDao.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { Dinoz } from '../entity/dinoz.js';
+import { ConditionEnum, RewardEnum, TriggerEnum } from '../models/enums/Parser.js';
 
 function checkCondition(condition: string, dinoz: Dinoz): boolean {
 	const conditionList: Array<string> = condition.split('+');
@@ -26,36 +27,36 @@ function checkCondition(condition: string, dinoz: Dinoz): boolean {
 function conditionParser(condition: string, dinoz: Dinoz): boolean {
 	const param: string = condition.substring(condition.indexOf('(') + 1, condition.indexOf(')'));
 	let result: boolean | undefined = undefined;
-	if (condition.includes('level')) {
+	if (condition.includes(ConditionEnum.LEVEL)) {
 		result = dinoz.level >= parseInt(param);
-	} else if (condition.includes('fx')) {
+	} else if (condition.includes(ConditionEnum.STATUS)) {
 		let status = Object.entries(statusList).find(status => status[0] === param.toUpperCase()) as [string, number];
 		result = dinoz.status.some(dinozStatus => dinozStatus.statusId === status[1]);
-	} else if (condition.includes('scenario')) {
-	} else if (condition.includes('curmission')) {
+	} else if (condition.includes(ConditionEnum.SCENARIO)) {
+	} else if (condition.includes(ConditionEnum.CURRENT_MISSION)) {
 		//Avoir la mission en cours
-	} else if (condition.includes('mission')) {
+	} else if (condition.includes(ConditionEnum.FINISHED_MISSION)) {
 		//Avoir fait la mission
-	} else if (condition.includes('hasingr')) {
-	} else if (condition.includes('hasobject')) {
-	} else if (condition.includes('active')) {
-	} else if (condition.includes('uvar')) {
+	} else if (condition.includes(ConditionEnum.POSSESS_INGREDIENT)) {
+	} else if (condition.includes(ConditionEnum.POSSESS_OBJECT)) {
+	} else if (condition.includes(ConditionEnum.ACTIVE)) {
+	} else if (condition.includes(ConditionEnum.PLAYER_EPIC)) {
 		//Récompense epic du joueur
-	} else if (condition.includes('drand')) {
+	} else if (condition.includes(ConditionEnum.RANDOM)) {
 		//Random
-	} else if (condition.includes('hourrand')) {
+	} else if (condition.includes(ConditionEnum.HOUR_RAND)) {
 		//Random sur l'heure
-	} else if (condition.includes('tag')) {
+	} else if (condition.includes(ConditionEnum.TAG)) {
 		// ??
-	} else if (condition.includes('collec')) {
-	} else if (condition.includes('gvar')) {
-	} else if (condition.includes('event')) {
-	} else if (condition.includes('clanact')) {
-	} else if (condition.includes('swait')) {
-	} else if (condition.includes('race')) {
-	} else if (condition.includes('skill')) {
-	} else if (condition.includes('equip')) {
-	} else if (condition.includes('utime')) {
+	} else if (condition.includes(ConditionEnum.COLLEC)) {
+	} else if (condition.includes(ConditionEnum.GVAR)) {
+	} else if (condition.includes(ConditionEnum.EVENT)) {
+	} else if (condition.includes(ConditionEnum.CLANACT)) {
+	} else if (condition.includes(ConditionEnum.SWAIT)) {
+	} else if (condition.includes(ConditionEnum.RACE)) {
+	} else if (condition.includes(ConditionEnum.SKILL)) {
+	} else if (condition.includes(ConditionEnum.EQUIP)) {
+	} else if (condition.includes(ConditionEnum.UTIME)) {
 	}
 	if (condition.startsWith('!')) {
 		result = !result;
@@ -65,7 +66,7 @@ function conditionParser(condition: string, dinoz: Dinoz): boolean {
 
 async function triggerAction(action: string, dinoz: Dinoz): Promise<boolean> {
 	let result: boolean;
-	if (action.includes('fight')) {
+	if (action.includes(TriggerEnum.FIGHT)) {
 		//Launch the fight against param
 		const fight = await betaFight(dinoz);
 		result = fight.result;
@@ -82,14 +83,14 @@ async function triggerAction(action: string, dinoz: Dinoz): Promise<boolean> {
 async function rewarder(rewards: Array<string>, dinoz: Dinoz): Promise<void> {
 	for (const reward of rewards) {
 		const param: string = reward.substring(reward.indexOf('(') + 1, reward.indexOf(')'));
-		if (reward.includes('fx')) {
+		if (reward.includes(RewardEnum.STATUS)) {
 			const statusId: number = Object.entries(statusList).find(status => status[0] === param.toUpperCase())![1];
 			if (reward.startsWith('!')) {
 				await removeStatusToDinoz(dinoz.id, statusId);
 			} else {
 				await addStatusToDinoz(dinoz, statusId);
 			}
-		} else if (reward.includes('changeelem')) {
+		} else if (reward.includes(RewardEnum.CHANGE_ELEMENT)) {
 			let elementId: number;
 			switch (param) {
 				case 'fire':
@@ -111,7 +112,7 @@ async function rewarder(rewards: Array<string>, dinoz: Dinoz): Promise<void> {
 					elementId = 1;
 			}
 			await setDinozNextElement(dinoz.id, elementId);
-		} else if (reward.includes('exp')) {
+		} else if (reward.includes(RewardEnum.EXPERIENCE)) {
 			const maxExp: number = levelList.find(level => level.id === dinoz.level)!.experience;
 			await addExperience(dinoz.id, maxExp - dinoz.experience);
 		} else {

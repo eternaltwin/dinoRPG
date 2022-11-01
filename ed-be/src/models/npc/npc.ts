@@ -8,4 +8,5 @@ export interface Npc {
 	condition: NpcTrigger;
 	conditionID?: Array<number>;
 	data: Readonly<Record<string, NpcData>>;
+	flashvars?: string;
 }

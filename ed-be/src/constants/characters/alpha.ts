@@ -61,67 +61,67 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		stepName: 'nothing',
 		nextStep: ['back'],
 		condition:
-			'fx(CLIMBING_GEAR)+fx(BUOY)+fx(SKULLY_MEMORY)+fx(DINOPLAZA)+fx(JOVEBOZE)+fx(NENUPHAR_LEAF)+fx(RASCAPHANDRE_DECOY)+fx(LANTERN)+fx(FLIPPERS)+fx(SYLVENOIRE_KEY)'
+			'status(CLIMBING_GEAR)+status(BUOY)+status(SKULLY_MEMORY)+status(DINOPLAZA)+status(JOVEBOZE)+status(NENUPHAR_LEAF)+status(RASCAPHANDRE_DECOY)+status(LANTERN)+status(FLIPPERS)+status(SYLVENOIRE_KEY)'
 	},
 	GO_TO_GRAND_TOUT_CHAUD: {
 		stepName: 'GO_TO_GRAND_TOUT_CHAUD',
 		nextStep: ['back'],
-		condition: '!fx(CLIMBING_GEAR)',
-		reward: ['fx(CLIMBING_GEAR)']
+		condition: '!status(CLIMBING_GEAR)',
+		reward: ['status(CLIMBING_GEAR)']
 	},
 	GO_TO_ATLANTEINES_ISLAND: {
 		stepName: 'GO_TO_ATLANTEINES_ISLAND',
 		nextStep: ['back'],
-		condition: '!fx(BUOY)',
-		reward: ['fx(BUOY)']
+		condition: '!status(BUOY)',
+		reward: ['status(BUOY)']
 	},
 	CIMETIERE: {
 		stepName: 'CIMETIERE',
 		nextStep: ['back'],
-		condition: '!fx(SKULLY_MEMORY)',
-		reward: ['fx(SKULLY_MEMORY)']
+		condition: '!status(SKULLY_MEMORY)',
+		reward: ['status(SKULLY_MEMORY)']
 	},
 	GO_TO_DINOPLAZA: {
 		stepName: 'GO_TO_DINOPLAZA',
 		nextStep: ['back'],
-		condition: '!fx(DINOPLAZA)',
-		reward: ['fx(DINOPLAZA)']
+		condition: '!status(DINOPLAZA)',
+		reward: ['status(DINOPLAZA)']
 	},
 	GO_TO_MONSTER_ISLAND: {
 		stepName: 'GO_TO_MONSTER_ISLAND',
 		nextStep: ['back'],
-		condition: '!fx(JOVEBOZE)',
-		reward: ['fx(JOVEBOZE)']
+		condition: '!status(JOVEBOZE)',
+		reward: ['status(JOVEBOZE)']
 	},
 	GO_TO_FOREST: {
 		stepName: 'GO_TO_FOREST',
 		nextStep: ['back'],
-		condition: '!fx(NENUPHAR_LEAF)',
-		reward: ['fx(NENUPHAR_LEAF)']
+		condition: '!status(NENUPHAR_LEAF)',
+		reward: ['status(NENUPHAR_LEAF)']
 	},
 	GO_TO_DOME_SOULAFLOTTE: {
 		stepName: 'GO_TO_DOME_SOULAFLOTTE',
 		nextStep: ['back'],
-		condition: '!fx(RASCAPHANDRE_DECOY)',
-		reward: ['fx(RASCAPHANDRE_DECOY)']
+		condition: '!status(RASCAPHANDRE_DECOY)',
+		reward: ['status(RASCAPHANDRE_DECOY)']
 	},
 	GO_TO_TUNNEL: {
 		stepName: 'GO_TO_TUNNEL',
 		nextStep: ['back'],
-		condition: '!fx(LANTERN)',
-		reward: ['fx(LANTERN)']
+		condition: '!status(LANTERN)',
+		reward: ['status(LANTERN)']
 	},
 	JUNGLE_SAUVAGE: {
 		stepName: 'JUNGLE_SAUVAGE',
 		nextStep: ['back'],
-		condition: '!fx(FLIPPERS)',
-		reward: ['fx(FLIPPERS)']
+		condition: '!status(FLIPPERS)',
+		reward: ['status(FLIPPERS)']
 	},
 	GO_TO_STEPPES: {
 		stepName: 'GO_TO_STEPPES',
 		nextStep: ['back'],
-		condition: '!fx(SYLVENOIRE_KEY)',
-		reward: ['fx(SYLVENOIRE_KEY)']
+		condition: '!status(SYLVENOIRE_KEY)',
+		reward: ['status(SYLVENOIRE_KEY)']
 	},
 	experience: {
 		stepName: 'experience',

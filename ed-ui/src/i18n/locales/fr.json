@@ -611,7 +611,8 @@
       "professor": "Professeur",
       "alpha_test": "Alpha Beteur",
       "michel": "Le guide Michel",
-      "street_shouter":"blabla"
+      "street_shouter":"blabla",
+      "sofia": "Sofia"
     },
     "professor": {
       "speech": {
@@ -709,6 +710,37 @@
         "GO_TO_STEPPES": "Les steppes magnétiques",
         "nothing": "Surprends moi !",
         "maxExperience": "Haaaaaaaaa"
+      }
+    },
+    "sofia": {
+      "speech": {
+        "begin": "Allongée sur le transat de Mandragore, Sofia sirote un cocktail.\n\t\tElle profite allégrement du soleil et se laisse bronzer sur la plage...",
+        "slurp": "Slurpp....",
+        "nouvelle": "Sluuuuuuuuurpp....\n\t\tCa va pas trop mal, j'étais plutôt tranquille avant que tu n'arrives.\n\t\tSi tu allais jouer ailleurs ?\n\t\tSlurpp....\n\t\tEt ne dérange pas mon mari, je ne voudrais pas que tu lui donnes des idées suspectes...",
+        "bien": "Il vaut mieux la laisser tranquille, si même Mandragore n'ose pas la contrarier, alors qui serait assez fou pour le faire...?",
+        "troph": "Slurpp....\n\t\tCaushemesh ne craint rien...\n\t\tJ'ai chargé les filles de surveiller la brêche du monde sombre.\n\t\tEn cas de problème, j'enverrai mon mari faire mon boulot.",
+        "palais": "Il n'y a rien d'intéressant de toute façon là-bas... Hormis peut-être un objet.\n\t\tHumm... Je n'ai pas envie d'aller le chercher... Ecoute, je te le donne, je n'en ai plus besoin de toute façon, maintenant que j'ai le vrai, héhé...\n\t\tPrend le donc en guise de récompense pour avoir retrouvé mon mari.",
+        "retour": "Maintenant laisse moi, j'ai des affaires urgentes à traiter...\n\t\t...\n\t\tMandrachou !!!! Viens me masser...\n\t\tVITE !",
+        "niveau": "C'est bien vrai qu'avec ton niveau actuel, tu ne vas pas aller très loin...\n\t\tBon, je suis capable de briser la limite du niveau maximal de ton dinoz, mais prend garde, cette décision est IRREVOCABLE !\n\t\tUne fois la limite brisée, tu pourras évoluer jusqu'au niveau 60 !",
+        "yes": "Qu'il en soit ainsi !\n\t\t_(Sofia se lève d'un seul coup, concentre son énergie... et projette une décharge intense sur votre dinoz !)_\n\t\t_(Au travers de sa souffrance, son organisme réagit. Il développe une nouvelle force, capable de surmonter les dures épreuves qui lui feront face !)_\n\t\tBien, j'ai levé le seau qui empêchait ton dinoz d'évoluer. Cette sécurité avait été apposée il y a longtemps pour éviter une surpopulation de dinoz aussi puissant...\n\t\t_(Votre dinoz a changé, il peut dorénavant dépasser ses limites, comment va t'il évoluer ? )_",
+        "ether": "Oula, il en mourra sûrement... Cependant, s'il est exposé un temps très court à l'éther, il pourrait développer de nouvelles compétences qui le rendrait surement plus fort !\n\t\tMais attention, tu n'aurais plus accès à l'ancien arbre de compétences, tu ne pourrais donc pas apprendre les dernières compétences qu'il te manquait...\n\t\tAvant d'exposer ton dinoz à l'ether, sois sûr de bien avoir optimisé son choix de compétences...",
+        "newskill": "Qu'il en soit ainsi !\n\t\t_(Sofia fait amener une cuve remplie d'ether, et y plonge votre dinoz d'un coup !)_\n\t\t_(Peu content d'être malmené, votre dinoz en ressort très vite en boudant...)_\n\t\tVoilà, ton dinoz va petit à petit comprendre la portée de cet acte quand il gagnera des niveaux supplémentaires.\n\t\t_(Vous regardez votre dinoz avec interrogation, sa pupille est plus verte qu'avant. Que vous réserve-t'il ?)_",
+        "no": "Bien, si tu changes d'avis, tu peux revenir me voir.\n\t\tTu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant atteint le niveau 50.",
+        "no2": "Bien, si tu changes d'avis, tu peux revenir me voir.\n\t\tTu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant dépassé le niveau 50."
+      },
+      "playerChoice": {
+        "slurp": "Bonjour !",
+        "nouvelle": "Tout va bien ?",
+        "bien": "Euh... Bien sûr...",
+        "troph": "Et Caushemesh ?",
+        "palais": "Et le palais ?",
+        "retour": "euh merci ?",
+        "niveau": "Pourriez vous rendre mon dinoz plus fort ?",
+        "yes": "Je suis sûr de moi, mon dinoz veut évoluer !",
+        "ether": "Je ferais bien tremper mon dinoz dans de l'éther !",
+        "newskill": "Je suis sûr de moi, mon dinoz veut apprendre de nouvelles compétences !",
+        "no": "Non merci, mon dinoz n'a pas besoin de surpasser le niveau 50 !",
+        "no2": "Non merci, mon dinoz préfère continuer d'apprendre les anciennes compétences !"
       }
     }
 

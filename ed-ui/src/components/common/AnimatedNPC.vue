@@ -1,5 +1,6 @@
 <template>
 	<object v-if="NPC !== undefined" class="swf" type="application/x-shockwave-flash" :data="getSWFUrl('swf', NPC)">
+		<param name="flashvars" :value="flashvars" />
 		<embed :src="getSWFUrl('swf', NPC)" />
 	</object>
 </template>
@@ -11,6 +12,7 @@ export default defineComponent({
 	name: 'AnimatedNPC',
 	props: {
 		NPC: String,
+		flashvars: String
 	}
 });
 </script>

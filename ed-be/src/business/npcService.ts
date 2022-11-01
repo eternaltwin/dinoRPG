@@ -92,7 +92,8 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 	return {
 		name: npcName,
 		speech: nextStepWantedData.stepName,
-		playerChoice: playerChoices
+		playerChoice: playerChoices,
+		flashvars: pnj.flashvars
 	};
 };
 

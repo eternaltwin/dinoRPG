@@ -205,7 +205,7 @@ describe('Function getNpcSpeech', function () {
 		expect(parser.triggerAction).toHaveBeenCalledTimes(1);
 		expect(parser.triggerAction).toHaveBeenCalledWith('fight(efire)', dinozAtWrongPlace);
 		expect(parser.rewarder).toHaveBeenCalledTimes(1);
-		expect(parser.rewarder).toHaveBeenCalledWith(['fx(climbing_gear)'], dinozAtWrongPlace);
+		expect(parser.rewarder).toHaveBeenCalledWith(['status(climbing_gear)'], dinozAtWrongPlace);
 	});
 
 	it('Empty conditions', async () => {
