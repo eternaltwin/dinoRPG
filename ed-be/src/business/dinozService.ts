@@ -381,7 +381,7 @@ const betaMove = async (req: Request): Promise<FightResult> => {
 	// Fight at the desired place
 	const fight: FightResult = await betaFight(dinoz);
 	if (fight.result) {
-		await setDinozPlaceRequest(dinoz, finalPlace);
+		await setDinozPlaceRequest(dinoz.id, finalPlace);
 	}
 
 	return fight;

@@ -164,21 +164,31 @@ const setDinoz = (dinoz: Partial<Dinoz>): Promise<Dinoz> => {
 	return dinozRepository.save(dinoz);
 };
 
-//TODO
-const setDinozPlaceRequest = (dinoz: Dinoz, placeId: number): Promise<Dinoz> => {
-	dinoz.placeId = placeId;
-	return dinozRepository.save(dinoz);
+const setDinozPlaceRequest = (dinozId: number, newPlaceId: number): Promise<UpdateResult> => {
+	return dinozRepository
+		.createQueryBuilder()
+		.update(Dinoz)
+		.set({ placeId: newPlaceId })
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.execute();
 };
 
-//TODO
-const setDinozNameRequest = (olddinoz: Dinoz, canChangeName: boolean): Promise<Dinoz> => {
-	olddinoz.canChangeName = canChangeName;
-	return dinozRepository.save(olddinoz);
+const setDinozNameRequest = (dinozId: number, canChangeName: boolean): Promise<UpdateResult> => {
+	return dinozRepository
+		.createQueryBuilder()
+		.update(Dinoz)
+		.set({ canChangeName: canChangeName })
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.execute();
 };
 
-const setDinozNextElement = (dinoz: Dinoz, elementIdd: number): Promise<Dinoz> => {
-	dinoz.nextUpElementId = elementIdd;
-	return dinozRepository.save(dinoz);
+const setDinozNextElement = (dinozId: number, elementIdd: number): Promise<UpdateResult> => {
+	return dinozRepository
+		.createQueryBuilder()
+		.update(Dinoz)
+		.set({ nextUpElementId: elementIdd })
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.execute();
 };
 
 const addExperience = (dinozId: number, experience: number): Promise<UpdateResult> => {

@@ -576,7 +576,7 @@ describe('Function betaMove', function () {
 		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(dinozId);
 
-		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(DinozWithSkillsAndStatusReadyToMove, place1Alias);
+		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(DinozWithSkillsAndStatusReadyToMove.id, place1Alias);
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
 
 		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(1);

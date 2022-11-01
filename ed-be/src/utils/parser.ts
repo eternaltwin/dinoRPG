@@ -110,7 +110,7 @@ async function rewarder(rewards: Array<string>, dinoz: Dinoz): Promise<void> {
 				default:
 					elementId = 1;
 			}
-			await setDinozNextElement(dinoz, elementId);
+			await setDinozNextElement(dinoz.id, elementId);
 		} else if (reward.includes('exp')) {
 			const maxExp: number = levelList.find(level => level.id === dinoz.level)!.experience;
 			await addExperience(dinoz.id, maxExp - dinoz.experience);
