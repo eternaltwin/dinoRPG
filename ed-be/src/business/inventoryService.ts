@@ -1,8 +1,10 @@
 import { Request } from 'express';
 import { getPlayerInventoryDataRequest } from '../dao/playerDao.js';
-import { Player } from '../entity/index.js';
-import { ItemFiche, ItemType } from '../models/index.js';
+import { Dinoz, Player } from '../entity/index.js';
+import { ItemEffect, ItemFiche, ItemType } from '../models/index.js';
 import { itemList } from '../constants/item.js';
+import { addLife, getDinozFicheRequest } from '../dao/dinozDao.js';
+import { useItemDataRequest } from '../dao/playerItemDao.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -35,4 +37,27 @@ const getAllItemsData = async (req: Request): Promise<Array<ItemFiche>> => {
 	return allItemsDataReply;
 };
 
-export { getAllItemsData };
+const useItem = async (req: Request): Promise<string> => {
+	//The Promise need to be reworked
+	const dinozId: number = parseInt(req.params.dinozId);
+	const dinoz: Dinoz = await getDinozFicheRequest(dinozId);
+	const itemId: number = parseInt(req.params.itemId);
+	const item: ItemFiche = Object.values(itemList).find(item => item.itemId === itemId)!;
+
+	switch (item.effect?.class) {
+		case ItemEffect.HEAL:
+			const lifeAdded = dinoz.maxLife - dinoz.life > item.effect.value ? item.effect.value : dinoz.maxLife - dinoz.life;
+			if (lifeAdded === 0) {
+				return 'Dinoz is at max health'; //Replace by a key to translate in the front
+			}
+			await addLife(dinoz.id, lifeAdded);
+			await useItemDataRequest(dinoz.player.id, item.itemId);
+			break;
+		default:
+			break;
+	}
+
+	return 'ok'; //Default return when everything is ok, maybe change it
+};
+
+export { getAllItemsData, useItem };

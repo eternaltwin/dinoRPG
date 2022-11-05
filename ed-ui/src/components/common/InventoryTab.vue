@@ -37,6 +37,7 @@
 								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
 							}"
+							@click="useItem(item)"
 						>
 							<img :src="getImgURL('icons', 'small_use')" alt="small_use" />
 						</a>
@@ -48,7 +49,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImgURL('icons' ,'small_use_off')" alt="small_use_off"/>
+							<img :src="getImgURL('icons', 'small_use_off')" alt="small_use_off" />
 						</a>
 						<a
 							class="on"
@@ -68,7 +69,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImgURL('icons', 'small_equip_off')" alt="small_equip_off"/>
+							<img :src="getImgURL('icons', 'small_equip_off')" alt="small_equip_off" />
 						</a>
 					</td>
 				</tr>
@@ -103,12 +104,30 @@ export default defineComponent({
 		},
 		isFull(item: Item): boolean {
 			return item.quantity! >= item.maxQuantity!;
+		},
+		async useItem(item: Item): Promise<void> {
+			if (item.quantity! > 0) {
+				const dinozId = this.$route.params.id as string;
+				InventoryService.useInventoryItem(item.itemId, parseInt(dinozId)).then(res => {
+					if (res === 'ok') {
+						// const itemEdit = this.allItemsData.find(items => items.itemId === item.itemId);
+						// itemEdit!.quantity! -= 1;
+						this.$router.go(0);
+					} else {
+						//Need to put this in a toast
+						console.error(res);
+					}
+				});
+			}
 		}
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
 		try {
 			this.allItemsData = await InventoryService.getAllItemsData();
+			this.allItemsData = this.allItemsData.sort((a, b) => {
+				return a.itemId - b.itemId;
+			});
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);

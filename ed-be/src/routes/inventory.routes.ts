@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
-import { getAllItemsData } from '../business/inventoryService.js';
-import { validationResult } from 'express-validator';
+import { getAllItemsData, useItem } from '../business/inventoryService.js';
+import { param, validationResult } from 'express-validator';
 import { ItemFiche } from '../models/index.js';
 
 const routes: Router = Router();
@@ -38,5 +38,51 @@ routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 		return res.status(500).send(err.message);
 	}
 });
+
+/**
+ * @openapi
+ * /api/v1/inventory/{dinozId}/{itemId}:
+ *   get:
+ *     summary: Use the item on the dinoz
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Inventory
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz.
+ * 	     - in: path
+ *         name: itemId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the item.
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       500:
+ *         description: Error
+ */
+routes.get(
+	`${commonPath}/:dinozId/:itemId`,
+	[param('dinozId').exists().toInt().isNumeric(), param('itemId').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: string = await useItem(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send(err.message);
+		}
+	}
+);
 
 export default routes;

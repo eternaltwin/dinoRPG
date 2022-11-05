@@ -17,4 +17,13 @@ const updateItemDataRequest = (playerId: number, itemId: number, newQuantity: nu
 		.execute();
 };
 
-export { createItemDataRequest, updateItemDataRequest };
+const useItemDataRequest = (playerId: number, itemId: number): Promise<UpdateResult> => {
+	return itemRepository
+		.createQueryBuilder('item')
+		.update(PlayerItem)
+		.set({ quantity: () => 'quantity - 1' })
+		.where('itemId = :iId AND player.id = :pId', { iId: itemId, pId: playerId })
+		.execute();
+};
+
+export { createItemDataRequest, updateItemDataRequest, useItemDataRequest };

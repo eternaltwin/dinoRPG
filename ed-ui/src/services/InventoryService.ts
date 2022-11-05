@@ -16,5 +16,12 @@ export const InventoryService = {
 			.get('/inventory/all')
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+
+	useInventoryItem(itemId: number, dinozId: number): Promise<string> {
+		return http()
+			.get(`/inventory/${dinozId}/${itemId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

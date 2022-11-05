@@ -201,6 +201,16 @@ const addExperience = (dinozId: number, experience: number): Promise<UpdateResul
 		.execute();
 };
 
+const addLife = (dinozId: number, life: number): Promise<UpdateResult> => {
+	return dinozRepository
+		.createQueryBuilder()
+		.update(Dinoz)
+		.set({ life: () => 'life + :addLife' })
+		.setParameter('addLife', life)
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.execute();
+};
+
 export {
 	getAllDinozFromAccount,
 	getCanDinozChangeName,
@@ -215,5 +225,6 @@ export {
 	setDinozNameRequest,
 	setDinozPlaceRequest,
 	addExperience,
+	addLife,
 	setDinozNextElement
 };
