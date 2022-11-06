@@ -3,6 +3,7 @@ import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/pla
 import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	addExperience,
+	addLife,
 	getCanDinozChangeName,
 	getDinozFicheRequest,
 	getDinozPlaceRequest,
@@ -37,6 +38,11 @@ import gameConfig from '../config/game.config.js';
  */
 function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	const availableActions: Array<ActionFiche> = [];
+
+	if (dinoz.life === 0) {
+		availableActions.push(actionList.RESURRECT);
+		return availableActions;
+	}
 
 	// Default actions
 	availableActions.push(actionList.FIGHT);
@@ -417,4 +423,32 @@ async function betaFight(dinoz: Dinoz): Promise<FightResult> {
 	};
 }
 
-export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, betaFight };
+const resurrectDinoz = async (req: Request): Promise<void> => {
+	const dinozId: number = parseInt(req.params.id);
+
+	// Retrieve player from dinozId
+	const dinozData: Dinoz = await getDinozFicheRequest(dinozId);
+
+	// If player found is different from player who do the request, throw exception
+	if (dinozData.player.id !== req.user!.playerId) {
+		throw new Error(
+			`Cannot get dinoz details, dinozId : ${dinozId} belongs to player ${dinozData.player.id} instead of player ${
+				req.user!.playerId
+			}`
+		);
+	}
+
+	if (dinozData.life > 0){
+		throw new Error(`${dinozData.name} is not dead`);
+	}
+	
+	const dinozToUpdate: Partial<Dinoz> = {
+		id: parseInt(req.params.id),
+		life: 1,
+		experience: dinozData.experience / 2
+	};
+
+	await setDinoz(dinozToUpdate);
+}
+
+export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, betaFight, resurrectDinoz };

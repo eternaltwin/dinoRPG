@@ -1,7 +1,7 @@
 export enum ItemEffect {
 	HEAL = 'heal',
 	EQUIP = 'equip',
-	RESURECT = 'resurect',
+	RESURRECT = 'resurrect',
 	EGG = 'egg',
 	GATHER = 'gather',
 	ACTION = 'action'

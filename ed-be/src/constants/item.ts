@@ -27,7 +27,7 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		maxQuantity: 8,
 		price: 1000, // TODO double check
 		effect: {
-			class: ItemEffect.RESURECT,
+			class: ItemEffect.RESURRECT,
 			value: 1
 		}
 	},

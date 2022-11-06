@@ -53,6 +53,13 @@ const useItem = async (req: Request): Promise<string> => {
 			await addLife(dinoz.id, lifeAdded);
 			await useItemDataRequest(dinoz.player.id, item.itemId);
 			break;
+		case ItemEffect.RESURRECT:
+			if (dinoz.life > 0){
+				return 'Dinoz cannot be resurrected'; //Replace by a key to translate in the front
+			}
+			await addLife(dinoz.id, 1);
+			await useItemDataRequest(dinoz.player.id, item.itemId);
+			break;
 		default:
 			break;
 	}

@@ -1,5 +1,6 @@
 <template>
 	<div class="actions">
+		<Resurect :enabled="resurect" @close="resurect = false"/>
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
@@ -60,14 +61,19 @@
 import { defineComponent, PropType } from 'vue';
 import { shopNameList, npcNameList } from '@/constants';
 import { Action } from '@/models';
+import Resurect from './ResurectModal.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
 	data() {
 		return {
 			shopNameList: shopNameList,
-			npcNameList: npcNameList
+			npcNameList: npcNameList,
+			resurect: false as boolean
 		};
+	},
+	components: {
+		Resurect
 	},
 	props: { dinozActions: Object as PropType<Array<Action>> },
 	methods: {
@@ -91,6 +97,8 @@ export default defineComponent({
 						params: { id: this.$route.params.id.toString(), npc: npcNameList[action.prop!] }
 					});
 					break;
+				case 'resurrect':
+					this.resurect = true;
 				default:
 					break;
 			}

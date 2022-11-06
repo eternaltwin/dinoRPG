@@ -197,6 +197,7 @@ export default defineComponent({
 			this.dinoz = this.dinozProp;
 		},
 		async dinozUpdate(): Promise<void> {
+			console.log(this.dinozField.life)
 			EventBus.emit('isLoading', true);
 
 			try {
@@ -207,7 +208,7 @@ export default defineComponent({
 					this.dinozField.level ||
 					this.dinozField.placeId ||
 					this.dinozField.canChangeName !== undefined ||
-					this.dinozField.life ||
+					this.dinozField.life! > -1 ||
 					this.dinozField.maxLife ||
 					this.dinozField.experience ||
 					(this.dinozField.statusList.length > 0 && this.statusOperation) ||
