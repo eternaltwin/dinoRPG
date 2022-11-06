@@ -8,7 +8,10 @@
 		<div class="rewards">
 			<template v-for="(rewards, index) in epicRewards" :key="index">
 				<Tippy theme="normal">
-					<img :src="getImgURL('epicRewards', `collec_${epicList.imgName[rewards]}`)" :alt="epicList.imgName[rewards]" />
+					<img
+						:src="getImgURL('epicRewards', `collec_${epicList.imgName[rewards]}`)"
+						:alt="epicList.imgName[rewards]"
+					/>
 					<template #content>
 						<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))" />
 						<p v-html="formatContent($t(`rewards.description.${epicList.imgName[rewards]}`))" />

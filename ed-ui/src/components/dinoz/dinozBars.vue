@@ -18,7 +18,11 @@
 			<div class="lifetext">{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
 			<div class="xp">
 				<div class="bar">
-					<img :src="getImgURL('bar', 'bar_xp')" alt="xp" :style="getBarSize(dinozData.experience, dinozData.maxExperience)" />
+					<img
+						:src="getImgURL('bar', 'bar_xp')"
+						alt="xp"
+						:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
+					/>
 				</div>
 			</div>
 			<div class="xptext">{{ dinozData.experience }} / {{ dinozData.maxExperience }}</div>

@@ -97,7 +97,8 @@
 							</template>
 						</Tippy>
 						<Tippy
-							theme="small" tag="img"
+							theme="small"
+							tag="img"
 							v-if="selectedItem.canBeEquipped"
 							:src="getImgURL('icons', 'small_equip')"
 							alt="equip"

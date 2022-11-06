@@ -209,7 +209,11 @@ export default defineComponent({
 		const map = placeList.find(place => place.placeId === this.dinozData!.placeId)!.map;
 		// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
 		this.placeMap = placeList.filter(
-			place => place.map === map && (!place.hidden || this.dinozData!.borderPlace!.includes(place.placeId) || place.placeId === this.dinozData?.placeId)
+			place =>
+				place.map === map &&
+				(!place.hidden ||
+					this.dinozData!.borderPlace!.includes(place.placeId) ||
+					place.placeId === this.dinozData?.placeId)
 		);
 
 		this.waitForImageToLoad();

@@ -114,8 +114,8 @@ export default defineComponent({
 	top: -25px;
 	padding-left: 15px;
 	padding-top: 15px;
-	background: url('@/assets/design/sideMenu_header.webp') no-repeat, url('@/assets/design/sideMenu_footer.webp') no-repeat,
-		url('@/assets/design/sideMenu_bg.webp') repeat-y;
+	background: url('@/assets/design/sideMenu_header.webp') no-repeat,
+		url('@/assets/design/sideMenu_footer.webp') no-repeat, url('@/assets/design/sideMenu_bg.webp') repeat-y;
 	background-position-y: top, bottom;
 	display: block;
 	list-style: none;

@@ -113,7 +113,7 @@ const importAccount = async (req: Request): Promise<void> => {
 	// const userET: string = importedData.eternalTwinId;
 
 	//Give Epic Reward
-	await addRewardToPlayer(playerId, 100);
+	await addRewardToPlayer(playerId, rewardList.IMPORT);
 
 	//Set hasImported to true
 	await setPlayer({ id: playerId, hasImported: true });

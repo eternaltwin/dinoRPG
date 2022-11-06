@@ -133,7 +133,7 @@ describe('Function importAccount', function () {
 		expect(PlayerDao.resetUser).toHaveBeenCalledWith(player.id_1);
 
 		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledTimes(1);
-		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledWith(player.id_1, 100);
+		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledWith(player.id_1, 999);
 
 		expect(PlayerDao.setPlayer).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.setPlayer).toHaveBeenCalledWith({

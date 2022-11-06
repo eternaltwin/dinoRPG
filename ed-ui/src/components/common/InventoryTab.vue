@@ -48,7 +48,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImgURL('icons' ,'small_use_off')" alt="small_use_off"/>
+							<img :src="getImgURL('icons', 'small_use_off')" alt="small_use_off" />
 						</a>
 						<a
 							class="on"
@@ -68,7 +68,7 @@
 								theme: 'small'
 							}"
 						>
-							<img :src="getImgURL('icons', 'small_equip_off')" alt="small_equip_off"/>
+							<img :src="getImgURL('icons', 'small_equip_off')" alt="small_equip_off" />
 						</a>
 					</td>
 				</tr>

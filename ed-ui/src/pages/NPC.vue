@@ -9,7 +9,7 @@
 			<div class="name">{{ $t(`npc.name.${npcName}`) }} :</div>
 		</div>
 		<div class="footer">
-			<AnimatedNPC :NPC="npcSpeech.name" :flashvars="npcSpeech.flashvars"/>
+			<AnimatedNPC :NPC="npcSpeech.name" :flashvars="npcSpeech.flashvars" />
 			<a class="button" @click="stop()">{{ $t(`npc.stop`) }}</a>
 			<span class="dialog">
 				{{ $t(`npc.${npcName}.speech.${npcSpeech.speech}`) }}

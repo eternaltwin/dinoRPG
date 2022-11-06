@@ -7,7 +7,9 @@
 	</div>
 	<ul class="tabs">
 		<li :class="tabSelected === 1 ? 'active' : ''">
-			<a href="#" @click="setTab(1)"><img :src="getImgURL('design', 'small_member')" alt="member" /> {{ $t('tabs.players') }}</a>
+			<a href="#" @click="setTab(1)"
+				><img :src="getImgURL('design', 'small_member')" alt="member" /> {{ $t('tabs.players') }}</a
+			>
 		</li>
 		<li :class="tabSelected === 2 ? 'active' : ''">
 			<a href="#" @click="setTab(2)">{{ $t('tabs.average') }}</a>
