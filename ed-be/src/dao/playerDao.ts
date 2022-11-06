@@ -110,7 +110,7 @@ const getAllInformationFromPlayer = (playerId: number): Promise<Player> => {
 const getImportedData = (playerId: number): Promise<Player> => {
 	return playerRepository
 		.createQueryBuilder('player')
-		.select(['player.hasImported', 'player.eternalTwinId'])
+		.select(['player.hasImported', 'player.eternalTwinId', 'player.id'])
 		.where('player.id = :pId', { pId: playerId })
 		.getOneOrFail();
 };

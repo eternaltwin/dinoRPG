@@ -21,7 +21,7 @@
 				/>
 			</li>
 			<template #content>
-				<template v-for="(status, index) in dinoz.statusList" :key="index">
+				<template v-for="(status, index) in dinoz.status" :key="index">
 					<img
 						v-if="statusList.displayed[status]"
 						:src="getImgURL('status', `fx_${statusList.imgName[status]}`)"

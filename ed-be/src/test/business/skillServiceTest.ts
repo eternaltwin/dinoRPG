@@ -30,7 +30,7 @@ describe('Function getLearnableSkills', () => {
 			tryNumber: '1'
 		};
 
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel1LevelUp);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel1LevelUp);
 	});
 
 	// Dinoz is level 1, has no skill, doesn't have PDC or cube, tryNumber = 1
@@ -57,8 +57,8 @@ describe('Function getLearnableSkills', () => {
 		expect(response!.unlockableSkills).toStrictEqual([]);
 		expect(response!.upChance).toBe(raceList.WINKS.upChance);
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 	});
 
 	// No need to test that the DAO can return a null dinoz. It will throw an error if no dinoz is found.
@@ -66,7 +66,7 @@ describe('Function getLearnableSkills', () => {
 	it("Dinoz doesn't belong to the player who do the request", async () => {
 		const dinozToOtherPlayer = _.cloneDeep(DinozLevel1LevelUp);
 		dinozToOtherPlayer.player!.id = player.id_2;
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozToOtherPlayer);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(dinozToOtherPlayer);
 
 		try {
 			await getLearnableAndUnlockableSkills(req);
@@ -75,15 +75,15 @@ describe('Function getLearnableSkills', () => {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${req.params.id} doesn't belong to player ${req.user!.playerId}`);
 
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 		}
 	});
 
 	it("Dinoz doesn't have enough experience", async () => {
 		const dinozWithoutXp = _.cloneDeep(DinozLevel1LevelUp);
 		dinozWithoutXp.experience = 0;
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozWithoutXp);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(dinozWithoutXp);
 
 		try {
 			await getLearnableAndUnlockableSkills(req);
@@ -92,8 +92,8 @@ describe('Function getLearnableSkills', () => {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${req.params.id} doesn't have enough experience`);
 
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 		}
 	});
 
@@ -107,8 +107,8 @@ describe('Function getLearnableSkills', () => {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`tryNumber ${req.params.tryNumber} is invalid`);
 
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 		}
 	});
 
@@ -122,15 +122,15 @@ describe('Function getLearnableSkills', () => {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`tryNumber ${req.params.tryNumber} is invalid`);
 
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 		}
 	});
 
 	it("Player try to do a second try but dinoz is level 11 and doesn't have 'Plan de carrière'", async () => {
 		req.params.tryNumber = '2';
 
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel11LevelUp);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel11LevelUp);
 
 		try {
 			await getLearnableAndUnlockableSkills(req);
@@ -139,15 +139,15 @@ describe('Function getLearnableSkills', () => {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`tryNumber ${req.params.tryNumber} is invalid`);
 
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 		}
 	});
 
 	it('Dinoz is alreay at max level', async () => {
 		const dinozLevel80 = _.cloneDeep(DinozLevel1LevelUp);
 		dinozLevel80.level = 80;
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozLevel80);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(dinozLevel80);
 
 		try {
 			await getLearnableAndUnlockableSkills(req);
@@ -156,8 +156,8 @@ describe('Function getLearnableSkills', () => {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${dinozLevel80.id} is already at max level.`);
 
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 		}
 	});
 
@@ -166,7 +166,7 @@ describe('Function getLearnableSkills', () => {
 
 		const dinozLevel11withPDC = _.cloneDeep(DinozLevel11LevelUp);
 		dinozLevel11withPDC.skills = [{ skillId: skillList.PLAN_DE_CARRIERE.skillId } as DinozSkill];
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozLevel11withPDC);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(dinozLevel11withPDC);
 
 		const response = await getLearnableAndUnlockableSkills(req);
 
@@ -182,8 +182,8 @@ describe('Function getLearnableSkills', () => {
 		expect(response!.unlockableSkills).toStrictEqual([]);
 		expect(response!.upChance).toBe(raceList.WINKS.upChance);
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 	});
 
 	it("Player try to do a second try, dinoz is level 1 and has 'cube' object", async () => {
@@ -191,7 +191,7 @@ describe('Function getLearnableSkills', () => {
 
 		const dinozLevel1WithCube = _.cloneDeep(DinozLevel1LevelUp);
 		dinozLevel1WithCube.items = [{ itemId: itemList.DINOZ_CUBE.itemId } as DinozItem];
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(dinozLevel1WithCube);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(dinozLevel1WithCube);
 
 		const response = await getLearnableAndUnlockableSkills(req);
 
@@ -207,8 +207,8 @@ describe('Function getLearnableSkills', () => {
 		expect(response!.unlockableSkills).toStrictEqual([]);
 		expect(response!.upChance).toBe(raceList.WINKS.upChance);
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 	});
 });
 
@@ -228,7 +228,7 @@ describe('Function learnSkill', () => {
 			tryNumber: '1'
 		};
 
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel1LevelUp);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel1LevelUp);
 		DinozDao.setDinoz = jasmine.createSpy();
 		DinozSkillUnlockableDao.removeUnlockableSkillsToDinoz = jasmine.createSpy();
 		DinozSkillUnlockableDao.addMultipleUnlockableSkills = jasmine.createSpy();
@@ -243,8 +243,8 @@ describe('Function learnSkill', () => {
 
 		expect(response).toBe(levelList[1].experience.toString());
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledTimes(1);
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledWith(
@@ -274,8 +274,8 @@ describe('Function learnSkill', () => {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${req.params.id} can't learn this`);
 
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-			expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+			expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 
 			expect(DinozSkillDao.addSkillToDinoz).not.toHaveBeenCalled();
 		}
@@ -284,14 +284,14 @@ describe('Function learnSkill', () => {
 	it('Dinoz is level 2 and wants to unlock some skills with success', async () => {
 		req.body.skillIdList = [skillList.POCHE_VENTRALE.skillId, skillList.KARATE_SOUS_MARIN.skillId];
 
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel2LevelUp);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel2LevelUp);
 
 		const response = await learnSkill(req);
 
 		expect(response).toBe(levelList[2].experience.toString());
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 
 		expect(DinozSkillUnlockableDao.removeUnlockableSkillsToDinoz).toHaveBeenCalledTimes(1);
 		expect(DinozSkillUnlockableDao.removeUnlockableSkillsToDinoz).toHaveBeenCalledWith(
@@ -311,14 +311,14 @@ describe('Function learnSkill', () => {
 	it('Dinoz is level 1 and wants to learn a wood skill with success', async () => {
 		req.body.skillIdList = [skillList.ENDURANCE.skillId];
 
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel1LevelUpInWood);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel1LevelUpInWood);
 
 		const response: string = await learnSkill(req);
 
 		expect(response).toBe(levelList[1].experience.toString());
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledTimes(1);
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledWith(
@@ -339,14 +339,14 @@ describe('Function learnSkill', () => {
 	it('Dinoz is level 50 and wants to learn a lightning skill (Soutien moral) from ether tree with success, tryNumber = 1', async () => {
 		req.body.skillIdList = [skillList.SOUTIEN_MORAL.skillId];
 
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
 
 		const response: string = await learnSkill(req);
 
 		expect(response).toBe(levelList[50].experience.toString());
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledTimes(1);
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledWith(
@@ -370,14 +370,14 @@ describe('Function learnSkill', () => {
 			tryNumber: '2'
 		};
 
-		DinozDao.getDinozSkillAndUnlockablesRequest = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
+		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
 
 		const response: string = await learnSkill(req);
 
 		expect(response).toBe(levelList[50].experience.toString());
 
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozSkillAndUnlockablesRequest).toHaveBeenCalledWith(parseInt(req.params.id));
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozForLevelUp).toHaveBeenCalledWith(parseInt(req.params.id));
 
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledTimes(1);
 		expect(DinozSkillDao.addSkillToDinoz).toHaveBeenCalledWith(

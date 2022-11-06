@@ -29,5 +29,6 @@ export enum TriggerEnum {
 export enum RewardEnum {
 	STATUS = 'status',
 	CHANGE_ELEMENT = 'changeelem',
-	EXPERIENCE = 'exp'
+	EXPERIENCE = 'exp',
+	SKILL = 'skill'
 }

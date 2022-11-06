@@ -194,6 +194,17 @@ export const placeList: Array<Place> = [
 		yFactor: 10
 	},
 	{
+		placeId: 102,
+		name: 'fleuve',
+		posLeft: 327,
+		posTop: 110,
+		icon: PlaceIcon.DEFAULT,
+		map: Map.JUNGLE,
+		hidden: false,
+		xFactor: 2,
+		yFactor: 10
+	},
+	{
 		placeId: 18,
 		name: 'camp',
 		posLeft: 227,

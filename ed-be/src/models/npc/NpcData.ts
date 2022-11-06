@@ -6,4 +6,5 @@ export interface NpcData {
 	condition?: string;
 	action?: string;
 	reward?: Array<string>;
+	target?: string;
 }

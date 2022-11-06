@@ -14,6 +14,7 @@ import { PlayerInfo, PlayerCommonData } from '../models/index.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { getDinozTotalCount } from '../dao/dinozDao.js';
 import { levelList } from '../constants/index.js';
+import { PlayerReward } from '../entity/index.js';
 
 /**
  * @summary Get data from player on login
@@ -113,7 +114,7 @@ const importAccount = async (req: Request): Promise<void> => {
 	// const userET: string = importedData.eternalTwinId;
 
 	//Give Epic Reward
-	await addRewardToPlayer(playerId, rewardList.IMPORT);
+	await addRewardToPlayer(new PlayerReward(importedData, rewardList.IMPORT));
 
 	//Set hasImported to true
 	await setPlayer({ id: playerId, hasImported: true });

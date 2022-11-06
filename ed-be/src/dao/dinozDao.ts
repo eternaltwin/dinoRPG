@@ -84,10 +84,12 @@ const getDinozNPCRequest = (dinozId: number): Promise<Dinoz> => {
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name', 'dinoz.level', 'dinoz.placeId'])
 		.addSelect(['player.id'])
+		.addSelect(['skills.skillId'])
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
 		.addSelect(['npc.npcId', 'npc.step'])
 		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.NPC', 'npc')
@@ -121,7 +123,7 @@ const getDinozSkillAndStatusRequest = (dinozId: number): Promise<Dinoz> => {
 		.getOneOrFail();
 };
 
-const getDinozSkillAndUnlockablesRequest = (dinozId: number): Promise<Dinoz> => {
+const getDinozForLevelUp = (dinozId: number): Promise<Dinoz> => {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select([
@@ -147,6 +149,20 @@ const getDinozSkillAndUnlockablesRequest = (dinozId: number): Promise<Dinoz> => 
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('player.rank', 'ranking')
 		.leftJoin('dinoz.items', 'items')
+		.leftJoin('dinoz.skills', 'skills')
+		.leftJoin('dinoz.skillsUnlockable', 'skillsUnlockable')
+		.leftJoin('dinoz.status', 'status')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
+};
+
+const getDinozSkillsLearnableAndUnlockable = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.raceId'])
+		.addSelect(['skills.skillId'])
+		.addSelect(['skillsUnlockable.skillId'])
+		.addSelect(['status.statusId'])
 		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('dinoz.skillsUnlockable', 'skillsUnlockable')
 		.leftJoin('dinoz.status', 'status')
@@ -209,7 +225,8 @@ export {
 	getDinozPlaceRequest,
 	getDinozTotalCount,
 	getDinozSkillRequest,
-	getDinozSkillAndUnlockablesRequest,
+	getDinozForLevelUp,
+	getDinozSkillsLearnableAndUnlockable,
 	getDinozSkillAndStatusRequest,
 	setDinoz,
 	setDinozNameRequest,

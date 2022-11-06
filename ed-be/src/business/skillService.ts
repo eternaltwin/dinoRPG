@@ -11,7 +11,7 @@ import {
 	SkillTree,
 	UpChance
 } from '../models/index.js';
-import { getDinozSkillAndUnlockablesRequest, setDinoz } from '../dao/dinozDao.js';
+import { getDinozForLevelUp, getDinozSkillsLearnableAndUnlockable, setDinoz } from '../dao/dinozDao.js';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
@@ -31,7 +31,7 @@ const getLearnableAndUnlockableSkills = async (
 ): Promise<Partial<DinozSkillOwnAndUnlockable> | undefined> => {
 	const dinozId: number = parseInt(req.params.id);
 
-	const dinozSkills: Dinoz = await getDinozSkillAndUnlockablesRequest(dinozId);
+	const dinozSkills: Dinoz = await getDinozForLevelUp(dinozId);
 
 	const dinozRace: DinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId)!;
 
@@ -52,7 +52,7 @@ const learnSkill = async (req: Request): Promise<string> => {
 	const dinozId: number = parseInt(req.params.id);
 	const skillIdList: Array<number> = req.body.skillIdList;
 
-	const dinozSkills: Dinoz = await getDinozSkillAndUnlockablesRequest(dinozId);
+	const dinozSkills: Dinoz = await getDinozForLevelUp(dinozId);
 
 	const ranking: Ranking | undefined = dinozSkills.player.rank;
 
@@ -318,4 +318,27 @@ function getElementUpChance(
 		: 0;
 }
 
-export { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill };
+/**
+ * Function used when the dinoz learn "Double skill".
+ * Get all double skills that dinoz can learn et place it into unlockable_skills table.
+ */
+const unlockDoubleSkills = async (dinozId: number): Promise<void> => {
+	const dinoz: Dinoz = await getDinozSkillsLearnableAndUnlockable(dinozId);
+	const allLearnableSkills: Array<Partial<DinozSkillFiche>> = getLearnableSkills(dinoz);
+
+	// First filter : Get all skills which have more that one element (ex : fire and water).
+	// Second filter : Assert that the skill is a double skill, and not an invocation or something else.
+	const doubleSkillsToUnlock: Array<DinozSkillUnlockable> = allLearnableSkills
+		.filter(skill => skill.element!.length > 1)
+		.filter(skillToUnlock => {
+			const skillDetail: DinozSkillFiche = Object.values(skillList).find(
+				skill => skill.skillId === skillToUnlock.skillId
+			)!;
+			return skillDetail.unlockedFrom!.includes(skillList.COMPETENCE_DOUBLE.skillId);
+		})
+		.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.skillId!));
+
+	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
+};
+
+export { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill, unlockDoubleSkills };

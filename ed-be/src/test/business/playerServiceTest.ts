@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import { Request } from 'express';
 import { PlayerAllData, playerList } from '../data/playerData.js';
-import { mockRequest, player } from '../utils/constants.js';
+import { importPlayerData, mockRequest, player } from '../utils/constants.js';
 import {
 	getAccountData,
 	getCommonData,
@@ -133,7 +133,7 @@ describe('Function importAccount', function () {
 		expect(PlayerDao.resetUser).toHaveBeenCalledWith(player.id_1);
 
 		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledTimes(1);
-		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledWith(player.id_1, 999);
+		expect(assPlayerRewardsDao.addRewardToPlayer).toHaveBeenCalledWith(importPlayerData);
 
 		expect(PlayerDao.setPlayer).toHaveBeenCalledTimes(1);
 		expect(PlayerDao.setPlayer).toHaveBeenCalledWith({

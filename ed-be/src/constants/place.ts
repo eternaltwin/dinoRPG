@@ -100,12 +100,19 @@ export const placeList: Record<string, Place> = {
 	FLEUVE_JUMIN: {
 		placeId: 17,
 		name: 'fleuve',
-		borderPlace: [15, 16, 18, 19]
+		borderPlace: [15, 16, 19, 18]
+	},
+	FLEUVE_JUMIN_BIS: {
+		placeId: 102,
+		name: 'fleuve',
+		borderPlace: [18],
+		conditions: statusList.FLIPPERS,
+		alias: 17
 	},
 	CAMP_KORGON: {
 		placeId: 18,
 		name: 'camp',
-		borderPlace: [17, 22],
+		borderPlace: [22, 102],
 		conditions: statusList.FLIPPERS
 	},
 	JUNGLE_SAUVAGE: {

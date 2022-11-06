@@ -5,11 +5,8 @@ import { DeleteResult } from 'typeorm';
 const rewardRepository = AppDataSource.getRepository(PlayerReward);
 
 //TODO
-const addRewardToPlayer = (playerId: number, rewardId: number): Promise<PlayerReward> => {
-	return rewardRepository.save({
-		rewardId: rewardId,
-		playerId: playerId
-	});
+const addRewardToPlayer = (player: PlayerReward): Promise<PlayerReward> => {
+	return rewardRepository.save(player);
 };
 
 //TODO

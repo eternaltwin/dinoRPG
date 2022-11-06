@@ -29,7 +29,7 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 		throw new Error(`Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
-	const nextStepWantedData: NpcData | undefined = Object.values(pnj.data).find(
+	let nextStepWantedData: NpcData | undefined = Object.values(pnj.data).find(
 		pnj => pnj.stepName === nextStepWanted || pnj.alias === nextStepWanted
 	);
 
@@ -69,20 +69,24 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 			throw new Error(`The dinoz doesn't fullfill the conditions.`);
 		}
 
-		let action: boolean | undefined;
-		if (nextStepWantedData.action !== undefined) {
-			action = await triggerAction(nextStepWantedData.action, dinoz);
+		if (nextStepWantedData.target !== undefined) {
+			nextStepWantedData = Object.values(pnj.data).find(pnj => pnj.stepName === nextStepWantedData!.target);
 		}
 
-		if ((action && nextStepWantedData.reward) || nextStepWantedData.reward !== undefined) {
-			await rewarder(nextStepWantedData.reward, dinoz);
+		let action: boolean | undefined;
+		if (nextStepWantedData!.action !== undefined) {
+			action = await triggerAction(nextStepWantedData!.action, dinoz);
+		}
+
+		if ((action && nextStepWantedData!.reward) || nextStepWantedData!.reward !== undefined) {
+			await rewarder(nextStepWantedData!.reward, dinoz);
 		}
 
 		await updateDinozStep(dinozId, pnj.id, nextStepWanted);
 	}
 
 	// Select nextStep to send to the player
-	const playerChoices: Array<string> = nextStepWantedData.nextStep.filter(possibility => {
+	const playerChoices: Array<string> = nextStepWantedData!.nextStep.filter(possibility => {
 		const condition: string | undefined = Object.values(pnj!.data).find(data => data.stepName === possibility)
 			?.condition;
 		// If there is a condition non-met, replace it with enmpty string
@@ -91,7 +95,7 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 
 	return {
 		name: npcName,
-		speech: nextStepWantedData.stepName,
+		speech: nextStepWantedData!.stepName,
 		playerChoice: playerChoices,
 		flashvars: pnj.flashvars
 	};

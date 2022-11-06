@@ -240,6 +240,7 @@ export default defineComponent({
 }
 .canGo {
 	cursor: pointer;
+	z-index: 500 !important;
 }
 .imgHidden {
 	display: none;

@@ -1,9 +1,13 @@
 import { betaFight } from '../business/dinozService.js';
+import { unlockDoubleSkills } from '../business/skillService.js';
 import { levelList } from '../constants/level.js';
+import { skillList } from '../constants/skill.js';
 import { statusList } from '../constants/status.js';
 import { addExperience, setDinozNextElement } from '../dao/dinozDao.js';
+import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { Dinoz } from '../entity/dinoz.js';
+import { DinozSkill } from '../entity/dinozSkill.js';
 import { ConditionEnum, RewardEnum, TriggerEnum } from '../models/enums/Parser.js';
 
 function checkCondition(condition: string, dinoz: Dinoz): boolean {
@@ -55,6 +59,9 @@ function conditionParser(condition: string, dinoz: Dinoz): boolean {
 	} else if (condition.includes(ConditionEnum.SWAIT)) {
 	} else if (condition.includes(ConditionEnum.RACE)) {
 	} else if (condition.includes(ConditionEnum.SKILL)) {
+		let skill = parseInt(param);
+		console.log(dinoz.skills);
+		result = dinoz.skills.some(DinozSkill => DinozSkill.skillId === skill);
 	} else if (condition.includes(ConditionEnum.EQUIP)) {
 	} else if (condition.includes(ConditionEnum.UTIME)) {
 	}
@@ -115,6 +122,12 @@ async function rewarder(rewards: Array<string>, dinoz: Dinoz): Promise<void> {
 		} else if (reward.includes(RewardEnum.EXPERIENCE)) {
 			const maxExp: number = levelList.find(level => level.id === dinoz.level)!.experience;
 			await addExperience(dinoz.id, maxExp - dinoz.experience);
+		} else if (reward.includes(RewardEnum.SKILL)) {
+			await addSkillToDinoz(new DinozSkill(new Dinoz(dinoz.id), parseInt(param)));
+
+			if (parseInt(param) === skillList.COMPETENCE_DOUBLE.skillId) {
+				unlockDoubleSkills(dinoz.id);
+			}
 		} else {
 			console.log('Not implemented yet');
 		}

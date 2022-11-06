@@ -3,7 +3,8 @@ import { mockRequest, player } from '../utils/constants.js';
 import { getNpcSpeech } from '../../business/npcService.js';
 import { DinozLevel1LevelUp } from '../data/dinozData.js';
 import _ from 'lodash';
-import { NPC } from '../../entity/index.js';
+import { DinozSkill, NPC } from '../../entity/index.js';
+import { skillList } from '../../constants/skill.js';
 
 const NPCDao = require('../../dao/npcDao.js');
 const DinozDao = require('../../dao/dinozDao.js');
@@ -183,6 +184,30 @@ describe('Function getNpcSpeech', function () {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`The dinoz doesn't fullfill the conditions.`);
 		}
+	});
+
+	it('Step with target', async () => {
+		req.params.npc = 'mmex';
+		req.body.step = 'learn2';
+		const dinozAtWrongPlace = _.cloneDeep(DinozLevel1LevelUp);
+		dinozAtWrongPlace.placeId = 4;
+		dinozAtWrongPlace.NPC = [{ npcId: 5, step: 'learn' } as NPC];
+		dinozAtWrongPlace.skills = [
+			{ skillId: skillList.COCON.skillId } as DinozSkill,
+			{ skillId: skillList.WAIKIKIDO.skillId } as DinozSkill
+		];
+		DinozDao.getDinozNPCRequest = jasmine.createSpy().and.returnValue(dinozAtWrongPlace);
+		parser.rewarder = jasmine.createSpy();
+		try {
+			await getNpcSpeech(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
+
+		expect(parser.rewarder).toHaveBeenCalledTimes(1);
+		expect(parser.rewarder).toHaveBeenCalledWith(['skill(61119)'], dinozAtWrongPlace);
 	});
 
 	it('Step with actions and reward', async () => {
