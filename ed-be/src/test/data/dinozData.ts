@@ -1,7 +1,7 @@
 import { ElementType, DinozFiche } from '../../models/index.js';
-import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable } from '../../entity/index.js';
+import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable, PlayerItem } from '../../entity/index.js';
 import { itemList, placeList, raceList, skillList, statusList } from '../../constants/index.js';
-import { player, dinozId, skillId, skillId2 } from '../utils/constants.js';
+import { player, dinozId, skillId, skillId2, dinozName, itemId } from '../utils/constants.js';
 import { PlayerData, BasicPlayerWithRank } from './playerData.js';
 
 export const DinozFicheData = ({
@@ -13,7 +13,8 @@ export const DinozFicheData = ({
 	level: 1,
 	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }],
 	status: [{ statusId: 1 }],
-	placeId: 1
+	placeId: 1,
+	experience: 100
 } as unknown) as Dinoz;
 
 export const DinozWithSkills = {
@@ -43,6 +44,35 @@ export const DinozWithSkillsAndStatusReadyToMove = {
 	level: 1,
 	skills: [{ skillId: skillId2 }],
 	status: [{ statusId: 2 }, { statusId: 12 }]
+} as Dinoz;
+
+export const DinozDead = {
+	id: dinozId,
+	player: {
+		id: 12345
+	},
+	experience: 99,
+	life: 0,
+	name: dinozName
+} as Dinoz;
+
+export const DinozLite = {
+	id: dinozId,
+	player: {
+		id: player.id_1,
+		items: [
+			{ itemId: 3, quantity: 23 }, //Nuage-burger
+			{ itemId: 2, quantity: 23 } //Potion d'ange
+		]
+	},
+	experience: 99,
+	life: 95,
+	placeId: placeList.FORCEBRUT.placeId,
+	maxLife: 100,
+	level: 1,
+	name: dinozName,
+	status: [{ statusId: 2 }, { statusId: 12 }],
+	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }]
 } as Dinoz;
 
 export const BasicDinoz = {

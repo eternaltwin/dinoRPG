@@ -8,7 +8,8 @@ export const sessionStore = defineStore('sessionStore', {
 		dinozList: [],
 		dinozCount: undefined,
 		playerId: undefined,
-		fight: undefined
+		fight: undefined,
+		tab: 1
 	}),
 	getters: {
 		getJwt: (state: StoreStateSession) => state.jwt,
@@ -16,7 +17,8 @@ export const sessionStore = defineStore('sessionStore', {
 		getDinozList: (state: StoreStateSession) => state.dinozList,
 		getDinozCount: (state: StoreStateSession) => state.dinozCount,
 		getPlayerId: (state: StoreStateSession) => state.playerId,
-		getFightResult: (state: StoreStateSession) => state.fight
+		getFightResult: (state: StoreStateSession) => state.fight,
+		getTab: (state: StoreStateSession) => state.tab
 	},
 	actions: {
 		setJwt(jwt: string): void {
@@ -36,6 +38,9 @@ export const sessionStore = defineStore('sessionStore', {
 		},
 		setFightResult(fight: FightResult): void {
 			this.fight = fight;
+		},
+		setTab(tab: number): void {
+			this.tab = tab;
 		}
 	},
 	persist: {

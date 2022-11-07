@@ -8,6 +8,7 @@ export interface StoreStateSession {
 	dinozList?: Array<Dinoz>;
 	playerId?: number;
 	fight?: FightResult;
+	tab: number;
 }
 
 export interface StoreStateLocal {

@@ -2,7 +2,16 @@ stages:
   - build
   - test
 
-.drpg: &drpg
+before_script:
+  - cp ed-be/config_development.toml.example ed-be/config_development.toml
+  - "node --version"
+  - "yarn --version"
+  - "rustc --version"
+  - "cargo --version"
+  - yarn install
+
+container-build:
+  stage: build
   image: "demurgos/node:2022.1"
   variables:
     CARGO_HOME: ".cargo"
@@ -13,17 +22,10 @@ stages:
           - "yarn.lock"
       paths:
         - ".yarn/cache/"
-  before_script:
-    - cp ed-be/config_development.toml.example ed-be/config_development.toml
-    - "node --version"
-    - "yarn --version"
-    - "rustc --version"
-    - "cargo --version"
-    - yarn install
-
-container-build:
-  <<: *drpg
-  stage: build
+  artifacts:
+    paths:
+      - node_modules/
+      - native/
   script:
     - yarn build:gitlab
   rules:
@@ -31,8 +33,8 @@ container-build:
     - if: '$CI_COMMIT_BRANCH == "develop"'
 
 front-lint:
-  <<: *drpg
   stage: test
+  image: "demurgos/node:2022.1"
   needs: [container-build]
   script:
     - yarn lint:test
@@ -41,17 +43,21 @@ front-lint:
     - if: '$CI_COMMIT_BRANCH == "develop"'
 
 back-coverage:
-  <<: *drpg
   stage: test
+  image: "demurgos/node:2022.1"
   needs: [container-build]
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  variables:
+    CARGO_HOME: ".cargo"
+    RUSTFLAGS: "-C target-feature=-crt-static"
   cache:
     paths:
       - "ed-be/coverage/"
       - junit.xml
   script:
-    - yarn build:ci
     - yarn test:ci
+  dependencies:
+    - container-build
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH == "develop"'

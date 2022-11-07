@@ -60,7 +60,6 @@ function conditionParser(condition: string, dinoz: Dinoz): boolean {
 	} else if (condition.includes(ConditionEnum.RACE)) {
 	} else if (condition.includes(ConditionEnum.SKILL)) {
 		let skill = parseInt(param);
-		console.log(dinoz.skills);
 		result = dinoz.skills.some(DinozSkill => DinozSkill.skillId === skill);
 	} else if (condition.includes(ConditionEnum.EQUIP)) {
 	} else if (condition.includes(ConditionEnum.UTIME)) {

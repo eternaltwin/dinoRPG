@@ -37,6 +37,7 @@
 								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
 							}"
+							@click="useItem(item)"
 						>
 							<img :src="getImgURL('icons', 'small_use')" alt="small_use" />
 						</a>
@@ -90,7 +91,7 @@ export default defineComponent({
 	name: 'InventoryTab',
 	data() {
 		return {
-			allItemsData: {} as Array<Item>,
+			allItemsData: [] as Array<Item>,
 			itemNameList: itemNameList
 		};
 	},
@@ -103,12 +104,23 @@ export default defineComponent({
 		},
 		isFull(item: Item): boolean {
 			return item.quantity! >= item.maxQuantity!;
+		},
+		async useItem(item: Item): Promise<void> {
+			if (item.quantity! > 0) {
+				const dinozId = this.$route.params.id as string;
+				try {
+					await InventoryService.useInventoryItem(item.itemId, parseInt(dinozId));
+				} catch (error) {
+					console.error(error); //Need to be put in the toast later
+				}
+			}
 		}
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
 		try {
 			this.allItemsData = await InventoryService.getAllItemsData();
+			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);

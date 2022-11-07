@@ -42,16 +42,34 @@
     "air": "Element **Air**",
     "neutral": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
   },
+  "resurrection": {
+    "choice1": {
+      "name":  "**Choix 1 :**&&Résurrection",
+      "resurrect": "Ressusciter",
+      "explanation": "Vous pouvez ressusciter votre Dinoz, immédiatement et gratuitement :",
+      "list1": "il retournera à Dinoville",
+      "list2": "il perdra la moitié de ses points d'expérience actuels"
+    },
+    "choice2": {
+      "name":  "**Choix 2 :**&&Potion d'ange",
+      "resurrect": "Utiliser une potion",
+      "explanation": "Vous pouvez aussi ressusciter votre Dinoz en achetant une Potion d'Ange dans la {boutique} :",
+      "list1": "il restera au lieu actuel",
+      "list2": "il ne perdra aucun point d'expérience"
+    }
+  },
   "action": {
     "description": {
       "fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer **un déplacement ou un combat par jour** et par Dinoz.",
       "follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
-      "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz."
+      "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz.",
+      "resurrect": "Votre Dinoz est mort, il faut donc le Ressusciter avant de pouvoir à nouveau le faire combattre."
     },
     "name": {
       "fight": "Combattre",
       "follow": "Suivre",
-      "levelup": "Niveau Supplémentaire !"
+      "levelup": "Niveau Supplémentaire !",
+      "resurrect": "Ressusciter"
     }
   },
   "button": {

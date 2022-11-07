@@ -1,4 +1,4 @@
-import { ItemFiche, ItemType } from '../models/index.js';
+import { ItemEffect, ItemFiche, ItemType } from '../models/index.js';
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.
@@ -11,7 +11,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 80,
-		price: 450 // TODO double check
+		price: 450, // TODO double check
+		effect: {
+			category: ItemEffect.ACTION,
+			value: 1
+		}
 	},
 	// Angel potion: resurrects a dino
 	POTION_ANGEL: {
@@ -21,7 +25,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 8,
-		price: 1000 // TODO double check
+		price: 1000, // TODO double check
+		effect: {
+			category: ItemEffect.RESURRECT,
+			value: 1
+		}
 	},
 	// Cloud burger: heals 10
 	CLOUD_BURGER: {
@@ -31,7 +39,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 24,
-		price: 350 // TODO double check
+		price: 350, // TODO double check
+		effect: {
+			category: ItemEffect.HEAL,
+			value: 10
+		}
 	},
 	// Authentic hot bread: heals 100
 	HOT_BREAD: {
@@ -41,7 +53,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 8,
-		price: 3000 // TODO double check
+		price: 3000, // TODO double check
+		effect: {
+			category: ItemEffect.HEAL,
+			value: 100
+		}
 	},
 	// Meat pie: heals 30
 	MEAT_PIE: {
@@ -51,7 +67,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 16,
-		price: 1000 // TODO double check
+		price: 1000, // TODO double check
+		effect: {
+			category: ItemEffect.HEAL,
+			value: 30
+		}
 	},
 	// Fight ration: heals up to 20 during a fight
 	FIGHT_RATION: {

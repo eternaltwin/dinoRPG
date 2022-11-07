@@ -2,13 +2,13 @@
 	<div class="tabPanel">
 		<ul class="tabs">
 			<li :class="tabSelected === 1 ? 'active' : ''">
-				<a href="#" @click="tabSelected = 1">{{ $t('tabs.map') }}</a>
+				<a href="#" @click="sessionStore.setTab(1)">{{ $t('tabs.map') }}</a>
 			</li>
 			<li :class="tabSelected === 2 ? 'active' : ''">
-				<a href="#" @click="tabSelected = 2">{{ $t('tabs.inventory') }}</a>
+				<a href="#" @click="sessionStore.setTab(2)">{{ $t('tabs.inventory') }}</a>
 			</li>
 			<li :class="tabSelected === 3 ? 'active' : ''">
-				<a href="#" @click="tabSelected = 3">{{ $t('tabs.details') }}</a>
+				<a href="#" @click="sessionStore.setTab(3)">{{ $t('tabs.details') }}</a>
 			</li>
 		</ul>
 		<MapTab v-if="tabSelected === 1" :dinozData="dinozData" />
@@ -19,7 +19,8 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz, Item } from '@/models';
+import { sessionStore } from '@/store';
+import { Dinoz } from '@/models';
 
 export default defineComponent({
 	name: 'TabPanel',
@@ -31,9 +32,13 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			allItemsData: {} as Array<Item>,
-			tabSelected: 1 as number
+			sessionStore: sessionStore()
 		};
+	},
+	computed: {
+		tabSelected(): number {
+			return this.sessionStore.getTab;
+		}
 	}
 });
 </script>

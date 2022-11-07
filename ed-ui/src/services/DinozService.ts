@@ -65,5 +65,11 @@ export const DinozService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	resurrectDinoz(dinozId: number): Promise<void> {
+		return http()
+			.put(`/dinoz/resurrect/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

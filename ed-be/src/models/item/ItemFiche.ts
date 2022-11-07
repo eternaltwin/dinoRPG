@@ -1,4 +1,4 @@
-import { ItemType } from '../enums/index.js';
+import { ItemEffect, ItemType } from '../enums/index.js';
 
 export interface ItemFiche {
 	itemId: number;
@@ -9,4 +9,8 @@ export interface ItemFiche {
 	itemType: ItemType;
 	isRare: boolean;
 	price: number;
+	effect?: {
+		category: ItemEffect;
+		value: number;
+	};
 }

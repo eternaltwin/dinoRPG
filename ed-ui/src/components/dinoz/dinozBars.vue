@@ -12,7 +12,18 @@
 		<div class="bars">
 			<div class="life">
 				<div class="bar">
-					<img :src="getImgURL('bar', 'bar_life')" alt="life" :style="getBarSize(dinozData.life, dinozData.maxLife)" />
+					<img
+						v-if="dinozData.life === 0"
+						:src="getImgURL('bar', 'bar_warning')"
+						alt="life"
+						style="width: 98px; height: 11px"
+					/>
+					<img
+						v-else
+						:src="getImgURL('bar', 'bar_life')"
+						alt="life"
+						:style="getBarSize(dinozData.life, dinozData.maxLife)"
+					/>
 				</div>
 			</div>
 			<div class="lifetext">{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
