@@ -1634,7 +1634,7 @@
     "shop": {
       "buyMaxConfirm_part1": "Voulez-vous vraiment acheter ",
       "buyMaxConfirm_part2": " exemplaire(s) de cet objet pour un total de ",
-      "buyMaxConfirm_part3": " pièces ?",
+      "buyMaxConfirm_part3a": " pièces ?",
       "buyMaxConfirm_part3b": " napodinos d'or ?"
     }
   },
