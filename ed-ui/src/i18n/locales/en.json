@@ -29,14 +29,6 @@
     "text2": "DinoRPG is Open Source and everyone is welcome to contribute. You can find the source code on {Gitlab}.",
     "text3": "DinoRPG is part of {EternalTwin}, if you want, you can donate on {OpenCollective}."
   },
-  "footer": {
-    "developpers": "Development",
-    "thanks": "Special Thanks",
-    "dinorpg": "Eternal DinoRPG",
-    "text1": "This is a fan-project for {DinoRPG} from MotionTwin. Unless otherwise stated, all graphic parts are from these games and thus are MotionTwin's property.",
-    "text2": "DinoRPG is Open Source and everyone is welcome to contribute. You can find the source code on {Gitlab}.",
-    "text3": "DinoRPG is part of {EternalTwin}, if you want, you can donate on {OpenCollective}."
-  },
   "import": {
     "disclaimer1": "You can import your account from DinoRPG to get back your progress and all your Dinoz !",
     "disclaimer2": "Carefull, this will reset all your current progress on EternalDinoRPG but won't touch your DinoRPG account.",
@@ -111,13 +103,6 @@
       "false": "**INACTIVE** && //An inactive skill will no longer be used by your Dinoz. Click to activate//",
       "true": "**ACTIVE** && //Click here to deactivate//",
       "locked": "Cannot be disabled"
-    },
-    "sort": {
-      "default": "Default",
-      "energy": "Energy",
-      "type": "Type",
-      "state": "Status",
-      "title": "Sort skills"
     },
     "sort": {
       "default": "Default",
@@ -379,7 +364,6 @@
   },
   "news": {
     "actualites": "Dinoland's actuality",
-    "overload": "Show old updates",
     "overload": "Show old updates"
   },
   "place": {
@@ -1221,7 +1205,6 @@
       "SangAcide": "If one of the enemy's assaults hits the Dinoz, he can make the enemy lose some life",
       "Regenerescence": "Increases speed of health points recovery when resting",
       "PremierSoins": "Dinoz will recover one health point at the end of the fight if he has lost some life",
-      "PremierSoins": "Permet au Dinoz de récuperer un point de vie à la fin du combat s'il a perdu de la vie",
       "PureeSalvatrice": "Cancels all Negative Status of the Group",
       "AuraHermetique": "Give the status Shield, increases all defense by 6",
       "CrepusculeFlambloyant": "Attacks all enemies with Fire at a strength of 6 + Lightning at a strength of 6",
