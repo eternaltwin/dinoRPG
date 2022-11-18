@@ -142,7 +142,6 @@
       "cloud_burger": "Nuage Burger",
       "hot_bread": "Pain Chaud",
       "meat_pie": "Tarte à la Viande",
-
       "fight_ration": "Ration de Combat",
       "surviving_ration": "TODO",
       "goblin_merguez": "Merguez de Gobelin",
@@ -853,8 +852,8 @@
       "advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma: l'essayer, c'est l'adopter !",
       "quantity": "Quantité",
       "buy": "Acheter",
-      "price": "Prix :",
       "title": "Marchand : ",
+      "price": "Prix :",
       "flying": {
         "name": "Boutique volante de Dinoland",
         "description": "La Boutique volante de Dinoland est accessible à tout endroit et permet à tout moment à votre Dinoz de se procurer des objets de base. En général, il suffit de siffler très fort pour qu'elle arrive. Il existe aussi de nombreuses autres Boutiques dans Dinoland, qui vendent chacune des objets spéciaux."
