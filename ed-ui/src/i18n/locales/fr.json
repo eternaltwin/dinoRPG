@@ -631,7 +631,8 @@
       "michel": "Le guide Michel",
       "street_shouter":"blabla",
       "sofia": "Sofia",
-      "mmex": "Madame X"
+      "mmex": "Madame X",
+      "mineur":  "Mineur Coralien"
     },
     "professor": {
       "speech": {
@@ -801,6 +802,37 @@
         "learn5bis": "Quoi...",
         "no": "(ouille)",
         "dolearn": "hello"
+      }
+    },
+    "mineur": {
+      "speech": {
+        "begin": "Pinc ! Pinc ! Pinc ! Pffff ce corail est plus dur que de la pierre tu savais ça toi ?",
+        "thanks": "T'es sympa ! Reviens ici quand ta pelle sera cassée, je la réparerai.",
+        "yes": "Ah bon tu étais au courant ? Tiens, je te prête une vielle pelle pour que toi aussi tu puisses creuser.\n\t\tElle est en très mauvais état donc à la première utilisation elle va se casser, mais c'est ma pelle porte-chance,\n\t\tavec elle tu pourras trouver les plus grands trésors de Dinoland ! Alors, on dit quoi ?",
+        "nothing": "Alors elle te plaît ma pelle ? On dit quoi ?",
+        "repair": "Ah c'est toi ? Alors comme ça tu as cassé ma pelle ? Bouge pas... voilà je te l'ai réparée !... Hep ! Tu n'oublies pas quelque chose ?",
+        "nothing2": "Alors elle te plaît ma pelle avec le manche ergonomique ? On dit quoi ?",
+        "repair2": "Ah c'est toi ? Alors comme ça tu as cassé ma pelle ? Bouge pas... voilà je te l'ai réparée !... Hep ! Tu n'oublies pas quelque chose ?",
+        "no": "Pfff, oui c'est très très dur à creuser, c'est pour celà qu'il faut des gars costauds comme moi pour faire ce métier.",
+        "next": "Oui, tout à fait ! Regarde-moi ces muscles ! Je suis nominé aux Corail Awards, catégorie \"Mineur Gros-bras\" cette année.",
+        "next2": "Oui, puisque j'te le dis ! Va falloir que je bosse encore beaucoup si je veux un jour ressembler à mon idole...",
+        "next3": "Et alors ?!!? Tu me demandes même pô qui c'est mon idole ?",
+        "qui": "Mais voyons ! Sylverter Staline bien sûr ! Trois fois gagnant des Corail Awards, dans les catégories\n\t\t\"Muscles Ultimes\" et \"Replique qui tue\". Il est vraiment trop coool, et il a toujours réussi a éliminer tous ses\n\t\topposants !",
+        "ok": "Oui c'est le plus fort ! Alàlà, le bon vieux temps, je pourrais en parler pendant des heures...\n\t\tMais bon je te laisse j'ai du boulot ! Pinc ! Pinc ! Pinc !"
+      },
+      "playerChoice": {
+        "thanks": "Merci !",
+        "yes": "Oui",
+        "nothing": "Oui",
+        "repair": "Oui",
+        "nothing2": "Oui",
+        "repair2": "Oui",
+        "no": "Non",
+        "next": "Ah bon...",
+        "next2": "Vraiment...",
+        "next3": "...",
+        "qui": "Euh... et qui est votre idole ?",
+        "ok": "Il a l'air fort !"
       }
     }
 
@@ -1518,7 +1550,8 @@
       "46": "Clé de Sylvenoire",
       "47": "Vénérable",
       "48": "Charme de Feu",
-      "49": "Charme Bao"
+      "49": "Charme Bao",
+      "52" : "Pelle Cassée"
     },
     "description": {
       "1": "Le Materiel d'Escalade permet à ce Dinoz de gravir les pentes escarpées.",
@@ -1569,7 +1602,8 @@
       "46": "Cette clé permet au Dinoz d'ouvrir la Porte de Sylvenoire et d'accéder aux Steppes Magnétiques.",
       "47": "Ce dinoz a vaincu le Vénérable.",
       "48": "Le Charme de Feu augmente la puissance des attaques de Feu de ce Dinoz.",
-      "49": "Le Charme Bao augmente la défense de ce Dinoz contre les attaques d'Eau."
+      "49": "Le Charme Bao augmente la défense de ce Dinoz contre les attaques d'Eau.",
+      "52": "La Pelle améliorée s'est finalement cassée il faudra la faire réparer avant de l'utiliser à nouveau."
     }
   },
   "tabs": {

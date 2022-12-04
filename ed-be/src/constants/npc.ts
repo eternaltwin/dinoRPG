@@ -1,6 +1,6 @@
 import { Npc, NpcTrigger } from '../models/index.js';
 import { placeList } from './index.js';
-import { ALPHA, MMEX, PROFESSOR, SOFIA } from './characters/index.js';
+import { ALPHA, MINEUR, MMEX, PROFESSOR, SOFIA } from './characters/index.js';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -45,6 +45,12 @@ export const npcList: Record<string, Npc> = {
 		placeId: placeList.FORCEBRUT.placeId,
 		condition: NpcTrigger.ALWAYS,
 		data: MMEX
-		// flashvars: 'frame=plage&background=2'
+	},
+	MINEUR: {
+		name: 'mineur',
+		id: 6,
+		placeId: placeList.MINES_DE_CORAIL.placeId,
+		condition: NpcTrigger.ALWAYS,
+		data: MINEUR
 	}
 };
