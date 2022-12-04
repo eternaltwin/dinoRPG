@@ -40,6 +40,7 @@
 			></a>
 		</div>
 		<DinozList></DinozList>
+		<a class="overviewButton"><img :src="getImgURL('icons', `small_edit`)" :alt="edit" />{{ $t('button.sortDinoz') }}</a>
 		<a class="button" @click="goToPage('DinozShopPage')">
 			{{ $t('button.buyDinoz') }}
 		</a>
@@ -106,6 +107,30 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.overviewBt {
+	color: #8e3e26;
+	font-variant: small-caps;
+	font-weight: bold;
+	display: block;
+	margin-bottom: 1px;
+	width: 138px;
+	padding-left: 5px;
+	font-size: 8pt;
+	line-height: 10pt;
+	text-decoration: none;
+	border: 1px solid #d69e68;
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	cursor: pointer;
+	img {
+		vertical-align: -15%;
+		padding-right: 3px;
+	}
+	&:hover {
+		color: #fce3bc;
+	}
+}
 #accountList {
 	float: left;
 	position: relative;

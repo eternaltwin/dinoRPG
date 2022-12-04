@@ -164,6 +164,11 @@ export class Dinoz {
 	})
 	nbrUpAir: number;
 
+	@Column({
+		nullable: true
+	})
+	order: number;
+
 	@CreateDateColumn()
 	createdDate: Date;
 

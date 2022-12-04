@@ -62,13 +62,14 @@ export default defineComponent({
 		if (!money || !dinozList || !dinozCount) {
 			try {
 				EventBus.emit('isLoading', true);
-				const commonData: CommonData = await PlayerService.getCommonData();
+				const commonData: CommonData = await PlayerService.getLoggedInData();
 
 				// Set data in sessionStore
 				this.sessionStore.setMoney(commonData.money);
 				this.sessionStore.setDinozList(commonData.dinoz);
 				this.sessionStore.setDinozCount(commonData.dinozCount);
 				this.sessionStore.setPlayerId(commonData.id);
+				this.sessionStore.setPlayerOptions(commonData.playerOptions);
 				EventBus.emit('isLoading', false);
 
 				await this.$router.push({ name: 'News' });

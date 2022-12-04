@@ -84,11 +84,13 @@
     "shop": "Boutique",
     "confirm": "Confirmer cette action ?",
     "chose": "Choisir",
-    "generator": "Générateur de dinoz"
+    "generator": "Générateur de dinoz",
+    "sortDinoz":  "Gérer mes Dinoz"
   },
   "chooseDinoz": {
     "information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
-    "nomDuDinoz": "Nom du dinoz :"
+    "nomDuDinoz": "Nom du dinoz :",
+    "pageName":  "Choix du Nom"
   },
   "inventory": {
     "itemName": "Nom de l'objet",
@@ -1667,7 +1669,8 @@
     "ranking": "Dino-RPG [ Grand Hall de la Gloire ]",
     "ingredients": "Dino-RPG [ Ingrédients ]",
     "levelup": "Dino-RPG [ Niveau supplémentaire pour ",
-    "npc": "Dino-RPG [ Personnage : "
+    "npc": "Dino-RPG [ Personnage : ",
+    "dinozNaming": "Dino-RPG [ Choix du Nom ]"
   },
   "myAccount": {
     "title": "Joueur :",

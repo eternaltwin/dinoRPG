@@ -12,6 +12,7 @@ export * from './place/Place.js';
 export * from './player/NewPositions.js';
 export * from './player/PlayerCommonData.js';
 export * from './player/PlayerInfo.js';
+export * from './player/PlayerOptions.js';
 export * from './player/PlayerRanking.js';
 export * from './player/PlayerTypeToSend.js';
 export * from './reward/EpicReward.js';

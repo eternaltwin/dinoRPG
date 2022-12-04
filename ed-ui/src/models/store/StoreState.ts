@@ -1,4 +1,4 @@
-import { Dinoz } from '@/models';
+import { Dinoz, PlayerOptions } from '@/models';
 import { FightResult } from '../dinoz';
 
 export interface StoreStateSession {
@@ -9,6 +9,7 @@ export interface StoreStateSession {
 	playerId?: number;
 	fight?: FightResult;
 	tab: number;
+	playerOptions: PlayerOptions;
 }
 
 export interface StoreStateLocal {

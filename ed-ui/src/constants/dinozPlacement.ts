@@ -43,43 +43,43 @@ export const dinozPlacement: placement = {
 	},
 	fliped: {
 		0: {
-			top: 90,
+			top: 60,
 			left: 137
 		},
 		1: {
-			top: 85,
+			top: 55,
 			left: 141
 		},
 		2: {
-			top: 84,
+			top: 54,
 			left: 143
 		},
 		3: {
-			top: 78,
+			top: 48,
 			left: 146
 		},
 		4: {
-			top: 76,
+			top: 46,
 			left: 149
 		},
 		5: {
-			top: 72,
+			top: 42,
 			left: 149
 		},
 		6: {
-			top: 69,
+			top: 39,
 			left: 154
 		},
 		7: {
-			top: 66,
+			top: 36,
 			left: 159
 		},
 		8: {
-			top: 63,
+			top: 33,
 			left: 157
 		},
 		9: {
-			top: 60,
+			top: 30,
 			left: 162
 		}
 	}

@@ -25,6 +25,7 @@ export interface Dinoz {
 	nbrUpWater?: number;
 	nbrUpLightning?: number;
 	nbrUpAir?: number;
+	order: number | null;
 }
 
 export interface DinozRace {

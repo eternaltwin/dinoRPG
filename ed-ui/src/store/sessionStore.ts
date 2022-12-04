@@ -1,4 +1,4 @@
-import { Dinoz, FightResult, StoreStateSession } from '@/models';
+import { Dinoz, FightResult, PlayerOptions, StoreStateSession } from '@/models';
 import { defineStore } from 'pinia';
 
 export const sessionStore = defineStore('sessionStore', {
@@ -9,7 +9,10 @@ export const sessionStore = defineStore('sessionStore', {
 		dinozCount: undefined,
 		playerId: undefined,
 		fight: undefined,
-		tab: 1
+		tab: 1,
+		playerOptions: {
+			hasPDA: false
+		}
 	}),
 	getters: {
 		getJwt: (state: StoreStateSession) => state.jwt,
@@ -18,7 +21,8 @@ export const sessionStore = defineStore('sessionStore', {
 		getDinozCount: (state: StoreStateSession) => state.dinozCount,
 		getPlayerId: (state: StoreStateSession) => state.playerId,
 		getFightResult: (state: StoreStateSession) => state.fight,
-		getTab: (state: StoreStateSession) => state.tab
+		getTab: (state: StoreStateSession) => state.tab,
+		getPlayerOptions: (state: StoreStateSession) => state.playerOptions
 	},
 	actions: {
 		setJwt(jwt: string): void {
@@ -41,6 +45,9 @@ export const sessionStore = defineStore('sessionStore', {
 		},
 		setTab(tab: number): void {
 			this.tab = tab;
+		},
+		setPlayerOptions(playerOptions: PlayerOptions): void {
+			this.playerOptions = playerOptions;
 		}
 	},
 	persist: {

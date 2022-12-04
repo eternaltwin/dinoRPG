@@ -5,16 +5,24 @@
 		{{ dinozData.name }}
 	</div>
 	<a class="right" />
-	<DinozWithoutFlash
-		:style="{
-			position: `absolute`,
-			left: `${position.fliped[dinozData.display[1]].left}px`,
-			top: `${position.fliped[dinozData.display[1]].top}px`
-		}"
-		:display="dinozData.display"
-		:life="dinozData.life"
-		:flip="-1"
-	/>
+	<Tippy theme="normal" tag="div" id="dinozVisual">
+		<DinozWithoutFlash
+			:style="{
+				position: `absolute`,
+				left: `${position.fliped[dinozData.display[1]].left}px`,
+				top: `${position.fliped[dinozData.display[1]].top}px`
+			}"
+			:display="dinozData.display"
+			:life="dinozData.life"
+			:flip="-1"
+		/>
+		<template #content>
+			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
+			<p>
+				{{ $t(`race.description.${dinozRace}`) }}
+			</p>
+		</template>
+	</Tippy>
 	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
 	<DinozEquip :itemList="dinozData.items" />
@@ -24,7 +32,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { Dinoz } from '@/models';
-import { dinozPlacement } from '@/constants';
+import { dinozPlacement, raceList } from '@/constants';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -34,6 +42,11 @@ export default defineComponent({
 			nameChoosen: undefined as boolean | undefined,
 			position: dinozPlacement
 		};
+	},
+	computed: {
+		dinozRace(): string {
+			return Object.entries(raceList).find(race => race[0].toString() === this.dinozData!.display![0])![1];
+		}
 	},
 	components: {
 		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue')),
@@ -47,6 +60,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+#dinozVisual {
+	width: 200px;
+	height: 165px;
+	position: absolute;
+	top: 30px;
+}
 .left {
 	position: absolute;
 	margin-left: 205px;

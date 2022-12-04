@@ -2,7 +2,7 @@ import { http } from '@/utils';
 import { CommonData, PlayerInfo, PlayerRanking } from '@/models';
 
 export const PlayerService = {
-	getCommonData(): Promise<CommonData> {
+	getLoggedInData(): Promise<CommonData> {
 		return http()
 			.get('/player/commondata')
 			.then(res => Promise.resolve(res.data))
