@@ -15,6 +15,7 @@ import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { getDinozTotalCount } from '../dao/dinozDao.js';
 import { levelList } from '../constants/index.js';
 import { PlayerReward } from '../entity/index.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Get data from player on login
@@ -34,6 +35,7 @@ const getCommonData = async (req: Request): Promise<PlayerCommonData> => {
 				display: dinoz.display,
 				name: dinoz.name,
 				life: dinoz.life,
+				maxLife: dinoz.maxLife,
 				experience: dinoz.experience,
 				maxExperience: levelList.find(level => level.id === dinoz.level)!.experience,
 				placeId: dinoz.placeId,
@@ -102,7 +104,7 @@ const importAccount = async (req: Request): Promise<void> => {
 
 	//Check if user has not already imported
 	if (importedData.hasImported) {
-		throw new Error(`Player ${playerId} has already imported his account`);
+		throw new ErrorFormator(500, `Player ${playerId} has already imported his account`);
 	}
 
 	//Check if user has data in Eternaltwin's API
@@ -132,7 +134,7 @@ const setCustomText = async (req: Request): Promise<void> => {
 
 	//Check if user can edit
 	if (!playerProfile.rewards.some(reward => reward.rewardId === rewardList.PLUME)) {
-		throw new Error(`Player ${playerId} cannot edit this field`);
+		throw new ErrorFormator(500, `Player ${playerId} cannot edit this field`);
 	}
 
 	await setPlayer({ id: playerId, customText: req.body.message });

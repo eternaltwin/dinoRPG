@@ -6,6 +6,7 @@ type Events = {
 	responseError: AxiosError;
 	isLoading: boolean;
 	fightResult: FightResult;
+	toast: string;
 };
 
 const EventBus = mitt<Events>();

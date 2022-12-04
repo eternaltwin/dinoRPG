@@ -9,6 +9,7 @@ import { OauthAccessToken } from '@eternal-twin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -27,7 +28,7 @@ const authenticateToET = async (req: Request): Promise<string> => {
 		user = await getUser(token.accessToken, config.general.eternalTwinServerUri);
 	} catch (err) {
 		console.error(err);
-		throw new Error('An error occurred');
+		throw new ErrorFormator(500, 'An error occurred');
 	}
 
 	// Check if player already exists in database

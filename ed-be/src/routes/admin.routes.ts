@@ -12,6 +12,7 @@ import {
 import { body, param, validationResult } from 'express-validator';
 import { checkIsAdmin } from '../utils/jwt.js';
 import { DinozFiche, PlayerTypeToSend } from '../models/index.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -27,7 +28,8 @@ routes.get(`${commonPath}/dashboard`, checkIsAdmin, async (req: Request, res: Re
 		return res.status(200).send(response);
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		err.cause !== undefined ? res.status(401) : res.status(500);
+		return res.send(err.message);
 	}
 });
 
@@ -60,7 +62,8 @@ routes.put(
 			return res.status(200).send();
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
@@ -83,7 +86,8 @@ routes.put(
 			return res.status(200).send(response);
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
@@ -106,7 +110,8 @@ routes.put(
 			return res.status(200).send();
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
@@ -125,7 +130,8 @@ routes.get(
 			return res.status(200).send(response);
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
@@ -156,7 +162,8 @@ routes.put(
 			return res.status(200).send();
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
@@ -175,7 +182,8 @@ routes.get(
 			return res.status(200).send(response);
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );

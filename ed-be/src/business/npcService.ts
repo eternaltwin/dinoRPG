@@ -6,6 +6,7 @@ import { placeList } from '../constants/index.js';
 import { npcList } from '../constants/npc.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { checkCondition, rewarder, triggerAction } from '../utils/parser.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 	const dinozId: number = parseInt(req.params.dinozId);
@@ -16,17 +17,17 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const pnj: Npc | undefined = Object.values(npcList).find(pnj => pnj.name === npcName);
 
 	if (!pnj) {
-		throw new Error(`NPC ${npcName} doesn't exists`);
+		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
 	}
 	if (actualPlace!.placeId !== pnj!.placeId) {
-		throw new Error(`Dinoz ${dinozId} cannot talk to this NPC`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
 	let nextStepWantedData: NpcData | undefined = Object.values(pnj.data).find(
@@ -34,7 +35,7 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 	);
 
 	if (!nextStepWantedData) {
-		throw new Error(`The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
+		throw new ErrorFormator(500, `The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
 	}
 
 	if (nextStepWanted === nextStepWantedData.alias) {
@@ -63,10 +64,10 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 			!actualStep.nextStep.includes(nextStepWantedData!.stepName) &&
 			!actualStep.nextStep.includes(nextStepWantedData!.alias!)
 		) {
-			throw new Error(`This step is not reachable.`);
+			throw new ErrorFormator(500, `This step is not reachable.`);
 		}
 		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData!.condition, dinoz)) {
-			throw new Error(`The dinoz doesn't fullfill the conditions.`);
+			throw new ErrorFormator(500, `The dinoz doesn't fullfill the conditions.`);
 		}
 
 		if (nextStepWantedData.target !== undefined) {

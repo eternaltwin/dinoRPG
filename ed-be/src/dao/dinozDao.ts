@@ -70,9 +70,11 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz> => {
 			'dinoz.placeId'
 		])
 		.addSelect(['player.id'])
+		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
 		.innerJoin('dinoz.player', 'player')
+		.leftJoin('player.items', 'playerItems')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })

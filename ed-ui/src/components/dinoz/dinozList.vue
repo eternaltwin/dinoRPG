@@ -1,6 +1,14 @@
 <template>
 	<ul>
-		<li class="light" v-for="(dinoz, index) in dinozList" :key="index">
+		<li
+			v-for="(dinoz, index) in dinozList"
+			:key="index"
+			:class="{
+				dead: dinoz.life === 0,
+				selected: dinoz.id === pageId,
+				light: true
+			}"
+		>
 			<a @click="goToDinozPage(dinoz.id)">
 				<span class="icon">
 					<span class="tinyBar">
@@ -50,7 +58,7 @@ export default defineComponent({
 		SDinozSWF
 	},*/
 	methods: {
-		goToDinozPage(dinozId: string): void {
+		goToDinozPage(dinozId: number): void {
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 		},
 		getLifeBarWidth(life: number, maxLife: number): string {
@@ -64,11 +72,14 @@ export default defineComponent({
 	computed: {
 		storeDinozList(): Array<Dinoz> {
 			return this.sessionStore.getDinozList!;
+		},
+		pageId(): number {
+			return parseInt(this.$route.params.id as string);
 		}
 	},
 	watch: {
 		storeDinozList: function (dinozList: Array<Dinoz>) {
-			this.dinozList = dinozList;
+			this.dinozList = dinozList.sort((a, b) => a.id! - b.id!);
 		}
 	},
 	mounted(): void {
@@ -115,6 +126,8 @@ ul {
 				width: 87px;
 				white-space: nowrap;
 				overflow: hidden;
+				font-weight: bold;
+				font-variant: small-caps;
 			}
 
 			.icon {
@@ -136,6 +149,34 @@ ul {
 					.tinyBar {
 						margin-top: 6px;
 					}
+				}
+			}
+
+			&.dead {
+				color: #a52323;
+				background-color: #a9a9a9;
+				span {
+					text-decoration: line-through;
+				}
+			}
+
+			&.off {
+				opacity: 0.3;
+				filter: alpha(opacity=30);
+				zoom: 1;
+			}
+
+			&.selected {
+				background-color: #e6b479;
+				color: black;
+				border-color: black;
+				a {
+					background-color: #e6b479;
+					color: black;
+					border-color: black;
+				}
+				span {
+					color: black;
 				}
 			}
 

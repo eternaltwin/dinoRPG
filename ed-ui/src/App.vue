@@ -5,6 +5,7 @@
 	<Version />
 	<Thanks />
 	<ErrorMessage />
+	<Toast />
 </template>
 
 <script lang="ts">
@@ -20,7 +21,8 @@ export default defineComponent({
 		Version,
 		Thanks,
 		Spinner: defineAsyncComponent(() => import('@/components/utils/Spinner.vue')),
-		ErrorMessage: defineAsyncComponent(() => import('@/components/utils/ErrorMessage.vue'))
+		ErrorMessage: defineAsyncComponent(() => import('@/components/utils/ErrorMessage.vue')),
+		Toast: defineAsyncComponent(() => import('@/components/utils/Toast.vue'))
 	}
 });
 </script>

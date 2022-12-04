@@ -3,6 +3,7 @@ import { apiRoutes } from '../constants/index.js';
 import { getAllIngredientsData } from '../business/ingredientService.js';
 import { validationResult } from 'express-validator';
 import { IngredientFiche } from '../models/index.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -35,7 +36,8 @@ routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 		return res.status(200).send(response);
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		const e: ErrorFormator = err;
+		res.status(e.errorCode).send(e.message);
 	}
 });
 

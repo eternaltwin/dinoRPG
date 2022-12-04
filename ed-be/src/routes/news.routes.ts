@@ -5,6 +5,7 @@ import { checkIsAdmin } from '../utils/jwt.js';
 import { getNews, postNews, updateNews } from '../business/newsService.js';
 import { News } from '../entity/news.js';
 import multer from 'multer';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -90,7 +91,8 @@ routes.put(
 			return res.status(200).send();
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
@@ -130,7 +132,8 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 		return res.status(200).send(response);
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		const e: ErrorFormator = err as ErrorFormator;
+		res.status(e.errorCode).send(e.message);
 	}
 });
 
@@ -214,7 +217,8 @@ routes.put(
 			return res.status(200).send();
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );

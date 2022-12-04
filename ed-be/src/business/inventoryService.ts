@@ -3,8 +3,9 @@ import { getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { Dinoz, Player } from '../entity/index.js';
 import { ItemEffect, ItemFiche, ItemType } from '../models/index.js';
 import { itemList } from '../constants/item.js';
-import { addLife, getDinozFicheItemRequest, getDinozFicheRequest } from '../dao/dinozDao.js';
+import { addLife, getDinozFicheItemRequest } from '../dao/dinozDao.js';
 import { useItemDataRequest } from '../dao/playerItemDao.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -46,39 +47,39 @@ const useItem = async (req: Request): Promise<void> => {
 
 	// If player found is different from player who do the request, throw exception
 	if (dinoz.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${dinozId} doesn't belong to player.`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
 	if (item === undefined) {
-		throw new Error(`This item didn't exist`);
+		throw new ErrorFormator(500, `This item didn't exist`);
 	}
 
 	const itemData = dinoz.player.items.find(item => item.itemId === itemId);
 	if (itemData && itemData.quantity <= 0) {
-		throw new Error(`You don't have enought item ${itemId}`);
+		throw new ErrorFormator(500, `You don't have enought item ${itemId}`);
 	}
 
 	switch (item.effect?.category) {
 		case ItemEffect.HEAL:
 			const lifeAdded = dinoz.maxLife - dinoz.life > item.effect.value ? item.effect.value : dinoz.maxLife - dinoz.life;
 			if (lifeAdded === 0) {
-				throw new Error('AlreadyAtMaxHealth');
+				throw new ErrorFormator(400, 'AlreadyAtMaxHealth');
 			}
 			if (dinoz.life === 0) {
-				throw new Error('DinozIsDead');
+				throw new ErrorFormator(400, 'DinozIsDead');
 			}
 			await addLife(dinoz.id, lifeAdded);
 			await useItemDataRequest(dinoz.player.id, item.itemId);
 			break;
 		case ItemEffect.RESURRECT:
 			if (dinoz.life > 0) {
-				throw new Error('DinozNotDead');
+				throw new ErrorFormator(400, 'DinozNotDead');
 			}
 			await addLife(dinoz.id, 1);
 			await useItemDataRequest(dinoz.player.id, item.itemId);
 			break;
 		default:
-			throw new Error('WTF');
+			throw new ErrorFormator(500, 'WTF');
 	}
 };
 

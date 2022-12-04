@@ -8,6 +8,7 @@ import {
 	setPlayerMoneyRequest
 } from '../dao/playerDao.js';
 import { itemList, placeList, shopList, statusList } from '../constants/index.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Get all items from a shop
@@ -22,7 +23,7 @@ const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
 
 	// Throw an exception if the shop does not exist
 	if (tempShop === undefined) {
-		throw new Error(`The shop ${shopId} does not exist`);
+		throw new ErrorFormator(500, `The shop ${shopId} does not exist`);
 	}
 
 	// Get the player's data (money, shopKeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
@@ -83,13 +84,13 @@ const buyItem = async (req: Request): Promise<void> => {
 
 	// Throw an exception if somehow we have a negative or zero quantity
 	if (quantityBought <= 0) {
-		throw new Error(`Invalid quantity of items ${quantityBought}`);
+		throw new ErrorFormator(400, 'wrongQuantity');
 	}
 
 	const theShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId);
 	// Throw an exception if the shop does not exist
 	if (!theShop) {
-		throw new Error(`The shop ${shopId} does not exist`);
+		throw new ErrorFormator(500, `The shop ${shopId} does not exist`);
 	}
 
 	checkDinozPlace(theShop, playerShopData, shopId);
@@ -98,7 +99,7 @@ const buyItem = async (req: Request): Promise<void> => {
 	const itemSold: Partial<ItemFiche> | undefined = theShop.listItemsSold.find(item => item.itemId === itemId)!;
 	// Throw an exception if the item does not exist in the shop list of items
 	if (itemSold === undefined) {
-		throw new Error(`The item ${itemId} does not exist in the shop ${shopId}`);
+		throw new ErrorFormator(500, `The item ${itemId} does not exist in the shop ${shopId}`);
 	}
 
 	// All checks passed, now do the checks specific to normal and magic items
@@ -129,12 +130,12 @@ const buyItem = async (req: Request): Promise<void> => {
 	} else {
 		// Throws an exception if player doesn't have enough money to buy the items
 		if (playerShopData.money < itemToBuy.price! * quantityBought) {
-			throw new Error(`You don't have enough money to buy ${quantityBought} of the item ${itemToBuy.itemId}`);
+			throw new ErrorFormator(400, 'notEnoughMoney');
 		}
 
 		// Throws an exception if the player does not have enough storage space left
 		if (itemToBuy.quantity! > itemToBuy.maxQuantity!) {
-			throw new Error(`You don't have enough storage to buy ${itemToBuy.quantity} of the item ${itemToBuy.itemId}`);
+			throw new ErrorFormator(400, 'notEnoughMoney');
 		}
 
 		// All checks passed related to gold, let's update the stuff
@@ -193,12 +194,12 @@ async function buyMagicItem(
 
 	// Throws an exception if player doesn't have enough money to buy the items
 	if (playerNapoData === undefined || playerNapoData!.quantity! < magicalItemToBuy.price! * quantityBought) {
-		throw new Error(`You don't have enough golden napodinoz to buy the item ${itemReference.itemId}`);
+		throw new ErrorFormator(400, 'notEnoughMoney');
 	}
 
 	// Throws an exception if the player does not have enough storage space left
 	if (magicalItemToBuy.quantity! > magicalItemToBuy.maxQuantity!) {
-		throw new Error(`You don't have enough storage to buy ${quantityBought} of the item ${itemReference.itemId}`);
+		throw new ErrorFormator(400, 'notEnoughStorage');
 	}
 
 	// All checks passed related to magic item, let's update the stuff
@@ -218,12 +219,12 @@ function checkDinozPlace(theShop: ShopFiche, player: Player, shopId: number): vo
 				dinoz => dinoz.status.some(status => status.statusId === statusList.CURSED) && dinoz.placeId === theShop.placeId
 			);
 			if (!hasCursedDinozAtShop) {
-				throw new Error(`You need a cursed dinoz at the location of the shop to access it`);
+				throw new ErrorFormator(500, `You need a cursed dinoz at the location of the shop to access it`);
 			}
 		} else {
 			// Check at least one dinoz that is not frozen or sacrificed is at the location of the shop
 			if (!player.dinoz.some(dinoz => dinoz.placeId === theShop.placeId)) {
-				throw new Error(`You don't have any dinoz at the shop's location ${shopId}`);
+				throw new ErrorFormator(500, `You don't have any dinoz at the shop's location ${shopId}`);
 			}
 		}
 	}

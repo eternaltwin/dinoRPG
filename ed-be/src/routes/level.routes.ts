@@ -3,6 +3,7 @@ import { body, param, validationResult } from 'express-validator';
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
 import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -51,9 +52,8 @@ routes.get(
 			const response = await getLearnableAndUnlockableSkills(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e: Error = err as Error;
-			console.error(e.message);
-			res.status(500).send(e.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
@@ -117,9 +117,8 @@ routes.post(
 			const response: string = await learnSkill(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e: Error = err as Error;
-			console.error(e.message);
-			return res.status(500).send(e.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );

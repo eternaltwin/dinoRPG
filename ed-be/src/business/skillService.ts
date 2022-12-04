@@ -16,6 +16,7 @@ import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../d
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -74,7 +75,7 @@ const learnSkill = async (req: Request): Promise<string> => {
 		skillIdList.length === skills.unlockableSkills!.length;
 
 	if (!isLearnableSkills && !isUnlockableSkills) {
-		throw new Error(`Dinoz ${dinozId} can't learn this`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} can't learn this`);
 	}
 
 	if (isUnlockableSkills) {
@@ -132,17 +133,17 @@ function getDinozLearnableSkills(
 	tryNumber: number
 ): Partial<DinozSkillOwnAndUnlockable> {
 	if (dinoz.level === gameConfig.dinoz.maxLevel) {
-		throw new Error(`Dinoz ${dinozId} is already at max level.`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} is already at max level.`);
 	}
 
 	if (dinoz.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	const maxExperience: number = levelList.find(level => level.id === dinoz.level)!.experience;
 
 	if (dinoz.experience < maxExperience) {
-		throw new Error(`Dinoz ${dinozId} doesn't have enough experience`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't have enough experience`);
 	}
 
 	// Check if dinoz has 'Plan de carrière' skill or cube object
@@ -151,7 +152,7 @@ function getDinozLearnableSkills(
 		(dinoz.items.some(item => item.itemId === itemList.DINOZ_CUBE.itemId) && dinoz.level <= 10);
 
 	if (tryNumber < 1 || tryNumber > 2 || (tryNumber === 2 && !hasCubeOrPdc)) {
-		throw new Error(`tryNumber ${tryNumber} is invalid`);
+		throw new ErrorFormator(500, `tryNumber ${tryNumber} is invalid`);
 	}
 
 	const learnableElement: number = tryNumber === 1 ? dinoz.nextUpElementId : dinoz.nextUpAltElementId;
@@ -222,7 +223,7 @@ function getNewDinozDataFromLevelUp(
 			dinoz.nbrUpAir = dinozSkills.nbrUpAir + 1;
 			break;
 		default:
-			throw new Error(`Up type is not valid !`);
+			throw new ErrorFormator(500, `Up type is not valid !`);
 	}
 
 	// Display

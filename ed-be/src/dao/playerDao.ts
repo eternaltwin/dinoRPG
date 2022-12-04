@@ -87,6 +87,7 @@ const getCommonDataRequest = (playerId: number): Promise<Player> => {
 			'dinoz.display',
 			'dinoz.name',
 			'dinoz.life',
+			'dinoz.maxLife',
 			'dinoz.experience',
 			'dinoz.placeId',
 			'dinoz.level'

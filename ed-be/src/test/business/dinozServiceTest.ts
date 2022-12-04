@@ -9,9 +9,9 @@ import {
 	betaMove,
 	resurrectDinoz
 } from '../../business/dinozService.js';
-import { actionList, placeList, raceList, shopList, skillList, statusList } from '../../constants/index.js';
+import { actionList, itemList, placeList, raceList, shopList, skillList, statusList } from '../../constants/index.js';
 import { ActionFiche, DinozFiche, DinozSkillFiche, FightResult, ShopType } from '../../models/index.js';
-import { DinozSkill, DinozStatus, Dinoz, Player } from '../../entity/index.js';
+import { DinozSkill, DinozStatus, Dinoz, Player, PlayerItem } from '../../entity/index.js';
 import {
 	player,
 	dinozId,
@@ -80,10 +80,17 @@ describe('Function getDinozFiche()', function () {
 	it.each(Object.values(shopList))('Nominal case - test all shops action: Shop %#', async shopToTest => {
 		// Update dinoz location and status as necessary depending on the shop
 		DinozTestData.placeId = shopToTest.placeId;
-		if (shopToTest.type == ShopType.CURSED) {
+		if (shopToTest.type === ShopType.CURSED) {
 			DinozTestData.status.push({
 				statusId: statusList.CURSED
 			} as DinozStatus);
+		}
+
+		if (shopToTest.type === ShopType.MAGICAL) {
+			DinozTestData.player.items.push({
+				itemId: itemList.GOLDEN_NAPODINO.itemId,
+				quantity: 1
+			} as PlayerItem);
 		}
 
 		// Override this as necessary if you change DinozTestData
@@ -330,7 +337,7 @@ describe('Test de la fonction buyDinoz()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`You don't have enough money to buy dinoz ${dinozId}`);
+			expect(e.message).toBe(`notEnoughMoney`);
 		}
 
 		DinozFromShop.player.money = 200000;

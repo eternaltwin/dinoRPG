@@ -107,11 +107,14 @@ export default defineComponent({
 		},
 		async useItem(item: Item): Promise<void> {
 			if (item.quantity! > 0) {
+				EventBus.emit('isLoading', true);
 				const dinozId = this.$route.params.id as string;
 				try {
 					await InventoryService.useInventoryItem(item.itemId, parseInt(dinozId));
+					EventBus.emit('isLoading', false);
 				} catch (error) {
-					console.error(error); //Need to be put in the toast later
+					errorHandler.handle(error);
+					return;
 				}
 			}
 		}

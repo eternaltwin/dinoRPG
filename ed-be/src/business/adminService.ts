@@ -8,6 +8,7 @@ import { addMultipleSkillToDinoz, removeSkillToDinoz } from '../dao/dinozSkillDa
 import { DinozStatus, PlayerReward, DinozSkill } from '../entity/index.js';
 import { addMultipleRewardToPlayer, removeRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { DinozFiche, PlayerTypeToSend } from '../models/index.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -67,7 +68,7 @@ const editDinoz = async (req: Request): Promise<void> => {
 				}
 				break;
 			default:
-				throw new Error(`You need to select an operation.`);
+				throw new ErrorFormator(500, `You need to select an operation.`);
 		}
 	}
 
@@ -86,7 +87,7 @@ const editDinoz = async (req: Request): Promise<void> => {
 				}
 				break;
 			default:
-				throw new Error(`You need to select an operation.`);
+				throw new ErrorFormator(500, `You need to select an operation.`);
 		}
 	}
 };
@@ -110,7 +111,7 @@ const setPlayerMoney = async (req: Request): Promise<string> => {
 			await setPlayerMoneyRequest(parseInt(req.params.id), playerGold.money! - req.body.gold);
 			break;
 		default:
-			throw new Error(`You need to select an operation.`);
+			throw new ErrorFormator(500, `You need to select an operation.`);
 	}
 
 	const updatedPlayerGold: Player = await getPlayerMoney(parseInt(req.params.id));
@@ -140,7 +141,7 @@ const givePlayerEpicReward = async (req: Request): Promise<void> => {
 			}
 			break;
 		default:
-			throw new Error(`You need to select an operation.`);
+			throw new ErrorFormator(500, `You need to select an operation.`);
 	}
 };
 

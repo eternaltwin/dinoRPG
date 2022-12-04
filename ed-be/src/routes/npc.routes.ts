@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 import { NpcTalk } from '../models/index.js';
 import { apiRoutes } from '../constants/index.js';
 import { getNpcSpeech } from '../business/npcService.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -68,9 +69,8 @@ routes.put(
 			const dialogue: NpcTalk = await getNpcSpeech(req);
 			res.status(200).send(dialogue);
 		} catch (err) {
-			const e: Error = err as Error;
-			console.error(e.message);
-			res.status(500).send(e.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );

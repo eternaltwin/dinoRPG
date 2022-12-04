@@ -10,6 +10,7 @@ import {
 import { body, param, validationResult } from 'express-validator';
 import { PlayerCommonData, PlayerInfo } from '../models/index.js';
 import { Player } from '../entity/player.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -40,7 +41,8 @@ routes.get(`${commonPath}/commondata`, async (req: Request, res: Response) => {
 		return res.status(200).send(response);
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		const e: ErrorFormator = err;
+		res.status(e.errorCode).send(e.message);
 	}
 });
 
@@ -75,7 +77,8 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: 
 		return res.status(200).send(response);
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		const e: ErrorFormator = err;
+		res.status(e.errorCode).send(e.message);
 	}
 });
 
@@ -119,7 +122,8 @@ routes.put(`${commonPath}/import`, [body('server').exists().isString()], async (
 		return res.status(200).send();
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		const e: ErrorFormator = err;
+		res.status(e.errorCode).send(e.message);
 	}
 });
 
@@ -163,7 +167,8 @@ routes.put(`${commonPath}/customText`, [body('message').exists()], async (req: R
 		return res.status(200).send();
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		const e: ErrorFormator = err;
+		res.status(e.errorCode).send(e.message);
 	}
 });
 
@@ -205,7 +210,8 @@ routes.get(
 			return res.status(200).send(response);
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );

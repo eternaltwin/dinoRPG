@@ -3,6 +3,7 @@ import { getRanking } from '../business/rankingService.js';
 import { apiRoutes } from '../constants/index.js';
 import { Request, Response, Router } from 'express';
 import { PlayerRanking } from '../models/index.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -52,7 +53,8 @@ routes.get(
 			return res.status(200).send(response);
 		} catch (err) {
 			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e: ErrorFormator = err;
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );

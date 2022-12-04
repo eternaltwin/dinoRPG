@@ -12,6 +12,11 @@
     "api": "API",
     "logout": "Déconnexion"
   },
+  "toast": {
+    "DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
+    "AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
+    "DinozNotDead": "Votre dinoz est déjà en vie."
+  },
   "api": "Il vous est possible de consulter notre API afin de la tester. N'oubliez pas de prendre vos token d'authentification JWT :",
   "alpha": {
     "login": "Connexion à Eternal-Twin",

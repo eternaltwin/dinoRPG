@@ -931,7 +931,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`Invalid quantity of items ${quantity}`);
+			expect(e.message).toBe(`wrongQuantity`);
 		}
 	});
 
@@ -952,7 +952,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`Invalid quantity of items ${quantity}`);
+			expect(e.message).toBe(`wrongQuantity`);
 		}
 	});
 
@@ -1103,7 +1103,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`You don't have enough money to buy ${quantity} of the item ${itemPurchased.itemId}`);
+			expect(e.message).toBe(`notEnoughMoney`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -1133,7 +1133,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`You don't have enough storage to buy ${quantity} of the item ${itemPurchased.itemId}`);
+			expect(e.message).toBe(`notEnoughMoney`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -1171,7 +1171,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`You don't have enough storage to buy ${quantity} of the item ${itemPurchased.itemId}`);
+			expect(e.message).toBe(`notEnoughStorage`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -1328,7 +1328,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`You don't have enough golden napodinoz to buy the item ${itemList.TEAR_OF_LIFE.itemId}`);
+			expect(e.message).toBe(`notEnoughMoney`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);
@@ -1368,9 +1368,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(
-				`You don't have enough storage to buy ${quantityToBuy} of the item ${itemList.TEAR_OF_LIFE.itemId}`
-			);
+			expect(e.message).toBe(`notEnoughStorage`);
 		}
 
 		expect(PlayerDao.getPlayerShopOneItemDataRequest).toHaveBeenCalledTimes(1);

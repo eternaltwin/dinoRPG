@@ -3,7 +3,6 @@ import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/pla
 import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	addExperience,
-	addLife,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
 	getDinozFicheRequest,
@@ -25,13 +24,23 @@ import {
 	ShopFiche,
 	ShopType
 } from '../models/index.js';
-import { actionList, levelList, placeList, raceList, shopList, skillList, statusList } from '../constants/index.js';
+import {
+	actionList,
+	itemList,
+	levelList,
+	placeList,
+	raceList,
+	shopList,
+	skillList,
+	statusList
+} from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { getRandomNumber } from '../utils/tools.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js';
 import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Get available action from dinoz
@@ -56,6 +65,16 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 			const dinozIsCursed = dinoz.status.some(status => status.statusId === statusList.CURSED);
 			if (dinozIsCursed) {
 				// Add the shop id to the action
+				const shopAction: ActionFiche = {
+					name: actionList.SHOP.name,
+					imgName: actionList.SHOP.imgName,
+					prop: shopAvailable.shopId
+				};
+				availableActions.push(shopAction);
+			}
+		} else if (shopAvailable.type == ShopType.MAGICAL) {
+			const playerNapodino = dinoz.player.items.find(napo => napo.itemId === itemList.GOLDEN_NAPODINO.itemId);
+			if (playerNapodino && playerNapodino.quantity > 0) {
 				const shopAction: ActionFiche = {
 					name: actionList.SHOP.name,
 					imgName: actionList.SHOP.imgName,
@@ -108,7 +127,8 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 
 	// If player found is different from player who do the request, throw exception
 	if (dinozData.player.id !== req.user!.playerId) {
-		throw new Error(
+		throw new ErrorFormator(
+			500,
 			`Cannot get dinoz details, dinozId : ${dinozId} belongs to player ${dinozData.player.id} instead of player ${
 				req.user!.playerId
 			}`
@@ -159,7 +179,7 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
 	const dinozSkillData: Dinoz = await getDinozSkillRequest(dinozId);
 
 	if (dinozSkillData.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${dinozId} doesn't belong to player ${dinozSkillData.player.id}`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${dinozSkillData.player.id}`);
 	}
 
 	return dinozSkillData.skills.map(skill => {
@@ -194,12 +214,12 @@ const buyDinoz = async (req: Request): Promise<DinozFiche> => {
 
 	// Throws an exception if player doesn't have enough money to buy the dinoz
 	if (dinozShopData.player.money < race.price) {
-		throw new Error(`You don't have enough money to buy dinoz ${req.params.id}`);
+		throw new ErrorFormator(400, 'notEnoughMoney');
 	}
 
 	// Throw error if dinoz doesn't belong to player shop
 	if (dinozShopData.player.id !== req.user!.playerId!) {
-		throw new Error(`Dinoz ${req.params.id} doesn't belong to your account`);
+		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to your account`);
 	}
 
 	const newDinoz: Partial<Dinoz> = {
@@ -276,12 +296,12 @@ const setDinozName = async (req: Request): Promise<void> => {
 
 	// If authenticated player is different from player found, throw exception
 	if (dinoz!.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${req.params.id} doesn't belong to player ${req.user!.playerId}`);
+		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	// If player can't change dinoz name, throw exception
 	if (!dinoz!.canChangeName) {
-		throw new Error(`Can't update dinoz name`);
+		throw new ErrorFormator(500, `Can't update dinoz name`);
 	}
 
 	const dinozToUpdate: Partial<Dinoz> = {
@@ -310,21 +330,21 @@ const setSkillState = async (req: Request): Promise<boolean> => {
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	// Check if dinoz can change his skills
 	const amulst = dinoz.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
 
 	if (!amulst) {
-		throw new Error(`Dinoz ${dinozId} doesn't have the right status`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't have the right status`);
 	}
 
 	// Check if dinoz know the skill
 	const dinozKnowThisSkill = dinoz.skills.some(skill => skill.skillId === skillToUpdate);
 
 	if (!dinozKnowThisSkill) {
-		throw new Error(`Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
 	}
 
 	// Check if skill can be activate / desactivate
@@ -333,7 +353,7 @@ const setSkillState = async (req: Request): Promise<boolean> => {
 	);
 
 	if (!skillIsActivatable!.activatable) {
-		throw new Error(`Skill ${skillToUpdate} cannot be activated`);
+		throw new ErrorFormator(500, `Skill ${skillToUpdate} cannot be activated`);
 	}
 
 	await setSkillStateRequest(dinozId, skillToUpdate, skillStateToUpdate);
@@ -355,7 +375,7 @@ const betaMove = async (req: Request): Promise<FightResult> => {
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
 	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
@@ -363,22 +383,22 @@ const betaMove = async (req: Request): Promise<FightResult> => {
 
 	// Check if desired and actual place exist and is adjacent to actual place
 	if (!desiredPlace) {
-		throw new Error(`Dinoz ${dinozId} want to go in the void`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} want to go in the void`);
 	}
 
 	if (actualPlace!.placeId === desiredPlace.placeId) {
-		throw new Error(`Dinoz ${dinozId} is already at ${actualPlace!.name}`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} is already at ${actualPlace!.name}`);
 	}
 
 	if (!actualPlace!.borderPlace.includes(desiredPlace.placeId)) {
-		throw new Error(`${actualPlace!.name} is not adjacent with ${desiredPlace.name}`);
+		throw new ErrorFormator(500, `${actualPlace!.name} is not adjacent with ${desiredPlace.name}`);
 	}
 
 	// Check if condition to go to desired place are fullfill
 	if (desiredPlace.conditions) {
 		const canGoToWantedPlace: boolean = dinoz!.status.some(status => status.statusId === desiredPlace.conditions);
 		if (!canGoToWantedPlace) {
-			throw new Error(`Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
+			throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
 		}
 	}
 
@@ -432,11 +452,11 @@ const resurrectDinoz = async (req: Request): Promise<void> => {
 
 	// If player found is different from player who do the request, throw exception
 	if (dinozData.player.id !== req.user!.playerId) {
-		throw new Error(`Dinoz ${dinozId} doesn't belong to player.`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
 	if (dinozData.life > 0) {
-		throw new Error(`${dinozData.name} is not dead`);
+		throw new ErrorFormator(500, `${dinozData.name} is not dead`);
 	}
 
 	const dinozToUpdate: Partial<Dinoz> = {
