@@ -1340,7 +1340,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		// Add a dinoz that is at the location of the shop
 		DinozTestData.placeId = shopList.MAGIC_SHOP.placeId;
 
-		const quantityToBuy: number = 5;
+		const quantityToBuy: number = 10;
 		const napoQuantity: number = 999;
 
 		// Give the player enough napodinoz
