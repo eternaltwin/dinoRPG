@@ -15,7 +15,8 @@
   "toast": {
     "DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
     "AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
-    "DinozNotDead": "Votre dinoz est déjà en vie."
+    "DinozNotDead": "Votre dinoz est déjà en vie.",
+    "OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés."
   },
   "api": "Il vous est possible de consulter notre API afin de la tester. N'oubliez pas de prendre vos token d'authentification JWT :",
   "alpha": {

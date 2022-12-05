@@ -66,8 +66,7 @@ export default defineComponent({
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);
 			} else {
-				// TODO : afficher popin d'erreur
-				console.log('Seulement chiffres et lettres ! ');
+				EventBus.emit('toast', 'OnlyLettersAndNumbers');
 			}
 		}
 	}
