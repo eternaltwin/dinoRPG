@@ -13,10 +13,15 @@ bash:
 bash-DB:
 	docker exec -it drpg_database bash
 
-
 build:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml build
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --no-start
+
+re-build:
+	docker exec -it drpg yarn build
+
+re-build-debug:
+	docker exec -it drpg yarn build-debug
 
 install: build
 	cp ./Eternaltwin/etwin.toml.example ./Eternaltwin/etwin.toml
@@ -56,4 +61,4 @@ fix-lint-front:
 
 update-schema:
 	docker start drpg_database &&\
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn migration:run
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn migration

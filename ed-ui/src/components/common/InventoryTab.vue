@@ -112,6 +112,7 @@ export default defineComponent({
 				try {
 					await InventoryService.useInventoryItem(item.itemId, parseInt(dinozId));
 					EventBus.emit('isLoading', false);
+					this.$router.go(0);
 				} catch (error) {
 					errorHandler.handle(error);
 					return;

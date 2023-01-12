@@ -115,6 +115,33 @@ const getDinozFicheItemRequest = (dinozId: number): Promise<Dinoz> => {
 		.getOneOrFail();
 };
 
+const getDinozFightDataRequest = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select([
+			'dinoz.id',
+			'dinoz.level',
+			'dinoz.life',
+			'dinoz.maxLife',
+			'dinoz.experience',
+			'dinoz.nbrUpFire',
+			'dinoz.nbrUpWood',
+			'dinoz.nbrUpWater',
+			'dinoz.nbrUpLightning',
+			'dinoz.nbrUpAir'
+		])
+		.addSelect(['player.id'])
+		.addSelect(['items.itemId'])
+		.addSelect(['skills.skillId'])
+		.addSelect(['status.statusId'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.items', 'items')
+		.leftJoin('dinoz.skills', 'skills')
+		.leftJoin('dinoz.status', 'status')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
+};
+
 const getDinozNPCRequest = (dinozId: number): Promise<Dinoz> => {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
@@ -269,6 +296,7 @@ export {
 	getDinozFicheRequest,
 	getDinozFicheLiteRequest,
 	getDinozFicheItemRequest,
+	getDinozFightDataRequest,
 	getDinozNPCRequest,
 	getDinozPlaceRequest,
 	getDinozTotalCount,

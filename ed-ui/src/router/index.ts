@@ -63,7 +63,7 @@ const router = createRouter({
 					path: '/fight',
 					name: 'Fight',
 					component: Fight,
-					props: true
+					props: route => ({ dinozId: route.query.dinozId })
 				},
 				{
 					path: '/generator',

@@ -95,6 +95,52 @@ docker exec -it drpg bash
 #yarn install
 ```
 
+## Native
+
+La partie "Native" contient le code Rust. Cette partie doit être compilée
+lorsque les docker ont été lancés. Une fois lancés (avec `make docker-bash`
+par exemple), utiliser `make re-build` pour compiler et faire prendre en
+compte les changements du côté Node.
+`make re-build-debug` est aussi disponible pour compiler la partie native
+sans optimization.
+
+Autrement, il est possible de compiler la partie native directement:
+- Lancer les dockers -si c'est utilisé (i.e hors prod)- avec `make docker-start`)
+- Lancer le bash dans le docker `drpg` avec `make bash`
+- Aller dans `native` avec `cd native`
+- 2 options de compilation:
+  - Un binaire directement utilisable (notamment pour debugger sans passer
+  par Node):
+  ```
+  cargo build --bin main
+  ```
+  - La librairie utilisée par Node avec Neon:
+  ```
+  cargo build --message-format=json-render-diagnostics
+  ```
+  - L'option `--release` peut être ajoutée pour activer les optimisations.
+
+Pour utiliser le binaire ensuite, c'est comme un binaire classique:
+```
+./target/<release|debug>/main
+```
+
+Le niveau des logs peut être changé en définissant la variable d'environnement
+`RUST_LOG`. Par exemple pour activer les logs INFO et en dessous (TRACE et
+DEBUG):
+```
+RUST_LOG=INFO ./target/<release|debug>/main
+```
+
+### Clippy
+
+Cargo donne déjà de bon conseils pour garder du code propre.
+[Clippy](https://github.com/rust-lang/rust-clippy) en met encore une couche et
+donnera encore d'autres bons conseils. Il s'utilise simplement avec :
+```
+cargo clippy
+```
+
 # Tips
 
 ## Faire tourner les tests unitaires

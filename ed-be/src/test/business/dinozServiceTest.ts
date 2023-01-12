@@ -589,6 +589,8 @@ describe('Function betaMove', function () {
 
 	it('Nominal case', async function () {
 		const expectedFightResult: FightResult = {
+			dinozId: dinozId,
+			opponent: '',
 			goldEarned: 999,
 			xpEarned: 1,
 			hpLost: 0,
@@ -596,6 +598,8 @@ describe('Function betaMove', function () {
 		};
 
 		let fightResult: FightResult = {
+			dinozId: dinozId,
+			opponent: '',
 			goldEarned: 999,
 			xpEarned: 999,
 			hpLost: 0,
@@ -660,6 +664,8 @@ describe('Function betaMove', function () {
 			placeId: placeList.FOUTAINE_DE_JOUVENCE.placeId
 		};
 		const expectedFightResult: FightResult = {
+			dinozId: dinozId,
+			opponent: '',
 			goldEarned: 999,
 			xpEarned: 999,
 			hpLost: 0,
@@ -667,6 +673,8 @@ describe('Function betaMove', function () {
 		};
 
 		let fightResult: FightResult = {
+			dinozId: dinozId,
+			opponent: '',
 			goldEarned: 999,
 			xpEarned: 999,
 			hpLost: 0,

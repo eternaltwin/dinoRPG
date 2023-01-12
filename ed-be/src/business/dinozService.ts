@@ -437,10 +437,12 @@ async function betaFight(dinoz: Dinoz): Promise<FightResult> {
 		await addExperience(dinozInFight.id, xpEarned);
 	}
 	return {
+		opponent: '',
 		goldEarned: goldEarned,
 		xpEarned: xpEarned,
 		hpLost: hpLost,
-		result: result
+		result: result,
+		dinozId: dinoz.id
 	};
 }
 

@@ -17,6 +17,23 @@ export const DinozFicheData = ({
 	experience: 100
 } as unknown) as Dinoz;
 
+export const DinozFightData = ({
+	id: dinozId,
+	level: 1,
+	life: 100,
+	max_life: 100,
+	experience: 0,
+	nbrUpFire: 2,
+	nbrUpWood: 1,
+	nbrUpWater: 1,
+	nbrUpLightning: 1,
+	nbrUpAir: 1,
+	items: [{ itemId: 1 }],
+	skills: [{ skillId: 1 }],
+	status: [{ statusId: 1 }],
+	player: PlayerData
+} as unknown) as Dinoz;
+
 export const DinozWithSkills = {
 	id: dinozId,
 	player: {

@@ -1,6 +1,6 @@
 <template>
 	<div class="actions">
-		<Resurrect :enabled="resurect" @close="resurect = false" />
+		<Resurrect :enabled="resurrect" @close="resurrect = false" />
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
@@ -10,7 +10,7 @@
 					<Tippy
 						tag="tr"
 						theme="normal"
-						v-for="action in dinozActions"
+						v-for="action in dinozData.actions"
 						:key="action.name"
 						:id="action.imgName"
 						@click="launch(action)"
@@ -60,7 +60,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { shopNameList, npcNameList } from '@/constants';
-import { Action } from '@/models';
+import { Action, Dinoz, FightResult } from '@/models';
+import { sessionStore } from '@/store';
 import Resurrect from '../modal/ResurrectModal.vue';
 
 export default defineComponent({
@@ -69,15 +70,19 @@ export default defineComponent({
 		return {
 			shopNameList: shopNameList,
 			npcNameList: npcNameList,
-			resurect: false as boolean
+			resurrect: false as boolean,
+			sessionStore: sessionStore()
 		};
 	},
 	components: {
 		Resurrect
 	},
-	props: { dinozActions: Object as PropType<Array<Action>> },
+	props: {
+		// dinozActions: Object as PropType<Array<Action>>,
+		dinozData: Object as PropType<Dinoz>
+	},
 	methods: {
-		launch(action: Action): void {
+		async launch(action: Action): Promise<void> {
 			switch (action.name) {
 				case 'levelup':
 					this.$router.push({
@@ -97,8 +102,15 @@ export default defineComponent({
 						params: { id: this.$route.params.id.toString(), npc: npcNameList[action.prop!] }
 					});
 					break;
+				case 'fight':
+					this.$router.push({
+						name: 'Fight',
+						query: { dinozId: this.dinozData?.id?.toString() }
+						// params: { dinozId: this.dinozData?.id?.toString() }
+					});
+					break;
 				case 'resurrect':
-					this.resurect = true;
+					this.resurrect = true;
 					break;
 				default:
 					break;

@@ -9,10 +9,12 @@ export * from './shop.js';
 export * from './skill.js';
 export * from './status.js';
 export * from './action.js';
+export * from './monster.js';
 
 export const apiRoutes = {
 	adminRoute: '/api/v1/admin',
 	dinozRoute: '/api/v1/dinoz',
+	fightRoute: '/api/v1/fight',
 	ingredientRoute: '/api/v1/ingredients',
 	inventoryRoute: '/api/v1/inventory',
 	levelRoute: '/api/v1/level',

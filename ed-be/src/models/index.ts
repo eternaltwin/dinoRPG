@@ -3,7 +3,7 @@ export * from './dinoz/DinozFiche.js';
 export * from './dinoz/DinozSkillFiche.js';
 export * from './dinoz/DinozSkillOwnAndUnlockable.js';
 export * from './dinoz/DinozRace.js';
-export * from './dinoz/FightResult.js';
+export * from './fight/index.js';
 export * from './enums/index.js';
 export * from './item/ItemFiche.js';
 export * from './ingredient/IngredientFiche.js';

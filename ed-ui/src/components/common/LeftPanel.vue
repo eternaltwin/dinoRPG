@@ -79,7 +79,7 @@ export default defineComponent({
 			});
 		},
 		isDevEnv(): boolean {
-			return import.meta.env.NODE_ENV === 'development';
+			return import.meta.env.MODE === 'development';
 		}
 	},
 	computed: {

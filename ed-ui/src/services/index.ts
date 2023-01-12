@@ -1,6 +1,7 @@
 export * from './AdminService';
 export * from './DinozService';
 export * from './DinozShopService';
+export * from './FightService';
 export * from './IngredientsService';
 export * from './InventoryService';
 export * from './ItemShopService';
