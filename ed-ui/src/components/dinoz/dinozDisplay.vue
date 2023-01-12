@@ -9,8 +9,8 @@
 		<DinozWithoutFlash
 			:style="{
 				position: `absolute`,
-				left: `${position.fliped[dinozData.display[1]].left}px`,
-				top: `${position.fliped[dinozData.display[1]].top}px`
+				left: `${getPositionLeft(dinozData!.display!)}px`,
+				top: `${getPositionTop(dinozData!.display!)}px`,
 			}"
 			:display="dinozData.display"
 			:life="dinozData.life"
@@ -36,18 +36,6 @@ import { dinozPlacement, raceList } from '@/constants';
 
 export default defineComponent({
 	name: 'DinozDisplay',
-	props: { dinozData: Object as PropType<Dinoz> },
-	data() {
-		return {
-			nameChoosen: undefined as boolean | undefined,
-			position: dinozPlacement
-		};
-	},
-	computed: {
-		dinozRace(): string {
-			return Object.entries(raceList).find(race => race[0].toString() === this.dinozData!.display![0])![1];
-		}
-	},
 	components: {
 		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue')),
 		DinozElements: defineAsyncComponent(() => import('@/components/dinoz/dinozElements.vue')),
@@ -55,6 +43,34 @@ export default defineComponent({
 		DinozEquip: defineAsyncComponent(() => import('@/components/dinoz/dinozEquip.vue')),
 		DinozStatus: defineAsyncComponent(() => import('@/components/dinoz/dinozStatus.vue')),
 		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue'))
+	},
+	data() {
+		return {
+			nameChoosen: undefined as boolean | undefined,
+			position: dinozPlacement
+		};
+	},
+	props: { dinozData: Object as PropType<Dinoz> },
+	computed: {
+		dinozRace(): string {
+			return Object.entries(raceList).find(race => race[0].toString() === this.dinozData!.display![0])![1];
+		}
+	},
+	methods: {
+		getPositionLeft(dinoz: string): number {
+			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
+			return (
+				((dinozPlacement.fliped[dinoz[0]].adult.left - dinozPlacement.fliped[dinoz[0]].baby.left) / 9) * taille +
+				dinozPlacement.fliped[dinoz[0]].baby.left
+			);
+		},
+		getPositionTop(dinoz: string): number {
+			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
+			return (
+				((dinozPlacement.fliped[dinoz[0]].adult.top - dinozPlacement.fliped[dinoz[0]].baby.top) / 9) * taille +
+				dinozPlacement.fliped[dinoz[0]].baby.top
+			);
+		}
 	}
 });
 </script>

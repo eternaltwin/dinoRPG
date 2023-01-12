@@ -37,8 +37,7 @@ export const raceList: Record<string, DinozRace> = {
 			12: '0',
 			13: '0',
 			14: '0',
-			15: '0',
-			16: '0'
+			15: '0'
 		}
 	},
 	MOUEFFE_DEMON: {
@@ -77,7 +76,25 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 20000,
-		swfLetter: '1'
+		swfLetter: '1',
+		display: {
+			0: '1',
+			1: '0',
+			2: '3', // Eyes
+			3: '9', // Mouth
+			4: '3', // Tail
+			5: '1', // hair back right leg (1 = yes)
+			6: 'F', // Hair
+			7: '0',
+			8: '0',
+			9: 'B', // Body color
+			10: '8', // Tail color
+			11: 'A', // Hair color
+			12: '0',
+			13: '0', // Special color (max = 2)
+			14: '0', // Special stripe (max = 1)
+			15: '0'
+		}
 	},
 	PIGMOU_DEMON: {
 		raceId: 4,

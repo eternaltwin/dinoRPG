@@ -80,7 +80,7 @@ const router = createRouter({
 					path: '/dinozwithoutflash',
 					name: 'DinozWithoutFlash',
 					component: DinozWithoutFlash,
-					props: { display: '1910731007000', flip: -1, life: 60 }
+					props: { display: '3000010000000000', flip: -1, life: 100 }
 				},
 				{
 					path: '/admin',

@@ -3,7 +3,7 @@
   "version": "0.4.1",
   "private": true,
   "scripts": {
-    "serve": "vite --host",
+    "serve": "yarn run lint:fix && vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "lint:test": "eslint --ext .ts,vue --ignore-path .gitignore .",

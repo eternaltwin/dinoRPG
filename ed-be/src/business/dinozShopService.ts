@@ -1,8 +1,7 @@
 import { Request } from 'express';
-import { Config, DinozRace, DinozShopFiche } from '../models/index.js';
+import { DinozRace, DinozShopFiche } from '../models/index.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
-import { getConfig } from '../utils/context.js';
 import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
 import { raceList, rewardList, skillList } from '../constants/index.js';
 import { Player, PlayerDinozShop } from '../entity/index.js';
@@ -32,12 +31,10 @@ const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche
 			raceList.NUAGOZ,
 			raceList.GORILLOZ,
 			raceList.WANWAN,
-			raceList.PIGMOU,
 			raceList.PLANAILLE,*/
-			raceList.MOUEFFE
+			raceList.MOUEFFE,
+			raceList.PIGMOU
 		];
-
-		const config: Config = getConfig();
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
 		const player: Player = await getPlayerRewardsRequest(req.user!.playerId!);
@@ -60,7 +57,7 @@ const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche
 		// Make x Dinoz object to fill shop
 		for (let i = 0; i < gameConfig.shop.dinozNumber; i++) {
 			// Set a random race to the dinoz
-			randomRace = availableRaces[getRandomNumber(0, availableRaces.length - 1)].raceId;
+			randomRace = availableRaces[getRandomNumber(0, availableRaces.length)].raceId;
 
 			const dinozRaceData: DinozRace = Object.values(raceList).find(race => race.raceId === randomRace)!;
 

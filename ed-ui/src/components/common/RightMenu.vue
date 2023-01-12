@@ -89,7 +89,7 @@ export default defineComponent({
 			this.$router.go(0);
 		},
 		isDevEnv(): boolean {
-			return process.env.NODE_ENV === 'development';
+			return import.meta.env.MODE === 'development';
 		},
 		async jwt(): Promise<void> {
 			await navigator.clipboard.writeText(this.sessionStore.getJwt!);

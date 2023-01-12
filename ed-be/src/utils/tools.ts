@@ -1,5 +1,5 @@
 /**
- * @summary Return a random number
+ * @summary Return a random number between min and max - 1
  * @param min {number}
  * @param max {number}
  * @return number

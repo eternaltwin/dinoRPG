@@ -12,11 +12,11 @@
 				<DinozWithoutFlash
 					:style="{
 						position: `absolute`,
-						left: `${position.noFliped[dinoz.display[1]].left}px`,
-						top: `${position.noFliped[dinoz.display[1]].top}px`
+						left: `${getPositionLeft(dinoz.display!)}px`,
+						top: `${getPositionTop(dinoz.display!)}px`
 					}"
-					:display="dinoz.display"
-					:life="dinoz.life"
+					:display="dinoz.display!"
+					:life="dinoz.life!"
 					:flip="1"
 				/>
 			</li>
@@ -55,6 +55,22 @@ export default defineComponent({
 			statusList: statusList,
 			position: dinozPlacement
 		};
+	},
+	methods: {
+		getPositionLeft(dinoz: string): number {
+			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
+			return (
+				((dinozPlacement.noFliped[dinoz[0]].adult.left - dinozPlacement.noFliped[dinoz[0]].baby.left) / 9) * taille +
+				dinozPlacement.noFliped[dinoz[0]].baby.left
+			);
+		},
+		getPositionTop(dinoz: string): number {
+			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
+			return (
+				((dinozPlacement.noFliped[dinoz[0]].adult.top - dinozPlacement.noFliped[dinoz[0]].baby.top) / 9) * taille +
+				dinozPlacement.noFliped[dinoz[0]].baby.top
+			);
+		}
 	}
 });
 </script>
