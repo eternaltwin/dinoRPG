@@ -15,6 +15,7 @@ import AdminDashBoard from '@/pages/AdminDashBoard.vue';
 import Ingredients from '@/pages/Ingredients.vue';
 import News from '@/components/common/News.vue';
 import NPC from '@/pages/NPC.vue';
+import Missions from '@/pages/Missions.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
 					path: '/dino/:id/:npc',
 					name: 'NPC',
 					component: NPC
+				},
+				{
+					path: '/dino/:id/missions/:npc',
+					name: 'Missions',
+					component: Missions
 				},
 				{
 					path: '/shop/:name',

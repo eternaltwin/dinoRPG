@@ -40,9 +40,7 @@
 			></a>
 		</div>
 		<DinozList></DinozList>
-		<a class="overviewButton"
-			><img :src="getImgURL('icons', `small_edit`)" :alt="edit" />{{ $t('button.sortDinoz') }}</a
-		>
+		<a class="overviewButton"><img :src="getImgURL('icons', `small_edit`)" alt="edit" />{{ $t('button.sortDinoz') }}</a>
 		<a class="button" @click="goToPage('DinozShopPage')">
 			{{ $t('button.buyDinoz') }}
 		</a>

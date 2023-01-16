@@ -29,6 +29,7 @@ import EventBus from '@/events/index.js';
 import { errorHandler } from '@/utils/index.js';
 import { NPCService } from '@/services/index.js';
 import { NpcTalk } from '@/models/index.js';
+import { NavigationFailure } from 'vue-router';
 
 export default defineComponent({
 	name: 'NPC',
@@ -45,7 +46,10 @@ export default defineComponent({
 		AnimatedNPC: defineAsyncComponent(() => import('@/components/common/AnimatedNPC.vue'))
 	},
 	methods: {
-		async choiseStep(choice: string): Promise<void> {
+		async choiseStep(choice: string): Promise<void | NavigationFailure> {
+			if (choice === 'missions') {
+				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
+			}
 			this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
 		},
 		async stop(): Promise<void> {

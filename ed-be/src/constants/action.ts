@@ -24,5 +24,9 @@ export const actionList: Readonly<Record<string, ActionFiche>> = {
 	RESURRECT: {
 		name: 'resurrect',
 		imgName: 'act_resurrect'
+	},
+	MISSION: {
+		name: 'mission',
+		imgName: 'act_mission'
 	}
 };

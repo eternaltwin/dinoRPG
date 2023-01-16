@@ -14,7 +14,8 @@ export const DinozFicheData = ({
 	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }],
 	status: [{ statusId: 1 }],
 	placeId: 1,
-	experience: 100
+	experience: 100,
+	missions: []
 } as unknown) as Dinoz;
 
 export const DinozFightData = ({

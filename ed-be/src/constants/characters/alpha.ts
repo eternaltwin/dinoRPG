@@ -131,7 +131,7 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	maxExperience: {
 		stepName: 'maxExperience',
 		nextStep: ['back'],
-		reward: ['exp']
+		reward: ['maxExp']
 	},
 	stop: {
 		stepName: 'stop',

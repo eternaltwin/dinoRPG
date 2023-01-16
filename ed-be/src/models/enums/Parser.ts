@@ -19,7 +19,10 @@ export enum ConditionEnum {
 	RACE = 'race',
 	SKILL = 'skill',
 	EQUIP = 'equip',
-	UTIME = 'utime'
+	UTIME = 'utime',
+	GOTO = 'goto',
+	TALKTO = 'talkTo',
+	FINISH_MISSION = 'validate'
 }
 
 export enum TriggerEnum {
@@ -29,6 +32,9 @@ export enum TriggerEnum {
 export enum RewardEnum {
 	STATUS = 'status',
 	CHANGE_ELEMENT = 'changeelem',
-	EXPERIENCE = 'exp',
-	SKILL = 'skill'
+	MAXEXPERIENCE = 'maxExp',
+	SKILL = 'skill',
+	EXPERIENCE = 'xp',
+	GOLD = 'gold',
+	ITEM = 'item'
 }

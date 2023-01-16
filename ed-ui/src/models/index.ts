@@ -1,6 +1,7 @@
 export * from './CommonData';
 export * from './dinoz';
 export * from './ingredients';
+export * from './mission';
 export * from './news';
 export * from './npc';
 export * from './place';

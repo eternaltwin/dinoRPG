@@ -12,8 +12,10 @@ const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz> => {
 		.select(['dinoz.id', 'dinoz.placeId'])
 		.addSelect(['player.id'])
 		.addSelect(['status.statusId'])
+		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.status', 'status')
+		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
 };
@@ -73,10 +75,26 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz> => {
 		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
+		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('player.items', 'playerItems')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.status', 'status')
+		.leftJoin('dinoz.missions', 'missions')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
+};
+
+const getDinozMissionsInfo = (dinozId: number): Promise<Dinoz> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id', 'dinoz.level', 'dinoz.placeId'])
+		.addSelect(['player.id'])
+		.addSelect(['status.statusId'])
+		.addSelect(['missions.id', 'missions.missionId', 'missions.step', 'missions.isFinished'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.status', 'status')
+		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
 };
@@ -302,6 +320,7 @@ export {
 	getDinozTotalCount,
 	getDinozSkillRequest,
 	getDinozForLevelUp,
+	getDinozMissionsInfo,
 	getDinozSkillsLearnableAndUnlockable,
 	getDinozSkillAndStatusRequest,
 	setDinoz,

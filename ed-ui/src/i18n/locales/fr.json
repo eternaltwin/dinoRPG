@@ -630,6 +630,7 @@
   "npc":  {
     "description": "Vous pouvez discuter avec cette personne.",
     "stop": "Arrêter la discussion",
+    "continue": "Continuer",
     "header": {
       "character": "Personnage:"
     },
@@ -640,7 +641,8 @@
       "street_shouter":"blabla",
       "sofia": "Sofia",
       "mmex": "Madame X",
-      "mineur":  "Mineur Coralien"
+      "mineur":  "Mineur Coralien",
+      "papy":  "Papy Joe"
     },
     "professor": {
       "speech": {
@@ -810,6 +812,14 @@
         "learn5bis": "Quoi...",
         "no": "(ouille)",
         "dolearn": "hello"
+      }
+    },
+    "papy": {
+      "speech": {
+        "begin": "Salut p'tit gars, je t'attendais..."
+      },
+      "playerChoice": {
+        "missions": "Consulter la liste des Missions"
       }
     },
     "mineur": {
@@ -1671,7 +1681,92 @@
     "ingredients": "Dino-RPG [ Ingrédients ]",
     "levelup": "Dino-RPG [ Niveau supplémentaire pour ",
     "npc": "Dino-RPG [ Personnage : ",
+    "missions": "Dino-RPG [ Liste des Missions ]",
     "dinozNaming": "Dino-RPG [ Choix du Nom ]"
+  },
+  "missions": {
+    "header": "Liste des Missions",
+    "xp": "points d'expérience",
+    "gold": "pièces",
+    "item": "Objets :",
+    "unavailable": {
+      "title": "Mission Bloquée",
+      "description": "Cette Mission ne vous est pas accessible pour l'instant, il vous faudra revenir plus tard."
+    },
+    "giveUp": "Abandonner",
+    "continue": "Continuer",
+    "accept": "Accepter la Mission",
+    "already": "Votre Dinoz a déjà une mission en cours et ne peut pas accepter plus d'une mission à la fois.",
+    "status": {
+      "available": "",
+      "unavailable": "",
+      "ongoing": "En cours...",
+      "finished": "Terminée",
+      "over": "Félicitations ! Vous avez terminé la Mission \"{mission}\" !"
+    },
+    "name": {
+      "fish": "Du poisson frais",
+      "dog": "Le chien perdu",
+      "kilgou": "Les Goupignons des Collines",
+      "kilwlf": "La chasse aux loups",
+      "fflow": "Le rosier en danger",
+      "kbook": "Le livre de recettes",
+      "msg": "Les Timbres",
+      "lettre": "La lettre confidentielle",
+      "kilglu": "Un étrange monstre",
+      "kilgnt": "Les Géants",
+      "kilcoq": "L'exploit du mois"
+    },
+    "tooltip": "Mission : {mission}",
+    "description":  {
+      "fish": "Madame Seyche, habitante de Dinoville, recherche du poisson frais pour organiser un dîner avec ses amis. Peux-tu aller lui chercher du poisson chez le Marchand au Port de Prêche au sud ? Il a été prévenu et il t'attend.",
+      "dog": "La Vieille Ducraft a perdu son caniche alors qu'elle visitait son fils dans les Collines Escarpées, sauras-tu le retrouver ?",
+      "kilgou": "De nombreux Loups et Goupignons sévissent dans les Collines Escarpées au nord de Dinoville, le chef d'un village voisin cherche quelqu'un pour en tuer quelques-uns et ainsi leur faire peur pour qu'ils se calment, sauras-tu te montrer suffisamment fort ?",
+      "kilwlf": "Récemment, les paysans ont beaucoup de problèmes avec des groupes de Loups qui attaquent leurs chèvres. Peux-tu faire un tour ici-et-là et en tuer quelques-uns histoire de les éloigner ?",
+      "fflow": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
+      "kbook": "J'ai à nouveau reçu une demande de la ravissante Madame Seyche. Elle voudrait consulter un livre de recettes qui se trouve à l'Université, peux-tu aller lui chercher ?",
+      "msg": "J'ai très envie d'écrire une lettre à une certaine personne qui me tient à coeur. Mais il se trouve que mes Timbres ont été volés par des Goupignons Chapardeurs qui se regroupent habituellement à la Fontaine de Jouvence. Si tu les tues, je te laisserai utiliser mes Timbres, ça te va ?",
+      "lettre": "Uhm... Cette fois-ci c'est pour moi, Papy Joe, que tu vas travailler... J'aurais besoin de toi pour que tu apporte d'URGENCE cette lettre à une certaine personne à Dinoville. Il faut faire très vite surtout !",
+      "kilglu": "Un étrange monstre est apparu ces derniers temps dans le Royaume de Dinoville. Il est assez coriace et peut suivant les cas faire beaucoup de dégâts lors d'un combat. Pourrais-tu en tuer un et me le ramener pour que je puisse l'étudier ?",
+      "kilgnt": "Je ne sais pas si tu t'en es aperçu, mais le Royaume de Dinoville est envahi par d'immenses Géants Verts qui ne semblent pas se nourrir que de légumes ! Peux-tu aller en exterminer une douzaine au plus vite ? Il s'agit d'un ordre du Roi, alors il faut faire vite !",
+      "kilcoq": "Uhm... J'ai encore un Golf de prévu avec le Roi le mois prochain, et figure toi qu'il veut encore entendre parler de tes exploits... Que dirais-tu d'aller tuer quelques Coqdur rapidement ? Tu seras bien récompensé !"
+    },
+    "actions": {
+      "talkTo": "Discuter avec {npc} ...",
+      "goto": "Se rendre {place} ...",
+      "validate": "Retourner valider la mission {place} ...",
+      "terminate": "Valider la Mission",
+      "hidePlace": "Trouvez le bon lieu ..."
+    },
+    "npc": {
+      "fishVendor": "Marchand de poisson",
+      "mmeseyche": "Madame Seyche",
+      "mmeducraft1": "Jacqueline Ducraft",
+      "mmeducraft2": "Jacqueline Ducraft",
+      "nioufniouf": "NioufNiouf",
+      "PAPY_JOE": "Papy Joe"
+    },
+    "place":  {
+      "port":"au Port de Prêche",
+      "market":"à la Place du Marché",
+      "papy":"Chez Papy Joe",
+      "forcebrut":"à Forcebrut",
+      "dnv":"à Dinoville",
+      "colesc": "aux Collines Escarpées"
+    },
+    "dialog": {
+      "fish": {
+        "fishVendor": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite.",
+        "mmeSeyche": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense...",
+        "papy": "Madame Seyche est très contente de toi, voilà ta récompense !"
+      },
+      "dog": {
+        "mmeducraft1": "Bonjour jeune homme ! Nioufniouf, mon petit amour de caniche, a disparu ! Je l'avais puni car il avait fait une bêtise...ohh... comme je regreettte ! Vite, retrouve-le s'il te plaît. Je suis certaine qu'il n'a pas pu grimper ces montagnes avec ses petites pattes, il doit donc être parti vers le Sud.",
+        "nioufniouf": "Vous avez retrouvé NioufNiouf ! Ramenez-le vite à sa propriétaire !",
+        "mmeducraft2": "Mon NioufNiouf chéri !!! Pardonne-moi, ta moooman a été très méchante avec le gentil chienchien ! Merci jeune homme, retournez au plus vite chez ce vieux schnock pour obtenir votre récompense !",
+        "papy": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi"
+      }
+    }
   },
   "myAccount": {
     "title": "Joueur :",

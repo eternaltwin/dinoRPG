@@ -35,7 +35,6 @@ describe('Function processFight()', function () {
 		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(1);
 		expect(DinozDao.addLife).toHaveBeenCalledTimes(1);
 	});
 

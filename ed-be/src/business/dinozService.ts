@@ -41,6 +41,7 @@ import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js'
 import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { getHUDObjective, getMissionAction } from './missionsService.js';
 import { processFight } from './fightService.js';
 
 /**
@@ -103,6 +104,15 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 		});
 	});
 
+	const missionAvailable = getMissionAction(dinoz);
+	if (missionAvailable) {
+		availableActions.push({
+			name: actionList.MISSION.name,
+			imgName: actionList.MISSION.imgName,
+			prop: missionAvailable
+		});
+	}
+
 	const maxExp: number = levelList.find(level => level.id === dinoz?.level)!.experience;
 	if (maxExp - dinoz.experience <= 0 && dinoz.level < gameConfig.dinoz.maxLevel) {
 		availableActions.push({
@@ -144,7 +154,7 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 		isFrozen: dinozData.isFrozen,
 		isSacrificed: dinozData.isSacrificed,
 		level: dinozData.level,
-		missionId: dinozData.missionId,
+		missionId: dinozData.missions.find(mission => !mission.isFinished)?.missionId,
 		canChangeName: dinozData.canChangeName,
 		following: dinozData.following,
 		life: dinozData.life,
@@ -155,6 +165,7 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 		race: Object.values(raceList).find(race => race.raceId === dinozData.raceId)!,
 		placeId: dinozData.placeId,
 		actions: getAvailableActions(dinozData),
+		missions: getHUDObjective(dinozData),
 		items: dinozData.items.map(item => item.itemId),
 		status: dinozData.status.map(status => status.statusId),
 		borderPlace: Object.values(placeList)

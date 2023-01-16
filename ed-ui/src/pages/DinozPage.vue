@@ -7,7 +7,11 @@
 	</div>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<!--<div class="header" />(à implémenter)-->
-		<DinozActions :dinozData="dinozData" />
+		<DinozActions
+			:dinozActions="dinozData.actions"
+			:missionId="dinozData.missionId"
+			@continueMission="continueMission()"
+		/>
 		<TabPanel :dinozData="dinozData" />
 		<div class="footer" />
 	</div>
@@ -19,11 +23,13 @@ import { Dinoz } from '@/models';
 import { errorHandler } from '@/utils';
 import { DinozService } from '@/services';
 import EventBus from '@/events';
+import { sessionStore } from '@/store';
 
 export default defineComponent({
 	name: 'DinozPage',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			nameChoosen: undefined as boolean | undefined,
 			dinozData: {} as Dinoz
 		};
@@ -43,6 +49,22 @@ export default defineComponent({
 		setNameChoosen(newName: string): void {
 			this.nameChoosen = true;
 			this.dinozData.name = newName;
+		},
+		async continueMission(): Promise<void> {
+			EventBus.emit('isLoading', true);
+			try {
+				const dinozId = this.$route.params.id as string;
+				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
+				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
+				dinozToUpdate.missionId = this.dinozData.missionId;
+				dinozToUpdate.missions = this.dinozData.missions;
+				this.sessionStore.setDinozList(dinozList);
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err);
+				return;
+			}
 		}
 	},
 	// Get dinoz data
@@ -51,6 +73,10 @@ export default defineComponent({
 		try {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
+			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
+			dinozList.splice(dinozToUpdate, 1, this.dinozData);
+			this.sessionStore.setDinozList(dinozList);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);

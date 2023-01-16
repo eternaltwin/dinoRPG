@@ -1,6 +1,7 @@
 import { Npc, NpcTrigger } from '../models/index.js';
 import { placeList } from './index.js';
-import { ALPHA, MINEUR, MMEX, PROFESSOR, SOFIA } from './characters/index.js';
+import { ALPHA, MINEUR, MMEX, PAPY, PROFESSOR, SOFIA } from './characters/index.js';
+import { MPAPY } from './missions/index.js';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -52,5 +53,13 @@ export const npcList: Record<string, Npc> = {
 		placeId: placeList.MINES_DE_CORAIL.placeId,
 		condition: NpcTrigger.ALWAYS,
 		data: MINEUR
+	},
+	PAPY: {
+		name: 'papy',
+		id: 7,
+		placeId: placeList.PAPY_JOE.placeId,
+		condition: NpcTrigger.ALWAYS,
+		missions: MPAPY,
+		data: PAPY
 	}
 };

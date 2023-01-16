@@ -2,6 +2,7 @@ export * from './dinozPlacement';
 export * from './epic';
 export * from './moueffe';
 export * from './item';
+export * from './missions.js';
 export * from './npcNameList';
 export * from './pigmou';
 export * from './place';
