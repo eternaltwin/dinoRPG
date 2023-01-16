@@ -40,7 +40,7 @@ export const sessionStore = defineStore('sessionStore', {
 		setPlayerId(playerId: number): void {
 			this.playerId = playerId;
 		},
-		setFightResult(fight: FightResult): void {
+		setFightResult(fight: FightResult | undefined): void {
 			this.fight = fight;
 		},
 		setTab(tab: number): void {

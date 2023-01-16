@@ -1,4 +1,3 @@
-import { betaFight } from '../business/dinozService.js';
 import { unlockDoubleSkills } from '../business/skillService.js';
 import { levelList } from '../constants/level.js';
 import { skillList } from '../constants/skill.js';
@@ -74,8 +73,7 @@ async function triggerAction(action: string, dinoz: Dinoz): Promise<boolean> {
 	let result: boolean;
 	if (action.includes(TriggerEnum.FIGHT)) {
 		//Launch the fight against param
-		const fight = await betaFight(dinoz);
-		result = fight.result;
+		result = true;
 	} else {
 		result = false;
 	}

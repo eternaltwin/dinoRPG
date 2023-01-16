@@ -62,7 +62,9 @@ import { defineComponent, PropType } from 'vue';
 import { shopNameList, npcNameList } from '@/constants';
 import { Action, Dinoz, FightResult } from '@/models';
 import { sessionStore } from '@/store';
+import EventBus from '@/events';
 import Resurrect from '../modal/ResurrectModal.vue';
+import { FightService } from '@/services';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -103,11 +105,15 @@ export default defineComponent({
 					});
 					break;
 				case 'fight':
+					EventBus.emit('isLoading', true);
+					// eslint-disable-next-line
+					const fight: FightResult = await FightService.processFight(parseInt(this.$route.params.id.toString()));
+					this.sessionStore.setFightResult(fight);
 					this.$router.push({
 						name: 'Fight',
-						query: { dinozId: this.dinozData?.id?.toString() }
-						// params: { dinozId: this.dinozData?.id?.toString() }
+						query: { dinozId: this.$route.params.id.toString() }
 					});
+					EventBus.emit('isLoading', false);
 					break;
 				case 'resurrect':
 					this.resurrect = true;

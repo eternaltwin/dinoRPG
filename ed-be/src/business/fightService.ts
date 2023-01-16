@@ -7,6 +7,7 @@ import { getRandomNumber } from '../utils/tools.js';
 import { addExperience, addLife, getDinozFightDataRequest } from '../dao/dinozDao.js';
 import { addPlayerMoney } from '../dao/playerDao.js';
 import { getEnvironnement } from '../utils/context.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const { fight_rust } = pkg;
 
@@ -37,6 +38,11 @@ const processFight = async (req: Request): Promise<FightResult> => {
 
 	// Get Dinoz info
 	const dinozData: Dinoz = await getDinozFightDataRequest(dinozId);
+
+	if (dinozData.player.id !== req.user!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	}
+
 	const listDinozItems: Array<number> = dinozData.items ? dinozData.items.map(item => item.itemId) : [];
 	const listDinozSkills: Array<number> = dinozData.skills ? dinozData.skills.map(skill => skill.skillId) : [];
 	const listDinozStatus: Array<number> = dinozData.status ? dinozData.status.map(status => status.statusId) : [];

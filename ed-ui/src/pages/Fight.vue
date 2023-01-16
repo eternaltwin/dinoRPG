@@ -38,7 +38,7 @@ export default defineComponent({
 				const result: FightResult = await FightService.processFight(this.dinozId!);
 				this.sessionStore.setFightResult(result);
 				this.fight = this.sessionStore.getFightResult!;
-				if(result.result) {
+				if (result.result) {
 					const newMoney: number = this.sessionStore.getMoney! + this.fight.goldEarned;
 					this.sessionStore.setMoney(newMoney);
 					const dinozInStore: Array<Dinoz> = this.sessionStore.getDinozList!;
@@ -57,16 +57,12 @@ export default defineComponent({
 	},
 	created(): void {
 		this.dinozId = parseInt(this.$router.currentRoute.value.query.dinozId as string);
-	},
-	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		try {
-			await this.processFight();
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err);
-			return;
+		if (this.sessionStore.getFightResult) {
+			this.fight = this.sessionStore.getFightResult;
 		}
+	},
+	unmounted(): void {
+		this.sessionStore.setFightResult(undefined);
 	}
 });
 </script>

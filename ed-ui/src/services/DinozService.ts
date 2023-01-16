@@ -37,16 +37,9 @@ export const DinozService = {
 	},
 	betaMove(dinozId: number, placeId: number): Promise<FightResult> {
 		return http()
-			.put(`/dinoz/betamove/${dinozId}`, {
-				placeId: placeId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	betaFight(dinozId: number, placeId: number): Promise<FightResult> {
-		return http()
-			.put(`/dinoz/betafight/${dinozId}`, {
-				placeId: placeId
+			.put(`/dinoz/betamove`, {
+				placeId: placeId,
+				dinozId: dinozId
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
