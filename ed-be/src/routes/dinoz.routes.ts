@@ -286,8 +286,8 @@ routes.put(
  *         description: Error
  */
 routes.put(
-	`${commonPath}/betamove/:id`,
-	[param('id').exists().toInt().isNumeric(), body('placeId').exists().toInt().isNumeric()],
+	`${commonPath}/betamove`,
+	[body('placeId').exists().toInt().isNumeric(), body('dinozId').exists().toInt().isNumeric()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

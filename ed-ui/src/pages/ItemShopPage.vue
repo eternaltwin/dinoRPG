@@ -265,7 +265,7 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		// Reload the item list if the player go on another shope page
+		// Reload the item list if the player go on another shop page
 		'$route.params.name': async function () {
 			if (this.shopId < 0) {
 				return;

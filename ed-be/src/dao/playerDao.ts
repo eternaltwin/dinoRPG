@@ -90,9 +90,11 @@ const getCommonDataRequest = (playerId: number): Promise<Player> => {
 			'dinoz.maxLife',
 			'dinoz.experience',
 			'dinoz.placeId',
-			'dinoz.level'
+			'dinoz.level',
+			'dinoz.order'
 		])
 		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false')
+		.leftJoinAndSelect('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
 		.getOneOrFail();
 };

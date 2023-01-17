@@ -1,0 +1,28 @@
+<template>
+	<svg
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		:height="`${36.85 * size}px`"
+		:width="`${11.75 * size}px`"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<g :transform="`matrix(${1.0 * size}, 0.0, 0.0, ${1.0 * size}, ${-10.1 * size}, ${11.9 * size})`">
+			<path
+				d="M21.85 -11.35 Q21.85 -9.9 20.15 -5.95 18.4 -2.0 18.4 -1.05 18.4 0.55 19.45 2.5 L20.45 4.75 Q20.45 7.05 18.3 9.3 L17.2 11.55 Q15.7 13.4 14.65 13.6 L14.65 13.8 14.45 14.45 15.5 16.85 14.95 18.5 Q14.35 19.75 14.35 20.7 14.35 22.55 13.1 23.8 11.95 24.95 10.65 24.95 10.1 24.95 10.1 24.55 12.6 22.85 12.9 22.35 L12.95 20.25 14.15 16.85 Q14.15 15.95 13.25 15.15 12.3 14.3 12.3 13.8 12.3 12.6 13.45 12.6 L14.1 12.75 15.4 11.55 16.35 9.55 Q18.75 6.6 18.75 5.4 16.45 2.65 16.45 -0.65 16.45 -2.35 18.6 -6.25 L21.75 -11.9 21.85 -11.35"
+				fill="#a51616"
+				fill-rule="evenodd"
+				stroke="none"
+			/>
+		</g>
+	</svg>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+	name: 'PigmouHeadHeavyInjury7',
+	props: {
+		size: Number
+	}
+});
+</script>

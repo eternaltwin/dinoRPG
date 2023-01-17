@@ -6,6 +6,7 @@ type Events = {
 	responseError: AxiosError;
 	isLoading: boolean;
 	fightResult: FightResult;
+	resurrect: boolean;
 	toast: string;
 };
 

@@ -159,7 +159,7 @@
 				:is="tail"
 				class="tail"
 				:id="`${display}-tail`"
-				:size="size * tailSize"
+				:size="size * tailSize!"
 				:mainFirstColor="mainFirstColor"
 				:mainSecondColor="mainSecondColor"
 				:mainThirdColor="mainThirdColor"
@@ -574,14 +574,8 @@ export default defineComponent({
 			childOrAdult: '' as string,
 			size: 1 as number,
 			isLoading: true as boolean,
-			tail0: 0 as number,
-			chestElements3: 4 as number,
-			tailSpecial0: 0 as number,
-			chestTattoo0: 0 as number,
-			leftLeg0: 0 as number,
-			leftLegNail0: 0 as number,
-			rightLeg0: 0 as number,
-			rightLegNail0: 0 as number
+			element0: 0 as number,
+			element4: 4 as number
 		};
 	},
 	computed: {
@@ -628,7 +622,7 @@ export default defineComponent({
 			return defineAsyncComponent(() => import(`./chest/${this.chest.element2.imgNumber}.vue`));
 		},
 		chestElement3(): string {
-			return defineAsyncComponent(() => import(`./chest/${this.chestElements3}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/${this.element4}.vue`));
 		},
 		chestInjury1(): string {
 			return defineAsyncComponent(
@@ -646,16 +640,16 @@ export default defineComponent({
 			);
 		},
 		tail(): string {
-			return defineAsyncComponent(() => import(`./chest/tail/${this.tail0}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/tail/${this.element0}.vue`));
 		},
 		tailSpecial(): string {
-			return defineAsyncComponent(() => import(`./chest/tail/special/${this.tailSpecial0}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/tail/special/${this.element0}.vue`));
 		},
 		tailHair(): string {
 			return defineAsyncComponent(() => import(`./hair/tail/${this.hairNumber}.vue`));
 		},
 		chestTattoo(): string {
-			return defineAsyncComponent(() => import(`./chest/tattoo/${this.chestTattoo0}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/tattoo/${this.element0}.vue`));
 		},
 		leftArm(): string {
 			return defineAsyncComponent(() => import(`./arm/left/${this.arm.imgNumber}.vue`));
@@ -710,7 +704,7 @@ export default defineComponent({
 			);
 		},
 		leftLeg(): string {
-			return defineAsyncComponent(() => import(`./leg/left/${this.leftLeg0}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/left/${this.element0}.vue`));
 		},
 		leftLegKneeHorn(): string {
 			return defineAsyncComponent(() => import(`./leg/left/knee/${this.leg.left.knee.horn.imgNumber}.vue`));
@@ -729,10 +723,10 @@ export default defineComponent({
 			);
 		},
 		leftLegNail(): string {
-			return defineAsyncComponent(() => import(`./leg/left/nail/${this.leftLegNail0}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/left/nail/${this.element0}.vue`));
 		},
 		rightLeg(): string {
-			return defineAsyncComponent(() => import(`./leg/right/${this.rightLeg0}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/right/${this.element0}.vue`));
 		},
 		rightLegKneeHorn(): string {
 			return defineAsyncComponent(() => import(`./leg/right/knee/${this.leg.right.knee.horn.imgNumber}.vue`));
@@ -756,7 +750,7 @@ export default defineComponent({
 			);
 		},
 		rightLegNail(): string {
-			return defineAsyncComponent(() => import(`./leg/right/nail/${this.rightLegNail0}.vue`));
+			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/right/nail/${this.element0}.vue`));
 		}
 	},
 	methods: {

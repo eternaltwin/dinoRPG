@@ -2,6 +2,7 @@ export * from './ElementType.js';
 export * from './Energy.js';
 export * from './ItemEffect.js';
 export * from './ItemType.js';
+export * from './MissionsStatus.js';
 export * from './NpcTrigger.js';
 export * from './ShopType.js';
 export * from './SkillType.js';

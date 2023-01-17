@@ -33,6 +33,8 @@ services:
       # https://cli.vuejs.org/guide/mode-and-env.html#modes
       # development is used by vue-cli-service serve
       - NODE_ENV=development
+      # To make sure that someone running a brand new docker gets debug logs by default
+      - RUST_LOG=DEBUG
 
   drpg_eternal_twin:
     container_name: drpg_eternal_twin

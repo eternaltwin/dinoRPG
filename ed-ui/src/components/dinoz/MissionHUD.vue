@@ -1,0 +1,121 @@
+<template>
+	<Tippy theme="normal" tag="div" class="mission" @click="getInformation(mission)">
+		<p class="name">
+			{{ $t(`missions.name.${missionName}`) }}
+		</p>
+		<div class="detail">
+			<template v-if="missionAction === 'talkTo'">
+				{{ $t(`missions.actions.${missionAction}`, { npc: $t(`missions.npc.${missionTarget}`) }) }}
+			</template>
+			<template v-else-if="missionAction === 'goto'">
+				{{ $t(`missions.actions.${missionAction}`, { place: $t(`missions.place.${missionTarget}`) }) }}
+			</template>
+			<template v-else-if="missionAction === 'validate'">
+				{{ $t(`missions.actions.${missionAction}`, { place: $t(`missions.place.${missionTarget}`) }) }}
+			</template>
+			<template v-else-if="missionAction === 'hidePlace'">
+				{{ $t(`missions.actions.hidePlace`) }}
+			</template>
+		</div>
+		<template #content>
+			<h1>{{ $t(`missions.name.${missionName}`) }}</h1>
+			<p>{{ $t(`missions.description.${missionName}`) }}</p>
+		</template>
+	</Tippy>
+	<MissionInformationModal
+		:enabled="information"
+		:mission="mission"
+		@close="information = !information"
+		@reload="reload()"
+	/>
+</template>
+
+<script lang="ts">
+import { defineAsyncComponent, defineComponent } from 'vue';
+import { sessionStore } from '@/store/index.js';
+import { missionsList } from '@/constants/index.js';
+import { Dinoz, MissionList } from '@/models/index.js';
+import EventBus from '@/events/index.js';
+import { MissionsStatus } from '@/enums/index.js';
+
+export default defineComponent({
+	name: 'MissionHUD',
+	components: {
+		MissionInformationModal: defineAsyncComponent(() => import('@/components/modal/MissionInformationModal.vue'))
+	},
+	emits: ['abort'],
+	data() {
+		return {
+			sessionStore: sessionStore(),
+			information: false as boolean
+		};
+	},
+	methods: {
+		getInformation(mission: MissionList): void {
+			if (mission.status === 'ongoing' || mission.status === 'available') {
+				this.information = !this.information;
+			}
+		},
+		async reload(): Promise<void> {
+			EventBus.emit('isLoading', true);
+			const dinozId = this.$route.params.id as string;
+			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
+			dinozToUpdate.missionId = undefined;
+			dinozToUpdate.missions = undefined;
+			this.information = !this.information;
+			this.$emit('abort');
+			EventBus.emit('isLoading', false);
+		}
+	},
+	props: {
+		missionId: { type: Number, required: true }
+	},
+	computed: {
+		missionName(): string {
+			return missionsList[this.missionId];
+		},
+		missionDetail(): string {
+			const dinozId = this.$route.params.id as string;
+			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
+			return myDinoz.missions!;
+		},
+		mission(): MissionList {
+			return { missionId: this.missionId, status: MissionsStatus.ONGOING };
+		},
+		missionAction(): string {
+			return this.missionDetail.split('(')[0];
+		},
+		missionTarget(): string {
+			return this.missionDetail.substring(this.missionDetail.indexOf('(') + 1, this.missionDetail.indexOf(')'));
+		}
+	}
+});
+</script>
+
+<style lang="scss" scoped>
+.mission {
+	margin: 0 10px 10px;
+	padding: 5px 5px 5px 20px;
+	font-size: 10pt;
+	background-color: #bc683c;
+	background-image: url('@/assets/icons/small_missAct.webp');
+	background-position: 5px 8px;
+	background-repeat: no-repeat;
+	line-height: 10pt;
+	overflow: hidden;
+	color: #774828;
+	cursor: pointer;
+}
+.name {
+	font-variant: small-caps;
+	font-weight: bold;
+	color: white;
+}
+.detail {
+	font-style: italic;
+	color: #fce3bc;
+	font-size: 9pt;
+}
+</style>

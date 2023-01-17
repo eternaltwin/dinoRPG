@@ -14,7 +14,26 @@ export const DinozFicheData = ({
 	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }],
 	status: [{ statusId: 1 }],
 	placeId: 1,
-	experience: 100
+	experience: 100,
+	missions: []
+} as unknown) as Dinoz;
+
+export const DinozFightData = ({
+	id: dinozId,
+	placeId: 1,
+	level: 1,
+	life: 100,
+	max_life: 100,
+	experience: 0,
+	nbrUpFire: 2,
+	nbrUpWood: 1,
+	nbrUpWater: 1,
+	nbrUpLightning: 1,
+	nbrUpAir: 1,
+	items: [{ itemId: 1 }],
+	skills: [{ skillId: 1 }],
+	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
+	player: PlayerData
 } as unknown) as Dinoz;
 
 export const DinozWithSkills = {
@@ -74,6 +93,30 @@ export const DinozLite = {
 	status: [{ statusId: 2 }, { statusId: 12 }],
 	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }]
 } as Dinoz;
+
+export const multipleDinoz = [
+	{
+		id: undefined,
+		player: {
+			id: 1,
+			leader: true,
+		}
+	},
+	{
+		id: undefined,
+		player: {
+			id: 1,
+			leader: true,
+		}
+	},
+	{
+		id: undefined,
+		player: {
+			id: 1,
+			leader: true,
+		}
+	}
+]
 
 export const BasicDinoz = {
 	id: dinozId,

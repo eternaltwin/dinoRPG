@@ -28,13 +28,6 @@
 				/></span>
 				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
 			</a>
-			<!--<SDinozSWF
-			:display="dinoz.display"
-			:flip="1"
-			:width="40"
-			:height="40"
-			type="sdino"
-		></SDinozSWF>-->
 		</li>
 	</ul>
 </template>
@@ -44,19 +37,16 @@ import { defineComponent } from 'vue';
 import { Dinoz } from '@/models';
 import { sessionStore } from '@/store';
 import { placeList } from '@/constants';
-// import SDinozSWF from '@/components/dinoz/dinozSWF.vue';
 
 export default defineComponent({
 	name: 'DinozList',
 	data() {
 		return {
 			sessionStore: sessionStore(),
-			dinozList: [] as Array<Dinoz>
+			dinozList: [] as Array<Dinoz>,
+			hasPDA: false as boolean
 		};
 	},
-	/*components: {
-		SDinozSWF
-	},*/
 	methods: {
 		goToDinozPage(dinozId: number): void {
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
@@ -79,11 +69,16 @@ export default defineComponent({
 	},
 	watch: {
 		storeDinozList: function (dinozList: Array<Dinoz>) {
-			this.dinozList = dinozList.sort((a, b) => a.id! - b.id!);
+			if (this.hasPDA) {
+				this.dinozList = dinozList.sort((a, b) => (a.order ?? a.id!) - (b.order ?? b.id!));
+			} else {
+				this.dinozList = dinozList.sort((a, b) => a.id! - b.id!);
+			}
 		}
 	},
 	mounted(): void {
 		this.dinozList = this.sessionStore.getDinozList!;
+		this.hasPDA = this.sessionStore.getPlayerOptions!.hasPDA;
 	}
 });
 </script>

@@ -15,6 +15,7 @@ import AdminDashBoard from '@/pages/AdminDashBoard.vue';
 import Ingredients from '@/pages/Ingredients.vue';
 import News from '@/components/common/News.vue';
 import NPC from '@/pages/NPC.vue';
+import Missions from '@/pages/Missions.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
 					component: NPC
 				},
 				{
+					path: '/dino/:id/missions/:npc',
+					name: 'Missions',
+					component: Missions
+				},
+				{
 					path: '/shop/:name',
 					name: 'ItemShopPage',
 					component: ItemShopPage
@@ -63,7 +69,7 @@ const router = createRouter({
 					path: '/fight',
 					name: 'Fight',
 					component: Fight,
-					props: true
+					props: route => ({ dinozId: route.query.dinozId })
 				},
 				{
 					path: '/generator',
@@ -80,7 +86,7 @@ const router = createRouter({
 					path: '/dinozwithoutflash',
 					name: 'DinozWithoutFlash',
 					component: DinozWithoutFlash,
-					props: { display: '1910731007000', flip: -1, life: 60 }
+					props: { display: '3000010000000000', flip: -1, life: 100 }
 				},
 				{
 					path: '/admin',

@@ -1,9 +1,12 @@
 <template>
 	<div class="actions">
 		<Resurrect :enabled="resurect" @close="resurect = false" />
+		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
+		<MissionHUD v-if="missionId" :missionId="missionId" @abort="endMission()" />
+		<MissionRewardModal :missionReward="missionReward" @close="endMission()" />
 		<ul>
 			<table class="action_button">
 				<tbody>
@@ -24,6 +27,12 @@
 						<td v-else-if="action.name === 'npc'" class="label">
 							{{ $t(`npc.name.${npcNameList[action.prop]}`) }}
 						</td>
+						<td v-else-if="action.name === 'mission' && missionAction === 'validate'" class="label">
+							{{ $t(`missions.actions.terminate`) }}
+						</td>
+						<td v-else-if="action.name === 'mission'" class="label">
+							{{ $t(`missions.npc.${action.prop}`) }}
+						</td>
 						<td v-else-if="action.name !== 'npc' && action.name !== 'shop'" class="label">
 							{{ $t(`action.name.${action.name}`) }}
 						</td>
@@ -37,6 +46,11 @@
 								v-html="formatContent($t(`npc.name.${npcNameList[action.prop]}`))"
 							/>
 							<h1
+								v-else-if="action.name === 'mission' && missionAction === 'validate'"
+								v-html="formatContent($t(`missions.actions.terminate`))"
+							/>
+							<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
+							<h1
 								v-else-if="action.name !== 'npc' && action.name !== 'shop'"
 								v-html="formatContent($t(`action.name.${action.name}`))"
 							/>
@@ -45,6 +59,10 @@
 								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
 							/>
 							<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
+							<p
+								v-else-if="action.name === 'mission'"
+								v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
+							/>
 							<p
 								v-else-if="action.name !== 'npc' && action.name !== 'shop'"
 								v-html="formatContent($t(`action.description.${action.name}`))"
@@ -58,10 +76,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { shopNameList, npcNameList } from '@/constants';
+import { defineComponent, PropType, defineAsyncComponent } from 'vue';
+import { shopNameList, npcNameList, missionsList } from '@/constants';
 import { Action } from '@/models';
-import Resurrect from '../modal/ResurrectModal.vue';
+import { sessionStore } from '@/store';
+import EventBus from '@/events';
+import { MissionService } from '@/services';
+import { errorHandler } from '@/utils/index.js';
+import { FightService } from '@/services';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -69,15 +91,27 @@ export default defineComponent({
 		return {
 			shopNameList: shopNameList,
 			npcNameList: npcNameList,
-			resurect: false as boolean
+			resurect: false as boolean,
+			NPCModal: undefined as string | undefined,
+			mission: sessionStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
+				.missions,
+			npcName: undefined as string | undefined,
+			missionReward: undefined as string | undefined,
+			sessionStore: sessionStore()
 		};
 	},
 	components: {
-		Resurrect
+		Resurrect: defineAsyncComponent(() => import('@/components/modal/ResurrectModal.vue')),
+		MissionHUD: defineAsyncComponent(() => import('@/components/dinoz/MissionHUD.vue')),
+		NPCModal: defineAsyncComponent(() => import('@/components/modal/NPCModal.vue')),
+		MissionRewardModal: defineAsyncComponent(() => import('@/components/modal/MissionRewardModal.vue'))
 	},
-	props: { dinozActions: Object as PropType<Array<Action>> },
+	props: {
+		dinozActions: Object as PropType<Array<Action>>,
+		missionId: Number
+	},
 	methods: {
-		launch(action: Action): void {
+		async launch(action: Action): Promise<void> {
 			switch (action.name) {
 				case 'levelup':
 					this.$router.push({
@@ -88,21 +122,72 @@ export default defineComponent({
 				case 'shop':
 					this.$router.push({
 						name: 'ItemShopPage',
-						params: { name: shopNameList[action.prop!] }
+						params: { name: shopNameList[action.prop as number] }
 					});
 					break;
 				case 'npc':
 					this.$router.push({
 						name: 'NPC',
-						params: { id: this.$route.params.id.toString(), npc: npcNameList[action.prop!] }
+						params: { id: this.$route.params.id.toString(), npc: npcNameList[action.prop as number] }
 					});
+					break;
+				case 'fight':
+					EventBus.emit('isLoading', true);
+					// eslint-disable-next-line
+					const fight: FightResult = await FightService.processFight(parseInt(this.$route.params.id.toString()));
+					this.sessionStore.setFightResult(fight);
+					this.$router.push({
+						name: 'Fight',
+						query: { dinozId: this.$route.params.id.toString() }
+					});
+					EventBus.emit('isLoading', false);
 					break;
 				case 'resurrect':
 					this.resurect = true;
 					break;
+				case 'mission':
+					if (this.missionAction === 'validate') {
+						this.missionReward = await MissionService.interactMission(
+							this.$route.params.id.toString(),
+							this.missionId!,
+							action.prop as string
+						);
+					} else {
+						try {
+							this.npcName = action.prop as string;
+							this.NPCModal = await MissionService.interactMission(
+								this.$route.params.id.toString(),
+								this.missionId!,
+								action.prop as string
+							);
+						} catch (e) {
+							errorHandler.handle(e);
+						}
+					}
+					break;
 				default:
 					break;
 			}
+		},
+		continueMission(): void {
+			this.NPCModal = undefined;
+			this.$emit('continueMission');
+		},
+		endMission(): void {
+			this.missionReward = undefined;
+			this.mission = undefined;
+			this.$router.go(0);
+		}
+	},
+	computed: {
+		missionAction(): string | undefined {
+			return this.mission?.split('(')[0];
+		},
+		missionName(): string | undefined {
+			if (this.missionId) {
+				return missionsList[this.missionId!];
+			}
+			return undefined;
 		}
 	}
 });

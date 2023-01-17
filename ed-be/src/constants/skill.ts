@@ -289,10 +289,10 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		skillId: 11314,
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.FIRE, ElementType.LIGHTNING],
+		element: [ElementType.FIRE, ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [41201, 11206, 51309],
+		unlockedFrom: [41201, 11206, 51309, 61121],
 		raceId: [raceList.HIPPOCLAMP.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -426,7 +426,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.FIRE, ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [31305, 11312],
+		unlockedFrom: [31305, 11312, 61121],
 		raceId: [raceList.FEROSS.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -438,7 +438,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.FIRE, ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [11303, 41312],
+		unlockedFrom: [11303, 41312, 61121],
 		raceId: [raceList.MOUEFFE.raceId, raceList.MOUEFFE_DEMON.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -450,7 +450,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.FIRE, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [11307, 21311],
+		unlockedFrom: [11307, 21311, 61121],
 		raceId: [raceList.PIGMOU.raceId, raceList.PIGMOU_DEMON.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -958,7 +958,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [11302, 21301],
+		unlockedFrom: [11302, 21301, 61121],
 		raceId: [raceList.GORILLOZ.raceId, raceList.GORILLOZ_DEMON.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -981,7 +981,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [21304, 51311],
+		unlockedFrom: [21304, 51311, 61121],
 		raceId: [raceList.CASTIVORE.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -1576,7 +1576,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		skillId: 31408,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.WATER, ElementType.WOOD],
+		element: [ElementType.WOOD, ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31311, 21309, 61119],
@@ -1590,7 +1590,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [31310, 31310],
+		unlockedFrom: [31310, 31310, 61121],
 		raceId: [raceList.SIRAIN.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -1613,7 +1613,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.WATER, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [31406, 51206],
+		unlockedFrom: [31406, 51206, 61121],
 		raceId: [raceList.MAHAMUTI.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -1622,7 +1622,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		skillId: 32101,
 		type: SkillType.S,
 		energy: Energy.NONE,
-		element: [ElementType.WATER, ElementType.LIGHTNING],
+		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [],
@@ -2140,7 +2140,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		skillId: 41409,
 		type: SkillType.P,
 		energy: Energy.NONE,
-		element: [ElementType.LIGHTNING, ElementType.WATER],
+		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41301, 31308, 61119],
@@ -2154,7 +2154,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.LIGHTNING, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [41302, 11309],
+		unlockedFrom: [41302, 11309, 61121],
 		raceId: [raceList.ROCKY.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -2166,7 +2166,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [41301, 51302],
+		unlockedFrom: [41301, 51302, 61121],
 		raceId: [raceList.PLANAILLE.raceId, raceList.PLANAILLE_DEMON.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -2190,7 +2190,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.LIGHTNING, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [21308, 41308],
+		unlockedFrom: [21308, 41308, 61121],
 		raceId: [raceList.TOUFUFU.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -2652,7 +2652,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		skillId: 51314,
 		type: SkillType.A,
 		energy: Energy.WEAK,
-		element: [ElementType.AIR, ElementType.WOOD],
+		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51310, 21304, 61119],
@@ -2732,7 +2732,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [11311, 51309],
+		unlockedFrom: [11311, 51309, 61121],
 		raceId: [raceList.KABUKI.raceId, raceList.KABUKI_DEMON.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -2744,7 +2744,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.AIR, ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [41308, 51301],
+		unlockedFrom: [41308, 51301, 61121],
 		raceId: [raceList.NUAGOZ.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -2767,7 +2767,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [11201, 51403],
+		unlockedFrom: [11201, 51403, 61121],
 		raceId: [raceList.PTEROZ.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -2779,7 +2779,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [51403, 21204, 31203],
+		unlockedFrom: [51403, 21204, 31203, 61121],
 		raceId: [raceList.SANTAZ.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -3208,7 +3208,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [41501, 51312],
+		unlockedFrom: [41501, 51312, 61121],
 		raceId: [raceList.SMOG.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -3217,10 +3217,10 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		skillId: 41505, //Edit since this
 		type: SkillType.I,
 		energy: Energy.VHIGH,
-		element: [ElementType.LIGHTNING, ElementType.WOOD],
+		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [21307, 51311],
+		unlockedFrom: [51405, 51311, 61121],
 		raceId: [raceList.SOUFFLET.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false
@@ -3232,7 +3232,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [12502, 22504],
+		unlockedFrom: [12502, 22504, 61121],
 		raceId: [raceList.TRICERAGNON.raceId],
 		isBaseSkill: false,
 		isSphereSkill: false

@@ -12,6 +12,13 @@
     "api": "API",
     "logout": "Déconnexion"
   },
+  "toast": {
+    "DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
+    "AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
+    "DinozNotDead": "Votre dinoz est déjà en vie.",
+    "OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
+    "tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs."
+  },
   "api": "Il vous est possible de consulter notre API afin de la tester. N'oubliez pas de prendre vos token d'authentification JWT :",
   "alpha": {
     "login": "Connexion à Eternal-Twin",
@@ -61,11 +68,13 @@
     "shop": "Boutique",
     "confirm": "Confirmer cette action ?",
     "chose": "Choisir",
-    "generator": "Générateur de dinoz"
+    "generator": "Générateur de dinoz",
+    "sortDinoz":  "Gérer mes Dinoz"
   },
   "chooseDinoz": {
     "information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
-    "nomDuDinoz": "Nom du dinoz :"
+    "nomDuDinoz": "Nom du dinoz :",
+    "pageName":  "Choix du Nom"
   },
   "inventory": {
     "itemName": "Nom de l'objet",
@@ -120,7 +129,7 @@
       "hot_bread": "Pain Chaud",
       "meat_pie": "Tarte à la Viande",
       "fight_ration": "Ration de Combat",
-      "surviving_ration": "TODO",
+      "surviving_ration": "Ration de Survie",
       "goblin_merguez": "Merguez de Gobelin",
       "pampleboum": "Pampleboum",
       "sos_helmet": "Casque de Secours",
@@ -217,23 +226,23 @@
       "quetzu_egg": "Oeuf de Quetzu",
       "quetzu_egg_rare": "Oeuf de Quetzu Rare",
       "smog_egg": "Oeuf de Smog",
-      "smog_egg_anniversary": "Oeuf de Smog d'Anniversaire",
-      "smog_egg_christmas_blue": "Oeuf de Smog de Noël Bleu",
-      "smog_egg_christmas_green": "Oeuf de Smog de Noël Vert",
+      "smog_egg_anniversary": "Oeuf de Smog Anniversaire",
+      "smog_egg_christmas_blue": "Oeuf de Smog de Noël",
+      "smog_egg_christmas_green": "Oeuf de Smog de Noël",
       "triceragnon_baby": "Bébé Tricéragnon",
       "triceragnon_baby_rare": "Bébé Tricéragnon Rare",
       "amnesic_rice": "Riz Amnésique",
       "tik_bracelet": "Bracelent en Tik",
       "magic_star": "Étoile Magique",
       "golden_napodino": "Napodino d'or",
-      "bamboo_friend": "TODO",
-      "candle_card": "TODO",
+      "bamboo_friend": "Ami Bambooz",
+      "candle_card": "Bougie d'Anniversaire",
       "christmas_ticket": "Ticket de Noël",
       "tictac_ticket": "Ticket Taque",
       "anniversary_ticket": "Ticket d'Anniversaire",
-      "easter_egg": "Oeuf de Pâque",
-      "fire_cracker": "Pétard TODO",
-      "special_potion_irma": "Potion d'Irma Spéciale",
+      "easter_egg": "Oeuf de Madame Urma",
+      "fire_cracker": "Pétard magique",
+      "special_potion_irma": "Potion de Madame Irma spéciale",
       "empty": "Vide",
       "undefined": "Inconnu"
     },
@@ -301,63 +310,63 @@
       "demon_ticket": "Les Tickets Démons sont obtenus en sacrifiant des Dinoz à la Boutique Démoniaque. Vous pouvez les échanger contre des Dinoz-Démons une fois que vous en aurez suffisamment.",
       "treasure_coupon": "Un Bon du Trésor vaut 1.000 Pièces d'Or plus les taxes et permet d'enchérir sur des Offres de la Place du Marché. Il suffit de l'utiliser pour le convertir en pièces.",
       "moueffe_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "moueffe_egg_rare": "TODO",
+      "moueffe_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "pigmou_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "pigmou_egg_rare": "TODO",
+      "pigmou_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "winks_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "winks_egg_rare": "TODO",
+      "winks_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "planaille_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "planaille_egg_rare": "TODO",
+      "planaille_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "castivore_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "castivore_egg_rare": "TODO",
+      "castivore_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "rocky_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "rocky_egg_rare": "TODO",
+      "rocky_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "pteroz_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "pteroz_egg_rare": "TODO",
+      "pteroz_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "nuagoz_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "nuagoz_egg_rare": "TODO",
+      "nuagoz_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "sirain_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "sirain_egg_rare": "TODO",
+      "sirain_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "hippoclamp_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "hippoclamp_egg_rare": "TODO",
+      "hippoclamp_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "gorilloz_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "gorilloz_egg_rare": "TODO",
+      "gorilloz_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "wanwan_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "wanwan_egg_rare": "TODO",
+      "wanwan_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "wanwan_baby_rare": "TODO",
       "santaz_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "santaz_egg_rare": "TODO",
+      "santaz_egg_rare": "Cet oeuf de Santaz n'est pas comme les autres, à quoi va-t'il bien pouvoir ressembler ?",
       "feross_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "feross_egg_rare": "TODO",
-      "feross_egg_christmas": "TODO",
+      "feross_egg_rare": "Cet oeuf de Feross n'est pas comme les autres, ce dinoz semble taillé pour la guerre !",
+      "feross_egg_christmas": "Cet oeuf de Feross n'est pas comme les autres, tout droit sorti de l'équipe du Père Noël, il semble capable de distribuer autre chose que des paquets cadeaux!",
       "kabuki_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "kabuki_egg_rare": "TODO",
+      "kabuki_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel...",
       "mahamuti_egg": "Au travers de la glace, vous distinguez une forme étrange, une boule de poil cornue...?",
-      "mahamuti_egg_rare": "TODO",
+      "mahamuti_egg_rare": "Au travers de la glace, vous distinguez une forme étrange, une boule de poil cornue...?",
       "souffet_egg": "Cet oeuf de Soufflet est sur le point d'éclore, à quoi va-t-il bien pouvoir ressembler ?",
       "soufflet_egg_rare": "TODO",
       "toufufu_baby": "Ce bébé Toufufu commence déjà à gigoter, il veut absolument se défouler sur les champs de bataille !",
-      "toufufu_baby_rare": "TODO",
+      "toufufu_baby_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel...",
       "quetzu_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
-      "quetzu_egg_rare": "TODO",
+      "quetzu_egg_rare": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel...",
       "smog_egg": "Cet oeuf étrange semble tout près de se transormer en un Dinoz exceptionnel...",
-      "smog_egg_anniversary": "TODO",
-      "smog_egg_christmas_blue": "TODO",
-      "smog_egg_christmas_green": "TODO",
-      "triceragnon_baby": "TODO",
+      "smog_egg_anniversary": "Cet oeuf bien étrange semble tout près de se transformer en un Dinoz exceptionnel...",
+      "smog_egg_christmas_blue": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel...",
+      "smog_egg_christmas_green": "Cet oeuf de Smog n'est pas comme les autres, tout droit sorti de l'équipe du Père Noël, il semble capable de distribuer autre chose que des paquets cadeaux!",
+      "triceragnon_baby": "Cet oeuf étrange semble tout près de se transformer en un Dinoz exceptionnel !",
       "triceragnon_baby_rare": "TODO",
       "amnesic_rice": "Cette variété très rare de Riz rends amnésique. En le mangeant, un Dinoz oublie son nom et perds aussi l'expérience accumulée depuis son dernier niveau…",
       "tik_bracelet": "Cet objet issu de la technologie de Caushemesh peut redonner chaque jour jusqu'à 10 points de vie au Dinoz qui le porte et se sera le seul dinoz qui l'aura.",
       "magic_star": "Ces mystérieuses étoiles sont réparties un peu partout dans le monde de Dinoland. Saurez-vous rassembler les 7 ?",
       "golden_napodino": "Les Napodino d'or sont des pièces en or massif datant d'une civilisation pré-dinovillienne. Ils ont une très grande valeur auprès des collectionneurs, et on raconte qu'ils portent chance aux Dinoz qui les transportent.",
       "bamboo_friend": "Un ami Bambooz viendra aider votre Dinoz pendant les combats !",
-      "candle_card": "TODO",
+      "candle_card": "Cette carte d'Anniversaire vous permet d'accéder au jeu du château de sable au port de Prêche !",
       "christmas_ticket": "Permet de jouer au jeu du Chasse-Neige et gagner 1.000 d'or, 5.000 d'or ou le Santaz.",
       "tictac_ticket": "Ces Tickets Taque vous permettront de fouiller dans le jardin de Papy Joe, à la recherche des trésors enfouis par son arrière grand-père.",
-      "anniversary_ticket": "TODO",
-      "easter_egg": "TODO",
-      "fire_cracker": "TODO",
-      "special_potion_irma": "TODO",
+      "anniversary_ticket": "Ces Tickets Taque vous permettront de fouiller dans le jardin de Papy Joe, à la recherche des trésors enfouis par son arrière grand-père.",
+      "easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
+      "fire_cracker": "Ce pétard vous permet de déclencher un feu d'artice à Dinoville pour gagner des trésors !",
+      "special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
       "empty": "Il n'y a aucun objet dans cette case",
       "undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
     }
@@ -604,6 +613,7 @@
   "npc":  {
     "description": "Vous pouvez discuter avec cette personne.",
     "stop": "Arrêter la discussion",
+    "continue": "Continuer",
     "header": {
       "character": "Personnage:"
     },
@@ -611,7 +621,11 @@
       "professor": "Professeur",
       "alpha_test": "Alpha Beteur",
       "michel": "Le guide Michel",
-      "street_shouter":"blabla"
+      "street_shouter":"blabla",
+      "sofia": "Sofia",
+      "mmex": "Madame X",
+      "mineur":  "Mineur Coralien",
+      "papy":  "Papy Joe"
     },
     "professor": {
       "speech": {
@@ -709,6 +723,117 @@
         "GO_TO_STEPPES": "Les steppes magnétiques",
         "nothing": "Surprends moi !",
         "maxExperience": "Haaaaaaaaa"
+      }
+    },
+    "sofia": {
+      "speech": {
+        "begin": "Allongée sur le transat de Mandragore, Sofia sirote un cocktail.\n\t\tElle profite allégrement du soleil et se laisse bronzer sur la plage...",
+        "slurp": "Slurpp....",
+        "nouvelle": "Sluuuuuuuuurpp....\n\t\tCa va pas trop mal, j'étais plutôt tranquille avant que tu n'arrives.\n\t\tSi tu allais jouer ailleurs ?\n\t\tSlurpp....\n\t\tEt ne dérange pas mon mari, je ne voudrais pas que tu lui donnes des idées suspectes...",
+        "bien": "Il vaut mieux la laisser tranquille, si même Mandragore n'ose pas la contrarier, alors qui serait assez fou pour le faire...?",
+        "troph": "Slurpp....\n\t\tCaushemesh ne craint rien...\n\t\tJ'ai chargé les filles de surveiller la brêche du monde sombre.\n\t\tEn cas de problème, j'enverrai mon mari faire mon boulot.",
+        "palais": "Il n'y a rien d'intéressant de toute façon là-bas... Hormis peut-être un objet.\n\t\tHumm... Je n'ai pas envie d'aller le chercher... Ecoute, je te le donne, je n'en ai plus besoin de toute façon, maintenant que j'ai le vrai, héhé...\n\t\tPrend le donc en guise de récompense pour avoir retrouvé mon mari.",
+        "retour": "Maintenant laisse moi, j'ai des affaires urgentes à traiter...\n\t\t...\n\t\tMandrachou !!!! Viens me masser...\n\t\tVITE !",
+        "niveau": "C'est bien vrai qu'avec ton niveau actuel, tu ne vas pas aller très loin...\n\t\tBon, je suis capable de briser la limite du niveau maximal de ton dinoz, mais prend garde, cette décision est IRREVOCABLE !\n\t\tUne fois la limite brisée, tu pourras évoluer jusqu'au niveau 60 !",
+        "yes": "Qu'il en soit ainsi !\n\t\t_(Sofia se lève d'un seul coup, concentre son énergie... et projette une décharge intense sur votre dinoz !)_\n\t\t_(Au travers de sa souffrance, son organisme réagit. Il développe une nouvelle force, capable de surmonter les dures épreuves qui lui feront face !)_\n\t\tBien, j'ai levé le seau qui empêchait ton dinoz d'évoluer. Cette sécurité avait été apposée il y a longtemps pour éviter une surpopulation de dinoz aussi puissant...\n\t\t_(Votre dinoz a changé, il peut dorénavant dépasser ses limites, comment va t'il évoluer ? )_",
+        "ether": "Oula, il en mourra sûrement... Cependant, s'il est exposé un temps très court à l'éther, il pourrait développer de nouvelles compétences qui le rendrait surement plus fort !\n\t\tMais attention, tu n'aurais plus accès à l'ancien arbre de compétences, tu ne pourrais donc pas apprendre les dernières compétences qu'il te manquait...\n\t\tAvant d'exposer ton dinoz à l'ether, sois sûr de bien avoir optimisé son choix de compétences...",
+        "newskill": "Qu'il en soit ainsi !\n\t\t_(Sofia fait amener une cuve remplie d'ether, et y plonge votre dinoz d'un coup !)_\n\t\t_(Peu content d'être malmené, votre dinoz en ressort très vite en boudant...)_\n\t\tVoilà, ton dinoz va petit à petit comprendre la portée de cet acte quand il gagnera des niveaux supplémentaires.\n\t\t_(Vous regardez votre dinoz avec interrogation, sa pupille est plus verte qu'avant. Que vous réserve-t'il ?)_",
+        "no": "Bien, si tu changes d'avis, tu peux revenir me voir.\n\t\tTu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant atteint le niveau 50.",
+        "no2": "Bien, si tu changes d'avis, tu peux revenir me voir.\n\t\tTu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant dépassé le niveau 50."
+      },
+      "playerChoice": {
+        "slurp": "Bonjour !",
+        "nouvelle": "Tout va bien ?",
+        "bien": "Euh... Bien sûr...",
+        "troph": "Et Caushemesh ?",
+        "palais": "Et le palais ?",
+        "retour": "euh merci ?",
+        "niveau": "Pourriez vous rendre mon dinoz plus fort ?",
+        "yes": "Je suis sûr de moi, mon dinoz veut évoluer !",
+        "ether": "Je ferais bien tremper mon dinoz dans de l'éther !",
+        "newskill": "Je suis sûr de moi, mon dinoz veut apprendre de nouvelles compétences !",
+        "no": "Non merci, mon dinoz n'a pas besoin de surpasser le niveau 50 !",
+        "no2": "Non merci, mon dinoz préfère continuer d'apprendre les anciennes compétences !"
+      }
+    },
+    "mmex": {
+      "speech": {
+        "begin": "Alors que vous passiez par Forcebrut, vous rencontrez une femme, qui semblait justement vous attendre.",
+        "talk": "Tiens donc, voilà donc ce jeune Maître Eleveur dont j'ai tant entendu parler ? Il semble que Papy Joe dise beaucoup de bien à propos de toi, tant tu t'appliques à remplir ses missions ?",
+        "talk2": "Puisque tu sembles être quelqu'un à qui on peut faire confiance, j'aurais moi aussi aimé te confier quelques missions, libre à toi d'accepter ou non !",
+        "missions": "Ah désolé, cette partie la n'a encore été developpée. Reviens me voir plus tard.",
+        "question": "Qui je suis ?!? Ah ah ah ! Pardonne-moi, mon jeune ami, j'avais complètement oublié de me présenter ! Je suis.... .... ....",
+        "question2": "... désolée... je m'excuse. Je viens juste de me rappeler que je ne pouvais justement pas révéler qui je suis, car cela pourrait t'attirer de gros ennuis ! Mais comme c'est tout de même très malpoli, je vais te révéler quelque chose d'intéressant...",
+        "double": "Voyons voir... Je suppose que jusqu'à présent, tu as appris que chaque compétence correspondait à un unique élément parmi les cinq élements possibles ? Par exemple, Colère correspond à l'élément Feu et Perception correspond à l'élément Eau.",
+        "double2": "Et bien... c'est faux ! Il existe des compétences spéciales, qui sont associées non pas à un seul mais à DEUX éléments ! On les appelle les compétences-doubles. Une mais demande de connaître au préalable une compétence de chacun des deux éléments.",
+        "double3": "Je comprends tout à fait ta surprise, c'est un secret bien gardé. Cependant pour pouvoir apprendre ces compétences, il est nécessaire de maîtriser Compétence-Double, une compétence secrète que seuls les Drag.... mais j'en ai déjà trop dit !",
+        "learn": "Oh c'est plutôt simple, regarde, il me suffit de faire 'ça' et...",
+        "already": "A ton avis ? .... Il me semble que tu l'as déjà appris ! Ah ah ah !",
+        "no": "Non... ça ne marche pas... si ça te picote quand je fait 'ça' ou si ton Dinoz n'a pas encore appris les compétences  te permettant de maîtriser Compétence-Double, ça ne marchera pas. Reviens me voir plus tard pour que l'on réessaie !",
+        "dolearn": "Ouah ! Ca a marché ! Tu vois que c'était facile ? Ton Dinoz maîtrise désormais Compétence-Double, félicitations !"
+      },
+      "playerChoice": {
+        "talk": "Lui parler",
+        "talk2": "...",
+        "missions": "Liste de Missions",
+        "question": "Mais qui êtes-vous ?",
+        "question2": "Vous êtes ?",
+        "double": "Ah ?",
+        "double2": "Oui !",
+        "double3": "!!!",
+        "learn": "Comment l'apprendre ?",
+        "already": "Comment l'apprendre ?",
+        "learn1": "Et ?",
+        "learn2": "Ah ??",
+        "learn3": "Hein ???",
+        "learn4": "Oh !",
+        "learn5": "Quoi...",
+        "learn1bis": "Et ?",
+        "learn2bis": "Ah ??",
+        "learn3bis": "Hein ???",
+        "learn4bis": "Oh !",
+        "learn5bis": "Quoi...",
+        "no": "(ouille)",
+        "dolearn": "hello"
+      }
+    },
+    "papy": {
+      "speech": {
+        "begin": "Salut p'tit gars, je t'attendais..."
+      },
+      "playerChoice": {
+        "missions": "Consulter la liste des Missions"
+      }
+    },
+    "mineur": {
+      "speech": {
+        "begin": "Pinc ! Pinc ! Pinc ! Pffff ce corail est plus dur que de la pierre tu savais ça toi ?",
+        "thanks": "T'es sympa ! Reviens ici quand ta pelle sera cassée, je la réparerai.",
+        "yes": "Ah bon tu étais au courant ? Tiens, je te prête une vielle pelle pour que toi aussi tu puisses creuser.\n\t\tElle est en très mauvais état donc à la première utilisation elle va se casser, mais c'est ma pelle porte-chance,\n\t\tavec elle tu pourras trouver les plus grands trésors de Dinoland ! Alors, on dit quoi ?",
+        "nothing": "Alors elle te plaît ma pelle ? On dit quoi ?",
+        "repair": "Ah c'est toi ? Alors comme ça tu as cassé ma pelle ? Bouge pas... voilà je te l'ai réparée !... Hep ! Tu n'oublies pas quelque chose ?",
+        "nothing2": "Alors elle te plaît ma pelle avec le manche ergonomique ? On dit quoi ?",
+        "repair2": "Ah c'est toi ? Alors comme ça tu as cassé ma pelle ? Bouge pas... voilà je te l'ai réparée !... Hep ! Tu n'oublies pas quelque chose ?",
+        "no": "Pfff, oui c'est très très dur à creuser, c'est pour celà qu'il faut des gars costauds comme moi pour faire ce métier.",
+        "next": "Oui, tout à fait ! Regarde-moi ces muscles ! Je suis nominé aux Corail Awards, catégorie \"Mineur Gros-bras\" cette année.",
+        "next2": "Oui, puisque j'te le dis ! Va falloir que je bosse encore beaucoup si je veux un jour ressembler à mon idole...",
+        "next3": "Et alors ?!!? Tu me demandes même pô qui c'est mon idole ?",
+        "qui": "Mais voyons ! Sylverter Staline bien sûr ! Trois fois gagnant des Corail Awards, dans les catégories\n\t\t\"Muscles Ultimes\" et \"Replique qui tue\". Il est vraiment trop coool, et il a toujours réussi a éliminer tous ses\n\t\topposants !",
+        "ok": "Oui c'est le plus fort ! Alàlà, le bon vieux temps, je pourrais en parler pendant des heures...\n\t\tMais bon je te laisse j'ai du boulot ! Pinc ! Pinc ! Pinc !"
+      },
+      "playerChoice": {
+        "thanks": "Merci !",
+        "yes": "Oui",
+        "nothing": "Oui",
+        "repair": "Oui",
+        "nothing2": "Oui",
+        "repair2": "Oui",
+        "no": "Non",
+        "next": "Ah bon...",
+        "next2": "Vraiment...",
+        "next3": "...",
+        "qui": "Euh... et qui est votre idole ?",
+        "ok": "Il a l'air fort !"
       }
     }
 
@@ -1325,7 +1450,7 @@
       "Oracle": "Double le taux de lancement de l'invocation lors d'un combat",
       "ForceDeZeus": "Augmente la puissance de tous les assauts foudre de 20",
       "RemanenceHertzienne": "Augmente les chances d'esquive de 20%",
-      "Blanc": "Blanc",
+      "Blanc": "Augmente les assauts de 20 du dinoz s'il se trouve à Nimbao",
       "Anaerobie": "Augmente la puissance de tous les assauts de 20 lorsque le dinoz est à Nimbao",
       "DoubleFace": "50% de chance d'augmenter ou réduire l'initiative du lanceur de 10 au début d'un combat",
       "Flagellation": "Réduit de 15% la vitesse de récupération",
@@ -1352,7 +1477,7 @@
       "LoupGarou": "Attaque tous les ennemis avec un pouvoir bois de 30",
       "Salamandre": "Attaque un ennemi avec un pouvoir feu de 40",
       "BenedictionDesFees": "Le groupe gagne 10 en initiative",
-      "Bouddha": " Les alliés voient toutes leurs résistances élémentaires augmentées de 10",
+      "Bouddha": "Les alliés voient toutes leurs résistances élémentaires augmentées de 10",
       "TotemAncestralAeroporte": "Attaque un ennemi avec un pouvoir air de 30",
       "Leviathan": "Attaque tous les ennemis avec un pouvoir eau de 20",
       "Vulcain": "Attaque tous les ennemis avec un pouvoir feu de 20",
@@ -1536,7 +1661,93 @@
     "ranking": "Dino-RPG [ Grand Hall de la Gloire ]",
     "ingredients": "Dino-RPG [ Ingrédients ]",
     "levelup": "Dino-RPG [ Niveau supplémentaire pour ",
-    "npc": "Dino-RPG [ Personnage : "
+    "npc": "Dino-RPG [ Personnage : ",
+    "missions": "Dino-RPG [ Liste des Missions ]",
+    "dinozNaming": "Dino-RPG [ Choix du Nom ]"
+  },
+  "missions": {
+    "header": "Liste des Missions",
+    "xp": "points d'expérience",
+    "gold": "pièces",
+    "item": "Objets :",
+    "unavailable": {
+      "title": "Mission Bloquée",
+      "description": "Cette Mission ne vous est pas accessible pour l'instant, il vous faudra revenir plus tard."
+    },
+    "giveUp": "Abandonner",
+    "continue": "Continuer",
+    "accept": "Accepter la Mission",
+    "already": "Votre Dinoz a déjà une mission en cours et ne peut pas accepter plus d'une mission à la fois.",
+    "status": {
+      "available": "",
+      "unavailable": "",
+      "ongoing": "En cours...",
+      "finished": "Terminée",
+      "over": "Félicitations ! Vous avez terminé la Mission \"{mission}\" !"
+    },
+    "name": {
+      "fish": "Du poisson frais",
+      "dog": "Le chien perdu",
+      "kilgou": "Les Goupignons des Collines",
+      "kilwlf": "La chasse aux loups",
+      "fflow": "Le rosier en danger",
+      "kbook": "Le livre de recettes",
+      "msg": "Les Timbres",
+      "lettre": "La lettre confidentielle",
+      "kilglu": "Un étrange monstre",
+      "kilgnt": "Les Géants",
+      "kilcoq": "L'exploit du mois"
+    },
+    "tooltip": "Mission : {mission}",
+    "description":  {
+      "fish": "Madame Seyche, habitante de Dinoville, recherche du poisson frais pour organiser un dîner avec ses amis. Peux-tu aller lui chercher du poisson chez le Marchand au Port de Prêche au sud ? Il a été prévenu et il t'attend.",
+      "dog": "La Vieille Ducraft a perdu son caniche alors qu'elle visitait son fils dans les Collines Escarpées, sauras-tu le retrouver ?",
+      "kilgou": "De nombreux Loups et Goupignons sévissent dans les Collines Escarpées au nord de Dinoville, le chef d'un village voisin cherche quelqu'un pour en tuer quelques-uns et ainsi leur faire peur pour qu'ils se calment, sauras-tu te montrer suffisamment fort ?",
+      "kilwlf": "Récemment, les paysans ont beaucoup de problèmes avec des groupes de Loups qui attaquent leurs chèvres. Peux-tu faire un tour ici-et-là et en tuer quelques-uns histoire de les éloigner ?",
+      "fflow": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
+      "kbook": "J'ai à nouveau reçu une demande de la ravissante Madame Seyche. Elle voudrait consulter un livre de recettes qui se trouve à l'Université, peux-tu aller lui chercher ?",
+      "msg": "J'ai très envie d'écrire une lettre à une certaine personne qui me tient à coeur. Mais il se trouve que mes Timbres ont été volés par des Goupignons Chapardeurs qui se regroupent habituellement à la Fontaine de Jouvence. Si tu les tues, je te laisserai utiliser mes Timbres, ça te va ?",
+      "lettre": "Uhm... Cette fois-ci c'est pour moi, Papy Joe, que tu vas travailler... J'aurais besoin de toi pour que tu apporte d'URGENCE cette lettre à une certaine personne à Dinoville. Il faut faire très vite surtout !",
+      "kilglu": "Un étrange monstre est apparu ces derniers temps dans le Royaume de Dinoville. Il est assez coriace et peut suivant les cas faire beaucoup de dégâts lors d'un combat. Pourrais-tu en tuer un et me le ramener pour que je puisse l'étudier ?",
+      "kilgnt": "Je ne sais pas si tu t'en es aperçu, mais le Royaume de Dinoville est envahi par d'immenses Géants Verts qui ne semblent pas se nourrir que de légumes ! Peux-tu aller en exterminer une douzaine au plus vite ? Il s'agit d'un ordre du Roi, alors il faut faire vite !",
+      "kilcoq": "Uhm... J'ai encore un Golf de prévu avec le Roi le mois prochain, et figure toi qu'il veut encore entendre parler de tes exploits... Que dirais-tu d'aller tuer quelques Coqdur rapidement ? Tu seras bien récompensé !"
+    },
+    "actions": {
+      "talkTo": "Discuter avec {npc} ...",
+      "goto": "Se rendre {place} ...",
+      "validate": "Retourner valider la mission {place} ...",
+      "terminate": "Valider la Mission",
+      "hidePlace": "Trouvez le bon lieu ..."
+    },
+    "npc": {
+      "fishVendor": "Marchand de poisson",
+      "mmeseyche": "Madame Seyche",
+      "mmeducraft1": "Jacqueline Ducraft",
+      "mmeducraft2": "Jacqueline Ducraft",
+      "nioufniouf": "NioufNiouf",
+      "PAPY_JOE": "Papy Joe"
+    },
+    "place":  {
+      "port":"au Port de Prêche",
+      "market":"à la Place du Marché",
+      "papy":"Chez Papy Joe",
+      "forcebrut":"à Forcebrut",
+      "dnv":"à Dinoville",
+      "colesc": "aux Collines Escarpées"
+    },
+    "dialog": {
+      "fish": {
+        "fishVendor": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite.",
+        "mmeSeyche": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense...",
+        "papy": "Madame Seyche est très contente de toi, voilà ta récompense !"
+      },
+      "dog": {
+        "mmeducraft1": "Bonjour jeune homme ! Nioufniouf, mon petit amour de caniche, a disparu ! Je l'avais puni car il avait fait une bêtise...ohh... comme je regreettte ! Vite, retrouve-le s'il te plaît. Je suis certaine qu'il n'a pas pu grimper ces montagnes avec ses petites pattes, il doit donc être parti vers le Sud.",
+        "nioufniouf": "Vous avez retrouvé NioufNiouf ! Ramenez-le vite à sa propriétaire !",
+        "mmeducraft2": "Mon NioufNiouf chéri !!! Pardonne-moi, ta moooman a été très méchante avec le gentil chienchien ! Merci jeune homme, retournez au plus vite chez ce vieux schnock pour obtenir votre récompense !",
+        "papy": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi"
+      }
+    }
   },
   "myAccount": {
     "title": "Joueur :",

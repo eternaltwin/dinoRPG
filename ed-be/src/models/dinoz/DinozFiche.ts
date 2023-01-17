@@ -19,6 +19,7 @@ export interface DinozFiche {
 	race?: DinozRace;
 	placeId?: number;
 	actions?: Array<ActionFiche>;
+	missions?: string;
 	items?: Array<number>;
 	skills?: Array<number>;
 	status?: Array<number>;
@@ -33,5 +34,5 @@ export interface DinozFiche {
 export interface ActionFiche {
 	name: string;
 	imgName: string;
-	prop?: number;
+	prop?: number | string;
 }

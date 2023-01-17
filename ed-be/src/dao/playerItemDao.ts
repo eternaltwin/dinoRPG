@@ -17,6 +17,16 @@ const updateItemDataRequest = (playerId: number, itemId: number, newQuantity: nu
 		.execute();
 };
 
+const changeItemQuantity = (playerId: number, itemId: number, quantity: number): Promise<UpdateResult> => {
+	return itemRepository
+		.createQueryBuilder('item')
+		.update(PlayerItem)
+		.set({ quantity: () => 'quantity + :addQuantity' })
+		.setParameter('addQuantity', quantity)
+		.where('itemId = :iId AND player.id = :pId', { iId: itemId, pId: playerId })
+		.execute();
+};
+
 const useItemDataRequest = (playerId: number, itemId: number): Promise<UpdateResult> => {
 	return itemRepository
 		.createQueryBuilder('item')
@@ -26,4 +36,4 @@ const useItemDataRequest = (playerId: number, itemId: number): Promise<UpdateRes
 		.execute();
 };
 
-export { createItemDataRequest, updateItemDataRequest, useItemDataRequest };
+export { createItemDataRequest, updateItemDataRequest, changeItemQuantity, useItemDataRequest };

@@ -39,10 +39,14 @@ const getCommonData = async (req: Request): Promise<PlayerCommonData> => {
 				experience: dinoz.experience,
 				maxExperience: levelList.find(level => level.id === dinoz.level)!.experience,
 				placeId: dinoz.placeId,
-				level: dinoz.level
+				level: dinoz.level,
+				order: dinoz.order
 			};
 		}),
-		id: playerCommonData.id
+		id: playerCommonData.id,
+		playerOptions: {
+			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PDA)
+		}
 	};
 	return commonData;
 };

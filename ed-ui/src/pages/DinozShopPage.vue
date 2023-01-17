@@ -38,12 +38,20 @@
 					:lightning="dinoz.race.nbrLightning"
 					:air="dinoz.race.nbrAir"
 				></Elements>
-				<div class="skill" v-if="dinoz.race.skillId?.length > 0">
-					<div :id="'detail_' + index" v-for="(skillId, index) in dinoz.race.skillId" :key="skillId">
+				<template v-if="dinoz.race.skillId && dinoz.race.skillId.length > 0">
+					<Tippy theme="normal" tag="div" class="skill" v-for="skillId in dinoz.race.skillId" :key="skillId">
 						<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
 						{{ $t(`skill.name.${skillNameList[skillId]}`) }}
-					</div>
-				</div>
+						<template #content>
+							<h1>
+								{{ $t(`skill.name.${skillNameList[skillId]}`) }}
+							</h1>
+							<p>
+								{{ $t(`skill.description.${skillNameList[skillId]}`) }}
+							</p>
+						</template>
+					</Tippy>
+				</template>
 			</div>
 		</div>
 	</div>

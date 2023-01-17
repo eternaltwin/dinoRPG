@@ -1,4 +1,4 @@
-export const skillNameList = {
+export const skillNameList: Record<number, string> = {
 	// Fire Skills
 	11101: 'GriffesEnflammees',
 	11102: 'Colere',

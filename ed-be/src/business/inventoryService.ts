@@ -55,8 +55,8 @@ const useItem = async (req: Request): Promise<void> => {
 	}
 
 	const itemData = dinoz.player.items.find(item => item.itemId === itemId);
-	if (itemData && itemData.quantity <= 0) {
-		throw new ErrorFormator(500, `You don't have enought item ${itemId}`);
+	if (itemData === undefined || itemData.quantity <= 0) {
+		throw new ErrorFormator(500, `You don't have enough of item ${itemId}`);
 	}
 
 	switch (item.effect?.category) {

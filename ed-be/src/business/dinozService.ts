@@ -3,6 +3,7 @@ import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/pla
 import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	addExperience,
+	getActiveDinoz,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
 	getDinozFicheRequest,
@@ -41,6 +42,8 @@ import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js'
 import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { getHUDObjective, getMissionAction } from './missionsService.js';
+import { processFight } from './fightService.js';
 
 /**
  * @summary Get available action from dinoz
@@ -102,6 +105,15 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 		});
 	});
 
+	const missionAvailable = getMissionAction(dinoz);
+	if (missionAvailable) {
+		availableActions.push({
+			name: actionList.MISSION.name,
+			imgName: actionList.MISSION.imgName,
+			prop: missionAvailable
+		});
+	}
+
 	const maxExp: number = levelList.find(level => level.id === dinoz?.level)!.experience;
 	if (maxExp - dinoz.experience <= 0 && dinoz.level < gameConfig.dinoz.maxLevel) {
 		availableActions.push({
@@ -143,7 +155,7 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 		isFrozen: dinozData.isFrozen,
 		isSacrificed: dinozData.isSacrificed,
 		level: dinozData.level,
-		missionId: dinozData.missionId,
+		missionId: dinozData.missions.find(mission => !mission.isFinished)?.missionId,
 		canChangeName: dinozData.canChangeName,
 		following: dinozData.following,
 		life: dinozData.life,
@@ -154,6 +166,7 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 		race: Object.values(raceList).find(race => race.raceId === dinozData.raceId)!,
 		placeId: dinozData.placeId,
 		actions: getAvailableActions(dinozData),
+		missions: getHUDObjective(dinozData),
 		items: dinozData.items.map(item => item.itemId),
 		status: dinozData.status.map(status => status.statusId),
 		borderPlace: Object.values(placeList)
@@ -207,6 +220,18 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
  * @return DinozFiche
  */
 const buyDinoz = async (req: Request): Promise<DinozFiche> => {
+	//Check if player can buy more dinoz
+	const dinozActive: Array<Dinoz> = await getActiveDinoz(req.user!.playerId!);
+	if (!dinozActive[0].player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
+		throw new ErrorFormator(400, 'tooManyActiveDinoz');
+	}
+	if (
+		dinozActive[0].player.leader &&
+		dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus
+	) {
+		throw new ErrorFormator(400, 'tooManyActiveDinoz');
+	}
+
 	// Get dinoz details thanks to his ID
 	const dinozShopData: PlayerDinozShop = await getDinozShopDetailsRequest(parseInt(req.params.id));
 
@@ -369,7 +394,7 @@ const setSkillState = async (req: Request): Promise<boolean> => {
  */
 const betaMove = async (req: Request): Promise<FightResult> => {
 	//Retrieve dinozId
-	const dinozId: number = parseInt(req.params.id);
+	const dinozId: number = parseInt(req.body.dinozId);
 	const dinoz: Dinoz = await getDinozPlaceRequest(dinozId);
 	let finalPlace: number;
 
@@ -406,43 +431,13 @@ const betaMove = async (req: Request): Promise<FightResult> => {
 	finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
 
 	// Fight at the desired place
-	const fight: FightResult = await betaFight(dinoz);
+	const fight: FightResult = await processFight(req);
 	if (fight.result) {
 		await setDinozPlaceRequest(dinoz.id, finalPlace);
 	}
 
 	return fight;
 };
-
-/**
- * @summary Process a fake fight
- * @param dinoz {Dinoz}
- * @return FightResult
- */
-async function betaFight(dinoz: Dinoz): Promise<FightResult> {
-	// NOTHING IS GOOD HERE. EVERYTHING IS TO DO
-	const dinozInFight: Dinoz | null = await getDinozFicheRequest(dinoz.id);
-	const maxExp = levelList.find(level => level.id === dinozInFight?.level)!.experience;
-
-	let goldEarned = getRandomNumber(900, 1100);
-	let xpEarned =
-		maxExp - dinozInFight!.experience > 0
-			? ((10 + getRandomNumber(0, maxExp - dinozInFight!.experience)) % (maxExp - dinozInFight!.experience)) + 1
-			: 0;
-	let hpLost = 0;
-	let result = true;
-
-	if (result) {
-		await addPlayerMoney(dinozInFight!.player.id, goldEarned);
-		await addExperience(dinozInFight.id, xpEarned);
-	}
-	return {
-		goldEarned: goldEarned,
-		xpEarned: xpEarned,
-		hpLost: hpLost,
-		result: result
-	};
-}
 
 const resurrectDinoz = async (req: Request): Promise<void> => {
 	const dinozId: number = parseInt(req.params.id);
@@ -469,4 +464,4 @@ const resurrectDinoz = async (req: Request): Promise<void> => {
 	await setDinoz(dinozToUpdate);
 };
 
-export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, betaFight, resurrectDinoz };
+export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, resurrectDinoz };

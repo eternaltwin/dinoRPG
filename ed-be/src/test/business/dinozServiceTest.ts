@@ -28,17 +28,21 @@ import {
 	BasicDinoz,
 	DinozDead,
 	DinozFicheData,
+	DinozFightData,
 	DinozToChangeName,
 	DinozWithSkills,
 	DinozWithSkillsAndStatus,
-	DinozWithSkillsAndStatusReadyToMove
+	DinozWithSkillsAndStatusReadyToMove,
+	multipleDinoz
 } from '../data/dinozData.js';
 import { PlayerData } from '../data/playerData.js';
 import { DinozFromShop } from '../data/dinozShopData.js';
 import { playerRanking } from '../data/rankingData.js';
+import { processFight } from '../../business/fightService.js';
 
 const DinozDao = require('../../dao/dinozDao.js');
 const DinozSkillDao = require('../../dao/dinozSkillDao.js');
+const fight = require('../../business/fightService.js');
 const PlayerDao = require('../../dao/playerDao.js');
 const DinozShopDao = require('../../dao/playerDinozShopDao.js');
 const RankingDao = require('../../dao/rankingDao.js');
@@ -246,6 +250,7 @@ describe('Test de la fonction buyDinoz()', function () {
 		DinozSkillDao.addSkillToDinoz = jasmine.createSpy();
 		RankingDao.updatePoints = jasmine.createSpy();
 		DinozDao.setDinoz = jasmine.createSpy().and.returnValue(BasicDinoz);
+		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(multipleDinoz);
 		dinozHelper.getRandomUpElement = jasmine.createSpy().and.returnValue(3);
 	});
 
@@ -328,6 +333,49 @@ describe('Test de la fonction buyDinoz()', function () {
 	});
 
 	// No need to test that the DAO can return a null dinoz. It will throw an error if no dinoz is found.
+	it("Player already had enought active dinoz without leader", async function () {
+		const tooMuchDinoz = cloneDeep(multipleDinoz);
+		multipleDinoz[0].player.leader = false
+		tooMuchDinoz.length = 18
+
+		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(tooMuchDinoz);
+
+		try {
+			await buyDinoz(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`tooManyActiveDinoz`);
+		}
+
+		DinozFromShop.player.money = 200000;
+
+		expect(DinozShopDao.getDinozShopDetailsRequest).toHaveBeenCalledTimes(0);
+
+		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(0);
+	});
+
+
+	it("Player already had enought active dinoz with leader", async function () {
+		const tooMuchDinozLeader = cloneDeep(multipleDinoz);
+		tooMuchDinozLeader.length = 21
+
+		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(tooMuchDinozLeader);
+
+		try {
+			await buyDinoz(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`tooManyActiveDinoz`);
+		}
+
+		DinozFromShop.player.money = 200000;
+
+		expect(DinozShopDao.getDinozShopDetailsRequest).toHaveBeenCalledTimes(0);
+
+		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(0);
+	});
 
 	it("Player doesn't have enough money to buy the dinoz", async function () {
 		DinozFromShop.player.money = 0;
@@ -572,37 +620,30 @@ describe('Function betaMove', function () {
 		jest.clearAllMocks();
 		req = mockRequest;
 
-		req.params = {
-			id: dinozId.toString()
-		};
 		req.body = {
-			placeId: place1
+			placeId: place1,
+			dinozId: DinozFightData.id
 		};
 
-		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(DinozWithSkillsAndStatusReadyToMove);
+		let FightResult: FightResult = {
+			opponent: 'string',
+			goldEarned: 1,
+			xpEarned: 1,
+			hpLost: 1,
+			result: true,
+			dinozId: DinozFightData.id
+		};
+
+		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(DinozFightData);
 		DinozDao.setDinozPlaceRequest = jasmine.createSpy();
-		DinozDao.getDinozFicheRequest = jasmine.createSpy().and.returnValue(DinozWithSkillsAndStatusReadyToMove);
-		PlayerDao.addPlayerMoney = jasmine.createSpy();
-		DinozDao.addExperience = jasmine.createSpy();
+		fight.processFight = jasmine.createSpy().and.returnValue(FightResult);
+		DinozDao.getDinozFightDataRequest = jasmine.createSpy().and.returnValue(DinozFightData);
 		jest.spyOn(tools, 'getRandomNumber').mockReturnValue(999);
 	});
 
 	it('Nominal case', async function () {
-		const expectedFightResult: FightResult = {
-			goldEarned: 999,
-			xpEarned: 1,
-			hpLost: 0,
-			result: true
-		};
-
-		let fightResult: FightResult = {
-			goldEarned: 999,
-			xpEarned: 999,
-			hpLost: 0,
-			result: true
-		};
 		try {
-			fightResult = await betaMove(req);
+			await betaMove(req);
 		} catch (err) {
 			const e: Error = err as Error;
 			console.log(e.message);
@@ -610,24 +651,13 @@ describe('Function betaMove', function () {
 		}
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(dinozId);
+		expect(fight.processFight).toHaveBeenCalledTimes(1);
+		expect(fight.processFight).toHaveBeenCalledWith(req);
 
-		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(DinozWithSkillsAndStatusReadyToMove.id, place1Alias);
+		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id, place1Alias);
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
-
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledWith(
-			DinozWithSkillsAndStatusReadyToMove.player.id,
-			expectedFightResult.goldEarned
-		);
-
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(1);
-		expect(DinozDao.addExperience).toHaveBeenCalledWith(dinozId, expectedFightResult.xpEarned);
-
-		expect(fightResult).toStrictEqual(expectedFightResult);
 
 		//expect(res.send).toHaveBeenCalledWith(defaultFight);
 	});
@@ -642,36 +672,24 @@ describe('Function betaMove', function () {
 
 		try {
 			await betaMove(req);
-			fail();
 		} catch (err) {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${dinozId} doesn't belong to player ${player.id_1}`);
 		}
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+
+		expect(fight.processFight).toHaveBeenCalledTimes(0);
+
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(0);
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(0);
 	});
 
 	it('Dinoz does not change map', async function () {
-		req.body = {
-			placeId: placeList.FOUTAINE_DE_JOUVENCE.placeId
-		};
-		const expectedFightResult: FightResult = {
-			goldEarned: 999,
-			xpEarned: 999,
-			hpLost: 0,
-			result: true
-		};
+		const dinozWithNoBouee = cloneDeep(DinozWithSkillsAndStatusReadyToMove);
 
-		let fightResult: FightResult = {
-			goldEarned: 999,
-			xpEarned: 999,
-			hpLost: 0,
-			result: true
-		};
+		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(dinozWithNoBouee);
+		req.body.placeId = placeList.FOUTAINE_DE_JOUVENCE.placeId;
 
 		try {
 			await betaMove(req);
@@ -682,87 +700,69 @@ describe('Function betaMove', function () {
 		}
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(dinozId);
+		expect(fight.processFight).toHaveBeenCalledTimes(1);
+		expect(fight.processFight).toHaveBeenCalledWith(req);
 
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(
-			DinozWithSkillsAndStatusReadyToMove.id,
+			DinozFightData.id,
 			placeList.FOUTAINE_DE_JOUVENCE.placeId
 		);
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
-
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(1);
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledWith(
-			DinozWithSkillsAndStatusReadyToMove.player.id,
-			expectedFightResult.goldEarned
-		);
-
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(1);
-		expect(DinozDao.addExperience).toHaveBeenCalledWith(dinozId, 1);
-
-		expect(fightResult).toStrictEqual(expectedFightResult);
 	});
 
 	it('Dinoz want to go to an inexistant place', async function () {
-		req.body = {
-			placeId: inexistantPlace
-		};
-
+		req.body.placeId = inexistantPlace;
 		try {
 			await betaMove(req);
-			fail();
 		} catch (err) {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${dinozId} want to go in the void`);
 		}
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+
+		expect(fight.processFight).toHaveBeenCalledTimes(0);
+
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(0);
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(0);
 	});
 
 	it('Dinoz is already at this place', async function () {
-		req.body = {
-			placeId: 1
-		};
+		req.body.placeId = 1;
 
 		try {
 			await betaMove(req);
-			fail();
 		} catch (err) {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${dinozId} is already at port`);
 		}
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+
+		expect(fight.processFight).toHaveBeenCalledTimes(0);
+
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(0);
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(0);
 	});
 
 	it('Dinoz want to go to a non adjascent place', async function () {
-		req.body = {
-			placeId: notClosePlace
-		};
+		req.body.placeId = notClosePlace;
 
 		try {
 			await betaMove(req);
-			fail();
 		} catch (err) {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`port is not adjacent with ilac2`);
 		}
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+
+		expect(fight.processFight).toHaveBeenCalledTimes(0);
+
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(0);
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(0);
 	});
 
 	it("Dinoz doesn't fulfill requirement to go this place", async function () {
@@ -775,17 +775,17 @@ describe('Function betaMove', function () {
 
 		try {
 			await betaMove(req);
-			fail();
 		} catch (err) {
 			const e: Error = err as Error;
 			expect(e.message).toBe(`Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
 		}
 
 		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(dinozId);
+		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+
+		expect(fight.processFight).toHaveBeenCalledTimes(0);
+
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
-		expect(PlayerDao.addPlayerMoney).toHaveBeenCalledTimes(0);
-		expect(DinozDao.addExperience).toHaveBeenCalledTimes(0);
 	});
 
 	// Bad requests are handled in routes

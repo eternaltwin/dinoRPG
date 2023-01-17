@@ -119,7 +119,7 @@ describe('Function useItem', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`WTF`);
+			expect(e.message).toBe(`You don't have enough of item ${req.params.itemId}`);
 		}
 
 		expect(DinozDao.getDinozFicheItemRequest).toHaveBeenCalledTimes(1);
@@ -141,7 +141,7 @@ describe('Function useItem', function () {
 			fail();
 		} catch (err) {
 			const e: Error = err as Error;
-			expect(e.message).toBe(`You don't have enought item ${req.params.itemId}`);
+			expect(e.message).toBe(`You don't have enough of item ${req.params.itemId}`);
 		}
 
 		expect(DinozDao.getDinozFicheItemRequest).toHaveBeenCalledTimes(1);
