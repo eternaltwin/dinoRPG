@@ -94,6 +94,30 @@ export const DinozLite = {
 	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }]
 } as Dinoz;
 
+export const multipleDinoz = [
+	{
+		id: undefined,
+		player: {
+			id: 1,
+			leader: true,
+		}
+	},
+	{
+		id: undefined,
+		player: {
+			id: 1,
+			leader: true,
+		}
+	},
+	{
+		id: undefined,
+		player: {
+			id: 1,
+			leader: true,
+		}
+	}
+]
+
 export const BasicDinoz = {
 	id: dinozId,
 	display: '63cvi4d1fs',

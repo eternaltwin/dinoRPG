@@ -20,7 +20,7 @@
 					:flip="1"
 				/>
 			</li>
-			<template #content>
+			<template v-if="dinoz.status && dinoz.status.length > 0" #content>
 				<template v-for="(status, index) in dinoz.status" :key="index">
 					<img
 						v-if="statusList.displayed[status]"

@@ -68,7 +68,7 @@ export const MPAPY: Array<Mission> = [
 	{
 		missionId: 3,
 		missionName: 'kilgou',
-		condition: 'mission(fish)',
+		condition: 'mission(kilwlf)', //set to fish to unlock
 		rewards: ['xp(30)', 'gold(500)'],
 		steps: []
 	},
@@ -82,7 +82,7 @@ export const MPAPY: Array<Mission> = [
 	{
 		missionId: 5,
 		missionName: 'fflow',
-		condition: 'mission(fish)',
+		condition: 'mission(kilwlf)', //set to fish to unlock
 		rewards: ['xp(20)'],
 		steps: []
 	},

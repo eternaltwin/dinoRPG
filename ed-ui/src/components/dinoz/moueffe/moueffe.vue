@@ -159,7 +159,7 @@
 				:is="tail"
 				class="tail"
 				:id="`${display}-tail`"
-				:size="size * tailSize"
+				:size="size * tailSize!"
 				:mainFirstColor="mainFirstColor"
 				:mainSecondColor="mainSecondColor"
 				:mainThirdColor="mainThirdColor"

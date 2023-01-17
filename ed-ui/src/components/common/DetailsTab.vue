@@ -171,7 +171,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .wrapperMenu {
 	zoom: 1;
-	*display: inline;
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-top: 5px;
@@ -194,7 +193,6 @@ export default defineComponent({
 	overflow: hidden;
 	transition: max-height 0.2s ease-out;
 	zoom: 1;
-	*display: inline;
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-top: 5px;

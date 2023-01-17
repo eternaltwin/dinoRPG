@@ -32,7 +32,8 @@ import {
 	DinozToChangeName,
 	DinozWithSkills,
 	DinozWithSkillsAndStatus,
-	DinozWithSkillsAndStatusReadyToMove
+	DinozWithSkillsAndStatusReadyToMove,
+	multipleDinoz
 } from '../data/dinozData.js';
 import { PlayerData } from '../data/playerData.js';
 import { DinozFromShop } from '../data/dinozShopData.js';
@@ -249,6 +250,7 @@ describe('Test de la fonction buyDinoz()', function () {
 		DinozSkillDao.addSkillToDinoz = jasmine.createSpy();
 		RankingDao.updatePoints = jasmine.createSpy();
 		DinozDao.setDinoz = jasmine.createSpy().and.returnValue(BasicDinoz);
+		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(multipleDinoz);
 		dinozHelper.getRandomUpElement = jasmine.createSpy().and.returnValue(3);
 	});
 
@@ -331,6 +333,49 @@ describe('Test de la fonction buyDinoz()', function () {
 	});
 
 	// No need to test that the DAO can return a null dinoz. It will throw an error if no dinoz is found.
+	it("Player already had enought active dinoz without leader", async function () {
+		const tooMuchDinoz = cloneDeep(multipleDinoz);
+		multipleDinoz[0].player.leader = false
+		tooMuchDinoz.length = 18
+
+		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(tooMuchDinoz);
+
+		try {
+			await buyDinoz(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`tooManyActiveDinoz`);
+		}
+
+		DinozFromShop.player.money = 200000;
+
+		expect(DinozShopDao.getDinozShopDetailsRequest).toHaveBeenCalledTimes(0);
+
+		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(0);
+	});
+
+
+	it("Player already had enought active dinoz with leader", async function () {
+		const tooMuchDinozLeader = cloneDeep(multipleDinoz);
+		tooMuchDinozLeader.length = 21
+
+		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(tooMuchDinozLeader);
+
+		try {
+			await buyDinoz(req);
+			fail();
+		} catch (err) {
+			const e: Error = err as Error;
+			expect(e.message).toBe(`tooManyActiveDinoz`);
+		}
+
+		DinozFromShop.player.money = 200000;
+
+		expect(DinozShopDao.getDinozShopDetailsRequest).toHaveBeenCalledTimes(0);
+
+		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(0);
+	});
 
 	it("Player doesn't have enough money to buy the dinoz", async function () {
 		DinozFromShop.player.money = 0;

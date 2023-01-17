@@ -20,6 +20,16 @@ const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz> => {
 		.getOneOrFail();
 };
 
+const getActiveDinoz = (playerId: number): Promise<Array<Dinoz>> => {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.isFrozen'])
+		.addSelect(['player.id', 'player.leader'])
+		.innerJoin('dinoz.player', 'player')
+		.where('player.id = :pId AND dinoz.isFrozen = FALSE', { pId: playerId })
+		.getMany();
+};
+
 const getAllDinozFromAccount = (playerId: number): Promise<Array<Dinoz>> => {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
@@ -311,6 +321,7 @@ const addLife = (dinozId: number, life: number): Promise<UpdateResult> => {
 export {
 	getAllDinozFromAccount,
 	getCanDinozChangeName,
+	getActiveDinoz,
 	getDinozFicheRequest,
 	getDinozFicheLiteRequest,
 	getDinozFicheItemRequest,

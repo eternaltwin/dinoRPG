@@ -40,7 +40,9 @@
 			></a>
 		</div>
 		<DinozList></DinozList>
-		<a class="overviewButton"><img :src="getImgURL('icons', `small_edit`)" alt="edit" />{{ $t('button.sortDinoz') }}</a>
+		<a v-if="hasPDA" class="overviewButton"
+			><img :src="getImgURL('icons', `small_edit`)" alt="edit" />{{ $t('button.sortDinoz') }}</a
+		>
 		<a class="button" @click="goToPage('DinozShopPage')">
 			{{ $t('button.buyDinoz') }}
 		</a>
@@ -85,6 +87,9 @@ export default defineComponent({
 	computed: {
 		storeMoney(): number | undefined {
 			return this.sessionStore.getMoney;
+		},
+		hasPDA(): boolean {
+			return this.sessionStore.playerOptions.hasPDA;
 		},
 		// Format money display (1000000 -> 1.000.000)
 		beautifulMoney(): string | undefined {

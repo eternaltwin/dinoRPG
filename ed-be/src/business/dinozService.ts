@@ -3,6 +3,7 @@ import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/pla
 import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	addExperience,
+	getActiveDinoz,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
 	getDinozFicheRequest,
@@ -219,6 +220,18 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
  * @return DinozFiche
  */
 const buyDinoz = async (req: Request): Promise<DinozFiche> => {
+	//Check if player can buy more dinoz
+	const dinozActive: Array<Dinoz> = await getActiveDinoz(req.user!.playerId!);
+	if (!dinozActive[0].player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
+		throw new ErrorFormator(400, 'tooManyActiveDinoz');
+	}
+	if (
+		dinozActive[0].player.leader &&
+		dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus
+	) {
+		throw new ErrorFormator(400, 'tooManyActiveDinoz');
+	}
+
 	// Get dinoz details thanks to his ID
 	const dinozShopData: PlayerDinozShop = await getDinozShopDetailsRequest(parseInt(req.params.id));
 
