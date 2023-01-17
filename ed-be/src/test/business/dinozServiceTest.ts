@@ -333,10 +333,10 @@ describe('Test de la fonction buyDinoz()', function () {
 	});
 
 	// No need to test that the DAO can return a null dinoz. It will throw an error if no dinoz is found.
-	it("Player already had enought active dinoz without leader", async function () {
+	it('Player already had enought active dinoz without leader', async function () {
 		const tooMuchDinoz = cloneDeep(multipleDinoz);
-		multipleDinoz[0].player.leader = false
-		tooMuchDinoz.length = 18
+		multipleDinoz[0].player.leader = false;
+		tooMuchDinoz.length = 18;
 
 		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(tooMuchDinoz);
 
@@ -355,10 +355,9 @@ describe('Test de la fonction buyDinoz()', function () {
 		expect(PlayerDao.setPlayerMoneyRequest).toHaveBeenCalledTimes(0);
 	});
 
-
-	it("Player already had enought active dinoz with leader", async function () {
+	it('Player already had enought active dinoz with leader', async function () {
 		const tooMuchDinozLeader = cloneDeep(multipleDinoz);
-		tooMuchDinozLeader.length = 21
+		tooMuchDinozLeader.length = 21;
 
 		DinozDao.getActiveDinoz = jasmine.createSpy().and.returnValue(tooMuchDinozLeader);
 

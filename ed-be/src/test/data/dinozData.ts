@@ -99,24 +99,24 @@ export const multipleDinoz = [
 		id: undefined,
 		player: {
 			id: 1,
-			leader: true,
+			leader: true
 		}
 	},
 	{
 		id: undefined,
 		player: {
 			id: 1,
-			leader: true,
+			leader: true
 		}
 	},
 	{
 		id: undefined,
 		player: {
 			id: 1,
-			leader: true,
+			leader: true
 		}
 	}
-]
+];
 
 export const BasicDinoz = {
 	id: dinozId,

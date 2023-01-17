@@ -221,16 +221,21 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
  */
 const buyDinoz = async (req: Request): Promise<DinozFiche> => {
 	//Check if player can buy more dinoz
-	const dinozActive: Array<Dinoz> = await getActiveDinoz(req.user!.playerId!);
-	if (!dinozActive[0].player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
-		throw new ErrorFormator(400, 'tooManyActiveDinoz');
+	const dinozActive: Array<Dinoz> | undefined = await getActiveDinoz(req.user!.playerId!);
+
+
+	if (dinozActive.length > 0) {
+		if (!dinozActive[0].player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
+			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+		}
+		if (
+			dinozActive[0].player.leader &&
+			dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus
+		) {
+			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+		}
 	}
-	if (
-		dinozActive[0].player.leader &&
-		dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus
-	) {
-		throw new ErrorFormator(400, 'tooManyActiveDinoz');
-	}
+	
 
 	// Get dinoz details thanks to his ID
 	const dinozShopData: PlayerDinozShop = await getDinozShopDetailsRequest(parseInt(req.params.id));
