@@ -59,6 +59,7 @@ export default defineComponent({
 		this.dinozId = parseInt(this.$router.currentRoute.value.query.dinozId as string);
 		if (this.sessionStore.getFightResult) {
 			this.fight = this.sessionStore.getFightResult;
+			this.sessionStore.setMoney(this.sessionStore.getMoney! + this.fight.goldEarned);
 		}
 	},
 	unmounted(): void {

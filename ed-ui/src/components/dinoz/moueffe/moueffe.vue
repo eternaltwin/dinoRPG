@@ -622,7 +622,7 @@ export default defineComponent({
 			return defineAsyncComponent(() => import(`./chest/${this.chest.element2.imgNumber}.vue`));
 		},
 		chestElement3(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/${this.element4}.vue`));
+			return defineAsyncComponent(() => import(`./chest/${this.element4}.vue`));
 		},
 		chestInjury1(): string {
 			return defineAsyncComponent(
@@ -640,16 +640,16 @@ export default defineComponent({
 			);
 		},
 		tail(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/tail/${this.element0}.vue`));
+			return defineAsyncComponent(() => import(`./chest/tail/${this.element0}.vue`));
 		},
 		tailSpecial(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/tail/special/${this.element0}.vue`));
+			return defineAsyncComponent(() => import(`./chest/tail/special/${this.element0}.vue`));
 		},
 		tailHair(): string {
 			return defineAsyncComponent(() => import(`./hair/tail/${this.hairNumber}.vue`));
 		},
 		chestTattoo(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./chest/tattoo/${this.element0}.vue`));
+			return defineAsyncComponent(() => import(`./chest/tattoo/${this.element0}.vue`));
 		},
 		leftArm(): string {
 			return defineAsyncComponent(() => import(`./arm/left/${this.arm.imgNumber}.vue`));
@@ -704,7 +704,7 @@ export default defineComponent({
 			);
 		},
 		leftLeg(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/left/${this.element0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/left/${this.element0}.vue`));
 		},
 		leftLegKneeHorn(): string {
 			return defineAsyncComponent(() => import(`./leg/left/knee/${this.leg.left.knee.horn.imgNumber}.vue`));
@@ -723,10 +723,10 @@ export default defineComponent({
 			);
 		},
 		leftLegNail(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/left/nail/${this.element0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/left/nail/${this.element0}.vue`));
 		},
 		rightLeg(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/right/${this.element0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/right/${this.element0}.vue`));
 		},
 		rightLegKneeHorn(): string {
 			return defineAsyncComponent(() => import(`./leg/right/knee/${this.leg.right.knee.horn.imgNumber}.vue`));
@@ -750,7 +750,7 @@ export default defineComponent({
 			);
 		},
 		rightLegNail(): string {
-			return defineAsyncComponent(() => import(/* @vite-ignore */ `./leg/right/nail/${this.element0}.vue`));
+			return defineAsyncComponent(() => import(`./leg/right/nail/${this.element0}.vue`));
 		}
 	},
 	methods: {
