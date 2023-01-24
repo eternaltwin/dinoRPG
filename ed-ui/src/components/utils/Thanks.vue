@@ -75,7 +75,6 @@ export default defineComponent({
 	width: 29%;
 	height: fit-content;
 	color: black;
-	text-shadow: #8e3e26;
 	& strong {
 		display: block;
 		background: rgba(0, 0, 0, 0.5);

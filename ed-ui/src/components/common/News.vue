@@ -137,8 +137,6 @@ export default defineComponent({
 		font-size: 20pt;
 		font-weight: bold;
 		opacity: 0.8;
-		filter: alpha(opacity=80);
-		zoom: 1;
 		color: white;
 		background: transparent;
 	}
@@ -151,8 +149,6 @@ export default defineComponent({
 	}
 
 	p {
-		filter: alpha(opacity=80);
-		zoom: 1;
 		color: white;
 		background: transparent;
 	}

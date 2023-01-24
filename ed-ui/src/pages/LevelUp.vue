@@ -348,7 +348,6 @@ export default defineComponent({
 	text-align: center;
 	background-color: #bc683c;
 	border-radius: 10px;
-	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	font-size: 10pt;
 }

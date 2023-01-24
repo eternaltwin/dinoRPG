@@ -349,7 +349,6 @@ export default defineComponent({
 				height: 32px;
 				border: 1px solid #b37047;
 				border-radius: 0px;
-				-moz-border-radius: 0px;
 				-webkit-border-radius: 0px;
 				&:hover {
 					border-color: white;
@@ -364,8 +363,6 @@ export default defineComponent({
 			}
 			.button {
 				opacity: 0.3;
-				filter: alpha(opacity=30);
-				zoom: 1;
 			}
 		}
 		.details {
@@ -526,7 +523,6 @@ export default defineComponent({
 				padding-right: 5px;
 				padding-left: 10px;
 				border-radius: 10px;
-				-moz-border-radius: 10px;
 				-webkit-border-radius: 10px;
 				font-size: 8pt;
 				background-color: #9a4029;

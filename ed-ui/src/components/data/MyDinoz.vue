@@ -86,7 +86,6 @@ export default defineComponent({
 	cursor: default;
 	border: 1px solid #fce3bc;
 	border-radius: 10px;
-	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	&:hover {
 		border: 1px solid #f1c98e;

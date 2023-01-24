@@ -79,7 +79,6 @@ export default defineComponent({
 	background-color: #bc683c;
 	font-size: 10pt;
 	border-radius: 10px;
-	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	.link {
 		color: white;

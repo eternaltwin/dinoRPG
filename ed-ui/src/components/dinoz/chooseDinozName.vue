@@ -92,7 +92,6 @@ export default defineComponent({
 	color: #ffee92;
 	background-color: #e4aa69;
 	border-radius: 10px;
-	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	grid-column: 1;
 	grid-row: 1;

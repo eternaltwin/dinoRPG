@@ -170,7 +170,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .wrapperMenu {
-	zoom: 1;
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-top: 5px;
@@ -192,7 +191,6 @@ export default defineComponent({
 .wrapper {
 	overflow: hidden;
 	transition: max-height 0.2s ease-out;
-	zoom: 1;
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-top: 5px;
@@ -297,7 +295,6 @@ export default defineComponent({
 		.disabled {
 			td {
 				opacity: 0.4;
-				zoom: 1;
 				&.state {
 					background-color: red;
 					background-image: none;

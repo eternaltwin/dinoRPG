@@ -113,7 +113,6 @@ export default defineComponent({
 	// 	background-image: url(../../assets/design/dinoz_footer.webp);
 	// }
 	.footer {
-		flex-grow: 100%;
 		height: 24px;
 		width: 100%;
 		background-image: url('@/assets/design/dinoz_footer.webp');

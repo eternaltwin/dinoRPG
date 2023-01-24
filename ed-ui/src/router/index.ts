@@ -66,10 +66,9 @@ const router = createRouter({
 					component: LevelUp
 				},
 				{
-					path: '/fight',
+					path: '/fight/:dinozId',
 					name: 'Fight',
-					component: Fight,
-					props: route => ({ dinozId: route.query.dinozId })
+					component: Fight
 				},
 				{
 					path: '/generator',

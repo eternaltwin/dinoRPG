@@ -157,8 +157,6 @@ ul {
 
 			&.off {
 				opacity: 0.3;
-				filter: alpha(opacity=30);
-				zoom: 1;
 			}
 
 			&.selected {

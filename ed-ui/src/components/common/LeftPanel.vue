@@ -125,7 +125,6 @@ export default defineComponent({
 	text-decoration: none;
 	border: 1px solid #d69e68;
 	border-radius: 0px;
-	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
 	cursor: pointer;
 	img {

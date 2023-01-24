@@ -1,31 +1,71 @@
 <template>
-	THIS IS A TEMPORARY DISPLAY ! <br /><br /><br /><br />
-	<div v-if="fight.result">YOU WON!</div>
-	<div v-else>YOU LOST!</div>
-	<div class="monster">You fought a: {{ fight.opponent }}</div>
-	<div class="life">HP Lost : {{ fight.hpLost }}</div>
-	<div class="xp">XP Earned : {{ fight.xpEarned }}</div>
-	<div class="money">Gold Earned : {{ fight.goldEarned }}</div>
-	<a class="button" @click="returnToDinoz()">Continuer</a>
-	<a class="button" v-if="isDevEnv()" @click="processFight()">Combattre de nouveau</a>
-	<a class="button">Afficher le combat</a>
+	<TitleHeader :title="$t('pageTitle.fight')" />
+	<div class="section">
+		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
+	</div>
+	{{ fightText }}
+	<div class="wrapper">
+		<div class="debrief" :class="lang">
+			<img
+				v-if="fight.result"
+				:src="getImgURL('design', `large_fight_win`)"
+				alt="win"
+				v-tippy="{
+					content: formatContent($t(`fight.win`)),
+					theme: 'small'
+				}"
+			/>
+			<img
+				v-else
+				:src="getImgURL('design', `large_fight_lose`)"
+				alt="lose"
+				v-tippy="{
+					content: formatContent($t(`fight.lose`)),
+					theme: 'small'
+				}"
+			/>
+			<div class="results life">{{ fight.hpLost }}</div>
+			<div class="results xp">
+				{{ fight.xpEarned }}
+				<img
+					v-if="fight.result && fight.xpEarned === 0"
+					:src="getImgURL('icons', `small_lup`)"
+					alt="lup"
+					v-tippy="{
+						content: formatContent($t(`fight.lvlup`)),
+						theme: 'small'
+					}"
+				/>
+			</div>
+			<div class="results money">{{ fight.goldEarned }}</div>
+		</div>
+		<a class="button" @click="returnToDinoz()">Continuer</a>
+		<a class="button" v-if="isDevEnv()" @click="processFight()">Combattre de nouveau</a>
+		<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
+	</div>
 </template>
 
 <script lang="ts">
 import { Dinoz, FightResult } from '@/models';
 import { FightService } from '@/services';
-import { sessionStore } from '@/store';
+import { localStore, sessionStore } from '@/store';
+import TitleHeader from '@/components/utils/TitleHeader.vue';
 import { errorHandler } from '@/utils';
 import EventBus from '@/events';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'Fight',
+	components: {
+		TitleHeader
+	},
 	data() {
 		return {
 			sessionStore: sessionStore(),
 			fight: {} as FightResult,
-			dinozId: undefined as number | undefined
+			dinozId: undefined as number | undefined,
+			lang: localStore().getLanguage,
+			fightText: undefined as string | undefined
 		};
 	},
 	methods: {
@@ -53,6 +93,9 @@ export default defineComponent({
 		},
 		isDevEnv(): boolean {
 			return import.meta.env.MODE === 'development';
+		},
+		displayFight(): void {
+			this.fightText = `Combat vs ${this.fight.opponent}`;
 		}
 	},
 	created(): void {
@@ -69,14 +112,65 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.results {
+	position: absolute;
+	padding-left: 20px;
+	margin-top: 18px;
+	width: 80px;
+	text-align: left;
+	font-size: 15pt;
+	color: white;
+}
+.life {
+	margin-left: 53px;
+}
+.xp {
+	margin-left: 148px;
+}
+
+.money {
+	margin-left: 243px;
+}
+
+.debrief {
+	// position: absolute;
+	flex: 1 1 100%;
+	width: 377px;
+	height: 56px;
+	margin-left: 66px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #ffee92;
+	img {
+		margin-top: 10px;
+		margin-left: 5px;
+		position: absolute;
+	}
+}
+
+.fr {
+	background-image: url('@/assets/background/debriefing_fr.webp');
+	background-repeat: no-repeat;
+}
+.es {
+	background-image: url('@/assets/background/debriefing_es.webp');
+	background-repeat: no-repeat;
+}
+.en {
+	background-image: url('@/assets/background/debriefing_en.webp');
+	background-repeat: no-repeat;
+}
+.de {
+	background-image: url('@/assets/background/debriefing_de.webp');
+	background-repeat: no-repeat;
+}
 .filler {
 	height: 180px;
 	width: 550px;
 }
 .wrapper {
 	display: flex;
-	width: 620px;
-	justify-content: space-between;
+	justify-content: space-around;
 	gap: 10px;
 	flex-wrap: wrap;
 }

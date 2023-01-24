@@ -138,7 +138,7 @@ export default defineComponent({
 					this.sessionStore.setFightResult(fight);
 					this.$router.push({
 						name: 'Fight',
-						query: { dinozId: this.$route.params.id.toString() }
+						params: { dinozId: this.$route.params.id.toString() }
 					});
 					EventBus.emit('isLoading', false);
 					break;
@@ -206,7 +206,6 @@ export default defineComponent({
 	min-height: 90px;
 	color: white;
 	position: relative;
-	flex-grow: 50%;
 	.actions_top {
 		width: 185px;
 		height: 28px;
