@@ -1682,7 +1682,8 @@
     "levelup": "Dino-RPG [ Niveau supplémentaire pour ",
     "npc": "Dino-RPG [ Personnage : ",
     "missions": "Dino-RPG [ Liste des Missions ]",
-    "dinozNaming": "Dino-RPG [ Choix du Nom ]"
+    "dinozNaming": "Dino-RPG [ Choix du Nom ]",
+    "fight": "Dino-RPG [ Combat ! ]"
   },
   "missions": {
     "header": "Liste des Missions",
@@ -2248,6 +2249,13 @@
       "previous": "Previous page",
       "next": "Next page"
     }
+  },
+  "fight": {
+    "pageName": "Combat !",
+    "win": "Vous **remportez** ce combat !",
+    "lose": "Vous avez **perdu**...",
+    "lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
+    "display": "Afficher le combat"
   },
   "ingredients": {
     "disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
