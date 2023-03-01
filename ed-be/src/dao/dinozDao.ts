@@ -219,6 +219,7 @@ const getDinozForLevelUp = (dinozId: number): Promise<Dinoz> => {
 		.createQueryBuilder('dinoz')
 		.select([
 			'dinoz.id',
+			'dinoz.maxLife',
 			'dinoz.raceId',
 			'dinoz.display',
 			'dinoz.experience',

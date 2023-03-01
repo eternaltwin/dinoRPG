@@ -1,4 +1,4 @@
-import { DinozSkillFiche, ElementType, Energy, SkillTree, SkillType } from '../models/index.js';
+import { DinozSkillFiche, ElementType, Energy, SkillEffect, SkillTree, SkillType } from '../models/index.js';
 import { raceList } from './race.js';
 
 // skillId are counted like this : ABCDE
@@ -140,7 +140,14 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		unlockedFrom: [11103],
 		raceId: [raceList.QUETZU.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: -2,
+				element: ElementType.FIRE
+			}
+		]
 	},
 	VIGILANCE: {
 		skillId: 11301,
@@ -162,7 +169,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11203],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 20
+			}
+		]
 	},
 	COULEE_DE_LAVE: {
 		skillId: 11303,
@@ -228,7 +241,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11206],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 20
+			}
+		]
 	},
 	AURA_INCANDESCENTE: {
 		skillId: 11309,
@@ -239,7 +258,14 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11204],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 2,
+				element: ElementType.FIRE
+			}
+		]
 	},
 	VENGEANCE: {
 		skillId: 11310,
@@ -417,7 +443,19 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11311, 31301, 61119],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 2,
+				element: ElementType.WATER
+			},
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 2,
+				element: ElementType.FIRE
+			}
+		]
 	},
 	SALAMANDRE: {
 		skillId: 11411,
@@ -464,7 +502,18 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11404],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 50
+			},
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 6,
+				element: ElementType.FIRE
+			}
+		]
 	},
 	PROTEINES_DINOZIENNES: {
 		skillId: 12101,
@@ -508,7 +557,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12201],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 30
+			}
+		]
 	},
 	CRI_DE_GUERRE: {
 		skillId: 12302,
@@ -729,7 +784,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21103],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 20
+			}
+		]
 	},
 	GRATTEUR: {
 		skillId: 21207,
@@ -784,7 +845,14 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21202],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 2,
+				element: ElementType.WOOD
+			}
+		]
 	},
 	LARGE_MACHOIRE: {
 		skillId: 21305,
@@ -927,7 +995,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21303],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 30
+			}
+		]
 	},
 	GARDE_FORESTIER: {
 		skillId: 21405,
@@ -995,7 +1069,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21404],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 50
+			}
+		]
 	},
 	OXYGENATION_MUSCULAIRE: {
 		skillId: 22101,
@@ -1105,7 +1185,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22204],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 50
+			}
+		]
 	},
 	CHAMPOLLION: {
 		skillId: 22401,
@@ -1171,7 +1257,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22401],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 100
+			}
+		]
 	},
 	SHARIGNAN: {
 		skillId: 22503,
@@ -1238,7 +1330,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 30
+			}
+		]
 	},
 	VITALITE: {
 		skillId: 31104,
@@ -1249,7 +1347,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 10
+			}
+		]
 	},
 	GEL: {
 		skillId: 31201,
@@ -1404,7 +1508,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31203],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 10
+			}
+		]
 	},
 	PECHEUR_CONFIRME: {
 		skillId: 31307,
@@ -1437,7 +1547,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31205],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 100
+			}
+		]
 	},
 	SANS_PITIE: {
 		skillId: 31310,
@@ -1526,7 +1642,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31306],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 20
+			}
+		]
 	},
 	MAITRE_PECHEUR: {
 		skillId: 31404,
@@ -1604,7 +1726,14 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31403],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 5,
+				element: ElementType.WATER
+			}
+		]
 	},
 	LEVIATHAN: {
 		skillId: 31502,
@@ -1638,7 +1767,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32101],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 30
+			}
+		]
 	},
 	BLEU: {
 		skillId: 32202,
@@ -1792,7 +1927,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32405],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 80
+			}
+		]
 	},
 	// LIGHTNING Skills
 	INTELLIGENCE: {
@@ -2204,7 +2345,19 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41404],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 2,
+				element: ElementType.FIRE
+			},
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 1,
+				element: ElementType.LIGHTNING
+			}
+		]
 	},
 	ARCHANGE_GENESIF: {
 		skillId: 41502,
@@ -2215,7 +2368,19 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41401],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 2,
+				element: ElementType.WOOD
+			},
+			{
+				type: SkillEffect.CHANGE_ELEMENT,
+				value: 1,
+				element: ElementType.LIGHTNING
+			}
+		]
 	},
 	PRETRE: {
 		skillId: 41503,
@@ -2292,7 +2457,13 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42301],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: [
+			{
+				type: SkillEffect.CHANGE_MAX_LIFE,
+				value: 50
+			}
+		]
 	},
 	EINSTEIN: {
 		skillId: 42402,

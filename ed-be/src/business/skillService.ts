@@ -17,6 +17,7 @@ import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { effectParser } from '../utils/skillParser.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -81,6 +82,7 @@ const learnSkill = async (req: Request): Promise<string> => {
 	if (isUnlockableSkills) {
 		await removeUnlockableSkillsToDinoz(dinozId, skillIdList);
 	} else {
+		await applySkillEffect(dinozSkills, Object.values(skillList).find(skill => skill.skillId === skillIdList[0])!);
 		await addSkillToDinoz(new DinozSkill(new Dinoz(dinozId), skillIdList[0]));
 
 		// Get all new unlockables skills
@@ -235,8 +237,6 @@ function getNewDinozDataFromLevelUp(
 
 	dinoz.display = dinozSkills.display[0] + growthLetter + dinozSkills.display.substring(2, dinozSkills.display.length);
 
-	// TODO: Do a function to save into database the effect of the skill learned (ex: Sumo -> +100 hp) - (EDRPG-112)
-
 	return dinoz;
 }
 
@@ -341,5 +341,11 @@ const unlockDoubleSkills = async (dinozId: number): Promise<void> => {
 
 	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
 };
+
+async function applySkillEffect(dinoz: Dinoz, skill: DinozSkillFiche): Promise<void> {
+	if (skill.effects) {
+		await effectParser(skill.effects, dinoz);
+	}
+}
 
 export { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill, unlockDoubleSkills };
