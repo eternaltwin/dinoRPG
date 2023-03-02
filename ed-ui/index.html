@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="./favicon.ico" />
+    <link rel="manifest" href="./manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eternal Dino-RPG</title>
       <script defer async>
@@ -30,7 +31,11 @@
               doc.appendChild(script);
           }
       </script>
-
+        <script>
+            if (typeof navigator.serviceWorker !== 'undefined') {
+              navigator.serviceWorker.register('./sw.js')
+            }
+          </script>
   </head>
   <body>
     <div id="app"></div>
