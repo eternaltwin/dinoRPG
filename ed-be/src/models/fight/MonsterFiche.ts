@@ -6,4 +6,5 @@ export interface MonsterFiche {
 	gold: number;
 	// Chance of encountering this monster.
 	odds: number;
+	level: number;
 }

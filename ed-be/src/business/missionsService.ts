@@ -1,13 +1,31 @@
 import { Request } from 'express';
-import { Mission, MissionSteps, MissionList, MissionsStatus, Npc, Place } from '../models/index.js';
+import {
+	ConditionEnum,
+	FightResult,
+	Mission,
+	MissionCheck,
+	MissionHUD,
+	MissionList,
+	MissionsStatus,
+	MissionSteps,
+	Npc,
+	Place,
+	Rewarder
+} from '../models/index.js';
 import { Dinoz, DinozMission } from '../entity/index.js';
 import { getDinozMissionsInfo } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
 import { checkCondition, rewarder } from '../utils/parser.js';
 import { npcList } from '../constants/npc.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { addMissionToDinoz, finishMission, removeMissionToDinoz, updateMissionStep } from '../dao/dinozMissionDao.js';
-import { ConditionEnum } from '../models/enums/Parser.js';
+import {
+	addMissionToDinoz,
+	finishMission,
+	removeMissionToDinoz,
+	updateMissionProgression,
+	updateMissionStep
+} from '../dao/dinozMissionDao.js';
+import _ from 'lodash';
 
 const getMissionsList = async (req: Request): Promise<Array<MissionList>> => {
 	const dinozId: number = parseInt(req.params.id);
@@ -86,13 +104,36 @@ const updateMission = async (req: Request): Promise<boolean> => {
 };
 
 const interactMission = async (req: Request): Promise<string> => {
+	const mission = await checkMission(req);
+
+	const task = mission.actualStep.requirement.actionType;
+
+	switch (task) {
+		case ConditionEnum.TALKTO:
+			await updateMissionStep(mission.dinoz.id, mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText!}`;
+		case ConditionEnum.DO:
+			await updateMissionStep(mission.dinoz.id, mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText!}`;
+		default:
+			return 'error';
+	}
+};
+
+const endMission = async (req: Request): Promise<Array<Rewarder>> => {
+	const mission = await checkMission(req);
+
+	await rewarder(mission.missionReference.rewards, mission.dinoz);
+	await finishMission(mission.dinoz.id, mission.dinozMission.missionId);
+	return mission.missionReference.rewards;
+};
+
+async function checkMission(req: Request): Promise<MissionCheck> {
 	const dinozId: number = parseInt(req.params.dinozId);
 	const missionId: number = req.body.missionId;
-	// const target: string = req.body.task;
 
 	const dinoz: Dinoz = await getDinozMissionsInfo(dinozId);
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
-
 	if (dinoz.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
@@ -115,22 +156,8 @@ const interactMission = async (req: Request): Promise<string> => {
 	if (dinoz.placeId != Object.values(placeList).find(place => place.name === actualStep.place)!.placeId) {
 		throw new ErrorFormator(500, 'The dinoz is not at the expected place.');
 	}
-
-	const task = actualStep.requirement?.split('(')[0];
-
-	switch (task) {
-		case ConditionEnum.TALKTO:
-			await updateMissionStep(dinoz.id, dinozMission.missionId, actualStep.stepId + 1);
-			return `${missionReference.missionName}.${actualStep.displayedText!}`;
-		case ConditionEnum.FINISH_MISSION:
-			await rewarder(missionReference.rewards, dinoz);
-			await finishMission(dinoz.id, dinozMission.missionId);
-			return missionReference.rewards.join('-');
-		default:
-			return 'error';
-	}
-};
-
+	return { dinoz: dinoz, dinozMission: dinozMission, missionReference: missionReference, actualStep: actualStep };
+}
 function getMissionAction(dinoz: Dinoz): string | undefined {
 	const actualStep = getActualStep(dinoz);
 
@@ -139,14 +166,14 @@ function getMissionAction(dinoz: Dinoz): string | undefined {
 	}
 
 	if (
-		actualStep.requirement &&
-		dinoz.placeId === Object.entries(placeList).find(place => place[1].name === actualStep.place)![1].placeId
+		dinoz.placeId === Object.entries(placeList).find(place => place[1].name === actualStep.place)![1].placeId &&
+		!actualStep.displayedAction!.includes('kill')
 	) {
 		return actualStep.displayedAction;
 	} else return;
 }
 
-function getHUDObjective(dinoz: Dinoz): string | undefined {
+function getHUDObjective(dinoz: Dinoz): MissionHUD | undefined {
 	const actualStep = getActualStep(dinoz);
 
 	if (!actualStep) {
@@ -154,15 +181,23 @@ function getHUDObjective(dinoz: Dinoz): string | undefined {
 	}
 
 	const dinozActualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId) as Place;
+	let HUD: MissionHUD = actualStep.requirement;
 
-	if (dinozActualPlace.name === actualStep.place) {
-		return actualStep.requirement;
-	} else if (!actualStep.hidePlace && actualStep.requirement!.includes('validate')) {
-		return actualStep.requirement;
+	if (HUD.actionType === ConditionEnum.KILL) {
+		HUD.progress = actualStep.progress;
+	}
+
+	if (dinozActualPlace.name === actualStep.place || actualStep.place === placeList.ANYWHERE.name) {
+		return HUD;
+	} else if (!actualStep.hidePlace && HUD.actionType === ConditionEnum.FINISH_MISSION) {
+		return HUD;
 	} else if (!actualStep.hidePlace) {
-		return `goto(${actualStep.place})`;
+		HUD.actionType = ConditionEnum.GOTO;
+		HUD.target = actualStep.place;
+		return HUD;
 	} else {
-		return `hidePlace`;
+		HUD.actionType = ConditionEnum.HIDE_PLACE;
+		return HUD;
 	}
 }
 
@@ -177,7 +212,11 @@ function getActualStep(dinoz: Dinoz): MissionSteps | undefined {
 	const missionReference = Object.values(npc.missions!).find(
 		missions => missions.missionId === missionDinoz.missionId
 	) as Mission;
-	return missionReference.steps.find(step => step.stepId === missionDinoz.step) as MissionSteps;
+	const missionReturn = _.cloneDeep(
+		missionReference.steps.find(step => step.stepId === missionDinoz.step) as MissionSteps
+	);
+	missionReturn.progress = missionDinoz.progress;
+	return missionReturn;
 }
 
 function missionSort(missions: Array<Mission>, dinoz: Dinoz): Array<MissionList> {
@@ -208,4 +247,43 @@ function missionSort(missions: Array<Mission>, dinoz: Dinoz): Array<MissionList>
 	});
 }
 
-export { getMissionsList, updateMission, interactMission, getHUDObjective, getMissionAction };
+async function checkMissionFight(dinoz: Dinoz, fight: FightResult): Promise<void> {
+	//Retrieve mission on its way and the step
+	const actualStep = getActualStep(dinoz) as MissionSteps;
+	//Increment the progress of killing mobs
+	if (
+		(dinoz.placeId === Object.values(placeList).find(place => place.name === actualStep.place)?.placeId ||
+			actualStep.place === placeList.ANYWHERE.name) &&
+		fight.result &&
+		actualStep.requirement.actionType === ConditionEnum.KILL &&
+		actualStep.requirement.target.split(':').some(mob => mob === fight.opponent)
+	) {
+		await updateMissionProgression(dinoz.id, dinoz.missions.find(mission => !mission.isFinished)?.missionId!, 1);
+		await checkProgressEnd(dinoz, fight, actualStep);
+	}
+}
+
+async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualStep: MissionSteps): Promise<void> {
+	if (actualStep.requirement.actionType !== ConditionEnum.KILL) return;
+	const progressTarget = actualStep.requirement.value;
+
+	let progress = dinoz.missions.find(mission => !mission.isFinished)!.progress;
+	const missionId = dinoz.missions.find(mission => !mission.isFinished)!.missionId;
+
+	if (fight.result) {
+		progress += 1; //replace by fight.opponent.length when we can fight multiple opponent
+	}
+	if (progress >= progressTarget) {
+		await updateMissionStep(dinoz.id, missionId, actualStep.stepId + 1);
+	}
+}
+
+export {
+	endMission,
+	getMissionsList,
+	updateMission,
+	interactMission,
+	getHUDObjective,
+	getMissionAction,
+	checkMissionFight
+};

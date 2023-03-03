@@ -1,5 +1,5 @@
 import { http } from '@/utils';
-import { MissionList } from '@/models';
+import { MissionList, missionRewards } from '@/models';
 
 export const MissionService = {
 	getMissions(id: string, npc: string): Promise<Array<MissionList>> {
@@ -17,6 +17,12 @@ export const MissionService = {
 	interactMission(dinozId: string, missionId: number, task: string): Promise<string> {
 		return http()
 			.put(`/missions/step/${dinozId}/`, { missionId: missionId, task: task })
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	finishMission(dinozId: string, missionId: number): Promise<Array<missionRewards>> {
+		return http()
+			.put(`/missions/finish/${dinozId}/`, { missionId: missionId })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

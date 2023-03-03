@@ -152,7 +152,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				this.$router.push({
 					name: 'Fight',
-					query: { dinozId: this.dinozData?.id?.toString() }
+					params: { dinozId: this.dinozData?.id?.toString() }
 				});
 			} catch (err) {
 				errorHandler.handle(err);

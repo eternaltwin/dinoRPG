@@ -1,7 +1,7 @@
 import { ElementType, DinozFiche } from '../../models/index.js';
-import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable, PlayerItem } from '../../entity/index.js';
+import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable } from '../../entity/index.js';
 import { itemList, placeList, raceList, skillList, statusList } from '../../constants/index.js';
-import { player, dinozId, skillId, skillId2, dinozName, itemId } from '../utils/constants.js';
+import { player, dinozId, skillId, skillId2, dinozName } from '../utils/constants.js';
 import { PlayerData, BasicPlayerWithRank } from './playerData.js';
 
 export const DinozFicheData = ({
@@ -16,6 +16,103 @@ export const DinozFicheData = ({
 	placeId: 1,
 	experience: 100,
 	missions: []
+} as unknown) as Dinoz;
+
+export const DinozFicheDataWithMission = ({
+	id: dinozId,
+	player: PlayerData,
+	race: {
+		price: 20000
+	},
+	level: 1,
+	items: [{ itemId: 1 }, { itemId: 2 }, { itemId: 3 }],
+	status: [{ statusId: 1 }],
+	placeId: 3,
+	experience: 100,
+	missions: [
+		{
+			missionId: 1,
+			step: 2,
+			progress: 0,
+			isFinished: false
+		}
+	]
+} as unknown) as Dinoz;
+
+export const MonsterDataLvl1 = {
+	name: 'goupignon',
+	hp: 10,
+	attack: 1,
+	gold: 100,
+	xp: 10,
+	odds: 100,
+	level: 1
+};
+
+export const MonsterDataLvl7 = {
+	name: 'wolf',
+	hp: 15,
+	attack: 1,
+	gold: 500,
+	xp: 20,
+	odds: 80,
+	level: 5
+};
+
+export const fightLvl1Win = {
+	winner: true,
+	attackers: [{ dinoz_id: dinozId, hp_lost: 20, items_used: [] }],
+	defenders: [{ dinoz_id: 0, hp_lost: 10, items_used: [] }]
+};
+
+export const fightLvl7Win = {
+	winner: true,
+	attackers: [{ dinoz_id: dinozId, hp_lost: 20, items_used: [] }],
+	defenders: [{ dinoz_id: 0, hp_lost: 10, items_used: [] }]
+};
+
+export const fightResultlvl1Win = {
+	opponent: 'goupignon',
+	hpLost: 8,
+	dinozId: dinozId,
+	goldEarned: 100,
+	xpEarned: 10,
+	result: true
+};
+
+export const fightResultlvl7Win = {
+	opponent: 'wolf',
+	hpLost: 12,
+	dinozId: dinozId,
+	goldEarned: 500,
+	xpEarned: 20,
+	result: true
+};
+
+export const DinozFightDataWithMission = ({
+	id: dinozId,
+	placeId: 1,
+	level: 1,
+	life: 100,
+	max_life: 100,
+	experience: 0,
+	nbrUpFire: 2,
+	nbrUpWood: 1,
+	nbrUpWater: 1,
+	nbrUpLightning: 1,
+	nbrUpAir: 1,
+	items: [{ itemId: 1 }],
+	skills: [{ skillId: 1 }],
+	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
+	missions: [
+		{
+			missionId: 3,
+			step: 0,
+			progress: 1,
+			isFinished: false
+		}
+	],
+	player: PlayerData
 } as unknown) as Dinoz;
 
 export const DinozFightData = ({
@@ -33,8 +130,112 @@ export const DinozFightData = ({
 	items: [{ itemId: 1 }],
 	skills: [{ skillId: 1 }],
 	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
+	missions: [],
 	player: PlayerData
 } as unknown) as Dinoz;
+export const DinozKillFightData = ({
+	id: dinozId,
+	placeId: placeList.UNIVERSITE.placeId,
+	level: 1,
+	life: 100,
+	max_life: 100,
+	experience: 0,
+	nbrUpFire: 2,
+	nbrUpWood: 1,
+	nbrUpWater: 1,
+	nbrUpLightning: 1,
+	nbrUpAir: 1,
+	items: [{ itemId: 1 }],
+	skills: [{ skillId: 1 }],
+	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
+	missions: [
+		{
+			missionId: 3,
+			step: 0,
+			progress: 1,
+			isFinished: false
+		}
+	],
+	player: PlayerData
+} as unknown) as Dinoz;
+
+export const DinozNPCData = ({
+	id: dinozId,
+	placeId: 3,
+	level: 1,
+	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
+	missions: [
+		{
+			missionId: 1,
+			step: 2,
+			progress: 0,
+			isFinished: true
+		}
+	],
+	player: PlayerData
+} as unknown) as Dinoz;
+
+export const DinozSecondMission = ({
+	id: dinozId,
+	placeId: placeList.COLLINES_ESCARPEES.placeId,
+	level: 1,
+	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
+	missions: [
+		{
+			missionId: 1,
+			step: 2,
+			progress: 0,
+			isFinished: true
+		},
+		{
+			missionId: 2,
+			step: 0,
+			progress: 0,
+			isFinished: false
+		}
+	],
+	player: PlayerData
+} as unknown) as Dinoz;
+
+export const DinozKillMission = ({
+	id: dinozId,
+	placeId: placeList.COLLINES_ESCARPEES.placeId,
+	level: 1,
+	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
+	missions: [
+		{
+			missionId: 1,
+			step: 2,
+			progress: 0,
+			isFinished: true
+		},
+		{
+			missionId: 2,
+			step: 0,
+			progress: 0,
+			isFinished: true
+		},
+		{
+			missionId: 3,
+			step: 0,
+			progress: 2,
+			isFinished: false
+		}
+	],
+	player: PlayerData
+} as unknown) as Dinoz;
+
+export const missionRewards = [
+	{
+		rewardType: 'xp',
+		value: 10
+	},
+	{
+		quantity: 1,
+		rewardType: 'item',
+		value: 'POTION_ANGEL'
+	}
+];
 
 export const DinozWithSkills = {
 	id: dinozId,

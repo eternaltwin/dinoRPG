@@ -1,12 +1,13 @@
 import { Request } from 'express';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
-import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
+import { setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
-	addExperience,
+
 	getActiveDinoz,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
 	getDinozFicheRequest,
+	getDinozFightDataRequest,
 	getDinozPlaceRequest,
 	getDinozSkillAndStatusRequest,
 	getDinozSkillRequest,
@@ -37,13 +38,12 @@ import {
 } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
-import { getRandomNumber } from '../utils/tools.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js';
 import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getHUDObjective, getMissionAction } from './missionsService.js';
-import { processFight } from './fightService.js';
+import { moveFight, processFight } from './fightService.js';
 
 /**
  * @summary Get available action from dinoz
@@ -121,7 +121,6 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 			imgName: actionList.LEVEL_UP.imgName
 		});
 	}
-
 	return availableActions;
 }
 
@@ -136,7 +135,6 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 
 	// Retrieve player from dinozId
 	const dinozData: Dinoz = await getDinozFicheRequest(dinozId);
-
 	// If player found is different from player who do the request, throw exception
 	if (dinozData.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(
@@ -398,7 +396,7 @@ const setSkillState = async (req: Request): Promise<boolean> => {
 const betaMove = async (req: Request): Promise<FightResult> => {
 	//Retrieve dinozId
 	const dinozId: number = parseInt(req.body.dinozId);
-	const dinoz: Dinoz = await getDinozPlaceRequest(dinozId);
+	const dinoz: Dinoz = await getDinozFightDataRequest(dinozId);
 	let finalPlace: number;
 
 	// Check if dinoz belongs to player who do the request
@@ -434,7 +432,7 @@ const betaMove = async (req: Request): Promise<FightResult> => {
 	finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
 
 	// Fight at the desired place
-	const fight: FightResult = await processFight(req);
+	const fight: FightResult = await moveFight(dinoz, finalPlace);
 	if (fight.result) {
 		await setDinozPlaceRequest(dinoz.id, finalPlace);
 	}

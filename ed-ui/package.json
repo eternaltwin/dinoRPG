@@ -1,6 +1,6 @@
 {
   "name": "ed-ui",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "scripts": {
     "serve": "yarn run lint:fix && vite --host",

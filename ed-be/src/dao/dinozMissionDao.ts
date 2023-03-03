@@ -12,7 +12,17 @@ const updateMissionStep = (dinozId: number, missionId: number, step: number) => 
 	return missionRepository
 		.createQueryBuilder()
 		.update(DinozMission)
-		.set({ step: step })
+		.set({ step: step, progress: 0 })
+		.where('dinoz.id = :dId AND missionId = :mId', { dId: dinozId, mId: missionId })
+		.execute();
+};
+
+const updateMissionProgression = (dinozId: number, missionId: number, progress: number) => {
+	return missionRepository
+		.createQueryBuilder()
+		.update(DinozMission)
+		.set({ progress: () => 'progress + :addedProgress' })
+		.setParameter('addedProgress', progress)
 		.where('dinoz.id = :dId AND missionId = :mId', { dId: dinozId, mId: missionId })
 		.execute();
 };
@@ -35,4 +45,4 @@ const removeMissionToDinoz = (dinozId: number, missionId: number): Promise<Delet
 		.execute();
 };
 
-export { addMissionToDinoz, updateMissionStep, finishMission, removeMissionToDinoz };
+export { addMissionToDinoz, updateMissionStep, updateMissionProgression, finishMission, removeMissionToDinoz };

@@ -1,4 +1,4 @@
-import { NpcData } from '../../models/index.js';
+import { ConditionEnum, ConditionOperatorEnum, NpcData, RewardEnum } from '../../models/index.js';
 
 export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -13,33 +13,100 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	nothing: {
 		stepName: 'nothing',
 		nextStep: [],
-		condition: '!level(5)'
+		condition: {
+			conditionType: ConditionEnum.MAXLEVEL,
+			value: 5
+		}
 	},
 	nothing2: {
 		stepName: 'nothing2',
 		nextStep: [],
-		condition: '!level(7)+status(buoy)|status(CLIMBING_GEAR)'
+		condition: {
+			conditionType: ConditionEnum.MAXLEVEL,
+			value: 7,
+			operator: ConditionOperatorEnum.AND,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'buoy',
+				operator: ConditionOperatorEnum.OR,
+				nextCondition: {
+					conditionType: ConditionEnum.STATUS,
+					value: 'CLIMBING_GEAR'
+				}
+			}
+		}
 	},
 	learn: {
 		stepName: 'learn',
 		alias: 'back',
 		nextStep: ['water', 'fire'],
-		condition: 'level(5)+!status(buoy)+!status(CLIMBING_GEAR)'
+		condition: {
+			conditionType: ConditionEnum.MINLEVEL,
+			value: 5,
+			operator: ConditionOperatorEnum.AND,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'buoy',
+				reverse: true,
+				operator: ConditionOperatorEnum.AND,
+				nextCondition: {
+					conditionType: ConditionEnum.STATUS,
+					value: 'CLIMBING_GEAR',
+					reverse: true
+				}
+			}
+		}
 	},
 	learn_water: {
 		stepName: 'learn_water',
 		nextStep: ['water_fight'],
-		condition: 'level(7)+!status(buoy)+status(CLIMBING_GEAR)'
+		condition: {
+			conditionType: ConditionEnum.MINLEVEL,
+			value: 7,
+			operator: ConditionOperatorEnum.AND,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'buoy',
+				reverse: true,
+				operator: ConditionOperatorEnum.AND,
+				nextCondition: {
+					conditionType: ConditionEnum.STATUS,
+					value: 'CLIMBING_GEAR'
+				}
+			}
+		}
 	},
 	learn_fire: {
 		stepName: 'learn_fire',
 		nextStep: ['fire_fight'],
-		condition: 'level(7)+status(buoy)+!status(CLIMBING_GEAR)'
+		condition: {
+			conditionType: ConditionEnum.MINLEVEL,
+			value: 7,
+			operator: ConditionOperatorEnum.AND,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'buoy',
+				operator: ConditionOperatorEnum.AND,
+				nextCondition: {
+					conditionType: ConditionEnum.STATUS,
+					value: 'CLIMBING_GEAR',
+					reverse: true
+				}
+			}
+		}
 	},
 	learn_done: {
 		stepName: 'learn_done',
 		nextStep: [],
-		condition: 'status(buoy)+status(climbing_gear)'
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'buoy',
+			operator: ConditionOperatorEnum.AND,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'climbing_gear'
+			}
+		}
 	},
 	water: {
 		stepName: 'water',
@@ -53,13 +120,23 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		stepName: 'water_fight',
 		nextStep: [],
 		action: 'fight(ewater)',
-		reward: ['status(buoy)']
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'buoy'
+			}
+		]
 	},
 	fire_fight: {
 		stepName: 'fire_fight',
 		nextStep: [],
 		action: 'fight(efire)',
-		reward: ['status(climbing_gear)']
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'climbing_gear'
+			}
+		]
 	},
 	question: {
 		stepName: 'question',
@@ -73,27 +150,49 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	gtc: {
 		stepName: 'gtc',
 		nextStep: ['menu'],
-		condition: 'level(5)'
+		condition: {
+			conditionType: ConditionEnum.MINLEVEL,
+			value: 7
+		}
 	},
 	atlante: {
 		stepName: 'atlante',
 		nextStep: ['menu'],
-		condition: 'level(8)'
+		condition: {
+			conditionType: ConditionEnum.MINLEVEL,
+			value: 8
+		}
 	},
 	stone: {
 		stepName: 'stone',
 		nextStep: ['stone_yes', 'stone_no'],
-		condition: 'status(old_stone)'
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'old_stone'
+		}
 	},
 	gant: {
 		stepName: 'gant',
 		nextStep: ['menu'],
-		condition: 'status(zors_glove)'
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'zors_glove'
+		}
 	},
 	stone_yes: {
 		stepName: 'stone_yes',
 		nextStep: [],
-		reward: ['!status(old_stone)', 'status(ashpouk_totem)']
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'old_stone',
+				reverse: true
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'ashpouk_totem'
+			}
+		]
 	},
 	stone_no: {
 		stepName: 'stone_no',

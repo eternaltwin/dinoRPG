@@ -4,17 +4,33 @@
 			{{ $t(`missions.name.${missionName}`) }}
 		</p>
 		<div class="detail">
-			<template v-if="missionAction === 'talkTo'">
-				{{ $t(`missions.actions.${missionAction}`, { npc: $t(`missions.npc.${missionTarget}`) }) }}
+			<template v-if="missionDetail.actionType === MissionEnum.TALK_TO">
+				{{ $t(`missions.actions.${missionDetail.actionType}`, { npc: $t(`missions.npc.${missionDetail.target}`) }) }}
 			</template>
-			<template v-else-if="missionAction === 'goto'">
-				{{ $t(`missions.actions.${missionAction}`, { place: $t(`missions.place.${missionTarget}`) }) }}
+			<template v-else-if="missionDetail.actionType === MissionEnum.GOTO">
+				{{
+					$t(`missions.actions.${missionDetail.actionType}`, { place: $t(`missions.place.${missionDetail.target}`) })
+				}}
 			</template>
-			<template v-else-if="missionAction === 'validate'">
-				{{ $t(`missions.actions.${missionAction}`, { place: $t(`missions.place.${missionTarget}`) }) }}
+			<template v-else-if="missionDetail.actionType === MissionEnum.VALIDATE">
+				{{
+					$t(`missions.actions.${missionDetail.actionType}`, { place: $t(`missions.place.${missionDetail.target}`) })
+				}}
 			</template>
-			<template v-else-if="missionAction === 'hidePlace'">
+			<template v-else-if="missionDetail.actionType === MissionEnum.HIDE_PLACE">
 				{{ $t(`missions.actions.hidePlace`) }}
+			</template>
+			<template v-else-if="missionDetail.actionType === MissionEnum.DO">
+				{{ $t(`missions.actions.${missionDetail.target}`) }}
+			</template>
+			<template v-else-if="missionDetail.actionType === MissionEnum.KILL">
+				{{
+					$t(`missions.actions.${missionDetail.actionType}`, {
+						progress: missionDetail.progress,
+						target: missionDetail.value,
+						targetName: $t(`missions.target.${missionDetail.target}`)
+					})
+				}}
 			</template>
 		</div>
 		<template #content>
@@ -34,9 +50,9 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { sessionStore } from '@/store/index.js';
 import { missionsList } from '@/constants/index.js';
-import { Dinoz, MissionList } from '@/models/index.js';
+import { Dinoz, MissionList, missionRequirement } from '@/models/index.js';
 import EventBus from '@/events/index.js';
-import { MissionsStatus } from '@/enums/index.js';
+import { MissionEnum, MissionsStatus } from '@/enums/index.js';
 
 export default defineComponent({
 	name: 'MissionHUD',
@@ -47,7 +63,8 @@ export default defineComponent({
 	data() {
 		return {
 			sessionStore: sessionStore(),
-			information: false as boolean
+			information: false as boolean,
+			MissionEnum: MissionEnum
 		};
 	},
 	methods: {
@@ -75,7 +92,7 @@ export default defineComponent({
 		missionName(): string {
 			return missionsList[this.missionId];
 		},
-		missionDetail(): string {
+		missionDetail(): missionRequirement {
 			const dinozId = this.$route.params.id as string;
 			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
@@ -83,12 +100,6 @@ export default defineComponent({
 		},
 		mission(): MissionList {
 			return { missionId: this.missionId, status: MissionsStatus.ONGOING };
-		},
-		missionAction(): string {
-			return this.missionDetail.split('(')[0];
-		},
-		missionTarget(): string {
-			return this.missionDetail.substring(this.missionDetail.indexOf('(') + 1, this.missionDetail.indexOf(')'));
 		}
 	}
 });

@@ -4,6 +4,7 @@ export * from './ItemEffect.js';
 export * from './ItemType.js';
 export * from './MissionsStatus.js';
 export * from './NpcTrigger.js';
+export * from './Parser.js';
 export * from './ShopType.js';
 export * from './SkillEffect.js';
 export * from './SkillType.js';

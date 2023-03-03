@@ -28,6 +28,7 @@ import {
 	BasicDinoz,
 	DinozDead,
 	DinozFicheData,
+	DinozFicheDataWithMission,
 	DinozFightData,
 	DinozToChangeName,
 	DinozWithSkills,
@@ -38,7 +39,6 @@ import {
 import { PlayerData } from '../data/playerData.js';
 import { DinozFromShop } from '../data/dinozShopData.js';
 import { playerRanking } from '../data/rankingData.js';
-import { processFight } from '../../business/fightService.js';
 
 const DinozDao = require('../../dao/dinozDao.js');
 const DinozSkillDao = require('../../dao/dinozSkillDao.js');
@@ -79,6 +79,20 @@ describe('Function getDinozFiche()', function () {
 
 		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
 		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(dinozId);
+	});
+
+	it('Dinoz with a mission ongoing', async function () {
+		DinozDao.getDinozFicheRequest = jasmine.createSpy().and.returnValue(DinozFicheDataWithMission);
+		try {
+			await getDinozFiche(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
+
+		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFicheRequest).toHaveBeenCalledWith(DinozFicheDataWithMission.id);
 	});
 
 	it.each(Object.values(shopList))('Nominal case - test all shops action: Shop %#', async shopToTest => {
@@ -625,22 +639,23 @@ describe('Function betaMove', function () {
 		};
 
 		let FightResult: FightResult = {
-			opponent: 'string',
-			goldEarned: 1,
-			xpEarned: 1,
-			hpLost: 1,
+			opponent: 'goupignon',
+			goldEarned: 100,
+			xpEarned: 20,
+			hpLost: 10,
 			result: true,
 			dinozId: DinozFightData.id
 		};
 
-		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(DinozFightData);
-		DinozDao.setDinozPlaceRequest = jasmine.createSpy();
-		fight.processFight = jasmine.createSpy().and.returnValue(FightResult);
 		DinozDao.getDinozFightDataRequest = jasmine.createSpy().and.returnValue(DinozFightData);
+		DinozDao.setDinozPlaceRequest = jasmine.createSpy();
+		fight.moveFight = jasmine.createSpy().and.returnValue(FightResult);
 		jest.spyOn(tools, 'getRandomNumber').mockReturnValue(999);
 	});
 
 	it('Nominal case', async function () {
+		req.body.placeId = 10;
+
 		try {
 			await betaMove(req);
 		} catch (err) {
@@ -649,13 +664,35 @@ describe('Function betaMove', function () {
 			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
 		}
 
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(fight.processFight).toHaveBeenCalledTimes(1);
-		expect(fight.processFight).toHaveBeenCalledWith(req);
+		expect(fight.moveFight).toHaveBeenCalledTimes(1);
+		expect(fight.moveFight).toHaveBeenCalledWith(DinozFightData, place1Alias);
 
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id, place1Alias);
+		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
+
+		//expect(res.send).toHaveBeenCalledWith(defaultFight);
+	});
+
+	it('Dinoz doesnt leave the actual map', async function () {
+		req.body.placeId = 7;
+		try {
+			await betaMove(req);
+		} catch (err) {
+			const e: Error = err as Error;
+			console.log(e.message);
+			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
+		}
+
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
+
+		expect(fight.moveFight).toHaveBeenCalledTimes(1);
+		expect(fight.moveFight).toHaveBeenCalledWith(DinozFightData, 7);
+
+		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id, 7);
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
 
 		//expect(res.send).toHaveBeenCalledWith(defaultFight);
@@ -667,7 +704,7 @@ describe('Function betaMove', function () {
 		const dinozWithNoBouee = cloneDeep(DinozWithSkillsAndStatusReadyToMove);
 		dinozWithNoBouee.player.id = player.id_2;
 
-		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(dinozWithNoBouee);
+		DinozDao.getDinozFightDataRequest = jasmine.createSpy().and.returnValue(dinozWithNoBouee);
 
 		try {
 			await betaMove(req);
@@ -676,39 +713,12 @@ describe('Function betaMove', function () {
 			expect(e.message).toBe(`Dinoz ${dinozId} doesn't belong to player ${player.id_1}`);
 		}
 
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(fight.processFight).toHaveBeenCalledTimes(0);
+		expect(fight.moveFight).toHaveBeenCalledTimes(0);
 
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
-	});
-
-	it('Dinoz does not change map', async function () {
-		const dinozWithNoBouee = cloneDeep(DinozWithSkillsAndStatusReadyToMove);
-
-		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(dinozWithNoBouee);
-		req.body.placeId = placeList.FOUTAINE_DE_JOUVENCE.placeId;
-
-		try {
-			await betaMove(req);
-		} catch (err) {
-			const e: Error = err as Error;
-			console.log(e.message);
-			expect(e.message).toBe(`An unexpected error occurred during the test, check the test logs`);
-		}
-
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
-
-		expect(fight.processFight).toHaveBeenCalledTimes(1);
-		expect(fight.processFight).toHaveBeenCalledWith(req);
-
-		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledWith(
-			DinozFightData.id,
-			placeList.FOUTAINE_DE_JOUVENCE.placeId
-		);
-		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(1);
 	});
 
 	it('Dinoz want to go to an inexistant place', async function () {
@@ -720,10 +730,10 @@ describe('Function betaMove', function () {
 			expect(e.message).toBe(`Dinoz ${dinozId} want to go in the void`);
 		}
 
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(fight.processFight).toHaveBeenCalledTimes(0);
+		expect(fight.moveFight).toHaveBeenCalledTimes(0);
 
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
 	});
@@ -738,10 +748,10 @@ describe('Function betaMove', function () {
 			expect(e.message).toBe(`Dinoz ${dinozId} is already at port`);
 		}
 
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(fight.processFight).toHaveBeenCalledTimes(0);
+		expect(fight.moveFight).toHaveBeenCalledTimes(0);
 
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
 	});
@@ -756,10 +766,10 @@ describe('Function betaMove', function () {
 			expect(e.message).toBe(`port is not adjacent with ilac2`);
 		}
 
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(fight.processFight).toHaveBeenCalledTimes(0);
+		expect(fight.moveFight).toHaveBeenCalledTimes(0);
 
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
 	});
@@ -768,9 +778,7 @@ describe('Function betaMove', function () {
 		const dinozWithNoBouee = cloneDeep(DinozWithSkillsAndStatusReadyToMove);
 		dinozWithNoBouee.status = [{ statusId: 1 }] as Array<DinozStatus>;
 
-		DinozDao.getDinozPlaceRequest = jasmine.createSpy().and.returnValue(dinozWithNoBouee);
-
-		DinozDao.getDinozSkillAndStatusRequest = jasmine.createSpy().and.returnValue(dinozWithNoBouee);
+		DinozDao.getDinozFightDataRequest = jasmine.createSpy().and.returnValue(dinozWithNoBouee);
 
 		try {
 			await betaMove(req);
@@ -779,10 +787,10 @@ describe('Function betaMove', function () {
 			expect(e.message).toBe(`Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
 		}
 
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledTimes(1);
-		expect(DinozDao.getDinozPlaceRequest).toHaveBeenCalledWith(DinozFightData.id);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledTimes(1);
+		expect(DinozDao.getDinozFightDataRequest).toHaveBeenCalledWith(DinozFightData.id);
 
-		expect(fight.processFight).toHaveBeenCalledTimes(0);
+		expect(fight.moveFight).toHaveBeenCalledTimes(0);
 
 		expect(DinozDao.setDinozPlaceRequest).toHaveBeenCalledTimes(0);
 	});

@@ -1,3 +1,5 @@
+import { missionRequirement } from '@/models/index.js';
+
 export interface Dinoz {
 	id?: number;
 	name?: string;
@@ -6,7 +8,7 @@ export interface Dinoz {
 	isSacrificed?: boolean;
 	level?: number;
 	missionId?: number;
-	missions?: string;
+	missions?: missionRequirement;
 	canChangeName?: boolean;
 	following?: number;
 	life?: number;

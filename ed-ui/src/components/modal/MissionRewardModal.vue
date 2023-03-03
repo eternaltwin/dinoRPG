@@ -39,10 +39,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { missionsList } from '@/constants/index.js';
-import { Dinoz } from '@/models/index.js';
+import { Dinoz, missionRewards } from '@/models/index.js';
 import { sessionStore } from '@/store/index.js';
+import { RewardEnum } from '@/enums/index.js';
 
 export default defineComponent({
 	name: 'MissionRewardModal',
@@ -52,9 +53,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		missionText: String,
-		missionReward: String,
-		npc: String
+		missionReward: { type: Object as PropType<Array<missionRewards>>, required: true }
 	},
 	computed: {
 		missionName(): string {
@@ -68,38 +67,32 @@ export default defineComponent({
 			const dinozId = this.$route.params.id as string;
 			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-			return myDinoz.missions!.substring(myDinoz.missions!.indexOf('(') + 1, myDinoz.missions!.indexOf(')'));
-		},
-		rewards(): Array<string> {
-			return this.missionReward!.split('-');
+			return myDinoz.missions!.target;
 		},
 		xp(): number | undefined {
-			const isXP: string | undefined = this.rewards.find(el => el.includes('xp'));
+			const isXP: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EXPERIENCE);
 			if (!isXP) {
 				return undefined;
 			} else {
-				return parseInt(isXP.substring(isXP.indexOf('(') + 1, isXP.indexOf(')')));
+				return isXP.quantity;
 			}
 		},
 		gold(): number | undefined {
-			const isGold: string | undefined = this.rewards.find(el => el.includes('gold'));
+			const isGold: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.GOLD);
 			if (!isGold) {
 				return undefined;
 			} else {
-				return parseInt(isGold.substring(isGold.indexOf('(') + 1, isGold.indexOf(')')));
+				return isGold.quantity;
 			}
 		},
 		items(): Array<string> | undefined {
-			const isItem: Array<string> | undefined = this.rewards.filter(el => el.includes('item'));
+			const isItem: Array<missionRewards> | undefined = this.missionReward.filter(
+				el => el.rewardType === RewardEnum.ITEM
+			);
 			if (!isItem) {
 				return undefined;
 			} else {
-				return isItem.map(el =>
-					el
-						.substring(el.indexOf('(') + 1, el.indexOf(')'))
-						.split(',')[0]
-						.toLowerCase()
-				);
+				return isItem.map(el => el.value!.toLowerCase());
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-import { NpcData } from '../../models/index.js';
+import { ConditionEnum, NpcData, RewardEnum } from '../../models/index.js';
 
 export const SOFIA: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -33,12 +33,25 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 	niveau: {
 		stepName: 'niveau',
 		nextStep: ['yes', 'no'],
-		condition: 'level(50)+!status(broken_limit_1)'
+		condition: {
+			conditionType: ConditionEnum.MINLEVEL,
+			value: 50,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'broken_limit_1',
+				reverse: true
+			}
+		}
 	},
 	yes: {
 		stepName: 'yes',
 		nextStep: ['ether'],
-		reward: ['status(broken_limit_1)']
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'broken_limit_1'
+			}
+		]
 	},
 	no: {
 		stepName: 'no',
@@ -47,12 +60,29 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 	ether: {
 		stepName: 'ether',
 		nextStep: ['newskill', 'no2'],
-		condition: 'level(50)+status(broken_limit_1)+!status(ether_drop)'
+		condition: {
+			conditionType: ConditionEnum.MINLEVEL,
+			value: 50,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'broken_limit_1',
+				nextCondition: {
+					conditionType: ConditionEnum.STATUS,
+					value: 'ether_drop',
+					reverse: true
+				}
+			}
+		}
 	},
 	newskill: {
 		stepName: 'newskill',
 		nextStep: [],
-		reward: ['status(ether_drop)']
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'ether_drop'
+			}
+		]
 	},
 	no2: {
 		stepName: 'no2',

@@ -13,7 +13,8 @@
       "build": "tsc",
       "start": "ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-esm",
-      "run:migration": "tsc && typeorm-ts-node-esm migration:run -d dist/data-source.js"
+      "run:migration": "tsc && typeorm-ts-node-esm migration:run -d dist/data-source.js",
+      "migration:generate": "yarn typeorm migration:generate -d src/data-source.ts src/migration/${0}"
    },
    "keywords": [
       "nodejs",

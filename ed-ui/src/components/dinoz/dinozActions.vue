@@ -27,7 +27,7 @@
 						<td v-else-if="action.name === 'npc'" class="label">
 							{{ $t(`npc.name.${npcNameList[action.prop]}`) }}
 						</td>
-						<td v-else-if="action.name === 'mission' && missionAction === 'validate'" class="label">
+						<td v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.VALIDATE" class="label">
 							{{ $t(`missions.actions.terminate`) }}
 						</td>
 						<td v-else-if="action.name === 'mission'" class="label">
@@ -46,7 +46,7 @@
 								v-html="formatContent($t(`npc.name.${npcNameList[action.prop]}`))"
 							/>
 							<h1
-								v-else-if="action.name === 'mission' && missionAction === 'validate'"
+								v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.VALIDATE"
 								v-html="formatContent($t(`missions.actions.terminate`))"
 							/>
 							<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
@@ -76,14 +76,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, defineAsyncComponent } from 'vue';
-import { shopNameList, npcNameList, missionsList } from '@/constants';
-import { Action } from '@/models';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { missionsList, npcNameList, shopNameList } from '@/constants';
+import { Action, missionRewards } from '@/models';
 import { sessionStore } from '@/store';
 import EventBus from '@/events';
-import { MissionService } from '@/services';
+import { FightService, MissionService } from '@/services';
 import { errorHandler } from '@/utils/index.js';
-import { FightService } from '@/services';
+import { MissionEnum } from '@/enums/index.js';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -96,8 +96,9 @@ export default defineComponent({
 			mission: sessionStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
 				.missions,
 			npcName: undefined as string | undefined,
-			missionReward: undefined as string | undefined,
-			sessionStore: sessionStore()
+			missionReward: undefined as Array<missionRewards> | undefined,
+			sessionStore: sessionStore(),
+			MissionEnum: MissionEnum
 		};
 	},
 	components: {
@@ -146,12 +147,8 @@ export default defineComponent({
 					this.resurect = true;
 					break;
 				case 'mission':
-					if (this.missionAction === 'validate') {
-						this.missionReward = await MissionService.interactMission(
-							this.$route.params.id.toString(),
-							this.missionId!,
-							action.prop as string
-						);
+					if (this.mission!.actionType === MissionEnum.VALIDATE) {
+						this.missionReward = await MissionService.finishMission(this.$route.params.id.toString(), this.missionId!);
 					} else {
 						try {
 							this.npcName = action.prop as string;
@@ -180,9 +177,6 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		missionAction(): string | undefined {
-			return this.mission?.split('(')[0];
-		},
 		missionName(): string | undefined {
 			if (this.missionId) {
 				return missionsList[this.missionId!];

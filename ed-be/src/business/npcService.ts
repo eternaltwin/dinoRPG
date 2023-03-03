@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Npc, NpcData, NpcTalk, Place } from '../models/index.js';
+import { Condition, Npc, NpcData, NpcTalk, Place } from '../models/index.js';
 import { Dinoz, NPC } from '../entity/index.js';
 import { getDinozNPCRequest } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
@@ -88,7 +88,7 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 
 	// Select nextStep to send to the player
 	const playerChoices: Array<string> = nextStepWantedData!.nextStep.filter(possibility => {
-		const condition: string | undefined = Object.values(pnj!.data).find(data => data.stepName === possibility)
+		const condition: Condition | undefined = Object.values(pnj!.data).find(data => data.stepName === possibility)
 			?.condition;
 		// If there is a condition non-met, replace it with enmpty string
 		return condition === undefined || checkCondition(condition, dinoz);

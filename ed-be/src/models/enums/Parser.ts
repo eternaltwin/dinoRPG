@@ -1,5 +1,6 @@
 export enum ConditionEnum {
-	LEVEL = 'level',
+	MINLEVEL = 'minlevel',
+	MAXLEVEL = 'maxlevel',
 	STATUS = 'status',
 	SCENARIO = 'scenario',
 	CURRENT_MISSION = 'curmssion',
@@ -22,7 +23,10 @@ export enum ConditionEnum {
 	UTIME = 'utime',
 	GOTO = 'goto',
 	TALKTO = 'talkTo',
-	FINISH_MISSION = 'validate'
+	FINISH_MISSION = 'validate',
+	KILL = 'kill',
+	DO = 'do',
+	HIDE_PLACE = 'hidePlace'
 }
 
 export enum TriggerEnum {
@@ -36,5 +40,11 @@ export enum RewardEnum {
 	SKILL = 'skill',
 	EXPERIENCE = 'xp',
 	GOLD = 'gold',
-	ITEM = 'item'
+	ITEM = 'item',
+	EPIC = 'epic'
+}
+
+export enum ConditionOperatorEnum {
+	AND,
+	OR
 }

@@ -64,7 +64,7 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			fight: {} as FightResult,
 			dinozId: undefined as number | undefined,
-			lang: localStore().getLanguage,
+			lang: localStore().getLanguage ?? 'fr',
 			fightText: undefined as string | undefined
 		};
 	},

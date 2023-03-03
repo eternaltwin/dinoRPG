@@ -18,5 +18,6 @@ export * from './player/PlayerOptions.js';
 export * from './player/PlayerRanking.js';
 export * from './player/PlayerTypeToSend.js';
 export * from './reward/EpicReward.js';
+export * from './reward/Rewarder.js';
 export * from './shop/ShopFiche.js';
 export * from './shop/DinozShopFiche.js';

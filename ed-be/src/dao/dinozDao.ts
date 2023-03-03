@@ -12,7 +12,7 @@ const getDinozPlaceRequest = (dinozId: number): Promise<Dinoz> => {
 		.select(['dinoz.id', 'dinoz.placeId'])
 		.addSelect(['player.id'])
 		.addSelect(['status.statusId'])
-		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished'])
+		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.missions', 'missions')
@@ -85,7 +85,7 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz> => {
 		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
-		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished'])
+		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('player.items', 'playerItems')
 		.leftJoin('dinoz.items', 'items')
@@ -101,7 +101,7 @@ const getDinozMissionsInfo = (dinozId: number): Promise<Dinoz> => {
 		.select(['dinoz.id', 'dinoz.level', 'dinoz.placeId'])
 		.addSelect(['player.id'])
 		.addSelect(['status.statusId'])
-		.addSelect(['missions.id', 'missions.missionId', 'missions.step', 'missions.isFinished'])
+		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.missions', 'missions')
@@ -156,16 +156,19 @@ const getDinozFightDataRequest = (dinozId: number): Promise<Dinoz> => {
 			'dinoz.nbrUpWood',
 			'dinoz.nbrUpWater',
 			'dinoz.nbrUpLightning',
-			'dinoz.nbrUpAir'
+			'dinoz.nbrUpAir',
+			'dinoz.placeId'
 		])
 		.addSelect(['player.id'])
 		.addSelect(['items.itemId'])
 		.addSelect(['skills.skillId'])
 		.addSelect(['status.statusId'])
+		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('dinoz.status', 'status')
+		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
 };

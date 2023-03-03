@@ -1,4 +1,4 @@
-import { NpcData } from '../../models/index.js';
+import { ConditionEnum, NpcData, RewardEnum } from '../../models/index.js';
 
 export const MINEUR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -12,30 +12,85 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 	},
 	yes: {
 		stepName: 'yes',
-		condition: '!status(SHOVEL)+!status(ENHANCED_SHOVEL)+!status(BROKEN_SHOVEL)+!status(BROKEN_ENHANCED_SHOVEL)',
-		reward: ['status(SHOVEL)'],
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'SHOVEL',
+			reverse: true,
+			nextCondition: {
+				conditionType: ConditionEnum.STATUS,
+				value: 'ENHANCED_SHOVEL',
+				nextCondition: {
+					conditionType: ConditionEnum.STATUS,
+					value: 'BROKEN_SHOVEL',
+					reverse: true,
+					nextCondition: {
+						conditionType: ConditionEnum.STATUS,
+						value: 'BROKEN_ENHANCED_SHOVEL',
+						reverse: true
+					}
+				}
+			}
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'SHOVEL'
+			}
+		],
 		nextStep: ['thanks']
 	},
 	nothing: {
 		stepName: 'nothing',
-		condition: 'status(SHOVEL)',
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'SHOVEL'
+		},
 		nextStep: ['thanks']
 	},
 	repair: {
 		stepName: 'repair',
-		condition: 'status(BROKEN_SHOVEL)',
-		reward: ['status(SHOVEL)', '!status(BROKEN_SHOVEL)'],
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'BROKEN_SHOVEL'
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'SHOVEL'
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'BROKEN_SHOVEL',
+				reverse: true
+			}
+		],
 		nextStep: ['thanks']
 	},
 	nothing2: {
 		stepName: 'nothing2',
-		condition: 'status(ENHANCED_SHOVEL)',
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'ENHANCED_SHOVEL'
+		},
 		nextStep: ['thanks']
 	},
 	repair2: {
 		stepName: 'repair2',
-		condition: 'status(BROKEN_ENHANCED_SHOVEL)',
-		reward: ['status(ENHANCED_SHOVEL)', '!status(BROKEN_ENHANCED_SHOVEL)'],
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'BROKEN_ENHANCED_SHOVEL'
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'ENHANCED_SHOVEL'
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'BROKEN_ENHANCED_SHOVEL',
+				reverse: true
+			}
+		],
 		nextStep: ['thanks']
 	},
 	no: {

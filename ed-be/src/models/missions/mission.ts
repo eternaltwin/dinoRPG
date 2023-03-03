@@ -1,9 +1,9 @@
-import { MissionSteps } from './missionSteps.js';
+import { Condition, MissionSteps, Rewarder } from '../index.js';
 
 export interface Mission {
 	missionId: number;
 	missionName: string;
-	condition?: string;
-	rewards: Array<string>;
+	condition?: Condition;
+	rewards: Array<Rewarder>;
 	steps: Array<MissionSteps>;
 }

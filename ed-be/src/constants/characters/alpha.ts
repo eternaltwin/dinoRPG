@@ -1,4 +1,4 @@
-import { NpcData } from '../../models/index.js';
+import { ConditionEnum, ElementType, NpcData, RewardEnum } from '../../models/index.js';
 
 export const ALPHA: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -13,33 +13,61 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	},
 	element: {
 		stepName: 'element',
-		condition: '!level(80)',
+		condition: {
+			conditionType: ConditionEnum.MAXLEVEL,
+			value: 80
+		},
 		nextStep: ['fire', 'water', 'lightning', 'wood', 'air']
 	},
 	fire: {
 		stepName: 'fire',
 		nextStep: ['back'],
-		reward: ['changeelem(fire)']
+		reward: [
+			{
+				rewardType: RewardEnum.CHANGE_ELEMENT,
+				value: ElementType.FIRE
+			}
+		]
 	},
 	water: {
 		stepName: 'water',
 		nextStep: ['back'],
-		reward: ['changeelem(water)']
+		reward: [
+			{
+				rewardType: RewardEnum.CHANGE_ELEMENT,
+				value: ElementType.WATER
+			}
+		]
 	},
 	lightning: {
 		stepName: 'lightning',
 		nextStep: ['back'],
-		reward: ['changeelem(lightning)']
+		reward: [
+			{
+				rewardType: RewardEnum.CHANGE_ELEMENT,
+				value: ElementType.LIGHTNING
+			}
+		]
 	},
 	wood: {
 		stepName: 'wood',
 		nextStep: ['back'],
-		reward: ['changeelem(wood)']
+		reward: [
+			{
+				rewardType: RewardEnum.CHANGE_ELEMENT,
+				value: ElementType.WOOD
+			}
+		]
 	},
 	air: {
 		stepName: 'air',
 		nextStep: ['back'],
-		reward: ['changeelem(air)']
+		reward: [
+			{
+				rewardType: RewardEnum.CHANGE_ELEMENT,
+				value: ElementType.AIR
+			}
+		]
 	},
 	world: {
 		stepName: 'world',
@@ -59,79 +87,175 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	},
 	nothing: {
 		stepName: 'nothing',
-		nextStep: ['back'],
-		condition:
-			'status(CLIMBING_GEAR)+status(BUOY)+status(SKULLY_MEMORY)+status(DINOPLAZA)+status(JOVEBOZE)+status(NENUPHAR_LEAF)+status(RASCAPHANDRE_DECOY)+status(LANTERN)+status(FLIPPERS)+status(SYLVENOIRE_KEY)'
+		nextStep: ['back']
 	},
 	GO_TO_GRAND_TOUT_CHAUD: {
 		stepName: 'GO_TO_GRAND_TOUT_CHAUD',
 		nextStep: ['back'],
-		condition: '!status(CLIMBING_GEAR)',
-		reward: ['status(CLIMBING_GEAR)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'CLIMBING_GEAR',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'CLIMBING_GEAR'
+			}
+		]
 	},
 	GO_TO_ATLANTEINES_ISLAND: {
 		stepName: 'GO_TO_ATLANTEINES_ISLAND',
 		nextStep: ['back'],
-		condition: '!status(BUOY)',
-		reward: ['status(BUOY)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'BUOY',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'BUOY'
+			}
+		]
 	},
 	CIMETIERE: {
 		stepName: 'CIMETIERE',
 		nextStep: ['back'],
-		condition: '!status(SKULLY_MEMORY)',
-		reward: ['status(SKULLY_MEMORY)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'SKULLY_MEMORY',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'SKULLY_MEMORY'
+			}
+		]
 	},
 	GO_TO_DINOPLAZA: {
 		stepName: 'GO_TO_DINOPLAZA',
 		nextStep: ['back'],
-		condition: '!status(DINOPLAZA)',
-		reward: ['status(DINOPLAZA)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'DINOPLAZA',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'DINOPLAZA'
+			}
+		]
 	},
 	GO_TO_MONSTER_ISLAND: {
 		stepName: 'GO_TO_MONSTER_ISLAND',
 		nextStep: ['back'],
-		condition: '!status(JOVEBOZE)',
-		reward: ['status(JOVEBOZE)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'JOVEBOZE',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'JOVEBOZE'
+			}
+		]
 	},
 	GO_TO_FOREST: {
 		stepName: 'GO_TO_FOREST',
 		nextStep: ['back'],
-		condition: '!status(NENUPHAR_LEAF)',
-		reward: ['status(NENUPHAR_LEAF)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'NENUPHAR_LEAF',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'NENUPHAR_LEAF'
+			}
+		]
 	},
 	GO_TO_DOME_SOULAFLOTTE: {
 		stepName: 'GO_TO_DOME_SOULAFLOTTE',
 		nextStep: ['back'],
-		condition: '!status(RASCAPHANDRE_DECOY)',
-		reward: ['status(RASCAPHANDRE_DECOY)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'RASCAPHANDRE_DECOY',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'RASCAPHANDRE_DECOY'
+			}
+		]
 	},
 	GO_TO_TUNNEL: {
 		stepName: 'GO_TO_TUNNEL',
 		nextStep: ['back'],
-		condition: '!status(LANTERN)',
-		reward: ['status(LANTERN)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'LANTERN',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'LANTERN'
+			}
+		]
 	},
 	JUNGLE_SAUVAGE: {
 		stepName: 'JUNGLE_SAUVAGE',
 		nextStep: ['back'],
-		condition: '!status(FLIPPERS)',
-		reward: ['status(FLIPPERS)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'FLIPPERS',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'FLIPPERS'
+			}
+		]
 	},
 	GO_TO_STEPPES: {
 		stepName: 'GO_TO_STEPPES',
 		nextStep: ['back'],
-		condition: '!status(SYLVENOIRE_KEY)',
-		reward: ['status(SYLVENOIRE_KEY)']
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'SYLVENOIRE_KEY',
+			reverse: true
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'SYLVENOIRE_KEY'
+			}
+		]
 	},
 	experience: {
 		stepName: 'experience',
-		condition: '!level(80)',
+		condition: {
+			conditionType: ConditionEnum.MAXLEVEL,
+			value: 80
+		},
 		nextStep: ['maxExperience']
 	},
 	maxExperience: {
 		stepName: 'maxExperience',
 		nextStep: ['back'],
-		reward: ['maxExp']
+		reward: [
+			{
+				rewardType: RewardEnum.MAXEXPERIENCE,
+				value: 1
+			}
+		]
 	},
 	stop: {
 		stepName: 'stop',

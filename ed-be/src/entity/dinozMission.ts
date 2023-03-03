@@ -24,6 +24,11 @@ export class DinozMission {
 	@Column({
 		nullable: true
 	})
+	progress: number;
+
+	@Column({
+		nullable: true
+	})
 	isFinished: boolean;
 
 	constructor(dinoz: Dinoz, missionId: number) {
@@ -31,5 +36,6 @@ export class DinozMission {
 		this.missionId = missionId;
 		this.step = 0;
 		this.isFinished = false;
+		this.progress = 0;
 	}
 }

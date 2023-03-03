@@ -1,4 +1,5 @@
 import { DinozRace } from './DinozRace.js';
+import { MissionHUD, missionRequirement } from '../missions/index.js';
 
 // This is the model to use to communicate with the front
 export interface DinozFiche {
@@ -19,7 +20,7 @@ export interface DinozFiche {
 	race?: DinozRace;
 	placeId?: number;
 	actions?: Array<ActionFiche>;
-	missions?: string;
+	missions?: MissionHUD;
 	items?: Array<number>;
 	skills?: Array<number>;
 	status?: Array<number>;

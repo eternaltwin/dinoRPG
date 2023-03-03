@@ -1738,7 +1738,9 @@
       "goto": "Se rendre {place} ...",
       "validate": "Retourner valider la mission {place} ...",
       "terminate": "Valider la Mission",
-      "hidePlace": "Trouvez le bon lieu ..."
+      "hidePlace": "Trouvez le bon lieu ...",
+      "kill": "{progress} / {target} {targetName} à tuer ...",
+      "timbre": "Ramasser les Timbres"
     },
     "npc": {
       "fishVendor": "Marchand de poisson",
@@ -1746,28 +1748,74 @@
       "mmeducraft1": "Jacqueline Ducraft",
       "mmeducraft2": "Jacqueline Ducraft",
       "nioufniouf": "NioufNiouf",
-      "PAPY_JOE": "Papy Joe"
+      "papyjoe": "Papy Joe",
+      "pureWater": "Eau Pure",
+      "kbook": "Livre de Recettes",
+      "timbre": "Ramasser les Timbres"
     },
     "place":  {
       "port":"au Port de Prêche",
       "market":"à la Place du Marché",
-      "papy":"Chez Papy Joe",
+      "papyjoe":"Chez Papy Joe",
       "forcebrut":"à Forcebrut",
       "dnv":"à Dinoville",
-      "colesc": "aux Collines Escarpées"
+      "colesc": "aux Collines Escarpées",
+      "fountj": "à la Fontaine de Jouvence",
+      "universite": "à l'Université"
     },
     "dialog": {
       "fish": {
         "fishVendor": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite.",
         "mmeSeyche": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense...",
-        "papy": "Madame Seyche est très contente de toi, voilà ta récompense !"
+        "papyjoe": "Madame Seyche est très contente de toi, voilà ta récompense !"
       },
       "dog": {
         "mmeducraft1": "Bonjour jeune homme ! Nioufniouf, mon petit amour de caniche, a disparu ! Je l'avais puni car il avait fait une bêtise...ohh... comme je regreettte ! Vite, retrouve-le s'il te plaît. Je suis certaine qu'il n'a pas pu grimper ces montagnes avec ses petites pattes, il doit donc être parti vers le Sud.",
         "nioufniouf": "Vous avez retrouvé NioufNiouf ! Ramenez-le vite à sa propriétaire !",
         "mmeducraft2": "Mon NioufNiouf chéri !!! Pardonne-moi, ta moooman a été très méchante avec le gentil chienchien ! Merci jeune homme, retournez au plus vite chez ce vieux schnock pour obtenir votre récompense !",
-        "papy": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi"
+        "papyjoe": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi"
+      },
+      "kilgou": {
+        "papyjoe": "Bravo, grâce à toi les Collines ont retrouvé un certain calme, félicitations !"
+      },
+      "kilwlf": {
+        "papyjoe": "Bravo, c'est bien joué, avec ça ils ne devraient plus trop s'approcher des chèvres pendant quelque temps !"
+      },
+      "kilglu": {
+        "papyjoe": "Merci, c'est un beau spécimen. Voilà pour ta récompense !"
+      },
+      "kilgnt": {
+        "papyjoe": "Ouf ! C'était juste ! Merci tu m'as bien aidé, je vais pouvoir parler de cet exploit au Roi demain pendant que nous jouerons au golf."
+      },
+      "kilcoq": {
+        "papyjoe": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !"
+      },
+      "fflow": {
+        "pureWater": "Vous obtenez de l'Eau Pure qui est particulièrement conseillée pour arroser les fleurs...",
+        "mmeSeyche": "Ooohhh merci mon petit, grâce à toi mon rosier va pouvoir retrouver de belles couleurs ! Retourne vite voir Papy Joe, il te donnera ta récompense...",
+        "papyjoe": "Cette charmante Madame Seyche m'a félicité pour ton travail, tu as bien mérité ta récompense !"
+      },
+      "kbook": {
+        "kbook": "Vous obtenez \"100 Façons de cuire un Korgon\", écrit et illustré par Gorak le borgne",
+        "mmeSeyche": "OOOooooooh merci mon petit ! Je vais pouvoir expérimenter différentes recettes de Korgons, n'hésite pas à venir y goûter un peu de temps en temps !",
+        "papyjoe": "Bravo, grâce à toi Madame Seyche m'a remercié en m'envoyant un bout de Korgon grillé. Un vrai délice !"
+      },
+      "msg": {
+        "timbre": "Bravo, vous récupérez les Timbres, ramenez-les vite à Papy Joe !",
+        "papyjoe": "Merci, génial, je vais pouvoir écrire ma lettre ! Tiens, tu as bien mérité tes timbres..."
+      },
+      "lettre": {
+        "mmeSeyche": "Oohhhh mon petit, que m'apportes-tu cette fois ? Quoi ? Une lettre de papy ? .... ..... Apporte-lui vite cette réponse !",
+        "papyjoe": "Uhm ! Ehm... Une réponse ?! Déjà ?!? GENIAL ! Elle accepte mon invitation à dîner. C'est dans la poche : malgré mon grand âge, la nuit va être chaude !"
       }
+    },
+    "target": {
+      "goupignon:wolf": "Loups et Goupignons",
+      "wolf": "loups",
+      "goupignon": "Goupignons Chapardeurs",
+      "gluon": "gluons",
+      "greeng": "géants vert",
+      "coq": "Coqdur"
     }
   },
   "myAccount": {

@@ -5,6 +5,7 @@ import { DinozLevel1LevelUp } from '../data/dinozData.js';
 import _ from 'lodash';
 import { DinozSkill, NPC } from '../../entity/index.js';
 import { skillList } from '../../constants/skill.js';
+import { npcList } from '../../constants/npc.js';
 
 const NPCDao = require('../../dao/npcDao.js');
 const DinozDao = require('../../dao/dinozDao.js');
@@ -207,7 +208,7 @@ describe('Function getNpcSpeech', function () {
 		}
 
 		expect(parser.rewarder).toHaveBeenCalledTimes(1);
-		expect(parser.rewarder).toHaveBeenCalledWith(['skill(61119)'], dinozAtWrongPlace);
+		expect(parser.rewarder).toHaveBeenCalledWith(npcList.MMEX.data.dolearn.reward, dinozAtWrongPlace);
 	});
 
 	it('Step with actions and reward', async () => {
@@ -228,9 +229,9 @@ describe('Function getNpcSpeech', function () {
 		}
 
 		expect(parser.triggerAction).toHaveBeenCalledTimes(1);
-		expect(parser.triggerAction).toHaveBeenCalledWith('fight(efire)', dinozAtWrongPlace);
+		expect(parser.triggerAction).toHaveBeenCalledWith(npcList.PROFESSOR.data.fire_fight.action, dinozAtWrongPlace);
 		expect(parser.rewarder).toHaveBeenCalledTimes(1);
-		expect(parser.rewarder).toHaveBeenCalledWith(['status(climbing_gear)'], dinozAtWrongPlace);
+		expect(parser.rewarder).toHaveBeenCalledWith(npcList.PROFESSOR.data.fire_fight.reward, dinozAtWrongPlace);
 	});
 
 	it('Empty conditions', async () => {
@@ -266,8 +267,7 @@ describe('Function getNpcSpeech', function () {
 		}
 
 		expect(parser.rewarder).toHaveBeenCalledTimes(1);
-		expect(parser.rewarder).toHaveBeenCalledWith(['changeelem(water)'], dinozAtWrongPlace);
+		expect(parser.rewarder).toHaveBeenCalledWith(npcList.ALPHA.data.water.reward, dinozAtWrongPlace);
 	});
-
 	// Bad requests are handled in routes
 });
