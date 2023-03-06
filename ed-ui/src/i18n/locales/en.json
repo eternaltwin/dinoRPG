@@ -13,11 +13,11 @@
     "logout": "Log out"
   },
   "toast": {
-    "DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
-    "AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
-    "DinozNotDead": "Votre dinoz est déjà en vie.",
-    "OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
-    "tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs."
+    "DinozIsDead": "Your dinoz is dead and cannot be healed.",
+    "AlreadyAtMaxHealth": "Your dinoz cannot be healed any more.",
+    "DinozNotDead": "Your dinoz is already alive.",
+    "OnlyLettersAndNumbers": "Invalid name! Only letters and numbers can be used.",
+    "tooManyActiveDinoz": "You already have too many active dinoz."
   },
   "api": "You can consult our API to test it. Don't forget to take your JWT authentication tokens:",
   "alpha": {
@@ -51,32 +51,32 @@
   },
   "resurrection": {
     "choice1": {
-      "name": "**Choix 1 :**&&Résurrection",
-      "resurrect": "Ressusciter",
-      "explanation": "Vous pouvez ressusciter votre Dinoz, immédiatement et gratuitement :",
-      "list1": "il retournera à Dinoville",
-      "list2": "il perdra la moitié de ses points d'expérience actuels"
+      "name": "**Choice 1 :**&Resurrect",
+      "resurrect": "Resurrect",
+      "explanation": "You can resurrect your Dinoz, immediately and for free:",
+      "list1": "he will go back to Dinoville",
+      "list2": "it will lose half of his current experience points"
     },
     "choice2": {
-      "name": "**Choix 2 :**&&Potion d'ange",
-      "resurrect": "Utiliser une potion",
-      "explanation": "Vous pouvez aussi ressusciter votre Dinoz en achetant une Potion d'Ange dans la {boutique} :",
-      "list1": "il restera au lieu actuel",
-      "list2": "il ne perdra aucun point d'expérience"
+      "name": "**Choice 2 :**&Angel Potion",
+      "resurrect": "Use potion",
+      "explanation": "You can also resurrect your Dinoz by purchasing an Angel Potion in the {boutique}:",
+      "list1": "it will remain at the current place",
+      "list2": "It will not lose any experience points"
     }
   },
   "action": {
     "description": {
-      "fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer **un déplacement ou un combat par jour** et par Dinoz.",
+      "fight": "Search for a monster to fight at this location. You can perform **one move or fight per day** and by Dinoz.",
       "follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
-      "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz.",
-      "resurrect": "Votre Dinoz est mort, il faut donc le Ressusciter avant de pouvoir à nouveau le faire combattre."
+      "levelup": "Your Dinoz earned enough experience to reach the next level. Click this action to increase the power of your Dinoz.",
+      "resurrect": "Your Dinoz is dead, thus you need to resurrect it before you can have it fight again."
     },
     "name": {
       "fight": "Fight",
       "follow": "Follow",
       "levelup": "Extra level!",
-      "resurrect": "Ressusciter"
+      "resurrect": "Resurrect"
     }
   },
   "button": {
@@ -87,12 +87,12 @@
     "confirm": "Confirm this action?",
     "chose": "Buy",
     "generator": "Dinoz generator",
-    "sortDinoz": "Gérer mes Dinoz"
+    "sortDinoz": "Manage my Dinoz"
   },
   "chooseDinoz": {
     "information": "Before taking control of your Dinoz, you must first give it a name.",
     "nomDuDinoz": "Dinoz name:",
-    "pageName": "Choix du Nom"
+    "pageName": "Choose name"
   },
   "inventory": {
     "itemName": "Object name",
@@ -279,7 +279,7 @@
       "zippo": "Your Dinoz goes up in flames!",
       "sos_flame": "Nothing better than a Rescue Flamelet to help you during a fight.",
       "refrigerated_shield": "Increases the Fire defense by 20.",
-      "fuca_pill": "Double la vitesse des attaques de votre Dinoz.",
+      "fuca_pill": "Double the speed of your Dinoz's attacks.",
       "monochromatic": "All your Dinoz' assaults become of his best element colour.",
       "poisonite_shot": "Protects your Dinoz from the effects of poison.",
       "loris_costume": "An enemy attack one of his comrades.",
@@ -385,8 +385,8 @@
       "easter_egg": "TODO",
       "fire_cracker": "TODO",
       "special_potion_irma": "TODO",
-      "empty": "Il n'y a aucun objet dans cette case",
-      "undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
+      "empty": "There is no item at this spot",
+      "undefined": "This object is unknown, it is rare and it will strongly make developers curious about its existence."
     }
   },
   "news": {
@@ -562,14 +562,14 @@
       "ihaut": "A cavern which seems to have been dug into the summit of the holy mountain. There appears to be some kind of laboratory at the back of the cave. There are numerous vials of every colour stored inside. What kind of research was the former Archdorogon involved in up here...",
       "voie": "From far away, the immense observatory imposes its silhouette on the panorama that is open to all and located on Nimbao's tail. It points its objective towards the surface, the study of stars is probably less integrated than the monitoring of the Caushemesh Mountains.",
       "observ": "The observatory is also a large bibliotheque that collects an impressive number of books about Dinoland's history. Unfortunately, the books are written in the language of the former Dorogons, so you cannot learn more.",
-      "egout": "L'intérieur du pilier soutenant le palais de l'Archidorogon recelle toute une structure servant à acheminer l'eau pure dans les différentes parties de la ville Dorogon.",
+      "egout": "The pillar structure supporting the Archidorogon Palace incorporates a whole structure used to transport pure water into the different parts of the Dorogon city.",
       "ilac": "The water from the lake seems to constantly flow into the void, but the falls keep on flowing...",
       "ilac2": "Behind the lakes, there is a vast expanse in the shape of a wing, there is nothing on the horizon apart from green plains bathed in sunlight. You feel the powerful wind which clears this peaceful stratch of land, you make out the tip of the wing, very few people will have seen it from the very edge though...",
       "prison": "The infernal prison they call the Nimbao Hilton only opens its doors once for visitors, nobody who has entered has ever come back out. Here is where they imprisoned anyone who questioned Archdorogon Grizorg's authority.",
       "ville1": "The Dorogon city is rich and luxurious, The residents seem really relaxed, unlike the swarms of guards that patrol the town.",
       "ville2": "This part of the Dorogon city offers a spectacular view of Nimbao. An enormous pillar supports the archway leading to the Archdorogon's palace.",
       "sommet": "The panorama is splendid, you stand at the top of the celestial island of Nimbao. In the distance, you can see the palace of the Archidorogon, bathed in light. It represents well the hegemony of the powerful dorogone civilization.",
-      "palais": "Le palais de L'Archidorogon est le fleuron de l'architecture dorogone, technologie ancestrale se servant de l'eau pure abondante en ce lieu. Le palais est malgré tout immense, et parfois labyrinthique pour les néophytes...",
+      "palais": "The Palace of the Archidorogon is the jewel of the architecture of Dorogone, an ancestral technology that uses the pure water abundant in this place. The palace is huge, and sometimes labyrinthine for neophytes...",
       "mport": "Monster Port is true to its name. Here you'll meet all types of monsters which live on the island. The port is configured in an odd way, it almost seems as if it's split into two seperate parts.",
       "mfoutp": "The border between the Frutox and Vegetox kingdoms is heavily guarded. The outpost controlled by the Frutox is a strategic location from which they can spy on the Vegetox and defend the Royal Palace.",
       "mfpalc": "Grotox is the king of the Frutox. he is considered the most powerful Frutox among his people and he rules his kingdom with an iron fist.",
@@ -631,19 +631,19 @@
   "npc": {
     "description": "Vous pouvez discuter avec cette personne.",
     "stop": "Arrêter la discussion",
-    "continue": "Continuer",
+    "continue": "Continue",
     "header": {
-      "character": "Personnage:"
+      "character": "Character :"
     },
     "name": {
-      "professor": "Professeur",
-      "alpha_test": "Alpha Beteur",
-      "michel": "Le guide Michel",
+      "professor": "Professor",
+      "alpha_test": "Alpha Dummy",
+      "michel": "Michel the Guide",
       "street_shouter": "blabla",
       "sofia": "Sofia",
-      "mmex": "Madame X",
-      "mineur": "Mineur Coralien",
-      "papy": "Papy Joe"
+      "mmex": "Miss X",
+      "mineur": "Coral Miner",
+      "papy": "Grandpa Joe"
     },
     "professor": {
       "speech": {
@@ -702,8 +702,8 @@
         "water": "Et voila ! A bientôt",
         "lightning": "Et voila ! A bientôt",
         "wood": "Et voila ! A bientôt",
-        "air": "Et voila ! A bientôt",
-        "world": "Quels lieux souhaite visiter ?",
+        "air": "Here you go! See you soon",
+        "world": "Which places would you like to visit?",
         "GO_TO_GRAND_TOUT_CHAUD": "Et voila ! A bientôt",
         "GO_TO_ATLANTEINES_ISLAND": "Et voila ! A bientôt",
         "CIMETIERE": "Et voila ! A bientôt",
@@ -723,23 +723,23 @@
         "element": "Je veux choisir l'élément de mon prochain niveau !",
         "world": "Je veux visiter le monde !",
         "experience": "Donne moi ce bonbon !",
-        "fire": "Je choisis le feu",
-        "water": "Je choisis l'eau",
-        "lightning": "Je choisis la foudre",
-        "wood": "Je choisis le bois",
-        "air": "Je choisis l'air",
+        "fire": "I choose fire",
+        "water": "I choose water",
+        "lightning": "I choose lightning",
+        "wood": "I choose wood",
+        "air": "I choose air",
         "back": "Back",
         "GO_TO_GRAND_TOUT_CHAUD": "Le Grand Tout Chaud",
         "GO_TO_ATLANTEINES_ISLAND": "Les îles Atlantéinées",
-        "CIMETIERE": "Le Cimetière",
+        "CIMETIERE": "The Graveyard",
         "GO_TO_DINOPLAZA": "Dinoplaza",
-        "GO_TO_MONSTER_ISLAND": "L'île aux monstres",
-        "GO_TO_FOREST": "La forêt de Grumhel",
-        "GO_TO_DOME_SOULAFLOTTE": "Le dôme Soulaflotte",
+        "GO_TO_MONSTER_ISLAND": "Monster Island",
+        "GO_TO_FOREST": "The Grumhel Forest",
+        "GO_TO_DOME_SOULAFLOTTE": "The Underwater Dome",
         "GO_TO_TUNNEL": "Le tunnel Sous la Branche",
-        "JUNGLE_SAUVAGE": "La jungle sauvage",
+        "JUNGLE_SAUVAGE": "Wild Jungle",
         "GO_TO_STEPPES": "Les steppes magnétiques",
-        "nothing": "Surprends moi !",
+        "nothing": "Surprise Me !",
         "maxExperience": "Haaaaaaaaa"
       }
     },
@@ -793,11 +793,11 @@
       "playerChoice": {
         "talk": "Lui parler",
         "talk2": "...",
-        "missions": "Liste de Missions",
-        "question": "Mais qui êtes-vous ?",
+        "missions": "Missions List",
+        "question": "But who are you?",
         "question2": "Vous êtes ?",
         "double": "Ah ?",
-        "double2": "Oui !",
+        "double2": "Yes !",
         "double3": "!!!",
         "learn": "Comment l'apprendre ?",
         "already": "Comment l'apprendre ?",
@@ -1737,7 +1737,9 @@
       "goto": "Se rendre {place} ...",
       "validate": "Retourner valider la mission {place} ...",
       "terminate": "Valider la Mission",
-      "hidePlace": "Trouvez le bon lieu ..."
+      "hidePlace": "Trouvez le bon lieu ...",
+      "kill": "{progress} / {target} {targetName} à tuer ...",
+      "timbre": "Ramasser les Timbres"
     },
     "npc": {
       "fishVendor": "Marchand de poisson",
@@ -1745,28 +1747,74 @@
       "mmeducraft1": "Jacqueline Ducraft",
       "mmeducraft2": "Jacqueline Ducraft",
       "nioufniouf": "NioufNiouf",
-      "PAPY_JOE": "Papy Joe"
+      "papyjoe": "Papy Joe",
+      "pureWater": "Eau Pure",
+      "kbook": "Livre de Recettes",
+      "timbre": "Ramasser les Timbres"
     },
     "place": {
       "port": "au Port de Prêche",
       "market": "à la Place du Marché",
-      "papy": "Chez Papy Joe",
+      "papyjoe": "Chez Papy Joe",
       "forcebrut": "à Forcebrut",
       "dnv": "à Dinoville",
-      "colesc": "aux Collines Escarpées"
+      "colesc": "aux Collines Escarpées",
+      "fountj": "à la Fontaine de Jouvence",
+      "universite": "à l'Université"
     },
     "dialog": {
       "fish": {
         "fishVendor": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite.",
         "mmeSeyche": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense...",
-        "papy": "Madame Seyche est très contente de toi, voilà ta récompense !"
+        "papyjoe": "Madame Seyche est très contente de toi, voilà ta récompense !"
       },
       "dog": {
         "mmeducraft1": "Bonjour jeune homme ! Nioufniouf, mon petit amour de caniche, a disparu ! Je l'avais puni car il avait fait une bêtise...ohh... comme je regreettte ! Vite, retrouve-le s'il te plaît. Je suis certaine qu'il n'a pas pu grimper ces montagnes avec ses petites pattes, il doit donc être parti vers le Sud.",
         "nioufniouf": "Vous avez retrouvé NioufNiouf ! Ramenez-le vite à sa propriétaire !",
         "mmeducraft2": "Mon NioufNiouf chéri !!! Pardonne-moi, ta moooman a été très méchante avec le gentil chienchien ! Merci jeune homme, retournez au plus vite chez ce vieux schnock pour obtenir votre récompense !",
-        "papy": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi"
+        "papyjoe": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi"
+      },
+      "kilgou": {
+        "papyjoe": "Bravo, grâce à toi les Collines ont retrouvé un certain calme, félicitations !"
+      },
+      "kilwlf": {
+        "papyjoe": "Bravo, c'est bien joué, avec ça ils ne devraient plus trop s'approcher des chèvres pendant quelque temps !"
+      },
+      "kilglu": {
+        "papyjoe": "Merci, c'est un beau spécimen. Voilà pour ta récompense !"
+      },
+      "kilgnt": {
+        "papyjoe": "Ouf ! C'était juste ! Merci tu m'as bien aidé, je vais pouvoir parler de cet exploit au Roi demain pendant que nous jouerons au golf."
+      },
+      "kilcoq": {
+        "papyjoe": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !"
+      },
+      "fflow": {
+        "pureWater": "Vous obtenez de l'Eau Pure qui est particulièrement conseillée pour arroser les fleurs...",
+        "mmeSeyche": "Ooohhh merci mon petit, grâce à toi mon rosier va pouvoir retrouver de belles couleurs ! Retourne vite voir Papy Joe, il te donnera ta récompense...",
+        "papyjoe": "Cette charmante Madame Seyche m'a félicité pour ton travail, tu as bien mérité ta récompense !"
+      },
+      "kbook": {
+        "kbook": "Vous obtenez \"100 Façons de cuire un Korgon\", écrit et illustré par Gorak le borgne",
+        "mmeSeyche": "OOOooooooh merci mon petit ! Je vais pouvoir expérimenter différentes recettes de Korgons, n'hésite pas à venir y goûter un peu de temps en temps !",
+        "papyjoe": "Bravo, grâce à toi Madame Seyche m'a remercié en m'envoyant un bout de Korgon grillé. Un vrai délice !"
+      },
+      "msg": {
+        "timbre": "Bravo, vous récupérez les Timbres, ramenez-les vite à Papy Joe !",
+        "papyjoe": "Merci, génial, je vais pouvoir écrire ma lettre ! Tiens, tu as bien mérité tes timbres..."
+      },
+      "lettre": {
+        "mmeSeyche": "Oohhhh mon petit, que m'apportes-tu cette fois ? Quoi ? Une lettre de papy ? .... ..... Apporte-lui vite cette réponse !",
+        "papyjoe": "Uhm ! Ehm... Une réponse ?! Déjà ?!? GENIAL ! Elle accepte mon invitation à dîner. C'est dans la poche : malgré mon grand âge, la nuit va être chaude !"
       }
+    },
+    "target": {
+      "goupignon:wolf": "Loups et Goupignons",
+      "wolf": "loups",
+      "goupignon": "Goupignons Chapardeurs",
+      "gluon": "gluons",
+      "greeng": "géants vert",
+      "coq": "Coqdur"
     }
   },
   "myAccount": {
