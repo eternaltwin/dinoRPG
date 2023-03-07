@@ -1,6 +1,6 @@
 import { Npc, NpcTrigger } from '../models/index.js';
 import { placeList } from './index.js';
-import { ALPHA, MINEUR, MMEX, PAPY, PROFESSOR, SOFIA } from './characters/index.js';
+import { ALPHA, FORGERON, MINEUR, MMEX, PAPY, PROFESSOR, SOFIA } from './characters/index.js';
 import { MPAPY } from './missions/index.js';
 
 export const npcList: Record<string, Npc> = {
@@ -61,5 +61,13 @@ export const npcList: Record<string, Npc> = {
 		condition: NpcTrigger.ALWAYS,
 		missions: MPAPY,
 		data: PAPY
+	},
+	FORGERON: {
+		name: 'forgeron',
+		id: 8,
+		placeId: placeList.FORGES_DU_GTC.placeId,
+		condition: NpcTrigger.ALWAYS, // set to epic(medaillon à trois yeux) later
+		data: FORGERON,
+		flashvars: 'frame=blabla'
 	}
 };

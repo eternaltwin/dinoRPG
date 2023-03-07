@@ -1,0 +1,71 @@
+import { ConditionEnum, NpcData, RewardEnum } from '../../models/index.js';
+
+export const FORGERON: Readonly<Record<string, NpcData>> = {
+	begin: {
+		stepName: 'begin',
+		nextStep: ['repair', 'repair2', 'pelle', 'no'],
+		initialStep: true
+	},
+	repair: {
+		stepName: 'repair',
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'BROKEN_SHOVEL'
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'SHOVEL'
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'BROKEN_SHOVEL',
+				reverse: true
+			},
+			{
+				rewardType: RewardEnum.GOLD,
+				value: -100
+			}
+		],
+		nextStep: ['thanks']
+	},
+	repair2: {
+		stepName: 'repair2',
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: 'BROKEN_ENHANCED_SHOVEL'
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'ENHANCED_SHOVEL'
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: 'BROKEN_ENHANCED_SHOVEL',
+				reverse: true
+			},
+			{
+				rewardType: RewardEnum.GOLD,
+				value: -100
+			}
+		],
+		nextStep: ['thanks']
+	},
+	pelle: {
+		stepName: 'pelle',
+		nextStep: []
+	},
+	no: {
+		stepName: 'no',
+		nextStep: []
+	},
+	thanks: {
+		stepName: 'thanks',
+		nextStep: []
+	},
+	stop: {
+		stepName: 'stop',
+		nextStep: []
+	}
+};

@@ -643,7 +643,8 @@
       "sofia": "Sofia",
       "mmex": "Madame X",
       "mineur":  "Mineur Coralien",
-      "papy":  "Papy Joe"
+      "papy":  "Papy Joe",
+      "forgeron": "Forgeron"
     },
     "professor": {
       "speech": {
@@ -853,8 +854,24 @@
         "qui": "Euh... et qui est votre idole ?",
         "ok": "Il a l'air fort !"
       }
+    },
+    "forgeron": {
+      "speech": {
+        "begin": "Vous entrez dans les forges de Fosselave. la chaleur qui règne ici n'a rien à envier à l'intérieur du cratère du Grand Tout Chaud.\n\t\tIci rien ne se crée, tout se transforme, à grand coup de marteau !\n\t\t\n\t\t100 pièces d'or pour réparer une pelle, c'est donné  non ?",
+        "pelle": "Et une pelle dans la gueule ca te tente ?",
+        "repair": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
+        "repair2": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
+        "thanks": "Reviens si t'as encore besoin de nos services ptit gars !",
+        "no": "Reviens avec les poches pleines ptit gars, tu nous fais perdre notre temps !"
+      },
+      "playerChoice": {
+        "pelle": "Pouvez me rouler une...",
+        "repair": "Pouvez vous me réparer ma pelle ?",
+        "repair2": "Pouvez vous me réparer ma super pelle ?",
+        "thanks": "Euh oui mdame !",
+        "no": "Rien de particulier"
+      }
     }
-
   },
   "shop": {
     "dinoz": {
