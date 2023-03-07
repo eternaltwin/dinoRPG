@@ -2,7 +2,6 @@ import { Request } from 'express';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
-
 	getActiveDinoz,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
