@@ -6,7 +6,7 @@
 			<p>{{ $t('layout.action') }}</p>
 		</div>
 		<MissionHUD v-if="missionId" :missionId="missionId" @abort="endMission()" />
-		<MissionRewardModal :missionReward="missionReward" @close="endMission()" />
+		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="endMission()" />
 		<ul>
 			<table class="action_button">
 				<tbody>

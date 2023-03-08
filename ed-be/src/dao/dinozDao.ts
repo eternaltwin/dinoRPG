@@ -79,7 +79,8 @@ const getDinozFicheRequest = (dinozId: number): Promise<Dinoz> => {
 			'dinoz.nbrUpWood',
 			'dinoz.name',
 			'dinoz.level',
-			'dinoz.placeId'
+			'dinoz.placeId',
+			'dinoz.raceId'
 		])
 		.addSelect(['player.id'])
 		.addSelect(['playerItems.itemId', 'playerItems.quantity'])

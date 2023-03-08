@@ -8,7 +8,12 @@
 	<div id="chooseDinozName">
 		<div class="disclaimer">{{ $t('chooseDinoz.information') }}</div>
 		<div class="dinoz_display">
-			<DinozWithoutFlash :display="dinozData.display" :life="dinozData.life" :flip="-1"></DinozWithoutFlash>
+			<DinozWithoutFlash
+				:display="dinozData.display"
+				:life="dinozData.life"
+				:flip="-1"
+				:race="dinozData.race.raceId"
+			></DinozWithoutFlash>
 		</div>
 		<div class="naming">
 			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>

@@ -32,7 +32,7 @@ export interface Dinoz {
 }
 
 export interface DinozRace {
-	raceId?: string;
+	raceId?: number;
 	name?: string;
 	nbrAir?: number;
 	nbrFire?: number;

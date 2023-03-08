@@ -9,7 +9,13 @@
 		</div>
 		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
 			<div class="dinoz_display">
-				<DinozWithoutFlash :display="dinoz.display" :life="parseInt(dinoz.life)" :flip="-1"></DinozWithoutFlash>
+				<DinozWithoutFlash
+					:display="dinoz.display"
+					:life="parseInt(dinoz.life)"
+					:flip="-1"
+					:race="dinoz.race.raceId"
+					:shop="true"
+				></DinozWithoutFlash>
 			</div>
 			<div class="infos">
 				<div class="price">

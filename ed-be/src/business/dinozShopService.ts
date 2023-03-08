@@ -22,16 +22,16 @@ const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche
 	// If nothing is found, create 15 (?) dinoz to fill the shop
 	if (playerData.dinozShop.length === 0) {
 		let dinozArray: Array<PlayerDinozShop> = [];
-		let randomRace: number;
+		let randomRace: DinozRace;
 		let randomDisplay: string;
 		const availableRaces: Array<DinozRace> = [
-			/*raceList.WINKS,
+			raceList.WINKS,
 			raceList.SIRAIN,
 			raceList.CASTIVORE,
 			raceList.NUAGOZ,
 			raceList.GORILLOZ,
 			raceList.WANWAN,
-			raceList.PLANAILLE,*/
+			raceList.PLANAILLE,
 			raceList.MOUEFFE,
 			raceList.PIGMOU
 		];
@@ -57,20 +57,18 @@ const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche
 		// Make x Dinoz object to fill shop
 		for (let i = 0; i < gameConfig.shop.dinozNumber; i++) {
 			// Set a random race to the dinoz
-			randomRace = availableRaces[getRandomNumber(0, availableRaces.length)].raceId;
-
-			const dinozRaceData: DinozRace = Object.values(raceList).find(race => race.raceId === randomRace)!;
+			randomRace = availableRaces[getRandomNumber(0, availableRaces.length)];
 
 			// Make a random display
-			randomDisplay = `${randomRace}0`;
+			randomDisplay = randomRace.swfLetter;
 
-			for (let i = 2; i < 16; i++) {
-				randomDisplay += getRandomLetter(dinozRaceData.display![i]);
+			for (let i = 0; i < 14; i++) {
+				randomDisplay += getRandomLetter(randomRace.display![i]);
 			}
 
 			let dinoz: PlayerDinozShop = new PlayerDinozShop();
 			dinoz.player = playerData;
-			dinoz.raceId = randomRace;
+			dinoz.raceId = randomRace.raceId;
 			dinoz.display = randomDisplay;
 
 			dinozArray.push(dinoz);

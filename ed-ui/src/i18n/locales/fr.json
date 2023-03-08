@@ -26,7 +26,8 @@
       "part1": "DinoRPG est actuellement en version alpha ouverte au public. Faites attention car le jeu est envahi de hargneux Goupignons.",
       "part2": "Toutes les informations sont disponibles sur "
     },
-    "issue": "Merci de signaler les bugs rencontrés sur "
+    "issue": "Merci de signaler les bugs rencontrés sur ",
+    "shop": "Afficher le dinoz"
   },
   "footer": {
     "developpers": "Développement",

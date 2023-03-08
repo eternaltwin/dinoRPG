@@ -7,14 +7,11 @@
 	<a class="right" />
 	<Tippy theme="normal" tag="div" id="dinozVisual">
 		<DinozWithoutFlash
-			:style="{
-				position: `absolute`,
-				left: `${getPositionLeft(dinozData!.display!)}px`,
-				top: `${getPositionTop(dinozData!.display!)}px`,
-			}"
+			:style="style(dinozData.display)"
 			:display="dinozData.display"
 			:life="dinozData.life"
 			:flip="-1"
+			:race="dinozData.race.raceId"
 		/>
 		<template #content>
 			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
@@ -53,23 +50,22 @@ export default defineComponent({
 	props: { dinozData: Object as PropType<Dinoz> },
 	computed: {
 		dinozRace(): string {
-			return Object.entries(raceList).find(race => race[0].toString() === this.dinozData!.display![0])![1];
+			return Object.entries(raceList).find(race => parseInt(race[0]) === this.dinozData!.race?.raceId)![1];
 		}
 	},
 	methods: {
-		getPositionLeft(dinoz: string): number {
-			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
-			return (
-				((dinozPlacement.fliped[dinoz[0]].adult.left - dinozPlacement.fliped[dinoz[0]].baby.left) / 9) * taille +
-				dinozPlacement.fliped[dinoz[0]].baby.left
-			);
-		},
-		getPositionTop(dinoz: string): number {
-			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
-			return (
-				((dinozPlacement.fliped[dinoz[0]].adult.top - dinozPlacement.fliped[dinoz[0]].baby.top) / 9) * taille +
-				dinozPlacement.fliped[dinoz[0]].baby.top
-			);
+		style(dinoz: string): string {
+			if (this.dinozRace === 'moueffe' || this.dinozRace === 'pigmou') {
+				const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
+				const left =
+					((dinozPlacement.fliped[dinoz[0]].adult.left - dinozPlacement.fliped[dinoz[0]].baby.left) / 9) * taille +
+					dinozPlacement.fliped[dinoz[0]].baby.left;
+				const top =
+					((dinozPlacement.fliped[dinoz[0]].adult.top - dinozPlacement.fliped[dinoz[0]].baby.top) / 9) * taille +
+					dinozPlacement.fliped[dinoz[0]].baby.top;
+				return `position: absolute; left: ${left}px; top: ${top}px;`;
+			}
+			return 'top: -15px;';
 		}
 	}
 });
@@ -122,10 +118,5 @@ export default defineComponent({
 	height: 21px;
 	border-radius: 0px;
 	cursor: pointer;
-}
-.avatar {
-	position: absolute;
-	margin-left: 5px;
-	margin-top: 25px;
 }
 </style>

@@ -1,4 +1,4 @@
-export const raceList = {
+export const raceList: Record<number, string> = {
 	1: 'moueffe',
 	2: 'moueffe_demon',
 	3: 'pigmou',

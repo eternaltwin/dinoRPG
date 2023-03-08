@@ -10,14 +10,12 @@
 					{{ $t(`myAccount.level`) }} {{ dinoz.level }}
 				</div>
 				<DinozWithoutFlash
-					:style="{
-						position: `absolute`,
-						left: `${getPositionLeft(dinoz.display!)}px`,
-						top: `${getPositionTop(dinoz.display!)}px`
-					}"
-					:display="dinoz.display!"
-					:life="dinoz.life!"
+					:style="style(dinoz)"
+					:display="dinoz.display"
+					:life="dinoz.life"
 					:flip="1"
+					:race="dinoz.raceId"
+					style="position: absolute"
 				/>
 			</li>
 			<template v-if="dinoz.status && dinoz.status.length > 0" #content>
@@ -36,7 +34,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { raceList, statusList } from '@/constants';
-import { PlayerInfo } from '@/models';
+import { PlayerInfo, Dinoz } from '@/models';
 import { dinozPlacement } from '@/constants';
 
 export default defineComponent({
@@ -57,19 +55,25 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		getPositionLeft(dinoz: string): number {
-			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
-			return (
-				((dinozPlacement.noFliped[dinoz[0]].adult.left - dinozPlacement.noFliped[dinoz[0]].baby.left) / 9) * taille +
-				dinozPlacement.noFliped[dinoz[0]].baby.left
-			);
-		},
-		getPositionTop(dinoz: string): number {
-			const taille = parseInt(dinoz[1] === 'A' ? '9' : dinoz[1]);
-			return (
-				((dinozPlacement.noFliped[dinoz[0]].adult.top - dinozPlacement.noFliped[dinoz[0]].baby.top) / 9) * taille +
-				dinozPlacement.noFliped[dinoz[0]].baby.top
-			);
+		style(dinoz: Dinoz): string {
+			const race = Object.entries(raceList).find(race => parseInt(race[0]) === dinoz.raceId)![1];
+			if (race === 'moueffe' || race === 'pigmou') {
+				const taille = parseInt(dinoz.display![1] === 'A' ? '9' : dinoz.display![1]);
+				const left =
+					((dinozPlacement.noFliped[dinoz.display![0]].adult.left -
+						dinozPlacement.noFliped[dinoz.display![0]].baby.left) /
+						9) *
+						taille +
+					dinozPlacement.noFliped[dinoz.display![0]].baby.left;
+				const top =
+					((dinozPlacement.noFliped[dinoz.display![0]].adult.top -
+						dinozPlacement.noFliped[dinoz.display![0]].baby.top) /
+						9) *
+						taille +
+					dinozPlacement.noFliped[dinoz.display![0]].baby.top;
+				return `position: absolute; left: ${left}px; top: ${top}px;`;
+			}
+			return 'top: -15px; left: -15px;';
 		}
 	}
 });

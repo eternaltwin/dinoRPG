@@ -20,24 +20,23 @@ export const raceList: Record<string, DinozRace> = {
 			air: 3
 		},
 		price: 16000,
-		swfLetter: '0',
+		swfLetter: '00',
 		display: {
-			0: '0',
-			1: '0',
-			2: '1', // HasKnee (1 = yes)
-			3: '7', // Head
-			4: '7', // Hair
-			5: '5', // Arm
-			6: '3', // Chest
-			7: 'A', // Tattoo
-			8: '0',
-			9: 'A', // Body color
-			10: '7', // Hair color
-			11: 'C', // Tattoo color
+			0: '1', // HasKnee (1 = yes)
+			1: '7', // Head
+			2: '7',  // Hair
+			3: '5', // Arm
+			4: '3', // Chest
+			5: 'A', // Tattoo
+			6: '0',
+			7: 'A', // Body color
+			8: '7', // Hair color
+			9: 'C', // Tattoo color
+			10: '0',
+			11: '0',
 			12: '0',
 			13: '0',
-			14: '0',
-			15: '0'
+			14: '0'
 		}
 	},
 	MOUEFFE_DEMON: {
@@ -57,7 +56,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 3
 		},
 		price: 600,
-		swfLetter: '0'
+		swfLetter: '0A'
 	},
 	PIGMOU: {
 		raceId: 3,
@@ -76,24 +75,23 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 20000,
-		swfLetter: '1',
+		swfLetter: '10',
 		display: {
-			0: '1',
-			1: '0',
-			2: '3', // Eyes
-			3: '9', // Mouth
-			4: '3', // Tail
-			5: '1', // hair back right leg (1 = yes)
-			6: 'F', // Hair
-			7: '0',
-			8: '0',
-			9: 'B', // Body color
-			10: '8', // Tail color
-			11: 'A', // Hair color
-			12: '0',
-			13: '0', // Special color (max = 2)
-			14: '0', // Special stripe (max = 1)
-			15: '0'
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
 		}
 	},
 	PIGMOU_DEMON: {
@@ -132,7 +130,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 20000,
-		swfLetter: '2'
+		swfLetter: '20',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	WINKS_DEMON: {
 		raceId: 6,
@@ -151,7 +166,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 700,
-		swfLetter: '2'
+		swfLetter: '2A',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	PLANAILLE: {
 		raceId: 7,
@@ -170,7 +202,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 4
 		},
 		price: 16000,
-		swfLetter: '3'
+		swfLetter: '30',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	PLANAILLE_DEMON: {
 		raceId: 8,
@@ -189,7 +238,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 4
 		},
 		price: 700,
-		swfLetter: '3'
+		swfLetter: '3A',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	CASTIVORE: {
 		raceId: 9,
@@ -208,7 +274,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 5
 		},
 		price: 16000,
-		swfLetter: '4'
+		swfLetter: '40',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	ROCKY: {
 		raceId: 10,
@@ -227,7 +310,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 18000,
-		swfLetter: '5'
+		swfLetter: '50',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	PTEROZ: {
 		raceId: 11,
@@ -246,7 +346,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 6
 		},
 		price: 22000,
-		swfLetter: '6'
+		swfLetter: '60',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	NUAGOZ: {
 		raceId: 12,
@@ -265,7 +382,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 6
 		},
 		price: 16000,
-		swfLetter: '7'
+		swfLetter: '70',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	SIRAIN: {
 		raceId: 13,
@@ -284,7 +418,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 16000,
-		swfLetter: '8'
+		swfLetter: '80',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	HIPPOCLAMP: {
 		raceId: 14,
@@ -303,7 +454,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 4
 		},
 		price: 28000,
-		swfLetter: '9'
+		swfLetter: '90',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	GORILLOZ: {
 		raceId: 15,
@@ -322,7 +490,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 16000,
-		swfLetter: 'A'
+		swfLetter: 'A0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	GORILLOZ_DEMON: {
 		raceId: 16,
@@ -341,7 +526,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 700,
-		swfLetter: 'A'
+		swfLetter: 'AA',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	WANWAN: {
 		raceId: 17,
@@ -360,7 +562,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 19000,
-		swfLetter: 'B'
+		swfLetter: 'B0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	WANWAN_DEMON: {
 		raceId: 18,
@@ -379,7 +598,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 900,
-		swfLetter: 'B'
+		swfLetter: 'BA',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	SANTAZ: {
 		raceId: 19,
@@ -398,7 +634,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 12
 		},
 		price: 0,
-		swfLetter: 'C'
+		swfLetter: 'C0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	FEROSS: {
 		raceId: 20,
@@ -417,7 +670,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 0,
-		swfLetter: 'D'
+		swfLetter: 'D0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	KABUKI: {
 		raceId: 21,
@@ -436,7 +706,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 0,
-		swfLetter: 'E'
+		swfLetter: 'E0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	KABUKI_DEMON: {
 		raceId: 22,
@@ -455,7 +742,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 800,
-		swfLetter: 'E'
+		swfLetter: 'EA',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	MAHAMUTI: {
 		raceId: 23,
@@ -474,7 +778,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 0,
-		swfLetter: 'F'
+		swfLetter: 'F0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	SOUFFLET: {
 		raceId: 24,
@@ -493,7 +814,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 0,
-		swfLetter: 'G'
+		swfLetter: 'G0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	TOUFUFU: {
 		raceId: 25,
@@ -512,7 +850,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 5
 		},
 		price: 0,
-		swfLetter: 'H'
+		swfLetter: 'H0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	QUETZU: {
 		raceId: 26,
@@ -531,7 +886,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 0
 		},
 		price: 35000,
-		swfLetter: 'I'
+		swfLetter: 'I0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	SMOG: {
 		raceId: 27,
@@ -550,7 +922,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 6
 		},
 		price: 0,
-		swfLetter: 'J'
+		swfLetter: 'J0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	},
 	TRICERAGNON: {
 		raceId: 28,
@@ -569,7 +958,24 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 0,
-		swfLetter: 'K'
+		swfLetter: 'K0',
+		display: {
+			0: '3', // Eyes
+			1: '9', // Mouth
+			2: '3', // Tail
+			3: '1', // hair back right leg (1 = yes)
+			4: 'F', // Hair
+			5: '0',
+			6: '0',
+			7: 'B', // Body color
+			8: '8', // Tail color
+			9: 'A', // Hair color
+			10: '0',
+			11: '0', // Special color (max = 2)
+			12: '0', // Special stripe (max = 1)
+			13: '0',
+			14: '0'
+		}
 	}
 };
 

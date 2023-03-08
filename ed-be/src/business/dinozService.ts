@@ -7,7 +7,6 @@ import {
 	getDinozFicheLiteRequest,
 	getDinozFicheRequest,
 	getDinozFightDataRequest,
-	getDinozPlaceRequest,
 	getDinozSkillAndStatusRequest,
 	getDinozSkillRequest,
 	setDinoz,
@@ -42,7 +41,7 @@ import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getHUDObjective, getMissionAction } from './missionsService.js';
-import { moveFight, processFight } from './fightService.js';
+import { moveFight } from './fightService.js';
 
 /**
  * @summary Get available action from dinoz
