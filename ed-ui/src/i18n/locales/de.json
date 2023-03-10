@@ -13,20 +13,21 @@
     "logout": "Log out"
   },
   "toast": {
-    "DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
-    "AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
-    "DinozNotDead": "Votre dinoz est déjà en vie.",
-    "OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
-    "tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs."
+    "DinozIsDead": "Dein Dinoz ist tot und kann nicht geheilt werden.",
+    "AlreadyAtMaxHealth": "Dein Dinoz könnte nicht gepflegter sein.",
+    "DinozNotDead": "Dein Dinoz lebt bereits.",
+    "OnlyLettersAndNumbers": "Name ist nicht gültig! Es können nur Buchstaben und Zahlen verwendet werden.",
+    "tooManyActiveDinoz": "Du hast bereits zu viele aktive Dinoz."
   },
-  "api": "Il vous est possible de consulter notre API afin de la tester. N'oubliez pas de prendre vos token d'authentification JWT :",
+  "api": "Du kannst dir unsere API ansehen, um sie zu testen. Denke daran, deine JWT-Authentifizierungs-Token mitzunehmen:",
   "alpha": {
     "login": "Bei Eternal-Twin anmelden",
     "homepage": {
       "part1": "Die Alpha-Version von DinoRPG ist nun öffentlich verfügbar. Nehmt euch vor den Gupignons in Acht.",
       "part2": "Alles Weitere findet ihr auf"
     },
-    "issue": "Bitte meldet gefundene Fehler unter "
+    "issue": "Bitte meldet gefundene Fehler unter ",
+    "shop": "Afficher le dinoz"
   },
   "footer": {
     "developpers": "Entwicklung",
@@ -51,32 +52,32 @@
   },
   "resurrection": {
     "choice1": {
-      "name": "**Choix 1 :**&&Résurrection",
-      "resurrect": "Ressusciter",
-      "explanation": "Vous pouvez ressusciter votre Dinoz, immédiatement et gratuitement :",
-      "list1": "il retournera à Dinoville",
-      "list2": "il perdra la moitié de ses points d'expérience actuels"
+      "name": "**Entscheidung 1:**&&Auferstehung",
+      "resurrect": "Wiederbelebung",
+      "explanation": "Du kannst deinen Dinoz wiederbeleben, sofort und kostenlos:",
+      "list1": "er wird nach Dinoville zurückkehren",
+      "list2": "verliert er die Hälfte seiner aktuellen Erfahrungspunkte"
     },
     "choice2": {
-      "name": "**Choix 2 :**&&Potion d'ange",
-      "resurrect": "Utiliser une potion",
-      "explanation": "Vous pouvez aussi ressusciter votre Dinoz en achetant une Potion d'Ange dans la {boutique} :",
-      "list1": "il restera au lieu actuel",
-      "list2": "il ne perdra aucun point d'expérience"
+      "name": "**Wahl 2:**&&Engelstrank",
+      "resurrect": "Einen Trank benutzen",
+      "explanation": "Du kannst deinen Dinoz auch wiederbeleben, indem du einen Engelstrank im {boutique} kaufst:",
+      "list1": "er bleibt am derzeitigen Ort",
+      "list2": "er wird keine Erfahrungspunkte verlieren"
     }
   },
   "action": {
     "description": {
-      "fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer **un déplacement ou un combat par jour** et par Dinoz.",
-      "follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
-      "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz.",
-      "resurrect": "Votre Dinoz est mort, il faut donc le Ressusciter avant de pouvoir à nouveau le faire combattre."
+      "fight": "Suche an diesem Ort nach einem Monster, das du bekämpfen kannst. Du kannst **eine Bewegung oder einen Kampf pro Tag** und pro Dinoz durchführen.",
+      "follow": "Dein Dinoz kann **einem anderen deiner Dinoz folgen**, wenn du das möchtest, dann bewegen sie sich gemeinsam und helfen sich im Kampf.",
+      "levelup": "Dein Dinoz hat genug Erfahrung gesammelt, um das nächste Level zu erreichen. Klicke auf diese Option, um die Stärke deines Dinoz zu erhöhen.",
+      "resurrect": "Dein Dinoz ist gestorben, also musst du ihn wiederbeleben, bevor er wieder kämpfen kann."
     },
     "name": {
       "fight": "Kämpfen",
       "follow": "Folgen",
-      "levelup": "Niveau Supplémentaire !",
-      "resurrect": "Ressusciter"
+      "levelup": "Zusätzliches Level!",
+      "resurrect": "Wiederbelebung"
     }
   },
   "button": {
@@ -87,12 +88,12 @@
     "confirm": "Aktion bestätigen?",
     "chose": "Auswählen",
     "generator": "Dinoz-Generator",
-    "sortDinoz": "Gérer mes Dinoz"
+    "sortDinoz": "Meine Dinoz verwalten"
   },
   "chooseDinoz": {
     "information": "Bevor du diesen Dinoz steuern kannst, musst du es zunächst einen Namen geben.",
     "nomDuDinoz": "Name des Dinoz:",
-    "pageName": "Choix du Nom"
+    "pageName": "Namensauswahl"
   },
   "inventory": {
     "itemName": "Name des Gegenstands",
@@ -148,65 +149,65 @@
       "meat_pie": "Fleischpastete",
       "fight_ration": "Kampfration",
       "surviving_ration": "TODO",
-      "goblin_merguez": "Merguez de Gobelin",
-      "pampleboum": "Pampleboum",
-      "sos_helmet": "Casque de Secours",
-      "little_pepper": "Petit Poivron",
-      "zippo": "Briquet",
-      "sos_flame": "Flammèche de Secours",
-      "refrigerated_shield": "Bouclier réfrigéré",
-      "fuca_pill": "Dragée Fuca",
-      "monochromatic": "Monochromatique",
-      "poisonite_shot": "Piqûre de Poisonite",
-      "loris_costume": "Costume de Lorie",
-      "vegetox_costume": "Costume de Garde Végétox",
-      "goblin_costume": "Costume de Gobelin",
-      "pampleboum_pit": "Noyau de Pampleboum",
-      "portable_love": "Amour Portable",
-      "danger_detector": "Détecteur de danger",
-      "pirhanoz_in_bag": "Pirhanoz-en-Sachet",
-      "devil_ointment": "Onguent du Démon",
-      "land_of_ashes": "Pays de Cendre",
-      "abyss": "Abysse",
-      "amazon": "Amazonie",
-      "st_elmas_fire": "Feu de St Elme",
-      "uvavu": "Ouranos",
-      "strong_tea": "Thé Concentré",
-      "temporal_stabiliser": "Stabilisateur Temporel",
-      "elixir": "Élixir",
-      "elixir_of_life": "Élixir de Vie",
-      "banishement": "Bannissement",
-      "battering_ram": "Bélier",
-      "ember": "Braise",
-      "scale": "Balance",
-      "beer": "Bière",
-      "encyclopedia": "Encyclopédie",
-      "antichromatic": "Antichromatique",
-      "antidote": "Antipoison",
-      "time_manipulator": "Manipulateur Temporel",
-      "dimensional_powder": "Poudre Dimensionelle",
-      "sorcerers_stick": "Baguette du Sorcier",
-      "friendly_whistle": "Sifflet Amical",
-      "dinoz_cube": "Dinoz Cube",
-      "temporal_reduction": "Amortisseur Temporel",
-      "tear_of_life": "Larme de Vie",
-      "cuzcussian_mask": "Masque de Cuzcous",
-      "anti_grave_suit": "Combinaison Anti-Grave",
-      "enchanted_steroid": "Stéroïde Féérique",
-      "curse_locker": "Cadenas Maudit",
+      "goblin_merguez": "Merguez der Goblin",
+      "pampleboum": "Granatapfel",
+      "sos_helmet": "Rettungshelm",
+      "little_pepper": "Kleine Paprika",
+      "zippo": "Feuerzeug",
+      "sos_flame": "Rettungsflamme",
+      "refrigerated_shield": "Gekühlter Schild",
+      "fuca_pill": "Fuca-Dragee",
+      "monochromatic": "Einfarbig",
+      "poisonite_shot": "Giftstich",
+      "loris_costume": "Lories Kostüm",
+      "vegetox_costume": "Vegetox-Wächterkostüm",
+      "goblin_costume": "Koboldkostüm",
+      "pampleboum_pit": "Kern vom Granatapfel",
+      "portable_love": "Tragbare Liebe",
+      "danger_detector": "Gefahrendetektor",
+      "pirhanoz_in_bag": "Pirhanoz-in-der-Tasche",
+      "devil_ointment": "Dämonensalbe",
+      "land_of_ashes": "Land der Asche",
+      "abyss": "Abyss",
+      "amazon": "Amazonas",
+      "st_elmas_fire": "Flamme von St. Elme",
+      "uvavu": "Uranos",
+      "strong_tea": "Konzentrierter Tee",
+      "temporal_stabiliser": "Temporärer Stabilisator",
+      "elixir": "Elixier",
+      "elixir_of_life": "Elixier des Lebens",
+      "banishement": "Verbannung",
+      "battering_ram": "Rammbock",
+      "ember": "Glut",
+      "scale": "Waage",
+      "beer": "Bier",
+      "encyclopedia": "Enzyklopädie",
+      "antichromatic": "Antichromatisch",
+      "antidote": "Gegengift",
+      "time_manipulator": "Temporärer Manipulator",
+      "dimensional_powder": "Dimensionspulver",
+      "sorcerers_stick": "Stab des Zauberers",
+      "friendly_whistle": "Freundschaftspfeife",
+      "dinoz_cube": "Dinoz-Würfel",
+      "temporal_reduction": "Zeitlicher Puffer",
+      "tear_of_life": "Träne des Lebens",
+      "cuzcussian_mask": "Maske von Cuzcous",
+      "anti_grave_suit": "Anti-Gravitationsanzug",
+      "enchanted_steroid": "Fererisches Steroid",
+      "curse_locker": "Verfluchtes Vorhängeschloss",
       "fear_factor": "Trouillomètre",
-      "life_stealer": "Voleur de Vie",
-      "fire_sphere": "Sphère de Feu",
-      "wood_sphere": "Sphère de Bois",
-      "water_sphere": "Sphère d'Eau",
-      "lightning_sphere": "Sphère de Foudre",
-      "air_sphere": "Sphère d'Air",
-      "demon_ticket": "Ticket-Démon",
-      "treasure_coupon": "Bon du Trésor",
-      "moueffe_egg": "Oeuf de Moueffe",
-      "moueffe_egg_rare": "Oeuf de Moueffe Rare",
-      "pigmou_egg": "Oeuf de Pigmou",
-      "pigmou_egg_rare": "Oeuf de Pigmou Rare",
+      "life_stealer": "Lebensdieb",
+      "fire_sphere": "Feuerkugel",
+      "wood_sphere": "Holzkugel",
+      "water_sphere": "Wasserkugel",
+      "lightning_sphere": "Blitzkugel",
+      "air_sphere": "Luftkugel",
+      "demon_ticket": "Dämonenticket",
+      "treasure_coupon": "Schatzbrief",
+      "moueffe_egg": "Moueffe-Ei",
+      "moueffe_egg_rare": "Seltenes Moueffe-Ei",
+      "pigmou_egg": "Pigmou-Ei",
+      "pigmou_egg_rare": "Seltenes Pigmou-Ei",
       "winks_egg": "Oeuf de Winks",
       "winks_egg_rare": "Oeuf de Winks Rare",
       "planaille_egg": "Oeuf de Planaille",
@@ -643,7 +644,8 @@
       "sofia": "Sofia",
       "mmex": "Madame X",
       "mineur": "Mineur Coralien",
-      "papy": "Papy Joe"
+      "papy": "Papy Joe",
+      "forgeron": "Forgeron"
     },
     "professor": {
       "speech": {
@@ -852,6 +854,23 @@
         "next3": "...",
         "qui": "Euh... et qui est votre idole ?",
         "ok": "Il a l'air fort !"
+      }
+    },
+    "forgeron": {
+      "speech": {
+        "begin": "Vous entrez dans les forges de Fosselave. la chaleur qui règne ici n'a rien à envier à l'intérieur du cratère du Grand Tout Chaud.\n\t\tIci rien ne se crée, tout se transforme, à grand coup de marteau !\n\t\t\n\t\t100 pièces d'or pour réparer une pelle, c'est donné  non ?",
+        "pelle": "Et une pelle dans la gueule ca te tente ?",
+        "repair": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
+        "repair2": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
+        "thanks": "Reviens si t'as encore besoin de nos services ptit gars !",
+        "no": "Reviens avec les poches pleines ptit gars, tu nous fais perdre notre temps !"
+      },
+      "playerChoice": {
+        "pelle": "Pouvez me rouler une...",
+        "repair": "Pouvez vous me réparer ma pelle ?",
+        "repair2": "Pouvez vous me réparer ma super pelle ?",
+        "thanks": "Euh oui mdame !",
+        "no": "Rien de particulier"
       }
     }
   },
