@@ -27,6 +27,14 @@
 							</template>
 						</Tippy>
 					</li>
+					<li v-if="epic">
+						<Tippy theme="normal" tag="img" :src="getImgURL('epicRewards', `collec_${epic}`)" alt="use">
+							<template #content>
+								<h1 v-html="formatContent($t(`rewards.name.${epic}`))" />
+								<p v-html="formatContent($t(`rewards.description.${epic}`))" />
+							</template>
+						</Tippy>
+					</li>
 				</ul>
 				<div class="option">
 					<a class="button" @click="$emit('close')">
@@ -71,28 +79,36 @@ export default defineComponent({
 		},
 		xp(): number | undefined {
 			const isXP: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EXPERIENCE);
-			if (!isXP) {
-				return undefined;
+			if (isXP?.rewardType === RewardEnum.EXPERIENCE) {
+				return isXP.value;
 			} else {
-				return isXP.quantity;
+				return undefined;
 			}
 		},
 		gold(): number | undefined {
 			const isGold: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.GOLD);
-			if (!isGold) {
-				return undefined;
+			if (isGold?.rewardType === RewardEnum.GOLD) {
+				return isGold.value;
 			} else {
-				return isGold.quantity;
+				return undefined;
 			}
 		},
 		items(): Array<string> | undefined {
 			const isItem: Array<missionRewards> | undefined = this.missionReward.filter(
 				el => el.rewardType === RewardEnum.ITEM
 			);
-			if (!isItem) {
-				return undefined;
+			if (isItem.every(el => el.rewardType === RewardEnum.ITEM)) {
+				return isItem.map(el => (el.value as string)!.toLowerCase());
 			} else {
-				return isItem.map(el => el.value!.toLowerCase());
+				return undefined;
+			}
+		},
+		epic(): string | undefined {
+			const isEpic: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EPIC);
+			if (isEpic?.rewardType === RewardEnum.EPIC) {
+				return isEpic.value.toLowerCase();
+			} else {
+				return undefined;
 			}
 		}
 	}

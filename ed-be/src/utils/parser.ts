@@ -66,6 +66,10 @@ function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 			];
 			result = place[1].placeId === dinoz.placeId;
 			break;
+		case ConditionEnum.SCENARIO:
+			//TODO: Implement scenario
+			result = false;
+			break;
 		default:
 			break;
 	}
@@ -137,6 +141,9 @@ async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<void> {
 			if (!testRewards.rewards.some(r => r.rewardId === epic)) {
 				await addRewardToPlayer(EpicReward);
 			}
+		} else if (reward.rewardType === RewardEnum.SCENARIO) {
+			//TODO: Implement scenario
+			console.log('Not implemented yet');
 		} else {
 			console.log('Not implemented yet');
 		}

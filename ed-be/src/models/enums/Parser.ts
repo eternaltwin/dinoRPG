@@ -41,7 +41,8 @@ export enum RewardEnum {
 	EXPERIENCE = 'xp',
 	GOLD = 'gold',
 	ITEM = 'item',
-	EPIC = 'epic'
+	EPIC = 'epic',
+	SCENARIO = 'scenario'
 }
 
 export enum ConditionOperatorEnum {

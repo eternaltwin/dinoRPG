@@ -7,5 +7,7 @@ export const npcNameList: Array<string> = [
 	'mmex',
 	'mineur',
 	'papy',
-	'forgeron'
+	'forgeron',
+	'baobob',
+	'baofan'
 ];

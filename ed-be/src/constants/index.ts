@@ -10,6 +10,7 @@ export * from './skill.js';
 export * from './status.js';
 export * from './action.js';
 export * from './monster.js';
+export * from './missions.js';
 
 export const apiRoutes = {
 	adminRoute: '/api/v1/admin',

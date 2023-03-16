@@ -1,7 +1,7 @@
 import { Npc, NpcTrigger } from '../models/index.js';
 import { placeList } from './index.js';
-import { ALPHA, FORGERON, MINEUR, MMEX, PAPY, PROFESSOR, SOFIA } from './characters/index.js';
-import { MPAPY } from './missions/index.js';
+import { ALPHA, BAOFAN, BAOBOB, FORGERON, MINEUR, MMEX, PAPYJOE, PROFESSOR, SOFIA } from './characters/index.js';
+import { M_BAO_BOB, M_PAPY_JOE } from './missions/index.js';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -59,8 +59,8 @@ export const npcList: Record<string, Npc> = {
 		id: 7,
 		placeId: placeList.PAPY_JOE.placeId,
 		condition: NpcTrigger.ALWAYS,
-		missions: MPAPY,
-		data: PAPY
+		missions: M_PAPY_JOE,
+		data: PAPYJOE
 	},
 	FORGERON: {
 		name: 'forgeron',
@@ -69,5 +69,20 @@ export const npcList: Record<string, Npc> = {
 		condition: NpcTrigger.ALWAYS, // set to epic(medaillon à trois yeux) later
 		data: FORGERON,
 		flashvars: 'frame=blabla'
+	},
+	BOB: {
+		name: 'bob',
+		id: 9,
+		placeId: placeList.BAO_BOB.placeId,
+		condition: NpcTrigger.ALWAYS,
+		missions: M_BAO_BOB,
+		data: BAOBOB
+	},
+	BAOFAN: {
+		name: 'baofan',
+		id: 10,
+		placeId: placeList.BAO_BOB.placeId,
+		condition: NpcTrigger.ALWAYS,
+		data: BAOFAN
 	}
 };

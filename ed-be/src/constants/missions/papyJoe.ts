@@ -1,9 +1,10 @@
 import { ConditionEnum, Mission, RewardEnum } from '../../models/index.js';
-import { placeList } from '../place.js';
+import { placeList, missionsList } from '../index.js';
 
-export const MPAPY: Array<Mission> = [
+export const M_PAPY_JOE: Array<Mission> = [
+	// Missions 1 to 10
 	{
-		missionId: 1,
+		missionId: missionsList.PAPY_JOE_FISH,
 		missionName: 'fish',
 		rewards: [
 			{
@@ -45,7 +46,7 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 2,
+		missionId: missionsList.PAPY_JOE_DOG,
 		missionName: 'dog',
 		rewards: [
 			{
@@ -98,11 +99,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 3,
+		missionId: missionsList.PAPY_JOE_KILGOU,
 		missionName: 'kilgou',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'fish'
+			value: 'papy_joe_fish'
 		},
 		rewards: [
 			{
@@ -139,11 +140,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 4,
+		missionId: missionsList.PAPY_JOE_KILWLF,
 		missionName: 'kilwlf',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'kilgou'
+			value: 'papy_joe_kilgou'
 		},
 		rewards: [
 			{
@@ -213,11 +214,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 5,
+		missionId: missionsList.PAPY_JOE_FFLOW,
 		missionName: 'fflow',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'fish'
+			value: 'papy_joe_fish'
 		},
 		rewards: [
 			{
@@ -259,11 +260,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 6,
+		missionId: missionsList.PAPY_JOE_KBOOK,
 		missionName: 'kbook',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'fflow'
+			value: 'papy_joe_fflow'
 		},
 		rewards: [
 			{
@@ -305,11 +306,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 7,
+		missionId: missionsList.PAPY_JOE_MSG,
 		missionName: 'msg',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'kbook'
+			value: 'papy_joe_kbook'
 		},
 		rewards: [
 			{
@@ -356,11 +357,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 8,
+		missionId: missionsList.PAPY_JOE_LETTRE,
 		missionName: 'lettre',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'msg'
+			value: 'papy_joe_msg'
 		},
 		rewards: [
 			{
@@ -392,11 +393,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 9,
+		missionId: missionsList.PAPY_JOE_KILGLU,
 		missionName: 'kilglu',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'kilwlf',
+			value: 'papy_joe_kilwlf',
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
 				value: 7
@@ -437,11 +438,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 10,
+		missionId: missionsList.PAPY_JOE_KILGNT,
 		missionName: 'kilgnt',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'kilglu',
+			value: 'papy_joe_kilglu',
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
 				value: 14
@@ -482,11 +483,11 @@ export const MPAPY: Array<Mission> = [
 		]
 	},
 	{
-		missionId: 11,
+		missionId: missionsList.PAPY_JOE_KILCOQ,
 		missionName: 'kilcoq',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'kilgnt',
+			value: 'papy_joe_kilgnt',
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
 				value: 21
