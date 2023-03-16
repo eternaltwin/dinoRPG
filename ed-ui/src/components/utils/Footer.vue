@@ -94,7 +94,7 @@
 							></path>
 						</svg>
 						<b>Alpha Version.</b> {{ $t('alpha.issue') }}
-				<a href="https://discord.gg/Jb8Nwjck6r" target="_blank">Discord</a>
+						<a href="https://discord.gg/Jb8Nwjck6r" target="_blank">Discord</a>
 					</span>
 					<div class="versionId">
 						<span>

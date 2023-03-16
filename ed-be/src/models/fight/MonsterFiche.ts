@@ -1,4 +1,6 @@
-export interface MonsterFiche {
+import { MapZone, PlaceEnum } from '../enums/index.js';
+
+export type MonsterFiche = {
 	name: string;
 	hp: number;
 	attack: number;
@@ -7,4 +9,6 @@ export interface MonsterFiche {
 	// Chance of encountering this monster.
 	odds: number;
 	level: number;
-}
+	zone: MapZone;
+	place?: PlaceEnum;
+};

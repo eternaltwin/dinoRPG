@@ -1,8 +1,17 @@
 import pkg from 'native-dinorpg';
 import { Request } from 'express';
-import { levelList, monsterList } from '../constants/index.js';
+import { levelList, monsterList, placeList } from '../constants/index.js';
 import { Dinoz } from '../entity/index.js';
-import { FightConfiguration, FighterFiche, FightProcessResult, FightResult, MonsterFiche } from '../models/index.js';
+import {
+	FightConfiguration,
+	FighterFiche,
+	FightProcessResult,
+	FightResult,
+	MapZone,
+	MonsterFiche,
+	Place,
+	PlaceEnum
+} from '../models/index.js';
 import { getRandomNumber } from '../utils/tools.js';
 import { addExperience, addLife, getDinozFightDataRequest } from '../dao/dinozDao.js';
 import { addPlayerMoney } from '../dao/playerDao.js';
@@ -26,7 +35,8 @@ const processFight = async (req: Request): Promise<FightResult> => {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const monster: MonsterFiche = prepareFight(dinozData.level);
+	const localisation: Place = Object.values(placeList).find(place => place.placeId === dinozData.placeId)!;
+	const monster: MonsterFiche = prepareFight(dinozData.level, localisation.map, localisation.placeId);
 
 	const fightResult: FightProcessResult = calculateFight(dinozData, monster);
 
@@ -45,7 +55,8 @@ const processFight = async (req: Request): Promise<FightResult> => {
 };
 
 const moveFight = async (dinoz: Dinoz, placeId: number): Promise<FightResult> => {
-	const monster: MonsterFiche = prepareFight(dinoz.level);
+	const localisation: Place = Object.values(placeList).find(place => place.placeId === dinoz.placeId)!;
+	const monster: MonsterFiche = prepareFight(dinoz.level, localisation.map, localisation.placeId);
 	const fightResult: FightProcessResult = calculateFight(dinoz, monster);
 	await rewardFight(dinoz, monster, fightResult);
 
@@ -59,25 +70,26 @@ const moveFight = async (dinoz: Dinoz, placeId: number): Promise<FightResult> =>
 	return result;
 };
 
-function prepareFight(dinozlevel: number): MonsterFiche {
+function prepareFight(dinozlevel: number, zone: MapZone, place: PlaceEnum): MonsterFiche {
 	// Pick random monster
 	// Get totalOdds, roll a random number between 0 and the totalOdds
 	// Pick the monster based on the roll and a sliding window on the intermediate odds
-	const totalOdds: number = Object.values(monsterList)
+	const monsterArray = Object.values(monsterList)
 		.filter(monster => monster.level <= dinozlevel)
-		.reduce((previous, current) => previous + current.odds, 0);
-	const roll: number = getRandomNumber(0, totalOdds);
-	const sortedMonstersByOddsHighestFirst: Array<MonsterFiche> = Object.values(monsterList)
-		.filter(monster => monster.level <= dinozlevel)
+		.filter(monster => monster.zone === zone || monster.zone === MapZone.ALL)
+		.filter(monster => monster.place === place || monster.place === undefined)
 		.sort((monsterA, monsterB) => monsterB.odds - monsterA.odds);
+	const totalOdds: number = monsterArray.reduce((previous, current) => previous + current.odds, 0);
+
+	const roll: number = getRandomNumber(0, totalOdds);
 	let previousOdds: number = 0;
 	return (
-		sortedMonstersByOddsHighestFirst.find(monster => {
+		monsterArray.find(monster => {
 			if (roll >= previousOdds && roll < previousOdds + monster.odds) {
 				return monster;
 			}
 			previousOdds += monster.odds;
-		}) ?? sortedMonstersByOddsHighestFirst[0]
+		}) ?? monsterArray[0]
 	);
 }
 
