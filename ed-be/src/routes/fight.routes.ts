@@ -1,8 +1,10 @@
 import { Request, Response, Router } from 'express';
-import { body, param, validationResult } from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import { processFight } from '../business/fightService.js';
 import { apiRoutes } from '../constants/index.js';
 import { FightResult } from '../models/index.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { postError } from '../utils/discord.js';
 
 const routes: Router = Router();
 
@@ -39,7 +41,9 @@ routes.put(`${commonPath}`, [body('dinozId').exists().toInt().isNumeric()], asyn
 		return res.status(200).send(response);
 	} catch (err) {
 		console.error(err.message);
-		return res.status(500).send(err.message);
+		const e: ErrorFormator = err;
+		await postError(e, res);
+		res.status(e.errorCode).send(e.message);
 	}
 });
 

@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import { createPlayer, getPlayerId } from '../dao/playerDao.js';
-import { getConfig } from '../utils/context.js';
-import { forgeJWT } from '../utils/jwt.js';
+import { getConfig, forgeJWT } from '../utils/index.js';
 import { Config } from '../models/index.js';
 import { Player } from '../entity/index.js';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/rfc-oauth-client';

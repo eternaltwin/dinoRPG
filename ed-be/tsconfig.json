@@ -5,7 +5,7 @@
     "module": "esnext",
     "esModuleInterop": true,
     "target": "esnext",
-    "lib": ["es2022"],
+    "lib": ["ESNext"],
     "moduleResolution": "Node16",
     "sourceMap": true,
     "outDir": "dist",

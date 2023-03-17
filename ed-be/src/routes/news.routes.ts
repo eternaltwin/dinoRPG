@@ -6,6 +6,7 @@ import { getNews, postNews, updateNews } from '../business/newsService.js';
 import { News } from '../entity/news.js';
 import multer from 'multer';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { postError } from '../utils/discord.js';
 
 const routes: Router = Router();
 
@@ -92,6 +93,7 @@ routes.put(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -133,6 +135,7 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 	} catch (err) {
 		console.error(err.message);
 		const e: ErrorFormator = err as ErrorFormator;
+		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
 });
@@ -218,6 +221,7 @@ routes.put(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}

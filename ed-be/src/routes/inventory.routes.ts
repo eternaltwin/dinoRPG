@@ -4,6 +4,7 @@ import { getAllItemsData, useItem } from '../business/inventoryService.js';
 import { param, validationResult } from 'express-validator';
 import { ItemFiche } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { postError } from '../utils/discord.js';
 
 const routes: Router = Router();
 
@@ -37,6 +38,7 @@ routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 	} catch (err) {
 		console.error(err.message);
 		const e: ErrorFormator = err;
+		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
 });
@@ -84,6 +86,7 @@ routes.get(
 			return res.status(200).send(response);
 		} catch (err) {
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}

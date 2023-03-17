@@ -4,6 +4,7 @@ export interface Config {
 	db: DbConfig;
 	jwt: JwtConfig;
 	admin: AdminsConfig;
+	discord: Discord;
 }
 
 interface GeneralConfig {
@@ -37,4 +38,9 @@ interface AdminsConfig {
 	readonly biocat: string;
 	readonly jahaa: string;
 	readonly jolu: string;
+}
+
+interface Discord {
+	readonly channel: string;
+	readonly token: string;
 }

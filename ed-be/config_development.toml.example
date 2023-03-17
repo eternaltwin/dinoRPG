@@ -25,3 +25,7 @@ expiration = 2592000
 biocat = '283c25c6-e8ea-401d-a152-b5dbf521eddf' # Replace by your etwinID and username
 jahaa = '8e429bed-d99c-40d6-b018-b8f82aff1e60'
 jolu = '8e429bed-d99c-40d6-b018-b8f82aff1e60'
+
+[discord]
+token = 'token'
+channel = '12345'

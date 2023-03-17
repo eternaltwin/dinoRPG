@@ -12,7 +12,7 @@ import {
 	Place,
 	PlaceEnum
 } from '../models/index.js';
-import { getRandomNumber } from '../utils/tools.js';
+import { getRandomNumber } from '../utils/index.js';
 import { addExperience, addLife, getDinozFightDataRequest } from '../dao/dinozDao.js';
 import { addPlayerMoney } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';

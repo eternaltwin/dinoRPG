@@ -16,8 +16,8 @@ import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../d
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
+import { effectParser } from '../utils/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { effectParser } from '../utils/skillParser.js';
 
 /**
  * @summary Get all learnables and unlockables skills

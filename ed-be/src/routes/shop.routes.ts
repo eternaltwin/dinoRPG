@@ -5,6 +5,7 @@ import { getItemsFromShop, buyItem } from '../business/itemShopService.js';
 import { body, param, validationResult } from 'express-validator';
 import { DinozShopFiche, ItemFiche } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { postError } from '../utils/discord.js';
 
 const routes: Router = Router();
 
@@ -21,6 +22,7 @@ routes.get(`${commonPath}/dinoz`, async (req: Request, res: Response) => {
 		res.status(200).send(listItems);
 	} catch (err) {
 		const e: ErrorFormator = err;
+		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
 });
@@ -39,6 +41,7 @@ routes.get(
 			res.status(200).send(listItems);
 		} catch (err) {
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -62,6 +65,7 @@ routes.put(
 			res.status(200).send();
 		} catch (err) {
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}

@@ -12,6 +12,7 @@ import {
 import { apiRoutes, regex } from '../constants/index.js';
 import { DinozFiche, DinozSkillFiche, FightResult } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { postError } from '../utils/discord.js';
 
 const routes: Router = Router();
 
@@ -52,6 +53,7 @@ routes.get(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -92,6 +94,7 @@ routes.post(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -142,6 +145,7 @@ routes.put(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -182,6 +186,7 @@ routes.get(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -245,6 +250,7 @@ routes.put(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -299,6 +305,7 @@ routes.put(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -318,6 +325,7 @@ routes.put(
 		} catch (err) {
 			console.error(err.message);
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}

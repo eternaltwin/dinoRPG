@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { DinozRace, DinozShopFiche } from '../models/index.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
-import { getRandomLetter, getRandomNumber } from '../utils/tools.js';
+import { getRandomLetter, getRandomNumber } from '../utils/index.js';
 import { raceList, rewardList, skillList } from '../constants/index.js';
 import { Player, PlayerDinozShop } from '../entity/index.js';
 import gameConfig from '../config/game.config.js';

@@ -5,7 +5,7 @@ import { getDinozNPCRequest } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
 import { npcList } from '../constants/npc.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
-import { checkCondition, rewarder, triggerAction } from '../utils/parser.js';
+import { checkCondition, rewarder, triggerAction } from '../utils/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 
 const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {

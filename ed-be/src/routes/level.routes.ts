@@ -4,6 +4,7 @@ import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillSe
 import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { postError } from '../utils/discord.js';
 
 const routes: Router = Router();
 
@@ -53,6 +54,7 @@ routes.get(
 			return res.status(200).send(response);
 		} catch (err) {
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
@@ -118,6 +120,7 @@ routes.post(
 			return res.status(200).send(response);
 		} catch (err) {
 			const e: ErrorFormator = err;
+			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}
