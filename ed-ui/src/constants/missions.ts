@@ -20,5 +20,9 @@ export const missionsList: Record<number, string> = {
 	18: 'rally2',
 	19: 'rally3',
 	20: 'rally4',
-	21: 'tour'
+	21: 'tour',
+	22: 'kswim',
+	23: 'rivals',
+	24: 'kfood',
+	25: 'poison'
 };

@@ -50,5 +50,9 @@ export const statusList: Record<string, number> = {
 	WATER_CHARM: 49,
 	JOVEBOZE: 50,
 	DINOPLAZA: 51,
-	BROKEN_ENHANCED_SHOVEL: 52
+	BROKEN_ENHANCED_SHOVEL: 52,
+	QWHY: 53,
+	QWOOD: 54,
+	QTAME: 55,
+	DIAN: 56
 };

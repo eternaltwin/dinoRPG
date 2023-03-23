@@ -13,7 +13,7 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 	const npcName: string = req.params.npc;
 	let nextStepWanted: string = req.body.step;
 
-	const dinoz: Dinoz = await getDinozNPCRequest(dinozId);
+	let dinoz: Dinoz = await getDinozNPCRequest(dinozId);
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.player.id !== req.user!.playerId) {
@@ -81,6 +81,8 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 
 		if ((action && nextStepWantedData!.reward) || nextStepWantedData!.reward !== undefined) {
 			await rewarder(nextStepWantedData!.reward, dinoz);
+			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
+			dinoz = await getDinozNPCRequest(dinozId);
 		}
 
 		await updateDinozStep(dinozId, pnj.id, nextStepWanted);

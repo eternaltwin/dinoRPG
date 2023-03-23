@@ -32,7 +32,8 @@ import {
 	raceList,
 	shopList,
 	skillList,
-	statusList
+	statusList,
+	TemporaryStatus
 } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
@@ -42,6 +43,7 @@ import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getHUDObjective, getMissionAction } from './missionsService.js';
 import { moveFight } from './fightService.js';
+import { removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 
 /**
  * @summary Get available action from dinoz
@@ -57,7 +59,7 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 
 	// Default actions
 	availableActions.push(actionList.FIGHT);
-	availableActions.push(actionList.FOLLOW);
+	//availableActions.push(actionList.FOLLOW);
 
 	// Shop action: check if a shop is available where the dinoz is
 	const shopAvailable = Object.values(shopList).find(shop => shop.placeId == dinoz.placeId) as ShopFiche | undefined;
@@ -141,6 +143,14 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 				req.user!.playerId
 			}`
 		);
+	}
+
+	//Remove temporary status
+	const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
+	if (tempStatus.length > 0) {
+		for (const status of tempStatus) {
+			await removeStatusToDinoz(parseInt(req.params.id), status.statusId);
+		}
 	}
 
 	// Create the answer that will be sent back

@@ -2,7 +2,7 @@ import { ConditionEnum, ConditionOperatorEnum, Mission, RewardEnum } from '../..
 import { missionsList, placeList } from '../index.js';
 
 export const M_BAO_BOB: Array<Mission> = [
-	// Missions 12 to 23
+	// Missions 12 to 21
 	{
 		missionId: missionsList.BAO_BOB_KILPIR,
 		missionName: 'kilpir',

@@ -51,7 +51,11 @@ export const statusList = {
 		49: 'wcharm',
 		50: 'joze',
 		51: 'dinoplaza',
-		52: 'brkpel2'
+		52: 'brkpel2',
+		53: 'qwhy',
+		54: 'qwood',
+		55: 'qtame',
+		56: 'dian'
 	},
 	id: {
 		matesc: 1,
@@ -105,7 +109,11 @@ export const statusList = {
 		wcharm: 49,
 		joze: 50,
 		dinoplaza: 51,
-		brkpel2: 52
+		brkpel2: 52,
+		qwhy: 53,
+		qwood: 54,
+		qtame: 55,
+		dian: 56
 	},
 	displayed: {
 		1: true,
@@ -159,6 +167,10 @@ export const statusList = {
 		49: true,
 		50: false,
 		51: false,
-		52: true
+		52: true,
+		53: false,
+		54: false,
+		55: false,
+		56: false
 	}
 };

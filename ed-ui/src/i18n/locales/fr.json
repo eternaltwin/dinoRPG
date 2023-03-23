@@ -647,7 +647,8 @@
       "papy":  "Papy Joe",
       "bob": "M. Bao Bob",
       "baofan": "Fan de Bao",
-      "forgeron": "Forgeron"
+      "forgeron": "Forgeron",
+      "dian":  "Dian Korgsey"
     },
     "professor": {
       "speech": {
@@ -932,6 +933,28 @@
         "repair2": "Pouvez vous me réparer ma super pelle ?",
         "thanks": "Euh oui mdame !",
         "no": "Rien de particulier"
+      }
+    },
+    "dian": {
+      "speech": {
+        "begin": "Salut, éleveur... Ne fais pas un bruit, il ne faut surtout pas déranger les Korgons !",
+        "korgons": "Oui, ce sont les petites créatures qui se sont installées ici. De vraies petites teignes si\n\t\ton n'y prête pas gare ! Déjà, ne les regarde surtout pas dans les yeux... Et si l'un d'eux\n\t\ts'approche trop, tu peux toujours essayer de lui donner un bout de bois à grignoter",
+        "why": "Ils pourraient prendre ça pour un défi ! Et là, je vous laisse imaginer ce qui se passerait si tous les Korgons\n\t\tdu campement se mettaient dans la tête que vous étiez un ennemi... Les derniers à avoir\n\t\tessayé ont été servis en souper le soir même.",
+        "wood": "Ils adorent ça ! C'est d'ailleurs la raison pour laquelle ils se sont installés dans\n\t\tla Jungle de Grumhel. Fascinant n'est-ce pas ? Mais malheureusement pour nous, ils sont capables de manger tout et\n\t\tn'importe quoi, y compris les voyageurs imprudents.",
+        "tame": "Il y a bien longtemps, je pense que les Korgons étaient domestiqués. Probablement bien avant\n\t\tla chute de l'île de Jazz... Mais aujourd'hui, ils sont revenus totalement à l'état sauvage !\n\t\tPas moyen de les approcher sans risquer d'y perdre un bras. Quelques éleveurs s'y sont aussi\n\t\tfrottés, mais personne n'a obtenu mieux de leur part qu'un grand coup de dents.",
+        "interest": "N'est-ce pas ! Je suis heureuse de voir que ces adorables Korgons vous plaisent autant ! Si cela\n\t\tvous intéresse, vous pourriez me rendre quelques petits services au Camp ?",
+        "service": "Parfait ! Voilà ce dont j'ai besoin...",
+        "nothing": "D'accord, bon voyage !"
+      },
+      "playerChoice": {
+        "missions": "Consulter la liste des Missions",
+        "korgons": "Les Korgons ?",
+        "why": "Il ne faut pas les regarder ?",
+        "wood": "Ils mangent du bois ?",
+        "tame": "Personne n'en a jamais dressé ?",
+        "interest": "Tout ça est vraiment passionnant  !",
+        "service": "Oui, avec plaisir !",
+        "nothing": "Oh pardon, je m'en vais..."
       }
     }
   },
@@ -1806,7 +1829,11 @@
       "rally2": "Le Rallye des Poissons",
       "rally3": "Le Rallye des Requins",
       "rally4": "Le Rallye des Baleines",
-      "tour": "Le Tour de Dinoland"
+      "tour": "Le Tour de Dinoland",
+      "kswim": "Comme un Korgon dans l'eau",
+      "rivals": "Korgons du nord, Korgons du sud",
+      "kfood": "Steak de bois",
+      "poison": "Rivalités korgons"
     },
     "tooltip": "Mission : {mission}",
     "description":  {
@@ -1830,7 +1857,11 @@
       "rally2": "Participe au Rallye des Poissons ! Rejoins le Port de Prêche le plus rapidement possible !",
       "rally3": "Participe au Rallye des Requins ! Rejoins les Mines de Corail le plus rapidement possible !",
       "rally4": "Participe au Rallye des Baleines ! Rejoins Fosselave puis reviens ici le plus rapidement possible !",
-      "tour": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! La première étape se situe sur l'Ile Waïkiki."
+      "tour": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! La première étape se situe sur l'Ile Waïkiki.",
+      "kswim": "La Jungle de Grumhel est un endroit fascinant ! Tenez, prenez les korgons par exemple. Ils se sont adaptés à merveille à leur environnement ! Saviez-vous qu'ils fabriquaient leur propres palmes afin de pouvoir traverser sans encombre le fleuve Jumin ? Non ? Tenez, je veux bien vous en offrir une paire si vous me ramenez quelques fournitures de première nécessité...",
+      "rivals": "Si les Korgons de cette partie de la Jungle de Grumhel sont quasiment sociables, il en existe au Sud, sur les bords du Chemin Glauque qui sont autrement moins gentils. Je pense que si tu m'apportais une preuve de victoire sur ceux du Sud, les korgons d'ici nous apprécieraient beaucoup plus !",
+      "kfood": "Il existe quelque part dans Grumhel une espèce rare d'arbre que les Korgons adorent : le Fikoïa Cendré ! J'ignore où on peut en trouver, mais je te payerai bien si tu m'en apportes !",
+      "poison": "Le Fikoïa Cendré que vous avez découvert va rapidement devenir un point stratégique pour les korgons du sud... Il faut réagir vite ! Nous allons \"piéger\" quelques branches de cet arbre pour les dissuader de le manger... Evidemment, nous, nous saurons quelles branches ne pas toucher... Hi hi hi."
     },
     "actions": {
       "talkTo": "Discuter avec {npc} ...",
@@ -1839,7 +1870,19 @@
       "terminate": "Valider la Mission",
       "hidePlace": "Trouvez le bon lieu ...",
       "kill": "{progress} / {target} {targetName} à tuer ...",
-      "timbre": "Ramasser les Timbres"
+      "timbre": "Ramasser les Timbres",
+      "list": "Examiner la liste de fournitures",
+      "tools": "Prendre des Outils",
+      "wood": "Couper du bois",
+      "grigri": "Demander un grigri",
+      "trophee": "Trouver un trophée",
+      "branch": "Arbre étrange",
+      "seve": "Récupérer de la sève",
+      "trap": "Piéger le Fikoïa",
+      "ambush": "Embuscade",
+      "leaves": "Traces au sol",
+      "fiquoia": "Fikoïa Cendré",
+      "hide": "Cacher le Fikoïa"
     },
     "npc": {
       "fishVendor": "Marchand de poisson",
@@ -1862,7 +1905,21 @@
       "pecheur": "Pêcheur",
       "adam": "Adam Nature",
       "etape": "Etape du Rallye",
-      "bob": "M. Bao Bob"
+      "bob": "M. Bao Bob",
+      "list": "Examiner la liste de fournitures",
+      "tools": "Prendre des Outils",
+      "wood": "Couper du bois",
+      "grigri": "Demander un grigri",
+      "trophee": "Trouver un trophée",
+      "branch": "Arbre étrange",
+      "seve": "Récupérer de la sève",
+      "trap": "Piéger le Fikoïa",
+      "ambush": "Embuscade",
+      "leaves": "Traces au sol",
+      "fiquoia": "Fikoïa Cendré",
+      "hidefiquoia": "Cacher le Fikoïa",
+      "tree": "Arbre étrange",
+      "dian": "Dian Korgsey"
     },
     "place":  {
       "port":"au Port de Prêche",
@@ -1878,7 +1935,75 @@
       "bob": "Chez M. Bao Bob",
       "fosslv": "à Fosselave",
       "camp": "au camp Korgon",
-      "auree": "à L'Orée de la Forêt"
+      "auree": "à L'Orée de la Forêt",
+      "papy":"Chez Papy Joe",
+      "skull":"au Cimetière du Crépuscule",
+      "chemin":"au Chemin Glauque",
+      "collin":"aux Collines Hantées",
+      "fleuve":"au Fleuve Jumin",
+      "jungle":"à la Jungle Sauvage",
+      "garde":"à la Porte de Sylvenoire",
+      "chutes":"aux Chutes Mutantes",
+      "baobob":"Chez M. Bao Bob",
+      "dome":"au Dôme Soulaflotte",
+      "corail":"aux Mines de Corail",
+      "dplaza":"à Dinoplaza",
+      "villa":"à la Villa",
+      "dcine":"au Cinéma Paradino",
+      "clinik":"à la Clinique de Dinoville",
+      "chato":"au Château de Dinoville",
+      "poste":"au Poste de Garde",
+      "portal":"à la Voie du Temple Céleste",
+      "bslt":"aux Pentes de Basalte",
+      "forges":"aux Forges du Grand Tout Chaud",
+      "rashpk":"aux Ruines Ashpouk",
+      "vener":"au Repaire du Vénérable",
+      "tunel":"au Tunnel sous la Branche",
+      "gorges":"aux Gorges Profondes",
+      "tourbt":"à la Tour de Karinbao",
+      "senter":"à la Frontière Crépitante",
+      "scross":"à la Croisée des Nomades",
+      "svillg":"à l'Avant-poste Rocky",
+      "sking":"à la Citadelle du Roi",
+      "spylon":"aux Pylônes de Magnétite",
+      "slake":"au Syphon Siffleur",
+      "scanyo":"au Sentier de Toutemba",
+      "stowr1":"à la Dévoreuse de l'Est",
+      "stowr2":"à la Dévoreuse du Nord",
+      "stowr3":"à la Dévoreuse de l'Ouest",
+      "sband1":"au Taudis des Zaxa",
+      "sband2":"au Camp des Emmemma",
+      "sband3":"au Campement des Mattmût",
+      "scampw":"au Repaire de la Team-W",
+      "scaush":"au Confins des Steppes",
+      "sport":"à la Portes de Caushemesh",
+      "iroche":"à la Tête de l'île",
+      "ipont":"au Pont",
+      "iporte":"à la Porte du Niveau Supérieur",
+      "icite":"à la Cité Arboris",
+      "ilacro":"au Lac Céleste",
+      "iplain":"aux Plaines Enneigées",
+      "isnow2":"aux Bois Givrés",
+      "imont":"au Mont Sacré d'Everouest",
+      "ihaut":"au Sommet du Mont sacré",
+      "voie":"au Chemin vers l'Observatoire",
+      "observ":"à l'Observatoire",
+      "egout":"aux Egouts du Palais",
+      "ilac":"aux Chutes du Nirvana ",
+      "ilac2":"à l'Aile Ouest du Dragon",
+      "prison":"à la Priranèse",
+      "ville1":"au Quartier Luxuriant",
+      "ville2":"au Quartier Exubérant",
+      "sommet":"au Chemin vers le Palais",
+      "palais":"au Palais de l'Archidorogon",
+      "mport":"au Port Monstreux",
+      "mfoutp":"à l'Avant-Poste Frutox",
+      "mfpalc":"au Palais du Grotox",
+      "mforst":"à la Forêt Kaze Kami",
+      "mvoutp":"à l'Avant-Poste Végétox",
+      "mvpalc":"au Palais d'Antraxov",
+      "mcuzco":"aux Ruines de Cuzcous",
+      "mcelit":"au Camp d'Elit"
     },
     "dialog": {
       "fish": {
@@ -1978,6 +2103,33 @@
         "etape5": "Félicitations pour avoir franchi la cinquième étape du Tour de Dinoland. La prochaine étape se trouve à l'Orée de la Forêt ! Attention à ne pas vous perdre sur le Chemin Sombre...",
         "etape6": "Félicitations pour avoir franchi la sixième étape du Tour de Dinoland ! La dernière étape consiste à rejoindre M. Bao Bob pour remporter ce Tour !",
         "bob": "Bravo ! C'était un magnifique Tour de Dinoland, voici une récompense digne de votre exploit !"
+      },
+      "kswim": {
+        "list": "La liste de Dian Korgsey indique qu'elle a tout d'abord besoin de certains outils que l'on trouve aux Forges du Grand Tout-Chaud.",
+        "tools": "Vous récupérez une Trousse à Outils. La suite de la liste indique \"Branches de la forêt du volcan\"...",
+        "wood": "Vous récupérez quelques branches calcinées. La liste de fournitures se termine sur \"un grigri\"...",
+        "grigri": "Le Shaman vous adresse un large sourire et vous tend un de ses grigris porte-bonheur. Merci !",
+        "camp": "Voilà tout ce qu'il me fallait ! C'est parfait. Voici les Palmes des Korgons, comme convenu !"
+      },
+      "rivals": {
+        "trophee": "Vous récupérez quelques Griffes de Korgons pour servir de trophée pour les korgons du nord...",
+        "camp": "Ah, bonne idée les griffes ! Les korgons ici ont l'air d'apprécier... Tiens, voila pour ta peine."
+      },
+      "kfood": {
+        "branch": "Mieux vaut ne pas trop tarder par ici: vous préparez un gros fagot de bois et vous vous éloignez des fourrés...",
+        "tree": "Vous remarquez un drôle d'arbre aux feuilles grises et qui sent le tabac froid... Sûrement un Fikoïa Cendré ! Mais tandis que vous vous apprêtez à en prendre quelques branches, des bruits se font entendre dans les fourrés...",
+        "camp": "Ils vont se régaler avec ça, merci bien !"
+      },
+      "poison": {
+        "seve": "Vous récupérez de la Suintante Mordicus, une sève d'arbre au goût innommable. Le piège idéal pour ce travail.",
+        "trap": "Ca alors ! Le Fikoïa a disparu ! Les korgons du sud sont probablement passés avant vous...",
+        "ambush": "Tandis que vous avancez dans la Jungle Sauvage, un groupe de Korgons surgit tout autour de vous ! Il va falloir s'en débarrasser pour continuer...",
+        "leaves1": "De larges traces dans le sol indiquent clairement qu'on a trainé quelque chose de très lourd depuis le Fleuve Jumin... Les traces continuent vers le sud.",
+        "leaves2": "La piste s'arrête ici... Mais à en juger par les grognements dans les buissons, on vous attendait de pied ferme !",
+        "fiquoia": "Le Fikoïa est dissimulé sous une pile de feuilles de bananiers. Il va falloir le trainer jusqu'au camp...",
+        "dian": "Ah vous voila ! Quel dommage qu'ils aient coupé ce Fikoïa Cendré... C'est bien un travail de korgon sudiste ça... Bon, impossible de remonter la rivière avec. Cachez-le ici, ça fera l'affaire. On se retrouve au Camp.",
+        "hidefiquoia": "Vous dissimulez à votre tour l'arbre sous quelques feuilles de bananiers.",
+        "camp": "C'est bien triste pour ce specimen de Fikoïa, ils sont si rares ! Merci pour toute votre aide, on ne vous oubliera pas..."
       }
     },
     "target": {
@@ -1990,7 +2142,10 @@
       "pira": "Pirhanoz",
       "kazka": "Kazkadine",
       "anguil": "Anguilloz",
-      "kazka:pira": "Monstres des Îles"
+      "kazka:pira": "Monstres des Îles",
+      "korgon": "Korgons",
+      "korgon:ronciv": "Korgons ou alliés",
+      "any": "monstres"
     }
   },
   "myAccount": {

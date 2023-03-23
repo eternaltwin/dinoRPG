@@ -1,7 +1,18 @@
 import { Npc, NpcTrigger } from '../models/index.js';
 import { placeList } from './index.js';
-import { ALPHA, BAOFAN, BAOBOB, FORGERON, MINEUR, MMEX, PAPYJOE, PROFESSOR, SOFIA } from './characters/index.js';
-import { M_BAO_BOB, M_PAPY_JOE } from './missions/index.js';
+import {
+	ALPHA,
+	BAOBOB,
+	BAOFAN,
+	DIANKORGSEY,
+	FORGERON,
+	MINEUR,
+	MMEX,
+	PAPYJOE,
+	PROFESSOR,
+	SOFIA
+} from './characters/index.js';
+import { M_BAO_BOB, M_DIANKORGSEY, M_PAPY_JOE } from './missions/index.js';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -84,5 +95,13 @@ export const npcList: Record<string, Npc> = {
 		placeId: placeList.BAO_BOB.placeId,
 		condition: NpcTrigger.ALWAYS,
 		data: BAOFAN
+	},
+	DIAN_KORGSEY: {
+		name: 'dian',
+		id: 11,
+		placeId: placeList.CAMP_KORGON.placeId,
+		condition: NpcTrigger.ALWAYS,
+		data: DIANKORGSEY,
+		missions: M_DIANKORGSEY
 	}
 };
