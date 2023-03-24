@@ -1,5 +1,5 @@
 import { http } from '@/utils';
-import { Dinoz, FightResult, Skill, DinozSkillOwnAndUnlockable } from '@/models';
+import { Dinoz, FightResult, Skill, DinozSkillOwnAndUnlockable, missionRewards } from '@/models';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<Dinoz> {
@@ -62,6 +62,12 @@ export const DinozService = {
 	resurrectDinoz(dinozId: number): Promise<void> {
 		return http()
 			.put(`/dinoz/resurrect/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	dig(dinozId: number): Promise<missionRewards> {
+		return http()
+			.get(`/dinoz/dig/${dinozId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

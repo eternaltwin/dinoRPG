@@ -7,7 +7,8 @@ import {
 	getDinozSkill,
 	setSkillState,
 	betaMove,
-	resurrectDinoz
+	resurrectDinoz,
+	digWithDinoz
 } from '../business/dinozService.js';
 import { apiRoutes, regex } from '../constants/index.js';
 import { DinozFiche, DinozSkillFiche, FightResult } from '../models/index.js';
@@ -330,5 +331,42 @@ routes.put(
 		}
 	}
 );
+
+/**
+ * @openapi
+ * /api/v1/dinoz/dig/{dinozId}:
+ *   get:
+ *     summary: Dig with the dinoz
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz to dig.
+ *     responses:
+ *       200:
+ *         description: Returns an item.
+ */
+routes.get(`${commonPath}/dig/:id`, [param('id').exists().toInt().isNumeric()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await digWithDinoz(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		console.error(err.message);
+		const e: ErrorFormator = err;
+		await postError(e, res);
+		res.status(e.errorCode).send(e.message);
+	}
+});
 
 export default routes;

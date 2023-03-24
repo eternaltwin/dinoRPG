@@ -65,18 +65,24 @@ export default defineComponent({
 				errorHandler.handle(err);
 				return;
 			}
-		}
-	},
-	// Get dinoz data
-	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		try {
+		},
+		async getFiche(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
 			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
 			this.sessionStore.setDinozList(dinozList);
+		}
+	},
+	// Get dinoz data
+	async mounted(): Promise<void> {
+		EventBus.on('refreshDinoz', async e => {
+			if (e) await this.getFiche();
+		});
+		EventBus.emit('isLoading', true);
+		try {
+			await this.getFiche();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);

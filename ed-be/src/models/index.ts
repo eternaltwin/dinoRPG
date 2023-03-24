@@ -1,4 +1,5 @@
 export * from './config/Config.js';
+export * from './dinoz/DigData.js';
 export * from './dinoz/DinozFiche.js';
 export * from './dinoz/DinozSkillFiche.js';
 export * from './dinoz/DinozSkillOwnAndUnlockable.js';

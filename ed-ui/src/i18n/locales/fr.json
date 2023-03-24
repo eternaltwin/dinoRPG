@@ -19,6 +19,10 @@
     "OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
     "tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs."
   },
+  "dig": {
+    "gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
+    "status": "En creusant, votre dinoz a trouvé l'objet {item}. Il apparaîtra dans ses status. Félicitations !"
+  },
   "api": "Il vous est possible de consulter notre API afin de la tester. N'oubliez pas de prendre vos token d'authentification JWT :",
   "alpha": {
     "login": "Connexion à Eternal-Twin",
@@ -71,13 +75,15 @@
       "fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer **un déplacement ou un combat par jour** et par Dinoz.",
       "follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
       "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz.",
-      "resurrect": "Votre Dinoz est mort, il faut donc le Ressusciter avant de pouvoir à nouveau le faire combattre."
+      "resurrect": "Votre Dinoz est mort, il faut donc le Ressusciter avant de pouvoir à nouveau le faire combattre.",
+      "dig": "Votre Dinoz peut **creuser** à cet endroit avec la pelle pour y trouver peut-être un trésor."
     },
     "name": {
       "fight": "Combattre",
       "follow": "Suivre",
       "levelup": "Niveau Supplémentaire !",
-      "resurrect": "Ressusciter"
+      "resurrect": "Ressusciter",
+      "dig": "Creuser"
     }
   },
   "button": {

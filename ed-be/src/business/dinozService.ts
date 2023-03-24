@@ -15,12 +15,15 @@ import {
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import {
 	ActionFiche,
+	DigData,
 	DinozFiche,
 	DinozRace,
 	DinozSkillFiche,
 	FightResult,
 	Npc,
 	Place,
+	RewardEnum,
+	Rewarder,
 	ShopFiche,
 	ShopType
 } from '../models/index.js';
@@ -43,7 +46,9 @@ import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getHUDObjective, getMissionAction } from './missionsService.js';
 import { moveFight } from './fightService.js';
-import { removeStatusToDinoz } from '../dao/dinozStatusDao.js';
+import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
+import { digTreasures } from '../constants/digTreasures.js';
+import { checkCondition, getRandomNumber, rewarder } from '../utils/index.js';
 
 /**
  * @summary Get available action from dinoz
@@ -60,6 +65,13 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	// Default actions
 	availableActions.push(actionList.FIGHT);
 	//availableActions.push(actionList.FOLLOW);
+
+	// Dig with the shovel
+	if (
+		dinoz.status.some(status => status.statusId === statusList.SHOVEL || status.statusId === statusList.ENHANCED_SHOVEL)
+	) {
+		availableActions.push(actionList.DIG);
+	}
 
 	// Shop action: check if a shop is available where the dinoz is
 	const shopAvailable = Object.values(shopList).find(shop => shop.placeId == dinoz.placeId) as ShopFiche | undefined;
@@ -473,4 +485,47 @@ const resurrectDinoz = async (req: Request): Promise<void> => {
 	await setDinoz(dinozToUpdate);
 };
 
-export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, resurrectDinoz };
+const digWithDinoz = async (req: Request): Promise<Rewarder> => {
+	const dinozId: number = parseInt(req.params.id);
+	const dinozData: Dinoz = await getDinozFicheRequest(dinozId);
+
+	if (dinozData.player.id !== req.user!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
+	}
+
+	if (
+		!dinozData.status.some(
+			status => status.statusId === statusList.SHOVEL || status.statusId === statusList.ENHANCED_SHOVEL
+		)
+	) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot dig.`);
+	}
+
+	const digPlace: DigData | undefined = Object.values(digTreasures).find(dig => dig.place === dinozData.placeId);
+	let reward: Array<Rewarder>;
+	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, dinozData)) {
+		reward = digPlace.reward;
+	} else {
+		reward = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(100, 500) }];
+	}
+	await rewarder(reward, dinozData);
+
+	//Broke shovel
+	if (dinozData.status.some(status => status.statusId === statusList.SHOVEL)) {
+		await removeStatusToDinoz(dinozId, statusList.SHOVEL);
+		await addStatusToDinoz(dinozData, statusList.BROKEN_SHOVEL);
+	}
+
+	//Try to broke enhanced shovel (75% of keeping it)
+	if (
+		getRandomNumber(0, 100) > 100 &&
+		dinozData.status.some(status => status.statusId === statusList.ENHANCED_SHOVEL)
+	) {
+		await removeStatusToDinoz(dinozId, statusList.ENHANCED_SHOVEL);
+		await addStatusToDinoz(dinozData, statusList.BROKEN_ENHANCED_SHOVEL);
+	}
+
+	return reward[0];
+};
+
+export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, resurrectDinoz, digWithDinoz };

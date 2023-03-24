@@ -8,7 +8,7 @@ export const errorHandler = {
 			// For toast display if it's a client error
 			if (err.response.status === 400) {
 				EventBus.emit('isLoading', false);
-				EventBus.emit('toast', err.response.data as string);
+				EventBus.emit('toast', { type: 'error', message: err.response.data as string });
 			} else if (err.response.status === 401) {
 				sessionStorage.clear();
 				router.go(0);

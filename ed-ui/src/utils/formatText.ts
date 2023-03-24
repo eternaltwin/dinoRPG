@@ -17,6 +17,8 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_void')}" alt="pmo">`;
 			case 'right':
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_right')}" alt="pmo">`;
+			case 'gold':
+				return `<img src="${mixin.methods.getImgURL('icons', 'small_gold')}" alt="gold">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}
@@ -35,5 +37,6 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(/:air:/g, helpers.computeImageHtml('air'));
 	formattedText = formattedText.replace(/:neutre:/g, helpers.computeImageHtml('neutre'));
 	formattedText = formattedText.replace(/:right:/g, helpers.computeImageHtml('right'));
+	formattedText = formattedText.replace(/:gold:/g, helpers.computeImageHtml('gold'));
 	return formattedText;
 }

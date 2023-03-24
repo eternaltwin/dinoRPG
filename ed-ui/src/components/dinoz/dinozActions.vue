@@ -78,12 +78,14 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { missionsList, npcNameList, shopNameList } from '@/constants';
-import { Action, missionRewards } from '@/models';
+import { Action, FightResult, missionRewards } from '@/models';
 import { sessionStore } from '@/store';
 import EventBus from '@/events';
-import { FightService, MissionService } from '@/services';
+import { DinozService, FightService, MissionService } from '@/services';
 import { errorHandler } from '@/utils/index.js';
-import { MissionEnum } from '@/enums/index.js';
+import { MissionEnum, RewardEnum } from '@/enums/index.js';
+import { formatText } from '@/utils/formatText.js';
+import { mixin } from '@/mixin/mixin.js';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -98,7 +100,8 @@ export default defineComponent({
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Array<missionRewards> | undefined,
 			sessionStore: sessionStore(),
-			MissionEnum: MissionEnum
+			MissionEnum: MissionEnum,
+			digReward: undefined as missionRewards | undefined
 		};
 	},
 	components: {
@@ -162,6 +165,25 @@ export default defineComponent({
 						}
 					}
 					break;
+				case 'dig':
+					this.digReward = await DinozService.dig(parseInt(this.$route.params.id.toString()));
+					if (this.digReward.rewardType === RewardEnum.GOLD) {
+						EventBus.emit('toast', {
+							type: 'reward',
+							message: formatText(this.$t(`dig.gold`, { gold: this.digReward.value }))
+						});
+					} else if (this.digReward.rewardType === RewardEnum.STATUS) {
+						EventBus.emit('toast', {
+							type: 'reward',
+							message: formatText(
+								this.$t(`dig.status`, {
+									item: mixin.methods.formatContent(this.$t(`status.name.${this.digReward.value}`))
+								})
+							)
+						});
+					}
+					EventBus.emit('refreshDinoz', true);
+					break;
 				default:
 					break;
 			}
@@ -191,7 +213,7 @@ export default defineComponent({
 .actions {
 	background: url('@/assets/background/banniere_left.webp') no-repeat,
 		url('@/assets/background/banniere_right.webp') no-repeat, url('@/assets/background/banniere_middle.webp') repeat-x;
-	background-position-x: left, right;
+	background-position-x: left;
 	float: left;
 	left: 12px;
 	top: -14px;

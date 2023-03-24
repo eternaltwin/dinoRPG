@@ -7,7 +7,13 @@ type Events = {
 	isLoading: boolean;
 	fightResult: FightResult;
 	resurrect: boolean;
-	toast: string;
+	toast: toast;
+	refreshDinoz: boolean;
+};
+
+type toast = {
+	message: string;
+	type: 'error' | 'reward';
 };
 
 const EventBus = mitt<Events>();

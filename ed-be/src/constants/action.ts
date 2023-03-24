@@ -28,5 +28,9 @@ export const actionList: Readonly<Record<string, ActionFiche>> = {
 	MISSION: {
 		name: 'mission',
 		imgName: 'act_mission'
+	},
+	DIG: {
+		name: 'dig',
+		imgName: 'act_dig'
 	}
 };

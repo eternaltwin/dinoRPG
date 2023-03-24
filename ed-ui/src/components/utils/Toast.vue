@@ -1,7 +1,8 @@
 <template>
 	<Transition>
 		<div v-if="displayToast" class="snackbar" @click="displayToast = !displayToast">
-			{{ $t(`toast.${errorDisplay}`) }}
+			<template v-if="type === 'error'">{{ $t(`toast.${message}`) }}</template>
+			<p v-if="type === 'reward'" v-html="message" />
 		</div>
 	</Transition>
 </template>
@@ -15,12 +16,14 @@ export default defineComponent({
 	data() {
 		return {
 			displayToast: false as boolean,
-			errorDisplay: '' as string
+			message: '' as string,
+			type: undefined as string | undefined
 		};
 	},
 	mounted(): void {
 		EventBus.on('toast', e => {
-			this.errorDisplay = e;
+			this.message = e.message;
+			this.type = e.type;
 			this.displayToast = true;
 		});
 	}
