@@ -1,5 +1,5 @@
-import { PlaceIcon, Map } from '@/enums';
-import { Place } from '@/models';
+import { PlaceIcon, Map } from '../enums';
+import { Place } from '../models';
 
 export const placeList: Array<Place> = [
 	{

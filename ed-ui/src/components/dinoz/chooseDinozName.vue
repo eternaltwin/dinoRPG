@@ -25,17 +25,17 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { errorHandler } from '@/utils';
-import { DinozService } from '@/services';
-import { Dinoz } from '@/models';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
+import { errorHandler } from '../../utils';
+import { DinozService } from '../../services';
+import { Dinoz } from '../../models';
+import { sessionStore } from '../../store';
+import EventBus from '../../events';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../../components/utils/TitleHeader.vue')),
+		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
@@ -111,7 +111,7 @@ input {
 	font-size: 9pt;
 	font-weight: bold;
 	border: none;
-	background-image: url('@/assets/design/form_field.webp');
+	background-image: url('../../assets/design/form_field.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
 	grid-column: 2 / 4;

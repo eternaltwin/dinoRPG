@@ -163,12 +163,12 @@
 
 <script lang="ts" scoped>
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { ItemShopService } from '@/services';
-import { Item } from '@/models';
-import { errorHandler } from '@/utils';
-import { itemNameList, shopNameList } from '@/constants';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
+import { ItemShopService } from '../services';
+import { Item } from '../models';
+import { errorHandler } from '../utils';
+import { itemNameList, shopNameList } from '../constants';
+import { sessionStore } from '../store';
+import EventBus from '../events';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -183,7 +183,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
 	},
 	computed: {
 		// Check if the quantity select is valid:

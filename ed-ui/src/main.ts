@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import { localStore } from './store';
 import { createI18n } from 'vue-i18n';
-import { messages, defaultLocale, LocalesEnum } from '@/i18n';
+import { messages, defaultLocale, LocalesEnum } from './i18n';
 import './css/main.scss';
 import { plugin as VueTippy } from 'vue-tippy';
 import { mixin } from './mixin/mixin';

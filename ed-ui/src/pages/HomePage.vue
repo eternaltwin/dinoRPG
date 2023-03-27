@@ -34,7 +34,7 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 export default defineComponent({
 	name: 'HomePage',
 	components: {
-		AuthenticationPage: defineAsyncComponent(() => import('@/pages/AuthenticationPage.vue'))
+		AuthenticationPage: defineAsyncComponent(() => import('../pages/AuthenticationPage.vue'))
 	}
 });
 </script>

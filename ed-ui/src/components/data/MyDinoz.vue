@@ -33,14 +33,14 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { raceList, statusList } from '@/constants';
-import { PlayerInfo, Dinoz } from '@/models';
-import { dinozPlacement } from '@/constants';
+import { raceList, statusList } from '../../constants';
+import { PlayerInfo, Dinoz } from '../../models';
+import { dinozPlacement } from '../../constants';
 
 export default defineComponent({
 	name: 'MyDinoz',
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
+		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	props: {
 		accountData: {

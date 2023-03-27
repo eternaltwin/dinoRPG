@@ -55,9 +55,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { sessionStore } from '@/store';
-import { utils } from '@/utils';
-import DinozList from '@/components/dinoz/dinozList.vue';
+import { sessionStore } from '../../store';
+import { utils } from '../../utils';
+import DinozList from '../../components/dinoz/dinozList.vue';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -163,7 +163,7 @@ export default defineComponent({
 		color: #ffee92;
 		border: 0px;
 		background-color: transparent;
-		background-image: url('@/assets/background/goldbox2.webp');
+		background-image: url('../../assets/background/goldbox2.webp');
 		background-repeat: no-repeat;
 		cursor: help;
 		font-weight: bold;
@@ -187,48 +187,48 @@ export default defineComponent({
 
 			&.iconor {
 				margin-right: 5px;
-				background-image: url('@/assets/icons/act_shop.webp');
+				background-image: url('../../assets/icons/act_shop.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('@/assets/icons/act_shop2.webp');
+					background-image: url('../../assets/icons/act_shop2.webp');
 				}
 			}
 
 			&.iconboutik {
 				margin-right: 5px;
-				background-image: url('@/assets/icons/act_boutique.webp');
+				background-image: url('../../assets/icons/act_boutique.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('@/assets/icons/act_boutique2.webp');
+					background-image: url('../../assets/icons/act_boutique2.webp');
 				}
 			}
 
 			&.iconclan {
 				margin-right: 5px;
-				background-image: url('@/assets/icons/act_castle.webp');
+				background-image: url('../../assets/icons/act_castle.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('@/assets/icons/act_castle2.webp');
+					background-image: url('../../assets/icons/act_castle2.webp');
 				}
 			}
 
 			&.icondojo {
-				background-image: url('@/assets/icons/act_dojo.webp');
+				background-image: url('../../assets/icons/act_dojo.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
 
 				&:hover {
-					background-image: url('@/assets/icons/act_dojo2.webp');
+					background-image: url('../../assets/icons/act_dojo2.webp');
 				}
 			}
 		}

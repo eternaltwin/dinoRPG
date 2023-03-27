@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { Dinoz } from '@/models';
+import { Dinoz } from '../../models';
 
 export default defineComponent({
 	name: 'DinozBars',
@@ -62,7 +62,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozBars {
-	background: url('@/assets/background/stats_box.webp') no-repeat;
+	background: url('../../assets/background/stats_box.webp') no-repeat;
 	width: 180px;
 	height: 40px;
 	position: absolute;

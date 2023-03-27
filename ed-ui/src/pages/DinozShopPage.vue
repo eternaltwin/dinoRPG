@@ -65,12 +65,12 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { DinozShopService, DinozService } from '@/services';
-import { DinozShop, Dinoz } from '@/models';
-import { errorHandler, utils } from '@/utils';
-import { sessionStore } from '@/store';
-import { raceList, skillNameList } from '@/constants';
-import EventBus from '@/events';
+import { DinozShopService, DinozService } from '../services';
+import { DinozShop, Dinoz } from '../models';
+import { errorHandler, utils } from '../utils';
+import { sessionStore } from '../store';
+import { raceList, skillNameList } from '../constants';
+import EventBus from '../events';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -84,9 +84,9 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		Elements: defineAsyncComponent(() => import('@/components/data/elements.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
+		Elements: defineAsyncComponent(() => import('../components/data/elements.vue')),
+		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {

@@ -30,7 +30,7 @@ export default defineComponent({
 	font-size: 0pt;
 	width: 100px;
 	height: 138px;
-	background: url('@/assets/background/equipment_box.webp') no-repeat;
+	background: url('../../assets/background/equipment_box.webp') no-repeat;
 
 	ul {
 		list-style: none;

@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { Dinoz, Player } from '@/models';
+import { http } from '../utils';
+import { Dinoz, Player } from '../models';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {

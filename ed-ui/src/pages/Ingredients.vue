@@ -42,11 +42,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IngredientFiche } from '@/models';
-import { IngredientsService } from '@/services';
-import TitleHeader from '@/components/utils/TitleHeader.vue';
-import EventBus from '@/events';
-import { errorHandler } from '@/utils';
+import { IngredientFiche } from '../models';
+import { IngredientsService } from '../services';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import EventBus from '../events';
+import { errorHandler } from '../utils';
 
 export default defineComponent({
 	name: 'Ingredients',
@@ -105,7 +105,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('@/assets/background/table_header.webp');
+			background-image: url('../assets/background/table_header.webp');
 			background-position: left bottom;
 			max-width: 222px;
 			&.name {
@@ -130,7 +130,7 @@ table {
 			color: #710;
 			background-color: #f3ca92;
 			border: 1px solid #c88f44;
-			background-image: url('@/assets/background/table_cell.webp');
+			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
 			&.name {
 				padding: 1px 5px;
@@ -142,12 +142,12 @@ table {
 			}
 		}
 		&.full td {
-			background-image: url('@/assets/background/table_cell_hover.webp') !important;
+			background-image: url('../assets/background/table_cell_hover.webp') !important;
 			background-position: -10px 0px;
 			color: #fffdba;
 		}
 		&.even td {
-			background-image: url('@/assets/background/table_cell_even.webp');
+			background-image: url('../assets/background/table_cell_even.webp');
 			background-position: -10px 0px;
 		}
 	}

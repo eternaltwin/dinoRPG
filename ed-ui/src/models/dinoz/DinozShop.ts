@@ -1,4 +1,4 @@
-import { DinozRace } from '@/models';
+import { DinozRace } from '../../models';
 
 export interface DinozShop {
 	id: number;

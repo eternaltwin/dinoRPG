@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { Item } from '@/models';
+import { http } from '../utils';
+import { Item } from '../models';
 
 // For Player's inventory
 

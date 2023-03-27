@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { DinozService, InventoryService } from '@/services';
+import { DinozService, InventoryService } from '../../services';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

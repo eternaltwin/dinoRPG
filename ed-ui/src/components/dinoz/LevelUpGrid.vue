@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { ElementType } from '@/enums';
+import { ElementType } from '../../enums';
 
 export default defineComponent({
 	name: 'LevelUpGrid',

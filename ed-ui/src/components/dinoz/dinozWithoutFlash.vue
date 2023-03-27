@@ -10,13 +10,13 @@
 </template>
 
 <script lang="ts">
-import { raceList } from '@/constants';
+import { raceList } from '../../constants';
 import { defineAsyncComponent, defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'DinozWithoutFlash',
 	components: {
-		DinozSWF: defineAsyncComponent(() => import('@/components/dinoz/dinozSWF.vue'))
+		DinozSWF: defineAsyncComponent(() => import('../../components/dinoz/dinozSWF.vue'))
 	},
 	props: {
 		display: { type: String, required: true },

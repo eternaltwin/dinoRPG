@@ -48,16 +48,16 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { sessionStore } from '@/store/index.js';
-import { missionsList } from '@/constants/index.js';
-import { Dinoz, MissionList, missionRequirement } from '@/models/index.js';
-import EventBus from '@/events/index.js';
-import { MissionEnum, MissionsStatus } from '@/enums/index.js';
+import { sessionStore } from '../../store/index.js';
+import { missionsList } from '../../constants/index.js';
+import { Dinoz, MissionList, missionRequirement } from '../../models/index.js';
+import EventBus from '../../events/index.js';
+import { MissionEnum, MissionsStatus } from '../../enums/index.js';
 
 export default defineComponent({
 	name: 'MissionHUD',
 	components: {
-		MissionInformationModal: defineAsyncComponent(() => import('@/components/modal/MissionInformationModal.vue'))
+		MissionInformationModal: defineAsyncComponent(() => import('../../components/modal/MissionInformationModal.vue'))
 	},
 	emits: ['abort'],
 	data() {
@@ -111,7 +111,7 @@ export default defineComponent({
 	padding: 5px 5px 5px 20px;
 	font-size: 10pt;
 	background-color: #bc683c;
-	background-image: url('@/assets/icons/small_missAct.webp');
+	background-image: url('../../assets/icons/small_missAct.webp');
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
 	line-height: 10pt;

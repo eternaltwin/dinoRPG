@@ -1,5 +1,5 @@
-import EventBus from '@/events';
-import router from '@/router';
+import EventBus from '../events';
+import router from '../router';
 import axios from 'axios';
 
 export const errorHandler = {

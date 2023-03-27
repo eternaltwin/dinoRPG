@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import dinozSwf from '@/assets/swf/dino.swf';
-import sdinozSwf from '@/assets/swf/sdino.swf';
+import dinozSwf from '../../assets/swf/dino.swf';
+import sdinozSwf from '../../assets/swf/sdino.swf';
 
 export default defineComponent({
 	name: 'DinozSWF',
@@ -116,7 +116,7 @@ type FlashVars = {
 	position: absolute;
 	top: 35px;
 	left: 25px;
-	background-image: url('@/assets/button/button.webp');
+	background-image: url('../../assets/button/button.webp');
 	display: block;
 	margin-top: 3px;
 	margin-bottom: 2px;
@@ -132,7 +132,7 @@ type FlashVars = {
 	border-radius: 0px;
 	&:hover {
 		color: white;
-		background-image: url('@/assets/button/button_hover.webp');
+		background-image: url('../../assets/button/button_hover.webp');
 		background-color: transparent;
 	}
 }

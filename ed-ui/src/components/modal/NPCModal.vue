@@ -46,10 +46,10 @@ export default defineComponent({
 		cursor: pointer;
 		min-width: 528px;
 		background-repeat: repeat-y;
-		background-image: url('@/assets/background/dialog_bg_pix.webp');
+		background-image: url('../../assets/background/dialog_bg_pix.webp');
 
 		.headerBox {
-			background-image: url('@/assets/background/dialog_bg_header.webp');
+			background-image: url('../../assets/background/dialog_bg_header.webp');
 			background-repeat: no-repeat;
 			height: 30px;
 
@@ -66,7 +66,7 @@ export default defineComponent({
 		.footer {
 			min-height: 148px;
 			padding: 1px;
-			background-image: url('@/assets/background/dialog_bg_footer.webp');
+			background-image: url('../../assets/background/dialog_bg_footer.webp');
 			background-repeat: no-repeat;
 			background-position: bottom left;
 			overflow: hidden;
@@ -79,10 +79,10 @@ export default defineComponent({
 				font-size: 9pt;
 				line-height: 7pt;
 				width: 95px;
-				background-image: url('@/assets/button/button_small.webp');
+				background-image: url('../../assets/button/button_small.webp');
 
 				&:hover {
-					background-image: url('@/assets/button/button_small_hover.webp');
+					background-image: url('../../assets/button/button_small_hover.webp');
 				}
 			}
 

@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { OauthService } from '@/services';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
+import { OauthService } from '../services';
+import { sessionStore } from '../store';
+import EventBus from '../events';
 
 export default defineComponent({
 	name: 'Authentication',

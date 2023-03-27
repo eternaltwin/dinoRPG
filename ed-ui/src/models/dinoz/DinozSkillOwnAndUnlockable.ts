@@ -1,4 +1,4 @@
-import { DinozSkill } from '@/models';
+import { DinozSkill } from '../../models';
 
 export interface DinozSkillOwnAndUnlockable {
 	learnableSkills: Array<DinozSkill>;

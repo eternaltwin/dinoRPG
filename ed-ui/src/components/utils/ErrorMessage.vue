@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import EventBus from '@/events';
+import EventBus from '../../events';
 import { AxiosError } from 'axios';
 import { defineComponent } from 'vue';
 

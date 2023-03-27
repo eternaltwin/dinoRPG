@@ -1,4 +1,4 @@
-import { Dinoz, PlayerOptions } from '@/models';
+import { Dinoz, PlayerOptions } from '../../models';
 import { FightResult } from '../dinoz';
 
 export interface StoreStateSession {

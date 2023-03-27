@@ -141,21 +141,21 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import EventBus from '@/events';
-import { DinozService } from '@/services';
-import { errorHandler } from '@/utils';
-import { Dinoz, DinozSkillOwnAndUnlockable } from '@/models';
-import { dinozPlacement, skillNameList } from '@/constants';
-import { ElementType } from '@/enums';
-import { sessionStore } from '@/store';
+import EventBus from '../events';
+import { DinozService } from '../services';
+import { errorHandler } from '../utils';
+import { Dinoz, DinozSkillOwnAndUnlockable } from '../models';
+import { dinozPlacement, skillNameList } from '../constants';
+import { ElementType } from '../enums';
+import { sessionStore } from '../store';
 
 export default defineComponent({
 	name: 'LevelUp',
 	components: {
-		LevelUpGrid: defineAsyncComponent(() => import('@/components/dinoz/LevelUpGrid.vue')),
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		Elements: defineAsyncComponent(() => import('@/components/data/elements.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
+		LevelUpGrid: defineAsyncComponent(() => import('../components/dinoz/LevelUpGrid.vue')),
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
+		Elements: defineAsyncComponent(() => import('../components/data/elements.vue')),
+		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
@@ -414,7 +414,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('@/assets/background/table_header.webp');
+				background-image: url('../assets/background/table_header.webp');
 				background-position: left bottom;
 				&.name {
 					width: 330px;
@@ -432,7 +432,7 @@ export default defineComponent({
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
 				&.name {
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					//padding-left: 15px;
 					max-width: 337px;
@@ -450,7 +450,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
@@ -458,7 +458,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					text-decoration: underline;
 					background-repeat: no-repeat;

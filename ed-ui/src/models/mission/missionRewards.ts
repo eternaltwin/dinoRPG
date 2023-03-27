@@ -1,4 +1,4 @@
-import { RewardEnum } from '@/enums/index.js';
+import { RewardEnum } from '../../enums/index.js';
 
 export type missionRewards =
 	| {

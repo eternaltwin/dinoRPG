@@ -17,11 +17,11 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { PlayerService } from '@/services';
-import { errorHandler } from '@/utils';
-import { PlayerInfo } from '@/models';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
+import { PlayerService } from '../services';
+import { errorHandler } from '../utils';
+import { PlayerInfo } from '../models';
+import { sessionStore } from '../store';
+import EventBus from '../events';
 
 export default defineComponent({
 	name: 'MyAccount',
@@ -33,10 +33,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		MyDinoz: defineAsyncComponent(() => import('@/components/data/MyDinoz.vue')),
-		Profile: defineAsyncComponent(() => import('@/components/data/Profile.vue')),
-		EpicRewards: defineAsyncComponent(() => import('@/components/data/EpicRewards.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
+		MyDinoz: defineAsyncComponent(() => import('../components/data/MyDinoz.vue')),
+		Profile: defineAsyncComponent(() => import('../components/data/Profile.vue')),
+		EpicRewards: defineAsyncComponent(() => import('../components/data/EpicRewards.vue'))
 	},
 	async created(): Promise<void> {
 		const accountId = parseInt(this.$route.params.id.toString());
@@ -64,7 +64,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .smallbutton {
 	display: inline-block;
-	background-image: url('~@/assets/design/button_small.webp');
+	background-image: url('../assets/design/button_small.webp');
 	font-size: 9pt;
 	width: 80px;
 	padding-top: 5px;
@@ -80,7 +80,7 @@ export default defineComponent({
 	text-align: center;
 	text-decoration: none;
 	&:hover {
-		background-image: url('~@/assets/design/button_small_hover.webp');
+		background-image: url('../assets/design/button_small_hover.webp');
 	}
 }
 .filler {

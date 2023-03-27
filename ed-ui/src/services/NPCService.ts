@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { NpcTalk } from '@/models';
+import { http } from '../utils';
+import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 
 export const NPCService = {
 	talkTo(dinoz: number, npc: string, step: string, stop?: boolean): Promise<NpcTalk> {

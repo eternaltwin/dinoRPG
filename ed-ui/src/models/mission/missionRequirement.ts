@@ -1,4 +1,4 @@
-import { MissionEnum } from '@/enums/index.js';
+import { MissionEnum } from '../../enums/index.js';
 
 export interface missionRequirement {
 	actionType: MissionEnum;

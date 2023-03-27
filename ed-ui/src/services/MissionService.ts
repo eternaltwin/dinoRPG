@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { MissionList, missionRewards } from '@/models';
+import { http } from '../utils';
+import { MissionList, missionRewards } from '../models';
 
 export const MissionService = {
 	getMissions(id: string, npc: string): Promise<Array<MissionList>> {

@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "composite": true,
+    "target": "es2021",
+    "module": "Node16",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
@@ -15,11 +16,8 @@
     "types": ["node", "vite/client"],
     "isolatedModules": true,
     "useDefineForClassFields": true,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
+    "declaration": false,
+    "outDir": "./dist/ts",
     "lib": [
       "esnext",
       "dom",
@@ -34,7 +32,13 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
+  "exclude": [],
+  "references": [
+    {
+      "path": "./tsconfig.deps.json"
+    },
+    {
+      "path": "../core"
+    }
   ]
 }

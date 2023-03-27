@@ -1,4 +1,4 @@
-import { Dinoz, FightResult, PlayerOptions, StoreStateSession } from '@/models';
+import { Dinoz, FightResult, PlayerOptions, StoreStateSession } from '../models';
 import { defineStore } from 'pinia';
 
 export const sessionStore = defineStore('sessionStore', {

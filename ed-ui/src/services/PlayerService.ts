@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { CommonData, PlayerInfo, PlayerRanking } from '@/models';
+import { http } from '../utils';
+import { CommonData, PlayerInfo, PlayerRanking } from '../models';
 
 export const PlayerService = {
 	getLoggedInData(): Promise<CommonData> {
