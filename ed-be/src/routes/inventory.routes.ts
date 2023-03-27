@@ -36,8 +36,7 @@ routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 		const response: Array<ItemFiche> = await getAllItemsData(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
@@ -85,7 +84,7 @@ routes.get(
 			const response: void = await useItem(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

@@ -5,7 +5,7 @@
    "main": "src/server.ts",
    "type": "module",
    "scripts": {
-      "serve": "yarn run prettier && concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/server.js\"",
+      "serve": "yarn run prettier && tsc-watch --build ./tsconfig.json --onSuccess \"node dist/server.js\"",
       "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
       "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
       "test:ci": "tsc && NODE_ENV=development jest --config ./jest.config.json --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --watchAll=false",
@@ -27,6 +27,7 @@
    "author": "Jolujolu",
    "license": "ISC",
    "dependencies": {
+      "@drpg/core": "workspace:^*",
       "@eternal-twin/core": "^0.10.3",
       "@eternal-twin/etwin-client-http": "^0.10.3",
       "@eternal-twin/oauth-client-http": "^0.10.3",
@@ -76,7 +77,8 @@
       "nodemon": "^2.0.7",
       "prettier": "2.2.1",
       "ts-jest": "^26.5.5",
-      "ts-node": "10.9.1",
+      "ts-node": "^10.9.1",
+      "tsc-watch": "^6.0.0",
       "typescript": "4.7.4"
    },
    "packageManager": "yarn@3.1.0"

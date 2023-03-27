@@ -70,7 +70,7 @@ routes.put(
 			const dialogue: NpcTalk = await getNpcSpeech(req);
 			res.status(200).send(dialogue);
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

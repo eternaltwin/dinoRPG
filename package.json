@@ -33,7 +33,8 @@
         "packages": [
             "ed-be/",
             "native/",
-            "ed-ui/"
+            "ed-ui/",
+            "core/"
         ]
     },
     "packageManager": "yarn@3.2.3",

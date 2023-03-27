@@ -13,6 +13,7 @@ import {
 	setDinozPlaceRequest
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
+import { ShopType } from '../models/index.js';
 import {
 	ActionFiche,
 	DigData,
@@ -22,11 +23,10 @@ import {
 	FightResult,
 	Npc,
 	Place,
-	RewardEnum,
 	Rewarder,
-	ShopFiche,
-	ShopType
-} from '../models/index.js';
+	RewardEnum,
+	ShopFiche
+} from '@drpg/core';
 import {
 	actionList,
 	itemList,

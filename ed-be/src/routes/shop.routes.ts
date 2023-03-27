@@ -21,7 +21,7 @@ routes.get(`${commonPath}/dinoz`, async (req: Request, res: Response) => {
 		const listItems: Array<DinozShopFiche> = await getDinozFromDinozShop(req);
 		res.status(200).send(listItems);
 	} catch (err) {
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
@@ -40,7 +40,7 @@ routes.get(
 			const listItems: Array<ItemFiche> = await getItemsFromShop(req);
 			res.status(200).send(listItems);
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -64,7 +64,7 @@ routes.put(
 			await buyItem(req);
 			res.status(200).send();
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

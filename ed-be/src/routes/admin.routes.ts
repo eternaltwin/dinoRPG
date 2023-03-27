@@ -28,9 +28,9 @@ routes.get(`${commonPath}/dashboard`, checkIsAdmin, async (req: Request, res: Re
 		const response: boolean = await getAdminDashBoard(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		err.cause !== undefined ? res.status(401) : res.status(500);
-		return res.send(err.message);
+		const e = err as ErrorFormator;
+		console.error(e.message);
+		return res.status(e.errorCode).send(e.message);
 	}
 });
 
@@ -62,8 +62,7 @@ routes.put(
 			await editDinoz(req);
 			return res.status(200).send();
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -87,8 +86,7 @@ routes.put(
 			const response: string = await setPlayerMoney(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -112,8 +110,7 @@ routes.put(
 			await givePlayerEpicReward(req);
 			return res.status(200).send();
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -133,8 +130,7 @@ routes.get(
 			const response: Array<DinozFiche> = await listAllDinozFromPlayer(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -166,8 +162,7 @@ routes.put(
 			await editPlayer(req);
 			return res.status(200).send();
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -187,8 +182,7 @@ routes.get(
 			const response: Partial<PlayerTypeToSend> = await listAllPlayerInformationForAdminDashboard(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

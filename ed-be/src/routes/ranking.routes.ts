@@ -53,8 +53,7 @@ routes.get(
 			const response: Array<PlayerRanking> = await getRanking(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

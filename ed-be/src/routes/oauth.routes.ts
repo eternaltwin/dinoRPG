@@ -26,8 +26,8 @@ routes.post(`${commonPath}/redirect`, async (_req: Request, res: Response) => {
 		const response: URL = await getAuthorizationUri();
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
+		console.error(e.message);
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
@@ -62,8 +62,8 @@ routes.put(`${commonPath}/authenticate/eternal-twin`, async (req: Request, res: 
 		const response: string = await authenticateToET(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
+		console.error(e.message);
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}

@@ -1,0 +1,12 @@
+{
+  "name": "@drpg/core",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile": "tsc"
+  },
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "typescript": "4.7.4"
+  }
+}

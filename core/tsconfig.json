@@ -1,0 +1,25 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "target": "esnext",
+    "lib": ["ESNext"],
+    "moduleResolution": "Node16",
+    "sourceMap": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "useUnknownInCatchVariables": false
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": ["dist", "node_modules"]
+}

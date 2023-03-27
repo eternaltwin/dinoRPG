@@ -53,7 +53,7 @@ routes.get(
 			const response = await getLearnableAndUnlockableSkills(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -119,7 +119,7 @@ routes.post(
 			const response: string = await learnSkill(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
