@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { FightResult } from '@/models';
+import { http } from '../utils';
+import { FightResult } from '../models';
 
 export const FightService = {
 	processFight(dinozId: number): Promise<FightResult> {

@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { Dinoz, FightResult, Skill, DinozSkillOwnAndUnlockable, missionRewards } from '@/models';
+import { http } from '../utils';
+import { Dinoz, FightResult, Skill, DinozSkillOwnAndUnlockable, missionRewards } from '../models';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<Dinoz> {

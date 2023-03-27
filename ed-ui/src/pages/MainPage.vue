@@ -35,13 +35,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import LeftPanel from '@/components/common/LeftPanel.vue';
-import RightMenu from '@/components/common/RightMenu.vue';
-import { sessionStore } from '@/store';
-import { CommonData } from '@/models';
-import { errorHandler } from '@/utils';
-import { PlayerService } from '@/services';
-import EventBus from '@/events';
+import LeftPanel from '../components/common/LeftPanel.vue';
+import RightMenu from '../components/common/RightMenu.vue';
+import { sessionStore } from '../store';
+import { CommonData } from '../models';
+import { errorHandler } from '../utils';
+import { PlayerService } from '../services';
+import EventBus from '../events';
 
 export default defineComponent({
 	name: 'MainPage',

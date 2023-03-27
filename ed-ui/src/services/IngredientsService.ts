@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { IngredientFiche } from '@/models';
+import { http } from '../utils';
+import { IngredientFiche } from '../models';
 
 export const IngredientsService = {
 	getAllIngredients(): Promise<Array<IngredientFiche>> {

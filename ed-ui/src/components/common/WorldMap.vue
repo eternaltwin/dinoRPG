@@ -49,12 +49,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { placeList } from '@/constants';
-import { Dinoz, FightResult, Place, svgLines } from '@/models';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
-import { DinozService } from '@/services';
-import { errorHandler } from '@/utils';
+import { placeList } from '../../constants';
+import { Dinoz, FightResult, Place, svgLines } from '../../models';
+import { sessionStore } from '../../store';
+import EventBus from '../../events';
+import { DinozService } from '../../services';
+import { errorHandler } from '../../utils';
 
 export default defineComponent({
 	name: 'WorldMap',

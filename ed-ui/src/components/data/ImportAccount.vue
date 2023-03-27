@@ -19,10 +19,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '@/events';
-import { PlayerService } from '@/services';
-import { errorHandler } from '@/utils';
-import { sessionStore } from '@/store';
+import EventBus from '../../events';
+import { PlayerService } from '../../services';
+import { errorHandler } from '../../utils';
+import { sessionStore } from '../../store';
 
 export default defineComponent({
 	name: 'ImportAccount',
@@ -130,7 +130,7 @@ export default defineComponent({
 	margin-bottom: 5px;
 }
 .smallbutton {
-	background-image: url('@/assets/design/button_small.webp');
+	background-image: url('../../assets/design/button_small.webp');
 	padding-top: 4px;
 	font-size: 9pt;
 	line-height: 7pt;
@@ -147,7 +147,7 @@ export default defineComponent({
 	padding-left: 10px;
 	cursor: pointer;
 	&:hover {
-		background-image: url('@/assets/design/button_small_hover.webp');
+		background-image: url('../../assets/design/button_small_hover.webp');
 	}
 }
 </style>

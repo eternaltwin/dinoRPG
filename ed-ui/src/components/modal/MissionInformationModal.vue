@@ -22,12 +22,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { missionsList } from '@/constants/index.js';
-import { Dinoz, MissionList } from '@/models/index.js';
-import { sessionStore } from '@/store/index.js';
-import { MissionService } from '@/services/index.js';
-import EventBus from '@/events/index.js';
-import { errorHandler } from '@/utils/index.js';
+import { missionsList } from '../../constants/index.js';
+import { Dinoz, MissionList } from '../../models/index.js';
+import { sessionStore } from '../../store/index.js';
+import { MissionService } from '../../services/index.js';
+import EventBus from '../../events/index.js';
+import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
 	name: 'MissionInformationModal',
@@ -89,7 +89,7 @@ export default defineComponent({
 	align-items: center;
 
 	.modal-box {
-		background-image: url('@/assets/background/mission.webp');
+		background-image: url('../../assets/background/mission.webp');
 		background-repeat: no-repeat;
 		width: 394px;
 		height: 296px;

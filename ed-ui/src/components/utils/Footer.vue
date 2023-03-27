@@ -171,7 +171,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { developers, helpers } from '@/constants/index.js';
+import { developers, helpers } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'FooterComp',
@@ -243,7 +243,7 @@ footer {
 	align-items: stretch;
 
 	padding: 3.9rem 1.35rem 6rem;
-	background-image: url('@/assets/background/sky_footer_blue.webp');
+	background-image: url('../../assets/background/sky_footer_blue.webp');
 	background-repeat: repeat-x;
 	background-position: bottom center;
 }

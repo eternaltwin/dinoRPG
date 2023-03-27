@@ -19,7 +19,7 @@
 					>{{ dinoz.name }}
 					<img
 						v-if="dinoz.experience >= dinoz.maxExperience && dinoz.maxExperience !== 0"
-						src="@/assets/icons/small_lup.webp"
+						src="../../assets/icons/small_lup.webp"
 						v-tippy="{
 							content: formatContent($t('levelup.small')),
 							theme: 'small'
@@ -34,9 +34,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Dinoz } from '@/models';
-import { sessionStore } from '@/store';
-import { placeList } from '@/constants';
+import { Dinoz } from '../../models';
+import { sessionStore } from '../../store';
+import { placeList } from '../../constants';
 
 export default defineComponent({
 	name: 'DinozList',

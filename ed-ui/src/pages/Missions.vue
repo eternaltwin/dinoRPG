@@ -42,19 +42,19 @@
 
 <script lang="ts">
 import { defineComponent, defineAsyncComponent } from 'vue';
-import { MissionList } from '@/models/index.js';
-import EventBus from '@/events/index.js';
-import { MissionService } from '@/services/index.js';
-import { errorHandler } from '@/utils/index.js';
-import { missionsList } from '@/constants/index.js';
-import MissionInformation from '@/components/modal/MissionInformationModal.vue';
-import { sessionStore } from '@/store/index.js';
+import { MissionList } from '../models/index.js';
+import EventBus from '../events/index.js';
+import { MissionService } from '../services/index.js';
+import { errorHandler } from '../utils/index.js';
+import { missionsList } from '../constants/index.js';
+import MissionInformation from '../components/modal/MissionInformationModal.vue';
+import { sessionStore } from '../store/index.js';
 
 export default defineComponent({
 	name: 'Missions',
 	components: {
 		MissionInformation,
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
 	},
 	data() {
 		return {
@@ -145,7 +145,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('@/assets/background/table_header.webp');
+			background-image: url('../assets/background/table_header.webp');
 			background-position: left bottom;
 
 			//&.name {
@@ -167,7 +167,7 @@ table {
 			border: 1px solid #c88f44;
 
 			&.name {
-				background-image: url('@/assets/background/table_cell.webp');
+				background-image: url('../assets/background/table_cell.webp');
 				background-position: 0px 0px;
 				padding-left: 15px;
 
@@ -187,11 +187,11 @@ table {
 				font-weight: bold;
 				text-align: center;
 				color: #bc683c;
-				background-image: url('@/assets/background/table_cell.webp');
+				background-image: url('../assets/background/table_cell.webp');
 				background-position: -10px 0px;
 				max-width: 4px;
 			}
-			background-image: url('@/assets/background/table_cell.webp');
+			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
 		}
 		&.available {
@@ -209,7 +209,7 @@ table {
 		&.unavailable {
 			font-style: normal;
 			td {
-				background-image: url('@/assets/background/table_cell_off.webp');
+				background-image: url('../assets/background/table_cell_off.webp');
 				color: #db9c57;
 				border-color: #e6b57b;
 				font-style: italic;
@@ -217,7 +217,7 @@ table {
 		}
 		&.ongoing {
 			td {
-				background-image: url('@/assets/background/table_cell_hover.webp');
+				background-image: url('../assets/background/table_cell_hover.webp');
 				border-color: #7a261b;
 				font-style: italic;
 				color: #fffdba;

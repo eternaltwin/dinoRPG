@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { statusList } from '@/constants';
+import { statusList } from '../../constants';
 
 export default defineComponent({
 	name: 'DinozStatus',
@@ -50,7 +50,7 @@ export default defineComponent({
 	.fx_top {
 		width: 223px;
 		height: 28px;
-		background: url('@/assets/background/box_header.webp') no-repeat;
+		background: url('../../assets/background/box_header.webp') no-repeat;
 		p {
 			color: white;
 			padding-left: 2px;

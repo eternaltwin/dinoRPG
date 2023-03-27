@@ -12,8 +12,8 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz } from '@/models';
-import { placeList } from '@/constants';
+import { Dinoz } from '../../models';
+import { placeList } from '../../constants';
 
 export default defineComponent({
 	name: 'MapTab',
@@ -24,7 +24,7 @@ export default defineComponent({
 	},
 	props: { dinozData: Object as PropType<Dinoz> },
 	components: {
-		WorldMap: defineAsyncComponent(() => import('@/components/common/WorldMap.vue'))
+		WorldMap: defineAsyncComponent(() => import('../../components/common/WorldMap.vue'))
 	},
 	methods: {
 		getPlaceName(placeId: number): string {

@@ -19,11 +19,11 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { Dinoz } from '@/models';
-import { errorHandler } from '@/utils';
-import { DinozService } from '@/services';
-import EventBus from '@/events';
-import { sessionStore } from '@/store';
+import { Dinoz } from '../models';
+import { errorHandler } from '../utils';
+import { DinozService } from '../services';
+import EventBus from '../events';
+import { sessionStore } from '../store';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -35,10 +35,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		ChooseDinozName: defineAsyncComponent(() => import('@/components/dinoz/chooseDinozName.vue')),
-		DinozDisplay: defineAsyncComponent(() => import('@/components/dinoz/dinozDisplay.vue')),
-		DinozActions: defineAsyncComponent(() => import('@/components/dinoz/dinozActions.vue')),
-		TabPanel: defineAsyncComponent(() => import('@/components/common/TabPanel.vue'))
+		ChooseDinozName: defineAsyncComponent(() => import('../components/dinoz/chooseDinozName.vue')),
+		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/dinozDisplay.vue')),
+		DinozActions: defineAsyncComponent(() => import('../components/dinoz/dinozActions.vue')),
+		TabPanel: defineAsyncComponent(() => import('../components/common/TabPanel.vue'))
 	},
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
@@ -104,7 +104,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozPanels {
-	background-image: url('@/assets/design/dinoz_panels_bg.webp');
+	background-image: url('../assets/design/dinoz_panels_bg.webp');
 	background-repeat: repeat-y;
 	display: flex;
 	flex-wrap: wrap;
@@ -121,11 +121,11 @@ export default defineComponent({
 	.footer {
 		height: 24px;
 		width: 100%;
-		background-image: url('@/assets/design/dinoz_footer.webp');
+		background-image: url('../assets/design/dinoz_footer.webp');
 	}
 }
 .dinoz {
-	background-image: url('@/assets/background/dinoz_bg_cut.webp');
+	background-image: url('../assets/background/dinoz_bg_cut.webp');
 	background-repeat: no-repeat;
 	min-height: 265px;
 }

@@ -77,15 +77,15 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { missionsList, npcNameList, shopNameList } from '@/constants';
-import { Action, FightResult, missionRewards } from '@/models';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
-import { DinozService, FightService, MissionService } from '@/services';
-import { errorHandler } from '@/utils/index.js';
-import { MissionEnum, RewardEnum } from '@/enums/index.js';
-import { formatText } from '@/utils/formatText.js';
-import { mixin } from '@/mixin/mixin.js';
+import { missionsList, npcNameList, shopNameList } from '../../constants';
+import { Action, FightResult, missionRewards } from '../../models';
+import { sessionStore } from '../../store';
+import EventBus from '../../events';
+import { DinozService, FightService, MissionService } from '../../services';
+import { errorHandler } from '../../utils/index.js';
+import { MissionEnum, RewardEnum } from '../../enums/index.js';
+import { formatText } from '../../utils/formatText.js';
+import { mixin } from '../../mixin/mixin.js';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -105,10 +105,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Resurrect: defineAsyncComponent(() => import('@/components/modal/ResurrectModal.vue')),
-		MissionHUD: defineAsyncComponent(() => import('@/components/dinoz/MissionHUD.vue')),
-		NPCModal: defineAsyncComponent(() => import('@/components/modal/NPCModal.vue')),
-		MissionRewardModal: defineAsyncComponent(() => import('@/components/modal/MissionRewardModal.vue'))
+		Resurrect: defineAsyncComponent(() => import('../../components/modal/ResurrectModal.vue')),
+		MissionHUD: defineAsyncComponent(() => import('../../components/dinoz/MissionHUD.vue')),
+		NPCModal: defineAsyncComponent(() => import('../../components/modal/NPCModal.vue')),
+		MissionRewardModal: defineAsyncComponent(() => import('../../components/modal/MissionRewardModal.vue'))
 	},
 	props: {
 		dinozActions: Object as PropType<Array<Action>>,
@@ -211,8 +211,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .actions {
-	background: url('@/assets/background/banniere_left.webp') no-repeat,
-		url('@/assets/background/banniere_right.webp') no-repeat, url('@/assets/background/banniere_middle.webp') repeat-x;
+	background: url('../../assets/background/banniere_left.webp') no-repeat,
+		url('../../assets/background/banniere_right.webp') no-repeat,
+		url('../../assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left;
 	float: left;
 	left: 12px;

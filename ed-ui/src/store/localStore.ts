@@ -1,4 +1,4 @@
-import { StoreStateLocal } from '@/models';
+import { StoreStateLocal } from '../models';
 import { defineStore } from 'pinia';
 
 export const localStore = defineStore('localStore', {

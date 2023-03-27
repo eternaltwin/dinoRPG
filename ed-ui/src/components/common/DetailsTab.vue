@@ -70,7 +70,7 @@
 							/>
 							<img
 								v-else
-								src="@/assets/icons/small_skill_inactive.webp"
+								src="../../assets/icons/small_skill_inactive.webp"
 								v-tippy="{
 									content: formatContent($t(`details.activate.locked`)),
 									theme: 'small'
@@ -86,12 +86,12 @@
 
 <script lang="ts" scoped>
 import { defineComponent, PropType } from 'vue';
-import { statusList, skillNameList } from '@/constants';
-import { Dinoz, Skill } from '@/models';
-import { DinozService } from '@/services';
-import { errorHandler } from '@/utils';
-import EventBus from '@/events';
-import { ElementType } from '@/enums';
+import { statusList, skillNameList } from '../../constants';
+import { Dinoz, Skill } from '../../models';
+import { DinozService } from '../../services';
+import { errorHandler } from '../../utils';
+import EventBus from '../../events';
+import { ElementType } from '../../enums';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -233,7 +233,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('@/assets/background/table_header.webp');
+				background-image: url('../../assets/background/table_header.webp');
 				background-position: left bottom;
 				max-width: 222px;
 				&.name {
@@ -255,7 +255,7 @@ export default defineComponent({
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
 				&.name {
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					padding-left: 15px;
 					max-width: 222px;
@@ -273,7 +273,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
@@ -287,7 +287,7 @@ export default defineComponent({
 						top: 5px;
 						cursor: help;
 					}
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 				}
 			}

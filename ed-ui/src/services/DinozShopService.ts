@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { DinozShop } from '@/models';
+import { http } from '../utils';
+import { DinozShop } from '../models';
 export const DinozShopService = {
 	getDinozFromDinozShop(): Promise<Array<DinozShop>> {
 		return http()

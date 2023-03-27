@@ -34,8 +34,8 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 export default defineComponent({
 	name: 'Ranking',
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		PlayerRanking: defineAsyncComponent(() => import('@/components/rankings/PlayerRanking.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
+		PlayerRanking: defineAsyncComponent(() => import('../components/rankings/PlayerRanking.vue'))
 	},
 	data() {
 		return {

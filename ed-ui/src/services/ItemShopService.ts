@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { Item } from '@/models';
+import { http } from '../utils';
+import { Item } from '../models';
 export const ItemShopService = {
 	getItemFromItemShop(shopId: number): Promise<Array<Item>> {
 		return http()

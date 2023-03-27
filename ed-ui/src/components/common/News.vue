@@ -15,11 +15,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '@/events';
-import { NewsService } from '@/services';
-import { errorHandler } from '@/utils';
-import { AllNews, Image, News } from '@/models';
-import { localStore } from '@/store';
+import EventBus from '../../events';
+import { NewsService } from '../../services';
+import { errorHandler } from '../../utils';
+import { AllNews, Image, News } from '../../models';
+import { localStore } from '../../store';
 
 export default defineComponent({
 	name: 'News',
@@ -121,7 +121,7 @@ export default defineComponent({
 	}
 }
 .bloc {
-	background-image: url('@/assets/background/bloc_news.webp');
+	background-image: url('../../assets/background/bloc_news.webp');
 	background-repeat: repeat-y;
 	margin-bottom: 10px;
 	margin-right: 10px;

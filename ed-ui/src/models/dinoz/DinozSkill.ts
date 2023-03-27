@@ -1,4 +1,4 @@
-import { ElementType, SkillType } from '@/enums';
+import { ElementType, SkillType } from '../../enums';
 
 export interface DinozSkill {
 	skillId: number;

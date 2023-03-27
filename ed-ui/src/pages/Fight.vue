@@ -46,12 +46,12 @@
 </template>
 
 <script lang="ts">
-import { Dinoz, FightResult } from '@/models';
-import { FightService } from '@/services';
-import { localStore, sessionStore } from '@/store';
-import TitleHeader from '@/components/utils/TitleHeader.vue';
-import { errorHandler } from '@/utils';
-import EventBus from '@/events';
+import { Dinoz, FightResult } from '../models';
+import { FightService } from '../services';
+import { localStore, sessionStore } from '../store';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import { errorHandler } from '../utils';
+import EventBus from '../events';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -149,19 +149,19 @@ export default defineComponent({
 }
 
 .fr {
-	background-image: url('@/assets/background/debriefing_fr.webp');
+	background-image: url('../assets/background/debriefing_fr.webp');
 	background-repeat: no-repeat;
 }
 .es {
-	background-image: url('@/assets/background/debriefing_es.webp');
+	background-image: url('../assets/background/debriefing_es.webp');
 	background-repeat: no-repeat;
 }
 .en {
-	background-image: url('@/assets/background/debriefing_en.webp');
+	background-image: url('../assets/background/debriefing_en.webp');
 	background-repeat: no-repeat;
 }
 .de {
-	background-image: url('@/assets/background/debriefing_de.webp');
+	background-image: url('../assets/background/debriefing_de.webp');
 	background-repeat: no-repeat;
 }
 .filler {

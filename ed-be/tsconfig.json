@@ -16,8 +16,7 @@
     "composite": true,
     "useUnknownInCatchVariables": false,
     "rootDir": "src",
-    "outDir": "dist",
-    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo"
+    "outDir": "dist"
   },
   "include": ["./src/**/*.ts"],
   "exclude": [],

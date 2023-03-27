@@ -12,8 +12,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Locales } from '@/i18n';
-import { localStore } from '@/store';
+import { Locales } from '../../i18n';
+import { localStore } from '../../store';
 
 export default defineComponent({
 	name: 'LocaleChange',

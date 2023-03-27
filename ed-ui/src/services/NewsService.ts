@@ -1,5 +1,5 @@
-import { http } from '@/utils';
-import { AllNews } from '@/models';
+import { http } from '../utils';
+import { AllNews } from '../models';
 
 export const NewsService = {
 	getNewsFromPage(page: number): Promise<Array<Partial<AllNews>>> {

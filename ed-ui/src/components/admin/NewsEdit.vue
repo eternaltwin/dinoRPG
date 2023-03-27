@@ -55,10 +55,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NewsService } from '@/services';
-import { AllNews } from '@/models';
-import EventBus from '@/events';
-import { errorHandler } from '@/utils';
+import { NewsService } from '../../services';
+import { AllNews } from '../../models';
+import EventBus from '../../events';
+import { errorHandler } from '../../utils';
 
 export default defineComponent({
 	name: 'NewsEdit',
@@ -165,7 +165,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('@/assets/background/table_header.webp');
+			background-image: url('../../assets/background/table_header.webp');
 			background-position: left bottom;
 			max-width: 222px;
 		}

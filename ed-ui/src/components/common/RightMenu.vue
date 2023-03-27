@@ -51,8 +51,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import LocaleChange from '@/components/utils/LocaleChange.vue';
-import { sessionStore } from '@/store';
+import LocaleChange from '../../components/utils/LocaleChange.vue';
+import { sessionStore } from '../../store';
 
 export default defineComponent({
 	name: 'RightMenu',
@@ -114,8 +114,8 @@ export default defineComponent({
 	top: -25px;
 	padding-left: 15px;
 	padding-top: 15px;
-	background: url('@/assets/design/sideMenu_header.webp') no-repeat,
-		url('@/assets/design/sideMenu_footer.webp') no-repeat, url('@/assets/design/sideMenu_bg.webp') repeat-y;
+	background: url('../../assets/design/sideMenu_header.webp') no-repeat,
+		url('../../assets/design/sideMenu_footer.webp') no-repeat, url('../../assets/design/sideMenu_bg.webp') repeat-y;
 	background-position-y: top, bottom;
 	display: block;
 	list-style: none;
@@ -188,7 +188,7 @@ export default defineComponent({
 	height: 16px;
 	padding-left: 20px;
 	font-size: 10pt;
-	background-image: url('@/assets/design/small_chrono.webp');
+	background-image: url('../../assets/design/small_chrono.webp');
 	background-repeat: no-repeat;
 	margin-left: 3px;
 	line-height: 12px;

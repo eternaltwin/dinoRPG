@@ -165,11 +165,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { AdminService } from '@/services';
-import { Dinoz, DinozEdit } from '@/models';
-import { skillNameList, statusList } from '@/constants';
-import { errorHandler } from '@/utils';
-import EventBus from '@/events';
+import { AdminService } from '../../services';
+import { Dinoz, DinozEdit } from '../../models';
+import { skillNameList, statusList } from '../../constants';
+import { errorHandler } from '../../utils';
+import EventBus from '../../events';
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -318,7 +318,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('@/assets/background/table_header.webp');
+			background-image: url('../../assets/background/table_header.webp');
 			background-position: left bottom;
 			max-width: 222px;
 		}

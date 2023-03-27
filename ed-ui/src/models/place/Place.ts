@@ -1,4 +1,4 @@
-import { Map, PlaceIcon } from '@/enums';
+import { Map, PlaceIcon } from '../../enums';
 
 export interface Place {
 	placeId: number;

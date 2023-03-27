@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "ts-out"
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
+}
