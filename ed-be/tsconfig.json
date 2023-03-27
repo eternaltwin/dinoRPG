@@ -15,11 +15,12 @@
     "skipLibCheck": true,
     "composite": true,
     "useUnknownInCatchVariables": false,
+    "rootDir": "src",
     "outDir": "dist",
-    "rootDir": "src"
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist", "node_modules"],
+  "include": ["./src/**/*.ts"],
+  "exclude": [],
   "references": [
     {
       "path": "../core"

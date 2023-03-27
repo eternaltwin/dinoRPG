@@ -19,7 +19,7 @@ const getAllIngredientsData = async (req: Request): Promise<Array<Partial<Ingred
 		)!;
 
 		return {
-			name: ingredientFound[0].toLowerCase(),
+			name: ingredientFound[0].toLowerCase() as Lowercase<string>,
 			quantity: ingr.quantity,
 			maxQuantity: ingredientFound[1].maxQuantity
 		};

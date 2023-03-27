@@ -1,45 +1,45 @@
 {
-    "name": "@eternaltwin/dinorpg-monorepo",
-    "private": true,
-    "licenses": [
-        {
-            "type": "AGPL-3.0-or-later",
-            "url": "https://spdx.org/licenses/AGPL-3.0-or-later.html"
-        }
-    ],
-    "engines": {
-        "node": ">=18"
-    },
-    "scripts": {
-        "start:back": "cd ed-be && yarn run serve",
-        "start:front": "cd ed-ui && yarn run serve",
-        "serve": "concurrently -k -n \"back,front\" -p \"[{name}]\" -c \"blue,green,orange\" \"yarn run start:back\" \"yarn run start:front\"",
-        "build:back": "cd ed-be && yarn run build",
-        "build:front": "cd ed-ui && yarn run build",
-        "build:native": "cd native && yarn run build",
-        "build:native-debug": "cd native && yarn run build-debug",
-        "build:ci": "cd native && yarn run build:ci",
-        "build:gitlab": "yarn run build:ci && yarn run build:back && yarn run build:front",
-        "build": "yarn run build:native && yarn run build:back && yarn run build:front",
-        "build-debug": "yarn run build:native-debug && yarn run build:back && yarn run build:front",
-        "migration": "cd ed-be && yarn run run:migration",
-        "etwin": "cd Eternaltwin && yarn run etwin db upgrade",
-        "test:ci": "cd ed-be && yarn run test:ci",
-        "coverage": "cd ed-be && yarn run coverage",
-        "lint:test": "cd ed-ui && yarn lint:test",
-        "lint:fix": "cd ed-ui && yarn lint:fix"
-    },
-    "workspaces": {
-        "packages": [
-            "ed-be/",
-            "native/",
-            "ed-ui/",
-            "core/"
-        ]
-    },
-    "packageManager": "yarn@3.2.3",
-    "devDependencies": {
-        "concurrently": "^6.0.0",
-        "typescript": "^4.7.4"
+  "name": "@eternaltwin/dinorpg-monorepo",
+  "private": true,
+  "licenses": [
+    {
+      "type": "AGPL-3.0-or-later",
+      "url": "https://spdx.org/licenses/AGPL-3.0-or-later.html"
     }
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start:back": "cd ed-be && yarn run serve",
+    "start:front": "cd ed-ui && yarn run serve",
+    "serve": "concurrently -k -n \"back,front\" -p \"[{name}]\" -c \"blue,green,orange\" \"yarn run start:back\" \"yarn run start:front\"",
+    "build:back": "cd ed-be && yarn run build",
+    "build:front": "cd ed-ui && yarn run build",
+    "build:native": "cd native && yarn run build",
+    "build:native-debug": "cd native && yarn run build-debug",
+    "build:ci": "cd native && yarn run build:ci",
+    "build:gitlab": "yarn run build:ci && yarn run build:back && yarn run build:front",
+    "build": "yarn run build:native && yarn run build:back && yarn run build:front",
+    "build-debug": "yarn run build:native-debug && yarn run build:back && yarn run build:front",
+    "migration": "cd ed-be && yarn run run:migration",
+    "etwin": "cd Eternaltwin && yarn run etwin db upgrade",
+    "test:ci": "cd ed-be && yarn run test:ci",
+    "coverage": "cd ed-be && yarn run coverage",
+    "lint:test": "cd ed-ui && yarn lint:test",
+    "lint:fix": "cd ed-ui && yarn lint:fix"
+  },
+  "workspaces": {
+    "packages": [
+      "ed-be/",
+      "native/",
+      "ed-ui/",
+      "core/"
+    ]
+  },
+  "packageManager": "yarn@3.5.0",
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "typescript": "^5.0.2"
+  }
 }
