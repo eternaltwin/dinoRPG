@@ -1,4 +1,4 @@
-import { missionRequirement } from '@drpg/core';
+import { missionRequirement } from '../../models/index.js';
 
 export interface Dinoz {
 	id?: number;

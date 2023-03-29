@@ -28,7 +28,7 @@ import { defineComponent, defineAsyncComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { NPCService } from '../services/index.js';
-import { NpcTalk } from '@drpg/core';
+import { NpcTalk } from '../models/index.js';
 import { NavigationFailure } from 'vue-router';
 
 export default defineComponent({

@@ -16,7 +16,7 @@
     "types": ["node", "vite/client"],
     "isolatedModules": true,
     "useDefineForClassFields": true,
-    "declaration": false,
+    "declaration": true,
     "outDir": "./dist/ts",
     "lib": [
       "esnext",

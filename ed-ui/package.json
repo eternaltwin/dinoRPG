@@ -6,7 +6,7 @@
     "serve": "concurrently -k -n \"vite,deps\" -p \"[{name}]\" \"yarn run serve:app\" \"yarn run serve:deps\"",
     "serve:app": "yarn run build:deps && yarn run lint:fix && vite --host",
     "serve:deps": "yarn run build:deps --watch",
-    "build": "yarn run build:deps && CHECK_TS=true vite build",
+    "build": "yarn run build:deps && vite build",
     "build:deps": "tsc --project ./tsconfig.deps.json --noEmit",
     "preview": "vite preview",
     "lint:test": "eslint --ext .ts,vue --ignore-path .gitignore .",

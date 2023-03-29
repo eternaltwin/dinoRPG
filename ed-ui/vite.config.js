@@ -7,7 +7,7 @@ const STATIC_DIR = 'public';
 export default defineConfig(() => {
   return {
     plugins: [
-      ...(process.env["CHECK_TS"] === "true" ? [typescript()] : []),
+      typescript(),
       vue()
     ],
     publicDir: STATIC_DIR,

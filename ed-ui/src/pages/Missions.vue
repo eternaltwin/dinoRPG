@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { defineComponent, defineAsyncComponent } from 'vue';
-import { MissionList } from '@drpg/core';
+import { MissionList } from '../models/index.js';
 import EventBus from '../events/index.js';
 import { MissionService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
