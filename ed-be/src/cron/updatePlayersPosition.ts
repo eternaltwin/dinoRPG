@@ -1,7 +1,7 @@
 import cron, { CronJob } from 'cron';
 import { getPlayersPoints, updateRanking } from '../dao/rankingDao.js';
 import { Ranking } from '../entity/ranking.js';
-import { NewPositions } from '../models/index.js';
+import { NewPositions } from '@drpg/core/models/player/NewPositions';
 
 const updatePlayersPosition = (): CronJob => {
 	const CronJob = cron.CronJob;

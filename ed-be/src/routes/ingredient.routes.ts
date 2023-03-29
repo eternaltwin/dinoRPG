@@ -2,9 +2,9 @@ import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
 import { getAllIngredientsData } from '../business/ingredientService.js';
 import { validationResult } from 'express-validator';
-import { IngredientFiche } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 
 const routes: Router = Router();
 

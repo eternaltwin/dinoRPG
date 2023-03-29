@@ -1,4 +1,6 @@
-import { ItemEffect, ItemFiche, ItemType } from '../models/index.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.

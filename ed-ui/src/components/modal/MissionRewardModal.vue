@@ -49,7 +49,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
-import { Dinoz, missionRewards } from '../../models/index.js';
+import { Dinoz, missionRewards } from '@drpg/core';
 import { sessionStore } from '../../store/index.js';
 import { RewardEnum } from '../../enums/index.js';
 

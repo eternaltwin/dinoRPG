@@ -9,11 +9,10 @@
   },
   "type": "module",
   "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/*.js"
+    "./*": "./dist/*.mjs"
   },
   "files": [
-    "./dist/**/*.(js|map|ts)",
+    "./dist/**/*.(mjs|map|mts|js|ts)",
     "./src/"
   ]
 }

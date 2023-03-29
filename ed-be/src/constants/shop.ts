@@ -1,5 +1,6 @@
-import { ShopType, ShopFiche } from '../models/index.js';
 import { itemList, placeList } from './index.js';
+import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 
 // Prices are as they were before the abandon of Twinoid (they were lowered to half the price after the game became free)
 // listItemSold is filled with a copy of each item from itemList with the price changed.

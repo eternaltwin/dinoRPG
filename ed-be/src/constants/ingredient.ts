@@ -1,4 +1,4 @@
-import { IngredientFiche } from '../models/index.js';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 
 export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	MEROU_LUJIDANE: {

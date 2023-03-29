@@ -1,4 +1,6 @@
-import { ConditionEnum, ElementType, NpcData, RewardEnum } from '../../models/index.js';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 export const ALPHA: Readonly<Record<string, NpcData>> = {
 	begin: {

@@ -9,7 +9,6 @@ import {
 	setPlayerMoney
 } from '../../business/adminService.js';
 import { DinozSkill, DinozStatus, Dinoz, PlayerReward, Player } from '../../entity/index.js';
-import { DinozFiche, PlayerTypeToSend } from '../../models/index.js';
 import { DinozListFromAnAccount, DinozFicheListFromAnAccount } from '../data/dinozData.js';
 import { dinozId, mockRequest, player } from '../utils/constants.js';
 import {
@@ -19,6 +18,8 @@ import {
 	playerMoneyPlus,
 	PlayerTypeToSendAllData
 } from '../data/playerData.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { PlayerTypeToSend } from '../../models/PlayerTypeToSend.js';
 
 const PlayerDao = require('../../dao/playerDao.js');
 const DinozDao = require('../../dao/dinozDao.js');

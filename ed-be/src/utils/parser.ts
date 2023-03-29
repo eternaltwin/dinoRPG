@@ -7,20 +7,15 @@ import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { Dinoz } from '../entity/dinoz.js';
 import { DinozSkill, Player, PlayerItem, PlayerReward } from '../entity/index.js';
-import {
-	Condition,
-	ConditionEnum,
-	ConditionOperatorEnum,
-	Place,
-	RewardEnum,
-	Rewarder,
-	TriggerEnum
-} from '../models/index.js';
 import { missionsList } from '../constants/missions.js';
 import { itemList, placeList, rewardList } from '../constants/index.js';
 import { addPlayerMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } from '../dao/playerDao.js';
 import { changeItemQuantity, createItemDataRequest } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
+import { Condition } from '@drpg/core/models/npc/NpcConditions';
+import { ConditionEnum, ConditionOperatorEnum, RewardEnum, TriggerEnum } from '@drpg/core/models/enums/Parser';
+import { Place } from '@drpg/core/models/place/Place';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 function checkCondition(condition: Condition, dinoz: Dinoz): boolean {
 	let conditionResult: boolean = true;

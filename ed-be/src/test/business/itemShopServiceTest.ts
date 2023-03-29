@@ -1,7 +1,8 @@
 import { Request } from 'express';
 // Back imports
 import { getItemsFromShop, buyItem } from '../../business/itemShopService.js';
-import { ItemFiche, ShopType } from '../../models/index.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { Dinoz, Player, PlayerItem, DinozStatus } from '../../entity/index.js';
 import { itemList, placeList, shopList, statusList } from '../../constants/index.js';
 // Test imports

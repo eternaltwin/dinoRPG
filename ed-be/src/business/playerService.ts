@@ -10,7 +10,8 @@ import {
 } from '../dao/playerDao.js';
 import { rewardList } from '../constants/reward.js';
 import { Player } from '../entity/player.js';
-import { PlayerInfo, PlayerCommonData } from '../models/index.js';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { getDinozTotalCount } from '../dao/dinozDao.js';
 import { levelList } from '../constants/index.js';

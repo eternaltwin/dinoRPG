@@ -13,20 +13,6 @@ import {
 	setDinozPlaceRequest
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
-import { ShopType } from '../models/index.js';
-import {
-	ActionFiche,
-	DigData,
-	DinozFiche,
-	DinozRace,
-	DinozSkillFiche,
-	FightResult,
-	Npc,
-	Place,
-	Rewarder,
-	RewardEnum,
-	ShopFiche
-} from '@drpg/core';
 import {
 	actionList,
 	itemList,
@@ -49,6 +35,17 @@ import { moveFight } from './fightService.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { digTreasures } from '../constants/digTreasures.js';
 import { checkCondition, getRandomNumber, rewarder } from '../utils/index.js';
+import { ActionFiche, DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
+import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { Npc } from '@drpg/core/models/npc/npc';
+import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { Place } from '@drpg/core/models/place/Place';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { DigData } from '@drpg/core/models/dinoz/DigData';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 /**
  * @summary Get available action from dinoz

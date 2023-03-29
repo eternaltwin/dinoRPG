@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
-import { Dinoz, MissionList } from '../../models/index.js';
+import { Dinoz, MissionList } from '@drpg/core';
 import { sessionStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import EventBus from '../../events/index.js';

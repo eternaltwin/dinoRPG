@@ -1,8 +1,9 @@
 import { Player } from '../../entity/index.js';
-import { PlayerTypeToSend } from '../../models/index.js';
+
 import { rewardList } from '../../constants/index.js';
 import { dinozId, player } from '../utils/constants.js';
 import { DinozShopArray } from './dinozShopData.js';
+import { PlayerTypeToSend } from '../../models/PlayerTypeToSend.js';
 
 export const PlayerAllData = ({
 	id: player.id_1,

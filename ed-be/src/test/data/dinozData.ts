@@ -1,8 +1,9 @@
-import { ElementType, DinozFiche } from '../../models/index.js';
 import { Dinoz, DinozItem, DinozSkill, DinozStatus, DinozSkillUnlockable } from '../../entity/index.js';
 import { itemList, placeList, raceList, skillList, statusList } from '../../constants/index.js';
 import { player, dinozId, skillId, skillId2, dinozName } from '../utils/constants.js';
 import { PlayerData, BasicPlayerWithRank } from './playerData.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 export const DinozFicheData = ({
 	id: dinozId,

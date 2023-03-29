@@ -2,7 +2,8 @@ import { DinozShopArray } from '../data/dinozShopData.js';
 import { PlayerWithoutDinozShop, PlayerWithDinozShop, PlayerWithRewards } from '../data/playerData.js';
 import { mockRequest, player } from '../utils/constants.js';
 import { raceList, skillList } from '../../constants/index.js';
-import { DinozShopFiche, DinozRace } from '../../models/index.js';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { getDinozFromDinozShop } from '../../business/dinozShopService.js';
 import { Request } from 'express';
 

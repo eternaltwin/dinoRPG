@@ -3,9 +3,10 @@ import { apiRoutes } from '../constants/index.js';
 import { getDinozFromDinozShop } from '../business/dinozShopService.js';
 import { getItemsFromShop, buyItem } from '../business/itemShopService.js';
 import { body, param, validationResult } from 'express-validator';
-import { DinozShopFiche, ItemFiche } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 
 const routes: Router = Router();
 

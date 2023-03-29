@@ -1,17 +1,4 @@
 import { Request } from 'express';
-import {
-	ConditionEnum,
-	FightResult,
-	Mission,
-	MissionCheck,
-	MissionHUD,
-	MissionList,
-	MissionsStatus,
-	MissionSteps,
-	Npc,
-	Place,
-	Rewarder
-} from '../models/index.js';
 import { Dinoz, DinozMission } from '../entity/index.js';
 import { getDinozMissionsInfo } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
@@ -26,6 +13,17 @@ import {
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
 import _ from 'lodash';
+import { MissionList } from '@drpg/core/models/missions/missionList';
+import { Place } from '@drpg/core/models/place/Place';
+import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
+import { Npc } from '@drpg/core/models/npc/npc';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { Mission } from '@drpg/core/models/missions/mission';
+import { MissionSteps } from '@drpg/core/models/missions/missionSteps';
+import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { MissionCheck } from '../models/missionCheck.js';
 
 const getMissionsList = async (req: Request): Promise<Array<MissionList>> => {
 	const dinozId: number = parseInt(req.params.id);

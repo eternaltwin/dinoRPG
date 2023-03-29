@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { getPlayersSumRanking, getPlayersAverageRanking } from '../dao/rankingDao.js';
-import { PlayerRanking } from '../models/index.js';
+import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 import { Ranking } from '../entity/index.js';
 
 /**

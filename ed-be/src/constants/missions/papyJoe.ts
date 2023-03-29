@@ -1,4 +1,5 @@
-import { ConditionEnum, Mission, RewardEnum } from '../../models/index.js';
+import { Mission } from '@drpg/core/models/missions/mission';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { placeList, missionsList } from '../index.js';
 
 export const M_PAPY_JOE: Array<Mission> = [

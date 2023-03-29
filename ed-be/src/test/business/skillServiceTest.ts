@@ -2,7 +2,7 @@ import { Request } from 'express';
 import _ from 'lodash';
 import { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill } from '../../business/skillService.js';
 import { itemList, levelList, raceList, skillList } from '../../constants/index.js';
-import { DinozSkillOwnAndUnlockable } from '../../models/index.js';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { DinozItem, DinozSkill, Dinoz } from '../../entity/index.js';
 import {
 	DinozLevel11LevelUp,

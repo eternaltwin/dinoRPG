@@ -2,9 +2,9 @@ import { Request, Response, Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import { processFight } from '../business/fightService.js';
 import { apiRoutes } from '../constants/index.js';
-import { FightResult } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 const routes: Router = Router();
 

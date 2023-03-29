@@ -8,10 +8,11 @@ import {
 	searchPlayers
 } from '../business/playerService.js';
 import { body, param, validationResult } from 'express-validator';
-import { PlayerCommonData, PlayerInfo } from '../models/index.js';
 import { Player } from '../entity/player.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 
 const routes: Router = Router();
 

@@ -1,8 +1,8 @@
 import { ErrorFormator } from './errorFormator.js';
-import { Config } from '../models/index.js';
 import { getConfig } from './context.js';
 import { Response } from 'express';
 import { EmbedBuilder, WebhookClient } from 'discord.js';
+import { Config } from '@drpg/core/models/config/Config';
 
 export async function postError(e: ErrorFormator, res: Response) {
 	try {

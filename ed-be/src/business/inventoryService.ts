@@ -1,11 +1,13 @@
 import { Request } from 'express';
 import { getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { Dinoz, Player } from '../entity/index.js';
-import { ItemEffect, ItemFiche, ItemType } from '../models/index.js';
 import { itemList } from '../constants/item.js';
 import { addLife, getDinozFicheItemRequest } from '../dao/dinozDao.js';
 import { useItemDataRequest } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
 /**
  * @summary Get all items from the inventory of a player

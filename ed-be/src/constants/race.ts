@@ -1,7 +1,7 @@
-import { DinozRace } from '../models/index.js';
-
 // If price is 0 that means the dinoz cannot be purchased via the dinoz shop.
 // For a demon dinoz, the price is the number of demon tickets.
+import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
+
 export const raceList: Record<string, DinozRace> = {
 	MOUEFFE: {
 		raceId: 1,

@@ -50,7 +50,7 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { sessionStore } from '../../store/index.js';
 import { missionsList } from '../../constants/index.js';
-import { Dinoz, MissionList, missionRequirement } from '../../models/index.js';
+import { Dinoz, MissionList, missionRequirement } from '@drpg/core';
 import EventBus from '../../events/index.js';
 import { MissionEnum, MissionsStatus } from '../../enums/index.js';
 

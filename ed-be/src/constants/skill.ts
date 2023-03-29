@@ -1,4 +1,9 @@
-import { DinozSkillFiche, ElementType, Energy, SkillEffect, SkillTree, SkillType } from '../models/index.js';
+import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
+import { Energy } from '@drpg/core/models/enums/Energy';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { SkillTree } from '@drpg/core/models/enums/SkillTree';
+import { SkillEffect } from '@drpg/core/models/enums/SkillEffect';
 import { raceList } from './race.js';
 
 // skillId are counted like this : ABCDE

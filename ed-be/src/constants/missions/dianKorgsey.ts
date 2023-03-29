@@ -1,4 +1,5 @@
-import { ConditionEnum, ConditionOperatorEnum, Mission, RewardEnum } from '../../models/index.js';
+import { Mission } from '@drpg/core/models/missions/mission';
+import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { missionsList } from '../missions.js';
 import { placeList } from '../place.js';
 

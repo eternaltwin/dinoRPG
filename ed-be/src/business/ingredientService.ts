@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
 import { PlayerIngredient } from '../entity/index.js';
-import { IngredientFiche } from '../models/index.js';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { ingredientList } from '../constants/index.js';
 
 /**

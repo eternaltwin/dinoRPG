@@ -11,9 +11,10 @@ import {
 } from '../business/adminService.js';
 import { body, param, validationResult } from 'express-validator';
 import { checkIsAdmin } from '../utils/jwt.js';
-import { DinozFiche, PlayerTypeToSend } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { PlayerTypeToSend } from '../models/PlayerTypeToSend.js';
 
 const routes: Router = Router();
 

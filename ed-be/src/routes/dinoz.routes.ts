@@ -11,9 +11,11 @@ import {
 	digWithDinoz
 } from '../business/dinozService.js';
 import { apiRoutes, regex } from '../constants/index.js';
-import { DinozFiche, DinozSkillFiche, FightResult } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 const routes: Router = Router();
 

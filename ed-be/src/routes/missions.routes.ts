@@ -1,10 +1,11 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import { MissionList, Rewarder } from '../models/index.js';
 import { endMission, getMissionsList, interactMission, updateMission } from '../business/missionsService.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { MissionList } from '@drpg/core/models/missions/missionList';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 const routes: Router = Router();
 

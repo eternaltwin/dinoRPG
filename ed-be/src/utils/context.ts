@@ -1,6 +1,6 @@
 import fs from 'fs';
 import toml from 'toml';
-import { Config } from '../models/index.js';
+import { Config } from '@drpg/core/models/config/Config';
 
 let config: Config;
 

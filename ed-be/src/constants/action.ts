@@ -1,4 +1,4 @@
-import { ActionFiche } from '../models/index.js';
+import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export const actionList: Readonly<Record<string, ActionFiche>> = {
 	FIGHT: {

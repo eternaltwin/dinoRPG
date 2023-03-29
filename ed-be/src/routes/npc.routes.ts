@@ -1,10 +1,10 @@
 import { body, param, validationResult } from 'express-validator';
 import { Request, Response, Router } from 'express';
-import { NpcTalk } from '../models/index.js';
 import { apiRoutes } from '../constants/index.js';
 import { getNpcSpeech } from '../business/npcService.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 
 const routes: Router = Router();
 

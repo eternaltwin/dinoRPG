@@ -1,5 +1,6 @@
 import { Request } from 'express';
-import { DinozRace, DinozShopFiche } from '../models/index.js';
+import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { getRandomLetter, getRandomNumber } from '../utils/index.js';

@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import { ItemFiche, ItemType, ShopFiche, ShopType } from '../models/index.js';
 import { Player, PlayerItem } from '../entity/index.js';
 import { createItemDataRequest, updateItemDataRequest } from '../dao/playerItemDao.js';
 import {
@@ -9,6 +8,10 @@ import {
 } from '../dao/playerDao.js';
 import { itemList, placeList, shopList, statusList } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 
 /**
  * @summary Get all items from a shop

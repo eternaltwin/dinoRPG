@@ -1,4 +1,5 @@
-import { ConditionEnum, ConditionOperatorEnum, NpcData, RewardEnum } from '../../models/index.js';
+import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
 
 export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 	begin: {
