@@ -139,7 +139,7 @@ function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
  * @param req.params.id {string} PlayerId
  * @return DinozFiche
  */
-const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
+export async function getDinozFiche(req: Request): Promise<DinozFiche> {
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
@@ -195,14 +195,14 @@ const getDinozFiche = async (req: Request): Promise<DinozFiche> => {
 		nbrUpLightning: dinozData.nbrUpLightning,
 		nbrUpAir: dinozData.nbrUpAir
 	};
-};
+}
 
 /**
  * @summary Get all skills and their state
  * @param req
  * @param req.params.id {string} DinozId
  */
-const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
+export async function getDinozSkill(req: Request): Promise<Array<DinozSkillFiche>> {
 	const dinozId: number = parseInt(req.params.id);
 	const dinozSkillData: Dinoz = await getDinozSkillRequest(dinozId);
 
@@ -226,7 +226,7 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
 			isSphereSkill: skillFound.isSphereSkill
 		};
 	});
-};
+}
 
 /**
  * @summary Buy a dinoz from the shop
@@ -234,7 +234,7 @@ const getDinozSkill = async (req: Request): Promise<Array<DinozSkillFiche>> => {
  * @param req.params.id {string} PlayerId
  * @return DinozFiche
  */
-const buyDinoz = async (req: Request): Promise<DinozFiche> => {
+export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	//Check if player can buy more dinoz
 	const dinozActive: Array<Dinoz> | undefined = await getActiveDinoz(req.user!.playerId!);
 
@@ -325,7 +325,7 @@ const buyDinoz = async (req: Request): Promise<DinozFiche> => {
 	await updatePoints(req.user!.playerId, sumPoints, averagePoints, dinozCount);
 
 	return dinozToSend;
-};
+}
 
 /**
  * @summary Set the name of a dinoz
@@ -333,7 +333,7 @@ const buyDinoz = async (req: Request): Promise<DinozFiche> => {
  * @param req.params.id {string} DinozId
  * @return void
  */
-const setDinozName = async (req: Request): Promise<void> => {
+export async function setDinozName(req: Request): Promise<void> {
 	// Retrieve player from dinozId
 	const dinoz: Dinoz = await getCanDinozChangeName(parseInt(req.params.id));
 
@@ -354,7 +354,7 @@ const setDinozName = async (req: Request): Promise<void> => {
 	};
 
 	await setDinoz(dinozToUpdate);
-};
+}
 
 /**
  * @summary Activate or desactivate a skill from a dinoz
@@ -364,7 +364,7 @@ const setDinozName = async (req: Request): Promise<void> => {
  * @param req.body.skillState {boolean} State of the skill
  * @return boolean
  */
-const setSkillState = async (req: Request): Promise<boolean> => {
+export async function setSkillState(req: Request): Promise<boolean> {
 	const dinozId: number = parseInt(req.params.id);
 	const skillToUpdate: number = parseInt(req.body.skillId);
 	const skillStateToUpdate: boolean = req.body.skillState;
@@ -402,7 +402,7 @@ const setSkillState = async (req: Request): Promise<boolean> => {
 	await setSkillStateRequest(dinozId, skillToUpdate, skillStateToUpdate);
 
 	return !skillStateToUpdate;
-};
+}
 
 /**
  * @summary Move the dinoz to a new place
@@ -410,7 +410,7 @@ const setSkillState = async (req: Request): Promise<boolean> => {
  * @param req.params.id {string} DinozId
  * @return FightResult
  */
-const betaMove = async (req: Request): Promise<FightResult> => {
+export async function betaMove(req: Request): Promise<FightResult> {
 	//Retrieve dinozId
 	const dinozId: number = parseInt(req.body.dinozId);
 	const dinoz: Dinoz = await getDinozFightDataRequest(dinozId);
@@ -455,9 +455,9 @@ const betaMove = async (req: Request): Promise<FightResult> => {
 	}
 
 	return fight;
-};
+}
 
-const resurrectDinoz = async (req: Request): Promise<void> => {
+export async function resurrectDinoz(req: Request): Promise<void> {
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
@@ -480,9 +480,9 @@ const resurrectDinoz = async (req: Request): Promise<void> => {
 	};
 
 	await setDinoz(dinozToUpdate);
-};
+}
 
-const digWithDinoz = async (req: Request): Promise<Rewarder> => {
+export async function digWithDinoz(req: Request): Promise<Rewarder> {
 	const dinozId: number = parseInt(req.params.id);
 	const dinozData: Dinoz = await getDinozFicheRequest(dinozId);
 
@@ -523,6 +523,4 @@ const digWithDinoz = async (req: Request): Promise<Rewarder> => {
 	}
 
 	return reward[0];
-};
-
-export { getDinozFiche, buyDinoz, setDinozName, getDinozSkill, setSkillState, betaMove, resurrectDinoz, digWithDinoz };
+}

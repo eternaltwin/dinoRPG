@@ -12,7 +12,7 @@ import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
 
-const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
+export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId: number = parseInt(req.params.dinozId);
 	const npcName: string = req.params.npc;
 	let nextStepWanted: string = req.body.step;
@@ -106,6 +106,4 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 		playerChoice: playerChoices,
 		flashvars: pnj.flashvars
 	};
-};
-
-export { getNpcSpeech };
+}

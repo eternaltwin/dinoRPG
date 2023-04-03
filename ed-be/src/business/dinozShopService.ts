@@ -16,7 +16,7 @@ import gameConfig from '../config/game.config.js';
  */
 
 // TODO: Refaire cette fonction en construisant un objet de retour
-const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche>> => {
+export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozShopFiche>> {
 	// Retrieve player with dinoz shop info
 	const playerData: Player = await getPlayerDinozShopRequest(req.user!.playerId!);
 
@@ -90,7 +90,7 @@ const getDinozFromDinozShop = async (req: Request): Promise<Array<DinozShopFiche
 
 		return listDinozShop;
 	}
-};
+}
 
 /**
  * @summary Map the race and skill to a new dinoz
@@ -110,5 +110,3 @@ function setDinozShopFiche(dinozShop: PlayerDinozShop): DinozShopFiche {
 		display: dinozShop.display
 	};
 }
-
-export { getDinozFromDinozShop };

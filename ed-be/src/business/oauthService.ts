@@ -17,7 +17,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
  * @param res {string}
  * @return string
  */
-const authenticateToET = async (req: Request): Promise<string> => {
+export async function authenticateToET(req: Request): Promise<string> {
 	let token: OauthAccessToken;
 	let user: User;
 	const config: Config = getConfig();
@@ -58,7 +58,7 @@ const authenticateToET = async (req: Request): Promise<string> => {
 
 	// Forge JWT with playerId
 	return await forgeJWT(player!.id);
-};
+}
 
 async function getUser(accessToken: string, eternalTwinURI: string) {
 	let res;
@@ -90,11 +90,11 @@ async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {
  * @param _req
  * @return URL
  */
-const getAuthorizationUri = (): URL => {
+export async function getAuthorizationUri(): Promise<URL> {
 	const oauthClient: RfcOauthClient = getRfcOauthClient(false);
 
 	return oauthClient.getAuthorizationUri('base', 'authenticate');
-};
+}
 
 function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {
 	const config: Config = getConfig();
@@ -130,5 +130,3 @@ interface User {
 		};
 	};
 }
-
-export { authenticateToET, getAuthorizationUri };

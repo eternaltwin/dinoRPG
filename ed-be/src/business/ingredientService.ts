@@ -10,7 +10,7 @@ import { ingredientList } from '../constants/index.js';
  * @returns Array<IngredientFiche>
  * 				An array with all ingredients that player owns
  */
-const getAllIngredientsData = async (req: Request): Promise<Array<Partial<IngredientFiche>>> => {
+export async function getAllIngredientsData(req: Request): Promise<Array<Partial<IngredientFiche>>> {
 	const allIngredientsData: Array<PlayerIngredient> = await getAllIngredientsDataRequest(req.user!.playerId!);
 
 	const ingredients: Array<Partial<IngredientFiche>> = allIngredientsData.map(ingr => {
@@ -26,6 +26,4 @@ const getAllIngredientsData = async (req: Request): Promise<Array<Partial<Ingred
 	});
 
 	return ingredients;
-};
-
-export { getAllIngredientsData };
+}

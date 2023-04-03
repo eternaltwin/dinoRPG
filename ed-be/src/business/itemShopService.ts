@@ -19,7 +19,7 @@ import { ShopType } from '@drpg/core/models/enums/ShopType';
  * @param req.params.shopId {string} ShopId
  * @return Array<ItemFiche>
  */
-const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
+export async function getItemsFromShop(req: Request): Promise<Array<ItemFiche>> {
 	const playerId: number = req.user!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
 	const tempShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId);
@@ -62,7 +62,7 @@ const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
 			isRare: itemReference.isRare
 		};
 	});
-};
+}
 
 /**
  * @summary Buy an item
@@ -72,7 +72,7 @@ const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
  * @param req.body.quantity {string} Quantity to buy
  * @return void
  */
-const buyItem = async (req: Request): Promise<void> => {
+export async function buyItem(req: Request): Promise<void> {
 	const playerId: number = req.user!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
 	const itemId: number = parseInt(req.body.itemId);
@@ -164,7 +164,7 @@ const buyItem = async (req: Request): Promise<void> => {
 		newItem.quantity = itemToBuy.quantity!;
 		await createItemDataRequest(newItem);
 	}
-};
+}
 
 /**
  * @summary Buy an item
@@ -232,5 +232,3 @@ function checkDinozPlace(theShop: ShopFiche, player: Player, shopId: number): vo
 		}
 	}
 }
-
-export { getItemsFromShop, buyItem };

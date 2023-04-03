@@ -25,9 +25,9 @@ import { SkillTree } from '@drpg/core/models/enums/SkillTree';
  *
  * @returns Partial<DinozSkillOwnAndUnlockable> | undefined>
  */
-const getLearnableAndUnlockableSkills = async (
+export async function getLearnableAndUnlockableSkills(
 	req: Request
-): Promise<Partial<DinozSkillOwnAndUnlockable> | undefined> => {
+): Promise<Partial<DinozSkillOwnAndUnlockable> | undefined> {
 	const dinozId: number = parseInt(req.params.id);
 
 	const dinozSkills: Dinoz = await getDinozForLevelUp(dinozId);
@@ -35,7 +35,7 @@ const getLearnableAndUnlockableSkills = async (
 	const dinozRace: DinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId)!;
 
 	return getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, parseInt(req.params.tryNumber));
-};
+}
 
 /**
  * @summary Learn one not spherical skill
@@ -47,7 +47,7 @@ const getLearnableAndUnlockableSkills = async (
  *
  * @returns New max experience value
  */
-const learnSkill = async (req: Request): Promise<string> => {
+export async function learnSkill(req: Request): Promise<string> {
 	const dinozId: number = parseInt(req.params.id);
 	const skillIdList: Array<number> = req.body.skillIdList;
 
@@ -122,7 +122,7 @@ const learnSkill = async (req: Request): Promise<string> => {
 	await updatePoints(req.user!.playerId!, sumPoints, averagePoints, dinozCount);
 
 	return newMaxExperience;
-};
+}
 
 function getDinozLearnableSkills(
 	req: Request,
@@ -241,7 +241,7 @@ function getNewDinozDataFromLevelUp(
  * Return all skills that a dinoz can learn (every elements).
  * If the param "elementWanted" is present, return learnable skills from one specific element.
  */
-function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<Partial<DinozSkillFiche>> {
+export function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<Partial<DinozSkillFiche>> {
 	const treeType: SkillTree = getTreeType(dinoz.status);
 	let learnableSkills: Array<Partial<DinozSkillFiche>> = _.cloneDeep(Object.values(skillList));
 
@@ -320,7 +320,7 @@ function getElementUpChance(
  * Function used when the dinoz learn "Double skill".
  * Get all double skills that dinoz can learn et place it into unlockable_skills table.
  */
-const unlockDoubleSkills = async (dinozId: number): Promise<void> => {
+export async function unlockDoubleSkills(dinozId: number): Promise<void> {
 	const dinoz: Dinoz = await getDinozSkillsLearnableAndUnlockable(dinozId);
 	const allLearnableSkills: Array<Partial<DinozSkillFiche>> = getLearnableSkills(dinoz);
 
@@ -337,12 +337,10 @@ const unlockDoubleSkills = async (dinozId: number): Promise<void> => {
 		.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.skillId!));
 
 	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
-};
+}
 
 async function applySkillEffect(dinoz: Dinoz, skill: DinozSkillFiche): Promise<void> {
 	if (skill.effects) {
 		await effectParser(skill.effects, dinoz);
 	}
 }
-
-export { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill, unlockDoubleSkills };

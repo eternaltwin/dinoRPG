@@ -18,7 +18,7 @@ export async function getDinozPlaceRequest(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
 	return dinozRepository
@@ -28,7 +28,7 @@ export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
 		.innerJoin('dinoz.player', 'player')
 		.where('player.id = :pId AND dinoz.isFrozen = FALSE', { pId: playerId })
 		.getMany();
-};
+}
 
 export async function getAllDinozFromAccount(playerId: number): Promise<Array<Dinoz>> {
 	return dinozRepository
@@ -51,7 +51,7 @@ export async function getAllDinozFromAccount(playerId: number): Promise<Array<Di
 		.leftJoinAndSelect('dinoz.skills', 'skill')
 		.innerJoin('dinoz.player', 'player', 'player.id = :pId', { pId: playerId })
 		.getMany();
-};
+}
 
 export async function getCanDinozChangeName(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -61,7 +61,7 @@ export async function getCanDinozChangeName(dinozId: number): Promise<Dinoz> {
 		.innerJoin('dinoz.player', 'player')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -94,7 +94,7 @@ export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -108,7 +108,7 @@ export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozFicheLiteRequest(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -118,7 +118,7 @@ export async function getDinozFicheLiteRequest(dinozId: number): Promise<Dinoz> 
 		.innerJoin('dinoz.player', 'player')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -142,7 +142,7 @@ export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz> 
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -172,7 +172,7 @@ export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz> 
 		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -190,7 +190,7 @@ export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.NPC', 'npc')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozSkillRequest(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -202,7 +202,7 @@ export async function getDinozSkillRequest(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.skills', 'skills')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozSkillAndStatusRequest(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -216,7 +216,7 @@ export async function getDinozSkillAndStatusRequest(dinozId: number): Promise<Di
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozForLevelUp(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -250,7 +250,7 @@ export async function getDinozForLevelUp(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Promise<Dinoz> {
 	return dinozRepository
@@ -264,17 +264,17 @@ export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Pro
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
-};
+}
 
 export async function getDinozTotalCount(): Promise<number> {
 	return dinozRepository.count();
-};
+}
 
 // Setters
 //TODO
 export async function setDinoz(dinoz: Partial<Dinoz>): Promise<Dinoz> {
 	return dinozRepository.save(dinoz);
-};
+}
 
 export async function setDinozPlaceRequest(dinozId: number, newPlaceId: number): Promise<UpdateResult> {
 	return dinozRepository
@@ -283,7 +283,7 @@ export async function setDinozPlaceRequest(dinozId: number, newPlaceId: number):
 		.set({ placeId: newPlaceId })
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.execute();
-};
+}
 
 export async function setDinozNameRequest(dinozId: number, canChangeName: boolean): Promise<UpdateResult> {
 	return dinozRepository
@@ -292,7 +292,7 @@ export async function setDinozNameRequest(dinozId: number, canChangeName: boolea
 		.set({ canChangeName: canChangeName })
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.execute();
-};
+}
 
 export async function setDinozNextElement(dinozId: number, elementIdd: number): Promise<UpdateResult> {
 	return dinozRepository
@@ -301,7 +301,7 @@ export async function setDinozNextElement(dinozId: number, elementIdd: number): 
 		.set({ nextUpElementId: elementIdd })
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.execute();
-};
+}
 
 export async function addExperience(dinozId: number, experience: number): Promise<UpdateResult> {
 	return dinozRepository
@@ -311,7 +311,7 @@ export async function addExperience(dinozId: number, experience: number): Promis
 		.setParameter('addExperience', experience)
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.execute();
-};
+}
 
 export async function addLife(dinozId: number, life: number): Promise<UpdateResult> {
 	return dinozRepository
@@ -321,5 +321,4 @@ export async function addLife(dinozId: number, life: number): Promise<UpdateResu
 		.setParameter('addLife', life)
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.execute();
-};
-
+}
