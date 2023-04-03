@@ -6,6 +6,7 @@ import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { getDinozFromDinozShop } from '../../business/dinozShopService.js';
 import { Request } from 'express';
+import {jest} from '@jest/globals';
 
 const DinozShopDao = require('../../dao/playerDinozShopDao.js');
 const PlayerDao = require('../../dao/playerDao.js');

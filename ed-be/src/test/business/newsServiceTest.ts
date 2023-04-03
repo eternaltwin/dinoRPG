@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import {jest} from '@jest/globals';
 import { mockRequest } from '../utils/constants.js';
 import { getNews, postNews, updateNews } from '../../business/newsService.js';
 import { batchOfNews, editedNews } from '../data/newsData.js';

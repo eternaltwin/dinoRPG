@@ -1,4 +1,5 @@
 import { CronJob } from 'cron';
+import {jest} from '@jest/globals';
 import { resetDinozShopAtMidnight } from '../../cron/resetDinozShop.js';
 import { PlayerDinozShop } from '../../entity/index.js';
 import { AppDataSource } from '../../data-source.js';

@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import {jest} from '@jest/globals';
 import { Player } from '../../entity/index.js';
 import { getAllItemsData, useItem } from '../../business/inventoryService.js';
 import { PlayerData } from '../data/playerData.js';

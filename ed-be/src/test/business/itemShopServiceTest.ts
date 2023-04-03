@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import {jest} from '@jest/globals';
 // Back imports
 import { getItemsFromShop, buyItem } from '../../business/itemShopService.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -912,7 +913,7 @@ describe('itemShopService: Test error cases of buyItem()', function () {
 		InventoryDao.createItemDataRequest = jasmine.createSpy();
 		InventoryDao.updateItemDataRequest = jasmine.createSpy();
 
-		PlayerItem.constructor = jasmine.createSpy().and.returnValue({ get: jest.fn().mockResolvedValue(BasicItem) });
+		PlayerItem.constructor = jasmine.createSpy().and.returnValue({ get: (jest.fn() as any).mockResolvedValue(BasicItem) });
 	});
 
 	it('Error case: invalid quantity, 0 quantity', async function () {

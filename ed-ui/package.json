@@ -53,5 +53,8 @@
       "git add"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "imports": {
+    "#assets": "./src/assets/*"
+  }
 }

@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import {jest} from '@jest/globals';
 import { mockRequest, player } from '../utils/constants.js';
 import { getNpcSpeech } from '../../business/npcService.js';
 import { DinozLevel1LevelUp } from '../data/dinozData.js';
