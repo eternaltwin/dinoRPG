@@ -55,8 +55,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { sessionStore } from '../../store';
-import { utils } from '../../utils';
+import { sessionStore } from '../../store/index.js';
+import { utils } from '../../utils/index.js';
 import DinozList from '../../components/dinoz/dinozList.vue';
 
 export default defineComponent({

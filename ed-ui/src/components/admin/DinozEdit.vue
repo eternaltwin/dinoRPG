@@ -165,11 +165,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { AdminService } from '../../services';
-import { Dinoz, DinozEdit } from '../../models';
-import { skillNameList, statusList } from '../../constants';
-import { errorHandler } from '../../utils';
-import EventBus from '../../events';
+import { AdminService } from '../../services/index.js';
+import { Dinoz, DinozEdit } from '../../models/index.js';
+import { skillNameList, statusList } from '../../constants/index.js';
+import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'DinozEdit',

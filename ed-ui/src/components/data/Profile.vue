@@ -55,13 +55,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList } from '../../constants';
-import { PlayerInfo } from '../../models';
-import EventBus from '../../events';
+import { epicList } from '../../constants/index.js';
+import { PlayerInfo } from '../../models/index.js';
+import EventBus from '../../events/index.js';
 import ImportAccount from '../../components/data/ImportAccount.vue';
-import { PlayerService } from '../../services';
-import { errorHandler } from '../../utils';
-import { sessionStore } from '../../store';
+import { PlayerService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { sessionStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'Profile',

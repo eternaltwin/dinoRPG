@@ -15,11 +15,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events';
-import { NewsService } from '../../services';
-import { errorHandler } from '../../utils';
-import { AllNews, Image, News } from '../../models';
-import { localStore } from '../../store';
+import EventBus from '../../events/index.js';
+import { NewsService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { AllNews, Image, News } from '../../models/index.js';
+import { localStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'News',

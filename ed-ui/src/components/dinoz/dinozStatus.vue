@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { statusList } from '../../constants';
+import { statusList } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'DinozStatus',

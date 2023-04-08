@@ -9,7 +9,7 @@ import MyAccount from '../pages/MyAccount.vue';
 import Ranking from '../pages/Ranking.vue';
 import Fight from '../pages/Fight.vue';
 import LevelUp from '../pages/LevelUp.vue';
-import { sessionStore } from '../store';
+import { sessionStore } from '../store/index.js';
 import DinozWithoutFlash from '../components/dinoz/dinozWithoutFlash.vue';
 import AdminDashBoard from '../pages/AdminDashBoard.vue';
 import Ingredients from '../pages/Ingredients.vue';

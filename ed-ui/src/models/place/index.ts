@@ -1,2 +1,2 @@
-export * from './Place';
-export * from './svgLines';
+export * from './Place.js';
+export * from './svgLines.js';

@@ -1,1 +1,1 @@
-export * from './ingredientFiche';
+export * from './ingredientFiche.js';

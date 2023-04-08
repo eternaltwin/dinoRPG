@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { Dinoz } from '../../models';
+import { Dinoz } from '../../models/index.js';
 
 export default defineComponent({
 	name: 'DinozBars',

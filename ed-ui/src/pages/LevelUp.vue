@@ -141,13 +141,13 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import EventBus from '../events';
-import { DinozService } from '../services';
-import { errorHandler } from '../utils';
-import { Dinoz, DinozSkillOwnAndUnlockable } from '../models';
-import { dinozPlacement, skillNameList } from '../constants';
+import EventBus from '../events/index.js';
+import { DinozService } from '../services/index.js';
+import { errorHandler } from '../utils/index.js';
+import { Dinoz, DinozSkillOwnAndUnlockable } from '../models/index.js';
+import { dinozPlacement, skillNameList } from '../constants/index.js';
 import { ElementType } from '../enums';
-import { sessionStore } from '../store';
+import { sessionStore } from '../store/index.js';
 
 export default defineComponent({
 	name: 'LevelUp',

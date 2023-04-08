@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz } from '../../models';
+import { Dinoz } from '../../models/index.js';
 
 export default defineComponent({
 	name: 'DinozElements',

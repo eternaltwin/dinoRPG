@@ -17,11 +17,11 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { PlayerService } from '../services';
-import { errorHandler } from '../utils';
-import { PlayerInfo } from '../models';
-import { sessionStore } from '../store';
-import EventBus from '../events';
+import { PlayerService } from '../services/index.js';
+import { errorHandler } from '../utils/index.js';
+import { PlayerInfo } from '../models/index.js';
+import { sessionStore } from '../store/index.js';
+import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'MyAccount',

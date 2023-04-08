@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import EventBus from '../../events';
+import EventBus from '../../events/index.js';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

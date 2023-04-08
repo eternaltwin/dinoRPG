@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { createNews, getBatchOfNews, updateAnyNews } from '../dao/newsDao.js';
 import { News } from '../entity/news.js';
+import { AllNews } from '@drpg/core/models/news/AllNews';
 
 /**
  * @summary Create a news
@@ -41,10 +42,10 @@ export async function postNews(req: Request): Promise<void> {
  * @param res
  * @return Array<News>
  */
-export async function getNews(req: Request): Promise<Array<News>> {
+export async function getNews(req: Request): Promise<Array<AllNews>> {
 	const batch: Array<News> = await getBatchOfNews(parseInt(req.params.page));
-
-	return batch;
+	const news = batch as unknown as Array<AllNews>;
+	return news;
 }
 
 /**

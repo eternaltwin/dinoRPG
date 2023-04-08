@@ -33,9 +33,9 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { raceList, statusList } from '../../constants';
-import { PlayerInfo, Dinoz } from '../../models';
-import { dinozPlacement } from '../../constants';
+import { raceList, statusList } from '../../constants/index.js';
+import { PlayerInfo, Dinoz } from '../../models/index.js';
+import { dinozPlacement } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'MyDinoz',

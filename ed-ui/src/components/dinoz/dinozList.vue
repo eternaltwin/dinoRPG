@@ -34,9 +34,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Dinoz } from '../../models';
-import { sessionStore } from '../../store';
-import { placeList } from '../../constants';
+import { Dinoz } from '../../models/index.js';
+import { sessionStore } from '../../store/index.js';
+import { placeList } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'DinozList',

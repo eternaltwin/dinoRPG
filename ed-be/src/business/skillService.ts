@@ -47,7 +47,7 @@ export async function getLearnableAndUnlockableSkills(
  *
  * @returns New max experience value
  */
-export async function learnSkill(req: Request): Promise<string> {
+export async function learnSkill(req: Request): Promise<number> {
 	const dinozId: number = parseInt(req.params.id);
 	const skillIdList: Array<number> = req.body.skillIdList;
 
@@ -112,9 +112,7 @@ export async function learnSkill(req: Request): Promise<string> {
 
 	await setDinoz(newDinozData);
 
-	const newMaxExperience: string | undefined = levelList
-		.find(level => level.id === dinozSkills.level + 1)
-		?.experience?.toString()!;
+	const newMaxExperience: number | undefined = levelList.find(level => level.id === dinozSkills.level + 1)?.experience!;
 
 	const dinozCount = ranking!.dinozCount;
 	const sumPoints = ranking!.sumPoints + 1;

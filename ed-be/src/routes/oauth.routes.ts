@@ -60,6 +60,7 @@ routes.post(`${commonPath}/redirect`, async (_req: Request, res: Response) => {
 routes.put(`${commonPath}/authenticate/eternal-twin`, async (req: Request, res: Response) => {
 	try {
 		const response: string = await authenticateToET(req);
+    console.log(response)
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;

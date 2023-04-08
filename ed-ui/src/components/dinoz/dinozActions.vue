@@ -77,11 +77,11 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { missionsList, npcNameList, shopNameList } from '../../constants';
-import { Action, FightResult, missionRewards } from '../../models';
-import { sessionStore } from '../../store';
-import EventBus from '../../events';
-import { DinozService, FightService, MissionService } from '../../services';
+import { missionsList, npcNameList, shopNameList } from '../../constants/index.js';
+import { Action, FightResult, missionRewards } from '../../models/index.js';
+import { sessionStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
+import { DinozService, FightService, MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { MissionEnum, RewardEnum } from '../../enums/index.js';
 import { formatText } from '../../utils/formatText.js';

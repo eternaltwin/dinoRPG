@@ -1,1 +1,1 @@
-export * from './StoreState';
+export * from './StoreState.js';

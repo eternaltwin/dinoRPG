@@ -65,12 +65,12 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { DinozShopService, DinozService } from '../services';
-import { DinozShop, Dinoz } from '../models';
-import { errorHandler, utils } from '../utils';
-import { sessionStore } from '../store';
-import { raceList, skillNameList } from '../constants';
-import EventBus from '../events';
+import { DinozShopService, DinozService } from '../services/index.js';
+import { DinozShop, Dinoz } from '../models/index.js';
+import { errorHandler, utils } from '../utils/index.js';
+import { sessionStore } from '../store/index.js';
+import { raceList, skillNameList } from '../constants/index.js';
+import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'DinozShopPage',

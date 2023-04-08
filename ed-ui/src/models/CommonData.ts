@@ -1,4 +1,4 @@
-import { Dinoz } from './dinoz';
+import { Dinoz } from './dinoz/index.js';
 import { PlayerOptions } from '../models/player/index.js';
 
 export interface CommonData {

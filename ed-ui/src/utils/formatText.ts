@@ -1,4 +1,4 @@
-import { mixin } from '../mixin/mixin';
+import { mixin } from '../mixin/mixin.js';
 
 export const helpers = {
 	computeImageHtml(key: string): string {

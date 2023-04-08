@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList } from '../../constants';
+import { epicList } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'EpicRewards',

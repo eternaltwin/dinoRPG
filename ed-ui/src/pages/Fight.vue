@@ -46,12 +46,12 @@
 </template>
 
 <script lang="ts">
-import { Dinoz, FightResult } from '../models';
-import { FightService } from '../services';
-import { localStore, sessionStore } from '../store';
+import { Dinoz, FightResult } from '../models/index.js';
+import { FightService } from '../services/index.js';
+import { localStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { errorHandler } from '../utils';
-import EventBus from '../events';
+import { errorHandler } from '../utils/index.js';
+import EventBus from '../events/index.js';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

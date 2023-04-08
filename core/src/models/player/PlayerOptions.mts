@@ -1,3 +1,3 @@
 export interface PlayerOptions {
-	hasPDA: boolean;
+  hasPDA: boolean;
 }

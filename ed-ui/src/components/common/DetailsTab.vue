@@ -86,12 +86,12 @@
 
 <script lang="ts" scoped>
 import { defineComponent, PropType } from 'vue';
-import { statusList, skillNameList } from '../../constants';
-import { Dinoz, Skill } from '../../models';
-import { DinozService } from '../../services';
-import { errorHandler } from '../../utils';
-import EventBus from '../../events';
-import { ElementType } from '../../enums';
+import { statusList, skillNameList } from '../../constants/index.js';
+import { Dinoz, Skill } from '../../models/index.js';
+import { DinozService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
+import { ElementType } from '../../enums/index.js';
 
 export default defineComponent({
 	name: 'DetailsTab',

@@ -25,11 +25,11 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { errorHandler } from '../../utils';
-import { DinozService } from '../../services';
-import { Dinoz } from '../../models';
-import { sessionStore } from '../../store';
-import EventBus from '../../events';
+import { errorHandler } from '../../utils/index.js';
+import { DinozService } from '../../services/index.js';
+import { Dinoz } from '../../models/index.js';
+import { sessionStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'ChooseDinozName',

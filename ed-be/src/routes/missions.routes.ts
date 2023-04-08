@@ -58,7 +58,7 @@ routes.get(
 
 /**
  * @openapi
- * /api/v1/missions/{dinozId}/{missionId}:
+ * /api/v1/missions/update/{dinozId}/{missionId}:
  *   put:
  *     summary: Update the status of the selected mission
  *     security:

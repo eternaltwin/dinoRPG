@@ -10,6 +10,7 @@ export interface DinozFiche {
 	isSacrificed?: boolean;
 	level?: number;
 	missionId?: number;
+  missions?: MissionHUD;
 	canChangeName?: boolean;
 	following?: number;
 	life?: number;
@@ -20,7 +21,6 @@ export interface DinozFiche {
 	race?: DinozRace;
 	placeId?: number;
 	actions?: Array<ActionFiche>;
-	missions?: MissionHUD;
 	items?: Array<number>;
 	skills?: Array<number>;
 	status?: Array<number>;
@@ -30,6 +30,7 @@ export interface DinozFiche {
 	nbrUpWater?: number;
 	nbrUpLightning?: number;
 	nbrUpAir?: number;
+  order?: number | null;
 }
 
 export interface ActionFiche {

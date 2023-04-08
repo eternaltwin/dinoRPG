@@ -19,8 +19,8 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { sessionStore } from '../../store';
-import { Dinoz } from '../../models';
+import { sessionStore } from '../../store/index.js';
+import { Dinoz } from '../../models/index.js';
 
 export default defineComponent({
 	name: 'TabPanel',

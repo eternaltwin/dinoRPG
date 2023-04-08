@@ -163,12 +163,12 @@
 
 <script lang="ts" scoped>
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { ItemShopService } from '../services';
-import { Item } from '../models';
-import { errorHandler } from '../utils';
-import { itemNameList, shopNameList } from '../constants';
-import { sessionStore } from '../store';
-import EventBus from '../events';
+import { ItemShopService } from '../services/index.js';
+import { Item } from '../models/index.js';
+import { errorHandler } from '../utils/index.js';
+import { itemNameList, shopNameList } from '../constants/index.js';
+import { sessionStore } from '../store/index.js';
+import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'ItemShopPage',

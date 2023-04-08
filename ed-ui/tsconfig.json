@@ -18,6 +18,7 @@
     "useDefineForClassFields": true,
     "declaration": true,
     "outDir": "./dist/ts",
+    "noImplicitAny": false,
     "lib": [
       "esnext",
       "dom",
@@ -29,6 +30,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "src/i18n/**/*",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

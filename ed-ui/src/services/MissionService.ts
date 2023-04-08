@@ -1,5 +1,6 @@
-import { http } from '../utils';
-import { MissionList, missionRewards } from '../models';
+import { http } from '../utils/index.js';
+import { MissionList } from '@drpg/core/dist/models/missions/missionList.mjs';
+import { Rewarder } from '@drpg/core/dist/models/reward/Rewarder.mjs';
 
 export const MissionService = {
 	getMissions(id: string, npc: string): Promise<Array<MissionList>> {
@@ -20,7 +21,7 @@ export const MissionService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	finishMission(dinozId: string, missionId: number): Promise<Array<missionRewards>> {
+	finishMission(dinozId: string, missionId: number): Promise<Array<Rewarder>> {
 		return http()
 			.put(`/missions/finish/${dinozId}/`, { missionId: missionId })
 			.then(res => Promise.resolve(res.data))

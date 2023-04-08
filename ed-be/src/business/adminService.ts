@@ -9,7 +9,7 @@ import { DinozStatus, PlayerReward, DinozSkill } from '../entity/index.js';
 import { addMultipleRewardToPlayer, removeRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { PlayerTypeToSend } from '../models/PlayerTypeToSend.js';
+import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 
 /**
  * @summary Check if user can access the admin dashboard

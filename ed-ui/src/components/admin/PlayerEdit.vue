@@ -181,9 +181,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { AdminService } from '../../services';
-import { epicList } from '../../constants';
-import { Player, PlayerEdit } from '../../models';
+import { AdminService } from '../../services/index.js';
+import { epicList } from '../../constants/index.js';
+import { Player, PlayerEdit } from '../../models/index.js';
 
 export default defineComponent({
 	name: 'PlayerEdit',

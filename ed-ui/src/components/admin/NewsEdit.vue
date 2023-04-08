@@ -55,10 +55,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NewsService } from '../../services';
-import { AllNews } from '../../models';
-import EventBus from '../../events';
-import { errorHandler } from '../../utils';
+import { NewsService } from '../../services/index.js';
+import { AllNews } from '../../models/index.js';
+import EventBus from '../../events/index.js';
+import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
 	name: 'NewsEdit',

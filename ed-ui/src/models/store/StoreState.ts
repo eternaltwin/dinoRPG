@@ -1,11 +1,12 @@
-import { Dinoz, PlayerOptions } from '../../models';
-import { FightResult } from '../dinoz';
+import { FightResult } from '@drpg/core/dist/models/fight/FightResult.mjs';
+import { DinozFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
+import { PlayerOptions } from '@drpg/core/dist/models/player/PlayerOptions.mjs';
 
 export interface StoreStateSession {
 	dinozCount?: number;
 	jwt?: string;
 	money?: number;
-	dinozList?: Array<Dinoz>;
+	dinozList?: Array<DinozFiche>;
 	playerId?: number;
 	fight?: FightResult;
 	tab: number;

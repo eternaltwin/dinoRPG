@@ -4,6 +4,7 @@ import { mockRequest } from '../utils/constants.js';
 import { getNews, postNews, updateNews } from '../../business/newsService.js';
 import { batchOfNews, editedNews } from '../data/newsData.js';
 import { News } from '../../entity/index.js';
+import { AllNews } from "@drpg/core/models/news/AllNews";
 
 const NewsDao = require('../../dao/newsDao.js');
 
@@ -73,7 +74,7 @@ describe('Function getNews', function () {
 	});
 
 	it('Nominal Case', async function () {
-		let response: Array<News> = [];
+		let response: Array<AllNews> = [];
 		try {
 			response = await getNews(req);
 		} catch (err) {

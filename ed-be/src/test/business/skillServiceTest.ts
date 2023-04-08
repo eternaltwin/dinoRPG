@@ -240,7 +240,7 @@ describe('Function learnSkill', () => {
 	});
 
 	it("Dinoz is level 1 and want to learn 'Colère' skill with success", async () => {
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[1].experience.toString());
 
@@ -314,7 +314,7 @@ describe('Function learnSkill', () => {
 
 		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel1LevelUpInWood);
 
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[1].experience.toString());
 
@@ -342,7 +342,7 @@ describe('Function learnSkill', () => {
 
 		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
 
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[50].experience.toString());
 
@@ -373,7 +373,7 @@ describe('Function learnSkill', () => {
 
 		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
 
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[50].experience.toString());
 

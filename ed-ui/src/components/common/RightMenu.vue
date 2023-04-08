@@ -52,7 +52,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LocaleChange from '../../components/utils/LocaleChange.vue';
-import { sessionStore } from '../../store';
+import { sessionStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'RightMenu',

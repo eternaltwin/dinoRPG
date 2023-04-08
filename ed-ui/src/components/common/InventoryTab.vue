@@ -81,11 +81,11 @@
 
 <script lang="ts" scoped>
 import { defineComponent } from 'vue';
-import { Item } from '../../models';
-import { itemNameList } from '../../constants';
-import { InventoryService } from '../../services';
-import { errorHandler } from '../../utils';
-import EventBus from '../../events';
+import { Item } from '../../models/index.js';
+import { itemNameList } from '../../constants/index.js';
+import { InventoryService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'InventoryTab',

@@ -1,4 +1,4 @@
-import { FightResult } from '../models';
+import { FightResult } from '../models/index.js';
 import { AxiosError } from 'axios';
 import mitt from 'mitt';
 

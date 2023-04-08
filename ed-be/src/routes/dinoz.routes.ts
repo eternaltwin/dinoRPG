@@ -16,6 +16,7 @@ import { postError } from '../utils/discord.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 const routes: Router = Router();
 
@@ -317,8 +318,8 @@ routes.put(
 		}
 
 		try {
-			const response: void = await resurrectDinoz(req);
-			return res.status(200).send(response);
+			await resurrectDinoz(req);
+			return res.status(200).send();
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
@@ -354,7 +355,7 @@ routes.get(`${commonPath}/dig/:id`, [param('id').exists().toInt().isNumeric()], 
 	}
 
 	try {
-		const response = await digWithDinoz(req);
+		const response: Rewarder = await digWithDinoz(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;

@@ -28,8 +28,8 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz } from '../../models';
-import { dinozPlacement, raceList } from '../../constants';
+import { Dinoz } from '../../models/index.js';
+import { dinozPlacement, raceList } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'DinozDisplay',

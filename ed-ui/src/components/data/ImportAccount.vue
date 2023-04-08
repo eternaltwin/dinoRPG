@@ -19,10 +19,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events';
-import { PlayerService } from '../../services';
-import { errorHandler } from '../../utils';
-import { sessionStore } from '../../store';
+import EventBus from '../../events/index.js';
+import { PlayerService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { sessionStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'ImportAccount',

@@ -14,7 +14,7 @@ import { checkIsAdmin } from '../utils/jwt.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { PlayerTypeToSend } from '../models/PlayerTypeToSend.js';
+import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 
 const routes: Router = Router();
 

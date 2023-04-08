@@ -1,13 +1,14 @@
-import { http } from '../utils';
+import { http } from '../utils/index.js';
 import { Item } from '../models';
+import { ItemFiche } from '@drpg/core/dist/models/item/ItemFiche.mjs';
 export const ItemShopService = {
-	getItemFromItemShop(shopId: number): Promise<Array<Item>> {
+	getItemFromItemShop(shopId: number): Promise<Array<ItemFiche>> {
 		return http()
 			.get(`/shop/getShop/${shopId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	buyItem(shopId: number, itemId: number, quantity: number): Promise<Item> {
+	buyItem(shopId: number, itemId: number, quantity: number): Promise<void> {
 		return http()
 			.put(`/shop/buyItem/${shopId}`, {
 				itemId: itemId,

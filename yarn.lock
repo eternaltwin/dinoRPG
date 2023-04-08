@@ -2896,6 +2896,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/vue-i18n@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@types/vue-i18n@npm:7.0.0"
+  dependencies:
+    vue-i18n: "*"
+  checksum: da1cde55de6a9c85253228c434370d20616de1c91d191e709f4fb4dafda67d7615b5f44d78cb28de8b8dbbf3f1412f949faad33df0174fb46ecdd5cdef41049f
+  languageName: node
+  linkType: hard
+
 "@types/webpack-env@npm:^1.15.2":
   version: 1.18.0
   resolution: "@types/webpack-env@npm:1.18.0"
@@ -5069,6 +5078,7 @@ __metadata:
     "@drpg/core": "workspace:^"
     "@rollup/plugin-typescript": ^11.0.0
     "@types/url-join": ^4.0.1
+    "@types/vue-i18n": ^7.0.0
     "@typescript-eslint/eslint-plugin": ^5.57.0
     "@typescript-eslint/parser": ^5.57.0
     "@vitejs/plugin-vue": ^4.1.0
@@ -10890,7 +10900,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-i18n@npm:^9.2.2":
+"vue-i18n@npm:*, vue-i18n@npm:^9.2.2":
   version: 9.2.2
   resolution: "vue-i18n@npm:9.2.2"
   dependencies:

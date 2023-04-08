@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { raceList } from '../../constants';
+import { raceList } from '../../constants/index.js';
 import { defineAsyncComponent, defineComponent } from 'vue';
 
 export default defineComponent({

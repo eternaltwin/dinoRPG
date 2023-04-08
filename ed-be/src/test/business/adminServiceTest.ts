@@ -20,7 +20,7 @@ import {
 	PlayerTypeToSendAllData
 } from '../data/playerData.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { PlayerTypeToSend } from '../../models/PlayerTypeToSend.js';
+import { PlayerTypeToSend } from "@drpg/core/models/player/PlayerTypeToSend";
 
 const PlayerDao = require('../../dao/playerDao.js');
 const DinozDao = require('../../dao/dinozDao.js');

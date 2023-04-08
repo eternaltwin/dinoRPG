@@ -37,11 +37,11 @@
 import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
 import RightMenu from '../components/common/RightMenu.vue';
-import { sessionStore } from '../store';
-import { CommonData } from '../models';
-import { errorHandler } from '../utils';
-import { PlayerService } from '../services';
-import EventBus from '../events';
+import { sessionStore } from '../store/index.js';
+import { CommonData } from '../models/index.js';
+import { errorHandler } from '../utils/index.js';
+import { PlayerService } from '../services/index.js';
+import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'MainPage',
