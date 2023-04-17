@@ -1,6 +1,6 @@
 import { http } from '../utils/index.js';
 import { Item } from '../models';
-import { ItemFiche } from '@drpg/core/dist/models/item/ItemFiche.mjs';
+import { ItemFiche } from '@drpg/core/src/models/item/ItemFiche.mjs';
 export const ItemShopService = {
 	getItemFromItemShop(shopId: number): Promise<Array<ItemFiche>> {
 		return http()

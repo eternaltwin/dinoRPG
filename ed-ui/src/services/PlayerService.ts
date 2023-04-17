@@ -1,7 +1,7 @@
 import { http } from '../utils/index.js';
-import { PlayerCommonData } from '@drpg/core/dist/models/player/PlayerCommonData.mjs';
-import { PlayerRanking } from '@drpg/core/dist/models/player/PlayerRanking.mjs';
-import { PlayerInfo } from '@drpg/core/dist/models/player/PlayerInfo.mjs';
+import { PlayerCommonData } from '@drpg/core/src/models/player/PlayerCommonData.mjs';
+import { PlayerRanking } from '@drpg/core/src/models/player/PlayerRanking.mjs';
+import { PlayerInfo } from '@drpg/core/src/models/player/PlayerInfo.mjs';
 
 export const PlayerService = {
 	getLoggedInData(): Promise<PlayerCommonData> {

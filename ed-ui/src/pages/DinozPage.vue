@@ -23,7 +23,7 @@ import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import { sessionStore } from '../store/index.js';
-import { DinozFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
 
 export default defineComponent({
 	name: 'DinozPage',

@@ -1,8 +1,8 @@
-import { StoreStateSession } from '@drpg/core/dist/models/store/StoreStateSession.mjs';
+import { StoreStateSession } from '@drpg/core/src/models/store/StoreStateSession.mjs';
 import { defineStore } from 'pinia';
-import { FightResult } from '@drpg/core/dist/models/fight/FightResult.mjs';
-import { DinozFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
-import { PlayerOptions } from '@drpg/core/dist/models/player/PlayerOptions.mjs';
+import { FightResult } from '@drpg/core/src/models/fight/FightResult.mjs';
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
+import { PlayerOptions } from '@drpg/core/src/models/player/PlayerOptions.mjs';
 
 export const sessionStore = defineStore('sessionStore', {
 	state: (): StoreStateSession => ({

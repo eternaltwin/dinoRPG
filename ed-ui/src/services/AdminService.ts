@@ -1,6 +1,6 @@
 import { http } from '../utils/index.js';
-import { PlayerTypeToSend } from '@drpg/core/dist/models/player/PlayerTypeToSend.mjs';
-import { DinozFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
+import { PlayerTypeToSend } from '@drpg/core/src/models/player/PlayerTypeToSend.mjs';
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {

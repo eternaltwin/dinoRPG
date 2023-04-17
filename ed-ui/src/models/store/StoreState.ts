@@ -1,6 +1,6 @@
-import { FightResult } from '@drpg/core/dist/models/fight/FightResult.mjs';
-import { DinozFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
-import { PlayerOptions } from '@drpg/core/dist/models/player/PlayerOptions.mjs';
+import { FightResult } from '@drpg/core/src/models/fight/FightResult.mjs';
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
+import { PlayerOptions } from '@drpg/core/src/models/player/PlayerOptions.mjs';
 
 export interface StoreStateSession {
 	dinozCount?: number;

@@ -28,6 +28,7 @@ import { sessionStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
 
 export default defineComponent({
 	name: 'MissionInformationModal',
@@ -44,7 +45,7 @@ export default defineComponent({
 		async updateMission(status: string) {
 			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			try {
 				await MissionService.updateMissions(dinozId, this.mission!.missionId, status);
@@ -67,7 +68,7 @@ export default defineComponent({
 			return missionsList[this.mission!.missionId];
 		},
 		dinoz(): Dinoz {
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			return dinozList.find(dinozs => dinozs.id == parseInt(this.$route.params.id as string))!;
 		}
 	}

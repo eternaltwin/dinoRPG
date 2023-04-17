@@ -166,10 +166,11 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { AdminService } from '../../services/index.js';
-import { Dinoz, DinozEdit } from '../../models/index.js';
+import { DinozEdit } from '../../models/index.js';
 import { skillNameList, statusList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
+import { DinozFiche } from "@drpg/core/dist/models/dinoz/DinozFiche.mjs";
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -179,7 +180,7 @@ export default defineComponent({
 				skillList: [],
 				statusList: []
 			} as DinozEdit,
-			dinoz: {} as Dinoz,
+			dinoz: {} as DinozFiche,
 			statusList: statusList,
 			statusOperation: '' as string,
 			statusListFiltered: [] as Array<string>,
@@ -189,7 +190,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozProp: { type: Object as PropType<Dinoz>, required: true },
+		dinozProp: { type: Object as PropType<DinozFiche>, required: true },
 		playerId: { type: Number, required: true }
 	},
 	methods: {
@@ -231,7 +232,7 @@ export default defineComponent({
 					);
 				}
 
-				const refresh: Array<Dinoz> = await AdminService.listAllDinozFromPlayer(this.playerId);
+				const refresh: Array<DinozFiche> = await AdminService.listAllDinozFromPlayer(this.playerId);
 				this.dinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id)!;
 			} catch (err) {
 				EventBus.emit('isLoading', false);

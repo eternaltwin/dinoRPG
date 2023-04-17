@@ -3,7 +3,7 @@ import fr from './locales/fr.json';
 import es from './locales/es.json';
 import de from './locales/de.json';
 
-interface LangInfos {
+export interface LangInfos {
 	caption: string;
 	icon: string;
 	short: string;

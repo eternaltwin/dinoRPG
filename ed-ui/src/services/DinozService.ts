@@ -1,9 +1,9 @@
 import { http } from '../utils/index.js';
-import { DinozFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
-import { DinozSkillFiche } from '@drpg/core/dist/models/dinoz/DinozSkillFiche.mjs';
-import { FightResult } from '@drpg/core/dist/models/fight/FightResult.mjs';
-import { Rewarder } from '@drpg/core/dist/models/reward/Rewarder.mjs';
-import { DinozSkillOwnAndUnlockable } from '@drpg/core/dist/models/dinoz/DinozSkillOwnAndUnlockable.mjs';
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
+import { DinozSkillFiche } from '@drpg/core/src/models/dinoz/DinozSkillFiche.mjs';
+import { FightResult } from '@drpg/core/src/models/fight/FightResult.mjs';
+import { Rewarder } from '@drpg/core/src/models/reward/Rewarder.mjs';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/src/models/dinoz/DinozSkillOwnAndUnlockable.mjs';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {

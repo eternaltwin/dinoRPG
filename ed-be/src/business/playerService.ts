@@ -25,7 +25,6 @@ import { ErrorFormator } from '../utils/errorFormator.js';
  */
 export async function getCommonData(req: Request): Promise<PlayerCommonData> {
 	const playerCommonData: Player = await getCommonDataRequest(req.user!.playerId!);
-  console.log("hhh")
 
 	const commonData: PlayerCommonData = {
 		money: playerCommonData.money,

@@ -53,6 +53,8 @@ import { missionsList } from '../../constants/index.js';
 import { Dinoz, MissionList, missionRequirement } from '../../models/index.js';
 import EventBus from '../../events/index.js';
 import { MissionEnum, MissionsStatus } from '../../enums/index.js';
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
+import { MissionHUD } from "@drpg/core/src/models/missions/missionHUD.mjs"
 
 export default defineComponent({
 	name: 'MissionHUD',
@@ -76,7 +78,7 @@ export default defineComponent({
 		async reload(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			dinozToUpdate.missionId = undefined;
 			dinozToUpdate.missions = undefined;
@@ -92,9 +94,9 @@ export default defineComponent({
 		missionName(): string {
 			return missionsList[this.missionId];
 		},
-		missionDetail(): missionRequirement {
+		missionDetail(): MissionHUD {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			return myDinoz.missions!;
 		},

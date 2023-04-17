@@ -32,7 +32,8 @@
     "src/**/*.vue",
     "src/i18n/**/*",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "src/**/*.json"
   ],
   "exclude": [],
   "references": [

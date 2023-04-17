@@ -83,9 +83,11 @@ import { sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { MissionEnum, RewardEnum } from '../../enums/index.js';
+import { MissionEnum } from '../../enums/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { mixin } from '../../mixin/mixin.js';
+import { Rewarder } from "@drpg/core/src/models/reward/Rewarder.mjs";
+import { ConditionEnum, RewardEnum } from "@drpg/core/src/models/enums/Parser.mjs";
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -98,10 +100,10 @@ export default defineComponent({
 			mission: sessionStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
 				.missions,
 			npcName: undefined as string | undefined,
-			missionReward: undefined as Array<missionRewards> | undefined,
+			missionReward: undefined as Array<Rewarder> | undefined,
 			sessionStore: sessionStore(),
 			MissionEnum: MissionEnum,
-			digReward: undefined as missionRewards | undefined
+			digReward: undefined as Rewarder | undefined
 		};
 	},
 	components: {
@@ -150,7 +152,7 @@ export default defineComponent({
 					this.resurect = true;
 					break;
 				case 'mission':
-					if (this.mission!.actionType === MissionEnum.VALIDATE) {
+					if (this.mission!.actionType === ConditionEnum.FINISH_MISSION) {
 						this.missionReward = await MissionService.finishMission(this.$route.params.id.toString(), this.missionId!);
 					} else {
 						try {
