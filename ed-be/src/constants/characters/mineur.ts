@@ -1,4 +1,4 @@
-import { ConditionEnum, NpcData, RewardEnum } from '../../models/index.js';
+import { ConditionEnum, ConditionOperatorEnum, NpcData, RewardEnum } from '../../models/index.js';
 
 export const MINEUR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -16,13 +16,16 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 			conditionType: ConditionEnum.STATUS,
 			value: 'SHOVEL',
 			reverse: true,
+			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
 				value: 'ENHANCED_SHOVEL',
+				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
 					value: 'BROKEN_SHOVEL',
 					reverse: true,
+					operator: ConditionOperatorEnum.AND,
 					nextCondition: {
 						conditionType: ConditionEnum.STATUS,
 						value: 'BROKEN_ENHANCED_SHOVEL',
