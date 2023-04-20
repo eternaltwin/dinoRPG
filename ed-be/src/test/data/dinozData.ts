@@ -5,7 +5,7 @@ import { PlayerData, BasicPlayerWithRank } from './playerData.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 
-export const DinozFicheData = ({
+export const DinozFicheData = {
 	id: dinozId,
 	player: PlayerData,
 	race: {
@@ -17,9 +17,9 @@ export const DinozFicheData = ({
 	placeId: 1,
 	experience: 100,
 	missions: []
-} as unknown) as Dinoz;
+} as unknown as Dinoz;
 
-export const DinozFicheDataWithMission = ({
+export const DinozFicheDataWithMission = {
 	id: dinozId,
 	player: PlayerData,
 	race: {
@@ -38,7 +38,7 @@ export const DinozFicheDataWithMission = ({
 			isFinished: false
 		}
 	]
-} as unknown) as Dinoz;
+} as unknown as Dinoz;
 
 export const MonsterDataLvl1 = {
 	name: 'goupignon',
@@ -90,7 +90,7 @@ export const fightResultlvl7Win = {
 	result: true
 };
 
-export const DinozFightDataWithMission = ({
+export const DinozFightDataWithMission = {
 	id: dinozId,
 	placeId: 1,
 	level: 1,
@@ -114,9 +114,9 @@ export const DinozFightDataWithMission = ({
 		}
 	],
 	player: PlayerData
-} as unknown) as Dinoz;
+} as unknown as Dinoz;
 
-export const DinozFightData = ({
+export const DinozFightData = {
 	id: dinozId,
 	placeId: 1,
 	level: 1,
@@ -133,8 +133,8 @@ export const DinozFightData = ({
 	status: [{ statusId: 1 }, { statusId: 2 }, { statusId: 12 }],
 	missions: [],
 	player: PlayerData
-} as unknown) as Dinoz;
-export const DinozKillFightData = ({
+} as unknown as Dinoz;
+export const DinozKillFightData = {
 	id: dinozId,
 	placeId: placeList.UNIVERSITE.placeId,
 	level: 1,
@@ -158,9 +158,9 @@ export const DinozKillFightData = ({
 		}
 	],
 	player: PlayerData
-} as unknown) as Dinoz;
+} as unknown as Dinoz;
 
-export const DinozNPCData = ({
+export const DinozNPCData = {
 	id: dinozId,
 	placeId: 3,
 	level: 1,
@@ -174,9 +174,9 @@ export const DinozNPCData = ({
 		}
 	],
 	player: PlayerData
-} as unknown) as Dinoz;
+} as unknown as Dinoz;
 
-export const DinozSecondMission = ({
+export const DinozSecondMission = {
 	id: dinozId,
 	placeId: placeList.COLLINES_ESCARPEES.placeId,
 	level: 1,
@@ -196,9 +196,9 @@ export const DinozSecondMission = ({
 		}
 	],
 	player: PlayerData
-} as unknown) as Dinoz;
+} as unknown as Dinoz;
 
-export const DinozKillMission = ({
+export const DinozKillMission = {
 	id: dinozId,
 	placeId: placeList.COLLINES_ESCARPEES.placeId,
 	level: 1,
@@ -224,7 +224,7 @@ export const DinozKillMission = ({
 		}
 	],
 	player: PlayerData
-} as unknown) as Dinoz;
+} as unknown as Dinoz;
 
 export const missionRewards = [
 	{
@@ -363,7 +363,7 @@ export const AllDinozFromAnAccount = [
 	}
 ] as Array<Dinoz>;
 
-export const DinozListFromAnAccount = ([
+export const DinozListFromAnAccount = [
 	{
 		id: 123456,
 		following: null,
@@ -442,9 +442,9 @@ export const DinozListFromAnAccount = ([
 			playerId: player.id_1
 		}
 	}
-] as unknown) as Array<Dinoz>;
+] as unknown as Array<Dinoz>;
 
-export const DinozFicheListFromAnAccount = ([
+export const DinozFicheListFromAnAccount = [
 	{
 		id: 123456,
 		following: null,
@@ -477,7 +477,7 @@ export const DinozFicheListFromAnAccount = ([
 		status: [5, 4],
 		skills: [61103, 61103, 61104]
 	}
-] as unknown) as Array<DinozFiche>;
+] as unknown as Array<DinozFiche>;
 
 export const AllDinozFromAnAccountArray = [123456, 654321] as Array<number>;
 

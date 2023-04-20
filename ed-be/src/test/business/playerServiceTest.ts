@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { Request } from 'express';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 import { PlayerAllData, playerList } from '../data/playerData.js';
 import { importPlayerData, mockRequest, player } from '../utils/constants.js';
 import {
@@ -189,9 +189,9 @@ describe('Function setCustomText', function () {
 
 	it('Nominal case', async function () {
 		PlayerTestData.rewards = [
-			({
+			{
 				rewardId: rewardList.PLUME
-			} as unknown) as PlayerReward
+			} as unknown as PlayerReward
 		];
 		PlayerDao.getPlayerRewardsRequest = jasmine.createSpy().and.returnValue(PlayerTestData);
 

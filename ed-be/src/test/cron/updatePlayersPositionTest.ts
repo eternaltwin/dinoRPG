@@ -1,5 +1,5 @@
 import { CronJob } from 'cron';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 import { updatePlayersPosition } from '../../cron/updatePlayersPosition.js';
 import { playersToUpdatePoints } from '../data/rankingData.js';
 import { player } from '../utils/constants.js';

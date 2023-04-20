@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 import _ from 'lodash';
 import { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill } from '../../business/skillService.js';
 import { itemList, levelList, raceList, skillList } from '../../constants/index.js';

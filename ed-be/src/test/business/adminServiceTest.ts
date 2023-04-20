@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 import {
 	editDinoz,
 	editPlayer,
@@ -20,7 +20,7 @@ import {
 	PlayerTypeToSendAllData
 } from '../data/playerData.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { PlayerTypeToSend } from "@drpg/core/models/player/PlayerTypeToSend";
+import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 
 const PlayerDao = require('../../dao/playerDao.js');
 const DinozDao = require('../../dao/dinozDao.js');

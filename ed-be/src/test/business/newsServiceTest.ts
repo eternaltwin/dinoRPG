@@ -1,10 +1,10 @@
 import { Request } from 'express';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 import { mockRequest } from '../utils/constants.js';
 import { getNews, postNews, updateNews } from '../../business/newsService.js';
 import { batchOfNews, editedNews } from '../data/newsData.js';
 import { News } from '../../entity/index.js';
-import { AllNews } from "@drpg/core/models/news/AllNews";
+import { AllNews } from '@drpg/core/models/news/AllNews';
 
 const NewsDao = require('../../dao/newsDao.js');
 

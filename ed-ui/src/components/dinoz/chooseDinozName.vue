@@ -30,8 +30,8 @@ import { DinozService } from '../../services/index.js';
 import { Dinoz } from '../../models/index.js';
 import { sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
-import { DinozFiche } from "@drpg/core/src/models/dinoz/DinozFiche.mjs";
-import { messages } from "../../i18n/index.js";
+import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
+import { messages } from '../../i18n/index.js';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
@@ -73,7 +73,7 @@ export default defineComponent({
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);
 			} else {
-				EventBus.emit('toast', {message: 'OnlyLettersAndNumbers', type: 'error'});
+				EventBus.emit('toast', { message: 'OnlyLettersAndNumbers', type: 'error' });
 			}
 		}
 	}

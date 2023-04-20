@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 
 // Player constants
 export const player = {
@@ -95,8 +95,8 @@ export const mockRequest = {
 	}
 } as Request;
 
-export const mockResponse = ({
+export const mockResponse = {
 	status: jest.fn().mockReturnThis(),
 	send: jest.fn().mockReturnThis(),
 	json: jest.fn().mockReturnThis()
-} as unknown) as Response;
+} as unknown as Response;

@@ -52,7 +52,7 @@ import { missionsList } from '../../constants/index.js';
 import { missionRewards } from '../../models/index.js';
 import { sessionStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
-import { Rewarder } from "@drpg/core/src/models/reward/Rewarder.mjs";
+import { Rewarder } from '@drpg/core/src/models/reward/Rewarder.mjs';
 import { RewardEnum } from '@drpg/core/src/models/enums/Parser.mjs';
 
 export default defineComponent({
@@ -96,10 +96,10 @@ export default defineComponent({
 			}
 		},
 		items(): Array<string | undefined> {
-			const isItem: Array<Rewarder> | undefined = this.missionReward.filter(
-				el => el.rewardType === RewardEnum.ITEM
-			);
-			return isItem.map(el => {if (el.rewardType === RewardEnum.ITEM) return el.value.toLowerCase()});
+			const isItem: Array<Rewarder> | undefined = this.missionReward.filter(el => el.rewardType === RewardEnum.ITEM);
+			return isItem.map(el => {
+				if (el.rewardType === RewardEnum.ITEM) return el.value.toLowerCase();
+			});
 		},
 		epic(): string | undefined {
 			const isEpic: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EPIC);

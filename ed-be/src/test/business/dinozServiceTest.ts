@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import {jest} from '@jest/globals';
+import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash';
 import {
 	getDinozFiche,
@@ -299,7 +299,7 @@ describe('Test de la fonction buyDinoz()', function () {
 			nextUpAltElementId: 3
 		};
 
-		const tempDinoz: Dinoz = (expectedDinoz as unknown) as Dinoz;
+		const tempDinoz: Dinoz = expectedDinoz as unknown as Dinoz;
 
 		const expectedDinozFiche: DinozFiche = {
 			id: expectedDinoz.id,
