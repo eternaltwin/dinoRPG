@@ -57,20 +57,20 @@
 				<p>
 					<i18n-t keypath="footer.text1" tag="div" class="text">
 						<template v-slot:DinoRPG>
-							<a href="http://www.dinorpg.com/" target="_blank"> DinoRPG </a>
+							<a href="http://www.dinorpg.com/" target="_blank">DinoRPG</a>
 						</template>
 					</i18n-t>
 					<i18n-t keypath="footer.text2" tag="div" class="text">
 						<template v-slot:Gitlab>
-							<a href="https://gitlab.com/eternaltwin/dinorpg/dinorpg/" target="_blank"> Gitlab </a>
+							<a href="https://gitlab.com/eternaltwin/dinorpg/dinorpg/" target="_blank">Gitlab</a>
 						</template>
 					</i18n-t>
 					<i18n-t keypath="footer.text3" tag="div" class="text">
 						<template v-slot:EternalTwin>
-							<a href="https://eternal-twin.net/" target="_blank"> EternalTwin </a>
+							<a href="https://eternal-twin.net/" target="_blank">EternalTwin</a>
 						</template>
 						<template v-slot:OpenCollective>
-							<a href="https://opencollective.com/eternaltwin" target="_blank"> OpenCollective </a>
+							<a href="https://opencollective.com/eternaltwin" target="_blank">OpenCollective</a>
 						</template>
 					</i18n-t>
 				</p>
