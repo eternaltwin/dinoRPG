@@ -146,7 +146,7 @@ import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { Dinoz, DinozSkillOwnAndUnlockable } from '../models/index.js';
 import { dinozPlacement, skillNameList } from '../constants/index.js';
-import { ElementType } from '@drpg/core/src/models/enums/ElementType.mjs';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { sessionStore } from '../store/index.js';
 
 export default defineComponent({

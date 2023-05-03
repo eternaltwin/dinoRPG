@@ -28,7 +28,7 @@ import { sessionStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'MissionInformationModal',

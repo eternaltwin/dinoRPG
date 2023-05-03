@@ -53,8 +53,8 @@ import { missionsList } from '../../constants/index.js';
 import { Dinoz, MissionList, missionRequirement } from '../../models/index.js';
 import EventBus from '../../events/index.js';
 import { MissionEnum, MissionsStatus } from '../../enums/index.js';
-import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
-import { MissionHUD } from '@drpg/core/src/models/missions/missionHUD.mjs';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 
 export default defineComponent({
 	name: 'MissionHUD',

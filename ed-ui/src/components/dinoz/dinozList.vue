@@ -36,7 +36,7 @@
 import { defineComponent } from 'vue';
 import { sessionStore } from '../../store/index.js';
 import { placeList } from '../../constants/index.js';
-import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozList',

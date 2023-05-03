@@ -1,4 +1,4 @@
-import { StoreStateLocal } from '@drpg/core/src/models/store/StoreStateLocal.mjs';
+import { StoreStateLocal } from '@drpg/core/models/store/StoreStateLocal';
 import { defineStore } from 'pinia';
 
 export const localStore = defineStore('localStore', {

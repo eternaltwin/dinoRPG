@@ -1,5 +1,5 @@
 import { http } from '../utils/index.js';
-import { DinozShopFiche } from '@drpg/core/src/models/shop/DinozShopFiche.mjs';
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 export const DinozShopService = {
 	getDinozFromDinozShop(): Promise<Array<DinozShopFiche>> {
 		return http()

@@ -51,9 +51,9 @@ import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
 import { missionRewards } from '../../models/index.js';
 import { sessionStore } from '../../store/index.js';
-import { DinozFiche } from '@drpg/core/src/models/dinoz/DinozFiche.mjs';
-import { Rewarder } from '@drpg/core/src/models/reward/Rewarder.mjs';
-import { RewardEnum } from '@drpg/core/src/models/enums/Parser.mjs';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export default defineComponent({
 	name: 'MissionRewardModal',

@@ -1,5 +1,5 @@
 import { http } from '../utils/index.js';
-import { IngredientFiche } from '@drpg/core/src/models/ingredient/IngredientFiche.mjs';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 
 export const IngredientsService = {
 	getAllIngredients(): Promise<Array<IngredientFiche>> {

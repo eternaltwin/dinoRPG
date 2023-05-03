@@ -170,7 +170,7 @@ import { DinozEdit } from '../../models/index.js';
 import { skillNameList, statusList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
-import { DinozFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozEdit',

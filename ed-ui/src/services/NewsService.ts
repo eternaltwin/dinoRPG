@@ -1,5 +1,5 @@
 import { http } from '../utils/index.js';
-import { AllNews } from '@drpg/core/src/models/news/AllNews.mjs';
+import { AllNews } from '@drpg/core/models/news/AllNews';
 
 export const NewsService = {
 	getNewsFromPage(page: number): Promise<Array<Partial<AllNews>>> {

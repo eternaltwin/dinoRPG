@@ -1,6 +1,6 @@
 import { http } from '../utils/index.js';
-import { MissionList } from '@drpg/core/src/models/missions/missionList.mjs';
-import { Rewarder } from '@drpg/core/src/models/reward/Rewarder.mjs';
+import { MissionList } from '@drpg/core/models/missions/missionList';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 export const MissionService = {
 	getMissions(id: string, npc: string): Promise<Array<MissionList>> {

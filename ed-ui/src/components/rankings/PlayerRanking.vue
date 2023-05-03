@@ -52,7 +52,7 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { PlayerRanking } from '@drpg/core/src/models/player/PlayerRanking.mjs';
+import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 
 export default defineComponent({
 	name: 'PlayerRanking',

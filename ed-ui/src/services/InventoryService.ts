@@ -1,5 +1,5 @@
 import { http } from '../utils/index.js';
-import { ItemFiche } from '@drpg/core/src/models/item/ItemFiche.mjs';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 
 // For Player's inventory
 

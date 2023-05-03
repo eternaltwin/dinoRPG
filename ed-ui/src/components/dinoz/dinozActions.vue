@@ -86,8 +86,8 @@ import { errorHandler } from '../../utils/index.js';
 import { MissionEnum } from '../../enums/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { mixin } from '../../mixin/mixin.js';
-import { Rewarder } from '@drpg/core/src/models/reward/Rewarder.mjs';
-import { ConditionEnum, RewardEnum } from '@drpg/core/src/models/enums/Parser.mjs';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export default defineComponent({
 	name: 'DinozActions',
