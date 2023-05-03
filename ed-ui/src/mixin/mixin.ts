@@ -1,4 +1,4 @@
-import { formatText } from '../utils/formatText';
+import { formatText } from '../utils/formatText.js';
 
 export const mixin = {
 	methods: {

@@ -1,4 +1,4 @@
-import { Image } from './Image';
+import { Image } from '@drpg/core/models/news/Image'
 
 export interface AllNews {
 	title: string;
