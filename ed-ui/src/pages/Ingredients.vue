@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IngredientFiche } from '../models/index.js';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { IngredientsService } from '../services/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';

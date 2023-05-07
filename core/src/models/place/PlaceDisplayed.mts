@@ -1,12 +1,14 @@
-import { Map, PlaceIcon } from '../../enums';
+import { MapZone } from "../enums/MapType.mjs";
+import { PlaceIcon } from "../enums/PlaceIcon.mjs";
 
-export interface Place {
+
+export interface PlaceDisplayed {
 	placeId: number;
 	name: string;
 	posLeft: number;
 	posTop: number;
 	icon: PlaceIcon;
-	map: Map;
+	map: MapZone;
 	hidden: boolean;
 	alias?: number;
 	xFactor: number;

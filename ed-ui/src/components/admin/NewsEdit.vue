@@ -56,7 +56,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { NewsService } from '../../services/index.js';
-import { AllNews } from '../../models/index.js';
+import { AllNews } from '@drpg/core/models/news/AllNews';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
 

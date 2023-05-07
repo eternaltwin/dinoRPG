@@ -144,7 +144,8 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
-import { Dinoz, DinozSkillOwnAndUnlockable } from '../models/index.js';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
+import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
 import { dinozPlacement, skillNameList } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { sessionStore } from '../store/index.js';
@@ -161,7 +162,7 @@ export default defineComponent({
 		return {
 			sessionStore: sessionStore(),
 			availableSkills: {} as Partial<DinozSkillOwnAndUnlockable>,
-			dinozData: {} as Dinoz,
+			dinozData: {} as DinozFiche,
 			tryNumber: 1 as number,
 			skillNameList: skillNameList,
 			ElementType: ElementType,
@@ -197,7 +198,7 @@ export default defineComponent({
 			try {
 				const newMaxExperience = await DinozService.learnSkill(parseInt(dinozId), skillIdList, this.tryNumber);
 
-				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 				dinozToUpdate.experience = 0;
 				dinozToUpdate.maxExperience = newMaxExperience;
@@ -230,7 +231,7 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		const dinozId: string = this.$route.params.id.toString();
-		const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+		const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 		this.dinozData = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 
 		await this.getLearnableSkills(dinozId, 1);

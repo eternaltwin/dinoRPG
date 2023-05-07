@@ -50,21 +50,24 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { placeList } from '../../constants/index.js';
-import { Dinoz, FightResult, Place, svgLines } from '../../models/index.js';
+import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
+import { svgLines } from '@drpg/core/models/place/svgLines';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
 
 export default defineComponent({
 	name: 'WorldMap',
 	props: {
-		dinozData: Object as PropType<Dinoz>
+		dinozData: Object as PropType<DinozFiche>
 	},
 	data() {
 		return {
 			sessionStore: sessionStore(),
-			placeMap: [] as Array<Place>,
+			placeMap: [] as Array<PlaceDisplayed>,
 			translation: {
 				x: 0 as number,
 				y: 0 as number
@@ -141,7 +144,7 @@ export default defineComponent({
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				if (moveTry.result) {
-					const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+					const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 					const dinozToUpdate = dinozList.find(dinozs => dinozs.id == this.dinozData!.id!)!;
 					if (placeList.find(place => place.placeId === placeId)?.alias) {
 						placeId = placeList.find(place => place.placeId === placeId)!.alias!;

@@ -43,11 +43,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { Dinoz } from '../../models/index.js';
+import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
 
 export default defineComponent({
 	name: 'DinozBars',
-	props: { dinozData: Object as PropType<Dinoz> },
+	props: { dinozData: Object as PropType<DinozFiche> },
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
 			const width: number = Math.round((value / maxValue) * 98);

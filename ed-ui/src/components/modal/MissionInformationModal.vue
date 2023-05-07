@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
-import { Dinoz, MissionList } from '../../models/index.js';
+import { MissionList } from '@drpg/core/models/missions/MissionList';
 import { sessionStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
@@ -67,7 +67,7 @@ export default defineComponent({
 		missionName(): string {
 			return missionsList[this.mission!.missionId];
 		},
-		dinoz(): Dinoz {
+		dinoz(): DinozFiche {
 			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			return dinozList.find(dinozs => dinozs.id == parseInt(this.$route.params.id as string))!;
 		}

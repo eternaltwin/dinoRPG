@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz } from '../../models/index.js';
+import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
 import { placeList } from '../../constants/index.js';
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
 			placeId: undefined as number | undefined
 		};
 	},
-	props: { dinozData: Object as PropType<Dinoz> },
+	props: { dinozData: Object as PropType<DinozFiche> },
 	components: {
 		WorldMap: defineAsyncComponent(() => import('../../components/common/WorldMap.vue'))
 	},

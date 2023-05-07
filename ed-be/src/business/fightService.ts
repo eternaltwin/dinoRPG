@@ -9,7 +9,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkMissionFight } from './missionsService.js';
 import _ from 'lodash';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
-import { Place } from '@drpg/core/models/place/Place';
+import { PlaceDisplayed } from '@drpg/core/../../../core/src/models/place/PlaceDisplayed';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -32,7 +32,7 @@ export async function processFight(req: Request): Promise<FightResult> {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const localisation: Place = Object.values(placeList).find(place => place.placeId === dinozData.placeId)!;
+	const localisation: PlaceDisplayed = Object.values(placeList).find(place => place.placeId === dinozData.placeId)!;
 	const monster: MonsterFiche = prepareFight(dinozData.level, localisation.map, localisation.placeId);
 
 	const fightResult: FightProcessResult = calculateFight(dinozData, monster);
@@ -52,7 +52,7 @@ export async function processFight(req: Request): Promise<FightResult> {
 }
 
 export async function moveFight(dinoz: Dinoz, placeId: number): Promise<FightResult> {
-	const localisation: Place = Object.values(placeList).find(place => place.placeId === dinoz.placeId)!;
+	const localisation: PlaceDisplayed = Object.values(placeList).find(place => place.placeId === dinoz.placeId)!;
 	const monster: MonsterFiche = prepareFight(dinoz.level, localisation.map, localisation.placeId);
 	const fightResult: FightProcessResult = calculateFight(dinoz, monster);
 	await rewardFight(dinoz, monster, fightResult);

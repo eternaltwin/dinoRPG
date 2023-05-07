@@ -49,7 +49,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
-import { missionRewards } from '../../models/index.js';
 import { sessionStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';

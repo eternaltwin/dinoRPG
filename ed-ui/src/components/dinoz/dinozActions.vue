@@ -78,12 +78,12 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { missionsList, npcNameList, shopNameList } from '../../constants/index.js';
-import { Action, FightResult, missionRewards } from '../../models/index.js';
+import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { MissionEnum } from '../../enums/index.js';
 import { formatText } from '../../utils/formatText.js';
 import { mixin } from '../../mixin/mixin.js';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
@@ -102,7 +102,7 @@ export default defineComponent({
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Array<Rewarder> | undefined,
 			sessionStore: sessionStore(),
-			MissionEnum: MissionEnum,
+			MissionEnum: ConditionEnum,
 			digReward: undefined as Rewarder | undefined
 		};
 	},
@@ -113,11 +113,11 @@ export default defineComponent({
 		MissionRewardModal: defineAsyncComponent(() => import('../../components/modal/MissionRewardModal.vue'))
 	},
 	props: {
-		dinozActions: Object as PropType<Array<Action>>,
+		dinozActions: Object as PropType<Array<ActionFiche>>,
 		missionId: Number
 	},
 	methods: {
-		async launch(action: Action): Promise<void> {
+		async launch(action: ActionFiche): Promise<void> {
 			switch (action.name) {
 				case 'levelup':
 					this.$router.push({

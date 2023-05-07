@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz } from '../../models/index.js';
+import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
 
 export default defineComponent({
 	name: 'DinozElements',
@@ -24,7 +24,7 @@ export default defineComponent({
 		Elements: defineAsyncComponent(() => import('../../components/data/elements.vue'))
 	},
 	props: {
-		dinozData: Object as PropType<Dinoz>
+		dinozData: Object as PropType<DinozFiche>
 	}
 });
 </script>

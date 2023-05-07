@@ -166,7 +166,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { AdminService } from '../../services/index.js';
-import { DinozEdit } from '../../models/index.js';
+import { DinozEdit } from '@drpg/core/models/dinoz/DinozEdit';
 import { skillNameList, statusList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';

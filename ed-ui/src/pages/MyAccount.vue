@@ -19,7 +19,7 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { PlayerService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
-import { PlayerInfo } from '../models/index.js';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { sessionStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 

@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz } from '../../models/index.js';
+import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
 import { dinozPlacement, raceList } from '../../constants/index.js';
 
 export default defineComponent({
@@ -47,7 +47,7 @@ export default defineComponent({
 			position: dinozPlacement
 		};
 	},
-	props: { dinozData: Object as PropType<Dinoz> },
+	props: { dinozData: Object as PropType<DinozFiche> },
 	computed: {
 		dinozRace(): string {
 			return Object.entries(raceList).find(race => parseInt(race[0]) === this.dinozData!.race?.raceId)![1];

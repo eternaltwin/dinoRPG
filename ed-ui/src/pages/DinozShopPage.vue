@@ -66,7 +66,8 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { DinozShopService, DinozService } from '../services/index.js';
-import { DinozShop, Dinoz } from '../models/index.js';
+import { DinozShopFiche } from "@drpg/core/models/shop/DinozShopFiche";
+import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
 import { errorHandler, utils } from '../utils/index.js';
 import { sessionStore } from '../store/index.js';
 import { raceList, skillNameList } from '../constants/index.js';
@@ -78,7 +79,7 @@ export default defineComponent({
 		return {
 			sessionStore: sessionStore(),
 			utils: utils,
-			dinozList: [] as Array<DinozShop>,
+			dinozList: [] as Array<DinozShopFiche>,
 			raceList: raceList,
 			skillNameList: skillNameList
 		};
@@ -89,11 +90,11 @@ export default defineComponent({
 		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	methods: {
-		async openPopinConfirmChoice(dinoz: DinozShop): Promise<void> {
+		async openPopinConfirmChoice(dinoz: DinozShopFiche): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
 			if (res) {
 				EventBus.emit('isLoading', true);
-				let dinozCreated: Dinoz;
+				let dinozCreated: DinozFiche;
 				try {
 					dinozCreated = await DinozService.buyDinoz(dinoz.id);
 					EventBus.emit('isLoading', false);

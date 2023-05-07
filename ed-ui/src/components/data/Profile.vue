@@ -56,7 +56,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { epicList } from '../../constants/index.js';
-import { PlayerInfo } from '../../models/index.js';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import EventBus from '../../events/index.js';
 import ImportAccount from '../../components/data/ImportAccount.vue';
 import { PlayerService } from '../../services/index.js';

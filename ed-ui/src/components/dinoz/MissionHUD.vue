@@ -50,9 +50,10 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { sessionStore } from '../../store/index.js';
 import { missionsList } from '../../constants/index.js';
-import { Dinoz, MissionList, missionRequirement } from '../../models/index.js';
+import { MissionList } from '@drpg/core/models/missions/MissionList';
 import EventBus from '../../events/index.js';
-import { MissionEnum, MissionsStatus } from '../../enums/index.js';
+import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 
@@ -66,7 +67,7 @@ export default defineComponent({
 		return {
 			sessionStore: sessionStore(),
 			information: false as boolean,
-			MissionEnum: MissionEnum
+			MissionEnum: ConditionEnum
 		};
 	},
 	methods: {
