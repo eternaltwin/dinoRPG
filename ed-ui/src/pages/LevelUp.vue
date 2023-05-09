@@ -145,7 +145,7 @@ import EventBus from '../events/index.js';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, skillNameList } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { sessionStore } from '../store/index.js';

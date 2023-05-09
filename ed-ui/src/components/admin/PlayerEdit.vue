@@ -183,8 +183,8 @@
 import { defineComponent, PropType } from 'vue';
 import { AdminService } from '../../services/index.js';
 import { epicList } from '../../constants/index.js';
-import { Player } from "@drpg/core/models/player/Player";
-import { PlayerEdit } from "@drpg/core/models/player/PlayerEdit";
+import { Player } from '@drpg/core/models/player/Player';
+import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 
 export default defineComponent({
 	name: 'PlayerEdit',

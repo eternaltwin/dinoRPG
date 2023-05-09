@@ -53,7 +53,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
 import { defineComponent } from 'vue';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'Fight',

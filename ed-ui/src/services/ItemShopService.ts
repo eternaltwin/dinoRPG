@@ -1,5 +1,4 @@
 import { http } from '../utils/index.js';
-import { Item } from '../models';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 export const ItemShopService = {
 	getItemFromItemShop(shopId: number): Promise<Array<ItemFiche>> {

@@ -66,8 +66,8 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { DinozShopService, DinozService } from '../services/index.js';
-import { DinozShopFiche } from "@drpg/core/models/shop/DinozShopFiche";
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
 import { sessionStore } from '../store/index.js';
 import { raceList, skillNameList } from '../constants/index.js';

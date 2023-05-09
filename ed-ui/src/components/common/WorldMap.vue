@@ -57,7 +57,7 @@ import { sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'WorldMap',
@@ -180,12 +180,14 @@ export default defineComponent({
 				mapY = (mapImage.height / mapImage.width) * 100;
 				mapX = 100;
 			}
-			const actualPlace: Place | undefined = placeList.find(place => place.placeId === this.dinozData!.placeId);
+			const actualPlace: PlaceDisplayed | undefined = placeList.find(
+				place => place.placeId === this.dinozData!.placeId
+			);
 			const x1 = ((actualPlace!.posLeft + 8.5) / mapImage.width) * mapX;
 			const y1 = ((actualPlace!.posTop + 8.5) / mapImage.height) * mapY;
 
 			this.dinozData!.borderPlace!.forEach(closePlace => {
-				const place: Place = placeList.find(place => place.placeId === closePlace)!;
+				const place: PlaceDisplayed = placeList.find(place => place.placeId === closePlace)!;
 				const x2: number = ((place.posLeft! + 8.5) / mapImage.width) * mapX;
 				const y2: number = ((place.posTop! + 8.5) / mapImage.height) * mapY;
 				this.svgLines.push({ x1, y1, x2, y2, name: place.name });

@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { sessionStore } from '../../store/index.js';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'TabPanel',

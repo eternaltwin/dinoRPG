@@ -42,8 +42,8 @@ import { AdminService, PlayerService } from '../services/index.js';
 import PlayerEdit from '../components/admin/PlayerEdit.vue';
 import DinozEdit from '../components/admin/DinozEdit.vue';
 import NewsEdit from '../components/admin/NewsEdit.vue';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
-import { Player } from "@drpg/core/models/player/Player";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { Player } from '@drpg/core/models/player/Player';
 
 interface PlayerSearch {
 	name: string;

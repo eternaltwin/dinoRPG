@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { placeList } from '../../constants/index.js';
 
 export default defineComponent({

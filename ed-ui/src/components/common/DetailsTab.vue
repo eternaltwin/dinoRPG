@@ -88,7 +88,7 @@
 import { defineComponent, PropType } from 'vue';
 import { statusList, skillNameList } from '../../constants/index.js';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';

@@ -30,7 +30,6 @@ import { DinozService } from '../../services/index.js';
 import { sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { messages } from '../../i18n/index.js';
 
 export default defineComponent({
 	name: 'ChooseDinozName',

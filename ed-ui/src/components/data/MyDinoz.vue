@@ -35,7 +35,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { raceList, statusList } from '../../constants/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-import { DinozFiche } from "@drpg/core/models/dinoz/DinozFiche";
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement } from '../../constants/index.js';
 
 export default defineComponent({
