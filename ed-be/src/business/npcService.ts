@@ -7,7 +7,7 @@ import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { checkCondition, rewarder, triggerAction } from '../utils/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
-import { PlaceDisplayed } from '@drpg/core/../../../core/src/models/place/PlaceDisplayed';
+import { Place } from '@drpg/core/models/place/Place';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
@@ -24,7 +24,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const actualPlace: PlaceDisplayed | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const pnj: Npc | undefined = Object.values(npcList).find(pnj => pnj.name === npcName);
 
 	if (!pnj) {

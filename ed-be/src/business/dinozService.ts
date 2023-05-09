@@ -42,7 +42,7 @@ import { Npc } from '@drpg/core/models/npc/npc';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
-import { PlaceDisplayed } from '@drpg/core/../../../core/src/models/place/PlaceDisplayed';
+import { Place } from '@drpg/core/models/place/Place';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { DigData } from '@drpg/core/models/dinoz/DigData';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -421,8 +421,8 @@ export async function betaMove(req: Request): Promise<FightResult> {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const actualPlace: PlaceDisplayed | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
-	const desiredPlace: PlaceDisplayed | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);
+	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const desiredPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);
 
 	// Check if desired and actual place exist and is adjacent to actual place
 	if (!desiredPlace) {

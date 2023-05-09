@@ -14,7 +14,7 @@ import {
 } from '../dao/dinozMissionDao.js';
 import _ from 'lodash';
 import { MissionList } from '@drpg/core/models/missions/missionList';
-import { PlaceDisplayed } from '@drpg/core/../../../core/src/models/place/PlaceDisplayed';
+import { Place } from '@drpg/core/models/place/Place';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
@@ -29,7 +29,7 @@ export async function getMissionsList(req: Request): Promise<Array<MissionList>>
 	const dinozId: number = parseInt(req.params.id);
 	const npcName: string = req.params.npc;
 	const dinoz: Dinoz = await getDinozMissionsInfo(dinozId);
-	const currentPlace: PlaceDisplayed | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const currentPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const npc = Object.values(npcList).find(npc => npc.name === npcName);
 
 	if (dinoz.player.id !== req.user!.playerId) {
@@ -60,7 +60,7 @@ export async function updateMission(req: Request): Promise<boolean> {
 	const npc: Npc | undefined = Object.values(npcList).find(npc =>
 		npc.missions?.find(mission => mission.missionId === missionId)
 	);
-	const actualPlace: PlaceDisplayed | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 
 	if (dinoz.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
@@ -178,7 +178,7 @@ export function getHUDObjective(dinoz: Dinoz): MissionHUD | undefined {
 		return;
 	}
 
-	const dinozActualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId) as PlaceDisplayed;
+	const dinozActualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId) as Place;
 	let HUD: MissionHUD = actualStep.requirement;
 
 	if (HUD.actionType === ConditionEnum.KILL) {

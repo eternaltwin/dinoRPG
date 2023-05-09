@@ -14,7 +14,7 @@ import { changeItemQuantity, createItemDataRequest } from '../dao/playerItemDao.
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum, TriggerEnum } from '@drpg/core/models/enums/Parser';
-import { PlaceDisplayed } from '@drpg/core/../../../core/src/models/place/PlaceDisplayed';
+import { Place } from '@drpg/core/models/place/Place';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 function checkCondition(condition: Condition, dinoz: Dinoz): boolean {
@@ -57,7 +57,7 @@ function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 		case ConditionEnum.GOTO:
 			let place = Object.entries(placeList).find(place => place[0].toUpperCase() === condition.value.toUpperCase()) as [
 				string,
-				PlaceDisplayed
+				Place
 			];
 			result = place[1].placeId === dinoz.placeId;
 			break;

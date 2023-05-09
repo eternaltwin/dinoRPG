@@ -1,8 +1,8 @@
 import { statusList } from './status.js';
-import { PlaceDisplayed } from '@drpg/core/../../../core/src/models/place/PlaceDisplayed';
+import { Place } from '@drpg/core/models/place/Place';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 
-export const placeList: Record<string, PlaceDisplayed> = {
+export const placeList: Record<string, Place> = {
 	// Useful for the few things accessible from any where like the flying shop
 	ANYWHERE: {
 		placeId: 0,
