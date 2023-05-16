@@ -1,4 +1,4 @@
-export interface svgLines {
+export class svgLines {
 	x1: number;
 	y1: number;
 	x2: number;

@@ -2,7 +2,7 @@ import { DinozRace } from './DinozRace.mjs';
 import { MissionHUD } from "../missions/missionHUD.mjs";
 
 // This is the model to use to communicate with the front
-export interface DinozFiche {
+export class DinozFiche {
 	id?: number;
 	name?: string;
 	display?: string;
@@ -33,7 +33,7 @@ export interface DinozFiche {
   order?: number | null;
 }
 
-export interface ActionFiche {
+export class ActionFiche {
 	name: string;
 	imgName: string;
 	prop?: number | string;

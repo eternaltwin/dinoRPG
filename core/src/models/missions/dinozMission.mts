@@ -1,6 +1,6 @@
 import { DinozFiche } from "../dinoz/DinozFiche.mjs";
 
-export interface DinozMission {
+export class DinozMission {
   id: number;
 
   dinoz: Array<DinozFiche>;

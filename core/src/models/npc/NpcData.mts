@@ -1,7 +1,7 @@
 import { Rewarder } from '../reward/Rewarder.mjs';
 import { Condition } from './NpcConditions.mjs';
 
-export interface NpcData {
+export class NpcData {
 	stepName: string; //Correspond au <phase id="speech"> du code MT
 	alias?: string;
 	nextStep: Array<string>; //Correspond au <a id="speech"> du code MT

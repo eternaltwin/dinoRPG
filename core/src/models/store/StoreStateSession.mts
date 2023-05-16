@@ -2,7 +2,7 @@ import { DinozFiche } from "../dinoz/DinozFiche.mjs";
 import { FightResult } from "../fight/FightResult.mjs";
 import { PlayerOptions } from "../player/PlayerOptions.mjs";
 
-export interface StoreStateSession {
+export class StoreStateSession {
   dinozCount?: number;
   jwt?: string;
   money?: number;

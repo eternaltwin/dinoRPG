@@ -1,7 +1,7 @@
 import { ItemType } from "../enums/ItemType.mjs";
 import { ItemEffect } from "../enums/ItemEffect.mjs";
 
-export interface ItemFiche {
+export class ItemFiche {
   name?: string;
 	itemId: number;
 	quantity?: number;

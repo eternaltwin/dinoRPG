@@ -1,6 +1,6 @@
 import { missionRequirement } from './missionRequirement.mjs';
 
-export interface MissionSteps {
+export class MissionSteps {
 	stepId: number;
 	place: string;
 	hidePlace?: boolean;

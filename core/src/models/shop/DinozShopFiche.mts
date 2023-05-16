@@ -1,6 +1,6 @@
 import { DinozRace } from "../dinoz/DinozRace.mjs";
 
-export interface DinozShopFiche {
+export class DinozShopFiche {
 	id: string;
 	display: string;
 	race: DinozRace;

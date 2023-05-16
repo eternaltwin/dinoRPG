@@ -1,4 +1,4 @@
-export interface Player {
+export class Player {
   id: number;
   hasImported: boolean;
   name: string;

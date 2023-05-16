@@ -1,4 +1,4 @@
-export interface Image {
+export class Image {
 	data: Array<number>;
 	type: string;
 }

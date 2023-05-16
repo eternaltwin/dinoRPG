@@ -1,4 +1,4 @@
-export interface PlayerEdit {
+export class PlayerEdit {
 	customText?: string;
 	hasImported?: boolean;
 	rewards?: Array<string>;

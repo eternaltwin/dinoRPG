@@ -1,4 +1,4 @@
-export interface Config {
+export class Config {
 	general: GeneralConfig;
 	oauth: OauthConfig;
 	db: DbConfig;
@@ -7,14 +7,14 @@ export interface Config {
 	discord: Discord;
 }
 
-interface GeneralConfig {
+class GeneralConfig {
 	readonly eternalTwinPublicUri: string;
 	readonly eternalTwinServerUri: string;
 	readonly serverUri: string;
 	readonly frontUri: string;
 }
 
-interface OauthConfig {
+class OauthConfig {
 	readonly clientId: string;
 	readonly clientSecret: string;
 	readonly authorizationUri: string;
@@ -22,25 +22,25 @@ interface OauthConfig {
 	readonly callbackUri: string;
 }
 
-interface DbConfig {
+class DbConfig {
 	readonly host: string;
 	readonly user: string;
 	readonly password: string;
 	readonly dbName: string;
 }
 
-interface JwtConfig {
+class JwtConfig {
 	readonly secretKey: string;
 	readonly expiration: number;
 }
 
-interface AdminsConfig {
+class AdminsConfig {
 	readonly biocat: string;
 	readonly jahaa: string;
 	readonly jolu: string;
 }
 
-interface Discord {
+class Discord {
 	readonly channel: string;
 	readonly token: string;
 }

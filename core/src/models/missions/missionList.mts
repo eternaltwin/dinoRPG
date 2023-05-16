@@ -1,6 +1,6 @@
 import { MissionsStatus } from "../enums/MissionsStatus.mjs";
 
-export interface MissionList {
+export class MissionList {
 	missionId: number;
 	status: MissionsStatus;
 }

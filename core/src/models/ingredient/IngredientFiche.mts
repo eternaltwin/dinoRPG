@@ -1,4 +1,4 @@
-export interface IngredientFiche {
+export class IngredientFiche {
 	ingredientId: number;
 	maxQuantity: number;
 	quantity?: number;

@@ -1,6 +1,6 @@
 import { DinozSkillFiche } from './DinozSkillFiche.mjs';
 
-export interface DinozSkillOwnAndUnlockable {
+export class DinozSkillOwnAndUnlockable {
 	learnableSkills: Array<Partial<DinozSkillFiche>>;
 	unlockableSkills: Array<Partial<DinozSkillFiche>>;
 	element: number;

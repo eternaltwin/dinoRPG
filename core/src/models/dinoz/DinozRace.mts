@@ -1,4 +1,4 @@
-export interface DinozRace {
+export class DinozRace {
 	raceId: number;
 	isDemon: boolean;
 	name: string;
@@ -17,7 +17,7 @@ export interface DinozRace {
 	skillId?: Array<number>;
 }
 
-export interface UpChance {
+export class UpChance {
 	fire: number;
 	wood: number;
 	water: number;

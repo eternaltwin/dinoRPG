@@ -1,3 +1,3 @@
-export interface StoreStateLocal {
+export class StoreStateLocal {
   langue?: string;
 }
