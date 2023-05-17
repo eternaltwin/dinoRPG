@@ -2,7 +2,7 @@ import { MapZone } from "../enums/MapType.mjs";
 import { PlaceIcon } from "../enums/PlaceIcon.mjs";
 
 
-export class PlaceDisplayed {
+export interface PlaceDisplayed {
 	placeId: number;
 	name: string;
 	posLeft: number;

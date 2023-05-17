@@ -1,7 +1,7 @@
 import { Image } from "./Image.mjs";
 
 
-export class DisplayedNews {
+export interface DisplayedNews {
   title: string;
   image: Image;
   text: string;

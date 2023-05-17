@@ -21,7 +21,7 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
 				value: 'ENHANCED_SHOVEL',
-				reverse: true,
+        reverse: true,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,

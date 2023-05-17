@@ -1,6 +1,6 @@
 import { Player } from "./Player.mjs";
 
-export class PlayerTypeToSend extends Player {
+export interface PlayerTypeToSend extends Player {
   status: Array<number>;
   createdDate: Date
 }

@@ -1,4 +1,4 @@
-import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { FightResult } from '../models/index.js';
 import { AxiosError } from 'axios';
 import mitt from 'mitt';
 
