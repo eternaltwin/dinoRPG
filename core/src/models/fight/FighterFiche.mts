@@ -1,5 +1,5 @@
 // This structure needs to be exactly the same as FighterConfiguration in native/src/fight/fighter.rs
-export class FighterFiche {
+export interface FighterFiche {
 	// ID of the dinoz in the DB
 	dinoz_id: number;
 	// Health of the dinoz at the start of the fight, it cannot go above it during a fight
@@ -15,7 +15,7 @@ export class FighterFiche {
 }
 
 // This structure needs to be exactly the same as FighterResult in native/src/fight/fighter.rs
-export class FighterResultFiche {
+export interface FighterResultFiche {
 	// ID of the dinoz in the DB
 	dinoz_id: number;
 	// The health lost by the dinoz in the fight in comparison to its starting life

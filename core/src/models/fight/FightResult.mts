@@ -1,6 +1,6 @@
 import { FighterResultFiche } from './FighterFiche.mjs';
 
-export class FightResult {
+export interface FightResult {
 	opponent: string;
 	goldEarned: number;
 	xpEarned: number;
@@ -10,7 +10,7 @@ export class FightResult {
 }
 
 // This structure needs to be exactly the same as FightResult in native/src/fight/manager.rs
-export class FightProcessResult {
+export interface FightProcessResult {
 	// true: attackers won, false: defenders won
 	winner: boolean;
 	attackers: Array<FighterResultFiche>;

@@ -1,5 +1,5 @@
 export enum ShopType {
-	CLASSIC = 'classic',
+	interfaceIC = 'interfaceic',
 	MAGICAL = 'magical',
 	CURSED = 'cursed'
 }

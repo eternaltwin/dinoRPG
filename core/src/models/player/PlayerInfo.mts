@@ -1,6 +1,6 @@
 import { DinozFiche } from "../dinoz/DinozFiche.mjs";
 
-export class PlayerInfo {
+export interface PlayerInfo {
 	dinozCount: number;
 	rank: number;
 	pointCount: number;

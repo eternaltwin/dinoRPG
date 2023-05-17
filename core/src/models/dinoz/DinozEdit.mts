@@ -1,4 +1,4 @@
-export class DinozEdit {
+export interface DinozEdit {
 	dinozId?: string;
 	name?: string;
 	isFrozen?: boolean;

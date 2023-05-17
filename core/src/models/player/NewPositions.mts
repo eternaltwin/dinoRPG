@@ -1,4 +1,4 @@
-export class NewPositions {
+export interface NewPositions {
 	id: number;
 	sumPosition: number;
 	averagePosition: number;

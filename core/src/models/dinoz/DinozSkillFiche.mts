@@ -4,7 +4,7 @@ import { ElementType } from "../enums/ElementType.mjs";
 import { SkillTree } from "../enums/SkillTree.mjs";
 import { SkillEffectType } from "./SkillEffectType.mjs";
 
-export class DinozSkillFiche {
+export interface DinozSkillFiche {
 	skillId: number;
 	type: SkillType;
 	energy: Energy;

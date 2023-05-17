@@ -1,4 +1,4 @@
-export class PlayerRanking {
+export interface PlayerRanking {
 	dinozCount: number;
 	pointCount: number;
 	playerName: string;
