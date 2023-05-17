@@ -43,11 +43,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { Dinoz } from '@/models';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozBars',
-	props: { dinozData: Object as PropType<Dinoz> },
+	props: { dinozData: Object as PropType<DinozFiche> },
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
 			const width: number = Math.round((value / maxValue) * 98);
@@ -62,7 +62,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozBars {
-	background: url('@/assets/background/stats_box.webp') no-repeat;
+	background: url('../../assets/background/stats_box.webp') no-repeat;
 	width: 180px;
 	height: 40px;
 	position: absolute;

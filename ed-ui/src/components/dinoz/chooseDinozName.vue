@@ -25,17 +25,17 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { errorHandler } from '@/utils';
-import { DinozService } from '@/services';
-import { Dinoz } from '@/models';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
+import { errorHandler } from '../../utils/index.js';
+import { DinozService } from '../../services/index.js';
+import { sessionStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../../components/utils/TitleHeader.vue')),
+		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
@@ -45,7 +45,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozData: Object as PropType<Dinoz>
+		dinozData: Object as PropType<DinozFiche>
 	},
 	emits: ['setNameChoosen'],
 	methods: {
@@ -62,7 +62,7 @@ export default defineComponent({
 				}
 
 				// Update dinozList in store
-				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id == this.dinozData!.id)!;
 				dinozToUpdate.name = this.name;
 
@@ -71,7 +71,7 @@ export default defineComponent({
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);
 			} else {
-				EventBus.emit('toast', 'OnlyLettersAndNumbers');
+				EventBus.emit('toast', { message: 'OnlyLettersAndNumbers', type: 'error' });
 			}
 		}
 	}
@@ -111,7 +111,7 @@ input {
 	font-size: 9pt;
 	font-weight: bold;
 	border: none;
-	background-image: url('@/assets/design/form_field.webp');
+	background-image: url('../../assets/design/form_field.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
 	grid-column: 2 / 4;

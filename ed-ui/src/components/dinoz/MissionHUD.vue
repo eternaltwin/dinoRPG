@@ -48,23 +48,26 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { sessionStore } from '@/store/index.js';
-import { missionsList } from '@/constants/index.js';
-import { Dinoz, MissionList, missionRequirement } from '@/models/index.js';
-import EventBus from '@/events/index.js';
-import { MissionEnum, MissionsStatus } from '@/enums/index.js';
+import { sessionStore } from '../../store/index.js';
+import { missionsList } from '../../constants/index.js';
+import { MissionList } from '@drpg/core/models/missions/MissionList';
+import EventBus from '../../events/index.js';
+import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 
 export default defineComponent({
 	name: 'MissionHUD',
 	components: {
-		MissionInformationModal: defineAsyncComponent(() => import('@/components/modal/MissionInformationModal.vue'))
+		MissionInformationModal: defineAsyncComponent(() => import('../../components/modal/MissionInformationModal.vue'))
 	},
 	emits: ['abort'],
 	data() {
 		return {
 			sessionStore: sessionStore(),
 			information: false as boolean,
-			MissionEnum: MissionEnum
+			MissionEnum: ConditionEnum
 		};
 	},
 	methods: {
@@ -76,7 +79,7 @@ export default defineComponent({
 		async reload(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			dinozToUpdate.missionId = undefined;
 			dinozToUpdate.missions = undefined;
@@ -92,9 +95,9 @@ export default defineComponent({
 		missionName(): string {
 			return missionsList[this.missionId];
 		},
-		missionDetail(): missionRequirement {
+		missionDetail(): MissionHUD {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			return myDinoz.missions!;
 		},
@@ -111,7 +114,7 @@ export default defineComponent({
 	padding: 5px 5px 5px 20px;
 	font-size: 10pt;
 	background-color: #bc683c;
-	background-image: url('@/assets/icons/small_missAct.webp');
+	background-image: url('../../assets/icons/small_missAct.webp');
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
 	line-height: 10pt;

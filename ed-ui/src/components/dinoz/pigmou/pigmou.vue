@@ -349,7 +349,7 @@
 </template>
 
 <script lang="ts">
-import { pigmou } from '@/constants';
+import { pigmou } from '../../../constants/index.js';
 import { defineAsyncComponent, defineComponent } from 'vue';
 
 export default defineComponent({

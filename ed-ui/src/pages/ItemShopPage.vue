@@ -163,35 +163,35 @@
 
 <script lang="ts" scoped>
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { ItemShopService } from '@/services';
-import { Item } from '@/models';
-import { errorHandler } from '@/utils';
-import { itemNameList, shopNameList } from '@/constants';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
+import { ItemShopService } from '../services/index.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { errorHandler } from '../utils/index.js';
+import { itemNameList, shopNameList } from '../constants/index.js';
+import { sessionStore } from '../store/index.js';
+import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'ItemShopPage',
 	data() {
 		return {
 			sessionStore: sessionStore(),
-			itemList: [] as Array<Item>,
+			itemList: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
 			shopNameList: shopNameList,
-			selectedItem: {} as Item,
+			selectedItem: {} as ItemFiche,
 			selectedQuantity: 1 as number
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
 	},
 	computed: {
 		// Check if the quantity select is valid:
 		// i.e a valid number or the player has enough room
 		isSelectedQuantityValid(): {
-			(selectedQuantity: number, selectedItem: Item): boolean;
+			(selectedQuantity: number, selectedItem: ItemFiche): boolean;
 		} {
-			return (selectedQuantity: number, selectedItem: Item) => {
+			return (selectedQuantity: number, selectedItem: ItemFiche) => {
 				return (
 					selectedQuantity > 0 &&
 					selectedQuantity <= selectedItem.maxQuantity! - selectedItem.quantity! &&
@@ -204,7 +204,7 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		isFull(item: Item): boolean {
+		isFull(item: ItemFiche): boolean {
 			return item.quantity! >= item.maxQuantity!;
 		},
 		// Buy n of the selected item

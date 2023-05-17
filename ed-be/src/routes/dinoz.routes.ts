@@ -11,9 +11,12 @@ import {
 	digWithDinoz
 } from '../business/dinozService.js';
 import { apiRoutes, regex } from '../constants/index.js';
-import { DinozFiche, DinozSkillFiche, FightResult } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 const routes: Router = Router();
 
@@ -52,8 +55,7 @@ routes.get(
 			const response: DinozFiche = await getDinozFiche(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -93,8 +95,7 @@ routes.post(
 			const response: DinozFiche = await buyDinoz(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -144,8 +145,7 @@ routes.put(
 			await setDinozName(req);
 			return res.status(200).send();
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -185,8 +185,7 @@ routes.get(
 			const response: Array<DinozSkillFiche> = await getDinozSkill(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -249,8 +248,7 @@ routes.put(
 			const response: boolean = await setSkillState(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -304,8 +302,7 @@ routes.put(
 			const response: FightResult = await betaMove(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -321,11 +318,10 @@ routes.put(
 		}
 
 		try {
-			const response: void = await resurrectDinoz(req);
-			return res.status(200).send(response);
+			await resurrectDinoz(req);
+			return res.status(200).send();
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -359,11 +355,11 @@ routes.get(`${commonPath}/dig/:id`, [param('id').exists().toInt().isNumeric()], 
 	}
 
 	try {
-		const response = await digWithDinoz(req);
+		const response: Rewarder = await digWithDinoz(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
+		console.error(e.message);
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}

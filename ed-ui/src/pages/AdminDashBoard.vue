@@ -36,13 +36,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '@/events';
-import { errorHandler } from '@/utils';
-import { AdminService, PlayerService } from '@/services';
-import { Dinoz, Player } from '@/models';
-import PlayerEdit from '@/components/admin/PlayerEdit.vue';
-import DinozEdit from '@/components/admin/DinozEdit.vue';
-import NewsEdit from '@/components/admin/NewsEdit.vue';
+import EventBus from '../events/index.js';
+import { errorHandler } from '../utils/index.js';
+import { AdminService, PlayerService } from '../services/index.js';
+import PlayerEdit from '../components/admin/PlayerEdit.vue';
+import DinozEdit from '../components/admin/DinozEdit.vue';
+import NewsEdit from '../components/admin/NewsEdit.vue';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { Player } from '@drpg/core/models/player/Player';
 
 interface PlayerSearch {
 	name: string;
@@ -58,8 +59,8 @@ export default defineComponent({
 			playerList: [] as Array<PlayerSearch>,
 			player: {} as Player,
 			tabSelected: 1 as number,
-			dinozList: {} as Array<Dinoz>,
-			selectedDinoz: null as Dinoz | null,
+			dinozList: {} as Array<DinozFiche>,
+			selectedDinoz: null as DinozFiche | null,
 			awaitingSearch: false as boolean,
 			displayErrorMessage: false as boolean
 		};

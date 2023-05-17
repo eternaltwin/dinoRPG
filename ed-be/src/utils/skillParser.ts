@@ -1,6 +1,8 @@
-import { ElementType, SkillEffect, SkillEffectType } from '../models/index.js';
 import { setDinoz } from '../dao/dinozDao.js';
 import { Dinoz } from '../entity/index.js';
+import { SkillEffectType } from '@drpg/core/models/dinoz/SkillEffectType';
+import { SkillEffect } from '@drpg/core/models/enums/SkillEffect';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 async function effectParser(ooce: Array<SkillEffectType>, dinoz: Dinoz): Promise<void> {
 	for (const e of ooce) {

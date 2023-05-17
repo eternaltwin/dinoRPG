@@ -22,12 +22,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { missionsList } from '@/constants/index.js';
-import { Dinoz, MissionList } from '@/models/index.js';
-import { sessionStore } from '@/store/index.js';
-import { MissionService } from '@/services/index.js';
-import EventBus from '@/events/index.js';
-import { errorHandler } from '@/utils/index.js';
+import { missionsList } from '../../constants/index.js';
+import { MissionList } from '@drpg/core/models/missions/MissionList';
+import { sessionStore } from '../../store/index.js';
+import { MissionService } from '../../services/index.js';
+import EventBus from '../../events/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'MissionInformationModal',
@@ -44,7 +45,7 @@ export default defineComponent({
 		async updateMission(status: string) {
 			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			try {
 				await MissionService.updateMissions(dinozId, this.mission!.missionId, status);
@@ -66,8 +67,8 @@ export default defineComponent({
 		missionName(): string {
 			return missionsList[this.mission!.missionId];
 		},
-		dinoz(): Dinoz {
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+		dinoz(): DinozFiche {
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			return dinozList.find(dinozs => dinozs.id == parseInt(this.$route.params.id as string))!;
 		}
 	}
@@ -89,7 +90,7 @@ export default defineComponent({
 	align-items: center;
 
 	.modal-box {
-		background-image: url('@/assets/background/mission.webp');
+		background-image: url('../../assets/background/mission.webp');
 		background-repeat: no-repeat;
 		width: 394px;
 		height: 296px;

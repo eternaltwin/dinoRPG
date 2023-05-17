@@ -1,5 +1,6 @@
 import { mockRequest } from '../utils/constants.js';
 import { Request } from 'express';
+import { jest } from '@jest/globals';
 import { moveFight, processFight } from '../../business/fightService.js';
 import {
 	DinozFightData,

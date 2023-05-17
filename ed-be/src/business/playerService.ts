@@ -10,7 +10,8 @@ import {
 } from '../dao/playerDao.js';
 import { rewardList } from '../constants/reward.js';
 import { Player } from '../entity/player.js';
-import { PlayerInfo, PlayerCommonData } from '../models/index.js';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { getDinozTotalCount } from '../dao/dinozDao.js';
 import { levelList } from '../constants/index.js';
@@ -22,7 +23,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
  * @param req
  * @return Player
  */
-const getCommonData = async (req: Request): Promise<PlayerCommonData> => {
+export async function getCommonData(req: Request): Promise<PlayerCommonData> {
 	const playerCommonData: Player = await getCommonDataRequest(req.user!.playerId!);
 
 	const commonData: PlayerCommonData = {
@@ -49,7 +50,7 @@ const getCommonData = async (req: Request): Promise<PlayerCommonData> => {
 		}
 	};
 	return commonData;
-};
+}
 
 /**
  * @summary Get data from an account
@@ -57,7 +58,7 @@ const getCommonData = async (req: Request): Promise<PlayerCommonData> => {
  * @param req.params.id {string} PlayerId
  * @return PlayerInfo
  */
-const getAccountData = async (req: Request): Promise<PlayerInfo> => {
+export async function getAccountData(req: Request): Promise<PlayerInfo> {
 	const playerId: number = parseInt(req.params.id);
 	const playerInfo: Player = await getPlayerDataRequest(playerId);
 
@@ -93,7 +94,7 @@ const getAccountData = async (req: Request): Promise<PlayerInfo> => {
 	};
 
 	return infoToSend;
-};
+}
 
 /**
  * @summary Import a specified account
@@ -101,7 +102,7 @@ const getAccountData = async (req: Request): Promise<PlayerInfo> => {
  * @param req.body.server {string} Server where the player came from
  * @return void
  */
-const importAccount = async (req: Request): Promise<void> => {
+export async function importAccount(req: Request): Promise<void> {
 	const playerId: number = req.user!.playerId!;
 	//const server: string = req.body.server;
 	const importedData: Player = await getImportedData(playerId);
@@ -124,7 +125,7 @@ const importAccount = async (req: Request): Promise<void> => {
 
 	//Set hasImported to true
 	await setPlayer({ id: playerId, hasImported: true });
-};
+}
 
 /**
  * @summary Set custom text for a player
@@ -132,7 +133,7 @@ const importAccount = async (req: Request): Promise<void> => {
  * @param req.body.message {string} Message to set as custom text
  * @return void
  */
-const setCustomText = async (req: Request): Promise<void> => {
+export async function setCustomText(req: Request): Promise<void> {
 	const playerId: number = req.user!.playerId!;
 	const playerProfile: Player = await getPlayerRewardsRequest(playerId);
 
@@ -142,7 +143,7 @@ const setCustomText = async (req: Request): Promise<void> => {
 	}
 
 	await setPlayer({ id: playerId, customText: req.body.message });
-};
+}
 
 /**
  * @summary Fetch a list of player based on a string
@@ -150,10 +151,8 @@ const setCustomText = async (req: Request): Promise<void> => {
  * @param req.params.id {string}
  * @return Array<Player>
  */
-const searchPlayers = async (req: Request): Promise<Array<Player>> => {
+export async function searchPlayers(req: Request): Promise<Array<Player>> {
 	const playerList: Array<Player> = await searchPlayersByName(req.params.name);
 
 	return playerList;
-};
-
-export { getCommonData, getAccountData, importAccount, setCustomText, searchPlayers };
+}

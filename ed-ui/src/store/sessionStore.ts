@@ -1,5 +1,8 @@
-import { Dinoz, FightResult, PlayerOptions, StoreStateSession } from '@/models';
+import { StoreStateSession } from '@drpg/core/models/store/StoreStateSession';
 import { defineStore } from 'pinia';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 
 export const sessionStore = defineStore('sessionStore', {
 	state: (): StoreStateSession => ({
@@ -31,7 +34,7 @@ export const sessionStore = defineStore('sessionStore', {
 		setMoney(money: number): void {
 			this.money = money;
 		},
-		setDinozList(dinozList: Array<Dinoz>): void {
+		setDinozList(dinozList: Array<DinozFiche>): void {
 			this.dinozList = dinozList;
 		},
 		setDinozCount(dinozCount: number): void {

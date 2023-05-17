@@ -3,9 +3,12 @@
 /ed-be/dist/
 /ed-be/coverage/
 /ed-be/junit.xml
+/core/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.tsbuildinfo
+ts-out/
 
 # Editor directories and files
 .idea

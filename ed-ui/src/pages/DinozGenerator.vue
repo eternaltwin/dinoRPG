@@ -44,7 +44,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DinozSWF: defineAsyncComponent(() => import('@/components/dinoz/dinozSWF.vue'))
+		DinozSWF: defineAsyncComponent(() => import('../components/dinoz/dinozSWF.vue'))
 	},
 	methods: {
 		reload(): void {

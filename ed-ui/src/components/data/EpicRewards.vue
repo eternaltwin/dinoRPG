@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList } from '@/constants';
+import { epicList } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'EpicRewards',
@@ -43,8 +43,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .profil {
-	background: url('@/assets/design/info_header.webp') no-repeat, url('@/assets/design/info_footer.webp') no-repeat,
-		url('@/assets/design/info_center.webp') repeat-y;
+	background: url('../../assets/design/info_header.webp') no-repeat,
+		url('../../assets/design/info_footer.webp') no-repeat, url('../../assets/design/info_center.webp') repeat-y;
 	background-position-y: top, bottom;
 	height: auto;
 	width: 304px;

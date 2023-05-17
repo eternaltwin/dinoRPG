@@ -1,12 +1,12 @@
 import { PlayerItem } from '../../entity/index.js';
 import { item, itemId, itemQuantity, player } from '../utils/constants.js';
 
-export const BasicItem = ({
+export const BasicItem = {
 	id: itemId,
 	itemId: item.id_1,
 	playerId: player.id_1,
 	quantity: itemQuantity
-} as unknown) as PlayerItem;
+} as unknown as PlayerItem;
 
 export const playerFlyingShopInventory = [
 	{

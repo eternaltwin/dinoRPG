@@ -19,16 +19,16 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { sessionStore } from '@/store';
-import { Dinoz } from '@/models';
+import { sessionStore } from '../../store/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'TabPanel',
-	props: { dinozData: Object as PropType<Dinoz> },
+	props: { dinozData: Object as PropType<DinozFiche> },
 	components: {
-		InventoryTab: defineAsyncComponent(() => import('@/components/common/InventoryTab.vue')),
-		DetailsTab: defineAsyncComponent(() => import('@/components/common/DetailsTab.vue')),
-		MapTab: defineAsyncComponent(() => import('@/components/common/MapTab.vue'))
+		InventoryTab: defineAsyncComponent(() => import('../../components/common/InventoryTab.vue')),
+		DetailsTab: defineAsyncComponent(() => import('../../components/common/DetailsTab.vue')),
+		MapTab: defineAsyncComponent(() => import('../../components/common/MapTab.vue'))
 	},
 	data() {
 		return {
@@ -52,9 +52,10 @@ export default defineComponent({
 	width: 315px;
 	padding-bottom: 15px;
 	color: white;
-	background: url('@/assets/background/banniere_left.webp') no-repeat,
-		url('@/assets/background/banniere_right.webp') no-repeat, url('@/assets/background/banniere_middle.webp') repeat-x;
-	background-position-x: left, right;
+	background: url('../../assets/background/banniere_left.webp') no-repeat,
+		url('../../assets/background/banniere_right.webp') no-repeat,
+		url('../../assets/background/banniere_middle.webp') repeat-x;
+	background-position-x: left;
 
 	.tabs {
 		margin-top: 15px;

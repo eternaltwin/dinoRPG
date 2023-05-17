@@ -1,5 +1,6 @@
-import { ConditionEnum, ConditionOperatorEnum, Mission, RewardEnum } from '../../models/index.js';
 import { missionsList, placeList } from '../index.js';
+import { Mission } from '@drpg/core/models/missions/mission';
+import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export const M_BAO_BOB: Array<Mission> = [
 	// Missions 12 to 21

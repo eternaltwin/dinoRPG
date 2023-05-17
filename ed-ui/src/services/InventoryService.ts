@@ -1,10 +1,10 @@
-import { http } from '@/utils';
-import { Item } from '@/models';
+import { http } from '../utils/index.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 
 // For Player's inventory
 
 export const InventoryService = {
-	getAllItemsData(): Promise<Array<Item>> {
+	getAllItemsData(): Promise<Array<ItemFiche>> {
 		return http()
 			.get('/inventory/all')
 			.then(res => Promise.resolve(res.data))

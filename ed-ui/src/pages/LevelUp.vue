@@ -141,27 +141,28 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import EventBus from '@/events';
-import { DinozService } from '@/services';
-import { errorHandler } from '@/utils';
-import { Dinoz, DinozSkillOwnAndUnlockable } from '@/models';
-import { dinozPlacement, skillNameList } from '@/constants';
-import { ElementType } from '@/enums';
-import { sessionStore } from '@/store';
+import EventBus from '../events/index.js';
+import { DinozService } from '../services/index.js';
+import { errorHandler } from '../utils/index.js';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { dinozPlacement, skillNameList } from '../constants/index.js';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { sessionStore } from '../store/index.js';
 
 export default defineComponent({
 	name: 'LevelUp',
 	components: {
-		LevelUpGrid: defineAsyncComponent(() => import('@/components/dinoz/LevelUpGrid.vue')),
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		Elements: defineAsyncComponent(() => import('@/components/data/elements.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
+		LevelUpGrid: defineAsyncComponent(() => import('../components/dinoz/LevelUpGrid.vue')),
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
+		Elements: defineAsyncComponent(() => import('../components/data/elements.vue')),
+		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
 			sessionStore: sessionStore(),
 			availableSkills: {} as Partial<DinozSkillOwnAndUnlockable>,
-			dinozData: {} as Dinoz,
+			dinozData: {} as DinozFiche,
 			tryNumber: 1 as number,
 			skillNameList: skillNameList,
 			ElementType: ElementType,
@@ -197,7 +198,7 @@ export default defineComponent({
 			try {
 				const newMaxExperience = await DinozService.learnSkill(parseInt(dinozId), skillIdList, this.tryNumber);
 
-				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 				dinozToUpdate.experience = 0;
 				dinozToUpdate.maxExperience = newMaxExperience;
@@ -230,7 +231,7 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		const dinozId: string = this.$route.params.id.toString();
-		const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+		const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 		this.dinozData = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 
 		await this.getLearnableSkills(dinozId, 1);
@@ -414,7 +415,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('@/assets/background/table_header.webp');
+				background-image: url('../assets/background/table_header.webp');
 				background-position: left bottom;
 				&.name {
 					width: 330px;
@@ -432,7 +433,7 @@ export default defineComponent({
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
 				&.name {
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					//padding-left: 15px;
 					max-width: 337px;
@@ -450,7 +451,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
@@ -458,7 +459,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					text-decoration: underline;
 					background-repeat: no-repeat;

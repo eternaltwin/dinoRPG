@@ -1,10 +1,11 @@
 import { Player } from '../../entity/index.js';
-import { PlayerTypeToSend } from '../../models/index.js';
+
 import { rewardList } from '../../constants/index.js';
 import { dinozId, player } from '../utils/constants.js';
 import { DinozShopArray } from './dinozShopData.js';
+import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 
-export const PlayerAllData = ({
+export const PlayerAllData = {
 	id: player.id_1,
 	hasImported: false,
 	createdDate: '08/01/2021',
@@ -74,9 +75,9 @@ export const PlayerAllData = ({
 		averagePointsDisplayed: 4,
 		averagePoints: 4
 	}
-} as unknown) as Player;
+} as unknown as Player;
 
-export const PlayerAdminData = ({
+export const PlayerAdminData = {
 	id: player.id_1,
 	hasImported: false,
 	customText: 'test',
@@ -105,9 +106,9 @@ export const PlayerAdminData = ({
 			rewardId: 7974
 		}
 	]
-} as unknown) as Player;
+} as unknown as Player;
 
-export const PlayerTypeToSendAllData = ({
+export const PlayerTypeToSendAllData = {
 	id: player.id_1,
 	hasImported: false,
 	createdDate: undefined,
@@ -124,11 +125,11 @@ export const PlayerTypeToSendAllData = ({
 	priest: false,
 	teacher: false,
 	rewards: [13214, 9845, 79456, 7974]
-} as unknown) as PlayerTypeToSend;
+} as unknown as PlayerTypeToSend;
 
 export const BasicPlayer = PlayerAllData;
 
-export const PlayerWithDinoz = ({
+export const PlayerWithDinoz = {
 	id: player.id_1,
 	dinoz: [
 		{
@@ -137,21 +138,21 @@ export const PlayerWithDinoz = ({
 			setDataValue: jest.fn()
 		}
 	]
-} as unknown) as Player;
+} as unknown as Player;
 
-export const BasicNotImportedPlayer = ({
+export const BasicNotImportedPlayer = {
 	id: player.id_1,
 	hasImported: false,
 	eternalTwinId: '6b60f9d9-74fb-42f7-9e34-73961b407c00'
-} as unknown) as Player;
+} as unknown as Player;
 
-export const BasicImportedPlayer = ({
+export const BasicImportedPlayer = {
 	id: player.id_1,
 	hasImported: true,
 	eternalTwinId: '6b60f9d9-74fb-42f7-9e34-73961b407c00'
-} as unknown) as Player;
+} as unknown as Player;
 
-export const PlayerWithRewards = ({
+export const PlayerWithRewards = {
 	id: player.id_1,
 	quetzuBought: 0,
 	rewards: [
@@ -172,21 +173,21 @@ export const PlayerWithRewards = ({
 			name: rewardList.TROPHEE_QUETZU
 		}
 	]
-} as unknown) as Player;
+} as unknown as Player;
 
-export const PlayerWithoutDinozShop = ({
+export const PlayerWithoutDinozShop = {
 	id: player.id_1,
 	quetzuBought: 0,
 	dinozShop: []
-} as unknown) as Player;
+} as unknown as Player;
 
-export const PlayerWithDinozShop = ({
+export const PlayerWithDinozShop = {
 	id: player.id_1,
 	quetzuBought: 1,
 	dinozShop: DinozShopArray
-} as unknown) as Player;
+} as unknown as Player;
 
-export const PlayerData = ({
+export const PlayerData = {
 	createdDate: '08/01/2021',
 	name: 'Jolujolu',
 	rewards: [{ rewardId: 1 }, { rewardId: 13 }],
@@ -203,7 +204,7 @@ export const PlayerData = ({
 			setDataValue: jest.fn()
 		}
 	]
-} as unknown) as Player;
+} as unknown as Player;
 
 export const playerList = [
 	{
@@ -216,25 +217,25 @@ export const playerList = [
 	}
 ] as Array<Player>;
 
-export const playerMoney = ({
+export const playerMoney = {
 	id: player.id_1,
 	money: 50000
-} as unknown) as Player;
+} as unknown as Player;
 
-export const playerMoneyPlus = ({
+export const playerMoneyPlus = {
 	id: player.id_1,
 	money: 60000
-} as unknown) as Player;
+} as unknown as Player;
 
-export const playerMoneyLess = ({
+export const playerMoneyLess = {
 	id: player.id_1,
 	money: 40000
-} as unknown) as Player;
+} as unknown as Player;
 
-export const BasicPlayerWithRank = ({
+export const BasicPlayerWithRank = {
 	id: player.id_1,
 	rank: {
 		dinozCount: 2,
 		sumPoints: 5
 	}
-} as unknown) as Player;
+} as unknown as Player;

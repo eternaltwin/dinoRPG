@@ -1,4 +1,5 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -8,13 +9,20 @@
     "lib": ["ESNext"],
     "moduleResolution": "Node16",
     "sourceMap": true,
-    "outDir": "dist",
     "strict": true,
     "strictPropertyInitialization": false,
     "downlevelIteration": true,
     "skipLibCheck": true,
-    "useUnknownInCatchVariables": false
+    "composite": true,
+    "useUnknownInCatchVariables": false,
+    "rootDir": "src",
+    "outDir": "dist"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+  "include": ["./src/**/*.ts"],
+  "exclude": [],
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
 }

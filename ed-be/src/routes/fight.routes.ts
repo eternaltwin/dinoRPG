@@ -2,9 +2,9 @@ import { Request, Response, Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import { processFight } from '../business/fightService.js';
 import { apiRoutes } from '../constants/index.js';
-import { FightResult } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 const routes: Router = Router();
 
@@ -40,8 +40,7 @@ routes.put(`${commonPath}`, [body('dinozId').exists().toInt().isNumeric()], asyn
 		const response: FightResult = await processFight(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}

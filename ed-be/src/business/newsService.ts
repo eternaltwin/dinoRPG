@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { createNews, getBatchOfNews, updateAnyNews } from '../dao/newsDao.js';
 import { News } from '../entity/news.js';
+import { AllNews } from '@drpg/core/models/news/AllNews';
 
 /**
  * @summary Create a news
@@ -17,7 +18,7 @@ import { News } from '../entity/news.js';
  * @param req.body.germanText {string} German text
  * @return void
  *  */
-const postNews = async (req: Request): Promise<void> => {
+export async function postNews(req: Request): Promise<void> {
 	const postedNews: Partial<News> = {
 		title: req.params.title,
 		image: req.file?.buffer as Buffer,
@@ -32,7 +33,7 @@ const postNews = async (req: Request): Promise<void> => {
 	};
 
 	await createNews(postedNews);
-};
+}
 
 /**
  * @summary Retrieve a batch of new
@@ -41,11 +42,11 @@ const postNews = async (req: Request): Promise<void> => {
  * @param res
  * @return Array<News>
  */
-const getNews = async (req: Request): Promise<Array<News>> => {
+export async function getNews(req: Request): Promise<Array<AllNews>> {
 	const batch: Array<News> = await getBatchOfNews(parseInt(req.params.page));
-
-	return batch;
-};
+	const news = batch as unknown as Array<AllNews>;
+	return news;
+}
 
 /**
  * @summary Update a selected news
@@ -62,7 +63,7 @@ const getNews = async (req: Request): Promise<Array<News>> => {
  * @param req.body.germanText {string} German text to update
  * @return void
  */
-const updateNews = async (req: Request): Promise<void> => {
+export async function updateNews(req: Request): Promise<void> {
 	const updatedNews: Partial<News> = {
 		image: req.file?.buffer,
 		frenchTitle: req.body.frenchTitle,
@@ -76,5 +77,4 @@ const updateNews = async (req: Request): Promise<void> => {
 	};
 
 	await updateAnyNews(req.params.title, updatedNews);
-};
-export { postNews, getNews, updateNews };
+}

@@ -5,6 +5,7 @@ import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 
 const routes: Router = Router();
 
@@ -50,10 +51,10 @@ routes.get(
 		}
 
 		try {
-			const response = await getLearnableAndUnlockableSkills(req);
+			const response: Partial<DinozSkillOwnAndUnlockable> | undefined = await getLearnableAndUnlockableSkills(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -116,10 +117,10 @@ routes.post(
 		}
 
 		try {
-			const response: string = await learnSkill(req);
+			const response: number = await learnSkill(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

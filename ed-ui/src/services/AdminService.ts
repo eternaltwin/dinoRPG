@@ -1,5 +1,6 @@
-import { http } from '@/utils';
-import { Dinoz, Player } from '@/models';
+import { http } from '../utils/index.js';
+import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -26,7 +27,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getplayerInformation(id: number): Promise<Player> {
+	getplayerInformation(id: number): Promise<PlayerTypeToSend> {
 		return http()
 			.get(`/admin/playerinfo/${id}`)
 			.then(res => Promise.resolve(res.data))
@@ -44,7 +45,7 @@ export const AdminService = {
 		merchant?: boolean | null,
 		priest?: boolean | null,
 		teacher?: boolean | null
-	): Promise<Player> {
+	): Promise<void> {
 		return http()
 			.put(`/admin/player/${id}`, {
 				customText: customText,
@@ -61,7 +62,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	listAllDinozFromPlayer(id: number): Promise<Array<Dinoz>> {
+	listAllDinozFromPlayer(id: number): Promise<Array<DinozFiche>> {
 		return http()
 			.get(`/admin/playerdinoz/${id}`)
 			.then(res => Promise.resolve(res.data))
@@ -82,7 +83,7 @@ export const AdminService = {
 		statusOperation?: string,
 		skill?: Array<string>,
 		skillOperation?: string
-	): Promise<number> {
+	): Promise<void> {
 		return http()
 			.put(`/admin/dinoz/${id}`, {
 				name: name,

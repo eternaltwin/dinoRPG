@@ -411,7 +411,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { moueffe } from '@/constants';
+import { moueffe } from '../../../constants/index.js';
 
 export default defineComponent({
 	name: 'Moueffe',

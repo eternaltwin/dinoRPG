@@ -33,14 +33,15 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { raceList, statusList } from '@/constants';
-import { PlayerInfo, Dinoz } from '@/models';
-import { dinozPlacement } from '@/constants';
+import { raceList, statusList } from '../../constants/index.js';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { dinozPlacement } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'MyDinoz',
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() => import('@/components/dinoz/dinozWithoutFlash.vue'))
+		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/dinozWithoutFlash.vue'))
 	},
 	props: {
 		accountData: {
@@ -55,7 +56,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		style(dinoz: Dinoz): string {
+		style(dinoz: DinozFiche): string {
 			const race = Object.entries(raceList).find(race => parseInt(race[0]) === dinoz.raceId)![1];
 			if (race === 'moueffe' || race === 'pigmou') {
 				const taille = parseInt(dinoz.display![1] === 'A' ? '9' : dinoz.display![1]);

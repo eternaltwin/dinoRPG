@@ -77,15 +77,17 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { missionsList, npcNameList, shopNameList } from '@/constants';
-import { Action, FightResult, missionRewards } from '@/models';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
-import { DinozService, FightService, MissionService } from '@/services';
-import { errorHandler } from '@/utils/index.js';
-import { MissionEnum, RewardEnum } from '@/enums/index.js';
-import { formatText } from '@/utils/formatText.js';
-import { mixin } from '@/mixin/mixin.js';
+import { missionsList, npcNameList, shopNameList } from '../../constants/index.js';
+import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { sessionStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
+import { DinozService, FightService, MissionService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { formatText } from '../../utils/formatText.js';
+import { mixin } from '../../mixin/mixin.js';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -98,24 +100,24 @@ export default defineComponent({
 			mission: sessionStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
 				.missions,
 			npcName: undefined as string | undefined,
-			missionReward: undefined as Array<missionRewards> | undefined,
+			missionReward: undefined as Array<Rewarder> | undefined,
 			sessionStore: sessionStore(),
-			MissionEnum: MissionEnum,
-			digReward: undefined as missionRewards | undefined
+			MissionEnum: ConditionEnum,
+			digReward: undefined as Rewarder | undefined
 		};
 	},
 	components: {
-		Resurrect: defineAsyncComponent(() => import('@/components/modal/ResurrectModal.vue')),
-		MissionHUD: defineAsyncComponent(() => import('@/components/dinoz/MissionHUD.vue')),
-		NPCModal: defineAsyncComponent(() => import('@/components/modal/NPCModal.vue')),
-		MissionRewardModal: defineAsyncComponent(() => import('@/components/modal/MissionRewardModal.vue'))
+		Resurrect: defineAsyncComponent(() => import('../../components/modal/ResurrectModal.vue')),
+		MissionHUD: defineAsyncComponent(() => import('../../components/dinoz/MissionHUD.vue')),
+		NPCModal: defineAsyncComponent(() => import('../../components/modal/NPCModal.vue')),
+		MissionRewardModal: defineAsyncComponent(() => import('../../components/modal/MissionRewardModal.vue'))
 	},
 	props: {
-		dinozActions: Object as PropType<Array<Action>>,
+		dinozActions: Object as PropType<Array<ActionFiche>>,
 		missionId: Number
 	},
 	methods: {
-		async launch(action: Action): Promise<void> {
+		async launch(action: ActionFiche): Promise<void> {
 			switch (action.name) {
 				case 'levelup':
 					this.$router.push({
@@ -150,7 +152,7 @@ export default defineComponent({
 					this.resurect = true;
 					break;
 				case 'mission':
-					if (this.mission!.actionType === MissionEnum.VALIDATE) {
+					if (this.mission!.actionType === ConditionEnum.FINISH_MISSION) {
 						this.missionReward = await MissionService.finishMission(this.$route.params.id.toString(), this.missionId!);
 					} else {
 						try {
@@ -211,8 +213,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .actions {
-	background: url('@/assets/background/banniere_left.webp') no-repeat,
-		url('@/assets/background/banniere_right.webp') no-repeat, url('@/assets/background/banniere_middle.webp') repeat-x;
+	background: url('../../assets/background/banniere_left.webp') no-repeat,
+		url('../../assets/background/banniere_right.webp') no-repeat,
+		url('../../assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left;
 	float: left;
 	left: 12px;

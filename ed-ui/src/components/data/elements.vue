@@ -93,7 +93,7 @@ span {
 		color: white;
 		text-align: left;
 		letter-spacing: -0.2pt;
-		background-image: url('@/assets/icons/element_bg.webp');
+		background-image: url('../../assets/icons/element_bg.webp');
 		background-position: 7px 5px;
 		background-repeat: no-repeat;
 		cursor: help;

@@ -1,5 +1,6 @@
-import { MapZone, Place } from '../models/index.js';
 import { statusList } from './status.js';
+import { Place } from '@drpg/core/models/place/Place';
+import { MapZone } from '@drpg/core/models/enums/MapZone';
 
 export const placeList: Record<string, Place> = {
 	// Useful for the few things accessible from any where like the flying shop

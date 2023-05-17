@@ -70,7 +70,7 @@
 							/>
 							<img
 								v-else
-								src="@/assets/icons/small_skill_inactive.webp"
+								src="../../assets/icons/small_skill_inactive.webp"
 								v-tippy="{
 									content: formatContent($t(`details.activate.locked`)),
 									theme: 'small'
@@ -86,19 +86,20 @@
 
 <script lang="ts" scoped>
 import { defineComponent, PropType } from 'vue';
-import { statusList, skillNameList } from '@/constants';
-import { Dinoz, Skill } from '@/models';
-import { DinozService } from '@/services';
-import { errorHandler } from '@/utils';
-import EventBus from '@/events';
-import { ElementType } from '@/enums';
+import { statusList, skillNameList } from '../../constants/index.js';
+import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 export default defineComponent({
 	name: 'DetailsTab',
-	props: { dinozData: Object as PropType<Dinoz> },
+	props: { dinozData: Object as PropType<DinozFiche> },
 	data() {
 		return {
-			dinozSkill: [] as Array<Skill>,
+			dinozSkill: [] as Array<DinozSkillFiche>,
 			skillNameList: skillNameList,
 			selectedSort: 'Default' as string,
 			picked: 'Ascendant' as string,
@@ -107,7 +108,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		async changeState(skill: Skill): Promise<void> {
+		async changeState(skill: DinozSkillFiche): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
 			try {
@@ -126,22 +127,22 @@ export default defineComponent({
 		sort(): void {
 			switch (this.selectedSort) {
 				case 'Default':
-					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
 						a.skillId > b.skillId ? 1 : b.skillId > a.skillId ? -1 : 0
 					);
 					break;
 				case 'Type':
-					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
 						a.type > b.type ? 1 : b.type > a.type ? -1 : 0
 					);
 					break;
 				case 'Energy':
-					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
 						a.energy > b.energy ? 1 : b.energy > a.energy ? -1 : 0
 					);
 					break;
 				case 'State':
-					this.dinozSkill = this.dinozSkill.sort((a: Skill, b: Skill) =>
+					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
 						a.state > b.state ? 1 : b.state > a.state ? -1 : 0
 					);
 					break;
@@ -233,7 +234,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('@/assets/background/table_header.webp');
+				background-image: url('../../assets/background/table_header.webp');
 				background-position: left bottom;
 				max-width: 222px;
 				&.name {
@@ -255,7 +256,7 @@ export default defineComponent({
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
 				&.name {
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					padding-left: 15px;
 					max-width: 222px;
@@ -273,7 +274,7 @@ export default defineComponent({
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
@@ -287,7 +288,7 @@ export default defineComponent({
 						top: 5px;
 						cursor: help;
 					}
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 				}
 			}

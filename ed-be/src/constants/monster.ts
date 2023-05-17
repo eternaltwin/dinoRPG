@@ -1,4 +1,6 @@
-import { MapZone, MonsterFiche, PlaceEnum } from '../models/index.js';
+import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
+import { MapZone } from '@drpg/core/models/enums/MapZone';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	// This monster is here to always have an enemy to fight

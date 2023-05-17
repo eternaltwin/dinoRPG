@@ -1,4 +1,5 @@
-import { ConditionEnum, ConditionOperatorEnum, NpcData, RewardEnum } from '../../models/index.js';
+import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
 
 export const MINEUR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -20,6 +21,7 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
 				value: 'ENHANCED_SHOVEL',
+        reverse: true,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,

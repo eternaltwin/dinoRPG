@@ -8,10 +8,11 @@ import {
 	searchPlayers
 } from '../business/playerService.js';
 import { body, param, validationResult } from 'express-validator';
-import { PlayerCommonData, PlayerInfo } from '../models/index.js';
 import { Player } from '../entity/player.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 
 const routes: Router = Router();
 
@@ -41,8 +42,8 @@ routes.get(`${commonPath}/commondata`, async (req: Request, res: Response) => {
 		const response: PlayerCommonData = await getCommonData(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
+		console.error(e.message);
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
@@ -78,8 +79,8 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: 
 		const response: PlayerInfo = await getAccountData(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
+		console.error(e.message);
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
@@ -124,8 +125,8 @@ routes.put(`${commonPath}/import`, [body('server').exists().isString()], async (
 		await importAccount(req);
 		return res.status(200).send();
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
+		console.error(e.message);
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
@@ -170,8 +171,8 @@ routes.put(`${commonPath}/customText`, [body('message').exists()], async (req: R
 		await setCustomText(req);
 		return res.status(200).send();
 	} catch (err) {
-		console.error(err.message);
-		const e: ErrorFormator = err;
+		const e = err as ErrorFormator;
+		console.error(e.message);
 		await postError(e, res);
 		res.status(e.errorCode).send(e.message);
 	}
@@ -214,8 +215,7 @@ routes.get(
 			const response: Array<Player> = await searchPlayers(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

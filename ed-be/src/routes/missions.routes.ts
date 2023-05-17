@@ -1,10 +1,11 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import { MissionList, Rewarder } from '../models/index.js';
 import { endMission, getMissionsList, interactMission, updateMission } from '../business/missionsService.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { MissionList } from '@drpg/core/models/missions/missionList';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 const routes: Router = Router();
 
@@ -48,8 +49,7 @@ routes.get(
 			const response: Array<MissionList> = await getMissionsList(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
@@ -58,7 +58,7 @@ routes.get(
 
 /**
  * @openapi
- * /api/v1/missions/{dinozId}/{missionId}:
+ * /api/v1/missions/update/{dinozId}/{missionId}:
  *   put:
  *     summary: Update the status of the selected mission
  *     security:
@@ -108,8 +108,8 @@ routes.put(
 			const response: boolean = await updateMission(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e = err as ErrorFormator;
+			return res.status(500).send(e.message);
 		}
 	}
 );
@@ -165,8 +165,8 @@ routes.put(
 			const response: string = await interactMission(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e = err as ErrorFormator;
+			return res.status(500).send(e.message);
 		}
 	}
 );
@@ -218,8 +218,8 @@ routes.put(
 			const response: Array<Rewarder> = await endMission(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			return res.status(500).send(err.message);
+			const e = err as ErrorFormator;
+			return res.status(500).send(e.message);
 		}
 	}
 );

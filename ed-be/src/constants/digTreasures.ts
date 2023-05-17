@@ -1,5 +1,6 @@
 import { placeList } from './place.js';
-import { ConditionEnum, ConditionOperatorEnum, DigData, RewardEnum } from '../models/index.js';
+import { DigData } from '@drpg/core/models/dinoz/DigData';
+import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export const digTreasures: Readonly<Record<string, DigData>> = {
 	BASALT: {

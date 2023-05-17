@@ -1,5 +1,7 @@
 import { placeList } from '../../constants/place.js';
-import { Npc, NpcData, NpcTrigger } from '../../models/index.js';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { Npc } from '@drpg/core/models/npc/npc';
+import { NpcTrigger } from '@drpg/core/models/enums/NpcTrigger';
 
 export const NPC_Alpha = {
 	begin: {

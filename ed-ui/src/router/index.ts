@@ -1,21 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MainPage from '@/pages/MainPage.vue';
-import DinozPage from '@/pages/DinozPage.vue';
-import DinozShopPage from '@/pages/DinozShopPage.vue';
-import ItemShopPage from '@/pages/ItemShopPage.vue';
-import HomePage from '@/pages/HomePage.vue';
-import DinozGenerator from '@/pages/DinozGenerator.vue';
-import MyAccount from '@/pages/MyAccount.vue';
-import Ranking from '@/pages/Ranking.vue';
-import Fight from '@/pages/Fight.vue';
-import LevelUp from '@/pages/LevelUp.vue';
-import { sessionStore } from '@/store';
-import DinozWithoutFlash from '@/components/dinoz/dinozWithoutFlash.vue';
-import AdminDashBoard from '@/pages/AdminDashBoard.vue';
-import Ingredients from '@/pages/Ingredients.vue';
-import News from '@/components/common/News.vue';
-import NPC from '@/pages/NPC.vue';
-import Missions from '@/pages/Missions.vue';
+import MainPage from '../pages/MainPage.vue';
+import DinozPage from '../pages/DinozPage.vue';
+import DinozShopPage from '../pages/DinozShopPage.vue';
+import ItemShopPage from '../pages/ItemShopPage.vue';
+import HomePage from '../pages/HomePage.vue';
+import DinozGenerator from '../pages/DinozGenerator.vue';
+import MyAccount from '../pages/MyAccount.vue';
+import Ranking from '../pages/Ranking.vue';
+import Fight from '../pages/Fight.vue';
+import LevelUp from '../pages/LevelUp.vue';
+import { sessionStore } from '../store/index.js';
+import DinozWithoutFlash from '../components/dinoz/dinozWithoutFlash.vue';
+import AdminDashBoard from '../pages/AdminDashBoard.vue';
+import Ingredients from '../pages/Ingredients.vue';
+import News from '../components/common/News.vue';
+import NPC from '../pages/NPC.vue';
+import Missions from '../pages/Missions.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),

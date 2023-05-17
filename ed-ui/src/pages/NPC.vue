@@ -25,10 +25,10 @@
 
 <script lang="ts">
 import { defineComponent, defineAsyncComponent } from 'vue';
-import EventBus from '@/events/index.js';
-import { errorHandler } from '@/utils/index.js';
-import { NPCService } from '@/services/index.js';
-import { NpcTalk } from '@/models/index.js';
+import EventBus from '../events/index.js';
+import { errorHandler } from '../utils/index.js';
+import { NPCService } from '../services/index.js';
+import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { NavigationFailure } from 'vue-router';
 
 export default defineComponent({
@@ -42,8 +42,8 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('@/components/utils/TitleHeader.vue')),
-		AnimatedNPC: defineAsyncComponent(() => import('@/components/common/AnimatedNPC.vue'))
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
+		AnimatedNPC: defineAsyncComponent(() => import('../components/common/AnimatedNPC.vue'))
 	},
 	methods: {
 		async choiseStep(choice: string): Promise<void | NavigationFailure> {

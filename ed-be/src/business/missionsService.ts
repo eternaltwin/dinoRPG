@@ -1,17 +1,4 @@
 import { Request } from 'express';
-import {
-	ConditionEnum,
-	FightResult,
-	Mission,
-	MissionCheck,
-	MissionHUD,
-	MissionList,
-	MissionsStatus,
-	MissionSteps,
-	Npc,
-	Place,
-	Rewarder
-} from '../models/index.js';
 import { Dinoz, DinozMission } from '../entity/index.js';
 import { getDinozMissionsInfo } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
@@ -26,8 +13,19 @@ import {
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
 import _ from 'lodash';
+import { MissionList } from '@drpg/core/models/missions/missionList';
+import { Place } from '@drpg/core/models/place/Place';
+import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
+import { Npc } from '@drpg/core/models/npc/npc';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { Mission } from '@drpg/core/models/missions/mission';
+import { MissionSteps } from '@drpg/core/models/missions/missionSteps';
+import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { MissionCheck } from '../models/missionCheck.js';
 
-const getMissionsList = async (req: Request): Promise<Array<MissionList>> => {
+export async function getMissionsList(req: Request): Promise<Array<MissionList>> {
 	const dinozId: number = parseInt(req.params.id);
 	const npcName: string = req.params.npc;
 	const dinoz: Dinoz = await getDinozMissionsInfo(dinozId);
@@ -51,9 +49,9 @@ const getMissionsList = async (req: Request): Promise<Array<MissionList>> => {
 	}
 
 	return missionSort(npc.missions, dinoz);
-};
+}
 
-const updateMission = async (req: Request): Promise<boolean> => {
+export async function updateMission(req: Request): Promise<boolean> {
 	const dinozId: number = parseInt(req.params.dinozId);
 	const missionId: number = parseInt(req.params.missionId);
 	const status: string = req.body.status;
@@ -101,9 +99,9 @@ const updateMission = async (req: Request): Promise<boolean> => {
 		default:
 			throw new ErrorFormator(500, "This status don't exist");
 	}
-};
+}
 
-const interactMission = async (req: Request): Promise<string> => {
+export async function interactMission(req: Request): Promise<string> {
 	const mission = await checkMission(req);
 
 	const task = mission.actualStep.requirement.actionType;
@@ -118,15 +116,15 @@ const interactMission = async (req: Request): Promise<string> => {
 		default:
 			return 'error';
 	}
-};
+}
 
-const endMission = async (req: Request): Promise<Array<Rewarder>> => {
+export async function endMission(req: Request): Promise<Array<Rewarder>> {
 	const mission = await checkMission(req);
 
 	await rewarder(mission.missionReference.rewards, mission.dinoz);
 	await finishMission(mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
-};
+}
 
 async function checkMission(req: Request): Promise<MissionCheck> {
 	const dinozId: number = parseInt(req.params.dinozId);
@@ -158,7 +156,7 @@ async function checkMission(req: Request): Promise<MissionCheck> {
 	}
 	return { dinoz: dinoz, dinozMission: dinozMission, missionReference: missionReference, actualStep: actualStep };
 }
-function getMissionAction(dinoz: Dinoz): string | undefined {
+export function getMissionAction(dinoz: Dinoz): string | undefined {
 	const actualStep = getActualStep(dinoz);
 
 	if (!actualStep) {
@@ -173,7 +171,7 @@ function getMissionAction(dinoz: Dinoz): string | undefined {
 	} else return;
 }
 
-function getHUDObjective(dinoz: Dinoz): MissionHUD | undefined {
+export function getHUDObjective(dinoz: Dinoz): MissionHUD | undefined {
 	const actualStep = getActualStep(dinoz);
 
 	if (!actualStep) {
@@ -247,7 +245,7 @@ function missionSort(missions: Array<Mission>, dinoz: Dinoz): Array<MissionList>
 	});
 }
 
-async function checkMissionFight(dinoz: Dinoz, fight: FightResult): Promise<void> {
+export async function checkMissionFight(dinoz: Dinoz, fight: FightResult): Promise<void> {
 	//Retrieve mission on its way and the step
 	const actualStep = getActualStep(dinoz) as MissionSteps;
 	//Increment the progress of killing mobs
@@ -278,13 +276,3 @@ async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualStep: Mi
 		await updateMissionStep(dinoz.id, missionId, actualStep.stepId + 1);
 	}
 }
-
-export {
-	endMission,
-	getMissionsList,
-	updateMission,
-	interactMission,
-	getHUDObjective,
-	getMissionAction,
-	checkMissionFight
-};

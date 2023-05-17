@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import { Condition, Npc, NpcData, NpcTalk, Place } from '../models/index.js';
 import { Dinoz, NPC } from '../entity/index.js';
 import { getDinozNPCRequest } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
@@ -7,8 +6,13 @@ import { npcList } from '../constants/npc.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { checkCondition, rewarder, triggerAction } from '../utils/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
+import { Place } from '@drpg/core/models/place/Place';
+import { Npc } from '@drpg/core/models/npc/npc';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { Condition } from '@drpg/core/models/npc/NpcConditions';
 
-const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
+export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId: number = parseInt(req.params.dinozId);
 	const npcName: string = req.params.npc;
 	let nextStepWanted: string = req.body.step;
@@ -90,8 +94,9 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 
 	// Select nextStep to send to the player
 	const playerChoices: Array<string> = nextStepWantedData!.nextStep.filter(possibility => {
-		const condition: Condition | undefined = Object.values(pnj!.data).find(data => data.stepName === possibility)
-			?.condition;
+		const condition: Condition | undefined = Object.values(pnj!.data).find(
+			data => data.stepName === possibility
+		)?.condition;
 		// If there is a condition non-met, replace it with enmpty string
 		return condition === undefined || checkCondition(condition, dinoz);
 	});
@@ -102,6 +107,4 @@ const getNpcSpeech = async (req: Request): Promise<NpcTalk> => {
 		playerChoice: playerChoices,
 		flashvars: pnj.flashvars
 	};
-};
-
-export { getNpcSpeech };
+}

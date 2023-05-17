@@ -1,18 +1,20 @@
 import { Request } from 'express';
 import { getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { Dinoz, Player } from '../entity/index.js';
-import { ItemEffect, ItemFiche, ItemType } from '../models/index.js';
 import { itemList } from '../constants/item.js';
 import { addLife, getDinozFicheItemRequest } from '../dao/dinozDao.js';
 import { useItemDataRequest } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
 /**
  * @summary Get all items from the inventory of a player
  * @param req
  * @return Array<ItemFiche>
  */
-const getAllItemsData = async (req: Request): Promise<Array<ItemFiche>> => {
+export async function getAllItemsData(req: Request): Promise<Array<ItemFiche>> {
 	const playerId: number = req.user!.playerId!;
 
 	// Get the player's data (shopKeeper)
@@ -36,9 +38,9 @@ const getAllItemsData = async (req: Request): Promise<Array<ItemFiche>> => {
 	});
 
 	return allItemsDataReply;
-};
+}
 
-const useItem = async (req: Request): Promise<void> => {
+export async function useItem(req: Request): Promise<void> {
 	//The Promise need to be reworked
 	const dinozId: number = parseInt(req.params.dinozId);
 	const dinoz: Dinoz = await getDinozFicheItemRequest(dinozId);
@@ -81,6 +83,4 @@ const useItem = async (req: Request): Promise<void> => {
 		default:
 			throw new ErrorFormator(500, 'WTF');
 	}
-};
-
-export { getAllItemsData, useItem };
+}

@@ -2,6 +2,7 @@ import { getRanking } from '../../business/rankingService.js';
 import { mockRequest } from '../utils/constants.js';
 import { playersRankingAverage, playersRankingSum } from '../data/rankingData.js';
 import { Request } from 'express';
+import { jest } from '@jest/globals';
 
 const RankingDao = require('../../dao/rankingDao.js');
 

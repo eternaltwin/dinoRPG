@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { getPlayersSumRanking, getPlayersAverageRanking } from '../dao/rankingDao.js';
-import { PlayerRanking } from '../models/index.js';
+import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 import { Ranking } from '../entity/index.js';
 
 /**
@@ -9,7 +9,7 @@ import { Ranking } from '../entity/index.js';
  * @param req.param.sort {string} between classic or average
  * @return Array<PlayerRanking>
  */
-const getRanking = async (req: Request): Promise<Array<PlayerRanking>> => {
+export async function getRanking(req: Request): Promise<Array<PlayerRanking>> {
 	const page: number = parseInt(req.params.page);
 	let playersRanking: Array<Ranking>;
 
@@ -37,6 +37,4 @@ const getRanking = async (req: Request): Promise<Array<PlayerRanking>> => {
 	});
 
 	return infoToSend;
-};
-
-export { getRanking };
+}

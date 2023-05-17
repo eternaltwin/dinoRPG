@@ -45,7 +45,7 @@ export const dinozPlacement: Placement = {
 	}
 };
 
-interface Placement {
+export interface Placement {
 	noFliped: {
 		[race: string]: {
 			baby: {

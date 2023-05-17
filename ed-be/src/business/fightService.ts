@@ -2,22 +2,19 @@ import pkg from 'native-dinorpg';
 import { Request } from 'express';
 import { levelList, monsterList, placeList } from '../constants/index.js';
 import { Dinoz } from '../entity/index.js';
-import {
-	FightConfiguration,
-	FighterFiche,
-	FightProcessResult,
-	FightResult,
-	MapZone,
-	MonsterFiche,
-	Place,
-	PlaceEnum
-} from '../models/index.js';
 import { getRandomNumber } from '../utils/index.js';
 import { addExperience, addLife, getDinozFightDataRequest } from '../dao/dinozDao.js';
 import { addPlayerMoney } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkMissionFight } from './missionsService.js';
 import _ from 'lodash';
+import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
+import { Place } from '@drpg/core/models/place/Place';
+import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
+import { MapZone } from '@drpg/core/models/enums/MapZone';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
+import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 
 const { fight_rust } = pkg;
 
@@ -26,7 +23,7 @@ const { fight_rust } = pkg;
  * @param req
  * @return FightResult
  */
-const processFight = async (req: Request): Promise<FightResult> => {
+export async function processFight(req: Request): Promise<FightResult> {
 	const dinozId: number = parseInt(req.body.dinozId);
 	// Get Dinoz info
 	const dinozData: Dinoz = await getDinozFightDataRequest(dinozId);
@@ -52,9 +49,9 @@ const processFight = async (req: Request): Promise<FightResult> => {
 	// if (getEnvironnement() === 'development') console.log(`Result sent to front: ${JSON.stringify(result)}`);
 
 	return result;
-};
+}
 
-const moveFight = async (dinoz: Dinoz, placeId: number): Promise<FightResult> => {
+export async function moveFight(dinoz: Dinoz, placeId: number): Promise<FightResult> {
 	const localisation: Place = Object.values(placeList).find(place => place.placeId === dinoz.placeId)!;
 	const monster: MonsterFiche = prepareFight(dinoz.level, localisation.map, localisation.placeId);
 	const fightResult: FightProcessResult = calculateFight(dinoz, monster);
@@ -68,7 +65,7 @@ const moveFight = async (dinoz: Dinoz, placeId: number): Promise<FightResult> =>
 		await checkMissionFight(dinozAtFuturePlace, result);
 	}
 	return result;
-};
+}
 
 function prepareFight(dinozlevel: number, zone: MapZone, place: PlaceEnum): MonsterFiche {
 	// Pick random monster
@@ -168,5 +165,3 @@ function getFightResult(dinozData: Dinoz, monster: MonsterFiche, fightResult: Fi
 		dinozId: dinozData.id
 	};
 }
-
-export { processFight, moveFight };

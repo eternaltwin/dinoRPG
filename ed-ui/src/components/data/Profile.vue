@@ -55,13 +55,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList } from '@/constants';
-import { PlayerInfo } from '@/models';
-import EventBus from '@/events';
-import ImportAccount from '@/components/data/ImportAccount.vue';
-import { PlayerService } from '@/services';
-import { errorHandler } from '@/utils';
-import { sessionStore } from '@/store';
+import { epicList } from '../../constants/index.js';
+import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
+import EventBus from '../../events/index.js';
+import ImportAccount from '../../components/data/ImportAccount.vue';
+import { PlayerService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { sessionStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'Profile',
@@ -220,7 +220,7 @@ export default defineComponent({
 	margin-bottom: 5px;
 }
 .smallbutton {
-	background-image: url('@/assets/design/button_small.webp');
+	background-image: url('../../assets/design/button_small.webp');
 	padding-top: 4px;
 	font-size: 9pt;
 	line-height: 7pt;
@@ -236,7 +236,7 @@ export default defineComponent({
 	padding-left: 10px;
 	cursor: pointer;
 	&:hover {
-		background-image: url('@/assets/design/button_small_hover.webp');
+		background-image: url('../../assets/design/button_small_hover.webp');
 	}
 }
 .tinybutton {

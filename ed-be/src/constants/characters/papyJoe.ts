@@ -1,4 +1,4 @@
-import { NpcData } from '../../models/index.js';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
 
 export const PAPYJOE: Readonly<Record<string, NpcData>> = {
 	begin: {

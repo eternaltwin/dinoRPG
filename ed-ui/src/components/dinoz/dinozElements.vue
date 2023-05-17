@@ -16,15 +16,15 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
-import { Dinoz } from '@/models';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozElements',
 	components: {
-		Elements: defineAsyncComponent(() => import('@/components/data/elements.vue'))
+		Elements: defineAsyncComponent(() => import('../../components/data/elements.vue'))
 	},
 	props: {
-		dinozData: Object as PropType<Dinoz>
+		dinozData: Object as PropType<DinozFiche>
 	}
 });
 </script>
@@ -55,7 +55,7 @@ export default defineComponent({
 			color: white;
 			text-align: left;
 			letter-spacing: -0.2pt;
-			background-image: url('src/assets/icons/element_bg.webp');
+			background-image: url('../../assets/icons/element_bg.webp');
 			background-position: 7px 5px;
 			background-repeat: no-repeat;
 			cursor: help;
@@ -76,7 +76,7 @@ export default defineComponent({
 	.elements_top {
 		width: 223px;
 		height: 28px;
-		background: url('@/assets/background/box_header.webp') no-repeat;
+		background: url('../../assets/background/box_header.webp') no-repeat;
 		p {
 			color: white;
 			padding-left: 2px;

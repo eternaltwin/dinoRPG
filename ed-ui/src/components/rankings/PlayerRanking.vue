@@ -49,10 +49,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '@/events';
-import { PlayerService } from '@/services';
-import { errorHandler } from '@/utils';
-import { PlayerRanking } from '@/models';
+import EventBus from '../../events/index.js';
+import { PlayerService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 
 export default defineComponent({
 	name: 'PlayerRanking',
@@ -121,7 +121,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('@/assets/background/table_header.webp');
+				background-image: url('../../assets/background/table_header.webp');
 				background-position: left bottom;
 				max-width: 222px;
 				&.pos {
@@ -147,24 +147,24 @@ export default defineComponent({
 				border: 1px solid #c88f44;
 				cursor: pointer;
 				&.pos {
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					padding-left: 1.2em;
 				}
 				&.other {
 					padding-left: 1em;
-					background-image: url('@/assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
 			}
 			&.even {
 				td.pos {
-					background-image: url('@/assets/background/table_cell_even.webp');
+					background-image: url('../../assets/background/table_cell_even.webp');
 					background-position: 0px 0px;
 				}
 				td.other {
-					background-image: url('@/assets/background/table_cell_even.webp');
+					background-image: url('../../assets/background/table_cell_even.webp');
 					background-position: -10px 0px;
 				}
 			}

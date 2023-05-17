@@ -35,13 +35,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import LeftPanel from '@/components/common/LeftPanel.vue';
-import RightMenu from '@/components/common/RightMenu.vue';
-import { sessionStore } from '@/store';
-import { CommonData } from '@/models';
-import { errorHandler } from '@/utils';
-import { PlayerService } from '@/services';
-import EventBus from '@/events';
+import LeftPanel from '../components/common/LeftPanel.vue';
+import RightMenu from '../components/common/RightMenu.vue';
+import { sessionStore } from '../store/index.js';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { errorHandler } from '../utils/index.js';
+import { PlayerService } from '../services/index.js';
+import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'MainPage',
@@ -57,7 +57,7 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		try {
 			EventBus.emit('isLoading', true);
-			const commonData: CommonData = await PlayerService.getLoggedInData();
+			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
 			// Set data in sessionStore
 			this.sessionStore.setMoney(commonData.money);

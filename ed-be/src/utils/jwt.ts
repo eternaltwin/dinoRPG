@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import expressJwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
 import { getConfig } from './context.js';
-import { Config } from '../models/index.js';
+import { Config } from '@drpg/core/models/config/Config';
 import { getEternalTwinId } from '../dao/playerDao.js';
 import { Player } from '../entity/index.js';
 

@@ -1,8 +1,9 @@
 import { Request } from 'express';
+import { jest } from '@jest/globals';
 import _ from 'lodash';
 import { getLearnableAndUnlockableSkills, getLearnableSkills, learnSkill } from '../../business/skillService.js';
 import { itemList, levelList, raceList, skillList } from '../../constants/index.js';
-import { DinozSkillOwnAndUnlockable } from '../../models/index.js';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { DinozItem, DinozSkill, Dinoz } from '../../entity/index.js';
 import {
 	DinozLevel11LevelUp,
@@ -239,7 +240,7 @@ describe('Function learnSkill', () => {
 	});
 
 	it("Dinoz is level 1 and want to learn 'Colère' skill with success", async () => {
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[1].experience.toString());
 
@@ -313,7 +314,7 @@ describe('Function learnSkill', () => {
 
 		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel1LevelUpInWood);
 
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[1].experience.toString());
 
@@ -341,7 +342,7 @@ describe('Function learnSkill', () => {
 
 		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
 
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[50].experience.toString());
 
@@ -372,7 +373,7 @@ describe('Function learnSkill', () => {
 
 		DinozDao.getDinozForLevelUp = jasmine.createSpy().and.returnValue(DinozLevel50LevelUp);
 
-		const response: string = await learnSkill(req);
+		const response: number = await learnSkill(req);
 
 		expect(response).toBe(levelList[50].experience.toString());
 

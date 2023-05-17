@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import { ItemFiche, ItemType, ShopFiche, ShopType } from '../models/index.js';
 import { Player, PlayerItem } from '../entity/index.js';
 import { createItemDataRequest, updateItemDataRequest } from '../dao/playerItemDao.js';
 import {
@@ -9,6 +8,10 @@ import {
 } from '../dao/playerDao.js';
 import { itemList, placeList, shopList, statusList } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 
 /**
  * @summary Get all items from a shop
@@ -16,7 +19,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
  * @param req.params.shopId {string} ShopId
  * @return Array<ItemFiche>
  */
-const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
+export async function getItemsFromShop(req: Request): Promise<Array<ItemFiche>> {
 	const playerId: number = req.user!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
 	const tempShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId);
@@ -59,7 +62,7 @@ const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
 			isRare: itemReference.isRare
 		};
 	});
-};
+}
 
 /**
  * @summary Buy an item
@@ -69,7 +72,7 @@ const getItemsFromShop = async (req: Request): Promise<Array<ItemFiche>> => {
  * @param req.body.quantity {string} Quantity to buy
  * @return void
  */
-const buyItem = async (req: Request): Promise<void> => {
+export async function buyItem(req: Request): Promise<void> {
 	const playerId: number = req.user!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
 	const itemId: number = parseInt(req.body.itemId);
@@ -161,7 +164,7 @@ const buyItem = async (req: Request): Promise<void> => {
 		newItem.quantity = itemToBuy.quantity!;
 		await createItemDataRequest(newItem);
 	}
-};
+}
 
 /**
  * @summary Buy an item
@@ -229,5 +232,3 @@ function checkDinozPlace(theShop: ShopFiche, player: Player, shopId: number): vo
 		}
 	}
 }
-
-export { getItemsFromShop, buyItem };

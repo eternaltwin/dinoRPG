@@ -81,17 +81,17 @@
 
 <script lang="ts" scoped>
 import { defineComponent } from 'vue';
-import { Item } from '@/models';
-import { itemNameList } from '@/constants';
-import { InventoryService } from '@/services';
-import { errorHandler } from '@/utils';
-import EventBus from '@/events';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { itemNameList } from '../../constants/index.js';
+import { InventoryService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
 	data() {
 		return {
-			allItemsData: [] as Array<Item>,
+			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList
 		};
 	},
@@ -102,10 +102,10 @@ export default defineComponent({
 				params: { name: 'flying' }
 			});
 		},
-		isFull(item: Item): boolean {
+		isFull(item: ItemFiche): boolean {
 			return item.quantity! >= item.maxQuantity!;
 		},
-		async useItem(item: Item): Promise<void> {
+		async useItem(item: ItemFiche): Promise<void> {
 			if (item.quantity! > 0) {
 				EventBus.emit('isLoading', true);
 				const dinozId = this.$route.params.id as string;

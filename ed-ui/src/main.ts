@@ -1,12 +1,12 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router';
-import { localStore } from './store';
+import router from './router/index.js';
+import { localStore } from './store/index.js';
 import { createI18n } from 'vue-i18n';
-import { messages, defaultLocale, LocalesEnum } from '@/i18n';
+import { messages, defaultLocale, LocalesEnum } from './i18n/index.js';
 import './css/main.scss';
 import { plugin as VueTippy } from 'vue-tippy';
-import { mixin } from './mixin/mixin';
+import { mixin } from './mixin/mixin.js';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 

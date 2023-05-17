@@ -1,18 +1,18 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import path from 'path';
+import typescript from '@rollup/plugin-typescript';
 
 const STATIC_DIR = 'public';
 
 export default defineConfig(() => {
   return {
-    plugins: [vue()],
+    plugins: [
+      typescript(),
+      vue()
+    ],
     publicDir: STATIC_DIR,
     resolve: {
-      extensions: ['.js', '.ts', '.json', '.vue'],
-      alias: {
-        "@": path.resolve(__dirname, "./src"),
-      }
+      extensions: ['.js', '.ts', '.json', '.vue']
     },
     css: {
       preprocessorOptions: {

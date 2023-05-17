@@ -165,11 +165,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { AdminService } from '@/services';
-import { Dinoz, DinozEdit } from '@/models';
-import { skillNameList, statusList } from '@/constants';
-import { errorHandler } from '@/utils';
-import EventBus from '@/events';
+import { AdminService } from '../../services/index.js';
+import { DinozEdit } from '@drpg/core/models/dinoz/DinozEdit';
+import { skillNameList, statusList } from '../../constants/index.js';
+import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -179,7 +180,7 @@ export default defineComponent({
 				skillList: [],
 				statusList: []
 			} as DinozEdit,
-			dinoz: {} as Dinoz,
+			dinoz: {} as DinozFiche,
 			statusList: statusList,
 			statusOperation: '' as string,
 			statusListFiltered: [] as Array<string>,
@@ -189,7 +190,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozProp: { type: Object as PropType<Dinoz>, required: true },
+		dinozProp: { type: Object as PropType<DinozFiche>, required: true },
 		playerId: { type: Number, required: true }
 	},
 	methods: {
@@ -231,7 +232,7 @@ export default defineComponent({
 					);
 				}
 
-				const refresh: Array<Dinoz> = await AdminService.listAllDinozFromPlayer(this.playerId);
+				const refresh: Array<DinozFiche> = await AdminService.listAllDinozFromPlayer(this.playerId);
 				this.dinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id)!;
 			} catch (err) {
 				EventBus.emit('isLoading', false);
@@ -318,7 +319,7 @@ table {
 			white-space: nowrap;
 			border: 1px solid #356847;
 			background-color: #c64e36;
-			background-image: url('@/assets/background/table_header.webp');
+			background-image: url('../../assets/background/table_header.webp');
 			background-position: left bottom;
 			max-width: 222px;
 		}

@@ -19,11 +19,11 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { Dinoz } from '@/models';
-import { errorHandler } from '@/utils';
-import { DinozService } from '@/services';
-import EventBus from '@/events';
-import { sessionStore } from '@/store';
+import { errorHandler } from '../utils/index.js';
+import { DinozService } from '../services/index.js';
+import EventBus from '../events/index.js';
+import { sessionStore } from '../store/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -31,14 +31,14 @@ export default defineComponent({
 		return {
 			sessionStore: sessionStore(),
 			nameChoosen: undefined as boolean | undefined,
-			dinozData: {} as Dinoz
+			dinozData: {} as DinozFiche
 		};
 	},
 	components: {
-		ChooseDinozName: defineAsyncComponent(() => import('@/components/dinoz/chooseDinozName.vue')),
-		DinozDisplay: defineAsyncComponent(() => import('@/components/dinoz/dinozDisplay.vue')),
-		DinozActions: defineAsyncComponent(() => import('@/components/dinoz/dinozActions.vue')),
-		TabPanel: defineAsyncComponent(() => import('@/components/common/TabPanel.vue'))
+		ChooseDinozName: defineAsyncComponent(() => import('../components/dinoz/chooseDinozName.vue')),
+		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/dinozDisplay.vue')),
+		DinozActions: defineAsyncComponent(() => import('../components/dinoz/dinozActions.vue')),
+		TabPanel: defineAsyncComponent(() => import('../components/common/TabPanel.vue'))
 	},
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
@@ -55,7 +55,7 @@ export default defineComponent({
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 				dinozToUpdate.missionId = this.dinozData.missionId;
 				dinozToUpdate.missions = this.dinozData.missions;
@@ -69,7 +69,7 @@ export default defineComponent({
 		async getFiche(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
 			this.sessionStore.setDinozList(dinozList);
@@ -104,7 +104,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozPanels {
-	background-image: url('@/assets/design/dinoz_panels_bg.webp');
+	background-image: url('../assets/design/dinoz_panels_bg.webp');
 	background-repeat: repeat-y;
 	display: flex;
 	flex-wrap: wrap;
@@ -121,11 +121,11 @@ export default defineComponent({
 	.footer {
 		height: 24px;
 		width: 100%;
-		background-image: url('@/assets/design/dinoz_footer.webp');
+		background-image: url('../assets/design/dinoz_footer.webp');
 	}
 }
 .dinoz {
-	background-image: url('@/assets/background/dinoz_bg_cut.webp');
+	background-image: url('../assets/background/dinoz_bg_cut.webp');
 	background-repeat: no-repeat;
 	min-height: 265px;
 }

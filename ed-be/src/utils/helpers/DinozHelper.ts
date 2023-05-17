@@ -1,4 +1,4 @@
-import { UpChance } from '../../models/index.js';
+import { UpChance } from '@drpg/core/models/dinoz/DinozRace';
 
 export const getRandomUpElement = (raceUpChance: UpChance): number | undefined => {
 	const totalUpChance: number = Object.values(raceUpChance).reduce((total, currentValue) => total + currentValue, 0);

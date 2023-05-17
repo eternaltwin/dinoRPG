@@ -15,11 +15,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '@/events';
-import { NewsService } from '@/services';
-import { errorHandler } from '@/utils';
-import { AllNews, Image, News } from '@/models';
-import { localStore } from '@/store';
+import EventBus from '../../events/index.js';
+import { NewsService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { DisplayedNews } from '@drpg/core/models/news/DisplayedNews';
+import { AllNews } from '@drpg/core/models/news/AllNews';
+import { Image } from '@drpg/core/models/news/Image';
+import { localStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'News',
@@ -27,7 +29,7 @@ export default defineComponent({
 		return {
 			localStore: localStore(),
 			batch: [] as Array<Partial<AllNews>>,
-			displayedBatch: [] as Array<Partial<News>>,
+			displayedBatch: [] as Array<Partial<DisplayedNews>>,
 			page: 1 as number
 		};
 	},
@@ -37,7 +39,7 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		transformLanguage(news: Array<Partial<AllNews>>): Array<Partial<News>> {
+		transformLanguage(news: Array<Partial<AllNews>>): Array<Partial<DisplayedNews>> {
 			switch (this.localStore.getLanguage) {
 				case 'fr':
 					return news.map(news => this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!));
@@ -51,7 +53,7 @@ export default defineComponent({
 					return news.map(news => this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!));
 			}
 		},
-		getBatchData(title: string, image: Image, text: string): News {
+		getBatchData(title: string, image: Image, text: string): DisplayedNews {
 			return {
 				title: title,
 				image: image,
@@ -121,7 +123,7 @@ export default defineComponent({
 	}
 }
 .bloc {
-	background-image: url('@/assets/background/bloc_news.webp');
+	background-image: url('../../assets/background/bloc_news.webp');
 	background-repeat: repeat-y;
 	margin-bottom: 10px;
 	margin-right: 10px;

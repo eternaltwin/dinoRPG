@@ -1,4 +1,5 @@
-import { ConditionEnum, NpcData, RewardEnum } from '../../models/index.js';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
 
 export const FORGERON: Readonly<Record<string, NpcData>> = {
 	begin: {

@@ -1,4 +1,4 @@
-import { ShopFiche } from '../../models/index.js';
+import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
 import { shop } from '../utils/constants.js';
 
 export const BasicShop = {

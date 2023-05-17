@@ -1,7 +1,7 @@
 import { AppDataSource } from '../data-source.js';
 import { Ranking } from '../entity/ranking.js';
 import { UpdateResult } from 'typeorm';
-import { NewPositions } from '../models/index.js';
+import { NewPositions } from '@drpg/core/models/player/NewPositions';
 
 const rankingRepository = AppDataSource.getRepository(Ranking);
 

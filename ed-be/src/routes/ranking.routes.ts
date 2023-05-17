@@ -2,9 +2,9 @@ import { param, validationResult } from 'express-validator';
 import { getRanking } from '../business/rankingService.js';
 import { apiRoutes } from '../constants/index.js';
 import { Request, Response, Router } from 'express';
-import { PlayerRanking } from '../models/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
+import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 
 const routes: Router = Router();
 
@@ -53,8 +53,7 @@ routes.get(
 			const response: Array<PlayerRanking> = await getRanking(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			console.error(err.message);
-			const e: ErrorFormator = err;
+			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}

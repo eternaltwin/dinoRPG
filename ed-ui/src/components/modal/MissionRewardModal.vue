@@ -48,10 +48,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { missionsList } from '@/constants/index.js';
-import { Dinoz, missionRewards } from '@/models/index.js';
-import { sessionStore } from '@/store/index.js';
-import { RewardEnum } from '@/enums/index.js';
+import { missionsList } from '../../constants/index.js';
+import { sessionStore } from '../../store/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export default defineComponent({
 	name: 'MissionRewardModal',
@@ -61,24 +62,24 @@ export default defineComponent({
 		};
 	},
 	props: {
-		missionReward: { type: Object as PropType<Array<missionRewards>>, required: true }
+		missionReward: { type: Object as PropType<Array<Rewarder>>, required: true }
 	},
 	computed: {
 		missionName(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			const missionId = myDinoz.missionId as number;
 			return missionsList[missionId];
 		},
 		validator(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			return myDinoz.missions!.target;
 		},
 		xp(): number | undefined {
-			const isXP: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EXPERIENCE);
+			const isXP: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EXPERIENCE);
 			if (isXP?.rewardType === RewardEnum.EXPERIENCE) {
 				return isXP.value;
 			} else {
@@ -86,25 +87,21 @@ export default defineComponent({
 			}
 		},
 		gold(): number | undefined {
-			const isGold: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.GOLD);
+			const isGold: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.GOLD);
 			if (isGold?.rewardType === RewardEnum.GOLD) {
 				return isGold.value;
 			} else {
 				return undefined;
 			}
 		},
-		items(): Array<string> | undefined {
-			const isItem: Array<missionRewards> | undefined = this.missionReward.filter(
-				el => el.rewardType === RewardEnum.ITEM
-			);
-			if (isItem.every(el => el.rewardType === RewardEnum.ITEM)) {
-				return isItem.map(el => (el.value as string)!.toLowerCase());
-			} else {
-				return undefined;
-			}
+		items(): Array<string | undefined> {
+			const isItem: Array<Rewarder> | undefined = this.missionReward.filter(el => el.rewardType === RewardEnum.ITEM);
+			return isItem.map(el => {
+				if (el.rewardType === RewardEnum.ITEM) return el.value.toLowerCase();
+			});
 		},
 		epic(): string | undefined {
-			const isEpic: missionRewards | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EPIC);
+			const isEpic: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EPIC);
 			if (isEpic?.rewardType === RewardEnum.EPIC) {
 				return isEpic.value.toLowerCase();
 			} else {
@@ -130,7 +127,7 @@ export default defineComponent({
 	align-items: center;
 
 	.modal-box {
-		background-image: url('@/assets/background/mission.webp');
+		background-image: url('../../assets/background/mission.webp');
 		background-repeat: no-repeat;
 		width: 394px;
 		height: 296px;

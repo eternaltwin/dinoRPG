@@ -49,22 +49,25 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { placeList } from '@/constants';
-import { Dinoz, FightResult, Place, svgLines } from '@/models';
-import { sessionStore } from '@/store';
-import EventBus from '@/events';
-import { DinozService } from '@/services';
-import { errorHandler } from '@/utils';
+import { placeList } from '../../constants/index.js';
+import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
+import { svgLines } from '@drpg/core/models/place/svgLines';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { sessionStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
+import { DinozService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'WorldMap',
 	props: {
-		dinozData: Object as PropType<Dinoz>
+		dinozData: Object as PropType<DinozFiche>
 	},
 	data() {
 		return {
 			sessionStore: sessionStore(),
-			placeMap: [] as Array<Place>,
+			placeMap: [] as Array<PlaceDisplayed>,
 			translation: {
 				x: 0 as number,
 				y: 0 as number
@@ -141,7 +144,7 @@ export default defineComponent({
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				if (moveTry.result) {
-					const dinozList: Array<Dinoz> = this.sessionStore.getDinozList!;
+					const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 					const dinozToUpdate = dinozList.find(dinozs => dinozs.id == this.dinozData!.id!)!;
 					if (placeList.find(place => place.placeId === placeId)?.alias) {
 						placeId = placeList.find(place => place.placeId === placeId)!.alias!;
@@ -177,12 +180,14 @@ export default defineComponent({
 				mapY = (mapImage.height / mapImage.width) * 100;
 				mapX = 100;
 			}
-			const actualPlace: Place | undefined = placeList.find(place => place.placeId === this.dinozData!.placeId);
+			const actualPlace: PlaceDisplayed | undefined = placeList.find(
+				place => place.placeId === this.dinozData!.placeId
+			);
 			const x1 = ((actualPlace!.posLeft + 8.5) / mapImage.width) * mapX;
 			const y1 = ((actualPlace!.posTop + 8.5) / mapImage.height) * mapY;
 
 			this.dinozData!.borderPlace!.forEach(closePlace => {
-				const place: Place = placeList.find(place => place.placeId === closePlace)!;
+				const place: PlaceDisplayed = placeList.find(place => place.placeId === closePlace)!;
 				const x2: number = ((place.posLeft! + 8.5) / mapImage.width) * mapX;
 				const y2: number = ((place.posTop! + 8.5) / mapImage.height) * mapY;
 				this.svgLines.push({ x1, y1, x2, y2, name: place.name });

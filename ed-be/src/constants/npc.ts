@@ -1,4 +1,3 @@
-import { Npc, NpcTrigger } from '../models/index.js';
 import { placeList } from './index.js';
 import {
 	ALPHA,
@@ -13,6 +12,8 @@ import {
 	SOFIA
 } from './characters/index.js';
 import { M_BAO_BOB, M_DIANKORGSEY, M_PAPY_JOE } from './missions/index.js';
+import { Npc } from '@drpg/core/models/npc/npc';
+import { NpcTrigger } from '@drpg/core/models/enums/NpcTrigger';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {

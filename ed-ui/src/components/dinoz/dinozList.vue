@@ -19,7 +19,7 @@
 					>{{ dinoz.name }}
 					<img
 						v-if="dinoz.experience >= dinoz.maxExperience && dinoz.maxExperience !== 0"
-						src="@/assets/icons/small_lup.webp"
+						src="../../assets/icons/small_lup.webp"
 						v-tippy="{
 							content: formatContent($t('levelup.small')),
 							theme: 'small'
@@ -34,16 +34,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Dinoz } from '@/models';
-import { sessionStore } from '@/store';
-import { placeList } from '@/constants';
+import { sessionStore } from '../../store/index.js';
+import { placeList } from '../../constants/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozList',
 	data() {
 		return {
 			sessionStore: sessionStore(),
-			dinozList: [] as Array<Dinoz>,
+			dinozList: [] as Array<DinozFiche>,
 			hasPDA: false as boolean
 		};
 	},
@@ -60,7 +60,7 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		storeDinozList(): Array<Dinoz> {
+		storeDinozList(): Array<DinozFiche> {
 			return this.sessionStore.getDinozList!;
 		},
 		pageId(): number {
@@ -68,7 +68,7 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		storeDinozList: function (dinozList: Array<Dinoz>) {
+		storeDinozList: function (dinozList: Array<DinozFiche>) {
 			if (this.hasPDA) {
 				this.dinozList = dinozList.sort((a, b) => (a.order ?? a.id!) - (b.order ?? b.id!));
 			} else {

@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash';
 import {
 	getDinozFiche,
@@ -10,7 +11,11 @@ import {
 	resurrectDinoz
 } from '../../business/dinozService.js';
 import { actionList, itemList, placeList, raceList, shopList, skillList, statusList } from '../../constants/index.js';
-import { ActionFiche, DinozFiche, DinozSkillFiche, FightResult, ShopType } from '../../models/index.js';
+import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { DinozSkill, DinozStatus, Dinoz, Player, PlayerItem } from '../../entity/index.js';
 import {
 	player,
@@ -294,7 +299,7 @@ describe('Test de la fonction buyDinoz()', function () {
 			nextUpAltElementId: 3
 		};
 
-		const tempDinoz: Dinoz = (expectedDinoz as unknown) as Dinoz;
+		const tempDinoz: Dinoz = expectedDinoz as unknown as Dinoz;
 
 		const expectedDinozFiche: DinozFiche = {
 			id: expectedDinoz.id,
