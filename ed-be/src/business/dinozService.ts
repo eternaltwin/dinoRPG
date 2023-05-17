@@ -51,7 +51,7 @@ import { RewardEnum } from '@drpg/core/models/enums/Parser';
  * @summary Get available action from dinoz
  * @return Array<String>
  */
-function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
+export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	const availableActions: Array<ActionFiche> = [];
 
 	if (dinoz.life === 0) {
