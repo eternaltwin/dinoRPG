@@ -1,5 +1,5 @@
 export enum ItemType {
-	interfaceIC = 'interfaceic',
+	CLASSIC = 'classic',
 	MAGICAL = 'magical',
 	CURSED = 'cursed'
 }
