@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "baseUrl": ".",
     "resolveJsonModule": true,
     "types": ["node", "vite/client"],
@@ -28,12 +28,11 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx",
     "src/**/*.vue",
-    "src/i18n/**/*",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
-    "src/**/*.json"
+    "src/i18n/locales/fr.json",
+    "src/i18n/locales/en.json",
+    "src/i18n/locales/de.json",
+    "src/i18n/locales/es.json"
   ],
   "exclude": [],
   "references": [
