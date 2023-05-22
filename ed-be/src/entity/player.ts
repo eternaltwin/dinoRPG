@@ -9,7 +9,15 @@ import {
 	Relation
 } from 'typeorm';
 import { Ranking } from './ranking.js';
-import { Dinoz, PlayerDinozShop, PlayerIngredient, PlayerItem, PlayerQuest, PlayerReward } from './index.js';
+import {
+	Dinoz,
+	PlayerGather,
+	PlayerDinozShop,
+	PlayerIngredient,
+	PlayerItem,
+	PlayerQuest,
+	PlayerReward
+} from './index.js';
 
 @Entity()
 export class Player {
@@ -43,6 +51,11 @@ export class Player {
 
 	@OneToMany(() => PlayerQuest, dinoz => dinoz.player)
 	quests: Relation<PlayerQuest[]>;
+
+	@OneToMany(() => PlayerGather, gather => gather.player, {
+		cascade: true
+	})
+	gather: Relation<PlayerGather[]>;
 
 	@Column('text', {
 		nullable: true

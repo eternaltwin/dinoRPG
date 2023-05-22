@@ -1,6 +1,7 @@
 import { statusList } from './status.js';
 import { Place } from '@drpg/core/models/place/Place';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
 
 export const placeList: Record<string, Place> = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -14,7 +15,8 @@ export const placeList: Record<string, Place> = {
 		placeId: 1,
 		name: 'port',
 		borderPlace: [7, 10, 11, 13],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		gather: GatherType.FISH
 	},
 	PLACE_DU_MARCHE: {
 		placeId: 2,

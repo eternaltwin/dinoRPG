@@ -26,7 +26,8 @@ export enum ConditionEnum {
 	FINISH_MISSION = 'validate',
 	KILL = 'kill',
 	DO = 'do',
-	HIDE_PLACE = 'hidePlace'
+	HIDE_PLACE = 'hidePlace',
+  PLACE_IS = 'place_is'
 }
 
 export enum TriggerEnum {

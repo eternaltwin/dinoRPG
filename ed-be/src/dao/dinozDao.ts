@@ -80,7 +80,8 @@ export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz> {
 			'dinoz.name',
 			'dinoz.level',
 			'dinoz.placeId',
-			'dinoz.raceId'
+			'dinoz.raceId',
+			'dinoz.canGather'
 		])
 		.addSelect(['player.id'])
 		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
@@ -268,6 +269,18 @@ export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Pro
 
 export async function getDinozTotalCount(): Promise<number> {
 	return dinozRepository.count();
+}
+
+export async function getDinozGatherData(dinozId: number): Promise<Dinoz> {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id', 'dinoz.placeId', 'dinoz.canGather'])
+		.addSelect(['player.id'])
+		.addSelect(['skills.skillId'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.skills', 'skills')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 }
 
 // Setters

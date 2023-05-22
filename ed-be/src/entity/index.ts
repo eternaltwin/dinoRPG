@@ -1,5 +1,6 @@
 export * from './dinoz.js';
 export * from './dinozItem.js';
+export * from './playerGather.js';
 export * from './playerDinozShop.js';
 export * from './playerIngredient.js';
 export * from './playerItem.js';

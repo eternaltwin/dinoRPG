@@ -1,4 +1,5 @@
 export * from './ingredient.js';
+export * from './gather.js';
 export * from './item.js';
 export * from './level.js';
 export * from './place.js';
