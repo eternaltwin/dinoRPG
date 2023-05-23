@@ -237,9 +237,9 @@ export class Dinoz {
 		return Object.values(raceList).find(race => race.raceId === this.raceId)!;
 	}
 
-	  get canChangeSkillState(): boolean {
-    return this.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
-  }
+	get canChangeSkillState(): boolean {
+		return this.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
+	}
 
 	get actualPlace(): Place {
 		return Object.values(placeList).find(place => place.placeId === this.placeId)!;

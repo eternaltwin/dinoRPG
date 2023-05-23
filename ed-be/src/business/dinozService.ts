@@ -174,7 +174,7 @@ export async function getDinozFiche(req: Request): Promise<DinozFiche> {
 	const ret = dinozData.toDinozFiche();
 	// Hack because we cannot put getHUDObjective in Dinoz class
 	ret.missions = getHUDObjective(dinozData);
-  ret.actions = getAvailableActions(dinozData)
+	ret.actions = getAvailableActions(dinozData);
 	return ret;
 }
 
@@ -270,9 +270,9 @@ export async function setDinozName(req: Request): Promise<void> {
 	// Retrieve player from dinozId
 	const dinoz: Dinoz = await getCanDinozChangeName(parseInt(req.params.id));
 
-  if (!dinoz) {
-    throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist`);
-  }
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist`);
+	}
 
 	// If authenticated player is different from player found, throw exception
 	if (dinoz.player.id !== req.user!.playerId) {
@@ -308,9 +308,7 @@ export async function setSkillState(req: Request): Promise<boolean> {
 
 	const dinoz: Dinoz = await getDinozSkillAndStatusRequest(dinozId);
 
-  const skill: DinozSkillFiche | undefined = Object.values(skillList).find(
-    skill => skill.skillId === skillToUpdate
-  );
+	const skill: DinozSkillFiche | undefined = Object.values(skillList).find(skill => skill.skillId === skillToUpdate);
 
 	// Check if skill exist and can be activate/deactivate
 	if (!skill) {
@@ -357,7 +355,7 @@ export async function betaMove(req: Request): Promise<FightResult> {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const actualPlace: Place = dinoz.actualPlace
+	const actualPlace: Place = dinoz.actualPlace;
 	const desiredPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);
 
 	// Check if desired and actual place exist and is adjacent to actual place
