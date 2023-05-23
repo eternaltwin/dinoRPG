@@ -522,6 +522,11 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 
 	const boxToOpen = boxToSanatize as Array<[number, number]>;
 
+  // Check if number of box to open is equal or lower than the number of maximum click
+  if (boxToOpen.length > dinozData.numberOfGatheringClick(gatherPlace)) {
+    throw new ErrorFormator(500, `You have selected too many square`)
+  }
+
 	await updateGrid(playerGrid.id, place.placeId, myGrid.saveGrid(...boxToOpen));
 
 	return myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
