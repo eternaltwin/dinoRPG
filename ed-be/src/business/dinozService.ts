@@ -141,7 +141,9 @@ export async function getDinozFiche(req: Request): Promise<DinozFiche> {
 	// Retrieve player from dinozId
 	const dinozData: Dinoz = await getDinozFicheRequest(dinozId);
 	// If player found is different from player who do the request, throw exception
-	dinozData.belongToPlayer(req.user!.playerId);
+	if (dinozData.player.id !== req.user!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozData.id} doesn't belong to player ${req.user!.playerId}`);
+	}
 
 	//Remove temporary status
 	const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
@@ -155,6 +157,7 @@ export async function getDinozFiche(req: Request): Promise<DinozFiche> {
 	const ret = dinozData.toDinozFiche();
 	// Hack because we cannot put getHUDObjective in Dinoz class
 	ret.missions = getHUDObjective(dinozData);
+  ret.actions = getAvailableActions(dinozData)
 	return ret;
 }
 
@@ -167,7 +170,9 @@ export async function getDinozSkill(req: Request): Promise<Array<DinozSkillFiche
 	const dinozId: number = parseInt(req.params.id);
 	const dinozSkillData: Dinoz = await getDinozSkillRequest(dinozId);
 
-	dinozSkillData.belongToPlayer(req.user!.playerId);
+	if (dinozSkillData.player.id !== req.user!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozSkillData.id} doesn't belong to player ${req.user!.playerId}`);
+	}
 
 	return dinozSkillData.toDinozSkillFiche();
 }
@@ -253,7 +258,9 @@ export async function setDinozName(req: Request): Promise<void> {
   }
 
 	// If authenticated player is different from player found, throw exception
-  dinoz.belongToPlayer(req.user!.playerId)
+	if (dinoz.player.id !== req.user!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	}
 
 	// If player can't change dinoz name, throw exception
 	if (!dinoz.canChangeName) {
@@ -288,16 +295,18 @@ export async function setSkillState(req: Request): Promise<boolean> {
     skill => skill.skillId === skillToUpdate
   );
 
-  // Check if skill exist and can be activate/deactivate
-  if (!skill) {
-    throw new ErrorFormator(500, `Skill ${skillToUpdate} doesn't know exist`);
-  }
-  if (!skill.activatable) {
-    throw new ErrorFormator(500, `Skill ${skillToUpdate} cannot be activated`);
-  }
+	// Check if skill exist and can be activate/deactivate
+	if (!skill) {
+		throw new ErrorFormator(500, `Skill ${skillToUpdate} doesn't know exist`);
+	}
+	if (!skill.activatable) {
+		throw new ErrorFormator(500, `Skill ${skillToUpdate} cannot be activated`);
+	}
 
 	// Check if dinoz belongs to player who do the request
-  dinoz.belongToPlayer(req.user!.playerId)
+	if (dinoz.player.id !== req.user!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	}
 
 	// Check if dinoz can change his skills
 	if (!dinoz.canChangeSkillState) {
@@ -326,8 +335,10 @@ export async function betaMove(req: Request): Promise<FightResult> {
 	const dinoz: Dinoz = await getDinozFightDataRequest(dinozId);
 	let finalPlace: number;
 
-  // Check if dinoz belongs to player who do the request
-  dinoz.belongToPlayer(req.user!.playerId)
+	// Check if dinoz belongs to player who do the request
+	if (dinoz.player.id !== req.user!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	}
 
 	const actualPlace: Place = dinoz.actualPlace
 	const desiredPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);

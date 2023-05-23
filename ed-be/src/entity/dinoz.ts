@@ -17,11 +17,10 @@ import { levelList, placeList, raceList, skillList, statusList } from '../consta
 import gameConfig from '../config/game.config.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { getAvailableActions } from '../business/dinozService.js';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
-import { Place } from "@drpg/core/models/place/Place";
+import { Place } from '@drpg/core/models/place/Place';
 
 @Entity()
 export class Dinoz {
@@ -238,13 +237,13 @@ export class Dinoz {
 		return Object.values(raceList).find(race => race.raceId === this.raceId)!;
 	}
 
-  get canChangeSkillState(): boolean {
+	  get canChangeSkillState(): boolean {
     return this.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
   }
 
-  get actualPlace(): Place {
-    return Object.values(placeList).find(place => place.placeId === this.placeId)!;
-  }
+	get actualPlace(): Place {
+		return Object.values(placeList).find(place => place.placeId === this.placeId)!;
+	}
 
 	public belongToPlayer(playerToTest: number | undefined): void {
 		if (this.player.id !== playerToTest) {
@@ -252,13 +251,13 @@ export class Dinoz {
 		}
 	}
 
-  public canGoThisPlace(place: Place): boolean {
-    return this.status.some(status => status.id === place.conditions)
-  }
+	public canGoThisPlace(place: Place): boolean {
+		return this.status.some(status => status.id === place.conditions);
+	}
 
-  public knowSkillId(skillId: number): boolean {
-    return this.skills.some(skill => skill.skillId === skillId);
-  }
+	public knowSkillId(skillId: number): boolean {
+		return this.skills.some(skill => skill.skillId === skillId);
+	}
 
 	public toDinozFiche(): DinozFiche {
 		return {
@@ -276,9 +275,8 @@ export class Dinoz {
 			experience: this.experience,
 			maxExperience: levelList.find(level => level.id === this.level)!.experience,
 			canGather: this.canGather,
-			race: this.race,
+			race: Object.values(raceList).find(race => race.raceId === this.raceId)!,
 			placeId: this.placeId,
-			actions: getAvailableActions(this),
 			items: this.items.map(item => item.itemId),
 			status: this.status.map(status => status.statusId),
 			borderPlace: Object.values(placeList)
