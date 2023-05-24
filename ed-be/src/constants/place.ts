@@ -16,7 +16,8 @@ export const placeList: Record<string, Place> = {
 		name: 'port',
 		borderPlace: [7, 10, 11, 13],
 		map: MapZone.DINOLAND,
-		gather: GatherType.FISH
+		gather: GatherType.FISH,
+		specialGather: GatherType.ANNIV
 	},
 	PLACE_DU_MARCHE: {
 		placeId: 2,

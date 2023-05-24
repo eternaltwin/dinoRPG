@@ -401,8 +401,8 @@ routes.get(`${commonPath}/dig/:id`, [param('id').exists().toInt().isNumeric()], 
  *         description: Returns a grid.
  */
 routes.get(
-	`${commonPath}/gather/:id`,
-	[param('id').exists().toInt().isNumeric()],
+	`${commonPath}/gather/:id/:type`,
+	[param('id').exists().toInt().isNumeric(), param('type').exists().isString()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -443,7 +443,7 @@ routes.get(
  */
 routes.put(
 	`${commonPath}/gather/:id`,
-	[param('id').exists().toInt().isNumeric(), body('box').exists().toArray()],
+	[param('id').exists().toInt().isNumeric(), body('type').exists().isString(), body('box').exists().toArray()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

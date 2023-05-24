@@ -101,7 +101,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 		ingredientId: 25,
 		maxQuantity: 24 // TODO : Valeur à vérifier
 	},
-	ORCHingredientIdEE_FANTASQUE: {
+	ORCHIDEE_FANTASQUE: {
 		ingredientId: 26,
 		maxQuantity: 6 // TODO : Valeur à vérifier
 	},

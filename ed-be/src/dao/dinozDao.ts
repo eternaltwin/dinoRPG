@@ -277,8 +277,10 @@ export async function getDinozGatherData(dinozId: number): Promise<Dinoz> {
 		.select(['dinoz.id', 'dinoz.placeId', 'dinoz.canGather'])
 		.addSelect(['player.id'])
 		.addSelect(['skills.skillId'])
+		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.skills', 'skills')
+		.leftJoin('player.items', 'playerItems')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
 }

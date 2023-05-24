@@ -8,5 +8,6 @@ export interface Place {
 	conditions?: number;
 	alias?: number;
 	map: MapZone;
-  gather?: GatherType
+  gather?: GatherType;
+  specialGather?: GatherType;
 }

@@ -49,11 +49,17 @@ export function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 			//TODO: Implement scenario
 			result = false;
 			break;
+		case ConditionEnum.POSSESS_OBJECT:
+			result = dinoz.player.items.some(item => item.itemId === condition.value);
+			break;
+		case ConditionEnum.RANDOM:
+			result = true;
+			break;
 		default:
 			break;
 	}
 
-	if (condition.reverse) {
+	if (condition.conditionType !== ConditionEnum.RANDOM && condition.reverse) {
 		result = !result;
 	}
 	return result!;

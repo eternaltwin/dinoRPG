@@ -99,16 +99,6 @@ const getCommonDataRequest = (playerId: number): Promise<Player> => {
 		.getOneOrFail();
 };
 
-const getCommonPlayerGatherInfo = (playerId: number): Promise<Player> => {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id'])
-		.addSelect(['gather.place', 'gather.grid'])
-		.leftJoin('player.gather', 'gather')
-		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
-};
-
 const getAllInformationFromPlayer = (playerId: number): Promise<Player> => {
 	return playerRepository
 		.createQueryBuilder('player')
@@ -302,7 +292,6 @@ export {
 	addPlayerMoney,
 	createPlayer,
 	editCustomText,
-	getCommonPlayerGatherInfo,
 	getAllInformationFromPlayer,
 	getCommonDataRequest,
 	getEternalTwinId,

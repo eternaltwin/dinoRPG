@@ -1243,6 +1243,96 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		maxQuantity: 3,
 		price: 0 // TODO double check
 	},
+	//Used for special gather
+	GOLD100: {
+		itemId: 121,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD500: {
+		itemId: 122,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD1000: {
+		itemId: 123,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD2000: {
+		itemId: 124,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD2500: {
+		itemId: 125,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD3000: {
+		itemId: 126,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD5000: {
+		itemId: 127,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD10000: {
+		itemId: 128,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
+	//Used for special gather
+	GOLD20000: {
+		itemId: 129,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 3,
+		price: 0 // TODO double check
+	},
 	// Empty item
 	EMPTY: {
 		itemId: 998,

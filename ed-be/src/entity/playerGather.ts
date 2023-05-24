@@ -4,6 +4,7 @@ import { GatherData } from '@drpg/core/models/gather/gatherData';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
 import { checkCondition } from '../utils/checkConditions.js';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
 
 @Entity()
 export class PlayerGather {
@@ -20,17 +21,23 @@ export class PlayerGather {
 	})
 	place: number;
 
+	@Column({
+		nullable: false
+	})
+	type: GatherType;
+
 	@Column('int', {
 		nullable: false,
 		array: true
 	})
 	grid: Array<Array<number>>;
 
-	constructor(player: Player, placeId: number, gridInformation: GatherData) {
-		this.player = player;
+	constructor(playerId: number, placeId: number, gridInformation: GatherData, gridId?: number) {
+		this.player = new Player(playerId);
 		this.place = placeId;
+		if (gridId) this.id = gridId;
 		if (!gridInformation) return;
-
+		this.type = gridInformation.type;
 		// Create arry with ingredientId. 0 for no element
 		let grid = new Array(gridInformation.size);
 
@@ -39,7 +46,9 @@ export class PlayerGather {
 		//Generate a list of ingredient
 		gridInformation.items.forEach(ingredient => {
 			let buffer = new Array(ingredient.count);
-			buffer.fill(ingredient.ingredientId);
+			let ingredientId: number = ingredient.ingredientId;
+			if (ingredient.type === 'item') ingredientId += 1000;
+			buffer.fill(ingredientId);
 			placeIngredients.splice(ingredientCount, ingredient.count, ...buffer);
 			ingredientCount += ingredient.count;
 		});
@@ -81,12 +90,13 @@ export class PlayerGather {
 	public discoverBox(dinoz: Dinoz, gridInformation: GatherData, ...box: Array<[number, number]>): GatherResultGrid {
 		let returnGrid = this.getPublicGrid();
 		for (let i = 0; i < box.length; i++) {
-			const ingredientId: number = this.grid[box[i][0]][box[i][1]];
+			let ingredientId: number = this.grid[box[i][0]][box[i][1]];
+			if (ingredientId > 1000) ingredientId -= 1000;
 			const ingredient = gridInformation.items.find(item => item.ingredientId === ingredientId);
 			if (ingredient && ingredient.condition) {
 				returnGrid[box[i][0]][box[i][1]] = checkCondition(ingredient.condition, dinoz) ? ingredient.ingredientId : -1;
 			} else {
-				returnGrid[box[i][0]][box[i][1]] = ingredientId;
+				returnGrid[box[i][0]][box[i][1]] = ingredientId > 0 ? ingredientId : -1;
 			}
 		}
 		return returnGrid;

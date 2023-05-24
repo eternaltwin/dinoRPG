@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
-import { getCommonPlayerGatherInfo, setPlayer, setPlayerMoneyRequest } from '../dao/playerDao.js';
+import { setPlayerMoneyRequest } from '../dao/playerDao.js';
 import {
 	getActiveDinoz,
 	getCanDinozChangeName,
@@ -25,7 +25,7 @@ import {
 	TemporaryStatus
 } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
-import { Dinoz, DinozSkill, Player, PlayerDinozShop, Ranking } from '../entity/index.js';
+import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js';
 import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -51,7 +51,9 @@ import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
-import { updateGrid } from '../dao/playerGatherDao.js';
+import { getCommonGatherInfo, setGrid, updateGrid } from '../dao/playerGatherDao.js';
+import { useItemDataRequest } from '../dao/playerItemDao.js';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
 
 /**
  * @summary Get available action from dinoz
@@ -73,6 +75,17 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	if (dinoz.canGather && dinoz.actualPlace.gather !== undefined) {
 		availableActions.push({
 			name: Object.values(gather).find(grid => grid.type === dinoz.actualPlace.gather)!.action,
+			imgName: 'act_gather'
+		});
+	}
+
+	// Special Gather
+	if (
+		dinoz.actualPlace.specialGather !== undefined &&
+		checkCondition(Object.values(gather).find(grid => grid.type === dinoz.actualPlace.specialGather)!.condition, dinoz)
+	) {
+		availableActions.push({
+			name: Object.values(gather).find(grid => grid.type === dinoz.actualPlace.specialGather)!.action,
 			imgName: 'act_gather'
 		});
 	}
@@ -458,10 +471,20 @@ export async function digWithDinoz(req: Request): Promise<Rewarder> {
 
 export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	const dinozId: number = parseInt(req.params.id);
+	const typeOfGrid: [string, string | GatherType] | undefined = Object.entries(GatherType).find(
+		g => g[1] === req.params.type.toUpperCase()
+	);
+
+	if (!typeOfGrid) {
+		throw new ErrorFormator(500, `This type of grid doesn't exist`);
+	}
+	const idOfTypeOfGrid = parseInt(typeOfGrid[0]);
 	const dinozData: Dinoz = await getDinozGatherData(dinozId);
-	const playerGrid: Player = await getCommonPlayerGatherInfo(dinozData.player.id);
+	const playerGrid: Array<PlayerGather> = await getCommonGatherInfo(dinozData.player.id);
 	const place: Place = dinozData.actualPlace;
-	const gatherPlace: GatherData | undefined = Object.values(gather).find(g => g.type === place.gather);
+	const gatherPlace: GatherData | undefined = Object.values(gather).find(
+		g => g.action === typeOfGrid[1].toString().toLowerCase()
+	);
 
 	if (!dinozData.canGather) {
 		throw new ErrorFormator(500, `Dinoz cannot gather`);
@@ -475,26 +498,43 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
 	}
 
-	let myGrid = playerGrid.gather.find(grid => grid.place === place.placeId) as PlayerGather | undefined;
+	let myGrid = playerGrid.filter(grid => grid.place === place.placeId).find(grid => grid.type === idOfTypeOfGrid) as
+		| PlayerGather
+		| undefined;
 
 	if (!myGrid) {
-		myGrid = new PlayerGather(playerGrid, place.placeId, gatherPlace);
-		playerGrid.gather.push(myGrid);
-		await setPlayer(playerGrid);
+		myGrid = new PlayerGather(req.user!.playerId!, place.placeId, gatherPlace);
+		await setGrid(myGrid);
 	}
-	/*await postGrid('Grille en DB',myGrid.grid)
-  await postGrid('Grille affichée',myGrid.hideIngredients())*/
 
-	return myGrid.hideIngredients();
+	// Generate a new one if all box are empty
+	if (myGrid.grid.every(row => row.every(box => box === -1))) {
+		myGrid = new PlayerGather(req.user!.playerId!, place.placeId, gatherPlace, myGrid.id);
+		await setGrid(myGrid);
+	}
+
+	return myGrid!.hideIngredients();
 }
 
 export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 	const dinozId: number = parseInt(req.params.id);
+	const typeOfGrid: [string, string | GatherType] | undefined = Object.entries(GatherType).find(
+		g => g[1] === req.body.type.toUpperCase()
+	);
+
+	if (!typeOfGrid) {
+		throw new ErrorFormator(500, `This type of grid doesn't exist`);
+	}
+	const idOfTypeOfGrid = parseInt(typeOfGrid[0]);
 	const dinozData: Dinoz = await getDinozGatherData(dinozId);
-	const playerGrid: Player = await getCommonPlayerGatherInfo(dinozData.player.id);
+	const playerGrid: Array<PlayerGather> = await getCommonGatherInfo(dinozData.player.id);
 	const place: Place = dinozData.actualPlace;
 	const gatherPlace: GatherData | undefined = Object.values(gather).find(g => g.type === place.gather);
-	let myGrid = playerGrid.gather.find(grid => grid.place === place.placeId) as PlayerGather;
+	let myGrid = playerGrid.filter(grid => grid.place === place.placeId).find(grid => grid.type === idOfTypeOfGrid) as
+		| PlayerGather
+		| undefined;
+
+	console.log(myGrid);
 
 	if (!dinozData.canGather) {
 		throw new ErrorFormator(500, `Dinoz cannot gather`);
@@ -502,6 +542,10 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 
 	if (!gatherPlace) {
 		throw new ErrorFormator(500, `Dinoz cannot gather at this place`);
+	}
+
+	if (!myGrid) {
+		throw new ErrorFormator(500, `You don't have generated any grid.`);
 	}
 
 	if (!checkCondition(gatherPlace.condition, dinozData)) {
@@ -522,12 +566,18 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 
 	const boxToOpen = boxToSanatize as Array<[number, number]>;
 
-  // Check if number of box to open is equal or lower than the number of maximum click
-  if (boxToOpen.length > dinozData.numberOfGatheringClick(gatherPlace)) {
-    throw new ErrorFormator(500, `You have selected too many square`)
-  }
+	// Check if number of box to open is equal or lower than the number of maximum click
+	if (boxToOpen.length > dinozData.numberOfGatheringClick(gatherPlace)) {
+		throw new ErrorFormator(500, `You have selected too many square`);
+	}
 
-	await updateGrid(playerGrid.id, place.placeId, myGrid.saveGrid(...boxToOpen));
+	const returnGrid = myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
+	await updateGrid(myGrid.player.id, place.placeId, idOfTypeOfGrid, myGrid.saveGrid(...boxToOpen));
 
-	return myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
+	// Consume token if it's a special gather
+	if (gatherPlace.special) {
+		await useItemDataRequest(dinozData.player.id, gatherPlace.cost.itemId);
+	}
+
+	return returnGrid;
 }
