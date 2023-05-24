@@ -20,4 +20,10 @@ export class PlayerItem {
 		nullable: false
 	})
 	quantity: number;
+
+	constructor(player: Player, itemId: number, quantity: number) {
+		this.player = player;
+		this.itemId = itemId;
+		this.quantity = quantity;
+	}
 }

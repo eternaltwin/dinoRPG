@@ -158,11 +158,7 @@ export async function buyItem(req: Request): Promise<void> {
 	}
 	// Else create it
 	else {
-		const newItem = new PlayerItem();
-		newItem.player = playerShopData;
-		newItem.itemId = itemToBuy.itemId!;
-		newItem.quantity = itemToBuy.quantity!;
-		await createItemDataRequest(newItem);
+		await createItemDataRequest(new PlayerItem(playerShopData, itemToBuy.itemId!, itemToBuy.quantity!));
 	}
 }
 

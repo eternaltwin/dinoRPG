@@ -5,6 +5,8 @@ import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
 import { checkCondition } from '../utils/checkConditions.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { GatherRewards } from '@drpg/core/models/gather/gatherRewards';
+import { ingredientList, itemList } from '../constants/index.js';
 
 @Entity()
 export class PlayerGather {
@@ -81,24 +83,42 @@ export class PlayerGather {
 		return this.grid.map(row => row.map(ingredient => (ingredient >= 0 ? 0 : -1)));
 	}
 
-	public saveGrid(...box: Array<[number, number]>): Array<Array<number>> {
-		for (let i = 0; i < box.length; i++) {
-			this.grid[box[i][0]][box[i][1]] = -1;
-		}
-		return this.grid;
-	}
-	public discoverBox(dinoz: Dinoz, gridInformation: GatherData, ...box: Array<[number, number]>): GatherResultGrid {
+	public discoverBox(
+		dinoz: Dinoz,
+		gridInformation: GatherData,
+		...box: Array<[number, number]>
+	): { grid: GatherResultGrid; rewards: GatherRewards } {
 		let returnGrid = this.getPublicGrid();
+		let rewards: GatherRewards = { item: [], ingredients: [] };
 		for (let i = 0; i < box.length; i++) {
 			let ingredientId: number = this.grid[box[i][0]][box[i][1]];
-			if (ingredientId > 1000) ingredientId -= 1000;
+			let itemCheck = false;
+			if (ingredientId > 1000) {
+				ingredientId -= 1000;
+				itemCheck = true;
+			}
 			const ingredient = gridInformation.items.find(item => item.ingredientId === ingredientId);
 			if (ingredient && ingredient.condition) {
 				returnGrid[box[i][0]][box[i][1]] = checkCondition(ingredient.condition, dinoz) ? ingredient.ingredientId : -1;
 			} else {
 				returnGrid[box[i][0]][box[i][1]] = ingredientId > 0 ? ingredientId : -1;
 			}
+
+			if (itemCheck) {
+				const item = Object.values(itemList).find(items => items.itemId === ingredientId);
+				item ? rewards.item.push(item) : 0;
+			} else {
+				const ingredient = Object.values(ingredientList).find(ingredients => ingredients.ingredientId === ingredientId);
+				ingredient ? rewards.ingredients.push(ingredient) : 0;
+			}
 		}
-		return returnGrid;
+		return { grid: returnGrid, rewards: rewards };
+	}
+
+	public saveGrid(...box: Array<[number, number]>): Array<Array<number>> {
+		for (let i = 0; i < box.length; i++) {
+			this.grid[box[i][0]][box[i][1]] = -1;
+		}
+		return this.grid;
 	}
 }

@@ -43,11 +43,7 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 			if (playerItemData) {
 				await changeItemQuantity(dinoz.player.id, itemRewarded.itemId, reward.quantity);
 			} else {
-				const newItem = new PlayerItem();
-				newItem.player = playerShopData;
-				newItem.itemId = itemRewarded.itemId!;
-				newItem.quantity = reward.quantity;
-				await createItemDataRequest(newItem);
+				await createItemDataRequest(new PlayerItem(playerShopData, itemRewarded.itemId!, reward.quantity));
 			}
 		} else if (reward.rewardType === RewardEnum.EPIC) {
 			const testRewards = await getPlayerRewardsRequest(dinoz.player.id);

@@ -25,7 +25,7 @@ import {
 	TemporaryStatus
 } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
-import { Dinoz, DinozSkill, PlayerDinozShop, Ranking } from '../entity/index.js';
+import { Dinoz, DinozSkill, PlayerDinozShop, PlayerIngredient, PlayerItem, Ranking } from '../entity/index.js';
 import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -52,8 +52,9 @@ import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
 import { getCommonGatherInfo, setGrid, updateGrid } from '../dao/playerGatherDao.js';
-import { useItemDataRequest } from '../dao/playerItemDao.js';
+import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { addIngredient, createIngredient } from '../dao/playerIngredientDao.js';
 
 /**
  * @summary Get available action from dinoz
@@ -534,8 +535,6 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 		| PlayerGather
 		| undefined;
 
-	console.log(myGrid);
-
 	if (!dinozData.canGather) {
 		throw new ErrorFormator(500, `Dinoz cannot gather`);
 	}
@@ -573,11 +572,27 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 
 	const returnGrid = myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
 	await updateGrid(myGrid.player.id, place.placeId, idOfTypeOfGrid, myGrid.saveGrid(...boxToOpen));
+	for (const i of returnGrid.rewards.item) {
+		if (dinozData.player.items.find(items => items.itemId === i.itemId)) {
+			await changeItemQuantity(req.user?.playerId!, i.itemId, 1);
+		} else {
+			dinozData.player.items.push(await createItemDataRequest(new PlayerItem(dinozData.player, i.itemId, 1)));
+		}
+	}
+	for (const i of returnGrid.rewards.ingredients) {
+		if (dinozData.player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId)) {
+			await addIngredient(req.user?.playerId!, i.ingredientId, 1);
+		} else {
+			dinozData.player.ingredients.push(
+				await createIngredient(new PlayerIngredient(dinozData.player, i.ingredientId, 1))
+			);
+		}
+	}
 
 	// Consume token if it's a special gather
 	if (gatherPlace.special) {
 		await useItemDataRequest(dinozData.player.id, gatherPlace.cost.itemId);
 	}
 
-	return returnGrid;
+	return returnGrid.grid;
 }

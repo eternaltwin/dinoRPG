@@ -281,6 +281,7 @@ export async function getDinozGatherData(dinozId: number): Promise<Dinoz> {
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('player.items', 'playerItems')
+		.leftJoinAndSelect('player.ingredients', 'ingredient')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
 }
