@@ -50,7 +50,7 @@ export function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 			result = false;
 			break;
 		case ConditionEnum.POSSESS_OBJECT:
-			result = dinoz.player.items.some(item => item.itemId === condition.value);
+			result = (dinoz.player.items.find(item => item.itemId === condition.value)?.quantity ?? 0) > 0;
 			break;
 		case ConditionEnum.RANDOM:
 			result = true;

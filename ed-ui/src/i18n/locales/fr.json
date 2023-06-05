@@ -1792,7 +1792,13 @@
     "npc": "Dino-RPG [ Personnage : ",
     "missions": "Dino-RPG [ Liste des Missions ]",
     "dinozNaming": "Dino-RPG [ Choix du Nom ]",
-    "fight": "Dino-RPG [ Combat ! ]"
+    "fight": "Dino-RPG [ Combat ! ]",
+    "gather": "Dino-RPG [ "
+  },
+  "gather": {
+    "action": {
+      "fish": "Pêcher"
+    }
   },
   "missions": {
     "header": "Liste des Missions",

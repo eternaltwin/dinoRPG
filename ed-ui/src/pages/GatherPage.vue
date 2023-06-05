@@ -1,0 +1,191 @@
+<template>
+	<TitleHeader :title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`" />
+	<div style="width: auto">
+		<div class="section">
+			<div class="titlePage">
+				<h3>{{ $t(`gather.action.${gatherType}`) }}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="disclaimer">
+		{{ $t('levelup.disclaimer') }}
+	</div>
+	<div
+		v-if="loaded"
+		class="grid"
+		:style="{
+			background: `url(${getImgURL('gather/background', gatherType)})`,
+			height: `${grid.grid.length * 34}px`,
+			width: `${grid.grid.length * 34}px`
+		}"
+	>
+		<div
+			class="overlay"
+			:style="{
+				background: `url(${getImgURL('gather/overlay', gatherType)})`,
+				backgroundSize: 'contain',
+				height: `${grid.grid.length * 34}px`,
+				width: `${grid.grid.length * 34}px`
+			}"
+		/>
+		<div class="row" v-for="(row, rowNumber) in grid.grid" :key="row">
+			<div
+				class="box"
+				v-for="(box, boxNumber) in row"
+				:key="box"
+				@click="selectBox(rowNumber, boxNumber)"
+				:class="{
+					selected: isSelected(rowNumber, boxNumber),
+					light: (rowNumber + (boxNumber % 2)) % 2 > 0,
+					dark: (rowNumber + (boxNumber % 2)) % 2 === 0,
+					isOpen: box === -1
+				}"
+			>
+				{{ grid.gatherTurn }}
+			</div>
+		</div>
+	</div>
+</template>
+
+<script lang="ts">
+import { defineAsyncComponent, defineComponent } from 'vue';
+import EventBus from '../events/index.js';
+import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
+import { DinozService } from '../services/index.js';
+import { errorHandler } from '../utils/index.js';
+
+export default defineComponent({
+	name: 'GatherPage',
+	components: {
+		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
+	},
+	data() {
+		return {
+			grid: undefined as GatherPublicGrid,
+			loaded: false as boolean,
+			clickedBox: [] as Array<Array<number>>,
+			gatherOver: false as boolean
+		};
+	},
+	methods: {
+		async selectBox(row: number, box: number): Promise<void> {
+			if (this.gatherOver) return;
+			const isNotDiscover = this.grid.grid[row][box] === 0;
+			const toPush = [row, box];
+			const isInArray = this.clickedBox.some(a => a.every((val, index) => val === toPush[index]));
+			if (isNotDiscover && !isInArray) {
+				this.clickedBox.push(toPush);
+				this.grid.gatherTurn--;
+			}
+			if (this.grid.gatherTurn <= 0) {
+				this.grid.grid = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				this.gatherOver = true;
+			}
+			if (
+				this.grid.grid.reduce((partSum, b) => b.reduce((partialSum, a) => partialSum + a, 0) + partSum, 0) +
+					this.grid.grid[0].length * this.grid.grid[0].length -
+					this.grid.gatherTurn <
+				this.grid.gatherTurn
+			) {
+				this.grid.grid = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				this.gatherOver = true;
+			}
+		},
+		isSelected(row: number, box: number): boolean {
+			const toTest = [row, box];
+			return this.clickedBox.some(a => a.every((val, index) => val === toTest[index]));
+		}
+	},
+	computed: {
+		gatherType(): string {
+			return this.$route.params.type.toString();
+		},
+		dinozId(): number {
+			return parseInt(this.$route.params.dinozId as string);
+		}
+	},
+	async created(): Promise<void> {
+		EventBus.emit('isLoading', true);
+		try {
+			this.grid = await DinozService.getGatherGrid(this.dinozId, this.gatherType);
+			this.loaded = true;
+			EventBus.emit('isLoading', false);
+		} catch (err) {
+			errorHandler.handle(err);
+			return;
+		}
+	}
+});
+</script>
+
+<style lang="scss" scoped>
+.overlay {
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	pointer-events: none;
+	opacity: 30%;
+}
+.disclaimer {
+	border-radius: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 5px 5px 5px 20px;
+	color: #fce3bc;
+	font-size: 10pt;
+	background-color: #bc683c;
+	background-position: 5px 8px;
+	background-repeat: no-repeat;
+}
+.grid {
+	font-size: 0;
+	overflow: hidden;
+	position: relative;
+	margin-top: 24px;
+	margin-left: 14px;
+	border: 10px solid transparent;
+	border-image: url('../assets/gather/border.webp') 30 stretch;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+}
+.box {
+	background: #cb914b;
+	box-shadow: 0 4px 0 #720d00;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-block;
+	height: 34px;
+	width: 34px;
+	&:not(.open):hover {
+		border: 1px solid #994400;
+		box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
+		font-size: initial;
+		text-align: center;
+		padding-top: 7px;
+		padding-left: 2px;
+		color: white;
+		text-shadow: rgb(188, 104, 60) 1px 0 0, rgb(188, 104, 60) 0.540302px 0.841471px 0,
+			rgb(188, 104, 60) -0.416147px 0.909297px 0, rgb(188, 104, 60) -0.989993px 0.14112px 0,
+			rgb(188, 104, 60) -0.653644px -0.756803px 0, rgb(188, 104, 60) 0.283662px -0.958924px 0,
+			rgb(188, 104, 60) 0.96017px -0.279416px 0;
+	}
+}
+.selected {
+	border: 1px solid #ffee92 !important;
+}
+.light {
+	background: url('../assets/gather/light.webp');
+	background-size: cover;
+}
+.dark {
+	background: url('../assets/gather/dark.webp');
+	background-size: cover;
+}
+.isOpen {
+	background: none;
+	box-shadow: none;
+	pointer-events: none;
+}
+</style>

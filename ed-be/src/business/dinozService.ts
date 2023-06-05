@@ -514,7 +514,10 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 		await setGrid(myGrid);
 	}
 
-	return myGrid!.hideIngredients();
+	return {
+		grid: myGrid!.hideIngredients(),
+		gatherTurn: dinozData.numberOfGatheringClick(gatherPlace)
+	};
 }
 
 export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
@@ -530,7 +533,9 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 	const dinozData: Dinoz = await getDinozGatherData(dinozId);
 	const playerGrid: Array<PlayerGather> = await getCommonGatherInfo(dinozData.player.id);
 	const place: Place = dinozData.actualPlace;
-	const gatherPlace: GatherData | undefined = Object.values(gather).find(g => g.type === place.gather);
+	const gatherPlace: GatherData | undefined = Object.values(gather).find(
+		g => g.action === typeOfGrid[1].toString().toLowerCase()
+	);
 	let myGrid = playerGrid.filter(grid => grid.place === place.placeId).find(grid => grid.type === idOfTypeOfGrid) as
 		| PlayerGather
 		| undefined;

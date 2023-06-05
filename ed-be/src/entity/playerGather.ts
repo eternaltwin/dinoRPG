@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from 'typeorm';
 import { Dinoz, Player } from './index.js';
 import { GatherData } from '@drpg/core/models/gather/gatherData';
-import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
 import { checkCondition } from '../utils/checkConditions.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
@@ -73,7 +72,7 @@ export class PlayerGather {
 
 		this.grid = grid;
 	}
-	public hideIngredients(): GatherPublicGrid {
+	public hideIngredients(): Array<Array<-1 | 0>> {
 		// -1 for already used box
 		// 0 for not discovered box
 		return this.grid.map(row => row.map(ingredient => (ingredient >= 0 ? 0 : -1)));

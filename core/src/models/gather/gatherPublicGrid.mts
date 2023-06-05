@@ -1,1 +1,4 @@
-export type GatherPublicGrid = Array<Array<-1|0>>
+export type GatherPublicGrid = {
+  grid: Array<Array<-1|0>>;
+  gatherTurn: number;
+}
