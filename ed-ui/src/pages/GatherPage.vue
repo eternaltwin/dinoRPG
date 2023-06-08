@@ -11,37 +11,30 @@
 		{{ $t('levelup.disclaimer') }}
 	</div>
 	<div
+		class="container"
 		v-if="loaded"
-		class="grid"
 		:style="{
-			background: `url(${getImgURL('gather/background', gatherType)})`,
 			height: `${grid.grid.length * 34}px`,
 			width: `${grid.grid.length * 34}px`
 		}"
 	>
-		<div
-			class="overlay"
-			:style="{
-				background: `url(${getImgURL('gather/overlay', gatherType)})`,
-				backgroundSize: 'contain',
-				height: `${grid.grid.length * 34}px`,
-				width: `${grid.grid.length * 34}px`
-			}"
-		/>
-		<div class="row" v-for="(row, rowNumber) in grid.grid" :key="row">
-			<div
-				class="box"
-				v-for="(box, boxNumber) in row"
-				:key="box"
-				@click="selectBox(rowNumber, boxNumber)"
-				:class="{
-					selected: isSelected(rowNumber, boxNumber),
-					light: (rowNumber + (boxNumber % 2)) % 2 > 0,
-					dark: (rowNumber + (boxNumber % 2)) % 2 === 0,
-					isOpen: box === -1
-				}"
-			>
-				{{ grid.gatherTurn }}
+		<img class="bgimg" :src="getImgURL('gather/background', gatherType)" />
+		<div class="grid">
+			<div class="row" v-for="(row, rowNumber) in grid.grid" :key="row">
+				<div
+					v-for="(box, boxNumber) in row"
+					:key="box"
+					@click="selectBox(rowNumber, boxNumber)"
+					:class="[
+						{
+							selected: isSelected(rowNumber, boxNumber),
+							open: box === -1
+						},
+						gatherType
+					]"
+				>
+					{{ grid.gatherTurn }}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -119,13 +112,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.overlay {
-	z-index: 1;
-	position: absolute;
-	top: 0;
-	pointer-events: none;
-	opacity: 30%;
-}
 .disclaimer {
 	border-radius: 5px;
 	margin-top: 10px;
@@ -137,55 +123,121 @@ export default defineComponent({
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
 }
+.bgimg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
 .grid {
-	font-size: 0;
-	overflow: hidden;
 	position: relative;
-	margin-top: 24px;
-	margin-left: 14px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	box-shadow: inset 0 4px 0 #720d00;
+}
+.container {
+	position: relative;
+	margin: 15px;
+	overflow: hidden;
 	border: 10px solid transparent;
 	border-image: url('../assets/gather/border.webp') 30 stretch;
 }
+
 .row {
 	display: flex;
 	flex-direction: row;
+	flex-grow: 1;
+
+	// TILES DESIGN
+	div {
+		color: transparent;
+		flex-grow: 1;
+
+		background-size: cover, 204px;
+		box-shadow: 0 4px 0 #720d00;
+		//box-shadow: 0 4px 0 #720d00;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: inline-block;
+		height: 34px;
+		width: 34px;
+
+		&:hover {
+			outline: 1px solid #994400;
+			box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
+		}
+
+		&:active,
+		&.open {
+			visibility: hidden;
+		}
+		&:not(.open):hover {
+			border: 1px solid #994400;
+			box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
+			font-size: initial;
+			text-align: center;
+			padding-top: 7px;
+			padding-left: 2px;
+			color: white;
+			text-shadow: rgb(188, 104, 60) 1px 0 0, rgb(188, 104, 60) 0.540302px 0.841471px 0,
+				rgb(188, 104, 60) -0.416147px 0.909297px 0, rgb(188, 104, 60) -0.989993px 0.14112px 0,
+				rgb(188, 104, 60) -0.653644px -0.756803px 0, rgb(188, 104, 60) 0.283662px -0.958924px 0,
+				rgb(188, 104, 60) 0.96017px -0.279416px 0;
+		}
+		.overlay {
+			background-image: linear-gradient(to right, RGBA(203, 145, 75, 0.7), RGBA(203, 145, 75, 0.7)),
+				// alpha gradient to add transparency to the bg-image underneath
+				url('../assets/gather/overlay/fish.webp');
+		}
+	}
 }
-.box {
-	background: #cb914b;
-	box-shadow: 0 4px 0 #720d00;
-	box-sizing: border-box;
-	cursor: pointer;
-	display: inline-block;
-	height: 34px;
-	width: 34px;
-	&:not(.open):hover {
-		border: 1px solid #994400;
-		box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
-		font-size: initial;
-		text-align: center;
-		padding-top: 7px;
-		padding-left: 2px;
-		color: white;
-		text-shadow: rgb(188, 104, 60) 1px 0 0, rgb(188, 104, 60) 0.540302px 0.841471px 0,
-			rgb(188, 104, 60) -0.416147px 0.909297px 0, rgb(188, 104, 60) -0.989993px 0.14112px 0,
-			rgb(188, 104, 60) -0.653644px -0.756803px 0, rgb(188, 104, 60) 0.283662px -0.958924px 0,
-			rgb(188, 104, 60) 0.96017px -0.279416px 0;
+
+// ATLERNING TILE COLOR
+.row:nth-child(odd) div:nth-child(even),
+.row:nth-child(even) div:nth-child(odd) {
+	background-image: url('../assets/gather/light.webp');
+	background-size: cover;
+}
+.row:nth-child(odd) div:nth-child(odd),
+.row:nth-child(even) div:nth-child(even) {
+	background-image: url('../assets/gather/dark.webp');
+	background-size: cover;
+}
+
+// TILES BG POSITION - INDEXED TO TILE SIZE: 34px (will break if tiles are not exactly this size, not currently applied)
+.fish::after {
+	background-image: url('../assets/gather/overlay/fish.webp');
+	background-size: 238px;
+}
+
+.anniv::after {
+	background-image: url('../assets/gather/overlay/anniv.webp');
+	background-size: 340px;
+}
+
+// BG Y OFFSET
+@for $i from 1 through 12 {
+	.row:nth-child(#{$i}) .overlay::after {
+		margin-top: -18px;
+		content: '';
+		background-position-y: ($i - 1) * -34px;
+		opacity: 30%;
+		width: 34px;
+		height: 34px;
+		display: block;
+	}
+}
+
+// BG X OFFSET
+@for $i from 1 through 12 {
+	.row div:nth-child(#{$i}).overlay::after {
+		background-position-x: ($i - 1) * -34px;
 	}
 }
 .selected {
 	border: 1px solid #ffee92 !important;
-}
-.light {
-	background: url('../assets/gather/light.webp');
-	background-size: cover;
-}
-.dark {
-	background: url('../assets/gather/dark.webp');
-	background-size: cover;
-}
-.isOpen {
-	background: none;
-	box-shadow: none;
-	pointer-events: none;
 }
 </style>
