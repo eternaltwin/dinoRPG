@@ -3,10 +3,12 @@ import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	MEROU_LUJIDANE: {
 		ingredientId: 1,
+    name: 'merou_lujidane',
 		maxQuantity: 60 // TODO : Valeur à vérifier
 	},
 	POISSON_VENGEUR: {
 		ingredientId: 2,
+    name: 'poisson_vengeur',
 		maxQuantity: 24 // TODO : Valeur à vérifier
 	},
 	AN_GUILI_GUILILLE: {
@@ -15,6 +17,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	},
 	GLOBULOS: {
 		ingredientId: 4,
+    name: 'globulos',
 		maxQuantity: 6 // TODO : Valeur à vérifier
 	},
 	SUPER_POISSON: {
@@ -119,6 +122,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	},
 	SPORE_ETHERAL: {
 		ingredientId: 30,
+    name: 'spore_etheral',
 		maxQuantity: 24 // TODO : Valeur à vérifier
 	},
 	POUSSE_SOMBRE: {

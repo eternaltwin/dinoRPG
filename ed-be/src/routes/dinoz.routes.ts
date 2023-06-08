@@ -20,7 +20,7 @@ import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
-import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
+import { GatherResult } from "@drpg/core/models/gather/gatherResult";
 
 const routes: Router = Router();
 
@@ -450,7 +450,7 @@ routes.put(
 		}
 
 		try {
-			const response: GatherResultGrid = await gatherWithDinoz(req);
+			const response: GatherResult = await gatherWithDinoz(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

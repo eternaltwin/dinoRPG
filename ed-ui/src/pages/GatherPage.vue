@@ -32,11 +32,13 @@
 						},
 						gatherType
 					]"
+					class="overlay"
 				>
 					{{ grid.gatherTurn }}
 				</div>
 			</div>
 		</div>
+		<GatherRewardModal v-if="gatherOver" :rewards="gatherResult.rewards" @close="returnToDinoz()" />
 	</div>
 </template>
 
@@ -46,10 +48,13 @@ import EventBus from '../events/index.js';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
+import { GatherResult } from '@drpg/core/models/gather/gatherResult';
+import GatherRewardModal from '../components/modal/GatherRewardModal.vue';
 
 export default defineComponent({
 	name: 'GatherPage',
 	components: {
+		GatherRewardModal,
 		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
 	},
 	data() {
@@ -57,10 +62,14 @@ export default defineComponent({
 			grid: undefined as GatherPublicGrid,
 			loaded: false as boolean,
 			clickedBox: [] as Array<Array<number>>,
-			gatherOver: false as boolean
+			gatherOver: false as boolean,
+			gatherResult: undefined as GatherResult
 		};
 	},
 	methods: {
+		returnToDinoz() {
+			this.$router.go(-1);
+		},
 		async selectBox(row: number, box: number): Promise<void> {
 			if (this.gatherOver) return;
 			const isNotDiscover = this.grid.grid[row][box] === 0;
@@ -71,7 +80,8 @@ export default defineComponent({
 				this.grid.gatherTurn--;
 			}
 			if (this.grid.gatherTurn <= 0) {
-				this.grid.grid = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
 			}
 			if (
@@ -80,7 +90,8 @@ export default defineComponent({
 					this.grid.gatherTurn <
 				this.grid.gatherTurn
 			) {
-				this.grid.grid = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
 			}
 		},
@@ -170,7 +181,6 @@ export default defineComponent({
 			box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
 		}
 
-		&:active,
 		&.open {
 			visibility: hidden;
 		}
@@ -186,11 +196,6 @@ export default defineComponent({
 				rgb(188, 104, 60) -0.416147px 0.909297px 0, rgb(188, 104, 60) -0.989993px 0.14112px 0,
 				rgb(188, 104, 60) -0.653644px -0.756803px 0, rgb(188, 104, 60) 0.283662px -0.958924px 0,
 				rgb(188, 104, 60) 0.96017px -0.279416px 0;
-		}
-		.overlay {
-			background-image: linear-gradient(to right, RGBA(203, 145, 75, 0.7), RGBA(203, 145, 75, 0.7)),
-				// alpha gradient to add transparency to the bg-image underneath
-				url('../assets/gather/overlay/fish.webp');
 		}
 	}
 }

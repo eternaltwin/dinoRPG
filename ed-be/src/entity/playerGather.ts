@@ -96,12 +96,8 @@ export class PlayerGather {
 				ingredientId -= 1000;
 				itemCheck = true;
 			}
-			const ingredient = gridInformation.items.find(item => item.ingredientId === ingredientId);
-			if (ingredient && ingredient.condition) {
-				returnGrid[box[i][0]][box[i][1]] = checkCondition(ingredient.condition, dinoz) ? ingredient.ingredientId : -1;
-			} else {
-				returnGrid[box[i][0]][box[i][1]] = ingredientId > 0 ? ingredientId : -1;
-			}
+
+      returnGrid[box[i][0]][box[i][1]] = -1;
 
 			if (itemCheck) {
 				const item = Object.values(itemList).find(items => items.itemId === ingredientId);

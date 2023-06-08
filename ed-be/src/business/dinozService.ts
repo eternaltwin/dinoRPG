@@ -55,6 +55,7 @@ import { getCommonGatherInfo, setGrid, updateGrid } from '../dao/playerGatherDao
 import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { addIngredient, createIngredient } from '../dao/playerIngredientDao.js';
+import { GatherResult } from "@drpg/core/models/gather/gatherResult";
 
 /**
  * @summary Get available action from dinoz
@@ -520,7 +521,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	};
 }
 
-export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
+export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	const dinozId: number = parseInt(req.params.id);
 	const typeOfGrid: [string, string | GatherType] | undefined = Object.entries(GatherType).find(
 		g => g[1] === req.body.type.toUpperCase()
@@ -575,7 +576,7 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 		throw new ErrorFormator(500, `You have selected too many square`);
 	}
 
-	const returnGrid = myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
+	const returnGrid: GatherResult = myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
 	await updateGrid(myGrid.player.id, place.placeId, idOfTypeOfGrid, myGrid.saveGrid(...boxToOpen));
 	for (const i of returnGrid.rewards.item) {
 		if (dinozData.player.items.find(items => items.itemId === i.itemId)) {
@@ -599,5 +600,5 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResultGrid> {
 		await useItemDataRequest(dinozData.player.id, gatherPlace.cost.itemId);
 	}
 
-	return returnGrid.grid;
+	return returnGrid;
 }

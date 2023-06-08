@@ -6,7 +6,7 @@ import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
-import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
+import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {
@@ -84,7 +84,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	gatherWithDinoz(dinozId: number, gridType: GatherType, box: Array<Array<number>>): Promise<GatherResultGrid> {
+	gatherWithDinoz(dinozId: number, gridType: GatherType, box: Array<Array<number>>): Promise<GatherResult> {
 		return http()
 			.put(`/dinoz/gather/${dinozId}`, {
 				type: gridType,
