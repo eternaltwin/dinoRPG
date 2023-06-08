@@ -166,15 +166,22 @@ export default defineComponent({
 	div {
 		color: transparent;
 		flex-grow: 1;
-
-		background-size: cover, 204px;
+		background-size: cover;
 		box-shadow: 0 4px 0 #720d00;
-		//box-shadow: 0 4px 0 #720d00;
 		box-sizing: border-box;
 		cursor: pointer;
 		display: inline-block;
 		height: 34px;
 		width: 34px;
+
+		&::after { // creates a pseudo-element to display the bg-images
+			content: '';
+			display: block;
+			opacity: 30%;
+			margin-top: -18px;
+			width: 34px;
+			height: 34px;
+		}
 
 		&:hover {
 			outline: 1px solid #994400;
@@ -204,15 +211,13 @@ export default defineComponent({
 .row:nth-child(odd) div:nth-child(even),
 .row:nth-child(even) div:nth-child(odd) {
 	background-image: url('../assets/gather/light.webp');
-	background-size: cover;
 }
 .row:nth-child(odd) div:nth-child(odd),
 .row:nth-child(even) div:nth-child(even) {
 	background-image: url('../assets/gather/dark.webp');
-	background-size: cover;
 }
 
-// TILES BG POSITION - INDEXED TO TILE SIZE: 34px (will break if tiles are not exactly this size, not currently applied)
+
 .fish::after {
 	background-image: url('../assets/gather/overlay/fish.webp');
 	background-size: 238px;
@@ -223,16 +228,11 @@ export default defineComponent({
 	background-size: 340px;
 }
 
+// TILES BG POSITION - INDEXED TO TILE SIZE: 34px (will break if tiles are not exactly this size)
 // BG Y OFFSET
 @for $i from 1 through 12 {
 	.row:nth-child(#{$i}) .overlay::after {
-		margin-top: -18px;
-		content: '';
 		background-position-y: ($i - 1) * -34px;
-		opacity: 30%;
-		width: 34px;
-		height: 34px;
-		display: block;
 	}
 }
 
