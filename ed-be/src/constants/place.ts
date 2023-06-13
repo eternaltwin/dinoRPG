@@ -29,37 +29,43 @@ export const placeList: Record<string, Place> = {
 		placeId: 3,
 		name: 'papy',
 		borderPlace: [4, 6, 7],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		gather: GatherType.HUNT
 	},
 	FORCEBRUT: {
 		placeId: 4,
 		name: 'forcebrut',
 		borderPlace: [2, 3, 7],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		gather: GatherType.ENERGY1
 	},
 	DINOVILLE: {
 		placeId: 5,
 		name: 'dnv',
 		borderPlace: [6, 7, 12],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		gather: GatherType.SEEK
 	},
 	UNIVERSITE: {
 		placeId: 6,
 		name: 'universite',
 		borderPlace: [3, 5, 8],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		gather: GatherType.CUEILLE1
 	},
 	FOUTAINE_DE_JOUVENCE: {
 		placeId: 7,
 		name: 'fountj',
 		borderPlace: [1, 3, 4, 5],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		gather: GatherType.CUEILLE1
 	},
 	COLLINES_ESCARPEES: {
 		placeId: 8,
 		name: 'colesc',
 		borderPlace: [6, 9],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		gather: GatherType.HUNT
 	},
 	GO_TO_GRAND_TOUT_CHAUD: {
 		placeId: 9,
@@ -104,25 +110,29 @@ export const placeList: Record<string, Place> = {
 		placeId: 14,
 		name: 'auree',
 		borderPlace: [15, 23],
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		gather: GatherType.CUEILLE1
 	},
 	CHEMIN_GLAUQUE: {
 		placeId: 15,
 		name: 'chemin',
 		borderPlace: [14, 16, 17],
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		gather: GatherType.CUEILLE1
 	},
 	COLLINES_HANTEES: {
 		placeId: 16,
 		name: 'collin',
 		borderPlace: [15, 17],
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		gather: GatherType.SEEK
 	},
 	FLEUVE_JUMIN: {
 		placeId: 17,
 		name: 'fleuve',
 		borderPlace: [15, 16, 19, 18],
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		gather: GatherType.FISH
 	},
 	FLEUVE_JUMIN_BIS: {
 		placeId: 102,
@@ -137,20 +147,23 @@ export const placeList: Record<string, Place> = {
 		name: 'camp',
 		borderPlace: [22, 102],
 		conditions: statusList.FLIPPERS,
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		gather: GatherType.HUNT
 	},
 	JUNGLE_SAUVAGE: {
 		placeId: 19,
 		name: 'jungle',
 		borderPlace: [17, 20],
 		conditions: statusList.FLIPPERS,
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		gather: GatherType.HUNT
 	},
 	PORTE_DE_SYLVENOIRE: {
 		placeId: 20,
 		name: 'garde',
 		borderPlace: [19, 21],
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		gather: GatherType.ENERGY1
 	},
 	GO_TO_STEPPES: {
 		placeId: 21,
@@ -186,7 +199,8 @@ export const placeList: Record<string, Place> = {
 		placeId: 25,
 		name: 'chutes',
 		borderPlace: [24, 26, 27, 29],
-		map: MapZone.ILES
+		map: MapZone.ILES,
+		gather: GatherType.FISH
 	},
 	GO_TO_DOME_SOULAFLOTTE: {
 		placeId: 26,
@@ -200,32 +214,37 @@ export const placeList: Record<string, Place> = {
 		placeId: 27,
 		name: 'baobob',
 		borderPlace: [25],
-		map: MapZone.ILES
+		map: MapZone.ILES,
+		gather: GatherType.HUNT
 	},
 	DOME_SOULAFLOTTE: {
 		placeId: 28,
 		name: 'dome',
 		borderPlace: [25],
 		conditions: statusList.RASCAPHANDRE_DECOY,
-		map: MapZone.ILES
+		map: MapZone.ILES,
+		gather: GatherType.ENERGY1
 	},
 	MARAIS_COLLANT: {
 		placeId: 29,
 		name: 'marais',
 		borderPlace: [25, 30, 31, 33],
-		map: MapZone.ILES
+		map: MapZone.ILES,
+		gather: GatherType.CUEILLE1
 	},
 	MINES_DE_CORAIL: {
 		placeId: 30,
 		name: 'corail',
 		borderPlace: [29, 31],
-		map: MapZone.ILES
+		map: MapZone.ILES,
+		gather: GatherType.SEEK
 	},
 	ILE_WAIKIKI: {
 		placeId: 31,
 		name: 'ilewkk',
 		borderPlace: [29, 30, 32],
-		map: MapZone.ILES
+		map: MapZone.ILES,
+		gather: GatherType.FISH
 	},
 	GO_TO_PORT_DE_PRECHE: {
 		placeId: 32,
@@ -300,31 +319,36 @@ export const placeList: Record<string, Place> = {
 		placeId: 43,
 		name: 'bslt',
 		borderPlace: [42, 44],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		gather: GatherType.ENERGY1
 	},
 	FORGES_DU_GTC: {
 		placeId: 44,
 		name: 'forges',
 		borderPlace: [43, 45, 46, 47],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		gather: GatherType.CUEILLE1
 	},
 	RUINES_ASHPOUK: {
 		placeId: 45,
 		name: 'rashpk',
 		borderPlace: [44],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		gather: GatherType.SEEK
 	},
 	FOSSELAVE: {
 		placeId: 46,
 		name: 'fosslv',
 		borderPlace: [44, 48],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		gather: GatherType.SEEK
 	},
 	REPAIRE_DU_VENERABLE: {
 		placeId: 47,
 		name: 'vener',
 		borderPlace: [44, 52],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		gather: GatherType.HUNT
 	},
 	TUNNEL_SOUS_LA_BRANCHE: {
 		placeId: 48,
@@ -377,7 +401,8 @@ export const placeList: Record<string, Place> = {
 		placeId: 55,
 		name: 'senter',
 		borderPlace: [54, 56, 57],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.CUEILLE1
 	},
 	CROISEE_DES_NOMADES: {
 		placeId: 56,
@@ -389,31 +414,36 @@ export const placeList: Record<string, Place> = {
 		placeId: 57,
 		name: 'svillg',
 		borderPlace: [55, 58],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.HUNT
 	},
 	CITADELLE_DU_ROI: {
 		placeId: 58,
 		name: 'sking',
 		borderPlace: [56, 57, 59, 62],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.SEEK
 	},
 	PYLONES_DE_MAGNETITES: {
 		placeId: 59,
 		name: 'spylon',
 		borderPlace: [58, 60, 63],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.ENERGY1
 	},
 	SYPHON_SIFFLEUR: {
 		placeId: 60,
 		name: 'slake',
 		borderPlace: [59, 61, 64, 65, 101],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.FISH
 	},
 	SENTIER_DE_TOUTEMBA: {
 		placeId: 61,
 		name: 'scanyo',
 		borderPlace: [56, 60],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.ENERGY1
 	},
 	DEVOREUSE_DE_L_EST: {
 		placeId: 62,
@@ -455,19 +485,22 @@ export const placeList: Record<string, Place> = {
 		placeId: 68,
 		name: 'scampw',
 		borderPlace: [67],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.SEEK
 	},
 	CONFINS_DES_STEPPES: {
 		placeId: 69,
 		name: 'scaush',
 		borderPlace: [66, 70, 71],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.CUEILLE1
 	},
 	PORTES_DE_CAUSHEMESH: {
 		placeId: 70,
 		name: 'sport',
 		borderPlace: [66, 69],
-		map: MapZone.STEPPE
+		map: MapZone.STEPPE,
+		gather: GatherType.CUEILLE1
 	},
 	APPROCHER_SYPHON: {
 		placeId: 71,
@@ -480,7 +513,8 @@ export const placeList: Record<string, Place> = {
 		placeId: 72,
 		name: 'iroche',
 		borderPlace: [73],
-		map: MapZone.NIMBAO
+		map: MapZone.NIMBAO,
+		gather: GatherType.SEEK
 	},
 	PONT: {
 		placeId: 73,
@@ -504,7 +538,8 @@ export const placeList: Record<string, Place> = {
 		placeId: 76,
 		name: 'ilacro',
 		borderPlace: [75, 88, 90],
-		map: MapZone.NIMBAO
+		map: MapZone.NIMBAO,
+		gather: GatherType.HUNT
 	},
 	PLAINES_ENNEIGEES: {
 		placeId: 77,
@@ -516,7 +551,8 @@ export const placeList: Record<string, Place> = {
 		placeId: 78,
 		name: 'isnow2',
 		borderPlace: [77, 79],
-		map: MapZone.NIMBAO
+		map: MapZone.NIMBAO,
+		gather: GatherType.CUEILLE2
 	},
 	MONT_SACRE_D_EVEROUEST: {
 		placeId: 79,
@@ -576,7 +612,8 @@ export const placeList: Record<string, Place> = {
 		placeId: 88,
 		name: 'ilac',
 		borderPlace: [74, 76],
-		map: MapZone.NIMBAO
+		map: MapZone.NIMBAO,
+		gather: GatherType.ENERGY2
 	},
 	PRIRANESE: {
 		placeId: 89,

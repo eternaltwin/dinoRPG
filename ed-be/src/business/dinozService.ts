@@ -55,7 +55,7 @@ import { getCommonGatherInfo, setGrid, updateGrid } from '../dao/playerGatherDao
 import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { addIngredient, createIngredient } from '../dao/playerIngredientDao.js';
-import { GatherResult } from "@drpg/core/models/gather/gatherResult";
+import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 
 /**
  * @summary Get available action from dinoz
@@ -473,20 +473,26 @@ export async function digWithDinoz(req: Request): Promise<Rewarder> {
 
 export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	const dinozId: number = parseInt(req.params.id);
-	const typeOfGrid: [string, string | GatherType] | undefined = Object.entries(GatherType).find(
-		g => g[1] === req.params.type.toUpperCase()
+	const gatherPlaceArray: Array<GatherData> = Object.values(gather).filter(
+		g => g.action === req.params.type.toString().toLowerCase()
+	);
+	const dinozData: Dinoz = await getDinozGatherData(dinozId);
+	const place: Place = dinozData.actualPlace;
+
+	const typeOfGridArray: Array<[string, string | GatherType]> | undefined = Object.entries(GatherType).filter(g => {
+		if (g[1] === place.gather || g[1] === place.specialGather) return true;
+	});
+	const typeOfGrid: [string, string | GatherType] | undefined = typeOfGridArray.find(
+		g => g[0].toLowerCase().replace(/[0-9]/g, '') === req.params.type.toString().toLowerCase()
 	);
 
 	if (!typeOfGrid) {
 		throw new ErrorFormator(500, `This type of grid doesn't exist`);
 	}
-	const idOfTypeOfGrid = parseInt(typeOfGrid[0]);
-	const dinozData: Dinoz = await getDinozGatherData(dinozId);
+	const idOfTypeOfGrid = typeOfGrid[1] as number;
+
 	const playerGrid: Array<PlayerGather> = await getCommonGatherInfo(dinozData.player.id);
-	const place: Place = dinozData.actualPlace;
-	const gatherPlace: GatherData | undefined = Object.values(gather).find(
-		g => g.action === typeOfGrid[1].toString().toLowerCase()
-	);
+	const gatherPlace: GatherData | undefined = gatherPlaceArray.find(place => place.type === idOfTypeOfGrid);
 
 	if (!dinozData.canGather) {
 		throw new ErrorFormator(500, `Dinoz cannot gather`);
@@ -523,20 +529,24 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 
 export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	const dinozId: number = parseInt(req.params.id);
-	const typeOfGrid: [string, string | GatherType] | undefined = Object.entries(GatherType).find(
-		g => g[1] === req.body.type.toUpperCase()
+	const gatherPlaceArray: Array<GatherData> = Object.values(gather).filter(
+		g => g.action === req.body.type.toString().toLowerCase()
+	);
+	const dinozData: Dinoz = await getDinozGatherData(dinozId);
+	const place: Place = dinozData.actualPlace;
+	const typeOfGridArray: Array<[string, string | GatherType]> | undefined = Object.entries(GatherType).filter(g => {
+		if (g[1] === place.gather || g[1] === place.specialGather) return true;
+	});
+	const typeOfGrid: [string, string | GatherType] | undefined = typeOfGridArray.find(
+		g => g[0].toLowerCase().replace(/[0-9]/g, '') === req.body.type.toString().toLowerCase()
 	);
 
 	if (!typeOfGrid) {
 		throw new ErrorFormator(500, `This type of grid doesn't exist`);
 	}
-	const idOfTypeOfGrid = parseInt(typeOfGrid[0]);
-	const dinozData: Dinoz = await getDinozGatherData(dinozId);
+	const idOfTypeOfGrid = typeOfGrid[1] as number;
 	const playerGrid: Array<PlayerGather> = await getCommonGatherInfo(dinozData.player.id);
-	const place: Place = dinozData.actualPlace;
-	const gatherPlace: GatherData | undefined = Object.values(gather).find(
-		g => g.action === typeOfGrid[1].toString().toLowerCase()
-	);
+	const gatherPlace: GatherData | undefined = gatherPlaceArray.find(place => place.type === typeOfGrid[1]);
 	let myGrid = playerGrid.filter(grid => grid.place === place.placeId).find(grid => grid.type === idOfTypeOfGrid) as
 		| PlayerGather
 		| undefined;
@@ -579,15 +589,19 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	const returnGrid: GatherResult = myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
 	await updateGrid(myGrid.player.id, place.placeId, idOfTypeOfGrid, myGrid.saveGrid(...boxToOpen));
 	for (const i of returnGrid.rewards.item) {
-		if (dinozData.player.items.find(items => items.itemId === i.itemId)) {
+		let itemToReward = dinozData.player.items.find(items => items.itemId === i.itemId);
+		if (itemToReward && itemToReward.quantity < i.maxQuantity) {
 			await changeItemQuantity(req.user?.playerId!, i.itemId, 1);
 		} else {
 			dinozData.player.items.push(await createItemDataRequest(new PlayerItem(dinozData.player, i.itemId, 1)));
 		}
 	}
 	for (const i of returnGrid.rewards.ingredients) {
-		if (dinozData.player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId)) {
-			await addIngredient(req.user?.playerId!, i.ingredientId, 1);
+		let ingredientToReward = dinozData.player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
+		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
+			await addIngredient(i.ingredientId, 1, req.user?.playerId!);
+		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
+			// Do nothing
 		} else {
 			dinozData.player.ingredients.push(
 				await createIngredient(new PlayerIngredient(dinozData.player, i.ingredientId, 1))

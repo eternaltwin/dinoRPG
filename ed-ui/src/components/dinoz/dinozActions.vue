@@ -187,12 +187,8 @@ export default defineComponent({
 					EventBus.emit('refreshDinoz', true);
 					break;
 				case 'fish':
-				case 'cueille1':
-				case 'cueille2':
-				case 'cueille3':
-				case 'cueille4':
-				case 'energy1':
-				case 'energy2':
+				case 'cueille':
+				case 'energy':
 				case 'hunt':
 				case 'seek':
 				case 'xmas':

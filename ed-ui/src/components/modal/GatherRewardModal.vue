@@ -20,12 +20,12 @@
 				tag="img"
 				v-for="item in rewards.item"
 				:key="item.itemId"
-				:src="getImgURL('item', `item_${item}`)"
+				:src="getImgURL('item', `item_${item.name}`)"
 				:alt="item.name"
 			>
 				<template #content>
-					<h1 v-html="formatContent($t(`item.name.${item}`))" />
-					<p v-html="formatContent($t(`item.description.${item}`))" />
+					<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
+					<p v-html="formatContent($t(`item.description.${item.name}`))" />
 				</template>
 			</Tippy>
 			<a class="button" @click="$emit('close')">

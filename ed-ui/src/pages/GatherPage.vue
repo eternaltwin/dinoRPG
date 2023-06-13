@@ -7,8 +7,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="disclaimer">
-		{{ $t('levelup.disclaimer') }}
+	<div class="disclaimer" v-if="loaded">
+		{{ $t('gather.disclaimer', { number: grid.gatherTurn, search: $t(`gather.type.${gatherType}`) }) }}
 	</div>
 	<div
 		class="container"
@@ -186,23 +186,13 @@ export default defineComponent({
 		&:hover {
 			outline: 1px solid #994400;
 			box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
+			font-size: initial;
+			text-align: center;
+			color: white;
 		}
 
 		&.open {
 			visibility: hidden;
-		}
-		&:not(.open):hover {
-			border: 1px solid #994400;
-			box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
-			font-size: initial;
-			text-align: center;
-			padding-top: 7px;
-			padding-left: 2px;
-			color: white;
-			text-shadow: rgb(188, 104, 60) 1px 0 0, rgb(188, 104, 60) 0.540302px 0.841471px 0,
-				rgb(188, 104, 60) -0.416147px 0.909297px 0, rgb(188, 104, 60) -0.989993px 0.14112px 0,
-				rgb(188, 104, 60) -0.653644px -0.756803px 0, rgb(188, 104, 60) 0.283662px -0.958924px 0,
-				rgb(188, 104, 60) 0.96017px -0.279416px 0;
 		}
 	}
 }
@@ -221,6 +211,22 @@ export default defineComponent({
 .fish::after {
 	background-image: url('../assets/gather/overlay/fish.webp');
 	background-size: 238px;
+}
+.cueille::after {
+	background-image: url('../assets/gather/overlay/cueille.webp');
+	background-size: 278px;
+}
+.energy::after {
+	background-image: url('../assets/gather/overlay/energy.webp');
+	background-size: 204px;
+}
+.hunt::after {
+	background-image: url('../assets/gather/overlay/hunt.webp');
+	background-size: 204px;
+}
+.seek::after {
+	background-image: url('../assets/gather/overlay/seek.webp');
+	background-size: 340px;
 }
 
 .anniv::after {

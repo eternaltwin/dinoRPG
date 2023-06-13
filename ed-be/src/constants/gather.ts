@@ -592,6 +592,123 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
+	SEEK: {
+		action: 'seek',
+		type: GatherType.SEEK,
+		special: false,
+		size: 10,
+		clicks: 1,
+		condition: {
+			conditionType: ConditionEnum.SKILL,
+			value: skillList.FOUILLE.skillId
+		},
+		apparence: 'SEEK',
+		items: [
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.SILEX_TAILLE.ingredientId,
+				count: 3
+			},
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
+				count: 1,
+				condition: {
+					conditionType: ConditionEnum.SKILL,
+					value: skillList.DETECTIVE.skillId
+				}
+			},
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
+				count: 2,
+				condition: {
+					conditionType: ConditionEnum.SKILL,
+					value: skillList.ARCHEOLOGUE.skillId,
+					operator: ConditionOperatorEnum.AND,
+					nextCondition: {
+						conditionType: ConditionEnum.RANDOM,
+						value: 5
+					}
+				}
+			},
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.CALICE_CISELE.ingredientId,
+				count: 2,
+				condition: {
+					conditionType: ConditionEnum.SKILL,
+					value: skillList.ARCHEOLOGUE.skillId,
+					operator: ConditionOperatorEnum.AND,
+					nextCondition: {
+						conditionType: ConditionEnum.RANDOM,
+						value: 5
+					}
+				}
+			},
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.COLLIER_KARAT.ingredientId,
+				count: 2,
+				condition: {
+					conditionType: ConditionEnum.SKILL,
+					value: skillList.ARCHEOLOGUE.skillId,
+					operator: ConditionOperatorEnum.AND,
+					nextCondition: {
+						conditionType: ConditionEnum.RANDOM,
+						value: 5
+					}
+				}
+			},
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
+				count: 1,
+				condition: {
+					conditionType: ConditionEnum.SKILL,
+					value: skillList.ARCHEOLOGUE.skillId,
+					operator: ConditionOperatorEnum.AND,
+					nextCondition: {
+						conditionType: ConditionEnum.RANDOM,
+						value: 15
+					}
+				}
+			},
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
+				count: 1,
+				condition: {
+					conditionType: ConditionEnum.SKILL,
+					value: skillList.ARCHEOLOGUE.skillId,
+					operator: ConditionOperatorEnum.AND,
+					nextCondition: {
+						conditionType: ConditionEnum.RANDOM,
+						value: 15
+					}
+				}
+			},
+			{
+				type: 'ingredient',
+				ingredientId: ingredientList.BRAS_MECANIQUE.ingredientId,
+				count: 1,
+				condition: {
+					conditionType: ConditionEnum.SKILL,
+					value: skillList.ARCHEOLOGUE.skillId,
+					operator: ConditionOperatorEnum.AND,
+					nextCondition: {
+						conditionType: ConditionEnum.RANDOM,
+						value: 10,
+						operator: ConditionOperatorEnum.AND,
+						nextCondition: {
+							conditionType: ConditionEnum.PLACE_IS,
+							value: placeList.TETE_DE_L_ILE.name
+						}
+					}
+				}
+			}
+		]
+	},
 	ANNIV: {
 		action: 'anniv',
 		type: GatherType.ANNIV,

@@ -6,6 +6,9 @@ import { checkCondition } from '../utils/checkConditions.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { GatherRewards } from '@drpg/core/models/gather/gatherRewards';
 import { ingredientList, itemList } from '../constants/index.js';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { Condition } from '@drpg/core/models/npc/NpcConditions';
 
 @Entity()
 export class PlayerGather {
@@ -96,15 +99,25 @@ export class PlayerGather {
 				ingredientId -= 1000;
 				itemCheck = true;
 			}
-
-      returnGrid[box[i][0]][box[i][1]] = -1;
+			returnGrid[box[i][0]][box[i][1]] = -1;
 
 			if (itemCheck) {
-				const item = Object.values(itemList).find(items => items.itemId === ingredientId);
-				item ? rewards.item.push(item) : 0;
+				const item = Object.entries(itemList).find(items => items[1].itemId === ingredientId) as [string, ItemFiche];
+				if (item) {
+					item[1].name = item[0].toLowerCase();
+					item[1] ? rewards.item.push(item[1]) : 0;
+				}
 			} else {
-				const ingredient = Object.values(ingredientList).find(ingredients => ingredients.ingredientId === ingredientId);
-				ingredient ? rewards.ingredients.push(ingredient) : 0;
+				const ingredient = Object.entries(ingredientList).find(
+					ingredients => ingredients[1].ingredientId === ingredientId
+				) as [string, IngredientFiche];
+				if (ingredient) {
+					let condition: Condition | undefined = gridInformation.items.find(
+						ing => ing.ingredientId === ingredient[1].ingredientId
+					)!.condition;
+					ingredient[1].name = ingredient[0].toLowerCase() as Lowercase<string>;
+					ingredient[1] && checkCondition(condition, dinoz) ? rewards.ingredients.push(ingredient[1]) : 0;
+				}
 			}
 		}
 		return { grid: returnGrid, rewards: rewards };

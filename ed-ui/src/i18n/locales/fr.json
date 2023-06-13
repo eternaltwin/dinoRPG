@@ -76,14 +76,26 @@
       "follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
       "levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz.",
       "resurrect": "Votre Dinoz est mort, il faut donc le Ressusciter avant de pouvoir à nouveau le faire combattre.",
-      "dig": "Votre Dinoz peut **creuser** à cet endroit avec la pelle pour y trouver peut-être un trésor."
+      "dig": "Votre Dinoz peut **creuser** à cet endroit avec la pelle pour y trouver peut-être un trésor.",
+      "cueille": "Votre Dinoz peut **cueillir** de belles plantes dans ce lieu. Certaines sont encore inconnues, alors il vaudrait mieux éviter de les manger !",
+      "anniv": "Utilisez vos Tickets Anniversaire pour trouver des trésors rares, et peut-être des oeufs !",
+      "fish": "Votre Dinoz peut **pêcher** de nombreux poissons en ce lieu. Attention au grand requin noir maléfique des abysses pestilentielles !",
+      "hunt": "Votre Dinoz peut chasser les **animaux sauvages** que l'on trouve aux alentours, et ainsi récuperer de precieux ingrédients.",
+      "seek": "Votre Dinoz peut chercher des **artefacts anciens** dans le sol de ce lieu. Ils sont rares, mais ils ont une grande valeur !",
+      "energy": "Ce lieu est rempli de puissantes énergies élémentaires, votre Dinoz pourra donc en absorber ici."
     },
     "name": {
       "fight": "Combattre",
       "follow": "Suivre",
       "levelup": "Niveau Supplémentaire !",
       "resurrect": "Ressusciter",
-      "dig": "Creuser"
+      "dig": "Creuser",
+      "cueille": "Cueillir",
+      "fish": "Pêcher",
+      "hunt": "Chasser",
+      "seek": "Fouiller",
+      "energy": "Energétiser",
+      "anniv": "Château de sable"
     }
   },
   "button": {
@@ -1797,8 +1809,22 @@
   },
   "gather": {
     "action": {
-      "fish": "Pêcher"
-    }
+      "cueille": "Cueillir",
+      "fish": "Pêcher",
+      "hunt": "Trophées de Chasse",
+      "seek": "Artefacts",
+      "energy": "Energétiser",
+      "anniv": "anniversaire"
+    },
+    "type": {
+      "cueille": "plantes",
+      "fish": "poissons",
+      "hunt": "Chasser",
+      "seek": "Fouiller",
+      "energy": "énergie",
+      "anniv": "trésors fabuleux"
+    },
+    "disclaimer": "Cliquez sur {number} cases de la grille pour trouver des {search}"
   },
   "missions": {
     "header": "Liste des Missions",
@@ -2662,7 +2688,7 @@
       "corne_en_chocolat": "Corne en chocolat",
       "oeil_visqueux": "Oeil visqueux",
       "langue_monstrueuse": "Langue monstrueuse",
-      "enegie_foudre": "Energie Foudre",
+      "energie_foudre": "Energie Foudre",
       "energie_air": "Energie Air",
       "energie_eau": "Energie Eau",
       "energie_feu": "Energie Feu",

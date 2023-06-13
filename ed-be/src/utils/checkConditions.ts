@@ -3,7 +3,8 @@ import { Dinoz } from '../entity/index.js';
 import { ConditionOperatorEnum } from '@drpg/core/models/enums/Parser';
 import { conditionParser } from './parser.js';
 
-export function checkCondition(condition: Condition, dinoz: Dinoz): boolean {
+export function checkCondition(condition: Condition | undefined, dinoz: Dinoz): boolean {
+	if (!condition) return true;
 	let conditionResult: boolean = true;
 
 	if (condition.nextCondition && condition.operator === ConditionOperatorEnum.AND) {
