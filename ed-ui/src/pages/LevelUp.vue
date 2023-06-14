@@ -33,7 +33,7 @@
 	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'">
 		<div class="result" v-if="ElementType[availableSkills.element]">
 			{{ dinozData.name }}
-			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element]}`))" />
+			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
 			<Elements
 				:fire="
 					ElementType[availableSkills.element] === 'fire' ? availableSkills.nbrUpFire + 1 : availableSkills.nbrUpFire
@@ -69,7 +69,7 @@
 								<img
 									v-for="element in skill.element"
 									:key="element"
-									:src="getImgURL('elements', `elem_${ElementType[element]}`)"
+									:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 									alt="elementUp"
 								/>
 								<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>

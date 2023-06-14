@@ -98,7 +98,7 @@ export default defineComponent({
 		this.levelUpGrid = this.levelUpGrid.concat(fire).concat(wood).concat(water).concat(lightning).concat(air);
 
 		const selectElement = this.levelUpGrid.reduce((a: Array<number>, e: string, i: number) => {
-			if (e === ElementType[this.element]) a.push(i);
+			if (e === ElementType[this.element].toLowerCase()) a.push(i);
 			return a;
 		}, []);
 		this.selectedIndex = selectElement[Math.floor(Math.random() * selectElement.length)];
