@@ -523,7 +523,8 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 
 	return {
 		grid: myGrid!.hideIngredients(),
-		gatherTurn: dinozData.numberOfGatheringClick(gatherPlace)
+		gatherTurn: dinozData.numberOfGatheringClick(gatherPlace),
+		gatherType: gatherPlace.apparence.toLowerCase()
 	};
 }
 

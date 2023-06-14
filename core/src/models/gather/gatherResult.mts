@@ -2,6 +2,6 @@ import { GatherResultGrid } from "./gatherResultGrid.mjs";
 import { GatherRewards } from "./gatherRewards.mjs";
 
 export interface GatherResult {
-grid: GatherResultGrid,
+grid: GatherResultGrid;
   rewards: GatherRewards
 }

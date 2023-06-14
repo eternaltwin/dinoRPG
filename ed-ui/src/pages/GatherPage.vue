@@ -18,7 +18,7 @@
 			width: `${grid.grid.length * 34}px`
 		}"
 	>
-		<img class="bgimg" :src="getImgURL('gather/background', gatherType)" />
+		<img class="bgimg" :src="getImgURL('gather/background', grid.gatherType)" />
 		<div class="grid">
 			<div class="row" v-for="(row, rowNumber) in grid.grid" :key="row">
 				<div
@@ -174,7 +174,8 @@ export default defineComponent({
 		height: 34px;
 		width: 34px;
 
-		&::after { // creates a pseudo-element to display the bg-images
+		&::after {
+			// creates a pseudo-element to display the bg-images
 			content: '';
 			display: block;
 			opacity: 30%;
@@ -206,7 +207,6 @@ export default defineComponent({
 .row:nth-child(even) div:nth-child(even) {
 	background-image: url('../assets/gather/dark.webp');
 }
-
 
 .fish::after {
 	background-image: url('../assets/gather/overlay/fish.webp');

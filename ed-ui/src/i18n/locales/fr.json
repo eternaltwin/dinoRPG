@@ -82,7 +82,11 @@
       "fish": "Votre Dinoz peut **pêcher** de nombreux poissons en ce lieu. Attention au grand requin noir maléfique des abysses pestilentielles !",
       "hunt": "Votre Dinoz peut chasser les **animaux sauvages** que l'on trouve aux alentours, et ainsi récuperer de precieux ingrédients.",
       "seek": "Votre Dinoz peut chercher des **artefacts anciens** dans le sol de ce lieu. Ils sont rares, mais ils ont une grande valeur !",
-      "energy": "Ce lieu est rempli de puissantes énergies élémentaires, votre Dinoz pourra donc en absorber ici."
+      "energy": "Ce lieu est rempli de puissantes énergies élémentaires, votre Dinoz pourra donc en absorber ici.",
+      "xmas": "Vous pouvez jouer au Chasse-Neige en utilisant vos Tickets de Noël, et gagner de nombreux cadeaux !",
+      "tictac": "Utilisez vos Tickets Taque pour trouver peut-être un trésor trés rare !",
+      "labo": "Chercher l'antidote dans le laboratoire de l'Archidorogon pour soigner le vénérable.",
+      "party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !"
     },
     "name": {
       "fight": "Combattre",
@@ -95,7 +99,11 @@
       "hunt": "Chasser",
       "seek": "Fouiller",
       "energy": "Energétiser",
-      "anniv": "Château de sable"
+      "anniv": "Château de sable",
+      "xmas": "Chasse-Neige",
+      "tictac": "Trésor de Papy Joe",
+      "labo": "Laboratoire de l'Archidorogon",
+      "party": "Feu d'artifice"
     }
   },
   "button": {
@@ -1814,7 +1822,11 @@
       "hunt": "Trophées de Chasse",
       "seek": "Artefacts",
       "energy": "Energétiser",
-      "anniv": "anniversaire"
+      "anniv": "anniversaire",
+      "xmas": "Chasse-Neige",
+      "tictac": "Trésor de Papy Joe",
+      "labo": "Laboratoire de l'Archidorogon",
+      "party": "Feu d'artifice"
     },
     "type": {
       "cueille": "plantes",
@@ -1822,7 +1834,11 @@
       "hunt": "Chasser",
       "seek": "Fouiller",
       "energy": "énergie",
-      "anniv": "trésors fabuleux"
+      "anniv": "trésors fabuleux",
+      "xmas": "Cadeaux de Noël",
+      "tictac": "trésors dans le jardin de Papy Joe",
+      "labo": "ressources dans le laboratoire de l'Archidorogon",
+      "party": "trésors fabuleux"
     },
     "disclaimer": "Cliquez sur {number} cases de la grille pour trouver des {search}"
   },
