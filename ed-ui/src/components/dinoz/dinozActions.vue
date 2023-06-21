@@ -186,6 +186,21 @@ export default defineComponent({
 					}
 					EventBus.emit('refreshDinoz', true);
 					break;
+				case 'fish':
+				case 'cueille':
+				case 'energy':
+				case 'hunt':
+				case 'seek':
+				case 'xmas':
+				case 'tictac':
+				case 'labo':
+				case 'anniv':
+				case 'party':
+					this.$router.push({
+						name: 'Gather',
+						params: { dinozId: this.$route.params.id.toString(), type: action.name }
+					});
+					break;
 				default:
 					break;
 			}
@@ -244,7 +259,7 @@ export default defineComponent({
 		position: relative;
 		left: 5px;
 		border-collapse: collapse;
-		border-spacing: 0px;
+		border-spacing: 0;
 		margin-bottom: 2px;
 		width: 175px;
 		tr:hover {
@@ -278,8 +293,8 @@ export default defineComponent({
 
 			&.icon {
 				width: 32px;
-				font-size: 0pt;
-				line-height: 0pt;
+				font-size: 0;
+				line-height: 0;
 			}
 		}
 	}

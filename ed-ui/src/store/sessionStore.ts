@@ -34,6 +34,9 @@ export const sessionStore = defineStore('sessionStore', {
 		setMoney(money: number): void {
 			this.money = money;
 		},
+		addMoney(quantity: number): void {
+			this.money += quantity;
+		},
 		setDinozList(dinozList: Array<DinozFiche>): void {
 			this.dinozList = dinozList;
 		},

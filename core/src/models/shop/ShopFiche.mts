@@ -1,5 +1,5 @@
-import { ShopType } from "../enums/ShopType.mjs";
-import { ItemFiche } from "../item/ItemFiche.mjs";
+import { ShopType } from '../enums/ShopType.mjs';
+import { ItemFiche } from '../item/ItemFiche.mjs';
 
 export interface ShopFiche {
 	shopId: number;

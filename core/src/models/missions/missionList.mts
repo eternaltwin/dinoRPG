@@ -1,4 +1,4 @@
-import { MissionsStatus } from "../enums/MissionsStatus.mjs";
+import { MissionsStatus } from '../enums/MissionsStatus.mjs';
 
 export interface MissionList {
 	missionId: number;

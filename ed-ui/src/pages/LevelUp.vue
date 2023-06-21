@@ -27,13 +27,14 @@
 				:display="dinozData.display"
 				:life="dinozData.life"
 				:flip="1"
+				:race="dinozData.race.raceId"
 			/>
 		</div>
 	</div>
 	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'">
 		<div class="result" v-if="ElementType[availableSkills.element]">
 			{{ dinozData.name }}
-			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element]}`))" />
+			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
 			<Elements
 				:fire="
 					ElementType[availableSkills.element] === 'fire' ? availableSkills.nbrUpFire + 1 : availableSkills.nbrUpFire
@@ -69,7 +70,7 @@
 								<img
 									v-for="element in skill.element"
 									:key="element"
-									:src="getImgURL('elements', `elem_${ElementType[element]}`)"
+									:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 									alt="elementUp"
 								/>
 								<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
@@ -110,7 +111,7 @@
 										<img
 											v-for="element in skill.element"
 											:key="element"
-											:src="getImgURL('elements', `elem_${ElementType[element]}`)"
+											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 											alt="elementUp"
 										/>
 										{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}
@@ -192,16 +193,16 @@ export default defineComponent({
 			}
 		},
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
-			const dinozId: string = this.$route.params.id.toString();
+			const dinozId: number = parseInt(this.$route.params.id.toString());
 
 			EventBus.emit('isLoading', true);
 			try {
-				const newMaxExperience = await DinozService.learnSkill(parseInt(dinozId), skillIdList, this.tryNumber);
+				const newMaxExperience = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
 
 				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.id === dinozId)!;
 				dinozToUpdate.experience = 0;
-				dinozToUpdate.maxExperience = newMaxExperience;
+				dinozToUpdate.maxExperience = parseInt(newMaxExperience);
 				this.sessionStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 

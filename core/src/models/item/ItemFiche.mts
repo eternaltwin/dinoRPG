@@ -1,8 +1,8 @@
-import { ItemType } from "../enums/ItemType.mjs";
-import { ItemEffect } from "../enums/ItemEffect.mjs";
+import { ItemType } from '../enums/ItemType.mjs';
+import { ItemEffect } from '../enums/ItemEffect.mjs';
 
 export interface ItemFiche {
-  name?: string;
+	name?: string;
 	itemId: number;
 	quantity?: number;
 	maxQuantity: number;

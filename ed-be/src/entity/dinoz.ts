@@ -1,15 +1,15 @@
 import {
-	Entity,
-	PrimaryGeneratedColumn,
 	Column,
-	JoinColumn,
-	OneToMany,
-	ManyToOne,
-	ManyToMany,
-	JoinTable,
 	CreateDateColumn,
-	UpdateDateColumn,
-	Relation
+	Entity,
+	JoinColumn,
+	JoinTable,
+	ManyToMany,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	Relation,
+	UpdateDateColumn
 } from 'typeorm';
 import { Player } from './player.js';
 import { DinozItem, DinozMission, DinozSkill, DinozSkillUnlockable, DinozStatus, NPC } from './index.js';
@@ -18,9 +18,10 @@ import gameConfig from '../config/game.config.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { Place } from '@drpg/core/models/place/Place';
+import { GatherData } from '@drpg/core/models/gather/gatherData';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
 
 @Entity()
 export class Dinoz {
@@ -142,12 +143,6 @@ export class Dinoz {
 	experience: number;
 
 	@Column({
-		nullable: false,
-		default: false
-	})
-	canGather: boolean;
-
-	@Column({
 		nullable: false
 	})
 	nbrUpFire: number;
@@ -201,7 +196,6 @@ export class Dinoz {
 				this.maxLife = 100;
 				this.experience = 0;
 				this.canChangeName = true;
-				this.canGather = false;
 				this.nbrUpFire = race.nbrFire;
 				this.nbrUpWood = race.nbrWood;
 				this.nbrUpWater = race.nbrWater;
@@ -237,18 +231,47 @@ export class Dinoz {
 		return Object.values(raceList).find(race => race.raceId === this.raceId)!;
 	}
 
-	  get canChangeSkillState(): boolean {
-    return this.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
-  }
+	get canChangeSkillState(): boolean {
+		return this.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
+	}
 
 	get actualPlace(): Place {
 		return Object.values(placeList).find(place => place.placeId === this.placeId)!;
 	}
 
-	public belongToPlayer(playerToTest: number | undefined): void {
-		if (this.player.id !== playerToTest) {
-			throw new ErrorFormator(500, `Dinoz ${this.id} doesn't belong to player ${playerToTest}`);
+	public numberOfGatheringClick(gridInformation: GatherData): number {
+		let click = 0;
+		switch (gridInformation.type) {
+			case GatherType.FISH:
+				this.skills.some(s => s.skillId === skillList.NEMO.skillId) ? click++ : click;
+				break;
+			case GatherType.CUEILLE1:
+			case GatherType.CUEILLE2:
+			case GatherType.CUEILLE3:
+			case GatherType.CUEILLE4:
+				this.skills.some(s => s.skillId === skillList.LONDUHAUT.skillId) ? click++ : click;
+				break;
+			case GatherType.ENERGY1:
+			case GatherType.ENERGY2:
+				this.skills.some(s => s.skillId === skillList.EINSTEIN.skillId) ? click++ : click;
+				break;
+			case GatherType.HUNT:
+				this.skills.some(s => s.skillId === skillList.BENEDICTION_DARTEMIS.skillId) ? click++ : click;
+				break;
+			case GatherType.SEEK:
+				this.skills.some(s => s.skillId === skillList.EXPERT_EN_FOUILLE.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList.PLANIFICATEUR.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList.CHAMPOLLION.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList.GRATTEUR.skillId) ? click++ : click;
+				break;
+			case GatherType.LABO:
+			case GatherType.PARTY:
+			case GatherType.XMAS:
+			case GatherType.TICTAC:
+			case GatherType.ANNIV:
+				break;
 		}
+		return gridInformation.minimumClick + click;
 	}
 
 	public canGoThisPlace(place: Place): boolean {
@@ -274,7 +297,6 @@ export class Dinoz {
 			maxLife: this.maxLife,
 			experience: this.experience,
 			maxExperience: levelList.find(level => level.id === this.level)!.experience,
-			canGather: this.canGather,
 			race: Object.values(raceList).find(race => race.raceId === this.raceId)!,
 			placeId: this.placeId,
 			items: this.items.map(item => item.itemId),

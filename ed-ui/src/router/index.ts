@@ -16,6 +16,7 @@ import Ingredients from '../pages/Ingredients.vue';
 import News from '../components/common/News.vue';
 import NPC from '../pages/NPC.vue';
 import Missions from '../pages/Missions.vue';
+import GatherPage from '../pages/GatherPage.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -96,6 +97,11 @@ const router = createRouter({
 					path: '/ingredients',
 					name: 'Ingredients',
 					component: Ingredients
+				},
+				{
+					path: '/gather/:dinozId/:type',
+					name: 'Gather',
+					component: GatherPage
 				}
 			]
 		},

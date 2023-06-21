@@ -3,9 +3,19 @@ import { ConditionEnum, ConditionOperatorEnum } from '../enums/Parser.mjs';
 // Choisis le type de value en fonction de l'enum utilisée pour conditionType
 export type Condition =
 	| {
-			conditionType: ConditionEnum.MINLEVEL | ConditionEnum.MAXLEVEL | ConditionEnum.SKILL;
+			conditionType:
+				| ConditionEnum.MINLEVEL
+				| ConditionEnum.MAXLEVEL
+				| ConditionEnum.SKILL
+				| ConditionEnum.POSSESS_OBJECT;
 			value: number;
 			reverse?: boolean;
+			nextCondition?: Condition;
+			operator?: ConditionOperatorEnum;
+	  }
+	| {
+			conditionType: ConditionEnum.RANDOM;
+			value: number;
 			nextCondition?: Condition;
 			operator?: ConditionOperatorEnum;
 	  }
@@ -20,7 +30,12 @@ export type Condition =
 	| {
 			conditionType: Exclude<
 				ConditionEnum,
-				ConditionEnum.MINLEVEL | ConditionEnum.MAXLEVEL | ConditionEnum.SKILL | ConditionEnum.SCENARIO
+				| ConditionEnum.MINLEVEL
+				| ConditionEnum.MAXLEVEL
+				| ConditionEnum.POSSESS_OBJECT
+				| ConditionEnum.RANDOM
+				| ConditionEnum.SKILL
+				| ConditionEnum.SCENARIO
 			>;
 			value: string;
 			reverse?: boolean;

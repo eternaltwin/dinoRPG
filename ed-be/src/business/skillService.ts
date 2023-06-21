@@ -119,7 +119,7 @@ export async function learnSkill(req: Request): Promise<number> {
 	const averagePoints = Math.round(sumPoints / dinozCount);
 	await updatePoints(req.user!.playerId!, sumPoints, averagePoints, dinozCount);
 
-	return newMaxExperience;
+	return newMaxExperience ?? 0;
 }
 
 function getDinozLearnableSkills(

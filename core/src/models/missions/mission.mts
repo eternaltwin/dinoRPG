@@ -1,6 +1,6 @@
-import { Condition } from "../npc/NpcConditions.mjs";
-import { Rewarder } from "../reward/Rewarder.mjs";
-import { MissionSteps } from "./missionSteps.mjs";
+import { Condition } from '../npc/NpcConditions.mjs';
+import { Rewarder } from '../reward/Rewarder.mjs';
+import { MissionSteps } from './missionSteps.mjs';
 
 export interface Mission {
 	missionId: number;

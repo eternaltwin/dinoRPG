@@ -1,6 +1,5 @@
-import { MapZone } from "../enums/MapType.mjs";
-import { PlaceEnum } from "../enums/PlaceEnum.mjs";
-
+import { MapZone } from '../enums/MapType.mjs';
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 
 export type MonsterFiche = {
 	name: string;

@@ -1,5 +1,5 @@
 import { DinozRace } from './DinozRace.mjs';
-import { MissionHUD } from "../missions/missionHUD.mjs";
+import { MissionHUD } from '../missions/missionHUD.mjs';
 
 // This is the model to use to communicate with the front
 export interface DinozFiche {
@@ -10,7 +10,7 @@ export interface DinozFiche {
 	isSacrificed?: boolean;
 	level?: number;
 	missionId?: number;
-  missions?: MissionHUD;
+	missions?: MissionHUD;
 	canChangeName?: boolean;
 	following?: number;
 	life?: number;
@@ -30,7 +30,7 @@ export interface DinozFiche {
 	nbrUpWater?: number;
 	nbrUpLightning?: number;
 	nbrUpAir?: number;
-  order?: number | null;
+	order?: number | null;
 }
 
 export interface ActionFiche {

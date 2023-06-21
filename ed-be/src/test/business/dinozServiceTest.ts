@@ -289,7 +289,6 @@ describe('Test de la fonction buyDinoz()', function () {
 			maxLife: 100,
 			experience: 0,
 			canChangeName: true,
-			canGather: false,
 			nbrUpFire: raceList.WINKS.nbrFire,
 			nbrUpWood: raceList.WINKS.nbrWood,
 			nbrUpWater: raceList.WINKS.nbrWater,

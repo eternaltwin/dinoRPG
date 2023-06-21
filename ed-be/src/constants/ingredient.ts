@@ -43,7 +43,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	},
 	LANGUE_MONSTRUEUSE: {
 		ingredientId: 11,
-		maxQuantity: 0 // TODO : Valeur à vérifier
+		maxQuantity: 10 // TODO : Valeur à vérifier
 	},
 	ENERGIE_FOUDRE: {
 		ingredientId: 12,
@@ -101,13 +101,13 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 		ingredientId: 25,
 		maxQuantity: 24 // TODO : Valeur à vérifier
 	},
-	ORCHingredientIdEE_FANTASQUE: {
+	ORCHIDEE_FANTASQUE: {
 		ingredientId: 26,
 		maxQuantity: 6 // TODO : Valeur à vérifier
 	},
 	RACINE_DE_FIGONICIA: {
 		ingredientId: 27,
-		maxQuantity: 0 // TODO : Valeur à vérifier
+		maxQuantity: 10 // TODO : Valeur à vérifier
 	},
 	SADIQUAE_MORDICUS: {
 		ingredientId: 28,
@@ -131,10 +131,10 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	},
 	DENT_DE_DOROGON: {
 		ingredientId: 33,
-		maxQuantity: 0 // TODO : Valeur à vérifier
+		maxQuantity: 10 // TODO : Valeur à vérifier
 	},
 	BRAS_MECANIQUE: {
 		ingredientId: 34,
-		maxQuantity: 0 // TODO : Valeur à vérifier
+		maxQuantity: 10 // TODO : Valeur à vérifier
 	}
 };

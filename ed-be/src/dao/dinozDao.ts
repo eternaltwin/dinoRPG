@@ -87,11 +87,13 @@ export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz> {
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
 		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
+		.addSelect(['skills.skillId'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('player.items', 'playerItems')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.missions', 'missions')
+		.leftJoin('dinoz.skills', 'skills')
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
 }
@@ -268,6 +270,21 @@ export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Pro
 
 export async function getDinozTotalCount(): Promise<number> {
 	return dinozRepository.count();
+}
+
+export async function getDinozGatherData(dinozId: number): Promise<Dinoz> {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id', 'dinoz.placeId'])
+		.addSelect(['player.id'])
+		.addSelect(['skills.skillId'])
+		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('dinoz.skills', 'skills')
+		.leftJoin('player.items', 'playerItems')
+		.leftJoinAndSelect('player.ingredients', 'ingredient')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
 }
 
 // Setters

@@ -4,13 +4,15 @@ import { getDinozNPCRequest } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
 import { npcList } from '../constants/npc.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
-import { checkCondition, rewarder, triggerAction } from '../utils/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { Place } from '@drpg/core/models/place/Place';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
+import { rewarder } from '../utils/rewarder.js';
+import { triggerAction } from '../utils/triggerAction.js';
+import { checkCondition } from '../utils/checkConditions.js';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId: number = parseInt(req.params.dinozId);

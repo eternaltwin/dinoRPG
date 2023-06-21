@@ -4,6 +4,9 @@ import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
+import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {
@@ -54,7 +57,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number): Promise<number | undefined> {
+	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number): Promise<string> {
 		return http()
 			.post(`/level/learnskill/${dinozId}`, {
 				skillIdList: skillIdList,
@@ -72,6 +75,21 @@ export const DinozService = {
 	dig(dinozId: number): Promise<Rewarder> {
 		return http()
 			.get(`/dinoz/dig/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getGatherGrid(dinozId: number, gridType: GatherType): Promise<GatherPublicGrid> {
+		return http()
+			.get(`/dinoz/gather/${dinozId}/${gridType}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	gatherWithDinoz(dinozId: number, gridType: GatherType, box: Array<Array<number>>): Promise<GatherResult> {
+		return http()
+			.put(`/dinoz/gather/${dinozId}`, {
+				type: gridType,
+				box: box
+			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

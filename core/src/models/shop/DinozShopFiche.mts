@@ -1,4 +1,4 @@
-import { DinozRace } from "../dinoz/DinozRace.mjs";
+import { DinozRace } from '../dinoz/DinozRace.mjs';
 
 export interface DinozShopFiche {
 	id: string;

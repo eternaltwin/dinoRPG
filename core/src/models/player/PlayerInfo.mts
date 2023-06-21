@@ -1,4 +1,4 @@
-import { DinozFiche } from "../dinoz/DinozFiche.mjs";
+import { DinozFiche } from '../dinoz/DinozFiche.mjs';
 
 export interface PlayerInfo {
 	dinozCount: number;

@@ -1,7 +1,6 @@
-
 import { NpcData } from './NpcData.mjs';
-import { Mission } from "../missions/mission.mjs";
-import { NpcTrigger } from "../enums/NpcTrigger.mjs";
+import { Mission } from '../missions/mission.mjs';
+import { NpcTrigger } from '../enums/NpcTrigger.mjs';
 
 export interface Npc {
 	name: string;

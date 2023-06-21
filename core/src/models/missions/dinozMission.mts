@@ -1,15 +1,15 @@
-import { DinozFiche } from "../dinoz/DinozFiche.mjs";
+import { DinozFiche } from '../dinoz/DinozFiche.mjs';
 
 export interface DinozMission {
-  id: number;
+	id: number;
 
-  dinoz: Array<DinozFiche>;
+	dinoz: Array<DinozFiche>;
 
-  missionId: number;
+	missionId: number;
 
-  step: number;
+	step: number;
 
-  progress: number;
+	progress: number;
 
-  isFinished: boolean;
+	isFinished: boolean;
 }

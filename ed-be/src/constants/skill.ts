@@ -3251,7 +3251,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTree.VANILLA,
-		raceId: [raceList.GORILLOZ.raceId],
+		raceId: [raceList.FEROSS.raceId],
 		isBaseSkill: true,
 		isSphereSkill: false
 	},

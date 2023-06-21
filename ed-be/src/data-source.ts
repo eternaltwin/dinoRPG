@@ -4,6 +4,7 @@ import dbConf from './config/db.config.js';
 import { getEnvironnement } from './utils/context.js';
 import {
 	Dinoz,
+	PlayerGather,
 	DinozItem,
 	DinozMission,
 	DinozSkill,
@@ -33,6 +34,7 @@ export const AppDataSource = new DataSource({
 	logging: getEnvironnement() === 'development',
 	entities: [
 		Dinoz,
+		PlayerGather,
 		DinozItem,
 		DinozMission,
 		DinozSkill,

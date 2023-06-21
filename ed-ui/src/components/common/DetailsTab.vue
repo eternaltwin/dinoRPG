@@ -36,7 +36,7 @@
 							<img
 								v-for="(element, index) in skill.element"
 								:key="index"
-								:src="getImgURL('elements', `elem_${ElementType[element]}`)"
+								:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 								:alt="ElementType[element]"
 							/>
 							<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>

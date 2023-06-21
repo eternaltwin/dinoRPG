@@ -118,7 +118,7 @@ routes.post(
 
 		try {
 			const response: number = await learnSkill(req);
-			return res.status(200).send(response);
+			return res.status(200).send(response.toString());
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);

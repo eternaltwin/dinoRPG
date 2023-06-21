@@ -8,7 +8,9 @@ import {
 	setSkillState,
 	betaMove,
 	resurrectDinoz,
-	digWithDinoz
+	digWithDinoz,
+	gatherWithDinoz,
+	getGatherGrid
 } from '../business/dinozService.js';
 import { apiRoutes, regex } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -17,6 +19,8 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
+import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 
 const routes: Router = Router();
 
@@ -345,6 +349,16 @@ routes.put(
  *         type: string
  *         required: true
  *         description: Numeric ID of the dinoz to dig.
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - placeId
+ *           properties:
+ *             placeId:
+ *               type: number
+ *               description: Id of the destination
  *     responses:
  *       200:
  *         description: Returns an item.
@@ -364,5 +378,87 @@ routes.get(`${commonPath}/dig/:id`, [param('id').exists().toInt().isNumeric()], 
 		res.status(e.errorCode).send(e.message);
 	}
 });
+
+/**
+ * @openapi
+ * /api/v1/dinoz/gather/{dinozId}:
+ *   get:
+ *     summary: Get the gather grid of the specific place
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz to gather.
+ *     responses:
+ *       200:
+ *         description: Returns a grid.
+ */
+routes.get(
+	`${commonPath}/gather/:id/:type`,
+	[param('id').exists().toInt().isNumeric(), param('type').exists().isString()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: GatherPublicGrid = await getGatherGrid(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			console.error(e.message);
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/dinoz/gather/{dinozId}:
+ *   get:
+ *     summary: Gather with the dinoz
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Dinoz
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz to gather.
+ *     responses:
+ *       200:
+ *         description: Returns a grid.
+ */
+routes.put(
+	`${commonPath}/gather/:id`,
+	[param('id').exists().toInt().isNumeric(), body('type').exists().isString(), body('box').exists().toArray()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: GatherResult = await gatherWithDinoz(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			console.error(e.message);
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
 
 export default routes;

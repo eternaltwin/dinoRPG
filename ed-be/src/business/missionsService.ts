@@ -2,7 +2,6 @@ import { Request } from 'express';
 import { Dinoz, DinozMission } from '../entity/index.js';
 import { getDinozMissionsInfo } from '../dao/dinozDao.js';
 import { placeList } from '../constants/index.js';
-import { checkCondition, rewarder } from '../utils/parser.js';
 import { npcList } from '../constants/npc.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import {
@@ -24,6 +23,8 @@ import { MissionSteps } from '@drpg/core/models/missions/missionSteps';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { MissionCheck } from '../models/missionCheck.js';
+import { rewarder } from '../utils/rewarder.js';
+import { checkCondition } from '../utils/checkConditions.js';
 
 export async function getMissionsList(req: Request): Promise<Array<MissionList>> {
 	const dinozId: number = parseInt(req.params.id);
