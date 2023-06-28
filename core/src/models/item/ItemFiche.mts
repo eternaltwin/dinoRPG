@@ -1,5 +1,5 @@
 import { ItemType } from '../enums/ItemType.mjs';
-import { ItemEffect } from '../enums/ItemEffect.mjs';
+import { ItemEffects } from './ItemEffects.mjs';
 
 export interface ItemFiche {
 	name?: string;
@@ -11,8 +11,5 @@ export interface ItemFiche {
 	itemType: ItemType;
 	isRare: boolean;
 	price: number;
-	effect?: {
-		category: ItemEffect;
-		value: number;
-	};
+	effect?: ItemEffects;
 }

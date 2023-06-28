@@ -1,13 +1,19 @@
 import { Request } from 'express';
 import { getPlayerInventoryDataRequest } from '../dao/playerDao.js';
-import { Dinoz, Player } from '../entity/index.js';
+import { Dinoz, DinozSkill, Player } from '../entity/index.js';
 import { itemList } from '../constants/item.js';
-import { addLife, getDinozFicheItemRequest } from '../dao/dinozDao.js';
+import { addLife, getActiveDinoz, getDinozFicheItemRequest, setDinoz } from '../dao/dinozDao.js';
 import { useItemDataRequest } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
+import gameConfig from '../config/game.config.js';
+import { getRandomLetter } from '../utils/index.js';
+import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { skillList } from '../constants/index.js';
+import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -33,7 +39,8 @@ export async function getAllItemsData(req: Request): Promise<Array<ItemFiche>> {
 					? Math.round(theItem.maxQuantity * 1.5)
 					: theItem.maxQuantity,
 			canBeUsedNow: theItem.canBeUsedNow,
-			canBeEquipped: theItem.canBeEquipped
+			canBeEquipped: theItem.canBeEquipped,
+			effect: theItem.effect
 		} as ItemFiche;
 	});
 
@@ -80,7 +87,51 @@ export async function useItem(req: Request): Promise<void> {
 			await addLife(dinoz.id, 1);
 			await useItemDataRequest(dinoz.player.id, item.itemId);
 			break;
+		case ItemEffect.EGG:
+			await hatchEgg(item.effect.race, item.effect.rare, req.user!.playerId);
+			await useItemDataRequest(dinoz.player.id, item.itemId);
+			break;
 		default:
 			throw new ErrorFormator(500, 'WTF');
 	}
+}
+
+async function hatchEgg(race: DinozRace, rare: boolean, playerId: number): Promise<void> {
+	//Check if player can hatch dinoz
+	const dinozActive: Array<Dinoz> | undefined = await getActiveDinoz(playerId);
+
+	if (dinozActive.length > 0) {
+		if (!dinozActive[0].player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
+			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+		}
+		if (
+			dinozActive[0].player.leader &&
+			dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus
+		) {
+			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+		}
+	}
+
+	//generate display
+	let randomDisplay: string = race.swfLetter;
+	for (let i = 0; i < 14; i++) {
+		randomDisplay += getRandomLetter(race.display![i]);
+	}
+
+	if (rare) {
+		randomDisplay =
+			randomDisplay.substring(0, 13) + getRandomLetter('9') + getRandomLetter('9') + randomDisplay.substring(15);
+	}
+
+	const newDinoz = new Dinoz(race.name, new Player(playerId), randomDisplay);
+
+	// Create a new dinoz that belongs to player
+	const dinozCreated: Dinoz = await setDinoz(newDinoz);
+
+	const skillsToAdd: Array<DinozSkillFiche> = Object.values(skillList).filter(
+		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
+	);
+
+	// Add base skills to created dinoz
+	await Promise.all(skillsToAdd.map(skill => addSkillToDinoz(new DinozSkill(dinozCreated, skill.skillId))));
 }

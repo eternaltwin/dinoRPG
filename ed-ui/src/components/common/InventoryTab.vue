@@ -83,14 +83,19 @@
 import { defineComponent } from 'vue';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemNameList } from '../../constants/index.js';
-import { InventoryService } from '../../services/index.js';
+import { InventoryService, PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { sessionStore } from '../../store/index.js';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 
 export default defineComponent({
 	name: 'InventoryTab',
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList
 		};
@@ -105,6 +110,22 @@ export default defineComponent({
 		isFull(item: ItemFiche): boolean {
 			return item.quantity! >= item.maxQuantity!;
 		},
+		async refreshDinozList(): Promise<void> {
+			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+
+			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
+
+			const newDinozList = commonData.dinoz.map(d => {
+				return d.id;
+			});
+			const oldDinozList = dinozList.map(d => {
+				return d.id;
+			});
+
+			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
+
+			this.sessionStore.setDinozList(dinozList);
+		},
 		async useItem(item: ItemFiche): Promise<void> {
 			if (item.quantity! > 0) {
 				EventBus.emit('isLoading', true);
@@ -116,6 +137,9 @@ export default defineComponent({
 				} catch (error) {
 					errorHandler.handle(error);
 					return;
+				}
+				if (item.effect && item.effect.category === ItemEffect.EGG) {
+					await this.refreshDinozList();
 				}
 			}
 		}
