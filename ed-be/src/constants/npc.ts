@@ -5,6 +5,7 @@ import {
 	BAOFAN,
 	DIANKORGSEY,
 	FORGERON,
+	MERGUEZ,
 	MINEUR,
 	MMEX,
 	PAPYJOE,
@@ -104,5 +105,12 @@ export const npcList: Record<string, Npc> = {
 		condition: NpcTrigger.ALWAYS,
 		data: DIANKORGSEY,
 		missions: M_DIANKORGSEY
+	},
+	MERGUEZ: {
+		name: 'merguez',
+		id: 12,
+		placeId: placeList.RUINES_ASHPOUK.placeId,
+		condition: NpcTrigger.ALWAYS,
+		data: MERGUEZ
 	}
 };

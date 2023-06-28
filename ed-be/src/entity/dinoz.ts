@@ -275,7 +275,7 @@ export class Dinoz {
 	}
 
 	public canGoThisPlace(place: Place): boolean {
-		return this.status.some(status => status.id === place.conditions);
+		return this.status.some(status => status.statusId === place.conditions);
 	}
 
 	public knowSkillId(skillId: number): boolean {

@@ -14,7 +14,7 @@ export type Rewarder =
 	  }
 	| {
 			rewardType: RewardEnum.ITEM;
-			value: string;
+			value: number;
 			quantity: number;
 			reverse?: boolean;
 	  }

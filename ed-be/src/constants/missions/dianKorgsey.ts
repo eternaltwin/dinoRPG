@@ -2,6 +2,7 @@ import { Mission } from '@drpg/core/models/missions/mission';
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { missionsList } from '../missions.js';
 import { placeList } from '../place.js';
+import { itemList } from '../item.js';
 
 export const M_DIANKORGSEY: Array<Mission> = [
 	// Missions 22 to 25
@@ -209,7 +210,7 @@ export const M_DIANKORGSEY: Array<Mission> = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: 'HOT_BREAD',
+				value: itemList.HOT_BREAD.itemId,
 				quantity: 1
 			}
 		],

@@ -7,7 +7,7 @@ import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 export const sessionStore = defineStore('sessionStore', {
 	state: (): StoreStateSession => ({
 		jwt: undefined,
-		money: undefined,
+		money: 0,
 		dinozList: [],
 		dinozCount: undefined,
 		playerId: undefined,

@@ -9,6 +9,7 @@ import { unlockDoubleSkills } from '../business/skillService.js';
 import { addPlayerMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } from '../dao/playerDao.js';
 import { changeItemQuantity, createItemDataRequest } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
+import { item } from '../test/utils/constants.js';
 
 export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<void> {
 	for (const reward of rewards) {
@@ -35,13 +36,19 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 		} else if (reward.rewardType === RewardEnum.GOLD) {
 			await addPlayerMoney(dinoz.player.id, reward.value);
 		} else if (reward.rewardType === RewardEnum.ITEM) {
-			const itemRewarded = Object.entries(itemList).find(item => item[0] === reward.value)![1];
+			const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value)!;
 			const playerShopData: Player = await getPlayerShopOneItemDataRequest(dinoz.player.id, itemRewarded.itemId);
 			const playerItemData: PlayerItem | undefined = playerShopData.items.find(
 				item => item.itemId === itemRewarded.itemId
 			);
 			if (playerItemData) {
-				await changeItemQuantity(dinoz.player.id, itemRewarded.itemId, reward.quantity);
+				await changeItemQuantity(
+					dinoz.player.id,
+					itemRewarded.itemId,
+					itemRewarded.maxQuantity - playerItemData!.quantity >= reward.quantity
+						? reward.quantity
+						: itemRewarded.maxQuantity - playerItemData!.quantity
+				);
 			} else {
 				await createItemDataRequest(new PlayerItem(playerShopData, itemRewarded.itemId!, reward.quantity));
 			}
