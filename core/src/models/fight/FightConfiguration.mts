@@ -2,6 +2,9 @@ import { FighterFiche } from './FighterFiche.mjs';
 
 // This structure needs to be exactly the same as ManagerConfiguration in native/src/fight/manager.rs
 export interface FightConfiguration {
+	// Seed (optional, only to replay a fight)
+	seed?: number;
+
 	// Flags
 	is_energy_enabled: boolean;
 	can_use_equipment: boolean;

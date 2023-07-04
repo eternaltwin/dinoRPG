@@ -1,6 +1,6 @@
 [package]
 name = "native-dinorpg"
-version = "0.1.0"
+version = "0.2.0"
 license = "ISC"
 edition = "2018"
 exclude = ["index.node"]
@@ -19,6 +19,7 @@ path = "src/main.rs"
 
 [dependencies]
 rand = "0.8.5"
+rand_chacha = "0.3.1"
 serde = { version = "1.0.145", features = ["derive"] }
 serde_json = "1.0.86"
 log = "0.4.0"

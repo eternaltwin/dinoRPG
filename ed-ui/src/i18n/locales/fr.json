@@ -1700,10 +1700,10 @@
       "33": "3ème limite brisée",
       "34": "Maudit !",
       "35": "Gant de Capture",
-      "36": "Médaille de Bronze",
-      "37": "Médaille d'Argent",
-      "38": "Médaille d'Or",
-      "39": "Médaille de Diamant",
+      "36": "Médaille de Bronze de Forcebrut",
+      "37": "Médaille d'Argent de Forcebrut",
+      "38": "Médaille d'Or de Forcebrut",
+      "39": "Médaille de Diamant de Forcebrut",
       "40": "Morceau d’Orbe Sombre",
       "41": "Goutte d’éther",
       "42": "Potion Anti-sedh",
@@ -1714,7 +1714,7 @@
       "47": "Vénérable",
       "48": "Charme de Feu",
       "49": "Charme Bao",
-      "52" : "Pelle Cassée"
+      "52" : "Pelle Améliorée Cassée"
     },
     "description": {
       "1": "Le Materiel d'Escalade permet à ce Dinoz de gravir les pentes escarpées.",

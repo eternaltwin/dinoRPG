@@ -1,6 +1,6 @@
 //=====================================================================================================================
-// FILE: fight.rs
-// PURPOSE: List the crates contained in the fight crate
+// FILE: fight/mod.rs
+// PURPOSE: List the modules contained in the fight crate
 // COPYRIGHT:
 //=====================================================================================================================
 

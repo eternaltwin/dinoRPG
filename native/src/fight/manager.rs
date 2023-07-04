@@ -1,6 +1,6 @@
 //=====================================================================================================================
-// FILE:
-// PURPOSE:
+// FILE:        fight/manager.rs
+// PURPOSE:     Structure to handle and manage the processing of a fight
 // COPYRIGHT:
 //=====================================================================================================================
 
@@ -8,13 +8,15 @@
 //                                             IMPORTED ITEMS
 //=====================================================================================================================
 
-use std::collections::{HashSet, HashMap};
-use serde::{Serialize, Deserialize};
-use rand::Rng;
 extern crate log;
 use log::{debug, info}; // add trace, warn and error as needed
+use rand::Rng;
+use rand::prelude::*;
+use rand_chacha::ChaCha8Rng;
+use serde::{Serialize, Deserialize};
+use std::collections::{HashSet, HashMap};
 
-use crate::fight::fighter::{Fighter, FighterConfiguration, FighterResult};
+use crate::fight::{fighter::{Fighter, FighterConfiguration, FighterResult}, elements::ElementIndex};
 
 //=====================================================================================================================
 //                                             LOCAL CONSTANTS
@@ -24,13 +26,16 @@ const MAX_TURNS: u32 = 1000;
 const TIMEBASE: u32 = 10; //base time, used to ensure compatibility
 const TIMECOEF: u32 = 10;
 
+const ATTACK_SCORE_BASE: u32 = 2;
+const DEFENSE_SCORE_BASE: u32 = 0;
+const ATTACK_GLOBAL_BONUS: f32 = 3.0;
+const ATTACK_GLOBAL_FACTOR: f32 = 0.9;
+const ASSAULT_POWER_BASE: u32 = 5;
+
 // Constants from MT's code but currently not used
 // const PROBA_MULTIPLIER: u32 = 1;
 // const INFINITE: u32 = TIMECOEF * 1000 * 1000;
 // const CYCLE: u32 = TIMECOEF * 6;
-// const ATTACK_SCORE_BASE: u32 = 2;
-// const DEFENSE_SCORE_BASE: u32 = 0;
-// const GORE: f32 = 0.9;
 
 type FighterId = usize;
 
@@ -63,6 +68,7 @@ type FighterId = usize;
 pub struct FightResult {
     // true: attackers won, false: defenders won
     winner: bool,
+    seed: u64,
     attackers: Vec<FighterResult>,
     defenders: Vec<FighterResult>,
 }
@@ -75,6 +81,9 @@ pub struct FightResult {
 #[derive(Deserialize, Debug, Default)]
 #[allow(dead_code)]
 pub struct ManagerConfiguration {
+    // Seed (optional)
+    seed: Option<u64>,
+
     // Flags    
     is_energy_enabled: bool,
     can_use_equipment: bool,
@@ -92,9 +101,13 @@ pub struct ManagerConfiguration {
 // PURPOSE: This structure defines the manager of the fight
 // NOTEs:   
 //---------------------------------------------------------------------------------------------------------------------
-#[derive(Debug, Default)]
+#[derive(Debug)]
 #[allow(dead_code)]
 pub struct Manager {
+    // Seed and random generator
+    seed: u64,
+    random_generator: ChaCha8Rng,
+
     // ID Generator
     next_id: usize,
 
@@ -168,19 +181,17 @@ impl Manager {
 // PARAMS:  - fighter_side (pool): side of the attacker picking a target
 // RETURN:  Fighter id of the target picked
 //---------------------------------------------------------------------------------------------------------------------
-    fn pick_target(&self, fighter_side: bool) -> FighterId {
-        let mut rng = rand::thread_rng();
-
+    fn pick_target(& mut self, fighter_side: bool) -> FighterId {
         // Attackers attack defenders
         let target_id: FighterId = if fighter_side {
             let defenders_number = self.fighters_defenders.len();
-            let random_number = rng.gen_range(0..=defenders_number-1);
+            let random_number = self.random_generator.gen_range(0..defenders_number);
             *self.fighters_defenders.iter().nth(random_number).unwrap()
         }
         // Defenders attack attackers
         else {
             let attackers_number = self.fighters_attackers.len();
-            let random_number = rng.gen_range(0..=attackers_number-1);
+            let random_number = self.random_generator.gen_range(0..attackers_number);
             *self.fighters_attackers.iter().nth(random_number).unwrap()
         };
 
@@ -228,7 +239,9 @@ impl Manager {
 
 
 //---------------------------------------------------------------------------------------------------------------------
-// PURPOSE: Calculate the hp lost by the target from an attacker's assault
+
+//---------------------------------------------------------------------------------------------------------------------
+// PURPOSE: Calculate the attack to a target 
 //          For an assault, the attack score is:
 //          BASE_ATTACK + 5 * attacker current element value + attacker assault bonus + attacker next assault bonus
 //          then * attacker assault multiplier * attacker next assault multiplier
@@ -236,15 +249,88 @@ impl Manager {
 //          BASE_DEFENSE + target defense value * (5 * attacker current element value) + target armor
 // PARAMS:  - attacker (&mut Fighter): mutable pointer of the attacker
 //          - target (&mut Fighter): mutable pointer of the target
+//          - attack_effect: array of the power effect of each element engaged in the attack]
+//            (0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
+//          - is_assault: specifies if the attack if an assault, if not it is a skill. This changes the bonuses involved in the calculation.
 // RETURN:  The number of hp lost by the target
 //---------------------------------------------------------------------------------------------------------------------
-    fn compute_hp_lost_from_assault(&self, attacker: &mut Fighter, _target: &mut Fighter) -> u32 {
-        // TODO rename _target to target once used
-        // let mut attack_score: u32 = ATTACK_SCORE_BASE;
-        // let mut defense_score: u32 = DEFENSE_SCORE_BASE;
-        let att_cur_element_index: usize = attacker.get_current_element_index(true);
+    fn attack_target(&mut self, attacker: &mut Fighter, target: &mut Fighter, attack_power: [u32; 6], is_assault: bool) -> u32 {
+        let mut attack_score: u32 = ATTACK_SCORE_BASE;
+        let mut defense_score: u32 = DEFENSE_SCORE_BASE;
+        let mut hp_lost: u32 = 0;
+        let mut sum_power: u32 = 0;
 
-        attacker.elements[att_cur_element_index]
+        for i in 0..=5 {
+            let temp_power = attack_power[i];
+            attack_score += temp_power;
+            sum_power += temp_power;
+
+            if temp_power > 0 {
+                // Add the element defense from the target to the defense score for the corresponding elements of the attack
+                defense_score += target.defense[i].ceil() as u32 * temp_power;
+                // Add the corresponding element bonus to the attack
+                if is_assault {
+                    debug!("[Manager:attack_target] Assault element ({:}) bonus: {:}", i, attacker.assault_elemental_bonus[i]);
+                    attack_score += attacker.assault_elemental_bonus[i];
+                }
+                else {
+                    debug!("[Manager:attack_target] Skill element ({:}) bonus: {:}", i, attacker.skill_elemental_bonus[i]);
+                    attack_score += attacker.skill_elemental_bonus[i];
+                }
+            }
+        }
+
+        // Apply global bonuses and multipliers to assaults
+        if is_assault {
+            debug!("[Manager:attack_target] Assault bonuses: all {:}, next {:}, all multiplier {:}, next multiplier {:}",
+                attacker.all_assaults_bonus, attacker.next_assault_bonus, attacker.all_assault_multiplier, attacker.next_assault_multiplier);
+            attack_score += attacker.all_assaults_bonus + attacker.next_assault_bonus;
+            attack_score = (attack_score as f32 * attacker.all_assault_multiplier * attacker.next_assault_multiplier).round() as u32;
+            // Reset the next assault bonus and multiplier
+            attacker.next_assault_bonus = 0;
+            attacker.next_assault_multiplier = 1.0;
+        }
+
+        // if multi-elements attack, defends with average, not sum
+        // TODO improve this comment
+        // TODO check for multi element attack defense
+        if sum_power > 0 {
+            defense_score = defense_score / sum_power;
+        }
+
+        // TODO check if attacker ignores armor
+        defense_score += target.armor;
+        debug!("[Manager:attack_target] Defense breakdown: armor: {:}, defenses {:?}", target.armor, target.defense);
+        debug!("[Manager:attack_target] Defense score: {:}", defense_score);
+
+        // Generate number between 0 and 1
+        let random: f32 = self.random_generator.gen_range(0.0..=1.0);
+        // Up to one third bonus
+        let attack_random_bonus = random * attack_score as f32 / ATTACK_GLOBAL_BONUS;
+
+        // Final attack score
+        debug!("[Manager:attack_target] Attack breakdown: power{:?}, attack score {:}, random bonus {:}, global factor {:}",
+            attack_power, attack_score, attack_random_bonus, ATTACK_GLOBAL_FACTOR);
+        attack_score = ((attack_random_bonus +  attack_score as f32 ) * ATTACK_GLOBAL_FACTOR).round() as u32;
+        debug!("[Manager:attack_target] Attack score: {:}", attack_score);
+
+        // Get first attack score
+        let mut damage_score: i32 = attack_score as i32 - defense_score as i32;
+        debug!("[Manager:attack_target] Intermediate damage score: {:} - {:} = {:}", attack_score, defense_score, damage_score);
+
+        // Apply attacker minimum damage
+        if damage_score < attacker.minimum_damage as i32 {
+            damage_score = attacker.minimum_damage as i32;
+        }
+        if damage_score < attacker.minimum_assault_damage as i32 {
+            damage_score = attacker.minimum_assault_damage as i32;
+        }
+        debug!("[Manager:attack_target] Applied minimum damage ({:} , {:}): damage score {:}", attacker.minimum_damage, attacker.minimum_assault_damage, damage_score);
+
+        // TODO much more to check here (dodge, etc)
+        hp_lost = damage_score as u32;
+
+        hp_lost
     }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -253,19 +339,21 @@ impl Manager {
 //          - target (&mut Fighter): mutable pointer of the target
 // RETURN:  None
 //---------------------------------------------------------------------------------------------------------------------
-    fn process_assault(&self, attacker: &mut Fighter, target: &mut Fighter) {
-        debug!("{:} launches an assault on {:}", attacker.id, target.id);
-        let hp_lost: u32 = self.compute_hp_lost_from_assault(attacker, target);
+    fn process_assault(&mut self, attacker: &mut Fighter, target: &mut Fighter) {
+        debug!("[Manager:process_assault] {:} launches an assault on {:}", attacker.id, target.id);
+
+        let current_element_index: ElementIndex = attacker.get_current_element_index(false);
+        let assault_power: [u32; 6] = attacker.compute_attack(current_element_index, ASSAULT_POWER_BASE);
+        debug!("[Manager:process_assault] Assault power is {:?}", assault_power);
+
+        let hp_lost: u32 = self.attack_target(attacker, target, assault_power, true);
         if target.life < hp_lost {
             target.life = 0;
         }
         else {
             target.life -= hp_lost;
         }
-        debug!("{:} loses {:} life points, only {:} left", target.id, hp_lost, target.life);
-        if target.life == 0 {
-            debug!("{:} died!", target.id);
-        }
+        debug!("[Manager:process_assault] {:} loses {:} life points, only {:} left", target.id, hp_lost, target.life);
     }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -274,11 +362,17 @@ impl Manager {
 // RETURN:  None
 //---------------------------------------------------------------------------------------------------------------------
     fn process_turn(&mut self, fighter: &mut Fighter) {
-        debug!("It's {:}'s turn", fighter.id);
+        debug!("[Manager:process_turn] It's {:}'s turn", fighter.id);
+
         let _target_id: FighterId = self.pick_target(fighter.side);
-        debug!("Its target is {:}", _target_id);
+        debug!("[Manager:process_turn] Its target is {:}", _target_id);
+
         let mut _target_new: Fighter = self.fighters_all[&_target_id].clone();
         self.process_assault(fighter, &mut _target_new);
+
+        // Increment element of the dinoz when done with its turn
+        fighter.increment_current_element_index();
+
         // Save the new state of the target
         *self.fighters_all.get_mut(&_target_id).unwrap() = _target_new;
     }
@@ -337,15 +431,24 @@ impl Manager {
 // RETURN:  The newly created manager
 //---------------------------------------------------------------------------------------------------------------------
     pub fn new() -> Self {
+        // Initiliaze the random generator and save the seed
+        let temp_seed: u64 = thread_rng().next_u64();
+        let temp_rng: ChaCha8Rng = ChaCha8Rng::seed_from_u64(temp_seed);
+        let mut temp_result = FightResult::default();
+        temp_result.seed = temp_seed;
         Self {
             // ID Generator
             next_id: 0,
+
+            // Seed and random generator
+            seed: temp_seed,
+            random_generator: temp_rng,
 
             // Configuration
             configuration: ManagerConfiguration::default(),
 
             // Result
-            fight_result: FightResult::default(),
+            fight_result: temp_result,
 
             // Fighter lists
             fighters_dead: HashSet::new(),
@@ -372,29 +475,49 @@ impl Manager {
         let mut _id: usize = 0;
 
         for _a in config.attackers.iter() {
-            let _f: Fighter = Fighter::from_config(_a, _id, true);
-            _attackers.insert(_f.id);
-            _all.insert(_f.id, _f.clone());
-            _all_order.push(_f.id);
+            let f: Fighter = Fighter::from_config(_a, _id, true);
+            info!("New attacker {:?}", f);
+            _attackers.insert(f.id);
+            _all.insert(f.id, f.clone());
+            _all_order.push(f.id);
             _id += 1;
         }
         for _d in config.defenders.iter() {
-            let _f: Fighter = Fighter::from_config(_d, _id, false);
-            _defenders.insert(_f.id);
-            _all.insert(_f.id, _f.clone());
-            _all_order.push(_f.id);
+            let f: Fighter = Fighter::from_config(_d, _id, false);
+            info!("New defender {:?}", f);
+            _defenders.insert(f.id);
+            _all.insert(f.id, f.clone());
+            _all_order.push(f.id);
             _id += 1;
         }
+
+        // Initiliaze the random generator and save the seed
+
+        let mut temp_seed: u64 = 0; 
+        let mut temp_rng: ChaCha8Rng = ChaCha8Rng::seed_from_u64(temp_seed);
+        let mut temp_result = FightResult::default();
+        if config.seed.is_some() {
+            temp_seed = config.seed.unwrap();
+        }
+        else {
+            temp_seed = thread_rng().next_u64();
+        }
+        temp_rng = ChaCha8Rng::seed_from_u64(temp_seed);
+        temp_result.seed = temp_seed;
 
         Self {
             // ID Generator
             next_id: 0,
 
+            // Seed and random generator
+            seed: temp_seed,
+            random_generator: temp_rng,
+            
             //Flags
             configuration: config,
 
             // Result
-            fight_result: FightResult::default(),
+            fight_result: temp_result,
 
             // Fighter lists
             fighters_dead: HashSet::new(),
@@ -455,12 +578,13 @@ impl Manager {
                 self.process_turn(&mut _fighter_new);
 
                 // Increase time
-                let mut _dt: u32 = (TIMEBASE as f32 * TIMECOEF as f32 * _fighter_new.time_multiplier * _fighter_new.time_elements_multipliers[0]).floor() as u32;
+                // TODO not final
+                let mut _dt: u32 = (TIMEBASE as f32 * TIMECOEF as f32 * _fighter_new.speed_global * _fighter_new.speed_per_element[0]).floor() as u32;
                 _fighter_new.time += _dt;
-                // debug!("{:}'s new time is {:}", _fighter_new.id, _fighter_new.time);
+                debug!("Fighter {:} new time is {:}", _fighter_new.id, _fighter_new.time);
 
                 // Update the fighter that just did its turn
-                *self.fighters_all.get_mut(&self.fighters_all_order[0]).unwrap() = _fighter_new;
+                *self.fighters_all.get_mut(&self.fighters_all_order.first().unwrap()).unwrap() = _fighter_new;
 
                 debug!("-- END OF TURN {:} --", i);
 

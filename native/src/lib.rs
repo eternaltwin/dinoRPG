@@ -17,9 +17,9 @@ extern crate log;
 use log::{debug, info}; // add trace, warn and error as needed
 use std::env;
 
-use crate::fight::manager::{Manager, ManagerConfiguration, FightResult};
-
 pub mod fight;
+
+use crate::fight::manager::{Manager, ManagerConfiguration, FightResult};
 
 //=====================================================================================================================
 //                                             LOCAL TYPES
@@ -62,11 +62,15 @@ fn randomizer(mut cx: FunctionContext) -> JsResult<JsNumber> {
 //---------------------------------------------------------------------------------------------------------------------
 fn fight_rust(mut cx: FunctionContext) -> JsResult<JsString> {
     info!("Calling fight_rust");
+    // Parse the configuration
     let configuration_json = cx.argument::<JsString>(0)?;
     let manager_configuration: ManagerConfiguration = serde_json::from_str(&configuration_json.value(&mut cx)).expect("JSON not well formatted");
     debug!("{:#?}", manager_configuration);
+    // Start the fight manager with the configuration
     let mut mngr: Manager = Manager::from_configuration(manager_configuration);
+    // Execute the fight
     mngr.execute_fight();
+    // Get the result and send it back to Node.
     let result: FightResult = mngr.get_fight_result();
     let result_handle: Handle<JsString> = cx.string(serde_json::to_string(&result).unwrap());
     Ok(result_handle)

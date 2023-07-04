@@ -99,11 +99,11 @@ function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightProcessRe
 		dinoz_id: dinozData.id,
 		start_life: dinozData.life,
 		base_elements: [
-			dinozData.nbrUpAir,
 			dinozData.nbrUpFire,
-			dinozData.nbrUpLightning,
+			dinozData.nbrUpWood,
 			dinozData.nbrUpWater,
-			dinozData.nbrUpWood
+			dinozData.nbrUpLightning,
+			dinozData.nbrUpAir
 		],
 		items: listDinozItems,
 		skills: listDinozSkills,

@@ -290,7 +290,7 @@ export class Dinoz {
 			isFrozen: this.isFrozen,
 			isSacrificed: this.isSacrificed,
 			level: this.level,
-			missionId: this.missions.find(mission => !mission.isFinished)?.missionId,
+			missionId: this.missions?.find(mission => !mission.isFinished)?.missionId,
 			canChangeName: this.canChangeName,
 			following: this.following,
 			life: this.life,
@@ -299,12 +299,12 @@ export class Dinoz {
 			maxExperience: levelList.find(level => level.id === this.level)!.experience,
 			race: Object.values(raceList).find(race => race.raceId === this.raceId)!,
 			placeId: this.placeId,
-			items: this.items.map(item => item.itemId),
-			status: this.status.map(status => status.statusId),
+			items: this.items?.map(item => item.itemId),
+			status: this.status?.map(status => status.statusId),
 			borderPlace: Object.values(placeList)
 				.find(place => place.placeId === this.placeId)!
 				.borderPlace.map(placeId => Object.values(placeList).find(place => place.placeId === placeId))
-				.filter(place => !place!.conditions || this.status.some(status => status.statusId === place!.conditions))
+				.filter(place => !place!.conditions || this.status?.some(status => status.statusId === place!.conditions))
 				.map(place => place!.placeId),
 			nbrUpFire: this.nbrUpFire,
 			nbrUpWood: this.nbrUpWood,

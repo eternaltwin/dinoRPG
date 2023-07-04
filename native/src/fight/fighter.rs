@@ -1,5 +1,5 @@
 //=====================================================================================================================
-// FILE:      fighter.rs
+// FILE:      fight/fighter.rs
 // PURPOSE:   Structure and function to handle a fighter
 // COPYRIGHT:
 //=====================================================================================================================
@@ -8,18 +8,30 @@
 //                                             IMPORTED ITEMS
 //=====================================================================================================================
 
+use log::{debug, info}; // add trace, warn and error as needed
 use serde::{Serialize, Deserialize};
 
-use crate::fight::elements::ElementsIndexes;
+use crate::fight::elements::{Elements, ElementIndex, OrderedElements};
 
 //=====================================================================================================================
 //                                             LOCAL CONSTANTS
 //=====================================================================================================================
 
 const DEFAULT_MAX_ENERGY: u32 = 100;
-const DEFENSES: [f32; 5] = [1.0, 0.5, 0.5, 1.5, 1.5];
 const MAXIMUM_MAX_ENERGY: u32 = 200;
 const MINIMUM_MAX_ENERGY: u32 = 0;
+
+// Helper to determine how one element contributes to the defense for all the elements (except Void)
+// It's a sliding window depending on where you are in the element order.
+// E.g.: Calculating for Fire will be [Fire, Wood, Water, Lightning, Air]
+// E.g.: Calculating for Air will be [Air, Fire, Wood, Water, Lightning]
+// First index corresponds to the element considered: it gives as much defense as its value
+// The next 2 are the elements that contribute the least to the element defense
+// The last 2 are the elements that contribute the most to the element defense
+// Fire contributes 1:1 to fire defense, wood & water contribute 2:1 and lightning & air contribute 1:1.5
+// Then rotate: wood contributes 1:1 to wood, water & lightning contribute 2:1 and air & fire contribute 1:1.5
+// Etc.
+const DEFENSE_CALCULATOR: [f32; 5] = [1.0, 0.5, 0.5, 1.5, 1.5];
 
 //=====================================================================================================================
 //                                             LOCAL TYPES
@@ -31,7 +43,7 @@ const MINIMUM_MAX_ENERGY: u32 = 0;
 //     Exception,
 // }
 
-// // Enum to define the duration of a status (?)
+// Enum to define the duration of a status (?)
 // enum StatusTime {
 //     DShort,
 //     DMedium,
@@ -39,20 +51,20 @@ const MINIMUM_MAX_ENERGY: u32 = 0;
 //     DInfinite,
 // }
 
-// // ?
+// ?
 // enum EventNotify {
 //     NSkill,
 //     NObject,
 // }
 
-// // ?
+// ?
 // enum Restriction {
 //     RObject,
 //     RMagicObject,
 //     REffects,
 // }
 
-// // Struct to store all the info of an attack
+// Struct to store all the info of an attack
 // struct AttackInfo {
 //     from: Fighter,
 //     target: Fighter,
@@ -63,18 +75,18 @@ const MINIMUM_MAX_ENERGY: u32 = 0;
 //     invoc: bool,
 // }
 
-// // Struct to store all the info of a status
+// Struct to store all the info of a status
 // struct StatusInfo {
-//     // todo status: Status,
+// todo status: Status,
 //     tine: i32,
 //     rem: i32,
 //     cycle: bool,
-//     // todo cancel: Void -> Void,
+// todo cancel: Void -> Void,
 // }
 
-// // Struct to store the info of an Event
-// // What is T
-// // What is N
+// Struct to store the info of an Event
+// What is T
+// What is N
 // struct Event<T,N> {
 //     priority: i32,
 //     proba: i32,
@@ -93,13 +105,13 @@ type StatusId = u32;
 //=====================================================================================================================
 
 // This structure needs to be exactly the same as FighterFiche in ed-be/src/models/fight/FighterFiche.ts
-#[derive(Deserialize, Debug, Default, Clone)]
+#[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct FighterConfiguration {
     // ID of the dinoz in the DB
     pub dinoz_id: u32,
     // Health of the dinoz at the start of the fight, it cannot go above it during a fight
     pub start_life: u32,
-    // The base elements of the dinoz
+    // The base elements of the dinoz (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
     base_elements: [u32; 5],
     // The items equipped by the dinoz
     items: Vec<ItemId>,
@@ -132,7 +144,6 @@ impl FighterResult {
 }
 
 #[derive(Debug, Clone)]
-#[allow(dead_code)]
 // Struct to define a Fighter (dino or monster)
 pub struct Fighter {
     // Used & Documented fields
@@ -144,20 +155,20 @@ pub struct Fighter {
     pub side: bool,
     // Original side of the fighter (in case it temporarily changes side)
     original_side: bool,
-    // Array of elements of the dinoz: Air, Fire, Lightning, Water, Wood
-    pub elements: [u32; 5],
-    // The order of elements of the dinoz: i.e contains the index of the elements it goes through
-    elements_order: [usize; 5],
-    // Index to determine the next element according to elements_order
-    elements_order_index: usize,
+
+    // Array of elements of the fighter ordered from highest to lowest
+    pub ordered_elements: OrderedElements,
     // The element of the fighter is locked
     is_locked_element: bool,
+
     // The current time of the fighter
     pub time: u32,
     // The current life of the fighter
     pub life: u32,
+
     // The start life of the fighter, it cannot go above its start life during a fight
     start_life: u32,
+
     // List of items carried by the fighter
     items: Vec<ItemId>,
     // List of skills of the fighter
@@ -165,69 +176,79 @@ pub struct Fighter {
     // List of status of the fighter
     status: Vec<StatusId>,
 
-    // WIP
-    // Armor of the fighter: does ??
-    armor: u32,
+    // Armor of the fighter: flat increase to the defense score when computing damage
+    pub armor: u32,
     // Defense of the fighter per element: see compute_defenses for how it is calculated
-    // Contains the defense of the dinoz for the elements in the following order:
-    // Air, Fire, Lightning, Water, Wood, Void
-    defense: [f32; 6],
+    // Contains the defense of the fighter for the elements in the following order:
+    // 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
+    pub defense: [f32; 6],
+
+    // Bonus to the assault attack score per element
+    pub assault_elemental_bonus: [u32; 6],
+    // Bonus to all assaults attack score
+    pub all_assaults_bonus: u32,
+    // Multiplier to all assaults attack score
+    pub all_assault_multiplier: f32,
+    // Bonus to the next assault attack score
+    pub next_assault_bonus: u32,
+    // Multiplier for the next assault attack score
+    pub next_assault_multiplier: f32,
+
+    // Bonus to the skill attack score per element
+    pub skill_elemental_bonus: [u32; 6],
+
+    // Global time multiplier, i.e speed
+    pub speed_global: f32,
+    // Global time multiplier, i.e speed for each element
+    pub speed_per_element: [f32; 5],
+
+    // Global minimum damage for an attack
+    pub minimum_damage: u32,
+    // Minimum damage for an assault, it can supersede minimum_assault_damage
+    pub minimum_assault_damage: u32,
 
     // Un-used & non-documented fields
-    default_max_energy: u32,
+    // default_max_energy: u32,
     // Number of attacks a Fighter chains (or just chained/is ongoing?)
-    combo: u32,
+    // combo: u32,
     // Infos
     //dino: undefined, // TODO Dino
     //monster: undefined, // TODO Monster
     // pub name: String,
 
-    max_energy: u32,
-    energy: u32,
-    delete_objects: bool, // true
+    // max_energy: u32,
+    // energy: u32,
+    // delete_objects: bool, // true
 
     // Bonuses
-    assaults_bonus: [u32; 5],
-    power_bonus: [u32; 5],
-    all_assaults_bonus: u32,
-    next_assault_bonus: u32,
-    next_assault_multiplier: f32,
-    assault_multiplier: f32,
 
     // Special Bonuses
-    multi_attack_chance: f32,
-    counter_attack_chance: f32,
-    dodge_chance: f32,
-    minimum_damage: u32,
+    // multi_attack_chance: f32,
+    // counter_attack_chance: f32,
+    // dodge_chance: f32,
 
-    minimum_assault_damage: u32,
-
-    // Global time multiplier, i.e speed
-    pub time_multiplier: f32,
     // function set_timeMultiplier ?
 
-    // Global time multiplier, i.e speed for each element
-    pub time_elements_multipliers: [f32; 5],
-    object_chance_multiplier: f32,
-    initiative_multiplier: f32,
-    recovery_multiplier: f32,
+    // object_chance_multiplier: f32,
+    // initiative_multiplier: f32,
+    // recovery_multiplier: f32,
 
-    perception: bool,
-    can_fight_intangible: bool,
-    can_fight_flying: bool,
-    can_escape: bool,
-    cancel_armor: bool,
-    mark_as_rock: bool,
-    costume_flag: bool,
-    fly_after_attack: bool,
-    super_dodge_chance: f32, // to dodge assault and events
+    // perception: bool,
+    // can_fight_intangible: bool,
+    // can_fight_flying: bool,
+    // can_escape: bool,
+    // cancel_armor: bool,
+    // mark_as_rock: bool,
+    // costume_flag: bool,
+    // fly_after_attack: bool,
+    // super_dodge_chance: f32, // to dodge assault and events
 
-    clone_default_life: u32,
+    // clone_default_life: u32,
     //next_attack: undefined, // TODO
     //next_event: undefined, // TODO
     //restrictions: undefined, // TODO Array of restriction
-    cant_dodge_assault: bool,
-    cant_reduce_max_energy: bool,
+    // cant_dodge_assault: bool,
+    // cant_reduce_max_energy: bool,
 
     //  Events
     //after_attack: undefined, // TODO List Attack Infos
@@ -252,17 +273,17 @@ pub struct Fighter {
 
     // Variables
     // cur_target: Fighter,
-    no_return: bool,
+    // no_return: bool,
     // status: undefined, // TODO
-    balanced: bool,
-    castle_attacks: u32,
+    // balanced: bool,
+    // castle_attacks: u32,
     // dino_ref: undefined, // TODO
-    hypnotized: bool,
-    under_fuca: bool,
-    invocations: u32,
-    has_used_fujin: bool,
+    // hypnotized: bool,
+    // under_fuca: bool,
+    // invocations: u32,
+    // has_used_fujin: bool,
 
-    has_whistle: bool
+    // has_whistle: bool
 }
 
 //=====================================================================================================================
@@ -270,31 +291,7 @@ pub struct Fighter {
 //=====================================================================================================================
 
 impl Fighter {
-// Documented local functions
 
-//---------------------------------------------------------------------------------------------------------------------
-// PURPOSE: Create an array of indexes of the elements of the fighter ordered from biggest to smallest
-// PARAMS:  - elements: [u32; 5] - expects the list of elements of the fighter in the following order:
-//            Air, Fire, Lightning, Water, Wood
-// RETURN:  List of the index of elements ordered from biggest element to smallest
-// EXAMPLE:
-//          elements: [0, 12, 5, 6, 2]
-//          ordered_indexes: [1 (for 12), 3 (for 6), 2 (for 5), 4 (for 2), 0 (for 0)]
-//---------------------------------------------------------------------------------------------------------------------
-    fn compute_elements_order(elements: [u32; 5]) -> [usize; 5] {
-        let mut ordered_elements = elements;
-        ordered_elements.sort_by(|a,b| b.cmp(a));
-        let mut ordered_indexes = [0; 5];
-        // Cannot use iterator in the first loop because the array is modified in the loop
-        for i in 0..=ordered_indexes.len()-1 {
-            for (j, element) in elements.iter().enumerate() {
-                if ordered_elements[i] == *element {
-                    ordered_indexes[i] = j;
-                }
-            }
-        }
-        ordered_indexes
-    }
 }
 
 // Un-used & non-documented local functions
@@ -323,7 +320,7 @@ impl Fighter {
 //---------------------------------------------------------------------------------------------------------------------
     pub fn from_config(config: &FighterConfiguration, fighter_id: usize, fighter_side: bool) -> Self {
         Self {
-            // USed & documented fields
+            // Used & documented fields
             id: fighter_id,
             dinoz_id: config.dinoz_id,
             side: fighter_side,
@@ -331,9 +328,8 @@ impl Fighter {
             start_life: config.start_life,
             life: config.start_life,
             time: 0,
-            elements: config.base_elements,
-            elements_order: Self::compute_elements_order(config.base_elements),
-            elements_order_index: 0,
+            ordered_elements: OrderedElements::from_elements_array_no_void(config.base_elements),
+            is_locked_element: false,
             items: config.items.clone(),
             skills: config.skills.clone(),
             status: config.status.clone(),
@@ -341,46 +337,55 @@ impl Fighter {
             // WIP
             armor: 0,
             defense: Self::compute_defenses(config.base_elements),
-
-            // Un-used & non-documented fields
-            time_multiplier: 1.0,
-            combo: 0,
-            object_chance_multiplier: 1.0,
-            initiative_multiplier: 1.0,
-            //
-            default_max_energy: DEFAULT_MAX_ENERGY,
-            max_energy: DEFAULT_MAX_ENERGY,
-            energy: DEFAULT_MAX_ENERGY,
-            recovery_multiplier: 1.0,
-            can_fight_flying: false,
-            can_fight_intangible: false,
-            costume_flag: false,
-            delete_objects: true,
-            balanced: false,
-            fly_after_attack: false,
-            hypnotized: false,
-            mark_as_rock: false,
-            minimum_assault_damage: 1,
-            // name: name,
-            no_return: false,
-            perception: false,
-            //
-            under_fuca: false,
-            time_elements_multipliers: [1.0, 1.0, 1.0, 1.0, 1.0],
-            assaults_bonus: [0, 0, 0, 0, 0],
-            power_bonus: [0, 0, 0, 0, 0],
+            speed_global: 1.0,
+            speed_per_element: [1.0, 1.0, 1.0, 1.0, 1.0],
+            assault_elemental_bonus: [0, 0, 0, 0, 0, 0],
             all_assaults_bonus: 0,
-            assault_multiplier: 1.0,
+            all_assault_multiplier: 1.0,
             next_assault_bonus: 0,
             next_assault_multiplier: 1.0,
-            counter_attack_chance: 1.0,
-            multi_attack_chance: 1.0,
-            invocations: 1,
-            has_used_fujin: false,
-            has_whistle: false,
-            dodge_chance: 1.0,
+            skill_elemental_bonus: [0, 0, 0, 0, 0, 0],
             minimum_damage: 1,
-            super_dodge_chance: 1.0,
+            minimum_assault_damage: 1,
+
+            // Un-used & non-documented fields
+            // combo: 0,
+            // object_chance_multiplier: 1.0,
+            // initiative_multiplier: 1.0,
+
+            // default_max_energy: DEFAULT_MAX_ENERGY,
+            // max_energy: DEFAULT_MAX_ENERGY,
+            // energy: DEFAULT_MAX_ENERGY,
+            // recovery_multiplier: 1.0,
+            // can_fight_flying: false,
+            // can_fight_intangible: false,
+            // costume_flag: false,
+            // delete_objects: true,
+            // balanced: false,
+            // fly_after_attack: false,
+            // hypnotized: false,
+            // mark_as_rock: false,
+            // minimum_assault_damage: 1,
+            // name: name,
+            // no_return: false,
+            // perception: false,
+
+            // under_fuca: false,
+            // assaults_bonus: [0, 0, 0, 0, 0],
+            // power_bonus: [0, 0, 0, 0, 0],
+            // all_assaults_bonus: 0,
+            // assault_multiplier: 1.0,
+            // next_assault_bonus: 0,
+            // next_assault_multiplier: 1.0,
+            // counter_attack_chance: 1.0,
+            // multi_attack_chance: 1.0,
+            // invocations: 1,
+            // has_used_fujin: false,
+            // has_whistle: false,
+            // dodge_chance: 1.0,
+            // minimum_damage: 1,
+            // super_dodge_chance: 1.0,
+
             // TODO
             // restrictions: undefined,
             // events: undefined,
@@ -390,9 +395,8 @@ impl Fighter {
             // defenses: undefined,
             // target_filters: undefined,
             // on_targeted: undefined,
-            //
-            //
-            clone_default_life: 1,
+            // clone_default_life: 1,
+
             // TODO
             // after_attack: undefined,
             // after_defense: undefined,
@@ -402,12 +406,11 @@ impl Fighter {
             // on_kill: undefined,
             // onlost: undefined,
             // before_turn: undefined,
-            castle_attacks: 1,
-            cancel_armor: false,
-            is_locked_element: false,
-            cant_dodge_assault: false,
-            cant_reduce_max_energy: false,
-            can_escape: true,
+            // castle_attacks: 1,
+            // cancel_armor: false,
+            // cant_dodge_assault: false,
+            // cant_reduce_max_energy: false,
+            // can_escape: true,
         }
     }
 
@@ -429,9 +432,8 @@ impl Fighter {
             original_side: side,
             start_life: life,
             life,
-            elements,
-            elements_order: Self::compute_elements_order(elements),
-            elements_order_index: 0,
+            ordered_elements: OrderedElements::from_elements_array_no_void(elements),
+            is_locked_element: false,
             time: 0,
             items: Vec::new(),
             skills: Vec::new(),
@@ -440,46 +442,54 @@ impl Fighter {
             // WIP
             armor: 0,
             defense: Self::compute_defenses(elements),
-
-            // Un-used & non-documented fields
-            time_multiplier: 1.0,
-            combo: 0,
-            object_chance_multiplier: 1.0,
-            initiative_multiplier: 1.0,
-            //
-            default_max_energy: DEFAULT_MAX_ENERGY, 
-            max_energy: DEFAULT_MAX_ENERGY,
-            energy: DEFAULT_MAX_ENERGY,
-            recovery_multiplier: 1.0,
-            can_fight_flying: false,
-            can_fight_intangible: false,
-            costume_flag: false,
-            delete_objects: true,
-            balanced: false,
-            fly_after_attack: false,
-            hypnotized: false,
-            mark_as_rock: false,
-            minimum_assault_damage: 1,
-            // name: name,
-            no_return: false,
-            perception: false,
-            //
-            under_fuca: false,
-            time_elements_multipliers: [1.0, 1.0, 1.0, 1.0, 1.0],
-            assaults_bonus: [0, 0, 0, 0, 0],
-            power_bonus: [0, 0, 0, 0, 0],
+            speed_global: 1.0,
+            speed_per_element: [1.0, 1.0, 1.0, 1.0, 1.0],
+            assault_elemental_bonus: [0, 0, 0, 0, 0, 0],
             all_assaults_bonus: 0,
-            assault_multiplier: 1.0,
+            all_assault_multiplier: 1.0,
             next_assault_bonus: 0,
             next_assault_multiplier: 1.0,
-            counter_attack_chance: 1.0,
-            multi_attack_chance: 1.0,
-            invocations: 1,
-            has_used_fujin: false,
-            has_whistle: false,
-            dodge_chance: 1.0,
+            skill_elemental_bonus: [0, 0, 0, 0, 0, 0],
             minimum_damage: 1,
-            super_dodge_chance: 1.0,
+            minimum_assault_damage: 1,
+
+            // Un-used & non-documented fields
+            // combo: 0,
+            // object_chance_multiplier: 1.0,
+            // initiative_multiplier: 1.0,
+
+            // default_max_energy: DEFAULT_MAX_ENERGY, 
+            // max_energy: DEFAULT_MAX_ENERGY,
+            // energy: DEFAULT_MAX_ENERGY,
+            // recovery_multiplier: 1.0,
+            // can_fight_flying: false,
+            // can_fight_intangible: false,
+            // costume_flag: false,
+            // delete_objects: true,
+            // balanced: false,
+            // fly_after_attack: false,
+            // hypnotized: false,
+            // mark_as_rock: false,
+            // minimum_assault_damage: 1,
+            // name: name,
+            // no_return: false,
+            // perception: false,
+
+            // under_fuca: false,
+            // assaults_bonus: [0, 0, 0, 0, 0],
+            // power_bonus: [0, 0, 0, 0, 0],
+            // all_assaults_bonus: 0,
+            // assault_multiplier: 1.0,
+            // next_assault_bonus: 0,
+            // next_assault_multiplier: 1.0,
+            // counter_attack_chance: 1.0,
+            // multi_attack_chance: 1.0,
+            // invocations: 1,
+            // has_used_fujin: false,
+            // has_whistle: false,
+            // dodge_chance: 1.0,
+            // minimum_damage: 1,
+            // super_dodge_chance: 1.0,
             // TODO
             // restrictions: undefined,
             // events: undefined,
@@ -491,7 +501,7 @@ impl Fighter {
             // on_targeted: undefined,
             //
             //
-            clone_default_life: 1,
+            // clone_default_life: 1,
             // TODO
             // after_attack: undefined,
             // after_defense: undefined,
@@ -501,49 +511,94 @@ impl Fighter {
             // on_kill: undefined,
             // onlost: undefined,
             // before_turn: undefined,
-            castle_attacks: 1,
-            cancel_armor: false,
-            is_locked_element: false,
-            cant_dodge_assault: false,
-            cant_reduce_max_energy: false,
-            can_escape: true,
+            // castle_attacks: 1,
+            // cancel_armor: false,
+            // cant_dodge_assault: false,
+            // cant_reduce_max_energy: false,
+            // can_escape: true,
 
         }
     }
 
 //---------------------------------------------------------------------------------------------------------------------
 // PURPOSE: Get the index of the current element of the fighter
-// PARAMS:  - do_increment (bool): Tells if the index should be moved to the Fighter's next element
-// RETURN:  The index of the current element of the fighter
+// PARAMS:  - do_increment (bool) - Tells if the index should be moved to the Fighter's next element after getting the element
+// RETURN:  ElementIndex - The index of the current element of the fighter
 //---------------------------------------------------------------------------------------------------------------------
-    pub fn get_current_element_index(&mut self, do_increment: bool) -> usize {
-        let current_element_index: usize = self.elements_order[self.elements_order_index];
+    pub fn get_current_element_index(&mut self, do_increment: bool) -> ElementIndex {
+        let index: ElementIndex = self.ordered_elements.get_current_element_index();
+        debug!("[Fighter {:}:get_current_element_index] Current element index is {:?}", self.id, index);
         if do_increment && !self.is_locked_element {
-            self.elements_order_index = (self.elements_order_index + 1) % 5;
+            let _ = &self.ordered_elements.increment_current_index();
+            debug!("[Fighter {:}:get_current_element_index] Do increment: next element index is {:?} (is locked: {:})", self.id, self.ordered_elements.get_current_element_index(), self.is_locked_element);
         }
-        current_element_index
+        index
+    }
+
+//---------------------------------------------------------------------------------------------------------------------
+// PURPOSE: Increment the index of the current element of the fighter
+// PARAMS:  None
+// RETURN:  ElementIndex - The index of the current element of the fighter
+//---------------------------------------------------------------------------------------------------------------------
+    pub fn increment_current_element_index(&mut self) -> ElementIndex {
+        debug!("[Fighter {:}:get_current_element_index] Current element index is {:?}", self.id, self.ordered_elements.get_current_element_index());
+        if !self.is_locked_element {
+            self.ordered_elements.increment_current_index();
+            debug!("[Fighter {:}:get_current_element_index] Do increment: next element is {:?} (is locked: {:})", self.id, self.ordered_elements.get_current_element_index(), self.is_locked_element);
+        }
+        self.ordered_elements.get_current_element_index()
     }
 
 //---------------------------------------------------------------------------------------------------------------------
 // PURPOSE: Calculate defenses of the fighter based on the elements
 // PARAMS:  - elements: ([u32; 5]) - expects the list of elements of the fighter in the following order
-//            Air, Fire, Lightning, Water, Wood
-// RETURN:  An array that corresponds to the defense of the fighter for elements in that following order:
-//          Air, Fire, Lightning, Water, Wood, Void
+//            0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
+// RETURN:  [f32;6] - An array that corresponds to the defense of the fighter with elements in the following order:
+//          0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
 //---------------------------------------------------------------------------------------------------------------------
-// TODO consider skills & statuses
+// TODO consider skills & statuses?
     pub fn compute_defenses(elements: [u32; 5]) -> [f32; 6] {
         let mut defense: [f32; 6] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
         for i in 0..=4 {
             let mut k: f32 = 0.0;
             for j in 0..=4 {
-                k += elements[(i+j)%5] as f32 * DEFENSES[j];
+                k += elements[(i+j)%5] as f32 * DEFENSE_CALCULATOR[j];
             }
             defense[i] = k;
-            defense[ElementsIndexes::Void as usize] += elements[i] as f32;
+            defense[ElementIndex::Void as usize] += elements[i] as f32;
         }
         defense
     }
+
+//---------------------------------------------------------------------------------------------------------------------
+// PURPOSE: Calculate the power value of an attack given its element type and power base
+//          The power value equals to: power_base * element
+//          For example, the power base of an assault is 5, so the result is 5 * element
+// PARAMS:  - element_type: u32 (0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
+//          - power_base: u32 - Base value of the attack. For example, 5 for an assault.
+// RETURN:  The power value of the attack at its proper element index in a [u32;6]
+//---------------------------------------------------------------------------------------------------------------------
+pub fn compute_attack(&self, element_type: ElementIndex, power_base: u32) -> [u32;6] {
+    let mut attack: [u32; 6] = [0, 0, 0, 0, 0, 0];
+    attack[element_type as usize] = power_base * self.ordered_elements.elements[element_type];
+    attack
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+// PURPOSE: Calculate the power value of a multi element attack given the element types type and power bases for each
+//          The element types of attack are inferred from the power bases (a power base of 0 means this element does not take part in the attack)
+// PARAMS:  - element_type: u32 (0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
+//          - power_base: [u32; 6]
+// RETURN:  The power value of the attack at its proper element index in a [u32;6]
+//---------------------------------------------------------------------------------------------------------------------
+pub fn compute_multi_element_attack(&self, power_base: [u32;6] ) -> [u32;6] {
+    let mut attack: [u32; 6] = power_base.clone();
+    let elements = self.ordered_elements.elements.to_array();
+    for i in 0..=5 {
+        attack[i] *= elements[i];
+    }
+    attack
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 // PURPOSE: Get the major element (i.e highest) index of the Fighter.
@@ -551,16 +606,17 @@ impl Fighter {
 // PARAMS:  None
 // RETURN:  The index of the major element of the fighter 
 //---------------------------------------------------------------------------------------------------------------------
-    pub fn get_major_element_index(self) -> u32 {
-        let mut best: u32 = self.elements[0];
-        let mut best_id: u32 = 0;
-        for n in 1..=self.elements.len() {
-            if self.elements[n] > best {
-                best = self.elements[n];
-                best_id = n as u32;
-            }
-        }
-        best_id
+    pub fn get_major_element_index(self) -> ElementIndex {
+        self.ordered_elements.elements.get_max_element_index()
+        // let mut best: u32 = self.elements[0];
+        // let mut best_id: u32 = 0;
+        // for n in 1..=self.elements.len() {
+        //     if self.elements[n] > best {
+        //         best = self.elements[n];
+        //         best_id = n as u32;
+        //     }
+        // }
+        // best_id
     }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -568,22 +624,22 @@ impl Fighter {
 // PARAMS:  - value (i32): The new maximum energy of the fighter
 // RETURN:  The newly set maximum energy of the fighter
 //---------------------------------------------------------------------------------------------------------------------
-    pub fn set_max_energy(mut self, value: i32) -> u32 {
-        if value > MAXIMUM_MAX_ENERGY as i32 {
-            self.max_energy = MAXIMUM_MAX_ENERGY;
-        }
-        else if value < MINIMUM_MAX_ENERGY as i32 {
-            self.max_energy = 1;
-        }
-        else {
-            self.max_energy = value as u32;
-        }
+    // pub fn set_max_energy(mut self, value: i32) -> u32 {
+    //     if value > MAXIMUM_MAX_ENERGY as i32 {
+    //         self.max_energy = MAXIMUM_MAX_ENERGY;
+    //     }
+    //     else if value < MINIMUM_MAX_ENERGY as i32 {
+    //         self.max_energy = 1;
+    //     }
+    //     else {
+    //         self.max_energy = value as u32;
+    //     }
 
-        if self.max_energy < DEFAULT_MAX_ENERGY && self.cant_reduce_max_energy {
-            self.max_energy = DEFAULT_MAX_ENERGY;
-        }
-        self.max_energy
-    }
+    //     if self.max_energy < DEFAULT_MAX_ENERGY && self.cant_reduce_max_energy {
+    //         self.max_energy = DEFAULT_MAX_ENERGY;
+    //     }
+    //     self.max_energy
+    // }
 
 //---------------------------------------------------------------------------------------------------------------------
 // PURPOSE: Set the energy of the Fighter and returns the value set. It cannot go above the maximum energy of the
@@ -591,18 +647,18 @@ impl Fighter {
 // PARAMS:  - value (i32): The new energy of the fighter
 // RETURN:  The newly set energy of the fighter
 //---------------------------------------------------------------------------------------------------------------------
-    pub fn set_energy(mut self, value: i32) -> u32 {
-        if value > self.max_energy as i32 {
-            self.energy = self.max_energy;
-        }
-        else if value < 0 {
-            self.energy = 0;
-        }
-        else {
-            self.energy = value as u32;
-        }
-        self.energy
-    }
+    // pub fn set_energy(mut self, value: i32) -> u32 {
+    //     if value > self.max_energy as i32 {
+    //         self.energy = self.max_energy;
+    //     }
+    //     else if value < 0 {
+    //         self.energy = 0;
+    //     }
+    //     else {
+    //         self.energy = value as u32;
+    //     }
+    //     self.energy
+    // }
 
 //---------------------------------------------------------------------------------------------------------------------
 // PURPOSE: Make a clone from the Fighter and give it a given Fighter id (fid)
@@ -610,40 +666,40 @@ impl Fighter {
 //          - start_life (u32): The life of the clone
 // RETURN:  A "clone" in game (not Rust clone) of the Fighter
 //---------------------------------------------------------------------------------------------------------------------
-    pub fn create_clone(self, fid: usize, start_life: u32) -> Fighter {
-        let mut c: Fighter = Self::new(fid, start_life, self.elements, self.original_side);
-        c.all_assaults_bonus = self.all_assaults_bonus;
-        c.armor = self.armor;
-        c.assaults_bonus = self.assaults_bonus;
-        c.can_fight_flying = self.can_fight_flying;
-        c.can_fight_intangible = self.can_fight_intangible;
-        c.cancel_armor = self.cancel_armor;
-        c.counter_attack_chance = self.counter_attack_chance;
-        c.defense = self.defense;
-        c.super_dodge_chance = self.super_dodge_chance;
-        c.mark_as_rock = self.mark_as_rock;
-        c.minimum_damage = self.minimum_damage;
-        c.minimum_assault_damage = self.minimum_assault_damage;
-        // todo c.monster = self.monster;
-        c.multi_attack_chance = self.multi_attack_chance;
-        c.object_chance_multiplier = self.object_chance_multiplier;
-        c.perception = self.perception;
-        c.power_bonus = self.power_bonus;
-        c.side = self.side;
-        c.time_multiplier = self.time_multiplier;
-        c.time_elements_multipliers = self.time_elements_multipliers;
-        c.start_life = self.start_life;
-        c.time = self.time;
-        c.balanced = self.balanced;
-        // todo
-        // if (self.dino != null) {
-        //     c.dino_ref = self.dino;
-        // }
-        // if (self.dino_ref != null) {
-        //     c.dino_ref = self.dino_ref;
-        // }
-        c
-    }
+    // todo
+    // pub fn create_clone(self, fid: usize, start_life: u32) -> Fighter {
+    //     let mut c: Fighter = Self::new(fid, start_life, self.elements, self.original_side);
+    //     c.all_assaults_bonus = self.all_assaults_bonus;
+    //     c.armor = self.armor;
+    //     c.assaults_bonus = self.assaults_bonus;
+    //     c.can_fight_flying = self.can_fight_flying;
+    //     c.can_fight_intangible = self.can_fight_intangible;
+    //     c.cancel_armor = self.cancel_armor;
+    //     c.counter_attack_chance = self.counter_attack_chance;
+    //     c.defense = self.defense;
+    //     c.super_dodge_chance = self.super_dodge_chance;
+    //     c.mark_as_rock = self.mark_as_rock;
+    //     c.minimum_damage = self.minimum_damage;
+    //     c.minimum_assault_damage = self.minimum_assault_damage;
+    //     // todo c.monster = self.monster;
+    //     c.multi_attack_chance = self.multi_attack_chance;
+    //     c.object_chance_multiplier = self.object_chance_multiplier;
+    //     c.perception = self.perception;
+    //     c.power_bonus = self.power_bonus;
+    //     c.side = self.side;
+    //     c.speed_global = self.speed_global;
+    //     c.speed_per_element = self.speed_per_element;
+    //     c.start_life = self.start_life;
+    //     c.time = self.time;
+    //     c.balanced = self.balanced;
+    //     if (self.dino != null) {
+    //         c.dino_ref = self.dino;
+    //     }
+    //     if (self.dino_ref != null) {
+    //         c.dino_ref = self.dino_ref;
+    //     }
+    //     c
+    // }
 
     // Un-used & non-documented exported functions
 

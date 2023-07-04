@@ -70,12 +70,14 @@ Runs the unit tests by calling `cargo test`. You can learn more about [adding te
 The directory structure of this project is:
 
 ```
-native-dinorpg/
+native/
 ├── Cargo.toml
 ├── README.md
 ├── index.node
 ├── package.json
 ├── src/
+|   ├── fight
+|   ├── main.rs
 |   └── lib.rs
 └── target/
 ```
@@ -102,9 +104,26 @@ The npm [manifest file](https://docs.npmjs.com/cli/v7/configuring-npm/package-js
 
 The directory tree containing the Rust source code for the project.
 
+### src/fight
+
+This folder contains the logic to handle a fight/
+
+### src/main.rs
+
+The Rust library's main module to be used outside of Node.
+Build it with:
+```bash
+  cargo build --bin main
+```
+
 ### src/lib.rs
 
-The Rust library's main module.
+The Rust library's main module to be used by Node.
+Build it with:
+```bash
+  cargo build --message-format=json-render-diagnostics
+```
+
 
 ### target/
 

@@ -13,6 +13,7 @@ export interface FightResult {
 export interface FightProcessResult {
 	// true: attackers won, false: defenders won
 	winner: boolean;
+	seed: number;
 	attackers: Array<FighterResultFiche>;
 	defenders: Array<FighterResultFiche>;
 }

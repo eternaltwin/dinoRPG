@@ -4,7 +4,7 @@
 			{{ $t(`missions.name.${missionName}`) }}
 		</p>
 		<div class="detail">
-			<template v-if="missionDetail.actionType === MissionEnum.TALK_TO">
+			<template v-if="missionDetail.actionType === MissionEnum.TALKTO">
 				{{ $t(`missions.actions.${missionDetail.actionType}`, { npc: $t(`missions.npc.${missionDetail.target}`) }) }}
 			</template>
 			<template v-else-if="missionDetail.actionType === MissionEnum.GOTO">
@@ -12,7 +12,7 @@
 					$t(`missions.actions.${missionDetail.actionType}`, { place: $t(`missions.place.${missionDetail.target}`) })
 				}}
 			</template>
-			<template v-else-if="missionDetail.actionType === MissionEnum.VALIDATE">
+			<template v-else-if="missionDetail.actionType === MissionEnum.FINISH_MISSION">
 				{{
 					$t(`missions.actions.${missionDetail.actionType}`, { place: $t(`missions.place.${missionDetail.target}`) })
 				}}

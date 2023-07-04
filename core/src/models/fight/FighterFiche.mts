@@ -4,7 +4,7 @@ export interface FighterFiche {
 	dinoz_id: number;
 	// Health of the dinoz at the start of the fight, it cannot go above it during a fight
 	start_life: number;
-	// The base elements of the dinoz
+	// The base elements of the dinoz (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
 	base_elements: Array<number>;
 	// The items equipped by the dinoz
 	items: Array<number>;
