@@ -731,11 +731,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.WINKS,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.WINKS,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -746,11 +746,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.WINKS,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.WINKS,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -761,11 +761,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.PLANAILLE,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.PLANAILLE,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -776,11 +776,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.PLANAILLE,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.PLANAILLE,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -791,11 +791,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.CASTIVORE,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.CASTIVORE,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -806,11 +806,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.CASTIVORE,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.CASTIVORE,
+			rare: true
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -821,11 +821,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.ROCKY,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.ROCKY,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -836,11 +836,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.ROCKY,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.ROCKY,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -851,11 +851,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.PTEROZ,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.PTEROZ,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -866,11 +866,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.PTEROZ,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.PTEROZ,
+			rare: true
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -881,11 +881,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.NUAGOZ,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.NUAGOZ,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -896,11 +896,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.NUAGOZ,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.NUAGOZ,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -911,11 +911,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SIRAIN,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SIRAIN,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -926,11 +926,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SIRAIN,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SIRAIN,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -941,11 +941,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.HIPPOCLAMP,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.HIPPOCLAMP,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -956,11 +956,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.HIPPOCLAMP,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.HIPPOCLAMP,
+			rare: true
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -971,11 +971,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.GORILLOZ,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.GORILLOZ,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -986,11 +986,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.GORILLOZ,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.GORILLOZ,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1001,11 +1001,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.WANWAN,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.WANWAN,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -1016,11 +1016,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.WANWAN,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.WANWAN,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1031,11 +1031,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.WANWAN,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.WANWAN,
+			rare: true
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -1046,11 +1046,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SANTAZ,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SANTAZ,
+			rare: false
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1061,11 +1061,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SANTAZ,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SANTAZ,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1076,11 +1076,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.FEROSS,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.FEROSS,
+			rare: false
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1091,11 +1091,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.FEROSS,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.FEROSS,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1106,11 +1106,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.FEROSS,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.FEROSS,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1121,11 +1121,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.KABUKI,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.KABUKI,
+			rare: false
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1136,11 +1136,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.KABUKI,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.KABUKI,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1151,11 +1151,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.MAHAMUTI,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.MAHAMUTI,
+			rare: false
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1166,11 +1166,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.MAHAMUTI,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.MAHAMUTI,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1181,11 +1181,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SOUFFLET,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SOUFFLET,
+			rare: false
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1196,11 +1196,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SOUFFLET,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SOUFFLET,
+			rare: true
+		},
 		maxQuantity: 8,
 		price: 0 // TODO double check
 	},
@@ -1211,11 +1211,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.TOUFUFU,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.TOUFUFU,
+			rare: false
+		},
 		maxQuantity: 2, // yes it's 2 in game
 		price: 30000
 	},
@@ -1226,11 +1226,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.TOUFUFU,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.TOUFUFU,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1241,11 +1241,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.QUETZU,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.QUETZU,
+			rare: false
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -1256,11 +1256,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.QUETZU,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.QUETZU,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1271,11 +1271,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SMOG,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SMOG,
+			rare: false
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1301,11 +1301,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SMOG,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SMOG,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1316,11 +1316,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.SMOG,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.SMOG,
+			rare: true
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1331,11 +1331,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.TRICERAGNON,
-      rare: false
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.TRICERAGNON,
+			rare: false
+		},
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1346,11 +1346,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
-    effect: {
-      category: ItemEffect.EGG,
-      race: raceList.TRICERAGNON,
-      rare: true
-    },
+		effect: {
+			category: ItemEffect.EGG,
+			race: raceList.TRICERAGNON,
+			rare: true
+		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
 	},
