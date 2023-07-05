@@ -5,13 +5,27 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: make install
-  - name: watch
-    command: make docker-watch
-    openMode: split-right
-  - name: stop
-    command: make docker-stop
-  - name: start
-    command: make docker-start
+  - init: make gitpodInstall
+ports:
+  - name: API
+    description: API from the back-end
+    port: 8081
+    visibility: private
+    onOpen: ignore
+  - name: Web App
+    description: The main application web server
+    port: 8080
+    visibility: public
+    onOpen: open-browser
+  - name: Database
+    description: Database of the application
+    port: 5432
+    visibility: private
+    onOpen: ignore
+  - name: EternalTwin
+    description: Application private's EternalTwin
+    port: 8081
+    visibility: public
+    onOpen: open-browser
 
 

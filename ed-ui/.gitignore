@@ -2,6 +2,7 @@
 node_modules
 /dist
 .rollup.cache
+.env.development
 
 # local env files
 .env.local

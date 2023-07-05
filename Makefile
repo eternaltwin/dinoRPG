@@ -17,6 +17,20 @@ build:
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml build
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up --no-start
 
+gitpodInstall:
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml build
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml up --no-start
+	cp ./Eternaltwin/etwin.toml.example ./Eternaltwin/etwin.toml
+	cp ./ed-be/config_development.toml.example ./ed-be/config_development.toml
+	cp ./ed-ui/.env.gitpod ./ed-ui/.env.development
+	docker start drpg_database
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg yarn install
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg_eternal_twin yarn install
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg_eternal_twin yarn etwin db upgrade
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg yarn build:native
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg yarn migration
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml up --no-recreate
+
 re-build:
 	docker exec -it drpg yarn build
 
@@ -26,6 +40,7 @@ re-build-debug:
 install: build
 	cp ./Eternaltwin/etwin.toml.example ./Eternaltwin/etwin.toml
 	cp ./ed-be/config_development.toml.example ./ed-be/config_development.toml
+	cp ./ed-ui/.env.development.example ./ed-ui/.env.development
 	docker start drpg_database
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn install
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn install

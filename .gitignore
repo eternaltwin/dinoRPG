@@ -44,4 +44,5 @@ package-lock.json
 # Config file
 etwin.toml
 config_development.toml
+.env.development
 
