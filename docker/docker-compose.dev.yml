@@ -4,7 +4,7 @@ services:
 
   drpg_database:
     ports:
-      - "5432:5432"
+      - 5432:5432
 
   drpg:
     ports:
@@ -18,7 +18,7 @@ services:
 
   drpg_eternal_twin:
     ports:
-      - "50320:50320"
+      - 50320:50320
     build:
       args:
         - UID=1000
