@@ -14,11 +14,10 @@ import { item } from '../test/utils/constants.js';
 export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<void> {
 	for (const reward of rewards) {
 		if (reward.rewardType === RewardEnum.STATUS) {
-			const statusId: number = Object.entries(statusList).find(status => status[0] === reward.value!.toUpperCase())![1];
 			if (reward.reverse) {
-				await removeStatusToDinoz(dinoz.id, statusId);
+				await removeStatusToDinoz(dinoz.id, reward.value);
 			} else {
-				await addStatusToDinoz(dinoz, statusId);
+				await addStatusToDinoz(dinoz, reward.value);
 			}
 		} else if (reward.rewardType === RewardEnum.CHANGE_ELEMENT) {
 			await setDinozNextElement(dinoz.id, reward.value);

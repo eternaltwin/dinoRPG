@@ -11,6 +11,7 @@
 			:dinozActions="dinozData.actions"
 			:missionId="dinozData.missionId"
 			@continueMission="continueMission()"
+			@endMission="endMission()"
 		/>
 		<TabPanel :dinozData="dinozData" />
 		<div class="footer" />
@@ -24,6 +25,7 @@ import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import { sessionStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -73,6 +75,12 @@ export default defineComponent({
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
 			this.sessionStore.setDinozList(dinozList);
+		},
+		endMission(): void {
+			this.dinozData.actions.splice(
+				this.dinozData.actions?.findIndex((action: ActionFiche) => action.name === 'mission'),
+				1
+			);
 		}
 	},
 	// Get dinoz data

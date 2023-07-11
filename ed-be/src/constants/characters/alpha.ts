@@ -1,6 +1,7 @@
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { statusList } from '../status.js';
 
 export const ALPHA: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -96,13 +97,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'CLIMBING_GEAR',
+			value: statusList.CLIMBING_GEAR,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'CLIMBING_GEAR'
+				value: statusList.CLIMBING_GEAR
 			}
 		]
 	},
@@ -111,13 +112,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'BUOY',
+			value: statusList.BUOY,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'BUOY'
+				value: statusList.BUOY
 			}
 		]
 	},
@@ -126,13 +127,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'SKULLY_MEMORY',
+			value: statusList.SKULLY_MEMORY,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'SKULLY_MEMORY'
+				value: statusList.SKULLY_MEMORY
 			}
 		]
 	},
@@ -141,13 +142,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'DINOPLAZA',
+			value: statusList.DINOPLAZA,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'DINOPLAZA'
+				value: statusList.DINOPLAZA
 			}
 		]
 	},
@@ -156,13 +157,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'JOVEBOZE',
+			value: statusList.JOVEBOZE,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'JOVEBOZE'
+				value: statusList.JOVEBOZE
 			}
 		]
 	},
@@ -171,13 +172,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'NENUPHAR_LEAF',
+			value: statusList.NENUPHAR_LEAF,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'NENUPHAR_LEAF'
+				value: statusList.NENUPHAR_LEAF
 			}
 		]
 	},
@@ -186,13 +187,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'RASCAPHANDRE_DECOY',
+			value: statusList.RASCAPHANDRE_DECOY,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'RASCAPHANDRE_DECOY'
+				value: statusList.RASCAPHANDRE_DECOY
 			}
 		]
 	},
@@ -201,13 +202,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'LANTERN',
+			value: statusList.LANTERN,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'LANTERN'
+				value: statusList.LANTERN
 			}
 		]
 	},
@@ -216,13 +217,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'FLIPPERS',
+			value: statusList.FLIPPERS,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'FLIPPERS'
+				value: statusList.FLIPPERS
 			}
 		]
 	},
@@ -231,13 +232,13 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'SYLVENOIRE_KEY',
+			value: statusList.SYLVENOIRE_KEY,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'SYLVENOIRE_KEY'
+				value: statusList.SYLVENOIRE_KEY
 			}
 		]
 	},

@@ -96,7 +96,7 @@ export default defineComponent({
 			return import.meta.env.MODE === 'development';
 		},
 		displayFight(): void {
-			this.fightText = `Combat vs ${this.fight.opponent}`;
+			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
 		}
 	},
 	created(): void {

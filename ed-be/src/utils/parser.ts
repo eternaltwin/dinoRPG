@@ -16,18 +16,10 @@ export function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 			result = dinoz.level < condition.value;
 			break;
 		case ConditionEnum.STATUS:
-			let status = Object.entries(statusList).find(status => status[0] === condition.value.toUpperCase()) as [
-				string,
-				number
-			];
-			result = dinoz.status.some(dinozStatus => dinozStatus.statusId === status[1]);
+			result = dinoz.status.some(dinozStatus => dinozStatus.statusId === condition.value);
 			break;
 		case ConditionEnum.FINISHED_MISSION:
-			let mission = Object.entries(missionsList).find(mission => mission[0] === condition.value.toUpperCase()) as [
-				string,
-				number
-			];
-			result = dinoz.missions.find(missions => missions.missionId === mission[1])?.isFinished;
+			result = dinoz.missions.find(missions => missions.missionId === condition.value)?.isFinished;
 			break;
 		case ConditionEnum.SKILL:
 			result = dinoz.skills.some(DinozSkill => DinozSkill.skillId === condition.value);
@@ -53,7 +45,9 @@ export function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 			result = (dinoz.player.items.find(item => item.itemId === condition.value)?.quantity ?? 0) > 0;
 			break;
 		case ConditionEnum.RANDOM:
-			result = true;
+			const score: number = Math.floor(Math.random() * condition.value);
+			const target: number = 0;
+			result = score == target;
 			break;
 		default:
 			break;

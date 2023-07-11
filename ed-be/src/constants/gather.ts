@@ -585,8 +585,8 @@ export const gather: Record<string, GatherData> = {
 					value: skillList.CHASSEUR_DE_GEANT.skillId,
 					operator: ConditionOperatorEnum.AND,
 					nextCondition: {
-						conditionType: ConditionEnum.RANDOM, //TODO: lieu caushemesh
-						value: 6
+						conditionType: ConditionEnum.PLACE_IS, //TODO: lieu caushemesh
+						value: placeList.NOWHERE.name
 					}
 				}
 			}

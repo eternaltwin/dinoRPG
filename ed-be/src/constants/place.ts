@@ -695,5 +695,11 @@ export const placeList: Record<string, Place> = {
 		borderPlace: [60],
 		alias: 69,
 		map: MapZone.STEPPE
+	},
+	NOWHERE: {
+		placeId: 999,
+		name: 'nowhere',
+		borderPlace: [],
+		map: MapZone.ALL
 	}
 };

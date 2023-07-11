@@ -58,8 +58,8 @@ export async function updateMission(req: Request): Promise<boolean> {
 	const status: string = req.body.status;
 
 	const dinoz: Dinoz = await getDinozMissionsInfo(dinozId);
-	const npc: Npc | undefined = Object.values(npcList).find(npc =>
-		npc.missions?.find(mission => mission.missionId === missionId)
+	const npc: Npc | undefined = Object.values(npcList).find(
+		npc => npc.missions?.find(mission => mission.missionId === missionId)
 	);
 	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 
@@ -144,8 +144,8 @@ async function checkMission(req: Request): Promise<MissionCheck> {
 		throw new ErrorFormator(500, 'This mission is already over');
 	}
 
-	const npc = Object.values(npcList).find(npc =>
-		npc.missions?.find(mission => mission.missionId === dinozMission.missionId)
+	const npc = Object.values(npcList).find(
+		npc => npc.missions?.find(mission => mission.missionId === dinozMission.missionId)
 	) as Npc;
 	const missionReference = Object.values(npc.missions!).find(
 		missions => missions.missionId === dinozMission.missionId
@@ -205,8 +205,8 @@ function getActualStep(dinoz: Dinoz): MissionSteps | undefined {
 	if (!missionDinoz) {
 		return;
 	}
-	const npc = Object.values(npcList).find(npc =>
-		npc.missions?.find(mission => mission.missionId === missionDinoz.missionId)
+	const npc = Object.values(npcList).find(
+		npc => npc.missions?.find(mission => mission.missionId === missionDinoz.missionId)
 	) as Npc;
 	const missionReference = Object.values(npc.missions!).find(
 		missions => missions.missionId === missionDinoz.missionId

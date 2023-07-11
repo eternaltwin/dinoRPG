@@ -1,5 +1,5 @@
 <template>
-	<Tippy theme="normal" tag="div" class="mission" @click="getInformation(mission)">
+	<Tippy theme="normal" tag="div" v-if="missionId" class="mission" @click="getInformation(mission)">
 		<p class="name">
 			{{ $t(`missions.name.${missionName}`) }}
 		</p>

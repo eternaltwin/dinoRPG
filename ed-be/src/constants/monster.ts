@@ -41,7 +41,7 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		gold: 10000,
 		xp: 25,
 		odds: 20,
-		level: 7,
+		level: 4,
 		zone: MapZone.DINOLAND
 	},
 	GREEN_GIANT: {
@@ -51,7 +51,7 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		gold: 10000,
 		xp: 10,
 		odds: 100,
-		level: 14,
+		level: 11,
 		zone: MapZone.DINOLAND
 	},
 	COQ: {
@@ -61,7 +61,7 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		gold: 10000,
 		xp: 10,
 		odds: 50,
-		level: 21,
+		level: 18,
 		zone: MapZone.DINOLAND
 	},
 	PIRASK: {

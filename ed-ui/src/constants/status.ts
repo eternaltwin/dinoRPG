@@ -55,7 +55,9 @@ export const statusList = {
 		53: 'qwhy',
 		54: 'qwood',
 		55: 'qtame',
-		56: 'dian'
+		56: 'dian',
+		57: 'shflag',
+		58: 'fflag'
 	},
 	id: {
 		matesc: 1,
@@ -113,7 +115,9 @@ export const statusList = {
 		qwhy: 53,
 		qwood: 54,
 		qtame: 55,
-		dian: 56
+		dian: 56,
+		shflag: 57,
+		fflag: 58
 	},
 	displayed: {
 		1: true,
@@ -171,6 +175,8 @@ export const statusList = {
 		53: false,
 		54: false,
 		55: false,
-		56: false
+		56: false,
+		57: false,
+		58: false
 	}
 };

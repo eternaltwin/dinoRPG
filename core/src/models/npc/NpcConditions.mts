@@ -6,8 +6,10 @@ export type Condition =
 			conditionType:
 				| ConditionEnum.MINLEVEL
 				| ConditionEnum.MAXLEVEL
+				| ConditionEnum.FINISHED_MISSION
 				| ConditionEnum.SKILL
-				| ConditionEnum.POSSESS_OBJECT;
+				| ConditionEnum.POSSESS_OBJECT
+				| ConditionEnum.STATUS;
 			value: number;
 			reverse?: boolean;
 			nextCondition?: Condition;
@@ -32,10 +34,12 @@ export type Condition =
 				ConditionEnum,
 				| ConditionEnum.MINLEVEL
 				| ConditionEnum.MAXLEVEL
+				| ConditionEnum.FINISHED_MISSION
 				| ConditionEnum.POSSESS_OBJECT
 				| ConditionEnum.RANDOM
 				| ConditionEnum.SKILL
 				| ConditionEnum.SCENARIO
+				| ConditionEnum.STATUS
 			>;
 			value: string;
 			reverse?: boolean;

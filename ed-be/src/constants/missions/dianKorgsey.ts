@@ -3,6 +3,7 @@ import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/mod
 import { missionsList } from '../missions.js';
 import { placeList } from '../place.js';
 import { itemList } from '../item.js';
+import { statusList } from '../status.js';
 
 export const M_DIANKORGSEY: Array<Mission> = [
 	// Missions 22 to 25
@@ -12,7 +13,7 @@ export const M_DIANKORGSEY: Array<Mission> = [
 		rewards: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'FLIPPERS'
+				value: statusList.FLIPPERS
 			},
 			{
 				rewardType: RewardEnum.EXPERIENCE,
@@ -79,7 +80,7 @@ export const M_DIANKORGSEY: Array<Mission> = [
 		missionName: 'rivals',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'dian_kswim'
+			value: missionsList.DIAN_KSWIM
 		},
 		rewards: [
 			{
@@ -130,7 +131,7 @@ export const M_DIANKORGSEY: Array<Mission> = [
 		missionName: 'kfood',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'dian_kswim'
+			value: missionsList.DIAN_KSWIM
 		},
 		rewards: [
 			{
@@ -192,11 +193,11 @@ export const M_DIANKORGSEY: Array<Mission> = [
 		missionName: 'poison',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'dian_kfood',
+			value: missionsList.DIAN_KFOOD,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: 'dian_rivals'
+				value: missionsList.DIAN_RIVALS
 			}
 		},
 		rewards: [

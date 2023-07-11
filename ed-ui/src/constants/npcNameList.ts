@@ -11,5 +11,6 @@ export const npcNameList: Array<string> = [
 	'baobob',
 	'baofan',
 	'dian',
-	'merguez'
+	'merguez',
+	'shaman'
 ];

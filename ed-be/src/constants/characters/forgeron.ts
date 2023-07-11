@@ -1,5 +1,6 @@
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { statusList } from '../status.js';
 
 export const FORGERON: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -11,16 +12,16 @@ export const FORGERON: Readonly<Record<string, NpcData>> = {
 		stepName: 'repair',
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'BROKEN_SHOVEL'
+			value: statusList.BROKEN_SHOVEL
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'SHOVEL'
+				value: statusList.SHOVEL
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'BROKEN_SHOVEL',
+				value: statusList.BROKEN_SHOVEL,
 				reverse: true
 			},
 			{
@@ -34,16 +35,16 @@ export const FORGERON: Readonly<Record<string, NpcData>> = {
 		stepName: 'repair2',
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'BROKEN_ENHANCED_SHOVEL'
+			value: statusList.BROKEN_ENHANCED_SHOVEL
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'ENHANCED_SHOVEL'
+				value: statusList.ENHANCED_SHOVEL
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'BROKEN_ENHANCED_SHOVEL',
+				value: statusList.BROKEN_ENHANCED_SHOVEL,
 				reverse: true
 			},
 			{

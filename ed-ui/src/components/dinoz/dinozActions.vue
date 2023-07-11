@@ -88,6 +88,8 @@ import { formatText } from '../../utils/formatText.js';
 import { mixin } from '../../mixin/mixin.js';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -211,8 +213,12 @@ export default defineComponent({
 		},
 		endMission(): void {
 			this.missionReward = undefined;
-			this.mission = undefined;
-			this.$router.go(0);
+			const dinozId = parseInt(this.$route.params.id as string);
+			const dinozToUpdate: DinozFiche = this.sessionStore.getDinoz(dinozId);
+			dinozToUpdate.missions = undefined;
+			dinozToUpdate.missionId = undefined;
+			this.sessionStore.setDinoz(dinozToUpdate);
+			this.$emit('endMission');
 		}
 	},
 	computed: {
@@ -221,6 +227,11 @@ export default defineComponent({
 				return missionsList[this.missionId!];
 			}
 			return undefined;
+		}
+	},
+	watch: {
+		storeMission: function (missions: MissionHUD) {
+			this.mission = missions;
 		}
 	}
 });

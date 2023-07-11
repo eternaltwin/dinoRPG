@@ -8,7 +8,7 @@ export type Rewarder =
 			reverse?: boolean;
 	  }
 	| {
-			rewardType: RewardEnum.STATUS | RewardEnum.EPIC;
+			rewardType: RewardEnum.EPIC;
 			value: string;
 			reverse?: boolean;
 	  }
@@ -16,6 +16,11 @@ export type Rewarder =
 			rewardType: RewardEnum.ITEM;
 			value: number;
 			quantity: number;
+			reverse?: boolean;
+	  }
+	| {
+			rewardType: RewardEnum.STATUS;
+			value: number;
 			reverse?: boolean;
 	  }
 	| {

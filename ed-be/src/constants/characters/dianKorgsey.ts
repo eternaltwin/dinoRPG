@@ -1,5 +1,6 @@
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { statusList } from '../status.js';
 
 export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -17,7 +18,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'QWHY'
+				value: statusList.QWHY
 			}
 		]
 	},
@@ -27,7 +28,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'QWOOD'
+				value: statusList.QWOOD
 			}
 		]
 	},
@@ -37,7 +38,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'QTAME'
+				value: statusList.QTAME
 			}
 		]
 	},
@@ -46,19 +47,19 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		nextStep: ['service'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'QTAME',
+			value: statusList.QTAME,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'QWOOD',
+				value: statusList.QWOOD,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'QWHY',
+					value: statusList.QWHY,
 					operator: ConditionOperatorEnum.AND,
 					nextCondition: {
 						conditionType: ConditionEnum.STATUS,
-						value: 'DIAN',
+						value: statusList.DIAN,
 						reverse: true
 					}
 				}
@@ -71,7 +72,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'DIAN'
+				value: statusList.DIAN
 			}
 		]
 	},
@@ -80,7 +81,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		nextStep: [],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'DIAN'
+			value: statusList.DIAN
 		}
 	},
 	nothing: {

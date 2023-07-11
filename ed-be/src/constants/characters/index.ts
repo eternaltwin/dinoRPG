@@ -8,4 +8,5 @@ export * from './mineur.js';
 export * from './mmex.js';
 export * from './papyJoe.js';
 export * from './prof.js';
+export * from './shaman.js';
 export * from './sofia.js';

@@ -1,4 +1,4 @@
-import { missionsList, placeList } from '../index.js';
+import { missionsList, placeList, statusList } from '../index.js';
 import { Mission } from '@drpg/core/models/missions/mission';
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 
@@ -142,7 +142,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionName: 'kilksk',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'BAO_BOB_kilpir',
+			value: missionsList.BAO_BOB_KILPIR,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
@@ -188,7 +188,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionName: 'kilang',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'kilksk',
+			value: missionsList.BAO_BOB_KILKSK,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
@@ -274,7 +274,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionName: 'bigpch',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'kilksk'
+			value: missionsList.BAO_BOB_KILKSK
 		},
 		rewards: [
 			{
@@ -347,7 +347,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionName: 'rally2',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'rally1'
+			value: missionsList.BAO_BOB_RALLY1
 		},
 		rewards: [
 			{
@@ -393,7 +393,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionName: 'rally3',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'rally2'
+			value: missionsList.BAO_BOB_RALLY2
 		},
 		rewards: [
 			{
@@ -449,7 +449,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionName: 'rally4',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'rally3'
+			value: missionsList.BAO_BOB_RALLY3
 		},
 		rewards: [
 			{
@@ -485,11 +485,11 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionName: 'tour',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'rally4',
+			value: missionsList.BAO_BOB_RALLY4,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'flippers'
+				value: statusList.FLIPPERS
 			}
 		},
 		rewards: [

@@ -1,5 +1,6 @@
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { statusList } from '../status.js';
 
 export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -28,11 +29,11 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'buoy',
+				value: statusList.BUOY,
 				operator: ConditionOperatorEnum.OR,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'CLIMBING_GEAR'
+					value: statusList.CLIMBING_GEAR
 				}
 			}
 		}
@@ -47,12 +48,12 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'buoy',
+				value: statusList.BUOY,
 				reverse: true,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'CLIMBING_GEAR',
+					value: statusList.CLIMBING_GEAR,
 					reverse: true
 				}
 			}
@@ -67,12 +68,12 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'buoy',
+				value: statusList.BUOY,
 				reverse: true,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'CLIMBING_GEAR'
+					value: statusList.CLIMBING_GEAR
 				}
 			}
 		}
@@ -86,11 +87,11 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'buoy',
+				value: statusList.BUOY,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'CLIMBING_GEAR',
+					value: statusList.CLIMBING_GEAR,
 					reverse: true
 				}
 			}
@@ -101,11 +102,11 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		nextStep: [],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'buoy',
+			value: statusList.BUOY,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'climbing_gear'
+				value: statusList.CLIMBING_GEAR
 			}
 		}
 	},
@@ -124,7 +125,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'buoy'
+				value: statusList.BUOY
 			}
 		]
 	},
@@ -135,7 +136,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'climbing_gear'
+				value: statusList.CLIMBING_GEAR
 			}
 		]
 	},
@@ -169,7 +170,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		nextStep: ['stone_yes', 'stone_no'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'old_stone'
+			value: statusList.OLD_STONE
 		}
 	},
 	gant: {
@@ -177,7 +178,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		nextStep: ['menu'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'zors_glove'
+			value: statusList.ZORS_GLOVE
 		}
 	},
 	stone_yes: {
@@ -186,12 +187,12 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'old_stone',
+				value: statusList.OLD_STONE,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'ashpouk_totem'
+				value: statusList.ASHPOUK_TOTEM
 			}
 		]
 	},

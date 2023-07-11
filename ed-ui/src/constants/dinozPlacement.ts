@@ -1,6 +1,6 @@
 export const dinozPlacement: Placement = {
 	noFliped: {
-		1: {
+		0: {
 			baby: {
 				top: 50,
 				left: 47
@@ -10,7 +10,7 @@ export const dinozPlacement: Placement = {
 				left: 22
 			}
 		},
-		3: {
+		1: {
 			baby: {
 				top: 40,
 				left: 60
@@ -22,7 +22,7 @@ export const dinozPlacement: Placement = {
 		}
 	},
 	fliped: {
-		1: {
+		0: {
 			baby: {
 				top: 60,
 				left: 137
@@ -32,7 +32,7 @@ export const dinozPlacement: Placement = {
 				left: 162
 			}
 		},
-		3: {
+		1: {
 			baby: {
 				top: 60,
 				left: 130

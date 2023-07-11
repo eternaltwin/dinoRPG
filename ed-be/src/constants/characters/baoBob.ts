@@ -1,5 +1,6 @@
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { statusList } from '../status.js';
 
 export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -29,7 +30,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'quest2',
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'FLIPPERS',
+			value: statusList.FLIPPERS,
 			reverse: true
 		},
 		nextStep: []
@@ -38,12 +39,12 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'quest3',
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'SYLVENOIRE_KEY',
+			value: statusList.SYLVENOIRE_KEY,
 			reverse: true,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'FLIPPERS'
+				value: statusList.FLIPPERS
 			}
 		},
 		nextStep: ['where2', 'how', 'quest3', 'danger', 'bye']
@@ -82,15 +83,15 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		nextStep: [],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'FLOWERING_BRANCH',
+			value: statusList.FLOWERING_BRANCH,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'ICE_PIECE',
+				value: statusList.ICE_PIECE,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'CORAIL'
+					value: statusList.CORAIL
 				}
 			}
 		}
@@ -100,17 +101,17 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		nextStep: ['potion'],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'FLOWERING_BRANCH',
+			value: statusList.FLOWERING_BRANCH,
 			reverse: true,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'ICE_PIECE',
+				value: statusList.ICE_PIECE,
 				reverse: true,
 				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'CORAIL',
+					value: statusList.CORAIL,
 					reverse: true
 				}
 			}
@@ -118,22 +119,22 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'FLOWERING_BRANCH',
+				value: statusList.FLOWERING_BRANCH,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'ICE_PIECE',
+				value: statusList.ICE_PIECE,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'CORAIL',
+				value: statusList.CORAIL,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'ANTI_SEDH_POTION'
+				value: statusList.ANTI_SEDH_POTION
 			},
 			{
 				rewardType: RewardEnum.SCENARIO,

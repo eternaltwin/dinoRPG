@@ -104,7 +104,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'kilgou',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_fish'
+			value: missionsList.PAPY_JOE_FISH
 		},
 		rewards: [
 			{
@@ -145,7 +145,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'kilwlf',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_kilgou'
+			value: missionsList.PAPY_JOE_KILGOU
 		},
 		rewards: [
 			{
@@ -219,7 +219,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'fflow',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_fish'
+			value: missionsList.PAPY_JOE_FISH
 		},
 		rewards: [
 			{
@@ -265,7 +265,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'kbook',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_fflow'
+			value: missionsList.PAPY_JOE_FFLOW
 		},
 		rewards: [
 			{
@@ -311,7 +311,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'msg',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_kbook'
+			value: missionsList.PAPY_JOE_KBOOK
 		},
 		rewards: [
 			{
@@ -362,7 +362,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'lettre',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_msg'
+			value: missionsList.PAPY_JOE_MSG
 		},
 		rewards: [
 			{
@@ -398,10 +398,10 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'kilglu',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_kilwlf',
+			value: missionsList.PAPY_JOE_KILWLF,
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
-				value: 7
+				value: 4
 			}
 		},
 		rewards: [
@@ -443,10 +443,10 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'kilgnt',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_kilglu',
+			value: missionsList.PAPY_JOE_KILGLU,
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
-				value: 14
+				value: 11
 			}
 		},
 		rewards: [
@@ -488,10 +488,10 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionName: 'kilcoq',
 		condition: {
 			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: 'papy_joe_kilgnt',
+			value: missionsList.PAPY_JOE_KILGNT,
 			nextCondition: {
 				conditionType: ConditionEnum.MINLEVEL,
-				value: 21
+				value: 18
 			}
 		},
 		rewards: [

@@ -1,5 +1,6 @@
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { statusList } from '../status.js';
 
 export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -19,7 +20,7 @@ export const BAOFAN: Readonly<Record<string, NpcData>> = {
 		stepName: 'nothing',
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'WATER_CHARM'
+			value: statusList.WATER_CHARM
 		},
 		nextStep: []
 	},
@@ -27,13 +28,13 @@ export const BAOFAN: Readonly<Record<string, NpcData>> = {
 		stepName: 'yes',
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'WATER_CHARM',
+			value: statusList.WATER_CHARM,
 			reverse: true
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'WATER_CHARM'
+				value: statusList.WATER_CHARM
 			}
 		],
 		nextStep: ['spirit']

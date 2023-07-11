@@ -1,4 +1,4 @@
-export const itemNameList = {
+export const itemNameList: Record<number, string> = {
 	// when the corresponding asset exists, the item has been marked with an x in comment
 	1: 'potion_irma', // x
 	2: 'potion_angel', // x

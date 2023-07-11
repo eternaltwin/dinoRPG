@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { missionsList } from '../../constants/index.js';
+import { itemNameList, missionsList } from '../../constants/index.js';
 import { sessionStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
@@ -97,7 +97,8 @@ export default defineComponent({
 		items(): Array<string | undefined> {
 			const isItem: Array<Rewarder> | undefined = this.missionReward.filter(el => el.rewardType === RewardEnum.ITEM);
 			return isItem.map(el => {
-				if (el.rewardType === RewardEnum.ITEM) return el.value.toLowerCase();
+				if (el.rewardType === RewardEnum.ITEM)
+					return Object.entries(itemNameList).find(item => item[0] === el.value)![1];
 			});
 		},
 		epic(): string | undefined {

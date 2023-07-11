@@ -1,5 +1,6 @@
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { statusList } from '../status.js';
 
 export const SOFIA: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -39,7 +40,7 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 			value: 50,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'broken_limit_1',
+				value: statusList.BROKEN_LIMIT_1,
 				reverse: true
 			}
 		}
@@ -50,7 +51,7 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'broken_limit_1'
+				value: statusList.BROKEN_LIMIT_1
 			}
 		]
 	},
@@ -66,10 +67,10 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 			value: 50,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'broken_limit_1',
+				value: statusList.BROKEN_LIMIT_1,
 				nextCondition: {
 					conditionType: ConditionEnum.STATUS,
-					value: 'ether_drop',
+					value: statusList.ETHER_DROP,
 					reverse: true
 				}
 			}
@@ -81,7 +82,7 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'ether_drop'
+				value: statusList.ETHER_DROP
 			}
 		]
 	},

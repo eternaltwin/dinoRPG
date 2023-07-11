@@ -12,6 +12,7 @@ export const missionsList: Record<number, string> = {
 	10: 'kilgnt',
 	11: 'kilcoq',
 	12: 'kilpir',
+	//BAOBO
 	13: 'troc',
 	14: 'kilksk',
 	15: 'kilang',
@@ -21,8 +22,21 @@ export const missionsList: Record<number, string> = {
 	19: 'rally3',
 	20: 'rally4',
 	21: 'tour',
+	//DIAN
 	22: 'kswim',
 	23: 'rivals',
 	24: 'kfood',
-	25: 'poison'
+	25: 'poison',
+	//SHAMAN
+	26: 'init1',
+	27: 'init2',
+	28: 'burn',
+	29: 'barbec',
+	30: 'joke',
+	31: 'defend',
+	32: 'shipmt',
+	33: 'sales',
+	34: 'ritual',
+	35: 'hiero',
+	36: 'pigeon'
 };

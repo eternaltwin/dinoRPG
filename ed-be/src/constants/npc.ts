@@ -10,9 +10,10 @@ import {
 	MMEX,
 	PAPYJOE,
 	PROFESSOR,
+	SHAMAN,
 	SOFIA
 } from './characters/index.js';
-import { M_BAO_BOB, M_DIANKORGSEY, M_PAPY_JOE } from './missions/index.js';
+import { M_BAO_BOB, M_DIANKORGSEY, M_PAPY_JOE, M_SHAMAN_MOU } from './missions/index.js';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcTrigger } from '@drpg/core/models/enums/NpcTrigger';
 
@@ -112,5 +113,13 @@ export const npcList: Record<string, Npc> = {
 		placeId: placeList.RUINES_ASHPOUK.placeId,
 		condition: NpcTrigger.ALWAYS,
 		data: MERGUEZ
+	},
+	SHAMAN: {
+		name: 'shaman',
+		id: 13,
+		placeId: placeList.FOSSELAVE.placeId,
+		condition: NpcTrigger.ALWAYS,
+		data: SHAMAN,
+		missions: M_SHAMAN_MOU
 	}
 };

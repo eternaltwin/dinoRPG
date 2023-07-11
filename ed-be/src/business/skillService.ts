@@ -88,11 +88,12 @@ export async function learnSkill(req: Request): Promise<number> {
 		// Third filter : Remove race skills (ex : fly from Pteroz)
 		const newUnlockableSkills: Array<DinozSkillUnlockable> = Object.values(skillList)
 			.filter(skill => skill.unlockedFrom?.some(skillId => skillIdList.includes(skillId)))
-			.filter(skill =>
-				skill.unlockedFrom?.every(
-					skillId =>
-						skillIdList.includes(skillId) || dinozSkills.skills.some(dinozSkill => dinozSkill.skillId === skillId)
-				)
+			.filter(
+				skill =>
+					skill.unlockedFrom?.every(
+						skillId =>
+							skillIdList.includes(skillId) || dinozSkills.skills.some(dinozSkill => dinozSkill.skillId === skillId)
+					)
 			)
 			.filter(skill => !skill.raceId || skill.raceId.includes(dinozSkills.raceId))
 			.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.skillId));
@@ -256,8 +257,8 @@ export function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): A
 	// Sixth filtre : Remove race skills (ex : fly from Pteroz)
 	return learnableSkills
 		.filter(skill => skill.tree === treeType)
-		.filter(skill =>
-			skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
+		.filter(
+			skill => skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
 		)
 		.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.skillId))
 		.filter(skill => !dinoz.skillsUnlockable.some(dinozSkill => dinozSkill.skillId === skill.skillId))

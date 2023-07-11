@@ -1,6 +1,7 @@
 import { placeList } from './place.js';
 import { DigData } from '@drpg/core/models/dinoz/DigData';
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { statusList } from './status.js';
 
 export const digTreasures: Readonly<Record<string, DigData>> = {
 	BASALT: {
@@ -9,17 +10,17 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'BASALT_SHARD'
+				value: statusList.BASALT_SHARD
 			}
 		],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'BASALT_SHARD',
+			value: statusList.BASALT_SHARD,
 			reverse: true,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'ZORS_GLOVE',
+				value: statusList.ZORS_GLOVE,
 				reverse: true
 			}
 		}
@@ -30,17 +31,17 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'PURE_WATER'
+				value: statusList.PURE_WATER
 			}
 		],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'PURE_WATER',
+			value: statusList.PURE_WATER,
 			reverse: true,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'ZORS_GLOVE',
+				value: statusList.ZORS_GLOVE,
 				reverse: true
 			}
 		}
@@ -51,17 +52,17 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'SWAMP_MUD'
+				value: statusList.SWAMP_MUD
 			}
 		],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'SWAMP_MUD',
+			value: statusList.SWAMP_MUD,
 			reverse: true,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'ZORS_GLOVE',
+				value: statusList.ZORS_GLOVE,
 				reverse: true
 			}
 		}
@@ -72,17 +73,17 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: 'OLD_STONE'
+				value: statusList.OLD_STONE
 			}
 		],
 		condition: {
 			conditionType: ConditionEnum.STATUS,
-			value: 'OLD_STONE',
+			value: statusList.OLD_STONE,
 			reverse: true,
 			operator: ConditionOperatorEnum.AND,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: 'ASHPOUK_TOTEM',
+				value: statusList.ASHPOUK_TOTEM,
 				reverse: true
 			}
 		}
