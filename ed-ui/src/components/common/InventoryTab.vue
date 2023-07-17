@@ -132,8 +132,11 @@ export default defineComponent({
 				const dinozId = this.$route.params.id as string;
 				try {
 					await InventoryService.useInventoryItem(item.itemId, parseInt(dinozId));
-					EventBus.emit('isLoading', false);
+					this.allItemsData = await InventoryService.getAllItemsData();
+					this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
 					EventBus.emit('refreshDinoz', true);
+					EventBus.emit('refreshMoney', true);
+					EventBus.emit('isLoading', false);
 				} catch (error) {
 					errorHandler.handle(error);
 					return;

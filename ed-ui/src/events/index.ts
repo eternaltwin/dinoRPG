@@ -9,6 +9,7 @@ type Events = {
 	resurrect: boolean;
 	toast: toast;
 	refreshDinoz: boolean;
+	refreshMoney: boolean;
 };
 
 type toast = {

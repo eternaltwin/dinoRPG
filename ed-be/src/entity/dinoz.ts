@@ -22,6 +22,8 @@ import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { Place } from '@drpg/core/models/place/Place';
 import { GatherData } from '@drpg/core/models/gather/gatherData';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 @Entity()
 export class Dinoz {
@@ -239,6 +241,14 @@ export class Dinoz {
 		return Object.values(placeList).find(place => place.placeId === this.placeId)!;
 	}
 
+	get useRice(): Partial<Dinoz> {
+		return {
+			id: this.id,
+			name: '?',
+			experience: 0
+		};
+	}
+
 	public numberOfGatheringClick(gridInformation: GatherData): number {
 		let click = 0;
 		switch (gridInformation.type) {
@@ -280,6 +290,52 @@ export class Dinoz {
 
 	public knowSkillId(skillId: number): boolean {
 		return this.skills.some(skill => skill.skillId === skillId);
+	}
+
+	public heal(lifeToAdd: number): Partial<Dinoz> {
+		const lifeHealed = this.maxLife - this.life > lifeToAdd ? lifeToAdd : this.maxLife - this.life;
+		if (lifeHealed === 0) throw new ErrorFormator(400, 'AlreadyAtMaxHealth');
+		if (this.life === 0) throw new ErrorFormator(400, 'DinozIsDead');
+		this.life += lifeHealed;
+		return {
+			id: this.id,
+			life: this.life
+		};
+	}
+
+	public resurrect(): Partial<Dinoz> {
+		if (this.life > 0) {
+			throw new ErrorFormator(400, 'DinozNotDead');
+		}
+		this.life = 1;
+		return {
+			id: this.id,
+			life: this.life
+		};
+	}
+
+	public learnNextSphereSkill(element: ElementType): number {
+		const sphereSkills = Object.values(skillList)
+			.filter(skill => skill.isSphereSkill)
+			.filter(skill => skill.element.some(el => el === element))
+			.sort((a, b) => a.skillId - b.skillId);
+		//Search last sphere skills from this element learnt
+		const lastKnownSphere = this.skills
+			.filter(skill => sphereSkills.some(s => skill.skillId === s.skillId))
+			.map(skill => skill.skillId)
+			.sort()
+			.pop();
+
+		if (!lastKnownSphere) {
+			return sphereSkills[0].skillId;
+		}
+
+		let testSphereToLean = sphereSkills.find(skill => skill.unlockedFrom?.some(s => s === lastKnownSphere));
+		if (!testSphereToLean) {
+			throw new ErrorFormator(400, `AlreadySphere`);
+		}
+
+		return testSphereToLean.skillId;
 	}
 
 	public toDinozFiche(): DinozFiche {

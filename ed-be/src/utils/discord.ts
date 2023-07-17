@@ -5,6 +5,8 @@ import { EmbedBuilder, WebhookClient } from 'discord.js';
 import { Config } from '@drpg/core/models/config/Config';
 
 export async function postError(e: ErrorFormator, res: Response) {
+	//Do no send Discord notification if error is to display toast
+	if (e.errorCode === 400) return;
 	try {
 		const config = getConfig() as Config;
 		if (!config.discord.channel) return;

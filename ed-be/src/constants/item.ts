@@ -2,6 +2,7 @@ import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { raceList } from './race.js';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.
@@ -114,6 +115,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 10,
+		effect: {
+			category: ItemEffect.HEAL,
+			value: 15
+		},
 		price: 500 // TODO double check
 	},
 	// SOS Helmet: increases armor by 1 in a fight
@@ -275,7 +280,11 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CURSED,
 		isRare: true,
 		maxQuantity: 5, // TODO double check
-		price: 5000
+		price: 5000,
+		effect: {
+			category: ItemEffect.SPECIAL,
+			value: 'ointment'
+		}
 	},
 	// Land of Ashes (Ember): turns the combat zone into a suffocating furnace.
 	// All Dinoz with a Fire element of less than 10 points will no longer use elements
@@ -365,6 +374,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5,
+		effect: {
+			category: ItemEffect.HEAL,
+			value: 200
+		},
 		price: 1234 // TODO double check
 	},
 
@@ -600,6 +613,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: true,
 		maxQuantity: 100,
+		effect: {
+			category: ItemEffect.SPHERE,
+			value: ElementType.FIRE
+		},
 		price: 0 // TODO double check
 	},
 	// Wood Sphere
@@ -610,6 +627,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: true,
 		maxQuantity: 100,
+		effect: {
+			category: ItemEffect.SPHERE,
+			value: ElementType.WOOD
+		},
 		price: 0 // TODO double check
 	},
 	// Water Sphere
@@ -620,6 +641,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: true,
 		maxQuantity: 100,
+		effect: {
+			category: ItemEffect.SPHERE,
+			value: ElementType.WATER
+		},
 		price: 0 // TODO double check
 	},
 	// Lightning Sphere
@@ -630,6 +655,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: true,
 		maxQuantity: 100,
+		effect: {
+			category: ItemEffect.SPHERE,
+			value: ElementType.LIGHTNING
+		},
 		price: 0 // TODO double check
 	},
 	// Air Sphere
@@ -640,6 +669,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: true,
 		maxQuantity: 100,
+		effect: {
+			category: ItemEffect.SPHERE,
+			value: ElementType.AIR
+		},
 		price: 0 // TODO double check
 	},
 	// Demon Ticket
@@ -660,6 +693,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 9999,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 1000
+		},
 		price: 0
 	},
 	// Some of those eggs may not exist, yet they should be added for consistency
@@ -1361,6 +1398,10 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: true,
+		effect: {
+			category: ItemEffect.SPECIAL,
+			value: 'rice'
+		},
 		maxQuantity: 5,
 		price: 5000
 	},

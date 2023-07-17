@@ -76,6 +76,11 @@ export default defineComponent({
 			errorHandler.handle(err);
 			return;
 		}
+		EventBus.on('refreshMoney', async e => {
+			if (!e) return;
+			const newMoney = await PlayerService.getPlayerMoney();
+			this.sessionStore.setMoney(parseInt(newMoney));
+		});
 	}
 });
 </script>

@@ -13,6 +13,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
+import { getPlayerMoney } from '../dao/playerDao.js';
 
 const routes: Router = Router();
 
@@ -41,6 +42,22 @@ routes.get(`${commonPath}/commondata`, async (req: Request, res: Response) => {
 	try {
 		const response: PlayerCommonData = await getCommonData(req);
 		return res.status(200).send(response);
+	} catch (err) {
+		const e = err as ErrorFormator;
+		console.error(e.message);
+		await postError(e, res);
+		res.status(e.errorCode).send(e.message);
+	}
+});
+
+routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response: Player = await getPlayerMoney(req.user!.playerId!);
+		return res.status(200).send(response.money.toString());
 	} catch (err) {
 		const e = err as ErrorFormator;
 		console.error(e.message);

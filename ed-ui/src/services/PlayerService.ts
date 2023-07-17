@@ -43,6 +43,12 @@ export const PlayerService = {
 			.get(`/player/search/${name}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	getPlayerMoney(): Promise<string> {
+		return http()
+			.get(`/player/getmoney`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
 interface PlayerSearch {

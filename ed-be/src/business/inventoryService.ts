@@ -1,8 +1,12 @@
 import { Request } from 'express';
-import { getPlayerInventoryDataRequest } from '../dao/playerDao.js';
+import { addPlayerMoney, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { Dinoz, DinozSkill, Player } from '../entity/index.js';
 import { itemList } from '../constants/item.js';
-import { addLife, getActiveDinoz, getDinozFicheItemRequest, setDinoz } from '../dao/dinozDao.js';
+import {
+	getActiveDinoz,
+	getDinozFicheItemRequest,
+	setDinoz,
+} from '../dao/dinozDao.js';
 import { useItemDataRequest } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -12,8 +16,10 @@ import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import gameConfig from '../config/game.config.js';
 import { getRandomLetter } from '../utils/index.js';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
-import { skillList } from '../constants/index.js';
+import { skillList, statusList } from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
+import { applySkillEffect } from './skillService.js';
+import { removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -70,30 +76,29 @@ export async function useItem(req: Request): Promise<void> {
 
 	switch (item.effect?.category) {
 		case ItemEffect.HEAL:
-			const lifeAdded = dinoz.maxLife - dinoz.life > item.effect.value ? item.effect.value : dinoz.maxLife - dinoz.life;
-			if (lifeAdded === 0) {
-				throw new ErrorFormator(400, 'AlreadyAtMaxHealth');
-			}
-			if (dinoz.life === 0) {
-				throw new ErrorFormator(400, 'DinozIsDead');
-			}
-			await addLife(dinoz.id, lifeAdded);
-			await useItemDataRequest(dinoz.player.id, item.itemId);
+			await setDinoz(dinoz.heal(item.effect.value));
 			break;
 		case ItemEffect.RESURRECT:
-			if (dinoz.life > 0) {
-				throw new ErrorFormator(400, 'DinozNotDead');
-			}
-			await addLife(dinoz.id, 1);
-			await useItemDataRequest(dinoz.player.id, item.itemId);
+			await setDinoz(dinoz.resurrect());
 			break;
 		case ItemEffect.EGG:
 			await hatchEgg(item.effect.race, item.effect.rare, req.user!.playerId);
-			await useItemDataRequest(dinoz.player.id, item.itemId);
+			break;
+		case ItemEffect.SPHERE:
+			const skillToLearn = dinoz.learnNextSphereSkill(item.effect.value);
+			await applySkillEffect(dinoz, Object.values(skillList).find(skill => skill.skillId === skillToLearn)!);
+			await addSkillToDinoz(new DinozSkill(new Dinoz(dinozId), skillToLearn));
+			break;
+		case ItemEffect.GOLD:
+			await addPlayerMoney(dinoz.player.id, item.effect.value);
+			break;
+		case ItemEffect.SPECIAL:
+			await useSpecialItem(dinoz, item);
 			break;
 		default:
 			throw new ErrorFormator(500, 'WTF');
 	}
+	await useItemDataRequest(dinoz.player.id, item.itemId);
 }
 
 async function hatchEgg(race: DinozRace, rare: boolean, playerId: number): Promise<void> {
@@ -134,4 +139,22 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number): Promi
 
 	// Add base skills to created dinoz
 	await Promise.all(skillsToAdd.map(skill => addSkillToDinoz(new DinozSkill(dinozCreated, skill.skillId))));
+}
+
+async function useSpecialItem(dinoz: Dinoz, item: ItemFiche): Promise<void> {
+	if (item.effect?.category !== ItemEffect.SPECIAL) return;
+	switch (item.effect.value) {
+		case 'ointment':
+			if (!dinoz.status.some(status => status.statusId === statusList.CURSED)) {
+				throw new ErrorFormator(400, `NotCursed`);
+			}
+			await removeStatusToDinoz(dinoz.id, statusList.CURSED);
+			break;
+		case 'rice':
+			await setDinoz(dinoz.useRice);
+			break;
+		default:
+			throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);
+	}
+	return;
 }

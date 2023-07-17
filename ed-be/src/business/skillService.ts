@@ -338,7 +338,7 @@ export async function unlockDoubleSkills(dinozId: number): Promise<void> {
 	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
 }
 
-async function applySkillEffect(dinoz: Dinoz, skill: DinozSkillFiche): Promise<void> {
+export async function applySkillEffect(dinoz: Dinoz, skill: DinozSkillFiche): Promise<void> {
 	if (skill.effects) {
 		await effectParser(skill.effects, dinoz);
 	}
