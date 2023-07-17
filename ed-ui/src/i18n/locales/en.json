@@ -20,8 +20,8 @@
 		"tooManyActiveDinoz": "You already have too many active dinoz."
 	},
 	"dig": {
-		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
-		"status": "En creusant, votre dinoz a trouvé l'objet {item}. Il apparaîtra dans ses status. Félicitations !"
+		"gold": "Your dinoz found {gold} :gold: by digging here.",
+		"status": "While digging your dinoz found the following item {item}. It will appear in its status. Congratulations!"
 	},
 	"api": "You can consult our API to test it. Don't forget to take your JWT authentication tokens:",
 	"alpha": {
@@ -31,7 +31,7 @@
 			"part2": "All information are available on "
 		},
 		"issue": "Please report bugs found on ",
-		"shop": "Afficher le dinoz"
+		"shop": "Show dinoz"
 	},
 	"footer": {
 		"developpers": "Development",
@@ -76,34 +76,34 @@
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
 			"levelup": "Your Dinoz earned enough experience to reach the next level. Click this action to increase the power of your Dinoz.",
 			"resurrect": "Your Dinoz is dead, thus you need to resurrect it before you can have it fight again.",
-			"dig": "Votre Dinoz peut **creuser** à cet endroit avec la pelle pour y trouver peut-être un trésor.",
-			"cueille": "Votre Dinoz peut **cueillir** de belles plantes dans ce lieu. Certaines sont encore inconnues, alors il vaudrait mieux éviter de les manger !",
-			"anniv": "Utilisez vos Tickets Anniversaire pour trouver des trésors rares, et peut-être des oeufs !",
-			"fish": "Votre Dinoz peut **pêcher** de nombreux poissons en ce lieu. Attention au grand requin noir maléfique des abysses pestilentielles !",
-			"hunt": "Votre Dinoz peut chasser les **animaux sauvages** que l'on trouve aux alentours, et ainsi récuperer de precieux ingrédients.",
-			"seek": "Votre Dinoz peut chercher des **artefacts anciens** dans le sol de ce lieu. Ils sont rares, mais ils ont une grande valeur !",
-			"energy": "Ce lieu est rempli de puissantes énergies élémentaires, votre Dinoz pourra donc en absorber ici.",
-			"xmas": "Vous pouvez jouer au Chasse-Neige en utilisant vos Tickets de Noël, et gagner de nombreux cadeaux !",
-			"tictac": "Utilisez vos Tickets Taque pour trouver peut-être un trésor trés rare !",
-			"labo": "Chercher l'antidote dans le laboratoire de l'Archidorogon pour soigner le vénérable.",
-			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !"
+			"dig": "Your Dinoz can **dig up** this place with the shovel to find a treasure maybe.",
+			"cueille": "Your Dinoz can **gather** beautiful plants in this place. Some are still unknown, it's better to avoid eating them!",
+			"anniv": "Use your Anniversary Tickets to find rare treasures, and maybe eggs!",
+			"fish": "Your Dinoz can **catch** many fish here. Beware of the great evil black shark of pestilential abysses!",
+			"hunt": "Your Dinoz can hunt **wild animals** that are found nearby, and thus receive valuable ingredients.",
+			"seek": "Your Dinoz can search for **ancient artifacts** in the ground of this place. They are rare, but have great value!",
+			"energy": "This place is filled with powerful elementary energy, your Dinoz will be able to absorb it here.",
+			"xmas": "You can play the Snowhunter using your Christmas Tickets, and win lots of gifts!",
+			"tictac": "Use your Ticket Taque to try to find a rare treasure !",
+			"labo": "Search for the antidote in the Archidorogon lab to heal the Venerable.",
+			"party": "Use magical rockets to create an astonishing firework and win plenty of treasures !"
 		},
 		"name": {
 			"fight": "Fight",
 			"follow": "Follow",
 			"levelup": "Extra level!",
 			"resurrect": "Resurrect",
-			"dig": "Creuser",
+			"dig": "Dig",
 			"cueille": "Harvester",
 			"fish": "Lavapit",
 			"hunt": "Shell",
-			"seek": "Fouiller",
-			"energy": "Energétiser",
-			"anniv": "Château de sable",
-			"xmas": "Chasse-Neige",
-			"tictac": "Trésor de Papy Joe",
-			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feu d'artifice"
+			"seek": "Search",
+			"energy": "Energize",
+			"anniv": "Sandcastle",
+			"xmas": "Snowplough Game",
+			"tictac": "Grandpa Joe's treasure",
+			"labo": "Archidorogon Lab",
+			"party": "Firework"
 		}
 	},
 	"button": {
@@ -168,7 +168,7 @@
 	},
 	"item": {
 		"name": {
-			"gold": "Pièces d'or",
+			"gold": "Gold coins",
 			"potion_irma": "Madam Irma's Potion",
 			"potion_angel": "Angel Potion",
 			"cloud_burger": "Cloud Burger",
@@ -293,11 +293,11 @@
 			"undefined": "Unknown"
 		},
 		"description": {
-			"gold": "{quantity} pièces d'or.",
+			"gold": "{quantity} gold coins.",
 			"potion_irma": "Madam Irma's famous potion gives Dinoz an **additional, immediate turn**; there's no need to wait to play again.",
 			"potion_angel": "If your Dinoz dies, it's not the end of the game. Use an Angel Potion to **resurrect him**. Thanks to this potion, your Dinoz will return to life without losing any experience points.",
 			"cloud_burger": "This tasty Burger restores 10 health points. It's made from clouds - so it's light and won't give you any indigestion!",
-			"hot_bread": "Soft, warm bread restores 100 health points to your Dinoz and is the perfect pick-me-up en route to fighting dragons and other dreadful monsters. Parfait avant de partir vaincre les dragons et autres affreux monstres.",
+			"hot_bread": "Soft, warm bread restores 100 health points to your Dinoz and is the perfect pick-me-up en route to fighting dragons and other dreadful monsters. Perfect before leaving to defeat the dragons and other awful monsters.",
 			"meat_pie": "For the hungry Dinoz, there's nothing better than a good Meat Pie. This hearty meal instantly restores 30 health points.",
 			"fight_ration": "Keep a Battle Ration in hand during a fight as when things get tough, you will recover **up to 20 health points**.",
 			"surviving_ration": "Keep a Battle Ration in hand during a fight as when things get tough, you will recover up to 20 health points.",
@@ -327,7 +327,7 @@
 			"strong_tea": "This ultra-concentrated tea, prepared by Chen herself, allows you to cancel the effects of beer on the opposing team.",
 			"temporal_stabiliser": "Dorogon technology has led to the creation of this object which is capable of breaking the temporal manipulator. Unfortunately it is too fragile to be used more than once.",
 			"elixir": "An incredibly powerful remedy used by only the most powerful Dinoz masters to heal their faithful companions. One potion restores 200 health points.",
-			"elixir_of_life": "Un remède capable de soigner le Vénérable du mal qui le ronge. Obtained from an extract obtained from a rare plant, maltus barlus, which only grows in one small patch on the celestial island. Nowadays, it is almost impossible to find it anywhere else.",
+			"elixir_of_life": "Medication able to heal the Venerable of his afflictions. Obtained from an extract obtained from a rare plant, maltus barlus, which only grows in one small patch on the celestial island. Nowadays, it is almost impossible to find it anywhere else.",
 			"banishement": "Prevents Dinoz from calling reinforcements during battles.",
 			"battering_ram": "Dinoz attacks your opponent's castle twice if you are victorious.",
 			"ember": "Increases the fire assaults of all Dinoz by 30%.",
@@ -408,10 +408,10 @@
 			"golden_napodino": "Gold Napodinos are solid gold coins dating back to a pre-dinotown civilization. They are highly desired by collectors, and people say that they give luck to Dinoz who choose to carry them.",
 			"bamboo_friend": "A Bambooz Friend will help your Dinoz during battles!",
 			"candle_card": "TODO",
-			"christmas_ticket": "Permet de jouer au jeu du Chasse-Neige et gagner 1.000 d'or, 5.000 d'or ou le Santaz.",
+			"christmas_ticket": "Use to play in the Snowplough Game and earn 1.000 gold coins, 5.000 or a Santaz.",
 			"tictac_ticket": "These Tac Tickets will allow you to dig in Papy Joe's garden, in search of treasures hidden by his great-grandfather.",
 			"anniversary_ticket": "TODO",
-			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
+			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Will it be a rare or comon item you'll get ?",
 			"fire_cracker": "TODO",
 			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
 			"empty": "There is no item at this spot",
@@ -545,7 +545,7 @@
 			"chutes": "Les Chutes Mutantes sont certainement l'un des plus grands mystères de Dinoland. En effet, l'eau de l'océan s'engouffre à longueur de journée dans cet immense trou sans pour autant que son niveau baisse. De grands scientifiques ont imaginé qu'il existe un endroit très loin où l'eau retourne dans l'océan, mais personne ne les a jamais crus.",
 			"baobob": "Bao Bob est un étrange personnage. Il affirme être l'un des représentant d'un ancien peuple de géants disparus de la surface de Dinoland depuis des centaines d'années. His eye has seen more secrets of Dinoland than any living resident. Les histoires qu'il raconte sont extraordinaires et amusent beaucoup les enfants.",
 			"dome": "A town under the sea! The Underwater Dome shelters the last survivors of the Atlantis civilization. In the past, they have dominated the Atlanteid Islands but a strange illness has all but exterminated them. The Dome is still magnificent despite it being centuries old.",
-			"marais": "Ce marais qui occupe le milieu de l'archipel est un véritable problème pour les voyageurs ! Suivant les jours, il change d'état. People say it has been like this for thousands of years. Some even think that it's a giant living creature with a terrible sense of humour. Aujourd'hui, le marais est totalement inondé ! You can't move! Il vous faudra attendre demain pour sortir de ce bourbier.",
+			"marais": "Ce marais qui occupe le milieu de l'archipel est un véritable problème pour les voyageurs ! Depending on the days, it changes its state. People say it has been like this for thousands of years. Some even think that it's a giant living creature with a terrible sense of humour. Today, the swamp is completely flooded ! You can't move! Il vous faudra attendre demain pour sortir de ce bourbier.",
 			"corail": "Large quantities of Coral have recently surfaced after having been submerged underwater for years. Coral is extremely popular in Dinoland due to its extraordinary strength. The mines employ hundreds of people.",
 			"ilewkk": "Waïkiki is a small island which forms part of the Atlanteid archipelago. Elle se distingue par ses palmiers violets, dont les longues feuilles sont utilisées pour donner des couleurs vives à beaucoup de vêtements sur Dinoland. Les humains locaux pratiquent aussi un Art Martial très réputé, le Waïkikidô.",
 			"chbroc": "On the top of a rock on the Atlanteid Islands sits a workshop. Some say that the inventor who chose to live there did so to escape the mockery of the other citizens, but it seems to have a more specific purpose...",
@@ -575,7 +575,7 @@
 			"stowr2": "Dinoz Masters have fought for eternity to take control of the Devourer's daily seed production. People say that whoever gathers 100 seeds will see his wish granted. En attendant, les graînes se revendent pour un très bon prix auprés du Marchand Ambulant.",
 			"stowr3": "Dinoz Masters have fought for eternity to take control of the Devourer's daily seed production. According to the legend of the Nomads, Devourers feed on the blood shed by their victims.",
 			"sband1": "The Zaxa have always been pillagers and are highly logical, renowned for their flawless skill and errorless work. Their convoy attacks are even recognized by local tourist guides…",
-			"sband2": "The Emmemma are pitiless mercenaries well known for their ancient ambush tactics. First, they send massive boulders into the ravine, then attack with clubs until their foes have been beaten an inch within their lives. Then they scavange. Ensuite seulement on ramasse. Pas de tracas ni de blabla.",
+			"sband2": "The Emmemma are pitiless mercenaries well known for their ancient ambush tactics. First, they send massive boulders into the ravine, then attack with clubs until their foes have been beaten an inch within their lives. Then they scavange. Ensuite seulement on ramasse. No arguing no hassling.",
 			"sband3": "The Mattmut are the specialists of filtering and piped-up games. Less aggressive than their neighbours, they are no less dangerous, provided you hold your gold. Their technique consists of exhausting the opponent with their traditional songs.",
 			"scampw": "The hidden lair of the W-Team… They take refuge there in times of great danger, in order to heal their wounds and prepare their counter-attack! These nomads have a will of steel and never admit defeat. Many of their enemies have perished for having slackened their attention, believing to have struck them down for good…",
 			"scaush": "On the fringes of the Steppes stands an impassable rocky barrier... you can see a chain of mountains in the distance, the homeland of the Santaz: the Caushemesh Mountains. Who knows what dangers and what adventures await you there, if you ever manage to get there...",
