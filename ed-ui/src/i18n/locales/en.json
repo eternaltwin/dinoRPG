@@ -704,18 +704,18 @@
 				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !"
 			},
 			"playerChoice": {
-				"talk": "Parler au Professeur Eugene",
-				"question": "Poser une Question",
+				"talk": "Professor Eugene",
+				"question": "Ask a question",
 				"nothing": "Learn",
 				"learn": "Learn",
 				"nothing2": "Learn",
 				"learn_water": "Learn",
 				"learn_fire": "Learn",
 				"learn_done": "Learn",
-				"water": "La nage en bouée",
-				"fire": "L'Escalade",
-				"water_fight": "Combattre",
-				"fire_fight": "Combattre",
+				"water": "Swimming with a buoy",
+				"fire": "Climbing",
+				"water_fight": "Fight",
+				"fire_fight": "Fight",
 				"back": "Back",
 				"dinoville": "Le Royaume de Dinoville",
 				"atlante": "Les Iles Atlantéinées",
@@ -724,8 +724,8 @@
 				"stone": "Cette Vieille Pierre ?",
 				"noquestion": "Rien de tout cela",
 				"menu": "Back",
-				"stone_yes": "Bien sûr, la voilà.",
-				"stone_no": "Hé, là ! Pas touche ! Avant, j'aimerais savoir quelque chose..."
+				"stone_yes": "Of course, here it is.",
+				"stone_no": "Hey! Don't touch it! Don't touch it! Avant, j'aimerais savoir quelque chose..."
 			}
 		},
 		"alpha_test": {
