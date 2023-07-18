@@ -603,10 +603,10 @@
 			"mfoutp": "The border between the Frutox and Vegetox kingdoms is heavily guarded. The outpost controlled by the Frutox is a strategic location from which they can spy on the Vegetox and defend the Royal Palace.",
 			"mfpalc": "Grotox is the king of the Frutox. he is considered the most powerful Frutox among his people and he rules his kingdom with an iron fist.",
 			"mforst": "The sacred Kaze Kami forest is renowned as being the habitat of the ancient Grotox. Ancient ruins lie at the heart of the forest which are said to contain hidden treasure...",
-			"mvoutp": "L'Avant-Poste Végétox est caché au sein d'une luxuriante forêt. Il est occupé par les forces spéciales Végétox qui sont formées au Camp d'Elit, et on y trouve des spécialistes en stratégie militaire.",
-			"mvpalc": "Véritable forteresse abritant le roi des Végétox, le Palais d'Antraxov est manifestement un lieu très bien gardé : de multiples gardes patrouillent autour et un intru aura bien du mal à s'y infiltrer. Le Palais est magnifique : il s'agit d'un immense arbre sculté de décorations qui vous rappellent des symboles Cuzcoussiens.",
+			"mvoutp": "The Vegetox outpost is hidden within a lush forest. Il est occupé par les forces spéciales Végétox qui sont formées au Camp d'Elit, et on y trouve des spécialistes en stratégie militaire.",
+			"mvpalc": "True fortress, home of the king of Vegetox, the palace of Antraxov is obviously a well guarded place. Multiple guards patrol the area, an intruder would have a hard time trying to infiltrate this place. Le Palais est magnifique : il s'agit d'un immense arbre sculté de décorations qui vous rappellent des symboles Cuzcoussiens.",
 			"mcuzco": "Hidden in an isolated corner of Monster Island are the ancient ruins of the capital of the Monster Empire. Today Cuzcous is no more than a pile of rocks overgrown with plants, but the buildings that are still standing show signs of a large and powerful civilisation. Many treasures are said to lie beneath these stones...",
-			"mcelit": "Au coeur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! Dans ce lieu barricadé, les meilleurs soldats Végétox s'entrainent pour pouvoir un jour remporter la Guerre contre les Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact."
+			"mcelit": "Au coeur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! In this barricade place, the best Vegetox soldiers train in order to one day win the war against the Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact."
 		}
 	},
 	"race": {
@@ -651,7 +651,7 @@
 			"rocky": "Rockies are often hidden amongst the stones. They are living creatures half-animal half-mineral, their bodies are made entirely of Lodestone. This gives them the power to produce electricity at will by rubbing their bodies.",
 			"santaz": "Santaz are from the mountains of Caushemesh. They are extremely rare and desired by Dinotown Dinoz Masters. They are difficult to tame but are very powerful and have the ability to perfectly master the Air element.",
 			"smog": "Smog DNA was discovered by the great professor. Extracted from blood found in a leech trapped in ice, he successfully recreated the genetic code of this dinoz who was amongst the most formidable predators on the planet.",
-			"soufflet": "Les soufflets sont des dinozs vraiment uniques, après avoir passé quelques temps sous forme de larve, c'est à l'age adulte ou ils revêtent leurs véritables formes. Un dinoz volant capable de rivaliser avec les meilleurs dinozs ! Originally form Nimbao they are reclusive creatures, but since the troubles on the island escalated they have started to be seen more and more.",
+			"soufflet": "Les soufflets sont des dinozs vraiment uniques, après avoir passé quelques temps sous forme de larve, c'est à l'age adulte ou ils revêtent leurs véritables formes. A flying dinoz able to compete with the best dinozs! Originally form Nimbao they are reclusive creatures, but since the troubles on the island escalated they have started to be seen more and more.",
 			"toufufu": "Tofufus are descended from their distant cousins, the Wistitis, and are extremely difficult to catch. They are quick and smart, and it seems as though someone has taught them kung-fu...",
 			"triceragnon": "Recently imported from the lands of Thorgnole, the Tricerithumps is extremely sought after by the discerning dino masters. Due to their aggressive nature, it can be difficult to move these dinoz from port to port without leaving a few broken planks behind !",
 			"wanwan": "Wanwan were once considered man's best friend, before they returned to the wild. Wanwan are vivacious, able to make multi-assaults, and their long, sharp teeth are deadly. Their fur conducts electricity, enabling them to store lightning and discharge when they choose."
@@ -673,23 +673,23 @@
 			"mmex": "Miss X",
 			"mineur": "Coral Miner",
 			"papy": "Grandpa Joe",
-			"bob": "M. Bao Bob",
-			"baofan": "Fan de Bao",
-			"forgeron": "Forgeron",
+			"bob": "Mr. Bao Bob",
+			"baofan": "Bao Fan",
+			"forgeron": "Blacksmith",
 			"dian": "Dian Korgsey",
 			"merguez": "Merchant",
-			"shaman": "Shaman Mou"
+			"shaman": "Soft Shaman"
 		},
 		"professor": {
 			"speech": {
 				"begin": "Once inside the University library, you meet the famous Professor Eugene. Ce dernier est réputé pour son grand intérêt envers les Maîtres Dinoz. Il vous pose souvent de nombreuses questions mais en échange peut apprendre quelques techniques très utiles à vos Dinoz, ainsi que vous donner des informations très importantes sur Dinoland.",
-				"talk": "Hello young Dinoz Master. So, how is everything going? So, how is everything going? Ah! Je me rappelle quand j'avais ton âge, j'en ai arpenté des kilomètres tout autour de Dinoland ! N'hésite pas à venir me poser des questions si tu veux des indices sur les grands mystères qui t'intriguent.&& En plus, je peux apprendre quelques techniques utiles à ton Dinoz. A condition bien sûr qu'il soit prêt, car mon enseignement n'est pas de tout repos et pourrait lui être fatal si ton Dinoz n'est pas assez entraîné.",
+				"talk": "Hello young Dinoz Master. So, how is everything going? So, how is everything going? Ah! I remember when I was your age, I walked all around Dinoland! Do not hesitate to come ask me questions if you want clues about the great mysteries that intrigued you. Plus, I can teach some useful techniques to your Dinoz. But obviously, only if your Dinoz is ready. Because my lessons are not necessarily resting and could be fatal if your Dinoz is not trained enough.",
 				"nothing": "Well then, let's see. Sit your Dinoz down there... perfect. (he pulls out a small pocket light)...   Let's see your teeth. Say \"Ahhhh!\" ...  Mmmm ...  it seems your Dinoz is still a bit too young ... I can't teach him anything at the moment. Come back to me when your Dinoz reaches Level 5.",
-				"nothing2": "Let's see ...  (il examine le Dinoz...) Bien, on dirait que ton Dinoz s'est vraiment amélioré depuis la dernière fois. Cependant, il n'est pas encore assez fort pour apprendre la seconde technique... son corps ne le supporterait pas. Je pense qu'il faudrait attendre le niveau 6... Mmmm non, le niveau 7, c'est plus sûr.",
+				"nothing2": "Let's see ...  (he examines the Dinoz...) Well, it looks like your Dinoz has really improved since the last time. Cependant, il n'est pas encore assez fort pour apprendre la seconde technique... his body wouldn't support it. Je pense qu'il faudrait attendre le niveau 6... Mmmm non, le niveau 7, c'est plus sûr.",
 				"learn": "Alors comme ça ton Dinoz veut apprendre une technique ? Pour cela ton Dinoz devra combattre un monstre. Je l'entraînerai uniquement s'il en sort vainqueur. Au fait, quelle technique veux-tu que je lui apprenne ?",
 				"water": "Très bien. Si ton Dinoz remporte ce défi, je lui apprendrai à utiliser la Bouée. Grâce à ça, ton Dinoz pourra traverser de courtes distances d'eau.",
 				"fire": "L'Escalade n'est pas facile à maîtriser, et en plus il faut du Matériel d'Escalade pour pouvoir s'y initier. S'il arrive à gagner contre ce monstre, j'enseignerai les bases à ton Dinoz et lui fournirai le materiel qui devrait lui permettre de gravir le volcan du Grand Tout Chaud.",
-				"water_fight": "Bravo, beau combat ! Comme promis, je viens de donner la Bouée à ton Dinoz. Maintenant il devrait pouvoir accéder aux Iles Atlantéinées au sud de Dinoland. Bonne chance, et sois prudent !",
+				"water_fight": "Well done, great fight! Comme promis, je viens de donner la Bouée à ton Dinoz. Maintenant il devrait pouvoir accéder aux Iles Atlantéinées au sud de Dinoland. Bonne chance, et sois prudent !",
 				"fire_fight": "Bravo, beau combat ! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir les pentes escarpées du volcan du Grand Tout Chaud. Les monstres là-bas sont très chaleureux, alors fais attention en t'y rendant !",
 				"learn_water": "Tu viens pour obtenir la Bouée c'est cela ? Il te faudra d'abord combattre ce monstre avant que je la donne à ton Dinoz !",
 				"learn_fire": "Tu viens pour obtenir le Materiel d'Escalade ? Pour l'avoir, tu devras d'abord combattre ce monstre.",
