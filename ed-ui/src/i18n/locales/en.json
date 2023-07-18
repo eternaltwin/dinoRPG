@@ -588,8 +588,8 @@
 			"iplain": "A vast white plain stretches for as far as the eye can see, snow is only found on the northern part of the island.",
 			"isnow2": "A forest permanently covered in a blanket of snow stands in the middle of the uniform whiteness of the plains. A timeless calm envelops anyone who dares cross the forest...",
 			"imont": "Considered by everyone as a sacred mountain, Everwest has a sharp peak which few have dared to try to climb. It became sacred during the reign of the former Archdorogon who used to come and meditate at the summit.",
-			"ihaut": "A cavern which seems to have been dug into the summit of the holy mountain. There appears to be some kind of laboratory at the back of the cave. Sont entreposés là de nombreuses fioles aux couleurs étranges. What kind of research was the former Archdorogon involved in up here...",
-			"voie": "From far away, the immense observatory imposes its silhouette on the panorama that is open to all and located on Nimbao's tail. Il est situé sur la queue de Nimbao. It points its objective towards the surface, the study of stars is probably less integrated than the monitoring of the Caushemesh Mountains.",
+			"ihaut": "A cavern which seems to have been dug into the summit of the holy mountain. There appears to be some kind of laboratory at the back of the cave. Many vials with strange colors are stored here. What kind of research was the former Archdorogon involved in up here...",
+			"voie": "From far away, the immense observatory imposes its silhouette on the panorama that is open to all and located on Nimbao's tail. It is located on Nimbao's tail. It points its objective towards the surface, the study of stars is probably less integrated than the monitoring of the Caushemesh Mountains.",
 			"observ": "The observatory is also a large bibliotheque that collects an impressive number of books about Dinoland's history. Unfortunately, the books are written in the language of the former Dorogons, so you cannot learn more.",
 			"egout": "The pillar structure supporting the Archidorogon Palace incorporates a whole structure used to transport pure water into the different parts of the Dorogon city.",
 			"ilac": "The water from the lake seems to constantly flow into the void, but the falls keep on flowing... Serait-ce la condensation des nuages qui permet à l'île d'avoir une aussi grande quantité d'eau à disposition...",
@@ -682,7 +682,7 @@
 		},
 		"professor": {
 			"speech": {
-				"begin": "Once inside the University library, you meet the famous Professor Eugene. Ce dernier est réputé pour son grand intérêt envers les Maîtres Dinoz. Il vous pose souvent de nombreuses questions mais en échange peut apprendre quelques techniques très utiles à vos Dinoz, ainsi que vous donner des informations très importantes sur Dinoland.",
+				"begin": "Once inside the University library, you meet the famous Professor Eugene. He's well known for his interest in Dinoz Masters. He often asks you many questions in exchange for useful techniques for your Dinoz, along with other important information about Dinoland.",
 				"talk": "Hello young Dinoz Master. So, how is everything going? So, how is everything going? Ah! I remember when I was your age, I walked all around Dinoland! Do not hesitate to come ask me questions if you want clues about the great mysteries that intrigued you. Plus, I can teach some useful techniques to your Dinoz. But obviously, only if your Dinoz is ready. Because my lessons are not necessarily resting and could be fatal if your Dinoz is not trained enough.",
 				"nothing": "Well then, let's see. Sit your Dinoz down there... perfect. (he pulls out a small pocket light)...   Let's see your teeth. Say \"Ahhhh!\" ...  Mmmm ...  it seems your Dinoz is still a bit too young ... I can't teach him anything at the moment. Come back to me when your Dinoz reaches Level 5.",
 				"nothing2": "Let's see ...  (he examines the Dinoz...) Well, it looks like your Dinoz has really improved since the last time. However, it's not strong enough to learn the second technique... his body wouldn't support it. I think we should wait for level 6... Mmmm no, level 7 is safer.",
@@ -692,7 +692,7 @@
 				"water_fight": "Well done, great fight! As promised, I just gave your Dinoz the Buoy. Now it should be able to access the Atlanted Islands south of Dinoland. Good luck and be careful!",
 				"fire_fight": "Well done, nice fight! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir les pentes escarpées du volcan du Grand Tout Chaud. The monsters there are warm, so be careful when going there!",
 				"learn_water": "You come to get the buoy, right? You'll have to fight this monster before I give it to your Dinoz!",
-				"learn_fire": "Tu viens pour obtenir le Materiel d'Escalade ? To get it, you'll need to fight this monster first.",
+				"learn_fire": "Did you come to get the Climbing Gear? To get it, you'll need to fight this monster first.",
 				"learn_done": "I have nothing left to teach your Dinoz. But don't worry, there are other people across the Dinoland Universe who can teach him many techniques!",
 				"question": "Ah, I l-o-v-e questions ! What do you want to know, my boy?",
 				"dinoville": "The Kingdom of Dinoville has been destroyed and rebuilt several times since ancient times. Today it is a prosperous and civilized place compared to the wild places that surround it. C'est pour cette raison que Dinoville est un endroit parfait pour un petiot Maître Dinoz comme toi !&& N'hésite pas à bien y entraîner tes Dinoz avant de les faire s'aventurer dans d'autres endroits de Dinoland, car les monstres y sont bien plus dangereux qu'ici !",
