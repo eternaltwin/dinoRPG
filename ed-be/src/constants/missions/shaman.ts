@@ -436,7 +436,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 					actionType: ConditionEnum.TALKTO,
 					target: 'garde'
 				},
-				displayedAction: 'garde1',
+				displayedAction: 'garde',
 				displayedText: 'garde1'
 			},
 			{

@@ -7,6 +7,7 @@ import { Config } from '@drpg/core/models/config/Config';
 export async function postError(e: ErrorFormator, res: Response) {
 	try {
 		const config = getConfig() as Config;
+		if (!config.discord.channel) return;
 
 		const webhookClient = new WebhookClient({
 			id: config.discord.channel,
@@ -58,5 +59,23 @@ ${e}
 		await webhookClient.send({ embeds: [embed] });
 	} catch (err) {
 		console.error('Error trying to send a message: ', err);
+	}
+}
+
+export async function sendDiscord(props: string) {
+	try {
+		const config = getConfig() as Config;
+		if (!config.discord.channel) {
+			return;
+		}
+
+		const webhookClient = new WebhookClient({
+			id: config.discord.channel,
+			token: config.discord.token
+		});
+
+		await webhookClient.send(props);
+	} catch (error) {
+		console.error('Error trying to send a message: ', error);
 	}
 }

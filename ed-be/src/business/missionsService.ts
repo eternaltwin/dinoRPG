@@ -152,7 +152,10 @@ async function checkMission(req: Request): Promise<MissionCheck> {
 	) as Mission;
 	const actualStep = missionReference.steps.find(step => step.stepId === dinozMission.step) as MissionSteps;
 
-	if (dinoz.placeId != Object.values(placeList).find(place => place.name === actualStep.place)!.placeId) {
+	if (
+		dinoz.placeId != Object.values(placeList).find(place => place.name === actualStep.place)!.placeId &&
+		actualStep.place !== placeList.ANYWHERE.name
+	) {
 		throw new ErrorFormator(500, 'The dinoz is not at the expected place.');
 	}
 	return { dinoz: dinoz, dinozMission: dinozMission, missionReference: missionReference, actualStep: actualStep };
@@ -165,7 +168,8 @@ export function getMissionAction(dinoz: Dinoz): string | undefined {
 	}
 
 	if (
-		dinoz.placeId === Object.entries(placeList).find(place => place[1].name === actualStep.place)![1].placeId &&
+		(dinoz.placeId === Object.entries(placeList).find(place => place[1].name === actualStep.place)![1].placeId ||
+			actualStep.place === placeList.ANYWHERE.name) &&
 		!actualStep.displayedAction!.includes('kill')
 	) {
 		return actualStep.displayedAction;

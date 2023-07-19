@@ -11,7 +11,7 @@
 			:dinozActions="dinozData.actions"
 			:missionId="dinozData.missionId"
 			@continueMission="continueMission()"
-			@endMission="endMission()"
+			@endMission="getFiche()"
 		/>
 		<TabPanel :dinozData="dinozData" />
 		<div class="footer" />
@@ -75,12 +75,6 @@ export default defineComponent({
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
 			this.sessionStore.setDinozList(dinozList);
-		},
-		endMission(): void {
-			this.dinozData.actions.splice(
-				this.dinozData.actions?.findIndex((action: ActionFiche) => action.name === 'mission'),
-				1
-			);
 		}
 	},
 	// Get dinoz data

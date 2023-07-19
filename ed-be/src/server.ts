@@ -13,7 +13,7 @@ import oauthRoutes from './routes/oauth.routes.js';
 import playerRoutes from './routes/player.routes.js';
 import shopRoutes from './routes/shop.routes.js';
 import rankingRoutes from './routes/ranking.routes.js';
-import { loadConfigFile } from './utils/context.js';
+import { getEnvironnement, loadConfigFile } from './utils/context.js';
 import { jwtConfig } from './utils/jwt.js';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
 import { updatePlayersPosition } from './cron/updatePlayersPosition.js';
@@ -145,6 +145,7 @@ const swaggerOptions = {
 	apis: ['dist/routes/*.js']
 };
 import swaggerJsDoc from 'swagger-jsdoc';
+import { sendDiscord } from './utils/discord.js';
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 
 // Launch Cron
@@ -160,4 +161,9 @@ updatePlayersPosition().start();
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}.`);
+	if (getEnvironnement() !== 'development') {
+		sendDiscord(`**Server started**`).catch(e => {
+			console.error(e);
+		});
+	}
 });

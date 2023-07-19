@@ -54,8 +54,8 @@ export default defineComponent({
 			sessionStore: sessionStore()
 		};
 	},
-	async mounted(): Promise<void> {
-		try {
+	methods: {
+		async firstLoad(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
@@ -66,6 +66,12 @@ export default defineComponent({
 			this.sessionStore.setPlayerId(commonData.id);
 			this.sessionStore.setPlayerOptions(commonData.playerOptions);
 			EventBus.emit('isLoading', false);
+		}
+	},
+	async mounted(): Promise<void> {
+		if (this.sessionStore.getPlayerId) return;
+		try {
+			await this.firstLoad();
 		} catch (err) {
 			errorHandler.handle(err);
 			return;

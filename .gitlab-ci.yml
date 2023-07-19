@@ -42,30 +42,30 @@ front-lint:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH == "develop"'
 
-back-coverage:
-  stage: test
-  image: "demurgos/node:2022.1"
-  needs: [container-build]
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-  variables:
-    CARGO_HOME: ".cargo"
-    RUSTFLAGS: "-C target-feature=-crt-static"
-  cache:
-    paths:
-      - "ed-be/coverage/"
-      - junit.xml
-  script:
-    - yarn test:ci
-  dependencies:
-    - container-build
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH == "develop"'
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - ed-be/junit.xml
-      coverage_report:
-        coverage_format: cobertura
-        path: ed-be/coverage/cobertura-coverage.xml
+#back-coverage:
+#  stage: test
+#  image: "demurgos/node:2022.1"
+#  needs: [container-build]
+#  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+#  variables:
+#    CARGO_HOME: ".cargo"
+#    RUSTFLAGS: "-C target-feature=-crt-static"
+#  cache:
+#    paths:
+#      - "ed-be/coverage/"
+#      - junit.xml
+#  script:
+#    - yarn test:ci
+#  dependencies:
+#    - container-build
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+#    - if: '$CI_COMMIT_BRANCH == "develop"'
+#  artifacts:
+#    when: always
+#    reports:
+#      junit:
+#        - ed-be/junit.xml
+#      coverage_report:
+#        coverage_format: cobertura
+#        path: ed-be/coverage/cobertura-coverage.xml

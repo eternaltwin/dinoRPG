@@ -5,7 +5,7 @@
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<MissionHUD v-if="missionId" :missionId="missionId" @abort="endMission()" />
+		<MissionHUD v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
 		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="endMission()" />
 		<ul>
 			<table class="action_button">
@@ -27,7 +27,10 @@
 						<td v-else-if="action.name === 'npc'" class="label">
 							{{ $t(`npc.name.${npcNameList[action.prop]}`) }}
 						</td>
-						<td v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.VALIDATE" class="label">
+						<td
+							v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
+							class="label"
+						>
 							{{ $t(`missions.actions.terminate`) }}
 						</td>
 						<td v-else-if="action.name === 'mission'" class="label">
@@ -46,7 +49,7 @@
 								v-html="formatContent($t(`npc.name.${npcNameList[action.prop]}`))"
 							/>
 							<h1
-								v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.VALIDATE"
+								v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
 								v-html="formatContent($t(`missions.actions.terminate`))"
 							/>
 							<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
@@ -105,7 +108,8 @@ export default defineComponent({
 			missionReward: undefined as Array<Rewarder> | undefined,
 			sessionStore: sessionStore(),
 			MissionEnum: ConditionEnum,
-			digReward: undefined as Rewarder | undefined
+			digReward: undefined as Rewarder | undefined,
+			dinozId: this.$route.params.id.toString()
 		};
 	},
 	components: {
@@ -227,6 +231,9 @@ export default defineComponent({
 				return missionsList[this.missionId!];
 			}
 			return undefined;
+		},
+		storeMission(): MissionHUD | undefined {
+			return sessionStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId).missions;
 		}
 	},
 	watch: {

@@ -905,7 +905,8 @@
 				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane.\n\t\tIl me semble qu'il te manque quelquechose, mon cher.",
 				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
 				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
-				"ok": "Désolé les développeurs n'ont pas encore appris à se concentrer..."
+				"ok": "Désolé les développeurs n'ont pas encore appris à se concentrer...",
+        "bye": "A la prochaine et amuse toi bien !"
 			},
 			"playerChoice": {
 				"question": "J'ai une question à vous poser...",
@@ -2069,7 +2070,7 @@
 			"hidefiquoia": "Cacher le Fikoïa",
 			"tree": "Arbre étrange",
 			"dian": "Dian Korgsey",
-			"shaman": "Shaman Mou",
+			"shaman": "Valider la mission",
 			"forgeron": "Forgeron",
 			"garde": "Garde des forges",
 			"artisan": "Artisan des Forges",
@@ -2097,7 +2098,7 @@
 			"banner": "Ramasser leur bannière",
 			"pickup": "Ramasser le colis",
 			"sound": "Des bruits suspects...",
-			"marchandise": "Récupérer la marchandise",
+			"pickMerchandise": "Récupérer la marchandise",
 			"babioles": "Ramasser des babioles",
 			"market": "Marché de Dinoville",
 			"instruction": "Prendre les instructions",

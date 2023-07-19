@@ -32,10 +32,11 @@ export function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 			result = place[1].placeId === dinoz.placeId;
 			break;
 		case ConditionEnum.PLACE_IS:
-			let thisplace = Object.entries(placeList).find(
-				place => place[1].name.toUpperCase() === condition.value.toUpperCase()
-			) as [string, Place];
-			result = thisplace[1].placeId === dinoz.placeId;
+			let thisplace = Object.values(placeList).find(
+				place => place.name.toUpperCase() === condition.value.toUpperCase()
+			) as Place;
+			if (thisplace.placeId === 0) thisplace.placeId = dinoz.placeId;
+			result = thisplace.placeId === dinoz.placeId;
 			break;
 		case ConditionEnum.SCENARIO:
 			//TODO: Implement scenario

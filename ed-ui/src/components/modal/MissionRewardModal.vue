@@ -35,6 +35,9 @@
 							</template>
 						</Tippy>
 					</li>
+					<li v-if="status">
+						<img :src="getImgURL('status', `fx_${status}`)" :alt="status" />
+					</li>
 				</ul>
 				<div class="option">
 					<a class="button" @click="$emit('close')">
@@ -48,7 +51,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { itemNameList, missionsList } from '../../constants/index.js';
+import { itemNameList, missionsList, statusList } from '../../constants/index.js';
 import { sessionStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
@@ -97,14 +100,21 @@ export default defineComponent({
 		items(): Array<string | undefined> {
 			const isItem: Array<Rewarder> | undefined = this.missionReward.filter(el => el.rewardType === RewardEnum.ITEM);
 			return isItem.map(el => {
-				if (el.rewardType === RewardEnum.ITEM)
-					return Object.entries(itemNameList).find(item => item[0] === el.value)![1];
+				if (el.rewardType === RewardEnum.ITEM) return itemNameList[el.value];
 			});
 		},
 		epic(): string | undefined {
 			const isEpic: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EPIC);
 			if (isEpic?.rewardType === RewardEnum.EPIC) {
 				return isEpic.value.toLowerCase();
+			} else {
+				return undefined;
+			}
+		},
+		status(): string | undefined {
+			const isStatus: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.STATUS);
+			if (isStatus?.rewardType === RewardEnum.STATUS) {
+				return statusList.imgName[isStatus.value];
 			} else {
 				return undefined;
 			}

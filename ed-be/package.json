@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "EternalDino API",
   "scripts": {
-    "serve": "yarn run prettier && tsc-watch --build ./tsconfig.json --onSuccess \"node dist/server.js\"",
+    "serve": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/server.js\"",
     "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
     "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "test:ci": "yarn run build && NODE_ENV=development NODE_OPTIONS=\"--experimental-vm-modules\" yarn jest --config ./jest.config.json --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --watchAll=false",

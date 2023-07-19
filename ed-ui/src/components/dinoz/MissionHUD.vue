@@ -3,7 +3,7 @@
 		<p class="name">
 			{{ $t(`missions.name.${missionName}`) }}
 		</p>
-		<div class="detail">
+		<div class="detail" v-if="missionDetail">
 			<template v-if="missionDetail.actionType === MissionEnum.TALKTO">
 				{{ $t(`missions.actions.${missionDetail.actionType}`, { npc: $t(`missions.npc.${missionDetail.target}`) }) }}
 			</template>
@@ -95,11 +95,11 @@ export default defineComponent({
 		missionName(): string {
 			return missionsList[this.missionId];
 		},
-		missionDetail(): MissionHUD {
+		missionDetail(): MissionHUD | undefined {
 			const dinozId = this.$route.params.id as string;
 			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-			return myDinoz.missions!;
+			return myDinoz.missions;
 		},
 		mission(): MissionList {
 			return { missionId: this.missionId, status: MissionsStatus.ONGOING };

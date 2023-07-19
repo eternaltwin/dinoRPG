@@ -8,7 +8,7 @@ export const npcNameList: Array<string> = [
 	'mineur',
 	'papy',
 	'forgeron',
-	'baobob',
+	'bob',
 	'baofan',
 	'dian',
 	'merguez',

@@ -45,6 +45,7 @@
 </template>
 
 <script lang="ts">
+import EventBus from '../../events/index.js';
 import { DinozService, InventoryService } from '../../services/index.js';
 import { defineComponent } from 'vue';
 
@@ -57,12 +58,14 @@ export default defineComponent({
 		async resurrect(): Promise<void> {
 			const dinozId = parseInt(this.$route.params.id as string);
 			await DinozService.resurrectDinoz(dinozId);
-			this.$router.go(0);
+			EventBus.emit('refreshDinoz', true);
+			this.$emit('close');
 		},
 		async useAngelPotion(): Promise<void> {
 			const dinozId = parseInt(this.$route.params.id as string);
 			await InventoryService.useInventoryItem(2, dinozId);
-			this.$router.go(0);
+			EventBus.emit('refreshDinoz', true);
+			this.$emit('close');
 		}
 	}
 });
