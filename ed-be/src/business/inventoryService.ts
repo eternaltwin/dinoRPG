@@ -1,13 +1,9 @@
 import { Request } from 'express';
 import { addPlayerMoney, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
-import { Dinoz, DinozSkill, Player } from '../entity/index.js';
+import { Dinoz, DinozSkill, Player, PlayerItem } from '../entity/index.js';
 import { itemList } from '../constants/item.js';
-import {
-	getActiveDinoz,
-	getDinozFicheItemRequest,
-	setDinoz,
-} from '../dao/dinozDao.js';
-import { useItemDataRequest } from '../dao/playerItemDao.js';
+import { getActiveDinoz, getDinozFicheItemRequest, setDinoz } from '../dao/dinozDao.js';
+import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
@@ -152,6 +148,12 @@ async function useSpecialItem(dinoz: Dinoz, item: ItemFiche): Promise<void> {
 			break;
 		case 'rice':
 			await setDinoz(dinoz.useRice);
+			break;
+		case 'pampleboum':
+			await setDinoz(dinoz.heal(15));
+			if (!dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId))
+				await createItemDataRequest(new PlayerItem(dinoz.player, itemList.PAMPLEBOUM_PIT.itemId, 1));
+			else await changeItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM_PIT.itemId, 1);
 			break;
 		default:
 			throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);

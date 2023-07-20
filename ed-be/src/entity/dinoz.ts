@@ -245,7 +245,8 @@ export class Dinoz {
 		return {
 			id: this.id,
 			name: '?',
-			experience: 0
+			experience: 0,
+      canChangeName: true
 		};
 	}
 

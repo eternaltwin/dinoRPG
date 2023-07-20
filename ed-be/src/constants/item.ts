@@ -116,8 +116,8 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 10,
 		effect: {
-			category: ItemEffect.HEAL,
-			value: 15
+			category: ItemEffect.SPECIAL,
+			value: 'pampleboum'
 		},
 		price: 500 // TODO double check
 	},
