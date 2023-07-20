@@ -6,7 +6,7 @@
 			<p>{{ $t('layout.action') }}</p>
 		</div>
 		<MissionHUD v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
-		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="endMission()" />
+		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
 		<ul>
 			<table class="action_button">
 				<tbody>
@@ -223,6 +223,10 @@ export default defineComponent({
 			dinozToUpdate.missionId = undefined;
 			this.sessionStore.setDinoz(dinozToUpdate);
 			this.$emit('endMission');
+		},
+		validateMission(): void {
+			this.missionReward = undefined;
+			EventBus.emit('refreshDinoz', true);
 		}
 	},
 	computed: {

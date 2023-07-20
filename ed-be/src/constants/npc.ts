@@ -5,6 +5,7 @@ import {
 	BAOFAN,
 	DIANKORGSEY,
 	FORGERON,
+	GARDIEN,
 	MERGUEZ,
 	MINEUR,
 	MMEX,
@@ -13,7 +14,7 @@ import {
 	SHAMAN,
 	SOFIA
 } from './characters/index.js';
-import { M_BAO_BOB, M_DIANKORGSEY, M_PAPY_JOE, M_SHAMAN_MOU } from './missions/index.js';
+import { M_BAO_BOB, M_DIANKORGSEY, M_GARDIEN, M_PAPY_JOE, M_SHAMAN_MOU } from './missions/index.js';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcTrigger } from '@drpg/core/models/enums/NpcTrigger';
 
@@ -121,5 +122,13 @@ export const npcList: Record<string, Npc> = {
 		condition: NpcTrigger.ALWAYS,
 		data: SHAMAN,
 		missions: M_SHAMAN_MOU
+	},
+	GARDIEN: {
+		name: 'gardien',
+		id: 14,
+		placeId: placeList.PORTE_DE_SYLVENOIRE.placeId,
+		condition: NpcTrigger.ALWAYS,
+		data: GARDIEN,
+		missions: M_GARDIEN
 	}
 };

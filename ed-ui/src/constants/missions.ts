@@ -38,5 +38,13 @@ export const missionsList: Record<number, string> = {
 	33: 'sales',
 	34: 'ritual',
 	35: 'hiero',
-	36: 'pigeon'
+	36: 'pigeon',
+	//GARDIEN DE LA FORET
+	37: 'unmute',
+	38: 'orchid',
+	39: 'licens',
+	40: 'king',
+	41: 'wishes',
+	42: 'newplt',
+	43: 'gshop'
 };

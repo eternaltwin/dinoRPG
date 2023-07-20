@@ -56,5 +56,6 @@ export const statusList: Record<string, number> = {
 	QTAME: 55,
 	DIAN: 56,
 	SHFLAG: 57,
-	FFLAG: 58
+	FFLAG: 58,
+	GRDMIS: 59
 };

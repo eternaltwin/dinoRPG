@@ -678,7 +678,8 @@
 			"forgeron": "Forgeron",
 			"dian": "Dian Korgsey",
 			"merguez": "Vendeur de Merguez",
-			"shaman": "Shaman Mou"
+			"shaman": "Shaman Mou",
+			"gardien": "Gardien de la Forêt"
 		},
 		"professor": {
 			"speech": {
@@ -1025,6 +1026,18 @@
 				"merci": "Merci, je tiendrai compte de vos conseils !",
 				"more": "Et c'est tout ?",
 				"accept": "Accepter"
+			}
+		},
+		"gardien": {
+			"speech": {
+				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement agé et semble empreint d'une grande\n\t\tsagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
+				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange\n\t\tet long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage\n\t\tsur votre tête : poc !",
+				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous\n\t\tconstatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+			},
+			"playerChoice": {
+				"missions": "Consulter la liste des Missions",
+				"shake": "Secouer un peu cet arbre",
+				"item": "Aie ! Qu'est-ce que c'est ?"
 			}
 		}
 	},
@@ -1942,7 +1955,14 @@
 			"sales": "Commerce (peu) équitable",
 			"ritual": "Rituel ridicule",
 			"hiero": "Hiéroglyphes",
-			"pigeon": "Pigeon voyageur"
+			"pigeon": "Pigeon voyageur",
+			"unmute": "Le Gardien de la Forêt",
+			"orchid": "La main verte",
+			"licens": "Permis de couper",
+			"king": "Le roi de la Jungle",
+			"wishes": "Faites vos voeux",
+			"newplt": "Un cric pour la forêt",
+			"gshop": "Monnaie de singe"
 		},
 		"tooltip": "Mission : {mission}",
 		"description": {
@@ -1981,7 +2001,14 @@
 			"sales": "Pour me permettre de manger à ma faim, je vends de temps à autre des petites babioles sur le Marché de Dinoville. Comme je suis très pris en ce moment, pourrais-tu y aller à ma place ? Je te donnerai un généreux pourcentage des ventes ! Tu verras, ça se vend bien.",
 			"ritual": "La congrégation shamanique au sein de laquelle j'ai fait mes études me réclame chaque année un rituel en gage de cette formation. Evidemment, j'ai autre chose à faire que m'occuper de ces âneries ! Pourrais-tu t'en charger à ma place ? Les instructions sont arrivées dans ma boîte aux lettres, fais comme chez toi.",
 			"hiero": "J'ai entendu dire qu'il y avait dans les cavernes à l'ouest, celles qui mènent dans la Jungle de Grumhel, des hiéroglyphes de la plus haute importance pour mes recherches mystiques ! Vas-y et recopie-les pour moi. Attention, pour pénétrer dans ces cavernes, il te faudra un moyen de retrouver ton chemin dans l'obscurité !",
-			"pigeon": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !"
+			"pigeon": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !",
+			"unmute": "Le parchemin qui vous est tombé dessus comporte ce message : |« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. » |A peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
+			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : |« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle ».| Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
+			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : |« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
+			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : |« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
+			"wishes": "Vous pouvez lire, gravé sur une branche : |« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »| Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: |« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »| Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
+			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :|« Déposez de l'or dans le seau pour votre ration quotidienne. »"
 		},
 		"actions": {
 			"talkTo": "Discuter avec {npc} ...",
@@ -2032,7 +2059,20 @@
 			"wahhh": "Crier waaah...",
 			"rock": "Jeter un caillou dans le cratère",
 			"hieroglyphes": "Copier les hiéroglyphes",
-			"foundArcheo": "Trouver l'archéologue"
+			"foundArcheo": "Trouver l'archéologue",
+			"fwater": "Eau du Fleuve Jumin",
+			"mwater": "Eau trouble",
+			"pwater": "Eau rafraichissante",
+			"bwater": "Eau bouillonnante",
+			"racine": "Verser la gourde sur les racines",
+			"pickwater": "Prendre de l'eau",
+			"worchid": "Arroser l'Orchidée",
+			"yell": "Pousser le cri du Roi de la Jungle",
+			"pickorchid": "Cueillir l'Orchidée",
+			"plantorchid": "Planter l'Orchidée",
+			"tosscoin": "Jeter une pièce",
+			"liftrock": "Soulever les rochers",
+			"bucket": "Examiner le seau"
 		},
 		"npc": {
 			"fishVendor": "Marchand de poisson",
@@ -2108,7 +2148,23 @@
 			"wahhh": "Crier waaah...",
 			"rock": "Jeter un caillou dans le cratère",
 			"hieroglyphes": "Copier les hiéroglyphes",
-			"foundArcheo": "Trouver l'archéologue"
+			"foundArcheo": "Trouver l'archéologue",
+			"fwater": "Eau du Fleuve Jumin",
+			"mwater": "Eau trouble",
+			"pwater": "Eau rafraichissante",
+			"bwater": "Eau bouillonnante",
+			"racine": "Verser la gourde sur les racines",
+			"pickwater": "Prendre de l'eau",
+			"worchid": "Arroser l'Orchidée",
+			"yell": "Pousser le cri du Roi de la Jungle",
+			"pickorchid": "Cueillir l'Orchidée",
+			"plantorchid": "Planter l'Orchidée",
+			"tosscoin": "Jeter une pièce",
+			"liftrock": "Soulever les rochers",
+			"bucket": "Examiner le seau",
+			"talkingorchide": "Orchidée Quidée parlante",
+			"benevole": "Bénévole «Paix Verte»",
+			"arbre": "Valider la Mission"
 		},
 		"place": {
 			"port": "au Port de Prêche",
@@ -2398,6 +2454,46 @@
 				"foundArcheo": "L'archéologue Pelletée ne semble pas être ici. Vous apprenez rapidement qu'il travaille en ce moment sur un chantier dans les Gorges Profondes...",
 				"archeo": "Oh... C'est amusant, on dirait à s'y méprendre les notes que j'ai laissé sur les parois des cavernes. Comment ? Et ce Shaman a pris ça pour des textes anciens ? Oh, mais non ! Ce sont justes des notes personnelles ! Je les ai écrites moi-même...",
 				"shaman": "J'aurais parié un de mes grigris qu'on tenait là une découverte fondamentale ! Dommage... En tous cas, merci pour la course et désolé pour le dérangement !"
+			},
+			"unmute": {
+				"fwater": "Vous remplissez la gourde du vieil arbre avec un peu d'eau du Fleuve Jumin. Voila pour l'eau filante !",
+				"mwater": "Vous ajoutez dans la gourde du vieil arbre un peu d'eau du Marais Collant. Elle sent vraiment mauvais...",
+				"pwater": "Vous ajoutez dans la gourde du vieil arbre de l'eau claire de la Fontaine et vous en profitez pour vous y rafraîchir.",
+				"bwater": "Vous complétez le contenu de la gourde avec un peu de l'eau bouillonnante qui inonde les Gorges. C'est chaud !",
+				"racine": "Les feuillages du vieil arbre s'agitent brusquement dans tous les sens et une lumière apaisante emplit la jungle tout autour de vous...",
+				"arbre": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds."
+			},
+			"orchid": {
+				"pickwater": "Vous remplissez la gourde d'eau du Fleuve Jumin.",
+				"worchid": "Vous versez tout le contenu de la gourde sur une magnifique fleur qui doit être l'Orchidée Quidée. Aussitôt, celle-ci s'illumine de mille feux et de jolis gouttelettes de rosées perlent sur ses feuilles gracieuses.",
+				"orchid": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse moi, tu m'fais de l'ombre !!",
+				"arbre": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat."
+			},
+			"licens": {
+				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+			},
+			"king": {
+				"yell": "Vous poussez un cri particulièrement ridicule, qui n'effraierait probablement même pas un Korgon... Il va falloir trouver mieux !",
+				"talkingorchide": "Encore là l'empaffé de la jungle ?! Qu'est-ce qu'il a l'autre à m'regarder comme ça ?",
+				"pickorchid": "Sans ménagement, vous arrachez l'orchidée et vous l'emmenez avec vous. Celle-ci crie, vous insulte copieusement et se débat autant qu'elle peut...",
+				"plantorchid": "Vous replantez d'un coup sec l'Orchidée Quidée qui ne manque pas de vous hurler dessus. Tandis que vous vous éloignez, vous pouvez encore entendre celle-ci crier des atrocités à votre égard... Voilà qui fera bien l'affaire pour effrayer les touristes !",
+				"arbre": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !"
+			},
+			"wishes": {
+				"tosscoin": "Vous jetez une pièce au coeur des chutes et vous attendez quelques minutes... Evidemment rien ne se produit et vous décidez d'aller exaucer le voeu de réduire la population des monstres par vous même.",
+				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+			},
+			"newplt": {
+				"benevole1": "Bonjour ! Toi aussi tu viens pour aider à déblayer toute cette roche ? Pour le moment, j'ai un gros problème sur les bras... Des monstres en tous genres viennent régulièrement m'empêcher de travailler... Tu peux faire quelque chose ?",
+				"liftrock1": "Vous installez le cric puis commencez à soulever et pousser les rochers tombés sur la forêt... Mais tandis que vous pensiez être enfin au calme, un grognement inquiétant se fait entendre derrière vous...",
+				"benevole2": "Il ne faut plus perdre une seconde, continuons !",
+				"liftrock2": "L'opération vous occupe encore plusieurs heures, même avec le cric, mais vous parvenez tout de même à dégager de nombreux arbres et plantes ensevelies sous les rochers.",
+				"benevole3": "Je vais rester ici pour arroser les plantes survivantes. Vas faire un rapport pour moi auprès du Gardien de la Forêt !",
+				"arbre": "Deux gros fruits se décrochent et tombe dans un buisson près de vous..."
+			},
+			"gshop": {
+				"bucket": "Vous trouvez une petite branche fleurie dans le seau...",
+				"arbre": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
 			}
 		},
 		"target": {
