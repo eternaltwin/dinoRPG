@@ -898,40 +898,40 @@
 				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons.\n\t\tCela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
 				"where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi\n\t\têtre des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
 				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Elle te permettra de la continuer, ton aventure. Mais sâche que tu y trouvera une clé, oui,\n\t\tLA clé. Pour la porte de Sylvenoire. Enfin, si tu survis\n\t\tbien entendu.",
-				"how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Les tiens ou ceux de membres de ton Clan.\n\t\tEvery Dinoz must concentrate. When you will be seven, then you will be able to go there.",
-				"danger": "Dangerous ? Mmm... pour faire simple, je dirais que tu n'as surement que peu de chance de survivre là-bas...\n\t\tMais qui ne tente rien n'a rien, n'est-ce pas ?",
-				"concen": "Mmm... Good... je vais hypnotiser ton Dinoz. Il pourra mieux se concentrer de cette façon...\n\t\tNe t'inquiete pas, tu pourras à tout moment arrêter cela, si tu le désires.",
-				"quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide.\n\t\tEnfin, si je devine bien quelle question tu voulais me poser...",
-				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane.\n\t\tIl me semble qu'il te manque quelquechose, mon cher.",
-				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
-				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
-				"ok": "Désolé les développeurs n'ont pas encore appris à se concentrer...",
-				"bye": "A la prochaine et amuse toi bien !"
+				"how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Yours or those of your clan members.\n\t\tEvery Dinoz must concentrate. When you will be seven, then you will be able to go there.",
+				"danger": "Dangerous ? Mmm... to make it simple, I would say that you probably have little chance of surviving there...\n\t\tBut who doesn't try anything has nothing, right?",
+				"concen": "Mmm... Good... i will hypnotize your Dinoz. He'll be able to concentrate better that way...\n\t\tDon't worry, you can stop this at any time, if you wish.",
+				"quest4": "Any questions? Mmmmm... You're going to need some ingredients for me to help you.\n\t\tWell, if I guess what question you wanted to ask me...",
+				"noingr": "Tsss tsss tsss.... The Coral that never breaks, the Ice that never melts, and the Branch that never fades.\n\t\tLooks like you're missing something, my dear.",
+				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam! And voila, a magnificent Anti Sedh Potion for you...",
+				"potion": "Mmmm... goodbye my friend, come back to see me sometime!",
+				"ok": "Sorry the devs haven't learned to focus yet...",
+				"bye": "Until next time and have fun!"
 			},
 			"playerChoice": {
-				"question": "J'ai une question à vous poser...",
-				"nothing": "Rien du tout",
-				"missions": "Oui je veux bien",
-				"no": "Non merci",
-				"quest2": "Et ma question ?",
-				"quest3": "Et ma question ?",
-				"bye": "Je dois partir",
-				"where": "Là-bas ?",
-				"where2": "Mais où exactement ?",
-				"how": "Comment dois-je faire ?",
-				"danger": "Et c'est dangereux ?",
-				"concen": "Je veux faire concentrer mon Dinoz !",
-				"quest4": "Et ma question ?",
-				"noingr": "Voilà les ingrédients !",
-				"ingr": "Voilà les ingrédients !",
-				"potion": "Vous êtes donc un Singe Antique !!!",
-				"ok": "D'accord"
+				"question": "I have a question for you...",
+				"nothing": "Nothing at all",
+				"missions": "Yes I want",
+				"no": "No, thanks",
+				"quest2": "And my question?",
+				"quest3": "And my question?",
+				"bye": "I need to run",
+				"where": "Over there?",
+				"where2": "But where exactly?",
+				"how": "How should I do it ?",
+				"danger": "And is it dangerous?",
+				"concen": "I want to concentrate my Dinoz!",
+				"quest4": "And my question?",
+				"noingr": "Here are the ingredients!",
+				"ingr": "Here are the ingredients!",
+				"potion": "So you are an Ancient Monkey!!!",
+				"ok": "Okay"
 			}
 		},
 		"baofan": {
 			"speech": {
-				"begin": "Bonjour monsieur ! Vous avez parlé à Monsieur Bao ? Il est vraiment génniaaaaaalll non ???",
-				"ok": "Hein, que c'est vrai !! Il est trop cool ! J'ai même traversé la Forêt de Grumhel exprès pour qu'il me raconte plein d'histoires super ! Vous savez quoi, il a déja assommé un gorilloz démon, un jour ! Si si ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? et ben il les a tous battus !",
+				"begin": "Hi ! You spoke to Mr Bao? He's really aaaaaawesome, isn't he???",
+				"ok": "Hey, it's true!! He's so cool! I even crossed the Forest of Grumhel on purpose so that he would tell me lots of great stories! You know what, he knocked out a demon gorilloz once! Yes ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? et ben il les a tous battus !",
 				"wah": "Oui ! Et M. Bao a bien voulu m'apprendre quelques trucs ! Il a dit que je suis très doué pour mon âge ! C'est bien, hein ? Attends regarde... je vais envoûter un truc, tu veux que je te montre ?",
 				"yes": ".............. Voilà, j'ai fini ! Tu le veux ? Tiens... C'est un Charme Bao ! Alors prends-en soin, hein ! Ca devrait aider ton Dinoz pendant quelques combats. Quand tout le fluide spitruel sera épuisé, tu pourras revenir me voir pour que je le recharge !",
 				"spirit": "Heu... oui c'est ça ! Spitri... péritel... spriti... ! Ho ils sont trop compliqués vos mots technologiques !",
@@ -953,44 +953,44 @@
 			"speech": {
 				"begin": "Vous entrez dans les forges de Fosselave. la chaleur qui règne ici n'a rien à envier à l'intérieur du cratère du Grand Tout Chaud.\n\t\tIci rien ne se crée, tout se transforme, à grand coup de marteau !\n\t\t\n\t\t100 pièces d'or pour réparer une pelle, c'est donné  non ?",
 				"pelle": "Et une pelle dans la gueule ca te tente ?",
-				"repair": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
-				"repair2": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
-				"thanks": "Reviens si t'as encore besoin de nos services ptit gars !",
-				"no": "Reviens avec les poches pleines ptit gars, tu nous fais perdre notre temps !"
+				"repair": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tThat'll be 100 gold coins. You're nice, don't forget to pay at checkout.",
+				"repair2": "There you go, your shovel is repaired my little guy!\n\t\tThat'll be 100 gold coins. You're nice, don't forget to pay at checkout.",
+				"thanks": "Come back if you still need our services!",
+				"no": "Come back with your pockets full little guy, you're wasting our time!"
 			},
 			"playerChoice": {
 				"pelle": "Pouvez me rouler une...",
-				"repair": "Pouvez vous me réparer ma pelle ?",
-				"repair2": "Pouvez vous me réparer ma super pelle ?",
-				"thanks": "Euh oui mdame !",
-				"no": "Rien de particulier"
+				"repair": "Can you repair my shovel?",
+				"repair2": "Can you repair my super shovel ?",
+				"thanks": "Uh yes ma'am!",
+				"no": "Nothing in particular"
 			}
 		},
 		"dian": {
 			"speech": {
-				"begin": "Salut, éleveur... Ne fais pas un bruit, il ne faut surtout pas déranger les Korgons !",
-				"korgons": "Oui, ce sont les petites créatures qui se sont installées ici. De vraies petites teignes si\n\t\ton n'y prête pas gare ! Déjà, ne les regarde surtout pas dans les yeux... Et si l'un d'eux\n\t\ts'approche trop, tu peux toujours essayer de lui donner un bout de bois à grignoter",
-				"why": "Ils pourraient prendre ça pour un défi ! Et là, je vous laisse imaginer ce qui se passerait si tous les Korgons\n\t\tdu campement se mettaient dans la tête que vous étiez un ennemi... Les derniers à avoir\n\t\tessayé ont été servis en souper le soir même.",
-				"wood": "Ils adorent ça ! C'est d'ailleurs la raison pour laquelle ils se sont installés dans\n\t\tla Jungle de Grumhel. Fascinant n'est-ce pas ? Mais malheureusement pour nous, ils sont capables de manger tout et\n\t\tn'importe quoi, y compris les voyageurs imprudents.",
-				"tame": "Il y a bien longtemps, je pense que les Korgons étaient domestiqués. Probablement bien avant\n\t\tla chute de l'île de Jazz... Mais aujourd'hui, ils sont revenus totalement à l'état sauvage !\n\t\tPas moyen de les approcher sans risquer d'y perdre un bras. Quelques éleveurs s'y sont aussi\n\t\tfrottés, mais personne n'a obtenu mieux de leur part qu'un grand coup de dents.",
-				"interest": "N'est-ce pas ! Je suis heureuse de voir que ces adorables Korgons vous plaisent autant ! Si cela\n\t\tvous intéresse, vous pourriez me rendre quelques petits services au Camp ?",
-				"service": "Parfait ! Voilà ce dont j'ai besoin...",
-				"nothing": "D'accord, bon voyage !"
+				"begin": "Hi breeder... Don't make a sound, you mustn't disturb the Korgons!",
+				"korgons": "Yes, it's the little creatures that have settled here. Real little nuisance if we do not pay attention! Don't look them in the eye... And if one of them gets too close, you can always try to give him a piece of wood to nibble on",
+				"why": "They might take that for a challenge! And here, I let you imagine what would happen if all the Korgons in the camp got it into their heads that you were an enemy... The last to have tried were served at dinner the same evening.",
+				"wood": "They love it ! This is also the reason why they settled in the Jungle of Grumhel. Fascinating isn't it? But unfortunately for us, they are able to eat everything and anything, including careless travellers.",
+				"tame": "A long time ago, I think the Korgons were domesticated. Probably long before the fall of Jazz Island... But today, they are totally back to there wild state!\n\t\tNo way to approach them without risking losing an arm. A few breeders also tried, but no one got better from them than a big bite.",
+				"interest": "Right! I'm glad to see you like these adorable Korgons so much! If that interests you, you could do a few little tasks for me at the Camp?",
+				"service": "Perfect! This is what I need...",
+				"nothing": "Alright, have a nice trip!"
 			},
 			"playerChoice": {
-				"missions": "Consulter la liste des Missions",
-				"korgons": "Les Korgons ?",
-				"why": "Il ne faut pas les regarder ?",
-				"wood": "Ils mangent du bois ?",
-				"tame": "Personne n'en a jamais dressé ?",
-				"interest": "Tout ça est vraiment passionnant  !",
-				"service": "Oui, avec plaisir !",
-				"nothing": "Oh pardon, je m'en vais..."
+				"missions": "Show Mission List",
+				"korgons": "The Korgons?",
+				"why": "We should not look at them?",
+				"wood": "They eat wood?",
+				"tame": "Nobody ever tame it?",
+				"interest": "It's all really exciting!",
+				"service": "Yes, with pleasure!",
+				"nothing": "Oh sorry, I'm leaving..."
 			}
 		},
 		"merguez": {
 			"speech": {
-				"begin": "Ola ola ola ! Elles sont bien graisseuses, mes merguez ! ....... Comment ? Quelle idée de venir vendre des merguez dans un endroit aussi lugubre ? Mais ces Ruines sont magnifiques !! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
+				"begin": "Ola ola ola! They are very greasy, my merguez! ....... How? What idea to come and sell merguez sausages in such a dismal place? But these Ruins are gorgeous!! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
 				"ah": "Oui, tout à fait ! C'est un peu comme l'acre-aux-pôles : mon cousin y a fait une fortune en vendant des porte-clés en forme de temple. Alors ici, c'est décidé, je serai le premier ! Même si je dois attendre plusieurs années que le commerce se lance, pas question de laisser passer cette opportunité en or !",
 				"ok": "Tiens, ton Dinoz m'a l'air bien maigre... Prends ces merguez ! C'est gratuit à condition que tu ailles parler des Superbes Ruines Ashpouk à tes amis. Ok, tu n'oublieras pas alors ?",
 				"thanks": "De rien, de rien, c'est bon pour le business !"
@@ -1008,22 +1008,22 @@
 				"souvenir": "Des souv'nirs ?... Bah... j'ai bien ma pile de feuilles d'incantations en retard là, mais je sais pas si ça t'interesse... J'peux te filer un autographe aussi, signé de mon vrai nom, Baston Labaf... non ? Ok tant pis... Sinon y'a des trucs de combats aux Forges... des équipements de combat, et tout ça là... Y'aura p'têt un truc cool pour toi.",
 				"charm": "Ah ouais, c'est vrai... y parait que j'dois t'aider... Tiens, un Charme de Feu... ça aidera bien ton dinoz dans ses prochains combats.",
 				"boost": "Bouge pas, j'vais t'enchanter de la magie des Shamans... Oyééé, oyééé ! ZZZZzzzzzz... ... C'est bon, tu peux y'aller, t'es un balaise maintenant.",
-				"nothing": "Hey, essaye pas d'me rouler, ton dinoz a déjà un charme... Reviens me voir plus tard.",
-				"force": "Fort ? le gros dorogon Vener' là ?... bah ouais un peu... C'est la première cause de mortalité chez les touristes, juste devant les crises cardiaques causées par nos merguez... Ha la la, qué p'tites natures ces touristes... ",
-				"merci": "Tchao mon pote... à la prochaine...",
-				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
-				"accept": "Marché conclu..."
+				"nothing": "Hey, essaye pas d'me rouler, ton dinoz a déjà un charme... Come see me later.",
+				"force": "Strong? the big dorogon Come here?... yeah a bit... It is the leading cause of death among tourists, just ahead of heart attacks caused by our merguez sausages... Ha la la, qué p'tites natures ces touristes... ",
+				"merci": "See y'a, buddy... next one...",
+				"more": "Uhmm.... If your Dinoz agrees to fulfill a few missions for me, I'll entrust him with my Strategy Guide. It's very useful...",
+				"accept": "Deal..."
 			},
 			"playerChoice": {
-				"vener": "Le Vénérable...",
-				"souvenir": "On peut acheter des souvenirs dans le coin ?",
-				"missions": "Consulter la liste des Missions",
-				"charm": "On m'a parlé d'un charme...",
-				"boost": "Accepter le Charme",
-				"nothing": "Accepter le Charme",
-				"force": "Ah ? Et il est fort ?",
-				"merci": "Merci, je tiendrai compte de vos conseils !",
-				"more": "Et c'est tout ?",
+				"vener": "The Venerable...",
+				"souvenir": "Can we buy souvenirs in the area?",
+				"missions": "Show Mission List",
+				"charm": "I have been told of a charm...",
+				"boost": "Accept the Charm",
+				"nothing": "Accept the Charm",
+				"force": "Oh? And it is strong?",
+				"merci": "Thanks, I'll take your advice into account!",
+				"more": "And that's it?",
 				"accept": "Confirm !"
 			}
 		}
@@ -1049,8 +1049,8 @@
 				"description": "The Forges are where items made from the fire of the Big All-Hot are also sold. You can find lots of useful items for battle there."
 			},
 			"magic": {
-				"name": "Boutique Magique",
-				"description": "Au coeur d'une petite ruelle de Dinoville, les aventuriers se perdent parfois et trouvent alors la Boutique Magique... Les objets extrêmement rares et puissants qu'elle vend ne peuvent être achetés avec de vulgaires pièces d'or. Par contre, ces objets sont ensorcelés : une fois équipés sur un Dinoz, ils ne peuvent plus être enlevés avant plusieurs jours !"
+				"name": "Magic Shop",
+				"description": "In the heart of a small alley in Dinoville, adventurers sometimes get lost and then find the Magic Shop... The extremely rare and powerful items it sells cannot be purchased with vulgar gold pieces. Par contre, ces objets sont ensorcelés : une fois équipés sur un Dinoz, ils ne peuvent plus être enlevés avant plusieurs jours !"
 			},
 			"cursed": {
 				"name": "Boutique Maudite",
