@@ -22,6 +22,7 @@ export interface DinozFiche {
 	placeId?: number;
 	actions?: Array<ActionFiche>;
 	items?: Array<number>;
+	maxItems?: number;
 	skills?: Array<number>;
 	status?: Array<number>;
 	borderPlace?: Array<number>;

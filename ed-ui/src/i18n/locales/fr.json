@@ -17,7 +17,8 @@
 		"AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
 		"DinozNotDead": "Votre dinoz est déjà en vie.",
 		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
-		"tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs."
+		"tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs.",
+		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -416,7 +417,8 @@
 			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
 			"empty": "Il n'y a aucun objet dans cette case",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
-		}
+		},
+		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre dinoz en combat.//"
 	},
 	"news": {
 		"actualites": "L'actualité de Dinoland",
@@ -907,7 +909,7 @@
 				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
 				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
 				"ok": "Désolé les développeurs n'ont pas encore appris à se concentrer...",
-        "bye": "A la prochaine et amuse toi bien !"
+				"bye": "A la prochaine et amuse toi bien !"
 			},
 			"playerChoice": {
 				"question": "J'ai une question à vous poser...",

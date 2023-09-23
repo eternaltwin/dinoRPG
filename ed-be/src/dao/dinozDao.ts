@@ -136,12 +136,28 @@ export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz> 
 		])
 		.addSelect(['player.id'])
 		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
-		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
 		.addSelect(['skills.skillId'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('player.items', 'playerItems')
-		.leftJoin('dinoz.items', 'items')
+		.leftJoin('dinoz.status', 'status')
+		.leftJoin('dinoz.skills', 'skills')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
+}
+
+export async function getDinozEquipItemRequest(dinozId: number): Promise<Dinoz> {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id'])
+		.addSelect(['player.id', 'player.engineer'])
+		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
+		.addSelect(['dinozItems.itemId', 'dinozItems.id'])
+		.addSelect(['status.statusId'])
+		.addSelect(['skills.skillId'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoin('player.items', 'playerItems')
+		.leftJoin('dinoz.items', 'dinozItems')
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.skills', 'skills')
 		.where('dinoz.id = :dId', { dId: dinozId })

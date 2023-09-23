@@ -4,7 +4,6 @@ import {
 	Entity,
 	JoinColumn,
 	JoinTable,
-	ManyToMany,
 	ManyToOne,
 	OneToMany,
 	PrimaryGeneratedColumn,
@@ -61,7 +60,7 @@ export class Dinoz {
 	})
 	missions: Relation<DinozMission[]>;
 
-	@ManyToMany(() => DinozItem, {
+	@OneToMany(() => DinozItem, item => item.dinoz, {
 		cascade: true
 	})
 	@JoinTable()
@@ -250,6 +249,15 @@ export class Dinoz {
 		};
 	}
 
+	get backpackSlot(): number {
+		let total = 2;
+		if (this.skills.find(skill => skill.skillId === skillList.POCHE_VENTRALE.skillId)) total++;
+		if (this.skills.find(skill => skill.skillId === skillList.SURPLIS_DHADES.skillId)) total++;
+		if (this.status.find(status => status.statusId === statusList.BACKPACK)) total++;
+		if (this.player.engineer) total++;
+		return total;
+	}
+
 	public numberOfGatheringClick(gridInformation: GatherData): number {
 		let click = 0;
 		switch (gridInformation.type) {
@@ -357,6 +365,7 @@ export class Dinoz {
 			race: Object.values(raceList).find(race => race.raceId === this.raceId)!,
 			placeId: this.placeId,
 			items: this.items?.map(item => item.itemId),
+			maxItems: this.backpackSlot,
 			status: this.status?.map(status => status.statusId),
 			borderPlace: Object.values(placeList)
 				.find(place => place.placeId === this.placeId)!

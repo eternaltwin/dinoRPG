@@ -1,5 +1,6 @@
 import { http } from '../utils/index.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { DinozItems } from '@drpg/core/models/item/DinozItems';
 
 // For Player's inventory
 
@@ -14,6 +15,12 @@ export const InventoryService = {
 	useInventoryItem(itemId: number, dinozId: number): Promise<void> {
 		return http()
 			.get(`/inventory/${dinozId}/${itemId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	equipInventoryItem(dinozId: number, itemId: number, equip: boolean): Promise<Array<DinozItems>> {
+		return http()
+			.put(`/inventory/${dinozId}`, { itemId: itemId, equip: equip })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

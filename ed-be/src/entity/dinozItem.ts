@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, Relation } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from 'typeorm';
 import { Dinoz } from './index.js';
 
 @Entity()
@@ -6,7 +6,7 @@ export class DinozItem {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@ManyToMany(() => Dinoz, {
+	@ManyToOne(() => Dinoz, dinoz => dinoz.items, {
 		onDelete: 'CASCADE'
 	})
 	dinoz: Relation<Dinoz>;
@@ -15,4 +15,9 @@ export class DinozItem {
 		nullable: false
 	})
 	itemId: number;
+
+	constructor(dinoz: Dinoz, itemId: number) {
+		this.dinoz = dinoz;
+		this.itemId = itemId;
+	}
 }

@@ -1,10 +1,25 @@
 <template>
 	<div class="equip">
 		<ul>
-			<li v-for="(item, index) in itemList" :key="index">
-				<a href="#" class="icon">
-					<img :src="getImgURL('item', `item_${$t(`item.imgName.${item}`)}`)" :alt="item" />
-				</a>
+			<li v-for="item in items" :key="item">
+				<Tippy
+					@click="unequip(item)"
+					theme="normal"
+					tag="img"
+					v-if="item"
+					:src="getImgURL('item', `item_${itemNameList[item]}`)"
+					:alt="itemNameList[item]"
+				>
+					<template #content>
+						<h1 v-html="formatContent($t(`item.name.${itemNameList[item]}`))" />
+						<p v-html="formatContent($t(`item.description.${itemNameList[item]}`))" />
+					</template>
+				</Tippy>
+				<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
+					<template #content>
+						<p v-html="formatContent($t(`item.empty`))" />
+					</template>
+				</Tippy>
 			</li>
 		</ul>
 	</div>
@@ -12,11 +27,51 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { itemNameList } from '../../constants';
+import EventBus from '../../events';
+import { InventoryService } from '../../services';
+import { errorHandler } from '../../utils';
 
 export default defineComponent({
 	name: 'DinozEquip',
 	props: {
-		itemList: Array as PropType<Array<number>>
+		itemList: Array as PropType<Array<number>>,
+		maxItem: { type: Number, required: true }
+	},
+	data() {
+		return {
+			items: undefined as undefined | Array<number>
+		};
+	},
+	computed: {
+		itemNameList() {
+			return itemNameList;
+		}
+	},
+	methods: {
+		async unequip(item: number) {
+			EventBus.emit('isLoading', true);
+			const dinozId = parseInt(this.$route.params.id as string);
+			try {
+				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
+				this.items = new Array(this.maxItem);
+				backPack.forEach((item, index) => (this.items![index] = item.itemId));
+				EventBus.emit('refreshInventory', true);
+				EventBus.emit('isLoading', false);
+			} catch (error) {
+				errorHandler.handle(error);
+				return;
+			}
+		}
+	},
+	mounted() {
+		this.items = new Array(this.maxItem);
+		this.itemList?.forEach((item, index) => (this.items![index] = item));
+
+		EventBus.on('equipItem', e => {
+			this.items = new Array(this.maxItem);
+			e.forEach((item, index) => (this.items![index] = item.itemId));
+		});
 	}
 });
 </script>
@@ -24,7 +79,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .equip {
 	position: absolute;
-	padding-left: 12px;
 	margin-left: 420px;
 	margin-top: 101px;
 	font-size: 0pt;
@@ -34,14 +88,23 @@ export default defineComponent({
 
 	ul {
 		list-style: none;
-		margin-left: 1px;
+		margin-left: 16px;
 		text-align: left;
-		margin-top: 4px;
+		margin-top: 22px;
 	}
 
 	li {
 		display: inline;
-		padding-right: 1px;
+		padding-right: 3px;
+		img {
+			margin-top: 2px;
+			margin-left: 1px;
+			position: relative;
+			&:hover {
+				outline: 1px solid white;
+				cursor: pointer;
+			}
+		}
 	}
 }
 </style>

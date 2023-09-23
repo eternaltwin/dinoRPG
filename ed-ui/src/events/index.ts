@@ -1,6 +1,7 @@
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { AxiosError } from 'axios';
 import mitt from 'mitt';
+import { DinozItems } from '@drpg/core/models/item/DinozItems';
 
 type Events = {
 	responseError: AxiosError;
@@ -10,6 +11,8 @@ type Events = {
 	toast: toast;
 	refreshDinoz: boolean;
 	refreshMoney: boolean;
+	refreshInventory: boolean;
+	equipItem: Array<DinozItems>;
 };
 
 type toast = {

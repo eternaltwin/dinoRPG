@@ -58,6 +58,7 @@
 								content: formatContent($t('tooltip.item.equipTitle')),
 								theme: 'small'
 							}"
+							@click="equipItem(item)"
 						>
 							<img :src="getImgURL('icons', 'small_equip')" alt="small_equip" />
 						</a>
@@ -132,8 +133,7 @@ export default defineComponent({
 				const dinozId = this.$route.params.id as string;
 				try {
 					await InventoryService.useInventoryItem(item.itemId, parseInt(dinozId));
-					this.allItemsData = await InventoryService.getAllItemsData();
-					this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
+					await this.resfreshInventory();
 					EventBus.emit('refreshDinoz', true);
 					EventBus.emit('refreshMoney', true);
 					EventBus.emit('isLoading', false);
@@ -145,18 +145,39 @@ export default defineComponent({
 					await this.refreshDinozList();
 				}
 			}
+		},
+		async equipItem(item: ItemFiche): Promise<void> {
+			if (item.quantity! > 0) {
+				EventBus.emit('isLoading', true);
+				const dinozId = parseInt(this.$route.params.id as string);
+				try {
+					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
+					await this.resfreshInventory();
+					EventBus.emit('equipItem', items);
+					EventBus.emit('isLoading', false);
+				} catch (error) {
+					errorHandler.handle(error);
+					return;
+				}
+			}
+		},
+		async resfreshInventory(): Promise<void> {
+			this.allItemsData = await InventoryService.getAllItemsData();
+			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
 		}
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
 		try {
-			this.allItemsData = await InventoryService.getAllItemsData();
-			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
+			await this.resfreshInventory();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
 			return;
 		}
+		EventBus.on('refreshInventory', async e => {
+			await this.resfreshInventory();
+		});
 	}
 });
 </script>

@@ -646,8 +646,8 @@
 			"mineur": "Minero Coraliano",
 			"papy": "Papi José",
 			"bob": "Sr. Bao Bob",
-      "baofan": "Fan de Bao",
-      "forgeron": "Herrero"
+			"baofan": "Fan de Bao",
+			"forgeron": "Herrero"
 		},
 		"professor": {
 			"speech": {
@@ -859,65 +859,65 @@
 			}
 		},
 		"bob": {
-      "speech": {
-        "begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Eleveur ?",
-        "question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on\n\t\torganise des rallyes tout autour de Dinoland !",
-        "nothing": "Ah bon ? Alors parfait... Bon voyage !",
-        "quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel.\n\t\tJe pourrais alors répondre à ton voeu le plus cher.",
-        "quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons.\n\t\tCela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
-        "where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi\n\t\têtre des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
-        "where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Mais sâche que tu y trouvera une clé, oui,\n\t\tLA clé. Pour la porte de Sylvenoire. Elle te permettra de la continuer, ton aventure. Enfin, si tu survis\n\t\tbien entendu.",
-        "how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Les tiens ou ceux de membres de ton Clan.\n\t\tChaque Dinoz doit se concentrer. Quand vous serez sept, alors, à ce moment, vous pourrez aller là-bas.",
-        "danger": "Dangereux ? Mmm... pour faire simple, je dirais que tu n'as surement que peu de chance de survivre là-bas...\n\t\tMais qui ne tente rien n'a rien, n'est-ce pas ?",
-        "concen": "Mmm... Bien... je vais hypnotiser ton Dinoz. Il pourra mieux se concentrer de cette façon...\n\t\tNe t'inquiete pas, tu pourras à tout moment arrêter cela, si tu le désires.",
-        "quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide.\n\t\tEnfin, si je devine bien quelle question tu voulais me poser...",
-        "noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane.\n\t\tIl me semble qu'il te manque quelquechose, mon cher.",
-        "ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
-        "potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
-        "ok": "Désolé les développeurs n'ont pas encore appris à se concentrer..."
-      },
-      "playerChoice": {
-        "question": "Tengo una pregunta para ti...",
-        "nothing": "Nada de nada",
-        "missions": "Sí quiero",
-        "no": "No gracias",
-        "quest2": "¿Y mi pregunta?",
-        "quest3": "¿Y mi pregunta?",
-        "bye": "Debo partir",
-        "where": "¿Allí?",
-        "where2": "Pero, ¿a dónde exactamente?",
-        "how": "¿Cómo tengo que hacerlo?",
-        "danger": "¿Y es peligroso?",
-        "concen": "¡Quiero enfocar a mi Dinoz!",
-        "quest4": "¿Y mi pregunta?",
-        "noingr": "¡Aquí están los ingredientes!",
-        "ingr": "¡Aquí están los ingredientes!",
-        "potion": "Vous êtes donc un Singe Antique !!!",
-        "ok": "De acuerdo"
-      }
-    },
-    "baofan": {
-      "speech": {
-        "begin": "Bonjour monsieur ! Vous avez parlé à Monsieur Bao ? Il est vraiment génniaaaaaalll non ???",
-        "ok": "Hein, que c'est vrai !! Il est trop cool ! J'ai même traversé la Forêt de Grumhel exprès pour qu'il me raconte plein d'histoires super ! Vous savez quoi, il a déja assommé un gorilloz démon, un jour ! Si si ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? et ben il les a tous battus !",
-        "wah": "Oui ! Et M. Bao a bien voulu m'apprendre quelques trucs ! Il a dit que je suis très doué pour mon âge ! C'est bien, hein ? Attends regarde... je vais envoûter un truc, tu veux que je te montre ?",
-        "yes": ".............. Voilà, j'ai fini ! Tu le veux ? Tiens... C'est un Charme Bao ! Alors prends-en soin, hein ! Ca devrait aider ton Dinoz pendant quelques combats. Quand tout le fluide spitruel sera épuisé, tu pourras revenir me voir pour que je le recharge !",
-        "spirit": "Heu... oui c'est ça ! Spitri... péritel... spriti... ! Ho ils sont trop compliqués vos mots technologiques !",
-        "thanks": "Hooo tu t'en vas déja... Tu reviendras, hein ? A bientôt alors !",
-        "nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'energie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
-        "no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*."
-      },
-      "playerChoice": {
-        "ok": "Ehh... sí",
-        "wah": "¡¡Waaaahh!!",
-        "yes": "¡Ok!",
-        "nothing": "¡Ok!",
-        "no": "No gracias",
-        "spirit": "\"Spirituel\" tu veux dire ?",
-        "thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !"
-      }
-    },
-    "forgeron": {
+			"speech": {
+				"begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Eleveur ?",
+				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on\n\t\torganise des rallyes tout autour de Dinoland !",
+				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
+				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel.\n\t\tJe pourrais alors répondre à ton voeu le plus cher.",
+				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons.\n\t\tCela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
+				"where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi\n\t\têtre des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
+				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Mais sâche que tu y trouvera une clé, oui,\n\t\tLA clé. Pour la porte de Sylvenoire. Elle te permettra de la continuer, ton aventure. Enfin, si tu survis\n\t\tbien entendu.",
+				"how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Les tiens ou ceux de membres de ton Clan.\n\t\tChaque Dinoz doit se concentrer. Quand vous serez sept, alors, à ce moment, vous pourrez aller là-bas.",
+				"danger": "Dangereux ? Mmm... pour faire simple, je dirais que tu n'as surement que peu de chance de survivre là-bas...\n\t\tMais qui ne tente rien n'a rien, n'est-ce pas ?",
+				"concen": "Mmm... Bien... je vais hypnotiser ton Dinoz. Il pourra mieux se concentrer de cette façon...\n\t\tNe t'inquiete pas, tu pourras à tout moment arrêter cela, si tu le désires.",
+				"quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide.\n\t\tEnfin, si je devine bien quelle question tu voulais me poser...",
+				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane.\n\t\tIl me semble qu'il te manque quelquechose, mon cher.",
+				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
+				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
+				"ok": "Désolé les développeurs n'ont pas encore appris à se concentrer..."
+			},
+			"playerChoice": {
+				"question": "Tengo una pregunta para ti...",
+				"nothing": "Nada de nada",
+				"missions": "Sí quiero",
+				"no": "No gracias",
+				"quest2": "¿Y mi pregunta?",
+				"quest3": "¿Y mi pregunta?",
+				"bye": "Debo partir",
+				"where": "¿Allí?",
+				"where2": "Pero, ¿a dónde exactamente?",
+				"how": "¿Cómo tengo que hacerlo?",
+				"danger": "¿Y es peligroso?",
+				"concen": "¡Quiero enfocar a mi Dinoz!",
+				"quest4": "¿Y mi pregunta?",
+				"noingr": "¡Aquí están los ingredientes!",
+				"ingr": "¡Aquí están los ingredientes!",
+				"potion": "Vous êtes donc un Singe Antique !!!",
+				"ok": "De acuerdo"
+			}
+		},
+		"baofan": {
+			"speech": {
+				"begin": "Bonjour monsieur ! Vous avez parlé à Monsieur Bao ? Il est vraiment génniaaaaaalll non ???",
+				"ok": "Hein, que c'est vrai !! Il est trop cool ! J'ai même traversé la Forêt de Grumhel exprès pour qu'il me raconte plein d'histoires super ! Vous savez quoi, il a déja assommé un gorilloz démon, un jour ! Si si ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? et ben il les a tous battus !",
+				"wah": "Oui ! Et M. Bao a bien voulu m'apprendre quelques trucs ! Il a dit que je suis très doué pour mon âge ! C'est bien, hein ? Attends regarde... je vais envoûter un truc, tu veux que je te montre ?",
+				"yes": ".............. Voilà, j'ai fini ! Tu le veux ? Tiens... C'est un Charme Bao ! Alors prends-en soin, hein ! Ca devrait aider ton Dinoz pendant quelques combats. Quand tout le fluide spitruel sera épuisé, tu pourras revenir me voir pour que je le recharge !",
+				"spirit": "Heu... oui c'est ça ! Spitri... péritel... spriti... ! Ho ils sont trop compliqués vos mots technologiques !",
+				"thanks": "Hooo tu t'en vas déja... Tu reviendras, hein ? A bientôt alors !",
+				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'energie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
+				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*."
+			},
+			"playerChoice": {
+				"ok": "Ehh... sí",
+				"wah": "¡¡Waaaahh!!",
+				"yes": "¡Ok!",
+				"nothing": "¡Ok!",
+				"no": "No gracias",
+				"spirit": "\"Spirituel\" tu veux dire ?",
+				"thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !"
+			}
+		},
+		"forgeron": {
 			"speech": {
 				"begin": "Vous entrez dans les forges de Fosselave. la chaleur qui règne ici n'a rien à envier à l'intérieur du cratère du Grand Tout Chaud.\n\t\tIci rien ne se crée, tout se transforme, à grand coup de marteau !\n\t\t\n\t\t100 pièces d'or pour réparer une pelle, c'est donné  non ?",
 				"pelle": "Et une pelle dans la gueule ca te tente ?",
@@ -1797,88 +1797,88 @@
 			"kilglu": "Un monstruo extraño",
 			"kilgnt": "Los gigantes",
 			"kilcoq": "El desafío del mes",
-      "kilpir": "El regalo de cumpleaños",
-      "troc": "El trueque de las islas atlantes",
-      "kilksk": "La caza de Kazkadines",
-      "kilang": "Anguilloz al vinagre",
-      "bigpch": "La gran caza",
-      "rally1": "El Rally de las Sardinas",
-      "rally2": "El Rally de los Pescados",
-      "rally3": "El Rally de los Tiburones",
-      "rally4": "El Rally de las Ballenas",
-      "tour": "El tour de Dinoland"
-    },
-    "tooltip": "Misión: {mission}",
-    "description": {
-      "fish": "Doña Seyche, residente de Dinovilla, busca pescado fresco para organizar una cena con sus amigos. ¿Puedes conseguirle algo de pescado en el Mercader del Puerto de Santa Moria, al sur? Ha sido avisado y te está esperando.",
-      "dog": "La vieja Ducraft perdió a su caniche mientras visitaba a su hijo en las Colinas Escarpadas, ¿puedes encontrarlo?",
-      "kilgou": "Muchos lobos y gupiones acampan a sus anchas en las Colinas Escarpadas al norte de Dinovilla, el jefe de un pueblo cercano está buscando a alguien para matar a algunos de ellos y así asustarlos para que se calmen, ¿serás capaz de mostrarte lo suficientemente fuerte?",
-      "kilwlf": "Recientemente, los granjeros han tenido muchos problemas con grupos de lobos que atacan a sus cabras. ¿Puedes dar un paseo aquí y allá y matar a algunos para mantenerlos alejados?",
-      "fflow": "El rosal favorito de Doña Seyche está en mal estado debido a la ola de calor. ¿Podrías traer agua pura de la fuente y llevársela?",
-      "kbook": "Nuevamente recibí una solicitud de la encantadora Doña Seyche. Le gustaría consultar un recetario que está en la Universidad, ¿puedes ir a buscarlo por ella?",
-      "msg": "Tengo ganas de escribir una carta a cierta persona que está cerca a mi corazón. Pero resulta que mis Sellos han sido robados por gupiones ladrones que normalmente se reúnen en la Fuente de la Juventud. Si los matas, te dejaré usar mis sellos, ¿de acuerdo?",
-      "lettre": "Uhm... Esta vez trabajarás para mi, Papy José... Necesito que entregues URGENTEMENTE esta carta a cierta persona en Dinoville. ¡Rápido!",
-      "kilglu": "Un extraño monstruo ha aparecido en el Reino de Dinoville. Es bastante duro y puede hacer mucho daño durante una pelea. ¿Podrías matar a uno y traérmelo para que pueda estudiarlo?",
-      "kilgnt": "No sé si te diste cuenta, ¡pero el Reino de Dinovilla está siendo invadido por enormes gigantes verdes que no parecen comer nada más que vegetales! ¿Puedes exterminar a una docena lo antes posible? Esta es una orden del Rey, ¡así que debes actuar rápido!",
-      "kilcoq": "Uhm... Todavía tengo un partido de Golf planeado con el Rey el próximo mes, y adivina qué, él quiere escuchar sobre tus hazañas... ¿Qué tal si matamos a algunos Coqdur rápidamente? ¡Serás bien recompensado!",
-      "kilpir": "Pronto es el cumpleaños de la pequeña Sophie de la isla de Waikiki. Su plato favorito son las Pirañas del Pantano Pegajoso. ¿Puedes traerle algunas por mí?",
-      "troc": "Hay un gran mercado en las islas donde puedes comerciar lo que quieras. Me gustaría conseguir un perchero para este plátano, ¿puedes ocuparte de ello?",
-      "kilksk": "Recibí una llamada urgente del Domo de Sulaflota. Los Atlanteidas están preocupados por la gran cantidad de Kazkadines de la Profundidad que han invadido el área. ¿Podrías llevar a tu Dinoz a que haga una pequeña limpieza? Ten cuidado de no electrocutarte.",
-      "kilang": "¿Conoces el plato tradicional de Anguilloz al vinagre? ¡Es realmente delicioso! ¿Puedes traer un poco de Anguilloz fresco y un poco de vinagre y luego llevárselo a mi amigo en el puerto de Santa Moria? ¡Es para un regalo!",
-      "bigpch": "Estoy un poco molesto. Le prometí al Archisabio del Domo de Sulaflota que exterminaría a 150 monstruos de las Islas Atlantes en solo diez días, pero me rompí el brazo y no puedo moverme demasiado. ¿Puedes encargarte de matar a treinta por mí? ¡Por lo demás, me las arreglaré!",
-      "rally1": "¡Participa en el Rally de la Sardina! ¡Llega al Puerto de Santa Moria lo más rápido posible!",
-      "rally2": "¡Participa en el Rally de Pescado! ¡Llega al Puerto de Santa Moria lo más rápido posible!",
-      "rally3": "¡Participa en el Rally del Tiburón! ¡Llega a las Minas de Coral lo más rápido posible!",
-      "rally4": "¡Participa en el Rally de Ballenas! ¡Ve a Fosalava y vuelve aquí lo antes posible!",
-      "tour": "¡El Tour de Dinoland es la carrera más famosa! ¡Haz un recorrido por Dinoland en menos de diez días! La primera parada es en la isla de Waikiki."
-    },
-    "actions": {
-      "talkTo": "Hablar con {npc}...",
-      "goto": "Ir a {place} ...",
-      "validate": "Volver para validar la misión {place}...",
-      "terminate": "Validar la misión",
-      "hidePlace": "Encuentra el lugar adecuado...",
-      "kill": "{progress} / {target} {targetName} a matar...",
-      "timbre": "Juntar los Sellos"
-    },
-    "npc": {
-      "fishVendor": "Mercader de pescado",
-      "mmeseyche": "Doña Seyche",
-      "mmeducraft1": "Jacqueline Ducraft",
-      "mmeducraft2": "Jacqueline Ducraft",
-      "nioufniouf": "NioufNiouf",
-      "papyjoe": "Papy Joe",
-      "pureWater": "Eau Pure",
-      "kbook": "Livre de Recettes",
-      "timbre": "Ramasser les Timbres",
-      "sophie": "La petite Sophie",
-      "marchand": "Un Marchand",
-      "amoureux": "Un Amoureux",
-      "bijoutier": "Un Bijoutier",
-      "touriste": "Un Touriste Enlisé",
-      "artiste": "Un Artiste Enthousiaste",
-      "dame": "Une Veille Dame",
-      "marchandvin": "Marchand de Vins",
-      "pecheur": "Pêcheur",
-      "adam": "Adam Nature",
-      "etape": "Etape du Rallye",
-      "bob": "M. Bao Bob"
-    },
-    "place": {
-      "port": "au Port de Prêche",
-      "market": "à la Place du Marché",
-      "papyjoe": "Chez Papy Joe",
-      "forcebrut": "à Forcebrut",
-      "dnv": "à Dinoville",
-      "colesc": "aux Collines Escarpées",
-      "fountj": "à la Fontaine de Jouvence",
-      "universite": "à l'Université",
-      "marais": "au marais colant",
-      "ilewkk": "à l'île Waïkiki",
-      "bob": "Chez M. Bao Bob",
-      "fosslv": "à Fosselave",
-      "camp": "au camp Korgon",
-      "auree": "à L'Orée de la Forêt"
+			"kilpir": "El regalo de cumpleaños",
+			"troc": "El trueque de las islas atlantes",
+			"kilksk": "La caza de Kazkadines",
+			"kilang": "Anguilloz al vinagre",
+			"bigpch": "La gran caza",
+			"rally1": "El Rally de las Sardinas",
+			"rally2": "El Rally de los Pescados",
+			"rally3": "El Rally de los Tiburones",
+			"rally4": "El Rally de las Ballenas",
+			"tour": "El tour de Dinoland"
+		},
+		"tooltip": "Misión: {mission}",
+		"description": {
+			"fish": "Doña Seyche, residente de Dinovilla, busca pescado fresco para organizar una cena con sus amigos. ¿Puedes conseguirle algo de pescado en el Mercader del Puerto de Santa Moria, al sur? Ha sido avisado y te está esperando.",
+			"dog": "La vieja Ducraft perdió a su caniche mientras visitaba a su hijo en las Colinas Escarpadas, ¿puedes encontrarlo?",
+			"kilgou": "Muchos lobos y gupiones acampan a sus anchas en las Colinas Escarpadas al norte de Dinovilla, el jefe de un pueblo cercano está buscando a alguien para matar a algunos de ellos y así asustarlos para que se calmen, ¿serás capaz de mostrarte lo suficientemente fuerte?",
+			"kilwlf": "Recientemente, los granjeros han tenido muchos problemas con grupos de lobos que atacan a sus cabras. ¿Puedes dar un paseo aquí y allá y matar a algunos para mantenerlos alejados?",
+			"fflow": "El rosal favorito de Doña Seyche está en mal estado debido a la ola de calor. ¿Podrías traer agua pura de la fuente y llevársela?",
+			"kbook": "Nuevamente recibí una solicitud de la encantadora Doña Seyche. Le gustaría consultar un recetario que está en la Universidad, ¿puedes ir a buscarlo por ella?",
+			"msg": "Tengo ganas de escribir una carta a cierta persona que está cerca a mi corazón. Pero resulta que mis Sellos han sido robados por gupiones ladrones que normalmente se reúnen en la Fuente de la Juventud. Si los matas, te dejaré usar mis sellos, ¿de acuerdo?",
+			"lettre": "Uhm... Esta vez trabajarás para mi, Papy José... Necesito que entregues URGENTEMENTE esta carta a cierta persona en Dinoville. ¡Rápido!",
+			"kilglu": "Un extraño monstruo ha aparecido en el Reino de Dinoville. Es bastante duro y puede hacer mucho daño durante una pelea. ¿Podrías matar a uno y traérmelo para que pueda estudiarlo?",
+			"kilgnt": "No sé si te diste cuenta, ¡pero el Reino de Dinovilla está siendo invadido por enormes gigantes verdes que no parecen comer nada más que vegetales! ¿Puedes exterminar a una docena lo antes posible? Esta es una orden del Rey, ¡así que debes actuar rápido!",
+			"kilcoq": "Uhm... Todavía tengo un partido de Golf planeado con el Rey el próximo mes, y adivina qué, él quiere escuchar sobre tus hazañas... ¿Qué tal si matamos a algunos Coqdur rápidamente? ¡Serás bien recompensado!",
+			"kilpir": "Pronto es el cumpleaños de la pequeña Sophie de la isla de Waikiki. Su plato favorito son las Pirañas del Pantano Pegajoso. ¿Puedes traerle algunas por mí?",
+			"troc": "Hay un gran mercado en las islas donde puedes comerciar lo que quieras. Me gustaría conseguir un perchero para este plátano, ¿puedes ocuparte de ello?",
+			"kilksk": "Recibí una llamada urgente del Domo de Sulaflota. Los Atlanteidas están preocupados por la gran cantidad de Kazkadines de la Profundidad que han invadido el área. ¿Podrías llevar a tu Dinoz a que haga una pequeña limpieza? Ten cuidado de no electrocutarte.",
+			"kilang": "¿Conoces el plato tradicional de Anguilloz al vinagre? ¡Es realmente delicioso! ¿Puedes traer un poco de Anguilloz fresco y un poco de vinagre y luego llevárselo a mi amigo en el puerto de Santa Moria? ¡Es para un regalo!",
+			"bigpch": "Estoy un poco molesto. Le prometí al Archisabio del Domo de Sulaflota que exterminaría a 150 monstruos de las Islas Atlantes en solo diez días, pero me rompí el brazo y no puedo moverme demasiado. ¿Puedes encargarte de matar a treinta por mí? ¡Por lo demás, me las arreglaré!",
+			"rally1": "¡Participa en el Rally de la Sardina! ¡Llega al Puerto de Santa Moria lo más rápido posible!",
+			"rally2": "¡Participa en el Rally de Pescado! ¡Llega al Puerto de Santa Moria lo más rápido posible!",
+			"rally3": "¡Participa en el Rally del Tiburón! ¡Llega a las Minas de Coral lo más rápido posible!",
+			"rally4": "¡Participa en el Rally de Ballenas! ¡Ve a Fosalava y vuelve aquí lo antes posible!",
+			"tour": "¡El Tour de Dinoland es la carrera más famosa! ¡Haz un recorrido por Dinoland en menos de diez días! La primera parada es en la isla de Waikiki."
+		},
+		"actions": {
+			"talkTo": "Hablar con {npc}...",
+			"goto": "Ir a {place} ...",
+			"validate": "Volver para validar la misión {place}...",
+			"terminate": "Validar la misión",
+			"hidePlace": "Encuentra el lugar adecuado...",
+			"kill": "{progress} / {target} {targetName} a matar...",
+			"timbre": "Juntar los Sellos"
+		},
+		"npc": {
+			"fishVendor": "Mercader de pescado",
+			"mmeseyche": "Doña Seyche",
+			"mmeducraft1": "Jacqueline Ducraft",
+			"mmeducraft2": "Jacqueline Ducraft",
+			"nioufniouf": "NioufNiouf",
+			"papyjoe": "Papy Joe",
+			"pureWater": "Eau Pure",
+			"kbook": "Livre de Recettes",
+			"timbre": "Ramasser les Timbres",
+			"sophie": "La petite Sophie",
+			"marchand": "Un Marchand",
+			"amoureux": "Un Amoureux",
+			"bijoutier": "Un Bijoutier",
+			"touriste": "Un Touriste Enlisé",
+			"artiste": "Un Artiste Enthousiaste",
+			"dame": "Une Veille Dame",
+			"marchandvin": "Marchand de Vins",
+			"pecheur": "Pêcheur",
+			"adam": "Adam Nature",
+			"etape": "Etape du Rallye",
+			"bob": "M. Bao Bob"
+		},
+		"place": {
+			"port": "au Port de Prêche",
+			"market": "à la Place du Marché",
+			"papyjoe": "Chez Papy Joe",
+			"forcebrut": "à Forcebrut",
+			"dnv": "à Dinoville",
+			"colesc": "aux Collines Escarpées",
+			"fountj": "à la Fontaine de Jouvence",
+			"universite": "à l'Université",
+			"marais": "au marais colant",
+			"ilewkk": "à l'île Waïkiki",
+			"bob": "Chez M. Bao Bob",
+			"fosslv": "à Fosselave",
+			"camp": "au camp Korgon",
+			"auree": "à L'Orée de la Forêt"
 		},
 		"dialog": {
 			"fish": {
@@ -1925,72 +1925,72 @@
 				"mmeSeyche": "Oohhhh mon petit, que m'apportes-tu cette fois ? Quoi ? Une lettre de papy ? .... ..... Apporte-lui vite cette réponse !",
 				"papyjoe": "Uhm ! Ehm... Une réponse ?! Déjà ?!? GENIAL ! Elle accepte mon invitation à dîner. C'est dans la poche : malgré mon grand âge, la nuit va être chaude !"
 			},
-      "kilpir": {
-        "sophie": "Oh ! Merci ! C'est très gentil de m'avoir apporté ces délicieux Piranhoz pour mon anniversaire ! Fait des gros bisoux à Monsieur Bao de ma part !",
-        "bob": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
-      },
-      "troc": {
-        "marchand": "Cette banane a l'air délicieuse, je te l'échange contre ce cerf-volant !",
-        "amoureux": "Pfff... je pars a la Fontaine de Jouvence, et si tu veux je t'échange ce cerf-volant contre cette bague de fiancailles toute neuve... jamais servie...",
-        "bijoutier": "Quoi ?!!??? Mais que vois-je ?!!?? Cette Bague fait partie d'une ancienne collection Royale ! Je vous l'échange contre ce que j'ai de plus cher au monde : ma villa sur l'Ile du Totem ! Tenez, voilà les clés, vous ne pouvez pas refuser !",
-        "touriste": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Une villa sur l'Ile du Totem ? Ok, sans problème, je l'échange contre mon camping-car !",
-        "artiste": "S.u.p.e.r. !! Je suis archi content ! Regarde ces visages ? C'est une composition art-ist-ique ! Quoi comment ça c'est nul ? Toi, tu ne comprends rien à l'Art avec un grand \"A\" ! D'ailleurs, mon oeuvre vaut bien un camping car, voilà, je confirme l'échange !",
-        "dame": "J'ai entendu que tu cherchais un porte-manteau ? Je te l'échange contre ce que tu veux... C'est quoi ça ? Des visages ? Ca ressemble a rien... mais bon, ça doit pas valoir grand chose, ce Monsieur Picassi est completement inconnu. Bon allez, prends ce porte-manteau en échange !",
-        "bob": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
-      },
-      "kilksk": {
-        "bob": "Bravo, c'était une mission branchée n'est-ce pas ?"
-      },
-      "kilang": {
-        "marchand": "Uhm ? Tu viens de la part de M. Bao ? Tu cherches du vinaigre ?? Tiens, j'ai ce vieux Chateau Forcebrut qui devrait être parfait pour la cuisine.",
-        "pecheur": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville.",
-        "mmeseyche": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !",
-        "adam": "Uhmmm ! Des anguilloz au vinaigre !! J'adoooore ! Désolé de ne pas avoir attendu au Port de Prêche, je vais prévenir ce cher Bob pour qu'il te récompense correctement !",
-        "bob": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
-      },
-      "bigpch": {
-        "bob": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
-      },
-      "rally1": {
-        "etape": "Vous avez franchi une étape du Rallye, vous devez maintenant rentrer voir M. Bao Bob !",
-        "bob": "Félicitations pour ce Rallye, voilà ton prix."
-      },
-      "rally2": {
-        "etape1": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à l'Université !",
-        "etape2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !",
-        "bob": "Félicitations pour ce Rallye, voilà ton prix."
-      },
-      "rally3": {
-        "etape1": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à Forcebrut !",
-        "etape2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant aller sur les Pentes de Basalte !",
-        "etape3": "Vous avez franchi la dernière étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !",
-        "bob": "Félicitations pour ce Rallye, voilà ton prix."
-      },
-      "rally4": {
-        "etape": "Vous avez franchi l'étape du Rallye, vous devez maintenant retourner chez M. Bao Bob au plus vite !",
-        "bob": "Félicitations pour ce Rallye, voilà ton prix."
-      },
-      "tour": {
-        "etape1": "Félicitations pour avoir franchi la première étape du Tour de Dinoland. La prochaine étape se trouve à Forcebrut. Bon courage !",
-        "etape2": "Félicitations pour avoir franchi la seconde étape du Tour de Dinoland. La prochaine étape se trouve aux Collines Escarpées. Bon courage dans les côtes !",
-        "etape3": "Félicitations pour avoir franchi la troisième étape du Tour de Dinoland. La prochaine étape se trouve à Fosselave. Bonne chance pour l'escalade du Grand Tout-Chaud !",
-        "etape4": "Félicitations pour avoir franchi la quatrième étape du Tour de Dinoland. La prochaine étape se trouve au Camp Korgon de la Forêt de Grumhel. Evitez de vous faire ralentir par ces sales bestioles !",
-        "etape5": "Félicitations pour avoir franchi la cinquième étape du Tour de Dinoland. La prochaine étape se trouve à l'Orée de la Forêt ! Attention à ne pas vous perdre sur le Chemin Sombre...",
-        "etape6": "Félicitations pour avoir franchi la sixième étape du Tour de Dinoland ! La dernière étape consiste à rejoindre M. Bao Bob pour remporter ce Tour !",
-        "bob": "Bravo ! C'était un magnifique Tour de Dinoland, voici une récompense digne de votre exploit !"
-      }
-    },
-    "target": {
-      "goupignon:wolf": "Loups et Goupignons",
-      "wolf": "loups",
-      "goupignon": "Goupignons Chapardeurs",
-      "gluon": "gluons",
-      "greeng": "géants vert",
-      "coq": "Coqdur",
-      "pira": "Pirhanoz",
-      "kazka": "Kazkadine",
-      "anguil": "Anguilloz",
-      "kazka:pira": "Monstres des Îles"
+			"kilpir": {
+				"sophie": "Oh ! Merci ! C'est très gentil de m'avoir apporté ces délicieux Piranhoz pour mon anniversaire ! Fait des gros bisoux à Monsieur Bao de ma part !",
+				"bob": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
+			},
+			"troc": {
+				"marchand": "Cette banane a l'air délicieuse, je te l'échange contre ce cerf-volant !",
+				"amoureux": "Pfff... je pars a la Fontaine de Jouvence, et si tu veux je t'échange ce cerf-volant contre cette bague de fiancailles toute neuve... jamais servie...",
+				"bijoutier": "Quoi ?!!??? Mais que vois-je ?!!?? Cette Bague fait partie d'une ancienne collection Royale ! Je vous l'échange contre ce que j'ai de plus cher au monde : ma villa sur l'Ile du Totem ! Tenez, voilà les clés, vous ne pouvez pas refuser !",
+				"touriste": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Une villa sur l'Ile du Totem ? Ok, sans problème, je l'échange contre mon camping-car !",
+				"artiste": "S.u.p.e.r. !! Je suis archi content ! Regarde ces visages ? C'est une composition art-ist-ique ! Quoi comment ça c'est nul ? Toi, tu ne comprends rien à l'Art avec un grand \"A\" ! D'ailleurs, mon oeuvre vaut bien un camping car, voilà, je confirme l'échange !",
+				"dame": "J'ai entendu que tu cherchais un porte-manteau ? Je te l'échange contre ce que tu veux... C'est quoi ça ? Des visages ? Ca ressemble a rien... mais bon, ça doit pas valoir grand chose, ce Monsieur Picassi est completement inconnu. Bon allez, prends ce porte-manteau en échange !",
+				"bob": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
+			},
+			"kilksk": {
+				"bob": "Bravo, c'était une mission branchée n'est-ce pas ?"
+			},
+			"kilang": {
+				"marchand": "Uhm ? Tu viens de la part de M. Bao ? Tu cherches du vinaigre ?? Tiens, j'ai ce vieux Chateau Forcebrut qui devrait être parfait pour la cuisine.",
+				"pecheur": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville.",
+				"mmeseyche": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !",
+				"adam": "Uhmmm ! Des anguilloz au vinaigre !! J'adoooore ! Désolé de ne pas avoir attendu au Port de Prêche, je vais prévenir ce cher Bob pour qu'il te récompense correctement !",
+				"bob": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
+			},
+			"bigpch": {
+				"bob": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
+			},
+			"rally1": {
+				"etape": "Vous avez franchi une étape du Rallye, vous devez maintenant rentrer voir M. Bao Bob !",
+				"bob": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally2": {
+				"etape1": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à l'Université !",
+				"etape2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !",
+				"bob": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally3": {
+				"etape1": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à Forcebrut !",
+				"etape2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant aller sur les Pentes de Basalte !",
+				"etape3": "Vous avez franchi la dernière étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !",
+				"bob": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally4": {
+				"etape": "Vous avez franchi l'étape du Rallye, vous devez maintenant retourner chez M. Bao Bob au plus vite !",
+				"bob": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"tour": {
+				"etape1": "Félicitations pour avoir franchi la première étape du Tour de Dinoland. La prochaine étape se trouve à Forcebrut. Bon courage !",
+				"etape2": "Félicitations pour avoir franchi la seconde étape du Tour de Dinoland. La prochaine étape se trouve aux Collines Escarpées. Bon courage dans les côtes !",
+				"etape3": "Félicitations pour avoir franchi la troisième étape du Tour de Dinoland. La prochaine étape se trouve à Fosselave. Bonne chance pour l'escalade du Grand Tout-Chaud !",
+				"etape4": "Félicitations pour avoir franchi la quatrième étape du Tour de Dinoland. La prochaine étape se trouve au Camp Korgon de la Forêt de Grumhel. Evitez de vous faire ralentir par ces sales bestioles !",
+				"etape5": "Félicitations pour avoir franchi la cinquième étape du Tour de Dinoland. La prochaine étape se trouve à l'Orée de la Forêt ! Attention à ne pas vous perdre sur le Chemin Sombre...",
+				"etape6": "Félicitations pour avoir franchi la sixième étape du Tour de Dinoland ! La dernière étape consiste à rejoindre M. Bao Bob pour remporter ce Tour !",
+				"bob": "Bravo ! C'était un magnifique Tour de Dinoland, voici une récompense digne de votre exploit !"
+			}
+		},
+		"target": {
+			"goupignon:wolf": "Loups et Goupignons",
+			"wolf": "loups",
+			"goupignon": "Goupignons Chapardeurs",
+			"gluon": "gluons",
+			"greeng": "géants vert",
+			"coq": "Coqdur",
+			"pira": "Pirhanoz",
+			"kazka": "Kazkadine",
+			"anguil": "Anguilloz",
+			"kazka:pira": "Monstres des Îles"
 		}
 	},
 	"myAccount": {
