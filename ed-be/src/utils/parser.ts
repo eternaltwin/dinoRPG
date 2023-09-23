@@ -1,13 +1,11 @@
-import { statusList } from '../constants/status.js';
 import { Dinoz } from '../entity/dinoz.js';
-import { missionsList } from '../constants/missions.js';
 import { placeList } from '../constants/index.js';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { Place } from '@drpg/core/models/place/Place';
 
-export function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
-	let result: boolean | undefined = undefined;
+export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?: Place): boolean {
+	let result: boolean | undefined;
 	switch (condition.conditionType) {
 		case ConditionEnum.MINLEVEL:
 			result = dinoz.level >= condition.value;
@@ -50,12 +48,18 @@ export function conditionParser(condition: Condition, dinoz: Dinoz): boolean {
 			const target: number = 0;
 			result = score == target;
 			break;
+		case ConditionEnum.NEXT_PLACE:
+			result = futurPlace === condition.value;
+			break;
 		default:
+			result = false;
 			break;
 	}
+
+	if (!result) result = false;
 
 	if (condition.conditionType !== ConditionEnum.RANDOM && condition.reverse) {
 		result = !result;
 	}
-	return result!;
+	return result;
 }

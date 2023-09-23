@@ -2,6 +2,7 @@ import { statusList } from './status.js';
 import { Place } from '@drpg/core/models/place/Place';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { ConditionEnum, ConditionOperatorEnum } from '@drpg/core/models/enums/Parser';
 
 export const placeList: Record<string, Place> = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -72,7 +73,10 @@ export const placeList: Record<string, Place> = {
 		name: 'gogtc',
 		borderPlace: [8],
 		alias: 43,
-		conditions: statusList.CLIMBING_GEAR,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.CLIMBING_GEAR
+		},
 		map: MapZone.GTOUTCHAUD
 	},
 	GO_TO_ATLANTEINES_ISLAND: {
@@ -80,14 +84,20 @@ export const placeList: Record<string, Place> = {
 		name: 'goiles',
 		borderPlace: [1],
 		alias: 31,
-		conditions: statusList.BUOY,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.BUOY
+		},
 		map: MapZone.ILES
 	},
 	CIMETIERE: {
 		placeId: 11,
 		name: 'skull',
 		borderPlace: [1],
-		conditions: statusList.SKULLY_MEMORY,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.SKULLY_MEMORY
+		},
 		map: MapZone.DINOLAND
 	},
 	GO_TO_DINOPLAZA: {
@@ -95,13 +105,19 @@ export const placeList: Record<string, Place> = {
 		name: 'goplaz',
 		borderPlace: [5],
 		alias: 35,
-		conditions: statusList.DINOPLAZA,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.DINOPLAZA
+		},
 		map: MapZone.DINOWEST
 	},
 	GO_TO_MONSTER_ISLAND: {
 		placeId: 13,
 		name: 'gomisl',
-		conditions: statusList.JOVEBOZE,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.JOVEBOZE
+		},
 		borderPlace: [1],
 		alias: 92,
 		map: MapZone.ILEMONSTRE
@@ -138,7 +154,10 @@ export const placeList: Record<string, Place> = {
 		placeId: 102,
 		name: 'fleuve',
 		borderPlace: [18],
-		conditions: statusList.FLIPPERS,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.FLIPPERS
+		},
 		alias: 17,
 		map: MapZone.JUNGLE
 	},
@@ -146,7 +165,10 @@ export const placeList: Record<string, Place> = {
 		placeId: 18,
 		name: 'camp',
 		borderPlace: [22, 102],
-		conditions: statusList.FLIPPERS,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.FLIPPERS
+		},
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT
 	},
@@ -154,7 +176,10 @@ export const placeList: Record<string, Place> = {
 		placeId: 19,
 		name: 'jungle',
 		borderPlace: [17, 20],
-		conditions: statusList.FLIPPERS,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.FLIPPERS
+		},
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT
 	},
@@ -169,7 +194,10 @@ export const placeList: Record<string, Place> = {
 		placeId: 21,
 		name: 'gostep',
 		borderPlace: [20],
-		conditions: statusList.SYLVENOIRE_KEY,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.SYLVENOIRE_KEY
+		},
 		alias: 55,
 		map: MapZone.STEPPE
 	},
@@ -191,7 +219,10 @@ export const placeList: Record<string, Place> = {
 		placeId: 24,
 		name: 'gogrum',
 		borderPlace: [25],
-		conditions: statusList.NENUPHAR_LEAF,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.NENUPHAR_LEAF
+		},
 		alias: 14,
 		map: MapZone.JUNGLE
 	},
@@ -207,7 +238,10 @@ export const placeList: Record<string, Place> = {
 		name: 'rasca',
 		borderPlace: [25],
 		alias: 28,
-		conditions: statusList.RASCAPHANDRE_DECOY,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.RASCAPHANDRE_DECOY
+		},
 		map: MapZone.ILES
 	},
 	BAO_BOB: {
@@ -221,7 +255,10 @@ export const placeList: Record<string, Place> = {
 		placeId: 28,
 		name: 'dome',
 		borderPlace: [25],
-		conditions: statusList.RASCAPHANDRE_DECOY,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.RASCAPHANDRE_DECOY
+		},
 		map: MapZone.ILES,
 		gather: GatherType.ENERGY1
 	},
@@ -366,7 +403,10 @@ export const placeList: Record<string, Place> = {
 		placeId: 50,
 		name: 'stunel',
 		borderPlace: [48],
-		conditions: statusList.LANTERN,
+		conditions: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.LANTERN
+		},
 		alias: 49,
 		map: MapZone.GTOUTCHAUD
 	},
@@ -695,6 +735,163 @@ export const placeList: Record<string, Place> = {
 		borderPlace: [60],
 		alias: 69,
 		map: MapZone.STEPPE
+	},
+	//DarkWorld
+	GOUFFRE: {
+		placeId: 103,
+		name: 'dkchut',
+		borderPlace: [104, 114, 111, 115, 116],
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE: {
+		placeId: 104,
+		name: 'dktow',
+		borderPlace: [103, 113, 105],
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE_1: {
+		placeId: 105,
+		name: 'dktow2',
+		borderPlace: [104, 106],
+		conditions: {
+			conditionType: ConditionEnum.CURRENT_MISSION,
+			value: 'monte',
+			operator: ConditionOperatorEnum.OR,
+			nextCondition: {
+				conditionType: ConditionEnum.CURRENT_MISSION,
+				value: 'roif',
+				operator: ConditionOperatorEnum.OR,
+				nextCondition: {
+					conditionType: ConditionEnum.SCENARIO,
+					value: 'smog',
+					step: 16,
+					operator: ConditionOperatorEnum.OR,
+					nextCondition: {
+						conditionType: ConditionEnum.SCENARIO,
+						value: 'smog',
+						step: 15
+					}
+				}
+			}
+		},
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE_2: {
+		placeId: 106,
+		name: 'dktow3',
+		borderPlace: [105, 107],
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE_DONJON_1: {
+		placeId: 107,
+		name: 'dktow4',
+		borderPlace: [106, 108, 109],
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE_DONJON_2: {
+		placeId: 108,
+		name: 'dktowa',
+		borderPlace: [107, 110],
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE_DONJON_3: {
+		placeId: 109,
+		name: 'dktowb',
+		borderPlace: [107, 110],
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE_DONJON_LAST: {
+		placeId: 110,
+		name: 'dktows',
+		borderPlace: [108, 109],
+		map: MapZone.DARKWORLD
+	},
+	DARK_FAKE: {
+		placeId: 111,
+		name: 'fake',
+		borderPlace: [103],
+		conditions: {
+			conditionType: ConditionEnum.CURRENT_MISSION,
+			value: 'ouestu',
+			operator: ConditionOperatorEnum.OR,
+			nextCondition: {
+				conditionType: ConditionEnum.CURRENT_MISSION,
+				value: 'lumi',
+				operator: ConditionOperatorEnum.OR,
+				nextCondition: {
+					conditionType: ConditionEnum.CURRENT_MISSION,
+					value: 'truci2',
+					operator: ConditionOperatorEnum.OR,
+					nextCondition: {
+						conditionType: ConditionEnum.STATUS,
+						value: statusList.DARK_ORB
+					}
+				}
+			}
+		},
+		map: MapZone.DARKWORLD
+	},
+	DARK_FAKE_2: {
+		placeId: 112,
+		name: 'fake2',
+		borderPlace: [102],
+		conditions: {
+			conditionType: ConditionEnum.CURRENT_MISSION,
+			value: 'roid'
+		},
+		map: MapZone.DARKWORLD
+	},
+	TOUR_SOMBRE_ENTREE: {
+		placeId: 113,
+		name: 'gotow',
+		borderPlace: [104],
+		conditions: {
+			conditionType: ConditionEnum.CURRENT_MISSION,
+			value: 'monte',
+			reverse: true,
+			operator: ConditionOperatorEnum.OR,
+			nextCondition: {
+				conditionType: ConditionEnum.CURRENT_MISSION,
+				value: 'roif',
+				reverse: true,
+				operator: ConditionOperatorEnum.OR,
+				nextCondition: {
+					conditionType: ConditionEnum.SCENARIO,
+					value: 'smog',
+					step: 16,
+					reverse: true
+				}
+			}
+		},
+		alias: 105,
+		map: MapZone.DARKWORLD
+	},
+	RETOUR_SURFACE: {
+		placeId: 114,
+		name: 'rechut',
+		conditions: {
+			conditionType: ConditionEnum.ACTIVE,
+			value: ''
+		},
+		borderPlace: [115],
+		map: MapZone.DARKWORLD
+	},
+	GO_TO_CHUTES_DARK: {
+		placeId: 115,
+		name: 'gochutd',
+		borderPlace: [114],
+		conditions: {
+			conditionType: ConditionEnum.PLACE_IS,
+			value: 'dkchut'
+		},
+		alias: 25,
+		map: MapZone.DARKWORLD
+	},
+	PORTAIL: {
+		placeId: 116,
+		name: 'dkbao',
+		borderPlace: [103, 112],
+		map: MapZone.DARKWORLD
 	},
 	NOWHERE: {
 		placeId: 999,

@@ -1144,5 +1144,156 @@ export const placeList: Array<PlaceDisplayed> = [
 		hidden: true,
 		xFactor: 10,
 		yFactor: 10
+	},
+	{
+		placeId: 103,
+		name: 'dkchut',
+		posLeft: 105,
+		posTop: 70,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 0.5,
+		yFactor: 10
+	},
+	{
+		placeId: 104,
+		name: 'dktow',
+		posLeft: 308,
+		posTop: 146,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 0.5,
+		yFactor: 10
+	},
+	{
+		placeId: 105,
+		name: 'dktow2',
+		hidden: true,
+		posLeft: 328,
+		posTop: 126,
+		icon: PlaceIcon.DOOR,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 106,
+		name: 'dktow3',
+		hidden: true,
+		posLeft: 332,
+		posTop: 92,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 107,
+		name: 'dktow4',
+		hidden: true,
+		posLeft: 334,
+		posTop: 67,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 108,
+		name: 'dktowa',
+		hidden: true,
+		posLeft: 317,
+		posTop: 52,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 109,
+		name: 'dktowb',
+		hidden: true,
+		posLeft: 357,
+		posTop: 52,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 110,
+		name: 'dktows',
+		hidden: true,
+		posLeft: 337,
+		posTop: 47,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 111,
+		name: 'fake',
+		posLeft: 111,
+		posTop: 182,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 112,
+		name: 'fake2',
+		posLeft: 321,
+		posTop: 28,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 113,
+		name: 'gotow',
+		hidden: true,
+		posLeft: 328,
+		posTop: 126,
+		alias: 104,
+		icon: PlaceIcon.DOOR,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 114,
+		name: 'rechut',
+		hidden: true,
+		posLeft: 62,
+		posTop: 32,
+		icon: PlaceIcon.WATER,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 115,
+		name: 'gochutd',
+		hidden: true,
+		alias: 25,
+		posLeft: 62,
+		posTop: 32,
+		icon: PlaceIcon.WATER,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 116,
+		name: 'dkbao',
+		posLeft: 199,
+		posTop: 72,
+		icon: PlaceIcon.HOUSE,
+		map: MapZone.DARKWORLD,
+		xFactor: 10,
+		yFactor: 10
 	}
 ];

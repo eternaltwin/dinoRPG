@@ -13,6 +13,7 @@ import { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { rewarder } from '../utils/rewarder.js';
 import { triggerAction } from '../utils/triggerAction.js';
 import { checkCondition } from '../utils/checkConditions.js';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId: number = parseInt(req.params.dinozId);
@@ -67,8 +68,8 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// Check if dinoz can go to this step
 		if (
 			nextStepWanted !== 'begin' &&
-			!actualStep.nextStep.includes(nextStepWantedData!.stepName) &&
-			!actualStep.nextStep.includes(nextStepWantedData!.alias!)
+			!actualStep.nextStep.includes(nextStepWantedData.stepName) &&
+			!actualStep.nextStep.includes(nextStepWantedData.alias!)
 		) {
 			throw new ErrorFormator(500, `This step is not reachable.`);
 		}
@@ -86,6 +87,17 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		}
 
 		if ((action && nextStepWantedData!.reward) || nextStepWantedData!.reward !== undefined) {
+			if (nextStepWantedData!.reward.find(r => r.rewardType === RewardEnum.REDIRECT)) {
+				const dataReturn = nextStepWantedData!.reward.find(r => r.rewardType === RewardEnum.REDIRECT);
+				if (dataReturn?.rewardType === RewardEnum.REDIRECT) {
+					return {
+						name: npcName,
+						speech: nextStepWantedData!.stepName,
+						playerChoice: [],
+						service: dataReturn.service
+					};
+				}
+			}
 			await rewarder(nextStepWantedData!.reward, dinoz);
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
 			dinoz = await getDinozNPCRequest(dinozId);

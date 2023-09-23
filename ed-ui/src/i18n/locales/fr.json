@@ -87,7 +87,8 @@
 			"xmas": "Vous pouvez jouer au Chasse-Neige en utilisant vos Tickets de Noël, et gagner de nombreux cadeaux !",
 			"tictac": "Utilisez vos Tickets Taque pour trouver peut-être un trésor trés rare !",
 			"labo": "Chercher l'antidote dans le laboratoire de l'Archidorogon pour soigner le vénérable.",
-			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !"
+			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !",
+			"concentrate": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -104,7 +105,8 @@
 			"xmas": "Chasse-Neige",
 			"tictac": "Trésor de Papy Joe",
 			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feu d'artifice"
+			"party": "Feu d'artifice",
+			"concentrate": "Arrêter de se concentrer"
 		}
 	},
 	"button": {
@@ -525,7 +527,20 @@
 			"bkport": "Retourner au Port de Prêche",
 			"mcuzco": "Ruines de Cuzcous",
 			"mcelit": "Camp d'Elit",
-			"tourup": "Aller vers le Sommet de la Tour de Karinbao"
+			"tourup": "Aller vers le Sommet de la Tour de Karinbao",
+			"dkbao": "Portail",
+			"dkchut": "Le gouffre des âmes perdues",
+			"dktow": "La Tour Sombre",
+			"dktow2": "La Tour Sombre 1er étage",
+			"dktow3": "La Tour Sombre 2ème étage",
+			"dktow4": "1er donjon Sombre",
+			"dktowa": "2ème donjon Sombre",
+			"dktowb": "3ème donjon Sombre",
+			"dktows": "Dernier donjon sombre",
+			"fake": "???",
+			"fake2": "????",
+			"gotow": "Entrer dans la Tour Sombre",
+			"rechut": "Retourner vers la surface"
 		},
 		"description": {
 			"port": "Créé par des moines quelques dizaines d'années auparavant, le Port de Prêche est rapidement devenu florissant grâce aux échanges avec les Iles Atlantéinées. Comme le poisson s'y trouve en grande quantité, aucun bateau n'est jamais disponible pour emmener les Dinoz jusqu'à la première île. Il vous faudra donc soit apprendre à nager à votre Dinoz soit au moins lui trouver une bouée avant de pouvoir traverser.",
@@ -608,7 +623,19 @@
 			"mvoutp": "L'Avant-Poste Végétox est caché au sein d'une luxuriante forêt. Il est occupé par les forces spéciales Végétox qui sont formées au Camp d'Elit, et on y trouve des spécialistes en stratégie militaire.",
 			"mvpalc": "Véritable forteresse abritant le roi des Végétox, le Palais d'Antraxov est manifestement un lieu très bien gardé : de multiples gardes patrouillent autour et un intru aura bien du mal à s'y infiltrer. Le Palais est magnifique : il s'agit d'un immense arbre sculté de décorations qui vous rappellent des symboles Cuzcoussiens.",
 			"mcuzco": "Dans cet endroit isolé de l'Ile des Monstres se dressent les ruines de l'ancienne capitale de l'Empire des Montres : la puissante Cuzcous n'est plus aujourd'hui qu'un tas de pierres envahie par la végétation, mais les bâtiments encore debout témoignent d'une grande civilisation. Sous ces vieilles pierres doivent dormir de nombreux trésors...",
-			"mcelit": "Au coeur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! Dans ce lieu barricadé, les meilleurs soldats Végétox s'entrainent pour pouvoir un jour remporter la Guerre contre les Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact."
+			"mcelit": "Au coeur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! Dans ce lieu barricadé, les meilleurs soldats Végétox s'entrainent pour pouvoir un jour remporter la Guerre contre les Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact.",
+			"dkbao": "De l'autre coté du portail se dresse un lieu inconnu et pourtant étrangement familier. Des hurlements se font entendre au loin. Il va falloir que votre Dinoz reste sur ses gardes s'il veut survivre.",
+			"dkchut": "A travers l'épais brouillard, on entend comme un lointain grondement, de l'eau qui s'écoule violemment. Il vaut mieux ne pas aller nager très loin, le courant est très violent...",
+			"dktow": "Une grande Tour Noire se dresse dans ce lieu. A première vue elle semble inhabitée mais de nombreux ossements de Dinoz sont entassés à l'entrée. La grand porte sombre qui permet de rentrer dans la Tour semble entrouverte. Il vaut sûrement mieux ne pas s'aventurer plus loin pour l'instant, car entrer dans la Tour serait suicidaire !\n\t\t",
+			"dktow2": "Les murs assemblés grossièrement se ressemblent tous, il en faudrait peu pour que vous vous perdiez, heureusement, il n'existe qu'un seul chemin vers le sommet.",
+			"dktow3": "La longue ascension continue, cette Tour peu hospitalière héberge des habitants peu disposé à vous laisser tranquillement aller au sommet.",
+			"dktow4": "Premier donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"dktowa": "Deuxième donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"dktowb": "Troisième donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"dktows": "Dernier donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"fake": "Une île déserte communément appelé l'île de la damnation, où quelques âmes en peine viennent s'échouer. Il fait particulièrement sombre par ici...",
+			"fake2": "Une île déserte communément appelé l'île des feu-folles, ces esprits errants sèment le désespoir et la mort. Il fait particulièrement sombre par ici...",
+			"rechut": "Grâce au morceau d'Orbe Sombre que votre dinoz possède, vous pouvez revenir à la surface. La lumière omniprésente vous aveugle quelques minutes, il vaut mieux ne pas rester trop longtemps dans le Monde Sombre."
 		}
 	},
 	"race": {
@@ -908,7 +935,7 @@
 				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. Il me semble qu'il te manque quelquechose, mon cher.",
 				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
 				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
-				"ok": "Désolé les développeurs n'ont pas encore appris à se concentrer...",
+				"ok": "Et voila ton dinoz se concentre ! Lorsque vous serez suffisament, vous vous retrouverez dans un autre monde.",
 				"bye": "A la prochaine et amuse toi bien !"
 			},
 			"playerChoice": {

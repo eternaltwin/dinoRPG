@@ -21,6 +21,7 @@ import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
+import { cancelConcentrate, concentrate } from '../business/specialService.js';
 
 const routes: Router = Router();
 
@@ -456,6 +457,46 @@ routes.put(
 			const e = err as ErrorFormator;
 			console.error(e.message);
 			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/concentrate/:id`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await concentrate(req);
+			return res.status(200).send();
+		} catch (err) {
+			const e = err as ErrorFormator;
+			console.error(e.message);
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/noconcentrate/:id`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await cancelConcentrate(req);
+			return res.status(200).send();
+		} catch (err) {
+			const e = err as ErrorFormator;
+			console.error(e.message);
+			//await postError(e, res);
 			res.status(e.errorCode).send(e.message);
 		}
 	}

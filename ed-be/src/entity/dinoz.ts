@@ -11,7 +11,7 @@ import {
 	UpdateDateColumn
 } from 'typeorm';
 import { Player } from './player.js';
-import { DinozItem, DinozMission, DinozSkill, DinozSkillUnlockable, DinozStatus, NPC } from './index.js';
+import { Concentration, DinozItem, DinozMission, DinozSkill, DinozSkillUnlockable, DinozStatus, NPC } from './index.js';
 import { levelList, placeList, raceList, skillList, statusList } from '../constants/index.js';
 import gameConfig from '../config/game.config.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -23,6 +23,8 @@ import { GatherData } from '@drpg/core/models/gather/gatherData';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { Condition } from '@drpg/core/models/npc/NpcConditions';
+import { checkCondition } from '../utils/checkConditions.js';
 
 @Entity()
 export class Dinoz {
@@ -34,6 +36,12 @@ export class Dinoz {
 	})
 	@JoinColumn()
 	player: Relation<Player>;
+
+	@ManyToOne(() => Concentration, concentration => concentration.dinoz, {
+		onDelete: 'SET NULL'
+	})
+	@JoinColumn()
+	concentration: Relation<Concentration>;
 
 	@OneToMany(() => DinozSkill, skill => skill.dinoz, {
 		cascade: true
@@ -245,7 +253,7 @@ export class Dinoz {
 			id: this.id,
 			name: '?',
 			experience: 0,
-      canChangeName: true
+			canChangeName: true
 		};
 	}
 
@@ -293,8 +301,12 @@ export class Dinoz {
 		return gridInformation.minimumClick + click;
 	}
 
-	public canGoThisPlace(place: Place): boolean {
-		return this.status.some(status => status.statusId === place.conditions);
+	public canGoThisPlace(condition: Condition): boolean {
+		return checkCondition(condition, this);
+	}
+
+	public possessStatus(statusId: number): boolean {
+		return this.status.some(status => status.statusId === statusId);
 	}
 
 	public knowSkillId(skillId: number): boolean {
@@ -370,7 +382,7 @@ export class Dinoz {
 			borderPlace: Object.values(placeList)
 				.find(place => place.placeId === this.placeId)!
 				.borderPlace.map(placeId => Object.values(placeList).find(place => place.placeId === placeId))
-				.filter(place => !place!.conditions || this.status?.some(status => status.statusId === place!.conditions))
+				.filter(place => !place!.conditions || this.canGoThisPlace(place!.conditions))
 				.map(place => place!.placeId),
 			nbrUpFire: this.nbrUpFire,
 			nbrUpWood: this.nbrUpWood,

@@ -30,6 +30,18 @@ export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
 		.getMany();
 }
 
+/*export async function prepareConcentration(dinozId: number): Promise<Dinoz> {
+  return dinozRepository
+    .createQueryBuilder('dinoz')
+    .select(['dinoz.id', 'dinoz.placeId'])
+    .addSelect(['player.id'])
+    .innerJoin('dinoz.player', 'player')
+    .leftJoinAndSelect('dinoz.status', 'status')
+    .leftJoinAndSelect('dinoz.concentration', 'concentration')
+    .where('dinoz.id = :dId', { dId: dinozId })
+    .getOneOrFail();
+}*/
+
 export async function getAllDinozFromAccount(playerId: number): Promise<Array<Dinoz>> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
@@ -89,6 +101,7 @@ export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz> {
 		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
 		.addSelect(['skills.skillId'])
 		.innerJoin('dinoz.player', 'player')
+		.leftJoinAndSelect('dinoz.concentration', 'concentration')
 		.leftJoin('player.items', 'playerItems')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.status', 'status')
@@ -108,6 +121,19 @@ export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz> {
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.missions', 'missions')
+		.where('dinoz.id = :dId', { dId: dinozId })
+		.getOneOrFail();
+}
+
+export async function getDinozConcentrationRequest(dinozId: number): Promise<Dinoz> {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select(['dinoz.id'])
+		.addSelect(['player.id'])
+		.innerJoin('dinoz.player', 'player')
+		.leftJoinAndSelect('dinoz.concentration', 'concentration')
+		.leftJoin('concentration.dinoz', 'concentrationDinoz')
+		.addSelect(['concentrationDinoz.id'])
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.getOneOrFail();
 }
@@ -308,6 +334,10 @@ export async function getDinozGatherData(dinozId: number): Promise<Dinoz> {
 // Setters
 //TODO
 export async function setDinoz(dinoz: Partial<Dinoz>): Promise<Dinoz> {
+	return dinozRepository.save(dinoz);
+}
+
+export async function setMultipleDinoz(dinoz: Array<Partial<Dinoz>>): Promise<Array<Dinoz>> {
 	return dinozRepository.save(dinoz);
 }
 

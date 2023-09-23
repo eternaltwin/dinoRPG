@@ -55,6 +55,7 @@ import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '.
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { addIngredient, createIngredient } from '../dao/playerIngredientDao.js';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
+import { mouvementListener } from './specialService.js';
 
 /**
  * @summary Get available action from dinoz
@@ -65,6 +66,11 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 
 	if (!dinoz.isAlive) {
 		availableActions.push(actionList.RESURRECT);
+		return availableActions;
+	}
+
+	if (dinoz.concentration) {
+		availableActions.push(actionList.CONCENTRATE);
 		return availableActions;
 	}
 
@@ -259,6 +265,8 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated: Dinoz = await setDinoz(newDinoz);
+	dinozCreated.status = [];
+  dinozCreated.skills = [];
 
 	const skillsToAdd: Array<DinozSkillFiche> = Object.values(skillList).filter(
 		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
@@ -389,19 +397,20 @@ export async function betaMove(req: Request): Promise<FightResult> {
 	}
 
 	// Check if condition to go to desired place are fullfill
-	if (desiredPlace.conditions && !dinoz.canGoThisPlace(desiredPlace)) {
+	if (desiredPlace.conditions && !dinoz.canGoThisPlace(desiredPlace.conditions)) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
 	}
 
 	// If dinoz leave the map, replace by the good place
 	finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
 
-	// Fight at the desired place
-	const fight: FightResult = await moveFight(dinoz, finalPlace);
-	if (fight.result) {
-		await setDinozPlaceRequest(dinoz.id, finalPlace);
+	let fight: false | FightResult = await mouvementListener(dinoz, finalPlace);
+	if (!fight) {
+		fight = await moveFight(dinoz, finalPlace);
+		if (fight.result) {
+			await setDinozPlaceRequest(dinoz.id, finalPlace);
+		}
 	}
-
 	return fight;
 }
 
@@ -561,7 +570,7 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	}
 
 	// Sanitize the box to open
-	const boxToSanitize: Array<Array<number>> = req.body.box;
+	const boxToSanitize: Array<Array<any>> = req.body.box;
 	for (const element of boxToSanitize) {
 		if (!element.every(coord => typeof coord === 'number')) {
 			throw new ErrorFormator(500, `This coordinate is not correct : ${element}`);
@@ -591,7 +600,6 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 			itemList.GOLD10000.itemId,
 			itemList.GOLD20000.itemId
 		];
-		console.log();
 		if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
 			await changeItemQuantity(req.user?.playerId!, i.itemId, 1);
 		} else if (itemToReward && goldItems.includes(i.itemId)) {

@@ -1,3 +1,4 @@
+export * from './concentration.js';
 export * from './dinoz.js';
 export * from './dinozItem.js';
 export * from './playerGather.js';

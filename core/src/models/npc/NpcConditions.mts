@@ -1,4 +1,5 @@
 import { ConditionEnum, ConditionOperatorEnum } from '../enums/Parser.mjs';
+import { Place } from '../place/Place.mjs';
 
 // Choisis le type de value en fonction de l'enum utilisée pour conditionType
 export type Condition =
@@ -30,6 +31,13 @@ export type Condition =
 			operator?: ConditionOperatorEnum;
 	  }
 	| {
+			conditionType: ConditionEnum.NEXT_PLACE;
+			value: Place;
+			reverse?: boolean;
+			nextCondition?: Condition;
+			operator?: ConditionOperatorEnum;
+	  }
+	| {
 			conditionType: Exclude<
 				ConditionEnum,
 				| ConditionEnum.MINLEVEL
@@ -40,6 +48,7 @@ export type Condition =
 				| ConditionEnum.SKILL
 				| ConditionEnum.SCENARIO
 				| ConditionEnum.STATUS
+				| ConditionEnum.NEXT_PLACE
 			>;
 			value: string;
 			reverse?: boolean;

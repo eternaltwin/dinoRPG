@@ -24,12 +24,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
-import { NPCService } from '../services/index.js';
+import { DinozService, NPCService } from '../services/index.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { NavigationFailure } from 'vue-router';
+import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 
 export default defineComponent({
 	name: 'NPC',
@@ -51,6 +52,15 @@ export default defineComponent({
 				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
 			}
 			this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
+			if (this.npcSpeech.service) {
+				switch (this.npcSpeech.service) {
+					case ServiceEnum.CONCENTRATION:
+						await DinozService.concentration(this.dinozId!);
+						break;
+					default:
+						break;
+				}
+			}
 		},
 		async stop(): Promise<void> {
 			await NPCService.talkTo(this.dinozId!, this.npcName!, 'begin', true);

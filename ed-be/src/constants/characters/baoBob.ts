@@ -1,6 +1,7 @@
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { statusList } from '../status.js';
+import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 
 export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -47,7 +48,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 				value: statusList.FLIPPERS
 			}
 		},
-		nextStep: ['where2', 'how', 'quest3', 'danger', 'bye']
+		nextStep: ['where2', 'how', 'danger', 'bye']
 	},
 	where2: {
 		stepName: 'where2',
@@ -67,6 +68,12 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	},
 	ok: {
 		stepName: 'ok',
+		reward: [
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: ServiceEnum.CONCENTRATION
+			}
+		],
 		nextStep: []
 	},
 	quest4: {

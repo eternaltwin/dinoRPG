@@ -7,5 +7,6 @@ export enum MapZone {
 	STEPPE = 'zone_magnet',
 	NIMBAO = 'zone_nimbao',
 	ILEMONSTRE = 'zone_monisl',
-	ALL = 'all'
+	ALL = 'all',
+	DARKWORLD = 'zone_atdark'
 }

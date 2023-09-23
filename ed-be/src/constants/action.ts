@@ -32,5 +32,10 @@ export const actionList: Readonly<Record<string, ActionFiche>> = {
 	DIG: {
 		name: 'dig',
 		imgName: 'act_dig'
+	},
+	//TODO: display text for front
+	CONCENTRATE: {
+		name: 'concentrate',
+		imgName: 'act_default'
 	}
 };

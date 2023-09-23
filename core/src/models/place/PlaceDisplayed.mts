@@ -1,4 +1,4 @@
-import { MapZone } from '../enums/MapType.mjs';
+import { MapZone } from '../enums/MapZone.mjs';
 import { PlaceIcon } from '../enums/PlaceIcon.mjs';
 
 export interface PlaceDisplayed {

@@ -142,6 +142,18 @@ const getPlayerDataRequest = (playerId: number): Promise<Player> => {
 		.getOneOrFail();
 };
 
+export async function prepareConcentration(playerId: number) {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.id'])
+		.addSelect(['dinoz.id', 'dinoz.placeId', 'dinoz.name', 'dinoz.concentration'])
+		.leftJoin('player.dinoz', 'dinoz')
+		.leftJoinAndSelect('dinoz.status', 'status')
+		.leftJoinAndSelect('dinoz.concentration', 'concentration')
+		.where('player.id = :pId', { pId: playerId })
+		.getOneOrFail();
+}
+
 const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
 	return playerRepository
 		.createQueryBuilder('player')

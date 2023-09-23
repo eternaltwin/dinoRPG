@@ -90,7 +90,7 @@ function prepareFight(dinozlevel: number, zone: MapZone, place: PlaceEnum): Mons
 	);
 }
 
-function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightProcessResult {
+export function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightProcessResult {
 	const listDinozItems: Array<number> = dinozData.items ? dinozData.items.map(item => item.itemId) : [];
 	const listDinozSkills: Array<number> = dinozData.skills ? dinozData.skills.map(skill => skill.skillId) : [];
 	const listDinozStatus: Array<number> = dinozData.status ? dinozData.status.map(status => status.statusId) : [];
@@ -138,7 +138,11 @@ function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightProcessRe
 	return JSON.parse(fight_rust(JSON.stringify(fightConfiguration)));
 }
 
-async function rewardFight(dinozData: Dinoz, monster: MonsterFiche, fightResult: FightProcessResult): Promise<void> {
+export async function rewardFight(
+	dinozData: Dinoz,
+	monster: MonsterFiche,
+	fightResult: FightProcessResult
+): Promise<void> {
 	// Cap experience gained to the max of what the dinoz needs
 	const maxExp = levelList.find(level => level.id === dinozData.level)!.experience;
 	const experienceGained = monster.xp + dinozData.experience > maxExp ? maxExp - dinozData.experience : monster.xp;
@@ -153,7 +157,7 @@ async function rewardFight(dinozData: Dinoz, monster: MonsterFiche, fightResult:
 	}
 }
 
-function getFightResult(dinozData: Dinoz, monster: MonsterFiche, fightResult: FightProcessResult): FightResult {
+export function getFightResult(dinozData: Dinoz, monster: MonsterFiche, fightResult: FightProcessResult): FightResult {
 	const maxExp = levelList.find(level => level.id === dinozData.level)!.experience;
 	const experienceGained = monster.xp + dinozData.experience > maxExp ? maxExp - dinozData.experience : monster.xp;
 	return {

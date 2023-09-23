@@ -38,4 +38,5 @@ export interface ActionFiche {
 	name: string;
 	imgName: string;
 	prop?: number | string;
+	special?: boolean;
 }

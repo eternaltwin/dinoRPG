@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import dbConf from './config/db.config.js';
 import { getEnvironnement } from './utils/context.js';
 import {
+	Concentration,
 	Dinoz,
 	PlayerGather,
 	DinozItem,
@@ -33,7 +34,9 @@ export const AppDataSource = new DataSource({
 	synchronize: false, // Set to true if schema need to be updated in dev
 	logging: getEnvironnement() === 'development',
 	entities: [
+		Player,
 		Dinoz,
+		Concentration,
 		PlayerGather,
 		DinozItem,
 		DinozMission,
@@ -42,7 +45,6 @@ export const AppDataSource = new DataSource({
 		DinozStatus,
 		News,
 		NPC,
-		Player,
 		PlayerDinozShop,
 		PlayerIngredient,
 		PlayerItem,

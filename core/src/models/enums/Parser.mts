@@ -27,7 +27,8 @@ export enum ConditionEnum {
 	KILL = 'kill',
 	DO = 'do',
 	HIDE_PLACE = 'hidePlace',
-	PLACE_IS = 'place_is'
+	PLACE_IS = 'place_is',
+	NEXT_PLACE = 'next_place'
 }
 
 export enum TriggerEnum {
@@ -43,7 +44,9 @@ export enum RewardEnum {
 	GOLD = 'gold',
 	ITEM = 'item',
 	EPIC = 'epic',
-	SCENARIO = 'scenario'
+	SCENARIO = 'scenario',
+	TELEPORT = 'teleport',
+	REDIRECT = 'redirect'
 }
 
 export enum ConditionOperatorEnum {
