@@ -1,6 +1,7 @@
 import { placeList, statusList } from './index.js';
 import {
 	ALPHA,
+	ARCHISAGE,
 	BAOBOB,
 	BAOFAN,
 	DIANKORGSEY,
@@ -144,5 +145,16 @@ export const npcList: Record<string, Npc> = {
 			value: statusList.JVBZ
 		},
 		data: JOVEBOZE_RASCA
+	},
+	ARCHISAGE: {
+		name: 'archis',
+		id: 18,
+		placeId: placeList.DOME_SOULAFLOTTE.placeId,
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.ZORS_GLOVE,
+			reverse: true
+		},
+		data: ARCHISAGE
 	}
 };

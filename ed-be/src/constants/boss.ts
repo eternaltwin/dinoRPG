@@ -41,5 +41,15 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		odds: 1,
 		level: 10,
 		zone: MapZone.ILES
+	},
+	ELEMENTAIRE_TERRE: {
+		name: 'eearth',
+		hp: 100,
+		attack: 1,
+		gold: 1000,
+		xp: 100,
+		odds: 1,
+		level: 10,
+		zone: MapZone.ILES
 	}
 };

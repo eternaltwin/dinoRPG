@@ -1,4 +1,5 @@
 export * from './alpha.js';
+export * from './archisage.js';
 export * from './baoBob.js';
 export * from './baofan.js';
 export * from './dianKorgsey.js';
