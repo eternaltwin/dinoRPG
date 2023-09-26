@@ -29,14 +29,17 @@
     "lint:test": "cd ed-ui && yarn lint:test",
     "lint:fix": "cd ed-ui && yarn lint:fix",
     "prettier": "prettier --config .prettierrc '**/src/**/*.{mts,ts,json}' --write && yarn lint:fix",
-    "precommit": "yarn prettier"
+    "precommit": "yarn prettier",
+    "clean": "rimraf ed-ui/ts-out ed-ui/.rollup.cache ed-be/dist core/dist **/node_modules **/tsconfig.tsbuildinfo **/.yarn/cache **/.yarn/install*",
+    "reset": "yarn clean && yarn install && cd Eternaltwin && yarn install"
   },
   "workspaces": {
     "packages": [
       "ed-be/",
       "native/",
       "ed-ui/",
-      "core/"
+      "core/",
+      "Eternaltwin/"
     ]
   },
   "packageManager": "yarn@3.5.0",
@@ -44,6 +47,7 @@
     "concurrently": "^7.6.0",
     "husky": "^8.0.3",
     "prettier": "^3.0.0",
+    "rimraf": "^5.0.4",
     "typescript": "^4.9.5"
   }
 }
