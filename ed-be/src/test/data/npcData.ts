@@ -21,7 +21,6 @@ export const npcList: Record<string, Npc> = {
 		name: 'alpha_test',
 		id: 0,
 		placeId: placeList.DINOVILLE.placeId,
-		condition: NpcTrigger.ALWAYS,
 		data: NPC_Alpha
 	}
 };

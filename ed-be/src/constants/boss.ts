@@ -31,5 +31,15 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		odds: 1,
 		level: 5,
 		zone: MapZone.DARKWORLD
+	},
+	RASCAPHANDRE: {
+		name: 'rasca',
+		hp: 60,
+		attack: 1,
+		gold: 1000,
+		xp: 100,
+		odds: 1,
+		level: 10,
+		zone: MapZone.ILES
 	}
 };

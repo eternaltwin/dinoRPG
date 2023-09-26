@@ -211,7 +211,7 @@ export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz> 
 		.addSelect(['skills.skillId'])
 		.addSelect(['status.statusId'])
 		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
-    .leftJoinAndSelect('dinoz.concentration', 'concentration')
+		.leftJoinAndSelect('dinoz.concentration', 'concentration')
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.skills', 'skills')

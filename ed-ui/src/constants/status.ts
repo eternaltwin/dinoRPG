@@ -58,7 +58,8 @@ export const statusList = {
 		56: 'dian',
 		57: 'shflag',
 		58: 'fflag',
-		59: 'grdmis'
+		59: 'grdmis',
+		60: 'jvbz'
 	},
 	id: {
 		matesc: 1,
@@ -119,7 +120,8 @@ export const statusList = {
 		dian: 56,
 		shflag: 57,
 		fflag: 58,
-		grdmis: 59
+		grdmis: 59,
+		jvbz: 60
 	},
 	displayed: {
 		1: true,
@@ -180,6 +182,7 @@ export const statusList = {
 		56: false,
 		57: false,
 		58: false,
-		59: false
+		59: false,
+		60: false
 	}
 };

@@ -19,7 +19,7 @@
 		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
 		"tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs.",
 		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz.",
-    "concentration": "Votre dinoz se concentre et ne peux rien faire d'autre actuellement."
+		"concentration": "Votre dinoz se concentre et ne peux rien faire d'autre actuellement."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -627,7 +627,7 @@
 			"mcelit": "Au coeur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! Dans ce lieu barricadé, les meilleurs soldats Végétox s'entrainent pour pouvoir un jour remporter la Guerre contre les Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact.",
 			"dkbao": "De l'autre coté du portail se dresse un lieu inconnu et pourtant étrangement familier. Des hurlements se font entendre au loin. Il va falloir que votre Dinoz reste sur ses gardes s'il veut survivre.",
 			"dkchut": "A travers l'épais brouillard, on entend comme un lointain grondement, de l'eau qui s'écoule violemment. Il vaut mieux ne pas aller nager très loin, le courant est très violent...",
-			"dktow": "Une grande Tour Noire se dresse dans ce lieu. A première vue elle semble inhabitée mais de nombreux ossements de Dinoz sont entassés à l'entrée. La grand porte sombre qui permet de rentrer dans la Tour semble entrouverte. Il vaut sûrement mieux ne pas s'aventurer plus loin pour l'instant, car entrer dans la Tour serait suicidaire !\t\t",
+			"dktow": "Une grande Tour Noire se dresse dans ce lieu. A première vue elle semble inhabitée mais de nombreux ossements de Dinoz sont entassés à l'entrée. La grand porte sombre qui permet de rentrer dans la Tour semble entrouverte. Il vaut sûrement mieux ne pas s'aventurer plus loin pour l'instant, car entrer dans la Tour serait suicidaire !  ",
 			"dktow2": "Les murs assemblés grossièrement se ressemblent tous, il en faudrait peu pour que vous vous perdiez, heureusement, il n'existe qu'un seul chemin vers le sommet.",
 			"dktow3": "La longue ascension continue, cette Tour peu hospitalière héberge des habitants peu disposé à vous laisser tranquillement aller au sommet.",
 			"dktow4": "Premier donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
@@ -710,7 +710,9 @@
 			"merguez": "Vendeur de Merguez",
 			"shaman": "Shaman Mou",
 			"gardien": "Gardien de la Forêt",
-			"fou": "Homme bizarre"
+			"fou": "Homme bizarre",
+			"garde_atlante": "Garde Atlante",
+			"joveboze": "Jovébozé"
 		},
 		"professor": {
 			"speech": {
@@ -1061,9 +1063,9 @@
 		},
 		"gardien": {
 			"speech": {
-				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement agé et semble empreint d'une grande\t\tsagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
-				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange\t\tet long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage\t\tsur votre tête : poc !",
-				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous\t\tconstatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement agé et semble empreint d'une grande  sagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
+				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange  et long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage  sur votre tête : poc !",
+				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous  constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
 			},
 			"playerChoice": {
 				"missions": "Consulter la liste des Missions",
@@ -1073,16 +1075,16 @@
 		},
 		"fou": {
 			"speech": {
-				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe\t\tavec un regard inquiétant... Il brandit une lanterne dans votre direction.",
+				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe  avec un regard inquiétant... Il brandit une lanterne dans votre direction.",
 				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
-				"approch": "A peine faites-vous un pas dans sa direction que l'homme bondit,\t\tterrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard,\t\tsa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
+				"approch": "A peine faites-vous un pas dans sa direction que l'homme bondit,  terrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard,  sa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
 				"run": "Vous prenez vos jambes à votre cou !",
-				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez\t\tà nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se\t\tdresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser\t\tun cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle\t\tbruyamment...",
-				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur !\t\tMoi je les ai vus !",
-				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter\t\tun regard derrière vous...",
+				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez  à nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se  dresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser  un cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle  bruyamment...",
+				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur !  Moi je les ai vus !",
+				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter  un regard derrière vous...",
 				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
-				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà\t\ttout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et\t\tnoire) !",
-				"fight": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il\t\ta disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à\t\tson cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les\t\tendroits obscurs."
+				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà  tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et  noire) !",
+				"fight": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il  a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à  son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les  endroits obscurs."
 			},
 			"playerChoice": {
 				"begin": "",
@@ -1095,6 +1097,41 @@
 				"seenWhat": "Vu quoi ",
 				"show": "Erk ! Il a l'air dangereux !",
 				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
+			}
+		},
+		"garde_atlante": {
+			"speech": {
+				"begin": "L'accès au Dôme Soulaflotte n'est possible qu'en utilisant un Rascaphandre.",
+				"rasca": "Un Rascaphandre est un gros poisson avec des arêtes creuses. Il est capable de stocker une grande quantité d'oxygène et ainsi d'emmener son maître jusqu'aux profondeurs où se situe le Dôme Soulaflotte, sans que celui-ci ne meure asphyxié.",
+				"where": "Les Rascaphandres sont nombreux dans les eaux des alentours, il faut juste savoir les appeler.",
+				"call": "(soupir)... En fait, il faut un objet particulier : un appeau à Rascaphandre. C'est une petite flûte que l'on plonge dans l'eau et qui imite les ondes du grand requin noir maléfique des abysses pestilentielles, le repas préféré des Rascaphandres. Ils se précipitent alors et vous pouvez en utiliser un pour vous rendre au Dôme.",
+				"appeau": "Oui. L'appeau à Rascaphandre est fabriqué avec des arêtes de vieux Rascaphandre. Mais plus ils sont vieux, plus ils ont mauvais caractère et ils deviennent alors très dangereux...",
+				"old": "J'ai un ami pêcheur au Port de Prêche, si vous n'avez pas peur du danger, je peux lui demander de vous emmener chasser le vieux Rascaphandre géant... Allez le voir de ma part, il s'appelle Jovébozé.",
+				"thanks": "Je vous souhaite un bon séjour sur les Iles Atlantéinées."
+			},
+			"playerChoice": {
+				"rasca": "Un quoi ?!?",
+				"where": "Vous savez où je peux en trouver un ?",
+				"call": "Super !... Heu... vous avez leur numéro ?",
+				"appeau": "Un Appeau...",
+				"old": "Uhm...",
+				"thanks": "Ok, merci !"
+			}
+		},
+		"joveboze": {
+			"speech": {
+				"begin": "Ol'a el chti ga ! Té vi laté du viou Rasca ?",
+				"trad": "Personne ici ne semble comprendre ce que dit Jovébozé. D'après les informations que vous avez recueillies, il s'agirait d'un dialecte local de Prêcheurs, voire d'un dialecte spécifique à Jovébozé...",
+				"sry": "Sité popré ven pa, sino mot'dan lobatou, k ?",
+				"go": "Jovébozé vous emmène en mer dans un coin que les bateaux semblent éviter... En vous approchant, vous voyez ce qui semble être un énorme Rascaphandre à quelques dizaines de mètres de la barque. Si vous continuez dans cette direction et si le Garde Atlante disait vrai, vous serez surement attaqué... Il faut faire vite !!!",
+				"attack": "Bien entendu, Jovébozé n'a rien compris a vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau a Rascaphandre qu'il a sculpté..."
+			},
+			"playerChoice": {
+				"sry": "... pardon ?!?",
+				"trad": "Aller chercher un traducteur",
+				"go": "Suivre Jovébozé",
+				"attack": "Continuer",
+				"back": "RECULER !!!"
 			}
 		}
 	},

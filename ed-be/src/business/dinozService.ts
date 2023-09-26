@@ -144,11 +144,13 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 
 	const npcAvailable: Array<Npc> = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
-		availableActions.push({
-			name: actionList.NPC.name,
-			imgName: actionList.NPC.imgName,
-			prop: npc.id
-		});
+		if (!npc.condition || checkCondition(npc.condition, dinoz)) {
+			availableActions.push({
+				name: actionList.NPC.name,
+				imgName: actionList.NPC.imgName,
+				prop: npc.id
+			});
+		}
 	});
 
 	const missionAvailable = getMissionAction(dinoz);
@@ -380,9 +382,9 @@ export async function betaMove(req: Request): Promise<FightResult> {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-  if (dinoz.concentration) {
-    throw new ErrorFormator(400,'concentration')
-  }
+	if (dinoz.concentration) {
+		throw new ErrorFormator(400, 'concentration');
+	}
 
 	const actualPlace: Place = dinoz.actualPlace;
 	const desiredPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);
