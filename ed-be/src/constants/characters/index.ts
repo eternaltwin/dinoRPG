@@ -3,6 +3,7 @@ export * from './baoBob.js';
 export * from './baofan.js';
 export * from './dianKorgsey.js';
 export * from './forgeron.js';
+export * from './fou.js';
 export * from './gardien.js';
 export * from './merguez.js';
 export * from './mineur.js';

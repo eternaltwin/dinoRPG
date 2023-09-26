@@ -2,10 +2,7 @@ import { Request } from 'express';
 import { addPlayerMoney, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { Dinoz, DinozItem, DinozSkill, Player, PlayerItem } from '../entity/index.js';
 import { itemList } from '../constants/item.js';
-import {
-  getActiveDinoz, getDinozEquipItemRequest,
-  getDinozFicheItemRequest,
-  setDinoz} from '../dao/dinozDao.js';
+import { getActiveDinoz, getDinozEquipItemRequest, getDinozFicheItemRequest, setDinoz } from '../dao/dinozDao.js';
 import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';

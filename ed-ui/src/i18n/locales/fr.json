@@ -18,7 +18,8 @@
 		"DinozNotDead": "Votre dinoz est déjà en vie.",
 		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
 		"tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs.",
-		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz."
+		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz.",
+    "concentration": "Votre dinoz se concentre et ne peux rien faire d'autre actuellement."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -626,7 +627,7 @@
 			"mcelit": "Au coeur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! Dans ce lieu barricadé, les meilleurs soldats Végétox s'entrainent pour pouvoir un jour remporter la Guerre contre les Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact.",
 			"dkbao": "De l'autre coté du portail se dresse un lieu inconnu et pourtant étrangement familier. Des hurlements se font entendre au loin. Il va falloir que votre Dinoz reste sur ses gardes s'il veut survivre.",
 			"dkchut": "A travers l'épais brouillard, on entend comme un lointain grondement, de l'eau qui s'écoule violemment. Il vaut mieux ne pas aller nager très loin, le courant est très violent...",
-			"dktow": "Une grande Tour Noire se dresse dans ce lieu. A première vue elle semble inhabitée mais de nombreux ossements de Dinoz sont entassés à l'entrée. La grand porte sombre qui permet de rentrer dans la Tour semble entrouverte. Il vaut sûrement mieux ne pas s'aventurer plus loin pour l'instant, car entrer dans la Tour serait suicidaire !\n\t\t",
+			"dktow": "Une grande Tour Noire se dresse dans ce lieu. A première vue elle semble inhabitée mais de nombreux ossements de Dinoz sont entassés à l'entrée. La grand porte sombre qui permet de rentrer dans la Tour semble entrouverte. Il vaut sûrement mieux ne pas s'aventurer plus loin pour l'instant, car entrer dans la Tour serait suicidaire !\t\t",
 			"dktow2": "Les murs assemblés grossièrement se ressemblent tous, il en faudrait peu pour que vous vous perdiez, heureusement, il n'existe qu'un seul chemin vers le sommet.",
 			"dktow3": "La longue ascension continue, cette Tour peu hospitalière héberge des habitants peu disposé à vous laisser tranquillement aller au sommet.",
 			"dktow4": "Premier donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
@@ -708,7 +709,8 @@
 			"dian": "Dian Korgsey",
 			"merguez": "Vendeur de Merguez",
 			"shaman": "Shaman Mou",
-			"gardien": "Gardien de la Forêt"
+			"gardien": "Gardien de la Forêt",
+			"fou": "Homme bizarre"
 		},
 		"professor": {
 			"speech": {
@@ -1059,14 +1061,40 @@
 		},
 		"gardien": {
 			"speech": {
-				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement agé et semble empreint d'une grande\n\t\tsagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
-				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange\n\t\tet long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage\n\t\tsur votre tête : poc !",
-				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous\n\t\tconstatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement agé et semble empreint d'une grande\t\tsagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
+				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange\t\tet long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage\t\tsur votre tête : poc !",
+				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous\t\tconstatez qu'il y a quelque chose d'écrit sur ce parchemin !"
 			},
 			"playerChoice": {
 				"missions": "Consulter la liste des Missions",
 				"shake": "Secouer un peu cet arbre",
 				"item": "Aie ! Qu'est-ce que c'est ?"
+			}
+		},
+		"fou": {
+			"speech": {
+				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe\t\tavec un regard inquiétant... Il brandit une lanterne dans votre direction.",
+				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
+				"approch": "A peine faites-vous un pas dans sa direction que l'homme bondit,\t\tterrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard,\t\tsa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
+				"run": "Vous prenez vos jambes à votre cou !",
+				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez\t\tà nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se\t\tdresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser\t\tun cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle\t\tbruyamment...",
+				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur !\t\tMoi je les ai vus !",
+				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter\t\tun regard derrière vous...",
+				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
+				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà\t\ttout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et\t\tnoire) !",
+				"fight": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il\t\ta disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à\t\tson cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les\t\tendroits obscurs."
+			},
+			"playerChoice": {
+				"begin": "",
+				"hi": "Euh... Bonjour ?",
+				"approch": "Tenter de s'approcher...",
+				"run": "Partir en courant !",
+				"ignore": "L'ignorer",
+				"intro": "Argh ! Vous m'avez fait peur !",
+				"leave": "Euh je vais vous laisser...",
+				"seenWhat": "Vu quoi ",
+				"show": "Erk ! Il a l'air dangereux !",
+				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
 			}
 		}
 	},

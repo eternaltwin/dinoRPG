@@ -57,6 +57,9 @@ export default defineComponent({
 					case ServiceEnum.CONCENTRATION:
 						await DinozService.concentration(this.dinozId!);
 						break;
+					case ServiceEnum.DINOZ:
+						this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
+						break;
 					default:
 						break;
 				}

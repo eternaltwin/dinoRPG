@@ -98,5 +98,11 @@ export const DinozService = {
 			.put(`/dinoz/concentrate/${dinozId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	cancelConcentration(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/noconcentrate/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

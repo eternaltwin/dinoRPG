@@ -5,6 +5,7 @@ import {
 	BAOFAN,
 	DIANKORGSEY,
 	FORGERON,
+	FOU,
 	GARDIEN,
 	MERGUEZ,
 	MINEUR,
@@ -130,5 +131,12 @@ export const npcList: Record<string, Npc> = {
 		condition: NpcTrigger.ALWAYS,
 		data: GARDIEN,
 		missions: M_GARDIEN
+	},
+	FOU: {
+		name: 'fou',
+		id: 15,
+		placeId: placeList.COLLINES_HANTEES.placeId,
+		condition: NpcTrigger.ALWAYS,
+		data: FOU
 	}
 };

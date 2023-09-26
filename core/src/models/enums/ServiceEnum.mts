@@ -1,3 +1,4 @@
 export enum ServiceEnum {
-	CONCENTRATION = 'concentration'
+	CONCENTRATION = 'concentration',
+	DINOZ = 'dinoz'
 }

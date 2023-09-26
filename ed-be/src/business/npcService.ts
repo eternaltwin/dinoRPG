@@ -14,6 +14,7 @@ import { rewarder } from '../utils/rewarder.js';
 import { triggerAction } from '../utils/triggerAction.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId: number = parseInt(req.params.dinozId);
@@ -84,6 +85,15 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		let action: boolean | undefined;
 		if (nextStepWantedData!.action !== undefined) {
 			action = await triggerAction(nextStepWantedData!.action, dinoz);
+		}
+
+		if (action === false) {
+			return {
+				name: npcName,
+				speech: nextStepWantedData!.stepName,
+				playerChoice: [],
+				service: ServiceEnum.DINOZ
+			};
 		}
 
 		if ((action && nextStepWantedData!.reward) || nextStepWantedData!.reward !== undefined) {

@@ -11,5 +11,25 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		odds: 1,
 		level: 30,
 		zone: MapZone.DARKWORLD
+	},
+	ELEMENTAIRE_FEU: {
+		name: 'efire',
+		hp: 60,
+		attack: 1,
+		gold: 1000,
+		xp: 50,
+		odds: 1,
+		level: 5,
+		zone: MapZone.DARKWORLD
+	},
+	ELEMENTAIRE_EAU: {
+		name: 'ewater',
+		hp: 50,
+		attack: 1,
+		gold: 1000,
+		xp: 50,
+		odds: 1,
+		level: 5,
+		zone: MapZone.DARKWORLD
 	}
 };

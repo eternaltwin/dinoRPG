@@ -207,7 +207,12 @@ export default defineComponent({
 						params: { dinozId: this.$route.params.id.toString(), type: action.name }
 					});
 					break;
+				case 'concentrate':
+					await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
+					EventBus.emit('refreshDinoz', true);
+					break;
 				default:
+					console.log(action.name);
 					break;
 			}
 		},

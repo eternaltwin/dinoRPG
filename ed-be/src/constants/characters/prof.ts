@@ -1,6 +1,7 @@
-import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { ConditionEnum, ConditionOperatorEnum, RewardEnum, TriggerEnum } from '@drpg/core/models/enums/Parser';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { statusList } from '../status.js';
+import { bossList } from '../boss.js';
 
 export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -121,7 +122,10 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	water_fight: {
 		stepName: 'water_fight',
 		nextStep: [],
-		action: 'fight(ewater)',
+		action: {
+			actionType: TriggerEnum.FIGHT,
+			enemies: [bossList.ELEMENTAIRE_EAU]
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -132,7 +136,10 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	fire_fight: {
 		stepName: 'fire_fight',
 		nextStep: [],
-		action: 'fight(efire)',
+		action: {
+			actionType: TriggerEnum.FIGHT,
+			enemies: [bossList.ELEMENTAIRE_FEU]
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,

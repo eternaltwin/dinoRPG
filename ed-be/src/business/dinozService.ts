@@ -266,7 +266,7 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	// Create a new dinoz that belongs to player
 	const dinozCreated: Dinoz = await setDinoz(newDinoz);
 	dinozCreated.status = [];
-  dinozCreated.skills = [];
+	dinozCreated.skills = [];
 
 	const skillsToAdd: Array<DinozSkillFiche> = Object.values(skillList).filter(
 		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
@@ -379,6 +379,10 @@ export async function betaMove(req: Request): Promise<FightResult> {
 	if (dinoz.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
 	}
+
+  if (dinoz.concentration) {
+    throw new ErrorFormator(400,'concentration')
+  }
 
 	const actualPlace: Place = dinoz.actualPlace;
 	const desiredPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);
