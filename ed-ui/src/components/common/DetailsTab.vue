@@ -152,19 +152,27 @@ export default defineComponent({
 		},
 		reverse(): void {
 			this.dinozSkill = this.dinozSkill.reverse();
+		},
+		async loadPage(): Promise<void> {
+			EventBus.emit('isLoading', true);
+			try {
+				const dinozId = this.$route.params.id as string;
+				this.dinozSkill = await DinozService.getDinozSkill(parseInt(dinozId));
+				this.sort();
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err);
+				return;
+			}
 		}
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		try {
-			const dinozId = this.$route.params.id as string;
-			this.dinozSkill = await DinozService.getDinozSkill(parseInt(dinozId));
-			this.sort();
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err);
-			return;
-		}
+		await this.loadPage();
+		EventBus.on('refreshSkills', async e => {
+			if (e) {
+				await this.loadPage();
+			}
+		});
 	}
 });
 </script>

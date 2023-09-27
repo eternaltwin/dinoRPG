@@ -72,10 +72,11 @@ export default defineComponent({
 				x: 0 as number,
 				y: 0 as number
 			},
-			left: undefined as number | undefined,
-			top: undefined as number | undefined,
+			left: 0 as number,
+			top: 0 as number,
 			svgLines: [] as Array<svgLines>,
-			svgSize: undefined as string | undefined
+			svgSize: undefined as string | undefined,
+			isLoaded: false as boolean
 		};
 	},
 	methods: {
@@ -94,15 +95,15 @@ export default defineComponent({
 			this.translation.y = Math.floor((-1 * (centerY - mouseY)) / yFactor);
 
 			// Protect the translation top overflow
-			if (this.top! + this.translation.y < 0) {
-				this.translation.y = -this.top!;
-			} else if (this.top! + this.translation.y > centerMapY) {
+			if (this.top + this.translation.y < 0) {
+				this.translation.y = -this.top;
+			} else if (this.top + this.translation.y > centerMapY) {
 				this.translation.y = 0;
 			}
 			// Protect the translation left overflow
-			if (this.left! + this.translation.x < 0) {
-				this.translation.x = -this.left!;
-			} else if (this.left! + this.translation.x > centerMapX) {
+			if (this.left + this.translation.x < 0) {
+				this.translation.x = -this.left;
+			} else if (this.left + this.translation.x > centerMapX) {
 				this.translation.x = 0;
 			}
 		},
@@ -208,21 +209,32 @@ export default defineComponent({
 					this.centerPos(mapImage);
 					this.svgMagic(mapImage);
 				}
-			}, 100);
+			}, 500);
+		},
+		loadPage(): void {
+			const map = placeList.find(place => place.placeId === this.dinozData!.placeId)!.map;
+			// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
+			this.placeMap = placeList.filter(
+				place =>
+					place.map === map &&
+					(!place.hidden ||
+						this.dinozData!.borderPlace!.includes(place.placeId) ||
+						place.placeId === this.dinozData?.placeId)
+			);
+
+			this.waitForImageToLoad();
 		}
 	},
 	mounted(): void {
-		const map = placeList.find(place => place.placeId === this.dinozData!.placeId)!.map;
-		// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
-		this.placeMap = placeList.filter(
-			place =>
-				place.map === map &&
-				(!place.hidden ||
-					this.dinozData!.borderPlace!.includes(place.placeId) ||
-					place.placeId === this.dinozData?.placeId)
-		);
+		this.loadPage();
 
-		this.waitForImageToLoad();
+		EventBus.on('refreshMap', async e => {
+			if (e) {
+				this.svgLines = [];
+				await this.loadPage();
+				this.waitForImageToLoad();
+			}
+		});
 	}
 });
 </script>

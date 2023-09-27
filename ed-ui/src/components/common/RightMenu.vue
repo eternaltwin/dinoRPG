@@ -75,7 +75,7 @@ export default defineComponent({
 	},
 	methods: {
 		goToMyAccount(page: string, paramId: number): void {
-			this.$router.push({ name: page, params: { id: paramId } });
+			this.$router.push({ name: page, params: { playerId: paramId } });
 		},
 		goToPage(page: string): void {
 			this.$router.push({ name: page });

@@ -176,7 +176,7 @@ export default defineComponent({
 			return;
 		}
 		EventBus.on('refreshInventory', async e => {
-			await this.resfreshInventory();
+			if (e) await this.resfreshInventory();
 		});
 	}
 });

@@ -39,7 +39,7 @@ export default defineComponent({
 		EpicRewards: defineAsyncComponent(() => import('../components/data/EpicRewards.vue'))
 	},
 	async created(): Promise<void> {
-		const accountId = parseInt(this.$route.params.id.toString());
+		const accountId = parseInt(this.$route.params.playerId.toString());
 		EventBus.emit('isLoading', true);
 		try {
 			this.accountData = await PlayerService.getPlayerData(accountId);
@@ -52,7 +52,7 @@ export default defineComponent({
 	},
 	watch: {
 		// Reload page if player click on 'my account' button
-		'$route.params.id': function () {
+		'$route.params.playerId': function () {
 			if (this.$router.currentRoute.value.params.id === this.sessionStore.getPlayerId!.toString()) {
 				this.$router.go(0);
 			}

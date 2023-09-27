@@ -25,7 +25,6 @@ import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import { sessionStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -95,9 +94,26 @@ export default defineComponent({
 	},
 	watch: {
 		// Reload page if player go on another dinoz page
-		'$route.params.id': function (to) {
+		'$route.params.id': async function (to) {
 			if (to !== undefined) {
-				this.$router.go(0);
+				//Refresh fiche
+				await this.getFiche();
+				//Refresh page if dinoz is not named yet
+				if (this.dinozData.name === '?') this.$router.go(0);
+				//Refresh map if tab is selected
+				switch (this.sessionStore.getTab) {
+					case 1:
+						setTimeout(() => {
+							EventBus.emit('refreshMap', true);
+						}, 100);
+
+						break;
+					case 3:
+						EventBus.emit('refreshSkills', true);
+						break;
+					default:
+						break;
+				}
 			}
 		}
 	}

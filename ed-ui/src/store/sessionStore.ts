@@ -1,5 +1,5 @@
 import { StoreStateSession } from '@drpg/core/models/store/StoreStateSession';
-import { StateTree, defineStore } from 'pinia';
+import { defineStore } from 'pinia';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
@@ -27,7 +27,7 @@ export const sessionStore = defineStore('sessionStore', {
 		getTab: (state: StoreStateSession) => state.tab,
 		getPlayerOptions: (state: StoreStateSession) => state.playerOptions,
 		getDinoz: (state: StoreStateSession) => {
-			return (dinozId: number) => state.dinozList.find((dinoz: DinozFiche) => dinoz.id === dinozId);
+			return (dinozId: number) => state.dinozList!.find((dinoz: DinozFiche) => dinoz.id === dinozId);
 		}
 	},
 	actions: {
@@ -59,8 +59,8 @@ export const sessionStore = defineStore('sessionStore', {
 			this.playerOptions = playerOptions;
 		},
 		setDinoz(dinoz: DinozFiche): void {
-			let dinozToUpdate = this.dinozList.find((dinozs: DinozFiche) => dinozs.id === dinoz.id);
-			dinozToUpdate = dinoz;
+			const dinozToUpdate = this.dinozList!.findIndex(dinozs => dinozs.id === dinoz.id);
+			this.dinozList!.splice(dinozToUpdate, 1, dinoz);
 		}
 	},
 	persist: {

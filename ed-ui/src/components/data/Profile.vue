@@ -87,7 +87,7 @@ export default defineComponent({
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
 		isMyAccount(): boolean {
-			return this.sessionStore.getPlayerId === parseInt(this.$route.params.id[0]);
+			return this.sessionStore.getPlayerId === parseInt(this.$route.params.playerId[0]);
 		},
 		closePopin(): void {
 			this.openPopinImport = false;

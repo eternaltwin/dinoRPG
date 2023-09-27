@@ -12,6 +12,7 @@
 			:life="dinozData.life"
 			:flip="-1"
 			:race="dinozData.race.raceId"
+			:key="dinozData.display"
 		/>
 		<template #content>
 			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
@@ -22,7 +23,7 @@
 	</Tippy>
 	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
-	<DinozEquip :itemList="dinozData.items" :maxItem="dinozData.maxItems" />
+	<DinozEquip :itemList="dinozData.items" :maxItem="dinozData.maxItems" :key="dinozData.items" />
 	<DinozStatus :dinozStatus="dinozData.status" />
 </template>
 

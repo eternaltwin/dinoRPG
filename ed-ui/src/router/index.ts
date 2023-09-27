@@ -57,7 +57,7 @@ const router = createRouter({
 					component: DinozShopPage
 				},
 				{
-					path: '/player/:id',
+					path: '/player/:playerId',
 					name: 'MyAccount',
 					component: MyAccount
 				},
