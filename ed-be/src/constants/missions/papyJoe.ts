@@ -1,6 +1,6 @@
 import { Mission } from '@drpg/core/models/missions/mission';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
-import { placeList, missionsList, itemList } from '../index.js';
+import { placeList, missionsList, itemList, rewardList } from '../index.js';
 
 export const M_PAPY_JOE: Array<Mission> = [
 	// Missions 1 to 10
@@ -320,7 +320,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 			},
 			{
 				rewardType: RewardEnum.EPIC,
-				value: 'MSG'
+				value: rewardList.MSG
 			}
 		],
 		steps: [

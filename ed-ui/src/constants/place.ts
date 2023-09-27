@@ -1148,6 +1148,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	{
 		placeId: 103,
 		name: 'dkchut',
+		hidden: false,
 		posLeft: 105,
 		posTop: 70,
 		icon: PlaceIcon.DEFAULT,
@@ -1158,6 +1159,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	{
 		placeId: 104,
 		name: 'dktow',
+		hidden: false,
 		posLeft: 308,
 		posTop: 146,
 		icon: PlaceIcon.DEFAULT,
@@ -1234,6 +1236,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	{
 		placeId: 111,
 		name: 'fake',
+		hidden: false,
 		posLeft: 111,
 		posTop: 182,
 		icon: PlaceIcon.DEFAULT,
@@ -1244,6 +1247,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	{
 		placeId: 112,
 		name: 'fake2',
+		hidden: false,
 		posLeft: 321,
 		posTop: 28,
 		icon: PlaceIcon.DEFAULT,
@@ -1289,6 +1293,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	{
 		placeId: 116,
 		name: 'dkbao',
+		hidden: false,
 		posLeft: 199,
 		posTop: 72,
 		icon: PlaceIcon.HOUSE,

@@ -1,7 +1,7 @@
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { Dinoz, DinozSkill, Player, PlayerItem, PlayerReward } from '../entity/index.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { itemList, levelList, rewardList, skillList } from '../constants/index.js';
+import { itemList, levelList, skillList } from '../constants/index.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { addExperience, setDinozNextElement, setDinozPlaceRequest } from '../dao/dinozDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
@@ -17,6 +17,7 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				if (reward.reverse) {
 					await removeStatusToDinoz(dinoz.id, reward.value);
 				} else {
+					if (dinoz.status.some(status => status.statusId === reward.value)) return;
 					await addStatusToDinoz(dinoz, reward.value);
 				}
 				break;
@@ -60,9 +61,8 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				break;
 			case RewardEnum.EPIC:
 				const testRewards = await getPlayerRewardsRequest(dinoz.player.id);
-				const epic = Object.entries(rewardList).find(item => item[0] === reward.value)![1];
-				const EpicReward = new PlayerReward(new Player(dinoz.player.id), epic);
-				if (!testRewards.rewards.some(r => r.rewardId === epic)) {
+				const EpicReward = new PlayerReward(new Player(dinoz.player.id), reward.value);
+				if (!testRewards.rewards.some(r => r.rewardId === reward.value)) {
 					await addRewardToPlayer(EpicReward);
 				}
 				break;

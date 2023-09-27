@@ -11,7 +11,7 @@ export type Rewarder =
 	  }
 	| {
 			rewardType: RewardEnum.EPIC;
-			value: string;
+			value: number;
 			reverse?: boolean;
 	  }
 	| {

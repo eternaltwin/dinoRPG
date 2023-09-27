@@ -1,4 +1,4 @@
-import { missionsList, placeList, statusList } from '../index.js';
+import { missionsList, placeList, rewardList, statusList } from '../index.js';
 import { Mission } from '@drpg/core/models/missions/mission';
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 
@@ -499,7 +499,7 @@ export const M_BAO_BOB: Array<Mission> = [
 			},
 			{
 				rewardType: RewardEnum.EPIC,
-				value: 'TOUR'
+				value: rewardList.TOUR
 			}
 		],
 		steps: [

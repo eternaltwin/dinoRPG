@@ -51,6 +51,10 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 		case ConditionEnum.NEXT_PLACE:
 			result = futurPlace === condition.value;
 			break;
+		case ConditionEnum.COLLEC:
+			const playerRewards = dinoz.player.rewards;
+			result = playerRewards.some(reward => reward.rewardId === condition.value);
+			break;
 		default:
 			result = false;
 			break;

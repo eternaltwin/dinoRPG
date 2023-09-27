@@ -10,6 +10,7 @@ export type Condition =
 				| ConditionEnum.FINISHED_MISSION
 				| ConditionEnum.SKILL
 				| ConditionEnum.POSSESS_OBJECT
+				| ConditionEnum.COLLEC
 				| ConditionEnum.STATUS;
 			value: number;
 			reverse?: boolean;
@@ -48,6 +49,7 @@ export type Condition =
 				| ConditionEnum.SKILL
 				| ConditionEnum.SCENARIO
 				| ConditionEnum.STATUS
+				| ConditionEnum.COLLEC
 				| ConditionEnum.NEXT_PLACE
 			>;
 			value: string;

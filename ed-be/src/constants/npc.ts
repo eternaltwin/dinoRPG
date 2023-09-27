@@ -9,10 +9,12 @@ import {
 	FOU,
 	GARDE_ATLANTE,
 	GARDIEN,
+	HYDARGOL,
 	JOVEBOZE_RASCA,
 	MERGUEZ,
 	MINEUR,
 	MMEX,
+	PADAMOINE,
 	PAPYJOE,
 	PROFESSOR,
 	SHAMAN,
@@ -20,7 +22,6 @@ import {
 } from './characters/index.js';
 import { M_BAO_BOB, M_DIANKORGSEY, M_GARDIEN, M_PAPY_JOE, M_SHAMAN_MOU } from './missions/index.js';
 import { Npc } from '@drpg/core/models/npc/npc';
-import { NpcTrigger } from '@drpg/core/models/enums/NpcTrigger';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 
 export const npcList: Record<string, Npc> = {
@@ -156,5 +157,21 @@ export const npcList: Record<string, Npc> = {
 			reverse: true
 		},
 		data: ARCHISAGE
+	},
+	HYDARGOL: {
+		name: 'hydargol',
+		id: 19,
+		placeId: placeList.CHUTES_MUTANTES.placeId,
+		data: HYDARGOL
+	},
+	PADAMOINE: {
+		name: 'padamoine',
+		id: 20,
+		placeId: placeList.PORT_DE_PRECHE.placeId,
+		condition: {
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.ZENBRO
+		},
+		data: PADAMOINE
 	}
 };

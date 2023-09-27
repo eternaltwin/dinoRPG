@@ -17,5 +17,7 @@ export const npcNameList: Array<string> = [
 	'fou',
 	'garde_atlante',
 	'joveboze',
-	'archis'
+	'archis',
+	'hydargol',
+	'padamoine'
 ];

@@ -80,6 +80,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 		if (nextStepWantedData.target !== undefined) {
 			nextStepWantedData = Object.values(pnj.data).find(pnj => pnj.stepName === nextStepWantedData!.target);
+			nextStepWanted = nextStepWantedData!.stepName;
 		}
 
 		let action: boolean | undefined;
