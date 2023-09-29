@@ -178,6 +178,9 @@ export default defineComponent({
 		EventBus.on('refreshInventory', async e => {
 			await this.resfreshInventory();
 		});
+	},
+	unmounted() {
+		EventBus.off('refreshInventory');
 	}
 });
 </script>

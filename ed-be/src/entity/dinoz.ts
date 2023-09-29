@@ -25,6 +25,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { checkCondition } from '../utils/checkConditions.js';
+import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
 
 @Entity()
 export class Dinoz {
@@ -392,6 +393,20 @@ export class Dinoz {
 		};
 	}
 
+	public toDinozFicheLite(): DinozFicheLite {
+		return {
+			id: this.id,
+			name: this.name,
+			display: this.display,
+			following: this.following,
+			life: this.life,
+			maxLife: this.maxLife,
+			experience: this.experience,
+			maxExperience: levelList.find(level => level.id === this.level)!.experience,
+			placeId: this.placeId,
+			order: this.order
+		};
+	}
 	public toDinozSkillFiche(): Array<DinozSkillFiche> {
 		return this.skills.map(skill => {
 			const skillFound: DinozSkillFiche | undefined = Object.values(skillList).find(

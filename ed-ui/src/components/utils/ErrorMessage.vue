@@ -36,6 +36,9 @@ export default defineComponent({
 			this.errorDisplay = e;
 			this.isError = true;
 		});
+	},
+	unmounted() {
+		EventBus.off('responseError');
 	}
 });
 </script>

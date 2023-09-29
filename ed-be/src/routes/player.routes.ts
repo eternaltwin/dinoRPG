@@ -5,7 +5,8 @@ import {
 	getCommonData,
 	importAccount,
 	setCustomText,
-	searchPlayers
+	searchPlayers,
+	getDinozList
 } from '../business/playerService.js';
 import { body, param, validationResult } from 'express-validator';
 import { Player } from '../entity/player.js';
@@ -14,6 +15,8 @@ import { postError } from '../utils/discord.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { getPlayerMoney } from '../dao/playerDao.js';
+import { Dinoz } from '../entity/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 const routes: Router = Router();
 
@@ -50,13 +53,28 @@ routes.get(`${commonPath}/commondata`, async (req: Request, res: Response) => {
 	}
 });
 
+routes.get(`${commonPath}/dinozList`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response: Array<DinozFiche> = await getDinozList(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		const e = err as ErrorFormator;
+		//await postError(e, res);
+		res.status(e.errorCode).send(e.message);
+	}
+});
+
 routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
 
 	try {
-		const response: Player = await getPlayerMoney(req.user!.playerId!);
+		const response: Player = (await getPlayerMoney(req.user!.playerId!)) as Player;
 		return res.status(200).send(response.money.toString());
 	} catch (err) {
 		const e = err as ErrorFormator;

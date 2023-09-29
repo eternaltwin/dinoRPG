@@ -12,7 +12,7 @@ export async function getConcentration(concentrationId: number) {
 		.createQueryBuilder('concentration')
 		.leftJoinAndSelect('concentration.dinoz', 'dinoz')
 		.where('concentration.id = :cId', { cId: concentrationId })
-		.getOneOrFail();
+		.getOne();
 }
 
 export async function removeConcentration(concentrationId: number) {

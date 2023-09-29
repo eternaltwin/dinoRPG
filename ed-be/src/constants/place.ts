@@ -740,7 +740,7 @@ export const placeList: Record<string, Place> = {
 	GOUFFRE: {
 		placeId: 103,
 		name: 'dkchut',
-		borderPlace: [104, 114, 111, 115, 116],
+		borderPlace: [104, 114, 111, 114, 115],
 		map: MapZone.DARKWORLD
 	},
 	TOUR_SOMBRE: {
@@ -873,22 +873,12 @@ export const placeList: Record<string, Place> = {
 			conditionType: ConditionEnum.ACTIVE,
 			value: ''
 		},
-		borderPlace: [115],
-		map: MapZone.DARKWORLD
-	},
-	GO_TO_CHUTES_DARK: {
-		placeId: 115,
-		name: 'gochutd',
-		borderPlace: [114],
-		conditions: {
-			conditionType: ConditionEnum.PLACE_IS,
-			value: 'dkchut'
-		},
+		borderPlace: [],
 		alias: 25,
 		map: MapZone.DARKWORLD
 	},
 	PORTAIL: {
-		placeId: 116,
+		placeId: 115,
 		name: 'dkbao',
 		borderPlace: [103, 112],
 		map: MapZone.DARKWORLD

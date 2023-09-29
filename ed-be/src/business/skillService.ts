@@ -30,7 +30,10 @@ export async function getLearnableAndUnlockableSkills(
 ): Promise<Partial<DinozSkillOwnAndUnlockable> | undefined> {
 	const dinozId: number = parseInt(req.params.id);
 
-	const dinozSkills: Dinoz = await getDinozForLevelUp(dinozId);
+	const dinozSkills: Dinoz | null = await getDinozForLevelUp(dinozId);
+	if (!dinozSkills) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 
 	const dinozRace: DinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId)!;
 
@@ -51,7 +54,10 @@ export async function learnSkill(req: Request): Promise<number> {
 	const dinozId: number = parseInt(req.params.id);
 	const skillIdList: Array<number> = req.body.skillIdList;
 
-	const dinozSkills: Dinoz = await getDinozForLevelUp(dinozId);
+	const dinozSkills: Dinoz | null = await getDinozForLevelUp(dinozId);
+	if (!dinozSkills) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 
 	const ranking: Ranking | undefined = dinozSkills.player.rank;
 
@@ -320,7 +326,10 @@ function getElementUpChance(
  * Get all double skills that dinoz can learn et place it into unlockable_skills table.
  */
 export async function unlockDoubleSkills(dinozId: number): Promise<void> {
-	const dinoz: Dinoz = await getDinozSkillsLearnableAndUnlockable(dinozId);
+	const dinoz: Dinoz | null = await getDinozSkillsLearnableAndUnlockable(dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 	const allLearnableSkills: Array<Partial<DinozSkillFiche>> = getLearnableSkills(dinoz);
 
 	// First filter : Get all skills which have more that one element (ex : fire and water).

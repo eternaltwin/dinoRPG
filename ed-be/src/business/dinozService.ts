@@ -181,7 +181,11 @@ export async function getDinozFiche(req: Request): Promise<DinozFiche> {
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
-	const dinozData: Dinoz = await getDinozFicheRequest(dinozId);
+	const dinozData: Dinoz | null = await getDinozFicheRequest(dinozId);
+
+	if (!dinozData) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 	// If player found is different from player who do the request, throw exception
 	if (dinozData.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozData.id} doesn't belong to player ${req.user!.playerId}`);
@@ -210,7 +214,10 @@ export async function getDinozFiche(req: Request): Promise<DinozFiche> {
  */
 export async function getDinozSkill(req: Request): Promise<Array<DinozSkillFiche>> {
 	const dinozId: number = parseInt(req.params.id);
-	const dinozSkillData: Dinoz = await getDinozSkillRequest(dinozId);
+	const dinozSkillData: Dinoz | null = await getDinozSkillRequest(dinozId);
+	if (!dinozSkillData) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 
 	if (dinozSkillData.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozSkillData.id} doesn't belong to player ${req.user!.playerId}`);
@@ -242,7 +249,11 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	}
 
 	// Get dinoz details thanks to his ID
-	const dinozShopData: PlayerDinozShop = await getDinozShopDetailsRequest(parseInt(req.params.id));
+	const dinozShopData: PlayerDinozShop | null = await getDinozShopDetailsRequest(parseInt(req.params.id));
+
+	if (!dinozShopData) {
+		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist.`);
+	}
 
 	const race: DinozRace = dinozShopData.race;
 
@@ -295,7 +306,7 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
  */
 export async function setDinozName(req: Request): Promise<void> {
 	// Retrieve player from dinozId
-	const dinoz: Dinoz = await getCanDinozChangeName(parseInt(req.params.id));
+	const dinoz: Dinoz | null = await getCanDinozChangeName(parseInt(req.params.id));
 
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist`);
@@ -333,8 +344,11 @@ export async function setSkillState(req: Request): Promise<boolean> {
 	const skillToUpdate: number = parseInt(req.body.skillId);
 	const skillStateToUpdate: boolean = req.body.skillState;
 
-	const dinoz: Dinoz = await getDinozSkillAndStatusRequest(dinozId);
+	const dinoz: Dinoz | null = await getDinozSkillAndStatusRequest(dinozId);
 
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 	const skill: DinozSkillFiche | undefined = Object.values(skillList).find(skill => skill.skillId === skillToUpdate);
 
 	// Check if skill exist and can be activate/deactivate
@@ -374,8 +388,12 @@ export async function setSkillState(req: Request): Promise<boolean> {
 export async function betaMove(req: Request): Promise<FightResult> {
 	//Retrieve dinozId
 	const dinozId: number = parseInt(req.body.dinozId);
-	const dinoz: Dinoz = await getDinozFightDataRequest(dinozId);
+	const dinoz: Dinoz | null = await getDinozFightDataRequest(dinozId);
 	let finalPlace: number;
+
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.player.id !== req.user!.playerId) {
@@ -384,6 +402,10 @@ export async function betaMove(req: Request): Promise<FightResult> {
 
 	if (dinoz.concentration) {
 		throw new ErrorFormator(400, 'concentration');
+	}
+
+	if (!dinoz.isAlive) {
+		throw new ErrorFormator(400, 'dead');
 	}
 
 	const actualPlace: Place = dinoz.actualPlace;
@@ -424,7 +446,11 @@ export async function resurrectDinoz(req: Request): Promise<void> {
 	const dinozId: number = parseInt(req.params.id);
 
 	// Retrieve player from dinozId
-	const dinozData: Dinoz = await getDinozFicheLiteRequest(dinozId);
+	const dinozData: Dinoz | null = await getDinozFicheLiteRequest(dinozId);
+
+	if (!dinozData) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 
 	// If player found is different from player who do the request, throw exception
 	if (dinozData.player.id !== req.user!.playerId) {
@@ -447,7 +473,11 @@ export async function resurrectDinoz(req: Request): Promise<void> {
 
 export async function digWithDinoz(req: Request): Promise<Rewarder> {
 	const dinozId: number = parseInt(req.params.id);
-	const dinozData: Dinoz = await getDinozFicheRequest(dinozId);
+	const dinozData: Dinoz | null = await getDinozFicheRequest(dinozId);
+
+	if (!dinozData) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 
 	if (dinozData.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
@@ -477,10 +507,7 @@ export async function digWithDinoz(req: Request): Promise<Rewarder> {
 	}
 
 	//Try to broke enhanced shovel (75% of keeping it)
-	if (
-		getRandomNumber(0, 100) > 100 &&
-		dinozData.status.some(status => status.statusId === statusList.ENHANCED_SHOVEL)
-	) {
+	if (getRandomNumber(0, 100) > 75 && dinozData.status.some(status => status.statusId === statusList.ENHANCED_SHOVEL)) {
 		await removeStatusToDinoz(dinozId, statusList.ENHANCED_SHOVEL);
 		await addStatusToDinoz(dinozData, statusList.BROKEN_ENHANCED_SHOVEL);
 	}
@@ -493,7 +520,12 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	const gatherPlaceArray: Array<GatherData> = Object.values(gather).filter(
 		g => g.action === req.params.type.toString().toLowerCase()
 	);
-	const dinozData: Dinoz = await getDinozGatherData(dinozId);
+	const dinozData: Dinoz | null = await getDinozGatherData(dinozId);
+
+	if (!dinozData) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
+
 	const place: Place = dinozData.actualPlace;
 
 	const typeOfGridArray: Array<[string, string | GatherType]> | undefined = Object.entries(GatherType).filter(g => {
@@ -546,7 +578,10 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	const gatherPlaceArray: Array<GatherData> = Object.values(gather).filter(
 		g => g.action === req.body.type.toString().toLowerCase()
 	);
-	const dinozData: Dinoz = await getDinozGatherData(dinozId);
+	const dinozData: Dinoz | null = await getDinozGatherData(dinozId);
+	if (!dinozData) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	}
 	const place: Place = dinozData.actualPlace;
 	const typeOfGridArray: Array<[string, string | GatherType]> | undefined = Object.entries(GatherType).filter(g => {
 		if (g[1] === place.gather || g[1] === place.specialGather) return true;
@@ -580,6 +615,9 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	for (const element of boxToSanitize) {
 		if (!element.every(coord => typeof coord === 'number')) {
 			throw new ErrorFormator(500, `This coordinate is not correct : ${element}`);
+		}
+		if (element.some(coord => coord > myGrid.getGridSize() || coord < 0)) {
+			throw new ErrorFormator(500, `This coordinate is out of the grid : ${element}`);
 		}
 	}
 

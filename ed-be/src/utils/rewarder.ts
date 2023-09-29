@@ -9,6 +9,7 @@ import { unlockDoubleSkills } from '../business/skillService.js';
 import { addPlayerMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } from '../dao/playerDao.js';
 import { changeItemQuantity, createItemDataRequest } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
+import { ErrorFormator } from './errorFormator.js';
 
 export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<void> {
 	for (const reward of rewards) {
@@ -43,7 +44,10 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				break;
 			case RewardEnum.ITEM:
 				const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value)!;
-				const playerShopData: Player = await getPlayerShopOneItemDataRequest(dinoz.player.id, itemRewarded.itemId);
+				const playerShopData: Player = (await getPlayerShopOneItemDataRequest(
+					dinoz.player.id,
+					itemRewarded.itemId
+				)) as Player;
 				const playerItemData: PlayerItem | undefined = playerShopData.items.find(
 					item => item.itemId === itemRewarded.itemId
 				);
@@ -61,6 +65,9 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				break;
 			case RewardEnum.EPIC:
 				const testRewards = await getPlayerRewardsRequest(dinoz.player.id);
+				if (!testRewards) {
+					throw new ErrorFormator(500, `Player ${dinoz.player.id} doesn't exist.`);
+				}
 				const EpicReward = new PlayerReward(new Player(dinoz.player.id), reward.value);
 				if (!testRewards.rewards.some(r => r.rewardId === reward.value)) {
 					await addRewardToPlayer(EpicReward);

@@ -13,10 +13,11 @@ import { Player } from '../entity/player.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
-import { getDinozTotalCount } from '../dao/dinozDao.js';
+import { getAllDinozFicheLite, getDinozTotalCount } from '../dao/dinozDao.js';
 import { levelList } from '../constants/index.js';
-import { PlayerReward } from '../entity/index.js';
+import { Dinoz, PlayerReward } from '../entity/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
 
 /**
  * @summary Get data from player on login
@@ -24,7 +25,10 @@ import { ErrorFormator } from '../utils/errorFormator.js';
  * @return Player
  */
 export async function getCommonData(req: Request): Promise<PlayerCommonData> {
-	const playerCommonData: Player = await getCommonDataRequest(req.user!.playerId!);
+	const playerCommonData: Player | null = await getCommonDataRequest(req.user!.playerId!);
+	if (!playerCommonData) {
+		throw new ErrorFormator(500, `Player ${req.user!.playerId!} doesn't exist.`);
+	}
 
 	const commonData: PlayerCommonData = {
 		money: playerCommonData.money,
@@ -60,7 +64,10 @@ export async function getCommonData(req: Request): Promise<PlayerCommonData> {
  */
 export async function getAccountData(req: Request): Promise<PlayerInfo> {
 	const playerId: number = parseInt(req.params.id);
-	const playerInfo: Player = await getPlayerDataRequest(playerId);
+	const playerInfo: Player | null = await getPlayerDataRequest(playerId);
+	if (!playerInfo) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
 
 	// Subscription date
 	const date: Array<string> = playerInfo.createdDate.toLocaleString().split(',')[0].split('/');
@@ -105,8 +112,10 @@ export async function getAccountData(req: Request): Promise<PlayerInfo> {
 export async function importAccount(req: Request): Promise<void> {
 	const playerId: number = req.user!.playerId!;
 	//const server: string = req.body.server;
-	const importedData: Player = await getImportedData(playerId);
-
+	const importedData: Player | null = await getImportedData(playerId);
+	if (!importedData) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
 	//Check if user has not already imported
 	if (importedData.hasImported) {
 		throw new ErrorFormator(500, `Player ${playerId} has already imported his account`);
@@ -135,8 +144,10 @@ export async function importAccount(req: Request): Promise<void> {
  */
 export async function setCustomText(req: Request): Promise<void> {
 	const playerId: number = req.user!.playerId!;
-	const playerProfile: Player = await getPlayerRewardsRequest(playerId);
-
+	const playerProfile: Player | null = await getPlayerRewardsRequest(playerId);
+	if (!playerProfile) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
 	//Check if user can edit
 	if (!playerProfile.rewards.some(reward => reward.rewardId === rewardList.PLUME)) {
 		throw new ErrorFormator(500, `Player ${playerId} cannot edit this field`);
@@ -155,4 +166,14 @@ export async function searchPlayers(req: Request): Promise<Array<Player>> {
 	const playerList: Array<Player> = await searchPlayersByName(req.params.name);
 
 	return playerList;
+}
+
+export async function getDinozList(req: Request): Promise<Array<any>> {
+	const playerId: number = req.user!.playerId!;
+	const dinozActive: Array<Dinoz> | undefined = await getAllDinozFicheLite(playerId);
+	if (!dinozActive) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+
+	return dinozActive.map(dinoz => dinoz.toDinozFicheLite());
 }

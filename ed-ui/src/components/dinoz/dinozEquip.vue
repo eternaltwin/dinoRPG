@@ -72,6 +72,9 @@ export default defineComponent({
 			this.items = new Array(this.maxItem);
 			e.forEach((item, index) => (this.items![index] = item.itemId));
 		});
+	},
+	unmounted() {
+		EventBus.off('equipItem');
 	}
 });
 </script>

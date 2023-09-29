@@ -21,20 +21,24 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const npcName: string = req.params.npc;
 	let nextStepWanted: string = req.body.step;
 
-	let dinoz: Dinoz = await getDinozNPCRequest(dinozId);
+	let dinoz: Dinoz | null = await getDinozNPCRequest(dinozId);
+
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
 	}
 
-	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz!.placeId);
 	const pnj: Npc | undefined = Object.values(npcList).find(pnj => pnj.name === npcName);
 
 	if (!pnj) {
 		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
 	}
-	if (actualPlace!.placeId !== pnj!.placeId) {
+	if (actualPlace!.placeId !== pnj!.placeId && !req.body.stop) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
@@ -93,7 +97,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 				name: npcName,
 				speech: nextStepWantedData!.stepName,
 				playerChoice: [],
-				service: ServiceEnum.DINOZ
+				service: [ServiceEnum.DINOZ]
 			};
 		}
 
@@ -122,6 +126,9 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		const condition: Condition | undefined = Object.values(pnj!.data).find(data => data.stepName === possibility)
 			?.condition;
 		// If there is a condition non-met, replace it with enmpty string
+		if (!dinoz) {
+			throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		}
 		return condition === undefined || checkCondition(condition, dinoz);
 	});
 

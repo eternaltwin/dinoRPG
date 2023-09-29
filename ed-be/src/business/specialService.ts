@@ -12,7 +12,10 @@ import { calculateFight, getFightResult, rewardFight } from './fightService.js';
 import { rewarder } from '../utils/rewarder.js';
 
 export async function concentrate(req: Request) {
-	const player: Player = await prepareConcentration(req.user!.playerId!);
+	const player: Player | null = await prepareConcentration(req.user!.playerId!);
+	if (!player) {
+		throw new ErrorFormator(500, `Dinoz ${req.user!.playerId!} doesn't exist.`);
+	}
 	const dinozList = player.dinoz;
 	const dinoz: Dinoz | undefined = player.dinoz.find(d => d.id === parseInt(req.params.id));
 
@@ -44,7 +47,7 @@ export async function concentrate(req: Request) {
 		await setConcentration(dinoz.concentration);
 		return;
 	} else {
-		concentration = await getConcentration(concentration.id);
+		concentration = (await getConcentration(concentration.id)) as Concentration;
 	}
 
 	concentration.dinoz.push(dinoz);
@@ -58,7 +61,10 @@ export async function concentrate(req: Request) {
 }
 
 export async function cancelConcentrate(req: Request) {
-	const dinoz: Dinoz = await getDinozConcentrationRequest(parseInt(req.params.id));
+	const dinoz: Dinoz | null = await getDinozConcentrationRequest(parseInt(req.params.id));
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist.`);
+	}
 
 	if (dinoz.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);

@@ -1,4 +1,5 @@
 export enum ServiceEnum {
 	CONCENTRATION = 'concentration',
-	DINOZ = 'dinoz'
+	DINOZ = 'dinoz',
+	REFRESH_DINOZLIST = 'refreshDinozList'
 }

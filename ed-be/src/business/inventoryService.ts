@@ -28,7 +28,11 @@ export async function getAllItemsData(req: Request): Promise<Array<ItemFiche>> {
 	const playerId: number = req.user!.playerId!;
 
 	// Get the player's data (shopKeeper)
-	const playerInventoryData: Player = await getPlayerInventoryDataRequest(playerId);
+	const playerInventoryData: Player | null = await getPlayerInventoryDataRequest(playerId);
+
+	if (!playerInventoryData) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
 
 	// All checks passed, let's create a list of the items owned by the player
 	const allItemsDataReply: Array<ItemFiche> = playerInventoryData.items?.map(i => {
@@ -54,7 +58,10 @@ export async function getAllItemsData(req: Request): Promise<Array<ItemFiche>> {
 export async function useItem(req: Request): Promise<void> {
 	//The Promise need to be reworked
 	const dinozId: number = parseInt(req.params.dinozId);
-	const dinoz: Dinoz = await getDinozFicheItemRequest(dinozId);
+	const dinoz: Dinoz | null = await getDinozFicheItemRequest(dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 	const itemId: number = parseInt(req.params.itemId);
 	const item: ItemFiche | undefined = Object.values(itemList).find(item => item.itemId === itemId);
 
@@ -165,7 +172,10 @@ async function useSpecialItem(dinoz: Dinoz, item: ItemFiche): Promise<void> {
 
 export async function equipItem(req: Request): Promise<Array<DinozItems>> {
 	const dinozId: number = parseInt(req.params.dinozId);
-	const dinoz: Dinoz = await getDinozEquipItemRequest(dinozId);
+	const dinoz: Dinoz | null = await getDinozEquipItemRequest(dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 	const itemId: number = parseInt(req.body.itemId);
 	const equip: boolean = req.body.equip;
 	const itemToEquip = Object.values(itemList).find(item => item.itemId === itemId);

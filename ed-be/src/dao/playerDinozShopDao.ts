@@ -16,7 +16,7 @@ const createMultipleDinoz = (dinozArray: Array<PlayerDinozShop>): Promise<Array<
 	return dinozShopRepository.save(dinozArray);
 };
 
-const getDinozShopDetailsRequest = (dinozId: number): Promise<PlayerDinozShop> => {
+const getDinozShopDetailsRequest = (dinozId: number): Promise<PlayerDinozShop | null> => {
 	return dinozShopRepository
 		.createQueryBuilder('dinozShop')
 		.select(['dinozShop.display', 'dinozShop.raceId', 'dinozShop.id'])
@@ -31,7 +31,7 @@ const getDinozShopDetailsRequest = (dinozId: number): Promise<PlayerDinozShop> =
 		.innerJoin('dinozShop.player', 'player')
 		.leftJoin('player.rank', 'rank')
 		.where('dinozShop.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 };
 
 const deleteDinozInShopRequest = (playerId: number): Promise<DeleteResult> => {

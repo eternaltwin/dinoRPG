@@ -30,7 +30,11 @@ export async function getItemsFromShop(req: Request): Promise<Array<ItemFiche>> 
 	}
 
 	// Get the player's data (money, shopKeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
-	const playerShopData: Player = await getPlayerShopItemsDataRequest(playerId);
+	const playerShopData: Player | null = await getPlayerShopItemsDataRequest(playerId);
+
+	if (!playerShopData) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
 
 	checkDinozPlace(tempShop, playerShopData, shopId);
 
@@ -80,8 +84,11 @@ export async function buyItem(req: Request): Promise<void> {
 
 	// Get the player's data (money, shopKeeper, list of dinoz not frozen and not sacrificed (placeId),
 	// the info about the item, and owned golden napodinos)
-	const playerShopData: Player = await getPlayerShopOneItemDataRequest(playerId, itemId);
+	const playerShopData: Player | null = await getPlayerShopOneItemDataRequest(playerId, itemId);
 
+	if (!playerShopData) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
 	// Extract item data from player
 	const playerItemData: PlayerItem | undefined = playerShopData.items.find(item => item.itemId === itemId);
 

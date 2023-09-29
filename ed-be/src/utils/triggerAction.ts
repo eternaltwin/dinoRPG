@@ -4,13 +4,17 @@ import { NpcAction } from '@drpg/core/models/npc/NpcAction';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { calculateFight, rewardFight } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
+import { ErrorFormator } from './errorFormator.js';
 
 export async function triggerAction(action: NpcAction, dinoz: Dinoz): Promise<boolean> {
 	let result: boolean;
 	switch (action.actionType) {
 		case TriggerEnum.FIGHT:
 			result = false;
-			const fightingDinoz: Dinoz = await getDinozFightDataRequest(dinoz.id);
+			const fightingDinoz: Dinoz | null = await getDinozFightDataRequest(dinoz.id);
+			if (!fightingDinoz) {
+				throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't exist.`);
+			}
 			const fightResult: FightProcessResult = calculateFight(fightingDinoz, action.enemies[0]);
 			await rewardFight(dinoz, action.enemies[0], fightResult);
 			if (fightResult.winner) {

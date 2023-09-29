@@ -21,6 +21,9 @@ export default defineComponent({
 	},
 	mounted(): void {
 		EventBus.on('isLoading', e => (this.loading = e));
+	},
+	unmounted() {
+		EventBus.off('isLoading');
 	}
 });
 </script>

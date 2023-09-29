@@ -77,7 +77,7 @@ const getEternalTwinId = (playerId: number): Promise<Player | null> => {
 		.getOne();
 };
 
-const getCommonDataRequest = (playerId: number): Promise<Player> => {
+const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money'])
@@ -96,10 +96,10 @@ const getCommonDataRequest = (playerId: number): Promise<Player> => {
 		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false')
 		.leftJoinAndSelect('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
-const getAllInformationFromPlayer = (playerId: number): Promise<Player> => {
+const getAllInformationFromPlayer = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select()
@@ -107,26 +107,26 @@ const getAllInformationFromPlayer = (playerId: number): Promise<Player> => {
 		.leftJoinAndSelect('player.ingredients', 'ingredient')
 		.leftJoinAndSelect('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
-const getImportedData = (playerId: number): Promise<Player> => {
+const getImportedData = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.hasImported', 'player.eternalTwinId', 'player.id'])
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
-const getPlayerMoney = (playerId: number): Promise<Player> => {
+const getPlayerMoney = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money'])
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
-const getPlayerDataRequest = (playerId: number): Promise<Player> => {
+const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.createdDate', 'player.name', 'player.customText'])
@@ -139,7 +139,7 @@ const getPlayerDataRequest = (playerId: number): Promise<Player> => {
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('player.rank', 'rank')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
 export async function prepareConcentration(playerId: number) {
@@ -151,7 +151,7 @@ export async function prepareConcentration(playerId: number) {
 		.leftJoinAndSelect('dinoz.status', 'status')
 		.leftJoinAndSelect('dinoz.concentration', 'concentration')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 }
 
 const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
@@ -169,14 +169,14 @@ const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerInventoryDataRequest = (playerId: number): Promise<Player> => {
+const getPlayerInventoryDataRequest = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.shopKeeper'])
 		.addSelect(['items.itemId', 'items.quantity'])
 		.leftJoin('player.items', 'items', 'items.quantity > 0')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
 /**
@@ -185,7 +185,7 @@ const getPlayerInventoryDataRequest = (playerId: number): Promise<Player> => {
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerDinozShopRequest = (playerId: number): Promise<Player> => {
+const getPlayerDinozShopRequest = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id'])
@@ -193,17 +193,17 @@ const getPlayerDinozShopRequest = (playerId: number): Promise<Player> => {
 		.leftJoin('player.dinozShop', 'dinozShop')
 		.leftJoinAndSelect('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
-const getPlayerRewardsRequest = (playerId: number): Promise<Player> => {
+const getPlayerRewardsRequest = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id'])
 		.addSelect(['rewards.rewardId'])
 		.leftJoin('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
 /**
@@ -211,14 +211,14 @@ const getPlayerRewardsRequest = (playerId: number): Promise<Player> => {
  * That includes:  platerId and the dinoz from the shop that it is trying to buy
  * @return Player
  */
-const getPlayerSpecificDinozShopRequest = (playerId: number, dinozId: number): Promise<Player> => {
+const getPlayerSpecificDinozShopRequest = (playerId: number, dinozId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money'])
 		.addSelect(['dinozShop.id', 'dinozShop.raceId', 'dinozShop.display'])
 		.leftJoin('player.dinozShop', 'dinozShop', 'dinozShop.id = :dId', { dId: dinozId })
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
 /**
@@ -228,7 +228,7 @@ const getPlayerSpecificDinozShopRequest = (playerId: number, dinozId: number): P
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player> => {
+const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
@@ -239,7 +239,7 @@ const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player> => {
 		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false AND dinoz.isSacrificed = false')
 		.leftJoin('dinoz.status', 'status')
 		.where('player.id = :pId', { pId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
 /**
@@ -249,7 +249,7 @@ const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player> => {
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerShopOneItemDataRequest = async (playerId: number, itemId: number): Promise<Player> => {
+const getPlayerShopOneItemDataRequest = async (playerId: number, itemId: number): Promise<Player | null> => {
 	return await playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
@@ -263,7 +263,7 @@ const getPlayerShopOneItemDataRequest = async (playerId: number, itemId: number)
 		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false AND dinoz.isSacrificed = false')
 		.leftJoin('dinoz.status', 'status')
 		.where('player.id = :playerId', { playerId: playerId })
-		.getOneOrFail();
+		.getOne();
 };
 
 // Setters

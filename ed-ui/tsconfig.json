@@ -29,10 +29,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",
-    "src/i18n/locales/fr.json",
-    "src/i18n/locales/en.json",
-    "src/i18n/locales/de.json",
-    "src/i18n/locales/es.json"
+    "**/i18n/locales/*.json",
   ],
   "exclude": [],
   "references": [

@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
-import { DinozService } from '../services/index.js';
+import { DinozService, PlayerService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import { sessionStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -92,6 +92,9 @@ export default defineComponent({
 		}
 
 		this.nameChoosen = this.dinozData.name !== '?';
+	},
+	unmounted() {
+		EventBus.off('refreshDinoz');
 	},
 	watch: {
 		// Reload page if player go on another dinoz page

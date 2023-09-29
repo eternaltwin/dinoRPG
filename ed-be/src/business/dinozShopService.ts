@@ -7,6 +7,7 @@ import { getRandomLetter, getRandomNumber } from '../utils/index.js';
 import { raceList, rewardList, skillList } from '../constants/index.js';
 import { Player, PlayerDinozShop } from '../entity/index.js';
 import gameConfig from '../config/game.config.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -18,7 +19,11 @@ import gameConfig from '../config/game.config.js';
 // TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozShopFiche>> {
 	// Retrieve player with dinoz shop info
-	const playerData: Player = await getPlayerDinozShopRequest(req.user!.playerId!);
+	const playerData: Player | null = await getPlayerDinozShopRequest(req.user!.playerId!);
+
+	if (!playerData) {
+		throw new ErrorFormator(500, `Player ${req.user?.playerId} doesn't exist.`);
+	}
 
 	// If nothing is found, create 15 (?) dinoz to fill the shop
 	if (playerData.dinozShop.length === 0) {
@@ -38,7 +43,11 @@ export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozSh
 		];
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player: Player = await getPlayerRewardsRequest(req.user!.playerId!);
+		const player: Player | null = await getPlayerRewardsRequest(req.user!.playerId!);
+
+		if (!player) {
+			throw new ErrorFormator(500, `Player ${req.user?.playerId} doesn't exist.`);
+		}
 
 		player.rewards.forEach(playerReward => {
 			if (playerReward.rewardId === rewardList.TROPHEE_ROCKY) {

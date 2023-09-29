@@ -102,8 +102,10 @@ export async function editDinoz(req: Request): Promise<void> {
  * @return string
  */
 export async function setPlayerMoney(req: Request): Promise<string> {
-	const playerGold: Player = await getPlayerMoney(parseInt(req.params.id));
-
+	const playerGold: Player | null = await getPlayerMoney(parseInt(req.params.id));
+	if (!playerGold) {
+		throw new ErrorFormator(500, `Plyaer ${req.params.id} doesn't exist.`);
+	}
 	switch (req.body.operation) {
 		case 'add':
 			await setPlayerMoneyRequest(parseInt(req.params.id), playerGold.money! + req.body.gold);
@@ -115,7 +117,10 @@ export async function setPlayerMoney(req: Request): Promise<string> {
 			throw new ErrorFormator(500, `You need to select an operation.`);
 	}
 
-	const updatedPlayerGold: Player = await getPlayerMoney(parseInt(req.params.id));
+	const updatedPlayerGold: Player | null = await getPlayerMoney(parseInt(req.params.id));
+	if (!updatedPlayerGold) {
+		throw new ErrorFormator(500, `Player ${req.user!.playerId!} doesn't exist.`);
+	}
 	return updatedPlayerGold.money.toString();
 }
 
@@ -215,7 +220,10 @@ export async function editPlayer(req: Request): Promise<void> {
  * @return Partial<PlayerTypeToSend>
  */
 export async function listAllPlayerInformationForAdminDashboard(req: Request): Promise<Partial<PlayerTypeToSend>> {
-	const player: Player = await getAllInformationFromPlayer(parseInt(req.params.id));
+	const player: Player | null = await getAllInformationFromPlayer(parseInt(req.params.id));
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${req.params.id} doesn't exist.`);
+	}
 
 	const playerToSend: Partial<PlayerTypeToSend> = {
 		id: player.id,

@@ -27,10 +27,11 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
-import { DinozService, NPCService } from '../services/index.js';
+import { DinozService, NPCService, PlayerService } from '../services/index.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { NavigationFailure } from 'vue-router';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
+import { sessionStore } from '../store/index.js';
 
 export default defineComponent({
 	name: 'NPC',
@@ -39,7 +40,8 @@ export default defineComponent({
 			npcName: undefined as string | undefined,
 			dinozId: undefined as number | undefined,
 			npcSpeech: {} as NpcTalk,
-			loaded: false as boolean
+			loaded: false as boolean,
+      sessionStore: sessionStore()
 		};
 	},
 	components: {
@@ -53,15 +55,20 @@ export default defineComponent({
 			}
 			this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
 			if (this.npcSpeech.service) {
-				switch (this.npcSpeech.service) {
-					case ServiceEnum.CONCENTRATION:
-						await DinozService.concentration(this.dinozId!);
-						break;
-					case ServiceEnum.DINOZ:
-						this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
-						break;
-					default:
-						break;
+				for (const service of this.npcSpeech.service) {
+					switch (service) {
+						case ServiceEnum.CONCENTRATION:
+							await DinozService.concentration(this.dinozId!);
+							break;
+						case ServiceEnum.DINOZ:
+							this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
+							break;
+						case ServiceEnum.REFRESH_DINOZLIST:
+              this.sessionStore.setDinozList(await PlayerService.getDinozList())
+							break;
+						default:
+							break;
+					}
 				}
 			}
 		},

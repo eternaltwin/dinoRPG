@@ -2,6 +2,7 @@ import { http } from '../utils/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
+import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
 
 export const PlayerService = {
 	getLoggedInData(): Promise<PlayerCommonData> {
@@ -47,6 +48,12 @@ export const PlayerService = {
 	getPlayerMoney(): Promise<string> {
 		return http()
 			.get(`/player/getmoney`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getDinozList(): Promise<Array<DinozFicheLite>> {
+		return http()
+			.get(`/player/dinozList`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

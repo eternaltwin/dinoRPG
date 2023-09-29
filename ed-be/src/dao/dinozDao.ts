@@ -6,7 +6,7 @@ const dinozRepository = AppDataSource.getRepository(Dinoz);
 
 // Getters
 
-export async function getDinozPlaceRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozPlaceRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.placeId'])
@@ -17,7 +17,7 @@ export async function getDinozPlaceRequest(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
 export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
@@ -39,7 +39,7 @@ export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
     .leftJoinAndSelect('dinoz.status', 'status')
     .leftJoinAndSelect('dinoz.concentration', 'concentration')
     .where('dinoz.id = :dId', { dId: dinozId })
-    .getOneOrFail();
+    .getOne();
 }*/
 
 export async function getAllDinozFromAccount(playerId: number): Promise<Array<Dinoz>> {
@@ -65,17 +65,36 @@ export async function getAllDinozFromAccount(playerId: number): Promise<Array<Di
 		.getMany();
 }
 
-export async function getCanDinozChangeName(dinozId: number): Promise<Dinoz> {
+export async function getAllDinozFicheLite(playerId: number): Promise<Array<Dinoz>> {
+	return dinozRepository
+		.createQueryBuilder('dinoz')
+		.select([
+			'dinoz.id',
+			'dinoz.name',
+			'dinoz.display',
+			'dinoz.following',
+			'dinoz.life',
+			'dinoz.level',
+			'dinoz.maxLife',
+			'dinoz.experience',
+			'dinoz.placeId',
+			'dinoz.order'
+		])
+		.innerJoin('dinoz.player', 'player', 'player.id = :pId', { pId: playerId })
+		.getMany();
+}
+
+export async function getCanDinozChangeName(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.canChangeName'])
 		.addSelect(['player.id'])
 		.innerJoin('dinoz.player', 'player')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select([
@@ -108,10 +127,10 @@ export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.missions', 'missions')
 		.leftJoin('dinoz.skills', 'skills')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz> {
+export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.level', 'dinoz.placeId'])
@@ -122,10 +141,10 @@ export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozConcentrationRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozConcentrationRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id'])
@@ -135,20 +154,20 @@ export async function getDinozConcentrationRequest(dinozId: number): Promise<Din
 		.leftJoin('concentration.dinoz', 'concentrationDinoz')
 		.addSelect(['concentrationDinoz.id'])
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozFicheLiteRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozFicheLiteRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name'])
 		.addSelect(['player.id'])
 		.innerJoin('dinoz.player', 'player')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select([
@@ -169,10 +188,10 @@ export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz> 
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.skills', 'skills')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozEquipItemRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozEquipItemRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id'])
@@ -187,10 +206,10 @@ export async function getDinozEquipItemRequest(dinozId: number): Promise<Dinoz> 
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.skills', 'skills')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select([
@@ -218,10 +237,10 @@ export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz> 
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.missions', 'missions')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name', 'dinoz.level', 'dinoz.placeId'])
@@ -237,10 +256,10 @@ export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.status', 'status')
 		.leftJoin('dinoz.NPC', 'npc')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozSkillRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozSkillRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id'])
@@ -249,10 +268,10 @@ export async function getDinozSkillRequest(dinozId: number): Promise<Dinoz> {
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.skills', 'skills')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozSkillAndStatusRequest(dinozId: number): Promise<Dinoz> {
+export async function getDinozSkillAndStatusRequest(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id'])
@@ -263,10 +282,10 @@ export async function getDinozSkillAndStatusRequest(dinozId: number): Promise<Di
 		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozForLevelUp(dinozId: number): Promise<Dinoz> {
+export async function getDinozForLevelUp(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select([
@@ -297,10 +316,10 @@ export async function getDinozForLevelUp(dinozId: number): Promise<Dinoz> {
 		.leftJoin('dinoz.skillsUnlockable', 'skillsUnlockable')
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
-export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Promise<Dinoz> {
+export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.raceId'])
@@ -311,14 +330,14 @@ export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Pro
 		.leftJoin('dinoz.skillsUnlockable', 'skillsUnlockable')
 		.leftJoin('dinoz.status', 'status')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
 export async function getDinozTotalCount(): Promise<number> {
 	return dinozRepository.count();
 }
 
-export async function getDinozGatherData(dinozId: number): Promise<Dinoz> {
+export async function getDinozGatherData(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.placeId'])
@@ -330,7 +349,7 @@ export async function getDinozGatherData(dinozId: number): Promise<Dinoz> {
 		.leftJoin('player.items', 'playerItems')
 		.leftJoinAndSelect('player.ingredients', 'ingredient')
 		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOneOrFail();
+		.getOne();
 }
 
 // Setters

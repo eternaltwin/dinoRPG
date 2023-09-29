@@ -85,6 +85,10 @@ export class PlayerGather {
 		return this.grid.map(row => row.map(ingredient => (ingredient >= 0 ? 0 : -1)));
 	}
 
+	public getGridSize(): number {
+		return this.grid[0].length;
+	}
+
 	public discoverBox(
 		dinoz: Dinoz,
 		gridInformation: GatherData,

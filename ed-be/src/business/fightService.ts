@@ -26,10 +26,22 @@ const { fight_rust } = pkg;
 export async function processFight(req: Request): Promise<FightResult> {
 	const dinozId: number = parseInt(req.body.dinozId);
 	// Get Dinoz info
-	const dinozData: Dinoz = await getDinozFightDataRequest(dinozId);
+	const dinozData: Dinoz | null = await getDinozFightDataRequest(dinozId);
+
+	if (!dinozData) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 
 	if (dinozData.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	}
+
+	if (dinozData.concentration) {
+		throw new ErrorFormator(400, 'concentration');
+	}
+
+	if (!dinozData.isAlive) {
+		throw new ErrorFormator(400, 'dead');
 	}
 
 	const localisation: Place = Object.values(placeList).find(place => place.placeId === dinozData.placeId)!;

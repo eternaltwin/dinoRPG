@@ -71,7 +71,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.REDIRECT,
-				service: ServiceEnum.CONCENTRATION
+				service: [ServiceEnum.CONCENTRATION, ServiceEnum.REFRESH_DINOZLIST]
 			}
 		],
 		nextStep: []

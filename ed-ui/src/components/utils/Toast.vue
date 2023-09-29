@@ -26,6 +26,9 @@ export default defineComponent({
 			this.type = e.type;
 			this.displayToast = true;
 		});
+	},
+	unmounted() {
+		EventBus.off('toast');
 	}
 });
 </script>

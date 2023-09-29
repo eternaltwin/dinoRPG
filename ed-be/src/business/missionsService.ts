@@ -29,7 +29,10 @@ import { checkCondition } from '../utils/checkConditions.js';
 export async function getMissionsList(req: Request): Promise<Array<MissionList>> {
 	const dinozId: number = parseInt(req.params.id);
 	const npcName: string = req.params.npc;
-	const dinoz: Dinoz = await getDinozMissionsInfo(dinozId);
+	const dinoz: Dinoz | null = await getDinozMissionsInfo(dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 	const currentPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const npc = Object.values(npcList).find(npc => npc.name === npcName);
 
@@ -57,7 +60,10 @@ export async function updateMission(req: Request): Promise<boolean> {
 	const missionId: number = parseInt(req.params.missionId);
 	const status: string = req.body.status;
 
-	const dinoz: Dinoz = await getDinozMissionsInfo(dinozId);
+	const dinoz: Dinoz | null = await getDinozMissionsInfo(dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 	const npc: Npc | undefined = Object.values(npcList).find(
 		npc => npc.missions?.find(mission => mission.missionId === missionId)
 	);
@@ -131,7 +137,10 @@ async function checkMission(req: Request): Promise<MissionCheck> {
 	const dinozId: number = parseInt(req.params.dinozId);
 	const missionId: number = req.body.missionId;
 
-	const dinoz: Dinoz = await getDinozMissionsInfo(dinozId);
+	const dinoz: Dinoz | null = await getDinozMissionsInfo(dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
 	if (dinoz.player.id !== req.user!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);

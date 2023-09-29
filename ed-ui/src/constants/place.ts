@@ -1280,18 +1280,6 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 115,
-		name: 'gochutd',
-		hidden: true,
-		alias: 25,
-		posLeft: 62,
-		posTop: 32,
-		icon: PlaceIcon.WATER,
-		map: MapZone.DARKWORLD,
-		xFactor: 10,
-		yFactor: 10
-	},
-	{
-		placeId: 116,
 		name: 'dkbao',
 		hidden: false,
 		posLeft: 199,
