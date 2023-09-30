@@ -1,6 +1,6 @@
 [package]
 name = "native-dinorpg"
-version = "0.3.0"
+version = "0.3.1"
 license = "ISC"
 edition = "2018"
 exclude = ["index.node"]

@@ -116,7 +116,14 @@ impl IndexMut<ElementIndex> for OrderedElements {
 
 impl fmt::Display for ElementIndex {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:?}", self)
+        match self {
+            ElementIndex::Air => write!(f, "air"),
+            ElementIndex::Fire => write!(f, "fire"),
+            ElementIndex::Lightning => write!(f, "lightning"),
+            ElementIndex::Void => write!(f, "void"),
+            ElementIndex::Water => write!(f, "water"),
+            ElementIndex::Wood => write!(f, "wood"),
+        }
     }
 }
 

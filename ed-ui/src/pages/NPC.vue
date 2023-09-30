@@ -41,7 +41,7 @@ export default defineComponent({
 			dinozId: undefined as number | undefined,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
-      sessionStore: sessionStore()
+			sessionStore: sessionStore()
 		};
 	},
 	components: {
@@ -64,7 +64,7 @@ export default defineComponent({
 							this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
-              this.sessionStore.setDinozList(await PlayerService.getDinozList())
+							this.sessionStore.setDinozList(await PlayerService.getDinozList());
 							break;
 						default:
 							break;

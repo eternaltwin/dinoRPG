@@ -214,6 +214,7 @@ export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz |
 		.createQueryBuilder('dinoz')
 		.select([
 			'dinoz.id',
+			'dinoz.name',
 			'dinoz.level',
 			'dinoz.life',
 			'dinoz.maxLife',

@@ -109,6 +109,7 @@ export function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightPr
 
 	const attacker: FighterFiche = {
 		dinoz_id: dinozData.id,
+		name: dinozData.name,
 		start_life: dinozData.life,
 		base_elements: [
 			dinozData.nbrUpFire,
@@ -124,6 +125,7 @@ export function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightPr
 
 	const defender: FighterFiche = {
 		dinoz_id: 0, // TODO have to find a way to define monster's id without conflicting with a dinoz id
+		name: monster.name,
 		start_life: monster.hp,
 		base_elements: [monster.attack, monster.attack, monster.attack, monster.attack, monster.attack],
 		items: [],
@@ -145,7 +147,7 @@ export function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightPr
 		defenders: [defender]
 	};
 
-	// if (getEnvironnement() === 'development') console.log(`Configuration: ${JSON.stringify(fightConfiguration)}`);
+	console.log(`Configuration: ${JSON.stringify(fightConfiguration)}`);
 
 	return JSON.parse(fight_rust(JSON.stringify(fightConfiguration)));
 }
@@ -178,6 +180,7 @@ export function getFightResult(dinozData: Dinoz, monster: MonsterFiche, fightRes
 		xpEarned: fightResult.winner ? experienceGained : 0,
 		hpLost: fightResult.attackers[0].hp_lost,
 		result: fightResult.winner,
-		dinozId: dinozData.id
+		dinozId: dinozData.id,
+		history: fightResult.history
 	};
 }

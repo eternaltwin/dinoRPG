@@ -68,6 +68,7 @@ fn main() {
         "attackers": [
             {
                 "dinoz_id": 123,
+                "name": "toto",
                 "start_life": 100,
                 "base_elements": [
                     1,
@@ -87,6 +88,7 @@ fn main() {
             },
             {
                 "dinoz_id": 124,
+                "name": "bob",
                 "start_life": 100,
                 "base_elements": [
                     0,
@@ -106,6 +108,7 @@ fn main() {
         "defenders": [
             {
                 "dinoz_id": 22,
+                "name": "kevin",
                 "start_life": 100,
                 "base_elements": [
                     0,
@@ -221,6 +224,7 @@ fn main() {
     // Get the result and print it
     let result: FightResult = mngr.get_fight_result();
     info!("{:}", serde_json::to_string(&result).unwrap());
+    info!("{}", result.history());
 }
 
 //=====================================================================================================================

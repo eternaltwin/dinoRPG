@@ -108,8 +108,10 @@ type StatusId = u32;
 // This structure needs to be exactly the same as FighterFiche in ed-be/src/models/fight/FighterFiche.ts
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct FighterConfiguration {
-    // ID of the dinoz in the DB
+    // ID of the dinoz on the node side
     pub dinoz_id: u32,
+    /// Name of the fighter
+    pub name: String,
     // Health of the dinoz at the start of the fight, it cannot go above it during a fight
     pub start_life: u32,
     // The base elements of the dinoz (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
@@ -149,6 +151,8 @@ pub struct Fighter {
     // Used & Documented fields
     /// Fighter ID: to handle fights
     pub id: usize,
+    /// Name of the fighter
+    pub name: String,
     /// Dinoz ID: to coordinate with the Node backend if it is a dinoz
     pub dinoz_id: u32,
     /// Side of the fighter - true: attacker, false: defender
@@ -238,7 +242,6 @@ pub struct Fighter {
     // Infos
     //dino: undefined, // TODO Dino
     //monster: undefined, // TODO Monster
-    // pub name: String,
 
     // delete_objects: bool, // true
 
@@ -333,6 +336,7 @@ impl Fighter {
         Self {
             // Used & documented fields
             id: fighter_id,
+            name: config.name.clone(),
             dinoz_id: config.dinoz_id,
             side: fighter_side,
             original_side: fighter_side,
@@ -432,6 +436,7 @@ impl Fighter {
         Self {
             // Used & documented fields
             id: fighter_id,
+            name: String::new(),
             dinoz_id: 0,
             side,
             original_side: side,

@@ -4,6 +4,7 @@
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
 	{{ fightText }}
+	{{ fightHistory }}
 	<div class="wrapper">
 		<div class="debrief" :class="lang">
 			<img
@@ -66,7 +67,8 @@ export default defineComponent({
 			fight: {} as FightResult,
 			dinozId: undefined as number | undefined,
 			lang: localStore().getLanguage ?? 'fr',
-			fightText: undefined as string | undefined
+			fightText: undefined as string | undefined,
+			fightHistory: undefined as string | undefined
 		};
 	},
 	methods: {
@@ -97,6 +99,7 @@ export default defineComponent({
 		},
 		displayFight(): void {
 			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
+			this.fightHistory = this.fight.history;
 		}
 	},
 	created(): void {

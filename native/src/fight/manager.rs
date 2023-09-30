@@ -15,6 +15,7 @@ use rand::Rng;
 use rand_chacha::ChaCha8Rng;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
+use std::fmt::Display;
 
 use crate::fight::{
     elements::ElementIndex,
@@ -45,10 +46,29 @@ type FighterId = usize;
 /// Enum to define the sides on the fight
 #[derive(Serialize, Debug, Clone, Copy, PartialEq)]
 pub enum TeamSide {
+    /// Equivalent to true
     Attackers,
+    /// Equivalent to false
     Defenders,
 }
 
+impl Display for TeamSide {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TeamSide::Attackers => write!(f, "attackers"),
+            TeamSide::Defenders => write!(f, "defenders"),
+        }
+    }
+}
+
+impl TeamSide {
+    pub fn to_boolean(&self) -> bool {
+        match self {
+            TeamSide::Attackers => true,
+            TeamSide::Defenders => false,
+        }
+    }
+}
 //---------------------------------------------------------------------------------------------------------------------
 // PURPOSE: Structure to define the result of a fight.
 // PARAMs:  - winner (bool): defines the winner of the fight, true: the attackers won, false: the defenders won
@@ -61,20 +81,33 @@ pub enum TeamSide {
 #[derive(Serialize, Debug, Clone)]
 pub struct FightResult {
     // true: attackers won, false: defenders won
-    winner: TeamSide,
+    winner: bool,
     seed: u64,
     attackers: Vec<FighterResult>,
     defenders: Vec<FighterResult>,
+    history: String,
 }
 
 impl Default for FightResult {
     fn default() -> Self {
         Self {
-            winner: TeamSide::Attackers,
+            winner: TeamSide::Attackers.to_boolean(),
             seed: 0,
             attackers: vec![],
             defenders: vec![],
+            history: String::new(),
         }
+    }
+}
+
+impl FightResult {
+    /// Appends a string to the history
+    pub fn append_to_history(&mut self, action: &str) {
+        self.history.push_str(format!("- {}\n", action).as_str());
+    }
+
+    pub fn history(&self) -> String {
+        self.history.clone()
     }
 }
 
@@ -127,6 +160,12 @@ pub struct Manager {
     fighters_all_order: Vec<FighterId>,
 }
 
+impl Default for Manager {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Manager {
     // Documented local functions
 
@@ -135,18 +174,14 @@ impl Manager {
     // PARAMS:  None
     // RETURN:  None
     //---------------------------------------------------------------------------------------------------------------------
-    fn announce_teams(&self) {
-        debug!("Attackers are:");
-        // todo need name back?
-        for _a in &self.fighters_attackers {
-            // debug!("- {:}",self.fighters_all[&_a].id);
-            debug!("- {:}", _a);
+    fn announce_teams(&mut self) {
+        let mut temp_fight_result = self.fight_result.clone();
+        for (_, f) in self.fighters_all.iter() {
+            let msg = format!("{} joins the fight on the {}'s team", f.name, f.side);
+            debug!("{}", msg);
+            temp_fight_result.append_to_history(msg.as_str());
         }
-        debug!("Defenders are:");
-        for _d in &self.fighters_defenders {
-            // debug!("- {:}",self.fighters_all[&_d].name);
-            debug!("- {:}", _d);
-        }
+        self.fight_result = temp_fight_result;
     }
 
     /// Prepare the teams before starting the fight (passive skills, magic  items and consumable items)
@@ -240,20 +275,25 @@ impl Manager {
                 else {
                     all_defenders_dead = false;
                 }
+                // Break early if both side still have a fighter alive
+                // todo may be ignore summons here
+                if !all_attackers_dead && !all_defenders_dead {
+                    result = false;
+                    break;
+                }
             }
         }
 
-        // If there are still fighters alive on both sides
-        if !all_defenders_dead && !all_attackers_dead {
-            result = false;
-        }
         // All defenders are dead, meaning the attackers won.
-        else if all_defenders_dead {
-            self.fight_result.winner = TeamSide::Attackers;
+        if all_defenders_dead {
+            self.fight_result.winner = TeamSide::Attackers.to_boolean();
+            self.fight_result.append_to_history("Attackers win!");
         }
         // Else, meaning the attackers lost.
-        else {
-            self.fight_result.winner = TeamSide::Defenders;
+        else if all_attackers_dead {
+            self.fight_result.winner = TeamSide::Defenders.to_boolean();
+
+            self.fight_result.append_to_history("Defenders win!");
         }
         // TODO check that there may be another case (not all died, so a tie?)
 
@@ -408,6 +448,17 @@ impl Manager {
             "[Manager:process_assault] {:} loses {:} life points, only {:} left",
             target.id, hp_lost, target.life
         );
+        self.fight_result.append_to_history(
+            format!(
+                "{} launches a {} assault on {} and deals {} damage",
+                attacker.name, current_element_index, target.name, hp_lost
+            )
+            .as_str(),
+        );
+        if target.life == 0 {
+            self.fight_result
+                .append_to_history(format!("{} is dead!", target.name).as_str());
+        }
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -486,8 +537,10 @@ impl Manager {
         // Initiliaze the random generator and save the seed
         let temp_seed: u64 = thread_rng().next_u64();
         let temp_rng: ChaCha8Rng = ChaCha8Rng::seed_from_u64(temp_seed);
-        let mut temp_result = FightResult::default();
-        temp_result.seed = temp_seed;
+        let temp_result = FightResult {
+            seed: temp_seed,
+            ..FightResult::default()
+        };
         Self {
             // ID Generator
             next_id: 0,

@@ -648,7 +648,8 @@ describe('Function betaMove', function () {
 			xpEarned: 20,
 			hpLost: 10,
 			result: true,
-			dinozId: DinozFightData.id
+			dinozId: DinozFightData.id,
+			history: ""
 		};
 
 		DinozDao.getDinozFightDataRequest = jasmine.createSpy().and.returnValue(DinozFightData);

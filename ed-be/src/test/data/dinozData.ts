@@ -78,7 +78,8 @@ export const fightResultlvl1Win = {
 	dinozId: dinozId,
 	goldEarned: 100,
 	xpEarned: 10,
-	result: true
+	result: true,
+	history: ""
 };
 
 export const fightResultlvl7Win = {
@@ -87,7 +88,8 @@ export const fightResultlvl7Win = {
 	dinozId: dinozId,
 	goldEarned: 500,
 	xpEarned: 20,
-	result: true
+	result: true,
+	history: ""
 };
 
 export const DinozFightDataWithMission = {
