@@ -1699,7 +1699,7 @@ export const skillList: Readonly<Record<string, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
-	INFATIGUABLE: {
+	INCREVABLE: {
 		skillId: 31408,
 		type: SkillType.P,
 		energy: Energy.NONE,

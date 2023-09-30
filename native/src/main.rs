@@ -15,7 +15,7 @@ extern crate log;
 use log::{debug, info}; // add trace, debug, warn, error as needed
 use std::env;
 
-use crate::fight::manager::{Manager, ManagerConfiguration, FightResult};
+use crate::fight::manager::{FightResult, Manager, ManagerConfiguration};
 
 pub mod fight;
 
@@ -51,8 +51,7 @@ fn main() {
     if env::var(RUST_LOG).is_err() {
         if cfg!(debug_assertions) {
             env::set_var(RUST_LOG, "DEBUG");
-        }
-        else {
+        } else {
             env::set_var(RUST_LOG, "ERROR");
         }
     }
@@ -71,8 +70,27 @@ fn main() {
                 "dinoz_id": 123,
                 "start_life": 100,
                 "base_elements": [
-                    10,
+                    1,
                     0,
+                    0,
+                    0,
+                    0
+                ],
+                "items": [
+                ],
+                "skills": [
+                    11204,
+                    11408
+                ],
+                "status": [
+                ]
+            },
+            {
+                "dinoz_id": 124,
+                "start_life": 100,
+                "base_elements": [
+                    0,
+                    2,
                     0,
                     0,
                     0
@@ -99,6 +117,12 @@ fn main() {
                 "items": [
                 ],
                 "skills": [
+                    11203,
+                    11204,
+                    11208,
+                    "hbkjn",
+                    123567,
+                    51506
                 ],
                 "status": [
                 ]
@@ -185,7 +209,8 @@ fn main() {
     //     ]
     // }"#;
 
-    let mngr_opt: ManagerConfiguration = serde_json::from_str(json_example).expect("JSON not well formatted");
+    let mngr_opt: ManagerConfiguration =
+        serde_json::from_str(json_example).expect("JSON not well formatted");
     info!("{:#?}", mngr_opt);
 
     let mut mngr: Manager = Manager::from_configuration(mngr_opt);
@@ -195,7 +220,7 @@ fn main() {
     mngr.execute_fight();
     // Get the result and print it
     let result: FightResult = mngr.get_fight_result();
-    info!("{:}",serde_json::to_string(&result).unwrap());
+    info!("{:}", serde_json::to_string(&result).unwrap());
 }
 
 //=====================================================================================================================

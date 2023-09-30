@@ -143,7 +143,7 @@ export const skillNameList: Record<number, string> = {
 	31405: 'Cuisinier',
 	31406: 'SangAcide',
 	31407: 'Bulle',
-	31408: 'Infatiguable',
+	31408: 'Increvable',
 	31409: 'Ondine',
 	31501: 'MaitreNageur',
 	31502: 'Leviathan',

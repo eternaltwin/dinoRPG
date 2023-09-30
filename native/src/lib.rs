@@ -19,7 +19,7 @@ use std::env;
 
 pub mod fight;
 
-use crate::fight::manager::{Manager, ManagerConfiguration, FightResult};
+use crate::fight::manager::{FightResult, Manager, ManagerConfiguration};
 
 //=====================================================================================================================
 //                                             LOCAL TYPES
@@ -53,7 +53,6 @@ fn randomizer(mut cx: FunctionContext) -> JsResult<JsNumber> {
     Ok(cx.number(rng.gen_range(1..20)))
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------
 // PURPOSE: API for Node to process a fight
 // PARAMS:  - cx (FunctionContext): The context that notable contains JsString: Configuration of the fight in JSON
@@ -64,7 +63,8 @@ fn fight_rust(mut cx: FunctionContext) -> JsResult<JsString> {
     info!("Calling fight_rust");
     // Parse the configuration
     let configuration_json = cx.argument::<JsString>(0)?;
-    let manager_configuration: ManagerConfiguration = serde_json::from_str(&configuration_json.value(&mut cx)).expect("JSON not well formatted");
+    let manager_configuration: ManagerConfiguration =
+        serde_json::from_str(&configuration_json.value(&mut cx)).expect("JSON not well formatted");
     debug!("{:#?}", manager_configuration);
     // Start the fight manager with the configuration
     let mut mngr: Manager = Manager::from_configuration(manager_configuration);
@@ -87,8 +87,7 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     if env::var(RUST_LOG).is_err() {
         if cfg!(debug_assertions) {
             env::set_var(RUST_LOG, "DEBUG");
-        }
-        else {
+        } else {
             env::set_var(RUST_LOG, "ERROR");
         }
     }
