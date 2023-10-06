@@ -3,8 +3,8 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
-	{{ fightText }}
-	{{ fightHistory }}
+	{{ fightText }}<br />
+	<p v-html="fightHistory" />
 	<div class="wrapper">
 		<div class="debrief" :class="lang">
 			<img
@@ -99,7 +99,7 @@ export default defineComponent({
 		},
 		displayFight(): void {
 			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
-			this.fightHistory = this.fight.history;
+			this.fightHistory = this.fight.history.replace(/\n/g, '<br>');
 		}
 	},
 	created(): void {

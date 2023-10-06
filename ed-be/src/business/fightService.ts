@@ -123,15 +123,23 @@ export function calculateFight(dinozData: Dinoz, monster: MonsterFiche): FightPr
 		status: listDinozStatus
 	};
 
-	const defender: FighterFiche = {
-		dinoz_id: 0, // TODO have to find a way to define monster's id without conflicting with a dinoz id
-		name: monster.name,
-		start_life: monster.hp,
-		base_elements: [monster.attack, monster.attack, monster.attack, monster.attack, monster.attack],
-		items: [],
-		skills: [],
-		status: []
-	};
+	const defender: FighterFiche = new FighterFiche(
+		0, // TODO have to find a way to define monster's id without conflicting with a dinoz id
+		monster.name,
+		monster.hp,
+		[
+			monster.elements.fire,
+			monster.elements.wood,
+			monster.elements.water,
+			monster.elements.lightning,
+			monster.elements.air
+		],
+		monster.bonus_attack,
+		monster.bonus_defense,
+		[],
+		[],
+		[]
+	);
 
 	const fightConfiguration: FightConfiguration = {
 		// Flags

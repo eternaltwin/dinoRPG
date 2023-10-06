@@ -5,7 +5,13 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 	GARDIEN_TOUR: {
 		name: 'towgrd',
 		hp: 300,
-		attack: 1,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
 		gold: 1000,
 		xp: 40,
 		odds: 1,
@@ -15,7 +21,13 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 	ELEMENTAIRE_FEU: {
 		name: 'efire',
 		hp: 60,
-		attack: 1,
+		elements: {
+			fire: 4,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
 		gold: 1000,
 		xp: 50,
 		odds: 1,
@@ -25,7 +37,13 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 	ELEMENTAIRE_EAU: {
 		name: 'ewater',
 		hp: 50,
-		attack: 1,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 4,
+			lightning: 0,
+			air: 0
+		},
 		gold: 1000,
 		xp: 50,
 		odds: 1,
@@ -35,7 +53,13 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 	RASCAPHANDRE: {
 		name: 'rasca',
 		hp: 60,
-		attack: 1,
+		elements: {
+			fire: 1,
+			wood: 2,
+			water: 8,
+			lightning: 1,
+			air: 2
+		},
 		gold: 1000,
 		xp: 100,
 		odds: 1,
@@ -45,7 +69,13 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 	ELEMENTAIRE_TERRE: {
 		name: 'eearth',
 		hp: 100,
-		attack: 1,
+		elements: {
+			fire: 2,
+			wood: 8,
+			water: 2,
+			lightning: 2,
+			air: 2
+		},
 		gold: 1000,
 		xp: 100,
 		odds: 1,

@@ -7,7 +7,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	JOKERPIGNON: {
 		name: 'goupignon',
 		hp: 10,
-		attack: 1,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 100,
 		xp: 10,
 		odds: 1,
@@ -17,7 +25,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	GOUPIGNON: {
 		name: 'goupignon',
 		hp: 10,
-		attack: 1,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 100,
 		xp: 10,
 		odds: 100,
@@ -27,7 +43,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	WOLF: {
 		name: 'wolf',
 		hp: 15,
-		attack: 1,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 1,
+		bonus_defense: 1,
 		gold: 500,
 		xp: 20,
 		odds: 80,
@@ -37,7 +61,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	GLUON: {
 		name: 'gluon',
 		hp: 35,
-		attack: 2,
+		elements: {
+			air: 2,
+			fire: 2,
+			lightning: 2,
+			water: 2,
+			wood: 2
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 25,
 		odds: 20,
@@ -47,7 +79,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	GREEN_GIANT: {
 		name: 'greeng',
 		hp: 70,
-		attack: 3,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 3,
+		bonus_defense: 6,
 		gold: 10000,
 		xp: 10,
 		odds: 100,
@@ -57,7 +97,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	COQ: {
 		name: 'coq',
 		hp: 80,
-		attack: 3,
+		elements: {
+			air: 3,
+			fire: 3,
+			lightning: 3,
+			water: 3,
+			wood: 3
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 10,
 		odds: 50,
@@ -67,7 +115,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	PIRASK: {
 		name: 'pirask',
 		hp: 15,
-		attack: 3,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 50,
+		bonus_defense: 30,
 		gold: 10000,
 		xp: 10,
 		odds: 50,
@@ -78,7 +134,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	FLAM: {
 		name: 'flam',
 		hp: 10,
-		attack: 1,
+		elements: {
+			fire: 1,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 7,
 		odds: 100,
@@ -88,7 +152,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	GOBLIN: {
 		name: 'goblin',
 		hp: 60,
-		attack: 2,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 2,
+		bonus_defense: 1,
 		gold: 10000,
 		xp: 10,
 		odds: 100,
@@ -98,7 +170,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BARCHE: {
 		name: 'barche',
 		hp: 70,
-		attack: 3,
+		elements: {
+			fire: 3,
+			wood: 1,
+			water: 2,
+			lightning: 1,
+			air: 1
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 15,
 		odds: 20,
@@ -108,7 +188,13 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	COBRA: {
 		name: 'cobra',
 		hp: 100,
-		attack: 5,
+		elements: {
+			fire: 5,
+			wood: 0,
+			water: 0,
+			lightning: 4,
+			air: 0
+		},
 		gold: 10000,
 		xp: 10,
 		odds: 50,
@@ -118,7 +204,13 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	PIRA: {
 		name: 'pira',
 		hp: 5,
-		attack: 1,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 1,
+			lightning: 0,
+			air: 0
+		},
 		gold: 10000,
 		xp: 5,
 		odds: 100,
@@ -128,7 +220,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	KAZKA: {
 		name: 'kazka',
 		hp: 50,
-		attack: 3,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 3,
+		bonus_defense: 7,
 		gold: 10000,
 		xp: 10,
 		odds: 50,
@@ -138,7 +238,13 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	ANGUIL: {
 		name: 'anguil',
 		hp: 120,
-		attack: 2,
+		elements: {
+			fire: 2,
+			wood: 0,
+			water: 4,
+			lightning: 0,
+			air: 0
+		},
 		gold: 10000,
 		xp: 15,
 		odds: 70,
@@ -148,7 +254,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BORG: {
 		name: 'borg',
 		hp: 100,
-		attack: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 40,
 		gold: 10000,
 		xp: 10,
 		odds: 50,
@@ -158,7 +272,13 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	KORGON: {
 		name: 'korgon',
 		hp: 10,
-		attack: 3,
+		elements: {
+			fire: 3,
+			wood: 4,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
 		gold: 10000,
 		xp: 10,
 		odds: 100,
@@ -168,7 +288,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	RONCIV: {
 		name: 'ronciv',
 		hp: 70,
-		attack: 6,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 6,
+		bonus_defense: 15,
 		gold: 10000,
 		xp: 10,
 		odds: 100,
@@ -178,7 +306,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BAT: {
 		name: 'bat',
 		hp: 50,
-		attack: 8,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 25,
+		bonus_defense: 18,
 		gold: 10000,
 		xp: 10,
 		odds: 50,
@@ -188,7 +324,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	GRDIEN: {
 		name: 'grdien',
 		hp: 80,
-		attack: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 25,
 		gold: 10000,
 		xp: 15,
 		odds: 50,
@@ -198,7 +342,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	WORM2: {
 		name: 'worm2',
 		hp: 50,
-		attack: 6,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 6,
+		bonus_defense: 10,
 		gold: 10000,
 		xp: 15,
 		odds: 50,
@@ -208,7 +360,13 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	WORM: {
 		name: 'worm',
 		hp: 60,
-		attack: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 10,
+			lightning: 15,
+			air: 0
+		},
 		gold: 10000,
 		xp: 15,
 		odds: 50,
@@ -218,7 +376,13 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	SCORP: {
 		name: 'scorp',
 		hp: 50,
-		attack: 9,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 9,
+			air: 0
+		},
 		gold: 10000,
 		xp: 15,
 		odds: 50,
@@ -228,7 +392,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	CACTUS: {
 		name: 'cactus',
 		hp: 20,
-		attack: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 130,
 		gold: 10000,
 		xp: 12,
 		odds: 50,
@@ -238,7 +410,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BRIG1_ALL: {
 		name: 'brig1',
 		hp: 30,
-		attack: 17,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 70,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 15,
 		odds: 10,
@@ -248,7 +428,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BRIG1_HOME: {
 		name: 'brig1',
 		hp: 30,
-		attack: 17,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 70,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 15,
 		odds: 500,
@@ -259,7 +447,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BRIG2_ALL: {
 		name: 'brig2',
 		hp: 30,
-		attack: 17,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 15,
 		odds: 10,
@@ -269,7 +465,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BRIG2_HOME: {
 		name: 'brig2',
 		hp: 30,
-		attack: 17,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
 		gold: 10000,
 		xp: 15,
 		odds: 500,
@@ -280,7 +484,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BRIG3_ALL: {
 		name: 'brig3',
 		hp: 30,
-		attack: 17,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 50,
+		bonus_defense: 20,
 		gold: 10000,
 		xp: 15,
 		odds: 10,
@@ -290,7 +502,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	BRIG3_HOME: {
 		name: 'brig3',
 		hp: 30,
-		attack: 17,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 50,
+		bonus_defense: 20,
 		gold: 10000,
 		xp: 15,
 		odds: 500,
@@ -301,7 +521,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	GROPI: {
 		name: 'gropi',
 		hp: 10,
-		attack: 7,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 15,
+		bonus_defense: 25,
 		gold: 10000,
 		xp: 15,
 		odds: 100,
@@ -311,7 +539,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	MIMIC: {
 		name: 'mimic',
 		hp: 30,
-		attack: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 30,
+		bonus_defense: 50,
 		gold: 10000,
 		xp: 15,
 		odds: 100,
@@ -321,7 +557,15 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	EARTH2: {
 		name: 'earth2',
 		hp: 30,
-		attack: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 40,
 		gold: 10000,
 		xp: 15,
 		odds: 100,
