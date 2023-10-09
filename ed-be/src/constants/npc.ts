@@ -9,6 +9,7 @@ import {
 	FOU,
 	GARDE_ATLANTE,
 	GARDIEN,
+	HULOT,
 	HYDARGOL,
 	JOVEBOZE_RASCA,
 	MERGUEZ,
@@ -20,7 +21,7 @@ import {
 	SHAMAN,
 	SOFIA
 } from './characters/index.js';
-import { M_BAO_BOB, M_DIANKORGSEY, M_GARDIEN, M_PAPY_JOE, M_SHAMAN_MOU } from './missions/index.js';
+import { M_BAO_BOB, M_DIANKORGSEY, M_GARDIEN, M_HULOT, M_PAPY_JOE, M_SHAMAN_MOU } from './missions/index.js';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 
@@ -173,5 +174,12 @@ export const npcList: Record<string, Npc> = {
 			value: statusList.ZENBRO
 		},
 		data: PADAMOINE
+	},
+	HULOT: {
+		name: 'hulot',
+		id: 21,
+		placeId: placeList.AUREE_DE_LA_FORET.placeId,
+		data: HULOT,
+		missions: M_HULOT
 	}
 };

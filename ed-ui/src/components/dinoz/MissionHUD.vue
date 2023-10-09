@@ -32,6 +32,9 @@
 					})
 				}}
 			</template>
+			<template v-else-if="missionDetail.actionType === MissionEnum.OVERWRITE">
+				{{ $t(`missions.actions.${missionDetail.target}`) }}
+			</template>
 		</div>
 		<template #content>
 			<h1>{{ $t(`missions.name.${missionName}`) }}</h1>

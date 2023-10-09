@@ -46,5 +46,11 @@ export const missionsList: Record<number, string> = {
 	40: 'king',
 	41: 'wishes',
 	42: 'newplt',
-	43: 'gshop'
+	43: 'gshop',
+	//NICOLAS MULOT
+	44: 'seqact',
+	45: 'toxic',
+	46: 'map',
+	47: 'hucure',
+	48: 'bckpck'
 };

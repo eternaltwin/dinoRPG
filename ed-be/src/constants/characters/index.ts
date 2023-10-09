@@ -7,6 +7,7 @@ export * from './forgeron.js';
 export * from './fou.js';
 export * from './gardeAtlante.js';
 export * from './gardien.js';
+export * from './hulot.js';
 export * from './hydargol.js';
 export * from './joveboze.js';
 export * from './merguez.js';

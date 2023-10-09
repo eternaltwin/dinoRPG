@@ -718,7 +718,8 @@
 			"joveboze": "Jovébozé",
 			"archis": "ArchiSage",
 			"hydargol": "Maître Hydargol",
-			"padamoine": "Apprenti padamoine"
+			"padamoine": "Apprenti padamoine",
+			"hulot": "Nicolas Mulot"
 		},
 		"professor": {
 			"speech": {
@@ -1159,17 +1160,17 @@
 		},
 		"hydargol": {
 			"speech": {
-				"begin": "Les Chutes Mutantes sont l'un des Grands Lieux de méditation des moines Zenzen. C'est pour cette\n\t\traison qu'on en trouve souvent dans le coin. En s'installant sur de grandes feuilles de nénuphars,\n\t\tils essaient de méditer le plus longtemps... sans pour autant se faire entraîner par le courant !\n\t\tDe nombreux moines s'étant un peu assoupis se sont offert une descente des chutes : en tout\n\t\tcas, personne ne les a jamais revus.",
+				"begin": "Les Chutes Mutantes sont l'un des Grands Lieux de méditation des moines Zenzen. C'est pour cette raison qu'on en trouve souvent dans le coin. En s'installant sur de grandes feuilles de nénuphars, ils essaient de méditer le plus longtemps... sans pour autant se faire entraîner par le courant ! De nombreux moines s'étant un peu assoupis se sont offert une descente des chutes : en tout cas, personne ne les a jamais revus.",
 				"talk": ".........bon.jour......",
 				"help": "....Ah ? Euh... oui... peux-tu... m'apporter...Zzzz... zzz...",
 				"get": "...Ah ? Euh... oui... m'apporter... une feuille... de nénuphar...",
 				"where": "...trouve... mon... apprenti padamoine... Zzz... zzz...",
-				"give": "...merci.... je vais pouvoir.... enfin... méditer sur... les Chutes !!!!\n\t\tJe t'offre cette Perle en récompense... elle rejoindra ta Collection d'objets !",
+				"give": "...merci.... je vais pouvoir.... enfin... méditer sur... les Chutes !!!! Je t'offre cette Perle en récompense... elle rejoindra ta Collection d'objets !",
 				"act": "Youhouhhh !!! C'est génial ! Regarde... je flotte !",
 				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
-				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes,\n\t\tautour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et\n\t\taccéder à la Forêt de Grumhel qui se trouve au-delà.",
-				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles\n\t\tde nénuphar qui te permettront de passer les Chutes... marché conclu ?",
-				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage\n\t\tpour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
+				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
+				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
 			},
 			"playerChoice": {
 				"hello": "Bonjour !",
@@ -1195,6 +1196,43 @@
 			"playerChoice": {
 				"help": "Je dois justement y aller aussi. Je peux lui app...",
 				"get": "Heu... De rien"
+			}
+		},
+		"hulot": {
+			"speech": {
+				"begin": "Un homme en tenue de safari se tient debout à l'Orée de la Jungle de Grumhel. Il a l'air d'attendre quelque chose...",
+				"welcome": "La Jungle de Grumhel ! Cet espace sauvage et encore vierge, protégé de toute agression extérieure par sa faune dangereuse, reste aujourd'hui une terre de mystère et de contraste qui séduit chaque année de nombreux explorateurs. Séquence frisson. \"A la découverte d'un Monde Sauvage\", c'est aujourd'hui, en ma compagnie !",
+				"who": "Nicolas Mulot, journaliste pour le magazine Ouïaïa et amoureux de Dinoland !",
+				"role": "Pas pour un journaliste de l'extrême comme moi. Il y a tout ce que je recherche ici: un monde inexploré, une faune et une flore riches, tant de choses fabuleuses à découvrir à chaque pas !",
+				"myst": "Je l'ignore encore... Mais... Mais je suis convaincu qu'il y a des choses fabuleuses qui se cachent dans cette jungle ! Il faut juste oser y entrer... Séquence peur bleue.",
+				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
+				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
+				"fauna": "Entre les roncivores, les korgons et les fauve-souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! A la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
+				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
+				"explore": "Ca serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
+				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
+				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
+				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amené étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut être m'aider à Drouver un remède ? ...",
+				"sickstatus": "Alors, vous avez trouvé un rebède ?",
+				"better": "Le remède que vous m'avez amené a été très efficace !"
+			},
+			"playerChoice": {
+				"welcome": "Lui parler",
+				"who": "Mais... Vous êtes qui ?",
+				"role": "Ca n'est pas un peu dangereux pour un journaliste ici ?",
+				"myst": "Quels genres de mystères existent ici ?",
+				"flora": "Il y a de belles plantes par ici ?",
+				"whynot": "Pourquoi n'entrez vous pas dans la jungle alors ?",
+				"fauna": "Parlez moi des animaux de la Jungle...",
+				"fear": "Ah... Vous voulez dire que vous n'osez pas voir ça par vous-même ?",
+				"explore": "Je peux vous aider si vous le voulez ?",
+				"other": "J'ai d'autres questions...",
+				"sick": "Lui parler",
+				"problem": "Ouh la ! Qu'est-ce qui vous arrive ?",
+				"sickstatus": "Lui parler",
+				"better": "Vous avez l'air d'aller bien mieux...",
+				"missions": "Consulter la liste des Missions",
+				"curesearch": "Voyons voir ça..."
 			}
 		}
 	},
@@ -2119,7 +2157,12 @@
 			"king": "Le roi de la Jungle",
 			"wishes": "Faites vos voeux",
 			"newplt": "Un cric pour la forêt",
-			"gshop": "Monnaie de singe"
+			"gshop": "Monnaie de singe",
+			"seqact": "La route du grand péril",
+			"toxic": "Allergies",
+			"map": "Cartographie",
+			"hucure": "Remède",
+			"bckpck": "Kit de l'aventurier"
 		},
 		"tooltip": "Mission : {mission}",
 		"description": {
@@ -2165,7 +2208,12 @@
 			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : |« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
 			"wishes": "Vous pouvez lire, gravé sur une branche : |« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »| Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
 			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: |« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »| Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
-			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :|« Déposez de l'or dans le seau pour votre ration quotidienne. »"
+			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :|« Déposez de l'or dans le seau pour votre ration quotidienne. »",
+			"seqact": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
+			"toxic": "Je suis victime d'allergies à certaines plantes de la Jungle... Mais j'ignore pour le moment lesquelles ! Pourriez-vous me trouver quelques plantes à l'air suspect, afin que je fasse quelques tests ?",
+			"map": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
+			"hucure": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
+			"bckpck": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?"
 		},
 		"actions": {
 			"talkTo": "Discuter avec {npc} ...",
@@ -2229,7 +2277,34 @@
 			"plantorchid": "Planter l'Orchidée",
 			"tosscoin": "Jeter une pièce",
 			"liftrock": "Soulever les rochers",
-			"bucket": "Examiner le seau"
+			"bucket": "Examiner le seau",
+			"pickfigo": "Figonicia Furonclée",
+			"pickpuru": "Purulente Noire",
+			"moinemedecinCoral": "Ramener le corail au moine",
+			"moineChutes": "Ramener les ingrédients aux Chutes",
+			"pickvisqueuse": "Visqueuse des Boues",
+			"pickherbs": "Prendre les plantes",
+			"pickCoral": "Morceau de corail",
+			"pickTeeth": "Ramasser des crocs",
+			"pickWings": "Récupérer des ailes",
+			"pickMedecine": "Caisse de remèdes",
+			"returnColline": "Retourner aux Collines Hantées",
+			"findPickPoint": "Trouver un point élevé",
+			"drawMap": "Tracer une carte",
+			"findBat": "Retrouver la Fauve-Souris",
+			"catchBat": "Attraper la Fauve-Souris",
+			"bat": "Fauve-Souris",
+			"launchRock": "Lancer une pierre",
+			"pickNote": "Ramasser le carnet",
+			"redraw": "Tracer la carte",
+			"dnvReport": "Faire votre rapport à Dinoville",
+			"extremFisher": "Pêcheur de l'extrême",
+			"alguae": "Ramasseur d'algues",
+			"interogateMinors": "Interroger les mineurs",
+			"minorHalt": "Mineur qui prend sa pause",
+			"afraidFisher": "Pêcheur affairé",
+			"findBobine": "Trouver une bobine",
+			"couturiere": "Couturière"
 		},
 		"npc": {
 			"fishVendor": "Marchand de poisson",
@@ -2321,7 +2396,29 @@
 			"bucket": "Examiner le seau",
 			"talkingorchide": "Orchidée Quidée parlante",
 			"benevole": "Bénévole «Paix Verte»",
-			"arbre": "Valider la Mission"
+			"arbre": "Valider la Mission",
+			"pickfigo": "Figonicia Furonclée",
+			"pickpuru": "Purulente Noire",
+			"pickvisqueuse": "Visqueuse des Boues",
+			"moinemedecin": "Moine médecin",
+			"pickherbs": "Prendre les plantes",
+			"pickCoral": "Morceau de corail",
+			"pickTeeth": "Ramasser des crocs",
+			"pickWings": "Récupérer des ailes",
+			"pickMedecine": "Caisse de remèdes",
+			"drawMap": "Tracer une carte",
+			"catchBat": "Attraper la Fauve-Souris",
+			"bat": "Fauve-Souris",
+			"launchRock": "Lancer une pierre",
+			"pickNote": "Ramasser le carnet",
+			"redraw": "Tracer la carte",
+			"extremFisher": "Pêcheur de l'extrême",
+			"alguae": "Ramasseur d'algues",
+			"interogateMinors": "Interroger les mineurs",
+			"minorHalt": "Mineur qui prend sa pause",
+			"afraidFisher": "Pêcheur affairé",
+			"findBobine": "Trouver une bobine",
+			"couturiere": "Couturière"
 		},
 		"place": {
 			"port": "au Port de Prêche",
@@ -2651,6 +2748,47 @@
 			"gshop": {
 				"bucket": "Vous trouvez une petite branche fleurie dans le seau...",
 				"arbre": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
+			},
+			"seqact": {
+				"auree": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?"
+			},
+			"toxic": {
+				"pickfigo": "Vous cueillez une fleur boursouflée et toute poisseuse...",
+				"pickpuru": "La Purulente dégage un petit nuage pollen malodorant vraiment suspect.",
+				"pickvisqueuse": "Vous trouvez une sorte de gros nénuphar verdâtre étalé dans une large flaque d'eau croupie.",
+				"auree": "Ca m'a l'air d'aller... Je vais essayer de trouver laquelle de ces plantes provoque une allergie chez moi... Voilà pour le service."
+			},
+			"hucure": {
+				"pickherbs": "Vous récupérez les plantes toxiques de Nicolas Mulot. On dirait bien qu'il a essayé de s'en faire une infusion....",
+				"moinemedecin": "Vous lui avez donné des Figonicia Furonclées ? De la Purulente Noire ?! Une Visqueuse des Boues !! Ouh la la... Il vaut mieux ne pas tarder ! Apportez moi un peu de poudre de corail pour commencer.",
+				"pickCoral": "Vous ramassez un bout de corail brisé : ça devrait bien faire l'affaire !",
+				"moinemedecin2": "Ramenez moi quelques crocs de Korgons du Chemin Glauque et quelques paires d'ailes de Fauve-Souris du nord.",
+				"pickTeeth": "Vous récupérez quelques crocs de Korgons.",
+				"pickWings": "Vous récupérez une belle collection d'ailes de Fauve-Souris...",
+				"moinemedecin3": "Parfait ! Je vais pouvoir me préparer un délicieux pot-au-feu avec tout ça... Pardon ? Ah vous veniez pour le remède ? Oui c'est vrai. J'en avais déjà une pleine caisse à vrai dire, servez-vous. Je vous garde un peu de pot-au-feu ?",
+				"pickMedecine": "Vous emportez trois ou quatre flacons d'antidote pour Nicolas Mulot, sait-on jamais...",
+				"auree": "Glou glou ! Merfi bien... Efpérons que fa fasse effet... Fa devenait limite là... Tenez prenez fette pofion en gave de gratitude."
+			},
+			"map": {
+				"drawMap": "Vous vous installez en haut d'une vieille souche pour tracer la carte des environs... Soudain, une Fauve-Souris hideuse jailli de nulle part et s'empare de votre bloc-notes d'un coup de dents ! D'un battement d'aile, elle s'éloigne et se pose sur une branche haute...",
+				"catchBat": "Vous êtes presque certain de l'entendre ricaner du haut de son perchoir... Vous attrapez une branche que vous secouez pour tenter de la faire tomber, mais celle-ci s'envole et s'éloigne dans la jungle !",
+				"bat": "La vilaine bestiole s'est perchée au sommet d'un énorme arbre ! Elle vous fixe impassiblement.",
+				"launchRock": "Vous faites mouche ! La Fauve-Souris pousse un cri et laisse tomber votre bloc-notes au pied de son arbre. Agacée, elle se pose alors juste à côté et vous adresse un regard de défi...",
+				"pickNote": "Vous récupérez finalement votre bloc-notes !",
+				"redraw": "Vous finissez de tracer votre carte, en restant sur vos gardes cette fois-ci...",
+				"auree": "Ca m'a l'air pas mal du tout ! Je vais étudier un peu tout cela pour bien préparer mon expédition de l'extrême."
+			},
+			"bckpck": {
+				"extremFisher": "Un sac d'os qu'vous dites ? Nan j'crois pas avoir pêché ça ! Faudrait p'têt voir s'il aurait pas été emporté plutôt vers le marais avec les courants ? C'est qu'ça coule dans un sens pas banal ici...",
+				"alguae": "Ah si j'm'en rappelle !! Un bin beau sac à dos qu'c'était celui-là, tout collé dans le bourbier d'une fougasse des marais qu'il était ! J'l'ai refilé à mon cousin de la mine, pour porter ses caillasses qu'c'est bin pratique ! Diou !",
+				"interogateMinors": "Vous questionnez quelques mineurs, on vous indique l'un d'eux du doigt..",
+				"minorHalt": "Ouais. J'vois bien de quoi tu parles. Mais l'sac, je l'ai plus. [Il crache par terre] Ouais. Il a pas tenu deux jours le machin. Je l'ai envoyé à mon cousin du Port de Prêche. Ouais. Ca pouvait faire un bon filet, je me suis dis. [Il crache à nouveau]",
+				"afraidFisher": "Le sac ? Oui je l'ai toujours ! Mais il est en piteux état ! Tenez, si ça peut vous rendre service, je peux vous le réparer et vous le laisser, il ne me sert pas à grand chose ici... Mais pour ça il me faut une bobine de fil et des aiguilles. On en vend à Dinoville je pense.",
+				"findBobine": "Vous faites rapidement le tour des étalages du marché pour trouver du Matériel de Couture. Vous finissez par trouver la boutique d'une couturière...",
+				"couturiere": "Bien le bonjour Maître des Dinoz, bienvenue dans mon échope ! Du fil et des aiguilles ? Oui j'en vends mais ça n'est pas donné... Mais je veux bien vous en laisser gratuitement si vous me rendez un petit service ! Ma maison se trouve près de la fontaine et il ne se passe pas un soir sans qu'on y soit attaqué par ces monstrueux CoqDurs ! Aidez-moi et le matériel est à vous.",
+				"couturiere2": "Merci mille fois pour votre intervention ! Voici le matériel comme promis...",
+				"afraidFisher2": "Ah c'est tout ce qu'il me faut pour rafistoler votre sac. [Il s'en occupe pendant une petite heure...] Voila ! Il devrait tenir pendant un petit moment encore.",
+				"auree": "Euh vous allez rire... Figurez-vous que j'ai reçu justement un Sac à dos de rechange ! Je l'avais commandé en prévision de mon expédition... Bon écoutez, voilà ce qu'on va faire : je récupère mon vieux sac et je vous donne le nouveau ! Ca marche ?"
 			}
 		},
 		"target": {
@@ -2670,6 +2808,9 @@
 			"flam": "Flammèche",
 			"cobra": "Cobrasero",
 			"goblin": "Gobelin",
+			"bat": "Fauve Souris",
+			"ronciv": "Roncivore",
+			"gardien": "Gardien Arboricole",
 			"any": "monstres"
 		}
 	},

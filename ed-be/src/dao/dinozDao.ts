@@ -253,6 +253,7 @@ export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz | null>
 		.addSelect(['npc.npcId', 'npc.step'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoinAndSelect('player.rewards', 'rewards')
+		.leftJoinAndSelect('dinoz.missions', 'missions')
 		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('dinoz.items', 'items')
 		.leftJoin('dinoz.status', 'status')

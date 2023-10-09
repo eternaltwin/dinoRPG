@@ -6,6 +6,7 @@ export interface MissionSteps {
 	hidePlace?: boolean;
 	displayedAction: string;
 	displayedText?: string;
+	displayedHUD?: string; //Used to overwrite
 	requirement: missionRequirement;
 	progress?: number;
 }

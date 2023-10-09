@@ -12,5 +12,9 @@ export function checkCondition(condition: Condition | undefined, dinoz: Dinoz): 
 	} else if (condition.nextCondition && condition.operator === ConditionOperatorEnum.OR) {
 		conditionResult = conditionResult || checkCondition(condition.nextCondition, dinoz);
 	}
+
+	if (condition.operator === ConditionOperatorEnum.OR) {
+		return conditionResult || conditionParser(condition, dinoz);
+	}
 	return conditionResult && conditionParser(condition, dinoz);
 }

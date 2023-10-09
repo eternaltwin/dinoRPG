@@ -37,6 +37,7 @@
 					</li>
 					<li v-if="status">
 						<img :src="getImgURL('status', `fx_${status}`)" :alt="status" />
+						{{ $t(`status.name.${statusId}`) }}
 					</li>
 				</ul>
 				<div class="option">
@@ -115,6 +116,14 @@ export default defineComponent({
 			const isStatus: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.STATUS);
 			if (isStatus?.rewardType === RewardEnum.STATUS) {
 				return statusList.imgName[isStatus.value];
+			} else {
+				return undefined;
+			}
+		},
+		statusId(): number | undefined {
+			const isStatus: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.STATUS);
+			if (isStatus?.rewardType === RewardEnum.STATUS) {
+				return isStatus.value;
 			} else {
 				return undefined;
 			}

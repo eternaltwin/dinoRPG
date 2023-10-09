@@ -199,6 +199,12 @@ export function getHUDObjective(dinoz: Dinoz): MissionHUD | undefined {
 		HUD.progress = actualStep.progress;
 	}
 
+	if (actualStep.displayedHUD) {
+		HUD.actionType = ConditionEnum.OVERWRITE;
+		HUD.target = actualStep.displayedHUD;
+		return HUD;
+	}
+
 	if (dinozActualPlace.name === actualStep.place || actualStep.place === placeList.ANYWHERE.name) {
 		return HUD;
 	} else if (!actualStep.hidePlace && HUD.actionType === ConditionEnum.FINISH_MISSION) {

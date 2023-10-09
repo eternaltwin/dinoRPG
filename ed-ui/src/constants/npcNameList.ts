@@ -19,5 +19,6 @@ export const npcNameList: Array<string> = [
 	'joveboze',
 	'archis',
 	'hydargol',
-	'padamoine'
+	'padamoine',
+	'hulot'
 ];
