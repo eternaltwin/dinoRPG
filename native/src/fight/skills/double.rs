@@ -31,7 +31,7 @@ pub static ARMURE_DE_BASALTE: Skill = Skill {
     id: SkillId::ARMURE_DE_BASALTE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |f: &mut Fighter, _m: &mut Manager| {
         f.armor += 3;
     },
     ignore: false,
@@ -95,7 +95,7 @@ pub static CHOC: Skill = Skill {
 
     skill_type: SkillType::SPECIAL,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default special skill implementation! Not yet implemented")
     },

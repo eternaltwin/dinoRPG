@@ -8,7 +8,7 @@ import { getDinozConcentrationRequest, setMultipleDinoz } from '../dao/dinozDao.
 import { specialActions } from '../constants/specialActions.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
-import { calculateFight, getFightResult, rewardFight } from './fightService.js';
+import { calculateFight, rewardFight } from './fightService.js';
 import { rewarder } from '../utils/rewarder.js';
 
 export async function concentrate(req: Request) {
@@ -92,14 +92,13 @@ export async function mouvementListener(dinoz: Dinoz, finalPlace: number): Promi
 
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, dinoz)) {
 		if (potentialSpecialActions.opponents) {
-			//TODO: pass the array rather than just the first enemy
-			const fightResult: FightProcessResult = calculateFight(dinoz, potentialSpecialActions.opponents[0]);
-			await rewardFight(dinoz, potentialSpecialActions.opponents[0], fightResult);
+			const fightResult: FightProcessResult = calculateFight(dinoz, potentialSpecialActions.opponents);
+			const result = await rewardFight(dinoz, potentialSpecialActions.opponents, fightResult);
 			if (fightResult.winner) {
 				await rewarder(potentialSpecialActions.reward, dinoz);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 			}
-			return getFightResult(dinoz, potentialSpecialActions.opponents[0], fightResult);
+			return result;
 		} else {
 			await rewarder(potentialSpecialActions.reward, dinoz);
 			//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event

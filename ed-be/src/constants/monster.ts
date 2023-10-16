@@ -16,8 +16,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 100,
-		xp: 10,
 		odds: 1,
 		level: 1,
 		zone: MapZone.ALL
@@ -34,8 +32,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 100,
-		xp: 10,
 		odds: 100,
 		level: 1,
 		zone: MapZone.DINOLAND
@@ -52,11 +48,10 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 1,
 		bonus_defense: 1,
-		gold: 500,
-		xp: 20,
 		odds: 80,
 		level: 5,
-		zone: MapZone.DINOLAND
+		zone: MapZone.DINOLAND,
+		groups: [5, 3, 1]
 	},
 	GLUON: {
 		name: 'gluon',
@@ -70,10 +65,8 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 25,
 		odds: 20,
-		level: 4,
+		level: 7,
 		zone: MapZone.DINOLAND
 	},
 	GREEN_GIANT: {
@@ -88,10 +81,8 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 3,
 		bonus_defense: 6,
-		gold: 10000,
-		xp: 10,
 		odds: 100,
-		level: 11,
+		level: 14,
 		zone: MapZone.DINOLAND
 	},
 	COQ: {
@@ -106,10 +97,8 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 10,
 		odds: 50,
-		level: 18,
+		level: 21,
 		zone: MapZone.DINOLAND
 	},
 	PIRASK: {
@@ -124,12 +113,11 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 50,
 		bonus_defense: 30,
-		gold: 10000,
-		xp: 10,
 		odds: 50,
-		level: 2,
+		level: 15,
 		zone: MapZone.DINOLAND,
-		place: PlaceEnum.CIMETIERE
+		place: PlaceEnum.CIMETIERE,
+		groups: [0, 0, 1]
 	},
 	FLAM: {
 		name: 'flam',
@@ -143,11 +131,10 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 7,
 		odds: 100,
 		level: 3,
-		zone: MapZone.GTOUTCHAUD
+		zone: MapZone.GTOUTCHAUD,
+		groups: [0, 3, 1]
 	},
 	GOBLIN: {
 		name: 'goblin',
@@ -161,8 +148,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 2,
 		bonus_defense: 1,
-		gold: 10000,
-		xp: 10,
 		odds: 100,
 		level: 5,
 		zone: MapZone.GTOUTCHAUD
@@ -179,8 +164,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 15,
 		odds: 20,
 		level: 10,
 		zone: MapZone.GTOUTCHAUD
@@ -195,8 +178,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 4,
 			air: 0
 		},
-		gold: 10000,
-		xp: 10,
 		odds: 50,
 		level: 20,
 		zone: MapZone.GTOUTCHAUD
@@ -211,11 +192,10 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		gold: 10000,
-		xp: 5,
 		odds: 100,
 		level: 6,
-		zone: MapZone.ILES
+		zone: MapZone.ILES,
+		groups: [0, 0, 1]
 	},
 	KAZKA: {
 		name: 'kazka',
@@ -229,8 +209,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 3,
 		bonus_defense: 7,
-		gold: 10000,
-		xp: 10,
 		odds: 50,
 		level: 8,
 		zone: MapZone.ILES
@@ -245,8 +223,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		gold: 10000,
-		xp: 15,
 		odds: 70,
 		level: 18,
 		zone: MapZone.ILES
@@ -263,8 +239,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 10,
 		bonus_defense: 40,
-		gold: 10000,
-		xp: 10,
 		odds: 50,
 		level: 28,
 		zone: MapZone.ILES
@@ -279,11 +253,10 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		gold: 10000,
-		xp: 10,
 		odds: 100,
 		level: 7,
-		zone: MapZone.JUNGLE
+		zone: MapZone.JUNGLE,
+		groups: [0, 2, 1]
 	},
 	RONCIV: {
 		name: 'ronciv',
@@ -297,8 +270,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 6,
 		bonus_defense: 15,
-		gold: 10000,
-		xp: 10,
 		odds: 100,
 		level: 15,
 		zone: MapZone.JUNGLE
@@ -315,8 +286,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 25,
 		bonus_defense: 18,
-		gold: 10000,
-		xp: 10,
 		odds: 50,
 		level: 20,
 		zone: MapZone.JUNGLE
@@ -333,8 +302,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 10,
 		bonus_defense: 25,
-		gold: 10000,
-		xp: 15,
 		odds: 50,
 		level: 25,
 		zone: MapZone.JUNGLE
@@ -351,8 +318,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 6,
 		bonus_defense: 10,
-		gold: 10000,
-		xp: 15,
 		odds: 50,
 		level: 20,
 		zone: MapZone.STEPPE
@@ -367,8 +332,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 15,
 			air: 0
 		},
-		gold: 10000,
-		xp: 15,
 		odds: 50,
 		level: 30,
 		zone: MapZone.STEPPE
@@ -383,8 +346,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 9,
 			air: 0
 		},
-		gold: 10000,
-		xp: 15,
 		odds: 50,
 		level: 30,
 		zone: MapZone.STEPPE
@@ -401,8 +362,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 40,
 		bonus_defense: 130,
-		gold: 10000,
-		xp: 12,
 		odds: 50,
 		level: 38,
 		zone: MapZone.STEPPE
@@ -419,11 +378,10 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 70,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 15,
 		odds: 10,
 		level: 25,
-		zone: MapZone.STEPPE
+		zone: MapZone.STEPPE,
+		groups: [0, 1]
 	},
 	BRIG1_HOME: {
 		name: 'brig1',
@@ -437,12 +395,11 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 70,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 15,
 		odds: 500,
 		level: 25,
 		zone: MapZone.STEPPE,
-		place: PlaceEnum.TAUDIS_DES_ZAXA
+		place: PlaceEnum.TAUDIS_DES_ZAXA,
+		groups: [0, 1]
 	},
 	BRIG2_ALL: {
 		name: 'brig2',
@@ -456,11 +413,10 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 15,
 		odds: 10,
 		level: 25,
-		zone: MapZone.STEPPE
+		zone: MapZone.STEPPE,
+		groups: [0, 0, 0, 1]
 	},
 	BRIG2_HOME: {
 		name: 'brig2',
@@ -474,12 +430,11 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 0,
 		bonus_defense: 0,
-		gold: 10000,
-		xp: 15,
 		odds: 500,
 		level: 25,
 		zone: MapZone.STEPPE,
-		place: PlaceEnum.CAMP_DES_EMMEMMA
+		place: PlaceEnum.CAMP_DES_EMMEMMA,
+		groups: [0, 0, 0, 1]
 	},
 	BRIG3_ALL: {
 		name: 'brig3',
@@ -493,11 +448,10 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 50,
 		bonus_defense: 20,
-		gold: 10000,
-		xp: 15,
 		odds: 10,
 		level: 25,
-		zone: MapZone.STEPPE
+		zone: MapZone.STEPPE,
+		groups: [0, 0, 1]
 	},
 	BRIG3_HOME: {
 		name: 'brig3',
@@ -511,12 +465,11 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 50,
 		bonus_defense: 20,
-		gold: 10000,
-		xp: 15,
 		odds: 500,
 		level: 25,
 		zone: MapZone.STEPPE,
-		place: PlaceEnum.CAMPEMENT_DES_MATTMUT
+		place: PlaceEnum.CAMPEMENT_DES_MATTMUT,
+		groups: [0, 0, 1]
 	},
 	GROPI: {
 		name: 'gropi',
@@ -530,8 +483,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 15,
 		bonus_defense: 25,
-		gold: 10000,
-		xp: 15,
 		odds: 100,
 		level: 7,
 		zone: MapZone.DINOWEST
@@ -548,8 +499,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 30,
 		bonus_defense: 50,
-		gold: 10000,
-		xp: 15,
 		odds: 100,
 		level: 35,
 		zone: MapZone.DINOWEST
@@ -566,8 +515,6 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		},
 		bonus_attack: 10,
 		bonus_defense: 40,
-		gold: 10000,
-		xp: 15,
 		odds: 100,
 		level: 15,
 		zone: MapZone.DINOWEST

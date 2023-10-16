@@ -101,37 +101,39 @@ const DEFENSE_CALCULATOR: [f32; 5] = [1.0, 0.5, 0.5, 1.5, 1.5];
 type ItemId = u32;
 type StatusId = u32;
 
-//=====================================================================================================================
-//                                             EXPORTED TYPES
-//=====================================================================================================================
-
-// This structure needs to be exactly the same as FighterFiche in ed-be/src/models/fight/FighterFiche.ts
+/// This structure needs to be exactly the same as FighterFiche in core/src/models/fight/FightConfiguration.mts
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
 pub struct FighterConfiguration {
-    // ID of the dinoz on the node side
+    /// ID of the dinoz on the node side if it's a dinoz
     pub dinoz_id: u32,
+    /// Tells if the fighter is a monster, this is important because monsters are initialized differently
+    is_monster: bool,
     /// Name of the fighter
     pub name: String,
-    // Health of the dinoz at the start of the fight, it cannot go above it during a fight
+    /// Health of the fighter at the start of the fight, it cannot go above it during a fight
     pub start_life: u32,
-    // The base elements of the dinoz (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
+    /// The base elements of the fighter (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
     base_elements: [i32; 5],
-    // The items equipped by the dinoz
+    /// The items equipped by the fighter
     items: Vec<ItemId>,
-    // The activated skills of the dinoz
+    /// The activated skills of the fighter
     skills: Vec<SkillOrUnknown>,
-    // The status of the dinoz
+    /// The status of the fighter
     status: Vec<StatusId>,
+    /// Attack bonus for the fighter
+    attack_bonus: u32,
+    /// Defense bonus for the fighter
+    defense_bonus: u32,
 }
 
-// This structure needs to be exactly the same as FighterResultFiche in ed-be/src/models/fight/FighterFiche.ts
+/// This structure needs to be exactly the same as FighterResultFiche in core/src/models/fight/FighterFiche.mts
 #[derive(Serialize, Debug, Default, Clone)]
 pub struct FighterResult {
-    // ID of the dinoz in the DB
+    /// ID of the dinoz in the DB
     dinoz_id: u32,
-    // The health lost by the dinoz in the fight in comparison to its starting life
+    /// The health lost by the fighter in the fight in comparison to its starting life
     hp_lost: u32,
-    // The items used by the dinoz during the fight
+    /// The items used by the dinoz during the fight
     items_used: Vec<ItemId>,
 }
 
@@ -146,7 +148,7 @@ impl FighterResult {
 }
 
 #[derive(Debug, Clone)]
-// Struct to define a Fighter (dino or monster)
+/// Struct to define a Fighter (dino, monster or anything)
 pub struct Fighter {
     // Used & Documented fields
     /// Fighter ID: to handle fights
@@ -158,7 +160,7 @@ pub struct Fighter {
     /// Side of the fighter - true: attacker, false: defender
     pub side: TeamSide,
     /// Original side of the fighter (in case it temporarily changes side)
-    original_side: TeamSide,
+    pub original_side: TeamSide,
 
     /// Array of elements of the fighter ordered from highest to lowest
     pub ordered_elements: OrderedElements,
@@ -204,7 +206,7 @@ pub struct Fighter {
     /// Global time multiplier, i.e speed
     pub speed_global: f32,
     /// Global time multiplier, i.e speed for each element
-    pub speed_per_element: [f32; 5],
+    pub speed_per_element: [f32; 6],
 
     /// Global minimum damage for an attack
     pub minimum_damage: u32,
@@ -333,6 +335,50 @@ impl Fighter {
         fighter_id: usize,
         fighter_side: TeamSide,
     ) -> Self {
+        let mut temp_defense = Self::compute_defenses(config.base_elements);
+        let mut temp_elements = OrderedElements::from_elements_array_no_void(config.base_elements);
+        // Monsters can get attack bonus that goes to their void elements and a defense bonus
+        if config.is_monster {
+            if config.attack_bonus > 0 {
+                temp_elements[ElementIndex::Void] += config.attack_bonus as i32;
+            }
+            if config.defense_bonus > 0 {
+                for d in temp_defense.iter_mut() {
+                    *d += config.defense_bonus as f32;
+                }
+            }
+            // Monsters don't attack with their elements that are 0
+            // Todo would be more concise to be able to use an iterator
+            if temp_elements[ElementIndex::Air] == 0 {
+                temp_elements.add_skipped_element(ElementIndex::Air);
+            }
+            if temp_elements[ElementIndex::Fire] == 0 {
+                temp_elements.add_skipped_element(ElementIndex::Fire);
+            }
+            if temp_elements[ElementIndex::Lightning] == 0 {
+                temp_elements.add_skipped_element(ElementIndex::Lightning);
+            }
+            if temp_elements[ElementIndex::Water] == 0 {
+                temp_elements.add_skipped_element(ElementIndex::Water);
+            }
+            if temp_elements[ElementIndex::Wood] == 0 {
+                temp_elements.add_skipped_element(ElementIndex::Wood);
+            }
+            if temp_elements[ElementIndex::Void] == 0 {
+                temp_elements.add_skipped_element(ElementIndex::Void);
+            }
+            // If no elements left, keep the void one
+            if temp_elements.skipped_indexes.len() == 6 {
+                temp_elements
+                    .skipped_indexes
+                    .retain(|e| *e != ElementIndex::Void);
+            }
+        }
+        // Other fighters don't use the void element
+        else {
+            temp_elements.add_skipped_element(ElementIndex::Void);
+        }
+
         Self {
             // Used & documented fields
             id: fighter_id,
@@ -343,7 +389,7 @@ impl Fighter {
             start_life: config.start_life,
             life: config.start_life,
             time: 0,
-            ordered_elements: OrderedElements::from_elements_array_no_void(config.base_elements),
+            ordered_elements: temp_elements,
             is_locked_element: false,
             items: config.items.clone(),
             skills: Skill::from_config(config.skills.clone()),
@@ -351,15 +397,15 @@ impl Fighter {
 
             // WIP
             armor: 0,
-            defense: Self::compute_defenses(config.base_elements),
+            defense: temp_defense,
             speed_global: 1.0,
-            speed_per_element: [1.0, 1.0, 1.0, 1.0, 1.0],
-            assault_elemental_bonus: [0, 0, 0, 0, 0, 0],
+            speed_per_element: [1.0; 6],
+            assault_elemental_bonus: [0; 6],
             all_assaults_bonus: 0,
             all_assault_multiplier: 1.0,
             next_assault_bonus: 0,
             next_assault_multiplier: 1.0,
-            skill_elemental_bonus: [0, 0, 0, 0, 0, 0],
+            skill_elemental_bonus: [0; 6],
             minimum_damage: 1,
             minimum_assault_damage: 1,
             initiative_global_multiplier: 1.0,
@@ -453,13 +499,13 @@ impl Fighter {
             armor: 0,
             defense: Self::compute_defenses(elements),
             speed_global: 1.0,
-            speed_per_element: [1.0, 1.0, 1.0, 1.0, 1.0],
-            assault_elemental_bonus: [0, 0, 0, 0, 0, 0],
+            speed_per_element: [1.0; 6],
+            assault_elemental_bonus: [0; 6],
             all_assaults_bonus: 0,
             all_assault_multiplier: 1.0,
             next_assault_bonus: 0,
             next_assault_multiplier: 1.0,
-            skill_elemental_bonus: [0, 0, 0, 0, 0, 0],
+            skill_elemental_bonus: [0; 6],
             minimum_damage: 1,
             minimum_assault_damage: 1,
             initiative_global_multiplier: 1.0,

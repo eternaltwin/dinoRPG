@@ -205,7 +205,7 @@ impl Elements {
 
     /// PURPOSE: Convert the Element into an array [u32; 6]
     /// RETURN:  [u32; 6] The elements ordered according to 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
-    pub fn to_array(self) -> [i32; 6] {
+    pub fn to_array(&self) -> [i32; 6] {
         let elements_array: [i32; 6] = [
             self.fire,
             self.wood,
@@ -313,7 +313,7 @@ impl OrderedElements {
         Self {
             elements,
             ordered_indexes: Self::get_order_from_elements(elements),
-            skipped_indexes: Vec::new(),
+            skipped_indexes: vec![],
             current_index: 0,
         }
     }
@@ -326,11 +326,10 @@ impl OrderedElements {
     //---------------------------------------------------------------------------------------------------------------------
     pub fn from_elements_array_no_void(elements_array: [i32; 5]) -> Self {
         let elements: Elements = Elements::from_array_no_void(elements_array);
-        let skipped_elements: Vec<ElementIndex> = vec![ElementIndex::Void];
         Self {
             elements,
             ordered_indexes: Self::get_order_from_elements(elements),
-            skipped_indexes: skipped_elements,
+            skipped_indexes: vec![],
             current_index: 0,
         }
     }
@@ -340,7 +339,7 @@ impl OrderedElements {
     // PARAM:   - elements: Element - The elements
     // RETURN:  OrderedElements - The OrderedElement object
     //---------------------------------------------------------------------------------------------------------------------
-    pub fn add_skipped_element(mut self, index: ElementIndex) {
+    pub fn add_skipped_element(&mut self, index: ElementIndex) {
         self.skipped_indexes.push(index);
     }
 
@@ -362,7 +361,8 @@ impl OrderedElements {
         {
             increment += 1;
             debug!("New increment {:}", increment);
-            if increment == 6 {
+            // 7 means: the base of 1, then 6 elements are skipped that means all of them!
+            if increment == 7 {
                 error!("Error incrementing elements, all skipped!");
                 break;
             }

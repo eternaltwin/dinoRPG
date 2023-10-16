@@ -9,6 +9,7 @@
 //=====================================================================================================================
 
 extern crate log;
+use log::trace;
 use log::{debug, info}; // add trace, warn and error as needed
 use rand::prelude::*;
 use rand::Rng;
@@ -157,7 +158,7 @@ pub struct Manager {
     fighters_attackers: HashSet<FighterId>,
     fighters_defenders: HashSet<FighterId>,
     pub fighters_all: HashMap<FighterId, Fighter>,
-    fighters_all_order: Vec<FighterId>,
+    figthers_all_alive_order: Vec<FighterId>,
 }
 
 impl Default for Manager {
@@ -212,15 +213,17 @@ impl Manager {
     }
 
     //---------------------------------------------------------------------------------------------------------------------
-    // PURPOSE: Sort the fighters_all_order vector with the FighterId with the smallest time first, and last has the
+    // PURPOSE: Sort the figthers_all_alive_order vector with the FighterId with the smallest time first, and last has the
     //          biggest time
     // PARAMS:  None
     // RETURN:  None
     //---------------------------------------------------------------------------------------------------------------------
     fn sort_all_fighters_by_time_smallest_first(&mut self) {
-        let mut _new_order: Vec<FighterId> = self.fighters_all_order.clone();
+        // Make a list of all the alive fighters
+        let mut new_order: Vec<FighterId> = self.figthers_all_alive_order.clone();
 
-        _new_order.sort_by(|a, b| self.fighters_all[a].time.cmp(&self.fighters_all[b].time));
+        // Sort that list by time
+        new_order.sort_by(|a, b| self.fighters_all[a].time.cmp(&self.fighters_all[b].time));
 
         // Keeping this as reference to make sure the above sorting works
         // for _i in 0..=_new_order.len() - 2 {
@@ -231,7 +234,7 @@ impl Manager {
         //     }
         // }
 
-        self.fighters_all_order = _new_order;
+        self.figthers_all_alive_order = new_order;
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -455,10 +458,6 @@ impl Manager {
             )
             .as_str(),
         );
-        if target.life == 0 {
-            self.fight_result
-                .append_to_history(format!("{} is dead!", target.name).as_str());
-        }
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -469,14 +468,26 @@ impl Manager {
     fn process_turn(&mut self, fighter: &mut Fighter) {
         debug!("[Manager:process_turn] It's {:}'s turn", fighter.id);
 
-        let _target_id: FighterId = self.pick_target(fighter.side);
-        debug!("[Manager:process_turn] Its target is {:}", _target_id);
+        let target_id: FighterId = self.pick_target(fighter.side);
+        debug!("[Manager:process_turn] Its target is {:}", target_id);
 
-        let mut _target_new: Fighter = self.fighters_all[&_target_id].clone();
-        self.process_assault(fighter, &mut _target_new);
+        let mut target_new: Fighter = self.fighters_all[&target_id].clone();
+        self.process_assault(fighter, &mut target_new);
 
+        // If the target is dead, add it to the dfead list, remove it from the list of alive fighters and remove it from its team.
+        if target_new.life == 0 {
+            self.fight_result
+                .append_to_history(format!("{} is dead!", target_new.name).as_str());
+            self.fighters_dead.insert(target_id);
+            self.figthers_all_alive_order.retain(|id| *id != target_id);
+            if target_new.original_side == TeamSide::Attackers {
+                self.fighters_attackers.remove(&target_id);
+            } else {
+                self.fighters_defenders.remove(&target_id);
+            }
+        }
         // Save the new state of the target
-        *self.fighters_all.get_mut(&_target_id).unwrap() = _target_new;
+        *self.fighters_all.get_mut(&target_id).unwrap() = target_new;
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -493,12 +504,12 @@ impl Manager {
         // TODO they could be created at the init step instead of now
         for (_, fighter) in all_fighters.iter() {
             debug!("Fighter id: {:}", fighter.dinoz_id);
-            for _attacker in old_config_attackers.iter() {
-                if fighter.dinoz_id == _attacker.dinoz_id {
+            for attacker in old_config_attackers.iter() {
+                if fighter.dinoz_id == attacker.dinoz_id {
                     debug!("{:} is an attacker", fighter.dinoz_id);
                     let mut hp_lost: u32 = 0;
-                    if _attacker.start_life > fighter.life {
-                        hp_lost = _attacker.start_life - fighter.life
+                    if attacker.start_life > fighter.life {
+                        hp_lost = attacker.start_life - fighter.life
                     }
                     self.fight_result.attackers.push(FighterResult::new(
                         fighter.dinoz_id,
@@ -507,12 +518,12 @@ impl Manager {
                     ));
                 }
             }
-            for _defender in old_config_defenders.iter() {
-                if fighter.dinoz_id == _defender.dinoz_id {
+            for defender in old_config_defenders.iter() {
+                if fighter.dinoz_id == defender.dinoz_id {
                     debug!("{:} is a defender", fighter.dinoz_id);
                     let mut hp_lost: u32 = 0;
-                    if _defender.start_life > fighter.life {
-                        hp_lost = _defender.start_life - fighter.life
+                    if defender.start_life > fighter.life {
+                        hp_lost = defender.start_life - fighter.life
                     }
                     self.fight_result.defenders.push(FighterResult::new(
                         fighter.dinoz_id,
@@ -562,7 +573,7 @@ impl Manager {
             fighters_attackers: HashSet::new(),
             fighters_defenders: HashSet::new(),
             fighters_all: HashMap::new(),
-            fighters_all_order: Vec::new(),
+            figthers_all_alive_order: Vec::new(),
         }
     }
 
@@ -572,27 +583,27 @@ impl Manager {
     // RETURN:  The newly created manager
     //---------------------------------------------------------------------------------------------------------------------
     pub fn from_configuration(config: ManagerConfiguration) -> Self {
-        let mut _all: HashMap<FighterId, Fighter> = HashMap::new();
-        let mut _all_order: Vec<FighterId> = Vec::new();
-        let mut _attackers: HashSet<FighterId> = HashSet::new();
-        let mut _defenders: HashSet<FighterId> = HashSet::new();
-        let mut _id: usize = 0;
+        let mut all: HashMap<FighterId, Fighter> = HashMap::new();
+        let mut all_order: Vec<FighterId> = Vec::new();
+        let mut attackers: HashSet<FighterId> = HashSet::new();
+        let mut defenders: HashSet<FighterId> = HashSet::new();
+        let mut id: usize = 0;
 
-        for _a in config.attackers.iter() {
-            let f: Fighter = Fighter::from_config(_a, _id, TeamSide::Attackers);
+        for a in config.attackers.iter() {
+            let f: Fighter = Fighter::from_config(a, id, TeamSide::Attackers);
             info!("New attacker {:?}", f);
-            _attackers.insert(f.id);
-            _all.insert(f.id, f.clone());
-            _all_order.push(f.id);
-            _id += 1;
+            attackers.insert(f.id);
+            all.insert(f.id, f.clone());
+            all_order.push(f.id);
+            id += 1;
         }
-        for _d in config.defenders.iter() {
-            let f: Fighter = Fighter::from_config(_d, _id, TeamSide::Defenders);
+        for d in config.defenders.iter() {
+            let f: Fighter = Fighter::from_config(d, id, TeamSide::Defenders);
             info!("New defender {:?}", f);
-            _defenders.insert(f.id);
-            _all.insert(f.id, f.clone());
-            _all_order.push(f.id);
-            _id += 1;
+            defenders.insert(f.id);
+            all.insert(f.id, f.clone());
+            all_order.push(f.id);
+            id += 1;
         }
 
         // Initialize the random generator and save the seed
@@ -608,7 +619,7 @@ impl Manager {
 
         Self {
             // ID Generator
-            next_id: 0,
+            next_id: id,
 
             // Seed and random generator
             seed: temp_seed,
@@ -624,10 +635,10 @@ impl Manager {
             fighters_dead: HashSet::new(),
             fighters_temp_dead: HashSet::new(),
             fighters_escaped: HashSet::new(),
-            fighters_attackers: _attackers,
-            fighters_defenders: _defenders,
-            fighters_all: _all,
-            fighters_all_order: _all_order,
+            fighters_attackers: attackers,
+            fighters_defenders: defenders,
+            fighters_all: all,
+            figthers_all_alive_order: all_order,
         }
     }
 
@@ -659,7 +670,7 @@ impl Manager {
         // Get smallest time (which can be negative) then remove it from all fighters to make sure on a 0-based time
         // Example: a fighter has an initiative boost to start first, that's a base time of -5.
         // By removing 5 from every fighter, the one with the initiative boost will be at 0 and the others at 5
-        let _t0 = self.fighters_all[&self.fighters_all_order[0]].time;
+        let _t0 = self.fighters_all[&self.figthers_all_alive_order[0]].time;
         for f in self.fighters_all.values_mut() {
             f.time -= _t0;
         }
@@ -674,37 +685,37 @@ impl Manager {
             for i in 0..=MAX_TURNS {
                 debug!("-- BEGINNING OF TURN {:} --", i);
 
-                // debug!("- Time = {:}", _current_time);
-                // Pick first fighter
+                // Pick first alive fighter
                 self.sort_all_fighters_by_time_smallest_first();
-                let mut _fighter_new: Fighter =
-                    self.fighters_all[&self.fighters_all_order[0]].clone();
+                let mut current_fighter: Fighter =
+                    self.fighters_all[&self.figthers_all_alive_order[0]].clone();
 
                 // Process its turn
-                self.process_turn(&mut _fighter_new);
+                self.process_turn(&mut current_fighter);
 
                 // Increase time
                 // TODO not final
                 let mut _dt: u32 = (TIMEBASE as f32
                     * TIMECOEF as f32
-                    * _fighter_new.speed_global
-                    * _fighter_new.speed_per_element
-                        [_fighter_new.get_current_element_index(false) as usize])
+                    * current_fighter.speed_global
+                    * current_fighter.speed_per_element
+                        [current_fighter.get_current_element_index(false) as usize])
                     .floor() as u32;
-                _fighter_new.time += _dt as i32;
-                info!(
+                current_fighter.time += _dt as i32;
+                trace!(
                     "Fighter {:} new time is {:}",
-                    _fighter_new.id, _fighter_new.time
+                    current_fighter.id,
+                    current_fighter.time
                 );
 
                 // Increment the element of the fighter
-                _fighter_new.increment_current_element_index();
+                current_fighter.increment_current_element_index();
 
                 // Update the fighter that just did its turn
                 *self
                     .fighters_all
-                    .get_mut(&self.fighters_all_order.first().unwrap())
-                    .unwrap() = _fighter_new;
+                    .get_mut(self.figthers_all_alive_order.first().unwrap())
+                    .unwrap() = current_fighter;
 
                 debug!("-- END OF TURN {:} --", i);
 
@@ -722,7 +733,7 @@ impl Manager {
 
         let json = serde_json::to_string(&self.fight_result).unwrap();
 
-        info!("Result:\n{}", json);
+        debug!("Result:\n{}", json);
     }
 
     //---------------------------------------------------------------------------------------------------------------------

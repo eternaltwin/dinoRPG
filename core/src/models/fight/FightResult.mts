@@ -1,7 +1,7 @@
 import { FighterResultFiche } from './FighterFiche.mjs';
 
 export interface FightResult {
-	opponent: string;
+	opponent: Array<string>;
 	goldEarned: number;
 	xpEarned: number;
 	hpLost: number;

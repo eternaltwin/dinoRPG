@@ -98,7 +98,7 @@ pub static MEDITATION_SOLITAIRE: Skill = Skill {
     id: SkillId::MEDITATION_SOLITAIRE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |f: &mut Fighter, _m: &mut Manager| {
         f.defense[ElementIndex::Air as usize] += 3.0;
         f.speed_per_element[ElementIndex::Air as usize] *= 1.5;
     },
@@ -109,7 +109,7 @@ pub static MEDITATION_TRANCHANTE: Skill = Skill {
     id: SkillId::MEDITATION_TRANCHANTE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |f: &mut Fighter, _m: &mut Manager| {
         f.defense[ElementIndex::Air as usize] += 6.0;
         f.speed_per_element[ElementIndex::Air as usize] *= 1.5;
     },
@@ -162,7 +162,7 @@ pub static BLANC: Skill = Skill {
     id: SkillId::BLANC,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
     },
     ignore: false,

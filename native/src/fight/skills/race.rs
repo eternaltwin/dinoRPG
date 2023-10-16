@@ -20,7 +20,7 @@ pub static COQUE: Skill = Skill {
     id: SkillId::COQUE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, m_: &mut Manager| {
+    effect: |f: &mut Fighter, _m_: &mut Manager| {
         f.armor += 1;
     },
     ignore: false,
@@ -30,7 +30,7 @@ pub static CHARGE_CORNUE: Skill = Skill {
     id: SkillId::CHARGE_CORNUE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, m_: &mut Manager| {
+    effect: |f: &mut Fighter, _m_: &mut Manager| {
         f.next_assault_multiplier = 1.2;
     },
     ignore: false,
@@ -64,7 +64,7 @@ pub static ORIGINE_CAUSHEMESHENNE: Skill = Skill {
     id: SkillId::ORIGINE_CAUSHEMESHENNE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    effect: |_f: &mut Fighter, _: &mut Manager| {
         // todo
     },
     ignore: false,
@@ -74,7 +74,7 @@ pub static FORCE_DE_LUMIERE: Skill = Skill {
     id: SkillId::FORCE_DE_LUMIERE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    effect: |_f: &mut Fighter, _: &mut Manager| {
         // todo
     },
     ignore: false,
@@ -121,7 +121,7 @@ pub static DEPLACEMENT_INSTANTANE: Skill = Skill {
     id: SkillId::DEPLACEMENT_INSTANTANE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    effect: |_f: &mut Fighter, _: &mut Manager| {
         // todo
     },
     ignore: false,

@@ -68,6 +68,7 @@ fn main() {
         "attackers": [
             {
                 "dinoz_id": 123,
+                "is_monster": false,
                 "name": "toto",
                 "start_life": 100,
                 "base_elements": [
@@ -84,10 +85,13 @@ fn main() {
                     11408
                 ],
                 "status": [
-                ]
+                ],
+                "attack_bonus": 0,
+                "defense_bonus": 0
             },
             {
                 "dinoz_id": 124,
+                "is_monster": false,
                 "name": "bob",
                 "start_life": 100,
                 "base_elements": [
@@ -102,12 +106,15 @@ fn main() {
                 "skills": [
                 ],
                 "status": [
-                ]
+                ],
+                "attack_bonus": 0,
+                "defense_bonus": 0
             }
         ],
         "defenders": [
             {
                 "dinoz_id": 22,
+                "is_monster": false,
                 "name": "kevin",
                 "start_life": 100,
                 "base_elements": [
@@ -128,89 +135,33 @@ fn main() {
                     51506
                 ],
                 "status": [
-                ]
+                ],
+                "attack_bonus": 0,
+                "defense_bonus": 0
+            },
+            {
+                "dinoz_id": 23,
+                "is_monster": true,
+                "name": "mega water goupignon",
+                "start_life": 50,
+                "base_elements": [
+                    0,
+                    0,
+                    3,
+                    0,
+                    0
+                ],
+                "items": [
+                ],
+                "skills": [
+                ],
+                "status": [
+                ],
+                "attack_bonus": 0,
+                "defense_bonus": 5
             }
         ]
     }"#;
-
-    // let json_example = r#"{
-    //     "is_energy_enabled": true,
-    //     "can_use_equipment": true,
-    //     "can_use_permanent_equipment_only": false,
-    //     "can_use_capture": true,
-    //     "can_delete_objects": true,
-    //     "is_balance_enabled": true,
-    //     "attackers": [
-    //         {
-    //             "dinoz_id": 123,
-    //             "start_life": 98,
-    //             "base_elements": [
-    //                 1,
-    //                 1,
-    //                 1,
-    //                 1,
-    //                 1
-    //             ],
-    //             "items": [
-    //                 1,
-    //                 12,
-    //                 48
-    //             ],
-    //             "skills": [
-    //                 3,
-    //                 34,
-    //                 789
-    //             ],
-    //             "status": [
-    //                 3,
-    //                 5
-    //             ]
-    //         }
-    //     ],
-    //     "defenders": [
-    //         {
-    //             "dinoz_id": 22,
-    //             "start_life": 128,
-    //             "base_elements": [
-    //                 1,
-    //                 2,
-    //                 3,
-    //                 4,
-    //                 5
-    //             ],
-    //             "items": [
-    //                 3,
-    //                 15,
-    //                 33
-    //             ],
-    //             "skills": [
-    //                 8,
-    //                 9,
-    //                 11
-    //             ],
-    //             "status": [
-    //             ]
-    //         },
-    //         {
-    //             "dinoz_id": 23,
-    //             "start_life": 18,
-    //             "base_elements": [
-    //                 1,
-    //                 2,
-    //                 1,
-    //                 1,
-    //                 1
-    //             ],
-    //             "items": [
-    //             ],
-    //             "skills": [
-    //             ],
-    //             "status": [
-    //                 2
-    //             ]
-    //         }
-    //     ]
-    // }"#;
 
     let mngr_opt: ManagerConfiguration =
         serde_json::from_str(json_example).expect("JSON not well formatted");
@@ -218,12 +169,10 @@ fn main() {
 
     let mut mngr: Manager = Manager::from_configuration(mngr_opt);
     debug!("{:#?}", mngr);
-    // mngr.add_new_fighter(100, [1, 1, 1, 1, 1], true);
-    // mngr.add_new_fighter(100, [1, 1, 1, 1, 1], false);
     mngr.execute_fight();
     // Get the result and print it
     let result: FightResult = mngr.get_fight_result();
-    info!("{:}", serde_json::to_string(&result).unwrap());
+    debug!("{:}", serde_json::to_string(&result).unwrap());
     info!("{}", result.history());
 }
 

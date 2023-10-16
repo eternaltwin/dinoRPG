@@ -79,7 +79,7 @@ export const fightResultlvl1Win = {
 	goldEarned: 100,
 	xpEarned: 10,
 	result: true,
-	history: ""
+	history: ''
 };
 
 export const fightResultlvl7Win = {
@@ -89,7 +89,7 @@ export const fightResultlvl7Win = {
 	goldEarned: 500,
 	xpEarned: 20,
 	result: true,
-	history: ""
+	history: ''
 };
 
 export const DinozFightDataWithMission = {

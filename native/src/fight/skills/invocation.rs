@@ -1,10 +1,10 @@
-use std::collections::HashMap;
+
 
 /// Implementations of all invocation skills
-use log::{error, trace};
+use log::{error};
 
-use crate::fight::manager::{Manager, TIMECOEF};
-use crate::fight::{elements::ElementIndex, fighter::Fighter};
+use crate::fight::manager::{Manager};
+use crate::fight::{fighter::Fighter};
 
 use super::{Skill, SkillId, SkillType};
 
@@ -23,7 +23,7 @@ pub static BOUDDHA: Skill = Skill {
 
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },
@@ -35,7 +35,7 @@ pub static SALAMANDRE: Skill = Skill {
 
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },
@@ -47,7 +47,7 @@ pub static VULCAIN: Skill = Skill {
 
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },
@@ -59,7 +59,7 @@ pub static ARMURE_DIFRIT: Skill = Skill {
 
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },
@@ -71,7 +71,7 @@ pub static BENEDICTION_DES_FEES: Skill = Skill {
 
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },
@@ -82,7 +82,7 @@ pub static LOUP_GAROU: Skill = Skill {
     id: SkillId::LOUP_GAROU,
     skill_type: SkillType::INVOCATION,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         error!("Default invocation skill implementation! Not yet implemented")
     },
     ignore: false,

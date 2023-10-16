@@ -13,7 +13,7 @@ pub static DETONATION: Skill = Skill {
     id: SkillId::DETONATION,
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },
@@ -25,7 +25,7 @@ pub static BRASERO: Skill = Skill {
 
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },
@@ -36,7 +36,7 @@ pub static COEUR_DE_PHOENIX: Skill = Skill {
     id: SkillId::PAUME_CHALUMEAU,
     skill_type: SkillType::SPECIAL,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Coeur de Phoenix skill is useless in fights");
     },
     ignore: true,
@@ -47,7 +47,7 @@ pub static LANCEUR_DE_GLAND: Skill = Skill {
     id: SkillId::LANCEUR_DE_GLAND,
     skill_type: SkillType::ACTIVE,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default active skill implementation! Not yet implemented")
     },
@@ -59,7 +59,7 @@ pub static GRATTEUR: Skill = Skill {
 
     skill_type: SkillType::COLLECT,
     energy: 0,
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Collect skill, ignored for fights by default")
     },
     ignore: true,
@@ -70,7 +70,7 @@ pub static GROSSE_BEIGNE: Skill = Skill {
 
     skill_type: SkillType::EVENT,
     energy: 0, // todo
-    effect: |f: &mut Fighter, m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented")
     },

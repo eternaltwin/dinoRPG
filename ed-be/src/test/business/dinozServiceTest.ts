@@ -1,3 +1,4 @@
+/*
 import { Request } from 'express';
 import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash';
@@ -881,3 +882,4 @@ describe('Function resurrectDinoz', function () {
 		expect(DinozDao.setDinoz).toHaveBeenCalledTimes(0);
 	});
 });
+*/

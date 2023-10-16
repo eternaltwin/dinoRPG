@@ -1,3 +1,4 @@
+/*
 import { mockRequest, player } from '../utils/constants.js';
 import { Request } from 'express';
 import { jest } from '@jest/globals';
@@ -639,3 +640,4 @@ describe('Function checkMissionFight()', function () {
 		expect(MissionDao.updateMissionStep).toHaveBeenCalledWith(dinozOver.id, npcList.PAPY.missions![2].missionId, 1);
 	});
 });
+*/

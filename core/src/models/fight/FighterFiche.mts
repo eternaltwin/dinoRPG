@@ -2,6 +2,10 @@
 export class FighterFiche {
 	// ID of the fighter in the DB (if it exists)
 	dinoz_id: number;
+	//Level of the dinoz (used for calculate monster power)
+	level: number;
+	// Tells if the fighter is a monster
+	is_monster: boolean;
 	// Name of the fighter
 	name: string;
 	// Health of the fighter at the start of the fight, it cannot go above it during a fight
@@ -10,9 +14,9 @@ export class FighterFiche {
 	// todo need to handle void
 	base_elements: Array<number>;
 	// bonus attack for monster
-	bonus_attack?: number | undefined;
+	attack_bonus?: number | undefined;
 	// bonus defense for monster
-	bonus_defense?: number | undefined;
+	defense_bonus?: number | undefined;
 	// The items equipped by the fighter
 	items: Array<number>;
 	// The activated skills of the fighter
@@ -22,6 +26,8 @@ export class FighterFiche {
 
 	constructor(
 		dinozId: number,
+		level: number | undefined,
+		is_monster: boolean,
 		name: string,
 		start_life: number,
 		base_elements: Array<number>,
@@ -32,6 +38,7 @@ export class FighterFiche {
 		status: Array<number>
 	) {
 		this.dinoz_id = dinozId;
+		this.is_monster = is_monster;
 		this.name = name;
 		this.start_life = start_life;
 		this.items = items;
@@ -39,10 +46,9 @@ export class FighterFiche {
 		this.status = status;
 		this.base_elements = base_elements;
 
-		if (bonus_attack === undefined) this.bonus_attack = 0;
-		if (bonus_defense === undefined) this.bonus_defense = 0;
-		this.bonus_defense = bonus_defense;
-		this.bonus_attack = bonus_attack;
+		this.level = level ?? 0;
+		this.defense_bonus = bonus_defense ?? 0;
+		this.attack_bonus = bonus_attack ?? 0;
 	}
 }
 

@@ -268,7 +268,7 @@ export async function checkMissionFight(dinoz: Dinoz, fight: FightResult): Promi
 			actualStep.place === placeList.ANYWHERE.name) &&
 		fight.result &&
 		actualStep.requirement.actionType === ConditionEnum.KILL &&
-		(actualStep.requirement.target.split(':').some(mob => mob === fight.opponent) ||
+		(actualStep.requirement.target.split(':').filter(value => fight.opponent.includes(value)).length > 0 ||
 			actualStep.requirement.target === 'any')
 	) {
 		await updateMissionProgression(dinoz.id, dinoz.missions.find(mission => !mission.isFinished)?.missionId!, 1);

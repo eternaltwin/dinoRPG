@@ -9,11 +9,14 @@ export type MonsterFiche = {
 	bonus_attack?: number | undefined;
 	// bonus defense for monster
 	bonus_defense?: number | undefined;
-	xp: number;
-	gold: number;
+	groups?: Array<number>;
+	xp?: number;
+	xpBonus?: number;
+	gold?: number;
 	// Chance of encountering this monster.
 	odds: number;
 	level: number;
 	zone: MapZone;
 	place?: PlaceEnum;
+	special?: boolean;
 };

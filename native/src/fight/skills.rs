@@ -28,8 +28,7 @@ mod race;
 mod sphere;
 
 use crate::fight::skills::{
-    air::*, double::*, fire::*, invocation::*, lightning::*, monster::*, race::*, sphere::*,
-    water::*, wood::*,
+    air::*, double::*, fire::*, invocation::*, lightning::*, race::*, sphere::*, water::*, wood::*,
 };
 
 /// Type of skill
@@ -98,7 +97,7 @@ impl Skill {
             }
         }
 
-        return skills;
+        skills
     }
 
     pub fn process_skill(self, f: &mut Fighter, m: &mut Manager) {
@@ -750,7 +749,7 @@ static UNKNOWN_SKILL: Skill = Skill {
     id: SkillId::UNKNOWN,
     skill_type: SkillType::UNKNOWN,
     energy: 0,
-    effect: |f: &mut Fighter, _: &mut Manager| error!("Unknown skill, ignored for fights"),
+    effect: |_f: &mut Fighter, _: &mut Manager| error!("Unknown skill, ignored for fights"),
     ignore: true,
 };
 
