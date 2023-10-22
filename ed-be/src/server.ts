@@ -21,6 +21,10 @@ import adminRoutes from './routes/admin.routes.js';
 import 'reflect-metadata';
 import { AppDataSource } from './data-source.js';
 import swaggerUi from 'swagger-ui-express';
+import WebSocket, { WebSocketServer } from 'ws';
+import swaggerJsDoc from 'swagger-jsdoc';
+import { sendDiscord } from './utils/discord.js';
+import http from 'http';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -43,12 +47,8 @@ loadConfigFile();
 
 // Database connection
 AppDataSource.initialize()
-	.then(() => {
-		console.log('Data Source has been initialized successfully.');
-	})
-	.catch(err => {
-		console.error('Error during Data Source initialization:', err);
-	});
+	.then(() => console.log('Data Source has been initialized successfully.'))
+	.catch(err => console.error('Error during Data Source initialization:', err));
 
 app.use(cors());
 
@@ -144,26 +144,29 @@ const swaggerOptions = {
 	swaggerDefinition,
 	apis: ['dist/routes/*.js']
 };
-import swaggerJsDoc from 'swagger-jsdoc';
-import { sendDiscord } from './utils/discord.js';
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 
 // Launch Cron
 resetDinozShopAtMidnight().start();
 updatePlayersPosition().start();
 
-// Initiate controllers
-//TODO: what is the purpose ?
-
-// oauthController.init();
-
-// set port, listen for requests
 const PORT = process.env.PORT || 8081;
-app.listen(PORT, () => {
+
+const server = http.createServer(app);
+
+const wss = new WebSocketServer({ server });
+
+server.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}.`);
 	if (getEnvironnement() !== 'development') {
-		sendDiscord(`**Server started**`).catch(e => {
-			console.error(e);
-		});
+		sendDiscord(`**Server started**`);
 	}
+});
+
+wss.on('connection', (ws: WebSocket, req: Request) => {
+  console.log('Client connected throught webSocket');
+  console.log(req.headers);
+
+  ws.on('message', message => console.log('message received from client : ' + message));
 });

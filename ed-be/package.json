@@ -51,7 +51,8 @@
     "swagger-ui-express": "^4.5.0",
     "toml": "^3.0.0",
     "typeorm": "0.3.16",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.0",
