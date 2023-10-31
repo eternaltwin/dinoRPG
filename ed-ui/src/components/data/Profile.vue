@@ -99,7 +99,7 @@ export default defineComponent({
 					break;
 				case 'dinorpg.production':
 					server = 'https://dinorpg.eternaltwin.org';
-					API = 423;
+					API = 424;
 					break;
 				default:
 					server = 'http://localhost:8080';
