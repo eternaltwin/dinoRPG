@@ -5,11 +5,13 @@ import { Player } from '../entity/player.js';
 import { getAllDinozFromAccount, setDinoz } from '../dao/dinozDao.js';
 import { addMultipleStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { addMultipleSkillToDinoz, removeSkillToDinoz } from '../dao/dinozSkillDao.js';
-import { DinozStatus, PlayerReward, DinozSkill } from '../entity/index.js';
+import { DinozStatus, PlayerReward, DinozSkill, Secret } from '../entity/index.js';
 import { addMultipleRewardToPlayer, removeRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
+import { SecretData } from '@drpg/core/models/admin/SecretData';
+import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -245,4 +247,35 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request): P
 	};
 
 	return playerToSend;
+}
+
+/**
+ * @summary Get all secrets stored
+ * @return Array<SecretData>
+ */
+export async function getAllSecrets(): Promise<Array<SecretData>> {
+	const secrets: Array<Secret> = await getAllSecretsRequest();
+	const response: Array<SecretData> = secrets.map(secret => {
+		return {
+			key: secret.key,
+			value: secret.value
+		};
+	});
+	return response;
+}
+
+/**
+ * @summary Add a secret to the store
+ * @return Array<SecretData>
+ */
+export async function addSecret(req: Request): Promise<Array<SecretData>> {
+	await addNewSecret(new Secret(req.body.key, req.body.value));
+	const secrets: Array<Secret> = await getAllSecretsRequest();
+	const response: Array<SecretData> = secrets.map(secret => {
+		return {
+			key: secret.key,
+			value: secret.value
+		};
+	});
+	return response;
 }

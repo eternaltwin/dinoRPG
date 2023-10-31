@@ -8,8 +8,11 @@
 		</div>
 		<div class="wrapper" v-if="dataLoaded">
 			<div class="filler"></div>
-			<Profile :accountData="accountData"></Profile>
-			<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
+			<TwinoDisplay></TwinoDisplay>
+			<div>
+				<Profile :accountData="accountData"></Profile>
+				<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
+			</div>
 			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData"></MyDinoz>
 		</div>
 	</div>
@@ -22,6 +25,7 @@ import { errorHandler } from '../utils/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { sessionStore } from '../store/index.js';
 import EventBus from '../events/index.js';
+import TwinoDisplay from '../components/data/TwinoDisplay.vue';
 
 export default defineComponent({
 	name: 'MyAccount',
@@ -33,6 +37,7 @@ export default defineComponent({
 		};
 	},
 	components: {
+		TwinoDisplay,
 		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
 		MyDinoz: defineAsyncComponent(() => import('../components/data/MyDinoz.vue')),
 		Profile: defineAsyncComponent(() => import('../components/data/Profile.vue')),
@@ -83,15 +88,15 @@ export default defineComponent({
 		background-image: url('../assets/design/button_small_hover.webp');
 	}
 }
-.filler {
-	height: 180px;
-	width: 550px;
-}
 .wrapper {
 	display: flex;
 	width: 620px;
 	justify-content: space-between;
 	gap: 10px;
 	flex-wrap: wrap;
+}
+.filler {
+	height: 180px;
+	width: 550px;
 }
 </style>

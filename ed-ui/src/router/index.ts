@@ -17,6 +17,7 @@ import News from '../components/common/News.vue';
 import NPC from '../pages/NPC.vue';
 import Missions from '../pages/Missions.vue';
 import GatherPage from '../pages/GatherPage.vue';
+import ImportPage from '../pages/ImportPage.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -102,6 +103,11 @@ const router = createRouter({
 					path: '/gather/:dinozId/:type',
 					name: 'Gather',
 					component: GatherPage
+				},
+				{
+					path: '/import',
+					name: 'ImportPage',
+					component: ImportPage
 				}
 			]
 		},

@@ -1,12 +1,20 @@
 <template>
-	<component
+	<!--	<component
 		v-if="raceName === 'moueffe' || raceName === 'pigmou'"
 		:is="dinozToDisplay"
 		:display="display"
 		:life="life"
 		:flip="flip"
-	></component>
-	<DinozSWF v-else :display="display" :width="190" :height="165" type="dino" :flip="-flip" :shop="shop"></DinozSWF>
+	></component> -->
+	<DinozSWF
+		:display="display"
+		:width="190"
+		:height="165"
+		type="dino"
+		:flip="-flip"
+		:shop="shop"
+		:isFrozen="isFrozen"
+	></DinozSWF>
 </template>
 
 <script lang="ts">
@@ -23,7 +31,8 @@ export default defineComponent({
 		life: { type: Number, required: true },
 		flip: { type: Number, required: true },
 		race: { type: Number, required: true },
-		shop: { type: Boolean, required: false }
+		shop: { type: Boolean, required: false },
+		isFrozen: { type: Boolean, required: false }
 	},
 	computed: {
 		dinozToDisplay(): string {

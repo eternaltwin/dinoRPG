@@ -1475,8 +1475,8 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		maxQuantity: 36,
 		price: 0 // TODO double check
 	},
-	// Tickets to use at the anniversary grid event
-	ANNIVERSARY_TICKET: {
+	// Error
+	DOUBLE_NOT_USED: {
 		itemId: 117,
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -1604,6 +1604,136 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 3,
 		price: 20000 // TODO double check
+	},
+	// Use to obtain Santaz or Trice, obtained during Christmas event
+	CHRISTMAS_EGG: {
+		itemId: 130,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 999, // TODO double check
+		price: 0 // TODO double check
+	},
+	// Ticket for Batide day
+	GODFATHER_TICKET: {
+		itemId: 131,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 5000
+	},
+	// Quest item
+	SAGE_POINT: {
+		itemId: 132,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	FRAGMENT_A: {
+		itemId: 133,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	FRAGMENT_B: {
+		itemId: 134,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	FRAGMENT_C: {
+		itemId: 135,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	FRAGMENT_D: {
+		itemId: 136,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	FRAGMENT_E: {
+		itemId: 137,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	FRAGMENT_F: {
+		itemId: 138,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	FRAGMENT_G: {
+		itemId: 139,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	STEPPE_METAL: {
+		itemId: 140,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	ICE_SHRED: {
+		itemId: 141,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
+	},
+	// Quest item
+	BATTERY: {
+		itemId: 142,
+		canBeEquipped: false,
+		canBeUsedNow: false, // disabled for now
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 5000,
+		price: 0
 	},
 	// Empty item
 	EMPTY: {

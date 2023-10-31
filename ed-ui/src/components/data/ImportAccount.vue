@@ -11,7 +11,6 @@
 				<p class="smallbutton" @click="selectImport('fr')">Français</p>
 				<p class="smallbutton" @click="selectImport('en')">English</p>
 				<p class="smallbutton" @click="selectImport('es')">Español</p>
-				<p class="smallbutton" @click="selectImport('de')">Deutsch</p>
 			</div>
 		</div>
 	</div>

@@ -1,10 +1,8 @@
 import { Request } from 'express';
 import {
 	getCommonDataRequest,
-	getImportedData,
 	getPlayerDataRequest,
 	getPlayerRewardsRequest,
-	resetUser,
 	searchPlayersByName,
 	setPlayer
 } from '../dao/playerDao.js';
@@ -12,12 +10,10 @@ import { rewardList } from '../constants/reward.js';
 import { Player } from '../entity/player.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
-import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { getAllDinozFicheLite, getDinozTotalCount } from '../dao/dinozDao.js';
 import { levelList } from '../constants/index.js';
-import { Dinoz, PlayerReward } from '../entity/index.js';
+import { Dinoz } from '../entity/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
 
 /**
  * @summary Get data from player on login
@@ -85,7 +81,7 @@ export async function getAccountData(req: Request): Promise<PlayerInfo> {
 		subscribeAt: subscribe,
 		clan: clan,
 		playerName: playerInfo!.name,
-		epicRewards: playerInfo.rewards.map(reward => reward.rewardId),
+		epicRewards: playerInfo.rewards.map(reward => reward.rewardId).sort((a, b) => a - b),
 		dinoz: playerInfo.dinoz.map(dinoz => {
 			return {
 				id: dinoz.id,
@@ -94,46 +90,15 @@ export async function getAccountData(req: Request): Promise<PlayerInfo> {
 				level: dinoz.level,
 				raceId: dinoz.raceId,
 				life: dinoz.life,
-				status: dinoz.status.map(status => status.statusId)
+				status: dinoz.status.map(status => status.statusId),
+				isFrozen: dinoz.isFrozen
 			};
 		}),
 		customText: playerInfo.customText
+		// twinoid: playerInfo.twinosite.map(i => {return {siteId: i.siteId, points: i.points, npoints: i.npoints}})
 	};
 
 	return infoToSend;
-}
-
-/**
- * @summary Import a specified account
- * @param req
- * @param req.body.server {string} Server where the player came from
- * @return void
- */
-export async function importAccount(req: Request): Promise<void> {
-	const playerId: number = req.user!.playerId!;
-	//const server: string = req.body.server;
-	const importedData: Player | null = await getImportedData(playerId);
-	if (!importedData) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
-	}
-	//Check if user has not already imported
-	if (importedData.hasImported) {
-		throw new ErrorFormator(500, `Player ${playerId} has already imported his account`);
-	}
-
-	//Check if user has data in Eternaltwin's API
-
-	//Reset all data for this user except the user's row in tb_player
-	await resetUser(playerId);
-
-	// TODO Import from Eternaltwin's API
-	// const userET: string = importedData.eternalTwinId;
-
-	//Give Epic Reward
-	await addRewardToPlayer(new PlayerReward(importedData, rewardList.IMPORT));
-
-	//Set hasImported to true
-	await setPlayer({ id: playerId, hasImported: true });
 }
 
 /**
@@ -175,5 +140,5 @@ export async function getDinozList(req: Request): Promise<Array<any>> {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
 
-	return dinozActive.map(dinoz => dinoz.toDinozFicheLite());
+	return dinozActive.map(dinoz => dinoz.toDinozFicheLite()).filter(dinoz => !dinoz.isFrozen);
 }

@@ -13,6 +13,7 @@ import { Place } from '@drpg/core/models/place/Place';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import { MapZone } from '@drpg/core/models/enums/MapZone';
 
 const { fight_rust } = pkg;
 
@@ -244,7 +245,7 @@ function generateMonster(fighters: Array<Dinoz>): Array<MonsterFiche> {
 	let specialProb = getRandomNumber(0, 100);
 	const place = fighters[0].actualPlace;
 	let monsters = Object.values(monsterList)
-		.filter(m => m.zone === place.map)
+		.filter(m => m.zone === place.map || m.zone === MapZone.ALL)
 		.map(m => {
 			if (m.special) {
 				let display = m.odds >= specialProb;

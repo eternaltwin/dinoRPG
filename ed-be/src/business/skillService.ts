@@ -8,7 +8,7 @@ import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../d
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
-import { effectParser } from '../utils/index.js';
+import { effectParser, fromBase62 } from '../utils/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { DinozRace, UpChance } from '@drpg/core/models/dinoz/DinozRace';
@@ -231,13 +231,13 @@ function getNewDinozDataFromLevelUp(
 	}
 
 	// Display
-	let growthLetter: number = parseInt(dinozSkills.display[1]);
+	let growthLetter: number = fromBase62(dinozSkills.display[1]) % 10;
 
-	if (growthLetter < 9) {
+	if (dinozSkills.level < 10 && dinozSkills.display[1] !== 'A') {
 		growthLetter++;
+		dinoz.display =
+			dinozSkills.display[0] + growthLetter + dinozSkills.display.substring(2, dinozSkills.display.length);
 	}
-
-	dinoz.display = dinozSkills.display[0] + growthLetter + dinozSkills.display.substring(2, dinozSkills.display.length);
 
 	return dinoz;
 }

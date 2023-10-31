@@ -26,6 +26,7 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { checkCondition } from '../utils/checkConditions.js';
 import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
+import { ImportDinoz } from '@drpg/core/models/import/importDinoz';
 
 @Entity()
 export class Dinoz {
@@ -188,9 +189,38 @@ export class Dinoz {
 	@UpdateDateColumn()
 	updatedDate: Date;
 
-	constructor(input: number | string, player?: Player, display?: string) {
+	constructor(input: number | string, player?: Player, display?: string, importData?: ImportDinoz) {
 		if (typeof input === 'number') {
 			this.id = input;
+		} else if (input === 'import' && importData && player && display) {
+			let race = Object.values(raceList).find(race => race.raceId === importData.raceId);
+			if (!race) {
+				race = raceList.MOUEFFE;
+			}
+			this.player = player;
+			this.display = display;
+			this.name = importData.name;
+			this.isFrozen = importData.isFrozen;
+			this.level = importData.level;
+			this.placeId = placeList.DINOVILLE.placeId;
+			this.life = importData.life;
+			this.maxLife = importData.maxLife;
+			this.experience = importData.experience;
+			this.canChangeName = importData.name === '???';
+			this.nbrUpFire = importData.nbrUpFire;
+			this.nbrUpWood = importData.nbrUpWood;
+			this.nbrUpWater = importData.nbrUpWater;
+			this.nbrUpLightning = importData.nbrUpLightning;
+			this.nbrUpAir = importData.nbrUpAir;
+			this.raceId = race.raceId;
+			this.nextUpElementId = getRandomUpElement(race.upChance)!;
+			this.nextUpAltElementId = getRandomUpElement(race.upChance)!;
+			this.skills = importData.skills.map(s => {
+				return new DinozSkill(this, s);
+			});
+			this.status = importData.status.map(s => {
+				return new DinozStatus(this, s);
+			});
 		} else {
 			const race = Object.values(raceList).find(race => race.name === input);
 			if (race && player && display) {
@@ -379,7 +409,7 @@ export class Dinoz {
 			placeId: this.placeId,
 			items: this.items?.map(item => item.itemId),
 			maxItems: this.backpackSlot,
-			status: this.status?.map(status => status.statusId),
+			status: this.status?.map(status => status.statusId).sort((a, b) => a - b),
 			borderPlace: Object.values(placeList)
 				.find(place => place.placeId === this.placeId)!
 				.borderPlace.map(placeId => Object.values(placeList).find(place => place.placeId === placeId))
@@ -404,7 +434,8 @@ export class Dinoz {
 			experience: this.experience,
 			maxExperience: levelList.find(level => level.id === this.level)!.experience,
 			placeId: this.placeId,
-			order: this.order
+			order: this.order,
+			isFrozen: this.isFrozen
 		};
 	}
 	public toDinozSkillFiche(): Array<DinozSkillFiche> {

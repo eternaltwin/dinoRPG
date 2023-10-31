@@ -41,15 +41,6 @@ const app = express();
 // Load TOML configuration file
 loadConfigFile();
 
-// Database connection
-AppDataSource.initialize()
-	.then(() => {
-		console.log('Data Source has been initialized successfully.');
-	})
-	.catch(err => {
-		console.error('Error during Data Source initialization:', err);
-	});
-
 app.use(cors());
 
 // parse requests of content-type - application/json
@@ -159,11 +150,19 @@ updatePlayersPosition().start();
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
+
+// Database connection
+AppDataSource.initialize()
+	.then(() => {
+		console.log('Data Source has been initialized successfully.');
+		if (getEnvironnement() !== 'development') {
+			sendDiscord(`**Server started on the ${getEnvironnement()}**`).catch(e => {
+				console.error(e);
+			});
+		}
+	})
+	.catch(err => console.error('Error during Data Source initialization:', err));
+
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}.`);
-	if (getEnvironnement() !== 'development') {
-		sendDiscord(`**Server started**`).catch(e => {
-			console.error(e);
-		});
-	}
 });

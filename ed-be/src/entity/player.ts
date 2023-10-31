@@ -16,7 +16,11 @@ import {
 	PlayerIngredient,
 	PlayerItem,
 	PlayerQuest,
-	PlayerReward
+	PlayerReward,
+	ImportedPlayer,
+	ImportedTwinoidSite,
+	ImportedTwinoidAchievements,
+	ImportedTwinoidStats
 } from './index.js';
 
 @Entity()
@@ -29,10 +33,24 @@ export class Player {
 	})
 	hasImported: boolean;
 
+	@OneToOne(() => ImportedPlayer, ImportedPlayer => ImportedPlayer.player, {
+		cascade: true
+	})
+	import: Relation<ImportedPlayer>;
+
 	@OneToOne(() => Ranking, ranking => ranking.player, {
 		cascade: true
 	})
 	rank: Relation<Ranking>;
+
+	@OneToMany(() => ImportedTwinoidSite, site => site.player)
+	twinosite: Relation<ImportedTwinoidSite[]>;
+
+	@OneToMany(() => ImportedTwinoidAchievements, achievement => achievement.player)
+	twinoAchievement: Relation<ImportedTwinoidAchievements[]>;
+
+	@OneToMany(() => ImportedTwinoidStats, site => site.player)
+	twinoStats: Relation<ImportedTwinoidStats[]>;
 
 	@OneToMany(() => PlayerReward, reward => reward.player)
 	rewards: Relation<PlayerReward[]>;

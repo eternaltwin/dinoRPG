@@ -7,7 +7,9 @@ import {
 	listAllDinozFromPlayer,
 	setPlayerMoney,
 	editPlayer,
-	listAllPlayerInformationForAdminDashboard
+	listAllPlayerInformationForAdminDashboard,
+	getAllSecrets,
+	addSecret
 } from '../business/adminService.js';
 import { body, param, validationResult } from 'express-validator';
 import { checkIsAdmin } from '../utils/jwt.js';
@@ -15,6 +17,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
+import { SecretData } from '@drpg/core/models/admin/SecretData';
 
 const routes: Router = Router();
 
@@ -181,6 +184,41 @@ routes.get(
 
 		try {
 			const response: Partial<PlayerTypeToSend> = await listAllPlayerInformationForAdminDashboard(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+routes.get(`${commonPath}/secret/all`, checkIsAdmin, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response: Array<SecretData> = await getAllSecrets();
+		return res.status(200).send(response);
+	} catch (err) {
+		const e = err as ErrorFormator;
+		await postError(e, res);
+		res.status(e.errorCode).send(e.message);
+	}
+});
+
+routes.put(
+	`${commonPath}/secret/add`,
+	[body('key').exists().isString(), body('value').exists().isString()],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response: Array<SecretData> = await addSecret(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

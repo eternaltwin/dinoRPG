@@ -1,5 +1,5 @@
 export enum TemporaryStatus {
-	QWHY = 53,
-	QWOOD = 54,
-	QTAME = 55
+	QWHY = 16,
+	QWOOD = 17,
+	QTAME = 18
 }

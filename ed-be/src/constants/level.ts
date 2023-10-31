@@ -221,99 +221,99 @@ export const levelList = [
 	},
 	{
 		id: 56,
-		experience: 4966
-	},
-	{
-		id: 57,
 		experience: 5339
 	},
 	{
-		id: 58,
+		id: 57,
 		experience: 5739
 	},
 	{
-		id: 59,
+		id: 58,
 		experience: 6169
 	},
 	{
-		id: 60,
+		id: 59,
 		experience: 6632
 	},
 	{
-		id: 61,
+		id: 60,
 		experience: 7130
 	},
 	{
-		id: 62,
+		id: 61,
 		experience: 7664
 	},
 	{
-		id: 63,
+		id: 62,
 		experience: 8239
 	},
 	{
-		id: 64,
+		id: 63,
 		experience: 8857
 	},
 	{
-		id: 65,
+		id: 64,
 		experience: 9522
 	},
 	{
-		id: 66,
+		id: 65,
 		experience: 10236
 	},
 	{
-		id: 67,
+		id: 66,
 		experience: 11003
 	},
 	{
-		id: 68,
+		id: 67,
 		experience: 11829
 	},
 	{
-		id: 69,
+		id: 68,
 		experience: 12716
 	},
 	{
-		id: 70,
+		id: 69,
 		experience: 13670
 	},
 	{
-		id: 71,
+		id: 70,
 		experience: 14695
 	},
 	{
-		id: 72,
+		id: 71,
 		experience: 15797
 	},
 	{
-		id: 73,
+		id: 72,
 		experience: 16982
 	},
 	{
-		id: 74,
+		id: 73,
 		experience: 18256
 	},
 	{
-		id: 75,
+		id: 74,
 		experience: 19625
 	},
 	{
-		id: 76,
+		id: 75,
 		experience: 21097
 	},
 	{
-		id: 77,
+		id: 76,
 		experience: 22679
 	},
 	{
-		id: 78,
+		id: 77,
 		experience: 24380
 	},
 	{
-		id: 79,
+		id: 78,
 		experience: 26209
+	},
+	{
+		id: 79,
+		experience: 28174
 	},
 	// ???
 	{

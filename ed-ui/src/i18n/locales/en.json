@@ -42,9 +42,10 @@
 		"text3": "DinoRPG is part of {EternalTwin}, if you want, you can donate on {OpenCollective}."
 	},
 	"import": {
-		"disclaimer1": "You can import your account from DinoRPG to get back your progress and all your Dinoz !",
-		"disclaimer2": "Carefull, this will reset all your current progress on EternalDinoRPG but won't touch your DinoRPG account.",
-		"disclaimer3": "You can only import one DinoRPG account and only once, this action is final and irreversible."
+		"disclaimer": "You can save your original DinoRPG account on EternalDinoRPG.&& &&All your dinoz, items and ingredients will be saved. The same applies to the status, skills, levels and appearances of your dinoz.&& &&Missions carried out by your dinoz will not be saved, some will be automatically completed due to their mandatory nature.&&The same applies to items equipped on your dinoz. To start saving, save the cookie link as a new bookmark, go to the dinorRPG site and click on the new bookmark. Then paste the cookie in the appropriate field, and click on the button of the server you wish to import.&&&Accept the use of the twinoid application when prompted.&& &&The more dinos you have in your account, the longer it will take to save. **Do not leave the page while importing.**&& &&You can restart the import a second time. Only one server can be saved. You won't be able to save the progress and dinoz of all servers at once, so choose carefully!&& &&If you have any questions or problems, don't hesitate to contact us on the Eternaltwin Discord.",
+		"imported": "Congratulations, the account named {accountName} and having the twinoid ID {accountID} has been imported !&&{nbDinos} dinoz of which {nbDemons} sacrificed dinoz have been saved from the server {server} !&& &&A new import will delete what is currently saved.",
+		"deleted": "Congratulations, the account named {accountName} and having the twinoid ID {accountID} has been removed from EternalDinoRPG !&&{nbDinos} dinoz including {nbDemons} sacrificed dinoz have been removed. You can now re-import.",
+		"disclaimer2": "You can save your Twinoid trophies and statistics by clicking on the button below."
 	},
 	"element": {
 		"fire": "Element **Fire**",

@@ -118,6 +118,15 @@ const getImportedData = (playerId: number): Promise<Player | null> => {
 		.getOne();
 };
 
+export async function getImportedTwinoidData(playerId: number): Promise<Player | null> {
+	return playerRepository
+		.createQueryBuilder('player')
+		.select(['player.eternalTwinId', 'player.id'])
+		.leftJoinAndSelect('player.twinosite', 'twinosite')
+		.where('player.id = :pId', { pId: playerId })
+		.getOne();
+}
+
 const getPlayerMoney = (playerId: number): Promise<Player | null> => {
 	return playerRepository
 		.createQueryBuilder('player')
@@ -131,7 +140,15 @@ const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
 		.createQueryBuilder('player')
 		.select(['player.createdDate', 'player.name', 'player.customText'])
 		.addSelect(['rewards.rewardId'])
-		.addSelect(['dinoz.id', 'dinoz.display', 'dinoz.name', 'dinoz.level', 'dinoz.raceId', 'dinoz.life'])
+		.addSelect([
+			'dinoz.id',
+			'dinoz.display',
+			'dinoz.name',
+			'dinoz.level',
+			'dinoz.raceId',
+			'dinoz.life',
+			'dinoz.isFrozen'
+		])
 		.addSelect(['status.statusId'])
 		.addSelect(['rank.dinozCountDisplayed', 'rank.sumPosition', 'rank.sumPointsDisplayed'])
 		.leftJoin('player.rewards', 'rewards')

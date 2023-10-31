@@ -36,4 +36,8 @@ export async function useItemDataRequest(playerId: number, itemId: number): Prom
 		.execute();
 }
 
+export async function setMultipleItem(item: Array<Partial<PlayerItem>>): Promise<Array<PlayerItem>> {
+	return itemRepository.save(item);
+}
+
 export { createItemDataRequest, updateItemDataRequest, changeItemQuantity };

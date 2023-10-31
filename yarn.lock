@@ -5480,6 +5480,7 @@ __metadata:
     multer: ^1.4.4-lts.1
     native-dinorpg: "workspace:^*"
     node-fetch: ^2.6.1
+    node-html-parser: ^6.1.10
     nodemon: ^2.0.22
     pg: ^8.4.0
     pg-hstore: ^2.3.3
@@ -6810,6 +6811,15 @@ __metadata:
   dependencies:
     function-bind: ^1.1.1
   checksum: b9ad53d53be4af90ce5d1c38331e712522417d017d5ef1ebd0507e07c2fbad8686fffb8e12ddecd4c39ca9b9b47431afbb975b8abf7f3c3b82c98e9aad052792
+  languageName: node
+  linkType: hard
+
+"he@npm:1.2.0":
+  version: 1.2.0
+  resolution: "he@npm:1.2.0"
+  bin:
+    he: bin/he
+  checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
   languageName: node
   linkType: hard
 
@@ -8982,6 +8992,16 @@ __metadata:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: b860e9976fa645ca0789c69e25387401b4396b93c8375489b5151a6c55cf2640a3b6183c212b38625ef7c508994930b72198338e3d09b9d7ade5acc4aaf51ea7
+  languageName: node
+  linkType: hard
+
+"node-html-parser@npm:^6.1.10":
+  version: 6.1.10
+  resolution: "node-html-parser@npm:6.1.10"
+  dependencies:
+    css-select: ^5.1.0
+    he: 1.2.0
+  checksum: 927f6a38b3b1cbc042bce609e24fb594d3b1e0f1067ffb416a925fa5a699e907be31980f349e094d55bab706dc16a71958b08f8dcdab62faf7b12013f29442bc
   languageName: node
   linkType: hard
 

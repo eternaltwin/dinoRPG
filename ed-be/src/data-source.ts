@@ -19,7 +19,19 @@ import {
 	PlayerItem,
 	PlayerQuest,
 	PlayerReward,
-	Ranking
+	Ranking,
+	ImportedPlayer,
+	ImportedDinoz,
+	ImportedPlayerReward,
+	ImportedDinozSkill,
+	ImportedPlayerItem,
+	ImportedDinozStatus,
+	ImportedPlayerScenario,
+	ImportedPlayerIngredients,
+	ImportedTwinoidStats,
+	ImportedTwinoidAchievements,
+	ImportedTwinoidSite,
+	Secret
 } from './entity/index.js';
 
 const dbConfig = dbConf(getEnvironnement());
@@ -50,7 +62,19 @@ export const AppDataSource = new DataSource({
 		PlayerItem,
 		PlayerQuest,
 		PlayerReward,
-		Ranking
+		Ranking,
+		ImportedPlayer,
+		ImportedDinoz,
+		ImportedPlayerReward,
+		ImportedDinozSkill,
+		ImportedPlayerItem,
+		ImportedDinozStatus,
+		ImportedPlayerScenario,
+		ImportedPlayerIngredients,
+		ImportedTwinoidStats,
+		ImportedTwinoidAchievements,
+		ImportedTwinoidSite,
+		Secret
 	],
 	migrations: ['dist/migration/*.js'],
 	subscribers: []

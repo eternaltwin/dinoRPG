@@ -25,7 +25,6 @@ import { DinozService, PlayerService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import { sessionStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozPage',

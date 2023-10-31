@@ -29,7 +29,8 @@ export default defineComponent({
 		width: Number,
 		height: Number,
 		type: String,
-		shop: Boolean
+		shop: Boolean,
+		isFrozen: Boolean
 	},
 	data() {
 		return {
@@ -82,6 +83,7 @@ export default defineComponent({
 		// Set flashVars
 		this.flashVars.data = this.display!;
 		this.flashVars.flip = this.flip ?? this.flashVars.flip;
+		if (this.isFrozen) this.flashVars.status = 'congel';
 
 		// Decode CHK
 		let decodedData = 0;
@@ -104,6 +106,7 @@ type FlashVars = {
 	chk: number;
 	damages: number;
 	flip?: number;
+	status?: string;
 };
 </script>
 

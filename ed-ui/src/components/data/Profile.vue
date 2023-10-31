@@ -45,7 +45,7 @@
 			<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
 			<a class="smallbutton">{{ $t(`myAccount.editAccount`) }}</a>
 			<a class="smallbutton">{{ $t(`myAccount.quest`) }}</a>
-			<p v-if="hasImport()" class="smallbutton" @click="openPopinImport = true">
+			<p v-if="hasImport()" class="smallbutton" @click="getCode()">
 				{{ $t(`myAccount.import`) }}
 			</p>
 			<ImportAccount v-if="openPopinImport" @closePopin="closePopin" />
@@ -74,7 +74,8 @@ export default defineComponent({
 			openPopinImport: false as boolean,
 			isEditOn: false as boolean,
 			customText: this.accountData?.customText as string | null,
-			customTextEdit: this.accountData?.customText as string | null
+			customTextEdit: this.accountData?.customText as string | null,
+			channel: import.meta.env.VITE_API_RELEASE_CHANNEL as string
 		};
 	},
 	props: {
@@ -83,11 +84,38 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		getCode(): void {
+			let server: string;
+			let API: number;
+			console.log(this.channel);
+			switch (this.channel) {
+				case 'development':
+					server = 'http://localhost:8080';
+					API = 425;
+					break;
+				case 'dinorpg.staging':
+					server = 'https://staging.dinorpg.eternaltwin.org';
+					API = 408;
+					break;
+				case 'dinorpg.production':
+					server = 'https://dinorpg.eternaltwin.org';
+					API = 423;
+					break;
+				default:
+					server = 'http://localhost:8080';
+					API = 425;
+					break;
+			}
+			window.open(
+				`https://twinoid.com/oauth/auth?response_type=code&client_id=${API}&redirect_uri=${server}/import&scope=rockfaller.com+mush.twinoid.com+mush.twinoid.es+arkadeo_plays+arkadeo.com+mush_ship_data+mush.vg+www.zombinoia.com+www.dieverdammten.de+www.die2nite.com+www.hordes.fr+applications+groups+contacts+www.dinorpg.com+es.dinorpg.com+en.dinorpg.com&state=authentification`,
+				'_self'
+			);
+		},
 		hasPlume(): boolean {
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
 		isMyAccount(): boolean {
-			return this.sessionStore.getPlayerId === parseInt(this.$route.params.id[0]);
+			return this.sessionStore.getPlayerId === parseInt(this.$route.params.id as string);
 		},
 		closePopin(): void {
 			this.openPopinImport = false;

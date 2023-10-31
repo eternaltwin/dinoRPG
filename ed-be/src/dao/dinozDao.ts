@@ -78,7 +78,8 @@ export async function getAllDinozFicheLite(playerId: number): Promise<Array<Dino
 			'dinoz.maxLife',
 			'dinoz.experience',
 			'dinoz.placeId',
-			'dinoz.order'
+			'dinoz.order',
+			'dinoz.isFrozen'
 		])
 		.innerJoin('dinoz.player', 'player', 'player.id = :pId', { pId: playerId })
 		.getMany();

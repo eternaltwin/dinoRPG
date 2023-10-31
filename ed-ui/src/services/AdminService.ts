@@ -1,6 +1,7 @@
 import { http } from '../utils/index.js';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { SecretData } from '@drpg/core/models/admin/SecretData';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -99,6 +100,21 @@ export const AdminService = {
 				statusOperation: statusOperation,
 				skill: skill,
 				skillOperation: skillOperation
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getAllSecret(): Promise<Array<SecretData>> {
+		return http()
+			.get('/admin/secret/all')
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	pushSecret(key: string, value: string): Promise<Array<SecretData>> {
+		return http()
+			.put('/admin/secret/add', {
+				key: key,
+				value: value
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));

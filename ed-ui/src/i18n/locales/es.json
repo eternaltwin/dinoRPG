@@ -42,9 +42,10 @@
 		"text3": "DinoRPG es parte del proyecto {EternalTwin}. Si lo deseas, puedes donar en {OpenCollective}."
 	},
 	"import": {
-		"disclaimer1": "¡Puedes importar tu cuenta de DinoRPG para restaurar el progreso y todos tus dinos!",
-		"disclaimer2": "Por favor, ten en cuenta que esto reiniciará tu progreso en EternalDinoRPG, pero no afectará a tu cuenta de DinoRPG.",
-		"disclaimer3": "Una cuenta de DinoRPG sólo se puede importar una sola vez, esta acción es definitiva e irreversible."
+		"disclaimer": "Puedes guardar tu cuenta original de DinoRPG en EternalDinoRPG.&&&Todos tus dinoz, objetos e ingredientes serán guardados. Lo mismo ocurre con el estado, las habilidades, los niveles y las apariencias de tus dinoz.&&&Las misiones llevadas a cabo por tus dinoz no se guardarán, algunas se completarán automáticamente debido a su carácter obligatorio.&&Lo mismo ocurre con los objetos equipados en tus dinoz. Recuerda quitarlos antes de iniciar la partida guardada.&& &&El progreso de tus misiones se guarda.&& && && &&&&&&&Para iniciar la partida guardada, guarda el enlace de la cookie como un nuevo marcador, ve a la página web de dinorRPG y haz clic en este nuevo marcador. A continuación, pega la cookie en el campo correspondiente y haz clic en el botón del servidor que deseas importar.&&&Acepta el uso de la aplicación twinoid cuando se te solicite.&&&Cuantos más dinos tengas en tu cuenta, más tardará en guardarse. **No abandones la página durante el proceso de importación&&Puedes reiniciar la importación una segunda vez. Esto borrará la copia de seguridad, pero podrás hacer nuevas copias más tarde.&& Sólo se puede hacer una copia de seguridad de un servidor. No podrás guardar tu progreso y tus dinoz de todos los servidores a la vez, así que ¡elige con cuidado!&& &&Si tienes alguna pregunta o problema, no dudes en contactar con nosotros en el Discord de Eternaltwin.",
+		"imported": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido importada! && ¡{nbDinos} dinoz, incluidos los {nbDemons} dinoz sacrificados, se han guardado del servidor {server}!&& &&Una nueva importación eliminará lo que está actualmente guardado.",
+		"deleted": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido eliminada de EternalDinoRPG! &&{nbDinos} dinoz, incluidos los {nbDemons} dinoz sacrificados, han sido eliminados. Ahora puedes volver a importar",
+		"disclaimer2": "Puedes guardar tus trofeos y estadísticas de Twinoid haciendo clic en el botón de abajo."
 	},
 	"element": {
 		"fire": "Elemento **Fuego**",

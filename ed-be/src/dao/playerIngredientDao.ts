@@ -25,4 +25,10 @@ export async function createIngredient(item: PlayerIngredient): Promise<PlayerIn
 	return ingredientRepository.save(item);
 }
 
+export async function setMultipleIngredient(
+	ingredientList: Array<Partial<PlayerIngredient>>
+): Promise<Array<PlayerIngredient>> {
+	return ingredientRepository.save(ingredientList);
+}
+
 export { getAllIngredientsDataRequest };

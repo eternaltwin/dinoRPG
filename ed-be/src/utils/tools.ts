@@ -22,4 +22,19 @@ function getRandomLetter(maxLetter: string): string {
 	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
 }
 
-export { getRandomNumber, getRandomLetter };
+export function fromBase62(s: string) {
+	const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	let result = 0;
+	for (let i = 0; i < s.length; i++) {
+		let p = digits.indexOf(s[i]);
+		if (p < 0) {
+			return NaN;
+		}
+		result += p * Math.pow(digits.length, s.length - i - 1);
+	}
+	return result;
+}
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export { getRandomNumber, getRandomLetter, sleep };

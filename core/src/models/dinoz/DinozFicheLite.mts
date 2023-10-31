@@ -9,4 +9,5 @@ export interface DinozFicheLite {
 	maxExperience?: number;
 	placeId?: number;
 	order?: number | null;
+	isFrozen: boolean;
 }

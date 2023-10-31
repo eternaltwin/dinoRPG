@@ -15,6 +15,8 @@
 					:life="dinoz.life"
 					:flip="1"
 					:race="dinoz.raceId"
+					:shop="true"
+					:isFrozen="dinoz.isFrozen"
 					style="position: absolute"
 				/>
 			</li>
@@ -58,7 +60,8 @@ export default defineComponent({
 	methods: {
 		style(dinoz: DinozFiche): string {
 			const race = Object.entries(raceList).find(race => parseInt(race[0]) === dinoz.raceId)![1];
-			if (race === 'moueffe' || race === 'pigmou') {
+			//TODO it's disabled because we disabled the vue dinoz
+			if (race === 'moueffeDisabled' || race === 'pigmouDisabled') {
 				const taille = parseInt(dinoz.display![1] === 'A' ? '9' : dinoz.display![1]);
 				const left =
 					((dinozPlacement.noFliped[dinoz.display![0]].adult.left -
