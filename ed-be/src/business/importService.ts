@@ -50,8 +50,7 @@ import { sleep } from '../utils/index.js';
 import { TwinoStat } from '@drpg/core/models/import/twinoStat';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
-import fs from 'fs';
-import { updatePoints } from "../dao/rankingDao.js";
+import { updatePoints } from '../dao/rankingDao.js';
 
 export async function importAPI(req: Request): Promise<ImportResponse | void> {
 	const secrets: Array<Secret> = await getAllSecretsRequest();
@@ -345,10 +344,10 @@ export async function importAPI(req: Request): Promise<ImportResponse | void> {
 	playerData.money = importedPlayer.money;
 	await setPlayer(playerData);
 
-  const dinozCount = importedDinoz.length;
-  const sumPoints = importedDinoz.reduce((partialSum, a) => partialSum + a.level, 0);
-  const averagePoints = Math.round(sumPoints / dinozCount);
-  await updatePoints(req.user!.playerId!, sumPoints, averagePoints, dinozCount);
+	const dinozCount = importedDinoz.length;
+	const sumPoints = importedDinoz.reduce((partialSum, a) => partialSum + a.level, 0);
+	const averagePoints = Math.round(sumPoints / dinozCount);
+	await updatePoints(req.user!.playerId!, sumPoints, averagePoints, dinozCount);
 
 	return {
 		status: 'imported',
@@ -458,14 +457,14 @@ export async function importTwinoidData(req: Request): Promise<void> {
 }
 
 export async function displayTwinoidSite(req: Request): Promise<Array<TwinoStat>> {
-  const playerId = req.params.id
+	const playerId = req.params.id;
 	const playerSite: Array<ImportedTwinoidSite> = await getImportedPlayerSite(parseInt(playerId));
 	return playerSite.map(site => site.toTwinoStat());
 }
 
 export async function displayTwinoidSpecificSite(req: Request): Promise<Array<SiteStat> | Array<SiteAchiev>> {
 	const site: number = parseInt(req.params.site);
-  const playerId = req.params.id
+	const playerId = req.params.id;
 	const type: string = req.params.type;
 	if (type === 'stat') {
 		const playerSite: Array<ImportedTwinoidStats> = await getImportedPlayerSpecificSiteStat(parseInt(playerId), site);

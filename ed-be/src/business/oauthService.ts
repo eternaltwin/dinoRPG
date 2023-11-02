@@ -2,13 +2,14 @@ import { Request } from 'express';
 import { createPlayer, getPlayerId } from '../dao/playerDao.js';
 import { getConfig, forgeJWT } from '../utils/index.js';
 import { Config } from '@drpg/core/models/config/Config';
-import { Player } from '../entity/index.js';
+import { Player, Secret } from '../entity/index.js';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/rfc-oauth-client';
 import { OauthAccessToken } from '@eternal-twin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { getAllSecretsRequest } from '../dao/secretDao.js';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -28,6 +29,15 @@ export async function authenticateToET(req: Request): Promise<string> {
 	} catch (err) {
 		console.error(err);
 		throw new ErrorFormator(500, 'An error occurred');
+	}
+
+	const secrets: Array<Secret> = await getAllSecretsRequest();
+	const beta = secrets.find(s => s.key === 'beta');
+	const userAllowedBeta = secrets.find(s => s.key === user.user.id);
+	const admins: Array<string | undefined> = Object.values(config.admin);
+
+	if (beta && !admins.includes(user.user.id) && !userAllowedBeta) {
+		throw new ErrorFormator(500, `User ${user.user.id}, you are not allowed to enter beta website.`);
 	}
 
 	// Check if player already exists in database

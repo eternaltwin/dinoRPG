@@ -75,7 +75,7 @@ routes.get(`${commonPath}/dinozList`, async (req: Request, res: Response) => {
 	}
 });
 
-routes.get(`${commonPath}/twinoStats/:id`,[param('id').exists().isNumeric()], async (req: Request, res: Response) => {
+routes.get(`${commonPath}/twinoStats/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -92,7 +92,7 @@ routes.get(`${commonPath}/twinoStats/:id`,[param('id').exists().isNumeric()], as
 
 routes.get(
 	`${commonPath}/twinoStats/:id/:type/:site`,
-	[param('id').exists().isNumeric(),param('type').exists().isString(), param('site').exists().isNumeric()],
+	[param('id').exists().isNumeric(), param('type').exists().isString(), param('site').exists().isNumeric()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

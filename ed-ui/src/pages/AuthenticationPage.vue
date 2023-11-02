@@ -9,6 +9,7 @@ import { defineComponent } from 'vue';
 import { OauthService } from '../services/index.js';
 import { sessionStore } from '../store/index.js';
 import EventBus from '../events/index.js';
+import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
 	name: 'Authentication',
@@ -26,7 +27,7 @@ export default defineComponent({
 				jwt = await OauthService.authenticateUser(this.$route.query.code as string);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				console.error(err);
+				errorHandler.handle(err);
 				return;
 			}
 
