@@ -52,7 +52,8 @@ import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { updatePoints } from '../dao/rankingDao.js';
 
-export async function importAPI(req: Request): Promise<ImportResponse | void> {
+// Import are not available
+/*export async function importAPI(req: Request): Promise<ImportResponse | void> {
 	const secrets: Array<Secret> = await getAllSecretsRequest();
 	const twinoidAPISecret = secrets.find(s => s.key === 'twinoAPI');
 	if (!twinoidAPISecret) {
@@ -454,7 +455,7 @@ export async function importTwinoidData(req: Request): Promise<void> {
 	await saveSite(playerData.twinosite);
 	await saveStats(playerData.twinoStats);
 	await saveAchievements(playerData.twinoAchievement);
-}
+}*/
 
 export async function displayTwinoidSite(req: Request): Promise<Array<TwinoStat>> {
 	const playerId = req.params.id;

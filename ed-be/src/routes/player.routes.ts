@@ -162,7 +162,9 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: 
 	}
 });
 
-routes.put(
+
+// Import are not available
+/*routes.put(
 	`${commonPath}/importAPI`,
 	[
 		body('code').exists().notEmpty().isString(),
@@ -204,7 +206,7 @@ routes.put(
 			res.status(e.errorCode).send(e.message);
 		}
 	}
-);
+);*/
 
 /**
  * @openapi

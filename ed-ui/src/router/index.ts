@@ -104,11 +104,12 @@ const router = createRouter({
 					name: 'Gather',
 					component: GatherPage
 				},
-				{
+        // Import are not available
+				/*{
 					path: '/import',
 					name: 'ImportPage',
 					component: ImportPage
-				}
+				}*/
 			]
 		},
 		{

@@ -45,9 +45,9 @@
 			<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
 			<a class="smallbutton">{{ $t(`myAccount.editAccount`) }}</a>
 			<a class="smallbutton">{{ $t(`myAccount.quest`) }}</a>
-			<p v-if="hasImport()" class="smallbutton" @click="getCode()">
+<!--			<p v-if="hasImport()" class="smallbutton" @click="getCode()">
 				{{ $t(`myAccount.import`) }}
-			</p>
+			</p>-->
 			<ImportAccount v-if="openPopinImport" @closePopin="closePopin" />
 		</div>
 	</div>
@@ -84,7 +84,8 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		getCode(): void {
+    // Import are not available
+		/*getCode(): void {
 			let server: string;
 			let API: number;
 			console.log(this.channel);
@@ -110,7 +111,7 @@ export default defineComponent({
 				`https://twinoid.com/oauth/auth?response_type=code&client_id=${API}&redirect_uri=${server}/import&scope=rockfaller.com+mush.twinoid.com+mush.twinoid.es+arkadeo_plays+arkadeo.com+mush_ship_data+mush.vg+www.zombinoia.com+www.dieverdammten.de+www.die2nite.com+www.hordes.fr+applications+groups+contacts+www.dinorpg.com+es.dinorpg.com+en.dinorpg.com&state=authentification`,
 				'_self'
 			);
-		},
+		},*/
 		hasPlume(): boolean {
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
