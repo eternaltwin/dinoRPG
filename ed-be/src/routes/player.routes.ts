@@ -18,8 +18,8 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import {
 	displayTwinoidSite,
 	displayTwinoidSpecificSite,
-	importAPI,
-	importTwinoidData
+	// importAPI,
+	// importTwinoidData
 } from '../business/importService.js';
 import { TwinoStat } from '@drpg/core/models/import/twinoStat';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
