@@ -21,8 +21,7 @@
 			<DinozWithoutFlash
 				:style="{
 					position: `relative`,
-					left: `53px`,
-					top: `85px`
+					top: `45px`
 				}"
 				:display="dinozData.display"
 				:life="dinozData.life"
@@ -176,14 +175,21 @@ export default defineComponent({
 			this.isSpinOver = true;
 		},
 		learnSkill(skillId: number): void {
-			if (confirm()) {
+			if (
+				confirm(
+					this.$t('levelup.confirmSkill', {
+						skill: this.$t(`skill.name.${skillNameList[skillId]}`),
+						level: this.dinozData.level
+					})
+				)
+			) {
 				const skillIdList: Array<number> = [skillId];
 
 				this.learnSkillAndSetStore(skillIdList);
 			}
 		},
 		unlockSkill(): void {
-			if (confirm()) {
+			if (confirm(this.$t('levelup.confirmUnlock', { quantity: this.availableSkills.unlockableSkills?.length }))) {
 				if (!this.availableSkills.unlockableSkills) {
 					return;
 				}

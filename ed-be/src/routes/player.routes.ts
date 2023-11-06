@@ -17,7 +17,7 @@ import { getPlayerMoney } from '../dao/playerDao.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import {
 	displayTwinoidSite,
-	displayTwinoidSpecificSite,
+	displayTwinoidSpecificSite
 	// importAPI,
 	// importTwinoidData
 } from '../business/importService.js';
@@ -161,7 +161,6 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: 
 		res.status(e.errorCode).send(e.message);
 	}
 });
-
 
 // Import are not available
 /*routes.put(

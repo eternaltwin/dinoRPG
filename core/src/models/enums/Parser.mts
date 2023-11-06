@@ -29,7 +29,8 @@ export enum ConditionEnum {
 	HIDE_PLACE = 'hidePlace',
 	PLACE_IS = 'place_is',
 	NEXT_PLACE = 'next_place',
-	OVERWRITE = 'overwrite'
+	OVERWRITE = 'overwrite',
+	DINOZ_LIFE = 'dinoz_life'
 }
 
 export enum TriggerEnum {

@@ -23,10 +23,10 @@ export async function getDinozPlaceRequest(dinozId: number): Promise<Dinoz | nul
 export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
-		.select(['dinoz.isFrozen'])
+		.select(['dinoz.isFrozen', 'dinoz.isSacrificed'])
 		.addSelect(['player.id', 'player.leader'])
 		.innerJoin('dinoz.player', 'player')
-		.where('player.id = :pId AND dinoz.isFrozen = FALSE', { pId: playerId })
+		.where('player.id = :pId AND dinoz.isFrozen = FALSE AND dinoz.isSacrificed = FALSE', { pId: playerId })
 		.getMany();
 }
 

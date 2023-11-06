@@ -25,16 +25,16 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		stepName: 'nothing2',
 		nextStep: [],
 		condition: {
-			conditionType: ConditionEnum.MAXLEVEL,
-			value: 7,
-			operator: ConditionOperatorEnum.AND,
+			conditionType: ConditionEnum.STATUS,
+			value: statusList.BUOY,
+			operator: ConditionOperatorEnum.OR,
 			nextCondition: {
 				conditionType: ConditionEnum.STATUS,
-				value: statusList.BUOY,
-				operator: ConditionOperatorEnum.OR,
+				value: statusList.CLIMBING_GEAR,
+				operator: ConditionOperatorEnum.AND,
 				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.CLIMBING_GEAR
+					conditionType: ConditionEnum.MAXLEVEL,
+					value: 7
 				}
 			}
 		}

@@ -46,14 +46,29 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 		case ConditionEnum.RANDOM:
 			const score: number = Math.floor(Math.random() * condition.value);
 			const target: number = 0;
-			result = score == target;
-			break;
+			return score == target;
 		case ConditionEnum.NEXT_PLACE:
 			result = futurPlace === condition.value;
 			break;
 		case ConditionEnum.COLLEC:
 			const playerRewards = dinoz.player.rewards;
 			result = playerRewards.some(reward => reward.rewardId === condition.value);
+			break;
+		case ConditionEnum.DINOZ_LIFE:
+			switch (condition.target) {
+				case 'equal':
+					return dinoz.life === condition.value;
+				case 'greater':
+					return dinoz.life > condition.value;
+				case 'greaterEqual':
+					return dinoz.life >= condition.value;
+				case 'lesser':
+					return dinoz.life < condition.value;
+				case 'lesserEqual':
+					return dinoz.life <= condition.value;
+				default:
+					return false;
+			}
 			break;
 		default:
 			result = false;
@@ -62,7 +77,7 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 
 	if (!result) result = false;
 
-	if (condition.conditionType !== ConditionEnum.RANDOM && condition.reverse) {
+	if (condition.reverse) {
 		result = !result;
 	}
 	return result;

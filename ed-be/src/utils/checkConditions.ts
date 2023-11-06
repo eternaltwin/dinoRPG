@@ -10,7 +10,7 @@ export function checkCondition(condition: Condition | undefined, dinoz: Dinoz): 
 	if (condition.nextCondition && condition.operator === ConditionOperatorEnum.AND) {
 		conditionResult = conditionResult && checkCondition(condition.nextCondition, dinoz);
 	} else if (condition.nextCondition && condition.operator === ConditionOperatorEnum.OR) {
-		conditionResult = conditionResult || checkCondition(condition.nextCondition, dinoz);
+		conditionResult = checkCondition(condition.nextCondition, dinoz);
 	}
 
 	if (condition.operator === ConditionOperatorEnum.OR) {

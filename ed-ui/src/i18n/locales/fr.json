@@ -2877,6 +2877,8 @@
 		"level": "Niv.",
 		"learn": "Apprendre",
 		"unlock1": "Débloquer ",
+		"confirmSkill": "Désirez-vous apprendre {skill} pour votre passage au niveau {level} ?",
+		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
 		"unlock2": " compétences supplémentaires",
 		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
 		"small": "Ce dinoz a gagné un niveau !",

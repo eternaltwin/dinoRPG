@@ -6,13 +6,7 @@
 	</div>
 	<a class="right" />
 	<Tippy theme="normal" tag="div" id="dinozVisual">
-		<DinozWithoutFlash
-			:style="style(dinozData.display)"
-			:display="dinozData.display"
-			:life="dinozData.life"
-			:flip="-1"
-			:race="dinozData.race.raceId"
-		/>
+		<DinozWithoutFlash :display="dinozData.display" :life="dinozData.life" :flip="-1" :race="dinozData.race.raceId" />
 		<template #content>
 			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
 			<p>

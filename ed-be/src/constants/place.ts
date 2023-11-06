@@ -96,7 +96,13 @@ export const placeList: Record<string, Place> = {
 		borderPlace: [1],
 		conditions: {
 			conditionType: ConditionEnum.STATUS,
-			value: statusList.SKULLY_MEMORY
+			value: statusList.SKULLY_MEMORY,
+			operator: ConditionOperatorEnum.OR,
+			nextCondition: {
+				conditionType: ConditionEnum.DINOZ_LIFE,
+				value: 10,
+				target: 'lesserEqual'
+			}
 		},
 		map: MapZone.DINOLAND
 	},

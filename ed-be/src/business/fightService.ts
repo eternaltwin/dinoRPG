@@ -168,7 +168,8 @@ export async function rewardFight(
 		// bonus for fighters of same level of the monster
 		if (Math.abs(dinozData.level - monster.level) <= 5) xp += monster.xpBonus ?? 0;
 	}
-	const experienceGained = xp + dinozData.experience > maxExp ? maxExp - dinozData.experience : xp;
+
+	const experienceGained = xp + dinozData.experience > maxExp ? maxExp - dinozData.experience : Math.round(xp);
 
 	let fprob = getRandomNumber(0, 100);
 	let goldMultiplier = 1;

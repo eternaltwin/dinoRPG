@@ -103,8 +103,8 @@ const router = createRouter({
 					path: '/gather/:dinozId/:type',
 					name: 'Gather',
 					component: GatherPage
-				},
-        // Import are not available
+				}
+				// Import are not available
 				/*{
 					path: '/import',
 					name: 'ImportPage',

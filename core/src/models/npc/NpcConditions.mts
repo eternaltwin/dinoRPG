@@ -24,6 +24,13 @@ export type Condition =
 			operator?: ConditionOperatorEnum;
 	  }
 	| {
+			conditionType: ConditionEnum.DINOZ_LIFE;
+			value: number;
+			target: 'equal' | 'greater' | 'greaterEqual' | 'lesser' | 'lesserEqual';
+			nextCondition?: Condition;
+			operator?: ConditionOperatorEnum;
+	  }
+	| {
 			conditionType: ConditionEnum.SCENARIO;
 			value: string;
 			step: number;
@@ -51,6 +58,7 @@ export type Condition =
 				| ConditionEnum.STATUS
 				| ConditionEnum.COLLEC
 				| ConditionEnum.NEXT_PLACE
+				| ConditionEnum.DINOZ_LIFE
 			>;
 			value: string;
 			reverse?: boolean;
