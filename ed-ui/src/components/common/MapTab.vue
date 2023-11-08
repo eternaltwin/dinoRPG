@@ -66,6 +66,7 @@ export default defineComponent({
 	display: block;
 	height: 20px;
 	padding-left: 8px;
+	padding-top: 4px;
 	color: #ffee92;
 	font-size: 12pt;
 	font-variant: small-caps;
