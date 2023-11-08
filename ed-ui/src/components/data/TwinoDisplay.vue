@@ -179,7 +179,7 @@ export default defineComponent({
 	height: auto;
 	max-height: 600px;
 	overflow: auto;
-	width: 304px;
+	width: 305px;
 	margin-bottom: 10px;
 	h3 {
 		display: flex;

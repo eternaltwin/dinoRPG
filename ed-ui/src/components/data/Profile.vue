@@ -151,7 +151,7 @@ export default defineComponent({
 		url('../../assets/design/info_footer.webp') no-repeat, url('../../assets/design/info_center.webp') repeat-y;
 	background-position-y: top, bottom;
 	height: auto;
-	width: 304px;
+	width: 305px;
 	margin-bottom: 10px;
 	h3 {
 		display: flex;
