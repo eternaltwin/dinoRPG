@@ -1,6 +1,6 @@
 <template>
 	<ul class="rightMenu">
-		<li>
+		<li class="time-wrapper">
 			<div class="time">{{ time }}</div>
 		</li>
 		<li>
@@ -119,6 +119,7 @@ export default defineComponent({
 	background-position-y: top, bottom;
 	display: block;
 	list-style: none;
+
 	// margin-block-start: 1em;
 	// margin-block-end: 1em;
 	// margin-inline-start: 0px;
@@ -127,6 +128,7 @@ export default defineComponent({
 	li {
 		width: 100px;
 	}
+
 	a {
 		text-decoration: none;
 		border-collapse: collapse;
@@ -152,11 +154,13 @@ export default defineComponent({
 		padding-top: 0px;
 		text-align: left;
 	}
+
 	a:hover {
 		background-color: #9a4029;
 		color: #fce3bc;
 		cursor: pointer;
 	}
+
 	p {
 		border-collapse: collapse;
 		border-spacing: 0px 0px;
@@ -182,16 +186,21 @@ export default defineComponent({
 		text-align: left;
 	}
 }
-.time {
-	display: inline;
-	width: 70px;
-	height: 16px;
-	padding-left: 20px;
-	padding-bottom: 2px;
-	font-size: 10pt;
-	background-image: url('../../assets/design/small_chrono.webp');
-	background-repeat: no-repeat;
-	margin-left: 3px;
-	line-height: 12px;
+
+.time-wrapper {
+	margin-bottom: 4px;
+
+	.time {
+		display: inline;
+		width: 70px;
+		height: 16px;
+		padding-left: 20px;
+		padding-bottom: 2px;
+		font-size: 10pt;
+		background-image: url('../../assets/design/small_chrono.webp');
+		background-repeat: no-repeat;
+		margin-left: 3px;
+		line-height: 12px;
+	}
 }
 </style>
