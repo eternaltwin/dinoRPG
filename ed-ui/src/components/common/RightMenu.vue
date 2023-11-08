@@ -187,6 +187,7 @@ export default defineComponent({
 	width: 70px;
 	height: 16px;
 	padding-left: 20px;
+	padding-bottom: 2px;
 	font-size: 10pt;
 	background-image: url('../../assets/design/small_chrono.webp');
 	background-repeat: no-repeat;

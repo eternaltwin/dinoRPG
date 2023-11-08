@@ -40,7 +40,7 @@
 			</div>
 			<div class="results money">{{ beautifulMoney(fight.goldEarned) }}</div>
 		</div>
-		<a class="button" @click="returnToDinoz()">Continuer</a>
+		<a class="button" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</a>
 		<a class="button" v-if="isDevEnv()" @click="processFight()">Combattre de nouveau</a>
 		<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
 	</div>

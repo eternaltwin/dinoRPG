@@ -7,9 +7,9 @@ Un [board](https://gitlab.com/eternal-twin/dinorpg/dinorpg/-/boards/2968003?labe
 # Prérequis
 
 Il est nécessaire d'avoir docker et docker-compose d'insntallé pour faire tourner l'environnement de dev.
-* [Docker](https://docs.docker.com/get-docker/) 
+* [Docker](https://docs.docker.com/get-docker/)
   * _(Windows)_ pendant l'installation, suivre la procédure pour WSL2
-* [Docker-compose](https://docs.docker.com/compose/install/) 
+* [Docker-compose](https://docs.docker.com/compose/install/)
 
 Docker doit être utilisable en temps qu'utilisateur non root sans sudo.
 Le fichier config_dev.toml doit vous être fournis par les dev.
@@ -27,6 +27,14 @@ $ git clone git@gitlab.com:eternal-twin/dinorpg/dinorpg.git
 Checkout sur master:
 ```bash
 $ git checkout master
+```
+
+Installer `make` si ce n'est pas déjà fait:
+```bash
+# Windows
+$ choco install make
+# Linux
+$ sudo apt install make
 ```
 
 Builder les containers:
@@ -105,7 +113,7 @@ compte les changements du côté Node.
 sans optimization.
 
 Autrement, il est possible de compiler la partie native directement:
-- Lancer les dockers -si c'est utilisé (i.e hors prod)- avec `make docker-start`)
+- Lancer les dockers -si c'est utilisé (i.e hors prod)- avec `make docker-start`
 - Lancer le bash dans le docker `drpg` avec `make bash`
 - Aller dans `native` avec `cd native`
 - 2 options de compilation:
@@ -159,4 +167,4 @@ $ docker container prune (supprimera tout les container existant sur le poste /!
 ```
 
 ## Comptes
-Il n'est pas nécessaire de recréer un compte ET à chaque fois. Temps que le container drpg_database n'est pas wype, l'environnement est persistant.
+Il n'est pas nécessaire de recréer un compte ET à chaque fois. Temps que le container drpg_database n'est pas wipe, l'environnement est persistant.

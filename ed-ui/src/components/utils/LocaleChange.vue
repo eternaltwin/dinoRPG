@@ -46,6 +46,11 @@ ol {
 	height: 7px;
 	margin: 0.6em auto 0.1em;
 	padding: 2px;
+	cursor: pointer;
+
+	&:not(.selected):hover {
+		outline: #c87560 solid 3px;
+	}
 }
 .fr {
 	background-image: url('/src/assets/design/lang_fr.webp');

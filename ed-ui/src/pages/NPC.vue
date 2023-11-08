@@ -10,7 +10,9 @@
 		</div>
 		<div class="footer">
 			<AnimatedNPC :NPC="npcSpeech.name" :flashvars="npcSpeech.flashvars" />
-			<a class="button" @click="stop()">{{ $t(`npc.stop`) }}</a>
+			<a class="button" @click="stop()">
+				<span v-html="formatContent($t(`npc.stop`))" />
+			</a>
 			<span class="dialog">
 				{{ $t(`npc.${npcName}.speech.${npcSpeech.speech}`) }}
 			</span>
@@ -132,15 +134,23 @@ export default defineComponent({
 		overflow: hidden;
 		.button {
 			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			margin-left: 419px;
 			margin-top: 107px;
-			padding-top: 4px;
+			padding: 0;
 			font-size: 9pt;
 			line-height: 7pt;
-			width: 95px;
+			width: 96px;
+			height: 28px;
 			background-image: url('../assets/button/button_small.webp');
 			&:hover {
 				background-image: url('../assets/button/button_small_hover.webp');
+			}
+
+			span {
+				padding: 4px 6px;
 			}
 		}
 		.dialog {

@@ -119,6 +119,10 @@ p:first-letter {
 		color: white;
 	}
 
+  &>span:first-letter {
+    color: white;
+  }
+
 	&:hover {
 		color: white;
 		background-image: url("../assets/button/button_hover.webp");

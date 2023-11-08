@@ -29,6 +29,7 @@
 					:id="itemNameList[item.itemId]"
 					:key="index"
 					tag="a"
+					:offset="[0, 10]"
 				>
 					<img
 						:src="getImgURL('item', `item_${itemNameList[item.itemId]}`)"
@@ -350,6 +351,7 @@ export default defineComponent({
 				border: 1px solid #b37047;
 				border-radius: 0px;
 				-webkit-border-radius: 0px;
+				cursor: pointer;
 				&:hover {
 					border-color: white;
 					z-index: 3;

@@ -2907,6 +2907,7 @@
 		"win": "You **win** this fight!",
 		"lose": "You have **lost**...",
 		"lvlup": "A dinoz earned an **extra level**!",
+    "continue": "Continue",
 		"display": "Show the battle",
 		"resume": "You fought an {enemy}"
 	},
