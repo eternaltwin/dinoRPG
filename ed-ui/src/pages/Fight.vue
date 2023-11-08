@@ -27,7 +27,7 @@
 			/>
 			<div class="results life">{{ fight.hpLost }}</div>
 			<div class="results xp">
-				{{ beautifulMoney(fight.xpEarned) }}
+				{{ fight.xpEarned }}
 				<img
 					v-if="fight.result && fight.xpEarned === 0"
 					:src="getImgURL('icons', `small_lup`)"
@@ -38,10 +38,10 @@
 					}"
 				/>
 			</div>
-			<div class="results money">{{ beautifulMoney(fight.goldEarned) }}</div>
+			<div class="results money">{{ fight.goldEarned }}</div>
 		</div>
 		<a class="button" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</a>
-		<a class="button" v-if="isDevEnv()" @click="processFight()">Combattre de nouveau</a>
+		<a class="button" v-if="isDevEnv()" @click="processFight()">[Dev] Fight again</a>
 		<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
 	</div>
 </template>
@@ -51,7 +51,7 @@ import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { FightService } from '../services/index.js';
 import { localStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { errorHandler, utils } from '../utils/index.js';
+import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
 import { defineComponent } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -100,9 +100,6 @@ export default defineComponent({
 		displayFight(): void {
 			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
 			this.fightHistory = this.fight.history.replace(/\n/g, '<br>');
-		},
-		beautifulMoney(money: number): string | undefined {
-			return utils.beautifulNumber(money.toString());
 		}
 	},
 	created(): void {
