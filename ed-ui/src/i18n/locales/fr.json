@@ -2096,6 +2096,10 @@
 	},
 	"missions": {
 		"header": "Liste des Missions",
+		"headers": {
+			"title": "Titre",
+			"status": "Statut"
+		},
 		"xp": "points d'expérience",
 		"gold": "pièces",
 		"item": "Objets :",
