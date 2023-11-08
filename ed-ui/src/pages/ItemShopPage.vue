@@ -29,7 +29,6 @@
 					:id="itemNameList[item.itemId]"
 					:key="index"
 					tag="a"
-					:offset="[0, 10]"
 				>
 					<img
 						:src="getImgURL('item', `item_${itemNameList[item.itemId]}`)"
@@ -520,10 +519,7 @@ export default defineComponent({
 				margin-top: 4px;
 				margin-bottom: 4px;
 				margin-right: 2px;
-				padding-top: 3px;
-				padding-bottom: 3px;
-				padding-right: 5px;
-				padding-left: 10px;
+				padding: 3px 6px;
 				border-radius: 10px;
 				-webkit-border-radius: 10px;
 				font-size: 8pt;
