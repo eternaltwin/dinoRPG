@@ -91,17 +91,16 @@ export default defineComponent({
 
 	ul {
 		list-style: none;
-		margin-left: 16px;
+		margin-left: 17px;
 		text-align: left;
-		margin-top: 22px;
+		margin-top: 23px;
 	}
 
 	li {
-		display: inline;
+		display: inline-block;
 		padding-right: 3px;
+		padding-bottom: 3px;
 		img {
-			margin-top: 2px;
-			margin-left: 1px;
 			position: relative;
 			&:hover {
 				outline: 1px solid white;
