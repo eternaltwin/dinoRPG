@@ -15,7 +15,7 @@ Docker doit être utilisable en temps qu'utilisateur non root sans sudo.
 Le fichier config_dev.toml doit vous être fournis par les dev.
 
 
-# Installation
+# Installation (Linux)
 
 
 Pour déployer l'environnement de dev, suivez les étapes suivantes :
@@ -31,9 +31,6 @@ $ git checkout master
 
 Installer `make` si ce n'est pas déjà fait:
 ```bash
-# Windows
-$ choco install make
-# Linux
 $ sudo apt install make
 ```
 
@@ -56,6 +53,35 @@ Une fois le lancement terminé vous devriez pouvoir accéder à :
   - DinoRPG_Front : http://localhost:8080
   - Eternal Twin local : http://localhost:50320
 
+
+# Installation (Windows)
+
+
+Pour déployer l'environnement de dev, suivez les étapes suivantes :
+
+- Cloner le projet
+```bash
+$ git clone git@gitlab.com:eternal-twin/dinorpg/dinorpg.git
+```
+- Checkout sur develop:
+```bash
+$ git checkout develop
+```
+- Installer les dépendances :
+```bash
+$ yarn install
+```
+- Créer deux bases de données sur votre serveur postgresql, une pour drpg et une pour etwin
+- Configurer dans `./Eternaltwin` le fichier etwin.toml
+- Configurer dans `./ed-be` le fichier config_development.toml
+- Installer `cargo`: https://win.rustup.rs/
+- Aller dans le dossier `./native` et lancer la commande `cargo build`
+- Aller dans le dossier `./Eternaltwin` et lancer la commande `yarn install`
+- Revenir à la racine du projet et lancer la commande `yarn dev:windows`
+
+Une fois le lancement terminé vous devriez pouvoir accéder à :
+  - DinoRPG_Front : http://localhost:8080
+  - Eternal Twin local : http://localhost:50320
 # Erreurs possible
 
 ## Base de données
