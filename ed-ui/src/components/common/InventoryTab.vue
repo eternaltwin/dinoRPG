@@ -27,7 +27,9 @@
 							theme: 'small'
 						}"
 					>
-						{{ item.quantity }}
+						<div>
+							{{ item.quantity }}
+						</div>
 					</td>
 					<td class="act">
 						<a
@@ -263,6 +265,13 @@ export default defineComponent({
 	padding-left: 4px;
 	padding-right: 4px;
 	vertical-align: center;
+
+	& > div {
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 .off:hover {
 	background-color: transparent;
