@@ -6,8 +6,8 @@
 	<table>
 		<tbody>
 			<tr>
-				<th class="name">Titre</th>
-				<th class="status">Status</th>
+				<th class="name">{{ $t('missions.headers.title') }}</th>
+				<th class="status">{{ $t('missions.headers.status') }}</th>
 			</tr>
 			<tr v-for="mission in missionList" :key="mission.missionId" :class="mission.status">
 				<td class="name" @click="getInformation(mission)">
