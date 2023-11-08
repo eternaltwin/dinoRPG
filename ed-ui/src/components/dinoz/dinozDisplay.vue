@@ -1,10 +1,10 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
-	<a class="left" />
+	<a class="left" @click="goToDinozPage(-1)" />
 	<div class="title">
 		{{ dinozData.name }}
 	</div>
-	<a class="right" />
+	<a class="right" @click="goToDinozPage(1)" />
 	<Tippy theme="normal" tag="div" id="dinozVisual">
 		<DinozWithoutFlash :display="dinozData.display" :life="dinozData.life" :flip="-1" :race="dinozData.race.raceId" />
 		<template #content>
@@ -24,6 +24,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, raceList } from '../../constants/index.js';
+import { sessionStore } from 'src/store';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -37,6 +38,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			sessionStore: sessionStore(),
 			nameChoosen: undefined as boolean | undefined,
 			position: dinozPlacement
 		};
@@ -60,6 +62,15 @@ export default defineComponent({
 				return `position: absolute; left: ${left}px; top: ${top}px;`;
 			}
 			return 'top: -15px;';
+		},
+		goToDinozPage(shift: number): void {
+			const currentIndex = this.sessionStore.getDinozList.findIndex(dinoz => dinoz.id === this.dinozData.id);
+			if (currentIndex === -1) return;
+
+			const newIndex = currentIndex + shift;
+			if (newIndex < 0 || newIndex >= this.sessionStore.getDinozList.length) return;
+
+			this.$router.push({ name: 'DinozPage', params: { id: this.sessionStore.getDinozList[newIndex].id } });
 		}
 	}
 });
