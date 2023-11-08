@@ -19,7 +19,8 @@ const vueTippyProps = {
 		allowHTML: true,
 		inlinePositioning: true,
 		duration: [50, 50],
-		hideOnClick: false
+		hideOnClick: false,
+		offset: [10, 20]
 	}
 };
 
