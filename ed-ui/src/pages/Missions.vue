@@ -17,7 +17,7 @@
 					<Tippy
 						v-if="mission.status === 'unavailable'"
 						tag="img"
-						:src="getImgURL('icons', 'helpFR')"
+						:src="getImgURL('icons', `help${getLanguage()}`)"
 						theme="normal"
 						class="help"
 					>
@@ -84,6 +84,9 @@ export default defineComponent({
 				errorHandler.handle(err);
 				return;
 			}
+		},
+		getLanguage() {
+			return this.$i18n.locale.toLocaleUpperCase();
 		}
 	},
 	async mounted(): Promise<void> {
@@ -106,10 +109,12 @@ export default defineComponent({
 	border: 1px solid #bc683c;
 	cursor: help;
 	margin-left: 5px;
+
 	&:hover {
 		outline: 1px solid white;
 	}
 }
+
 .section {
 	height: 45px;
 	margin-left: -15px;
@@ -118,6 +123,7 @@ export default defineComponent({
 	background-position: left bottom;
 	background-repeat: no-repeat;
 }
+
 table {
 	width: 100%;
 	margin-bottom: 10px;
@@ -191,23 +197,28 @@ table {
 				background-position: -10px 0px;
 				max-width: 4px;
 			}
+
 			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
 		}
+
 		&.available {
 			cursor: pointer;
 			text-decoration: underline;
 			text-decoration-color: #710;
 			font-style: normal;
 		}
+
 		&.available:hover {
 			td {
 				color: white;
 				border-color: #9a4029;
 			}
 		}
+
 		&.unavailable {
 			font-style: normal;
+
 			td {
 				background-image: url('../assets/background/table_cell_off.webp');
 				color: #db9c57;
@@ -215,6 +226,7 @@ table {
 				font-style: italic;
 			}
 		}
+
 		&.ongoing {
 			td {
 				background-image: url('../assets/background/table_cell_hover.webp');

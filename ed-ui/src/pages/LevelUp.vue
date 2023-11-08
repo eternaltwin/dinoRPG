@@ -98,7 +98,7 @@
 									{{ $t(`levelup.unlock1`) }}
 									{{ availableSkills.unlockableSkills.length }}
 									{{ $t(`levelup.unlock2`) }}
-									<Tippy tag="img" :src="getImgURL('icons', 'helpFR')" theme="normal" class="help">
+									<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
 										<template #content>
 											<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
 											<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
@@ -234,6 +234,9 @@ export default defineComponent({
 				errorHandler.handle(err);
 				return;
 			}
+		},
+		getLanguage() {
+			return this.$i18n.locale.toLocaleUpperCase();
 		}
 	},
 	async created(): Promise<void> {
