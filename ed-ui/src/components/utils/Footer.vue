@@ -172,6 +172,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { developers, helpers } from '../../constants/index.js';
+import { utils } from 'src/utils';
 
 export default defineComponent({
 	name: 'FooterComp',
@@ -187,8 +188,8 @@ export default defineComponent({
 		};
 	},
 	mounted() {
-		this.randomDev = this.developers.sort(() => 0.5 - Math.random());
-		this.randomHelpers = this.helpers.sort(() => 0.5 - Math.random()).toString();
+		this.randomDev = utils.shuffle(this.developers);
+		this.randomHelpers = utils.shuffle(this.helpers).join(', ');
 	}
 });
 </script>
