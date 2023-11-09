@@ -172,7 +172,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { developers, helpers } from '../../constants/index.js';
-import { utils } from 'src/utils';
+import { utils } from '../../utils';
 
 export default defineComponent({
 	name: 'FooterComp',

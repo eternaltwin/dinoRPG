@@ -24,7 +24,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, raceList } from '../../constants/index.js';
-import { sessionStore } from 'src/store';
+import { sessionStore } from '../../store';
 
 export default defineComponent({
 	name: 'DinozDisplay',
