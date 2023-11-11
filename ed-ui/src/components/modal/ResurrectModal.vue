@@ -48,6 +48,7 @@
 import EventBus from '../../events/index.js';
 import { DinozService, InventoryService } from '../../services/index.js';
 import { defineComponent } from 'vue';
+import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
 	name: 'Resurrect',
@@ -57,13 +58,21 @@ export default defineComponent({
 	methods: {
 		async resurrect(): Promise<void> {
 			const dinozId = parseInt(this.$route.params.id as string);
-			await DinozService.resurrectDinoz(dinozId);
+			try {
+				await DinozService.resurrectDinoz(dinozId);
+			} catch (e) {
+				errorHandler.handle(e);
+			}
 			EventBus.emit('refreshDinoz', true);
 			this.$emit('close');
 		},
 		async useAngelPotion(): Promise<void> {
 			const dinozId = parseInt(this.$route.params.id as string);
-			await InventoryService.useInventoryItem(2, dinozId);
+			try {
+				await InventoryService.useInventoryItem(2, dinozId);
+			} catch (e) {
+				errorHandler.handle(e);
+			}
 			EventBus.emit('refreshDinoz', true);
 			this.$emit('close');
 		}

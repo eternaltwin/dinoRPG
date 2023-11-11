@@ -21,7 +21,9 @@
 		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz.",
 		"concentration": "Votre dinoz se concentre et ne peux rien faire d'autre actuellement.",
 		"nocookie": "Le cookie a expiré ou est invalide, merci de recommencer l'import depuis la page Mon Compte.",
-		"wronglogins": "Les identifiants twino ne sont pas les bons."
+		"wronglogins": "Les identifiants twino ne sont pas les bons.",
+		"notEnoughItem": "Vous n'avez pas assez de cet objet",
+		"notEnoughMoney": "Vous n'avez pas assez d'or"
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
