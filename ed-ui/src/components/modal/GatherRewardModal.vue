@@ -91,11 +91,15 @@ export default defineComponent({
 }
 
 .v-enter-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 	animation-delay: 0.35s;
 }
 .v-leave-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 }
 
 .v-enter-from {

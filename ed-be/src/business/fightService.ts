@@ -7,7 +7,6 @@ import { addExperience, addLife, getDinozFightDataRequest } from '../dao/dinozDa
 import { addPlayerMoney } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkMissionFight } from './missionsService.js';
-import _ from 'lodash';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
 import { Place } from '@drpg/core/models/place/Place';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
@@ -31,8 +30,8 @@ export async function processFight(req: Request): Promise<FightResult> {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
 
-	if (dinozData.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	if (dinozData.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	if (dinozData.concentration) {
@@ -69,7 +68,7 @@ export async function moveFight(dinoz: Dinoz, placeId: number): Promise<FightRes
 	// const result = getFightResult(dinoz, monsters[0], fightResult);
 	//If the dinoz is on a mission, check if the fight result progress the mission
 	if (dinoz.missions.some(mission => !mission.isFinished)) {
-		const dinozAtFuturePlace = _.cloneDeep(dinoz);
+		const dinozAtFuturePlace = structuredClone(dinoz);
 		dinozAtFuturePlace.placeId = placeId;
 		await checkMissionFight(dinozAtFuturePlace, result);
 	}

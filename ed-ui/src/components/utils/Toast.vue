@@ -49,17 +49,24 @@ export default defineComponent({
 	background: rgb(201, 124, 72);
 	background: linear-gradient(0deg, rgba(201, 124, 72, 1) 15%, rgba(178, 96, 58, 1) 100%);
 	border: 1px solid #8d3e17;
-	box-shadow: 2px 4px 9px 0 rgba(125, 86, 36, 0.5), inset 0 0 0 1px #f9c825, inset 0 0 4px 1px #8d3e17;
+	box-shadow:
+		2px 4px 9px 0 rgba(125, 86, 36, 0.5),
+		inset 0 0 0 1px #f9c825,
+		inset 0 0 4px 1px #8d3e17;
 	cursor: pointer;
 }
 
 .v-enter-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 	animation: shake 0.5s;
 	animation-delay: 0.35s;
 }
 .v-leave-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 }
 
 .v-enter-from {

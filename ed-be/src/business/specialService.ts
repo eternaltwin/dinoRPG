@@ -12,15 +12,15 @@ import { calculateFight, rewardFight } from './fightService.js';
 import { rewarder } from '../utils/rewarder.js';
 
 export async function concentrate(req: Request) {
-	const player: Player | null = await prepareConcentration(req.user!.playerId!);
+	const player: Player | null = await prepareConcentration(req.auth!.playerId!);
 	if (!player) {
-		throw new ErrorFormator(500, `Dinoz ${req.user!.playerId!} doesn't exist.`);
+		throw new ErrorFormator(500, `Dinoz ${req.auth!.playerId!} doesn't exist.`);
 	}
 	const dinozList = player.dinoz;
 	const dinoz: Dinoz | undefined = player.dinoz.find(d => d.id === parseInt(req.params.id));
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to player ${req.user!.playerId}`);
+		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	//Check if dinoz is at Bao Bob's location
@@ -66,8 +66,8 @@ export async function cancelConcentrate(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist.`);
 	}
 
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	if (!dinoz.concentration) {

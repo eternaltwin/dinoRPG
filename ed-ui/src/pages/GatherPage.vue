@@ -186,7 +186,10 @@ export default defineComponent({
 
 		&:hover {
 			outline: 1px solid #994400;
-			box-shadow: inset 0 0 0 1px #ffee92, inset 0 0 0 2px #994400, 0 4px 0 #720d00;
+			box-shadow:
+				inset 0 0 0 1px #ffee92,
+				inset 0 0 0 2px #994400,
+				0 4px 0 #720d00;
 			font-size: initial;
 			text-align: center;
 			color: white;

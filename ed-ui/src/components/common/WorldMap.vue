@@ -238,7 +238,9 @@ export default defineComponent({
 	position: relative;
 	width: fit-content;
 	height: auto;
-	transition: top 1s, left 1s;
+	transition:
+		top 1s,
+		left 1s;
 	pointer-events: none;
 }
 .myPos {

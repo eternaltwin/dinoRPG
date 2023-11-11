@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import _ from 'lodash';
 import { itemList, levelList, raceList, skillList, statusList } from '../constants/index.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Ranking } from '../entity/index.js';
@@ -124,7 +123,7 @@ export async function learnSkill(req: Request): Promise<number> {
 	const dinozCount = ranking!.dinozCount;
 	const sumPoints = ranking!.sumPoints + 1;
 	const averagePoints = Math.round(sumPoints / dinozCount);
-	await updatePoints(req.user!.playerId!, sumPoints, averagePoints, dinozCount);
+	await updatePoints(req.auth!.playerId!, sumPoints, averagePoints, dinozCount);
 
 	return newMaxExperience ?? 0;
 }
@@ -140,8 +139,8 @@ function getDinozLearnableSkills(
 		throw new ErrorFormator(500, `Dinoz ${dinozId} is already at max level.`);
 	}
 
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	const maxExperience: number = levelList.find(level => level.id === dinoz.level)!.experience;
@@ -248,7 +247,7 @@ function getNewDinozDataFromLevelUp(
  */
 export function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<Partial<DinozSkillFiche>> {
 	const treeType: SkillTree = getTreeType(dinoz.status);
-	let learnableSkills: Array<Partial<DinozSkillFiche>> = _.cloneDeep(Object.values(skillList));
+	let learnableSkills: Array<Partial<DinozSkillFiche>> = structuredClone(Object.values(skillList));
 
 	// Keep all skills which have same type (fire, wood...)
 	if (elementWanted !== undefined) {

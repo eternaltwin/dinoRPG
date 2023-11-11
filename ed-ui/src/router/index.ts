@@ -17,7 +17,6 @@ import News from '../components/common/News.vue';
 import NPC from '../pages/NPC.vue';
 import Missions from '../pages/Missions.vue';
 import GatherPage from '../pages/GatherPage.vue';
-import ImportPage from '../pages/ImportPage.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),

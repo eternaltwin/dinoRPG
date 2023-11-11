@@ -28,8 +28,8 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 
 	// Check if dinoz belongs to player who do the request
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz!.placeId);

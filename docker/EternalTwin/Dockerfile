@@ -3,8 +3,8 @@ FROM node:18
 ARG UID=1000
 ARG GID=1000
 
-RUN apt-get -y update \
-	&& apt-get install -y git
+RUN apt -y update \
+	&& apt install -y git
 
 WORKDIR /www
 

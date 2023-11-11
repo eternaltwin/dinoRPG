@@ -25,7 +25,7 @@ import { addItemToDinoz, removeItemToDinoz } from '../dao/dinozItemDao.js';
  * @return Array<ItemFiche>
  */
 export async function getAllItemsData(req: Request): Promise<Array<ItemFiche>> {
-	const playerId: number = req.user!.playerId!;
+	const playerId: number = req.auth!.playerId!;
 
 	// Get the player's data (shopKeeper)
 	const playerInventoryData: Player | null = await getPlayerInventoryDataRequest(playerId);
@@ -66,7 +66,7 @@ export async function useItem(req: Request): Promise<void> {
 	const item: ItemFiche | undefined = Object.values(itemList).find(item => item.itemId === itemId);
 
 	// If player found is different from player who do the request, throw exception
-	if (dinoz.player.id !== req.user!.playerId) {
+	if (dinoz.player.id !== req.auth!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
@@ -87,7 +87,7 @@ export async function useItem(req: Request): Promise<void> {
 			await setDinoz(dinoz.resurrect());
 			break;
 		case ItemEffect.EGG:
-			await hatchEgg(item.effect.race, item.effect.rare, req.user!.playerId);
+			await hatchEgg(item.effect.race, item.effect.rare, req.auth!.playerId);
 			break;
 		case ItemEffect.SPHERE:
 			const skillToLearn = dinoz.learnNextSphereSkill(item.effect.value);
@@ -180,8 +180,8 @@ export async function equipItem(req: Request): Promise<Array<DinozItems>> {
 	const equip: boolean = req.body.equip;
 	const itemToEquip = Object.values(itemList).find(item => item.itemId === itemId);
 
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	if (!itemToEquip) {

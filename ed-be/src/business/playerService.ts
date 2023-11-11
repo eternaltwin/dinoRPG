@@ -21,9 +21,9 @@ import { ErrorFormator } from '../utils/errorFormator.js';
  * @return Player
  */
 export async function getCommonData(req: Request): Promise<PlayerCommonData> {
-	const playerCommonData: Player | null = await getCommonDataRequest(req.user!.playerId!);
+	const playerCommonData: Player | null = await getCommonDataRequest(req.auth!.playerId!);
 	if (!playerCommonData) {
-		throw new ErrorFormator(500, `Player ${req.user!.playerId!} doesn't exist.`);
+		throw new ErrorFormator(500, `Player ${req.auth!.playerId!} doesn't exist.`);
 	}
 
 	const commonData: PlayerCommonData = {
@@ -108,7 +108,7 @@ export async function getAccountData(req: Request): Promise<PlayerInfo> {
  * @return void
  */
 export async function setCustomText(req: Request): Promise<void> {
-	const playerId: number = req.user!.playerId!;
+	const playerId: number = req.auth!.playerId!;
 	const playerProfile: Player | null = await getPlayerRewardsRequest(playerId);
 	if (!playerProfile) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
@@ -134,7 +134,7 @@ export async function searchPlayers(req: Request): Promise<Array<Player>> {
 }
 
 export async function getDinozList(req: Request): Promise<Array<any>> {
-	const playerId: number = req.user!.playerId!;
+	const playerId: number = req.auth!.playerId!;
 	const dinozActive: Array<Dinoz> | undefined = await getAllDinozFicheLite(playerId);
 	if (!dinozActive) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);

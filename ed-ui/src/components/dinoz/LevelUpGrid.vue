@@ -150,7 +150,11 @@ export default defineComponent({
 		height: 30px;
 		border: 2px solid white;
 		border-radius: 4px;
-		box-shadow: 0 0 6px white, 0 0 12px white, 0 0 16px white, 0 0 6px 4px inset white;
+		box-shadow:
+			0 0 6px white,
+			0 0 12px white,
+			0 0 16px white,
+			0 0 6px 4px inset white;
 	}
 }
 @keyframes fadeIn {

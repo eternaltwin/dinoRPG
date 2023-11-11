@@ -34,7 +34,7 @@ declare global {
 		}
 
 		interface Request {
-			user?: User;
+			auth?: User;
 		}
 	}
 }

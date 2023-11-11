@@ -11,7 +11,6 @@ import {
 	updateMissionProgression,
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
-import _ from 'lodash';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { Place } from '@drpg/core/models/place/Place';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
@@ -36,8 +35,8 @@ export async function getMissionsList(req: Request): Promise<Array<MissionList>>
 	const currentPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const npc = Object.values(npcList).find(npc => npc.name === npcName);
 
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	if (!npc) {
@@ -69,8 +68,8 @@ export async function updateMission(req: Request): Promise<boolean> {
 	);
 	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	if (!npc) {
@@ -142,8 +141,8 @@ async function checkMission(req: Request): Promise<MissionCheck> {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	if (!dinozMission) {
@@ -230,7 +229,7 @@ function getActualStep(dinoz: Dinoz): MissionSteps | undefined {
 	const missionReference = Object.values(npc.missions!).find(
 		missions => missions.missionId === missionDinoz.missionId
 	) as Mission;
-	const missionReturn = _.cloneDeep(
+	const missionReturn = structuredClone(
 		missionReference.steps.find(step => step.stepId === missionDinoz.step) as MissionSteps
 	);
 	missionReturn.progress = missionDinoz.progress;

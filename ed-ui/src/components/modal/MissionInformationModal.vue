@@ -5,13 +5,13 @@
 				<button class="modal-close" @click="$emit('close')">X</button>
 				<p>{{ $t(`missions.description.${missionName}`) }}</p>
 				<div class="option">
-					<a v-if="mission.status === 'ongoing'" class="button" @click="updateMission('stop')">
+					<a v-if="mission?.status === 'ongoing'" class="button" @click="updateMission('stop')">
 						{{ $t('missions.giveUp') }}
 					</a>
-					<a v-if="!dinoz.missionId && mission.status === 'available'" class="button" @click="updateMission('start')">
+					<a v-if="!dinoz.missionId && mission?.status === 'available'" class="button" @click="updateMission('start')">
 						{{ $t('missions.accept') }}
 					</a>
-					<p v-if="dinoz.missionId && dinoz.missionId !== mission.missionId">
+					<p v-if="dinoz.missionId && dinoz.missionId !== mission?.missionId">
 						{{ $t('missions.already') }}
 					</p>
 				</div>
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
-import { MissionList } from '@drpg/core/models/missions/MissionList';
+import { MissionList } from '@drpg/core/models/missions/missionList';
 import { sessionStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
@@ -98,7 +98,9 @@ export default defineComponent({
 		background-color: #fff0d1;
 		border-radius: 3px;
 		border: 1px solid #efbf86;
-		box-shadow: 0 0 0 1px #aa885f, 0 0 5px 1px #aa885f;
+		box-shadow:
+			0 0 0 1px #aa885f,
+			0 0 5px 1px #aa885f;
 		animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 		p {
 			margin-bottom: 5px;
@@ -130,11 +132,15 @@ export default defineComponent({
 }
 
 .v-enter-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 	animation-delay: 0.35s;
 }
 .v-leave-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 }
 
 .v-enter-from {

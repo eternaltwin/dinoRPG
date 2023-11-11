@@ -70,7 +70,7 @@ export async function authenticateToET(req: Request): Promise<string> {
 	return await forgeJWT(player!.id);
 }
 
-async function getUser(accessToken: string, eternalTwinURI: string) {
+async function getUser(accessToken: string, eternalTwinURI: string): Promise<User> {
 	let res;
 
 	try {
@@ -86,7 +86,7 @@ async function getUser(accessToken: string, eternalTwinURI: string) {
 		return Promise.reject(err);
 	}
 
-	return await res.json();
+	return (await res.json()) as User;
 }
 
 async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {

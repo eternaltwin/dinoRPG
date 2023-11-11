@@ -5,16 +5,16 @@ ARG YOUR_APP_WEB_HTTP_PORT
 ARG UID=1000
 ARG GID=1000
 
-RUN apt-get -y update \
-	&& apt-get install -y git
+RUN apt -y update \
+	&& apt install -y git
 
 RUN yarn global add @vue/cli -g
 
 WORKDIR /www
 
-RUN apt-get autoremove -y \
-    && apt-get autoclean -y \
-    && apt-get clean -y \
+RUN apt autoremove -y \
+    && apt autoclean -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Or just use EXPORT 8080

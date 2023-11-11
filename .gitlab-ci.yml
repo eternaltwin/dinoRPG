@@ -12,7 +12,7 @@ before_script:
 
 container-build:
   stage: build
-  image: "demurgos/node:2022.1"
+  image: "demurgos/node:2023.6"
   variables:
     CARGO_HOME: ".cargo"
     RUSTFLAGS: "-C target-feature=-crt-static"
@@ -34,7 +34,7 @@ container-build:
 
 front-lint:
   stage: test
-  image: "demurgos/node:2022.1"
+  image: "demurgos/node:2023.6"
   needs: [container-build]
   script:
     - yarn lint:test

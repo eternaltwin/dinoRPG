@@ -73,7 +73,7 @@ import { updatePoints } from '../dao/rankingDao.js';
 	const cookie = req.body.cookie;
 	const url = 'https://twinoid.com/oauth/token';
 	const params = new URLSearchParams();
-	const playerId: number = req.user!.playerId!;
+	const playerId: number = req.auth!.playerId!;
 	let server: string;
 	let serverResponse: 'fr' | 'en' | 'es' = req.body.server;
 	if (!['fr', 'en', 'es'].some(s => s === serverResponse)) {
@@ -348,7 +348,7 @@ import { updatePoints } from '../dao/rankingDao.js';
 	const dinozCount = importedDinoz.length;
 	const sumPoints = importedDinoz.reduce((partialSum, a) => partialSum + a.level, 0);
 	const averagePoints = Math.round(sumPoints / dinozCount);
-	await updatePoints(req.user!.playerId!, sumPoints, averagePoints, dinozCount);
+	await updatePoints(req.auth!.playerId!, sumPoints, averagePoints, dinozCount);
 
 	return {
 		status: 'imported',
@@ -376,7 +376,7 @@ export async function importTwinoidData(req: Request): Promise<void> {
 	if (!client_id) {
 		throw new ErrorFormator(500, `Id don't the API ID.`);
 	}
-	const playerId: number = req.user!.playerId!;
+	const playerId: number = req.auth!.playerId!;
 
 	const playerData: Player | null = await getImportedTwinoidData(playerId);
 
@@ -472,7 +472,7 @@ export async function displayTwinoidSpecificSite(req: Request): Promise<Array<Si
 		return playerSite.map(site => site.toSiteStat());
 	} else {
 		const playerSite: Array<ImportedTwinoidAchievements> = await getImportedPlayerSpecificSiteAchievements(
-			req.user?.playerId!,
+			req.auth?.playerId!,
 			site
 		);
 		return playerSite.map(site => site.toSiteAchiev());

@@ -118,12 +118,8 @@ export default defineComponent({
 
 			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
-			const newDinozList = commonData.dinoz.map(d => {
-				return d.id;
-			});
-			const oldDinozList = dinozList.map(d => {
-				return d.id;
-			});
+			const newDinozList = commonData.dinoz.map(d => d.id);
+			const oldDinozList = dinozList.map(d => d.id);
 
 			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
 
@@ -177,7 +173,7 @@ export default defineComponent({
 			errorHandler.handle(err);
 			return;
 		}
-		EventBus.on('refreshInventory', async e => {
+		EventBus.on('refreshInventory', async () => {
 			await this.resfreshInventory();
 		});
 	},

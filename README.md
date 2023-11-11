@@ -1,19 +1,13 @@
 # DinoRPG
 
-# Avancement
-
-Un [board](https://gitlab.com/eternal-twin/dinorpg/dinorpg/-/boards/2968003?label_name[]=not_implemented) reprenant les objectifs des milestones est disponible.
-
 # Prérequis
 
-Il est nécessaire d'avoir docker et docker-compose d'insntallé pour faire tourner l'environnement de dev.
-* [Docker](https://docs.docker.com/get-docker/)
+Il est nécessaire d'avoir docker et docker compose d'installés pour faire tourner l'environnement de dev.
+* [Docker](https://docs.docker.com/get-docker/) v24.0.7
   * _(Windows)_ pendant l'installation, suivre la procédure pour WSL2
-* [Docker-compose](https://docs.docker.com/compose/install/)
 
 Docker doit être utilisable en temps qu'utilisateur non root sans sudo.
-Le fichier config_dev.toml doit vous être fournis par les dev.
-
+Le fichier config_development.toml doit vous être fournis par les dev.
 
 # Installation (Linux)
 
@@ -24,9 +18,9 @@ Cloner le projet
 ```bash
 $ git clone git@gitlab.com:eternal-twin/dinorpg/dinorpg.git
 ```
-Checkout sur master:
+Checkout sur develop:
 ```bash
-$ git checkout master
+$ git checkout develop
 ```
 
 Installer `make` si ce n'est pas déjà fait:
@@ -39,7 +33,7 @@ Builder les containers:
 $ make install
 ```
 
-Lancer les container
+Lancer les containers
 ```bash
 $ make docker-start
 ```
@@ -82,16 +76,17 @@ $ yarn install
 Une fois le lancement terminé vous devriez pouvoir accéder à :
   - DinoRPG_Front : http://localhost:8080
   - Eternal Twin local : http://localhost:50320
-# Erreurs possible
+
+# Erreurs possibles
 
 ## Base de données
 
-Si vous avez l'erreur suivante concernant `drpg_database`:
+Si vous avez l'erreur suivante concernant `drpg_database` :
 ```bash
 Error response from daemon: driver failed programming external connectivity on
 endpoint drpg_database [...] bind: address already in use
 ```
-Alors arrêter le service postgresql avec la commande suivante:
+Alors arrêter le service postgresql avec la commande suivante :
 ```bash
 service postgresql stop
 ```
@@ -115,14 +110,14 @@ Relancez une installation à zero.
 ## Front
 
 Il se peut que le front ne soit pas à jour suite à l'ajout d'une dépendance par
-un commit. Dans ce cas, utilisez les commands suivantes:
+un commit. Dans ce cas, utilisez les commandes suivantes :
 ```bash
 make docker-start
 make update-front
 ```
 
 Si la commande `make update-front` échoue ou donne une erreur, alors utilisez
-les commands suivantes:
+les commandes suivantes :
 ```bash
 make docker-start
 docker exec -it drpg bash
@@ -132,11 +127,11 @@ docker exec -it drpg bash
 ## Native
 
 La partie "Native" contient le code Rust. Cette partie doit être compilée
-lorsque les docker ont été lancés. Une fois lancés (avec `make docker-bash`
+lorsque les dockers ont été lancés. Une fois lancés (avec `make docker-bash`
 par exemple), utiliser `make re-build` pour compiler et faire prendre en
 compte les changements du côté Node.
 `make re-build-debug` est aussi disponible pour compiler la partie native
-sans optimization.
+sans optimisation.
 
 Autrement, il est possible de compiler la partie native directement:
 - Lancer les dockers -si c'est utilisé (i.e hors prod)- avec `make docker-start`
@@ -185,7 +180,7 @@ Si vous switchez d'une branche à une autre, pensez à faire un `make bash-front
 puis `./reset.sh` afin de mettre à jour les dépendances yarn
 
 ## Clean-up
-Il est possible de supprimer tout les container liés à dinorpg avec les commandes :
+Il est possible de supprimer tout les containers liés à dinorpg avec les commandes :
 ```bash
 $ make remove-drpg (supprimera uniquement les container utilisés de dinorpg)
 ou
@@ -193,4 +188,4 @@ $ docker container prune (supprimera tout les container existant sur le poste /!
 ```
 
 ## Comptes
-Il n'est pas nécessaire de recréer un compte ET à chaque fois. Temps que le container drpg_database n'est pas wipe, l'environnement est persistant.
+Il n'est pas nécessaire de recréer un compte ET à chaque fois. Tant que le container drpg_database n'est pas wipe, l'environnement est persistant.

@@ -9,7 +9,7 @@ import { Player } from '../entity/index.js';
 const jwtConfig = () => {
 	const config = getConfig() as Config;
 	const secret: string = config.jwt.secretKey;
-	return expressJwt({ secret, algorithms: ['HS256'] }).unless({
+	return expressJwt.expressjwt({ secret, algorithms: ['HS256'] }).unless({
 		path: [/\/api\/v1\/oauth*/, /\/api-docs*/]
 	});
 };
@@ -29,8 +29,8 @@ const forgeJWT = async (playerId: number): Promise<string> => {
 };
 
 const checkIsAdmin = (req: Request, res: Response, next: Function) => {
-	if (!req.user!.isAdmin) {
-		return res.status(500).send(`Player ${req.user!.playerId} is not admin !`);
+	if (!req.auth!.isAdmin) {
+		return res.status(500).send(`Player ${req.auth!.playerId} is not admin !`);
 	}
 	next();
 };

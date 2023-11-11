@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "composite": true,
-    "target": "es2021",
-    "module": "Node16",
+    "target": "esnext",
+    "module": "NodeNext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,

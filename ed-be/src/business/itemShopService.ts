@@ -20,7 +20,7 @@ import { ShopType } from '@drpg/core/models/enums/ShopType';
  * @return Array<ItemFiche>
  */
 export async function getItemsFromShop(req: Request): Promise<Array<ItemFiche>> {
-	const playerId: number = req.user!.playerId!;
+	const playerId: number = req.auth!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
 	const tempShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId);
 
@@ -77,7 +77,7 @@ export async function getItemsFromShop(req: Request): Promise<Array<ItemFiche>> 
  * @return void
  */
 export async function buyItem(req: Request): Promise<void> {
-	const playerId: number = req.user!.playerId!;
+	const playerId: number = req.auth!.playerId!;
 	const shopId: number = parseInt(req.params.shopId);
 	const itemId: number = parseInt(req.body.itemId);
 	const quantityBought: number = parseInt(req.body.quantity);

@@ -11,7 +11,7 @@ import { ingredientList } from '../constants/index.js';
  * 				An array with all ingredients that player owns
  */
 export async function getAllIngredientsData(req: Request): Promise<Array<Partial<IngredientFiche>>> {
-	const allIngredientsData: Array<PlayerIngredient> = await getAllIngredientsDataRequest(req.user!.playerId!);
+	const allIngredientsData: Array<PlayerIngredient> = await getAllIngredientsDataRequest(req.auth!.playerId!);
 
 	const ingredients: Array<Partial<IngredientFiche>> = allIngredientsData.map(ingr => {
 		const ingredientFound: [string, IngredientFiche] = Object.entries(ingredientList).find(

@@ -155,7 +155,9 @@ export default defineComponent({
 		background-color: #fff0d1;
 		border-radius: 3px;
 		border: 1px solid #efbf86;
-		box-shadow: 0 0 0 1px #aa885f, 0 0 5px 1px #aa885f;
+		box-shadow:
+			0 0 0 1px #aa885f,
+			0 0 5px 1px #aa885f;
 		animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 		.result {
 			font-size: 10pt;
@@ -214,11 +216,15 @@ export default defineComponent({
 }
 
 .v-enter-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 	animation-delay: 0.35s;
 }
 .v-leave-active {
-	transition: opacity 0.5s ease, bottom 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		bottom 0.5s ease;
 }
 
 .v-enter-from {

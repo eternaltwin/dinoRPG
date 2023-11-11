@@ -110,7 +110,9 @@ export default defineComponent({
 	text-transform: uppercase;
 	letter-spacing: 1pt;
 	color: #fce3bc;
-	text-shadow: -1px -1px 0px #68361b, 1px 1px 0px #ddad8c;
+	text-shadow:
+		-1px -1px 0px #68361b,
+		1px 1px 0px #ddad8c;
 }
 
 .right {

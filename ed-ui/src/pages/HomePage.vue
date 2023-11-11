@@ -65,7 +65,9 @@ export default defineComponent({
 			text-align: justify;
 			font-size: 15px;
 			line-height: 1.4em;
-			font-family: trebuchet ms, arial;
+			font-family:
+				trebuchet ms,
+				arial;
 			color: #016390;
 		}
 
@@ -83,12 +85,28 @@ export default defineComponent({
 			font-weight: bold;
 			text-decoration: none;
 			font-variant: small-caps;
-			text-shadow: 0 1px 0 #a5d9ff, 0 -1px 0 #a5d9ff, 1px 0 0 #a5d9ff, -1px 0 0 #a5d9ff, 1px 1px 0 #a5d9ff,
-				-1px -1px 0 #a5d9ff, -1px 1px 0 #a5d9ff, 1px -1px 0 #a5d9ff, 0px 2px 2px #0076cc;
+			text-shadow:
+				0 1px 0 #a5d9ff,
+				0 -1px 0 #a5d9ff,
+				1px 0 0 #a5d9ff,
+				-1px 0 0 #a5d9ff,
+				1px 1px 0 #a5d9ff,
+				-1px -1px 0 #a5d9ff,
+				-1px 1px 0 #a5d9ff,
+				1px -1px 0 #a5d9ff,
+				0px 2px 2px #0076cc;
 			&:hover {
 				color: #52b6ff;
-				text-shadow: 0 1px 0 white, 0 -1px 0 white, 1px 0 0 white, -1px 0 0 white, 1px 1px 0 white, -1px -1px 0 white,
-					-1px 1px 0 white, 1px -1px 0 white, 0 2px 2px #0076cc;
+				text-shadow:
+					0 1px 0 white,
+					0 -1px 0 white,
+					1px 0 0 white,
+					-1px 0 0 white,
+					1px 1px 0 white,
+					-1px -1px 0 white,
+					-1px 1px 0 white,
+					1px -1px 0 white,
+					0 2px 2px #0076cc;
 			}
 		}
 		em {
@@ -140,21 +158,39 @@ export default defineComponent({
 	}
 	.sign {
 		position: inherit;
-		font-family: trebuchet ms, arial;
+		font-family:
+			trebuchet ms,
+			arial;
 		font-size: 25px;
 		color: #016390;
 		font-weight: bold;
 		text-decoration: none;
 		cursor: pointer;
 		margin-left: 10px;
-		text-shadow: 0 1px 0 #a5d9ff, 0 -1px 0 #a5d9ff, 1px 0 0 #a5d9ff, -1px 0 0 #a5d9ff, 1px 1px 0 #a5d9ff,
-			-1px -1px 0 #a5d9ff, -1px 1px 0 #a5d9ff, 1px -1px 0 #a5d9ff, 0 2px 2px #0076cc;
+		text-shadow:
+			0 1px 0 #a5d9ff,
+			0 -1px 0 #a5d9ff,
+			1px 0 0 #a5d9ff,
+			-1px 0 0 #a5d9ff,
+			1px 1px 0 #a5d9ff,
+			-1px -1px 0 #a5d9ff,
+			-1px 1px 0 #a5d9ff,
+			1px -1px 0 #a5d9ff,
+			0 2px 2px #0076cc;
 	}
 	.sign:hover {
 		color: #52b6ff;
 		background-color: transparent;
-		text-shadow: 0 1px 0 white, 0 -1px 0 white, 1px 0 0 white, -1px 0 0 white, 1px 1px 0 white, -1px -1px 0 white,
-			-1px 1px 0 white, 1px -1px 0 white, 0 2px 2px #0076cc;
+		text-shadow:
+			0 1px 0 white,
+			0 -1px 0 white,
+			1px 0 0 white,
+			-1px 0 0 white,
+			1px 1px 0 white,
+			-1px -1px 0 white,
+			-1px 1px 0 white,
+			1px -1px 0 white,
+			0 2px 2px #0076cc;
 	}
 	.bloc {
 		width: 53em;

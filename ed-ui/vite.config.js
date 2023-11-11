@@ -1,13 +1,11 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import typescript from '@rollup/plugin-typescript';
 
 const STATIC_DIR = 'public';
 
 export default defineConfig(() => {
   return {
     plugins: [
-      typescript(),
       vue()
     ],
     publicDir: STATIC_DIR,

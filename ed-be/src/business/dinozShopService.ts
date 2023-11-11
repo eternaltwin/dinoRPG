@@ -19,10 +19,10 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 // TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozShopFiche>> {
 	// Retrieve player with dinoz shop info
-	const playerData: Player | null = await getPlayerDinozShopRequest(req.user!.playerId!);
+	const playerData: Player | null = await getPlayerDinozShopRequest(req.auth!.playerId!);
 
 	if (!playerData) {
-		throw new ErrorFormator(500, `Player ${req.user?.playerId} doesn't exist.`);
+		throw new ErrorFormator(500, `Player ${req.auth?.playerId} doesn't exist.`);
 	}
 
 	// If nothing is found, create 15 (?) dinoz to fill the shop
@@ -43,10 +43,10 @@ export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozSh
 		];
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player: Player | null = await getPlayerRewardsRequest(req.user!.playerId!);
+		const player: Player | null = await getPlayerRewardsRequest(req.auth!.playerId!);
 
 		if (!player) {
-			throw new ErrorFormator(500, `Player ${req.user?.playerId} doesn't exist.`);
+			throw new ErrorFormator(500, `Player ${req.auth?.playerId} doesn't exist.`);
 		}
 
 		player.rewards.forEach(playerReward => {

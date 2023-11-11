@@ -121,7 +121,7 @@ export async function setPlayerMoney(req: Request): Promise<string> {
 
 	const updatedPlayerGold: Player | null = await getPlayerMoney(parseInt(req.params.id));
 	if (!updatedPlayerGold) {
-		throw new ErrorFormator(500, `Player ${req.user!.playerId!} doesn't exist.`);
+		throw new ErrorFormator(500, `Player ${req.auth!.playerId!} doesn't exist.`);
 	}
 	return updatedPlayerGold.money.toString();
 }

@@ -115,7 +115,7 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response: Player = (await getPlayerMoney(req.user!.playerId!)) as Player;
+		const response: Player = (await getPlayerMoney(req.auth!.playerId!)) as Player;
 		return res.status(200).send(response.money.toString());
 	} catch (err) {
 		const e = err as ErrorFormator;

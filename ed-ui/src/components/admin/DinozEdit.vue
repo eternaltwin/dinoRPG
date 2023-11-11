@@ -253,8 +253,8 @@ export default defineComponent({
 					skillId => !this.dinoz.skills?.includes(parseInt(skillId))
 				);
 			} else {
-				this.skillListFiltered = Object.keys(skillNameList).filter(skillId =>
-					this.dinoz.skills?.includes(parseInt(skillId))
+				this.skillListFiltered = Object.keys(skillNameList).filter(
+					skillId => this.dinoz.skills?.includes(parseInt(skillId))
 				);
 			}
 		},
@@ -264,8 +264,8 @@ export default defineComponent({
 					statusId => !this.dinoz.status?.includes(parseInt(statusId))
 				);
 			} else {
-				this.statusListFiltered = Object.keys(statusList.imgName).filter(statusId =>
-					this.dinoz.status?.includes(parseInt(statusId))
+				this.statusListFiltered = Object.keys(statusList.imgName).filter(
+					statusId => this.dinoz.status?.includes(parseInt(statusId))
 				);
 			}
 		}

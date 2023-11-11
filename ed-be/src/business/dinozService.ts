@@ -187,8 +187,8 @@ export async function getDinozFiche(req: Request): Promise<DinozFiche> {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
 	// If player found is different from player who do the request, throw exception
-	if (dinozData.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozData.id} doesn't belong to player ${req.user!.playerId}`);
+	if (dinozData.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozData.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	//Remove temporary status
@@ -219,8 +219,8 @@ export async function getDinozSkill(req: Request): Promise<Array<DinozSkillFiche
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
 
-	if (dinozSkillData.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozSkillData.id} doesn't belong to player ${req.user!.playerId}`);
+	if (dinozSkillData.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozSkillData.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	return dinozSkillData.toDinozSkillFiche();
@@ -234,7 +234,7 @@ export async function getDinozSkill(req: Request): Promise<Array<DinozSkillFiche
  */
 export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	//Check if player can buy more dinoz
-	const dinozActive: Array<Dinoz> | undefined = await getActiveDinoz(req.user!.playerId!);
+	const dinozActive: Array<Dinoz> | undefined = await getActiveDinoz(req.auth!.playerId!);
 
 	if (dinozActive.length > 0) {
 		if (!dinozActive[0].player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
@@ -263,7 +263,7 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	}
 
 	// Throw error if dinoz doesn't belong to player shop
-	if (dinozShopData.player.id !== req.user!.playerId!) {
+	if (dinozShopData.player.id !== req.auth!.playerId!) {
 		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to your account`);
 	}
 
@@ -271,10 +271,10 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 
 	// Set player money
 	const newMoney: number = dinozShopData.player.money - race.price;
-	await setPlayerMoneyRequest(req.user!.playerId, newMoney);
+	await setPlayerMoneyRequest(req.auth!.playerId, newMoney);
 
 	// Delete all dinoz from dinoz shop
-	await deleteDinozInShopRequest(req.user!.playerId);
+	await deleteDinozInShopRequest(req.auth!.playerId);
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated: Dinoz = await setDinoz(newDinoz);
@@ -293,7 +293,7 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	const dinozCount = playerRanking!.dinozCount + 1;
 	const sumPoints = playerRanking!.sumPoints + 1;
 	const averagePoints = Math.round(sumPoints / dinozCount);
-	await updatePoints(req.user!.playerId, sumPoints, averagePoints, dinozCount);
+	await updatePoints(req.auth!.playerId, sumPoints, averagePoints, dinozCount);
 
 	return dinozCreated.toDinozFiche();
 }
@@ -313,8 +313,8 @@ export async function setDinozName(req: Request): Promise<void> {
 	}
 
 	// If authenticated player is different from player found, throw exception
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	// If player can't change dinoz name, throw exception
@@ -360,8 +360,8 @@ export async function setSkillState(req: Request): Promise<boolean> {
 	}
 
 	// Check if dinoz belongs to player who do the request
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	// Check if dinoz can change his skills
@@ -396,8 +396,8 @@ export async function betaMove(req: Request): Promise<FightResult> {
 	}
 
 	// Check if dinoz belongs to player who do the request
-	if (dinoz.player.id !== req.user!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.user!.playerId}`);
+	if (dinoz.player.id !== req.auth!.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
 	if (dinoz.concentration) {
@@ -453,7 +453,7 @@ export async function resurrectDinoz(req: Request): Promise<void> {
 	}
 
 	// If player found is different from player who do the request, throw exception
-	if (dinozData.player.id !== req.user!.playerId) {
+	if (dinozData.player.id !== req.auth!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
@@ -479,7 +479,7 @@ export async function digWithDinoz(req: Request): Promise<Rewarder> {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
 
-	if (dinozData.player.id !== req.user!.playerId) {
+	if (dinozData.player.id !== req.auth!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
@@ -556,13 +556,13 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 		| undefined;
 
 	if (!myGrid) {
-		myGrid = new PlayerGather(req.user!.playerId!, place.placeId, gatherPlace);
+		myGrid = new PlayerGather(req.auth!.playerId!, place.placeId, gatherPlace);
 		await setGrid(myGrid);
 	}
 
 	// Generate a new one if all box are empty
 	if (myGrid.grid.every(row => row.every(box => box === -1))) {
-		myGrid = new PlayerGather(req.user!.playerId!, place.placeId, gatherPlace, myGrid.id);
+		myGrid = new PlayerGather(req.auth!.playerId!, place.placeId, gatherPlace, myGrid.id);
 		await setGrid(myGrid);
 	}
 
@@ -645,9 +645,9 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 			itemList.GOLD20000.itemId
 		];
 		if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
-			await changeItemQuantity(req.user?.playerId!, i.itemId, 1);
+			await changeItemQuantity(req.auth?.playerId!, i.itemId, 1);
 		} else if (itemToReward && goldItems.includes(i.itemId)) {
-			await addPlayerMoney(req.user?.playerId!, i.price);
+			await addPlayerMoney(req.auth?.playerId!, i.price);
 		} else {
 			dinozData.player.items.push(await createItemDataRequest(new PlayerItem(dinozData.player, i.itemId, 1)));
 		}
@@ -656,7 +656,7 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	for (const i of returnGrid.rewards.ingredients) {
 		let ingredientToReward = dinozData.player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
 		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
-			await addIngredient(i.ingredientId, 1, req.user?.playerId!);
+			await addIngredient(i.ingredientId, 1, req.auth?.playerId!);
 		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
 			// Do nothing
 		} else {

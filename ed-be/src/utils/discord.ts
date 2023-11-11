@@ -63,11 +63,11 @@ ${e}
 			}
 
 			// Request body
-			if (Object.keys(res.req.user as object).length) {
+			if (Object.keys(res.req.auth as object).length) {
 				embed.addFields({
 					name: 'User',
 					value: `\`\`\`json
-  ${JSON.stringify(res.req.user)}
+  ${JSON.stringify(res.req.auth)}
   \`\`\``
 				});
 			}

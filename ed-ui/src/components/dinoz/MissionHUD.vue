@@ -53,7 +53,7 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { sessionStore } from '../../store/index.js';
 import { missionsList } from '../../constants/index.js';
-import { MissionList } from '@drpg/core/models/missions/MissionList';
+import { MissionList } from '@drpg/core/models/missions/missionList';
 import EventBus from '../../events/index.js';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';

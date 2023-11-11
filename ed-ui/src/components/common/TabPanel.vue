@@ -52,7 +52,8 @@ export default defineComponent({
 	width: 315px;
 	padding-bottom: 15px;
 	color: white;
-	background: url('../../assets/background/banniere_left.webp') no-repeat,
+	background:
+		url('../../assets/background/banniere_left.webp') no-repeat,
 		url('../../assets/background/banniere_right.webp') no-repeat,
 		url('../../assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left;
