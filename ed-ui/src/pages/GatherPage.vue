@@ -80,9 +80,16 @@ export default defineComponent({
 				this.grid.gatherTurn--;
 			}
 			if (this.grid.gatherTurn <= 0) {
-				this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				EventBus.emit('isLoading', true);
+				try {
+					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				} catch (err) {
+					errorHandler.handle(err);
+					return;
+				}
 				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
+				EventBus.emit('isLoading', false);
 			}
 			if (
 				this.grid.grid.reduce((partSum, b) => b.reduce((partialSum, a) => partialSum + a, 0) + partSum, 0) +
@@ -90,9 +97,16 @@ export default defineComponent({
 					this.grid.gatherTurn <
 				this.grid.gatherTurn
 			) {
-				this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				EventBus.emit('isLoading', true);
+				try {
+					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+				} catch (err) {
+					errorHandler.handle(err);
+					return;
+				}
 				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
+				EventBus.emit('isLoading', false);
 			}
 		},
 		isSelected(row: number, box: number): boolean {
