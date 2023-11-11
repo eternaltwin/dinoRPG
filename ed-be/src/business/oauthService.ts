@@ -37,7 +37,10 @@ export async function authenticateToET(req: Request): Promise<string> {
 	const admins: Array<string | undefined> = Object.values(config.admin);
 
 	if (beta && !admins.includes(user.user.id) && !userAllowedBeta) {
-		throw new ErrorFormator(500, `User ${user.user.id} (${user.user.display_name.current.value}), you are not allowed to enter the beta website.`);
+		throw new ErrorFormator(
+			500,
+			`User ${user.user.id} (${user.user.display_name.current.value}), you are not allowed to enter the beta website.`
+		);
 	}
 
 	// Check if player already exists in database

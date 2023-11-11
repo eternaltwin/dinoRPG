@@ -50,9 +50,12 @@ export default defineComponent({
 	props: { dinozData: Object as PropType<DinozFiche> },
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
-			const width: number = Math.round((value / maxValue) * 98);
+			let width: number = Math.round((value / maxValue) * 98);
 			if (maxValue === 0) {
 				return `width : 0px ; height : 11px`;
+			}
+			if (value > maxValue) {
+				width = 98;
 			}
 			return `width : ${width}px ; height : 11px`;
 		}
