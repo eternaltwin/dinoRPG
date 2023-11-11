@@ -69,7 +69,6 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
-		if (this.sessionStore.getPlayerId) return;
 		try {
 			await this.firstLoad();
 		} catch (err) {
