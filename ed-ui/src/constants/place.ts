@@ -5,7 +5,7 @@ import { PlaceIcon } from '@drpg/core/models/enums/PlaceIcon';
 export const placeList: Array<PlaceDisplayed> = [
 	{
 		placeId: 1,
-		name: 'port',
+		name: 'port', //OK
 		posLeft: 222,
 		posTop: 362,
 		icon: PlaceIcon.HOUSE,
@@ -27,7 +27,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 3,
-		name: 'papy',
+		name: 'papy', //OK
 		posLeft: 217,
 		posTop: 72,
 		icon: PlaceIcon.HOUSE,
@@ -38,7 +38,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 4,
-		name: 'forcebrut',
+		name: 'forcebrut', //OK
 		posLeft: 272,
 		posTop: 207,
 		icon: PlaceIcon.CAVERN,
@@ -49,7 +49,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 5,
-		name: 'dnv',
+		name: 'dnv', //OK
 		posLeft: 92,
 		posTop: 222,
 		icon: PlaceIcon.CASTLE,
@@ -60,7 +60,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 6,
-		name: 'universite',
+		name: 'universite', //OK
 		posLeft: 112,
 		posTop: 142,
 		icon: PlaceIcon.CHURCH,
@@ -71,7 +71,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 7,
-		name: 'fountj',
+		name: 'fountj', //OK
 		posLeft: 167,
 		posTop: 227,
 		icon: PlaceIcon.FOUNT,
@@ -82,7 +82,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 8,
-		name: 'colesc',
+		name: 'colesc', //OK
 		posLeft: 102,
 		posTop: 87,
 		icon: PlaceIcon.DEFAULT,
@@ -117,7 +117,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 11,
-		name: 'skull',
+		name: 'skull', //OK
 		posLeft: 332,
 		posTop: 352,
 		icon: PlaceIcon.DEFAULT,
@@ -152,7 +152,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 14,
-		name: 'auree',
+		name: 'auree', //OK
 		posLeft: 331,
 		posTop: 322,
 		icon: PlaceIcon.CAVERN,
@@ -163,7 +163,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 15,
-		name: 'chemin',
+		name: 'chemin', //OK
 		posLeft: 312,
 		posTop: 240,
 		icon: PlaceIcon.DEFAULT,
@@ -174,7 +174,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 16,
-		name: 'collin',
+		name: 'collin', //OK
 		posLeft: 382,
 		posTop: 202,
 		icon: PlaceIcon.MOUNTAIN,
@@ -185,7 +185,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 17,
-		name: 'fleuve',
+		name: 'fleuve', //OK
 		posLeft: 327,
 		posTop: 110,
 		icon: PlaceIcon.DEFAULT,
@@ -196,7 +196,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 102,
-		name: 'fleuve',
+		name: 'fleuve', //OK
 		posLeft: 327,
 		posTop: 110,
 		icon: PlaceIcon.DEFAULT,
@@ -207,7 +207,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 18,
-		name: 'camp',
+		name: 'camp', //OK
 		posLeft: 227,
 		posTop: 45,
 		icon: PlaceIcon.HOUSE,
@@ -218,7 +218,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 19,
-		name: 'jungle',
+		name: 'jungle', //OK
 		posLeft: 75,
 		posTop: 166,
 		icon: PlaceIcon.FOREST,
@@ -229,7 +229,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 20,
-		name: 'garde',
+		name: 'garde', //OK
 		posLeft: 46,
 		posTop: 32,
 		icon: PlaceIcon.DOOR,
@@ -288,7 +288,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 25,
-		name: 'chutes',
+		name: 'chutes', //OK
 		posLeft: 95,
 		posTop: 80,
 		icon: PlaceIcon.DEFAULT,
@@ -311,7 +311,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 27,
-		name: 'baobob',
+		name: 'baobob', //OK
 		posLeft: 199,
 		posTop: 72,
 		icon: PlaceIcon.HOUSE,
@@ -333,7 +333,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 29,
-		name: 'marais',
+		name: 'marais', //OK
 		posLeft: 328,
 		posTop: 116,
 		icon: PlaceIcon.DEFAULT,
@@ -344,7 +344,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 30,
-		name: 'corail',
+		name: 'corail', //OK
 		posLeft: 471,
 		posTop: 137,
 		icon: PlaceIcon.CAVERN,
@@ -355,7 +355,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 31,
-		name: 'ilewkk',
+		name: 'ilewkk', //OK
 		posLeft: 484,
 		posTop: 81,
 		icon: PlaceIcon.DEFAULT,
@@ -378,7 +378,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 33,
-		name: 'chbroc',
+		name: 'chbroc', //OK
 		posLeft: 259,
 		posTop: 219,
 		icon: PlaceIcon.DEFAULT,
@@ -401,7 +401,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 35,
-		name: 'dplaza',
+		name: 'dplaza', //OK
 		posLeft: 332,
 		posTop: 383,
 		icon: PlaceIcon.HOUSE,
@@ -412,7 +412,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 36,
-		name: 'villa',
+		name: 'villa', //OK
 		posLeft: 177,
 		posTop: 377,
 		icon: PlaceIcon.HOUSE,
@@ -423,7 +423,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 37,
-		name: 'dcine',
+		name: 'dcine', //OK
 		posLeft: 252,
 		posTop: 312,
 		icon: PlaceIcon.CAVERN,
@@ -434,7 +434,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 38,
-		name: 'clinik',
+		name: 'clinik', //OK
 		posLeft: 397,
 		posTop: 252,
 		icon: PlaceIcon.CLINIK,
@@ -490,7 +490,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 43,
-		name: 'bslt',
+		name: 'bslt', //OK
 		posLeft: 114,
 		posTop: 336,
 		icon: PlaceIcon.DEFAULT,
@@ -501,7 +501,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 44,
-		name: 'forges',
+		name: 'forges', //OK
 		posLeft: 225,
 		posTop: 237,
 		icon: PlaceIcon.CASTLE,
@@ -512,7 +512,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 45,
-		name: 'rashpk',
+		name: 'rashpk', //OK
 		posLeft: 101,
 		posTop: 267,
 		icon: PlaceIcon.HOUSE,
@@ -523,7 +523,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 46,
-		name: 'fosslv',
+		name: 'fosslv', //OK
 		posLeft: 177,
 		posTop: 116,
 		icon: PlaceIcon.DEFAULT,
@@ -534,7 +534,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 47,
-		name: 'vener',
+		name: 'vener', //OK
 		posLeft: 304,
 		posTop: 122,
 		icon: PlaceIcon.CAVERN,
@@ -545,7 +545,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 48,
-		name: 'tunel',
+		name: 'tunel', //OK
 		posLeft: 50,
 		posTop: 81,
 		icon: PlaceIcon.DOOR,
