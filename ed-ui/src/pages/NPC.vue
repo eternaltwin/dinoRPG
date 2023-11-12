@@ -13,7 +13,7 @@
 			<a class="button" @click="stop()">
 				<span v-html="formatContent($t(`npc.stop`))" />
 			</a>
-			<span class="dialog">
+			<span class="dialog" v-if="npcSpeech.speech">
 				{{ $t(`npc.${npcName}.speech.${npcSpeech.speech}`) }}
 			</span>
 		</div>
