@@ -1,12 +1,12 @@
 <template>
 	<div class="boxMap">
-		<WorldMap :dinozData="dinozData" />
+		<WorldMap :dinozData="dinozData" :key="dinozData" />
 		<p class="placeName">
-			{{ $t(`place.name.${getPlaceName(placeId)}`) }}
+			{{ $t(`place.name.${getPlaceName(dinozData!.placeId)}`) }}
 		</p>
 	</div>
-	<p class="placeDesc">
-		{{ $t(`place.description.${getPlaceName(placeId)}`) }}
+	<p class="placeDesc" @click="test()">
+		{{ $t(`place.description.${getPlaceName(dinozData!.placeId)}`) }}
 	</p>
 </template>
 
@@ -17,11 +17,6 @@ import { placeList } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'MapTab',
-	data() {
-		return {
-			placeId: undefined as number | undefined
-		};
-	},
 	props: { dinozData: Object as PropType<DinozFiche> },
 	components: {
 		WorldMap: defineAsyncComponent(() => import('../../components/common/WorldMap.vue'))
@@ -30,9 +25,6 @@ export default defineComponent({
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)!.name;
 		}
-	},
-	created(): void {
-		this.placeId = this.dinozData!.placeId;
 	}
 });
 </script>
