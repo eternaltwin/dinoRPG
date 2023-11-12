@@ -1,6 +1,6 @@
 import pkg from 'native-dinorpg';
 import { Request } from 'express';
-import { levelList, monsterList, placeList, statusList } from '../constants/index.js';
+import { levelList } from '../constants/index.js';
 import { Dinoz } from '../entity/index.js';
 import { getRandomNumber } from '../utils/index.js';
 import { addExperience, addLife, getDinozFightDataRequest } from '../dao/dinozDao.js';
@@ -13,6 +13,8 @@ import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
+import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { monsterList } from '@drpg/core/models/fight/MonsterList';
 
 const { fight_rust } = pkg;
 

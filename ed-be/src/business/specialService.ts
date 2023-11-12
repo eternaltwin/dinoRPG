@@ -2,7 +2,6 @@ import { Request } from 'express';
 import { Concentration, Dinoz, Player } from '../entity/index.js';
 import { prepareConcentration } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { placeList, statusList } from '../constants/index.js';
 import { getConcentration, removeConcentration, setConcentration } from '../dao/concentrationDao.js';
 import { getDinozConcentrationRequest, setMultipleDinoz } from '../dao/dinozDao.js';
 import { specialActions } from '../constants/specialActions.js';
@@ -10,6 +9,8 @@ import { checkCondition } from '../utils/checkConditions.js';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
 import { calculateFight, rewardFight } from './fightService.js';
 import { rewarder } from '../utils/rewarder.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { statusList } from '@drpg/core/models/dinoz/StatusList';
 
 export async function concentrate(req: Request) {
 	const player: Player | null = await prepareConcentration(req.auth!.playerId!);

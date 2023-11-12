@@ -5,10 +5,11 @@ import { GatherResultGrid } from '@drpg/core/models/gather/gatherResultGrid';
 import { checkCondition } from '../utils/checkConditions.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { GatherRewards } from '@drpg/core/models/gather/gatherRewards';
-import { ingredientList, itemList } from '../constants/index.js';
+import { ingredientList } from '../constants/index.js';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 @Entity()
 export class PlayerGather {

@@ -6,12 +6,15 @@ import {
 	getPlayerShopOneItemDataRequest,
 	setPlayerMoneyRequest
 } from '../dao/playerDao.js';
-import { itemList, placeList, shopList, statusList } from '../constants/index.js';
+import { shopList } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { statusList } from '@drpg/core/models/dinoz/StatusList';
 
 /**
  * @summary Get all items from a shop

@@ -27,10 +27,10 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { itemNameList } from '../../constants';
-import EventBus from '../../events';
-import { InventoryService } from '../../services';
-import { errorHandler } from '../../utils';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { errorHandler } from '../../utils/errorHandler.js';
+import { InventoryService } from '../../services/InventoryService.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'DinozEquip',

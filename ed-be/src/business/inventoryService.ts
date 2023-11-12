@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import { addPlayerMoney, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { Dinoz, DinozItem, DinozSkill, Player, PlayerItem } from '../entity/index.js';
-import { itemList } from '../constants/item.js';
 import { getActiveDinoz, getDinozEquipItemRequest, getDinozFicheItemRequest, setDinoz } from '../dao/dinozDao.js';
 import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -13,11 +12,13 @@ import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import gameConfig from '../config/game.config.js';
 import { getRandomLetter } from '../utils/index.js';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
-import { skillList, statusList } from '../constants/index.js';
+import { skillList } from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { applySkillEffect } from './skillService.js';
 import { removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { addItemToDinoz, removeItemToDinoz } from '../dao/dinozItemDao.js';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { statusList } from '@drpg/core/models/dinoz/StatusList';
 
 /**
  * @summary Get all items from the inventory of a player

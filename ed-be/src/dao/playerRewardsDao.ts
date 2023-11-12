@@ -23,4 +23,15 @@ const removeRewardToPlayer = (playerId: number, rewardId: number): Promise<Delet
 		.execute();
 };
 
-export { addRewardToPlayer, addMultipleRewardToPlayer, removeRewardToPlayer };
+const getPlayerRewards = (playerId: number): Promise<PlayerReward[]> => {
+	return rewardRepository.find({
+		where: {
+			player: {
+				id: playerId
+			}
+		},
+		select: ['rewardId']
+	});
+}
+
+export { addRewardToPlayer, addMultipleRewardToPlayer, removeRewardToPlayer, getPlayerRewards };

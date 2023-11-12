@@ -1,8 +1,6 @@
 import { Request } from 'express';
 import { Dinoz, NPC } from '../entity/index.js';
 import { getDinozNPCRequest } from '../dao/dinozDao.js';
-import { placeList } from '../constants/index.js';
-import { npcList } from '../constants/npc.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
@@ -15,6 +13,8 @@ import { triggerAction } from '../utils/triggerAction.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { npcList } from '@drpg/core/models/npc/NpcList';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId: number = parseInt(req.params.dinozId);
@@ -32,7 +32,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
 	}
 
-	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz!.placeId);
+	const actualPlace = Object.values(placeList).find(place => place.placeId === dinoz!.placeId);
 	const pnj: Npc | undefined = Object.values(npcList).find(pnj => pnj.name === npcName);
 
 	if (!pnj) {

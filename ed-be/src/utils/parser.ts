@@ -1,8 +1,8 @@
 import { Dinoz } from '../entity/dinoz.js';
-import { placeList } from '../constants/index.js';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { Place } from '@drpg/core/models/place/Place';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?: Place): boolean {
 	let result: boolean | undefined;
@@ -23,18 +23,22 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 			result = dinoz.skills.some(DinozSkill => DinozSkill.skillId === condition.value);
 			break;
 		case ConditionEnum.GOTO:
-			let place = Object.entries(placeList).find(place => place[0].toUpperCase() === condition.value.toUpperCase()) as [
-				string,
-				Place
-			];
+			let place = Object.entries(placeList).find(place => place[0].toUpperCase() === condition.value.toUpperCase());
+			if (!place) {
+				throw new Error(`Place ${condition.value} doesn't exist.`);
+			}
 			result = place[1].placeId === dinoz.placeId;
 			break;
 		case ConditionEnum.PLACE_IS:
 			let thisplace = Object.values(placeList).find(
 				place => place.name.toUpperCase() === condition.value.toUpperCase()
-			) as Place;
-			if (thisplace.placeId === 0) thisplace.placeId = dinoz.placeId;
-			result = thisplace.placeId === dinoz.placeId;
+			);
+			if (!thisplace) {
+				throw new Error(`Place ${condition.value} doesn't exist.`);
+			}
+
+			const placeIdToCompare = (thisplace.placeId === 0) ? dinoz.placeId : thisplace.placeId;
+			result = placeIdToCompare === dinoz.placeId;
 			break;
 		case ConditionEnum.SCENARIO:
 			//TODO: Implement scenario

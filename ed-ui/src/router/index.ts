@@ -17,6 +17,8 @@ import News from '../components/common/News.vue';
 import NPC from '../pages/NPC.vue';
 import Missions from '../pages/Missions.vue';
 import GatherPage from '../pages/GatherPage.vue';
+import ManageDinoz from '../pages/ManageDinoz.vue';
+import DinozMissions from '../pages/DinozMissions.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -102,6 +104,16 @@ const router = createRouter({
 					path: '/gather/:dinozId/:type',
 					name: 'Gather',
 					component: GatherPage
+				},
+				{
+					path: '/manage',
+					name: 'ManageDinoz',
+					component: ManageDinoz
+				},
+				{
+					path: '/missions',
+					name: 'DinozMissions',
+					component: DinozMissions
 				}
 				// Import are not available
 				/*{

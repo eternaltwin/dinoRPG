@@ -40,9 +40,14 @@
 			></a>
 		</div>
 		<DinozList></DinozList>
-		<a v-if="hasPDA" class="overviewButton"
-			><img :src="getImgURL('icons', `small_edit`)" alt="edit" />{{ $t('button.sortDinoz') }}</a
-		>
+		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
+			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
+			<span>{{ $t('button.sortDinoz') }}</span>
+		</a>
+		<a v-if="hasPMI" class="overviewButton" @click="goToPage('DinozMissions')">
+			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
+			<span>{{ $t('button.dinozMissions') }}</span>
+		</a>
 		<a class="button" @click="goToPage('DinozShopPage')">
 			{{ $t('button.buyDinoz') }}
 		</a>
@@ -91,6 +96,9 @@ export default defineComponent({
 		hasPDA(): boolean {
 			return this.playerStore.playerOptions.hasPDA;
 		},
+		hasPMI(): boolean {
+			return this.playerStore.playerOptions.hasPMI;
+		},
 		// Format money display (1000000 -> 1.000.000)
 		beautifulMoney(): string | undefined {
 			if (!this.money) {
@@ -112,13 +120,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.overviewBt {
+.overviewButton {
 	color: #8e3e26;
 	font-variant: small-caps;
 	font-weight: bold;
-	display: block;
+	display: flex;
+	align-items: center;
 	margin-bottom: 1px;
-	width: 138px;
+	padding-top: 1px;
+	padding-bottom: 1px;
 	padding-left: 5px;
 	font-size: 8pt;
 	line-height: 10pt;
@@ -128,7 +138,7 @@ export default defineComponent({
 	-webkit-border-radius: 0px;
 	cursor: pointer;
 	img {
-		vertical-align: -15%;
+		width: 8px;
 		padding-right: 3px;
 	}
 	&:hover {

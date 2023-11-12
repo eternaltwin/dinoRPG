@@ -4,10 +4,12 @@ import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { getRandomLetter, getRandomNumber } from '../utils/index.js';
-import { raceList, rewardList, skillList } from '../constants/index.js';
+import { skillList } from '../constants/index.js';
 import { Player, PlayerDinozShop } from '../entity/index.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -50,16 +52,16 @@ export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozSh
 		}
 
 		player.rewards.forEach(playerReward => {
-			if (playerReward.rewardId === rewardList.TROPHEE_ROCKY) {
+			if (playerReward.rewardId === rewardList.ROCKY) {
 				availableRaces.push(raceList.ROCKY);
 			}
-			if (playerReward.rewardId === rewardList.TROPHEE_HIPPOCLAMP) {
+			if (playerReward.rewardId === rewardList.HIPPO) {
 				availableRaces.push(raceList.HIPPOCLAMP);
 			}
-			if (playerReward.rewardId === rewardList.TROPHEE_PTEROZ) {
+			if (playerReward.rewardId === rewardList.PTEROZ) {
 				availableRaces.push(raceList.PTEROZ);
 			}
-			if (playerReward.rewardId === rewardList.TROPHEE_QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
+			if (playerReward.rewardId === rewardList.QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
 				availableRaces.push(raceList.QUETZU);
 			}
 		});

@@ -166,9 +166,10 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import { ItemShopService } from '../services/index.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { errorHandler } from '../utils/index.js';
-import { itemNameList, shopNameList } from '../constants/index.js';
+import { shopNameList } from '../constants/index.js';
 import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 export default defineComponent({
 	name: 'ItemShopPage',

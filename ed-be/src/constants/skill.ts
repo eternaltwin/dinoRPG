@@ -4,7 +4,7 @@ import { Energy } from '@drpg/core/models/enums/Energy';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillTree } from '@drpg/core/models/enums/SkillTree';
 import { SkillEffect } from '@drpg/core/models/enums/SkillEffect';
-import { raceList } from './race.js';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
 
 // skillId are counted like this : ABCDE
 // A = Element (from fire to void)

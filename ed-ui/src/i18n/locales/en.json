@@ -17,7 +17,10 @@
 		"AlreadyAtMaxHealth": "Your dinoz cannot be healed any more.",
 		"DinozNotDead": "Your dinoz is already alive.",
 		"OnlyLettersAndNumbers": "Invalid name! Only letters and numbers can be used.",
-		"tooManyActiveDinoz": "You already have too many active dinoz."
+		"tooManyActiveDinoz": "You already have too many active dinoz.",
+		"noPDA": "You need the Diamantite Pebble to access this page.",
+		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
+		"dinozListMissing": "Dinoz list missing"
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -115,7 +118,8 @@
 		"confirm": "Confirm this action?",
 		"chose": "Buy",
 		"generator": "Dinoz generator",
-		"sortDinoz": "Manage my Dinoz"
+		"sortDinoz": "Manage my Dinoz",
+		"dinozMissions": "My Dinoz missions"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -1859,7 +1863,9 @@
 		"missions": "Dino-RPG [ Liste des Missions ]",
 		"dinozNaming": "Dino-RPG [ Choix du Nom ]",
 		"fight": "Dino-RPG [ Combat ! ]",
-		"gather": "Dino-RPG [ "
+		"gather": "Dino-RPG [ ",
+		"dinozMissions": "Dino-RPG [ My Dinoz Missions ]",
+		"manageDinoz": "Dino-RPG [ Manage my Dinoz ]"
 	},
 	"gather": {
 		"action": {
@@ -2990,5 +2996,20 @@
 			"dent_de_dorogon": "Very few people can claim to own this particular hunting trophy! This freshly extracted Dorogon Tooth should fetch a nice price.",
 			"bras_mecanique": "This artifact resembles a hand, it must have been made using some forgotten technology, and even if it doesn't work any more, it still has great value..."
 		}
+	},
+	"manageDinoz": {
+		"title": "My Dinoz management",
+		"disclaimer": "This management module is accessible thanks to your Diamantite Pebble: a real concentrate of technology!",
+		"dinoz": "Dinoz",
+		"elements": "Elements"
+	},
+	"dinozMissions": {
+		"title": "My Dinoz missions",
+		"disclaimer": "This management module is accessible thanks to your **Illustrated Mission Guidebook**: very practical for following the missions of your Dinoz!",
+		"dinoz": "Dinoz",
+		"missions": "Missions",
+		"see": "See",
+		"total": "Total",
+		"missionsFrom": "\"{npc}\"'s missions"
 	}
 }

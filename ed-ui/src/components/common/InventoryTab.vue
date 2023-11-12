@@ -85,7 +85,6 @@
 <script lang="ts" scoped>
 import { defineComponent } from 'vue';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { itemNameList } from '../../constants/index.js';
 import { InventoryService, PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
@@ -93,6 +92,7 @@ import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 export default defineComponent({
 	name: 'InventoryTab',

@@ -17,16 +17,12 @@ import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import {
 	actionList,
 	gather,
-	itemList,
-	placeList,
 	shopList,
 	skillList,
-	statusList,
 	TemporaryStatus
 } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, PlayerIngredient, PlayerItem, Ranking } from '../entity/index.js';
-import { npcList } from '../constants/npc.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getHUDObjective, getMissionAction } from './missionsService.js';
@@ -56,6 +52,10 @@ import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { addIngredient, createIngredient } from '../dao/playerIngredientDao.js';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { mouvementListener } from './specialService.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { npcList } from '@drpg/core/models/npc/NpcList';
 
 /**
  * @summary Get available action from dinoz
@@ -409,7 +409,7 @@ export async function betaMove(req: Request): Promise<FightResult> {
 	}
 
 	const actualPlace: Place = dinoz.actualPlace;
-	const desiredPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === req.body.placeId);
+	const desiredPlace = Object.values(placeList).find(place => place.placeId === req.body.placeId);
 
 	// Check if desired and actual place exist and is adjacent to actual place
 	if (!desiredPlace) {
@@ -672,4 +672,4 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	}
 
 	return returnGrid;
-}
+};

@@ -8,8 +8,8 @@ import {
 	PlayerReward
 } from '../entity/index.js';
 import { AppDataSource } from '../data-source.js';
-import { itemList } from '../constants/index.js';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 const playerRepository = AppDataSource.getRepository(Player);
 

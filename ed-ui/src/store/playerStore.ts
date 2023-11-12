@@ -7,7 +7,8 @@ export const playerStore = defineStore('playerStore', {
 		money: 0,
 		playerId: undefined,
 		playerOptions: {
-			hasPDA: false
+			hasPDA: false,
+			hasPMI: false
 		}
 	}),
 	getters: {

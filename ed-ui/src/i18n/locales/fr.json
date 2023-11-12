@@ -23,7 +23,10 @@
 		"nocookie": "Le cookie a expiré ou est invalide, merci de recommencer l'import depuis la page Mon Compte.",
 		"wronglogins": "Les identifiants twino ne sont pas les bons.",
 		"notEnoughItem": "Vous n'avez pas assez de cet objet",
-		"notEnoughMoney": "Vous n'avez pas assez d'or"
+		"notEnoughMoney": "Vous n'avez pas assez d'or",
+		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
+		"noPMI": "Tu as besoin du Petit Missionaire Illustré pour accéder à cette page.",
+		"dinozListMissing": "liste des Dinoz manquante"
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -123,7 +126,8 @@
 		"confirm": "Confirmer cette action ?",
 		"chose": "Choisir",
 		"generator": "Générateur de dinoz",
-		"sortDinoz": "Gérer mes Dinoz"
+		"sortDinoz": "Gérer mes Dinoz",
+		"dinozMissions": "Missions de mes Dinoz"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -2067,7 +2071,9 @@
 		"missions": "Dino-RPG [ Liste des Missions ]",
 		"dinozNaming": "Dino-RPG [ Choix du Nom ]",
 		"fight": "Dino-RPG [ Combat ! ]",
-		"gather": "Dino-RPG [ "
+		"gather": "Dino-RPG [ ",
+		"dinozMissions": "Dino-RPG [ Missions de mes Dinoz ]",
+		"manageDinoz": "Dino-RPG [ Gestion de mes Dinoz ]"
 	},
 	"gather": {
 		"action": {
@@ -3421,5 +3427,20 @@
 			"dent_de_dorogon": "Peu de personnes peuvent se vanter de possèder ce trophée de chasse ! Cette dent de Dorogon fraîchement tombée devrait se vendre à un très bon prix.",
 			"bras_mecanique": "Cet artefact ressemble à une main, elle doit être issu d'une technologie oubliée, même si elle ne fonctionne plus, elle conserve une grande valeur.."
 		}
+	},
+	"manageDinoz": {
+		"title": "Gestion de mes Dinoz",
+		"disclaimer": "Ce module de gestion est accessible grâce à votre Pierre en Diamantite Agglomérée : un véritable concentré de technologie !",
+		"dinoz": "Dinoz",
+		"elements": "Eléments"
+	},
+	"dinozMissions": {
+		"title": "Missions de mes Dinoz",
+		"disclaimer": "Ce module de gestion est accessible grâce à votre **Petit Missionnaire Illustré** : très pratique pour suivre les missions de vos Dinoz !",
+		"dinoz": "Dinoz",
+		"missions": "Missions",
+		"see": "Voir",
+		"total": "Total",
+		"missionsFrom": "Missions de \"{npc}\""
 	}
 }

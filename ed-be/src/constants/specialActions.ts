@@ -1,8 +1,8 @@
-import { placeList } from './place.js';
+import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
-import { statusList } from './status.js';
+import { bossList } from '@drpg/core/models/fight/BossList';
 import { SpecialActions } from '@drpg/core/models/missions/specialActions';
-import { bossList } from './boss.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export const specialActions: Record<string, SpecialActions> = {
 	ENTER_TOWER: {

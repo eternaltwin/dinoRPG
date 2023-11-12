@@ -2,9 +2,9 @@ import { GatherData } from '@drpg/core/models/gather/gatherData';
 import { ConditionEnum, ConditionOperatorEnum } from '@drpg/core/models/enums/Parser';
 import { ingredientList } from './ingredient.js';
 import { skillList } from './skill.js';
-import { placeList } from './place.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
-import { itemList } from './item.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export const gather: Record<string, GatherData> = {
 	FISH: {

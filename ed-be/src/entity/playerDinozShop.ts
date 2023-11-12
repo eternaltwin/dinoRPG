@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from 'typeorm';
 import { Player } from './index.js';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { raceList } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
 
 @Entity()
 export class PlayerDinozShop {

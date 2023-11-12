@@ -1,6 +1,6 @@
 import { AppDataSource } from '../data-source.js';
 import { DinozMission } from '../entity/index.js';
-import { DeleteResult } from 'typeorm';
+import { DeleteResult, In } from 'typeorm';
 
 const missionRepository = AppDataSource.getRepository(DinozMission);
 
@@ -45,4 +45,30 @@ const removeMissionToDinoz = (dinozId: number, missionId: number): Promise<Delet
 		.execute();
 };
 
-export { addMissionToDinoz, updateMissionStep, updateMissionProgression, finishMission, removeMissionToDinoz };
+const getDinozMissions = (dinozIds: number[]): Promise<{
+	missionId: number;
+	isFinished: boolean;
+	dinoz: {
+		id: number;
+		name: string;
+	};
+}[]> => {
+	return missionRepository.find({
+		where: {
+			dinoz: {
+				id: In(dinozIds)
+			}
+		},
+		select: {
+			missionId: true,
+			isFinished: true,
+			dinoz: {
+				id: true,
+				name: true
+			}
+		},
+		relations: ['dinoz']
+	});
+}
+
+export { addMissionToDinoz, updateMissionStep, updateMissionProgression, finishMission, removeMissionToDinoz, getDinozMissions };

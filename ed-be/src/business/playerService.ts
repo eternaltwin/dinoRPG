@@ -6,7 +6,6 @@ import {
 	searchPlayersByName,
 	setPlayer
 } from '../dao/playerDao.js';
-import { rewardList } from '../constants/reward.js';
 import { Player } from '../entity/player.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
@@ -14,6 +13,7 @@ import { getAllDinozFicheLite, getDinozTotalCount } from '../dao/dinozDao.js';
 import { levelList } from '../constants/index.js';
 import { Dinoz } from '../entity/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 
 /**
  * @summary Get data from player on login
@@ -46,7 +46,8 @@ export async function getCommonData(req: Request): Promise<PlayerCommonData> {
 		}),
 		id: playerCommonData.id,
 		playerOptions: {
-			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PDA)
+			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PDA),
+			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PMI)
 		}
 	};
 	return commonData;

@@ -1,7 +1,6 @@
 export * from './dinozPlacement.js';
 export * from './epic.js';
 export * from './moueffe.js';
-export * from './item.js';
 export * from './missions.js';
 export * from './npcNameList.js';
 export * from './pigmou.js';

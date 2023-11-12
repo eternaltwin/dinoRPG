@@ -1,17 +1,16 @@
 import { Request } from 'express';
 import { Dinoz, DinozMission } from '../entity/index.js';
 import { getDinozMissionsInfo } from '../dao/dinozDao.js';
-import { placeList } from '../constants/index.js';
-import { npcList } from '../constants/npc.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import {
 	addMissionToDinoz,
 	finishMission,
+	getDinozMissions as getDinozMissionsData,
 	removeMissionToDinoz,
 	updateMissionProgression,
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
-import { MissionList } from '@drpg/core/models/missions/missionList';
+import { MissionID, MissionList } from '@drpg/core/models/missions/missionList';
 import { Place } from '@drpg/core/models/place/Place';
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
 import { Npc } from '@drpg/core/models/npc/npc';
@@ -24,19 +23,28 @@ import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { MissionCheck } from '../models/missionCheck.js';
 import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '../utils/checkConditions.js';
+import { getPlayerRewards } from '../dao/playerRewardsDao.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { MissionsPageData } from '@drpg/core/returnTypes/Missions';
+import { npcList } from '@drpg/core/models/npc/NpcList';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 
 export async function getMissionsList(req: Request): Promise<Array<MissionList>> {
 	const dinozId: number = parseInt(req.params.id);
 	const npcName: string = req.params.npc;
 	const dinoz: Dinoz | null = await getDinozMissionsInfo(dinozId);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
-	const currentPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const currentPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const npc = Object.values(npcList).find(npc => npc.name === npcName);
 
 	if (dinoz.player.id !== req.auth!.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
+	}
+
+	if (!currentPlace) {
+		throw new ErrorFormator(500, `Place ${dinoz.placeId} doesn't exist.`);
 	}
 
 	if (!npc) {
@@ -47,7 +55,7 @@ export async function getMissionsList(req: Request): Promise<Array<MissionList>>
 		throw new ErrorFormator(500, `NPC ${npcName} doesn't have any missions`);
 	}
 
-	if (currentPlace!.placeId !== npc!.placeId) {
+	if (currentPlace.placeId !== npc.placeId) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
@@ -241,9 +249,9 @@ function missionSort(missions: Array<Mission>, dinoz: Dinoz): Array<MissionList>
 		const missionKnown = dinoz.missions.find(element => element.missionId === missions.missionId);
 		let status: MissionsStatus;
 		/* Vérifie si les conditions sont remplies pour commencer la missions.
-         Si oui => status = MissionsStatus.AVAILABLE
-         Si non => status = MissionsStatus.UNAVAILABLE
-         */
+				 Si oui => status = MissionsStatus.AVAILABLE
+				 Si non => status = MissionsStatus.UNAVAILABLE
+				 */
 		if (!missionKnown) {
 			if (missions.condition && !checkCondition(missions.condition, dinoz)) {
 				status = MissionsStatus.UNAVAILABLE;
@@ -294,4 +302,77 @@ async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualStep: Mi
 	if (progress >= progressTarget) {
 		await updateMissionStep(dinoz.id, missionId, actualStep.stepId + 1);
 	}
+}
+
+/**
+ * Get data needed for the /missions page
+ */
+export async function getDinozMissions(req: Request): Promise<MissionsPageData> {
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Get player rewards
+	const rewards = await getPlayerRewards(req.auth.playerId);
+
+	// Check if player has PMI
+	const hasPMI = rewards.some(reward => reward.rewardId === rewardList.PMI);
+
+	// Stop if player doesn't have PMI
+	if (!hasPMI) {
+		throw new ErrorFormator(500, 'Player has no PMI');
+	}
+
+	// Get missions for selected Dinoz
+	const startedMissions = await getDinozMissionsData(req.body.dinoz);
+
+	// Get NPCs with missions
+	const npcsWithMissions = Object.values(npcList).filter(npc => npc.missions?.length);
+
+	// Get distinct Dinoz
+	const dinozList = startedMissions.reduce((acc, mission) => {
+		if (!acc.find(dinoz => dinoz.id === mission.dinoz.id)) {
+			acc.push(mission.dinoz);
+		}
+
+		return acc;
+	}, [] as { id: number, name: string }[]);
+
+	return dinozList.map(dinoz => ({
+		id: dinoz.id,
+		name: dinoz.name,
+		missions: npcsWithMissions.map(npc => {
+			const npcMissions = npc.missions || [];
+
+			return {
+				npc: npc.name,
+				missions: startedMissions.reduce((acc, mission) => {
+					// Filter out missions not for the current Dinoz
+					if (mission.dinoz.id !== dinoz.id) {
+						return acc;
+					}
+
+					// Filter out missions that are not finished
+					if (!mission.isFinished) {
+						return acc;
+					}
+
+					const foundMission = npcMissions.find(npcMission => npcMission.missionId === mission.missionId);
+
+					// Filter out missions that are not from the current NPC
+					if (!foundMission) {
+						return acc;
+					}
+
+					acc.push({
+						id: mission.missionId,
+						name: foundMission.missionName,
+					});
+
+					return acc;
+				}, [] as { id: MissionID, name: string }[])
+			};
+		}).filter(npc => npc.missions.length),
+	}));
 }

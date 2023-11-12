@@ -11,8 +11,8 @@ import {
 } from 'typeorm';
 import { ImportedDinozSkill, ImportedDinozStatus, ImportedPlayer } from './index.js';
 import { dinoAPI } from '@drpg/core/models/import/TwinoAPI';
-import { raceList, statusList } from '../constants/index.js';
 import { ImportDinoz } from '@drpg/core/models/import/importDinoz';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
 
 @Entity()
 export class ImportedDinoz {

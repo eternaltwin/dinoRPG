@@ -36,7 +36,7 @@ import {
 } from '../dao/importDao.js';
 import { sendDiscord } from '../utils/discord.js';
 import { statusResolution } from '../constants/import/statusResolution.js';
-import { rewardList, skillList } from '../constants/index.js';
+import { skillList } from '../constants/index.js';
 import { itemResolution } from '../constants/import/itemResolution.js';
 import { skillNameResolution } from '../constants/import/skillResolution.js';
 import { accentsTidy, parseShop } from '../utils/import.js';

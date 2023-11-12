@@ -52,11 +52,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList, itemNameList, missionsList, statusList } from '../../constants/index.js';
+import { epicList, missionsList, statusList } from '../../constants/index.js';
 import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 export default defineComponent({
 	name: 'MissionRewardModal',
