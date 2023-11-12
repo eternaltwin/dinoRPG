@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { itemNameList, missionsList, statusList } from '../../constants/index.js';
+import { epicList, itemNameList, missionsList, statusList } from '../../constants/index.js';
 import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
@@ -107,7 +107,7 @@ export default defineComponent({
 		epic(): string | undefined {
 			const isEpic: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EPIC);
 			if (isEpic?.rewardType === RewardEnum.EPIC) {
-				return isEpic.value.toLowerCase();
+				return epicList.imgName[isEpic.value];
 			} else {
 				return undefined;
 			}
