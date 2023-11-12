@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import EventBus from '../../events/index.js';
@@ -68,7 +68,7 @@ export default defineComponent({
 	emits: ['abort'],
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			information: false as boolean,
 			MissionEnum: ConditionEnum
 		};
@@ -82,7 +82,7 @@ export default defineComponent({
 		async reload(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			dinozToUpdate.missionId = undefined;
 			dinozToUpdate.missions = undefined;
@@ -100,7 +100,7 @@ export default defineComponent({
 		},
 		missionDetail(): MissionHUD | undefined {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			return myDinoz.missions;
 		},

@@ -167,14 +167,14 @@ import { ItemShopService } from '../services/index.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { errorHandler } from '../utils/index.js';
 import { itemNameList, shopNameList } from '../constants/index.js';
-import { sessionStore } from '../store/index.js';
+import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'ItemShopPage',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			playerStore: playerStore(),
 			itemList: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
 			shopNameList: shopNameList,
@@ -222,8 +222,8 @@ export default defineComponent({
 
 			// Update player's money if the item purchased is non magical
 			if (this.selectedItem.itemType !== 'magical') {
-				const newMoney = (this.sessionStore.getMoney! - this.selectedItem.price! * quantity) as number;
-				this.sessionStore.setMoney(newMoney);
+				const newMoney = (this.playerStore.getMoney! - this.selectedItem.price! * quantity) as number;
+				this.playerStore.setMoney(newMoney);
 			}
 		},
 		async buyMaxItemPopinConfirmChoice(): Promise<void> {

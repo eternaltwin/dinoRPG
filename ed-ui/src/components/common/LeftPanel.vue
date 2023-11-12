@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { sessionStore } from '../../store/index.js';
+import { playerStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
 import DinozList from '../../components/dinoz/dinozList.vue';
 
@@ -63,7 +63,7 @@ export default defineComponent({
 	name: 'LeftPanel',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			playerStore: playerStore(),
 			money: undefined as number | undefined
 		};
 	},
@@ -86,10 +86,10 @@ export default defineComponent({
 	},
 	computed: {
 		storeMoney(): number | undefined {
-			return this.sessionStore.getMoney;
+			return this.playerStore.getMoney;
 		},
 		hasPDA(): boolean {
-			return this.sessionStore.playerOptions.hasPDA;
+			return this.playerStore.playerOptions.hasPDA;
 		},
 		// Format money display (1000000 -> 1.000.000)
 		beautifulMoney(): string | undefined {
@@ -106,7 +106,7 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		this.money = this.sessionStore.getMoney;
+		this.money = this.playerStore.getMoney;
 	}
 });
 </script>

@@ -61,7 +61,7 @@ import EventBus from '../../events/index.js';
 import ImportAccount from '../../components/data/ImportAccount.vue';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { sessionStore } from '../../store/index.js';
+import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'Profile',
@@ -70,7 +70,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			playerStore: playerStore(),
 			openPopinImport: false as boolean,
 			isEditOn: false as boolean,
 			customText: this.accountData?.customText as string | null,
@@ -116,7 +116,7 @@ export default defineComponent({
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
 		isMyAccount(): boolean {
-			return this.sessionStore.getPlayerId === parseInt(this.$route.params.id as string);
+			return this.playerStore.getPlayerId === parseInt(this.$route.params.id as string);
 		},
 		closePopin(): void {
 			this.openPopinImport = false;

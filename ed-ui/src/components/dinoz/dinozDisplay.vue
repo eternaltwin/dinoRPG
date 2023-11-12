@@ -24,7 +24,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, raceList } from '../../constants/index.js';
-import { sessionStore } from '../../store';
+import { dinozStore } from '../../store';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -38,7 +38,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			nameChoosen: undefined as boolean | undefined,
 			position: dinozPlacement
 		};
@@ -64,13 +64,13 @@ export default defineComponent({
 			return 'top: -15px;';
 		},
 		goToDinozPage(shift: number): void {
-			const currentIndex = this.sessionStore.getDinozList.findIndex(dinoz => dinoz.id === this.dinozData.id);
+			const currentIndex = this.dinozStore.getDinozList.findIndex(dinoz => dinoz.id === this.dinozData?.id);
 			if (currentIndex === -1) return;
 
 			const newIndex = currentIndex + shift;
-			if (newIndex < 0 || newIndex >= this.sessionStore.getDinozList.length) return;
+			if (newIndex < 0 || newIndex >= this.dinozStore.getDinozList.length) return;
 
-			this.$router.push({ name: 'DinozPage', params: { id: this.sessionStore.getDinozList[newIndex].id } });
+			this.$router.push({ name: 'DinozPage', params: { id: this.dinozStore.getDinozList[newIndex].id } });
 		}
 	}
 });

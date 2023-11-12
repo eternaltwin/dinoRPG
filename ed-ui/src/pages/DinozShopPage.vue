@@ -69,7 +69,7 @@ import { DinozShopService, DinozService } from '../services/index.js';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
-import { sessionStore } from '../store/index.js';
+import { playerStore, dinozStore } from '../store/index.js';
 import { raceList, skillNameList } from '../constants/index.js';
 import EventBus from '../events/index.js';
 
@@ -77,7 +77,8 @@ export default defineComponent({
 	name: 'DinozShopPage',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
+			playerStore: playerStore(),
 			utils: utils,
 			dinozList: [] as Array<DinozShopFiche>,
 			raceList: raceList,
@@ -96,7 +97,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', true);
 				let dinozCreated: DinozFiche;
 				try {
-					dinozCreated = await DinozService.buyDinoz(dinoz.id);
+					dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
 					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err);
@@ -104,18 +105,18 @@ export default defineComponent({
 				}
 
 				// Update player's money
-				const newMoney = (this.sessionStore.getMoney! - dinoz.race.price!) as number;
-				this.sessionStore.setMoney(newMoney);
+				const newMoney = (this.playerStore.getMoney! - dinoz.race.price!) as number;
+				this.playerStore.setMoney(newMoney);
 
-				const dinozStore = this.sessionStore.getDinozList;
+				const dinozStore = this.dinozStore.getDinozList;
 
 				dinozStore!.push(dinozCreated);
 
 				// Update dinoz list
-				this.sessionStore.setDinozList(dinozStore!);
+				this.dinozStore.setDinozList(dinozStore!);
 
 				// Update dinoz count
-				this.sessionStore.setDinozCount(this.sessionStore.getDinozCount! + 1);
+				this.dinozStore.setDinozCount(this.dinozStore.getDinozCount! + 1);
 
 				// Go to dinoz page
 				await this.$router.push({

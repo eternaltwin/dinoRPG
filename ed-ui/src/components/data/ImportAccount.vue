@@ -21,14 +21,14 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'ImportAccount',
 	emits: ['closePopin'],
 	data() {
 		return {
-			sessionStore: sessionStore()
+			dinozStore: dinozStore()
 		};
 	},
 	methods: {
@@ -40,7 +40,7 @@ export default defineComponent({
 			this.$emit('closePopin');
 			try {
 				await PlayerService.requestImport(lang);
-				this.sessionStore.setDinozList([]);
+				this.dinozStore.setDinozList([]);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);

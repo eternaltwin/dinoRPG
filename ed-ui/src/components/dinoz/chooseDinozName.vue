@@ -27,7 +27,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { errorHandler } from '../../utils/index.js';
 import { DinozService } from '../../services/index.js';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
@@ -39,7 +39,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			name: undefined as string | undefined,
 			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/
 		};
@@ -62,11 +62,11 @@ export default defineComponent({
 				}
 
 				// Update dinozList in store
-				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id == this.dinozData!.id)!;
 				dinozToUpdate.name = this.name;
 
-				this.sessionStore.setDinozList(dinozList);
+				this.dinozStore.setDinozList(dinozList);
 
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);

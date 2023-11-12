@@ -91,14 +91,14 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 
 export default defineComponent({
 	name: 'InventoryTab',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList
 		};
@@ -114,7 +114,7 @@ export default defineComponent({
 			return item.quantity! >= item.maxQuantity!;
 		},
 		async refreshDinozList(): Promise<void> {
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 
 			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
@@ -123,7 +123,7 @@ export default defineComponent({
 
 			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
 
-			this.sessionStore.setDinozList(dinozList);
+			this.dinozStore.setDinozList(dinozList);
 		},
 		async useItem(item: ItemFiche): Promise<void> {
 			if (item.quantity! > 0) {

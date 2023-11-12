@@ -52,12 +52,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LocaleChange from '../../components/utils/LocaleChange.vue';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'RightMenu',
 	data() {
 		return {
+			dinozStore: dinozStore(),
+			playerStore: playerStore(),
 			sessionStore: sessionStore(),
 			time: '' as string
 		};
@@ -67,10 +69,10 @@ export default defineComponent({
 	},
 	computed: {
 		dinozCount(): number | undefined {
-			return this.sessionStore.getDinozCount;
+			return this.dinozStore.getDinozCount;
 		},
 		getPlayerId(): number | undefined {
-			return this.sessionStore.getPlayerId;
+			return this.playerStore.getPlayerId;
 		}
 	},
 	methods: {

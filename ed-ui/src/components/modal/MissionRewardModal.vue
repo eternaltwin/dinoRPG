@@ -53,7 +53,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { itemNameList, missionsList, statusList } from '../../constants/index.js';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -62,7 +62,7 @@ export default defineComponent({
 	name: 'MissionRewardModal',
 	data() {
 		return {
-			sessionStore: sessionStore()
+			dinozStore: dinozStore()
 		};
 	},
 	props: {
@@ -71,14 +71,14 @@ export default defineComponent({
 	computed: {
 		missionName(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			const missionId = myDinoz.missionId as number;
 			return missionsList[missionId];
 		},
 		validator(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			return myDinoz.missions!.target;
 		},

@@ -148,7 +148,7 @@ import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOw
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, skillNameList } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { sessionStore } from '../store/index.js';
+import { dinozStore } from '../store/index.js';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -160,7 +160,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			availableSkills: {} as Partial<DinozSkillOwnAndUnlockable>,
 			dinozData: {} as DinozFiche,
 			tryNumber: 1 as number,
@@ -205,11 +205,11 @@ export default defineComponent({
 			try {
 				const newMaxExperience = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
 
-				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id === dinozId)!;
 				dinozToUpdate.experience = 0;
 				dinozToUpdate.maxExperience = parseInt(newMaxExperience);
-				this.sessionStore.setDinozList(dinozList);
+				this.dinozStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 
 				this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
@@ -241,7 +241,7 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		const dinozId: string = this.$route.params.id.toString();
-		const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+		const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 		this.dinozData = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 
 		await this.getLearnableSkills(dinozId, 1);

@@ -23,14 +23,14 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
-import { sessionStore } from '../store/index.js';
+import { dinozStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozPage',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			nameChoosen: undefined as boolean | undefined,
 			dinozData: {} as DinozFiche
 		};
@@ -56,11 +56,11 @@ export default defineComponent({
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 				dinozToUpdate.missionId = this.dinozData.missionId;
 				dinozToUpdate.missions = this.dinozData.missions;
-				this.sessionStore.setDinozList(dinozList);
+				this.dinozStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
@@ -70,10 +70,10 @@ export default defineComponent({
 		async getFiche(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
-			this.sessionStore.setDinozList(dinozList);
+			this.dinozStore.setDinozList(dinozList);
 		}
 	},
 	// Get dinoz data

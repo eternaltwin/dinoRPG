@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 import { placeList } from '../../constants/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
@@ -42,7 +42,8 @@ export default defineComponent({
 	name: 'DinozList',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
+			playerStore: playerStore(),
 			dinozList: [] as Array<DinozFiche>,
 			hasPDA: false as boolean
 		};
@@ -61,7 +62,7 @@ export default defineComponent({
 	},
 	computed: {
 		storeDinozList(): Array<DinozFiche> {
-			return this.sessionStore.getDinozList!;
+			return this.dinozStore.getDinozList!;
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
@@ -77,8 +78,8 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		this.dinozList = this.sessionStore.getDinozList!;
-		this.hasPDA = this.sessionStore.getPlayerOptions!.hasPDA;
+		this.dinozList = this.dinozStore.getDinozList!;
+		this.hasPDA = this.playerStore.getPlayerOptions!.hasPDA;
 	}
 });
 </script>

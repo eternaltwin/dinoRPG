@@ -23,7 +23,7 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import { PlayerService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-import { sessionStore } from '../store/index.js';
+import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import TwinoDisplay from '../components/data/TwinoDisplay.vue';
 
@@ -31,7 +31,7 @@ export default defineComponent({
 	name: 'MyAccount',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			playerStore: playerStore(),
 			accountData: {} as PlayerInfo,
 			dataLoaded: false as boolean
 		};
@@ -58,7 +58,7 @@ export default defineComponent({
 	watch: {
 		// Reload page if player click on 'my account' button
 		'$route.params.id': function () {
-			if (this.$router.currentRoute.value.params.id === this.sessionStore.getPlayerId!.toString()) {
+			if (this.$router.currentRoute.value.params.id === this.playerStore.getPlayerId!.toString()) {
 				this.$router.go(0);
 			}
 		}

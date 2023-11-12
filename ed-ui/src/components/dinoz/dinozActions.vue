@@ -83,7 +83,7 @@ import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { missionsList, npcNameList, shopNameList } from '../../constants/index.js';
 import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
-import { sessionStore } from '../../store/index.js';
+import { sessionStore, dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -102,11 +102,12 @@ export default defineComponent({
 			npcNameList: npcNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
-			mission: sessionStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
+			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
 				.missions,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Array<Rewarder> | undefined,
 			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			MissionEnum: ConditionEnum,
 			digReward: undefined as Rewarder | undefined,
 			dinozId: this.$route.params.id.toString()
@@ -223,10 +224,10 @@ export default defineComponent({
 		endMission(): void {
 			this.missionReward = undefined;
 			const dinozId = parseInt(this.$route.params.id as string);
-			const dinozToUpdate: DinozFiche = this.sessionStore.getDinoz(dinozId);
+			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche;
 			dinozToUpdate.missions = undefined;
 			dinozToUpdate.missionId = undefined;
-			this.sessionStore.setDinoz(dinozToUpdate);
+			this.dinozStore.setDinoz(dinozToUpdate);
 			this.$emit('endMission');
 		},
 		validateMission(): void {
@@ -242,7 +243,7 @@ export default defineComponent({
 			return undefined;
 		},
 		storeMission(): MissionHUD | undefined {
-			return sessionStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId).missions;
+			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missions;
 		}
 	},
 	watch: {

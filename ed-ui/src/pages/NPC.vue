@@ -33,7 +33,7 @@ import { DinozService, NPCService, PlayerService } from '../services/index.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { NavigationFailure } from 'vue-router';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
-import { sessionStore } from '../store/index.js';
+import { dinozStore } from '../store/index.js';
 
 export default defineComponent({
 	name: 'NPC',
@@ -43,7 +43,7 @@ export default defineComponent({
 			dinozId: undefined as number | undefined,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
-			sessionStore: sessionStore()
+			dinozStore: dinozStore()
 		};
 	},
 	components: {
@@ -66,7 +66,7 @@ export default defineComponent({
 							this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
-							this.sessionStore.setDinozList(await PlayerService.getDinozList());
+							this.dinozStore.setDinozList(await PlayerService.getDinozList());
 							break;
 						default:
 							break;

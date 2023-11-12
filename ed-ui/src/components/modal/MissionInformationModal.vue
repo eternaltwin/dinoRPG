@@ -24,7 +24,7 @@
 import { defineComponent, PropType } from 'vue';
 import { missionsList } from '../../constants/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
-import { sessionStore } from '../../store/index.js';
+import { dinozStore } from '../../store/index.js';
 import { MissionService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -34,7 +34,7 @@ export default defineComponent({
 	name: 'MissionInformationModal',
 	data() {
 		return {
-			sessionStore: sessionStore()
+			dinozStore: dinozStore()
 		};
 	},
 	props: {
@@ -45,7 +45,7 @@ export default defineComponent({
 		async updateMission(status: string) {
 			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			try {
 				await MissionService.updateMissions(dinozId, this.mission!.missionId, status);
@@ -54,7 +54,7 @@ export default defineComponent({
 				} else {
 					dinozToUpdate.missionId = undefined;
 				}
-				this.sessionStore.setDinozList(dinozList);
+				this.dinozStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 				this.$emit('reload');
 			} catch (err) {
@@ -68,7 +68,7 @@ export default defineComponent({
 			return missionsList[this.mission!.missionId];
 		},
 		dinoz(): DinozFiche {
-			const dinozList: Array<DinozFiche> = this.sessionStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			return dinozList.find(dinozs => dinozs.id == parseInt(this.$route.params.id as string))!;
 		}
 	}

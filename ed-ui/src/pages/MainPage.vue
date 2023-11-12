@@ -37,7 +37,7 @@
 import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
 import RightMenu from '../components/common/RightMenu.vue';
-import { sessionStore } from '../store/index.js';
+import { playerStore, dinozStore } from '../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { errorHandler } from '../utils/index.js';
 import { PlayerService } from '../services/index.js';
@@ -51,7 +51,8 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			sessionStore: sessionStore()
+			playerStore: playerStore(),
+			dinozStore: dinozStore()
 		};
 	},
 	methods: {
@@ -60,11 +61,11 @@ export default defineComponent({
 			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
 			// Set data in sessionStore
-			this.sessionStore.setMoney(commonData.money);
-			this.sessionStore.setDinozList(commonData.dinoz);
-			this.sessionStore.setDinozCount(commonData.dinozCount);
-			this.sessionStore.setPlayerId(commonData.id);
-			this.sessionStore.setPlayerOptions(commonData.playerOptions);
+			this.playerStore.setMoney(commonData.money);
+			this.dinozStore.setDinozList(commonData.dinoz);
+			this.dinozStore.setDinozCount(commonData.dinozCount);
+			this.playerStore.setPlayerId(commonData.id);
+			this.playerStore.setPlayerOptions(commonData.playerOptions);
 			EventBus.emit('isLoading', false);
 		}
 	},
@@ -78,7 +79,7 @@ export default defineComponent({
 		EventBus.on('refreshMoney', async e => {
 			if (!e) return;
 			const newMoney = await PlayerService.getPlayerMoney();
-			this.sessionStore.setMoney(parseInt(newMoney));
+			this.playerStore.setMoney(parseInt(newMoney));
 		});
 	}
 });

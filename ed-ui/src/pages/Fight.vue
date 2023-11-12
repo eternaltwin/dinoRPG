@@ -49,7 +49,7 @@
 <script lang="ts">
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { FightService } from '../services/index.js';
-import { localStore, sessionStore } from '../store/index.js';
+import { localStore, playerStore, dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
@@ -63,6 +63,8 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			playerStore: playerStore(),
+			dinozStore: dinozStore(),
 			sessionStore: sessionStore(),
 			fight: {} as FightResult,
 			dinozId: undefined as number | undefined,
@@ -82,9 +84,9 @@ export default defineComponent({
 				this.sessionStore.setFightResult(result);
 				this.fight = this.sessionStore.getFightResult!;
 				if (result.result) {
-					const newMoney: number = this.sessionStore.getMoney! + this.fight.goldEarned;
-					this.sessionStore.setMoney(newMoney);
-					const dinozInStore: Array<DinozFiche> = this.sessionStore.getDinozList!;
+					const newMoney: number = this.playerStore.getMoney! + this.fight.goldEarned;
+					this.playerStore.setMoney(newMoney);
+					const dinozInStore: Array<DinozFiche> = this.dinozStore.getDinozList!;
 					const dinoz: DinozFiche = dinozInStore.find(dinoz => dinoz.id! === this.dinozId)!;
 					dinoz.experience! += this.fight.xpEarned;
 				}
@@ -106,7 +108,7 @@ export default defineComponent({
 		this.dinozId = parseInt(this.$router.currentRoute.value.query.dinozId as string);
 		if (this.sessionStore.getFightResult) {
 			this.fight = this.sessionStore.getFightResult;
-			this.sessionStore.setMoney(this.sessionStore.getMoney! + this.fight.goldEarned);
+			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
 		}
 	},
 	unmounted(): void {

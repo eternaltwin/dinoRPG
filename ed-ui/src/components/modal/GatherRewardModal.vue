@@ -38,7 +38,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { GatherRewards } from '@drpg/core/models/gather/gatherRewards';
-import { sessionStore } from '../../store/index.js';
+import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'GatherRewardModal',
@@ -48,7 +48,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			playerStore: playerStore(),
 			rewardList: {} as GatherRewards
 		};
 	},
@@ -58,7 +58,7 @@ export default defineComponent({
 		for (const item of this.rewardList.item) {
 			if (item.name?.includes('gold')) {
 				this.rewardList.item[index].name = 'gold';
-				this.sessionStore.addMoney(item.price);
+				this.playerStore.addMoney(item.price);
 			}
 			index++;
 		}
