@@ -61,6 +61,7 @@
 			{{ $t('button.generator') }}
 		</a>
 		<a class="button" v-if="isDevEnv()" @click="goToPage('DinozWithoutFlash')"> Dinoz display </a>
+		<a class="button" v-if="isDevEnv()" @click="goToPage('PixiFight')"> Fight display </a>
 	</div>
 </template>
 

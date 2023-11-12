@@ -17,6 +17,7 @@
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "pixi.js": "^7.3.2",
     "url-join": "^5.0.0",
     "vue": "^3.3.8",
     "vue-i18n": "^9.6.5",

@@ -100,6 +100,11 @@ const router = createRouter({
 					path: '/market',
 					name: 'MarketPage',
 					component: () => import('../pages/MarketPage.vue')
+				},
+				{
+					path: '/fight/pixi',
+					name: 'PixiFight',
+					component: () => import('../components/fight/PixiFight.vue')
 				}
 				// Import are not available
 				/*{
