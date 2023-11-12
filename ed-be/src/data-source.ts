@@ -39,7 +39,7 @@ const dbConfig = dbConf(getEnvironnement());
 export const AppDataSource = new DataSource({
 	type: 'postgres',
 	host: dbConfig.HOST,
-	port: 5433,
+	port: 5432,
 	username: dbConfig.USER,
 	password: dbConfig.PASSWORD,
 	database: dbConfig.DB,

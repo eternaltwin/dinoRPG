@@ -55,7 +55,13 @@ export default defineComponent({
 			if (choice === 'missions') {
 				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
 			}
-			this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
+			EventBus.emit('isLoading', true);
+			try {
+				this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
+			} catch (e) {
+				errorHandler.handle(e);
+			}
+			EventBus.emit('isLoading', false);
 			if (this.npcSpeech.service) {
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
