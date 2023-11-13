@@ -1,11 +1,10 @@
 import { Request } from 'express';
 import { Dinoz, DinozMission } from '../entity/index.js';
-import { getDinozMissionsInfo } from '../dao/dinozDao.js';
+import { getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import {
 	addMissionToDinoz,
 	finishMission,
-	getDinozMissions as getDinozMissionsData,
 	removeMissionToDinoz,
 	updateMissionProgression,
 	updateMissionStep
@@ -25,7 +24,7 @@ import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
-import { MissionsPageData } from '@drpg/core/returnTypes/Missions';
+import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 
@@ -307,14 +306,16 @@ async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualStep: Mi
 /**
  * Get data needed for the /missions page
  */
-export async function getDinozMissions(req: Request): Promise<MissionsPageData> {
+export async function getGlobalMissions(req: Request): Promise<MissionsPageData> {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
 		throw new ErrorFormator(500, 'No player found');
 	}
 
+	const playerId = req.auth.playerId;
+
 	// Get player rewards
-	const rewards = await getPlayerRewards(req.auth.playerId);
+	const rewards = await getPlayerRewards(playerId);
 
 	// Check if player has PMI
 	const hasPMI = rewards.some(reward => reward.rewardId === rewardList.PMI);
@@ -324,35 +325,22 @@ export async function getDinozMissions(req: Request): Promise<MissionsPageData> 
 		throw new ErrorFormator(500, 'Player has no PMI');
 	}
 
-	// Get missions for selected Dinoz
-	const startedMissions = await getDinozMissionsData(req.body.dinoz);
+	// Get player Dinoz and their missions
+	const dinozList = await getGlobalMissionsData(playerId);
 
 	// Get NPCs with missions
 	const npcsWithMissions = Object.values(npcList).filter(npc => npc.missions?.length);
 
-	// Get distinct Dinoz
-	const dinozList = startedMissions.reduce((acc, mission) => {
-		if (!acc.find(dinoz => dinoz.id === mission.dinoz.id)) {
-			acc.push(mission.dinoz);
-		}
-
-		return acc;
-	}, [] as { id: number, name: string }[]);
-
 	return dinozList.map(dinoz => ({
 		id: dinoz.id,
 		name: dinoz.name,
+		display: dinoz.display,
 		missions: npcsWithMissions.map(npc => {
 			const npcMissions = npc.missions || [];
 
 			return {
 				npc: npc.name,
-				missions: startedMissions.reduce((acc, mission) => {
-					// Filter out missions not for the current Dinoz
-					if (mission.dinoz.id !== dinoz.id) {
-						return acc;
-					}
-
+				missions: dinoz.missions.reduce((acc, mission) => {
 					// Filter out missions that are not finished
 					if (!mission.isFinished) {
 						return acc;

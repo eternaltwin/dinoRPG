@@ -10,10 +10,10 @@ import { Player } from '../entity/player.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { getAllDinozFicheLite, getDinozTotalCount } from '../dao/dinozDao.js';
-import { levelList } from '../constants/index.js';
 import { Dinoz } from '../entity/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 
 /**
  * @summary Get data from player on login

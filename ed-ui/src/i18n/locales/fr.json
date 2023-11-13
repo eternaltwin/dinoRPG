@@ -3430,7 +3430,7 @@
 	},
 	"manageDinoz": {
 		"title": "Gestion de mes Dinoz",
-		"disclaimer": "Ce module de gestion est accessible grâce à votre Pierre en Diamantite Agglomérée : un véritable concentré de technologie !",
+		"disclaimer": "Ce module de gestion est accessible grâce à votre **Pierre en Diamantite Agglomérée** : un véritable concentré de technologie !",
 		"dinoz": "Dinoz",
 		"elements": "Eléments"
 	},

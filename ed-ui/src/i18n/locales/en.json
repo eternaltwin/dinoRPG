@@ -2999,7 +2999,7 @@
 	},
 	"manageDinoz": {
 		"title": "My Dinoz management",
-		"disclaimer": "This management module is accessible thanks to your Diamantite Pebble: a real concentrate of technology!",
+		"disclaimer": "This management module is accessible thanks to your **Diamantite Pebble**: a real concentrate of technology!",
 		"dinoz": "Dinoz",
 		"elements": "Elements"
 	},

@@ -45,30 +45,4 @@ const removeMissionToDinoz = (dinozId: number, missionId: number): Promise<Delet
 		.execute();
 };
 
-const getDinozMissions = (dinozIds: number[]): Promise<{
-	missionId: number;
-	isFinished: boolean;
-	dinoz: {
-		id: number;
-		name: string;
-	};
-}[]> => {
-	return missionRepository.find({
-		where: {
-			dinoz: {
-				id: In(dinozIds)
-			}
-		},
-		select: {
-			missionId: true,
-			isFinished: true,
-			dinoz: {
-				id: true,
-				name: true
-			}
-		},
-		relations: ['dinoz']
-	});
-}
-
-export { addMissionToDinoz, updateMissionStep, updateMissionProgression, finishMission, removeMissionToDinoz, getDinozMissions };
+export { addMissionToDinoz, updateMissionStep, updateMissionProgression, finishMission, removeMissionToDinoz };

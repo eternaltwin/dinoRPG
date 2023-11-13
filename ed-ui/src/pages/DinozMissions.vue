@@ -100,13 +100,13 @@
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';
-import { dinozStore, playerStore } from '../store/index.js';
-import { MissionsPageData } from '@drpg/core/returnTypes/Missions';
+import { playerStore } from '../store/index.js';
+import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
 import { MissionService } from '../services/MissionService.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { npcMissions } from '@drpg/core/models/npc/NpcMissions';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { errorHandler } from '../utils/errorHandler.js';
 
 export default defineComponent({
 	name: 'DinozMissions',
@@ -116,8 +116,6 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore(),
-			dinozList: [] as DinozFiche[],
 			data: [] as MissionsPageData,
 			npcMissions,
 			totalMissions: npcMissions.reduce((acc, npc) => acc + (npc.missions?.length || 0), 0),
@@ -133,30 +131,13 @@ export default defineComponent({
 			return;
 		}
 
-		if (!this.dinozStore.getDinozList) {
-			EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+		// Fetch data
+		try {
+			this.data = await MissionService.getGlobalMissions();
+		} catch (error) {
+			errorHandler.handle(error);
 			return;
 		}
-
-		this.dinozList = this.dinozStore.getDinozList;
-
-		// Fetch data
-		this.data = await MissionService.getDinozMissions(this.dinozList.map(dinoz => dinoz.id || 0));
-
-		// Add missing Dinoz to data
-		this.dinozList.forEach(dinoz => {
-			if (!dinoz.id) return;
-			if (!this.data.find(d => d.id === dinoz.id)) {
-				this.data.push({
-					id: dinoz.id,
-					name: dinoz.name || '',
-					missions: []
-				});
-			}
-		});
-
-		console.log(this.data);
-		console.log(itemNameList[2]);
 	}
 });
 </script>

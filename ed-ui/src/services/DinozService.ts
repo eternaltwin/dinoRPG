@@ -7,6 +7,7 @@ import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOw
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
+import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {
@@ -102,6 +103,18 @@ export const DinozService = {
 	cancelConcentration(dinozId: number): Promise<void> {
 		return http()
 			.post(`/dinoz/noconcentrate/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getDinozToManage(): Promise<ManagePageData> {
+		return http()
+			.get('/dinoz/manage')
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	updateOrders(dinozIds: number[]): Promise<void> {
+		return http()
+			.post('/dinoz/manage', { order: dinozIds })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

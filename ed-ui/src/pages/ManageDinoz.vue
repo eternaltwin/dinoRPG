@@ -3,52 +3,131 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`manageDinoz.title`) }}</div>
 	</div>
-	<div class="disclaimer">
-		{{ $t('manageDinoz.disclaimer') }}
-	</div>
+	<div class="disclaimer" v-html="formatContent($t('manageDinoz.disclaimer'))" />
 	<table>
 		<tbody>
 			<tr>
-				<th class="dinoz">{{ $t('manageDinoz.dinoz') }}</th>
+				<th class="dinoz" colspan="3">{{ $t('manageDinoz.dinoz') }}</th>
 				<th class="elements">{{ $t('manageDinoz.elements') }}</th>
+				<th class="order"></th>
 			</tr>
 
-			<Tippy
-				theme="normal"
-				tag="tr"
-				v-for="(dinoz, index) in dinozList"
-				:key="dinoz.id"
-				:class="{
-					even: (index + 1) % 2 == 0
-				}"
-			>
-				<td class="dinoz">{{ dinoz.name }}</td>
-				<td class="elements">TODO</td>
+			<tr v-for="dinoz in dinozList as ManagePageData" :key="dinoz.id">
+				<td class="dinoz">🦖</td>
+				<td class="level">{{ dinoz.level }}</td>
+				<Tippy tag="td" theme="small">
+					<span>{{ dinoz.name }}</span>
+					<div class="life-full">
+						<div class="life" :style="{ width: `${(dinoz.life / dinoz.maxLife) * 100}%` }" />
+					</div>
+					<div class="experience-full">
+						<div class="experience" :style="{ width: `${(dinoz.experience / getMaxXP(dinoz.level)) * 100}%` }" />
+					</div>
 
-				<template #content> TEST </template>
-			</Tippy>
+					<template #content>
+						<img
+							v-for="status in dinoz.status"
+							:key="status.statusId"
+							:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
+							:alt="statusList.imgName[status.statusId]"
+						/>
+					</template>
+				</Tippy>
+				<td class="elements">
+					<Elements
+						:fire="dinoz.nbrUpFire"
+						:wood="dinoz.nbrUpWood"
+						:water="dinoz.nbrUpWater"
+						:lightning="dinoz.nbrUpLightning"
+						:air="dinoz.nbrUpAir"
+					/>
+				</td>
+				<td class="order">
+					<div class="up" @click="changeOrder(dinoz, -1)">
+						<img :src="getImgURL('icons', 'small_equip')" alt="arrow_up" />
+					</div>
+					<div class="down" @click="changeOrder(dinoz, 1)">
+						<img :src="getImgURL('icons', 'small_equip')" alt="arrow_down" />
+					</div>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </template>
 
 <script lang="ts">
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';
 import { dinozStore, playerStore } from '../store/index.js';
+import { DinozService } from '../services/DinozService.js';
+import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
+import { statusList } from '../constants/status.js';
+import { errorHandler } from '../utils/index.js';
+import { getMaxXP } from '@drpg/core/utils/getMaxXP';
 
 export default defineComponent({
 	name: 'ManageDinoz',
 	components: {
-		TitleHeader
+		TitleHeader,
+		Elements: defineAsyncComponent(() => import('../components/data/elements.vue'))
 	},
 	data() {
 		return {
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: [] as DinozFiche[]
+			dinozList: [] as ManagePageData,
+			statusList,
+			getMaxXP
 		};
+	},
+	methods: {
+		async changeOrder(dinoz: ManagePageData[number], direction: number) {
+			// Do nothing if already at an extremity
+			if ((direction === -1 && dinoz.order === 0) || (direction === 1 && dinoz.order === this.dinozList.length - 1)) {
+				return;
+			}
+
+			const index = this.dinozList.findIndex(d => d.id === dinoz.id);
+			let newList = [...this.dinozList];
+
+			// Swap order
+			const tmp = dinoz.order;
+			dinoz.order = newList[index + direction].order;
+			newList[index + direction].order = tmp;
+
+			// Swap in list
+			if (direction === -1) {
+				newList = [...newList.slice(0, index - 1), newList[index], newList[index - 1], ...newList.slice(index + 1)];
+			} else {
+				newList = [...newList.slice(0, index), newList[index + 1], newList[index], ...newList.slice(index + 2)];
+			}
+
+			try {
+				await DinozService.updateOrders(newList.map(d => d.id));
+
+				// Update list
+				this.dinozList = newList;
+
+				// Update store
+				if (!this.dinozStore.getDinozList) {
+					EventBus.emit('toast', { type: 'error', message: 'noDinozList' });
+					return;
+				}
+				this.dinozStore.setDinozList(
+					this.dinozStore.getDinozList.map((d, i) => {
+						if (i === index) {
+							d.order = dinoz.order + direction;
+						} else if (i === index + direction) {
+							d.order = dinoz.order;
+						}
+						return d;
+					})
+				);
+			} catch (error) {
+				errorHandler.handle(error);
+			}
+		}
 	},
 	async mounted(): Promise<void> {
 		// Redirect to last page if no PDA
@@ -58,14 +137,21 @@ export default defineComponent({
 			return;
 		}
 
-		if (!this.dinozStore.getDinozList) {
-			EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+		// Fetch data
+		try {
+			this.dinozList = await DinozService.getDinozToManage();
+
+			// Add order if null
+			this.dinozList = this.dinozList.map((dinoz, index) => {
+				if (dinoz.order === null) {
+					dinoz.order = index;
+				}
+				return dinoz;
+			});
+		} catch (error) {
+			errorHandler.handle(error);
 			return;
 		}
-
-		this.dinozList = this.dinozStore.getDinozList;
-
-		console.log(this.dinozList);
 	}
 });
 </script>
@@ -81,6 +167,7 @@ export default defineComponent({
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
 }
+
 table {
 	width: 100%;
 	margin-top: 10px;
@@ -88,9 +175,11 @@ table {
 	background-color: #ecbd84;
 	border-collapse: separate;
 	border-spacing: 1px;
+
 	tr {
 		display: table-row;
 		cursor: help;
+
 		th {
 			font-size: 8pt;
 			text-shadow: 1px 1px 0px #356847;
@@ -106,37 +195,93 @@ table {
 			background-color: #c64e36;
 			background-image: url('../assets/background/table_header.webp');
 			background-position: left bottom;
-			&.dinoz {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-			}
-			&.elements {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
+			padding-left: 4px;
+			padding-right: 4px;
+			padding-bottom: 8px;
+
+			&.order {
+				width: 18px;
 			}
 		}
+
 		td {
-			font-size: 16px;
+			font-size: 9pt;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
 			color: #710;
 			background-color: #f3ca92;
 			border: 1px solid #c88f44;
 			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
+			padding: 2px 4px;
+
 			&.dinoz {
-				padding: 1px 5px;
-				max-width: 222px;
+				width: 50px;
+				text-align: center;
 			}
-			&.elements {
-				padding: 1px 5px;
-				width: 52px;
+
+			&.level {
+				text-align: center;
 			}
-		}
-		&.even td {
-			background-image: url('../assets/background/table_cell_even.webp');
-			background-position: -10px 0px;
+
+			.life-full {
+				width: 70px;
+				height: 4px;
+				background-color: #8c492f;
+				border: 1px solid #8c492f;
+				overflow: hidden;
+				margin: 2px;
+
+				.life {
+					height: 4px;
+					background-color: #f9e94c;
+					border-right: 1px solid white;
+					box-sizing: border-box;
+				}
+			}
+
+			.experience-full {
+				width: 70px;
+				height: 4px;
+				background-color: #8c492f;
+				border: 1px solid #8c492f;
+				overflow: hidden;
+				margin: 2px;
+
+				.experience {
+					height: 4px;
+					background-color: #c487ea;
+					border-right: 1px solid white;
+					box-sizing: border-box;
+				}
+			}
+
+			&.order {
+				& > div {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border: 1px solid #f9e5b7;
+					background-color: #bb5e46;
+					margin: 1px;
+					text-align: center;
+					cursor: pointer;
+					width: 16px;
+					height: 16px;
+
+					&:hover {
+						border: 1px solid yellow;
+						background-color: #f9e5b7;
+					}
+
+					img {
+						width: 10px;
+					}
+
+					&.down img {
+						transform: rotate(180deg);
+					}
+				}
+			}
 		}
 	}
 }

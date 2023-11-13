@@ -10,8 +10,10 @@ import {
 	getDinozGatherData,
 	getDinozSkillAndStatusRequest,
 	getDinozSkillRequest,
+	getManageData,
 	setDinoz,
-	setDinozPlaceRequest
+	setDinozPlaceRequest,
+	updateOrderData
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import {
@@ -56,6 +58,9 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
+import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
+import { getPlayerRewards } from '../dao/playerRewardsDao.js';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 
 /**
  * @summary Get available action from dinoz
@@ -673,3 +678,71 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 
 	return returnGrid;
 };
+
+
+
+/**
+ * Get data needed for the /manage page
+ */
+export async function getDinozToManage(req: Request): Promise<ManagePageData> {
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	const playerId = req.auth.playerId;
+
+	// Get player rewards
+	const rewards = await getPlayerRewards(playerId);
+
+	// Check if player has PDA
+	const hasPDA = rewards.some(reward => reward.rewardId === rewardList.PDA);
+
+	// Stop if player doesn't have PDA
+	if (!hasPDA) {
+		throw new ErrorFormator(500, 'Player has no PDA');
+	}
+
+	// Get Dinoz
+	const dinozList = await getManageData(playerId);
+
+	return dinozList;
+}
+
+/**
+ * Update a player dinoz order
+ */
+export async function updateOrders(req: Request) {
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	const order = req.body.order;
+
+	if (!order || !Array.isArray(order)) {
+		throw new ErrorFormator(500, 'Order is not an array');
+	}
+
+	const playerId = req.auth.playerId;
+
+	// Get player rewards
+	const rewards = await getPlayerRewards(playerId);
+
+	// Check if player has PDA
+	const hasPDA = rewards.some(reward => reward.rewardId === rewardList.PDA);
+
+	// Stop if player doesn't have PDA
+	if (!hasPDA) {
+		throw new ErrorFormator(500, 'Player has no PDA');
+	}
+
+	// Preformat Dinoz data
+	const dinozList = order.map((id: number, index) => ({
+		id,
+		order: index
+	}));
+
+	// Update orders
+	await updateOrderData(dinozList);
+}

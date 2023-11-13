@@ -24,7 +24,7 @@
 import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, raceList } from '../../constants/index.js';
-import { dinozStore } from '../../store';
+import { dinozStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -64,6 +64,8 @@ export default defineComponent({
 			return 'top: -15px;';
 		},
 		goToDinozPage(shift: number): void {
+			if (!this.dinozStore.getDinozList) return;
+
 			const currentIndex = this.dinozStore.getDinozList.findIndex(dinoz => dinoz.id === this.dinozData?.id);
 			if (currentIndex === -1) return;
 

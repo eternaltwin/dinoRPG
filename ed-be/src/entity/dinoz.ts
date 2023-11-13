@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import { Player } from './player.js';
 import { Concentration, DinozItem, DinozMission, DinozSkill, DinozSkillUnlockable, DinozStatus, NPC } from './index.js';
-import { levelList, skillList } from '../constants/index.js';
+import { skillList } from '../constants/index.js';
 import gameConfig from '../config/game.config.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
@@ -30,6 +30,7 @@ import { ImportDinoz } from '@drpg/core/models/import/importDinoz';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 
 @Entity()
 export class Dinoz {

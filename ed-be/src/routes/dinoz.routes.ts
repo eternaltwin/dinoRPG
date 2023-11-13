@@ -10,7 +10,9 @@ import {
 	resurrectDinoz,
 	digWithDinoz,
 	gatherWithDinoz,
-	getGatherGrid
+	getGatherGrid,
+	getDinozToManage,
+	updateOrders
 } from '../business/dinozService.js';
 import { apiRoutes, regex } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -498,6 +500,47 @@ routes.post(
 			console.error(e.message);
 			//await postError(e, res);
 			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+// Route for /manage view
+routes.get(
+	`${commonPath}/manage`,
+	[],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await getDinozToManage(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(500).send(e.message);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/manage`,
+	[body('order').exists().isArray()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await updateOrders(req);
+			return res.status(200).send({
+				message: 'Orders updated'
+			});
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(500).send(e.message);
 		}
 	}
 );

@@ -1,7 +1,7 @@
 import { http } from '../utils/index.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { MissionsPageData } from '@drpg/core/returnTypes/Missions';
+import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
 
 export const MissionService = {
 	getMissions(id: string, npc: string): Promise<Array<MissionList>> {
@@ -28,9 +28,9 @@ export const MissionService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getDinozMissions(dinozIds: number[]): Promise<MissionsPageData> {
+	getGlobalMissions(): Promise<MissionsPageData> {
 		return http()
-			.post('/missions/get-for-dinoz', { dinoz: dinozIds })
+			.get('/missions/global')
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

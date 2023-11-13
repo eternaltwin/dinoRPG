@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { levelList, skillList } from '../constants/index.js';
+import { skillList } from '../constants/index.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Ranking } from '../entity/index.js';
 import { getDinozForLevelUp, getDinozSkillsLearnableAndUnlockable, setDinoz } from '../dao/dinozDao.js';
@@ -17,6 +17,7 @@ import { SkillTree } from '@drpg/core/models/enums/SkillTree';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 
 /**
  * @summary Get all learnables and unlockables skills

@@ -1,6 +1,9 @@
 import { UpdateResult } from 'typeorm';
 import { AppDataSource } from '../data-source.js';
 import { Dinoz } from '../entity/index.js';
+import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
+import { npcList } from '@drpg/core/models/npc/NpcList';
+import { MissionID } from '@drpg/core/models/missions/missionList';
 
 const dinozRepository = AppDataSource.getRepository(Dinoz);
 
@@ -410,4 +413,74 @@ export async function addLife(dinozId: number, life: number): Promise<UpdateResu
 		.setParameter('addLife', life)
 		.where('dinoz.id = :dId', { dId: dinozId })
 		.execute();
+}
+
+export async function getGlobalMissionsData(playerId: number): Promise<{
+	id: number;
+	name: string;
+	display: string;
+	missions: {
+		missionId: MissionID;
+		isFinished: boolean;
+	}[];
+}[]> {
+	return dinozRepository.find({
+		where: {
+			player: { id: playerId },
+			isSacrificed: false
+		},
+		select: {
+			id: true,
+			name: true,
+			display: true,
+			missions: {
+				missionId: true,
+				isFinished: true
+			},
+		},
+		relations: ['missions'],
+	});
+}
+
+export async function getManageData(userID: number): Promise<ManagePageData> {
+	return dinozRepository.find({
+		where: {
+			player: { id: userID },
+			isSacrificed: false,
+			isFrozen: false
+		},
+		select: {
+			id: true,
+			name: true,
+			level: true,
+			status: {
+				statusId: true
+			},
+			life: true,
+			maxLife: true,
+			experience: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			order: true,
+			display: true
+		},
+		relations: ['status'],
+		order: {
+			order: 'ASC',
+			name: 'ASC',
+		},
+	});
+}
+
+export async function updateOrderData(dinozList: { id: number, order: number }[]) {
+	const updates: Promise<UpdateResult>[] = [];
+
+	for (const dinoz of dinozList) {
+		updates.push(dinozRepository.update(dinoz.id, { order: dinoz.order }));
+	}
+
+	await Promise.all(updates);
 }

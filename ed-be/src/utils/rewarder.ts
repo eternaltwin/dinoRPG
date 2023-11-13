@@ -1,7 +1,7 @@
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { Dinoz, DinozSkill, Player, PlayerItem, PlayerReward } from '../entity/index.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { levelList, skillList } from '../constants/index.js';
+import { skillList } from '../constants/index.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { addExperience, setDinozNextElement, setDinozPlaceRequest } from '../dao/dinozDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
@@ -11,6 +11,7 @@ import { changeItemQuantity, createItemDataRequest } from '../dao/playerItemDao.
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from './errorFormator.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 
 export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<void> {
 	for (const reward of rewards) {

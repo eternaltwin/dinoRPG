@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import { endMission, getDinozMissions, getMissionsList, interactMission, updateMission } from '../business/missionsService.js';
+import { endMission, getGlobalMissions, getMissionsList, interactMission, updateMission } from '../business/missionsService.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
 import { MissionList } from '@drpg/core/models/missions/missionList';
@@ -225,22 +225,23 @@ routes.put(
 );
 
 // Route for /missions view
-routes.post(
-	`${commonPath}/get-for-dinoz`,
-	[body('dinoz').exists().toArray()],
+routes.get(
+	`${commonPath}/global`,
+	[],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
 		}
 
 		try {
-			const response = await getDinozMissions(req);
+			const response = await getGlobalMissions(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(500).send(e.message);
 		}
-	});
+	}
+);
 
 export default routes;
