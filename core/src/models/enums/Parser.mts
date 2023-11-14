@@ -51,7 +51,16 @@ export enum RewardEnum {
 	REDIRECT = 'redirect'
 }
 
-export enum ConditionOperatorEnum {
-	AND,
-	OR
+export enum Operator {
+	AND = 'AND',
+	OR = 'OR',
+	NOT = 'NOT'
+}
+
+export enum Comparator {
+	EQUAL = '==',
+	GREATER = '>',
+	GREATER_EQUAL = '>=',
+	LESSER = '<',
+	LESSER_EQUAL = '<='
 }

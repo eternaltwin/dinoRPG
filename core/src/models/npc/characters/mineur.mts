@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { NpcData } from "../NpcData.mjs";
 
 export const MINEUR: Readonly<Record<string, NpcData>> = {
@@ -15,27 +15,12 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 	yes: {
 		stepName: 'yes',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.SHOVEL,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.ENHANCED_SHOVEL,
-				reverse: true,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.BROKEN_SHOVEL,
-					reverse: true,
-					operator: ConditionOperatorEnum.AND,
-					nextCondition: {
-						conditionType: ConditionEnum.STATUS,
-						value: statusList.BROKEN_ENHANCED_SHOVEL,
-						reverse: true
-					}
-				}
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SHOVEL } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ENHANCED_SHOVEL } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_SHOVEL } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_ENHANCED_SHOVEL } }
+			],
 		},
 		reward: [
 			{
@@ -48,16 +33,14 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 	nothing: {
 		stepName: 'nothing',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.SHOVEL
+			[ConditionEnum.STATUS]: statusList.SHOVEL
 		},
 		nextStep: ['thanks']
 	},
 	repair: {
 		stepName: 'repair',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.BROKEN_SHOVEL
+			[ConditionEnum.STATUS]: statusList.BROKEN_SHOVEL
 		},
 		reward: [
 			{
@@ -75,16 +58,14 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 	nothing2: {
 		stepName: 'nothing2',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.ENHANCED_SHOVEL
+			[ConditionEnum.STATUS]: statusList.ENHANCED_SHOVEL
 		},
 		nextStep: ['thanks']
 	},
 	repair2: {
 		stepName: 'repair2',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.BROKEN_ENHANCED_SHOVEL
+			[ConditionEnum.STATUS]: statusList.BROKEN_ENHANCED_SHOVEL
 		},
 		reward: [
 			{

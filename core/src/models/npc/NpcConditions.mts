@@ -1,67 +1,41 @@
-import { ConditionEnum, ConditionOperatorEnum } from '../enums/Parser.mjs';
+import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { Place } from '../place/Place.mjs';
 
-// Choisis le type de value en fonction de l'enum utilisée pour conditionType
-export type Condition =
-	| {
-			conditionType:
-				| ConditionEnum.MINLEVEL
-				| ConditionEnum.MAXLEVEL
-				| ConditionEnum.FINISHED_MISSION
-				| ConditionEnum.SKILL
-				| ConditionEnum.POSSESS_OBJECT
-				| ConditionEnum.COLLEC
-				| ConditionEnum.STATUS;
-			value: number;
-			reverse?: boolean;
-			nextCondition?: Condition;
-			operator?: ConditionOperatorEnum;
-	  }
-	| {
-			conditionType: ConditionEnum.RANDOM;
-			value: number;
-			nextCondition?: Condition;
-			operator?: ConditionOperatorEnum;
-	  }
-	| {
-			conditionType: ConditionEnum.DINOZ_LIFE;
-			value: number;
-			target: 'equal' | 'greater' | 'greaterEqual' | 'lesser' | 'lesserEqual';
-			nextCondition?: Condition;
-			operator?: ConditionOperatorEnum;
-	  }
-	| {
-			conditionType: ConditionEnum.SCENARIO;
-			value: string;
-			step: number;
-			reverse?: boolean;
-			nextCondition?: Condition;
-			operator?: ConditionOperatorEnum;
-	  }
-	| {
-			conditionType: ConditionEnum.NEXT_PLACE;
-			value: Place;
-			reverse?: boolean;
-			nextCondition?: Condition;
-			operator?: ConditionOperatorEnum;
-	  }
-	| {
-			conditionType: Exclude<
-				ConditionEnum,
-				| ConditionEnum.MINLEVEL
-				| ConditionEnum.MAXLEVEL
-				| ConditionEnum.FINISHED_MISSION
-				| ConditionEnum.POSSESS_OBJECT
-				| ConditionEnum.RANDOM
-				| ConditionEnum.SKILL
-				| ConditionEnum.SCENARIO
-				| ConditionEnum.STATUS
-				| ConditionEnum.COLLEC
-				| ConditionEnum.NEXT_PLACE
-				| ConditionEnum.DINOZ_LIFE
-			>;
-			value: string;
-			reverse?: boolean;
-			nextCondition?: Condition;
-			operator?: ConditionOperatorEnum;
-	  };
+// Choisit le type de value en fonction de l'enum utilisée
+export type Condition = {
+	[Operator.AND]?: [Condition, Condition, ...Condition[]],
+	[Operator.OR]?: [Condition, Condition, ...Condition[]],
+	[Operator.NOT]?: Condition,
+	[ConditionEnum.MINLEVEL]?: number,
+	[ConditionEnum.MAXLEVEL]?: number,
+	[ConditionEnum.FINISHED_MISSION]?: number,
+	[ConditionEnum.SKILL]?: number,
+	[ConditionEnum.POSSESS_OBJECT]?: number,
+	[ConditionEnum.COLLEC]?: number,
+	[ConditionEnum.STATUS]?: number,
+	[ConditionEnum.RANDOM]?: number,
+	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number],
+	[ConditionEnum.SCENARIO]?: [string, number],
+	[ConditionEnum.NEXT_PLACE]?: Place,
+	[ConditionEnum.CURRENT_MISSION]?: string,
+	[ConditionEnum.POSSESS_INGREDIENT]?: string,
+	[ConditionEnum.ACTIVE]?: string,
+	[ConditionEnum.PLAYER_EPIC]?: string,
+	[ConditionEnum.HOUR_RAND]?: string,
+	[ConditionEnum.TAG]?: string,
+	[ConditionEnum.GVAR]?: string,
+	[ConditionEnum.EVENT]?: string,
+	[ConditionEnum.CLANACT]?: string,
+	[ConditionEnum.SWAIT]?: string,
+	[ConditionEnum.RACE]?: string,
+	[ConditionEnum.EQUIP]?: string,
+	[ConditionEnum.UTIME]?: string,
+	[ConditionEnum.GOTO]?: string,
+	[ConditionEnum.TALKTO]?: string,
+	[ConditionEnum.FINISH_MISSION]?: string,
+	[ConditionEnum.KILL]?: string,
+	[ConditionEnum.DO]?: string,
+	[ConditionEnum.HIDE_PLACE]?: string,
+	[ConditionEnum.PLACE_IS]?: string,
+	[ConditionEnum.OVERWRITE]?: string,
+};

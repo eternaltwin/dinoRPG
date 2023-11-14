@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { NpcData } from "../NpcData.mjs";
 
 export const GARDE_ATLANTE: Readonly<Record<string, NpcData>> = {
@@ -11,9 +11,7 @@ export const GARDE_ATLANTE: Readonly<Record<string, NpcData>> = {
 	rasca: {
 		stepName: 'rasca',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.RASCAPHANDRE_DECOY,
-			reverse: true
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.RASCAPHANDRE_DECOY },
 		},
 		nextStep: ['where', 'thanks']
 	},

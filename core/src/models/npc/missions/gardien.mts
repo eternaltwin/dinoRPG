@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, ConditionOperatorEnum } from "../../enums/Parser.mjs";
+import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
 import { itemList } from "../../item/ItemList.mjs";
 import { Mission } from "../../missions/mission.mjs";
 import { MissionID } from "../../missions/missionList.mjs";
@@ -92,8 +92,7 @@ export const M_GARDIEN: Array<Mission> = [
 		missionId: MissionID.GARDIEN_ORCHID,
 		missionName: 'orchid',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.GARDIEN_UNMUTE
+			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
 		rewards: [
 			{
@@ -153,8 +152,7 @@ export const M_GARDIEN: Array<Mission> = [
 		missionId: MissionID.GARDIEN_LICENS,
 		missionName: 'licens',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.GARDIEN_UNMUTE
+			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
 		rewards: [
 			{
@@ -195,13 +193,10 @@ export const M_GARDIEN: Array<Mission> = [
 		missionId: MissionID.GARDIEN_KING,
 		missionName: 'king',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.GARDIEN_UNMUTE,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.GARDIEN_ORCHID
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_ORCHID },
+			],
 		},
 		rewards: [
 			{
@@ -276,8 +271,7 @@ export const M_GARDIEN: Array<Mission> = [
 		missionId: MissionID.GARDIEN_WISHES,
 		missionName: 'wishes',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.GARDIEN_UNMUTE
+			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
 		rewards: [
 			{
@@ -361,8 +355,7 @@ export const M_GARDIEN: Array<Mission> = [
 		missionId: MissionID.GARDIEN_NEWPLT,
 		missionName: 'newplt',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.GARDIEN_UNMUTE
+			[ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE
 		},
 		rewards: [
 			{
@@ -464,33 +457,14 @@ export const M_GARDIEN: Array<Mission> = [
 		missionId: MissionID.GARDIEN_GSHOP,
 		missionName: 'shop',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.GARDIEN_UNMUTE,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.GARDIEN_ORCHID,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.FINISHED_MISSION,
-					value: MissionID.GARDIEN_LICENS,
-					operator: ConditionOperatorEnum.AND,
-					nextCondition: {
-						conditionType: ConditionEnum.FINISHED_MISSION,
-						value: MissionID.GARDIEN_KING,
-						operator: ConditionOperatorEnum.AND,
-						nextCondition: {
-							conditionType: ConditionEnum.FINISHED_MISSION,
-							value: MissionID.GARDIEN_WISHES,
-							operator: ConditionOperatorEnum.AND,
-							nextCondition: {
-								conditionType: ConditionEnum.FINISHED_MISSION,
-								value: MissionID.GARDIEN_NEWPLT
-							}
-						}
-					}
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_ORCHID },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_LICENS },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_KING },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_WISHES },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_NEWPLT },
+			],
 		},
 		rewards: [
 			{

@@ -11,8 +11,7 @@ export const FORGERON: Readonly<Record<string, NpcData>> = {
 	repair: {
 		stepName: 'repair',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.BROKEN_SHOVEL
+			[ConditionEnum.STATUS]: statusList.BROKEN_SHOVEL
 		},
 		reward: [
 			{
@@ -34,8 +33,7 @@ export const FORGERON: Readonly<Record<string, NpcData>> = {
 	repair2: {
 		stepName: 'repair2',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.BROKEN_ENHANCED_SHOVEL
+			[ConditionEnum.STATUS]: statusList.BROKEN_ENHANCED_SHOVEL
 		},
 		reward: [
 			{

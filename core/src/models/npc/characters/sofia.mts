@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { NpcData } from "../NpcData.mjs";
 
 export const SOFIA: Readonly<Record<string, NpcData>> = {
@@ -36,13 +36,10 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		stepName: 'niveau',
 		nextStep: ['yes', 'no'],
 		condition: {
-			conditionType: ConditionEnum.MINLEVEL,
-			value: 50,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.BROKEN_LIMIT_1,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.MINLEVEL]: 50 },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_LIMIT_1 } }
+			]
 		}
 	},
 	yes: {
@@ -63,17 +60,11 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		stepName: 'ether',
 		nextStep: ['newskill', 'no2'],
 		condition: {
-			conditionType: ConditionEnum.MINLEVEL,
-			value: 50,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.BROKEN_LIMIT_1,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.ETHER_DROP,
-					reverse: true
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.MINLEVEL]: 50 },
+				{ [ConditionEnum.STATUS]: statusList.BROKEN_LIMIT_1 },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ETHER_DROP } }
+			]
 		}
 	},
 	newskill: {

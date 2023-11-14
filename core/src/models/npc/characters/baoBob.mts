@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { ServiceEnum } from "../../enums/ServiceEnum.mjs";
 import { NpcData } from "../NpcData.mjs";
 
@@ -30,23 +30,17 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	quest2: {
 		stepName: 'quest2',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.FLIPPERS,
-			reverse: true
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FLIPPERS },
 		},
 		nextStep: []
 	},
 	quest3: {
 		stepName: 'quest3',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.SYLVENOIRE_KEY,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.FLIPPERS
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY } },
+				{ [ConditionEnum.STATUS]: statusList.FLIPPERS },
+			],
 		},
 		nextStep: ['where2', 'how', 'danger', 'bye']
 	},
@@ -80,48 +74,29 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'quest4',
 		nextStep: ['noingr', 'ingr', 'bye'],
 		condition: {
-			conditionType: ConditionEnum.SCENARIO,
-			step: 8,
-			value: 'magnet'
+			[ConditionEnum.SCENARIO]: ['magnet', 8],
 		}
 	},
 	noingr: {
 		stepName: 'noingr',
 		nextStep: [],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.FLOWERING_BRANCH,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.ICE_PIECE,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.CORAIL
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: statusList.FLOWERING_BRANCH },
+				{ [ConditionEnum.STATUS]: statusList.ICE_PIECE },
+				{ [ConditionEnum.STATUS]: statusList.CORAIL },
+			],
 		}
 	},
 	ingr: {
 		stepName: 'ingr',
 		nextStep: ['potion'],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.FLOWERING_BRANCH,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.ICE_PIECE,
-				reverse: true,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.CORAIL,
-					reverse: true
-				}
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FLOWERING_BRANCH } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ICE_PIECE } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CORAIL } },
+			],
 		},
 		reward: [
 			{

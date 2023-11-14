@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { NpcData } from "../NpcData.mjs";
 
 export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
@@ -46,24 +46,12 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		stepName: 'interest',
 		nextStep: ['service'],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.QTAME,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.QWOOD,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.QWHY,
-					operator: ConditionOperatorEnum.AND,
-					nextCondition: {
-						conditionType: ConditionEnum.STATUS,
-						value: statusList.DIAN,
-						reverse: true
-					}
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: statusList.QTAME },
+				{ [ConditionEnum.STATUS]: statusList.QWOOD },
+				{ [ConditionEnum.STATUS]: statusList.QWHY },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.DIAN } }
+			],
 		}
 	},
 	service: {
@@ -80,8 +68,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		stepName: 'missions',
 		nextStep: [],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.DIAN
+			[ConditionEnum.STATUS]: statusList.DIAN
 		}
 	},
 	nothing: {

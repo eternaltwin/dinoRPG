@@ -1,6 +1,6 @@
 import { DigData } from '@drpg/core/models/dinoz/DigData';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
-import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { ConditionEnum, Operator, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export const digTreasures: Readonly<Record<string, DigData>> = {
@@ -14,15 +14,10 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 			}
 		],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.BASALT_SHARD,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.ZORS_GLOVE,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BASALT_SHARD } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE } }
+			]
 		}
 	},
 	PURE_WATER: {
@@ -35,15 +30,10 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 			}
 		],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.PURE_WATER,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.ZORS_GLOVE,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.PURE_WATER } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE } }
+			]
 		}
 	},
 	SWAMP_MUD: {
@@ -56,15 +46,10 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 			}
 		],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.SWAMP_MUD,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.ZORS_GLOVE,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SWAMP_MUD } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE } }
+			]
 		}
 	},
 	OLD_STONE: {
@@ -77,15 +62,10 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 			}
 		],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.OLD_STONE,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.ASHPOUK_TOTEM,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.OLD_STONE } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ASHPOUK_TOTEM } }
+			]
 		}
 	}
 };

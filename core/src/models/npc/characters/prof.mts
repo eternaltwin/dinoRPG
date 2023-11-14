@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, ConditionOperatorEnum, TriggerEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, TriggerEnum, RewardEnum } from "../../enums/Parser.mjs";
 import { bossList } from "../../fight/BossList.mjs";
 import { NpcData } from "../NpcData.mjs";
 
@@ -17,26 +17,22 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		stepName: 'nothing',
 		nextStep: [],
 		condition: {
-			conditionType: ConditionEnum.MAXLEVEL,
-			value: 5
+			[ConditionEnum.MAXLEVEL]: 4
 		}
 	},
 	nothing2: {
 		stepName: 'nothing2',
 		nextStep: [],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.BUOY,
-			operator: ConditionOperatorEnum.OR,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.CLIMBING_GEAR,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.MAXLEVEL,
-					value: 7
-				}
-			}
+			[Operator.AND]: [
+				{
+					[Operator.OR]: [
+						{ [ConditionEnum.STATUS]: statusList.BUOY },
+						{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
+					],
+				},
+				{ [ConditionEnum.MAXLEVEL]: 6 }
+			],
 		}
 	},
 	learn: {
@@ -44,71 +40,43 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		alias: 'back',
 		nextStep: ['water', 'fire'],
 		condition: {
-			conditionType: ConditionEnum.MINLEVEL,
-			value: 5,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.BUOY,
-				reverse: true,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.CLIMBING_GEAR,
-					reverse: true
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.MINLEVEL]: 5 },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BUOY } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR } }
+			],
 		}
 	},
 	learn_water: {
 		stepName: 'learn_water',
 		nextStep: ['water_fight'],
 		condition: {
-			conditionType: ConditionEnum.MINLEVEL,
-			value: 7,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.BUOY,
-				reverse: true,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.CLIMBING_GEAR
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.MINLEVEL]: 7 },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BUOY } },
+				{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
+			],
 		}
 	},
 	learn_fire: {
 		stepName: 'learn_fire',
 		nextStep: ['fire_fight'],
 		condition: {
-			conditionType: ConditionEnum.MINLEVEL,
-			value: 7,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.BUOY,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.STATUS,
-					value: statusList.CLIMBING_GEAR,
-					reverse: true
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.MINLEVEL]: 7 },
+				{ [ConditionEnum.STATUS]: statusList.BUOY },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR } },
+			],
 		}
 	},
 	learn_done: {
 		stepName: 'learn_done',
 		nextStep: [],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.BUOY,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.CLIMBING_GEAR
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: statusList.BUOY },
+				{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
+			],
 		}
 	},
 	water: {
@@ -160,32 +128,28 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		stepName: 'gtc',
 		nextStep: ['menu'],
 		condition: {
-			conditionType: ConditionEnum.MINLEVEL,
-			value: 7
+			[ConditionEnum.MINLEVEL]: 7
 		}
 	},
 	atlante: {
 		stepName: 'atlante',
 		nextStep: ['menu'],
 		condition: {
-			conditionType: ConditionEnum.MINLEVEL,
-			value: 8
+			[ConditionEnum.MINLEVEL]: 8
 		}
 	},
 	stone: {
 		stepName: 'stone',
 		nextStep: ['stone_yes', 'stone_no'],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.OLD_STONE
+			[ConditionEnum.STATUS]: statusList.OLD_STONE
 		}
 	},
 	gant: {
 		stepName: 'gant',
 		nextStep: ['menu'],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.ZORS_GLOVE
+			[ConditionEnum.STATUS]: statusList.ZORS_GLOVE
 		}
 	},
 	stone_yes: {

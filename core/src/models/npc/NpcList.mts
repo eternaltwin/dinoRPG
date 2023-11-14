@@ -1,5 +1,5 @@
 import { statusList } from "../dinoz/StatusList.mjs";
-import { ConditionEnum } from "../enums/Parser.mjs";
+import { ConditionEnum, Operator } from "../enums/Parser.mjs";
 import { placeList } from "../place/PlaceList.mjs";
 import { ALPHA } from "./characters/alpha.mjs";
 import { ARCHISAGE } from "./characters/archisage.mjs";
@@ -184,8 +184,7 @@ export const npcList = {
 		id: 17,
 		placeId: placeList.PORT_DE_PRECHE.placeId,
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.JVBZ
+			[ConditionEnum.STATUS]: statusList.JVBZ
 		},
 		data: JOVEBOZE_RASCA,
 		missions: undefined,
@@ -196,9 +195,7 @@ export const npcList = {
 		id: 18,
 		placeId: placeList.DOME_SOULAFLOTTE.placeId,
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.ZORS_GLOVE,
-			reverse: true
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE },
 		},
 		data: ARCHISAGE,
 		missions: undefined,
@@ -218,8 +215,7 @@ export const npcList = {
 		id: 20,
 		placeId: placeList.PORT_DE_PRECHE.placeId,
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.ZENBRO
+			[ConditionEnum.STATUS]: statusList.ZENBRO
 		},
 		data: PADAMOINE,
 		missions: undefined,

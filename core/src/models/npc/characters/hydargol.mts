@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { rewardList } from "../../reward/RewardList.mjs";
 import { NpcData } from "../NpcData.mjs";
 
@@ -21,29 +21,20 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 	help: {
 		stepName: 'help',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.NENUPHAR_LEAF,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.COLLEC,
-				value: rewardList.PERLE,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF } },
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
+			],
 		},
 		nextStep: ['get']
 	},
 	give: {
 		stepName: 'give',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.NENUPHAR_LEAF,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.COLLEC,
-				value: rewardList.PERLE,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF },
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
+			],
 		},
 		reward: [
 			{
@@ -61,8 +52,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 	act: {
 		stepName: 'act',
 		condition: {
-			conditionType: ConditionEnum.COLLEC,
-			value: rewardList.PERLE
+			[ConditionEnum.COLLEC]: rewardList.PERLE
 		},
 		nextStep: ['gant']
 	},
@@ -84,14 +74,10 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		stepName: 'gant',
 		nextStep: ['why'],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.ZORS_GLOVE,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.NENUPHAR_LEAF,
-				reverse: true
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: statusList.ZORS_GLOVE },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF } }
+			],
 		}
 	},
 	ok: {

@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, ConditionOperatorEnum } from "../../enums/Parser.mjs";
+import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
 import { itemList } from "../../item/ItemList.mjs";
 import { Mission } from "../../missions/mission.mjs";
 import { MissionID } from "../../missions/missionList.mjs";
@@ -79,8 +79,7 @@ export const M_DIANKORGSEY: Array<Mission> = [
 		missionId: MissionID.DIAN_RIVALS,
 		missionName: 'rivals',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.DIAN_KSWIM
+			[ConditionEnum.FINISHED_MISSION]: MissionID.DIAN_KSWIM
 		},
 		rewards: [
 			{
@@ -130,8 +129,7 @@ export const M_DIANKORGSEY: Array<Mission> = [
 		missionId: MissionID.DIAN_KFOOD,
 		missionName: 'kfood',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.DIAN_KSWIM
+			[ConditionEnum.FINISHED_MISSION]: MissionID.DIAN_KSWIM
 		},
 		rewards: [
 			{
@@ -192,13 +190,10 @@ export const M_DIANKORGSEY: Array<Mission> = [
 		missionId: MissionID.DIAN_POISON,
 		missionName: 'poison',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.DIAN_KFOOD,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.DIAN_RIVALS
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.DIAN_KFOOD },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.DIAN_RIVALS }
+			],
 		},
 		rewards: [
 			{

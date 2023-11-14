@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, ConditionOperatorEnum } from "../../enums/Parser.mjs";
+import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
 import { itemList } from "../../item/ItemList.mjs";
 import { Mission } from "../../missions/mission.mjs";
 import { MissionID } from "../../missions/missionList.mjs";
@@ -64,8 +64,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_INIT2,
 		missionName: 'init2',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_INIT1
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT1
 		},
 		rewards: [
 			{
@@ -167,8 +166,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_BURN,
 		missionName: 'burn',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_INIT2
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
@@ -259,8 +257,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_BARBEC,
 		missionName: 'barbec',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_BURN
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_BURN
 		},
 		rewards: [
 			{
@@ -360,8 +357,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_JOKE,
 		missionName: 'joke',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_INIT2
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
@@ -410,8 +406,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_DEFEND,
 		missionName: 'defend',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_INIT2
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
@@ -517,8 +512,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_SHIPMT,
 		missionName: 'shipmt',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_DEFEND
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_DEFEND
 		},
 		rewards: [
 			{
@@ -646,8 +640,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_SALES,
 		missionName: 'sales',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_INIT2
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
@@ -696,8 +689,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_RITUAL,
 		missionName: 'ritual',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_INIT2
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2
 		},
 		rewards: [
 			{
@@ -825,18 +817,11 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_HIERO,
 		missionName: 'hiero',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_INIT2,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.SHAMAN_DEFEND,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.FINISHED_MISSION,
-					value: MissionID.SHAMAN_BARBEC
-				}
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2 },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_DEFEND },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_BARBEC },
+			],
 		},
 		rewards: [
 			{
@@ -876,8 +861,7 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 		missionId: MissionID.SHAMAN_PIGEON,
 		missionName: 'pigeon',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.SHAMAN_HIERO
+			[ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_HIERO
 		},
 		rewards: [
 			{

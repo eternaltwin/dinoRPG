@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, ConditionOperatorEnum } from "../../enums/Parser.mjs";
+import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
 import { Mission } from "../../missions/mission.mjs";
 import { MissionID } from "../../missions/missionList.mjs";
 import { placeList } from "../../place/PlaceList.mjs";
@@ -144,13 +144,10 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_KILKSK,
 		missionName: 'kilksk',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.BAO_BOB_KILPIR,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.MINLEVEL,
-				value: 8
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILPIR },
+				{ [ConditionEnum.MINLEVEL]: 8 },
+			],
 		},
 		rewards: [
 			{
@@ -190,13 +187,10 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_KILANG,
 		missionName: 'kilang',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.BAO_BOB_KILKSK,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.MINLEVEL,
-				value: 18
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILKSK },
+				{ [ConditionEnum.MINLEVEL]: 18 },
+			],
 		},
 		rewards: [
 			{
@@ -276,8 +270,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_BIGPCH,
 		missionName: 'bigpch',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.BAO_BOB_KILKSK
+			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILKSK
 		},
 		rewards: [
 			{
@@ -349,8 +342,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_RALLY2,
 		missionName: 'rally2',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.BAO_BOB_RALLY1
+			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY1
 		},
 		rewards: [
 			{
@@ -395,8 +387,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_RALLY3,
 		missionName: 'rally3',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.BAO_BOB_RALLY2
+			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY2
 		},
 		rewards: [
 			{
@@ -451,8 +442,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_RALLY4,
 		missionName: 'rally4',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.BAO_BOB_RALLY3
+			[ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY3
 		},
 		rewards: [
 			{
@@ -487,13 +477,10 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_TOUR,
 		missionName: 'tour',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.BAO_BOB_RALLY4,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.STATUS,
-				value: statusList.FLIPPERS
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY4 },
+				{ [ConditionEnum.STATUS]: statusList.FLIPPERS },
+			],
 		},
 		rewards: [
 			{

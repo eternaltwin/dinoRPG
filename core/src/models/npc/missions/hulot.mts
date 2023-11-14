@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, ConditionOperatorEnum } from "../../enums/Parser.mjs";
+import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
 import { itemList } from "../../item/ItemList.mjs";
 import { Mission } from "../../missions/mission.mjs";
 import { MissionID } from "../../missions/missionList.mjs";
@@ -21,14 +21,10 @@ export const M_HULOT: Array<Mission> = [
 			}
 		],
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_TOXIC,
-			reverse: true,
-			operator: ConditionOperatorEnum.OR,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.HULOT_HUCURE
-			}
+			[Operator.OR]: [
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE }
+			],
 		},
 		steps: [
 			{
@@ -114,14 +110,10 @@ export const M_HULOT: Array<Mission> = [
 		missionId: MissionID.HULOT_MAP,
 		missionName: 'map',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_TOXIC,
-			reverse: true,
-			operator: ConditionOperatorEnum.OR,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.HULOT_HUCURE
-			}
+			[Operator.OR]: [
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE }
+			],
 		},
 		rewards: [
 			{
@@ -224,8 +216,7 @@ export const M_HULOT: Array<Mission> = [
 		missionId: MissionID.HULOT_HUCURE,
 		missionName: 'hucure',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_TOXIC
+			[ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC
 		},
 		rewards: [
 			{
@@ -359,13 +350,10 @@ export const M_HULOT: Array<Mission> = [
 		missionId: MissionID.HULOT_BCKPCK,
 		missionName: 'bckpck',
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_HUCURE,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.HULOT_MAP
-			}
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_MAP }
+			],
 		},
 		rewards: [
 			{

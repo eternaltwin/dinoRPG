@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, ConditionOperatorEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { MissionID } from "../../missions/missionList.mjs";
 import { NpcData } from "../NpcData.mjs";
 
@@ -13,59 +13,42 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		stepName: 'welcome',
 		nextStep: ['who', 'better', 'missions'],
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_TOXIC,
-			reverse: true,
-			operator: ConditionOperatorEnum.OR,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.HULOT_HUCURE
-			}
+			[Operator.OR]: [
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE }
+			],
 		}
 	},
 	better: {
 		stepName: 'better',
 		nextStep: ['flora', 'fauna', 'myst', 'missions'],
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_HUCURE
+			[ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE
 		}
 	},
 	sick: {
 		stepName: 'sick',
 		nextStep: ['problem'],
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_HUCURE,
-			reverse: true,
-			operator: ConditionOperatorEnum.AND,
-			nextCondition: {
-				conditionType: ConditionEnum.FINISHED_MISSION,
-				value: MissionID.HULOT_TOXIC,
-				operator: ConditionOperatorEnum.AND,
-				nextCondition: {
-					conditionType: ConditionEnum.CURRENT_MISSION,
-					value: 'hucure',
-					reverse: true
-				}
-			}
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE } },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC },
+				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: 'hucure' } }
+			],
 		}
 	},
 	sickstatus: {
 		stepName: 'sickstatus',
 		nextStep: ['curesearch'],
 		condition: {
-			conditionType: ConditionEnum.CURRENT_MISSION,
-			value: 'hucure'
+			[ConditionEnum.CURRENT_MISSION]: 'hucure'
 		}
 	},
 	who: {
 		stepName: 'who',
 		nextStep: ['role'],
 		condition: {
-			conditionType: ConditionEnum.FINISHED_MISSION,
-			value: MissionID.HULOT_HUCURE,
-			reverse: true
+			[Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE }
 		}
 	},
 	role: {
@@ -92,9 +75,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		stepName: 'fear',
 		nextStep: ['explore', 'other'],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.HUMISS,
-			reverse: true
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.HUMISS },
 		}
 	},
 	explore: {
@@ -124,8 +105,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	missions: {
 		stepName: 'missions',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.HUMISS
+			[ConditionEnum.STATUS]: statusList.HUMISS
 		},
 		nextStep: []
 	},

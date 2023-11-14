@@ -16,8 +16,7 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	element: {
 		stepName: 'element',
 		condition: {
-			conditionType: ConditionEnum.MAXLEVEL,
-			value: 80
+			[ConditionEnum.MAXLEVEL]: 79
 		},
 		nextStep: ['fire', 'water', 'lightning', 'wood', 'air']
 	},
@@ -78,8 +77,7 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	experience: {
 		stepName: 'experience',
 		condition: {
-			conditionType: ConditionEnum.MAXLEVEL,
-			value: 80
+			[ConditionEnum.MAXLEVEL]: 79
 		},
 		nextStep: ['maxExperience']
 	},

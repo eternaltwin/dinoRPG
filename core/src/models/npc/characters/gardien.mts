@@ -1,5 +1,5 @@
 import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, RewardEnum } from "../../enums/Parser.mjs";
+import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
 import { NpcData } from "../NpcData.mjs";
 
 export const GARDIEN: Readonly<Record<string, NpcData>> = {
@@ -12,9 +12,7 @@ export const GARDIEN: Readonly<Record<string, NpcData>> = {
 		stepName: 'shake',
 		nextStep: ['item'],
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.GRDMIS,
-			reverse: true
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.GRDMIS },
 		}
 	},
 	item: {
@@ -30,8 +28,7 @@ export const GARDIEN: Readonly<Record<string, NpcData>> = {
 	missions: {
 		stepName: 'missions',
 		condition: {
-			conditionType: ConditionEnum.STATUS,
-			value: statusList.GRDMIS
+			[ConditionEnum.STATUS]: statusList.GRDMIS
 		},
 		nextStep: []
 	},
