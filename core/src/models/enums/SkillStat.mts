@@ -1,8 +1,30 @@
 export enum Stat {
 	MAX_HP = 'maxHp',
+	HP_REGEN = 'hpRegen',
+	COUNTER = 'counter',
+	INITIATIVE = 'initiative',
+	ARMOR = 'armor',
+	EVASION = 'evasion',
+	MULTIHIT = 'multihit',
+	FOLLOWERS = 'followers',
+	ENERGY = 'energy',
+	ENERGY_RECOVERY = 'energyRecovery',
+	// Assaults
 	FIRE_ASSAULT = 'fireAssault',
 	WATER_ASSAULT = 'waterAssault',
 	AIR_ASSAULT = 'airAssault',
 	LIGHTNING_ASSAULT = 'lightningAssault',
 	WOOD_ASSAULT = 'woodAssault',
+	// Speeds
+	FIRE_SPEED = 'fireSpeed',
+	WATER_SPEED = 'waterSpeed',
+	AIR_SPEED = 'airSpeed',
+	LIGHTNING_SPEED = 'lightningSpeed',
+	WOOD_SPEED = 'woodSpeed',
+	// Defenses
+	FIRE_DEFENSE = 'fireDefense',
+	WATER_DEFENSE = 'waterDefense',
+	AIR_DEFENSE = 'airDefense',
+	LIGHTNING_DEFENSE = 'lightningDefense',
+	WOOD_DEFENSE = 'woodDefense',
 }

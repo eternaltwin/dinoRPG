@@ -5,13 +5,37 @@ import { SkillTree } from '../enums/SkillTree.mjs';
 import { SkillEffectType } from './SkillEffectType.mjs';
 import { Stat } from '../enums/SkillStat.mjs';
 
+type OtherAssaults<T> = Exclude<
+	(Stat.FIRE_ASSAULT | Stat.WATER_ASSAULT | Stat.AIR_ASSAULT | Stat.LIGHTNING_ASSAULT | Stat.WOOD_ASSAULT),
+	T
+>
+
 export type SkillEffects = {
 	[Stat.MAX_HP]?: number;
-	[Stat.FIRE_ASSAULT]?: number;
-	[Stat.WATER_ASSAULT]?: number;
-	[Stat.AIR_ASSAULT]?: number;
-	[Stat.LIGHTNING_ASSAULT]?: number;
-	[Stat.WOOD_ASSAULT]?: number;
+	[Stat.HP_REGEN]?: number | ['x', number];
+	[Stat.COUNTER]?: number;
+	[Stat.INITIATIVE]?: number;
+	[Stat.ARMOR]?: number;
+	[Stat.EVASION]?: number;
+	[Stat.MULTIHIT]?: number;
+	[Stat.FOLLOWERS]?: number;
+	[Stat.ENERGY]?: number;
+	[Stat.ENERGY_RECOVERY]?: number;
+	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
+	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
+	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;
+	[Stat.LIGHTNING_ASSAULT]?: number | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
+	[Stat.WOOD_ASSAULT]?: number | OtherAssaults<Stat.WOOD_ASSAULT>;
+	[Stat.FIRE_SPEED]?: number;
+	[Stat.WATER_SPEED]?: number;
+	[Stat.AIR_SPEED]?: number;
+	[Stat.LIGHTNING_SPEED]?: number;
+	[Stat.WOOD_SPEED]?: number;
+	[Stat.FIRE_DEFENSE]?: number;
+	[Stat.WATER_DEFENSE]?: number;
+	[Stat.AIR_DEFENSE]?: number;
+	[Stat.LIGHTNING_DEFENSE]?: number;
+	[Stat.WOOD_DEFENSE]?: number;
 };
 
 export interface DinozSkillFiche {
