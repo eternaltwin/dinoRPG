@@ -6,7 +6,7 @@ export enum Stat {
 	ARMOR = 'armor',
 	EVASION = 'evasion',
 	MULTIHIT = 'multihit',
-	FOLLOWERS = 'followers',
+	MAX_FOLLOWERS = 'maxFollowers',
 	ENERGY = 'energy',
 	ENERGY_RECOVERY = 'energyRecovery',
 	// Assaults

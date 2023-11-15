@@ -18,7 +18,7 @@ export type SkillEffects = {
 	[Stat.ARMOR]?: number;
 	[Stat.EVASION]?: number;
 	[Stat.MULTIHIT]?: number;
-	[Stat.FOLLOWERS]?: number;
+	[Stat.MAX_FOLLOWERS]?: number;
 	[Stat.ENERGY]?: number;
 	[Stat.ENERGY_RECOVERY]?: number;
 	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;

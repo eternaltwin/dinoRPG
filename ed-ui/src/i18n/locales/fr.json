@@ -26,7 +26,8 @@
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
 		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
 		"noPMI": "Tu as besoin du Petit Missionaire Illustré pour accéder à cette page.",
-		"dinozListMissing": "liste des Dinoz manquante"
+		"dinozListMissing": "Liste des Dinoz manquante",
+		"dinozDataMissing": "Données du Dinoz manquantes"
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -196,7 +197,20 @@
 		"lightningDefense": "Défense de Foudre",
 		"airDefense": "Défense d'Air",
 		"voidDefense": "Défense Neutre",
-		"baseElementContribution": "Contribution de l'élément de base"
+		"baseElementContribution": "Contribution de l'élément de base",
+		"hpRegen": "Régénération de PV",
+		"initiative": "Initiative",
+		"energy": "Energie",
+		"energyRecovery": "Récupération d'énergie",
+		"maxFollowers": "Nombre maximum de suiveurs",
+		"armor": "Armure",
+		"multihit": "Multi-coup",
+		"evasion": "Esquive",
+		"counter": "Contre",
+		"bubbleRate": "Taux de bulle",
+		"torchDamage": "Dégâts du briquet",
+		"acidBloodDamage": "Dégâts de sang acide",
+		"baseValue": "Valeur de base"
 	},
 	"item": {
 		"name": {
@@ -1503,7 +1517,7 @@
 			"Sumo": "Sumo",
 			"SansPitie": "Sans pitié",
 			"CloneAqueux": "Clone aqueux",
-			"GriffesEmpoisonnes": "Griffes empoisonnées",
+			"GriffesEmpoisonnees": "Griffes empoisonnées",
 			"Cuisinier": "Cuisinier",
 			"SangAcide": "Sang acide",
 			"Regenerescence": "Régénérescence",
@@ -1799,7 +1813,7 @@
 			"Sumo": "Augmente les PV max de 100",
 			"SansPitie": "Les assauts ciblent l'ennemi avec le moins de PV",
 			"CloneAqueux": "Crée une copie du lanceur avec 1 PV",
-			"GriffesEmpoisonnes": "Les ennemis touchés par un assaut eau sont empoisonnés et subissent des dégats basés sur la valeur de l'élément eau du lanceur à chaque tour",
+			"GriffesEmpoisonnees": "Les ennemis touchés par un assaut eau sont empoisonnés et subissent des dégats basés sur la valeur de l'élément eau du lanceur à chaque tour",
 			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les dinozs",
 			"SangAcide": "Les ennemis attaquant le dinoz en mêlée ont une chance de subir des dégats relatifs à l'élément eau du dinoz",
 			"Regenerescence": "Augmente de 2 les PV récupérés par heure lors du repos",

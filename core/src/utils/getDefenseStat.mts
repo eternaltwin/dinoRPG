@@ -36,6 +36,7 @@ export const getDefenseStat = (
 	// Sum of all elements for neutral
 	if (elementName === DefenseElement.NEUTRAL) {
 		return {
+			name: DefenseElement.NEUTRAL,
 			neutral: true,
 			value: Object.values(elementStat).reduce((acc, cur) => acc + cur, 0),
 			details: Object.entries(elementStat).map(([key, value]) => ({
@@ -87,7 +88,7 @@ export const getDefenseStat = (
 					details.push({
 						type: "skill",
 						name: skill.name,
-						elements: skill.element.map((el) => Object.entries(ElementType).find(([key, value]) => value === el)![0].toLocaleLowerCase()),
+						elements: skill.element.map((el) => Object.entries(ElementType).find(([_, value]) => value === el)![0].toLocaleLowerCase()),
 						value: effect,
 					});
 				}
@@ -100,6 +101,7 @@ export const getDefenseStat = (
 		+ 1.5 * (strongElement.value + strongElement.bonus));
 
 	return {
+		name: elementName,
 		strong: strongElement,
 		weak: weakElement,
 		element,

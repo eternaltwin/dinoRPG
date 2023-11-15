@@ -298,6 +298,8 @@ export class Dinoz {
 		if (this.skills.find(skill => skill.skillId === skillList[Skill.SURPLIS_DHADES].id)) total++;
 		if (this.status.find(status => status.statusId === statusList.BACKPACK)) total++;
 		if (this.player.engineer) total++;
+
+		// Check for other dinoz storekeeper here
 		return total;
 	}
 

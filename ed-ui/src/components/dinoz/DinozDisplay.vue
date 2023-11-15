@@ -16,7 +16,7 @@
 	</Tippy>
 	<DinozElements :dinozData="dinozData" />
 	<DinozBars :dinozData="dinozData" />
-	<DinozEquip :itemList="dinozData.items" :maxItem="dinozData.maxItems" />
+	<DinozEquip :dinozData="dinozData" />
 	<DinozStatus :dinozStatus="dinozData.status" />
 </template>
 

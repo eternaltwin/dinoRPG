@@ -96,7 +96,7 @@ export const getAssaultStat = (
 				details.push({
 					type: "skill",
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)![0].toLocaleLowerCase()),
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([_, value]) => value === element)![0].toLocaleLowerCase()),
 					value: otherElementValue,
 				});
 			}
@@ -106,6 +106,7 @@ export const getAssaultStat = (
 	const result = element * 5 + bonus;
 
 	return {
+		name: elementName,
 		value: result,
 		details,
 	}

@@ -20,7 +20,8 @@
 		"tooManyActiveDinoz": "You already have too many active dinoz.",
 		"noPDA": "You need the Diamantite Pebble to access this page.",
 		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
-		"dinozListMissing": "Dinoz list missing"
+		"dinozListMissing": "Dinoz list missing",
+		"dinozDataMissing": "Dinoz data missing"
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -188,7 +189,20 @@
 		"lightningDefense": "Lightning defense",
 		"voidDefense": "Neutral defense",
 		"airDefense": "Air defense",
-		"baseElementContribution": "Base element contribution"
+		"baseElementContribution": "Base element contribution",
+		"hpRegen": "HP regeneration",
+		"initiative": "Initiative",
+		"energy": "Energy",
+		"energyRecovery": "Energy recovery",
+		"maxFollowers": "Max followers",
+		"armor": "Armor",
+		"multihit": "Multihit",
+		"evasion": "Evasion",
+		"counter": "Counter",
+		"bubbleRate": "Bubble rate",
+		"torchDamage": "Torch damage",
+		"acidBloodDamage": "Acid blood damage",
+		"baseValue": "Base value"
 	},
 	"item": {
 		"name": {
@@ -1245,7 +1259,7 @@
 			"Sumo": "Sumo",
 			"SansPitie": "Without Mercy",
 			"CloneAqueux": "Aqueous Clone",
-			"GriffesEmpoisonnes": "Poisoned Claws",
+			"GriffesEmpoisonnees": "Poisoned Claws",
 			"Cuisinier": "Cooker",
 			"SangAcide": "Acid Blood",
 			"Regenerescence": "Regeneration",
@@ -1541,7 +1555,7 @@
 			"Sumo": "Increases maximum health points by 100",
 			"SansPitie": "Chooses the target with the least health points for each assault",
 			"CloneAqueux": "Creates a clone of the Dinoz with 1 health point",
-			"GriffesEmpoisonnes": "If one of the Dinoz' Water assaults hits an enemy, he is poisoned",
+			"GriffesEmpoisonnees": "If one of the Dinoz' Water assaults hits an enemy, he is poisoned",
 			"Cuisinier": "Increases the life gain of the items by 10% for all the Dinoz",
 			"SangAcide": "If one of the enemy's assaults hits the Dinoz, he can make the enemy lose some life",
 			"Regenerescence": "Increases speed of health points recovery when resting",

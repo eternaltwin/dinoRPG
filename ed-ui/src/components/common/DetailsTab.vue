@@ -99,12 +99,11 @@
 				</Tippy>
 			</p>
 			<ul class="stat-values">
-				<Tippy tag="li" v-for="element in AssaultElement" :key="element" theme="normal">
-					{{ void (stat = getAssaultStat(dinozData, dinozSkill, element)) }}
-					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
+				<Tippy tag="li" v-for="stat in assaultStats" :key="stat.name" theme="normal">
+					<img :src="getImgURL('elements', `elem_${stat.name}`)" :alt="stat.name" />
 					<span>{{ stat.value }}</span>
 					<template #content>
-						<h1 v-html="formatContent($t(`details.${element}Assault`))" />
+						<h1 v-html="formatContent($t(`details.${stat.name}Assault`))" />
 						<ul class="stat-details">
 							<li v-for="(detail, i) in stat.details" :key="i">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
@@ -139,12 +138,11 @@
 				</Tippy>
 			</p>
 			<ul class="stat-values">
-				<Tippy tag="li" v-for="element in DefenseElement" :key="element" theme="normal">
-					{{ void (stat = getDefenseStat(dinozData, dinozSkill, element)) }}
-					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
+				<Tippy tag="li" v-for="stat in defenseStats" :key="stat.name" theme="normal">
+					<img :src="getImgURL('elements', `elem_${stat.name}`)" :alt="stat.name" />
 					<span>{{ stat.value }}</span>
 					<template #content>
-						<h1 v-html="formatContent($t(`details.${element}Defense`))" />
+						<h1 v-html="formatContent($t(`details.${stat.name}Defense`))" />
 						<ul class="stat-details">
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
@@ -192,7 +190,41 @@
 			<p class="subtitle">
 				<span>{{ $t('details.specials') }}</span>
 			</p>
-			<ul class="stat-values"></ul>
+			<ul class="stat-values">
+				<Tippy v-for="stat in specialStats" :key="stat.name" tag="li" theme="normal">
+					<img :src="getImgURL('specialStats', stat.name)" :alt="stat.name" />
+					<span>{{ stat.value }}{{ stat.percent ? '%' : '' }}</span>
+					<template #content>
+						<h1 v-html="formatContent($t(`details.${stat.name}`))" />
+						<ul class="stat-details">
+							<li v-for="(detail, i) in stat.details" :key="i">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img
+									v-if="detail.type === 'base' && detail.elements.length"
+									:src="getImgURL('elements', `elem_${detail.elements[0]}`)"
+									alt="info_button"
+								/>
+								<span v-if="detail.type === 'base'">
+									{{ detail.value }}{{ detail.percent ? '%' : '' }}
+									<span class="detail-name">
+										{{ stat.name === SpecialStat.ACID_BLOOD_DAMAGE ? '/ 2' : '' }} ({{ $t('details.baseValue') }})
+									</span>
+								</span>
+								<span v-else>+{{ detail.value }}{{ detail.percent ? '%' : '' }}</span>
+								<span v-if="detail.type !== 'base'" class="detail-name">
+									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
+									<img
+										v-for="element in detail.elements"
+										:key="element"
+										:src="getImgURL('elements', `elem_${element}`)"
+										alt="info_button"
+									/>
+								</span>
+							</li>
+						</ul>
+					</template>
+				</Tippy>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -210,12 +242,15 @@ import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat'
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { dinozStore } from '../../store/dinozStore.js';
 
 export default defineComponent({
 	name: 'DetailsTab',
 	props: { dinozData: Object as PropType<DinozFiche> },
 	data() {
 		return {
+			dinozStore: dinozStore(),
 			dinozSkill: [] as Array<DinozSkillFiche>,
 			skillList,
 			selectedSort: 'Default' as string,
@@ -224,12 +259,13 @@ export default defineComponent({
 			ElementType: ElementType,
 			AssaultElement: AssaultElement,
 			getAssaultStat,
+			assaultStats: [] as ReturnType<typeof getAssaultStat>[],
 			DefenseElement: DefenseElement,
 			getDefenseStat,
+			defenseStats: [] as ReturnType<typeof getDefenseStat>[],
 			SpecialStat: SpecialStat,
 			getSpecialStat,
-			defenseElements: ['fire', 'wood', 'water', 'lightning', 'air', 'void'],
-			specialElements: ['armor', 'multihit', 'counter']
+			specialStats: [] as ReturnType<typeof getSpecialStat>[]
 		};
 	},
 	methods: {
@@ -293,6 +329,48 @@ export default defineComponent({
 			errorHandler.handle(err);
 			return;
 		}
+
+		const data = this.dinozData;
+		if (!data) {
+			EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+			return;
+		}
+
+		// Get stats
+		this.assaultStats = Object.values(AssaultElement).map(stat =>
+			getAssaultStat(data, this.dinozSkill, stat as AssaultElement)
+		);
+
+		this.defenseStats = Object.values(DefenseElement).map(stat =>
+			getDefenseStat(data, this.dinozSkill, stat as DefenseElement)
+		);
+
+		this.specialStats = Object.values(SpecialStat)
+			.map(stat => getSpecialStat(data, this.dinozSkill, stat as SpecialStat))
+			.filter(Boolean);
+
+		// Refresh special stats on EventBus `refreshInventory`
+		EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
+			if (!this.dinozData) {
+				EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+				return;
+			}
+
+			// Remove torchDamage stat if last lighter was unequipped
+			if (event === 'unequip' && item === itemList.ZIPPO.itemId) {
+				if (this.dinozData.items?.filter(i => i === item).length === 1) {
+					this.specialStats = this.specialStats.filter(stat => stat?.name !== SpecialStat.TORCH_DAMAGE);
+				}
+			} else if (event === 'equip' && item === itemList.ZIPPO.itemId) {
+				// Add torchDamage stat if lighter was equipped and no other lighter was equipped
+				if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
+					this.specialStats.push(getSpecialStat(this.dinozData, this.dinozSkill, SpecialStat.TORCH_DAMAGE));
+				}
+			}
+		});
+	},
+	unmounted() {
+		EventBus.off('refreshInventory');
 	}
 });
 </script>
@@ -478,6 +556,7 @@ export default defineComponent({
 				position: relative;
 				display: inline-flex;
 				align-items: center;
+				justify-content: space-around;
 				min-width: 42px;
 				font-size: 10pt;
 				font-weight: bold;
@@ -500,6 +579,10 @@ export default defineComponent({
 					top: 5px;
 					border-radius: 10px;
 					z-index: -1;
+				}
+
+				& > img {
+					width: 22px;
 				}
 
 				span {

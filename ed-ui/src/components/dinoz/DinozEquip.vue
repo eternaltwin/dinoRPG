@@ -31,16 +31,18 @@ import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { InventoryService } from '../../services/InventoryService.js';
 import EventBus from '../../events/index.js';
+import { dinozStore } from '../../store/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozEquip',
 	props: {
-		itemList: Array as PropType<Array<number>>,
-		maxItem: { type: Number, required: true }
+		dinozData: Object as PropType<DinozFiche>
 	},
 	data() {
 		return {
-			items: undefined as undefined | Array<number>
+			items: undefined as undefined | Array<number>,
+			dinozStore: dinozStore()
 		};
 	},
 	computed: {
@@ -50,13 +52,22 @@ export default defineComponent({
 	},
 	methods: {
 		async unequip(item: number) {
+			if (!this.dinozData) {
+				EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+				return;
+			}
+
 			EventBus.emit('isLoading', true);
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
-				this.items = new Array(this.maxItem);
+				this.items = new Array(this.dinozData.maxItems);
 				backPack.forEach((item, index) => (this.items![index] = item.itemId));
-				EventBus.emit('refreshInventory', true);
+
+				EventBus.emit('refreshInventory', {
+					event: 'unequip',
+					item
+				});
 				EventBus.emit('isLoading', false);
 			} catch (error) {
 				errorHandler.handle(error);
@@ -65,11 +76,20 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		this.items = new Array(this.maxItem);
-		this.itemList?.forEach((item, index) => (this.items![index] = item));
+		if (!this.dinozData) {
+			EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+			return;
+		}
+		this.items = new Array(this.dinozData.maxItems);
+		this.dinozData.items?.forEach((item, index) => (this.items![index] = item));
 
 		EventBus.on('equipItem', e => {
-			this.items = new Array(this.maxItem);
+			if (!this.dinozData) {
+				EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+				return;
+			}
+
+			this.items = new Array(this.dinozData.maxItems);
 			e.forEach((item, index) => (this.items![index] = item.itemId));
 		});
 	},

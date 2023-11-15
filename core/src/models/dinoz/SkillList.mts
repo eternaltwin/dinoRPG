@@ -1165,7 +1165,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.SYMPATIQUE]: {
 		id: Skill.SYMPATIQUE,
-		name: 'Sympatique',
+		name: 'Sympathique',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
@@ -1175,7 +1175,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FOLLOWERS]: 1
+			[Stat.MAX_FOLLOWERS]: 1
 		},
 	},
 	[Skill.TENACITE]: {
@@ -1346,7 +1346,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FOLLOWERS]: 1
+			[Stat.MAX_FOLLOWERS]: 1
 		},
 	},
 	[Skill.RESISTANCE_A_LA_MAGIE]: {
@@ -2041,7 +2041,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.PECHEUR_CONFIRME]: {
 		id: Skill.PECHEUR_CONFIRME,
-		name: 'PecherConfirme',
+		name: 'PecheurConfirme',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
@@ -2397,7 +2397,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FOLLOWERS]: 1
+			[Stat.MAX_FOLLOWERS]: 1
 		},
 	},
 	[Skill.NEMO]: {
@@ -3330,7 +3330,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.TAICHI]: {
 		id: Skill.TAICHI,
-		name: 'Taichi',
+		name: 'TaiChi',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
