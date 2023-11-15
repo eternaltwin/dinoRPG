@@ -8,6 +8,7 @@ import { getAllSecretsRequest } from '../dao/secretDao.js';
 
 export async function postError(e: ErrorFormator, res: Response) {
 	const secrets: Array<Secret> = await getAllSecretsRequest();
+	if (secrets.length === 0) return;
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');
 	//Do no send Discord notification if error is to display toast

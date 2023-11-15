@@ -182,7 +182,9 @@
 		"statistics": "Caractéristiques",
 		"assaults": "Assauts",
 		"defenses": "Défenses",
-		"specials": "Spéciales"
+		"specials": "Spéciales",
+		"base": "Base",
+		"skill": "Skill"
 	},
 	"item": {
 		"name": {
@@ -1476,7 +1478,7 @@
 			"RayonKaarSher": "Rayon Kaar-Sher",
 			"Magasinier": "Magasinier",
 			"Perception": "Perception",
-			"CoupsSournois": "Coups Sournois",
+			"CoupsSournois": "Coup Sournois",
 			"ApprentiPecheur": "Apprenti Pêcheur",
 			"CoupFatal": "Coup fatal",
 			"EntrainementSousMarin": "Entrainement sous-marin",

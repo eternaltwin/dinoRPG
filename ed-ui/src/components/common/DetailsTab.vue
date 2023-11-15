@@ -99,17 +99,31 @@
 				</Tippy>
 			</p>
 			<ul class="stat-values">
-				<li
-					v-for="element in AssaultElement"
-					:key="element"
-					v-tippy="{
-						content: formatContent($t(`element.${element}`)),
-						theme: 'small'
-					}"
-				>
+				<Tippy tag="li" v-for="element in AssaultElement" :key="element" theme="normal">
+					{{ void (stat = getAssaultStat(dinozData, dinozSkill, element)) }}
 					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
-					<span>{{ getAssaultStat(dinozData, element) }}</span>
-				</li>
+					<span>{{ stat.value }}</span>
+					<template #content>
+						<h1 v-html="formatContent($t(`element.${element}`))" />
+						<ul class="stat-details">
+							<li v-for="(detail, i) in stat.details" :key="i">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<span v-if="detail.type === 'element'">{{ detail.value }}</span>
+								<span v-if="detail.type === 'element'" class="detail-name">x 5</span>
+								<span v-if="detail.type === 'skill'">+{{ detail.value }}</span>
+								<span v-if="detail.type === 'skill'" class="detail-name">
+									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
+									<img
+										v-for="element in detail.elements"
+										:key="element"
+										:src="getImgURL('elements', `elem_${element}`)"
+										alt="info_button"
+									/>
+								</span>
+							</li>
+						</ul>
+					</template>
+				</Tippy>
 			</ul>
 		</div>
 		<div class="stats">
@@ -453,6 +467,36 @@ export default defineComponent({
 				span {
 					margin-left: 2px;
 				}
+			}
+		}
+	}
+}
+
+.stat-details {
+	list-style-type: none;
+	color: white;
+	font-size: 9pt;
+
+	li {
+		display: flex;
+		align-items: center;
+
+		img {
+			margin-right: 4px;
+
+			&:first-child {
+				width: 7px;
+				margin-left: 8px;
+			}
+		}
+
+		.detail-name {
+			color: #fdf1c4;
+			font-style: italic;
+			margin-left: 2px;
+
+			img {
+				margin: 0 2px;
 			}
 		}
 	}

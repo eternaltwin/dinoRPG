@@ -1884,7 +1884,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.COUP_SOURNOIS]: {
 		id: Skill.COUP_SOURNOIS,
-		name: 'CoupSournois',
+		name: 'CoupsSournois',
 		type: SkillType.A,
 		energy: Energy.WEAK,
 		element: [ElementType.WATER],
@@ -1896,7 +1896,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.APPRENTI_PECHEUR]: {
 		id: Skill.APPRENTI_PECHEUR,
-		name: 'ApprentiPecher',
+		name: 'ApprentiPecheur',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
@@ -1908,7 +1908,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.POCHE_VENTRALE]: {
 		id: Skill.POCHE_VENTRALE,
-		name: 'PocheVentrable',
+		name: 'PocheVentrale',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],

@@ -174,7 +174,9 @@
 		"statistics": "Statistics",
 		"assaults": "Assaults",
 		"defenses": "Defenses",
-		"specials": "Specials"
+		"specials": "Specials",
+		"base": "Base",
+		"skill": "Skill"
 	},
 	"item": {
 		"name": {

@@ -1,5 +1,9 @@
 import { DinozFiche } from "../models/dinoz/DinozFiche.mjs";
 import { levelList } from "../models/dinoz/DinozLevel.mjs";
+import { DinozSkillFiche } from "../models/dinoz/DinozSkillFiche.mjs";
+import { skillList } from "../models/dinoz/SkillList.mjs";
+import { ElementType } from "../models/enums/ElementType.mjs";
+import { Stat } from "../models/enums/SkillStat.mjs";
 
 export enum AssaultElement {
 	FIRE = "fire",
@@ -11,6 +15,7 @@ export enum AssaultElement {
 
 export const getAssaultStat = (
 	dinoz: DinozFiche,
+	skills: DinozSkillFiche[],
 	elementName: AssaultElement
 ) => {
 	let element = 0;
@@ -35,6 +40,68 @@ export const getAssaultStat = (
 	}
 
 	let bonus = 0;
+	const details = [];
 
-	return element * 5 + bonus;
+	details.push({
+		type: "element",
+		elements: [elementName],
+		value: element,
+	});
+
+	// Get skill modifiers
+	skills.forEach((skill) => {
+		if (!skill.effects) return;
+
+		const effect = skill.effects[`${elementName}Assault`];
+
+		if (effect) {
+			// Flat value
+			if (typeof effect === "number") {
+				bonus += effect;
+				details.push({
+					type: "skill",
+					name: skill.name,
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)?.[0].toLocaleLowerCase()),
+					value: effect,
+				});
+			} else {
+				// Other element value
+				let otherElementValue = 0;
+				switch (effect) {
+					case Stat.FIRE_ASSAULT:
+						otherElementValue = dinoz.nbrUpFire || 0;
+						break;
+					case Stat.WOOD_ASSAULT:
+						otherElementValue = dinoz.nbrUpWood || 0;
+						break;
+					case Stat.LIGHTNING_ASSAULT:
+						otherElementValue= dinoz.nbrUpLightning || 0;
+						break;
+					case Stat.AIR_ASSAULT:
+						otherElementValue = dinoz.nbrUpAir || 0;
+						break;
+					case Stat.WATER_ASSAULT:
+						otherElementValue = dinoz.nbrUpWater || 0;
+						break;
+					default:
+						break;
+				}
+
+				bonus += otherElementValue;
+				details.push({
+					type: "skill",
+					name: skill.name,
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)?.[0].toLocaleLowerCase()),
+					value: otherElementValue,
+				});
+			}
+		}
+	});
+
+	const result = element * 5 + bonus;
+
+	return {
+		value: result,
+		details,
+	}
 };
