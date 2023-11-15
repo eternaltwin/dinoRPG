@@ -40,7 +40,12 @@ export const getAssaultStat = (
 	}
 
 	let bonus = 0;
-	const details = [];
+	const details: {
+		type: "skill" | "element";
+		name?: string;
+		elements: string[];
+		value: number;
+	}[] = [];
 
 	details.push({
 		type: "element",
@@ -48,7 +53,7 @@ export const getAssaultStat = (
 		value: element,
 	});
 
-	// Get skill modifiers
+	// Get bonuses from skills
 	skills.forEach((skill) => {
 		if (!skill.effects) return;
 
@@ -61,7 +66,7 @@ export const getAssaultStat = (
 				details.push({
 					type: "skill",
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)?.[0].toLocaleLowerCase()),
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)![0].toLocaleLowerCase()),
 					value: effect,
 				});
 			} else {
@@ -91,7 +96,7 @@ export const getAssaultStat = (
 				details.push({
 					type: "skill",
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)?.[0].toLocaleLowerCase()),
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)![0].toLocaleLowerCase()),
 					value: otherElementValue,
 				});
 			}

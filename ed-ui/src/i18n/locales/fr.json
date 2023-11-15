@@ -184,7 +184,19 @@
 		"defenses": "Défenses",
 		"specials": "Spéciales",
 		"base": "Base",
-		"skill": "Skill"
+		"skill": "Skill",
+		"fireAssault": "Assaut de Feu",
+		"woodAssault": "Assaut de Bois",
+		"waterAssault": "Assaut d'Eau",
+		"lightningAssault": "Assaut de Foudre",
+		"airAssault": "Assaut d'Air",
+		"fireDefense": "Défense de Feu",
+		"woodDefense": "Défense de Bois",
+		"waterDefense": "Défense d'Eau",
+		"lightningDefense": "Défense de Foudre",
+		"airDefense": "Défense d'Air",
+		"voidDefense": "Défense Neutre",
+		"baseElementContribution": "Contribution de l'élément de base"
 	},
 	"item": {
 		"name": {

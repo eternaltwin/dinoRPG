@@ -176,7 +176,19 @@
 		"defenses": "Defenses",
 		"specials": "Specials",
 		"base": "Base",
-		"skill": "Skill"
+		"skill": "Skill",
+		"fireAssault": "Fire assault",
+		"woodAssault": "Wood assault",
+		"waterAssault": "Water assault",
+		"lightningAssault": "Lightning assault",
+		"airAssault": "Air assault",
+		"fireDefense": "Fire defense",
+		"woodDefense": "Wood defense",
+		"waterDefense": "Water defense",
+		"lightningDefense": "Lightning defense",
+		"voidDefense": "Neutral defense",
+		"airDefense": "Air defense",
+		"baseElementContribution": "Base element contribution"
 	},
 	"item": {
 		"name": {

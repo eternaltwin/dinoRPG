@@ -104,12 +104,14 @@
 					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
 					<span>{{ stat.value }}</span>
 					<template #content>
-						<h1 v-html="formatContent($t(`element.${element}`))" />
+						<h1 v-html="formatContent($t(`details.${element}Assault`))" />
 						<ul class="stat-details">
 							<li v-for="(detail, i) in stat.details" :key="i">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<span v-if="detail.type === 'element'">{{ detail.value }}</span>
-								<span v-if="detail.type === 'element'" class="detail-name">x 5</span>
+								<span v-if="detail.type === 'element'" class="detail-name"
+									>x 5 ({{ $t('details.baseElementContribution') }})</span
+								>
 								<span v-if="detail.type === 'skill'">+{{ detail.value }}</span>
 								<span v-if="detail.type === 'skill'" class="detail-name">
 									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
@@ -137,17 +139,53 @@
 				</Tippy>
 			</p>
 			<ul class="stat-values">
-				<li
-					v-for="element in DefenseElement"
-					:key="element"
-					v-tippy="{
-						content: formatContent($t(`element.${element}`)),
-						theme: 'small'
-					}"
-				>
+				<Tippy tag="li" v-for="element in DefenseElement" :key="element" theme="normal">
+					{{ void (stat = getDefenseStat(dinozData, dinozSkill, element)) }}
 					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
-					<span>{{ getDefenseStat(dinozData, element) }}</span>
-				</li>
+					<span>{{ stat.value }}</span>
+					<template #content>
+						<h1 v-html="formatContent($t(`details.${element}Defense`))" />
+						<ul class="stat-details">
+							<li v-if="!stat.neutral">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('elements', `elem_${stat.weak.name}`)" alt="info_button" class="ml-4" />
+								<span>{{ stat.weak.value + stat.weak.bonus }}</span>
+								<span class="detail-name"> x 0.5</span>
+							</li>
+							<li v-if="!stat.neutral">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('elements', `elem_${stat.element.name}`)" alt="info_button" class="ml-4" />
+								<span>{{ stat.element.value + stat.element.bonus }}</span>
+							</li>
+							<li v-if="!stat.neutral">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('elements', `elem_${stat.strong.name}`)" alt="info_button" class="ml-4" />
+								<span>{{ stat.strong.value + stat.strong.bonus }}</span>
+								<span class="detail-name"> x 1.5</span>
+							</li>
+							<li v-for="(detail, i) in stat.details" :key="i">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<span v-if="detail.type === 'element'">{{ detail.value }}</span>
+								<img
+									v-if="detail.type === 'element'"
+									:src="getImgURL('elements', `elem_${detail.elements[0]}`)"
+									alt="info_button"
+									class="ml-4"
+								/>
+								<span v-if="detail.type === 'skill'">+{{ detail.value }}</span>
+								<span v-if="detail.type === 'skill'" class="detail-name">
+									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
+									<img
+										v-for="element in detail.elements"
+										:key="element"
+										:src="getImgURL('elements', `elem_${element}`)"
+										alt="info_button"
+									/>
+								</span>
+							</li>
+						</ul>
+					</template>
+				</Tippy>
 			</ul>
 		</div>
 		<div class="stats">
@@ -500,5 +538,9 @@ export default defineComponent({
 			}
 		}
 	}
+}
+
+.ml-4 {
+	margin-left: 4px;
 }
 </style>
