@@ -56,7 +56,8 @@
 		"water": "Element **Water**",
 		"lightning": "Element **Lightning**",
 		"air": "Element **Air**",
-		"neutral": "Element **Void** && //(this element does not apply on the monsters' normal attacks)//"
+		"neutral": "Element **Void** && //(this element applies to the monsters' normal attacks)//",
+		"void": "Element **Void** && //(this element applies to the monsters' normal attacks)//"
 	},
 	"resurrection": {
 		"choice1": {
@@ -169,7 +170,11 @@
 			"type": "Type",
 			"state": "Status",
 			"title": "Sort skills"
-		}
+		},
+		"statistics": "Statistics",
+		"assaults": "Assaults",
+		"defenses": "Defenses",
+		"specials": "Specials"
 	},
 	"item": {
 		"name": {

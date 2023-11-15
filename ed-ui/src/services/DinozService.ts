@@ -52,7 +52,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	levelUp(dinozId: number, tryNumber: string): Promise<Partial<DinozSkillOwnAndUnlockable>> {
+	levelUp(dinozId: number, tryNumber: string): Promise<DinozSkillOwnAndUnlockable> {
 		return http()
 			.get(`/level/learnableskills/${dinozId}/${tryNumber}`)
 			.then(res => Promise.resolve(res.data))

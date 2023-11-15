@@ -15,7 +15,7 @@ import {
 	setDinoz
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
-import { actionList, gather, shopList, skillList, TemporaryStatus } from '../constants/index.js';
+import { actionList, gather, shopList, TemporaryStatus } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, PlayerIngredient, PlayerItem, Ranking } from '../entity/index.js';
 import gameConfig from '../config/game.config.js';
@@ -54,6 +54,7 @@ import { npcList } from '@drpg/core/models/npc/NpcList';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 /**
  * @summary Get available action from dinoz
@@ -283,7 +284,7 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	);
 
 	// Add base skills to created dinoz
-	await Promise.all(skillsToAdd.map(skill => addSkillToDinoz(new DinozSkill(dinozCreated, skill.skillId))));
+	await Promise.all(skillsToAdd.map(skill => addSkillToDinoz(new DinozSkill(dinozCreated, skill.id))));
 
 	// // Add a point in the ranking to the player
 	// const playerRanking: Ranking = dinozShopData.player.rank;
@@ -346,7 +347,7 @@ export async function setSkillState(req: Request): Promise<boolean> {
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
-	const skill: DinozSkillFiche | undefined = Object.values(skillList).find(skill => skill.skillId === skillToUpdate);
+	const skill: DinozSkillFiche | undefined = Object.values(skillList).find(skill => skill.id === skillToUpdate);
 
 	// Check if skill exist and can be activate/deactivate
 	if (!skill) {

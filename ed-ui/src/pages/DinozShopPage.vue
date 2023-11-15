@@ -47,13 +47,13 @@
 				<template v-if="dinoz.race.skillId && dinoz.race.skillId.length > 0">
 					<Tippy theme="normal" tag="div" class="skill" v-for="skillId in dinoz.race.skillId" :key="skillId">
 						<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
-						{{ $t(`skill.name.${skillNameList[skillId]}`) }}
+						{{ $t(`skill.name.${skillList[skillId].name}`) }}
 						<template #content>
 							<h1>
-								{{ $t(`skill.name.${skillNameList[skillId]}`) }}
+								{{ $t(`skill.name.${skillList[skillId].name}`) }}
 							</h1>
 							<p>
-								{{ $t(`skill.description.${skillNameList[skillId]}`) }}
+								{{ $t(`skill.description.${skillList[skillId].name}`) }}
 							</p>
 						</template>
 					</Tippy>
@@ -70,11 +70,12 @@ import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
 import { playerStore, dinozStore } from '../store/index.js';
-import { raceList, skillNameList } from '../constants/index.js';
+import { raceList } from '../constants/index.js';
 import EventBus from '../events/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -85,7 +86,7 @@ export default defineComponent({
 			utils: utils,
 			dinozList: [] as Array<DinozShopFiche>,
 			raceList: raceList,
-			skillNameList: skillNameList
+			skillList
 		};
 	},
 	components: {

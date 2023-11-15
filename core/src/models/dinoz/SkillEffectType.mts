@@ -1,8 +1,8 @@
-import { SkillEffect } from '../enums/SkillEffect.mjs';
+import { Stat } from '../enums/SkillStat.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 
 export interface SkillEffectType {
-	type: SkillEffect;
+	type: Stat;
 	value: number;
 	element?: ElementType;
 }

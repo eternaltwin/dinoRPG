@@ -1,7 +1,6 @@
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { Dinoz, DinozSkill, Player, PlayerItem, PlayerReward } from '../entity/index.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { skillList } from '../constants/index.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { setDinoz } from '../dao/dinozDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
@@ -12,6 +11,7 @@ import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from './errorFormator.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 
 export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<void> {
 	for (const reward of rewards) {
@@ -34,7 +34,7 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 			case RewardEnum.SKILL:
 				await addSkillToDinoz(new DinozSkill(new Dinoz(dinoz.id), reward.value));
 
-				if (reward.value === skillList.COMPETENCE_DOUBLE.skillId) {
+				if (reward.value === skillList[Skill.COMPETENCE_DOUBLE].id) {
 					await unlockDoubleSkills(dinoz.id);
 				}
 				break;

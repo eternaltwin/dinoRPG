@@ -1,10 +1,10 @@
 import { GatherData } from '@drpg/core/models/gather/gatherData';
 import { ConditionEnum, Operator } from '@drpg/core/models/enums/Parser';
 import { ingredientList } from './ingredient.js';
-import { skillList } from './skill.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 
 export const gather: Record<string, GatherData> = {
 	FISH: {
@@ -14,7 +14,7 @@ export const gather: Record<string, GatherData> = {
 		size: 7,
 		minimumClick: 2,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.APPRENTI_PECHEUR.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.APPRENTI_PECHEUR].id
 		},
 		apparence: 'FISH',
 		items: [
@@ -28,8 +28,8 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.POISSON_VENGEUR.ingredientId,
 				startQuantity: 5,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.PECHEUR_CONFIRME.skillId
-				}
+					[ConditionEnum.SKILL]: skillList[Skill.PECHEUR_CONFIRME].id
+				},
 			},
 			{
 				type: 'ingredient',
@@ -37,7 +37,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.MAITRE_PECHEUR.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.MAITRE_PECHEUR].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.PORT_DE_PRECHE.name }
 					]
 				}
@@ -48,7 +48,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.MAITRE_PECHEUR.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.MAITRE_PECHEUR].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.CHUTES_MUTANTES.name }
 					]
 				}
@@ -59,7 +59,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.MAITRE_PECHEUR.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.MAITRE_PECHEUR].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.FLEUVE_JUMIN.name }
 					]
 				}
@@ -73,7 +73,7 @@ export const gather: Record<string, GatherData> = {
 		size: 8,
 		minimumClick: 3,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.CUEILLETTE.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.CUEILLETTE].id
 		},
 		apparence: 'CUEILLE',
 		items: [
@@ -87,8 +87,8 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
 				startQuantity: 11,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId
-				}
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
+				},
 			},
 			{
 				type: 'ingredient',
@@ -96,7 +96,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.FORGES_DU_GTC.name }
 					]
 				}
@@ -107,7 +107,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.CHEMIN_GLAUQUE.name }
 					]
 				}
@@ -118,7 +118,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.MARAIS_COLLANT.name }
 					]
 				}
@@ -132,7 +132,7 @@ export const gather: Record<string, GatherData> = {
 		size: 8,
 		minimumClick: 3,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.CUEILLETTE.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.CUEILLETTE].id
 		},
 		apparence: 'CUEILLE',
 		items: [
@@ -146,7 +146,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
 				startQuantity: 5,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
 				}
 			},
 			{
@@ -154,7 +154,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId }, { [ConditionEnum.RANDOM]: 4 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
+						{ [ConditionEnum.RANDOM]: 4 }
+					]
 				}
 			},
 			{
@@ -162,7 +165,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId }, { [ConditionEnum.RANDOM]: 4 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
+						{ [ConditionEnum.RANDOM]: 4 }
+					]
 				}
 			},
 			{
@@ -170,7 +176,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.SADIQUAE_MORDICUS.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId }, { [ConditionEnum.RANDOM]: 4 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
+						{ [ConditionEnum.RANDOM]: 4 }
+					]
 				}
 			},
 			{
@@ -179,7 +188,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.BOIS_GIVRES.name }
 					]
 				}
@@ -193,7 +202,7 @@ export const gather: Record<string, GatherData> = {
 		size: 8,
 		minimumClick: 3,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.CUEILLETTE.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.CUEILLETTE].id
 		},
 		apparence: 'CUEILLE',
 		items: [
@@ -207,7 +216,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
 				startQuantity: 5,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
 				}
 			},
 			{
@@ -215,7 +224,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
 				}
 			},
 			{
@@ -224,7 +233,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 5,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
 						{ [ConditionEnum.RANDOM]: 4 } //TODO: lieu de caushemesh
 					]
 				}
@@ -238,7 +247,7 @@ export const gather: Record<string, GatherData> = {
 		size: 8,
 		minimumClick: 3,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.CUEILLETTE.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.CUEILLETTE].id
 		},
 		apparence: 'CUEILLE',
 		items: [
@@ -257,7 +266,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
 				}
 			},
 			{
@@ -265,7 +274,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.SADIQUAE_MORDICUS.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
 				}
 			},
 			{
@@ -273,7 +282,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.POUSSE_SOMBRE.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.OEIL_DE_LYNX.skillId //TODO: lieu du monde sombre
+					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id //TODO: lieu du monde sombre
 				}
 			}
 		]
@@ -285,7 +294,7 @@ export const gather: Record<string, GatherData> = {
 		size: 6,
 		minimumClick: 1,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.PARATONNERRE.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.PARATONNERRE].id
 		},
 		apparence: 'ENERGY',
 		items: [
@@ -300,7 +309,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.FISSION_ELEMENTAIRE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.FORCEBRUT.name }
 					]
 				}
@@ -311,7 +320,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.FISSION_ELEMENTAIRE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.PENTES_DE_BASALTE.name }
 					]
 				}
@@ -322,7 +331,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.FISSION_ELEMENTAIRE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.PORTE_DE_SYLVENOIRE.name }
 					]
 				}
@@ -333,7 +342,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.FISSION_ELEMENTAIRE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.DOME_SOULAFLOTTE.name }
 					]
 				}
@@ -347,7 +356,7 @@ export const gather: Record<string, GatherData> = {
 		size: 6,
 		minimumClick: 1,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.PARATONNERRE.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.PARATONNERRE].id
 		},
 		apparence: 'ENERGY',
 		items: [
@@ -367,7 +376,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.FISSION_ELEMENTAIRE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
 						{ [ConditionEnum.RANDOM]: 6 }
 					]
 				}
@@ -378,7 +387,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.FISSION_ELEMENTAIRE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
 						{ [ConditionEnum.RANDOM]: 6 }
 					]
 				}
@@ -389,7 +398,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.FISSION_ELEMENTAIRE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
 						{ [ConditionEnum.RANDOM]: 6 }
 					]
 				}
@@ -403,7 +412,7 @@ export const gather: Record<string, GatherData> = {
 		size: 6,
 		minimumClick: 1,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.CHASSEUR_DE_GOUPIGNON.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_GOUPIGNON].id
 		},
 		apparence: 'HUNT',
 		items: [
@@ -417,7 +426,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.GRIFFES_ACEREES.ingredientId,
 				startQuantity: 4,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.CHASSEUR_DE_GEANT.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_GEANT].id
 				}
 			},
 			{
@@ -425,7 +434,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.CORNE_EN_CHOCOLAT.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.CHASSEUR_DE_DRAGON.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id
 				}
 			},
 			{
@@ -433,7 +442,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.OEIL_VISQUEUX.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.CHASSEUR_DE_DRAGON.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id
 				}
 			},
 			{
@@ -442,7 +451,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.CHASSEUR_DE_DRAGON.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id },
 						{ [ConditionEnum.RANDOM]: 3 },
 						{ [Operator.NOT]: { [ConditionEnum.PLACE_IS]: placeList.LAC_CELESTE.name } }
 					]
@@ -454,7 +463,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.CHASSEUR_DE_DRAGON.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id },
 						{ [ConditionEnum.RANDOM]: 3 },
 						{ [ConditionEnum.PLACE_IS]: placeList.LAC_CELESTE.name }
 					]
@@ -466,7 +475,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.CHASSEUR_DE_DRAGON.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id },
 						{ [ConditionEnum.RANDOM]: 3 },
 						{ [ConditionEnum.PLACE_IS]: placeList.LAC_CELESTE.name }
 					]
@@ -478,7 +487,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.CHASSEUR_DE_GEANT.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_GEANT].id },
 						{ [ConditionEnum.PLACE_IS]: placeList.NOWHERE.name } //TODO: lieu caushemesh
 					]
 				}
@@ -492,7 +501,7 @@ export const gather: Record<string, GatherData> = {
 		size: 10,
 		minimumClick: 1,
 		condition: {
-			[ConditionEnum.SKILL]: skillList.FOUILLE.skillId
+			[ConditionEnum.SKILL]: skillList[Skill.FOUILLE].id
 		},
 		apparence: 'SEEK',
 		items: [
@@ -506,7 +515,7 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[ConditionEnum.SKILL]: skillList.DETECTIVE.skillId
+					[ConditionEnum.SKILL]: skillList[Skill.DETECTIVE].id
 				}
 			},
 			{
@@ -514,7 +523,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.ARCHEOLOGUE.skillId }, { [ConditionEnum.RANDOM]: 5 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
+						{ [ConditionEnum.RANDOM]: 5 }
+					]
 				}
 			},
 			{
@@ -522,7 +534,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.CALICE_CISELE.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.ARCHEOLOGUE.skillId }, { [ConditionEnum.RANDOM]: 5 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
+						{ [ConditionEnum.RANDOM]: 5 }
+					]
 				}
 			},
 			{
@@ -530,7 +545,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.COLLIER_KARAT.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.ARCHEOLOGUE.skillId }, { [ConditionEnum.RANDOM]: 5 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
+						{ [ConditionEnum.RANDOM]: 5 }
+					]
 				}
 			},
 			{
@@ -538,7 +556,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.ARCHEOLOGUE.skillId }, { [ConditionEnum.RANDOM]: 15 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
+						{ [ConditionEnum.RANDOM]: 15 }
+					]
 				}
 			},
 			{
@@ -546,7 +567,10 @@ export const gather: Record<string, GatherData> = {
 				ingredientId: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList.ARCHEOLOGUE.skillId }, { [ConditionEnum.RANDOM]: 15 }]
+					[Operator.AND]: [
+						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
+						{ [ConditionEnum.RANDOM]: 15 }
+					]
 				}
 			},
 			{
@@ -555,7 +579,7 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList.ARCHEOLOGUE.skillId },
+						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
 						{ [ConditionEnum.RANDOM]: 10 },
 						{ [ConditionEnum.PLACE_IS]: placeList.TETE_DE_L_ILE.name }
 					]

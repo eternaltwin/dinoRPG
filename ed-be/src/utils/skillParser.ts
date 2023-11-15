@@ -1,36 +1,30 @@
+import { SkillEffects } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { setDinoz } from '../dao/dinozDao.js';
 import { Dinoz } from '../entity/index.js';
 import { SkillEffectType } from '@drpg/core/models/dinoz/SkillEffectType';
-import { SkillEffect } from '@drpg/core/models/enums/SkillEffect';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { Stat } from '@drpg/core/models/enums/SkillStat';
 
-async function effectParser(ooce: Array<SkillEffectType>, dinoz: Dinoz): Promise<void> {
-	for (const e of ooce) {
-		const effect: string = e.type;
-		switch (effect) {
-			case SkillEffect.CHANGE_MAX_LIFE:
-				dinoz.maxLife += e.value;
+async function effectParser(effects: SkillEffects, dinoz: Dinoz): Promise<void> {
+	for (const [stat, value] of Object.entries(effects)) {
+		switch (stat) {
+			case Stat.MAX_HP:
+				dinoz.maxLife += +value;
 				break;
-			case SkillEffect.CHANGE_ELEMENT:
-				switch (e.element) {
-					case ElementType.FIRE:
-						dinoz.nbrUpFire += e.value;
-						break;
-					case ElementType.WATER:
-						dinoz.nbrUpWater += e.value;
-						break;
-					case ElementType.WOOD:
-						dinoz.nbrUpWood += e.value;
-						break;
-					case ElementType.LIGHTNING:
-						dinoz.nbrUpLightning += e.value;
-						break;
-					case ElementType.AIR:
-						dinoz.nbrUpAir += e.value;
-						break;
-					default:
-						break;
-				}
+			case Stat.FIRE_ASSAULT:
+				dinoz.nbrUpFire += +value;
+				break;
+			case Stat.WATER_ASSAULT:
+				dinoz.nbrUpWater += +value;
+				break;
+			case Stat.AIR_ASSAULT:
+				dinoz.nbrUpAir += +value;
+				break;
+			case Stat.LIGHTNING_ASSAULT:
+				dinoz.nbrUpLightning += +value;
+				break;
+			case Stat.WOOD_ASSAULT:
+				dinoz.nbrUpWood += +value;
 				break;
 			default:
 				break;

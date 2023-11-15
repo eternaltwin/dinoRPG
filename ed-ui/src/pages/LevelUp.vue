@@ -72,10 +72,10 @@
 									:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 									alt="elementUp"
 								/>
-								<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
+								<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
 							</div>
 							<p class="desc">
-								{{ $t(`skill.description.${skillNameList[skill.skillId]}`) }}
+								{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
 							</p>
 						</td>
 						<Tippy theme="normal" tag="td" class="type">
@@ -106,14 +106,19 @@
 									</Tippy>
 								</div>
 								<ul class="unlock">
-									<Tippy tag="li" theme="small" v-for="(skill, index) in availableSkills.unlockableSkills" :key="index">
+									<Tippy
+										tag="li"
+										theme="small"
+										v-for="(skill, index) in (availableSkills as DinozSkillOwnAndUnlockable).unlockableSkills"
+										:key="index"
+									>
 										<img
 											v-for="element in skill.element"
 											:key="element"
 											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 											alt="elementUp"
 										/>
-										{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}
+										{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
 										<template #content>
 											{{ $t(`levelup.unlock`) }}
 										</template>
@@ -146,13 +151,14 @@ import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozPlacement, skillNameList } from '../constants/index.js';
+import { dinozPlacement } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { dinozStore } from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -165,10 +171,10 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			availableSkills: {} as Partial<DinozSkillOwnAndUnlockable>,
+			availableSkills: null as DinozSkillOwnAndUnlockable | null,
 			dinozData: {} as DinozFiche,
 			tryNumber: 1 as number,
-			skillNameList: skillNameList,
+			skillList,
 			ElementType: ElementType,
 			isSpinOver: false as boolean,
 			position: dinozPlacement
@@ -182,7 +188,7 @@ export default defineComponent({
 			if (
 				confirm(
 					this.$t('levelup.confirmSkill', {
-						skill: this.$t(`skill.name.${skillNameList[skillId]}`),
+						skill: this.$t(`skill.name.${skillList[skillId].name}`),
 						level: this.dinozData.level
 					})
 				)
@@ -193,6 +199,9 @@ export default defineComponent({
 			}
 		},
 		unlockSkill(): void {
+			if (!this.availableSkills) {
+				return;
+			}
 			if (confirm(this.$t('levelup.confirmUnlock', { quantity: this.availableSkills.unlockableSkills?.length }))) {
 				if (!this.availableSkills.unlockableSkills) {
 					return;
@@ -224,7 +233,7 @@ export default defineComponent({
 		},
 		retry(): void {
 			this.isSpinOver = false;
-			this.availableSkills = {};
+			this.availableSkills = null;
 			const dinozId: string = this.$route.params.id.toString();
 			this.tryNumber = this.tryNumber === 1 ? 2 : 1;
 			this.getLearnableSkills(dinozId, this.tryNumber);

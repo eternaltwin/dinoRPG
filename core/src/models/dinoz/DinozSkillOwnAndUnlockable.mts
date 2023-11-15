@@ -1,8 +1,10 @@
+import { ElementType } from '../enums/ElementType.mjs';
+import { SkillType } from '../enums/SkillType.mjs';
 import { DinozSkillFiche } from './DinozSkillFiche.mjs';
 
 export interface DinozSkillOwnAndUnlockable {
-	learnableSkills: Array<Partial<DinozSkillFiche>>;
-	unlockableSkills: Array<Partial<DinozSkillFiche>>;
+	learnableSkills: Array<{ skillId: number, type: SkillType, element: ElementType[] }>;
+	unlockableSkills: Array<{ skillId: number, element: ElementType[] }>;
 	element: number;
 	canRelaunch: boolean;
 	nbrUpFire: number;

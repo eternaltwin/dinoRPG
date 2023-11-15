@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import { skillList } from '../constants/index.js';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Ranking } from '../entity/index.js';
 import { getDinozForLevelUp, getDinozSkillsLearnableAndUnlockable, setDinoz } from '../dao/dinozDao.js';
@@ -17,6 +16,8 @@ import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -87,7 +88,7 @@ export async function learnSkill(req: Request): Promise<number> {
 	if (isUnlockableSkills) {
 		await removeUnlockableSkillsToDinoz(dinozId, skillIdList);
 	} else {
-		await applySkillEffect(dinozSkills, Object.values(skillList).find(skill => skill.skillId === skillIdList[0])!);
+		await applySkillEffect(dinozSkills, Object.values(skillList).find(skill => skill.id === skillIdList[0])!);
 		await addSkillToDinoz(new DinozSkill(new Dinoz(dinozId), skillIdList[0]));
 
 		// Get all new unlockables skills
@@ -104,7 +105,7 @@ export async function learnSkill(req: Request): Promise<number> {
 					)
 			)
 			.filter(skill => !skill.raceId || skill.raceId.includes(dinozSkills.raceId))
-			.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.skillId));
+			.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.id));
 
 		// Add skill to dinoz in order to have same data than database.
 		dinozSkills.skills.push(new DinozSkill(dinozSkills, skillIdList[0]));
@@ -132,7 +133,7 @@ function getDinozLearnableSkills(
 	race: DinozRace,
 	dinozId: number,
 	tryNumber: number
-): Partial<DinozSkillOwnAndUnlockable> {
+): DinozSkillOwnAndUnlockable {
 	if (dinoz.level === gameConfig.dinoz.maxLevel) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} is already at max level.`);
 	}
@@ -149,7 +150,7 @@ function getDinozLearnableSkills(
 
 	// Check if dinoz has 'Plan de carrière' skill or cube object
 	const hasCubeOrPdc: boolean =
-		dinoz.skills.some(skill => skill.skillId === skillList.PLAN_DE_CARRIERE.skillId) ||
+		dinoz.skills.some(skill => skill.skillId === skillList[Skill.PLAN_DE_CARRIERE].id) ||
 		(dinoz.items.some(item => item.itemId === itemList.DINOZ_CUBE.itemId) && dinoz.level <= 10);
 
 	if (tryNumber < 1 || tryNumber > 2 || (tryNumber === 2 && !hasCubeOrPdc)) {
@@ -243,9 +244,13 @@ function getNewDinozDataFromLevelUp(
  * Return all skills that a dinoz can learn (every elements).
  * If the param "elementWanted" is present, return learnable skills from one specific element.
  */
-export function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<Partial<DinozSkillFiche>> {
+export function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<{
+	skillId: number;
+	type: SkillType;
+	element: Array<ElementType>;
+}> {
 	const treeType: SkillTree = getTreeType(dinoz.status);
-	let learnableSkills: Array<Partial<DinozSkillFiche>> = structuredClone(Object.values(skillList));
+	let learnableSkills: Array<DinozSkillFiche> = structuredClone(Object.values(skillList));
 
 	// Keep all skills which have same type (fire, wood...)
 	if (elementWanted !== undefined) {
@@ -263,13 +268,13 @@ export function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): A
 		.filter(
 			skill => skill.unlockedFrom?.every(skillId => dinoz.skills.some(dinozSkill => dinozSkill.skillId === skillId))
 		)
-		.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.skillId))
-		.filter(skill => !dinoz.skillsUnlockable.some(dinozSkill => dinozSkill.skillId === skill.skillId))
+		.filter(skill => !dinoz.skills.some(dinozSkill => dinozSkill.skillId === skill.id))
+		.filter(skill => !dinoz.skillsUnlockable.some(dinozSkill => dinozSkill.skillId === skill.id))
 		.filter(skill => !skill.isSphereSkill)
 		.filter(skill => !skill.raceId || skill.raceId.includes(dinoz.raceId))
 		.map(skill => {
 			return {
-				skillId: skill.skillId,
+				skillId: skill.id,
 				type: skill.type,
 				element: skill.element
 			};
@@ -280,10 +285,13 @@ export function getLearnableSkills(dinoz: Dinoz, elementWanted?: ElementType): A
  * Return all skills that a dinoz can unlock (every elements).
  * If the param "elementWanted" is present, return unlockable skills from one specific element.
  */
-function getUnlockableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<Partial<DinozSkillFiche>> {
+function getUnlockableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<{
+	skillId: number;
+	element: Array<ElementType>;
+}> {
 	const treeType: SkillTree = getTreeType(dinoz.status);
 	let unlockableSkills = dinoz.skillsUnlockable.map(
-		skill => Object.values(skillList).find(skills => skills.skillId === skill.skillId)!
+		skill => Object.values(skillList).find(skills => skills.id === skill.skillId)!
 	);
 
 	if (elementWanted !== undefined) {
@@ -294,7 +302,7 @@ function getUnlockableSkills(dinoz: Dinoz, elementWanted?: ElementType): Array<P
 		.filter(skill => skill.tree === treeType)
 		.map(skill => {
 			return {
-				skillId: skill.skillId,
+				skillId: skill.id,
 				element: skill.element
 			};
 		});
@@ -335,11 +343,11 @@ export async function unlockDoubleSkills(dinozId: number): Promise<void> {
 		.filter(skill => skill.element!.length > 1)
 		.filter(skillToUnlock => {
 			const skillDetail: DinozSkillFiche = Object.values(skillList).find(
-				skill => skill.skillId === skillToUnlock.skillId
+				skill => skill.id === skillToUnlock.id
 			)!;
-			return skillDetail.unlockedFrom!.includes(skillList.COMPETENCE_DOUBLE.skillId);
+			return skillDetail.unlockedFrom!.includes(skillList[Skill.COMPETENCE_DOUBLE].id);
 		})
-		.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.skillId!));
+		.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.id!));
 
 	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
 }

@@ -6,6 +6,5 @@ export * from './pigmou.js';
 export * from './place.js';
 export * from './race.js';
 export * from './shop.js';
-export * from './skill.js';
 export * from './status.js';
 export * from './thanks.js';

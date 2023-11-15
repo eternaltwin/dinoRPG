@@ -12,7 +12,6 @@ import {
 } from 'typeorm';
 import { Player } from './player.js';
 import { Concentration, DinozItem, DinozMission, DinozSkill, DinozSkillUnlockable, DinozStatus, NPC } from './index.js';
-import { skillList } from '../constants/index.js';
 import gameConfig from '../config/game.config.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
@@ -31,6 +30,7 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 
 @Entity()
 export class Dinoz {
@@ -294,8 +294,8 @@ export class Dinoz {
 
 	get backpackSlot(): number {
 		let total = 2;
-		if (this.skills.find(skill => skill.skillId === skillList.POCHE_VENTRALE.skillId)) total++;
-		if (this.skills.find(skill => skill.skillId === skillList.SURPLIS_DHADES.skillId)) total++;
+		if (this.skills.find(skill => skill.skillId === skillList[Skill.POCHE_VENTRALE].id)) total++;
+		if (this.skills.find(skill => skill.skillId === skillList[Skill.SURPLIS_DHADES].id)) total++;
 		if (this.status.find(status => status.statusId === statusList.BACKPACK)) total++;
 		if (this.player.engineer) total++;
 		return total;
@@ -305,26 +305,26 @@ export class Dinoz {
 		let click = 0;
 		switch (gridInformation.type) {
 			case GatherType.FISH:
-				this.skills.some(s => s.skillId === skillList.NEMO.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.NEMO].id) ? click++ : click;
 				break;
 			case GatherType.CUEILLE1:
 			case GatherType.CUEILLE2:
 			case GatherType.CUEILLE3:
 			case GatherType.CUEILLE4:
-				this.skills.some(s => s.skillId === skillList.LONDUHAUT.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.LONDUHAUT].id) ? click++ : click;
 				break;
 			case GatherType.ENERGY1:
 			case GatherType.ENERGY2:
-				this.skills.some(s => s.skillId === skillList.EINSTEIN.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.EINSTEIN].id) ? click++ : click;
 				break;
 			case GatherType.HUNT:
-				this.skills.some(s => s.skillId === skillList.BENEDICTION_DARTEMIS.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.BENEDICTION_DARTEMIS].id) ? click++ : click;
 				break;
 			case GatherType.SEEK:
-				this.skills.some(s => s.skillId === skillList.EXPERT_EN_FOUILLE.skillId) ? click++ : click;
-				this.skills.some(s => s.skillId === skillList.PLANIFICATEUR.skillId) ? click++ : click;
-				this.skills.some(s => s.skillId === skillList.CHAMPOLLION.skillId) ? click++ : click;
-				this.skills.some(s => s.skillId === skillList.GRATTEUR.skillId) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.EXPERT_EN_FOUILLE].id) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.PLANIFICATEUR].id) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.CHAMPOLLION].id) ? click++ : click;
+				this.skills.some(s => s.skillId === skillList[Skill.GRATTEUR].id) ? click++ : click;
 				break;
 			case GatherType.LABO:
 			case GatherType.PARTY:
@@ -395,16 +395,16 @@ export class Dinoz {
 		const sphereSkills = Object.values(skillList)
 			.filter(skill => skill.isSphereSkill)
 			.filter(skill => skill.element.some(el => el === element))
-			.sort((a, b) => a.skillId - b.skillId);
+			.sort((a, b) => a.id - b.id);
 		//Search last sphere skills from this element learnt
 		const lastKnownSphere = this.skills
-			.filter(skill => sphereSkills.some(s => skill.skillId === s.skillId))
+			.filter(skill => sphereSkills.some(s => skill.skillId === s.id))
 			.map(skill => skill.skillId)
 			.sort()
 			.pop();
 
 		if (!lastKnownSphere) {
-			return sphereSkills[0].skillId;
+			return sphereSkills[0].id;
 		}
 
 		let testSphereToLean = sphereSkills.find(skill => skill.unlockedFrom?.some(s => s === lastKnownSphere));
@@ -412,7 +412,7 @@ export class Dinoz {
 			throw new ErrorFormator(400, `AlreadySphere`);
 		}
 
-		return testSphereToLean.skillId;
+		return testSphereToLean.id;
 	}
 
 	public toDinozFiche(): DinozFiche {
@@ -466,19 +466,9 @@ export class Dinoz {
 	public toDinozSkillFiche(): Array<DinozSkillFiche> {
 		return this.skills.map(skill => {
 			const skillFound: DinozSkillFiche | undefined = Object.values(skillList).find(
-				skillDinoz => skillDinoz.skillId === skill.skillId
+				skillDinoz => skillDinoz.id === skill.skillId
 			)!;
-			return {
-				skillId: skillFound.skillId,
-				type: skillFound.type,
-				energy: skillFound.energy,
-				element: skillFound.element,
-				state: skill.state,
-				activatable: skillFound.activatable,
-				tree: skillFound.tree,
-				isBaseSkill: skillFound.isBaseSkill,
-				isSphereSkill: skillFound.isSphereSkill
-			};
+			return skillFound;
 		});
 	}
 }

@@ -62,7 +62,8 @@
 		"water": "Element **Eau**",
 		"lightning": "Element **Foudre**",
 		"air": "Element **Air**",
-		"neutral": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
+		"neutral": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//",
+		"void": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
 	},
 	"resurrection": {
 		"choice1": {
@@ -177,7 +178,11 @@
 			"type": "Type",
 			"state": "État",
 			"title": "Trier les compétences"
-		}
+		},
+		"statistics": "Caractéristiques",
+		"assaults": "Assauts",
+		"defenses": "Défenses",
+		"specials": "Spéciales"
 	},
 	"item": {
 		"name": {

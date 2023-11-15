@@ -12,13 +12,13 @@ import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import gameConfig from '../config/game.config.js';
 import { getRandomLetter } from '../utils/index.js';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
-import { skillList } from '../constants/index.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { applySkillEffect } from './skillService.js';
 import { removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { addItemToDinoz, removeItemToDinoz } from '../dao/dinozItemDao.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -92,7 +92,7 @@ export async function useItem(req: Request): Promise<void> {
 			break;
 		case ItemEffect.SPHERE:
 			const skillToLearn = dinoz.learnNextSphereSkill(item.effect.value);
-			await applySkillEffect(dinoz, Object.values(skillList).find(skill => skill.skillId === skillToLearn)!);
+			await applySkillEffect(dinoz, Object.values(skillList).find(skill => skill.id === skillToLearn)!);
 			await addSkillToDinoz(new DinozSkill(new Dinoz(dinozId), skillToLearn));
 			break;
 		case ItemEffect.GOLD:
@@ -144,7 +144,7 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number): Promi
 	);
 
 	// Add base skills to created dinoz
-	await Promise.all(skillsToAdd.map(skill => addSkillToDinoz(new DinozSkill(dinozCreated, skill.skillId))));
+	await Promise.all(skillsToAdd.map(skill => addSkillToDinoz(new DinozSkill(dinozCreated, skill.id))));
 }
 
 async function useSpecialItem(dinoz: Dinoz, item: ItemFiche): Promise<void> {

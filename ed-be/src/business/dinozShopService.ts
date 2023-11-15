@@ -4,12 +4,12 @@ import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { getRandomLetter, getRandomNumber } from '../utils/index.js';
-import { skillList } from '../constants/index.js';
 import { Player, PlayerDinozShop } from '../entity/index.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -113,7 +113,7 @@ function setDinozShopFiche(dinozShop: PlayerDinozShop): DinozShopFiche {
 
 	raceFound.skillId = Object.values(skillList)
 		.filter(skill => skill.raceId?.some(raceId => raceId === raceFound.raceId) && skill.isBaseSkill)
-		.map(skill => skill.skillId);
+		.map(skill => skill.id);
 
 	return {
 		id: dinozShop.id.toString(),

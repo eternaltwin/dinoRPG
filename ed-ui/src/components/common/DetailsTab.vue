@@ -30,7 +30,11 @@
 						{{ $t('details.th.active') }}
 					</th>
 				</tr>
-				<tr v-for="skill in dinozSkill" :key="skill.skillId" :class="skill.state === false ? 'disabled' : ''">
+				<tr
+					v-for="skill in dinozSkill as DinozSkillFiche[]"
+					:key="skill.id"
+					:class="skill.state === false ? 'disabled' : ''"
+				>
 					<td class="name">
 						<Tippy theme="normal">
 							<img
@@ -39,10 +43,10 @@
 								:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 								:alt="ElementType[element]"
 							/>
-							<p>{{ $t(`skill.name.${skillNameList[skill.skillId]}`) }}</p>
+							<p>{{ $t(`skill.name.${skillList[skill.id].name}`) }}</p>
 							<template #content>
-								<h1 v-html="formatContent($t(`skill.name.${skillNameList[skill.skillId]}`))" />
-								<p v-html="formatContent($t(`skill.description.${skillNameList[skill.skillId]}`))" />
+								<h1 v-html="formatContent($t(`skill.name.${skillList[skill.id].name}`))" />
+								<p v-html="formatContent($t(`skill.description.${skillList[skill.id].name}`))" />
 								<h3 v-html="formatContent($t(`skill.energy.${skill.energy}`))" />
 							</template>
 						</Tippy>
@@ -60,7 +64,7 @@
 						<td class="state">
 							<img
 								:src="getImgURL('icons', `small_skill_${skill.state}`)"
-								:alt="skill.state"
+								:alt="skill.state ? 'active' : 'inactive'"
 								v-if="skill.activatable"
 								@click="changeState(skill)"
 								v-tippy="{
@@ -81,18 +85,79 @@
 				</tr>
 			</tbody>
 		</table>
+		<p class="title">
+			{{ $t('details.statistics') }}
+		</p>
+		<div class="stats">
+			<p class="subtitle">
+				<span>{{ $t('details.assaults') }}</span>
+				<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
+					<template #content>
+						<h1 v-html="$t('details.assaults')" />
+						<p v-html="'TODO'" />
+					</template>
+				</Tippy>
+			</p>
+			<ul class="stat-values">
+				<li
+					v-for="element in AssaultElement"
+					:key="element"
+					v-tippy="{
+						content: formatContent($t(`element.${element}`)),
+						theme: 'small'
+					}"
+				>
+					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
+					<span>{{ getAssaultStat(dinozData, element) }}</span>
+				</li>
+			</ul>
+		</div>
+		<div class="stats">
+			<p class="subtitle">
+				<span>{{ $t('details.defenses') }}</span>
+				<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
+					<template #content>
+						<h1 v-html="$t('details.defenses')" />
+						<p v-html="'TODO'" />
+					</template>
+				</Tippy>
+			</p>
+			<ul class="stat-values">
+				<li
+					v-for="element in DefenseElement"
+					:key="element"
+					v-tippy="{
+						content: formatContent($t(`element.${element}`)),
+						theme: 'small'
+					}"
+				>
+					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
+					<span>{{ getDefenseStat(dinozData, element) }}</span>
+				</li>
+			</ul>
+		</div>
+		<div class="stats">
+			<p class="subtitle">
+				<span>{{ $t('details.specials') }}</span>
+			</p>
+			<ul class="stat-values"></ul>
+		</div>
 	</div>
 </template>
 
 <script lang="ts" scoped>
 import { defineComponent, PropType } from 'vue';
-import { statusList, skillNameList } from '../../constants/index.js';
+import { statusList } from '../../constants/index.js';
 import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
+import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
+import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -100,11 +165,19 @@ export default defineComponent({
 	data() {
 		return {
 			dinozSkill: [] as Array<DinozSkillFiche>,
-			skillNameList: skillNameList,
+			skillList,
 			selectedSort: 'Default' as string,
 			picked: 'Ascendant' as string,
 			hidden: true as boolean,
-			ElementType: ElementType
+			ElementType: ElementType,
+			AssaultElement: AssaultElement,
+			getAssaultStat,
+			DefenseElement: DefenseElement,
+			getDefenseStat,
+			SpecialStat: SpecialStat,
+			getSpecialStat,
+			defenseElements: ['fire', 'wood', 'water', 'lightning', 'air', 'void'],
+			specialElements: ['armor', 'multihit', 'counter']
 		};
 	},
 	methods: {
@@ -112,7 +185,7 @@ export default defineComponent({
 			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
 			try {
-				await DinozService.setSkillState(parseInt(dinozId), skill.skillId, !skill.state);
+				await DinozService.setSkillState(parseInt(dinozId), skill.id, !skill.state);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);
@@ -128,7 +201,7 @@ export default defineComponent({
 			switch (this.selectedSort) {
 				case 'Default':
 					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
-						a.skillId > b.skillId ? 1 : b.skillId > a.skillId ? -1 : 0
+						a.id > b.id ? 1 : b.id > a.id ? -1 : 0
 					);
 					break;
 				case 'Type':
@@ -143,7 +216,7 @@ export default defineComponent({
 					break;
 				case 'State':
 					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
-						a.state > b.state ? 1 : b.state > a.state ? -1 : 0
+						!!a.state > !!b.state ? 1 : !!b.state > !!a.state ? -1 : 0
 					);
 					break;
 				default:
@@ -152,6 +225,9 @@ export default defineComponent({
 		},
 		reverse(): void {
 			this.dinozSkill = this.dinozSkill.reverse();
+		},
+		getLanguage() {
+			return this.$i18n.locale.toLocaleUpperCase();
 		}
 	},
 	async mounted(): Promise<void> {
@@ -300,6 +376,82 @@ export default defineComponent({
 					background-color: red;
 					background-image: none;
 					opacity: 1;
+				}
+			}
+		}
+	}
+
+	.title {
+		color: #f8efa4;
+		background-color: #bc683c;
+		padding: 4px 8px;
+		font-variant: small-caps;
+		margin-bottom: 4px;
+	}
+
+	.stats {
+		border: 1px solid #f8efa4;
+		border-radius: 10px;
+		padding: 2px 0;
+		margin-bottom: 6px;
+
+		.subtitle {
+			display: flex;
+			align-items: center;
+			color: #f8efa4;
+			font-variant: small-caps;
+			border-bottom: 1px solid #f8efa4;
+			font-size: 9pt;
+			padding-left: 4px;
+			padding-right: 4px;
+			padding-bottom: 2px;
+
+			.help {
+				border: 1px solid #bc683c;
+				cursor: help;
+				margin-left: 5px;
+
+				&:hover {
+					outline: 1px solid white;
+				}
+			}
+		}
+
+		.stat-values {
+			list-style-type: none;
+			padding: 4px 8px;
+			padding-bottom: 0;
+
+			li {
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				min-width: 42px;
+				font-size: 10pt;
+				font-weight: bold;
+				color: white;
+				letter-spacing: -0.2pt;
+				z-index: 2;
+				padding-right: 4px;
+
+				&:not(:last-child) {
+					margin-right: 2px;
+				}
+
+				&::before {
+					content: '';
+					position: absolute;
+					width: 80%;
+					height: 13px;
+					background-color: #90452c;
+					left: 20%;
+					top: 5px;
+					border-radius: 10px;
+					z-index: -1;
+				}
+
+				span {
+					margin-left: 2px;
 				}
 			}
 		}

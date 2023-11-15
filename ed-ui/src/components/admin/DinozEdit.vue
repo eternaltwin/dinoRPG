@@ -125,14 +125,14 @@
 					<td>Skill</td>
 					<td>
 						<template v-for="skillId in dinoz.skills" :key="skillId">
-							{{ $t(`skill.name.${skillNameList[skillId]}`) }} <br />
+							{{ $t(`skill.name.${skillList[skillId]}`) }} <br />
 						</template>
 					</td>
 					<td>
 						<select v-model="dinozField.skillList" multiple size="10">
 							<template v-for="(skill, index) in skillListFiltered" :key="index">
 								<option :value="skill">
-									{{ $t(`skill.name.${skillNameList[skill]}`) }}
+									{{ $t(`skill.name.${skillList[skill]}`) }}
 								</option>
 							</template>
 						</select>
@@ -167,10 +167,11 @@
 import { defineComponent, PropType } from 'vue';
 import { AdminService } from '../../services/index.js';
 import { DinozEdit } from '@drpg/core/models/dinoz/DinozEdit';
-import { skillNameList, statusList } from '../../constants/index.js';
+import { statusList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { skillList, Skill } from '@drpg/core/models/dinoz/SkillList';
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -184,7 +185,7 @@ export default defineComponent({
 			statusList: statusList,
 			statusOperation: '' as string,
 			statusListFiltered: [] as Array<string>,
-			skillNameList: skillNameList,
+			skillList,
 			skillListFiltered: [] as Array<string>,
 			skillOperation: '' as string
 		};
@@ -249,13 +250,9 @@ export default defineComponent({
 		},
 		filterSkillList(operation: string): void {
 			if (operation === 'add') {
-				this.skillListFiltered = Object.keys(skillNameList).filter(
-					skillId => !this.dinoz.skills?.includes(parseInt(skillId))
-				);
+				this.skillListFiltered = Object.values(Skill).filter(skillId => !this.dinoz.skills?.includes(skillId));
 			} else {
-				this.skillListFiltered = Object.keys(skillNameList).filter(
-					skillId => this.dinoz.skills?.includes(parseInt(skillId))
-				);
+				this.skillListFiltered = Object.values(Skill).filter(skillId => this.dinoz.skills?.includes(skillId));
 			}
 		},
 		filterStatusList(operation: string): void {
