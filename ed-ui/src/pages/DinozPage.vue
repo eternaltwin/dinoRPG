@@ -23,7 +23,7 @@ import { defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
-import { dinozStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
 import DinozDisplay from '../components/dinoz/DinozDisplay.vue';
@@ -35,6 +35,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			playerStore: playerStore(),
 			nameChoosen: undefined as boolean | undefined,
 			dinozData: {} as DinozFiche
 		};
@@ -78,6 +79,14 @@ export default defineComponent({
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
 			this.dinozStore.setDinozList(dinozList);
+
+			// Update current dinoz in player options
+			if (dinozId) {
+				this.playerStore.setPlayerOptions({
+					...this.playerStore.playerOptions,
+					currentDinozId: +dinozId
+				});
+			}
 		}
 	},
 	// Get dinoz data

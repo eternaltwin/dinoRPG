@@ -5,7 +5,7 @@
 			:key="index"
 			:class="{
 				dead: dinoz.life === 0,
-				selected: dinoz.id === pageId,
+				selected: currentDinozId ? dinoz.id === currentDinozId : dinoz.id === pageId,
 				light: true
 			}"
 		>
@@ -40,6 +40,9 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DinozList',
+	props: {
+		currentDinozId: { type: Number, required: false }
+	},
 	data() {
 		return {
 			dinozStore: dinozStore(),

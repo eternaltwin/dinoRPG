@@ -39,7 +39,13 @@
 				}"
 			></a>
 		</div>
-		<DinozList></DinozList>
+		<div class="place" v-if="place">
+			<div class="img-wrapper">
+				<img :src="getImgURL('place', place)" :alt="$t(`place.name.${place}`)" />
+			</div>
+			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
+		</div>
+		<DinozList :currentDinozId="currentDinozId"></DinozList>
 		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
@@ -60,15 +66,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { playerStore } from '../../store/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
 import DinozList from '../../components/dinoz/DinozList.vue';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export default defineComponent({
 	name: 'LeftPanel',
 	data() {
 		return {
 			playerStore: playerStore(),
+			dinozStore: dinozStore(),
 			money: undefined as number | undefined
 		};
 	},
@@ -93,6 +101,20 @@ export default defineComponent({
 		storeMoney(): number | undefined {
 			return this.playerStore.getMoney;
 		},
+		currentDinozId(): number | undefined {
+			return this.playerStore.playerOptions.currentDinozId;
+		},
+		place(): string | null {
+			if (!this.currentDinozId) return this.place;
+
+			const currentDinoz = this.dinozStore.getDinoz(this.currentDinozId);
+			if (!currentDinoz) return this.place;
+
+			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
+			if (!place) return this.place;
+
+			return place.name;
+		},
 		hasPDA(): boolean {
 			return this.playerStore.playerOptions.hasPDA;
 		},
@@ -111,6 +133,10 @@ export default defineComponent({
 		// Watch money in store. Each time money will change, the display will be updated
 		storeMoney: function (money: number) {
 			this.money = money;
+		},
+		// Watch current dinoz id in store. Each time current dinoz id will change, the selected dinoz will be updated
+		currentDinozId: function (dinozId: number) {
+			this.currentDinozId = dinozId;
 		}
 	},
 	mounted(): void {
@@ -241,6 +267,35 @@ export default defineComponent({
 					background-image: url('../../assets/icons/act_dojo2.webp');
 				}
 			}
+		}
+	}
+}
+
+.place {
+	padding: 2px;
+	background-color: #fbdca5;
+	margin-bottom: 8px;
+
+	.img-wrapper {
+		height: 100px;
+		overflow: hidden;
+
+		img {
+			width: 100%;
+			border: 1px solid #9a4029;
+			box-sizing: border-box;
+		}
+	}
+
+	.place-name {
+		color: #bc683c;
+		text-align: center;
+		font-size: 9pt;
+		font-style: italic;
+
+		&:first-letter {
+			font-weight: normal;
+			font-size: 9pt;
 		}
 	}
 }
