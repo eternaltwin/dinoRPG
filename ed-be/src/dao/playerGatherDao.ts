@@ -1,3 +1,4 @@
+import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { AppDataSource } from '../data-source.js';
 import { PlayerGather } from '../entity/index.js';
 

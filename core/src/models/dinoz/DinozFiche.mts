@@ -1,5 +1,6 @@
 import { DinozRace } from './DinozRace.mjs';
 import { MissionHUD } from '../missions/missionHUD.mjs';
+import { ActionFiche } from './ActionList.mjs';
 
 // This is the model to use to communicate with the front
 export interface DinozFiche {
@@ -32,11 +33,4 @@ export interface DinozFiche {
 	nbrUpLightning?: number;
 	nbrUpAir?: number;
 	order?: number | null;
-}
-
-export interface ActionFiche {
-	name: string;
-	imgName: string;
-	prop?: number | string;
-	special?: boolean;
 }

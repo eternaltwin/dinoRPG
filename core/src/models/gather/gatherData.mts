@@ -2,10 +2,11 @@ import { Condition } from '../npc/NpcConditions.mjs';
 import { GatherItems } from './gatherItems.mjs';
 import { GatherType } from '../enums/GatherType.mjs';
 import { ItemFiche } from '../item/ItemFiche.mjs';
+import { Action } from '../dinoz/ActionList.mjs';
 
 export type GatherData =
 	| {
-			action: string;
+			action: Action;
 			special: false;
 			type:
 				| GatherType.HUNT
@@ -24,7 +25,7 @@ export type GatherData =
 			items: Array<GatherItems>;
 	  }
 	| {
-			action: string;
+			action: Action;
 			special: true;
 			type: GatherType.ANNIV | GatherType.LABO | GatherType.PARTY | GatherType.TICTAC | GatherType.XMAS;
 			size: number;

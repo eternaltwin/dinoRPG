@@ -15,7 +15,7 @@ import {
 	setDinoz
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
-import { actionList, gather, shopList, TemporaryStatus } from '../constants/index.js';
+import { gather, shopList, TemporaryStatus } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, PlayerIngredient, PlayerItem, Ranking } from '../entity/index.js';
 import gameConfig from '../config/game.config.js';
@@ -25,7 +25,7 @@ import { moveFight } from './fightService.js';
 import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { digTreasures } from '../constants/digTreasures.js';
 import { getRandomNumber } from '../utils/index.js';
-import { ActionFiche, DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
 import { Npc } from '@drpg/core/models/npc/npc';
@@ -55,6 +55,7 @@ import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { actionList, Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 
 /**
  * @summary Get available action from dinoz
@@ -64,18 +65,18 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	const availableActions: Array<ActionFiche> = [];
 
 	if (!dinoz.isAlive) {
-		availableActions.push(actionList.RESURRECT);
+		availableActions.push(actionList[Action.RESURRECT]);
 		return availableActions;
 	}
 
 	if (dinoz.concentration) {
-		availableActions.push(actionList.CONCENTRATE);
+		availableActions.push(actionList[Action.CONCENTRATE]);
 		return availableActions;
 	}
 
 	// Default actions
-	availableActions.push(actionList.FIGHT);
-	//availableActions.push(actionList.FOLLOW);
+	availableActions.push(actionList[Action.FIGHT]);
+	//availableActions.push(actionList[Action.FOLLOW]);
 
 	//Gather
 	if (
@@ -103,7 +104,7 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	if (
 		dinoz.status.some(status => status.statusId === statusList.SHOVEL || status.statusId === statusList.ENHANCED_SHOVEL)
 	) {
-		availableActions.push(actionList.DIG);
+		availableActions.push(actionList[Action.DIG]);
 	}
 
 	// Shop action: check if a shop is available where the dinoz is
@@ -114,8 +115,8 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 			if (dinozIsCursed) {
 				// Add the shop id to the action
 				const shopAction: ActionFiche = {
-					name: actionList.SHOP.name,
-					imgName: actionList.SHOP.imgName,
+					name: actionList[Action.SHOP].name,
+					imgName: actionList[Action.SHOP].imgName,
 					prop: shopAvailable.shopId
 				};
 				availableActions.push(shopAction);
@@ -124,8 +125,8 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 			const playerNapodino = dinoz.player.items.find(napo => napo.itemId === itemList.GOLDEN_NAPODINO.itemId);
 			if (playerNapodino && playerNapodino.quantity > 0) {
 				const shopAction: ActionFiche = {
-					name: actionList.SHOP.name,
-					imgName: actionList.SHOP.imgName,
+					name: actionList[Action.SHOP].name,
+					imgName: actionList[Action.SHOP].imgName,
 					prop: shopAvailable.shopId
 				};
 				availableActions.push(shopAction);
@@ -133,20 +134,25 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 		} else {
 			// Add the shop id to the action
 			const shopAction: ActionFiche = {
-				name: actionList.SHOP.name,
-				imgName: actionList.SHOP.imgName,
+				name: actionList[Action.SHOP].name,
+				imgName: actionList[Action.SHOP].imgName,
 				prop: shopAvailable.shopId
 			};
 			availableActions.push(shopAction);
 		}
 	}
 
+	// Market if dinoz is in market
+	if (dinoz.placeId === placeList.PLACE_DU_MARCHE.placeId) {
+		availableActions.push(actionList[Action.MARKET]);
+	}
+
 	const npcAvailable: Array<Npc> = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
 		if (!npc.condition || checkCondition(npc.condition, dinoz)) {
 			availableActions.push({
-				name: actionList.NPC.name,
-				imgName: actionList.NPC.imgName,
+				name: actionList[Action.NPC].name,
+				imgName: actionList[Action.NPC].imgName,
 				prop: npc.id
 			});
 		}
@@ -155,16 +161,16 @@ export function getAvailableActions(dinoz: Dinoz): Array<ActionFiche> {
 	const missionAvailable = getMissionAction(dinoz);
 	if (missionAvailable) {
 		availableActions.push({
-			name: actionList.MISSION.name,
-			imgName: actionList.MISSION.imgName,
+			name: actionList[Action.MISSION].name,
+			imgName: actionList[Action.MISSION].imgName,
 			prop: missionAvailable
 		});
 	}
 
 	if (dinoz.canLevelUp) {
 		availableActions.push({
-			name: actionList.LEVEL_UP.name,
-			imgName: actionList.LEVEL_UP.imgName
+			name: actionList[Action.LEVEL_UP].name,
+			imgName: actionList[Action.LEVEL_UP].imgName
 		});
 	}
 	return availableActions;

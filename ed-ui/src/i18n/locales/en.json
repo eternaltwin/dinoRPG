@@ -21,7 +21,9 @@
 		"noPDA": "You need the Diamantite Pebble to access this page.",
 		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
 		"dinozListMissing": "Dinoz list missing",
-		"dinozDataMissing": "Dinoz data missing"
+		"dinozDataMissing": "Dinoz data missing",
+		"selectADinozAtMarketFirst": "You must select a dinoz at the market first.",
+		"unknownDinoz": "Unknown dinoz"
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -92,7 +94,8 @@
 			"xmas": "You can play the Snowhunter using your Christmas Tickets, and win lots of gifts!",
 			"tictac": "Use your Ticket Taque to try to find a rare treasure !",
 			"labo": "Search for the antidote in the Archidorogon lab to heal the Venerable.",
-			"party": "Use magical rockets to create an astonishing firework and win plenty of treasures !"
+			"party": "Use magical rockets to create an astonishing firework and win plenty of treasures !",
+			"market": "Welcome to the Tamer Market! Here you can buy and sell Dinoz, ingredients, and some rare items coming from all over Dinoland !"
 		},
 		"name": {
 			"fight": "Fight",
@@ -109,7 +112,8 @@
 			"xmas": "Snowplough Game",
 			"tictac": "Grandpa Joe's treasure",
 			"labo": "Archidorogon Lab",
-			"party": "Firework"
+			"party": "Firework",
+			"market": "Tamer Market"
 		}
 	},
 	"button": {
@@ -1898,7 +1902,8 @@
 		"fight": "Dino-RPG [ Combat ! ]",
 		"gather": "Dino-RPG [ ",
 		"dinozMissions": "Dino-RPG [ My Dinoz Missions ]",
-		"manageDinoz": "Dino-RPG [ Manage my Dinoz ]"
+		"manageDinoz": "Dino-RPG [ Manage my Dinoz ]",
+		"market": "Dino-RPG [ Tamer Market ]"
 	},
 	"gather": {
 		"action": {
@@ -3044,5 +3049,26 @@
 		"see": "See",
 		"total": "Total",
 		"missionsFrom": "\"{npc}\"'s missions"
+	},
+	"market": {
+		"title": "Tamer Market",
+		"disclaimer": "Welcome to the Tamer Market! Here you can buy and sell Dinoz, ingredients, and some rare items coming from all over Dinoland !",
+		"allOffers": "All offers",
+		"myTransactions": "My transactions",
+		"sell": "Sell",
+		"history": "History",
+		"dinoz": "Dinoz",
+		"items": "Items",
+		"makeAnOffer": "Make an offer",
+		"filter": "Filter",
+		"all": "All",
+		"empty": "Empty",
+		"seller": "Seller",
+		"timeLeft": "Time left",
+		"highestBid": "Highest bid",
+		"by": "by",
+		"details": "Details",
+		"time": "{days}d {hours}h {minutes}m {seconds}s",
+		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :gold: **= 1000** :gold: from the **Dinoland Bank**."
 	}
 }

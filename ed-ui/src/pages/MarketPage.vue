@@ -1,0 +1,131 @@
+<template>
+	<TitleHeader :title="$t('pageTitle.market')" />
+	<div class="section">
+		<div class="titlePage">{{ $t(`market.title`) }}</div>
+	</div>
+	<div class="tabPanel">
+		<ul class="tabs">
+			<li :class="tab === 0 ? 'active' : ''">
+				<a href="#" @click="changeTab(0)">{{ $t('market.allOffers') }}</a>
+			</li>
+			<li :class="tab === 1 ? 'active' : ''">
+				<a href="#" @click="changeTab(1)">{{ $t('market.myTransactions') }}</a>
+			</li>
+			<li :class="tab === 2 ? 'active' : ''">
+				<a href="#" @click="changeTab(2)">{{ $t('market.sell') }}</a>
+			</li>
+			<li :class="tab === 3 ? 'active' : ''">
+				<a href="#" @click="changeTab(3)">{{ $t('market.history') }}</a>
+			</li>
+		</ul>
+	</div>
+	<OfferList v-if="tab === 0" />
+	<Transactions v-if="tab === 1" />
+	<Sell v-if="tab === 2" />
+	<OfferHistory v-if="tab === 3" />
+</template>
+
+<script lang="ts">
+import { defineAsyncComponent, defineComponent } from 'vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import { errorHandler } from '../utils/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
+import EventBus from '../events/index.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+
+export default defineComponent({
+	name: 'MarketPage',
+	components: {
+		TitleHeader,
+		OfferList: defineAsyncComponent(() => import('../components/market/OfferList.vue')),
+		Transactions: defineAsyncComponent(() => import('../components/market/Transactions.vue')),
+		Sell: defineAsyncComponent(() => import('../components/market/Sell.vue')),
+		OfferHistory: defineAsyncComponent(() => import('../components/market/OfferHistory.vue'))
+	},
+	data() {
+		return {
+			playerStore: playerStore(),
+			dinozStore: dinozStore(),
+			tab: 0
+		};
+	},
+	methods: {
+		changeTab(tab: number) {
+			this.tab = tab;
+		}
+	},
+	async mounted(): Promise<void> {
+		const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+
+		// Check if we have a dinoz selected
+		if (!currentDinozId) {
+			EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
+			this.$router.push({
+				name: 'MainPage'
+			});
+			return;
+		}
+
+		// Check if the dinoz exists
+		const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
+		if (!currentDinoz) {
+			EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+			this.$router.push({
+				name: 'MainPage'
+			});
+			return;
+		}
+
+		// Check if the dinoz is at the market
+		const atMarket =
+			Object.values(placeList).find(place => place.placeId === currentDinoz.placeId)?.placeId ===
+			placeList.PLACE_DU_MARCHE.placeId;
+		if (!atMarket) {
+			EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
+			this.$router.push({
+				name: 'MainPage'
+			});
+			return;
+		}
+
+		// Fetch data
+		try {
+			// this.offers = await DinozService.getDinozToManage();
+		} catch (error) {
+			errorHandler.handle(error);
+			return;
+		}
+	}
+});
+</script>
+
+<style lang="scss" scoped>
+.tabPanel {
+	position: relative;
+	color: white;
+
+	.tabs {
+		padding-top: 4px;
+		background-color: transparent;
+		text-shadow: 1px 1px 0px #9a4029;
+		border-bottom: 3px solid #bc683c;
+
+		:hover {
+			color: white;
+		}
+
+		li.active {
+			margin-top: 1px;
+			text-shadow: 1px 1px 0px #9a4029;
+			a {
+				background-color: #d69e68;
+				line-height: 16pt;
+				color: white;
+				border-left-color: #ffe7aa;
+				border-top-color: #ffe7aa;
+				border-bottom: 1px solid #d69e68;
+			}
+		}
+	}
+}
+</style>

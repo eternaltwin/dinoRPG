@@ -5,10 +5,11 @@ import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Action } from '@drpg/core/models/dinoz/ActionList';
 
-export const gather: Record<string, GatherData> = {
-	FISH: {
-		action: 'fish',
+export const gather: Record<GatherType, GatherData> = {
+	[GatherType.FISH]: {
+		action: Action.FISH,
 		type: GatherType.FISH,
 		special: false,
 		size: 7,
@@ -66,8 +67,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	CUEILLE1: {
-		action: 'cueille',
+	[GatherType.CUEILLE1]: {
+		action: Action.CUEILLE,
 		type: GatherType.CUEILLE1,
 		special: false,
 		size: 8,
@@ -125,8 +126,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	CUEILLE2: {
-		action: 'cueille',
+	[GatherType.CUEILLE2]: {
+		action: Action.CUEILLE,
 		type: GatherType.CUEILLE2,
 		special: false,
 		size: 8,
@@ -195,8 +196,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	CUEILLE3: {
-		action: 'cueille',
+	[GatherType.CUEILLE3]: {
+		action: Action.CUEILLE,
 		type: GatherType.CUEILLE3,
 		special: false,
 		size: 8,
@@ -240,8 +241,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	CUEILLE4: {
-		action: 'cueille',
+	[GatherType.CUEILLE4]: {
+		action: Action.CUEILLE,
 		type: GatherType.CUEILLE4,
 		special: false,
 		size: 8,
@@ -287,8 +288,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	ENERGY1: {
-		action: 'energy',
+	[GatherType.ENERGY1]: {
+		action: Action.ENERGY,
 		type: GatherType.ENERGY1,
 		special: false,
 		size: 6,
@@ -349,8 +350,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	ENERGY2: {
-		action: 'energy',
+	[GatherType.ENERGY2]: {
+		action: Action.ENERGY,
 		type: GatherType.ENERGY2,
 		special: false,
 		size: 6,
@@ -405,8 +406,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	HUNT: {
-		action: 'hunt',
+	[GatherType.HUNT]: {
+		action: Action.HUNT,
 		type: GatherType.HUNT,
 		special: false,
 		size: 6,
@@ -494,8 +495,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	SEEK: {
-		action: 'seek',
+	[GatherType.SEEK]: {
+		action: Action.SEEK,
 		type: GatherType.SEEK,
 		special: false,
 		size: 10,
@@ -587,8 +588,8 @@ export const gather: Record<string, GatherData> = {
 			}
 		]
 	},
-	ANNIV: {
-		action: 'anniv',
+	[GatherType.ANNIV]: {
+		action: Action.ANNIV,
 		type: GatherType.ANNIV,
 		special: true,
 		size: 10,
@@ -723,5 +724,65 @@ export const gather: Record<string, GatherData> = {
 				startQuantity: 2
 			}
 		]
+	},
+	[GatherType.XMAS]: {
+		action: Action.DIG,
+		special: true,
+		type: GatherType.XMAS,
+		size: 10,
+		minimumClick: 3,
+		// Unachievable condition to prevent the gather from being displayed
+		condition: { [ConditionEnum.MINLEVEL]: 999 },
+		apparence: 'XMAS',
+		items: [],
+		cost: {
+			...itemList.CHRISTMAS_TICKET,
+			quantity: 1
+		}
+	},
+	[GatherType.TICTAC]: {
+		action: Action.DIG,
+		special: true,
+		type: GatherType.TICTAC,
+		size: 10,
+		minimumClick: 3,
+		// Unachievable condition to prevent the gather from being displayed
+		condition: { [ConditionEnum.MINLEVEL]: 999 },
+		apparence: 'TICTAC',
+		items: [],
+		cost: {
+			...itemList.TICTAC_TICKET,
+			quantity: 1
+		}
+	},
+	[GatherType.LABO]: {
+		action: Action.DIG,
+		special: true,
+		type: GatherType.LABO,
+		size: 10,
+		minimumClick: 3,
+		// Unachievable condition to prevent the gather from being displayed
+		condition: { [ConditionEnum.MINLEVEL]: 999 },
+		apparence: 'LABO',
+		items: [],
+		cost: {
+			...itemList.TICTAC_TICKET,
+			quantity: 1
+		}
+	},
+	[GatherType.PARTY]: {
+		action: Action.DIG,
+		special: true,
+		type: GatherType.PARTY,
+		size: 10,
+		minimumClick: 3,
+		// Unachievable condition to prevent the gather from being displayed
+		condition: { [ConditionEnum.MINLEVEL]: 999 },
+		apparence: 'PARTY',
+		items: [],
+		cost: {
+			...itemList.TICTAC_TICKET,
+			quantity: 1
+		}
 	}
 };

@@ -5,7 +5,7 @@
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<MissionHUD v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
+		<MissionHUDVue v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
 		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
 		<ul>
 			<table class="action_button">
@@ -81,7 +81,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList, shopNameList } from '../../constants/index.js';
-import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { sessionStore, dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
@@ -94,9 +93,12 @@ import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import Resurect from '../../components/modal/ResurrectModal.vue';
-import MissionHUD from '../../components/dinoz/MissionHUD.vue';
+import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
+import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -118,7 +120,7 @@ export default defineComponent({
 	},
 	components: {
 		Resurect,
-		MissionHUD,
+		MissionHUDVue,
 		NPCModal,
 		MissionRewardModal
 	},
@@ -129,25 +131,25 @@ export default defineComponent({
 	methods: {
 		async launch(action: ActionFiche): Promise<void> {
 			switch (action.name) {
-				case 'levelup':
+				case Action.LEVEL_UP:
 					this.$router.push({
 						name: 'Leveling',
 						params: { id: this.$route.params.id.toString() }
 					});
 					break;
-				case 'shop':
+				case Action.SHOP:
 					this.$router.push({
 						name: 'ItemShopPage',
 						params: { name: shopNameList[action.prop as number] }
 					});
 					break;
-				case 'npc':
+				case Action.NPC:
 					this.$router.push({
 						name: 'NPC',
 						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
 					});
 					break;
-				case 'fight':
+				case Action.FIGHT:
 					EventBus.emit('isLoading', true);
 					// eslint-disable-next-line
 					const fight: FightResult = await FightService.processFight(parseInt(this.$route.params.id.toString()));
@@ -158,10 +160,10 @@ export default defineComponent({
 					});
 					EventBus.emit('isLoading', false);
 					break;
-				case 'resurrect':
+				case Action.RESURRECT:
 					this.resurect = true;
 					break;
-				case 'mission':
+				case Action.MISSION:
 					if (this.mission!.actionType === ConditionEnum.FINISH_MISSION) {
 						this.missionReward = await MissionService.finishMission(this.$route.params.id.toString(), this.missionId!);
 					} else {
@@ -177,7 +179,7 @@ export default defineComponent({
 						}
 					}
 					break;
-				case 'dig':
+				case Action.DIG:
 					this.digReward = await DinozService.dig(parseInt(this.$route.params.id.toString()));
 					if (this.digReward.rewardType === RewardEnum.GOLD) {
 						EventBus.emit('toast', {
@@ -196,24 +198,29 @@ export default defineComponent({
 					}
 					EventBus.emit('refreshDinoz', true);
 					break;
-				case 'fish':
-				case 'cueille':
-				case 'energy':
-				case 'hunt':
-				case 'seek':
-				case 'xmas':
-				case 'tictac':
-				case 'labo':
-				case 'anniv':
-				case 'party':
+				case Action.FISH:
+				case Action.CUEILLE:
+				case Action.ENERGY:
+				case GatherType.HUNT:
+				case GatherType.SEEK:
+				case GatherType.XMAS:
+				case GatherType.TICTAC:
+				case GatherType.LABO:
+				case GatherType.ANNIV:
+				case GatherType.PARTY:
 					this.$router.push({
 						name: 'Gather',
 						params: { dinozId: this.$route.params.id.toString(), type: action.name }
 					});
 					break;
-				case 'concentrate':
+				case Action.CONCENTRATE:
 					await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
 					EventBus.emit('refreshDinoz', true);
+					break;
+				case Action.MARKET:
+					this.$router.push({
+						name: 'MarketPage'
+					});
 					break;
 				default:
 					console.log(action.name);

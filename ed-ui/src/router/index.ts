@@ -94,7 +94,7 @@ const router = createRouter({
 				{
 					path: '/missions',
 					name: 'DinozMissions',
-					component: () => import('../pages/DinozMissions.vue')
+					component: import('../pages/DinozMissions.vue')
 				}
 				// Import are not available
 				/*{
