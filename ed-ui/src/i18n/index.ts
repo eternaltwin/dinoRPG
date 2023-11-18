@@ -1,12 +1,13 @@
-import en from './locales/en.json';
-import fr from './locales/fr.json';
-import es from './locales/es.json';
-import de from './locales/de.json';
+import { I18n, createI18n } from 'vue-i18n';
+import { localStore } from '../store/localStore.js';
+
+let i18n: I18n;
+const loadedLanguages: Array<string> = [];
 
 export interface LangInfos {
 	caption: string;
 	icon: string;
-	short: string;
+	short: LocalesEnum;
 }
 
 export enum LocalesEnum {
@@ -16,34 +17,58 @@ export enum LocalesEnum {
 	ES = 'es'
 }
 
-export const messages = {
-	[LocalesEnum.EN]: en,
-	[LocalesEnum.FR]: fr,
-	[LocalesEnum.ES]: es,
-	[LocalesEnum.DE]: de
-};
-
 export const Locales: Record<string, LangInfos> = {
 	[LocalesEnum.FR]: {
 		caption: 'Français',
 		icon: '/src/assets/design/lang_fr.webp',
-		short: 'fr'
+		short: LocalesEnum.FR
 	},
 	[LocalesEnum.EN]: {
 		caption: 'English',
 		icon: '/src/assets/design/lang_en.webp',
-		short: 'en'
+		short: LocalesEnum.EN
 	},
 	[LocalesEnum.ES]: {
 		caption: 'Spanish',
 		icon: '/src/assets/design/lang_es.webp',
-		short: 'es'
+		short: LocalesEnum.ES
 	},
 	[LocalesEnum.DE]: {
 		caption: 'German',
 		icon: '/src/assets/design/lang_de.webp',
-		short: 'de'
+		short: LocalesEnum.DE
 	}
 };
 
 export const defaultLocale = LocalesEnum.FR;
+
+export const initI18n = async () => {
+	i18n = createI18n({
+		locale: localStore().getLanguage || LocalesEnum.FR,
+		fallbackLocale: defaultLocale,
+		messages: { fr: {}, en: {}, es: {}, de: {} }
+	});
+
+	await loadLanguage(i18n.global.locale as string);
+
+	return i18n;
+};
+
+export const loadLanguage = async (locale: string): Promise<string> => {
+	if (loadedLanguages.includes(locale)) {
+		return setI18nLanguage(locale);
+	}
+
+	// load locale messages with dynamic import
+	const messages = await import(`./locales/${locale}.json`);
+
+	i18n.global.setLocaleMessage(locale, messages.default);
+	loadedLanguages.push(locale);
+
+	return setI18nLanguage(locale);
+};
+
+function setI18nLanguage(locale: string): string {
+	i18n.global.locale = locale;
+	return locale;
+}

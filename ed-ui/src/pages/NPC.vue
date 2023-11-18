@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { DinozService, NPCService, PlayerService } from '../services/index.js';
@@ -34,6 +34,8 @@ import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { NavigationFailure } from 'vue-router';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { dinozStore } from '../store/index.js';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 
 export default defineComponent({
 	name: 'NPC',
@@ -47,8 +49,8 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
-		AnimatedNPC: defineAsyncComponent(() => import('../components/common/AnimatedNPC.vue'))
+		TitleHeader,
+		AnimatedNPC
 	},
 	methods: {
 		async choiseStep(choice: string): Promise<void | NavigationFailure> {

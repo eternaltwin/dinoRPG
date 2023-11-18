@@ -23,6 +23,9 @@ export default defineConfig(() => {
     define: {
       ['import.meta.env.VERSION']: JSON.stringify(require('./package.json').version)
     },
+		build: {
+			target: 'esnext'
+		},
     assetsInclude: '**/*.swf'
   }
 });

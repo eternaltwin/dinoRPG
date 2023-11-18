@@ -1,24 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MainPage from '../pages/MainPage.vue';
-import DinozPage from '../pages/DinozPage.vue';
-import DinozShopPage from '../pages/DinozShopPage.vue';
-import ItemShopPage from '../pages/ItemShopPage.vue';
-import HomePage from '../pages/HomePage.vue';
-import DinozGenerator from '../pages/DinozGenerator.vue';
-import MyAccount from '../pages/MyAccount.vue';
-import Ranking from '../pages/Ranking.vue';
-import Fight from '../pages/Fight.vue';
-import LevelUp from '../pages/LevelUp.vue';
 import { sessionStore } from '../store/index.js';
-import DinozWithoutFlash from '../components/dinoz/dinozWithoutFlash.vue';
-import AdminDashBoard from '../pages/AdminDashBoard.vue';
-import Ingredients from '../pages/Ingredients.vue';
-import News from '../components/common/News.vue';
-import NPC from '../pages/NPC.vue';
-import Missions from '../pages/Missions.vue';
-import GatherPage from '../pages/GatherPage.vue';
-import ManageDinoz from '../pages/ManageDinoz.vue';
-import DinozMissions from '../pages/DinozMissions.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,94 +7,94 @@ const router = createRouter({
 		{
 			path: '/',
 			name: 'MainPage',
-			component: MainPage,
+			component: () => import('../pages/MainPage.vue'),
 			children: [
 				{
 					path: '/',
 					name: 'News',
-					component: News
+					component: () => import('../components/common/News.vue')
 				},
 				{
 					path: '/dino/:id',
 					name: 'DinozPage',
-					component: DinozPage
+					component: () => import('../pages/DinozPage.vue')
 				},
 				{
 					path: '/dino/:id/:npc',
 					name: 'NPC',
-					component: NPC
+					component: () => import('../pages/NPC.vue')
 				},
 				{
 					path: '/dino/:id/missions/:npc',
 					name: 'Missions',
-					component: Missions
+					component: () => import('../pages/Missions.vue')
 				},
 				{
 					path: '/shop/:name',
 					name: 'ItemShopPage',
-					component: ItemShopPage
+					component: () => import('../pages/ItemShopPage.vue')
 				},
 				{
 					path: '/shop/dinoz',
 					name: 'DinozShopPage',
-					component: DinozShopPage
+					component: () => import('../pages/DinozShopPage.vue')
 				},
 				{
 					path: '/player/:id',
 					name: 'MyAccount',
-					component: MyAccount
+					component: () => import('../pages/MyAccount.vue')
 				},
 				{
 					path: '/levelup/:id',
 					name: 'Leveling',
-					component: LevelUp
+					component: () => import('../pages/LevelUp.vue')
 				},
 				{
 					path: '/fight/:dinozId',
 					name: 'Fight',
-					component: Fight
+					component: () => import('../pages/Fight.vue')
 				},
 				{
 					path: '/generator',
 					name: 'DinozGenerator',
-					component: DinozGenerator,
+					component: () => import('../pages/DinozGenerator.vue'),
 					props: route => ({ chk: route.query.chk, chk2: route.query.chk2 })
 				},
 				{
 					path: '/ranking',
 					name: 'Ranking',
-					component: Ranking
+					component: () => import('../pages/Ranking.vue')
 				},
 				{
 					path: '/dinozwithoutflash',
 					name: 'DinozWithoutFlash',
-					component: DinozWithoutFlash,
+					component: () => import('../components/dinoz/DinozWithoutFlash.vue'),
 					props: { display: '3000010000000000', flip: -1, life: 100 }
 				},
 				{
 					path: '/admin',
 					name: 'Admin',
-					component: AdminDashBoard
+					component: () => import('../pages/AdminDashBoard.vue')
 				},
 				{
 					path: '/ingredients',
 					name: 'Ingredients',
-					component: Ingredients
+					component: () => import('../pages/Ingredients.vue')
 				},
 				{
 					path: '/gather/:dinozId/:type',
 					name: 'Gather',
-					component: GatherPage
+					component: () => import('../pages/GatherPage.vue')
 				},
 				{
 					path: '/manage',
 					name: 'ManageDinoz',
-					component: ManageDinoz
+					component: () => import('../pages/ManageDinoz.vue')
 				},
 				{
 					path: '/missions',
 					name: 'DinozMissions',
-					component: DinozMissions
+					component: () => import('../pages/DinozMissions.vue')
 				}
 				// Import are not available
 				/*{
@@ -126,7 +107,7 @@ const router = createRouter({
 		{
 			path: '/authentication',
 			name: 'AuthenticationPage',
-			component: HomePage
+			component: () => import('../pages/HomePage.vue')
 		},
 		{
 			path: '/:pathMatch(.*)',

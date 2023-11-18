@@ -35,10 +35,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { PlayerService } from '../services/index.js';
-import EventBus from '../events';
-import { errorHandler } from '../utils';
+import EventBus from '../events/index.js';
+import { errorHandler } from '../utils/index.js';
 import { ImportResponse } from '@drpg/core/models/import/ImportResponse';
-import { formatText } from '../utils/formatText';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'ImportPage',

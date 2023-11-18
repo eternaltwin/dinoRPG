@@ -1,11 +1,11 @@
 <template>
 	<div class="actions">
-		<Resurrect :enabled="resurect" @close="resurect = false" />
+		<Ressurect :enabled="resurect" @close="resurect = false" />
 		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<MissionHUD v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
+		<MissionHUDVue v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
 		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
 		<ul>
 			<table class="action_button">
@@ -79,7 +79,7 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { missionsList, npcNameList, shopNameList } from '../../constants/index.js';
 import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
@@ -93,6 +93,10 @@ import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
+import Ressurect from '../../components/modal/ResurrectModal.vue';
+import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
+import NPCModal from '../../components/modal/NPCModal.vue';
+import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -114,10 +118,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Resurrect: defineAsyncComponent(() => import('../../components/modal/ResurrectModal.vue')),
-		MissionHUD: defineAsyncComponent(() => import('../../components/dinoz/MissionHUD.vue')),
-		NPCModal: defineAsyncComponent(() => import('../../components/modal/NPCModal.vue')),
-		MissionRewardModal: defineAsyncComponent(() => import('../../components/modal/MissionRewardModal.vue'))
+		Ressurect,
+		MissionHUDVue,
+		NPCModal,
+		MissionRewardModal
 	},
 	props: {
 		dinozActions: Object as PropType<Array<ActionFiche>>,

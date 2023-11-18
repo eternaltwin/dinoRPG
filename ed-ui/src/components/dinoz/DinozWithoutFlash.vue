@@ -24,7 +24,7 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 export default defineComponent({
 	name: 'DinozWithoutFlash',
 	components: {
-		DinozSWF: defineAsyncComponent(() => import('../../components/dinoz/dinozSWF.vue'))
+		DinozSWF: defineAsyncComponent(() => import('../../components/dinoz/DinozSWF.vue'))
 	},
 	props: {
 		display: { type: String, required: true },

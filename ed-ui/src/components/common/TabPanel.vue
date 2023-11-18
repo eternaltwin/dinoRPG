@@ -18,17 +18,20 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { sessionStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import InventoryTab from '../../components/common/InventoryTab.vue';
+import DetailsTab from '../../components/common/DetailsTab.vue';
+import MapTab from '../../components/common/MapTab.vue';
 
 export default defineComponent({
 	name: 'TabPanel',
 	props: { dinozData: Object as PropType<DinozFiche> },
 	components: {
-		InventoryTab: defineAsyncComponent(() => import('../../components/common/InventoryTab.vue')),
-		DetailsTab: defineAsyncComponent(() => import('../../components/common/DetailsTab.vue')),
-		MapTab: defineAsyncComponent(() => import('../../components/common/MapTab.vue'))
+		InventoryTab,
+		DetailsTab,
+		MapTab
 	},
 	data() {
 		return {

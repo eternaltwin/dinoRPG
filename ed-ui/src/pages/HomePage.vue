@@ -29,12 +29,13 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
+import AuthenticationPage from '../pages/AuthenticationPage.vue';
 
 export default defineComponent({
 	name: 'HomePage',
 	components: {
-		AuthenticationPage: defineAsyncComponent(() => import('../pages/AuthenticationPage.vue'))
+		AuthenticationPage
 	}
 });
 </script>

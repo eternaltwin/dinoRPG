@@ -3,7 +3,7 @@
 		<a
 			v-for="(lang, i) in langs"
 			:key="`Lang${i}`"
-			@click="switchLocale(i)"
+			@click="switchLocale(lang.short)"
 			:class="[$i18n.locale === lang.short ? 'selected' : '', lang.short]"
 			class="flag"
 		></a>
@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Locales } from '../../i18n';
+import { Locales, LocalesEnum, loadLanguage } from '../../i18n/index.js';
 import { localStore } from '../../store/index.js';
 
 export default defineComponent({
@@ -24,9 +24,9 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		switchLocale(locale: string): void {
+		switchLocale(locale: LocalesEnum): void {
 			if (this.$i18n.locale !== locale) {
-				this.$i18n.locale = locale;
+				loadLanguage(locale);
 				this.localStore.setLanguage(locale);
 			}
 		}

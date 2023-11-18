@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import EventBus from '../events/index.js';
 import { MissionService } from '../services/index.js';
@@ -49,12 +49,13 @@ import { errorHandler } from '../utils/index.js';
 import { missionsList } from '../constants/index.js';
 import MissionInformation from '../components/modal/MissionInformationModal.vue';
 import { sessionStore } from '../store/index.js';
+import TitleHeader from '../components/utils/TitleHeader.vue';
 
 export default defineComponent({
 	name: 'Missions',
 	components: {
 		MissionInformation,
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
+		TitleHeader
 	},
 	data() {
 		return {

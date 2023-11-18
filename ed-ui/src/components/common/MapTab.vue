@@ -11,15 +11,16 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { placeList } from '../../constants/index.js';
+import WorldMap from '../../components/common/WorldMap.vue';
 
 export default defineComponent({
 	name: 'MapTab',
 	props: { dinozData: Object as PropType<DinozFiche> },
 	components: {
-		WorldMap: defineAsyncComponent(() => import('../../components/common/WorldMap.vue'))
+		WorldMap
 	},
 	methods: {
 		getPlaceName(placeId: number): string {

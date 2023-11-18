@@ -21,20 +21,26 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, raceList } from '../../constants/index.js';
 import { dinozStore } from '../../store/index.js';
+import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
+import DinozElements from '../../components/dinoz/DinozElements.vue';
+import DinozBars from '../../components/dinoz/DinozBars.vue';
+import DinozEquip from '../../components/dinoz/DinozEquip.vue';
+import DinozStatus from '../../components/dinoz/DinozStatus.vue';
+import TitleHeader from '../../components/utils/TitleHeader.vue';
 
 export default defineComponent({
 	name: 'DinozDisplay',
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/dinozWithoutFlash.vue')),
-		DinozElements: defineAsyncComponent(() => import('../../components/dinoz/dinozElements.vue')),
-		DinozBars: defineAsyncComponent(() => import('../../components/dinoz/dinozBars.vue')),
-		DinozEquip: defineAsyncComponent(() => import('../../components/dinoz/dinozEquip.vue')),
-		DinozStatus: defineAsyncComponent(() => import('../../components/dinoz/dinozStatus.vue')),
-		TitleHeader: defineAsyncComponent(() => import('../../components/utils/TitleHeader.vue'))
+		DinozWithoutFlash,
+		DinozElements,
+		DinozBars,
+		DinozEquip,
+		DinozStatus,
+		TitleHeader
 	},
 	data() {
 		return {

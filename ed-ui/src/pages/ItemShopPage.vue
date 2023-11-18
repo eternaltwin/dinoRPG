@@ -162,7 +162,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { ItemShopService } from '../services/index.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { errorHandler } from '../utils/index.js';
@@ -170,6 +170,7 @@ import { shopNameList } from '../constants/index.js';
 import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import TitleHeader from '../components/utils/TitleHeader.vue';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -184,7 +185,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
+		TitleHeader
 	},
 	computed: {
 		// Check if the quantity select is valid:

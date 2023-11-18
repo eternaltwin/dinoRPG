@@ -62,7 +62,7 @@
 import { defineComponent } from 'vue';
 import { playerStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
-import DinozList from '../../components/dinoz/dinozList.vue';
+import DinozList from '../../components/dinoz/DinozList.vue';
 
 export default defineComponent({
 	name: 'LeftPanel',

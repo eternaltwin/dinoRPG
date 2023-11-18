@@ -19,13 +19,17 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { PlayerService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import TwinoDisplay from '../components/data/TwinoDisplay.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import MyDinoz from '../components/data/MyDinoz.vue';
+import Profile from '../components/data/Profile.vue';
+import EpicRewards from '../components/data/EpicRewards.vue';
 
 export default defineComponent({
 	name: 'MyAccount',
@@ -38,10 +42,10 @@ export default defineComponent({
 	},
 	components: {
 		TwinoDisplay,
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
-		MyDinoz: defineAsyncComponent(() => import('../components/data/MyDinoz.vue')),
-		Profile: defineAsyncComponent(() => import('../components/data/Profile.vue')),
-		EpicRewards: defineAsyncComponent(() => import('../components/data/EpicRewards.vue'))
+		TitleHeader,
+		MyDinoz,
+		Profile,
+		EpicRewards
 	},
 	async created(): Promise<void> {
 		const accountId = parseInt(this.$route.params.id.toString());

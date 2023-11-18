@@ -34,16 +34,17 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { raceList, statusList } from '../../constants/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement } from '../../constants/index.js';
+import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
 
 export default defineComponent({
 	name: 'MyDinoz',
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/dinozWithoutFlash.vue'))
+		DinozWithoutFlash
 	},
 	props: {
 		accountData: {

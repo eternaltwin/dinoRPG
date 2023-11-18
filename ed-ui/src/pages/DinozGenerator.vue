@@ -32,7 +32,8 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
+import DinozSWF from '../components/dinoz/DinozSWF.vue';
 
 export default defineComponent({
 	name: 'DinozGenerator',
@@ -44,7 +45,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DinozSWF: defineAsyncComponent(() => import('../components/dinoz/dinozSWF.vue'))
+		DinozSWF
 	},
 	methods: {
 		reload(): void {

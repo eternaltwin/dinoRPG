@@ -24,18 +24,20 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { errorHandler } from '../../utils/index.js';
 import { DinozService } from '../../services/index.js';
 import { dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import TitleHeader from '../../components/utils/TitleHeader.vue';
+import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('../../components/utils/TitleHeader.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/dinozWithoutFlash.vue'))
+		TitleHeader,
+		DinozWithoutFlash
 	},
 	data() {
 		return {

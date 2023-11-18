@@ -140,7 +140,7 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
@@ -149,14 +149,18 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, skillNameList } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { dinozStore } from '../store/index.js';
+import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import Elements from '../components/data/Elements.vue';
+import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 
 export default defineComponent({
 	name: 'LevelUp',
 	components: {
-		LevelUpGrid: defineAsyncComponent(() => import('../components/dinoz/LevelUpGrid.vue')),
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
-		Elements: defineAsyncComponent(() => import('../components/data/elements.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/dinozWithoutFlash.vue'))
+		LevelUpGrid,
+		TitleHeader,
+		Elements,
+		DinozWithoutFlash
 	},
 	data() {
 		return {

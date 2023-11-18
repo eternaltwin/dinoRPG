@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { DinozShopService, DinozService } from '../services/index.js';
 import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -72,6 +72,9 @@ import { errorHandler, utils } from '../utils/index.js';
 import { playerStore, dinozStore } from '../store/index.js';
 import { raceList, skillNameList } from '../constants/index.js';
 import EventBus from '../events/index.js';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import Elements from '../components/data/Elements.vue';
+import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -86,9 +89,9 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
-		Elements: defineAsyncComponent(() => import('../components/data/elements.vue')),
-		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/dinozWithoutFlash.vue'))
+		TitleHeader,
+		Elements,
+		DinozWithoutFlash
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShopFiche): Promise<void> {

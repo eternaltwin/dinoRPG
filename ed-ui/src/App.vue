@@ -8,18 +8,21 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import TitleHeader from './components/utils/TitleHeader.vue';
 import FooterComp from './components/utils/Footer.vue';
+import Spinner from './components/utils/Spinner.vue';
+import ErrorMessage from './components/utils/ErrorMessage.vue';
+import Toast from './components/utils/Toast.vue';
 
 export default defineComponent({
 	name: 'App',
 	components: {
 		TitleHeader,
 		FooterComp,
-		Spinner: defineAsyncComponent(() => import('./components/utils/Spinner.vue')),
-		ErrorMessage: defineAsyncComponent(() => import('./components/utils/ErrorMessage.vue')),
-		Toast: defineAsyncComponent(() => import('./components/utils/Toast.vue'))
+		Spinner,
+		ErrorMessage,
+		Toast
 	}
 });
 </script>

@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';
 import { dinozStore, playerStore } from '../store/index.js';
@@ -65,12 +65,13 @@ import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { statusList } from '../constants/status.js';
 import { errorHandler } from '../utils/index.js';
 import { getMaxXP } from '@drpg/core/utils/getMaxXP';
+import Elements from '../components/data/Elements.vue';
 
 export default defineComponent({
 	name: 'ManageDinoz',
 	components: {
 		TitleHeader,
-		Elements: defineAsyncComponent(() => import('../components/data/elements.vue'))
+		Elements
 	},
 	data() {
 		return {

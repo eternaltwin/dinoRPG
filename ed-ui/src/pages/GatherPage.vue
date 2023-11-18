@@ -43,19 +43,20 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import GatherRewardModal from '../components/modal/GatherRewardModal.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
 
 export default defineComponent({
 	name: 'GatherPage',
 	components: {
 		GatherRewardModal,
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue'))
+		TitleHeader
 	},
 	data() {
 		return {

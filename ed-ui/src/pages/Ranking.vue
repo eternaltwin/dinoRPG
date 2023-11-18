@@ -29,13 +29,15 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import PlayerRanking from '../components/rankings/PlayerRanking.vue';
 
 export default defineComponent({
 	name: 'Ranking',
 	components: {
-		TitleHeader: defineAsyncComponent(() => import('../components/utils/TitleHeader.vue')),
-		PlayerRanking: defineAsyncComponent(() => import('../components/rankings/PlayerRanking.vue'))
+		TitleHeader,
+		PlayerRanking
 	},
 	data() {
 		return {

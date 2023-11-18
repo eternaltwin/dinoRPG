@@ -19,12 +19,16 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import { dinozStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
+import DinozDisplay from '../components/dinoz/DinozDisplay.vue';
+import DinozActions from '../components/dinoz/DinozActions.vue';
+import TabPanel from '../components/common/TabPanel.vue';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -36,10 +40,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		ChooseDinozName: defineAsyncComponent(() => import('../components/dinoz/chooseDinozName.vue')),
-		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/dinozDisplay.vue')),
-		DinozActions: defineAsyncComponent(() => import('../components/dinoz/dinozActions.vue')),
-		TabPanel: defineAsyncComponent(() => import('../components/common/TabPanel.vue'))
+		ChooseDinozName,
+		DinozDisplay,
+		DinozActions,
+		TabPanel
 	},
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
