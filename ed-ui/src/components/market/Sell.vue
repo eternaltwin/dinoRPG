@@ -7,7 +7,7 @@
 				<td>{{ $t('market.dinoz') }}</td>
 				<td>
 					<div class="df aic">
-						<input type="checkbox" :checked="sellDinoz" id="sell-dinoz" />
+						<input type="checkbox" :checked="sellDinoz" id="sell-dinoz" @change="toggleSellDinoz" />
 						<label v-if="dinoz" for="sell-dinoz">
 							{{ $t('market.sellView.sellYourDinoz') }}
 							{{ dinoz.name }}
@@ -137,9 +137,13 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Tippy } from 'vue-tippy';
 import DZHelp from '../common/DZHelp.vue';
 import { MARKET_MIN_VALUE, MARKET_MAX_ITEMS } from '@drpg/core/constants';
+import { OfferService } from '../../services/OfferService.js';
 
 export default defineComponent({
 	name: 'OfferList',
+	props: {
+		changeTab: { type: Function, required: true }
+	},
 	data() {
 		return {
 			playerStore: playerStore(),
@@ -148,11 +152,15 @@ export default defineComponent({
 			dinoz: null as DinozFiche | null,
 			ingredients: [] as IngredientFiche[],
 			items: [] as ItemFiche[],
+			sellDinoz: false,
 			selectedItems: {} as Record<string, { type: 'ingredient' | 'item'; count: number }>
 		};
 	},
 	components: { DZButton, DZDisclaimer, Tippy, DZHelp },
 	methods: {
+		toggleSellDinoz() {
+			this.sellDinoz = !this.sellDinoz;
+		},
 		changeItemCount(type: 'ingredient' | 'item', name: string, value: number) {
 			if (!this.selectedItems[name]) {
 				this.selectedItems[name] = { type, count: 0 };
@@ -196,7 +204,7 @@ export default defineComponent({
 				}
 			}, 0);
 		},
-		createOffer() {
+		async createOffer() {
 			const totalValue = this.getTotalValue();
 
 			if (totalValue < MARKET_MIN_VALUE) {
@@ -212,8 +220,14 @@ export default defineComponent({
 				.filter(([, count]) => count.type === 'item' && count.count > 0)
 				.map(([name, count]) => ({ name, count: count.count }));
 
-			// TODO
-			console.log('TODO', totalValue, ingredients, items);
+			try {
+				await OfferService.createOffer(totalValue, ingredients, items, this.sellDinoz ? this.dinoz?.id : undefined);
+				EventBus.emit('toast', { type: 'success', message: 'market.offerCreated' });
+				this.changeTab(0);
+			} catch (error) {
+				errorHandler.handle(error);
+				return;
+			}
 		}
 	},
 	async mounted(): Promise<void> {

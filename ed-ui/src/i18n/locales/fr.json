@@ -32,7 +32,8 @@
 		"unknownDinoz": "Dinoz inconnu",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
-			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois."
+			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
+			"offerCreated": "Votre offre a été créée."
 		}
 	},
 	"dig": {

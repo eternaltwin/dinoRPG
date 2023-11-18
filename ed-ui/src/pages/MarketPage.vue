@@ -21,7 +21,7 @@
 	</div>
 	<OfferList v-if="tab === 0" :changeTab="changeTab" />
 	<Transactions v-if="tab === 1" />
-	<Sell v-if="tab === 2" />
+	<Sell v-if="tab === 2" :changeTab="changeTab" />
 	<OfferHistory v-if="tab === 3" />
 	<DZButton back @click="goBackToDinozPage">{{ $t('market.back') }}</DZButton>
 </template>

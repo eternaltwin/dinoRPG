@@ -2,8 +2,8 @@ import { Offer } from '@drpg/core/returnTypes/Offer';
 
 // const offerRepository = AppDataSource.getRepository(Offer);
 
-export async function getOfferListData(filter?: string): Promise<Offer[]> {
-	const mockOffers = [
+export async function getOfferListData(filter?: string) {
+	const mockOffers: Offer[] = [
 		{
 			id: 1,
 			seller: {
@@ -72,4 +72,13 @@ export async function getOfferListData(filter?: string): Promise<Offer[]> {
 	}
 
 	return mockOffers;
+}
+
+export async function insertOffer(
+	dinozId: number | null,
+	total: number,
+	ingredients: { name: string; count: number }[],
+	items: { id: number; count: number }[]
+) {
+	console.log('insertOffer', dinozId, total, ingredients, items);
 }
