@@ -20,6 +20,7 @@ export async function getAllIngredientsData(req: Request): Promise<Array<Partial
 
 		return {
 			name: ingredientFound[0].toLowerCase() as Lowercase<string>,
+			price: ingredientFound[1].price,
 			quantity: ingr.quantity,
 			maxQuantity: ingredientFound[1].maxQuantity
 		};

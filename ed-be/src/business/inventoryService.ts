@@ -19,6 +19,7 @@ import { addItemToDinoz, removeItemToDinoz } from '../dao/dinozItemDao.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -41,6 +42,8 @@ export async function getAllItemsData(req: Request): Promise<Array<ItemFiche>> {
 		const theItem: ItemFiche = Object.values(itemList).find(item => item.itemId === i.itemId)!;
 		// Push a new item object with its properties accordingly to the player's unique skills and data
 		return {
+			name: itemNameList[theItem.itemId],
+			price: theItem.price,
 			itemId: theItem.itemId,
 			quantity: playerInventoryData ? i.quantity : 0,
 			maxQuantity:

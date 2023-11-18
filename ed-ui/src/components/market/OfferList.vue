@@ -1,8 +1,8 @@
 <template>
-	<div class="disclaimer" v-html="formatContent($t('market.disclaimer'))" />
+	<DZDisclaimer help content="market.disclaimer" />
 	<div class="df jcsb">
-		<DZButton>{{ $t('market.makeAnOffer') }}</DZButton>
-		<select :placeholder="$t('market.filter')">
+		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
+		<select :placeholder="$t('market.filter')" @change="changeFilter">
 			<option value="all">{{ $t('market.all') }}</option>
 			<option value="dinoz">{{ $t('market.dinoz') }}</option>
 			<option value="items">{{ $t('market.items') }}</option>
@@ -66,7 +66,7 @@
 					<span>{{ $t('market.highestBid') }}:</span>
 					<span>
 						<span class="bid-value">{{ offer.bid.value }}</span>
-						<img :src="getImgURL('icons', 'small_gold')" />
+						<img :src="getImgURL('icons', 'gold', 'true')" />
 						<span>{{ $t('market.by') }}</span>
 						<DZUser class="user" :user="offer.bid.user" />
 					</span>
@@ -77,7 +77,7 @@
 			</td>
 		</tr>
 	</DZTable>
-	<div class="disclaimer" v-html="formatContent($t('market.currency'))" />
+	<DZDisclaimer help content="market.currency" />
 </template>
 
 <script lang="ts">
@@ -87,61 +87,55 @@ import DZTable from '../common/DZTable.vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { Tippy } from 'vue-tippy';
 import DZUser from '../common/DZUser.vue';
-import { secondsToDhms } from '../../utils/index.js';
+import { errorHandler, secondsToDhms } from '../../utils/index.js';
+import { OfferService } from '../../services/OfferService.js';
+import { Offer } from '@drpg/core/returnTypes/Offer';
+import { goTo } from '../../utils/goTo.js';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'OfferList',
+	props: {
+		changeTab: { type: Function, required: true }
+	},
 	data() {
 		return {
 			itemNameList,
 			secondsToDhms,
+			goTo,
 			now: Math.ceil(new Date().getTime() / 1000),
-			offers: [
-				{
-					id: 'test',
-					seller: {
-						id: 1,
-						name: 'test'
-					},
-					endDate: new Date('2023-12-12'),
-					dinoz: null,
-					items: [
-						{ id: 59, quantity: 5 },
-						{ id: 24, quantity: 2 },
-						{ id: 13, quantity: 1 }
-					],
-					bid: {
-						user: {
-							id: 2,
-							name: 'test2'
-						},
-						value: 100
-					}
-				},
-				{
-					id: 'test',
-					seller: {
-						id: 1,
-						name: 'test'
-					},
-					endDate: new Date('2023-12-24'),
-					dinoz: {
-						name: 'test'
-					},
-					items: [
-						{ id: 22, quantity: 4 },
-						{ id: 17, quantity: 4 },
-						{ id: 13, quantity: 3 },
-						{ id: 78, quantity: 1 },
-						{ id: 60, quantity: 1 }
-					],
-					bid: null
-				}
-			]
+			offers: [] as (Omit<Offer, 'endDate'> & { endDate: Date })[],
+			filter: 'all'
 		};
 	},
-	components: { DZButton, DZTable, Tippy, DZUser },
-	mounted(): void {
+	components: { DZButton, DZTable, Tippy, DZUser, DZDisclaimer },
+	methods: {
+		// Transform endDate to Date type
+		formatOffers(offers: Offer[]): (Omit<Offer, 'endDate'> & { endDate: Date })[] {
+			return offers.map(offer => ({
+				...offer,
+				endDate: new Date(offer.endDate)
+			}));
+		},
+		async fetchOffers() {
+			// Fetch data
+			try {
+				this.offers = this.formatOffers(await OfferService.getList(this.filter));
+			} catch (error) {
+				errorHandler.handle(error);
+				return;
+			}
+		},
+		async changeFilter(event: Event) {
+			this.filter = (event.target as HTMLSelectElement).value;
+
+			await this.fetchOffers();
+		}
+	},
+	async mounted() {
+		await this.fetchOffers();
+
+		// Update time every second
 		setInterval(() => {
 			this.now = Math.ceil(new Date().getTime() / 1000);
 		}, 1000);
@@ -150,17 +144,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
-
 .dinoz-header {
 	width: 50px;
 }

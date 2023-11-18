@@ -179,22 +179,27 @@ export default defineComponent({
 
 	// TILES DESIGN
 	div {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		color: transparent;
 		flex-grow: 1;
 		background-size: cover;
 		box-shadow: 0 4px 0 #720d00;
 		box-sizing: border-box;
 		cursor: pointer;
-		display: inline-block;
 		height: 34px;
 		width: 34px;
 
 		&::after {
 			// creates a pseudo-element to display the bg-images
+			position: absolute;
+			top: 0;
+			left: 0;
 			content: '';
 			display: block;
 			opacity: 30%;
-			margin-top: -18px;
 			width: 34px;
 			height: 34px;
 		}

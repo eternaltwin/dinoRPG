@@ -19,19 +19,21 @@
 			</li>
 		</ul>
 	</div>
-	<OfferList v-if="tab === 0" />
+	<OfferList v-if="tab === 0" :changeTab="changeTab" />
 	<Transactions v-if="tab === 1" />
 	<Sell v-if="tab === 2" />
 	<OfferHistory v-if="tab === 3" />
+	<DZButton back @click="goBackToDinozPage">{{ $t('market.back') }}</DZButton>
 </template>
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { errorHandler } from '../utils/index.js';
 import { dinozStore, playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
+import DZButton from '../components/common/DZButton.vue';
+import { goTo } from '../utils/goTo.js';
 
 export default defineComponent({
 	name: 'MarketPage',
@@ -40,7 +42,8 @@ export default defineComponent({
 		OfferList: defineAsyncComponent(() => import('../components/market/OfferList.vue')),
 		Transactions: defineAsyncComponent(() => import('../components/market/Transactions.vue')),
 		Sell: defineAsyncComponent(() => import('../components/market/Sell.vue')),
-		OfferHistory: defineAsyncComponent(() => import('../components/market/OfferHistory.vue'))
+		OfferHistory: defineAsyncComponent(() => import('../components/market/OfferHistory.vue')),
+		DZButton
 	},
 	data() {
 		return {
@@ -52,6 +55,9 @@ export default defineComponent({
 	methods: {
 		changeTab(tab: number) {
 			this.tab = tab;
+		},
+		goBackToDinozPage(): void {
+			goTo(this.$router, 'DinozPage', { params: { id: this.playerStore.playerOptions.currentDinozId } });
 		}
 	},
 	async mounted(): Promise<void> {
@@ -60,9 +66,7 @@ export default defineComponent({
 		// Check if we have a dinoz selected
 		if (!currentDinozId) {
 			EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
-			this.$router.push({
-				name: 'MainPage'
-			});
+			goTo(this.$router, 'MainPage');
 			return;
 		}
 
@@ -70,9 +74,7 @@ export default defineComponent({
 		const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
 		if (!currentDinoz) {
 			EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
-			this.$router.push({
-				name: 'MainPage'
-			});
+			goTo(this.$router, 'MainPage');
 			return;
 		}
 
@@ -82,17 +84,7 @@ export default defineComponent({
 			placeList.PLACE_DU_MARCHE.placeId;
 		if (!atMarket) {
 			EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
-			this.$router.push({
-				name: 'MainPage'
-			});
-			return;
-		}
-
-		// Fetch data
-		try {
-			// this.offers = await DinozService.getDinozToManage();
-		} catch (error) {
-			errorHandler.handle(error);
+			goTo(this.$router, 'MainPage');
 			return;
 		}
 	}

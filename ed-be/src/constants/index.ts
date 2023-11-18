@@ -17,7 +17,8 @@ export const apiRoutes = {
 	oauthRoute: '/api/v1/oauth',
 	playerRoute: '/api/v1/player',
 	rankingRoutes: '/api/v1/ranking',
-	shopRoutes: '/api/v1/shop'
+	shopRoutes: '/api/v1/shop',
+	offerRoutes: '/api/v1/offer',
 };
 
 export const regex = {

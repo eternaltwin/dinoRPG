@@ -2,10 +2,12 @@
 	<a
 		:class="{
 			'button-component': true,
-			[size]: true
+			[size]: true,
+			back
 		}"
 	>
-		<span>
+		<img v-if="back && size === 'normal'" :src="getImgURL('button', 'button-back-arrow')" alt="button-back" />
+		<span class="content">
 			<slot />
 		</span>
 	</a>
@@ -20,6 +22,10 @@ export default defineComponent({
 		size: {
 			type: String,
 			default: 'normal'
+		},
+		back: {
+			type: Boolean,
+			default: false
 		}
 	}
 });
@@ -27,13 +33,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .button-component {
-	display: flex;
+	position: relative;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 9pt;
 	font-variant: small-caps;
 	line-height: 7pt;
 	cursor: pointer;
+	text-decoration: none;
 
 	&.small {
 		border-color: #c5482c;
@@ -67,11 +75,21 @@ export default defineComponent({
 			color: white;
 		}
 
-		span {
+		.content {
 			padding: 4px 8px;
 
 			&:first-letter {
 				color: white;
+			}
+		}
+
+		&.back {
+			margin-left: 15px;
+
+			img {
+				position: absolute;
+				left: -15px;
+				top: 0;
 			}
 		}
 	}

@@ -13,6 +13,7 @@ import oauthRoutes from './routes/oauth.routes.js';
 import playerRoutes from './routes/player.routes.js';
 import shopRoutes from './routes/shop.routes.js';
 import rankingRoutes from './routes/ranking.routes.js';
+import offerRoutes from './routes/offer.routes.js';
 import { getEnvironnement, loadConfigFile } from './utils/context.js';
 import { jwtConfig } from './utils/jwt.js';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
@@ -69,6 +70,7 @@ app.use(oauthRoutes);
 app.use(playerRoutes);
 app.use(shopRoutes);
 app.use(rankingRoutes);
+app.use(offerRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 

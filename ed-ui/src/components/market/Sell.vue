@@ -1,46 +1,351 @@
 <template>
-	<div class="disclaimer" v-html="formatContent($t('market.disclaimer'))" />
-	<div>
-		<DZButton>{{ $t('market.makeAnOffer') }}</DZButton>
-	</div>
-	<DZTable>
-		<tr>
-			<th class="dinoz">{{ $t('market.dinoz') }}</th>
-			<th class="items">{{ $t('market.items') }}</th>
-			<th class="bid"></th>
-			<th class="see-more"></th>
-		</tr>
-
-		<tr v-for="offer in [{ id: 'test' }]" :key="offer.id">
-			<td class="dinoz">🦖</td>
-			<td class="items">{{ 0 }}</td>
-		</tr>
-	</DZTable>
+	<DZDisclaimer help content="market.sellView.disclaimer" />
+	<h4>{{ $t('market.sellView.prepareYourOffer') }}</h4>
+	<table>
+		<tbody>
+			<tr>
+				<td>{{ $t('market.dinoz') }}</td>
+				<td>
+					<div class="df aic">
+						<input type="checkbox" :checked="sellDinoz" id="sell-dinoz" />
+						<label v-if="dinoz" for="sell-dinoz">
+							{{ $t('market.sellView.sellYourDinoz') }}
+							{{ dinoz.name }}
+						</label>
+						<DZHelp title="TODO" content="TODO" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>{{ $t('market.sellView.itemsAndIngredients') }}</td>
+				<td>
+					<div class="df fww">
+						<div v-for="ingredient in ingredients" :key="ingredient.name" class="item">
+							<Tippy
+								tag="img"
+								theme="normal"
+								:src="getImgURL('ingredients', ingredient.name)"
+								:alt="$t(`ingredients.name.${ingredient.name}`)"
+							>
+								<p v-html="$t(`ingredients.name.${ingredient.name}`)" />
+								<template #content>
+									<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
+									<p v-html="formatContent($t(`ingredients.description.${ingredient.name}`))" />
+								</template>
+							</Tippy>
+							<div class="count">{{ selectedItems[ingredient.name]?.count || '' }}</div>
+							<div class="change-count">
+								<Tippy
+									tag="img"
+									theme="small"
+									:src="getImgURL('icons', 'up', true)"
+									@click="changeItemCount('ingredient', ingredient.name, 1)"
+								>
+									<template #content>
+										{{ $t('market.sellView.add') }}
+									</template>
+								</Tippy>
+								<Tippy
+									tag="img"
+									theme="small"
+									:src="getImgURL('icons', 'down', true)"
+									@click="changeItemCount('ingredient', ingredient.name, -1)"
+								>
+									<template #content>
+										{{ $t('market.sellView.remove') }}
+									</template>
+								</Tippy>
+							</div>
+						</div>
+						<div v-for="item in items" :key="item.name" class="item">
+							<Tippy
+								tag="img"
+								theme="normal"
+								:src="getImgURL('item', `item_${item.name}`)"
+								:alt="$t(`item.name.${item.name}`)"
+							>
+								<p v-html="$t(`item.name.${item.name}`)" />
+								<template #content>
+									<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
+									<p v-html="formatContent($t(`item.description.${item.name}`))" />
+								</template>
+							</Tippy>
+							<div class="count">{{ selectedItems[item.name]?.count || '' }}</div>
+							<div class="change-count">
+								<Tippy
+									tag="img"
+									theme="small"
+									:src="getImgURL('icons', 'up', true)"
+									@click="changeItemCount('item', item.name, 1)"
+								>
+									<template #content>
+										{{ $t('market.sellView.add') }}
+									</template>
+								</Tippy>
+								<Tippy
+									tag="img"
+									theme="small"
+									:src="getImgURL('icons', 'down', true)"
+									@click="changeItemCount('item', item.name, -1)"
+								>
+									<template #content>
+										{{ $t('market.sellView.remove') }}
+									</template>
+								</Tippy>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>{{ $t('market.sellView.offerMinimalValue') }}</td>
+				<td>
+					<DZDisclaimer
+						help
+						content="market.sellView.minimalValueDisclaimer"
+						:params="{ minValue: MARKET_MIN_VALUE }"
+					/>
+					<div class="total">
+						{{ getTotalValue() }}
+						<img :src="getImgURL('icons', 'gold', true)" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="empty" />
+				<td>
+					<DZButton @click="createOffer">{{ $t('market.sellView.create') }}</DZButton>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
-import DZTable from '../common/DZTable.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { IngredientsService } from '../../services/IngredientsService.js';
+import { InventoryService } from '../../services/InventoryService.js';
+import { errorHandler } from '../../utils/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
+import { goTo } from '../../utils/goTo.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { Tippy } from 'vue-tippy';
+import DZHelp from '../common/DZHelp.vue';
+import { MARKET_MIN_VALUE, MARKET_MAX_ITEMS } from '@drpg/core/constants';
 
 export default defineComponent({
 	name: 'OfferList',
 	data() {
-		return {};
+		return {
+			playerStore: playerStore(),
+			dinozStore: dinozStore(),
+			MARKET_MIN_VALUE,
+			dinoz: null as DinozFiche | null,
+			ingredients: [] as IngredientFiche[],
+			items: [] as ItemFiche[],
+			selectedItems: {} as Record<string, { type: 'ingredient' | 'item', count: number }>
+		};
 	},
-	components: { DZButton, DZTable }
+	components: { DZButton, DZDisclaimer, Tippy, DZHelp },
+	methods: {
+		changeItemCount(type: 'ingredient' | 'item', name: string, value: number) {
+			if (!this.selectedItems[name]) {
+				this.selectedItems[name] = { type, count: 0 };
+			}
+			const currentCount = this.selectedItems[name].count;
+			const newCount = currentCount + value;
+
+			if (newCount < 0) {
+				return;
+			}
+
+			// Limit to 5 different items
+			const positiveItems = Object.entries(this.selectedItems).filter(([, count]) => count.count > 0);
+			if (positiveItems.length >= 5) {
+				if (value === 1 && positiveItems.every(([n]) => n !== name)) {
+					EventBus.emit('toast', {
+						type: 'error',
+						message: 'market.tooManyItems',
+						params: { items: MARKET_MAX_ITEMS }
+					});
+					return;
+				}
+			}
+
+			this.selectedItems[name].count = newCount;
+		},
+		getTotalValue(): number {
+			return Object.entries(this.selectedItems).reduce((total, [name, count]) => {
+				if (count.type === 'ingredient') {
+					const ingredient = this.ingredients.find(ingredient => ingredient.name === name);
+					if (!ingredient) {
+						return total;
+					}
+					return total + ingredient.price * count.count;
+				} else {
+					const item = this.items.find(item => item.name === name);
+					if (!item) {
+						return total;
+					}
+					return total + item.price * count.count;
+				}
+			}, 0);
+		},
+		createOffer() {
+			const totalValue = this.getTotalValue();
+
+			if (totalValue < MARKET_MIN_VALUE) {
+				EventBus.emit('toast', { type: 'error', message: 'market.minimalValueError' });
+				return;
+			}
+
+			const ingredients = Object.entries(this.selectedItems)
+				.filter(([, count]) => count.type === 'ingredient' && count.count > 0)
+				.map(([name, count]) => ({ name, count: count.count }));
+
+			const items = Object.entries(this.selectedItems)
+				.filter(([, count]) => count.type === 'item' && count.count > 0)
+				.map(([name, count]) => ({ name, count: count.count }));
+
+			// TODO
+		}
+	},
+	async mounted(): Promise<void> {
+		try {
+			const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+
+			// Check if we have a dinoz selected
+			if (!currentDinozId) {
+				EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
+				goTo(this.$router, 'MainPage');
+				return;
+			}
+
+			// Check if the dinoz exists
+			const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
+			if (!currentDinoz) {
+				EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+				goTo(this.$router, 'MainPage');
+				return;
+			}
+
+			this.dinoz = currentDinoz;
+
+			// Fetch ingredients
+			this.ingredients = await IngredientsService.getAllIngredients();
+
+			// Fetch items
+			const items = await InventoryService.getAllItemsData();
+
+			// Limit to items that can be sold
+			this.items = items.filter(item => item.price);
+		} catch (error) {
+			errorHandler.handle(error);
+			return;
+		}
+	}
 });
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
+h4 {
 	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
+	color: #ffee92;
+	font-variant: small-caps;
+	padding: 2px 4px;
+	font-weight: normal;
+}
+
+table {
+	width: 100%;
+	table-layout: fixed;
+
+	td {
+		font-size: 9pt;
+		padding: 2px 4px;
+
+		&:first-child {
+			background-color: #ecbd84;
+			color: #f8efa4;
+			border-radius: 8px;
+			padding: 4px 8px;
+			text-align: center;
+			width: 230px;
+
+			&.empty {
+				background-color: transparent;
+			}
+		}
+
+		input[type='checkbox'] {
+			margin-right: 5px;
+		}
+
+		label {
+			cursor: pointer;
+			user-select: none;
+		}
+
+		.item {
+			display: flex;
+			margin-right: 10px;
+
+			& > img {
+				background-color: #bc683c;
+				padding: 1px;
+			}
+
+			.count {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #bc683c;
+				padding: 1px;
+				color: #ffee92;
+				box-sizing: border-box;
+				height: 34px;
+				width: 34px;
+				outline: 1px solid #ebd18b;
+				outline-offset: -2px;
+				margin-left: -1px;
+			}
+
+			.change-count {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				img {
+					cursor: pointer;
+					user-select: none;
+
+					&:hover {
+						outline: 1px solid white;
+						outline-offset: -1px;
+					}
+				}
+			}
+		}
+
+		.total {
+			display: flex;
+			align-items: center;
+			background-color: #853d25;
+			outline: 1px solid #f9e5b7;
+			outline-offset: -2px;
+			color: #ffee92;
+			font-size: 12pt;
+			padding: 4px 8px;
+
+			img {
+				margin-left: 5px;
+			}
+		}
+	}
 }
 </style>

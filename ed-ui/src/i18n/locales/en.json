@@ -23,7 +23,11 @@
 		"dinozListMissing": "Dinoz list missing",
 		"dinozDataMissing": "Dinoz data missing",
 		"selectADinozAtMarketFirst": "You must select a dinoz at the market first.",
-		"unknownDinoz": "Unknown dinoz"
+		"unknownDinoz": "Unknown dinoz",
+		"market": {
+			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
+			"tooManyItems": "You cannot sell more than {items} different items at a time."
+		}
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -104,7 +108,7 @@
 			"resurrect": "Resurrect",
 			"dig": "Dig",
 			"cueille": "Harvester",
-			"fish": "Lavapit",
+			"fish": "Fish",
 			"hunt": "Shell",
 			"seek": "Search",
 			"energy": "Energize",
@@ -3069,6 +3073,18 @@
 		"by": "by",
 		"details": "Details",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
-		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :gold: **= 1000** :gold: from the **Dinoland Bank**."
+		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :ticket: **= 1000** :gold: from the **Dinoland Bank**.",
+		"back": "Back",
+		"sellView": {
+			"disclaimer": "Here you can build your offer, it will be submitted to the other Dinoz Masters. If you sell a Dinoz or items, they will be unavailable for the duration of the offer.",
+			"prepareYourOffer": "Prepare your offer",
+			"sellYourDinoz": "Sell your Dinoz",
+			"itemsAndIngredients": "Items and ingredients",
+			"offerMinimalValue": "MINIMAL value of your offer",
+			"minimalValueDisclaimer": "Your offer must have, at MINIMUM, a value of **{minValue}** :gold: to be validated.",
+			"create": "Create offer",
+			"add": "Add",
+			"remove": "Remove"
+		}
 	}
 }
