@@ -1,8 +1,8 @@
 import { Request } from 'express';
-import { addPlayerMoney, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
+import { getPlayerInventoryDataRequest, setPlayer } from '../dao/playerDao.js';
 import { Dinoz, DinozItem, DinozSkill, Player, PlayerItem } from '../entity/index.js';
 import { getActiveDinoz, getDinozEquipItemRequest, getDinozFicheItemRequest, setDinoz } from '../dao/dinozDao.js';
-import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
+import { setItem } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
@@ -75,7 +75,7 @@ export async function useItem(req: Request): Promise<void> {
 		throw new ErrorFormator(500, `This item didn't exist`);
 	}
 
-	const itemData = dinoz.player.items.find(item => item.itemId === itemId);
+	const itemData: PlayerItem | undefined = dinoz.player.items.find(item => item.itemId === itemId);
 	if (itemData === undefined || itemData.quantity <= 0) {
 		throw new ErrorFormator(400, `notEnoughItem`);
 	}
@@ -96,7 +96,7 @@ export async function useItem(req: Request): Promise<void> {
 			await addSkillToDinoz(new DinozSkill(new Dinoz(dinozId), skillToLearn));
 			break;
 		case ItemEffect.GOLD:
-			await addPlayerMoney(dinoz.player.id, item.effect.value);
+			await setPlayer(dinoz.player.addMoney(item.effect.value));
 			break;
 		case ItemEffect.SPECIAL:
 			await useSpecialItem(dinoz, item);
@@ -104,7 +104,7 @@ export async function useItem(req: Request): Promise<void> {
 		default:
 			throw new ErrorFormator(500, 'WTF');
 	}
-	await useItemDataRequest(dinoz.player.id, item.itemId);
+	await setItem(itemData.changeItemQuantity(-1));
 }
 
 async function hatchEgg(race: DinozRace, rare: boolean, playerId: number): Promise<void> {
@@ -161,9 +161,11 @@ async function useSpecialItem(dinoz: Dinoz, item: ItemFiche): Promise<void> {
 			break;
 		case 'pampleboum':
 			await setDinoz(dinoz.heal(15));
-			if (!dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId))
-				await createItemDataRequest(new PlayerItem(dinoz.player, itemList.PAMPLEBOUM_PIT.itemId, 1));
-			else await changeItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM_PIT.itemId, 1);
+			const pamp: PlayerItem | undefined = dinoz.player.items.find(
+				item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId
+			);
+			if (!pamp) await setItem(new PlayerItem(dinoz.player, itemList.PAMPLEBOUM_PIT.itemId, 1));
+			else await setItem(pamp.changeItemQuantity(-1));
 			break;
 		default:
 			throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);
@@ -205,18 +207,23 @@ export async function equipItem(req: Request): Promise<Array<DinozItems>> {
 		throw new ErrorFormator(400, `backpackFull`);
 	}
 
-	const dinozItem = dinoz.items.find(item => item.itemId === itemId);
+	const dinozItem: DinozItem | undefined = dinoz.items.find(item => item.itemId === itemId);
+	const item: PlayerItem | undefined = dinoz.player.items.find(item => item.itemId === itemId);
 
 	if (!dinozItem && !equip) {
 		throw new ErrorFormator(500, `This dinoz don't have this item equiped`);
 	}
 
+	if (!item) {
+		throw new ErrorFormator(500, `You never had this item`);
+	}
+
 	if (equip) {
-		await useItemDataRequest(dinoz.player.id, itemId);
+		await setItem(item.changeItemQuantity(-1));
 		dinoz.items.push(await addItemToDinoz(new DinozItem(new Dinoz(dinoz.id), itemId)));
 	} else {
 		await removeItemToDinoz(dinozItem!.id);
-		await changeItemQuantity(dinoz.player.id, itemId, 1);
+		await setItem(item.changeItemQuantity(1));
 		const itemIndex = dinoz.items.findIndex(item => item.id === dinozItem!.id);
 		dinoz.items.splice(itemIndex, 1);
 	}

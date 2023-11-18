@@ -16,7 +16,8 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 	} else if (condition[ConditionEnum.STATUS]) {
 		result = dinoz.status.some(dinozStatus => dinozStatus.statusId === condition[ConditionEnum.STATUS]);
 	} else if (condition[ConditionEnum.FINISHED_MISSION]) {
-		result = dinoz.missions.find(missions => missions.missionId === condition[ConditionEnum.FINISHED_MISSION])?.isFinished;
+		result = dinoz.missions.find(missions => missions.missionId === condition[ConditionEnum.FINISHED_MISSION])
+			?.isFinished;
 	} else if (condition[ConditionEnum.SKILL]) {
 		result = dinoz.skills.some(DinozSkill => DinozSkill.skillId === condition[ConditionEnum.SKILL]);
 	} else if (GOTO) {
@@ -26,20 +27,19 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 		}
 		result = place[1].placeId === dinoz.placeId;
 	} else if (PLACE_IS) {
-		let thisplace = Object.values(placeList).find(
-			place => place.name.toUpperCase() === PLACE_IS.toUpperCase()
-		);
+		let thisplace = Object.values(placeList).find(place => place.name.toUpperCase() === PLACE_IS.toUpperCase());
 		if (!thisplace) {
 			throw new Error(`Place ${PLACE_IS} doesn't exist.`);
 		}
 
-		const placeIdToCompare = (thisplace.placeId === 0) ? dinoz.placeId : thisplace.placeId;
+		const placeIdToCompare = thisplace.placeId === 0 ? dinoz.placeId : thisplace.placeId;
 		result = placeIdToCompare === dinoz.placeId;
 	} else if (condition[ConditionEnum.SCENARIO]) {
 		//TODO: Implement scenario
 		result = false;
 	} else if (condition[ConditionEnum.POSSESS_OBJECT]) {
-		result = (dinoz.player.items.find(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT])?.quantity ?? 0) > 0;
+		result =
+			(dinoz.player.items.find(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT])?.quantity ?? 0) > 0;
 	} else if (condition[ConditionEnum.RANDOM]) {
 		const score = Math.floor(Math.random() * condition[ConditionEnum.RANDOM]);
 		const target = 0;

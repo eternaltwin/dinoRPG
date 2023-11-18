@@ -1,9 +1,9 @@
-import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
-import { itemList } from "../../item/ItemList.mjs";
-import { Mission } from "../../missions/mission.mjs";
-import { MissionID } from "../../missions/missionList.mjs";
-import { placeList } from "../../place/PlaceList.mjs";
-import { rewardList } from "../../reward/RewardList.mjs";
+import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { itemList } from '../../item/ItemList.mjs';
+import { Mission } from '../../missions/mission.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
+import { placeList } from '../../place/PlaceList.mjs';
+import { rewardList } from '../../reward/RewardList.mjs';
 
 export const M_PAPY_JOE: Array<Mission> = [
 	// Missions 1 to 10
@@ -106,7 +106,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionId: MissionID.PAPY_JOE_KILGOU,
 		missionName: 'kilgou',
 		condition: {
-			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FISH,
+			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FISH
 		},
 		rewards: [
 			{
@@ -146,7 +146,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionId: MissionID.PAPY_JOE_KILWLF,
 		missionName: 'kilwlf',
 		condition: {
-			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KILGOU,
+			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KILGOU
 		},
 		rewards: [
 			{
@@ -219,7 +219,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionId: MissionID.PAPY_JOE_FFLOW,
 		missionName: 'fflow',
 		condition: {
-			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FISH,
+			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FISH
 		},
 		rewards: [
 			{
@@ -264,7 +264,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionId: MissionID.PAPY_JOE_KBOOK,
 		missionName: 'kbook',
 		condition: {
-			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FFLOW,
+			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FFLOW
 		},
 		rewards: [
 			{
@@ -309,7 +309,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionId: MissionID.PAPY_JOE_MSG,
 		missionName: 'msg',
 		condition: {
-			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KBOOK,
+			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KBOOK
 		},
 		rewards: [
 			{
@@ -359,7 +359,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionId: MissionID.PAPY_JOE_LETTRE,
 		missionName: 'lettre',
 		condition: {
-			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_MSG,
+			[ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_MSG
 		},
 		rewards: [
 			{
@@ -394,10 +394,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 		missionId: MissionID.PAPY_JOE_KILGLU,
 		missionName: 'kilglu',
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KILWLF },
-				{ [ConditionEnum.MINLEVEL]: 4 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KILWLF }, { [ConditionEnum.MINLEVEL]: 4 }]
 		},
 		rewards: [
 			{
@@ -440,7 +437,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KILGLU },
 				{ [ConditionEnum.MINLEVEL]: 11 }
-			],
+			]
 		},
 		rewards: [
 			{
@@ -483,7 +480,7 @@ export const M_PAPY_JOE: Array<Mission> = [
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_KILGNT },
 				{ [ConditionEnum.MINLEVEL]: 18 }
-			],
+			]
 		},
 		rewards: [
 			{

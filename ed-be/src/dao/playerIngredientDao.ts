@@ -21,7 +21,7 @@ export async function addIngredient(itemId: number, quantity: number, playerId: 
 		.execute();
 }
 
-export async function createIngredient(item: PlayerIngredient): Promise<PlayerIngredient> {
+export async function setIngredient(item: Partial<PlayerIngredient>): Promise<PlayerIngredient> {
 	return ingredientRepository.save(item);
 }
 

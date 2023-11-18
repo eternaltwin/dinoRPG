@@ -1,9 +1,9 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
-import { Mission } from "../../missions/mission.mjs";
-import { MissionID } from "../../missions/missionList.mjs";
-import { placeList } from "../../place/PlaceList.mjs";
-import { rewardList } from "../../reward/RewardList.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { Mission } from '../../missions/mission.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
+import { placeList } from '../../place/PlaceList.mjs';
+import { rewardList } from '../../reward/RewardList.mjs';
 
 export const M_BAO_BOB: Array<Mission> = [
 	// Missions 12 to 21
@@ -144,10 +144,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_KILKSK,
 		missionName: 'kilksk',
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILPIR },
-				{ [ConditionEnum.MINLEVEL]: 8 },
-			],
+			[Operator.AND]: [{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILPIR }, { [ConditionEnum.MINLEVEL]: 8 }]
 		},
 		rewards: [
 			{
@@ -187,10 +184,7 @@ export const M_BAO_BOB: Array<Mission> = [
 		missionId: MissionID.BAO_BOB_KILANG,
 		missionName: 'kilang',
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILKSK },
-				{ [ConditionEnum.MINLEVEL]: 18 },
-			],
+			[Operator.AND]: [{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_KILKSK }, { [ConditionEnum.MINLEVEL]: 18 }]
 		},
 		rewards: [
 			{
@@ -479,8 +473,8 @@ export const M_BAO_BOB: Array<Mission> = [
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY4 },
-				{ [ConditionEnum.STATUS]: statusList.FLIPPERS },
-			],
+				{ [ConditionEnum.STATUS]: statusList.FLIPPERS }
+			]
 		},
 		rewards: [
 			{

@@ -1,8 +1,8 @@
-import { raceList } from "../dinoz/RaceList.mjs";
-import { ElementType } from "../enums/ElementType.mjs";
-import { ItemEffect } from "../enums/ItemEffect.mjs";
-import { ItemType } from "../enums/ItemType.mjs";
-import { ItemFiche } from "./ItemFiche.mjs";
+import { raceList } from '../dinoz/RaceList.mjs';
+import { ElementType } from '../enums/ElementType.mjs';
+import { ItemEffect } from '../enums/ItemEffect.mjs';
+import { ItemType } from '../enums/ItemType.mjs';
+import { ItemFiche } from './ItemFiche.mjs';
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.

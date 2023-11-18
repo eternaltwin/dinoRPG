@@ -33,6 +33,7 @@ import {
 	ImportedTwinoidSite,
 	Secret
 } from './entity/index.js';
+import { DinozSubscriber } from './subscriber/index.js';
 
 const dbConfig = dbConf(getEnvironnement());
 
@@ -77,5 +78,5 @@ export const AppDataSource = new DataSource({
 		Secret
 	],
 	migrations: ['dist/migration/*.js'],
-	subscribers: []
+	subscribers: [DinozSubscriber]
 });

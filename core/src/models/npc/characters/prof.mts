@@ -1,7 +1,7 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, TriggerEnum, RewardEnum } from "../../enums/Parser.mjs";
-import { bossList } from "../../fight/BossList.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { bossList } from '../../fight/BossList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -29,10 +29,10 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 					[Operator.OR]: [
 						{ [ConditionEnum.STATUS]: statusList.BUOY },
 						{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
-					],
+					]
 				},
 				{ [ConditionEnum.MAXLEVEL]: 6 }
-			],
+			]
 		}
 	},
 	learn: {
@@ -44,7 +44,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 				{ [ConditionEnum.MINLEVEL]: 5 },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BUOY } },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR } }
-			],
+			]
 		}
 	},
 	learn_water: {
@@ -55,7 +55,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 				{ [ConditionEnum.MINLEVEL]: 7 },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BUOY } },
 				{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
-			],
+			]
 		}
 	},
 	learn_fire: {
@@ -65,8 +65,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [ConditionEnum.MINLEVEL]: 7 },
 				{ [ConditionEnum.STATUS]: statusList.BUOY },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR } },
-			],
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR } }
+			]
 		}
 	},
 	learn_done: {
@@ -76,7 +76,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: statusList.BUOY },
 				{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
-			],
+			]
 		}
 	},
 	water: {

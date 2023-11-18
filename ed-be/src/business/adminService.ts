@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { getAllInformationFromPlayer, getPlayerMoney, setPlayer, setPlayerMoneyRequest } from '../dao/playerDao.js';
+import { getAllInformationFromPlayer, getPlayerMoney, setPlayer } from '../dao/playerDao.js';
 import { Dinoz } from '../entity/dinoz.js';
 import { Player } from '../entity/player.js';
 import { getAllDinozFromAccount, setDinoz } from '../dao/dinozDao.js';
@@ -110,10 +110,10 @@ export async function setPlayerMoney(req: Request): Promise<string> {
 	}
 	switch (req.body.operation) {
 		case 'add':
-			await setPlayerMoneyRequest(parseInt(req.params.id), playerGold.money! + req.body.gold);
+			await setPlayer(playerGold.addMoney(req.body.gold));
 			break;
 		case 'remove':
-			await setPlayerMoneyRequest(parseInt(req.params.id), playerGold.money! - req.body.gold);
+			await setPlayer(playerGold.addMoney(-req.body.gold));
 			break;
 		default:
 			throw new ErrorFormator(500, `You need to select an operation.`);

@@ -3,27 +3,35 @@ import { Ranking } from '../entity/ranking.js';
 import { UpdateResult } from 'typeorm';
 import { NewPositions } from '@drpg/core/models/player/NewPositions';
 
-const rankingRepository = AppDataSource.getRepository(Ranking);
-
-const addPlayerInRanking = (playerId: number): Promise<Ranking> => {
-	return rankingRepository.save({
+export async function addPlayerInRanking(playerId: number): Promise<Ranking> {
+	return AppDataSource.getRepository(Ranking).save({
 		player: {
 			id: playerId
 		}
 	});
-};
+}
 
-const getPlayersPoints = (): Promise<Array<Ranking>> => {
-	return rankingRepository
+export async function getSpecificPlayerPoints(playerId: number): Promise<Ranking | null> {
+	return AppDataSource.getRepository(Ranking)
+		.createQueryBuilder('ranking')
+		.select()
+		.addSelect(['player.id'])
+		.leftJoin('ranking.player', 'player')
+		.where('player.id = :pId', { pId: playerId })
+		.getOne();
+}
+
+export async function getPlayersPoints(): Promise<Array<Ranking>> {
+	return AppDataSource.getRepository(Ranking)
 		.createQueryBuilder('ranking')
 		.select(['ranking.sumPoints', 'ranking.averagePoints', 'ranking.dinozCount'])
 		.addSelect(['player.id'])
 		.leftJoin('ranking.player', 'player')
 		.getMany();
-};
+}
 
-const getPlayersAverageRanking = (page: number): Promise<Array<Ranking>> => {
-	return rankingRepository
+export async function getPlayersAverageRanking(page: number): Promise<Array<Ranking>> {
+	return AppDataSource.getRepository(Ranking)
 		.createQueryBuilder('ranking')
 		.select([
 			'ranking.averagePosition',
@@ -36,10 +44,10 @@ const getPlayersAverageRanking = (page: number): Promise<Array<Ranking>> => {
 		.where('"averagePosition" >= (:page - 1) * 20 + 1 AND "averagePosition" <= :page * 20', { page: page })
 		.orderBy('ranking.averagePosition', 'ASC')
 		.getMany();
-};
+}
 
-const getPlayersSumRanking = (page: number): Promise<Array<Ranking>> => {
-	return rankingRepository
+export async function getPlayersSumRanking(page: number): Promise<Array<Ranking>> {
+	return AppDataSource.getRepository(Ranking)
 		.createQueryBuilder('ranking')
 		.select([
 			'ranking.sumPosition',
@@ -52,15 +60,15 @@ const getPlayersSumRanking = (page: number): Promise<Array<Ranking>> => {
 		.where('"sumPosition" >= (:page - 1) * 20 + 1 AND "sumPosition" <= :page * 20', { page: page })
 		.orderBy('ranking.sumPosition', 'ASC')
 		.getMany();
-};
+}
 
-const updatePoints = async (
+export async function updatePoints(
 	playerId: number,
 	sumPoints: number,
 	averagePoints: number,
 	dinozCount: number
-): Promise<UpdateResult> => {
-	return rankingRepository
+): Promise<UpdateResult> {
+	return AppDataSource.getRepository(Ranking)
 		.createQueryBuilder('ranking')
 		.update(Ranking)
 		.set({
@@ -70,10 +78,10 @@ const updatePoints = async (
 		})
 		.where('player.id = :pId', { pId: playerId })
 		.execute();
-};
+}
 
-const updateRanking = (newPositions: NewPositions): Promise<UpdateResult> => {
-	return rankingRepository
+export async function updateRanking(newPositions: NewPositions): Promise<UpdateResult> {
+	return AppDataSource.getRepository(Ranking)
 		.createQueryBuilder('ranking')
 		.update(Ranking)
 		.set({
@@ -85,13 +93,4 @@ const updateRanking = (newPositions: NewPositions): Promise<UpdateResult> => {
 		})
 		.where('player.id = :pId', { pId: newPositions.id })
 		.execute();
-};
-
-export {
-	addPlayerInRanking,
-	getPlayersAverageRanking,
-	getPlayersPoints,
-	getPlayersSumRanking,
-	updatePoints,
-	updateRanking
-};
+}

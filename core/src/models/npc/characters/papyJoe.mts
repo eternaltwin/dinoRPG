@@ -1,4 +1,4 @@
-import { NpcData } from "../NpcData.mjs";
+import { NpcData } from '../NpcData.mjs';
 
 export const PAPYJOE: Readonly<Record<string, NpcData>> = {
 	begin: {

@@ -3,39 +3,39 @@ import { Place } from '../place/Place.mjs';
 
 // Choisit le type de value en fonction de l'enum utilisée
 export type Condition = {
-	[Operator.AND]?: [Condition, Condition, ...Condition[]],
-	[Operator.OR]?: [Condition, Condition, ...Condition[]],
-	[Operator.NOT]?: Condition,
-	[ConditionEnum.MINLEVEL]?: number,
-	[ConditionEnum.MAXLEVEL]?: number,
-	[ConditionEnum.FINISHED_MISSION]?: number,
-	[ConditionEnum.SKILL]?: number,
-	[ConditionEnum.POSSESS_OBJECT]?: number,
-	[ConditionEnum.COLLEC]?: number,
-	[ConditionEnum.STATUS]?: number,
-	[ConditionEnum.RANDOM]?: number,
-	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number],
-	[ConditionEnum.SCENARIO]?: [string, number],
-	[ConditionEnum.NEXT_PLACE]?: Place,
-	[ConditionEnum.CURRENT_MISSION]?: string,
-	[ConditionEnum.POSSESS_INGREDIENT]?: string,
-	[ConditionEnum.ACTIVE]?: string,
-	[ConditionEnum.PLAYER_EPIC]?: string,
-	[ConditionEnum.HOUR_RAND]?: string,
-	[ConditionEnum.TAG]?: string,
-	[ConditionEnum.GVAR]?: string,
-	[ConditionEnum.EVENT]?: string,
-	[ConditionEnum.CLANACT]?: string,
-	[ConditionEnum.SWAIT]?: string,
-	[ConditionEnum.RACE]?: string,
-	[ConditionEnum.EQUIP]?: string,
-	[ConditionEnum.UTIME]?: string,
-	[ConditionEnum.GOTO]?: string,
-	[ConditionEnum.TALKTO]?: string,
-	[ConditionEnum.FINISH_MISSION]?: string,
-	[ConditionEnum.KILL]?: string,
-	[ConditionEnum.DO]?: string,
-	[ConditionEnum.HIDE_PLACE]?: string,
-	[ConditionEnum.PLACE_IS]?: string,
-	[ConditionEnum.OVERWRITE]?: string,
+	[Operator.AND]?: [Condition, Condition, ...Condition[]];
+	[Operator.OR]?: [Condition, Condition, ...Condition[]];
+	[Operator.NOT]?: Condition;
+	[ConditionEnum.MINLEVEL]?: number;
+	[ConditionEnum.MAXLEVEL]?: number;
+	[ConditionEnum.FINISHED_MISSION]?: number;
+	[ConditionEnum.SKILL]?: number;
+	[ConditionEnum.POSSESS_OBJECT]?: number;
+	[ConditionEnum.COLLEC]?: number;
+	[ConditionEnum.STATUS]?: number;
+	[ConditionEnum.RANDOM]?: number;
+	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number];
+	[ConditionEnum.SCENARIO]?: [string, number];
+	[ConditionEnum.NEXT_PLACE]?: Place;
+	[ConditionEnum.CURRENT_MISSION]?: string;
+	[ConditionEnum.POSSESS_INGREDIENT]?: string;
+	[ConditionEnum.ACTIVE]?: string;
+	[ConditionEnum.PLAYER_EPIC]?: string;
+	[ConditionEnum.HOUR_RAND]?: string;
+	[ConditionEnum.TAG]?: string;
+	[ConditionEnum.GVAR]?: string;
+	[ConditionEnum.EVENT]?: string;
+	[ConditionEnum.CLANACT]?: string;
+	[ConditionEnum.SWAIT]?: string;
+	[ConditionEnum.RACE]?: string;
+	[ConditionEnum.EQUIP]?: string;
+	[ConditionEnum.UTIME]?: string;
+	[ConditionEnum.GOTO]?: string;
+	[ConditionEnum.TALKTO]?: string;
+	[ConditionEnum.FINISH_MISSION]?: string;
+	[ConditionEnum.KILL]?: string;
+	[ConditionEnum.DO]?: string;
+	[ConditionEnum.HIDE_PLACE]?: string;
+	[ConditionEnum.PLACE_IS]?: string;
+	[ConditionEnum.OVERWRITE]?: string;
 };

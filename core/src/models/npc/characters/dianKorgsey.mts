@@ -1,6 +1,6 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -51,7 +51,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 				{ [ConditionEnum.STATUS]: statusList.QWOOD },
 				{ [ConditionEnum.STATUS]: statusList.QWHY },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.DIAN } }
-			],
+			]
 		}
 	},
 	service: {

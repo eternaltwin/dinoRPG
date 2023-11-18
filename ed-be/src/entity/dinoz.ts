@@ -359,6 +359,27 @@ export class Dinoz {
 		};
 	}
 
+	public giveExperience(experienceToAdd: number): Partial<Dinoz> {
+		return {
+			id: this.id,
+			experience: this.experience + experienceToAdd
+		};
+	}
+
+	public setPlace(placeId: number): Partial<Dinoz> {
+		return {
+			id: this.id,
+			placeId: placeId
+		};
+	}
+
+	public setNextUpElement(elementId: number): Partial<Dinoz> {
+		return {
+			id: this.id,
+			nextUpElementId: elementId
+		};
+	}
+
 	public resurrect(): Partial<Dinoz> {
 		if (this.life > 0) {
 			throw new ErrorFormator(400, 'DinozNotDead');

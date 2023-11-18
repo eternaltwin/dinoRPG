@@ -128,10 +128,13 @@ export class PlayerGather {
 		return { grid: returnGrid, rewards: rewards };
 	}
 
-	public saveGrid(...box: Array<[number, number]>): Array<Array<number>> {
+	public saveGrid(...box: Array<[number, number]>): Partial<PlayerGather> {
 		for (let i = 0; i < box.length; i++) {
 			this.grid[box[i][0]][box[i][1]] = -1;
 		}
-		return this.grid;
+		return {
+			id: this.id,
+			grid: this.grid
+		};
 	}
 }

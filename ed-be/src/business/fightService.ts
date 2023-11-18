@@ -2,12 +2,11 @@ import pkg from 'native-dinorpg';
 import { Request } from 'express';
 import { Dinoz } from '../entity/index.js';
 import { getRandomNumber } from '../utils/index.js';
-import { addExperience, addLife, getDinozFightDataRequest } from '../dao/dinozDao.js';
-import { addPlayerMoney } from '../dao/playerDao.js';
+import { getDinozFightDataRequest, setDinoz } from '../dao/dinozDao.js';
+import { setPlayer } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkMissionFight } from './missionsService.js';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
-import { Place } from '@drpg/core/models/place/Place';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
@@ -182,12 +181,12 @@ export async function rewardFight(
 	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
 	// If attackers won
 	if (fightResult.winner) {
-		await addExperience(dinozData.id, experienceGained);
-		await addPlayerMoney(dinozData.player.id, gold);
+		await setDinoz(dinozData.giveExperience(experienceGained));
+		await setPlayer(dinozData.player.addMoney(gold));
 	}
 	// No need to modify the dinoz's life in db if none was lost
 	if (fightResult.attackers[0].hp_lost != 0) {
-		await addLife(dinozData.id, -fightResult.attackers[0].hp_lost);
+		await setDinoz(dinozData.heal(-fightResult.attackers[0].hp_lost));
 	}
 
 	return {

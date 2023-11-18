@@ -26,4 +26,12 @@ export class PlayerIngredient {
 		this.ingredientId = ingredientId;
 		this.quantity = quantity;
 	}
+
+	public changeIngredientQuantity(quantity: number): Partial<PlayerIngredient> {
+		return {
+			id: this.id,
+			ingredientId: this.ingredientId,
+			quantity: this.quantity + quantity
+		};
+	}
 }

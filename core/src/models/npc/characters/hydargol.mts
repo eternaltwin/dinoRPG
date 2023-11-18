@@ -1,7 +1,7 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { rewardList } from "../../reward/RewardList.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { rewardList } from '../../reward/RewardList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -24,7 +24,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF } },
 				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
-			],
+			]
 		},
 		nextStep: ['get']
 	},
@@ -34,7 +34,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF },
 				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
-			],
+			]
 		},
 		reward: [
 			{
@@ -77,7 +77,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: statusList.ZORS_GLOVE },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF } }
-			],
+			]
 		}
 	},
 	ok: {

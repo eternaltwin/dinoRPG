@@ -50,7 +50,6 @@ import { sleep } from '../utils/index.js';
 import { TwinoStat } from '@drpg/core/models/import/twinoStat';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
-import { updatePoints } from '../dao/rankingDao.js';
 
 // Import are not available
 /*export async function importAPI(req: Request): Promise<ImportResponse | void> {

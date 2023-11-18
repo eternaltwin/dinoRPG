@@ -1,32 +1,32 @@
-import { statusList } from "../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator } from "../enums/Parser.mjs";
-import { placeList } from "../place/PlaceList.mjs";
-import { ALPHA } from "./characters/alpha.mjs";
-import { ARCHISAGE } from "./characters/archisage.mjs";
-import { BAOBOB } from "./characters/baoBob.mjs";
-import { BAOFAN } from "./characters/baofan.mjs";
-import { DIANKORGSEY } from "./characters/dianKorgsey.mjs";
-import { FORGERON } from "./characters/forgeron.mjs";
-import { FOU } from "./characters/fou.mjs";
-import { GARDE_ATLANTE } from "./characters/gardeAtlante.mjs";
-import { GARDIEN } from "./characters/gardien.mjs";
-import { HULOT } from "./characters/hulot.mjs";
-import { HYDARGOL } from "./characters/hydargol.mjs";
-import { JOVEBOZE_RASCA } from "./characters/joveboze.mjs";
-import { MERGUEZ } from "./characters/merguez.mjs";
-import { MINEUR } from "./characters/mineur.mjs";
-import { MMEX } from "./characters/mmex.mjs";
-import { PADAMOINE } from "./characters/padamoine.mjs";
-import { PAPYJOE } from "./characters/papyJoe.mjs";
-import { PROFESSOR } from "./characters/prof.mjs";
-import { SHAMAN } from "./characters/shaman.mjs";
-import { SOFIA } from "./characters/sofia.mjs";
-import { M_BAO_BOB } from "./missions/baoBob.mjs";
-import { M_DIANKORGSEY } from "./missions/dianKorgsey.mjs";
-import { M_GARDIEN } from "./missions/gardien.mjs";
-import { M_HULOT } from "./missions/hulot.mjs";
-import { M_PAPY_JOE } from "./missions/papyJoe.mjs";
-import { M_SHAMAN_MOU } from "./missions/shaman.mjs";
+import { statusList } from '../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator } from '../enums/Parser.mjs';
+import { placeList } from '../place/PlaceList.mjs';
+import { ALPHA } from './characters/alpha.mjs';
+import { ARCHISAGE } from './characters/archisage.mjs';
+import { BAOBOB } from './characters/baoBob.mjs';
+import { BAOFAN } from './characters/baofan.mjs';
+import { DIANKORGSEY } from './characters/dianKorgsey.mjs';
+import { FORGERON } from './characters/forgeron.mjs';
+import { FOU } from './characters/fou.mjs';
+import { GARDE_ATLANTE } from './characters/gardeAtlante.mjs';
+import { GARDIEN } from './characters/gardien.mjs';
+import { HULOT } from './characters/hulot.mjs';
+import { HYDARGOL } from './characters/hydargol.mjs';
+import { JOVEBOZE_RASCA } from './characters/joveboze.mjs';
+import { MERGUEZ } from './characters/merguez.mjs';
+import { MINEUR } from './characters/mineur.mjs';
+import { MMEX } from './characters/mmex.mjs';
+import { PADAMOINE } from './characters/padamoine.mjs';
+import { PAPYJOE } from './characters/papyJoe.mjs';
+import { PROFESSOR } from './characters/prof.mjs';
+import { SHAMAN } from './characters/shaman.mjs';
+import { SOFIA } from './characters/sofia.mjs';
+import { M_BAO_BOB } from './missions/baoBob.mjs';
+import { M_DIANKORGSEY } from './missions/dianKorgsey.mjs';
+import { M_GARDIEN } from './missions/gardien.mjs';
+import { M_HULOT } from './missions/hulot.mjs';
+import { M_PAPY_JOE } from './missions/papyJoe.mjs';
+import { M_SHAMAN_MOU } from './missions/shaman.mjs';
 
 export const npcList = {
 	ALPHA: {
@@ -36,7 +36,7 @@ export const npcList = {
 		data: ALPHA,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	// CRIEUR: {
 	// 	name: 'street_shouter',
@@ -59,7 +59,7 @@ export const npcList = {
 		data: PROFESSOR,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	SOFIA: {
 		name: 'sofia',
@@ -68,7 +68,7 @@ export const npcList = {
 		data: SOFIA,
 		flashvars: 'frame=plage&background=2',
 		condition: undefined,
-		missions: undefined,
+		missions: undefined
 	},
 	MMEX: {
 		name: 'mmex',
@@ -77,7 +77,7 @@ export const npcList = {
 		data: MMEX,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	MINEUR: {
 		name: 'mineur',
@@ -86,7 +86,7 @@ export const npcList = {
 		data: MINEUR,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	PAPY: {
 		name: 'papy',
@@ -95,7 +95,7 @@ export const npcList = {
 		missions: M_PAPY_JOE,
 		data: PAPYJOE,
 		condition: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	FORGERON: {
 		name: 'forgeron',
@@ -105,7 +105,7 @@ export const npcList = {
 		data: FORGERON,
 		flashvars: 'frame=blabla',
 		condition: undefined,
-		missions: undefined,
+		missions: undefined
 	},
 	BOB: {
 		name: 'bob',
@@ -114,7 +114,7 @@ export const npcList = {
 		missions: M_BAO_BOB,
 		data: BAOBOB,
 		condition: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	BAOFAN: {
 		name: 'baofan',
@@ -123,7 +123,7 @@ export const npcList = {
 		data: BAOFAN,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	DIAN_KORGSEY: {
 		name: 'dian',
@@ -132,7 +132,7 @@ export const npcList = {
 		data: DIANKORGSEY,
 		missions: M_DIANKORGSEY,
 		condition: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	MERGUEZ: {
 		name: 'merguez',
@@ -141,7 +141,7 @@ export const npcList = {
 		data: MERGUEZ,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	SHAMAN: {
 		name: 'shaman',
@@ -150,7 +150,7 @@ export const npcList = {
 		data: SHAMAN,
 		missions: M_SHAMAN_MOU,
 		condition: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	GARDIEN: {
 		name: 'gardien',
@@ -159,7 +159,7 @@ export const npcList = {
 		data: GARDIEN,
 		missions: M_GARDIEN,
 		condition: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	FOU: {
 		name: 'fou',
@@ -168,7 +168,7 @@ export const npcList = {
 		data: FOU,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	GARDE_ATLANTE: {
 		name: 'garde_atlante',
@@ -177,7 +177,7 @@ export const npcList = {
 		data: GARDE_ATLANTE,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	JOVE_BOZE_RASCA: {
 		name: 'joveboze',
@@ -188,18 +188,18 @@ export const npcList = {
 		},
 		data: JOVEBOZE_RASCA,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	ARCHISAGE: {
 		name: 'archis',
 		id: 18,
 		placeId: placeList.DOME_SOULAFLOTTE.placeId,
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE },
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE }
 		},
 		data: ARCHISAGE,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	HYDARGOL: {
 		name: 'hydargol',
@@ -208,7 +208,7 @@ export const npcList = {
 		data: HYDARGOL,
 		condition: undefined,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	PADAMOINE: {
 		name: 'padamoine',
@@ -219,7 +219,7 @@ export const npcList = {
 		},
 		data: PADAMOINE,
 		missions: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	},
 	HULOT: {
 		name: 'hulot',
@@ -228,6 +228,6 @@ export const npcList = {
 		data: HULOT,
 		missions: M_HULOT,
 		condition: undefined,
-		flashvars: undefined,
+		flashvars: undefined
 	}
 } as const;

@@ -1,9 +1,9 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
-import { itemList } from "../../item/ItemList.mjs";
-import { Mission } from "../../missions/mission.mjs";
-import { MissionID } from "../../missions/missionList.mjs";
-import { placeList } from "../../place/PlaceList.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { itemList } from '../../item/ItemList.mjs';
+import { Mission } from '../../missions/mission.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
+import { placeList } from '../../place/PlaceList.mjs';
 
 export const M_HULOT: Array<Mission> = [
 	// Missions 44 to 48
@@ -24,7 +24,7 @@ export const M_HULOT: Array<Mission> = [
 			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE }
-			],
+			]
 		},
 		steps: [
 			{
@@ -113,7 +113,7 @@ export const M_HULOT: Array<Mission> = [
 			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE }
-			],
+			]
 		},
 		rewards: [
 			{
@@ -353,7 +353,7 @@ export const M_HULOT: Array<Mission> = [
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE },
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_MAP }
-			],
+			]
 		},
 		rewards: [
 			{

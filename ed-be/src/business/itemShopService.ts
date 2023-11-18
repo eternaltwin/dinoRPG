@@ -1,11 +1,7 @@
 import { Request } from 'express';
 import { Player, PlayerItem } from '../entity/index.js';
-import { createItemDataRequest, updateItemDataRequest } from '../dao/playerItemDao.js';
-import {
-	getPlayerShopItemsDataRequest,
-	getPlayerShopOneItemDataRequest,
-	setPlayerMoneyRequest
-} from '../dao/playerDao.js';
+import { setItem } from '../dao/playerItemDao.js';
+import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, setPlayer } from '../dao/playerDao.js';
 import { shopList } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -120,42 +116,34 @@ export async function buyItem(req: Request): Promise<void> {
 	// Get the reference of the item from the constants
 	const itemReference: ItemFiche = Object.values(itemList).find(item => item.itemId === itemId)!;
 
-	// Create the item that will be purchased (id, price, quantity, maxQuantity)
-	// Update its properties accordingly to the player's unique skills and data
-	const itemToBuy: Partial<ItemFiche> = {
-		itemId: itemReference.itemId,
-		// Merchant works only for the flying shop also called Dinoland's shop
-		price:
-			playerShopData.merchant && theShop.shopId === shopList.FLYING_SHOP.shopId
-				? Math.round(itemSold.price! * 0.9)
-				: itemSold.price!,
-		quantity: playerItemData ? quantityBought + playerItemData.quantity! : quantityBought,
-		// ShopKeeper does not work for magical items
-		maxQuantity:
-			playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
-				? Math.round(itemReference.maxQuantity * 1.5)
-				: itemReference.maxQuantity
-	};
+	itemReference.price =
+		playerShopData.merchant && theShop.shopId === shopList.FLYING_SHOP.shopId
+			? Math.round(itemSold.price! * 0.9)
+			: itemSold.price!;
+	itemReference.quantity = playerItemData ? quantityBought + playerItemData.quantity! : quantityBought;
+	// ShopKeeper does not work for magical items
+	itemReference.maxQuantity =
+		playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
+			? Math.round(itemReference.maxQuantity * 1.5)
+			: itemReference.maxQuantity;
 
 	// To avoid making this function bigger, use buyMagicItem if the shop is magical
 	if (theShop.type === ShopType.MAGICAL) {
-		await buyMagicItem(playerShopData, itemSold, itemReference, quantityBought, playerItemData);
+		await buyMagicItem(playerShopData, itemReference, quantityBought, playerItemData);
 	} else {
 		// Throws an exception if player doesn't have enough money to buy the items
-		if (playerShopData.money < itemToBuy.price! * quantityBought) {
+		if (playerShopData.money < itemReference.price * quantityBought) {
 			throw new ErrorFormator(400, 'notEnoughMoney');
 		}
 
 		// Throws an exception if the player does not have enough storage space left
-		if (itemToBuy.quantity! > itemToBuy.maxQuantity!) {
+		if (itemReference.quantity > itemReference.maxQuantity) {
 			throw new ErrorFormator(400, 'notEnoughMoney');
 		}
 
 		// All checks passed related to gold, let's update the stuff
 
-		// Set player money
-		const newMoney: number = playerShopData.money - itemToBuy.price! * quantityBought;
-		await setPlayerMoneyRequest(playerId, newMoney);
+		await setPlayer(playerShopData.addMoney(-itemReference.price * quantityBought));
 	}
 
 	// Continue updating stuff that is common to normal and magic items
@@ -164,11 +152,11 @@ export async function buyItem(req: Request): Promise<void> {
 	// Update entry if it already exists
 	// Note: itemToBuy can be re-used here regardless of the type of shop and item
 	if (playerItemData) {
-		await updateItemDataRequest(playerId, itemToBuy.itemId!, itemToBuy.quantity!);
+		await setItem(playerItemData.changeItemQuantity(itemReference.quantity));
 	}
 	// Else create it
 	else {
-		await createItemDataRequest(new PlayerItem(playerShopData, itemToBuy.itemId!, itemToBuy.quantity!));
+		await setItem(new PlayerItem(playerShopData, itemReference.itemId, itemReference.quantity));
 	}
 }
 
@@ -183,8 +171,7 @@ export async function buyItem(req: Request): Promise<void> {
  */
 async function buyMagicItem(
 	playerShopData: Player,
-	itemSold: Partial<ItemFiche>,
-	itemReference: ItemFiche,
+	itemSold: ItemFiche,
 	quantityBought: number,
 	playerItemData: PlayerItem | undefined
 ): Promise<void> {
@@ -193,29 +180,20 @@ async function buyMagicItem(
 		item => item.itemId === itemList.GOLDEN_NAPODINO.itemId
 	);
 
-	// Create the item that will be purchased (id, price, quantity, maxQuantity)
-	const magicalItemToBuy: Partial<ItemFiche> = {
-		itemId: itemReference.itemId,
-		price: itemSold.price!,
-		quantity: playerItemData ? quantityBought + playerItemData.quantity! : quantityBought,
-		maxQuantity: itemReference.maxQuantity
-	};
+	itemSold.quantity = playerItemData ? quantityBought + playerItemData.quantity! : quantityBought;
 
 	// Throws an exception if player doesn't have enough money to buy the items
-	if (playerNapoData === undefined || playerNapoData!.quantity! < magicalItemToBuy.price! * quantityBought) {
+	if (playerNapoData === undefined || playerNapoData!.quantity! < itemSold.price * quantityBought) {
 		throw new ErrorFormator(400, 'notEnoughMoney');
 	}
 
 	// Throws an exception if the player does not have enough storage space left
-	if (magicalItemToBuy.quantity! > magicalItemToBuy.maxQuantity!) {
+	if (itemSold.quantity > itemSold.maxQuantity) {
 		throw new ErrorFormator(400, 'notEnoughStorage');
 	}
 
-	// All checks passed related to magic item, let's update the stuff
-
 	// Set player golden napodino count
-	const newNapoCount: number = playerNapoData!.quantity! - magicalItemToBuy.price! * quantityBought;
-	await updateItemDataRequest(playerShopData.id, itemList.GOLDEN_NAPODINO.itemId, newNapoCount);
+	await setItem(playerNapoData.changeItemQuantity(-itemSold.price * quantityBought));
 }
 
 // Check if player can access the shop

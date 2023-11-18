@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
-import { addPlayerMoney, setPlayerMoneyRequest } from '../dao/playerDao.js';
+import { setPlayer } from '../dao/playerDao.js';
 import {
 	getActiveDinoz,
 	getCanDinozChangeName,
@@ -11,18 +11,11 @@ import {
 	getDinozSkillAndStatusRequest,
 	getDinozSkillRequest,
 	getManageData,
-	setDinoz,
-	setDinozPlaceRequest,
-	updateOrderData
+	updateOrderData,
+	setDinoz
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
-import {
-	actionList,
-	gather,
-	shopList,
-	skillList,
-	TemporaryStatus
-} from '../constants/index.js';
+import { actionList, gather, shopList, skillList, TemporaryStatus } from '../constants/index.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { Dinoz, DinozSkill, PlayerDinozShop, PlayerIngredient, PlayerItem, Ranking } from '../entity/index.js';
 import gameConfig from '../config/game.config.js';
@@ -48,10 +41,10 @@ import { PlayerGather } from '../entity/index.js';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '../utils/checkConditions.js';
-import { getCommonGatherInfo, setGrid, updateGrid } from '../dao/playerGatherDao.js';
-import { changeItemQuantity, createItemDataRequest, useItemDataRequest } from '../dao/playerItemDao.js';
+import { getCommonGatherInfo, setGrid } from '../dao/playerGatherDao.js';
+import { setItem } from '../dao/playerItemDao.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
-import { addIngredient, createIngredient } from '../dao/playerIngredientDao.js';
+import { setIngredient } from '../dao/playerIngredientDao.js';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { mouvementListener } from './specialService.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
@@ -275,8 +268,7 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	const newDinoz = new Dinoz(race.name, dinozShopData.player, dinozShopData.display);
 
 	// Set player money
-	const newMoney: number = dinozShopData.player.money - race.price;
-	await setPlayerMoneyRequest(req.auth!.playerId, newMoney);
+	await setPlayer(dinozShopData.player.addMoney(-race.price));
 
 	// Delete all dinoz from dinoz shop
 	await deleteDinozInShopRequest(req.auth!.playerId);
@@ -293,12 +285,12 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	// Add base skills to created dinoz
 	await Promise.all(skillsToAdd.map(skill => addSkillToDinoz(new DinozSkill(dinozCreated, skill.skillId))));
 
-	// Add a point in the ranking to the player
-	const playerRanking: Ranking = dinozShopData.player.rank;
-	const dinozCount = playerRanking!.dinozCount + 1;
-	const sumPoints = playerRanking!.sumPoints + 1;
-	const averagePoints = Math.round(sumPoints / dinozCount);
-	await updatePoints(req.auth!.playerId, sumPoints, averagePoints, dinozCount);
+	// // Add a point in the ranking to the player
+	// const playerRanking: Ranking = dinozShopData.player.rank;
+	// const dinozCount = playerRanking!.dinozCount + 1;
+	// const sumPoints = playerRanking!.sumPoints + 1;
+	// const averagePoints = Math.round(sumPoints / dinozCount);
+	// await updatePoints(req.auth!.playerId, sumPoints, averagePoints, dinozCount);
 
 	return dinozCreated.toDinozFiche();
 }
@@ -441,7 +433,7 @@ export async function betaMove(req: Request): Promise<FightResult> {
 	if (!fight) {
 		fight = await moveFight(dinoz, finalPlace);
 		if (fight.result) {
-			await setDinozPlaceRequest(dinoz.id, finalPlace);
+			await setDinoz(dinoz.setPlace(finalPlace));
 		}
 	}
 	return fight;
@@ -615,6 +607,15 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
 	}
 
+	// Consume token if it's a special gather
+	if (gatherPlace.special) {
+		const playerToken: PlayerItem | undefined = dinozData.player.items.find(
+			item => item.itemId === gatherPlace.cost.itemId
+		);
+		if (!playerToken) throw new ErrorFormator(500, `You don't have the needed token to gather here.`);
+		await setItem(playerToken.changeItemQuantity(-1));
+	}
+
 	// Sanitize the box to open
 	const boxToSanitize: Array<Array<any>> = req.body.box;
 	for (const element of boxToSanitize) {
@@ -634,10 +635,10 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 	}
 
 	const returnGrid: GatherResult = myGrid.discoverBox(dinozData, gatherPlace, ...boxToOpen);
-	await updateGrid(myGrid.player.id, place.placeId, idOfTypeOfGrid, myGrid.saveGrid(...boxToOpen));
+	await setGrid(myGrid.saveGrid(...boxToOpen));
 
 	for (const i of returnGrid.rewards.item) {
-		let itemToReward = dinozData.player.items.find(items => items.itemId === i.itemId);
+		let itemToReward: PlayerItem | undefined = dinozData.player.items.find(items => items.itemId === i.itemId);
 		let goldItems = [
 			itemList.GOLD100.itemId,
 			itemList.GOLD500.itemId,
@@ -650,36 +651,29 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 			itemList.GOLD20000.itemId
 		];
 		if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
-			await changeItemQuantity(req.auth?.playerId!, i.itemId, 1);
+			await setItem(itemToReward.changeItemQuantity(1));
 		} else if (itemToReward && goldItems.includes(i.itemId)) {
-			await addPlayerMoney(req.auth?.playerId!, i.price);
+			await setPlayer(dinozData.player.addMoney(i.price));
 		} else {
-			dinozData.player.items.push(await createItemDataRequest(new PlayerItem(dinozData.player, i.itemId, 1)));
+			dinozData.player.items.push(await setItem(new PlayerItem(dinozData.player, i.itemId, 1)));
 		}
 	}
 
 	for (const i of returnGrid.rewards.ingredients) {
-		let ingredientToReward = dinozData.player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
+		let ingredientToReward: PlayerIngredient | undefined = dinozData.player.ingredients.find(
+			ingre => ingre.ingredientId === i.ingredientId
+		);
 		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
-			await addIngredient(i.ingredientId, 1, req.auth?.playerId!);
+			await setIngredient(ingredientToReward.changeIngredientQuantity(1));
 		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
 			// Do nothing
 		} else {
-			dinozData.player.ingredients.push(
-				await createIngredient(new PlayerIngredient(dinozData.player, i.ingredientId, 1))
-			);
+			dinozData.player.ingredients.push(await setIngredient(new PlayerIngredient(dinozData.player, i.ingredientId, 1)));
 		}
 	}
 
-	// Consume token if it's a special gather
-	if (gatherPlace.special) {
-		await useItemDataRequest(dinozData.player.id, gatherPlace.cost.itemId);
-	}
-
 	return returnGrid;
-};
-
-
+}
 
 /**
  * Get data needed for the /manage page

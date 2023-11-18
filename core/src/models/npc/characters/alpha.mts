@@ -1,6 +1,6 @@
-import { ElementType } from "../../enums/ElementType.mjs";
-import { ConditionEnum, RewardEnum } from "../../enums/Parser.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { ElementType } from '../../enums/ElementType.mjs';
+import { ConditionEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const ALPHA: Readonly<Record<string, NpcData>> = {
 	begin: {

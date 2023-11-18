@@ -1,6 +1,6 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -26,7 +26,7 @@ export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	yes: {
 		stepName: 'yes',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.WATER_CHARM },
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.WATER_CHARM }
 		},
 		reward: [
 			{

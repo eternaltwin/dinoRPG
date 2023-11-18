@@ -1,6 +1,6 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const MINEUR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -20,7 +20,7 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ENHANCED_SHOVEL } },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_SHOVEL } },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_ENHANCED_SHOVEL } }
-			],
+			]
 		},
 		reward: [
 			{

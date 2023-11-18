@@ -22,6 +22,6 @@ export async function getCommonGatherInfo(playerId: number): Promise<Array<Playe
 		.getMany();
 }
 
-export async function setGrid(grid: PlayerGather): Promise<PlayerGather> {
+export async function setGrid(grid: Partial<PlayerGather>): Promise<PlayerGather> {
 	return gatherRepository.save(grid);
 }

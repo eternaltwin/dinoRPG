@@ -8,7 +8,7 @@ export const helpers = [
 	'Valedres',
 	'Stick-Man Smith',
 	'A7',
-	'Zen',
-	'Sininchi',
-	'Ash'
+	' Zen',
+	' Sininchi',
+	' Ash'
 ];

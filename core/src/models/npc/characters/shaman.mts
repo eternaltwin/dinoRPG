@@ -1,6 +1,6 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const SHAMAN: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -15,7 +15,7 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 	souvenir: {
 		stepName: 'souvenir',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SHFLAG },
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SHFLAG }
 		},
 		nextStep: ['more', 'merci']
 	},
@@ -36,7 +36,7 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 	boost: {
 		stepName: 'boost',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FIRE_CHARM },
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FIRE_CHARM }
 		},
 		reward: [
 			{

@@ -1,7 +1,7 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { TriggerEnum, RewardEnum } from "../../enums/Parser.mjs";
-import { bossList } from "../../fight/BossList.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { bossList } from '../../fight/BossList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	begin: {

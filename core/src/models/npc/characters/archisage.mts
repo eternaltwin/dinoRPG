@@ -1,8 +1,7 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, TriggerEnum } from "../../enums/Parser.mjs";
-import { bossList } from "../../fight/BossList.mjs";
-import { NpcData } from "../NpcData.mjs";
-
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { RewardEnum, TriggerEnum } from '../../enums/Parser.mjs';
+import { bossList } from '../../fight/BossList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 	begin: {

@@ -1,7 +1,7 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { ServiceEnum } from "../../enums/ServiceEnum.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -30,7 +30,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	quest2: {
 		stepName: 'quest2',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FLIPPERS },
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FLIPPERS }
 		},
 		nextStep: []
 	},
@@ -39,8 +39,8 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY } },
-				{ [ConditionEnum.STATUS]: statusList.FLIPPERS },
-			],
+				{ [ConditionEnum.STATUS]: statusList.FLIPPERS }
+			]
 		},
 		nextStep: ['where2', 'how', 'danger', 'bye']
 	},
@@ -74,7 +74,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'quest4',
 		nextStep: ['noingr', 'ingr', 'bye'],
 		condition: {
-			[ConditionEnum.SCENARIO]: ['magnet', 8],
+			[ConditionEnum.SCENARIO]: ['magnet', 8]
 		}
 	},
 	noingr: {
@@ -84,8 +84,8 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: statusList.FLOWERING_BRANCH },
 				{ [ConditionEnum.STATUS]: statusList.ICE_PIECE },
-				{ [ConditionEnum.STATUS]: statusList.CORAIL },
-			],
+				{ [ConditionEnum.STATUS]: statusList.CORAIL }
+			]
 		}
 	},
 	ingr: {
@@ -95,8 +95,8 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FLOWERING_BRANCH } },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ICE_PIECE } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CORAIL } },
-			],
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CORAIL } }
+			]
 		},
 		reward: [
 			{

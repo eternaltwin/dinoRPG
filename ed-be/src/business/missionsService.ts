@@ -335,32 +335,37 @@ export async function getGlobalMissions(req: Request): Promise<MissionsPageData>
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		missions: npcsWithMissions.map(npc => {
-			const npcMissions = npc.missions || [];
+		missions: npcsWithMissions
+			.map(npc => {
+				const npcMissions = npc.missions || [];
 
-			return {
-				npc: npc.name,
-				missions: dinoz.missions.reduce((acc, mission) => {
-					// Filter out missions that are not finished
-					if (!mission.isFinished) {
-						return acc;
-					}
+				return {
+					npc: npc.name,
+					missions: dinoz.missions.reduce(
+						(acc, mission) => {
+							// Filter out missions that are not finished
+							if (!mission.isFinished) {
+								return acc;
+							}
 
-					const foundMission = npcMissions.find(npcMission => npcMission.missionId === mission.missionId);
+							const foundMission = npcMissions.find(npcMission => npcMission.missionId === mission.missionId);
 
-					// Filter out missions that are not from the current NPC
-					if (!foundMission) {
-						return acc;
-					}
+							// Filter out missions that are not from the current NPC
+							if (!foundMission) {
+								return acc;
+							}
 
-					acc.push({
-						id: mission.missionId,
-						name: foundMission.missionName,
-					});
+							acc.push({
+								id: mission.missionId,
+								name: foundMission.missionName
+							});
 
-					return acc;
-				}, [] as { id: MissionID, name: string }[])
-			};
-		}).filter(npc => npc.missions.length),
+							return acc;
+						},
+						[] as { id: MissionID; name: string }[]
+					)
+				};
+			})
+			.filter(npc => npc.missions.length)
 	}));
 }

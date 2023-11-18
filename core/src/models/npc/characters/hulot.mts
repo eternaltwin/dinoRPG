@@ -1,7 +1,7 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { MissionID } from "../../missions/missionList.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const HULOT: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -16,7 +16,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE }
-			],
+			]
 		}
 	},
 	better: {
@@ -34,7 +34,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE } },
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC },
 				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: 'hucure' } }
-			],
+			]
 		}
 	},
 	sickstatus: {
@@ -75,7 +75,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		stepName: 'fear',
 		nextStep: ['explore', 'other'],
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.HUMISS },
+			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.HUMISS }
 		}
 	},
 	explore: {

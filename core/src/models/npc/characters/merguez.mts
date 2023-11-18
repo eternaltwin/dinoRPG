@@ -1,6 +1,6 @@
-import { RewardEnum } from "../../enums/Parser.mjs";
-import { itemList } from "../../item/ItemList.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { RewardEnum } from '../../enums/Parser.mjs';
+import { itemList } from '../../item/ItemList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 	begin: {

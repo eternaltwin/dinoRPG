@@ -13,12 +13,12 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 
 const playerRepository = AppDataSource.getRepository(Player);
 
-const createPlayer = (newPlayer: Player): Promise<Player> => {
+export async function createPlayer(newPlayer: Player): Promise<Player> {
 	return playerRepository.save(newPlayer);
-};
+}
 
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
-const resetUser = (playerId: number): Promise<DeleteResult> => {
+export async function resetUser(playerId: number): Promise<DeleteResult> {
 	const dinozRepository = AppDataSource.getRepository(Dinoz);
 	const dinozShopRepository = AppDataSource.getRepository(PlayerDinozShop);
 	const ingredientRepository = AppDataSource.getRepository(PlayerIngredient);
@@ -57,27 +57,27 @@ const resetUser = (playerId: number): Promise<DeleteResult> => {
 		.from(PlayerReward)
 		.where('player.id = :pId', { pId: playerId })
 		.execute();
-};
+}
 
 // Getters
 
-const getPlayerId = (eternalTwinId: string): Promise<Player | null> => {
+export async function getPlayerId(eternalTwinId: string): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id'])
 		.where('player.eternalTwinId = :eId', { eId: eternalTwinId })
 		.getOne();
-};
+}
 
-const getEternalTwinId = (playerId: number): Promise<Player | null> => {
+export async function getEternalTwinId(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.eternalTwinId'])
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
-const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
+export async function getCommonDataRequest(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money'])
@@ -97,9 +97,9 @@ const getCommonDataRequest = (playerId: number): Promise<Player | null> => {
 		.leftJoinAndSelect('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
-const getAllInformationFromPlayer = (playerId: number): Promise<Player | null> => {
+export async function getAllInformationFromPlayer(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select()
@@ -108,15 +108,15 @@ const getAllInformationFromPlayer = (playerId: number): Promise<Player | null> =
 		.leftJoinAndSelect('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
-const getImportedData = (playerId: number): Promise<Player | null> => {
+export async function getImportedData(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.hasImported', 'player.eternalTwinId', 'player.id'])
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
 export async function getImportedTwinoidData(playerId: number): Promise<Player | null> {
 	return playerRepository
@@ -127,15 +127,15 @@ export async function getImportedTwinoidData(playerId: number): Promise<Player |
 		.getOne();
 }
 
-const getPlayerMoney = (playerId: number): Promise<Player | null> => {
+export async function getPlayerMoney(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money'])
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
-const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
+export async function getPlayerDataRequest(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.createdDate', 'player.name', 'player.customText'])
@@ -157,7 +157,7 @@ const getPlayerDataRequest = (playerId: number): Promise<Player | null> => {
 		.leftJoin('player.rank', 'rank')
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
 export async function prepareConcentration(playerId: number) {
 	return playerRepository
@@ -171,14 +171,14 @@ export async function prepareConcentration(playerId: number) {
 		.getOne();
 }
 
-const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
+export async function searchPlayersByName(playerName: string): Promise<Array<Player>> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.eternalTwinId', 'player.name'])
 		.where('player.name iLike :playerId')
 		.setParameter('playerId', `%${playerName}%`)
 		.getMany();
-};
+}
 
 /**
  * Get all the necessary data from the player for inventoryService getAllItemsData function
@@ -186,7 +186,7 @@ const searchPlayersByName = (playerName: string): Promise<Array<Player>> => {
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerInventoryDataRequest = (playerId: number): Promise<Player | null> => {
+export async function getPlayerInventoryDataRequest(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.shopKeeper'])
@@ -194,7 +194,7 @@ const getPlayerInventoryDataRequest = (playerId: number): Promise<Player | null>
 		.leftJoin('player.items', 'items', 'items.quantity > 0')
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
 /**
  * Get all the necessary data from the player for dinozShopService getDinozFromDinozShop function
@@ -202,7 +202,7 @@ const getPlayerInventoryDataRequest = (playerId: number): Promise<Player | null>
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerDinozShopRequest = (playerId: number): Promise<Player | null> => {
+export async function getPlayerDinozShopRequest(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id'])
@@ -211,9 +211,9 @@ const getPlayerDinozShopRequest = (playerId: number): Promise<Player | null> => 
 		.leftJoinAndSelect('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
-const getPlayerRewardsRequest = (playerId: number): Promise<Player | null> => {
+export async function getPlayerRewardsRequest(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id'])
@@ -221,14 +221,14 @@ const getPlayerRewardsRequest = (playerId: number): Promise<Player | null> => {
 		.leftJoin('player.rewards', 'rewards')
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
 /**
  * Get all the necessary data from the player for dinozService buyDinoz function
  * That includes:  platerId and the dinoz from the shop that it is trying to buy
  * @return Player
  */
-const getPlayerSpecificDinozShopRequest = (playerId: number, dinozId: number): Promise<Player | null> => {
+export async function getPlayerSpecificDinozShopRequest(playerId: number, dinozId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money'])
@@ -236,7 +236,7 @@ const getPlayerSpecificDinozShopRequest = (playerId: number, dinozId: number): P
 		.leftJoin('player.dinozShop', 'dinozShop', 'dinozShop.id = :dId', { dId: dinozId })
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
 /**
  * Get all the necessary data from the player for itemShopService getItemsFromShop function
@@ -245,7 +245,7 @@ const getPlayerSpecificDinozShopRequest = (playerId: number, dinozId: number): P
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null> => {
+export async function getPlayerShopItemsDataRequest(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
@@ -257,7 +257,7 @@ const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null>
 		.leftJoin('dinoz.status', 'status')
 		.where('player.id = :pId', { pId: playerId })
 		.getOne();
-};
+}
 
 /**
  * Get all the necessary data from the player for itemShopService buyItem function
@@ -266,11 +266,11 @@ const getPlayerShopItemsDataRequest = (playerId: number): Promise<Player | null>
  * Throws an error if the player does not exist.
  * @return Player
  */
-const getPlayerShopOneItemDataRequest = async (playerId: number, itemId: number): Promise<Player | null> => {
+export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: number): Promise<Player | null> {
 	return await playerRepository
 		.createQueryBuilder('player')
 		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
-		.addSelect(['items.itemId', 'items.quantity'])
+		.addSelect(['items.itemId', 'items.quantity', 'items.id'])
 		.addSelect(['dinoz.placeId'])
 		.addSelect(['status.statusId'])
 		.leftJoin('player.items', 'items', 'items.itemId = :itemId OR items.itemId = :napoId', {
@@ -281,15 +281,15 @@ const getPlayerShopOneItemDataRequest = async (playerId: number, itemId: number)
 		.leftJoin('dinoz.status', 'status')
 		.where('player.id = :playerId', { playerId: playerId })
 		.getOne();
-};
+}
 
 // Setters
 //TODO
-const setPlayer = (player: Partial<Player>): Promise<Player> => {
+export async function setPlayer(player: Partial<Player>): Promise<Player> {
 	return playerRepository.save(player);
-};
+}
 
-const addPlayerMoney = (playerId: number, money: number): Promise<UpdateResult> => {
+export async function addPlayerMoney(playerId: number, money: number): Promise<UpdateResult> {
 	return playerRepository
 		.createQueryBuilder()
 		.update(Player)
@@ -297,45 +297,22 @@ const addPlayerMoney = (playerId: number, money: number): Promise<UpdateResult> 
 		.setParameter('addedMoney', money)
 		.where('player.id = :pId', { pId: playerId })
 		.execute();
-};
+}
 
-const editCustomText = (playerId: number, text: string): Promise<UpdateResult> => {
+export async function editCustomText(playerId: number, text: string): Promise<UpdateResult> {
 	return playerRepository
 		.createQueryBuilder()
 		.update(Player)
 		.set({ customText: text })
 		.where('player.id = :pId', { pId: playerId })
 		.execute();
-};
+}
 
-const setPlayerMoneyRequest = (playerId: number, newMoney: number): Promise<UpdateResult> => {
+export async function setPlayerMoneyRequest(playerId: number, newMoney: number): Promise<UpdateResult> {
 	return playerRepository
 		.createQueryBuilder('player')
 		.update(Player)
 		.set({ money: newMoney })
 		.where('player.id = :pId', { pId: playerId })
 		.execute();
-};
-
-export {
-	addPlayerMoney,
-	createPlayer,
-	editCustomText,
-	getAllInformationFromPlayer,
-	getCommonDataRequest,
-	getEternalTwinId,
-	getImportedData,
-	getPlayerDataRequest,
-	getPlayerDinozShopRequest,
-	getPlayerId,
-	getPlayerInventoryDataRequest,
-	getPlayerMoney,
-	setPlayer,
-	setPlayerMoneyRequest,
-	getPlayerRewardsRequest,
-	getPlayerShopItemsDataRequest,
-	getPlayerShopOneItemDataRequest,
-	getPlayerSpecificDinozShopRequest,
-	resetUser,
-	searchPlayersByName
-};
+}

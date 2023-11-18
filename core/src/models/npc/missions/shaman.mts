@@ -1,9 +1,9 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { RewardEnum, ConditionEnum, Operator } from "../../enums/Parser.mjs";
-import { itemList } from "../../item/ItemList.mjs";
-import { Mission } from "../../missions/mission.mjs";
-import { MissionID } from "../../missions/missionList.mjs";
-import { placeList } from "../../place/PlaceList.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { itemList } from '../../item/ItemList.mjs';
+import { Mission } from '../../missions/mission.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
+import { placeList } from '../../place/PlaceList.mjs';
 
 export const M_SHAMAN_MOU: Array<Mission> = [
 	//Missions 26 to 36
@@ -820,8 +820,8 @@ export const M_SHAMAN_MOU: Array<Mission> = [
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_INIT2 },
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_DEFEND },
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_BARBEC },
-			],
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_BARBEC }
+			]
 		},
 		rewards: [
 			{

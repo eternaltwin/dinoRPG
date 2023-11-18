@@ -1,5 +1,5 @@
-import { ConditionEnum, Operator, RewardEnum } from "../../enums/Parser.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const MMEX: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -47,10 +47,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn1',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 11305 },
-				{ [ConditionEnum.SKILL]: 41303 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11305 }, { [ConditionEnum.SKILL]: 41303 }]
 		},
 		target: 'dolearn'
 	},
@@ -58,10 +55,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn1bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 11310 },
-				{ [ConditionEnum.SKILL]: 51306 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11310 }, { [ConditionEnum.SKILL]: 51306 }]
 		},
 		target: 'dolearn'
 	},
@@ -69,10 +63,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn2',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 11308 },
-				{ [ConditionEnum.SKILL]: 21303 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11308 }, { [ConditionEnum.SKILL]: 21303 }]
 		},
 		target: 'dolearn'
 	},
@@ -80,10 +71,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn2bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 11311 },
-				{ [ConditionEnum.SKILL]: 31301 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 11311 }, { [ConditionEnum.SKILL]: 31301 }]
 		},
 		target: 'dolearn'
 	},
@@ -91,10 +79,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn3',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 21301 },
-				{ [ConditionEnum.SKILL]: 41306 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 21301 }, { [ConditionEnum.SKILL]: 41306 }]
 		},
 		target: 'dolearn'
 	},
@@ -102,10 +87,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn3bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 31304 },
-				{ [ConditionEnum.SKILL]: 51312 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 31304 }, { [ConditionEnum.SKILL]: 51312 }]
 		},
 		target: 'dolearn'
 	},
@@ -113,10 +95,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn4',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 31311 },
-				{ [ConditionEnum.SKILL]: 21309 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 31311 }, { [ConditionEnum.SKILL]: 21309 }]
 		},
 		target: 'dolearn'
 	},
@@ -124,10 +103,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn4bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 51302 },
-				{ [ConditionEnum.SKILL]: 41305 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 51302 }, { [ConditionEnum.SKILL]: 41305 }]
 		},
 		target: 'dolearn'
 	},
@@ -135,10 +111,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn5',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 41301 },
-				{ [ConditionEnum.SKILL]: 31308 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 41301 }, { [ConditionEnum.SKILL]: 31308 }]
 		},
 		target: 'dolearn'
 	},
@@ -146,10 +119,7 @@ export const MMEX: Readonly<Record<string, NpcData>> = {
 		stepName: 'learn5bis',
 		nextStep: ['dolearn'],
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SKILL]: 51310 },
-				{ [ConditionEnum.SKILL]: 21304 }
-			],
+			[Operator.AND]: [{ [ConditionEnum.SKILL]: 51310 }, { [ConditionEnum.SKILL]: 21304 }]
 		},
 		target: 'dolearn'
 	},

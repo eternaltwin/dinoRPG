@@ -1,7 +1,7 @@
-import { statusList } from "../../dinoz/StatusList.mjs";
-import { TriggerEnum, RewardEnum } from "../../enums/Parser.mjs";
-import { monsterList } from "../../fight/MonsterList.mjs";
-import { NpcData } from "../NpcData.mjs";
+import { statusList } from '../../dinoz/StatusList.mjs';
+import { TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const FOU: Readonly<Record<string, NpcData>> = {
 	begin: {

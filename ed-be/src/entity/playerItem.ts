@@ -26,4 +26,12 @@ export class PlayerItem {
 		this.itemId = itemId;
 		this.quantity = quantity;
 	}
+
+	public changeItemQuantity(quantity: number): Partial<PlayerItem> {
+		return {
+			id: this.id,
+			itemId: this.itemId,
+			quantity: this.quantity + quantity
+		};
+	}
 }

@@ -1,5 +1,5 @@
-import { MapZone } from "../enums/MapZone.mjs";
-import { MonsterFiche } from "./MonsterFiche.mjs";
+import { MapZone } from '../enums/MapZone.mjs';
+import { MonsterFiche } from './MonsterFiche.mjs';
 
 export const bossList: Readonly<Record<string, MonsterFiche>> = {
 	GARDIEN_TOUR: {

@@ -1,12 +1,12 @@
-import { MissionID } from "../models/missions/missionList.mjs";
-import { npcList } from "../models/npc/NpcList.mjs";
+import { MissionID } from '../models/missions/missionList.mjs';
+import { npcList } from '../models/npc/NpcList.mjs';
 
 export type MissionsPageData = {
 	id: number;
 	name: string;
 	display: string;
 	missions: {
-		npc: typeof npcList[keyof typeof npcList]['name'];
+		npc: (typeof npcList)[keyof typeof npcList]['name'];
 		missions: {
 			id: MissionID;
 			name: string;
@@ -20,7 +20,7 @@ export type ManagePageData = {
 	level: number;
 	status: {
 		statusId: number;
-	}[],
+	}[];
 	life: number;
 	maxLife: number;
 	experience: number;

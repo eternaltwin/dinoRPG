@@ -1,27 +1,12 @@
-import { UpdateResult } from 'typeorm';
 import { AppDataSource } from '../data-source.js';
 import { Dinoz } from '../entity/index.js';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
-import { npcList } from '@drpg/core/models/npc/NpcList';
 import { MissionID } from '@drpg/core/models/missions/missionList';
+import { UpdateResult } from 'typeorm';
 
 const dinozRepository = AppDataSource.getRepository(Dinoz);
 
 // Getters
-
-export async function getDinozPlaceRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id', 'dinoz.placeId'])
-		.addSelect(['player.id'])
-		.addSelect(['status.statusId'])
-		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('dinoz.missions', 'missions')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
-}
 
 export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
 	return dinozRepository
@@ -32,18 +17,6 @@ export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
 		.where('player.id = :pId AND dinoz.isFrozen = FALSE AND dinoz.isSacrificed = FALSE', { pId: playerId })
 		.getMany();
 }
-
-/*export async function prepareConcentration(dinozId: number): Promise<Dinoz> {
-  return dinozRepository
-    .createQueryBuilder('dinoz')
-    .select(['dinoz.id', 'dinoz.placeId'])
-    .addSelect(['player.id'])
-    .innerJoin('dinoz.player', 'player')
-    .leftJoinAndSelect('dinoz.status', 'status')
-    .leftJoinAndSelect('dinoz.concentration', 'concentration')
-    .where('dinoz.id = :dId', { dId: dinozId })
-    .getOne();
-}*/
 
 export async function getAllDinozFromAccount(playerId: number): Promise<Array<Dinoz>> {
 	return dinozRepository
@@ -117,7 +90,7 @@ export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz | nul
 			'dinoz.placeId',
 			'dinoz.raceId'
 		])
-		.addSelect(['player.id'])
+		.addSelect(['player.id', 'player.money'])
 		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
@@ -138,7 +111,7 @@ export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz | nul
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.level', 'dinoz.placeId'])
-		.addSelect(['player.id'])
+		.addSelect(['player.id', 'player.money'])
 		.addSelect(['status.statusId'])
 		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
 		.innerJoin('dinoz.player', 'player')
@@ -183,8 +156,8 @@ export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz |
 			'dinoz.level',
 			'dinoz.placeId'
 		])
-		.addSelect(['player.id'])
-		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
+		.addSelect(['player.id', 'player.money'])
+		.addSelect(['playerItems.itemId', 'playerItems.quantity', 'playerItems.id'])
 		.addSelect(['status.statusId'])
 		.addSelect(['skills.skillId'])
 		.innerJoin('dinoz.player', 'player')
@@ -200,7 +173,7 @@ export async function getDinozEquipItemRequest(dinozId: number): Promise<Dinoz |
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id'])
 		.addSelect(['player.id', 'player.engineer'])
-		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
+		.addSelect(['playerItems.itemId', 'playerItems.quantity', 'playerItems.id'])
 		.addSelect(['dinozItems.itemId', 'dinozItems.id'])
 		.addSelect(['status.statusId'])
 		.addSelect(['skills.skillId'])
@@ -230,7 +203,7 @@ export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz |
 			'dinoz.nbrUpAir',
 			'dinoz.placeId'
 		])
-		.addSelect(['player.id'])
+		.addSelect(['player.id', 'player.money'])
 		.addSelect(['items.itemId'])
 		.addSelect(['skills.skillId'])
 		.addSelect(['status.statusId'])
@@ -249,7 +222,7 @@ export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz | null>
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name', 'dinoz.level', 'dinoz.placeId'])
-		.addSelect(['player.id'])
+		.addSelect(['player.id', 'player.money'])
 		.addSelect(['skills.skillId'])
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
@@ -347,9 +320,9 @@ export async function getDinozGatherData(dinozId: number): Promise<Dinoz | null>
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.placeId'])
-		.addSelect(['player.id'])
+		.addSelect(['player.id', 'player.money'])
 		.addSelect(['skills.skillId'])
-		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
+		.addSelect(['playerItems.itemId', 'playerItems.quantity', 'playerItems.id'])
 		.innerJoin('dinoz.player', 'player')
 		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('player.items', 'playerItems')
@@ -368,62 +341,17 @@ export async function setMultipleDinoz(dinoz: Array<Partial<Dinoz>>): Promise<Ar
 	return dinozRepository.save(dinoz);
 }
 
-export async function setDinozPlaceRequest(dinozId: number, newPlaceId: number): Promise<UpdateResult> {
-	return dinozRepository
-		.createQueryBuilder()
-		.update(Dinoz)
-		.set({ placeId: newPlaceId })
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.execute();
-}
-
-export async function setDinozNameRequest(dinozId: number, canChangeName: boolean): Promise<UpdateResult> {
-	return dinozRepository
-		.createQueryBuilder()
-		.update(Dinoz)
-		.set({ canChangeName: canChangeName })
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.execute();
-}
-
-export async function setDinozNextElement(dinozId: number, elementIdd: number): Promise<UpdateResult> {
-	return dinozRepository
-		.createQueryBuilder()
-		.update(Dinoz)
-		.set({ nextUpElementId: elementIdd })
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.execute();
-}
-
-export async function addExperience(dinozId: number, experience: number): Promise<UpdateResult> {
-	return dinozRepository
-		.createQueryBuilder()
-		.update(Dinoz)
-		.set({ experience: () => 'experience + :addExperience' })
-		.setParameter('addExperience', experience)
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.execute();
-}
-
-export async function addLife(dinozId: number, life: number): Promise<UpdateResult> {
-	return dinozRepository
-		.createQueryBuilder()
-		.update(Dinoz)
-		.set({ life: () => 'life + :addLife' })
-		.setParameter('addLife', life)
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.execute();
-}
-
-export async function getGlobalMissionsData(playerId: number): Promise<{
-	id: number;
-	name: string;
-	display: string;
-	missions: {
-		missionId: MissionID;
-		isFinished: boolean;
-	}[];
-}[]> {
+export async function getGlobalMissionsData(playerId: number): Promise<
+	{
+		id: number;
+		name: string;
+		display: string;
+		missions: {
+			missionId: MissionID;
+			isFinished: boolean;
+		}[];
+	}[]
+> {
 	return dinozRepository.find({
 		where: {
 			player: { id: playerId },
@@ -436,9 +364,9 @@ export async function getGlobalMissionsData(playerId: number): Promise<{
 			missions: {
 				missionId: true,
 				isFinished: true
-			},
+			}
 		},
-		relations: ['missions'],
+		relations: ['missions']
 	});
 }
 
@@ -470,12 +398,12 @@ export async function getManageData(userID: number): Promise<ManagePageData> {
 		relations: ['status'],
 		order: {
 			order: 'ASC',
-			name: 'ASC',
-		},
+			name: 'ASC'
+		}
 	});
 }
 
-export async function updateOrderData(dinozList: { id: number, order: number }[]) {
+export async function updateOrderData(dinozList: { id: number; order: number }[]) {
 	const updates: Promise<UpdateResult>[] = [];
 
 	for (const dinoz of dinozList) {

@@ -5,7 +5,6 @@ import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Ranking } from '.
 import { getDinozForLevelUp, getDinozSkillsLearnableAndUnlockable, setDinoz } from '../dao/dinozDao.js';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
-import { updatePoints } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -123,11 +122,6 @@ export async function learnSkill(req: Request): Promise<number> {
 	await setDinoz(newDinozData);
 
 	const newMaxExperience: number | undefined = levelList.find(level => level.id === dinozSkills.level + 1)?.experience!;
-
-	const dinozCount = ranking!.dinozCount;
-	const sumPoints = ranking!.sumPoints + 1;
-	const averagePoints = Math.round(sumPoints / dinozCount);
-	await updatePoints(req.auth!.playerId!, sumPoints, averagePoints, dinozCount);
 
 	return newMaxExperience ?? 0;
 }

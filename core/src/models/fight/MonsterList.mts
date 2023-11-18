@@ -1,6 +1,6 @@
-import { MapZone } from "../enums/MapZone.mjs";
-import { PlaceEnum } from "../enums/PlaceEnum.mjs";
-import { MonsterFiche } from "./MonsterFiche.mjs";
+import { MapZone } from '../enums/MapZone.mjs';
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
+import { MonsterFiche } from './MonsterFiche.mjs';
 
 export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 	// This monster is here to always have an enemy to fight

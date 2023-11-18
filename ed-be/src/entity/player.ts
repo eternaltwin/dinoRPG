@@ -144,4 +144,11 @@ export class Player {
 	constructor(id: number) {
 		this.id = id;
 	}
+
+	public addMoney(quantity: number): Partial<Player> {
+		return {
+			id: this.id,
+			money: this.money + quantity
+		};
+	}
 }

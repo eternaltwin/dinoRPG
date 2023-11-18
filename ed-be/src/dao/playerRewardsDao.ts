@@ -5,25 +5,25 @@ import { DeleteResult } from 'typeorm';
 const rewardRepository = AppDataSource.getRepository(PlayerReward);
 
 //TODO
-const addRewardToPlayer = (player: PlayerReward): Promise<PlayerReward> => {
+export async function addRewardToPlayer(player: PlayerReward): Promise<PlayerReward> {
 	return rewardRepository.save(player);
-};
+}
 
 //TODO
-const addMultipleRewardToPlayer = (rewards: Array<PlayerReward>): Promise<Array<PlayerReward>> => {
+export async function addMultipleRewardToPlayer(rewards: Array<PlayerReward>): Promise<Array<PlayerReward>> {
 	return rewardRepository.save(rewards);
-};
+}
 
-const removeRewardToPlayer = (playerId: number, rewardId: number): Promise<DeleteResult> => {
+export async function removeRewardToPlayer(playerId: number, rewardId: number): Promise<DeleteResult> {
 	return rewardRepository
 		.createQueryBuilder()
 		.delete()
 		.from(PlayerReward)
 		.where('rewardId = :rId AND player.id = :pId', { rId: rewardId, pId: playerId })
 		.execute();
-};
+}
 
-const getPlayerRewards = (playerId: number): Promise<PlayerReward[]> => {
+export async function getPlayerRewards(playerId: number): Promise<PlayerReward[]> {
 	return rewardRepository.find({
 		where: {
 			player: {
@@ -33,5 +33,3 @@ const getPlayerRewards = (playerId: number): Promise<PlayerReward[]> => {
 		select: ['rewardId']
 	});
 }
-
-export { addRewardToPlayer, addMultipleRewardToPlayer, removeRewardToPlayer, getPlayerRewards };
