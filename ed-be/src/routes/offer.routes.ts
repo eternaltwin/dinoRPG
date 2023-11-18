@@ -1,19 +1,23 @@
 import { Request, Response, Router } from 'express';
-import { body, param, validationResult } from 'express-validator';
+import { body, param, query, validationResult } from 'express-validator';
 import { getGlobalMissions } from '../business/missionsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { createOffer, getOfferList } from '../business/offerService.js';
+import { cancelOffer, createOffer, getOfferList } from '../business/offerService.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.offerRoutes;
 
-// Route for the list tab
+// Offer list getter
 routes.get(
 	`${commonPath}/list/:filter`,
-	[param('filter').exists().isString()],
+	[
+		param('filter').exists().isString(),
+		query('sellerId').optional().isInt(),
+		query('bidderId').optional().isInt(),
+	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -45,9 +49,31 @@ routes.put(
 		}
 
 		try {
-			const response = await createOffer(req);
+			await createOffer(req);
 			return res.status(200).send({
 				message: 'Offer created',
+			});
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(500).send(e.message);
+		}
+	}
+);
+
+// Cancel an offer
+routes.delete(
+	`${commonPath}/:offerId`,
+	[param('offerId').exists().isInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await cancelOffer(req);
+			return res.status(200).send({
+				message: 'Offer canceled',
 			});
 		} catch (err) {
 			const e = err as ErrorFormator;

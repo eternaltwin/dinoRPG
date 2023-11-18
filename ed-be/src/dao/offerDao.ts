@@ -2,7 +2,11 @@ import { Offer } from '@drpg/core/returnTypes/Offer';
 
 // const offerRepository = AppDataSource.getRepository(Offer);
 
-export async function getOfferListData(filter?: string) {
+export async function getOffers(
+	filter: string,
+	sellerId: number | null,
+	bidderId: number | null
+) {
 	const mockOffers: Offer[] = [
 		{
 			id: 1,
@@ -13,65 +17,79 @@ export async function getOfferListData(filter?: string) {
 			endDate: new Date('2023-12-12').toISOString(),
 			dinoz: null,
 			items: [
-				{ id: 59, quantity: 5 },
-				{ id: 24, quantity: 2 },
-				{ id: 13, quantity: 1 }
+				{ id: 59, quantity: 5, isIngredient: false },
+				{ id: 24, quantity: 2, isIngredient: false },
+				{ id: 2, quantity: 1, isIngredient: true }
 			],
-			bid: {
-				user: {
-					id: 2,
-					name: 'test2'
-				},
-				value: 100
-			}
+			bids: [
+				{
+					user: {
+						id: 2,
+						name: 'test2'
+					},
+					value: 100
+				}
+			]
 		},
 		{
 			id: 2,
 			seller: {
-				id: 1,
-				name: 'test'
+				id: 2,
+				name: 'tes2'
 			},
 			endDate: new Date('2023-12-24').toISOString(),
 			dinoz: {
 				name: 'test'
 			},
 			items: [
-				{ id: 22, quantity: 4 },
-				{ id: 17, quantity: 4 },
-				{ id: 13, quantity: 3 },
-				{ id: 78, quantity: 1 },
-				{ id: 60, quantity: 1 }
+				{ id: 22, quantity: 4, isIngredient: false },
+				{ id: 17, quantity: 4, isIngredient: false },
+				{ id: 13, quantity: 3, isIngredient: false },
+				{ id: 78, quantity: 1, isIngredient: false },
+				{ id: 60, quantity: 1, isIngredient: false },
 			],
-			bid: null
+			bids: [
+				{
+					user: {
+						id: 1,
+						name: 'test'
+					},
+					value: 100
+				}
+			]
 		},
 		{
 			id: 3,
 			seller: {
-				id: 1,
-				name: 'test'
+				id: 3,
+				name: 'test3'
 			},
 			items: [],
 			endDate: new Date('2023-12-01').toISOString(),
 			dinoz: {
 				name: 'test3'
 			},
-			bid: null
+			bids: []
 		}
 	];
 
-	if (filter === 'all') {
-		return mockOffers;
-	}
+	let offers = [...mockOffers];
 
 	if (filter === 'dinoz') {
-		return mockOffers.filter(offer => offer.dinoz);
+		offers = offers.filter(offer => offer.dinoz);
+	} else if (filter === 'items') {
+		offers = offers.filter(offer => offer.items.length);
 	}
 
-	if (filter === 'items') {
-		return mockOffers.filter(offer => offer.items.length);
+	if (sellerId) {
+		offers = offers.filter(offer => offer.seller.id === sellerId);
 	}
 
-	return mockOffers;
+	if (bidderId) {
+		offers = offers.filter(offer => offer.bids.find(bid => bid.user.id === bidderId));
+	}
+
+	return offers;
 }
 
 export async function insertOffer(
@@ -81,4 +99,11 @@ export async function insertOffer(
 	items: { id: number; count: number }[]
 ) {
 	console.log('insertOffer', dinozId, total, ingredients, items);
+	// TODO: Insert offer
 }
+
+export async function deleteOffer(offerId: number) {
+	console.log('deleteOffer', offerId);
+	// TODO: Cancel offer
+}
+

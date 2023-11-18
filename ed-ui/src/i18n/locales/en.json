@@ -24,10 +24,12 @@
 		"dinozDataMissing": "Dinoz data missing",
 		"selectADinozAtMarketFirst": "You must select a dinoz at the market first.",
 		"unknownDinoz": "Unknown dinoz",
+		"missingUser": "Missing user",
 		"market": {
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
-			"offerCreated": "Your offer has been created."
+			"offerCreated": "Your offer has been created.",
+			"offerCancelled": "Your offer has been cancelled."
 		}
 	},
 	"dig": {
@@ -3086,6 +3088,15 @@
 			"create": "Create offer",
 			"add": "Add",
 			"remove": "Remove"
+		},
+		"transactionView": {
+			"yourOngoingOffer": "Your ongoing offer",
+			"noOnGoingOffer": "You have no ongoing offer.",
+			"bid": "Bid",
+			"noBidYet": "No bid yet",
+			"cancel": "Cancel",
+			"yourActiveBids": "Your active bids",
+			"noActiveBid": "You haven't bid on any offer yet."
 		}
 	}
 }

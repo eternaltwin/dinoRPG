@@ -12,12 +12,13 @@ export type Offer = {
 	items: {
 		id: number;
 		quantity: number;
+		isIngredient: boolean;
 	}[];
-	bid: {
+	bids: {
 		user: {
 			id: number;
 			name: string;
 		};
 		value: number;
-	} | null;
+	}[];
 };

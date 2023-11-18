@@ -2,10 +2,15 @@ import { http } from '../utils/index.js';
 import { Offer } from '@drpg/core/returnTypes/Offer';
 
 export const OfferService = {
-	getList(filter: string): Promise<Offer[]> {
+	getList(filter: string, sellerId: number | null = null, bidderId: number | null = null) {
 		return http()
-			.get(`/offer/list/${filter}`)
-			.then(res => Promise.resolve(res.data))
+			.get(`/offer/list/${filter}`, {
+				params: {
+					sellerId,
+					bidderId
+				}
+			})
+			.then(res => Promise.resolve<Offer[]>(res.data))
 			.catch(err => Promise.reject(err));
 	},
 	createOffer(
@@ -13,7 +18,7 @@ export const OfferService = {
 		ingredients: { name: string; count: number }[],
 		items: { name: string; count: number }[],
 		dinoz?: number
-	): Promise<void> {
+	) {
 		return http()
 			.put('/offer', {
 				dinoz,
@@ -21,6 +26,12 @@ export const OfferService = {
 				ingredients,
 				items
 			})
+			.then(() => Promise.resolve())
+			.catch(err => Promise.reject(err));
+	},
+	cancelOffer(offerId: number) {
+		return http()
+			.delete(`/offer/${offerId}`)
 			.then(() => Promise.resolve())
 			.catch(err => Promise.reject(err));
 	}
