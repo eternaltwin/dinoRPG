@@ -335,19 +335,19 @@ export async function unlockDoubleSkills(dinozId: number): Promise<void> {
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
-	const allLearnableSkills: Array<Partial<DinozSkillFiche>> = getLearnableSkills(dinoz);
+	const allLearnableSkills = getLearnableSkills(dinoz);
 
 	// First filter : Get all skills which have more that one element (ex : fire and water).
 	// Second filter : Assert that the skill is a double skill, and not an invocation or something else.
 	const doubleSkillsToUnlock: Array<DinozSkillUnlockable> = allLearnableSkills
-		.filter(skill => skill.element!.length > 1)
+		.filter(skill => (skill.element?.length || 0) > 1)
 		.filter(skillToUnlock => {
-			const skillDetail: DinozSkillFiche = Object.values(skillList).find(
-				skill => skill.id === skillToUnlock.id
-			)!;
-			return skillDetail.unlockedFrom!.includes(skillList[Skill.COMPETENCE_DOUBLE].id);
+			const skillDetail = Object.values(skillList).find(
+				skill => skill.id === skillToUnlock.skillId
+			);
+			return skillDetail?.unlockedFrom?.includes(skillList[Skill.COMPETENCE_DOUBLE].id);
 		})
-		.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.id!));
+		.map(skill => new DinozSkillUnlockable(new Dinoz(dinozId), skill.skillId));
 
 	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
 }
