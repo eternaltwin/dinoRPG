@@ -148,7 +148,7 @@ export default defineComponent({
 			dinoz: null as DinozFiche | null,
 			ingredients: [] as IngredientFiche[],
 			items: [] as ItemFiche[],
-			selectedItems: {} as Record<string, { type: 'ingredient' | 'item', count: number }>
+			selectedItems: {} as Record<string, { type: 'ingredient' | 'item'; count: number }>
 		};
 	},
 	components: { DZButton, DZDisclaimer, Tippy, DZHelp },
@@ -213,6 +213,7 @@ export default defineComponent({
 				.map(([name, count]) => ({ name, count: count.count }));
 
 			// TODO
+			console.log('TODO', totalValue, ingredients, items);
 		}
 	},
 	async mounted(): Promise<void> {
