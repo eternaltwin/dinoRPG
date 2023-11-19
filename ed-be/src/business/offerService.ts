@@ -1,13 +1,6 @@
-import { MissionID } from '@drpg/core/models/missions/missionList';
-import { npcList } from '@drpg/core/models/npc/NpcList';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
-import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
 import { Request } from 'express';
-import { getGlobalMissionsData } from '../dao/dinozDao.js';
-import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { addBid, deleteOffer, getOffer, getOffers, insertOffer } from '../dao/offerDao.js';
-import { Offer } from '@drpg/core/returnTypes/Offer';
 
 /**
  * Get the list of current offers
