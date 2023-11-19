@@ -3,6 +3,7 @@ import { GatherType } from '../enums/GatherType.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { Condition } from '../npc/NpcConditions.mjs';
+import { MissionID } from '../missions/missionList.mjs';
 
 export const placeList: Record<
 	string,
@@ -757,8 +758,8 @@ export const placeList: Record<
 		borderPlace: [104, 106],
 		conditions: {
 			[Operator.OR]: [
-				{ [ConditionEnum.CURRENT_MISSION]: 'monte' },
-				{ [ConditionEnum.CURRENT_MISSION]: 'roif' },
+				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'monte' },
+				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'roif' },
 				{ [ConditionEnum.SCENARIO]: ['smog', 16] },
 				{ [ConditionEnum.SCENARIO]: ['smog', 15] }
 			]
@@ -801,9 +802,9 @@ export const placeList: Record<
 		borderPlace: [103],
 		conditions: {
 			[Operator.OR]: [
-				{ [ConditionEnum.CURRENT_MISSION]: 'ouestu' },
-				{ [ConditionEnum.CURRENT_MISSION]: 'lumi' },
-				{ [ConditionEnum.CURRENT_MISSION]: 'truci2' },
+				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'ouestu' },
+				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'lumi' },
+				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'truci2' },
 				{ [ConditionEnum.STATUS]: statusList.DARK_ORB }
 			]
 		},
@@ -814,7 +815,7 @@ export const placeList: Record<
 		name: 'fake2',
 		borderPlace: [102],
 		conditions: {
-			[ConditionEnum.CURRENT_MISSION]: 'roid'
+			[ConditionEnum.CURRENT_MISSION]: MissionID.TODO //'roid'
 		},
 		map: MapZone.DARKWORLD
 	},
@@ -824,8 +825,8 @@ export const placeList: Record<
 		borderPlace: [104],
 		conditions: {
 			[Operator.OR]: [
-				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: 'monte' } },
-				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: 'roif' } },
+				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.TODO } }, //'monte' } },
+				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.TODO } }, //'roif' } },
 				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: ['smog', 16] } }
 			]
 		},

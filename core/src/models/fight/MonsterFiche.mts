@@ -19,4 +19,5 @@ export type MonsterFiche = {
 	zone: MapZone;
 	place?: PlaceEnum;
 	special?: boolean;
+	skills?: Array<number>;
 };

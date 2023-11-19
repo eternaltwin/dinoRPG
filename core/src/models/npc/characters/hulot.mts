@@ -33,7 +33,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE } },
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC },
-				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: 'hucure' } }
+				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.HULOT_HUCURE } }
 			]
 		}
 	},
@@ -41,7 +41,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		stepName: 'sickstatus',
 		nextStep: ['curesearch'],
 		condition: {
-			[ConditionEnum.CURRENT_MISSION]: 'hucure'
+			[ConditionEnum.CURRENT_MISSION]: MissionID.HULOT_HUCURE
 		}
 	},
 	who: {

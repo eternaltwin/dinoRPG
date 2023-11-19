@@ -8,6 +8,17 @@ export async function setItem(newItem: Partial<PlayerItem>): Promise<PlayerItem>
 	return itemRepository.save(newItem);
 }
 
+export async function getPlayerItems(playerId: number): Promise<Array<PlayerItem>> {
+	return itemRepository.find({
+		where: {
+			player: {
+				id: playerId
+			}
+		},
+		select: ['itemId']
+	});
+}
+
 export async function updateItemDataRequest(
 	playerId: number,
 	itemId: number,

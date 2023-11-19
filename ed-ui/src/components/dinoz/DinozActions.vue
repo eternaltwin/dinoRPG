@@ -1,11 +1,11 @@
 <template>
 	<div class="actions">
-		<Ressurect :enabled="resurect" @close="resurect = false" />
+		<Resurrect :enabled="resurect" @close="resurect = false" />
 		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<MissionHUDVue v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
+		<MissionHUD v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
 		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
 		<ul>
 			<table class="action_button">
@@ -25,7 +25,7 @@
 							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
 						</td>
 						<td v-else-if="action.name === 'npc'" class="label">
-							{{ $t(`npc.name.${npcNameList[action.prop]}`) }}
+							{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}
 						</td>
 						<td
 							v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
@@ -46,7 +46,7 @@
 							/>
 							<h1
 								v-else-if="action.name === 'npc'"
-								v-html="formatContent($t(`npc.name.${npcNameList[action.prop]}`))"
+								v-html="formatContent($t(`npc.name.${npcDisplayName(action.prop)}`))"
 							/>
 							<h1
 								v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
@@ -79,8 +79,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { missionsList, npcNameList, shopNameList } from '../../constants/index.js';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
+import { missionsList, shopNameList } from '../../constants/index.js';
 import { ActionFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { sessionStore, dinozStore } from '../../store/index.js';
@@ -93,17 +93,13 @@ import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
-import Ressurect from '../../components/modal/ResurrectModal.vue';
-import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
-import NPCModal from '../../components/modal/NPCModal.vue';
-import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
+import { npcList } from '@drpg/core/models/npc/NpcList';
 
 export default defineComponent({
 	name: 'DinozActions',
 	data() {
 		return {
 			shopNameList: shopNameList,
-			npcNameList: npcNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
 			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
@@ -118,10 +114,10 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Ressurect,
-		MissionHUDVue,
-		NPCModal,
-		MissionRewardModal
+		Resurrect: defineAsyncComponent(() => import('../../components/modal/ResurrectModal.vue')),
+		MissionHUD: defineAsyncComponent(() => import('../../components/dinoz/MissionHUD.vue')),
+		NPCModal: defineAsyncComponent(() => import('../../components/modal/NPCModal.vue')),
+		MissionRewardModal: defineAsyncComponent(() => import('../../components/modal/MissionRewardModal.vue'))
 	},
 	props: {
 		dinozActions: Object as PropType<Array<ActionFiche>>,
@@ -145,7 +141,7 @@ export default defineComponent({
 				case 'npc':
 					this.$router.push({
 						name: 'NPC',
-						params: { id: this.$route.params.id.toString(), npc: npcNameList[action.prop as number] }
+						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
 					});
 					break;
 				case 'fight':
@@ -237,6 +233,9 @@ export default defineComponent({
 		validateMission(): void {
 			this.missionReward = undefined;
 			EventBus.emit('refreshDinoz', true);
+		},
+		npcDisplayName(npcId: number): string | undefined {
+			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
 		}
 	},
 	computed: {

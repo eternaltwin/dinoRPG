@@ -91,7 +91,8 @@ export async function getCommonDataRequest(playerId: number): Promise<Player | n
 			'dinoz.experience',
 			'dinoz.placeId',
 			'dinoz.level',
-			'dinoz.order'
+			'dinoz.order',
+			'dinoz.raceId'
 		])
 		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false')
 		.leftJoinAndSelect('player.rewards', 'rewards')

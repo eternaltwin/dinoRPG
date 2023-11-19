@@ -17,7 +17,7 @@ export type Condition = {
 	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number];
 	[ConditionEnum.SCENARIO]?: [string, number];
 	[ConditionEnum.NEXT_PLACE]?: Place;
-	[ConditionEnum.CURRENT_MISSION]?: string;
+	[ConditionEnum.CURRENT_MISSION]?: number;
 	[ConditionEnum.POSSESS_INGREDIENT]?: string;
 	[ConditionEnum.ACTIVE]?: string;
 	[ConditionEnum.PLAYER_EPIC]?: string;

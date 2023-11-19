@@ -38,8 +38,8 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 		//TODO: Implement scenario
 		result = false;
 	} else if (condition[ConditionEnum.POSSESS_OBJECT]) {
-		result =
-			(dinoz.player.items.find(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT])?.quantity ?? 0) > 0;
+		console.log(dinoz.player.items.some(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT]));
+		result = dinoz.player.items.some(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT]);
 	} else if (condition[ConditionEnum.RANDOM]) {
 		const score = Math.floor(Math.random() * condition[ConditionEnum.RANDOM]);
 		const target = 0;

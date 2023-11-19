@@ -27,8 +27,13 @@ import { M_GARDIEN } from './missions/gardien.mjs';
 import { M_HULOT } from './missions/hulot.mjs';
 import { M_PAPY_JOE } from './missions/papyJoe.mjs';
 import { M_SHAMAN_MOU } from './missions/shaman.mjs';
+import { RODEUR, RODEUR2, RODEUR3 } from './characters/rodeur.mjs';
+import { M_RODEUR } from './missions/rodeur.mjs';
+import { MissionID } from '../missions/missionList.mjs';
+import { Npc } from './npc.mjs';
+import { itemList } from '../item/ItemList.mjs';
 
-export const npcList = {
+export const npcList: Record<string, Npc> = {
 	ALPHA: {
 		name: 'alpha_test',
 		id: 0,
@@ -229,5 +234,48 @@ export const npcList = {
 		missions: M_HULOT,
 		condition: undefined,
 		flashvars: undefined
+	},
+	RODEUR: {
+		name: 'rodeur',
+		id: 22,
+		placeId: placeList.FORGES_DU_GTC.placeId,
+		data: RODEUR,
+		missions: M_RODEUR,
+		condition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ } },
+				{ [ConditionEnum.MINLEVEL]: 15 }
+			]
+		},
+		flashvars: undefined
+	},
+	RODEUR2: {
+		name: 'rodeur2',
+		id: 23,
+		placeId: placeList.FORGES_DU_GTC.placeId,
+		data: RODEUR2,
+		missions: M_RODEUR,
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ },
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF } },
+				{ [ConditionEnum.MINLEVEL]: 20 }
+			]
+		},
+		flashvars: undefined
+	},
+	RODEUR3: {
+		name: 'rodeur3',
+		id: 24,
+		placeId: placeList.FORGES_DU_GTC.placeId,
+		data: RODEUR3,
+		missions: undefined,
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF },
+				{ [Operator.NOT]: { [ConditionEnum.POSSESS_OBJECT]: itemList.TIK_BRACELET.itemId } }
+			]
+		},
+		flashvars: undefined
 	}
-} as const;
+};

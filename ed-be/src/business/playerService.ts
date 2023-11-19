@@ -14,6 +14,7 @@ import { Dinoz } from '../entity/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
 
 /**
  * @summary Get data from player on login
@@ -41,7 +42,8 @@ export async function getCommonData(req: Request): Promise<PlayerCommonData> {
 				maxExperience: levelList.find(level => level.id === dinoz.level)!.experience,
 				placeId: dinoz.placeId,
 				level: dinoz.level,
-				order: dinoz.order
+				order: dinoz.order,
+				race: Object.values(raceList).find(race => race.raceId === dinoz.raceId)
 			};
 		}),
 		id: playerCommonData.id,

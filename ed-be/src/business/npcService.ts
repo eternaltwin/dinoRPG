@@ -4,7 +4,6 @@ import { getDinozNPCRequest } from '../dao/dinozDao.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
-import { Place } from '@drpg/core/models/place/Place';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
 import { Condition } from '@drpg/core/models/npc/NpcConditions';
@@ -15,6 +14,7 @@ import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
+import { getAllInformationFromPlayer } from '../dao/playerDao.js';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId: number = parseInt(req.params.dinozId);
@@ -22,10 +22,12 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	let nextStepWanted: string = req.body.step;
 
 	let dinoz: Dinoz | null = await getDinozNPCRequest(dinozId);
+	let player = await getAllInformationFromPlayer(req.auth!.playerId!);
 
-	if (!dinoz) {
-		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	if (!dinoz || !player) {
+		throw new ErrorFormator(500, `Player ${req.auth!.playerId} doesn't exist.`);
 	}
+	dinoz.player = player;
 
 	// Check if dinoz belongs to player who do the request
 	if (dinoz.player.id !== req.auth!.playerId) {
@@ -37,6 +39,10 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	if (!pnj) {
 		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
+	}
+
+	if (pnj.condition && !checkCondition(pnj.condition, dinoz)) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} don't meet requirement to talk to ${pnj.name}.`);
 	}
 	if (actualPlace!.placeId !== pnj!.placeId && !req.body.stop) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);

@@ -110,7 +110,7 @@ export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz | nul
 export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz | null> {
 	return dinozRepository
 		.createQueryBuilder('dinoz')
-		.select(['dinoz.id', 'dinoz.level', 'dinoz.placeId'])
+		.select(['dinoz.id', 'dinoz.level', 'dinoz.placeId', 'dinoz.experience'])
 		.addSelect(['player.id', 'player.money'])
 		.addSelect(['status.statusId'])
 		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
@@ -222,13 +222,10 @@ export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz | null>
 	return dinozRepository
 		.createQueryBuilder('dinoz')
 		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name', 'dinoz.level', 'dinoz.placeId'])
-		.addSelect(['player.id', 'player.money'])
 		.addSelect(['skills.skillId'])
 		.addSelect(['items.itemId'])
 		.addSelect(['status.statusId'])
 		.addSelect(['npc.npcId', 'npc.step'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoinAndSelect('player.rewards', 'rewards')
 		.leftJoinAndSelect('dinoz.missions', 'missions')
 		.leftJoin('dinoz.skills', 'skills')
 		.leftJoin('dinoz.items', 'items')

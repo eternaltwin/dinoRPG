@@ -30,7 +30,8 @@ export enum ConditionEnum {
 	PLACE_IS = 'place_is',
 	NEXT_PLACE = 'next_place',
 	OVERWRITE = 'overwrite',
-	DINOZ_LIFE = 'dinoz_life'
+	DINOZ_LIFE = 'dinoz_life',
+	KILL_BOSS = 'kill_boss'
 }
 
 export enum TriggerEnum {

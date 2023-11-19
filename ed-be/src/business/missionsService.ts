@@ -133,6 +133,7 @@ export async function interactMission(req: Request): Promise<string> {
 
 export async function endMission(req: Request): Promise<Array<Rewarder>> {
 	const mission = await checkMission(req);
+	console.log(mission);
 
 	await rewarder(mission.missionReference.rewards, mission.dinoz);
 	await finishMission(mission.dinoz.id, mission.dinozMission.missionId);
@@ -225,7 +226,7 @@ export function getHUDObjective(dinoz: Dinoz): MissionHUD | undefined {
 	}
 }
 
-function getActualStep(dinoz: Dinoz): MissionSteps | undefined {
+export function getActualStep(dinoz: Dinoz): MissionSteps | undefined {
 	const missionDinoz: DinozMission | undefined = dinoz.missions.find(mission => !mission.isFinished);
 	if (!missionDinoz) {
 		return;
@@ -288,7 +289,7 @@ export async function checkMissionFight(dinoz: Dinoz, fight: FightResult): Promi
 	}
 }
 
-async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualStep: MissionSteps): Promise<void> {
+export async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualStep: MissionSteps): Promise<void> {
 	if (actualStep.requirement.actionType !== ConditionEnum.KILL) return;
 	const progressTarget = actualStep.requirement.value;
 

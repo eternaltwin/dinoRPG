@@ -6,7 +6,7 @@ export interface MissionList {
 }
 
 export enum MissionID {
-	INIT,
+	TODO,
 	// PAPY
 	PAPY_JOE_FISH,
 	PAPY_JOE_DOG,
@@ -60,5 +60,8 @@ export enum MissionID {
 	HULOT_TOXIC,
 	HULOT_MAP,
 	HULOT_HUCURE,
-	HULOT_BCKPCK
+	HULOT_BCKPCK,
+	// RODEUR ETRANGE
+	RODEUR_RODRIZ,
+	RODEUR_RODLIF
 }

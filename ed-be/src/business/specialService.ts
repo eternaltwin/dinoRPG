@@ -3,7 +3,7 @@ import { Concentration, Dinoz, Player } from '../entity/index.js';
 import { prepareConcentration } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getConcentration, removeConcentration, setConcentration } from '../dao/concentrationDao.js';
-import { getDinozConcentrationRequest, setMultipleDinoz } from '../dao/dinozDao.js';
+import { getDinozConcentrationRequest, setDinoz, setMultipleDinoz } from '../dao/dinozDao.js';
 import { specialActions } from '../constants/specialActions.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
@@ -11,6 +11,9 @@ import { calculateFight, rewardFight } from './fightService.js';
 import { rewarder } from '../utils/rewarder.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { getActualStep } from './missionsService.js';
+import { updateMissionStep } from '../dao/dinozMissionDao.js';
 
 export async function concentrate(req: Request) {
 	const player: Player | null = await prepareConcentration(req.auth!.playerId!);
@@ -103,6 +106,26 @@ export async function mouvementListener(dinoz: Dinoz, finalPlace: number): Promi
 		} else {
 			await rewarder(potentialSpecialActions.reward, dinoz);
 			//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
+		}
+	}
+	const dinozMission = dinoz.missions.find(m => !m.isFinished);
+	// const isMissionSpecial = Object.values(missionsList).find(mission => mission)
+	if (dinozMission) {
+		const actualStep = getActualStep(dinoz);
+		const placeName = Object.values(placeList).find(place => place.placeId === finalPlace)?.name;
+		if (
+			actualStep &&
+			placeName &&
+			actualStep.place === placeName &&
+			actualStep.requirement.actionType === ConditionEnum.KILL_BOSS
+		) {
+			const fightResult: FightProcessResult = calculateFight(dinoz, actualStep.requirement.target);
+			const result = await rewardFight(dinoz, actualStep.requirement.target, fightResult);
+			if (fightResult.winner) {
+				await updateMissionStep(dinoz.id, dinozMission.missionId, actualStep.stepId + 1);
+				await setDinoz(dinoz.setPlace(finalPlace));
+			}
+			return result;
 		}
 	}
 	return false;

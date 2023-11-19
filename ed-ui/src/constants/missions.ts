@@ -52,5 +52,8 @@ export const missionsList: Record<number, string> = {
 	45: 'toxic',
 	46: 'map',
 	47: 'hucure',
-	48: 'bckpck'
+	48: 'bckpck',
+	//RODEUR
+	49: 'rodriz',
+	50: 'rodlif'
 };

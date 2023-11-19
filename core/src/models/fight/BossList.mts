@@ -81,5 +81,56 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		odds: 1,
 		level: 10,
 		zone: MapZone.ILES
+	},
+	PTEROZ: {
+		name: 'pteroz',
+		hp: 70,
+		elements: {
+			fire: 4,
+			wood: 1,
+			water: 0,
+			lightning: 2,
+			air: 3
+		},
+		gold: 1000,
+		xp: 50,
+		odds: 1,
+		level: 7,
+		zone: MapZone.ALL,
+		skills: [11102, 11103, 41102, 11101, 51105]
+	},
+	HIPPOCLAMP: {
+		name: 'hippo',
+		hp: 70,
+		elements: {
+			fire: 2,
+			wood: 4,
+			water: 3,
+			lightning: 1,
+			air: 1
+		},
+		gold: 1000,
+		xp: 50,
+		odds: 1,
+		level: 7,
+		zone: MapZone.ALL,
+		skills: [21101, 21102, 31101, 21103]
+	},
+	ROCKY: {
+		name: 'rocky',
+		hp: 100,
+		elements: {
+			fire: 1,
+			wood: 2,
+			water: 3,
+			lightning: 6,
+			air: 3
+		},
+		gold: 1000,
+		xp: 50,
+		odds: 1,
+		level: 12,
+		zone: MapZone.ALL,
+		skills: [21101, 41102, 41301, 41103, 41204]
 	}
 };

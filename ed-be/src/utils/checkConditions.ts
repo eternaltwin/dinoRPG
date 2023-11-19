@@ -12,8 +12,9 @@ export function checkCondition(condition: Condition | undefined, dinoz: Dinoz): 
 			conditionResult = conditionResult && checkCondition(subCondition, dinoz);
 		}
 	} else if (condition[Operator.OR]) {
+		conditionResult = false;
 		for (const subCondition of condition[Operator.OR]) {
-			conditionResult = conditionResult || checkCondition(subCondition, dinoz);
+			conditionResult = checkCondition(subCondition, dinoz) || conditionResult;
 		}
 	} else if (condition[Operator.NOT]) {
 		conditionResult = !checkCondition(condition[Operator.NOT], dinoz);
