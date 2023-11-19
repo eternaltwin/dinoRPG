@@ -80,7 +80,7 @@ export async function getEternalTwinId(playerId: number): Promise<Player | null>
 export async function getCommonDataRequest(playerId: number): Promise<Player | null> {
 	return playerRepository
 		.createQueryBuilder('player')
-		.select(['player.id', 'player.money'])
+		.select(['player.id', 'player.name', 'player.money'])
 		.addSelect([
 			'dinoz.id',
 			'dinoz.following',

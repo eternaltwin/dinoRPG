@@ -6,7 +6,7 @@ import { Request } from 'express';
 import { getGlobalMissionsData } from '../dao/dinozDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { deleteOffer, getOffers, insertOffer } from '../dao/offerDao.js';
+import { addBid, deleteOffer, getOffer, getOffers, insertOffer } from '../dao/offerDao.js';
 import { Offer } from '@drpg/core/returnTypes/Offer';
 
 /**
@@ -15,7 +15,7 @@ import { Offer } from '@drpg/core/returnTypes/Offer';
 export async function getOfferList(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ErrorFormator(500, 'missingUser');
 	}
 
 	const filter = req.params.filter;
@@ -35,7 +35,7 @@ export async function getOfferList(req: Request) {
 export async function createOffer(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ErrorFormator(500, 'missingUser');
 	}
 
 	const dinozId = req.body.dinoz ? +req.body.dinoz : null;
@@ -68,19 +68,17 @@ export async function createOffer(req: Request) {
 export async function cancelOffer(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ErrorFormator(500, 'missingUser');
 	}
 
 	const offerId = +req.params.offerId;
 
 	// Get user current offers
-	const offers = await getOffers(req.auth.playerId, 'all', req.auth.playerId, null, false);
+	const offer = await getOffer(offerId);
 
 	// Check if user is the seller
-	const offer = offers.find(offer => offer.id === offerId);
-
-	if (!offer) {
-		throw new ErrorFormator(500, 'Offer not found');
+	if (!offer || offer.seller.id !== req.auth.playerId) {
+		throw new ErrorFormator(500, 'invalidOffer');
 	}
 
 	const { dinoz, items: itemsAndIngredients } = offer;
@@ -93,8 +91,59 @@ export async function cancelOffer(req: Request) {
 
 	// TODO: Add items to inventory
 	// TODO: Add ingredients to inventory
+	// TODO: Reimburse bidders
 
 	// Delete offer
 	await deleteOffer(offerId);
 }
 
+/**
+ * Bid on an offer
+ */
+export async function bidOffer(req: Request) {
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'missingUser');
+	}
+
+	const playerId = req.auth.playerId;
+
+	const offerId = +req.params.offerId;
+	const value = +req.body.value;
+
+	// Get user current offers
+	const offer = await getOffer(offerId);
+
+	// Check if user is the seller
+	if (!offer || offer.seller.id === playerId) {
+		throw new ErrorFormator(400, 'invalidOffer');
+	}
+
+	// TODO: Check if user has enough ticket in inventory
+
+	// Get previous own bid value
+	const previousOwnBid = offer.bids.filter(bid => bid.user.id === playerId).pop()?.value || 0;
+
+	// Cancel if bid is lower or equal to previous bid
+	if (value <= previousOwnBid) {
+		throw new ErrorFormator(400, 'bidIsLower');
+	}
+
+	// Cancel if bid is lower than offer total
+	if (value < offer.total / 1000) {
+		throw new ErrorFormator(400, 'bidIsLower');
+	}
+
+	// Cancel if bid is lower than previous bid + 1
+	if (offer.bids.length && value < offer.bids[offer.bids.length - 1].value + 1) {
+		throw new ErrorFormator(400, 'bidIsLower');
+	}
+
+	// Add bid
+	await addBid(offerId, req.auth.playerId, value);
+
+	// Remove bid difference from inventory
+	const bidDifference = value - previousOwnBid;
+
+	// TODO: Remove bid difference from inventory
+}

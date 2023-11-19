@@ -35,5 +35,13 @@ export const OfferService = {
 			.delete(`/offer/${offerId}`)
 			.then(() => Promise.resolve())
 			.catch(err => Promise.reject(err));
+	},
+	bidOffer(offerId: number, value: number) {
+		return http()
+			.post(`/offer/${offerId}/bid`, {
+				value
+			})
+			.then(() => Promise.resolve())
+			.catch(err => Promise.reject(err));
 	}
 };

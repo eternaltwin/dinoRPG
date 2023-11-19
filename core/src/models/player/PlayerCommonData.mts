@@ -6,5 +6,6 @@ export interface PlayerCommonData {
 	dinoz: Array<DinozFiche>;
 	dinozCount: number;
 	id: number;
+	name: string;
 	playerOptions: PlayerOptions;
 }

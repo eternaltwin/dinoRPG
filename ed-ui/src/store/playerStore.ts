@@ -6,6 +6,7 @@ export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
 		money: 0,
 		playerId: undefined,
+		playerName: '',
 		playerOptions: {
 			hasPDA: false,
 			hasPMI: false
@@ -25,6 +26,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setPlayerId(playerId: number): void {
 			this.playerId = playerId;
+		},
+		setPlayerName(playerName: string): void {
+			this.playerName = playerName;
 		},
 		setPlayerOptions(playerOptions: PlayerOptions): void {
 			this.playerOptions = playerOptions;

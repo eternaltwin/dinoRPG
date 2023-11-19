@@ -4,7 +4,7 @@ import { getGlobalMissions } from '../business/missionsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { cancelOffer, createOffer, getOfferList } from '../business/offerService.js';
+import { bidOffer, cancelOffer, createOffer, getOfferList } from '../business/offerService.js';
 
 const routes: Router = Router();
 
@@ -80,6 +80,31 @@ routes.delete(
 			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(500).send(e.message);
+		}
+	}
+);
+
+// Bid on an offer
+routes.post(
+	`${commonPath}/:offerId/bid`,
+	[
+		param('offerId').exists().isInt(),
+		body('value').exists().isInt(),
+	],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await bidOffer(req);
+			return res.status(200).send({
+				message: 'Bid placed',
+			});
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );

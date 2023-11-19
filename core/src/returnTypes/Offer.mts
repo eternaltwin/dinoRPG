@@ -14,6 +14,7 @@ export type Offer = {
 		quantity: number;
 		isIngredient: boolean;
 	}[];
+	total: number;
 	bids: {
 		user: {
 			id: number;

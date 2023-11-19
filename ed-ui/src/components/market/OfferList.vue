@@ -12,11 +12,11 @@
 		<tr>
 			<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
 			<th class="items-header">{{ $t('market.items') }}</th>
-			<th></th>
-			<th></th>
+			<th>{{ $t('market.details') }}</th>
+			<th class="bid-action-header"></th>
 		</tr>
 
-		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" />
+		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :updateOffer="updateOffer" />
 	</DZTable>
 	<DZDisclaimer help content="market.currency" />
 </template>
@@ -65,6 +65,9 @@ export default defineComponent({
 			this.filter = (event.target as HTMLSelectElement).value;
 
 			await this.fetchOffers();
+		},
+		updateOffer(offer: Omit<Offer, 'endDate'> & { endDate: Date }) {
+			this.offers = this.offers.map(o => (o.id === offer.id ? offer : o));
 		}
 	},
 	async mounted() {
@@ -85,5 +88,9 @@ export default defineComponent({
 
 .items-header {
 	width: 187px;
+}
+
+.bid-action-header {
+	width: 80px;
 }
 </style>

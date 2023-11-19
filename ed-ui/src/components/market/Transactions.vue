@@ -38,7 +38,7 @@
 	<div v-if="offers.length">
 		<h4>{{ $t('market.transactionView.yourActiveBids') }}</h4>
 		<DZTable>
-			<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" />
+			<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :updateOffer="updateOffer" />
 		</DZTable>
 	</div>
 	<DZDisclaimer v-else help content="market.transactionView.noActiveBid" />
@@ -110,6 +110,9 @@ export default defineComponent({
 				errorHandler.handle(error);
 				return;
 			}
+		},
+		updateOffer(offer: Omit<Offer, 'endDate'> & { endDate: Date }) {
+			this.offers = this.offers.map(o => (o.id === offer.id ? offer : o));
 		}
 	},
 	async mounted() {
@@ -190,7 +193,7 @@ table {
 	width: 187px;
 }
 
-:deep(.details) {
-	width: 50px;
+:deep(.bid-action) {
+	width: 80px;
 }
 </style>

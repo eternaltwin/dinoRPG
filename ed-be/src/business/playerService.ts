@@ -47,6 +47,7 @@ export async function getCommonData(req: Request): Promise<PlayerCommonData> {
 			};
 		}),
 		id: playerCommonData.id,
+		name: playerCommonData.name,
 		playerOptions: {
 			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PDA),
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PMI)

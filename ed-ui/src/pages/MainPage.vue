@@ -65,6 +65,7 @@ export default defineComponent({
 			this.dinozStore.setDinozList(commonData.dinoz);
 			this.dinozStore.setDinozCount(commonData.dinozCount);
 			this.playerStore.setPlayerId(commonData.id);
+			this.playerStore.setPlayerName(commonData.name);
 			this.playerStore.setPlayerOptions(commonData.playerOptions);
 			EventBus.emit('isLoading', false);
 		}

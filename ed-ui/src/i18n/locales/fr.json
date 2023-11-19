@@ -31,6 +31,8 @@
 		"selectADinozAtMarketFirst": "Vous devez d'abord sélectionner un Dinoz au marché.",
 		"unknownDinoz": "Dinoz inconnu",
 		"missingUser": "Utilisateur manquant",
+		"invalidOffer": "Offre invalide",
+		"bidIsLower": "Votre enchère est inférieure à la précédente.",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
@@ -3568,12 +3570,14 @@
 		"seller": "Vendeur",
 		"timeLeft": "Temps restant",
 		"auctionExpired": "Enchère expirée",
+		"minimumPrice": "Prix mini",
 		"highestBid": "Enchère actuelle",
 		"by": "par",
 		"details": "Détails",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Eleveurs peuvent être obtenus pour l'équivalent de **1** :ticket: **= 1000** :gold: à partir de la **Banque de Dinoland**",
 		"back": "Retour",
+		"bid": "Enchérir",
 		"sellView": {
 			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
 			"prepareYourOffer": "Préparez votre offre",

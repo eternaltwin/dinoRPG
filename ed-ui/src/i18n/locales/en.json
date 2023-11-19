@@ -25,6 +25,8 @@
 		"selectADinozAtMarketFirst": "You must select a dinoz at the market first.",
 		"unknownDinoz": "Unknown dinoz",
 		"missingUser": "Missing user",
+		"invalidOffer": "Invalid offer",
+		"bidIsLower": "Your bid is lower than the previous bid.",
 		"market": {
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
@@ -3073,12 +3075,14 @@
 		"seller": "Seller",
 		"timeLeft": "Time left",
 		"auctionExpired": "Auction expired",
+		"minimumPrice": "Minimum price",
 		"highestBid": "Highest bid",
 		"by": "by",
 		"details": "Details",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
 		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :ticket: **= 1000** :gold: from the **Dinoland Bank**.",
 		"back": "Back",
+		"bid": "Bid",
 		"sellView": {
 			"disclaimer": "Here you can build your offer, it will be submitted to the other Dinoz Masters. If you sell a Dinoz or items, they will be unavailable for the duration of the offer.",
 			"prepareYourOffer": "Prepare your offer",
