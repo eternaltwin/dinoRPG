@@ -3,36 +3,38 @@
 	<button @click="doAnimation('stand')">Pause</button>
 </template>
 
-<script lang="js">
+<script lang="ts">
 import { defineComponent } from 'vue';
-import * as drpgAnim from './dinorpg-animations.js';// eslint-disable-line
+import { sdino } from './dinorpg-animations.js';
+import { Application, Sprite } from 'pixi.js';
 
 export default defineComponent({
 	data() {
 		return {
-			pixiCanvas: {},
-			allDinoz: []
+			pixiCanvas: {} as Application,
+			allDinoz: [] as Array<sdino>
 		};
 	},
 	props: {
 		dinoz: { type: Object, required: true },
 		placeName: { type: String, required: true }
 	},
-	mounted() {
-		const canvas = document.getElementById('pixiCanvas');
+	mounted(): void {
+		const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
 
-		this.pixiCanvas = new DinoAnim.Application({
+		this.pixiCanvas = new Application({
 			width: 420,
 			height: 320,
 			background: '#FBDAA0',
 			view: canvas
 		});
 
-		this.pixiCanvas.stage.addChild(DinoAnim.Sprite.from(this.getBackground(this.placeName)));
+		this.pixiCanvas.stage.addChild(Sprite.from(this.getBackground(this.placeName)));
 
 		this.addDinozToCanvas(this.dinoz.display, 50, 250);
 
 		let elapsed = 0.0;
+
 		this.pixiCanvas.ticker.add(delta => {
 			elapsed += delta;
 			this.allDinoz[0].x = 50.0 + Math.cos(elapsed / 100.0) * 15.0;
@@ -44,19 +46,13 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		/**
-		 * @param {string} display
-		 * @param {number} posX
-		 * @param {number} posY
-		 * @return {void}
-		 */
-		addDinozToCanvas(display, posX, posY) {
-			const dinoz = new DinoAnim.sdino({
+		addDinozToCanvas(display: string, posX: number, posY: number): void {
+			const dinoz = new sdino({
 				data: display,
 				flip: 1,
 				pflag: true
 			});
-			const scale = 0.00428571 * this.dinoz.maxLife + 1.07143; //Calcul arbitraire pour que scale = 1.5 à 100HP et 3 à 450HP
+			const scale = 0.00428571 * this.dinoz.maxLife + 1.07143; // Calcul arbitraire pour que scale = 1.5 à 100HP et 3 à 450HP
 			dinoz.setTransform(0, 0, scale, scale);
 
 			this.pixiCanvas.stage.addChild(dinoz);
@@ -66,10 +62,7 @@ export default defineComponent({
 
 			this.allDinoz.push(dinoz);
 		},
-		/**
-		 * @param {string} animationType
-		 */
-		doAnimation(animationType) {
+		doAnimation(animationType: string): void {
 			for (const dinoz of this.allDinoz) {
 				if (animationType === 'stand') {
 					if (this.pixiCanvas.ticker.started) {
@@ -82,7 +75,7 @@ export default defineComponent({
 				}
 			}
 		},
-		getBackground(imgName) {
+		getBackground(imgName: string): string {
 			return new URL(`/src/assets/battle/${imgName}.webp`, import.meta.url).toString();
 		}
 	}
