@@ -62,7 +62,7 @@ import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import MissionInformationModal from '../../components/modal/MissionInformationModal.vue';
 
 export default defineComponent({
-	name: 'MissionHUDVue',
+	name: 'MissionHUD',
 	components: {
 		MissionInformationModal
 	},

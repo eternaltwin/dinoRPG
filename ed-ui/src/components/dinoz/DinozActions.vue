@@ -5,7 +5,7 @@
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<MissionHUDVue v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
+		<MissionHUD v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
 		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
 		<ul>
 			<table class="action_button">
@@ -92,10 +92,9 @@ import { mixin } from '../../mixin/mixin.js';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import Resurect from '../../components/modal/ResurrectModal.vue';
-import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
+import MissionHUD from '../../components/dinoz/MissionHUD.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 
@@ -119,7 +118,7 @@ export default defineComponent({
 	},
 	components: {
 		Resurect,
-		MissionHUDVue,
+		MissionHUD,
 		NPCModal,
 		MissionRewardModal
 	},
