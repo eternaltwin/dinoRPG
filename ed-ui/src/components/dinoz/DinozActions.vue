@@ -1,6 +1,6 @@
 <template>
 	<div class="actions">
-		<Ressurect :enabled="resurect" @close="resurect = false" />
+		<Resurect :enabled="resurect" @close="resurect = false" />
 		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
@@ -94,7 +94,7 @@ import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import { npcList } from '@drpg/core/models/npc/NpcList';
-import Ressurect from '../../components/modal/ResurrectModal.vue';
+import Resurect from '../../components/modal/ResurrectModal.vue';
 import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
@@ -118,7 +118,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Ressurect,
+		Resurect,
 		MissionHUDVue,
 		NPCModal,
 		MissionRewardModal
