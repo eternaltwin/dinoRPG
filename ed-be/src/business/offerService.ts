@@ -21,9 +21,10 @@ export async function getOfferList(req: Request) {
 	const filter = req.params.filter;
 	const sellerId = req.query.sellerId ? +req.query.sellerId : null;
 	const bidderId = req.query.bidderId ? +req.query.bidderId : null;
+	const expired = req.query.expired ? req.query.expired === 'true' : false;
 
 	// Get filtered offers
-	const offers = await getOffers(filter, sellerId, bidderId);
+	const offers = await getOffers(req.auth.playerId, filter, sellerId, bidderId, expired);
 
 	return offers;
 }
@@ -73,7 +74,7 @@ export async function cancelOffer(req: Request) {
 	const offerId = +req.params.offerId;
 
 	// Get user current offers
-	const offers = await getOffers('all', req.auth.playerId, null);
+	const offers = await getOffers(req.auth.playerId, 'all', req.auth.playerId, null, false);
 
 	// Check if user is the seller
 	const offer = offers.find(offer => offer.id === offerId);

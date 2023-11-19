@@ -17,6 +17,7 @@ routes.get(
 		param('filter').exists().isString(),
 		query('sellerId').optional().isInt(),
 		query('bidderId').optional().isInt(),
+		query('expired').optional().isBoolean(),
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {

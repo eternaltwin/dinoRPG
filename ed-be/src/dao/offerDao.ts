@@ -3,9 +3,11 @@ import { Offer } from '@drpg/core/returnTypes/Offer';
 // const offerRepository = AppDataSource.getRepository(Offer);
 
 export async function getOffers(
+	userId: number,
 	filter: string,
 	sellerId: number | null,
-	bidderId: number | null
+	bidderId: number | null,
+	expired: boolean
 ) {
 	const mockOffers: Offer[] = [
 		{
@@ -70,7 +72,47 @@ export async function getOffers(
 				name: 'test3'
 			},
 			bids: []
-		}
+		},
+		{
+			id: 4,
+			seller: {
+				id: 3,
+				name: 'test3'
+			},
+			items: [],
+			endDate: new Date('2023-10-01').toISOString(),
+			dinoz: {
+				name: 'test3'
+			},
+			bids: []
+		},
+		{
+			id: 5,
+			seller: {
+				id: 2,
+				name: 'tes2'
+			},
+			endDate: new Date('2023-10-08').toISOString(),
+			dinoz: {
+				name: 'test'
+			},
+			items: [
+				{ id: 22, quantity: 4, isIngredient: false },
+				{ id: 17, quantity: 4, isIngredient: false },
+				{ id: 13, quantity: 3, isIngredient: false },
+				{ id: 78, quantity: 1, isIngredient: false },
+				{ id: 60, quantity: 1, isIngredient: false },
+			],
+			bids: [
+				{
+					user: {
+						id: 1,
+						name: 'test'
+					},
+					value: 100
+				}
+			]
+		},
 	];
 
 	let offers = [...mockOffers];
@@ -79,6 +121,8 @@ export async function getOffers(
 		offers = offers.filter(offer => offer.dinoz);
 	} else if (filter === 'items') {
 		offers = offers.filter(offer => offer.items.length);
+	} else if (filter === 'own') {
+		offers = offers.filter(offer => offer.seller.id === userId || offer.bids.find(bid => bid.user.id === userId));
 	}
 
 	if (sellerId) {
@@ -87,6 +131,12 @@ export async function getOffers(
 
 	if (bidderId) {
 		offers = offers.filter(offer => offer.bids.find(bid => bid.user.id === bidderId));
+	}
+
+	if (expired) {
+		offers = offers.filter(offer => new Date(offer.endDate) < new Date());
+	} else {
+		offers = offers.filter(offer => new Date(offer.endDate) > new Date());
 	}
 
 	return offers;

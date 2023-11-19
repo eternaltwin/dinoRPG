@@ -3072,6 +3072,7 @@
 		"empty": "Empty",
 		"seller": "Seller",
 		"timeLeft": "Time left",
+		"auctionExpired": "Auction expired",
 		"highestBid": "Highest bid",
 		"by": "by",
 		"details": "Details",
@@ -3097,6 +3098,10 @@
 			"cancel": "Cancel",
 			"yourActiveBids": "Your active bids",
 			"noActiveBid": "You haven't bid on any offer yet."
+		},
+		"historyView": {
+			"lastOffers": "Here are the latest sales that were completed by players:",
+			"yourBids": "Your bids"
 		}
 	}
 }

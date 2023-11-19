@@ -25,11 +25,9 @@
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import DZTable from '../common/DZTable.vue';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { errorHandler, secondsToDhms } from '../../utils/index.js';
+import { errorHandler } from '../../utils/index.js';
 import { OfferService } from '../../services/OfferService.js';
 import { Offer } from '@drpg/core/returnTypes/Offer';
-import { goTo } from '../../utils/goTo.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import OfferLine from './OfferLine.vue';
 
@@ -40,9 +38,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			itemNameList,
-			secondsToDhms,
-			goTo,
 			now: Math.ceil(new Date().getTime() / 1000),
 			offers: [] as (Omit<Offer, 'endDate'> & { endDate: Date })[],
 			filter: 'all'

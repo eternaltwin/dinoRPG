@@ -38,7 +38,8 @@
 				<span class="time">
 					<img :src="getImgURL('design', 'small_chrono')" :alt="$t('market.timeLeft')" />
 					<Tippy theme="small">
-						{{ $t('market.time', secondsToDhms(Math.ceil(offer.endDate.getTime() / 1000) - now)) }}
+						<span v-if="offer.endDate.getTime() / 1000 <= now">{{ $t('market.auctionExpired') }}</span>
+						<span v-else>{{ $t('market.time', secondsToDhms(Math.ceil(offer.endDate.getTime() / 1000) - now)) }}</span>
 						<template #content>
 							{{ offer.endDate.toLocaleString() }}
 						</template>

@@ -3567,6 +3567,7 @@
 		"all": "Tout",
 		"seller": "Vendeur",
 		"timeLeft": "Temps restant",
+		"auctionExpired": "Enchère expirée",
 		"highestBid": "Enchère actuelle",
 		"by": "par",
 		"details": "Détails",
@@ -3592,6 +3593,10 @@
 			"cancel": "Annuler",
 			"yourActiveBids": "Vos mises en cours",
 			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
+		},
+		"historyView": {
+			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
+			"yourBids": "Vos mises"
 		}
 	}
 }
