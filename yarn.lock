@@ -1580,9 +1580,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@drpg/dinoAnimation@workspace:^, @drpg/dinoAnimation@workspace:dinoAnimation":
+"@drpg/dino-animation@workspace:^, @drpg/dino-animation@workspace:dinoAnimation":
   version: 0.0.0-use.local
-  resolution: "@drpg/dinoAnimation@workspace:dinoAnimation"
+  resolution: "@drpg/dino-animation@workspace:dinoAnimation"
   dependencies:
     "@pixi/filter-glow": "npm:^5.2.1"
     eslint: "npm:^8.49.0"
@@ -6587,7 +6587,7 @@ __metadata:
   resolution: "ed-ui@workspace:ed-ui"
   dependencies:
     "@drpg/core": "workspace:^"
-    "@drpg/dinoAnimation": "workspace:^"
+    "@drpg/dino-animation": "workspace:^"
     "@types/url-join": "npm:^4.0.2"
     "@types/vue-i18n": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.10.0"
