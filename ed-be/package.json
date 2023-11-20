@@ -11,10 +11,9 @@
     "build": "tsc --build ./tsconfig.json",
     "start": "yarn run build && node dist/index.js",
     "typeorm": "typeorm-ts-node-esm",
-    "run:migration": "yarn run build && typeorm-ts-node-esm migration:run -d dist/data-source.js",
     "migration:generate": "yarn typeorm migration:generate -d src/data-source.ts src/migration/${0}",
     "db:sync:dev": "prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
-    "db:sync:prod": "prisma migrate deploy"
+    "migration": "prisma migrate deploy"
   },
   "keywords": [
     "nodejs",
