@@ -14,6 +14,6 @@ export interface FightConfiguration {
 	is_balance_enabled: boolean;
 
 	// Fighters
-	attackers: Array<FighterFiche>;
-	defenders: Array<FighterFiche>;
+	attackers: FighterFiche[];
+	defenders: FighterFiche[];
 }

@@ -1,10 +1,9 @@
 import { Request, Response, Router } from 'express';
-import { apiRoutes } from '../constants/index.js';
-import { getAllIngredientsData } from '../business/ingredientService.js';
 import { validationResult } from 'express-validator';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { getAllIngredientsData } from '../business/ingredientService.js';
+import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
-import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -33,7 +32,7 @@ routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response: Array<Partial<IngredientFiche>> = await getAllIngredientsData(req);
+		const response = await getAllIngredientsData(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;

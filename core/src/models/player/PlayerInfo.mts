@@ -7,7 +7,7 @@ export interface PlayerInfo {
 	subscribeAt: string;
 	clan?: string;
 	playerName: string;
-	dinoz: Array<DinozFiche>;
-	epicRewards: Array<number>;
+	dinoz: DinozFiche[];
+	epicRewards: number[];
 	customText: string | null;
 }

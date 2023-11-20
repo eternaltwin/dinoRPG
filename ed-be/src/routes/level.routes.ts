@@ -1,11 +1,10 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
 import { apiRoutes } from '../constants/index.js';
-import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
-import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
 
 const routes: Router = Router();
 
@@ -51,7 +50,7 @@ routes.get(
 		}
 
 		try {
-			const response: Partial<DinozSkillOwnAndUnlockable> | undefined = await getLearnableAndUnlockableSkills(req);
+			const response = await getLearnableAndUnlockableSkills(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -117,7 +116,7 @@ routes.post(
 		}
 
 		try {
-			const response: number = await learnSkill(req);
+			const response = await learnSkill(req);
 			return res.status(200).send(response.toString());
 		} catch (err) {
 			const e = err as ErrorFormator;

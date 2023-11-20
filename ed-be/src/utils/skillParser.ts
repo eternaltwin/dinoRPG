@@ -1,11 +1,12 @@
 import { SkillEffects } from '@drpg/core/models/dinoz/DinozSkillFiche';
-import { setDinoz } from '../dao/dinozDao.js';
-import { Dinoz } from '../entity/index.js';
-import { SkillEffectType } from '@drpg/core/models/dinoz/SkillEffectType';
-import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
+import { updateDinoz } from '../dao/dinozDao.js';
+import { Dinoz } from '@drpg/prisma';
 
-async function effectParser(effects: SkillEffects, dinoz: Dinoz): Promise<void> {
+async function effectParser(
+	effects: SkillEffects,
+	dinoz: Pick<Dinoz, 'id' | 'maxLife'>
+) {
 	for (const [stat, value] of Object.entries(effects)) {
 		switch (stat) {
 			case Stat.MAX_HP:
@@ -15,7 +16,7 @@ async function effectParser(effects: SkillEffects, dinoz: Dinoz): Promise<void> 
 				break;
 		}
 	}
-	await setDinoz(dinoz);
+	await updateDinoz(dinoz.id, { maxLife: dinoz.maxLife });
 }
 
 export { effectParser };

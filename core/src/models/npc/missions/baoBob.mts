@@ -5,7 +5,7 @@ import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 import { rewardList } from '../../reward/RewardList.mjs';
 
-export const M_BAO_BOB: Array<Mission> = [
+export const M_BAO_BOB: Mission[] = [
 	// Missions 12 to 21
 	{
 		missionId: MissionID.BAO_BOB_KILPIR,

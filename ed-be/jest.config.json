@@ -18,7 +18,6 @@
     "/server.js",
     "/routes/",
     "/oauthService.js",
-    "/entity/",
     "/migration/",
     "/swagger-setup.js"
   ]

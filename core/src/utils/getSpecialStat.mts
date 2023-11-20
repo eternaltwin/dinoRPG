@@ -1,5 +1,4 @@
 import { DinozFiche } from "../models/dinoz/DinozFiche.mjs";
-import { levelList } from "../models/dinoz/DinozLevel.mjs";
 import { DinozSkillFiche } from "../models/dinoz/DinozSkillFiche.mjs";
 import { Skill } from "../models/dinoz/SkillList.mjs";
 import { ElementType } from "../models/enums/ElementType.mjs";
@@ -148,7 +147,7 @@ export const getSpecialStat = (
 				type: "skill",
 				name: skill.name,
 				percent,
-				elements: skill.element.map((el) => Object.entries(ElementType).find(([_, value]) => value === el)![0].toLocaleLowerCase()),
+				elements: skill.element.map((el) => Object.entries(ElementType).find(([, value]) => value === el)![0].toLocaleLowerCase()),
 				value: percent ? (effectValue * 100) : effectValue,
 			});
 		}

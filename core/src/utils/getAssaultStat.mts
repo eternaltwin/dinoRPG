@@ -1,7 +1,5 @@
 import { DinozFiche } from "../models/dinoz/DinozFiche.mjs";
-import { levelList } from "../models/dinoz/DinozLevel.mjs";
 import { DinozSkillFiche } from "../models/dinoz/DinozSkillFiche.mjs";
-import { skillList } from "../models/dinoz/SkillList.mjs";
 import { ElementType } from "../models/enums/ElementType.mjs";
 import { Stat } from "../models/enums/SkillStat.mjs";
 
@@ -66,7 +64,7 @@ export const getAssaultStat = (
 				details.push({
 					type: "skill",
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([key, value]) => value === element)![0].toLocaleLowerCase()),
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)![0].toLocaleLowerCase()),
 					value: effect,
 				});
 			} else {
@@ -96,7 +94,7 @@ export const getAssaultStat = (
 				details.push({
 					type: "skill",
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([_, value]) => value === element)![0].toLocaleLowerCase()),
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)![0].toLocaleLowerCase()),
 					value: otherElementValue,
 				});
 			}

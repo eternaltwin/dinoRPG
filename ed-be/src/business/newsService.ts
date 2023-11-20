@@ -1,7 +1,5 @@
 import { Request } from 'express';
 import { createNews, getBatchOfNews, updateAnyNews } from '../dao/newsDao.js';
-import { News } from '../entity/news.js';
-import { AllNews } from '@drpg/core/models/news/AllNews';
 
 /**
  * @summary Create a news
@@ -16,10 +14,9 @@ import { AllNews } from '@drpg/core/models/news/AllNews';
  * @param req.body.englishText {string} English text
  * @param req.body.spanishText {string} Spanish text
  * @param req.body.germanText {string} German text
- * @return void
  *  */
-export async function postNews(req: Request): Promise<void> {
-	const postedNews: Partial<News> = {
+export async function postNews(req: Request) {
+	await createNews({
 		title: req.params.title,
 		image: req.file?.buffer as Buffer,
 		frenchTitle: req.body.frenchTitle,
@@ -30,9 +27,7 @@ export async function postNews(req: Request): Promise<void> {
 		englishText: req.body.englishText,
 		spanishText: req.body.spanishText,
 		germanText: req.body.germanText
-	};
-
-	await createNews(postedNews);
+	});
 }
 
 /**
@@ -40,11 +35,10 @@ export async function postNews(req: Request): Promise<void> {
  * @param req
  * @param req.params.page {string} Number of the page
  * @param res
- * @return Array<News>
  */
-export async function getNews(req: Request): Promise<Array<AllNews>> {
-	const batch: Array<News> = await getBatchOfNews(parseInt(req.params.page));
-	const news = batch as unknown as Array<AllNews>;
+export async function getNews(req: Request) {
+	const news = await getBatchOfNews(+req.params.page);
+
 	return news;
 }
 
@@ -61,10 +55,9 @@ export async function getNews(req: Request): Promise<Array<AllNews>> {
  * @param req.body.englishText {string} English text to update
  * @param req.body.spanishText {string} Spanish text to update
  * @param req.body.germanText {string} German text to update
- * @return void
  */
-export async function updateNews(req: Request): Promise<void> {
-	const updatedNews: Partial<News> = {
+export async function updateNews(req: Request) {
+	await updateAnyNews(req.params.title, {
 		image: req.file?.buffer,
 		frenchTitle: req.body.frenchTitle,
 		englishTitle: req.body.englishTitle,
@@ -74,7 +67,5 @@ export async function updateNews(req: Request): Promise<void> {
 		englishText: req.body.englishText,
 		spanishText: req.body.spanishText,
 		germanText: req.body.germanText
-	};
-
-	await updateAnyNews(req.params.title, updatedNews);
+	});
 }

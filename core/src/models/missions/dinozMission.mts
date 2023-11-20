@@ -3,7 +3,7 @@ import { DinozFiche } from '../dinoz/DinozFiche.mjs';
 export interface DinozMission {
 	id: number;
 
-	dinoz: Array<DinozFiche>;
+	dinoz: DinozFiche[];
 
 	missionId: number;
 

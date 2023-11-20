@@ -1,13 +1,13 @@
-import { GatherData } from '@drpg/core/models/gather/gatherData';
-import { ConditionEnum, Operator } from '@drpg/core/models/enums/Parser';
-import { ingredientList } from './ingredient.js';
-import { GatherType } from '@drpg/core/models/enums/GatherType';
-import { placeList } from '@drpg/core/models/place/PlaceList';
-import { itemList } from '@drpg/core/models/item/ItemList';
-import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Action } from '@drpg/core/models/dinoz/ActionList';
+import { GatherData } from './gatherData.mjs';
+import { ConditionEnum, Operator } from '../enums/Parser.mjs';
+import { GatherType } from '../enums/GatherType.mjs';
+import { placeList } from '../place/PlaceList.mjs';
+import { itemList } from '../item/ItemList.mjs';
+import { Skill, skillList } from '../dinoz/SkillList.mjs';
+import { Action } from '../dinoz/ActionList.mjs';
+import { ingredientList } from '../ingredient/ingredientList.mjs';
 
-export const gather: Record<GatherType, GatherData> = {
+export const gatherList: Record<GatherType, GatherData> = {
 	[GatherType.FISH]: {
 		action: Action.FISH,
 		type: GatherType.FISH,

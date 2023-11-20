@@ -1,10 +1,9 @@
+import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { getRanking } from '../business/rankingService.js';
 import { apiRoutes } from '../constants/index.js';
-import { Request, Response, Router } from 'express';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError } from '../utils/discord.js';
-import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -50,7 +49,7 @@ routes.get(
 		}
 
 		try {
-			const response: Array<PlayerRanking> = await getRanking(req);
+			const response = await getRanking(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

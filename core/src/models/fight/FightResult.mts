@@ -1,7 +1,7 @@
 import { FighterResultFiche } from './FighterFiche.mjs';
 
 export interface FightResult {
-	opponent: Array<string>;
+	opponent: string[];
 	goldEarned: number;
 	xpEarned: number;
 	hpLost: number;
@@ -17,9 +17,9 @@ export interface FightProcessResult {
 	// Seed used to generate random in the fight
 	seed: number;
 	// List of attackers
-	attackers: Array<FighterResultFiche>;
+	attackers: FighterResultFiche[];
 	// List of defenders
-	defenders: Array<FighterResultFiche>;
+	defenders: FighterResultFiche[];
 	// History of the fight
 	history: string;
 }

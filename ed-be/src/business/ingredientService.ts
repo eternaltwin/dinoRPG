@@ -1,8 +1,6 @@
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Request } from 'express';
 import { getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
-import { PlayerIngredient } from '../entity/index.js';
-import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
-import { ingredientList } from '../constants/index.js';
 
 /**
  * Get all the ingredients from a player
@@ -10,13 +8,16 @@ import { ingredientList } from '../constants/index.js';
  * @returns Array<IngredientFiche>
  * 				An array with all ingredients that player owns
  */
-export async function getAllIngredientsData(req: Request): Promise<Array<Partial<IngredientFiche>>> {
-	const allIngredientsData: Array<PlayerIngredient> = await getAllIngredientsDataRequest(req.auth!.playerId!);
+export async function getAllIngredientsData(req: Request) {
+	if (!req.auth?.playerId) throw new Error('No auth data');
+	const allIngredientsData = await getAllIngredientsDataRequest(req.auth.playerId);
 
-	const ingredients: Array<Partial<IngredientFiche>> = allIngredientsData.map(ingr => {
-		const ingredientFound: [string, IngredientFiche] = Object.entries(ingredientList).find(
+	const ingredients = allIngredientsData.map(ingr => {
+		const ingredientFound = Object.entries(ingredientList).find(
 			([, value]) => value.ingredientId === ingr.ingredientId
-		)!;
+		);
+
+		if (!ingredientFound) throw new Error('Ingredient not found');
 
 		return {
 			name: ingredientFound[0].toLowerCase() as Lowercase<string>,

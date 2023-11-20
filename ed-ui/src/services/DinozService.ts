@@ -85,7 +85,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	gatherWithDinoz(dinozId: number, gridType: GatherType, box: Array<Array<number>>): Promise<GatherResult> {
+	gatherWithDinoz(dinozId: number, gridType: GatherType, box: number[][]): Promise<GatherResult> {
 		return http()
 			.put(`/dinoz/gather/${dinozId}`, {
 				type: gridType,

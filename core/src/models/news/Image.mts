@@ -1,4 +1,4 @@
 export interface Image {
-	data: Array<number>;
+	data: number[];
 	type: string;
 }

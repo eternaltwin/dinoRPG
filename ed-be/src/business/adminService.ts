@@ -1,24 +1,18 @@
 import { Request } from 'express';
-import { addMoney, getAllInformationFromPlayer, getEternalTwinId, getPlayerMoney, removeMoney, setPlayer } from '../dao/playerDao.js';
-import { Dinoz } from '../entity/dinoz.js';
-import { Player } from '../entity/player.js';
-import { getAllDinozFromAccount, setDinoz } from '../dao/dinozDao.js';
-import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
+import { getAllDinozFromAccount, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
-import { DinozStatus, PlayerReward, DinozSkill, Secret } from '../entity/index.js';
+import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
+import { addMoney, getAllInformationFromPlayer, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
 import { addMultipleRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
-import { SecretData } from '@drpg/core/models/admin/SecretData';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Check if user can access the admin dashboard
  * @param req
  * @return boolean
  */
-export async function getAdminDashBoard(req: Request): Promise<boolean> {
+export async function getAdminDashBoard(): Promise<boolean> {
 	return true;
 }
 
@@ -40,9 +34,8 @@ export async function getAdminDashBoard(req: Request): Promise<boolean> {
  * @param req.body.addSkill {number} Skill to add to the dinoz
  * @param req.body.removeSkill {number} Skill to remove to the dinoz
  */
-export async function editDinoz(req: Request): Promise<void> {
-	const dinoz: Partial<Dinoz> = {
-		id: parseInt(req.params.id),
+export async function editDinoz(req: Request) {
+	const dinoz = {
 		name: req.body.name,
 		canChangeName: req.body.canChangeName,
 		isFrozen: req.body.isFrozen,
@@ -54,9 +47,9 @@ export async function editDinoz(req: Request): Promise<void> {
 		experience: req.body.experience
 	};
 
-	await setDinoz(dinoz);
+	await updateDinoz(+req.params.id, dinoz);
 
-	const statusList: Array<number> = req.body.status;
+	const statusList: number[] = req.body.status;
 	if (statusList.length > 0 && req.body.statusOperation) {
 		switch (req.body.statusOperation) {
 			case 'add':
@@ -72,19 +65,15 @@ export async function editDinoz(req: Request): Promise<void> {
 		}
 	}
 
-	const skillList: Array<number> = req.body.skill;
+	const skillList: number[] = req.body.skill;
 	if (skillList.length > 0 && req.body.skillOperation) {
 		switch (req.body.skillOperation) {
 			case 'add':
-				const skillsToAdd: Array<DinozSkill> = skillList.map(
-					skill => new DinozSkill(new Dinoz(parseInt(req.params.id)), skill)
-				);
-				await addMultipleSkillToDinoz(skillsToAdd);
+				await addMultipleSkillToDinoz(+req.params.id, skillList);
 				break;
 			case 'remove':
-				for (const skill of skillList) {
-					await removeSkillFromDinoz(parseInt(req.params.id), skill);
-				}
+				const promises = skillList.map(skill => removeSkillFromDinoz(+req.params.id, skill));
+				await Promise.all(promises);
 				break;
 			default:
 				throw new ErrorFormator(500, `You need to select an operation.`);
@@ -129,18 +118,17 @@ export async function setPlayerMoney(req: Request) {
  * @return void
  */
 export async function givePlayerEpicReward(req: Request): Promise<void> {
-	const rewardList: Array<number> = req.body.epicRewardId;
+	const rewardList: number[] = req.body.epicRewardId;
 	switch (req.body.operation) {
 		case 'add':
-			const rewardsToAdd: Array<PlayerReward> = rewardList.map(
-				rewards => new PlayerReward(new Player(parseInt(req.params.id)), rewards)
-			);
-			await addMultipleRewardToPlayer(rewardsToAdd);
+			await addMultipleRewardToPlayer(rewardList.map(reward => ({
+				playerId: +req.params.id,
+				rewardId: reward
+			})));
 			break;
 		case 'remove':
-			for (const reward of rewardList) {
-				await removeRewardFromPlayer(parseInt(req.params.id), reward);
-			}
+			const promises = rewardList.map(reward => removeRewardFromPlayer(+req.params.id, reward));
+			await Promise.all(promises);
 			break;
 		default:
 			throw new ErrorFormator(500, `You need to select an operation.`);
@@ -151,11 +139,10 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
  * @summary List all dinoz from a player
  * @param req
  * @param req.params.id {string} PlayerId
- * @return Array<DinozFiche>
  */
-export async function listAllDinozFromPlayer(req: Request): Promise<Array<DinozFiche>> {
-	const dinozList: Array<Dinoz> = await getAllDinozFromAccount(parseInt(req.params.id));
-	const dinozListToSend: Array<DinozFiche> = dinozList.map(dinoz => {
+export async function listAllDinozFromPlayer(req: Request) {
+	const dinozList = await getAllDinozFromAccount(parseInt(req.params.id));
+	const dinozListToSend = dinozList.map(dinoz => {
 		return {
 			id: dinoz.id,
 			name: dinoz.name,
@@ -191,7 +178,7 @@ export async function listAllDinozFromPlayer(req: Request): Promise<Array<DinozF
  * @param req.body.priest {boolean}
  * @param req.body.teacher {boolean}
  */
-export async function editPlayer(req: Request): Promise<void> {
+export async function editPlayer(req: Request) {
 	const player = {
 		hasImported: req.body.hasImported,
 		customText: req.body.customText,
@@ -212,15 +199,14 @@ export async function editPlayer(req: Request): Promise<void> {
  * @summary List all information from a player
  * @param req
  * @param req.params.id {number} PlayerId
- * @return Partial<PlayerTypeToSend>
  */
-export async function listAllPlayerInformationForAdminDashboard(req: Request): Promise<Partial<PlayerTypeToSend>> {
-	const player: Player | null = await getAllInformationFromPlayer(parseInt(req.params.id));
+export async function listAllPlayerInformationForAdminDashboard(req: Request) {
+	const player = await getAllInformationFromPlayer(+req.params.id);
 	if (!player) {
 		throw new ErrorFormator(500, `Player ${req.params.id} doesn't exist.`);
 	}
 
-	const playerToSend: Partial<PlayerTypeToSend> = {
+	const playerToSend = {
 		id: player.id,
 		hasImported: player.hasImported,
 		customText: player.customText,
@@ -244,14 +230,13 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request): P
 
 /**
  * @summary Get all secrets stored
- * @return Array<SecretData>
  */
-export async function getAllSecrets(): Promise<Array<SecretData>> {
-	const secrets: Array<Secret> = await getAllSecretsRequest();
-	const response: Array<SecretData> = secrets.map(secret => {
+export async function getAllSecrets() {
+	const secrets = await getAllSecretsRequest();
+	const response = secrets.map(secret => {
 		return {
 			key: secret.key,
-			value: secret.value
+			value: secret.value,
 		};
 	});
 	return response;
@@ -259,16 +244,13 @@ export async function getAllSecrets(): Promise<Array<SecretData>> {
 
 /**
  * @summary Add a secret to the store
- * @return Array<SecretData>
  */
-export async function addSecret(req: Request): Promise<Array<SecretData>> {
-	await addNewSecret(new Secret(req.body.key, req.body.value));
-	const secrets: Array<Secret> = await getAllSecretsRequest();
-	const response: Array<SecretData> = secrets.map(secret => {
-		return {
-			key: secret.key,
-			value: secret.value
-		};
+export async function addSecret(req: Request) {
+	await addNewSecret({
+		key: req.body.key,
+		value: req.body.value
 	});
-	return response;
+	const secrets = await getAllSecretsRequest();
+
+	return secrets;
 }

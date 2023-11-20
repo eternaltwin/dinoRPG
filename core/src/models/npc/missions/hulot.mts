@@ -5,7 +5,7 @@ import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 
-export const M_HULOT: Array<Mission> = [
+export const M_HULOT: Mission[] = [
 	// Missions 44 to 48
 	{
 		missionId: MissionID.HULOT_SEQACT,

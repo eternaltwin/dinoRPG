@@ -1,4 +1,4 @@
-import { NPC } from '@drpg/prisma';
+import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
 const getDinozStep = async (dinozId: number, npcId: number) => {
@@ -13,9 +13,12 @@ const getDinozStep = async (dinozId: number, npcId: number) => {
 	return npc;
 };
 
-const createDinozStep = async (npc: NPC) => {
+const createDinozStep = async (dinozId: number, npc: Prisma.NPCCreateInput) => {
 	const createdNpc = await prisma.nPC.create({
-		data: npc
+		data: {
+			dinoz: { connect: { id: dinozId } },
+			...npc
+		},
 	});
 
 	return createdNpc;

@@ -16,7 +16,7 @@ function getRandomNumber(min: number, max: number) {
  * @return string
  */
 function getRandomLetter(maxLetter: string): string {
-	const allLetters: string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	const allLetters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	const lettersAvailable: string = allLetters.substring(0, allLetters.indexOf(maxLetter) + 1);
 
 	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
@@ -26,7 +26,7 @@ export function fromBase62(s: string) {
 	const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	let result = 0;
 	for (let i = 0; i < s.length; i++) {
-		let p = digits.indexOf(s[i]);
+		const p = digits.indexOf(s[i]);
 		if (p < 0) {
 			return NaN;
 		}

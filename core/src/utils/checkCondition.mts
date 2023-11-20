@@ -1,11 +1,14 @@
-import { Condition } from '@drpg/core/models/npc/NpcConditions';
-import { Dinoz } from '../entity/index.js';
-import { Operator } from '@drpg/core/models/enums/Parser';
-import { conditionParser } from './parser.js';
+import { DinozForConditionCheck } from '../constants.mjs';
+import { Operator } from '../models/enums/Parser.mjs';
+import { Condition } from '../models/npc/NpcConditions.mjs';
+import { conditionParser } from './parser.mjs';
 
-export function checkCondition(condition: Condition | undefined, dinoz: Dinoz): boolean {
+export function checkCondition(
+	condition: Condition | undefined,
+	dinoz: DinozForConditionCheck
+): boolean {
 	if (!condition) return true;
-	let conditionResult: boolean = true;
+	let conditionResult = true;
 
 	if (condition[Operator.AND]) {
 		for (const subCondition of condition[Operator.AND]) {

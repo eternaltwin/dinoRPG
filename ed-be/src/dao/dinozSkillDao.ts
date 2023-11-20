@@ -1,6 +1,4 @@
-import { DeleteResult, UpdateResult } from 'typeorm';
 import { prisma } from '../prisma.js';
-import { DinozSkill, Prisma } from '@drpg/prisma';
 
 export async function setSkillStateRequest(dinozId: number, skillId: number, state: boolean) {
 	await prisma.dinozSkill.update({
@@ -10,16 +8,22 @@ export async function setSkillStateRequest(dinozId: number, skillId: number, sta
 }
 
 //TODO
-export async function addSkillToDinoz(skill: Prisma.DinozSkillCreateInput) {
+export async function addSkillToDinoz(dinozId: number, skillId: number) {
 	await prisma.dinozSkill.create({
-		data: skill
+		data: {
+			dinozId,
+			skillId
+		}
 	});
 }
 
 //TODO
-export async function addMultipleSkillToDinoz(skills: Prisma.DinozSkillCreateManyInput[]) {
+export async function addMultipleSkillToDinoz(dinozId: number,  skillIds: number[]) {
 	await prisma.dinozSkill.createMany({
-		data: skills
+		data: skillIds.map(skillId => ({
+			dinozId,
+			skillId
+		}))
 	});
 }
 

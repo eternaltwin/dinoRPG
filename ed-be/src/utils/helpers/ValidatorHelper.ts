@@ -1,4 +1,4 @@
-const allValuesAreNumber = <T>(value: Array<T>): boolean => {
+const allValuesAreNumber = <T>(value: T[]): boolean => {
 	return value.every(val => typeof val === 'number');
 };
 

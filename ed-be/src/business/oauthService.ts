@@ -2,7 +2,6 @@ import { Request } from 'express';
 import { createPlayer, getPlayerId } from '../dao/playerDao.js';
 import { getConfig, forgeJWT } from '../utils/index.js';
 import { Config } from '@drpg/core/models/config/Config';
-import { Player, Secret } from '../entity/index.js';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/rfc-oauth-client';
 import { OauthAccessToken } from '@eternal-twin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
@@ -18,7 +17,7 @@ import { getAllSecretsRequest } from '../dao/secretDao.js';
  * @param res {string}
  * @return string
  */
-export async function authenticateToET(req: Request): Promise<string> {
+export async function authenticateToET(req: Request) {
 	let token: OauthAccessToken;
 	let user: User;
 	const config: Config = getConfig();
@@ -31,10 +30,10 @@ export async function authenticateToET(req: Request): Promise<string> {
 		throw new ErrorFormator(500, 'An error occurred');
 	}
 
-	const secrets: Array<Secret> = await getAllSecretsRequest();
+	const secrets = await getAllSecretsRequest();
 	const beta = secrets.find(s => s.key === 'beta');
 	const userAllowedBeta = secrets.find(s => s.key === user.user.id);
-	const admins: Array<string | undefined> = Object.values(config.admin);
+	const admins: (string | undefined)[] = Object.values(config.admin);
 
 	if (beta && !admins.includes(user.user.id) && !userAllowedBeta) {
 		throw new ErrorFormator(
@@ -44,11 +43,12 @@ export async function authenticateToET(req: Request): Promise<string> {
 	}
 
 	// Check if player already exists in database
-	let player: Player | null = await getPlayerId(user.user.id);
+	let player = await getPlayerId(user.user.id);
 
 	// If player isn't found in database, create a new one
 	if (player === null) {
-		player = {
+		// Create new player in database
+		player = await createPlayer({
 			eternalTwinId: user.user.id,
 			hasImported: false,
 			name: user.user.display_name.current.value,
@@ -61,23 +61,19 @@ export async function authenticateToET(req: Request): Promise<string> {
 			merchant: false,
 			priest: false,
 			teacher: false
-		} as Player;
-
-		// Create new player in database
-		player = await createPlayer(player);
+		});
 		// Create player at position 0 in ranking
-		await addPlayerInRanking(player!.id);
+		await addPlayerInRanking(player.id);
 	}
 
 	// Forge JWT with playerId
-	return await forgeJWT(player!.id);
+	return await forgeJWT(player.id);
 }
 
-async function getUser(accessToken: string, eternalTwinURI: string): Promise<User> {
+async function getUser(accessToken: string, eternalTwinURI: string) {
 	let res;
 
 	try {
-		//@ts-ignore
 		res = await fetch(`${eternalTwinURI}api/v1/auth/self`, {
 			method: 'GET',
 			headers: {
@@ -92,7 +88,7 @@ async function getUser(accessToken: string, eternalTwinURI: string): Promise<Use
 	return (await res.json()) as User;
 }
 
-async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {
+async function getAuthorizationToken(code: string) {
 	const oauthClient: RfcOauthClient = getRfcOauthClient(true);
 
 	return oauthClient.getAccessToken(code);
@@ -103,15 +99,15 @@ async function getAuthorizationToken(code: string): Promise<OauthAccessToken> {
  * @param _req
  * @return URL
  */
-export async function getAuthorizationUri(): Promise<URL> {
+export async function getAuthorizationUri() {
 	const oauthClient: RfcOauthClient = getRfcOauthClient(false);
 
 	return oauthClient.getAuthorizationUri('base', 'authenticate');
 }
 
-function getRfcOauthClient(useDockerUri: boolean): RfcOauthClient {
-	const config: Config = getConfig();
-	const eternalTwinURI: string = useDockerUri
+function getRfcOauthClient(useDockerUri: boolean) {
+	const config = getConfig();
+	const eternalTwinURI = useDockerUri
 		? config.general.eternalTwinServerUri
 		: config.general.eternalTwinPublicUri;
 

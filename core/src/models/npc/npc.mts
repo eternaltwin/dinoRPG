@@ -8,6 +8,6 @@ export interface Npc {
 	placeId: number;
 	condition?: Condition;
 	data: Readonly<Record<string, NpcData>>;
-	missions?: Array<Mission>;
+	missions?: Mission[];
 	flashvars?: string;
 }

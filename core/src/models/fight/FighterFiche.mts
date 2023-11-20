@@ -12,17 +12,17 @@ export class FighterFiche {
 	start_life: number;
 	// The base elements of the fighter (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
 	// todo need to handle void
-	base_elements: Array<number>;
+	base_elements: number[];
 	// bonus attack for monster
 	attack_bonus?: number | undefined;
 	// bonus defense for monster
 	defense_bonus?: number | undefined;
 	// The items equipped by the fighter
-	items: Array<number>;
+	items: number[];
 	// The activated skills of the fighter
-	skills: Array<number>;
+	skills: number[];
 	// The status of the fighter
-	status: Array<number>;
+	status: number[];
 
 	constructor(
 		dinozId: number,
@@ -30,12 +30,12 @@ export class FighterFiche {
 		is_monster: boolean,
 		name: string,
 		start_life: number,
-		base_elements: Array<number>,
+		base_elements: number[],
 		bonus_attack: number | undefined,
 		bonus_defense: number | undefined,
-		items: Array<number>,
-		skills: Array<number>,
-		status: Array<number>
+		items: number[],
+		skills: number[],
+		status: number[]
 	) {
 		this.dinoz_id = dinozId;
 		this.is_monster = is_monster;
@@ -59,5 +59,5 @@ export interface FighterResultFiche {
 	// The health lost by the dinoz in the fight in comparison to its starting life
 	hp_lost: number;
 	// The items used by the dinoz during the fight
-	items_used: Array<number>;
+	items_used: number[];
 }

@@ -1,9 +1,8 @@
-import { SkillType } from '../enums/SkillType.mjs';
-import { Energy } from '../enums/Energy.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
-import { SkillTree } from '../enums/SkillTree.mjs';
-import { SkillEffectType } from './SkillEffectType.mjs';
+import { Energy } from '../enums/Energy.mjs';
 import { Stat } from '../enums/SkillStat.mjs';
+import { SkillTree } from '../enums/SkillTree.mjs';
+import { SkillType } from '../enums/SkillType.mjs';
 
 type OtherAssaults<T> = Exclude<
 	(Stat.FIRE_ASSAULT | Stat.WATER_ASSAULT | Stat.AIR_ASSAULT | Stat.LIGHTNING_ASSAULT | Stat.WOOD_ASSAULT),
@@ -43,12 +42,12 @@ export interface DinozSkillFiche {
 	name: string;
 	type: SkillType;
 	energy: Energy;
-	element: Array<ElementType>;
+	element: ElementType[];
 	activatable: boolean;
 	state?: boolean;
 	tree: SkillTree;
-	unlockedFrom?: Array<number>;
-	raceId?: Array<number>; // For specific race skill (ex : fly for Pteroz)
+	unlockedFrom?: number[];
+	raceId?: number[]; // For specific race skill (ex : fly for Pteroz)
 	isBaseSkill: boolean; // If true : dinoz knows this skill when he's bought
 	isSphereSkill: boolean; // true : the skill can only be learned with a sphere object
 	effects?: SkillEffects;

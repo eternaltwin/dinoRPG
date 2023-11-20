@@ -22,7 +22,7 @@ export type GatherData =
 			minimumClick: number;
 			condition: Condition; //Skill needed
 			apparence: string; //skin
-			items: Array<GatherItems>;
+			items: GatherItems[];
 	  }
 	| {
 			action: Action;
@@ -32,6 +32,6 @@ export type GatherData =
 			minimumClick: number;
 			condition: Condition; //Skill needed
 			apparence: string; //skin
-			items: Array<GatherItems>;
+			items: GatherItems[];
 			cost: ItemFiche;
 	  };

@@ -5,7 +5,7 @@ import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 
-export const M_RODEUR: Array<Mission> = [
+export const M_RODEUR: Mission[] = [
 	// Missions 49 to 50
 	{
 		missionId: MissionID.RODEUR_RODRIZ,

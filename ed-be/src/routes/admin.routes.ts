@@ -1,23 +1,22 @@
+import { SecretData } from '@drpg/core/models/admin/SecretData';
+import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import { Request, Response, Router } from 'express';
-import { apiRoutes } from '../constants/index.js';
+import { body, param, validationResult } from 'express-validator';
 import {
-	getAdminDashBoard,
+	addSecret,
 	editDinoz,
+	editPlayer,
+	getAdminDashBoard,
+	getAllSecrets,
 	givePlayerEpicReward,
 	listAllDinozFromPlayer,
-	setPlayerMoney,
-	editPlayer,
 	listAllPlayerInformationForAdminDashboard,
-	getAllSecrets,
-	addSecret
+	setPlayerMoney
 } from '../business/adminService.js';
-import { body, param, validationResult } from 'express-validator';
-import { checkIsAdmin } from '../utils/jwt.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
-import { SecretData } from '@drpg/core/models/admin/SecretData';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { checkIsAdmin } from '../utils/jwt.js';
 
 const routes: Router = Router();
 
@@ -29,7 +28,7 @@ routes.get(`${commonPath}/dashboard`, checkIsAdmin, async (req: Request, res: Re
 	}
 
 	try {
-		const response: boolean = await getAdminDashBoard(req);
+		const response: boolean = await getAdminDashBoard();
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -131,7 +130,7 @@ routes.get(
 		}
 
 		try {
-			const response: Array<DinozFiche> = await listAllDinozFromPlayer(req);
+			const response = await listAllDinozFromPlayer(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -199,7 +198,7 @@ routes.get(`${commonPath}/secret/all`, checkIsAdmin, async (req: Request, res: R
 	}
 
 	try {
-		const response: Array<SecretData> = await getAllSecrets();
+		const response: SecretData[] = await getAllSecrets();
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -218,7 +217,7 @@ routes.put(
 		}
 
 		try {
-			const response: Array<SecretData> = await addSecret(req);
+			const response: SecretData[] = await addSecret(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

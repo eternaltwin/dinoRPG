@@ -1,19 +1,6 @@
-import {
-	Dinoz,
-	Player,
-	PlayerDinozShop,
-	PlayerIngredient,
-	PlayerItem,
-	PlayerQuest,
-	PlayerReward
-} from '../entity/index.js';
-import { AppDataSource } from '../data-source.js';
-import { DeleteResult, UpdateResult } from 'typeorm';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
-
-const playerRepository = AppDataSource.getRepository(Player);
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -105,6 +92,7 @@ export async function getCommonDataRequest(playerId: number) {
 			id: true,
 			name: true,
 			money: true,
+			engineer: true,
 			dinoz: {
 				select: {
 					id: true,
@@ -117,11 +105,23 @@ export async function getCommonDataRequest(playerId: number) {
 					placeId: true,
 					level: true,
 					order: true,
-					raceId: true
+					raceId: true,
+					isFrozen: true,
+					missionId: true,
+					missions: true,
+					nbrUpFire: true,
+					nbrUpWood: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpAir: true,
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					skills: { select: { skillId: true } },
 				},
 				where: { isFrozen: false }
 			},
-			rewards: true
+			rewards: true,
+			items: { select: { itemId: true, quantity: true } },
 		}
 	});
 
@@ -196,7 +196,9 @@ export async function getPlayerDataRequest(playerId: number) {
 			createdDate: true,
 			name: true,
 			customText: true,
+			engineer: true,
 			rewards: { select: { rewardId: true } },
+			items: { select: { itemId: true, quantity: true } },
 			dinoz: { select: {
 				id: true,
 				display: true,
@@ -205,7 +207,20 @@ export async function getPlayerDataRequest(playerId: number) {
 				raceId: true,
 				life: true,
 				isFrozen: true,
+				following: true,
+				placeId: true,
+				maxLife: true,
+				experience: true,
+				nbrUpFire: true,
+				nbrUpWood: true,
+				nbrUpWater: true,
+				nbrUpLightning: true,
+				nbrUpAir: true,
+				order: true,
 				status: { select: { statusId: true } },
+				missions: true,
+				items: { select: { itemId: true } },
+				skills: { select: { skillId: true } },
 			} },
 			ranking: { select: {
 				dinozCountDisplayed: true,
@@ -321,6 +336,7 @@ export async function getPlayerRewardsRequest(playerId: number) {
 		},
 		select: {
 			id: true,
+			quetzuBought: true,
 			rewards: { select: { rewardId: true } }
 		}
 	});
@@ -404,7 +420,7 @@ export async function getPlayerShopItemsDataRequest(playerId: number) {
  * @return Player
  */
 export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: number) {
-	const player = await prisma.player.findUnique({
+	const player = await prisma.player.findUniqueOrThrow({
 		where: {
 			id: playerId
 		},

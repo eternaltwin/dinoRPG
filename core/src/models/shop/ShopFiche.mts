@@ -5,5 +5,5 @@ export interface ShopFiche {
 	shopId: number;
 	placeId: number;
 	type: ShopType;
-	listItemsSold: Array<Partial<ItemFiche>>;
+	listItemsSold: Partial<ItemFiche>[];
 }

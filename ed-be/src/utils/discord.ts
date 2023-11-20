@@ -1,13 +1,10 @@
-import { ErrorFormator } from './errorFormator.js';
-import { getConfig } from './context.js';
-import { Response } from 'express';
 import { EmbedBuilder, WebhookClient } from 'discord.js';
-import { Config } from '@drpg/core/models/config/Config';
-import { Secret } from '../entity/index.js';
+import { Response } from 'express';
 import { getAllSecretsRequest } from '../dao/secretDao.js';
+import { ErrorFormator } from './errorFormator.js';
 
 export async function postError(e: ErrorFormator, res: Response) {
-	const secrets: Array<Secret> = await getAllSecretsRequest();
+	const secrets = await getAllSecretsRequest();
 	if (secrets.length === 0) return;
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');
@@ -80,7 +77,7 @@ ${e}
 }
 
 export async function sendDiscord(props: string) {
-	const secrets: Array<Secret> = await getAllSecretsRequest();
+	const secrets = await getAllSecretsRequest();
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');
 	try {
@@ -96,9 +93,9 @@ export async function sendDiscord(props: string) {
 	}
 }
 
-export async function sendJSONToDiscord(functionName: string, description: string, json: any, json2?: any) {
+export async function sendJSONToDiscord(functionName: string, description: string, json: object, json2?: object) {
 	console.log(json);
-	const secrets: Array<Secret> = await getAllSecretsRequest();
+	const secrets = await getAllSecretsRequest();
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');
 	try {

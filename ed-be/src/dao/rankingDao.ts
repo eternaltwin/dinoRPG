@@ -1,4 +1,4 @@
-import { Ranking } from "@drpg/prisma";
+import { Prisma } from "@drpg/prisma";
 import { prisma } from "../prisma.js";
 
 export async function addPlayerInRanking(playerId: number) {
@@ -94,10 +94,10 @@ export async function updatePoints(
 	});
 }
 
-export async function updateRanking(newRanking: Ranking) {
+export async function updateRanking(id: number, newRanking: Prisma.RankingUpdateInput) {
 	return prisma.ranking.update({
 		where: {
-			id: newRanking.id
+			id
 		},
 		data: {
 			sumPosition: newRanking.sumPosition,

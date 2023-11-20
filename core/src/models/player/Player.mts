@@ -12,6 +12,6 @@ export interface Player {
 	merchant: boolean;
 	priest: boolean;
 	teacher: boolean;
-	rewards: Array<number>;
+	rewards: number[];
 	customText: string | null;
 }

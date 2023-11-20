@@ -1,12 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { apiRoutes } from '../constants/index.js';
 import { body, param, validationResult } from 'express-validator';
-import { checkIsAdmin } from '../utils/jwt.js';
-import { getNews, postNews, updateNews } from '../business/newsService.js';
 import multer from 'multer';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { getNews, postNews, updateNews } from '../business/newsService.js';
+import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
-import { AllNews } from '@drpg/core/models/news/AllNews';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { checkIsAdmin } from '../utils/jwt.js';
 
 const routes: Router = Router();
 
@@ -129,7 +128,7 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 	}
 
 	try {
-		const response: Array<AllNews> = await getNews(req);
+		const response = await getNews(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator as ErrorFormator;

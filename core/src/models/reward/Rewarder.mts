@@ -37,7 +37,7 @@ export type Rewarder =
 	  }
 	| {
 			rewardType: RewardEnum.REDIRECT;
-			service: Array<ServiceEnum>;
+			service: ServiceEnum[];
 	  }
 	| {
 			rewardType: Exclude<

@@ -3,7 +3,7 @@ import { PlayerOptions } from './PlayerOptions.mjs';
 
 export interface PlayerCommonData {
 	money: number;
-	dinoz: Array<DinozFiche>;
+	dinoz: DinozFiche[];
 	dinozCount: number;
 	id: number;
 	name: string;

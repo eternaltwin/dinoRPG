@@ -1,7 +1,7 @@
 export interface PlayerEdit {
 	customText?: string;
 	hasImported?: boolean;
-	rewards?: Array<string>;
+	rewards?: string[];
 	epicOperation?: string;
 	money?: number;
 	operation?: string;

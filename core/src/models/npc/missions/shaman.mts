@@ -5,7 +5,7 @@ import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 
-export const M_SHAMAN_MOU: Array<Mission> = [
+export const M_SHAMAN_MOU: Mission[] = [
 	//Missions 26 to 36
 	{
 		missionId: MissionID.SHAMAN_INIT1,

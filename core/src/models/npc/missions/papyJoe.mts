@@ -5,7 +5,7 @@ import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 import { rewardList } from '../../reward/RewardList.mjs';
 
-export const M_PAPY_JOE: Array<Mission> = [
+export const M_PAPY_JOE: Mission[] = [
 	// Missions 1 to 10
 	{
 		missionId: MissionID.PAPY_JOE_FISH,

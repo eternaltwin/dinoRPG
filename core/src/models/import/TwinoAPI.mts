@@ -8,11 +8,11 @@ export interface DinoRPGProfile {
 	id: number;
 	name: string;
 	twinId: number;
-	dinos: Array<dinoAPI>;
-	objects: Array<objectAPI>;
-	collections: Array<collectionAPI>;
+	dinos: dinoAPI[];
+	objects: objectAPI[];
+	collections: collectionAPI[];
 	money: number;
-	scenarios: Array<scenarioAPI>;
+	scenarios: scenarioAPI[];
 }
 export interface objectAPI {
 	id: number;
@@ -40,7 +40,7 @@ export interface dinoAPI {
 	xp: number; //valeur d'XP actuelle
 	elements: { air: number; fire: number; water: number; thunder: number; wood: number }; //tableau des elements du Dino
 	status: null | { desc: string; id: string; sid: number; timer: boolean }; //id de status du Dino
-	effects: Array<EffectAPI>; //tableau des effets appliqués au Dino
+	effects: EffectAPI[]; //tableau des effets appliqués au Dino
 }
 
 export interface collectionAPI {
@@ -70,8 +70,8 @@ export interface Site {
 	link: string;
 	npoints: number | null;
 	points: number;
-	stats: Array<Stats>;
-	achievements: Array<Achievement>;
+	stats: Stats[];
+	achievements: Achievement[];
 }
 export interface Achievement {
 	id: string; // siteId_statId_index
@@ -96,5 +96,5 @@ export interface Stats {
 export interface TwinoUser {
 	id: number;
 	name: string;
-	sites: Array<Site>;
+	sites: Site[];
 }

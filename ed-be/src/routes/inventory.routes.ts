@@ -1,11 +1,10 @@
-import { Request, Response, Router } from 'express';
-import { apiRoutes } from '../constants/index.js';
-import { equipItem, getAllItemsData, useItem } from '../business/inventoryService.js';
-import { body, param, validationResult } from 'express-validator';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { postError } from '../utils/discord.js';
-import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
+import { Request, Response, Router } from 'express';
+import { body, param, validationResult } from 'express-validator';
+import { equipItem, getAllItemsData, useItem } from '../business/inventoryService.js';
+import { apiRoutes } from '../constants/index.js';
+import { postError } from '../utils/discord.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -34,7 +33,7 @@ routes.get(`${commonPath}/all`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response: Array<ItemFiche> = await getAllItemsData(req);
+		const response = await getAllItemsData(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -82,7 +81,7 @@ routes.get(
 		}
 
 		try {
-			const response: void = await useItem(req);
+			const response = await useItem(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -140,7 +139,7 @@ routes.put(
 		}
 
 		try {
-			const response: Array<DinozItems> = await equipItem(req);
+			const response: DinozItems[] = await equipItem(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

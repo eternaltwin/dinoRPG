@@ -1,4 +1,4 @@
-export const skillNameResolution: Record<number, Array<string>> = {
+export const skillNameResolution: Record<number, string[]> = {
 	11101: ['griffes enflammées', 'garras en llamas', 'burning claws', 'brennende klauen'],
 	11102: ['colère', 'cólera', 'wrath', 'zorn'],
 	11103: ['force', 'fuerza', 'strength', 'macht'],

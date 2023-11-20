@@ -5,7 +5,7 @@ import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 
-export const M_GARDIEN: Array<Mission> = [
+export const M_GARDIEN: Mission[] = [
 	// Missions 37 to 43
 	{
 		missionId: MissionID.GARDIEN_UNMUTE,

@@ -2,5 +2,5 @@ import { DinozFiche } from '../dinoz/DinozFiche.mjs';
 
 export interface StoreDinoz {
 	dinozCount?: number;
-	dinozList?: Array<DinozFiche>;
+	dinozList?: DinozFiche[];
 }

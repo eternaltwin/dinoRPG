@@ -1,39 +1,43 @@
-import { Request } from 'express';
-import { Concentration, Dinoz, Player } from '../entity/index.js';
-import { prepareConcentration } from '../dao/playerDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { getConcentration, removeConcentration, setConcentration } from '../dao/concentrationDao.js';
-import { getDinozConcentrationRequest, setDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
-import { specialActions } from '../constants/specialActions.js';
-import { checkCondition } from '../utils/checkConditions.js';
-import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
-import { calculateFight, rewardFight } from './fightService.js';
-import { rewarder } from '../utils/rewarder.js';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { DinozForConditionCheck } from '@drpg/core/constants';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
-import { getActualStep } from './missionsService.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
+import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
+import { checkCondition } from '@drpg/core/utils/checkCondition';
+import { Request } from 'express';
+import { specialActions } from '../constants/specialActions.js';
+import { ConcentrationFromGetConcentration, createConcentration, getConcentration, removeConcentration, updateConcentration } from '../dao/concentrationDao.js';
+import { getDinozConcentrationRequest, updateDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
 import { updateMissionStep } from '../dao/dinozMissionDao.js';
+import { prepareConcentration } from '../dao/playerDao.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { rewarder } from '../utils/rewarder.js';
+import { DinozToCalculateFight, DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
+import { Dinoz } from '@drpg/prisma';
 
 export async function concentrate(req: Request) {
-	const player: Player | null = await prepareConcentration(req.auth!.playerId!);
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'Unauthorized');
+	}
+	const player = await prepareConcentration(req.auth.playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `Dinoz ${req.auth!.playerId!} doesn't exist.`);
+		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
 	}
 	const dinozList = player.dinoz;
-	const dinoz: Dinoz | undefined = player.dinoz.find(d => d.id === parseInt(req.params.id));
+	const dinoz = player.dinoz.find(d => d.id === parseInt(req.params.id));
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to player ${req.auth!.playerId}`);
+		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	//Check if dinoz is at Bao Bob's location
-	if (dinoz.actualPlace.placeId !== placeList.BAO_BOB.placeId) {
+	if (actualPlace(dinoz).placeId !== placeList.BAO_BOB.placeId) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} is not at the right place`);
 	}
 
 	//Check if dinoz doesn't already possess the key
-	if (dinoz.possessStatus(statusList.SYLVENOIRE_KEY)) {
+	if (possessStatus(dinoz, statusList.SYLVENOIRE_KEY)) {
 		throw new ErrorFormator(500, `${dinoz.name} cannot concentrate`);
 	}
 
@@ -42,36 +46,38 @@ export async function concentrate(req: Request) {
 		throw new ErrorFormator(500, `${dinoz.name} is already doing this`);
 	}
 
-	let concentration = dinozList.find(d => d.concentration)?.concentration ?? undefined;
+	const concentratingDinoz = dinozList.find(d => d.concentration);
+	let concentration: ConcentrationFromGetConcentration;
 
 	//If there is no concentration row, create a new one
-	if (!concentration) {
-		dinoz.concentration = new Concentration();
-		dinoz.concentration.dinoz = [dinoz];
-		await setConcentration(dinoz.concentration);
+	if (!concentratingDinoz || !concentratingDinoz.concentration) {
+		concentration = await createConcentration([{ id: dinoz.id }]);
 		return;
 	} else {
-		concentration = (await getConcentration(concentration.id)) as Concentration;
+		concentration = await getConcentration(concentratingDinoz.concentration.id);
+
+		if (!concentration) {
+			throw new ErrorFormator(500, `Concentration ${concentratingDinoz.concentration.id} doesn't exist.`);
+		}
+		concentration.dinoz.push(dinoz);
+		updateConcentration(concentration.id, concentration.dinoz);
 	}
 
-	concentration.dinoz.push(dinoz);
-	//Save this pool
-	concentration = await setConcentration(concentration);
 	//If 7 dinoz concentrate process the next events
-	if (concentration.dinoz.length === 2) {
+	if (concentration.dinoz.length === 7) {
 		await goDarkWorld(concentration.dinoz);
 		await removeConcentration(concentration.id);
 	}
 }
 
 export async function cancelConcentrate(req: Request) {
-	const dinoz: Dinoz | null = await getDinozConcentrationRequest(parseInt(req.params.id));
+	const dinoz = await getDinozConcentrationRequest(+req.params.id);
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist.`);
 	}
 
-	if (dinoz.player.id !== req.auth!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth!.playerId}`);
+	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	if (!dinoz.concentration) {
@@ -80,20 +86,26 @@ export async function cancelConcentrate(req: Request) {
 
 	const dinozToUpdate = dinoz.concentration.dinoz.findIndex(dino => dino.id === dinoz.id);
 	dinoz.concentration.dinoz.splice(dinozToUpdate, 1);
-	await setConcentration(dinoz.concentration);
+	await updateConcentration(dinoz.concentration.id, dinoz.concentration.dinoz);
 }
 
-async function goDarkWorld(dinozList: Array<Dinoz>): Promise<void> {
+async function goDarkWorld(dinozList: Pick<Dinoz, 'id'>[]): Promise<void> {
 	await updateMultipleDinozPlaceId(dinozList, placeList.PORTAIL.placeId);
 }
 
-export async function mouvementListener(dinoz: Dinoz, finalPlace: number): Promise<false | FightResult> {
+export async function mouvementListener(
+	dinoz: DinozToCalculateFight &
+		DinozToRewardFight &
+		DinozForConditionCheck &
+		DinozToGetActualStep,
+	finalPlace: number
+) {
 	//Specials actions
-	let potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
+	const potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
 
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, dinoz)) {
 		if (potentialSpecialActions.opponents) {
-			const fightResult: FightProcessResult = calculateFight(dinoz, potentialSpecialActions.opponents);
+			const fightResult = calculateFight(dinoz, potentialSpecialActions.opponents);
 			const result = await rewardFight(dinoz, potentialSpecialActions.opponents, fightResult);
 			if (fightResult.winner) {
 				await rewarder(potentialSpecialActions.reward, dinoz);
@@ -116,11 +128,11 @@ export async function mouvementListener(dinoz: Dinoz, finalPlace: number): Promi
 			actualStep.place === placeName &&
 			actualStep.requirement.actionType === ConditionEnum.KILL_BOSS
 		) {
-			const fightResult: FightProcessResult = calculateFight(dinoz, actualStep.requirement.target);
+			const fightResult = calculateFight(dinoz, actualStep.requirement.target);
 			const result = await rewardFight(dinoz, actualStep.requirement.target, fightResult);
 			if (fightResult.winner) {
 				await updateMissionStep(dinoz.id, dinozMission.missionId, actualStep.stepId + 1);
-				await setDinoz(dinoz.setPlace(finalPlace));
+				await updateDinoz(dinoz.id, { placeId: finalPlace });
 			}
 			return result;
 		}

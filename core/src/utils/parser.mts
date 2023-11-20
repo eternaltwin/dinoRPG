@@ -1,11 +1,15 @@
-import { Dinoz } from '../entity/dinoz.js';
-import { Condition } from '@drpg/core/models/npc/NpcConditions';
-import { ConditionEnum } from '@drpg/core/models/enums/Parser';
-import { Place } from '@drpg/core/models/place/Place';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { ConditionEnum } from '../models/enums/Parser.mjs';
+import { Condition } from '../models/npc/NpcConditions.mjs';
+import { Place } from '../models/place/Place.mjs';
+import { placeList } from '../models/place/PlaceList.mjs';
+import { DinozForConditionCheck } from '../constants.mjs';
 
-export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?: Place): boolean {
-	let result: boolean | undefined;
+export function conditionParser(
+	condition: Condition,
+	dinoz: DinozForConditionCheck,
+	futurPlace?: Place
+): boolean {
+	let result;
 	const GOTO = condition[ConditionEnum.GOTO];
 	const PLACE_IS = condition[ConditionEnum.PLACE_IS];
 
@@ -17,17 +21,17 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 		result = dinoz.status.some(dinozStatus => dinozStatus.statusId === condition[ConditionEnum.STATUS]);
 	} else if (condition[ConditionEnum.FINISHED_MISSION]) {
 		result = dinoz.missions.find(missions => missions.missionId === condition[ConditionEnum.FINISHED_MISSION])
-			?.isFinished;
+			?.isFinished ?? false;
 	} else if (condition[ConditionEnum.SKILL]) {
 		result = dinoz.skills.some(DinozSkill => DinozSkill.skillId === condition[ConditionEnum.SKILL]);
 	} else if (GOTO) {
-		let place = Object.entries(placeList).find(place => place[0].toUpperCase() === GOTO.toUpperCase());
+		const place = Object.entries(placeList).find(place => place[0].toUpperCase() === GOTO.toUpperCase());
 		if (!place) {
 			throw new Error(`Place ${GOTO} doesn't exist.`);
 		}
 		result = place[1].placeId === dinoz.placeId;
 	} else if (PLACE_IS) {
-		let thisplace = Object.values(placeList).find(place => place.name.toUpperCase() === PLACE_IS.toUpperCase());
+		const thisplace = Object.values(placeList).find(place => place.name.toUpperCase() === PLACE_IS.toUpperCase());
 		if (!thisplace) {
 			throw new Error(`Place ${PLACE_IS} doesn't exist.`);
 		}
@@ -38,8 +42,7 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 		//TODO: Implement scenario
 		result = false;
 	} else if (condition[ConditionEnum.POSSESS_OBJECT]) {
-		console.log(dinoz.player.items.some(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT]));
-		result = dinoz.player.items.some(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT]);
+		result = dinoz.player?.items.some(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT]);
 	} else if (condition[ConditionEnum.RANDOM]) {
 		const score = Math.floor(Math.random() * condition[ConditionEnum.RANDOM]);
 		const target = 0;
@@ -47,7 +50,7 @@ export function conditionParser(condition: Condition, dinoz: Dinoz, futurPlace?:
 	} else if (condition[ConditionEnum.NEXT_PLACE]) {
 		result = futurPlace?.placeId === condition[ConditionEnum.NEXT_PLACE].placeId;
 	} else if (condition[ConditionEnum.COLLEC]) {
-		const playerRewards = dinoz.player.rewards;
+		const playerRewards = dinoz.player?.rewards ?? [];
 		result = playerRewards.some(reward => reward.rewardId === condition[ConditionEnum.COLLEC]);
 	} else if (condition[ConditionEnum.DINOZ_LIFE]) {
 		switch (condition[ConditionEnum.DINOZ_LIFE][0]) {

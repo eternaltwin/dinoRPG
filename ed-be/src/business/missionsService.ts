@@ -1,7 +1,16 @@
+import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { Mission } from '@drpg/core/models/missions/mission';
+import { MissionID } from '@drpg/core/models/missions/missionList';
+import { MissionSteps } from '@drpg/core/models/missions/missionSteps';
+import { npcList } from '@drpg/core/models/npc/NpcList';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
+import { Dinoz, DinozMission } from '@drpg/prisma';
 import { Request } from 'express';
-import { Dinoz, DinozMission } from '../entity/index.js';
-import { getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { DinozWithMissionData, getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
 import {
 	addMissionToDinoz,
 	finishMission,
@@ -9,37 +18,23 @@ import {
 	updateMissionProgression,
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
-import { MissionID, MissionList } from '@drpg/core/models/missions/missionList';
-import { Place } from '@drpg/core/models/place/Place';
-import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
-import { Npc } from '@drpg/core/models/npc/npc';
-import { ConditionEnum } from '@drpg/core/models/enums/Parser';
-import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { Mission } from '@drpg/core/models/missions/mission';
-import { MissionSteps } from '@drpg/core/models/missions/missionSteps';
-import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
-import { MissionCheck } from '../models/missionCheck.js';
-import { rewarder } from '../utils/rewarder.js';
-import { checkCondition } from '../utils/checkConditions.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
-import { placeList } from '@drpg/core/models/place/PlaceList';
-import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
-import { npcList } from '@drpg/core/models/npc/NpcList';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { rewarder } from '../utils/rewarder.js';
+import { checkCondition } from '@drpg/core/utils/checkCondition';
 
-export async function getMissionsList(req: Request): Promise<Array<MissionList>> {
-	const dinozId: number = parseInt(req.params.id);
-	const npcName: string = req.params.npc;
-	const dinoz: Dinoz | null = await getDinozMissionsInfo(dinozId);
+export async function getMissionsList(req: Request) {
+	const dinozId = +req.params.id;
+	const npcName = req.params.npc;
+	const dinoz = await getDinozMissionsInfo(dinozId);
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
 	const currentPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const npc = Object.values(npcList).find(npc => npc.name === npcName);
 
-	if (dinoz.player.id !== req.auth!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
+	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	if (!currentPlace) {
@@ -61,49 +56,59 @@ export async function getMissionsList(req: Request): Promise<Array<MissionList>>
 	return missionSort(npc.missions, dinoz);
 }
 
-export async function updateMission(req: Request): Promise<boolean> {
-	const dinozId: number = parseInt(req.params.dinozId);
-	const missionId: number = parseInt(req.params.missionId);
-	const status: string = req.body.status;
+export async function updateMission(req: Request) {
+	const dinozId = +req.params.dinozId;
+	const missionId = +req.params.missionId;
+	const status = req.body.status;
 
-	const dinoz: Dinoz | null = await getDinozMissionsInfo(dinozId);
+	const dinoz = await getDinozMissionsInfo(dinozId);
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
-	const npc: Npc | undefined = Object.values(npcList).find(
+	const npc = Object.values(npcList).find(
 		npc => npc.missions?.find(mission => mission.missionId === missionId)
 	);
-	const actualPlace: Place | undefined = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const actualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 
-	if (dinoz.player.id !== req.auth!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
+	if (!actualPlace) {
+		throw new ErrorFormator(500, `Place ${dinoz.placeId} doesn't exist.`);
+	}
+
+	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	if (!npc) {
 		throw new ErrorFormator(500, `This mission doesn't exist`);
 	}
-	const npcMissions = missionSort(npc.missions!, dinoz);
+	const npcMissions = missionSort(npc.missions || [], dinoz);
 
 	switch (status) {
 		case 'start':
-			if (actualPlace!.placeId !== npc!.placeId) {
+			if (actualPlace.placeId !== npc.placeId) {
 				throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
-			} else if (npcMissions.find(mission => mission.missionId === missionId)!.status === MissionsStatus.FINISHED) {
+			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.FINISHED) {
 				throw new ErrorFormator(500, `This mission is already done`);
 			} else if (npcMissions.some(mission => mission.status === MissionsStatus.ONGOING)) {
 				throw new ErrorFormator(500, `A mission is already in progress`);
-			} else if (npcMissions.find(mission => mission.missionId === missionId)!.status === MissionsStatus.UNAVAILABLE) {
+			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
 				throw new ErrorFormator(500, `This mission is unavailable`);
 			} else {
-				await addMissionToDinoz(new DinozMission(dinoz, missionId));
+				await addMissionToDinoz({
+					dinoz: { connect: { id: dinozId } },
+					missionId: missionId,
+					step: 0,
+					isFinished: false,
+					progress: 0
+				});
 				return true;
 			}
 		case 'stop':
-			if (npcMissions.find(mission => mission.missionId === missionId)!.status === MissionsStatus.FINISHED) {
+			if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.FINISHED) {
 				throw new ErrorFormator(500, `This mission is already done`);
 			} else if (!npcMissions.some(mission => mission.status === MissionsStatus.ONGOING)) {
 				throw new ErrorFormator(500, `There is no mission in progress`);
-			} else if (npcMissions.find(mission => mission.missionId === missionId)!.status === MissionsStatus.UNAVAILABLE) {
+			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
 				throw new ErrorFormator(500, `This mission is unavailable`);
 			} else {
 				await removeMissionFromDinoz(dinoz.id, missionId);
@@ -114,7 +119,7 @@ export async function updateMission(req: Request): Promise<boolean> {
 	}
 }
 
-export async function interactMission(req: Request): Promise<string> {
+export async function interactMission(req: Request) {
 	const mission = await checkMission(req);
 
 	const task = mission.actualStep.requirement.actionType;
@@ -122,35 +127,34 @@ export async function interactMission(req: Request): Promise<string> {
 	switch (task) {
 		case ConditionEnum.TALKTO:
 			await updateMissionStep(mission.dinoz.id, mission.dinozMission.missionId, mission.actualStep.stepId + 1);
-			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText!}`;
+			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		case ConditionEnum.DO:
 			await updateMissionStep(mission.dinoz.id, mission.dinozMission.missionId, mission.actualStep.stepId + 1);
-			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText!}`;
+			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		default:
 			return 'error';
 	}
 }
 
-export async function endMission(req: Request): Promise<Array<Rewarder>> {
+export async function endMission(req: Request) {
 	const mission = await checkMission(req);
-	console.log(mission);
 
 	await rewarder(mission.missionReference.rewards, mission.dinoz);
 	await finishMission(mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
 }
 
-async function checkMission(req: Request): Promise<MissionCheck> {
-	const dinozId: number = parseInt(req.params.dinozId);
-	const missionId: number = req.body.missionId;
+async function checkMission(req: Request) {
+	const dinozId = +req.params.dinozId;
+	const missionId = +req.body.missionId;
 
-	const dinoz: Dinoz | null = await getDinozMissionsInfo(dinozId);
+	const dinoz = await getDinozMissionsInfo(dinozId);
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
-	if (dinoz.player.id !== req.auth!.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth!.playerId}`);
+	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	if (!dinozMission) {
@@ -162,21 +166,35 @@ async function checkMission(req: Request): Promise<MissionCheck> {
 
 	const npc = Object.values(npcList).find(
 		npc => npc.missions?.find(mission => mission.missionId === dinozMission.missionId)
-	) as Npc;
-	const missionReference = Object.values(npc.missions!).find(
+	);
+	const missionReference = Object.values(npc?.missions || {}).find(
 		missions => missions.missionId === dinozMission.missionId
-	) as Mission;
-	const actualStep = missionReference.steps.find(step => step.stepId === dinozMission.step) as MissionSteps;
+	);
+	if (!missionReference) {
+		throw new ErrorFormator(500, 'No mission found');
+	}
 
+	const actualStep = missionReference.steps.find(step => step.stepId === dinozMission.step);
+	if (!actualStep) {
+		throw new ErrorFormator(500, 'No step found');
+	}
 	if (
-		dinoz.placeId != Object.values(placeList).find(place => place.name === actualStep.place)!.placeId &&
+		dinoz.placeId != Object.values(placeList).find(place => place.name === actualStep.place)?.placeId &&
 		actualStep.place !== placeList.ANYWHERE.name
 	) {
 		throw new ErrorFormator(500, 'The dinoz is not at the expected place.');
 	}
-	return { dinoz: dinoz, dinozMission: dinozMission, missionReference: missionReference, actualStep: actualStep };
+	return {
+		dinoz: dinoz,
+		dinozMission: dinozMission,
+		missionReference: missionReference,
+		actualStep: actualStep
+	};
 }
-export function getMissionAction(dinoz: Dinoz): string | undefined {
+
+export function getMissionAction(dinoz: Pick<Dinoz, 'placeId'> & {
+	missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
+}) {
 	const actualStep = getActualStep(dinoz);
 
 	if (!actualStep) {
@@ -184,73 +202,21 @@ export function getMissionAction(dinoz: Dinoz): string | undefined {
 	}
 
 	if (
-		(dinoz.placeId === Object.entries(placeList).find(place => place[1].name === actualStep.place)![1].placeId ||
+		(dinoz.placeId === Object.entries(placeList).find(place => place[1].name === actualStep.place)?.[1].placeId ||
 			actualStep.place === placeList.ANYWHERE.name) &&
-		!actualStep.displayedAction!.includes('kill')
+		!actualStep.displayedAction.includes('kill')
 	) {
 		return actualStep.displayedAction;
 	} else return;
 }
 
-export function getHUDObjective(dinoz: Dinoz): MissionHUD | undefined {
-	const actualStep = getActualStep(dinoz);
-
-	if (!actualStep) {
-		return;
-	}
-
-	const dinozActualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId) as Place;
-	let HUD: MissionHUD = actualStep.requirement;
-
-	if (HUD.actionType === ConditionEnum.KILL) {
-		HUD.progress = actualStep.progress;
-	}
-
-	if (actualStep.displayedHUD) {
-		HUD.actionType = ConditionEnum.OVERWRITE;
-		HUD.target = actualStep.displayedHUD;
-		return HUD;
-	}
-
-	if (dinozActualPlace.name === actualStep.place || actualStep.place === placeList.ANYWHERE.name) {
-		return HUD;
-	} else if (!actualStep.hidePlace && HUD.actionType === ConditionEnum.FINISH_MISSION) {
-		return HUD;
-	} else if (!actualStep.hidePlace) {
-		HUD.actionType = ConditionEnum.GOTO;
-		HUD.target = actualStep.place;
-		return HUD;
-	} else {
-		HUD.actionType = ConditionEnum.HIDE_PLACE;
-		return HUD;
-	}
-}
-
-export function getActualStep(dinoz: Dinoz): MissionSteps | undefined {
-	const missionDinoz: DinozMission | undefined = dinoz.missions.find(mission => !mission.isFinished);
-	if (!missionDinoz) {
-		return;
-	}
-	const npc = Object.values(npcList).find(
-		npc => npc.missions?.find(mission => mission.missionId === missionDinoz.missionId)
-	) as Npc;
-	const missionReference = Object.values(npc.missions!).find(
-		missions => missions.missionId === missionDinoz.missionId
-	) as Mission;
-	const missionReturn = structuredClone(
-		missionReference.steps.find(step => step.stepId === missionDinoz.step) as MissionSteps
-	);
-	missionReturn.progress = missionDinoz.progress;
-	return missionReturn;
-}
-
-function missionSort(missions: Array<Mission>, dinoz: Dinoz): Array<MissionList> {
+function missionSort(missions: Mission[], dinoz: DinozWithMissionData) {
 	return missions.map(missions => {
 		const missionKnown = dinoz.missions.find(element => element.missionId === missions.missionId);
-		let status: MissionsStatus;
+		let status;
 		/* Vérifie si les conditions sont remplies pour commencer la missions.
-				 Si oui => status = MissionsStatus.AVAILABLE
-				 Si non => status = MissionsStatus.UNAVAILABLE
+				Si oui => status = MissionsStatus.AVAILABLE
+				Si non => status = MissionsStatus.UNAVAILABLE
 				 */
 		if (!missionKnown) {
 			if (missions.condition && !checkCondition(missions.condition, dinoz)) {
@@ -272,9 +238,20 @@ function missionSort(missions: Array<Mission>, dinoz: Dinoz): Array<MissionList>
 	});
 }
 
-export async function checkMissionFight(dinoz: Dinoz, fight: FightResult): Promise<void> {
+export type DinozToCheckMissionFight = Parameters<typeof checkMissionFight>[0];
+export async function checkMissionFight(
+	dinoz: DinozToGetActualStep & Pick<Dinoz, 'placeId' | 'id'> & {
+		missions: DinozMission[]
+	},
+	fight: FightResult,
+) {
 	//Retrieve mission on its way and the step
-	const actualStep = getActualStep(dinoz) as MissionSteps;
+	const actualStep = getActualStep(dinoz);
+
+	if (!actualStep) {
+		throw new ErrorFormator(500, 'No mission found');
+	}
+
 	//Increment the progress of killing mobs
 	if (
 		(dinoz.placeId === Object.values(placeList).find(place => place.name === actualStep.place)?.placeId ||
@@ -284,17 +261,27 @@ export async function checkMissionFight(dinoz: Dinoz, fight: FightResult): Promi
 		(actualStep.requirement.target.split(':').filter(value => fight.opponent.includes(value)).length > 0 ||
 			actualStep.requirement.target === 'any')
 	) {
-		await updateMissionProgression(dinoz.id, dinoz.missions.find(mission => !mission.isFinished)?.missionId!, 1);
+		const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
+
+		if (!dinozMission) {
+			throw new ErrorFormator(500, 'No mission found');
+		}
+		await updateMissionProgression(dinoz.id, dinozMission.missionId, 1);
 		await checkProgressEnd(dinoz, fight, actualStep);
 	}
 }
 
-export async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualStep: MissionSteps): Promise<void> {
+export async function checkProgressEnd(dinoz: Pick<Dinoz, 'id'> & { missions: DinozMission[] }, fight: FightResult, actualStep: MissionSteps): Promise<void> {
 	if (actualStep.requirement.actionType !== ConditionEnum.KILL) return;
 	const progressTarget = actualStep.requirement.value;
 
-	let progress = dinoz.missions.find(mission => !mission.isFinished)!.progress;
-	const missionId = dinoz.missions.find(mission => !mission.isFinished)!.missionId;
+	const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
+
+	if (!dinozMission) {
+		throw new ErrorFormator(500, 'No mission found');
+	}
+	let progress = dinozMission.progress || 0;
+	const missionId = dinozMission.missionId;
 
 	if (fight.result) {
 		progress += 1; //replace by fight.opponent.length when we can fight multiple opponent
@@ -307,7 +294,7 @@ export async function checkProgressEnd(dinoz: Dinoz, fight: FightResult, actualS
 /**
  * Get data needed for the /missions page
  */
-export async function getGlobalMissions(req: Request): Promise<MissionsPageData> {
+export async function getGlobalMissions(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
 		throw new ErrorFormator(500, 'No player found');
@@ -342,7 +329,7 @@ export async function getGlobalMissions(req: Request): Promise<MissionsPageData>
 
 				return {
 					npc: npc.name,
-					missions: dinoz.missions.reduce(
+					missions: dinoz.missions.reduce<{ id: MissionID; name: string }[]>(
 						(acc, mission) => {
 							// Filter out missions that are not finished
 							if (!mission.isFinished) {
@@ -363,7 +350,7 @@ export async function getGlobalMissions(req: Request): Promise<MissionsPageData>
 
 							return acc;
 						},
-						[] as { id: MissionID; name: string }[]
+						[]
 					)
 				};
 			})

@@ -1,15 +1,14 @@
-import { Request } from 'express';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
-import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
-import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
-import { getRandomLetter, getRandomNumber } from '../utils/index.js';
-import { Player, PlayerDinozShop } from '../entity/index.js';
-import gameConfig from '../config/game.config.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { PlayerDinozShop, Prisma } from '@drpg/prisma';
+import { Request } from 'express';
+import gameConfig from '../config/game.config.js';
+import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
+import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { getRandomLetter, getRandomNumber } from '../utils/index.js';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -19,20 +18,23 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
  */
 
 // TODO: Refaire cette fonction en construisant un objet de retour
-export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozShopFiche>> {
+export async function getDinozFromDinozShop(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized.`);
+	}
 	// Retrieve player with dinoz shop info
-	const playerData: Player | null = await getPlayerDinozShopRequest(req.auth!.playerId!);
+	const playerData = await getPlayerDinozShopRequest(req.auth.playerId);
 
 	if (!playerData) {
-		throw new ErrorFormator(500, `Player ${req.auth?.playerId} doesn't exist.`);
+		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
 	}
 
 	// If nothing is found, create 15 (?) dinoz to fill the shop
 	if (playerData.dinozShop.length === 0) {
-		let dinozArray: Array<PlayerDinozShop> = [];
+		const dinozArray = [];
 		let randomRace: DinozRace;
 		let randomDisplay: string;
-		const availableRaces: Array<DinozRace> = [
+		const availableRaces: DinozRace[] = [
 			raceList.WINKS,
 			raceList.SIRAIN,
 			raceList.CASTIVORE,
@@ -45,10 +47,10 @@ export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozSh
 		];
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player: Player | null = await getPlayerRewardsRequest(req.auth!.playerId!);
+		const player = await getPlayerRewardsRequest(req.auth.playerId);
 
 		if (!player) {
-			throw new ErrorFormator(500, `Player ${req.auth?.playerId} doesn't exist.`);
+			throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
 		}
 
 		player.rewards.forEach(playerReward => {
@@ -74,28 +76,30 @@ export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozSh
 			// Make a random display
 			randomDisplay = randomRace.swfLetter;
 
+			if (!randomRace.display) throw new ErrorFormator(500, `Race ${randomRace.raceId} doesn't have a display.`);
 			for (let i = 0; i < 14; i++) {
-				randomDisplay += getRandomLetter(randomRace.display![i]);
+				randomDisplay += getRandomLetter(randomRace.display[i]);
 			}
 
-			let dinoz: PlayerDinozShop = new PlayerDinozShop();
-			dinoz.player = playerData;
-			dinoz.raceId = randomRace.raceId;
-			dinoz.display = randomDisplay;
+			const dinoz: Prisma.PlayerDinozShopCreateManyInput = {
+				playerId: playerData.id,
+				raceId: randomRace.raceId,
+				display: randomDisplay
+			};
 
 			dinozArray.push(dinoz);
 		}
 
 		// Save created dinoz in database
-		const dinozCreatedInShop: PlayerDinozShop[] = await createMultipleDinoz(dinozArray);
+		const dinozCreatedInShop = await createMultipleDinoz(dinozArray);
 
-		const listDinozShop: DinozShopFiche[] = dinozCreatedInShop
+		const listDinozShop = dinozCreatedInShop
 			.map(dinozShop => setDinozShopFiche(dinozShop))
-			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
+			.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 
 		return listDinozShop;
 	} else {
-		const listDinozShop: DinozShopFiche[] = playerData.dinozShop
+		const listDinozShop = playerData.dinozShop
 			.map(dinozShop => setDinozShopFiche(dinozShop))
 			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
 
@@ -108,8 +112,12 @@ export async function getDinozFromDinozShop(req: Request): Promise<Array<DinozSh
  * @param dinozShop {PlayerDinozShop}
  * @return void
  */
-function setDinozShopFiche(dinozShop: PlayerDinozShop): DinozShopFiche {
-	const raceFound: DinozRace = Object.values(raceList).find(race => race.raceId === dinozShop.raceId)!;
+function setDinozShopFiche(dinozShop: Pick<PlayerDinozShop, 'raceId' | 'id' | 'display'>) {
+	const raceFound = Object.values(raceList).find(race => race.raceId === dinozShop.raceId);
+
+	if (!raceFound) {
+		throw new ErrorFormator(500, `Race ${dinozShop.raceId} doesn't exist.`);
+	}
 
 	raceFound.skillId = Object.values(skillList)
 		.filter(skill => skill.raceId?.some(raceId => raceId === raceFound.raceId) && skill.isBaseSkill)

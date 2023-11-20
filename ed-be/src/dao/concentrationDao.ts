@@ -1,35 +1,45 @@
 
-import { Concentration, Dinoz } from '@drpg/prisma';
+import { Dinoz } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
-export async function setConcentration(concentration: Concentration & { dinoz: Pick<Dinoz, 'id'>[] }) {
-	const dinoz = concentration.dinoz.map(d => ({ id: d.id }));
-
-	const object = await prisma.concentration.upsert({
-		where: {
-			id: concentration.id
-		},
-		create: {
-			dinoz: { connect: dinoz }
-		},
-		update: {
-			dinoz: { set: dinoz }
+export const createConcentration = async (dinozList: Pick<Dinoz, 'id'>[]) => {
+	const concentration = await prisma.concentration.create({
+		data: {
+			dinoz: {
+				connect: dinozList
+			}
 		},
 		include: {
-			dinoz: true
+			dinoz: { select: { id: true } }
 		}
 	});
 
-	return object;
-}
+	return concentration;
+};
 
+export const updateConcentration = async (concentrationId: number, dinozList: Pick<Dinoz, 'id'>[]) => {
+	const concentration = await prisma.concentration.update({
+		where: {
+			id: concentrationId
+		},
+		data: {
+			dinoz: {
+				set: dinozList
+			}
+		}
+	});
+
+	return concentration;
+};
+
+export type ConcentrationFromGetConcentration = Awaited<ReturnType<typeof getConcentration>>;
 export async function getConcentration(concentrationId: number) {
 	const concentration = await prisma.concentration.findUnique({
 		where: {
 			id: concentrationId
 		},
 		include: {
-			dinoz: true
+			dinoz: { select: { id: true } }
 		}
 	});
 

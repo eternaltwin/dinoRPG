@@ -1,29 +1,27 @@
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { GatherResult } from '@drpg/core/models/gather/gatherResult';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import {
-	getDinozFiche,
-	buyDinoz,
-	setDinozName,
-	getDinozSkill,
-	setSkillState,
 	betaMove,
-	resurrectDinoz,
+	buyDinoz,
 	digWithDinoz,
 	gatherWithDinoz,
-	getGatherGrid,
+	getDinozFiche,
+	getDinozSkill,
 	getDinozToManage,
+	getGatherGrid,
+	resurrectDinoz,
+	setDinozName,
+	setSkillState,
 	updateOrders
 } from '../business/dinozService.js';
-import { apiRoutes, regex } from '../constants/index.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { postError } from '../utils/discord.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
-import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
-import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
+import { apiRoutes, regex } from '../constants/index.js';
+import { postError } from '../utils/discord.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -189,7 +187,7 @@ routes.get(
 		}
 
 		try {
-			const response: Array<DinozSkillFiche> = await getDinozSkill(req);
+			const response = await getDinozSkill(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -412,7 +410,7 @@ routes.get(
 		}
 
 		try {
-			const response: GatherPublicGrid = await getGatherGrid(req);
+			const response = await getGatherGrid(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

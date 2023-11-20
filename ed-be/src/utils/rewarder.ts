@@ -1,8 +1,6 @@
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { Dinoz, DinozSkill, Player, PlayerItem, PlayerReward } from '../entity/index.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import { setDinoz } from '../dao/dinozDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { unlockDoubleSkills } from '../business/skillService.js';
 import { addMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } from '../dao/playerDao.js';
@@ -12,8 +10,24 @@ import { ErrorFormator } from './errorFormator.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Dinoz, DinozStatus, Player } from '@drpg/prisma';
+import { updateDinoz } from '../dao/dinozDao.js';
 
-export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<void> {
+export async function rewarder(
+	rewards: Rewarder[],
+	dinoz: Pick<Dinoz,
+		'id' |
+		'level' |
+		'experience'
+	> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+		player: Pick<Player, 'id'> | null;
+	}
+) {
+	if (!dinoz.player) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
 	for (const reward of rewards) {
 		switch (reward.rewardType) {
 			case RewardEnum.STATUS:
@@ -25,32 +39,40 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				}
 				break;
 			case RewardEnum.CHANGE_ELEMENT:
-				await setDinoz(dinoz.setNextUpElement(reward.value));
+				await updateDinoz(dinoz.id, { nextUpElementId: reward.value });
 				break;
 			case RewardEnum.MAXEXPERIENCE:
-				const maxExp: number = levelList.find(level => level.id === dinoz.level)!.experience;
-				await setDinoz(dinoz.giveExperience(maxExp - dinoz.experience));
+				const level = levelList.find(level => level.id === dinoz.level);
+				if (!level) {
+					throw new ErrorFormator(500, `Level ${dinoz.level} doesn't exist.`);
+				}
+				const maxExp = level.experience;
+				await updateDinoz(dinoz.id, { experience: maxExp - dinoz.experience });
 				break;
 			case RewardEnum.SKILL:
-				await addSkillToDinoz(new DinozSkill(new Dinoz(dinoz.id), reward.value));
+				await addSkillToDinoz(dinoz.id, reward.value);
 
 				if (reward.value === skillList[Skill.COMPETENCE_DOUBLE].id) {
 					await unlockDoubleSkills(dinoz.id);
 				}
 				break;
 			case RewardEnum.EXPERIENCE:
-				await setDinoz(dinoz.giveExperience(reward.value));
+				await updateDinoz(dinoz.id, { experience: dinoz.experience + reward.value });
 				break;
 			case RewardEnum.GOLD:
 				await addMoney(dinoz.player.id, reward.value);
 				break;
 			case RewardEnum.ITEM:
-				const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value)!;
-				const playerShopData: Player = (await getPlayerShopOneItemDataRequest(
+				const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value);
+				if (!itemRewarded) {
+					throw new ErrorFormator(500, `Item ${reward.value} doesn't exist.`);
+				}
+
+				const playerShopData = await getPlayerShopOneItemDataRequest(
 					dinoz.player.id,
 					itemRewarded.itemId
-				)) as Player;
-				const playerItemData: PlayerItem | undefined = playerShopData.items.find(
+				);
+				const playerItemData = playerShopData.items.find(
 					item => item.itemId === itemRewarded.itemId
 				);
 				if (playerItemData) {
@@ -68,9 +90,11 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				if (!testRewards) {
 					throw new ErrorFormator(500, `Player ${dinoz.player.id} doesn't exist.`);
 				}
-				const EpicReward = new PlayerReward(new Player(dinoz.player.id), reward.value);
 				if (!testRewards.rewards.some(r => r.rewardId === reward.value)) {
-					await addRewardToPlayer(EpicReward);
+					await addRewardToPlayer({
+						rewardId: reward.value,
+						player: { connect: { id: dinoz.player.id } }
+					});
 				}
 				break;
 			case RewardEnum.SCENARIO:
@@ -78,7 +102,7 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				console.log('Scenario are not implemented yet');
 				break;
 			case RewardEnum.TELEPORT:
-				await setDinoz(dinoz.setPlace(reward.place.placeId));
+				await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
 				break;
 			default:
 				console.log('Not implemented yet');

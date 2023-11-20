@@ -18,8 +18,23 @@ export async function getCommonGatherInfo(playerId: number) {
 	return gathers;
 }
 
-export async function setGrid(grid: Prisma.PlayerGatherCreateInput) {
+export async function createGrid(grid: Prisma.PlayerGatherCreateInput) {
 	return prisma.playerGather.create({
-		data: grid
+		data: grid,
+		include: {
+			player: { select: { id: true } }
+		}
+	});
+}
+
+export async function updateGrid(gridId: number, grid: Prisma.PlayerGatherUpdateInput) {
+	return prisma.playerGather.update({
+		where: {
+			id: gridId
+		},
+		data: grid,
+		include: {
+			player: { select: { id: true } }
+		}
 	});
 }

@@ -1,6 +1,12 @@
-import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import express from 'express';
+import 'reflect-metadata';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
+import { updatePlayersPosition } from './cron/updatePlayersPosition.js';
+import adminRoutes from './routes/admin.routes.js';
 import dinozRoutes from './routes/dinoz.routes.js';
 import fightRoutes from './routes/fight.routes.js';
 import ingredientRoutes from './routes/ingredient.routes.js';
@@ -10,21 +16,13 @@ import missionsRoutes from './routes/missions.routes.js';
 import newsRoutes from './routes/news.routes.js';
 import npcRoutes from './routes/npc.routes.js';
 import oauthRoutes from './routes/oauth.routes.js';
-import playerRoutes from './routes/player.routes.js';
-import shopRoutes from './routes/shop.routes.js';
-import rankingRoutes from './routes/ranking.routes.js';
 import offerRoutes from './routes/offer.routes.js';
-import { getEnvironnement, loadConfigFile } from './utils/context.js';
-import { jwtConfig } from './utils/jwt.js';
-import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
-import { updatePlayersPosition } from './cron/updatePlayersPosition.js';
-import adminRoutes from './routes/admin.routes.js';
-import 'reflect-metadata';
-import { AppDataSource } from './data-source.js';
-import swaggerUi from 'swagger-ui-express';
-import swaggerJsDoc from 'swagger-jsdoc';
-import { sendDiscord } from './utils/discord.js';
+import playerRoutes from './routes/player.routes.js';
+import rankingRoutes from './routes/ranking.routes.js';
+import shopRoutes from './routes/shop.routes.js';
+import { loadConfigFile } from './utils/context.js';
 import { swaggerOptions } from './utils/index.js';
+import { jwtConfig } from './utils/jwt.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -85,18 +83,6 @@ updatePlayersPosition().start();
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
-
-// Database connection
-AppDataSource.initialize()
-	.then(() => {
-		console.log('Data Source has been initialized successfully.');
-		if (getEnvironnement() !== 'development') {
-			sendDiscord(`**Server started on the ${getEnvironnement()}**`).catch(e => {
-				console.error(e);
-			});
-		}
-	})
-	.catch(err => console.error('Error during Data Source initialization:', err));
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}.`);

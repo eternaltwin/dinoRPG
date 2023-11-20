@@ -1,6 +1,6 @@
 export interface ImportDinoz {
-	skills: Array<number>;
-	status: Array<number>;
+	skills: number[];
+	status: number[];
 	name: string;
 	isSacrificed: boolean;
 	isFrozen: boolean;

@@ -1,10 +1,9 @@
+import { Config } from '@drpg/core/models/config/Config';
 import { Request, Response } from 'express';
 import expressJwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
-import { getConfig } from './context.js';
-import { Config } from '@drpg/core/models/config/Config';
 import { getEternalTwinId } from '../dao/playerDao.js';
-import { Player } from '../entity/index.js';
+import { getConfig } from './context.js';
 
 const jwtConfig = () => {
 	const config = getConfig() as Config;
@@ -28,17 +27,21 @@ const forgeJWT = async (playerId: number): Promise<string> => {
 	);
 };
 
-const checkIsAdmin = (req: Request, res: Response, next: Function) => {
-	if (!req.auth!.isAdmin) {
-		return res.status(500).send(`Player ${req.auth!.playerId} is not admin !`);
+const checkIsAdmin = (req: Request, res: Response, next: () => void) => {
+	if (!req.auth?.playerId) {
+		return res.status(500).send('No auth data !');
+	}
+	if (!req.auth.isAdmin) {
+		return res.status(500).send(`Player ${req.auth.playerId} is not admin !`);
 	}
 	next();
 };
 
 async function isPlayerAdmin(playerId: number, config: Config): Promise<boolean> {
-	const ETId: Player | null = await getEternalTwinId(playerId);
-	const admins: Array<string | undefined> = Object.values(config.admin);
+	const ETId = await getEternalTwinId(playerId);
+	const admins: (string | undefined)[] = Object.values(config.admin);
 	return admins.includes(ETId?.eternalTwinId);
 }
 
-export { jwtConfig, forgeJWT, checkIsAdmin };
+export { checkIsAdmin, forgeJWT, jwtConfig };
+

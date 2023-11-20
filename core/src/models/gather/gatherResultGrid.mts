@@ -1,1 +1,1 @@
-export type GatherResultGrid = Array<Array<number>>;
+export type GatherResultGrid = number[][];

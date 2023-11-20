@@ -5,10 +5,10 @@ import { NpcAction } from './NpcAction.mjs';
 export interface NpcData {
 	stepName: string; //Correspond au <phase id="speech"> du code MT
 	alias?: string;
-	nextStep: Array<string>; //Correspond au <a id="speech"> du code MT
+	nextStep: string[]; //Correspond au <a id="speech"> du code MT
 	initialStep?: boolean;
 	condition?: Condition;
 	action?: NpcAction;
-	reward?: Array<Rewarder>;
+	reward?: Rewarder[];
 	target?: string;
 }

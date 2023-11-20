@@ -1,29 +1,22 @@
 import { Request, Response, Router } from 'express';
-import { apiRoutes } from '../constants/index.js';
-import {
-	getAccountData,
-	getCommonData,
-	setCustomText,
-	searchPlayers,
-	getDinozList
-} from '../business/playerService.js';
 import { body, param, validationResult } from 'express-validator';
-import { Player } from '../entity/player.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { postError } from '../utils/discord.js';
-import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
-import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-import { getPlayerMoney } from '../dao/playerDao.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import {
 	displayTwinoidSite,
 	displayTwinoidSpecificSite
 	// importAPI,
 	// importTwinoidData
 } from '../business/importService.js';
-import { TwinoStat } from '@drpg/core/models/import/twinoStat';
-import { SiteStat } from '@drpg/core/models/import/siteStat';
-import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
+import {
+	getAccountData,
+	getCommonData,
+	getDinozList,
+	searchPlayers,
+	setCustomText
+} from '../business/playerService.js';
+import { apiRoutes } from '../constants/index.js';
+import { getPlayerMoney } from '../dao/playerDao.js';
+import { postError } from '../utils/discord.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -50,7 +43,7 @@ routes.get(`${commonPath}/commondata`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response: PlayerCommonData = await getCommonData(req);
+		const response = await getCommonData(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -66,7 +59,7 @@ routes.get(`${commonPath}/dinozList`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response: Array<DinozFiche> = await getDinozList(req);
+		const response = await getDinozList(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -81,7 +74,7 @@ routes.get(`${commonPath}/twinoStats/:id`, [param('id').exists().isNumeric()], a
 	}
 
 	try {
-		const response: Array<TwinoStat> = await displayTwinoidSite(req);
+		const response = await displayTwinoidSite(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -99,7 +92,7 @@ routes.get(
 		}
 
 		try {
-			const response: Array<SiteStat> | Array<SiteAchiev> = await displayTwinoidSpecificSite(req);
+			const response = await displayTwinoidSpecificSite(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -115,7 +108,15 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response: Player = (await getPlayerMoney(req.auth!.playerId!)) as Player;
+		if (!req.auth?.playerId) {
+			throw new ErrorFormator(400, 'No player ID found');
+		}
+		const response = await getPlayerMoney(req.auth.playerId)
+
+		if (!response) {
+			throw new ErrorFormator(400, 'No player found');
+		}
+
 		return res.status(200).send(response.money.toString());
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -152,7 +153,7 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: 
 	}
 
 	try {
-		const response: PlayerInfo = await getAccountData(req);
+		const response = await getAccountData(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -287,7 +288,7 @@ routes.get(
 		}
 
 		try {
-			const response: Array<Player> = await searchPlayers(req);
+			const response = await searchPlayers(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

@@ -1,8 +1,5 @@
-import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
-import { MissionID } from '@drpg/core/models/missions/missionList';
-import { UpdateResult } from 'typeorm';
+import { Dinoz, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
-import { Concentration, Dinoz, DinozItem, Player } from '@drpg/prisma';
 
 // Getters
 
@@ -70,6 +67,7 @@ export async function getAllDinozFicheLite(playerId: number) {
 			placeId: true,
 			order: true,
 			isFrozen: true,
+			level: true,
 		}
 	});
 
@@ -80,6 +78,7 @@ export async function getCanDinozChangeName(dinozId: number) {
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
+			id: true,
 			canChangeName: true,
 			player: { select: { id: true } }
 		}
@@ -106,17 +105,23 @@ export async function getDinozFicheRequest(dinozId: number) {
 			level: true,
 			placeId: true,
 			raceId: true,
+			missionId: true,
+			following: true,
+			isFrozen: true,
+			order: true,
 			player: {
 				select: {
 					id: true, money: true,
+					engineer: true,
 					items: {
 						select: { itemId: true, quantity: true }
 					},
+					rewards: { select: { rewardId: true } },
 				}
 			},
 			items: { select: { itemId: true } },
 			status: { select: { statusId: true } },
-			missions: { select: { missionId: true, step: true, isFinished: true, progress: true } },
+			missions: true,
 			skills: { select: { skillId: true } },
 			concentration: true,
 		}
@@ -125,6 +130,7 @@ export async function getDinozFicheRequest(dinozId: number) {
 	return dinoz;
 }
 
+export type DinozWithMissionData = NonNullable<Awaited<ReturnType<typeof getDinozMissionsInfo>>>;
 export async function getDinozMissionsInfo(dinozId: number) {
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
@@ -133,8 +139,15 @@ export async function getDinozMissionsInfo(dinozId: number) {
 			level: true,
 			placeId: true,
 			experience: true,
-			player: { select: { id: true, money: true } },
+			life: true,
+			player: { select: {
+				id: true,
+				money: true,
+				items: { select: { itemId: true, quantity: true } },
+				rewards: { select: { rewardId: true } },
+			} },
 			status: { select: { statusId: true } },
+			skills: { select: { skillId: true } },
 			missions: {
 				select: {
 					missionId: true,
@@ -249,13 +262,16 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			nbrUpLightning: true,
 			nbrUpAir: true,
 			placeId: true,
-			player: { select: { id: true, money: true } },
+			player: { select: {
+				id: true,
+				money: true,
+				items: { select: { itemId: true, quantity: true } },
+				rewards: { select: { rewardId: true } },
+			} },
 			items: { select: { itemId: true } },
 			skills: { select: { skillId: true } },
 			status: { select: { statusId: true } },
-			missions: { select: {
-				missionId: true, step: true, isFinished: true, progress: true
-			} },
+			missions: true,
 			concentration: true,
 		}
 	});
@@ -366,12 +382,17 @@ export async function getDinozGatherData(dinozId: number) {
 		select: {
 			id: true,
 			placeId: true,
+			level: true,
+			life: true,
 			player: { select: {
 				id: true, money: true,
 				items: { select: { id: true, itemId: true, quantity: true } },
+				rewards: { select: { rewardId: true } },
 				ingredients: true,
 			} },
 			skills: { select: { skillId: true } },
+			status: { select: { statusId: true } },
+			missions: { select: { missionId: true, isFinished: true } },
 		}
 	});
 
@@ -380,32 +401,21 @@ export async function getDinozGatherData(dinozId: number) {
 
 // Setters
 //TODO
-export async function setDinoz(dinoz: Dinoz & {
-	player?: Player,
-	concentration?: Concentration,
-}) {
-	const dinozWithoutLinks = {
-		...dinoz,
-		player: undefined,
-		concentration: undefined,
-	};
+export async function createDinoz(
+	dinoz: Prisma.DinozCreateInput
+) {
+	return prisma.dinoz.create({
+		data: dinoz as Prisma.DinozCreateInput
+	});
+}
 
-	const data = {
-		...dinozWithoutLinks,
-		playerId: dinoz.playerId || (dinoz.player ? dinoz.player.id : undefined),
-		concentrationId: dinoz.concentrationId || (dinoz.concentration ? dinoz.concentration.id : undefined),
-	};
-
-	return prisma.dinoz.upsert({
-		where: {
-			id: dinoz.id
-		},
-		create: {
-			...data,
-		},
-		update: {
-			...data,
-		},
+export async function updateDinoz(
+	dinozId: number,
+	dinoz: Prisma.DinozUpdateInput
+) {
+	await prisma.dinoz.update({
+		where: { id: dinozId },
+		data: dinoz
 	});
 }
 

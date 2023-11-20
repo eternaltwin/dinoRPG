@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { apiRoutes } from '../constants/index.js';
 import {
 	endMission,
 	getGlobalMissions,
@@ -8,10 +7,9 @@ import {
 	interactMission,
 	updateMission
 } from '../business/missionsService.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
-import { MissionList } from '@drpg/core/models/missions/missionList';
-import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -52,7 +50,7 @@ routes.get(
 		}
 
 		try {
-			const response: Array<MissionList> = await getMissionsList(req);
+			const response = await getMissionsList(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -111,7 +109,7 @@ routes.put(
 		}
 
 		try {
-			const response: boolean = await updateMission(req);
+			const response = await updateMission(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -168,7 +166,7 @@ routes.put(
 		}
 
 		try {
-			const response: string = await interactMission(req);
+			const response = await interactMission(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -221,7 +219,7 @@ routes.put(
 		}
 
 		try {
-			const response: Array<Rewarder> = await endMission(req);
+			const response = await endMission(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;

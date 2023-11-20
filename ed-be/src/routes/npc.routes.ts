@@ -1,10 +1,9 @@
-import { body, param, validationResult } from 'express-validator';
 import { Request, Response, Router } from 'express';
-import { apiRoutes } from '../constants/index.js';
+import { body, param, validationResult } from 'express-validator';
 import { getNpcSpeech } from '../business/npcService.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
-import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -67,7 +66,7 @@ routes.put(
 		}
 
 		try {
-			const dialogue: NpcTalk = await getNpcSpeech(req);
+			const dialogue = await getNpcSpeech(req);
 			res.status(200).send(dialogue);
 		} catch (err) {
 			const e = err as ErrorFormator;

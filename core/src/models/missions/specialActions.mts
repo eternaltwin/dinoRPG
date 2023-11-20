@@ -5,6 +5,6 @@ import { MonsterFiche } from '../fight/MonsterFiche.mjs';
 export interface SpecialActions {
 	place: number;
 	condition: Condition;
-	opponents?: Array<MonsterFiche>;
-	reward: Array<Rewarder>;
+	opponents?: MonsterFiche[];
+	reward: Rewarder[];
 }

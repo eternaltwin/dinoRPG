@@ -23,7 +23,7 @@ const commonPath: string = apiRoutes.oauthRoute;
  */
 routes.post(`${commonPath}/redirect`, async (_req: Request, res: Response) => {
 	try {
-		const response: URL = await getAuthorizationUri();
+		const response = await getAuthorizationUri();
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -59,7 +59,7 @@ routes.post(`${commonPath}/redirect`, async (_req: Request, res: Response) => {
  */
 routes.put(`${commonPath}/authenticate/eternal-twin`, async (req: Request, res: Response) => {
 	try {
-		const response: string = await authenticateToET(req);
+		const response = await authenticateToET(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;

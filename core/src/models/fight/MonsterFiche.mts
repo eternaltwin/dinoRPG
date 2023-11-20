@@ -9,7 +9,7 @@ export type MonsterFiche = {
 	bonus_attack?: number | undefined;
 	// bonus defense for monster
 	bonus_defense?: number | undefined;
-	groups?: Array<number>;
+	groups?: number[];
 	xp?: number;
 	xpBonus?: number;
 	gold?: number;
@@ -19,5 +19,5 @@ export type MonsterFiche = {
 	zone: MapZone;
 	place?: PlaceEnum;
 	special?: boolean;
-	skills?: Array<number>;
+	skills?: number[];
 };

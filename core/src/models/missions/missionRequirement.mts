@@ -9,7 +9,7 @@ export type missionRequirement =
 	  }
 	| {
 			actionType: ConditionEnum.KILL_BOSS;
-			target: Array<MonsterFiche>;
+			target: MonsterFiche[];
 	  }
 	| {
 			actionType: Exclude<ConditionEnum, ConditionEnum.KILL | ConditionEnum.KILL_BOSS>;

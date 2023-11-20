@@ -1,5 +1,8 @@
+/*
 import { EventSubscriber, InsertEvent, EntitySubscriberInterface, UpdateEvent } from 'typeorm';
 import { Dinoz, Ranking } from '../entity/index.js';
+
+// This should probably be redone using prisma.$on
 
 @EventSubscriber()
 export class DinozSubscriber implements EntitySubscriberInterface<Dinoz> {
@@ -48,3 +51,4 @@ export class DinozSubscriber implements EntitySubscriberInterface<Dinoz> {
 		}
 	}
 }
+*/

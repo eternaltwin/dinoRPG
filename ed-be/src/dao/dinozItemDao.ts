@@ -1,10 +1,12 @@
-import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
 
-export function addItemToDinoz(item: Prisma.DinozItemCreateInput) {
+export function addItemToDinoz(dinozId: number, itemId: number) {
 	return prisma.dinozItem.create({
-		data: item
+		data: {
+			dinozId,
+			itemId
+		}
 	});
 }
 

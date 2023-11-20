@@ -1,7 +1,5 @@
 import { Request } from 'express';
-import { getPlayersSumRanking, getPlayersAverageRanking } from '../dao/rankingDao.js';
-import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
-import { Ranking } from '../entity/index.js';
+import { getPlayersAverageRanking, getPlayersSumRanking } from '../dao/rankingDao.js';
 
 /**
  * @summary Get all the players from a specified page to display their ranking
@@ -9,32 +7,63 @@ import { Ranking } from '../entity/index.js';
  * @param req.param.sort {string} between classic or average
  * @return Array<PlayerRanking>
  */
-export async function getRanking(req: Request): Promise<Array<PlayerRanking>> {
-	const page: number = parseInt(req.params.page);
-	let playersRanking: Array<Ranking>;
+export async function getRanking(req: Request) {
+	const page = +req.params.page;
+	let playersRanking;
 
 	switch (req.params.sort) {
 		case 'classic':
-			playersRanking = await getPlayersSumRanking(page);
+			const data = await getPlayersSumRanking(page);
+			playersRanking = data.map(ranking => {
+				if (!ranking.player) {
+					throw new Error('Player not found');
+				}
+
+				return {
+					dinozCount: ranking.dinozCountDisplayed,
+					pointCount: ranking.sumPointsDisplayed,
+					playerName: ranking.player.name,
+					playerId: ranking.player.id,
+					pointAverage: ranking.averagePointsDisplayed,
+					position: ranking.sumPosition
+				};
+			});
 			break;
 		case 'average':
-			playersRanking = await getPlayersAverageRanking(page);
+			const data2 = await getPlayersAverageRanking(page);
+			playersRanking = data2.map(ranking => {
+				if (!ranking.player) {
+					throw new Error('Player not found');
+				}
+
+				return {
+					dinozCount: ranking.dinozCountDisplayed,
+					pointCount: ranking.sumPointsDisplayed,
+					playerName: ranking.player.name,
+					playerId: ranking.player.id,
+					pointAverage: ranking.averagePointsDisplayed,
+					position: ranking.averagePosition
+				};
+			});
 			break;
 		default:
-			playersRanking = await getPlayersSumRanking(page);
+			const data3 = await getPlayersSumRanking(page);
+			playersRanking = data3.map(ranking => {
+				if (!ranking.player) {
+					throw new Error('Player not found');
+				}
+
+				return {
+					dinozCount: ranking.dinozCountDisplayed,
+					pointCount: ranking.sumPointsDisplayed,
+					playerName: ranking.player.name,
+					playerId: ranking.player.id,
+					pointAverage: ranking.averagePointsDisplayed,
+					position: ranking.sumPosition
+				};
+			});
 			break;
 	}
 
-	const infoToSend: Array<PlayerRanking> = playersRanking.map(player => {
-		return {
-			dinozCount: player.dinozCountDisplayed,
-			pointCount: player.sumPointsDisplayed,
-			playerName: player.player.name,
-			playerId: player.player.id,
-			pointAverage: player.averagePointsDisplayed,
-			position: player.sumPosition || player.averagePosition
-		};
-	});
-
-	return infoToSend;
+	return playersRanking;
 }

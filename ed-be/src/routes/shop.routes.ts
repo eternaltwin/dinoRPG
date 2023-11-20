@@ -1,12 +1,10 @@
-import { Router, Request, Response } from 'express';
-import { apiRoutes } from '../constants/index.js';
-import { getDinozFromDinozShop } from '../business/dinozShopService.js';
-import { getItemsFromShop, buyItem } from '../business/itemShopService.js';
+import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { getDinozFromDinozShop } from '../business/dinozShopService.js';
+import { buyItem, getItemsFromShop } from '../business/itemShopService.js';
+import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
-import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 const routes: Router = Router();
 
@@ -19,7 +17,7 @@ routes.get(`${commonPath}/dinoz`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const listItems: Array<DinozShopFiche> = await getDinozFromDinozShop(req);
+		const listItems = await getDinozFromDinozShop(req);
 		res.status(200).send(listItems);
 	} catch (err) {
 		const e = err as ErrorFormator;
@@ -38,7 +36,7 @@ routes.get(
 		}
 
 		try {
-			const listItems: Array<ItemFiche> = await getItemsFromShop(req);
+			const listItems = await getItemsFromShop(req);
 			res.status(200).send(listItems);
 		} catch (err) {
 			const e = err as ErrorFormator;

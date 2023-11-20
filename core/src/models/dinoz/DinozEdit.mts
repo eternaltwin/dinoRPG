@@ -9,9 +9,9 @@ export interface DinozEdit {
 	maxLife?: number;
 	experience?: number;
 	maxExperience?: number;
-	status?: Array<number>;
-	skillList: Array<string>;
+	status?: number[];
+	skillList: string[];
 	placeId?: number;
-	statusList: Array<string>;
-	borderPlace?: Array<number>;
+	statusList: string[];
+	borderPlace?: number[];
 }

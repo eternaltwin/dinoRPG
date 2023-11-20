@@ -6,6 +6,6 @@ export interface Mission {
 	missionId: number;
 	missionName: string;
 	condition?: Condition;
-	rewards: Array<Rewarder>;
-	steps: Array<MissionSteps>;
+	rewards: Rewarder[];
+	steps: MissionSteps[];
 }

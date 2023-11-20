@@ -1,6 +1,3 @@
-export * from './ingredient.js';
-export * from './gather.js';
-// Note: item.js and place.js are before shop.js because shop.js needs them
 export * from './shop.js';
 export * from './temporaryStatus.js';
 

@@ -57,6 +57,7 @@
   "devDependencies": {
     "@babel/cli": "^7.23.0",
     "@babel/preset-env": "^7.23.3",
+    "@stylistic/eslint-plugin-ts": "^1.4.0",
     "@types/cheerio": "^0.22.34",
     "@types/cors": "^2.8.16",
     "@types/cron": "^2.4.0",
