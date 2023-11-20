@@ -5,7 +5,8 @@
  * If the aim is to generate small still pictures of standing dinos, the class should be used to generate an image to display in an <img> tag.
  * Filling the webpage with webgl canvas will send it straight to hell.
  */
-export class sdino extends Container<import('pixi.js').DisplayObject> {
+declare module '@drpg/dinoAnimation' {
+	export class sdino extends Container<import('pixi.js').DisplayObject> {
 	/**
 	 * Create a dino based on the data parameter.
 	 * @param {*} data Object containing the data describing a dino.
@@ -123,6 +124,8 @@ export class sdino extends Container<import('pixi.js').DisplayObject> {
 	 */
 	getChkCode(): number;
 }
+}
 import { Container } from 'pixi.js';
 import { Animator } from './display/Animator.js';
+
 //# sourceMappingURL=sdino.d.ts.map

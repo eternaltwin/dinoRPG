@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Debug</title>
+		<style>
+			canvas {
+				display: block;
+				margin: 5px;
+			}
+
+			table, input {
+				font-family: monospace;
+			}
+
+			.dino_names {
+				text-align: center;
+			}
+			
+			td {
+				padding: 0px 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="sdino"></div>
+		<div id="controls"></div>
+		<legend>Dinoz code</legend>
+		<input type="text" id="dino_code" value="09T1Yt9wqq4Rx000"></input>
+		<button id="update">Update</button>
+		<table>
+			<tr>
+				<th colspan="100">Examples</th>
+			</tr>
+			<tr class="dino_names">
+				<td>Moueffe</td>
+				<td>Pigmou</td>
+				<td>Winks</td>
+				<td>Planaile</td>
+				<td>Castivore</td>
+				<td>Rocky</td>
+				<td>Pteroz</td>
+			</tr>
+			<tr>
+				<td>
+					<p>09T1Yt9wqq4Rx000</p>
+					<p>09w7y7qqpdhld000</p>
+					<p>09adQBgO8T065000</p>
+					<p>09vGg4LW1S9fn000</p>
+					<p>0A8uYQDU0FywV000</p>
+					<p>0AcokGzWsf6WP000</p>
+					<p>0An2HcXN9sl3m000</p>
+				</td>
+				<td>
+					<p>19hot0hFbItLS000</p>
+					<p>199zX1Jn1zGXG000</p>
+					<p>191okqcRZdgVi000</p>
+					<p>19VSfUdpIPb0a000</p>
+					<p>19DHt2Szqam4y000</p>
+					<p>19oNVXoAYgPUI000</p>
+					<p>1AADFvpotbA6y000</p>
+				</td>
+				<td>
+					<p>29yp89zwHWlmC000</p>
+					<p>29VRA00KtkGM1000</p>
+					<p>29jH6Z7YjJdw5110</p>
+					<p>293DclwhG64Vd000</p>
+					<p>2ADTmPjGH4lLO000</p>
+					<p>2AIhcx2YC9ksv000</p>
+					<p>2AGVenN21FGJk000</p>
+				</td>
+				<td>
+					<p>393YRrXntzpn0000</p>
+					<p>39EEr8m1HSfK8000</p>
+					<p>39ANSxwXXTvUr000</p>
+					<p>39N9HVcY4gLiQ000</p>
+					<p>39SOHSjXu8FZM000</p>
+					<p>39uuvDuEYohCG000</p>
+					<p>3ArpIB2f2t2Ww000</p>
+				</td>
+				<td>
+					<p>49hwJCDfbel16000</p>
+					<p>49BsLby0mZF6k000</p>
+					<p>49uvrkF8dPrOS000</p>
+					<p>49SES7eSLrk1C000</p>
+					<p>494IHPBxwdn74000</p>
+					<p>498sSm4OIB4l7000</p>
+					<p>491KW4XcQQOnC000</p>
+				</td>
+				<td>
+					<p>59QdaJ5j1dEaK000</p>
+					<p>590iaiFtHCgfq000</p>
+					<p>59z6ZP4PDDZA6000</p>
+					<p>59e9OSz9v7KnK000</p>
+					<p>59MG98iyxUhaA000</p>
+					<p>59WkrzINzZ5p9000</p>
+					<p>59DCTDZxittpQ000</p>
+				</td>
+				<td>
+					<p>69pCCyHibiPFK000</p>
+					<p>69ShBRsiPCfiw000</p>
+					<p>69spSHxJqAuyc000</p>
+					<p>69SEXtatVVj3j000</p>
+					<p>69CCNfds4I0OC000</p>
+					<p>69LhH8GuujsLD000</p>
+					<p>69uOBQV7rJEEr000</p>
+				</td>
+			</tr>
+			<tr class="dino_names">
+				<td>Nuagoz</td>
+				<td>Sirain</td>
+				<td>Hippoclamp</td>
+			</tr>
+			<tr>
+				<td>
+					<p>79MZ2Ou1cj0q6000</p>
+					<p>79saoiWWdDYpi000</p>
+					<p>79TMjJApT93Mx000</p>
+					<p>796DaTiCSvPu7000</p>
+					<p>79wzoXZb94nxa000</p>
+					<p>79j66kSFEoTJ5000</p>
+					<p>79vKIt6DlGsCt000</p>
+				</td>
+				<td>
+					<p>89KlMhswn7mQ4000</p>
+					<p>89xsFY1bzYhjG000</p>
+					<p>89e7EDLfIWKJf000</p>
+					<p>89n03SgHUYlZU000</p>
+					<p>89lPun9nNPh7o000</p>
+					<p>89NgwzWWsktiC000</p>
+					<p>89P0ZGkRSwlfm000</p>
+				</td>
+				<td>
+					<p>991wF8kEU0A0u000</p>
+					<p>99X4YC3gRdbiA000</p>
+					<p>99gLuBRdyrrk0000</p>
+					<p>995FFpvfZ4W7E000</p>
+					<p>99Lh9VynQ3nnr000</p>
+					<p>99DUB6MqLdiAm000</p>
+					<p>98jwN04PyJ2Qs000</p>
+				</td>
+			</tr>
+		</table>
+		<script src="dinorpg-animations-test.min.js"></script>
+		<script src="sdino.js"></script>
+	</body>
+</html>

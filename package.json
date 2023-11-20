@@ -43,7 +43,8 @@
       "ed-ui/",
       "core/",
       "prisma/",
-      "Eternaltwin/"
+      "Eternaltwin/",
+      "dinoAnimation/"
     ]
   },
   "packageManager": "yarn@4.0.1",

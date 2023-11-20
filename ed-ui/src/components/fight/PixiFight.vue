@@ -5,7 +5,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { sdino } from './dinorpg-animations.js';
+import { sdino } from '@drpg/dinoAnimation';
 import { Application, Sprite } from 'pixi.js';
 
 export default defineComponent({
