@@ -118,7 +118,7 @@ export async function learnSkill(req: Request) {
 			.filter(skill => !skill.raceId || skill.raceId.includes(dinozSkills.raceId))
 			.map(skill => ({
 				skillId: skill.id,
-				dinoz: { connect: { id: dinozId } }
+				dinozId,
 			}));
 
 		// Add skill to dinoz in order to have same data than database.

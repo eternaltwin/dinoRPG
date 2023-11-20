@@ -6,7 +6,7 @@
 					{{ dinoz.name }}
 				</div>
 				<div class="dinozInfo">
-					{{ $t(`race.name.${raceList[dinoz.raceId]}`) }}
+					{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
 					{{ $t(`myAccount.level`) }} {{ dinoz.level }}
 				</div>
 				<DinozWithoutFlash
@@ -14,7 +14,7 @@
 					:display="dinoz.display"
 					:life="dinoz.life"
 					:flip="1"
-					:race="dinoz.raceId"
+					:race="dinoz.race.raceId"
 					:shop="true"
 					:isFrozen="dinoz.isFrozen"
 					style="position: absolute"
@@ -60,7 +60,7 @@ export default defineComponent({
 	},
 	methods: {
 		style(dinoz: DinozFiche): string {
-			const race = Object.entries(raceList).find(race => parseInt(race[0]) === dinoz.raceId)![1];
+			const race = Object.entries(raceList).find(race => parseInt(race[0]) === dinoz.race.raceId)![1];
 			//TODO it's disabled because we disabled the vue dinoz
 			if (race === 'moueffeDisabled' || race === 'pigmouDisabled') {
 				const taille = parseInt(dinoz.display![1] === 'A' ? '9' : dinoz.display![1]);

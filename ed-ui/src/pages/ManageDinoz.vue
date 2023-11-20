@@ -21,7 +21,7 @@
 						<div class="life" :style="{ width: `${(dinoz.life / dinoz.maxLife) * 100}%` }" />
 					</div>
 					<div class="experience-full">
-						<div class="experience" :style="{ width: `${(dinoz.experience / getMaxXP(dinoz)) * 100}%` }" />
+						<div class="experience" :style="{ width: `${(dinoz.experience / getMaxXp(dinoz)) * 100}%` }" />
 					</div>
 
 					<template #content>
