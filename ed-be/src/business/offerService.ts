@@ -50,6 +50,8 @@ export async function createOffer(req: Request) {
 		items
 	);
 
+	console.log(offers);
+
 	// TODO: Set Dinoz as selling
 	// TODO: Remove items from inventory
 	// TODO: Remove ingredients from inventory
@@ -76,11 +78,16 @@ export async function cancelOffer(req: Request) {
 
 	const { dinoz, items: itemsAndIngredients } = offer;
 
+	console.log(dinoz);
+
 	// TODO: Set Dinoz as not selling
 
 	// Separate items and ingredients
 	const ingredients = itemsAndIngredients.filter(item => item.isIngredient);
 	const items = itemsAndIngredients.filter(item => !item.isIngredient);
+
+	console.log(ingredients);
+	console.log(items);
 
 	// TODO: Add items to inventory
 	// TODO: Add ingredients to inventory
@@ -137,6 +144,8 @@ export async function bidOffer(req: Request) {
 
 	// Remove bid difference from inventory
 	const bidDifference = value - previousOwnBid;
+
+	console.log(bidDifference);
 
 	// TODO: Remove bid difference from inventory
 }
