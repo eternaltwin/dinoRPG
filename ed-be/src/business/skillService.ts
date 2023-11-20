@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { getRandomUpElement } from '../utils/helpers/DinozHelper.js';
 import { Dinoz, DinozSkill, DinozSkillUnlockable, DinozStatus, Ranking } from '../entity/index.js';
 import { getDinozForLevelUp, getDinozSkillsLearnableAndUnlockable, setDinoz } from '../dao/dinozDao.js';
-import { addMultipleUnlockableSkills, removeUnlockableSkillsToDinoz } from '../dao/dinozSkillUnlockableDao.js';
+import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import gameConfig from '../config/game.config.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
@@ -86,7 +86,7 @@ export async function learnSkill(req: Request): Promise<number> {
 	}
 
 	if (isUnlockableSkills) {
-		await removeUnlockableSkillsToDinoz(dinozId, skillIdList);
+		await removeUnlockableSkillsFromDinoz(dinozId, skillIdList);
 	} else {
 		await applySkillEffect(dinozSkills, Object.values(skillList).find(skill => skill.id === skillIdList[0])!);
 		await addSkillToDinoz(new DinozSkill(new Dinoz(dinozId), skillIdList[0]));

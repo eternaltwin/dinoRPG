@@ -1,56 +1,64 @@
-import { PlayerItem } from '../entity/index.js';
-import { AppDataSource } from '../data-source.js';
-import { UpdateResult } from 'typeorm';
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
-const itemRepository = AppDataSource.getRepository(PlayerItem);
-
-export async function setItem(newItem: Partial<PlayerItem>): Promise<PlayerItem> {
-	return itemRepository.save(newItem);
-}
-
-export async function getPlayerItems(playerId: number): Promise<Array<PlayerItem>> {
-	return itemRepository.find({
+export const increaseItemQuantity = async (playerId: number, itemId: number, quantity: number) => {
+	const item = await prisma.playerItem.update({
 		where: {
-			player: {
-				id: playerId
+			itemId_playerId: {
+				itemId,
+				playerId
 			}
 		},
-		select: ['itemId']
+		data: {
+			quantity: {
+				increment: quantity
+			}
+		}
+	});
+
+	return item;
+}
+
+export const decreaseItemQuantity = async (playerId: number, itemId: number, quantity: number) => {
+	const item = await prisma.playerItem.update({
+		where: {
+			itemId_playerId: {
+				itemId,
+				playerId
+			}
+		},
+		data: {
+			quantity: {
+				decrement: quantity
+			}
+		}
+	});
+
+	return item;
+}
+
+export async function insertItem(playerId: number, newItem: Prisma.PlayerItemCreateInput) {
+	return prisma.playerItem.create({
+		data: {
+			...newItem,
+			player: { connect: { id: playerId } }
+		}
 	});
 }
 
-export async function updateItemDataRequest(
-	playerId: number,
-	itemId: number,
-	newQuantity: number
-): Promise<UpdateResult> {
-	return itemRepository
-		.createQueryBuilder('item')
-		.update(PlayerItem)
-		.set({ quantity: newQuantity })
-		.where('itemId = :iId AND player.id = :pId', { iId: itemId, pId: playerId })
-		.execute();
+export async function getPlayerItems(playerId: number) {
+	return prisma.playerItem.findMany({
+		where: {
+			playerId
+		},
+		select: {
+			itemId: true,
+		}
+	});
 }
 
-export async function changeItemQuantity(playerId: number, itemId: number, quantity: number): Promise<UpdateResult> {
-	return itemRepository
-		.createQueryBuilder('item')
-		.update(PlayerItem)
-		.set({ quantity: () => 'quantity + :addQuantity' })
-		.setParameter('addQuantity', quantity)
-		.where('itemId = :iId AND player.id = :pId', { iId: itemId, pId: playerId })
-		.execute();
-}
-
-export async function useItemDataRequest(playerId: number, itemId: number): Promise<UpdateResult> {
-	return itemRepository
-		.createQueryBuilder('item')
-		.update(PlayerItem)
-		.set({ quantity: () => 'quantity - 1' })
-		.where('itemId = :iId AND player.id = :pId', { iId: itemId, pId: playerId })
-		.execute();
-}
-
-export async function setMultipleItem(item: Array<Partial<PlayerItem>>): Promise<Array<PlayerItem>> {
-	return itemRepository.save(item);
+export async function setMultipleItem(item: Prisma.PlayerItemCreateManyInput[]) {
+	await prisma.playerItem.createMany({
+		data: item
+	});
 }

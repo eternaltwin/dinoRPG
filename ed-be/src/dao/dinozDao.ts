@@ -1,357 +1,431 @@
-import { AppDataSource } from '../data-source.js';
-import { Dinoz } from '../entity/index.js';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { MissionID } from '@drpg/core/models/missions/missionList';
 import { UpdateResult } from 'typeorm';
-
-const dinozRepository = AppDataSource.getRepository(Dinoz);
+import { prisma } from '../prisma.js';
+import { Concentration, Dinoz, DinozItem, Player } from '@drpg/prisma';
 
 // Getters
 
-export async function getActiveDinoz(playerId: number): Promise<Array<Dinoz>> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.isFrozen', 'dinoz.isSacrificed'])
-		.addSelect(['player.id', 'player.leader'])
-		.innerJoin('dinoz.player', 'player')
-		.where('player.id = :pId AND dinoz.isFrozen = FALSE AND dinoz.isSacrificed = FALSE', { pId: playerId })
-		.getMany();
+export async function getActiveDinoz(playerId: number) {
+	const dinozList = await prisma.dinoz.findMany({
+		where: {
+			playerId,
+			isFrozen: false,
+			isSacrificed: false
+		},
+		select: {
+			isFrozen: true,
+			isSacrificed: true,
+			player: {
+				select: {
+					id: true,
+					leader: true
+				}
+			}
+		}
+	});
+
+	return dinozList;
 }
 
-export async function getAllDinozFromAccount(playerId: number): Promise<Array<Dinoz>> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select([
-			'dinoz.id',
-			'dinoz.following',
-			'dinoz.name',
-			'dinoz.isFrozen',
-			'dinoz.isSacrificed',
-			'dinoz.level',
-			'dinoz.missionId',
-			'dinoz.placeId',
-			'dinoz.canChangeName',
-			'dinoz.life',
-			'dinoz.maxLife',
-			'dinoz.experience'
-		])
-		.leftJoinAndSelect('dinoz.status', 'status')
-		.leftJoinAndSelect('dinoz.skills', 'skill')
-		.innerJoin('dinoz.player', 'player', 'player.id = :pId', { pId: playerId })
-		.getMany();
+export async function getAllDinozFromAccount(playerId: number) {
+	const dinozList = await prisma.dinoz.findMany({
+		where: {
+			playerId
+		},
+		select: {
+			id: true,
+			following: true,
+			name: true,
+			isFrozen: true,
+			isSacrificed: true,
+			level: true,
+			missionId: true,
+			placeId: true,
+			canChangeName: true,
+			life: true,
+			maxLife: true,
+			experience: true,
+			status: true,
+			skills: true,
+		}
+	});
+
+	return dinozList;
 }
 
-export async function getAllDinozFicheLite(playerId: number): Promise<Array<Dinoz>> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select([
-			'dinoz.id',
-			'dinoz.name',
-			'dinoz.display',
-			'dinoz.following',
-			'dinoz.life',
-			'dinoz.level',
-			'dinoz.maxLife',
-			'dinoz.experience',
-			'dinoz.placeId',
-			'dinoz.order',
-			'dinoz.isFrozen'
-		])
-		.innerJoin('dinoz.player', 'player', 'player.id = :pId', { pId: playerId })
-		.getMany();
+export async function getAllDinozFicheLite(playerId: number) {
+	const dinozList = await prisma.dinoz.findMany({
+		where: {
+			playerId
+		},
+		select: {
+			id: true,
+			name: true,
+			display: true,
+			following: true,
+			life: true,
+			maxLife: true,
+			experience: true,
+			placeId: true,
+			order: true,
+			isFrozen: true,
+		}
+	});
+
+	return dinozList;
 }
 
-export async function getCanDinozChangeName(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.canChangeName'])
-		.addSelect(['player.id'])
-		.innerJoin('dinoz.player', 'player')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getCanDinozChangeName(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			canChangeName: true,
+			player: { select: { id: true } }
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozFicheRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select([
-			'dinoz.id',
-			'dinoz.display',
-			'dinoz.life',
-			'dinoz.maxLife',
-			'dinoz.experience',
-			'dinoz.nbrUpAir',
-			'dinoz.nbrUpFire',
-			'dinoz.nbrUpLightning',
-			'dinoz.nbrUpWater',
-			'dinoz.nbrUpWood',
-			'dinoz.name',
-			'dinoz.level',
-			'dinoz.placeId',
-			'dinoz.raceId'
-		])
-		.addSelect(['player.id', 'player.money'])
-		.addSelect(['playerItems.itemId', 'playerItems.quantity'])
-		.addSelect(['items.itemId'])
-		.addSelect(['status.statusId'])
-		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
-		.addSelect(['skills.skillId'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoinAndSelect('dinoz.concentration', 'concentration')
-		.leftJoin('player.items', 'playerItems')
-		.leftJoin('dinoz.items', 'items')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('dinoz.missions', 'missions')
-		.leftJoin('dinoz.skills', 'skills')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozFicheRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			display: true,
+			life: true,
+			maxLife: true,
+			experience: true,
+			nbrUpAir: true,
+			nbrUpFire: true,
+			nbrUpLightning: true,
+			nbrUpWater: true,
+			nbrUpWood: true,
+			name: true,
+			level: true,
+			placeId: true,
+			raceId: true,
+			player: {
+				select: {
+					id: true, money: true,
+					items: {
+						select: { itemId: true, quantity: true }
+					},
+				}
+			},
+			items: { select: { itemId: true } },
+			status: { select: { statusId: true } },
+			missions: { select: { missionId: true, step: true, isFinished: true, progress: true } },
+			skills: { select: { skillId: true } },
+			concentration: true,
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozMissionsInfo(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id', 'dinoz.level', 'dinoz.placeId', 'dinoz.experience'])
-		.addSelect(['player.id', 'player.money'])
-		.addSelect(['status.statusId'])
-		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('dinoz.missions', 'missions')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozMissionsInfo(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			level: true,
+			placeId: true,
+			experience: true,
+			player: { select: { id: true, money: true } },
+			status: { select: { statusId: true } },
+			missions: {
+				select: {
+					missionId: true,
+					step: true,
+					isFinished: true,
+					progress: true
+				}
+			}
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozConcentrationRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id'])
-		.addSelect(['player.id'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoinAndSelect('dinoz.concentration', 'concentration')
-		.leftJoin('concentration.dinoz', 'concentrationDinoz')
-		.addSelect(['concentrationDinoz.id'])
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozConcentrationRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			player: { select: { id: true } },
+			concentration: {
+				select: {
+					id: true,
+					dinoz: {
+						select: { id: true }
+					}
+				}
+			},
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozFicheLiteRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name'])
-		.addSelect(['player.id'])
-		.innerJoin('dinoz.player', 'player')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozFicheLiteRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			life: true,
+			experience: true,
+			name: true,
+			player: { select: { id: true } },
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozFicheItemRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select([
-			'dinoz.id',
-			'dinoz.life',
-			'dinoz.maxLife',
-			'dinoz.experience',
-			'dinoz.name',
-			'dinoz.level',
-			'dinoz.placeId'
-		])
-		.addSelect(['player.id', 'player.money'])
-		.addSelect(['playerItems.itemId', 'playerItems.quantity', 'playerItems.id'])
-		.addSelect(['status.statusId'])
-		.addSelect(['skills.skillId'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('player.items', 'playerItems')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('dinoz.skills', 'skills')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozFicheItemRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			life: true,
+			maxLife: true,
+			experience: true,
+			name: true,
+			level: true,
+			placeId: true,
+			player: {
+				select: {
+					id: true, money: true,
+					items: {
+						select: { id: true, itemId: true, quantity: true }
+					},
+				}
+			},
+			status: { select: { statusId: true } },
+			skills: { select: { skillId: true } },
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozEquipItemRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id'])
-		.addSelect(['player.id', 'player.engineer'])
-		.addSelect(['playerItems.itemId', 'playerItems.quantity', 'playerItems.id'])
-		.addSelect(['dinozItems.itemId', 'dinozItems.id'])
-		.addSelect(['status.statusId'])
-		.addSelect(['skills.skillId'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('player.items', 'playerItems')
-		.leftJoin('dinoz.items', 'dinozItems')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('dinoz.skills', 'skills')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozEquipItemRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			player: {
+				select: {
+					id: true, engineer: true,
+					items: {
+						select: { id: true, itemId: true, quantity: true }
+					},
+				}
+			},
+			items: { select: { id: true, itemId: true } },
+			status: { select: { statusId: true } },
+			skills: { select: { skillId: true } },
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select([
-			'dinoz.id',
-			'dinoz.name',
-			'dinoz.level',
-			'dinoz.life',
-			'dinoz.maxLife',
-			'dinoz.experience',
-			'dinoz.nbrUpFire',
-			'dinoz.nbrUpWood',
-			'dinoz.nbrUpWater',
-			'dinoz.nbrUpLightning',
-			'dinoz.nbrUpAir',
-			'dinoz.placeId'
-		])
-		.addSelect(['player.id', 'player.money'])
-		.addSelect(['items.itemId'])
-		.addSelect(['skills.skillId'])
-		.addSelect(['status.statusId'])
-		.addSelect(['missions.missionId', 'missions.step', 'missions.isFinished', 'missions.progress'])
-		.leftJoinAndSelect('dinoz.concentration', 'concentration')
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('dinoz.items', 'items')
-		.leftJoin('dinoz.skills', 'skills')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('dinoz.missions', 'missions')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozFightDataRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			name: true,
+			level: true,
+			life: true,
+			maxLife: true,
+			experience: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			placeId: true,
+			player: { select: { id: true, money: true } },
+			items: { select: { itemId: true } },
+			skills: { select: { skillId: true } },
+			status: { select: { statusId: true } },
+			missions: { select: {
+				missionId: true, step: true, isFinished: true, progress: true
+			} },
+			concentration: true,
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozNPCRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id', 'dinoz.life', 'dinoz.experience', 'dinoz.name', 'dinoz.level', 'dinoz.placeId'])
-		.addSelect(['skills.skillId'])
-		.addSelect(['items.itemId'])
-		.addSelect(['status.statusId'])
-		.addSelect(['npc.npcId', 'npc.step'])
-		.leftJoinAndSelect('dinoz.missions', 'missions')
-		.leftJoin('dinoz.skills', 'skills')
-		.leftJoin('dinoz.items', 'items')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('dinoz.NPC', 'npc')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozNPCRequest(dinozId: number) {
+	const dinoz = prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			life: true,
+			experience: true,
+			name: true,
+			level: true,
+			placeId: true,
+			skills: { select: { skillId: true } },
+			items: { select: { itemId: true } },
+			status: { select: { statusId: true } },
+			npcs: { select: { npcId: true, step: true } },
+			missions: true,
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozSkillRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id'])
-		.addSelect(['player.id'])
-		.addSelect(['skills.skillId', 'skills.state'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('dinoz.skills', 'skills')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozSkillRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			player: { select: { id: true } },
+			skills: { select: { skillId: true, state: true } },
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozSkillAndStatusRequest(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id'])
-		.addSelect(['player.id'])
-		.addSelect(['skills.skillId'])
-		.addSelect(['status.statusId'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('dinoz.skills', 'skills')
-		.leftJoin('dinoz.status', 'status')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozSkillAndStatusRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			player: { select: { id: true } },
+			skills: { select: { skillId: true } },
+			status: { select: { statusId: true } },
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozForLevelUp(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select([
-			'dinoz.id',
-			'dinoz.maxLife',
-			'dinoz.raceId',
-			'dinoz.display',
-			'dinoz.experience',
-			'dinoz.level',
-			'dinoz.nextUpElementId',
-			'dinoz.nextUpAltElementId',
-			'dinoz.nbrUpFire',
-			'dinoz.nbrUpWood',
-			'dinoz.nbrUpWater',
-			'dinoz.nbrUpLightning',
-			'dinoz.nbrUpAir'
-		])
-		.addSelect(['player.id'])
-		.addSelect(['ranking.sumPoints', 'ranking.averagePoints', 'ranking.dinozCount'])
-		.addSelect(['items.itemId'])
-		.addSelect(['skills.skillId'])
-		.addSelect(['skillsUnlockable.skillId'])
-		.addSelect(['status.statusId'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('player.rank', 'ranking')
-		.leftJoin('dinoz.items', 'items')
-		.leftJoin('dinoz.skills', 'skills')
-		.leftJoin('dinoz.skillsUnlockable', 'skillsUnlockable')
-		.leftJoin('dinoz.status', 'status')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozForLevelUp(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			maxLife: true,
+			raceId: true,
+			display: true,
+			experience: true,
+			level: true,
+			nextUpElementId: true,
+			nextUpAltElementId: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			player: { select: {
+				id: true,
+				ranking: { select: { sumPoints: true, averagePoints: true, dinozCount: true } },
+			} },
+			items: { select: { itemId: true } },
+			skills: { select: { skillId: true } },
+			unlockableSkills: { select: { skillId: true } },
+			status: { select: { statusId: true } },
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozSkillsLearnableAndUnlockable(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.raceId'])
-		.addSelect(['skills.skillId'])
-		.addSelect(['skillsUnlockable.skillId'])
-		.addSelect(['status.statusId'])
-		.leftJoin('dinoz.skills', 'skills')
-		.leftJoin('dinoz.skillsUnlockable', 'skillsUnlockable')
-		.leftJoin('dinoz.status', 'status')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozSkillsLearnableAndUnlockable(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			raceId: true,
+			skills: { select: { skillId: true } },
+			unlockableSkills: { select: { skillId: true } },
+			status: { select: { statusId: true } },
+		}
+	});
+
+	return dinoz;
 }
 
-export async function getDinozTotalCount(): Promise<number> {
-	return dinozRepository.count();
+export async function getDinozTotalCount() {
+	return prisma.dinoz.count();
 }
 
-export async function getDinozGatherData(dinozId: number): Promise<Dinoz | null> {
-	return dinozRepository
-		.createQueryBuilder('dinoz')
-		.select(['dinoz.id', 'dinoz.placeId'])
-		.addSelect(['player.id', 'player.money'])
-		.addSelect(['skills.skillId'])
-		.addSelect(['playerItems.itemId', 'playerItems.quantity', 'playerItems.id'])
-		.innerJoin('dinoz.player', 'player')
-		.leftJoin('dinoz.skills', 'skills')
-		.leftJoin('player.items', 'playerItems')
-		.leftJoinAndSelect('player.ingredients', 'ingredient')
-		.where('dinoz.id = :dId', { dId: dinozId })
-		.getOne();
+export async function getDinozGatherData(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			placeId: true,
+			player: { select: {
+				id: true, money: true,
+				items: { select: { id: true, itemId: true, quantity: true } },
+				ingredients: true,
+			} },
+			skills: { select: { skillId: true } },
+		}
+	});
+
+	return dinoz;
 }
 
 // Setters
 //TODO
-export async function setDinoz(dinoz: Partial<Dinoz>): Promise<Dinoz> {
-	return dinozRepository.save(dinoz);
-}
+export async function setDinoz(dinoz: Dinoz & {
+	player?: Player,
+	concentration?: Concentration,
+}) {
+	const dinozWithoutLinks = {
+		...dinoz,
+		player: undefined,
+		concentration: undefined,
+	};
 
-export async function setMultipleDinoz(dinoz: Array<Partial<Dinoz>>): Promise<Array<Dinoz>> {
-	return dinozRepository.save(dinoz);
-}
+	const data = {
+		...dinozWithoutLinks,
+		playerId: dinoz.playerId || (dinoz.player ? dinoz.player.id : undefined),
+		concentrationId: dinoz.concentrationId || (dinoz.concentration ? dinoz.concentration.id : undefined),
+	};
 
-export async function getGlobalMissionsData(playerId: number): Promise<
-	{
-		id: number;
-		name: string;
-		display: string;
-		missions: {
-			missionId: MissionID;
-			isFinished: boolean;
-		}[];
-	}[]
-> {
-	return dinozRepository.find({
+	return prisma.dinoz.upsert({
 		where: {
-			player: { id: playerId },
+			id: dinoz.id
+		},
+		create: {
+			...data,
+		},
+		update: {
+			...data,
+		},
+	});
+}
+
+export async function updateMultipleDinozPlaceId(dinoz: Pick<Dinoz, 'id'>[], placeId: number) {
+	await prisma.dinoz.updateMany({
+		where: {
+			id: {
+				in: dinoz.map(d => d.id),
+			}
+		},
+		data: {
+			placeId,
+		},
+	});
+}
+
+export async function getGlobalMissionsData(playerId: number) {
+	const dinozList = await prisma.dinoz.findMany({
+		where: {
+			playerId,
 			isSacrificed: false
 		},
 		select: {
@@ -359,18 +433,21 @@ export async function getGlobalMissionsData(playerId: number): Promise<
 			name: true,
 			display: true,
 			missions: {
-				missionId: true,
-				isFinished: true
+				select: {
+					missionId: true,
+					isFinished: true
+				}
 			}
 		},
-		relations: ['missions']
 	});
+
+	return dinozList;
 }
 
-export async function getManageData(userID: number): Promise<ManagePageData> {
-	return dinozRepository.find({
+export async function getManageData(userID: number) {
+	const dinozList = await prisma.dinoz.findMany({
 		where: {
-			player: { id: userID },
+			playerId: userID,
 			isSacrificed: false,
 			isFrozen: false
 		},
@@ -378,9 +455,6 @@ export async function getManageData(userID: number): Promise<ManagePageData> {
 			id: true,
 			name: true,
 			level: true,
-			status: {
-				statusId: true
-			},
 			life: true,
 			maxLife: true,
 			experience: true,
@@ -390,21 +464,23 @@ export async function getManageData(userID: number): Promise<ManagePageData> {
 			nbrUpLightning: true,
 			nbrUpAir: true,
 			order: true,
-			display: true
+			display: true,
+			status: { select: { statusId: true } },
 		},
-		relations: ['status'],
-		order: {
-			order: 'ASC',
-			name: 'ASC'
-		}
+		orderBy: [{ order: 'asc' }, { name: 'asc' }]
 	});
+
+	return dinozList;
 }
 
 export async function updateOrderData(dinozList: { id: number; order: number }[]) {
-	const updates: Promise<UpdateResult>[] = [];
+	const updates = [];
 
 	for (const dinoz of dinozList) {
-		updates.push(dinozRepository.update(dinoz.id, { order: dinoz.order }));
+		updates.push(prisma.dinoz.update({
+			where: { id: dinoz.id },
+			data: { order: dinoz.order }
+		}));
 	}
 
 	await Promise.all(updates);

@@ -1,13 +1,15 @@
-import { AppDataSource } from '../data-source.js';
-import { DinozItem } from '../entity/index.js';
-import { DeleteResult } from 'typeorm';
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
-const dinozItemRepository = AppDataSource.getRepository(DinozItem);
 
-export function addItemToDinoz(item: DinozItem): Promise<DinozItem> {
-	return dinozItemRepository.save(item);
+export function addItemToDinoz(item: Prisma.DinozItemCreateInput) {
+	return prisma.dinozItem.create({
+		data: item
+	});
 }
 
-export function removeItemToDinoz(id: number): Promise<DeleteResult> {
-	return dinozItemRepository.createQueryBuilder().delete().from(DinozItem).where('id = :mId', { mId: id }).execute();
+export async function removeItemFromDinoz(id: number) {
+	await prisma.dinozItem.delete({
+		where: { id }
+	});
 }

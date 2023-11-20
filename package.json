@@ -34,9 +34,8 @@
     "reset": "yarn clean && yarn install && cd Eternaltwin && yarn install",
     "etwin:run": "cd Eternaltwin && yarn run etwin",
     "dev:windows": "concurrently -k -n \"back,front,etwin\" -p \"[{name}]\" -c \"blue,green,orange\" \"yarn run start:back\" \"yarn run start:front\" \"yarn run etwin:run\"",
-		"db:sync:dev": "cd ed-be && yarn db:sync:dev",
+    "db:sync:dev": "cd ed-be && yarn db:sync:dev",
     "db:sync:prod": "cd ed-be && yarn db:sync:prod"
-
   },
   "workspaces": {
     "packages": [
@@ -44,7 +43,7 @@
       "native/",
       "ed-ui/",
       "core/",
-			"prisma/",
+      "prisma/",
       "Eternaltwin/"
     ]
   },

@@ -1,28 +1,36 @@
-import { AppDataSource } from '../data-source.js';
-import { NPC } from '../entity/index.js';
-import { UpdateResult } from 'typeorm';
+import { NPC } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
-const npcRepository = AppDataSource.getRepository(NPC);
+const getDinozStep = async (dinozId: number, npcId: number) => {
+	const npc = await prisma.nPC.findFirst({
+		where: {
+			dinozId,
+			npcId
+		},
+		select: { npcId: true, step: true }
+	});
 
-const getDinozStep = (dinozId: number, npcId: number): Promise<NPC | null> => {
-	return npcRepository
-		.createQueryBuilder('npc')
-		.select(['npc.npcId', 'npc.step'])
-		.where('npc.dinozId = :dId AND npc.npcId = :nId', { dId: dinozId, nId: npcId })
-		.getOne();
+	return npc;
 };
 
-const createDinozStep = (npc: NPC): Promise<NPC> => {
-	return npcRepository.save(npc);
+const createDinozStep = async (npc: NPC) => {
+	const createdNpc = await prisma.nPC.create({
+		data: npc
+	});
+
+	return createdNpc;
 };
 
-const updateDinozStep = (dinoz: number, npcId: number, step: string): Promise<UpdateResult> => {
-	return npcRepository
-		.createQueryBuilder()
-		.update(NPC)
-		.set({ step: step })
-		.where('dinoz.id = :d AND npcId = :n', { d: dinoz, n: npcId })
-		.execute();
+const updateDinozStep = async (dinoz: number, npcId: number, step: string) => {
+	await prisma.nPC.update({
+		where: {
+			npcId_dinozId: { dinozId: dinoz, npcId }
+		},
+		data: {
+			step
+		}
+	});
 };
 
-export { getDinozStep, createDinozStep, updateDinozStep };
+export { createDinozStep, getDinozStep, updateDinozStep };
+

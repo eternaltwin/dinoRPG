@@ -1,34 +1,43 @@
-import { PlayerIngredient } from '../entity/index.js';
-import { AppDataSource } from '../data-source.js';
-import { UpdateResult } from 'typeorm';
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
-const ingredientRepository = AppDataSource.getRepository(PlayerIngredient);
-
-const getAllIngredientsDataRequest = async (playerId: number): Promise<Array<PlayerIngredient>> => {
-	return await ingredientRepository
-		.createQueryBuilder('ingredient')
-		.innerJoin('ingredient.player', 'player', 'player.id = :pId', { pId: playerId })
-		.getMany();
+export const getAllIngredientsDataRequest = async (playerId: number) => {
+	const ingredients = await prisma.playerIngredient.findMany({
+		where: {
+			playerId
+		},
+	});
+	return ingredients;
 };
 
-export async function addIngredient(itemId: number, quantity: number, playerId: number): Promise<UpdateResult> {
-	return ingredientRepository
-		.createQueryBuilder('ingredient')
-		.update(PlayerIngredient)
-		.set({ quantity: () => 'quantity + :addQuantity' })
-		.setParameter('addQuantity', quantity)
-		.where('ingredientId = :iId AND player.id = :pId', { iId: itemId, pId: playerId })
-		.execute();
+export const increaseIngredientQuantity = async (playerId: number, ingredientId: number, quantity: number) => {
+	const ingredient = await prisma.playerIngredient.update({
+		where: {
+			ingredientId_playerId: {
+				ingredientId,
+				playerId
+			}
+		},
+		data: {
+			quantity: {
+				increment: quantity
+			}
+		}
+	});
+
+	return ingredient;
 }
 
-export async function setIngredient(item: Partial<PlayerIngredient>): Promise<PlayerIngredient> {
-	return ingredientRepository.save(item);
+export async function setIngredient(item: Prisma.PlayerIngredientCreateInput) {
+	return prisma.playerIngredient.create({
+		data: item
+	});
 }
 
 export async function setMultipleIngredient(
-	ingredientList: Array<Partial<PlayerIngredient>>
-): Promise<Array<PlayerIngredient>> {
-	return ingredientRepository.save(ingredientList);
+	ingredientList: Prisma.PlayerIngredientCreateManyInput[]
+) {
+	await prisma.playerIngredient.createMany({
+		data: ingredientList
+	});
 }
-
-export { getAllIngredientsDataRequest };

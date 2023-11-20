@@ -113,7 +113,7 @@ export async function getAccountData(req: Request): Promise<PlayerInfo> {
  */
 export async function setCustomText(req: Request): Promise<void> {
 	const playerId: number = req.auth!.playerId!;
-	const playerProfile: Player | null = await getPlayerRewardsRequest(playerId);
+	const playerProfile = await getPlayerRewardsRequest(playerId);
 	if (!playerProfile) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
@@ -122,7 +122,7 @@ export async function setCustomText(req: Request): Promise<void> {
 		throw new ErrorFormator(500, `Player ${playerId} cannot edit this field`);
 	}
 
-	await setPlayer({ id: playerId, customText: req.body.message });
+	await setPlayer(playerId, { customText: req.body.message });
 }
 
 /**

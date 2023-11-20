@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Player, PlayerItem } from '../entity/index.js';
-import { setItem } from '../dao/playerItemDao.js';
-import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, setPlayer } from '../dao/playerDao.js';
+import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeMoney } from '../dao/playerDao.js';
 import { shopList } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -129,7 +129,7 @@ export async function buyItem(req: Request): Promise<void> {
 
 	// To avoid making this function bigger, use buyMagicItem if the shop is magical
 	if (theShop.type === ShopType.MAGICAL) {
-		await buyMagicItem(playerShopData, itemReference, quantityBought, playerItemData);
+		await buyMagicItem(playerId, playerShopData, itemReference, quantityBought, playerItemData);
 	} else {
 		// Throws an exception if player doesn't have enough money to buy the items
 		if (playerShopData.money < itemReference.price * quantityBought) {
@@ -143,7 +143,7 @@ export async function buyItem(req: Request): Promise<void> {
 
 		// All checks passed related to gold, let's update the stuff
 
-		await setPlayer(playerShopData.addMoney(-itemReference.price * quantityBought));
+		await removeMoney(playerId, itemReference.price * quantityBought);
 	}
 
 	// Continue updating stuff that is common to normal and magic items
@@ -152,16 +152,17 @@ export async function buyItem(req: Request): Promise<void> {
 	// Update entry if it already exists
 	// Note: itemToBuy can be re-used here regardless of the type of shop and item
 	if (playerItemData) {
-		await setItem(playerItemData.changeItemQuantity(itemReference.quantity));
+		await increaseItemQuantity(playerId, itemReference.itemId, itemReference.quantity);
 	}
 	// Else create it
 	else {
-		await setItem(new PlayerItem(playerShopData, itemReference.itemId, itemReference.quantity));
+		await insertItem(playerId, { itemId: itemReference.itemId, quantity: itemReference.quantity });
 	}
 }
 
 /**
  * @summary Buy an item
+ * @param playerId {number} Id of the player
  * @param playerShopData {Player} the data of the player
  * @param itemSold {Partial<ItemFiche>} The item that the player is trying to buy
  * @param itemReference{ItemFiche} Reference of the item from the constants
@@ -170,6 +171,7 @@ export async function buyItem(req: Request): Promise<void> {
  * @return void
  */
 async function buyMagicItem(
+	playerId: number,
 	playerShopData: Player,
 	itemSold: ItemFiche,
 	quantityBought: number,
@@ -193,7 +195,7 @@ async function buyMagicItem(
 	}
 
 	// Set player golden napodino count
-	await setItem(playerNapoData.changeItemQuantity(-itemSold.price * quantityBought));
+	await decreaseItemQuantity(playerId, itemList.GOLDEN_NAPODINO.itemId, itemSold.price * quantityBought);
 }
 
 // Check if player can access the shop

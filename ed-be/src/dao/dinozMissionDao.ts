@@ -1,48 +1,39 @@
-import { AppDataSource } from '../data-source.js';
-import { DinozMission } from '../entity/index.js';
+import { DinozMission, Prisma } from '@drpg/prisma';
 import { DeleteResult, In } from 'typeorm';
+import { prisma } from '../prisma.js';
 
-const missionRepository = AppDataSource.getRepository(DinozMission);
 
-const addMissionToDinoz = (mission: DinozMission): Promise<DinozMission> => {
-	return missionRepository.save(mission);
+export const addMissionToDinoz = async (data: Prisma.DinozMissionCreateInput) => {
+	const mission = await prisma.dinozMission.create({
+		data
+	});
+
+	return mission;
 };
 
-const updateMissionStep = (dinozId: number, missionId: number, step: number) => {
-	return missionRepository
-		.createQueryBuilder()
-		.update(DinozMission)
-		.set({ step: step, progress: 0 })
-		.where('dinoz.id = :dId AND missionId = :mId', { dId: dinozId, mId: missionId })
-		.execute();
+export const updateMissionStep = async (dinozId: number, missionId: number, step: number) => {
+	await prisma.dinozMission.update({
+		where: { missionId_dinozId: { dinozId, missionId } },
+		data: { step }
+	});
 };
 
-const updateMissionProgression = (dinozId: number, missionId: number, progress: number) => {
-	return missionRepository
-		.createQueryBuilder()
-		.update(DinozMission)
-		.set({ progress: () => 'progress + :addedProgress' })
-		.setParameter('addedProgress', progress)
-		.where('dinoz.id = :dId AND missionId = :mId', { dId: dinozId, mId: missionId })
-		.execute();
+export const updateMissionProgression = async (dinozId: number, missionId: number, progress: number) => {
+	await prisma.dinozMission.update({
+		where: { missionId_dinozId: { dinozId, missionId } },
+		data: { progress }
+	});
 };
 
-const finishMission = (dinozId: number, missionId: number) => {
-	return missionRepository
-		.createQueryBuilder()
-		.update(DinozMission)
-		.set({ isFinished: true })
-		.where('dinoz.id = :dId AND missionId = :mId', { dId: dinozId, mId: missionId })
-		.execute();
+export const finishMission = async (dinozId: number, missionId: number) => {
+	await prisma.dinozMission.update({
+		where: { missionId_dinozId: { dinozId, missionId } },
+		data: { isFinished: true }
+	});
 };
 
-const removeMissionToDinoz = (dinozId: number, missionId: number): Promise<DeleteResult> => {
-	return missionRepository
-		.createQueryBuilder()
-		.delete()
-		.from(DinozMission)
-		.where('missionId = :mId AND dinoz.id = :dId', { mId: missionId, dId: dinozId })
-		.execute();
+export const removeMissionFromDinoz = async (dinozId: number, missionId: number) => {
+	await prisma.dinozMission.delete({
+		where: { missionId_dinozId: { dinozId, missionId } }
+	});
 };
-
-export { addMissionToDinoz, updateMissionStep, updateMissionProgression, finishMission, removeMissionToDinoz };

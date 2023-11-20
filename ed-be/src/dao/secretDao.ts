@@ -1,12 +1,12 @@
-import { AppDataSource } from '../data-source.js';
-import { Secret } from '../entity/secret.js';
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
-const secretRepository = AppDataSource.getRepository(Secret);
-
-export function getAllSecretsRequest(): Promise<Array<Secret>> {
-	return secretRepository.createQueryBuilder('secret').getMany();
+export function getAllSecretsRequest() {
+	return prisma.secret.findMany();
 }
 
-export function addNewSecret(secret: Secret): Promise<Secret> {
-	return secretRepository.save(secret);
+export function addNewSecret(secret: Prisma.SecretCreateInput) {
+	return prisma.secret.create({
+		data: secret
+	});
 }

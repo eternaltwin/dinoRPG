@@ -3,7 +3,7 @@ import { Concentration, Dinoz, Player } from '../entity/index.js';
 import { prepareConcentration } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getConcentration, removeConcentration, setConcentration } from '../dao/concentrationDao.js';
-import { getDinozConcentrationRequest, setDinoz, setMultipleDinoz } from '../dao/dinozDao.js';
+import { getDinozConcentrationRequest, setDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
 import { specialActions } from '../constants/specialActions.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
@@ -84,10 +84,7 @@ export async function cancelConcentrate(req: Request) {
 }
 
 async function goDarkWorld(dinozList: Array<Dinoz>): Promise<void> {
-	dinozList.forEach(dinoz => {
-		dinoz.placeId = placeList.PORTAIL.placeId;
-	});
-	await setMultipleDinoz(dinozList);
+	await updateMultipleDinozPlaceId(dinozList, placeList.PORTAIL.placeId);
 }
 
 export async function mouvementListener(dinoz: Dinoz, finalPlace: number): Promise<false | FightResult> {

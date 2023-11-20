@@ -10,175 +10,250 @@ import {
 import { AppDataSource } from '../data-source.js';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 const playerRepository = AppDataSource.getRepository(Player);
 
-export async function createPlayer(newPlayer: Player): Promise<Player> {
-	return playerRepository.save(newPlayer);
+export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
+	const player = await prisma.player.create({
+		data: newPlayer
+	});
+
+	return player;
 }
 
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
-export async function resetUser(playerId: number): Promise<DeleteResult> {
-	const dinozRepository = AppDataSource.getRepository(Dinoz);
-	const dinozShopRepository = AppDataSource.getRepository(PlayerDinozShop);
-	const ingredientRepository = AppDataSource.getRepository(PlayerIngredient);
-	const itemRepository = AppDataSource.getRepository(PlayerItem);
-	const questRepository = AppDataSource.getRepository(PlayerQuest);
-	const rewardRepository = AppDataSource.getRepository(PlayerReward);
+export async function resetUser(playerId: number) {
+	// Delete all the player's dinoz
+	await prisma.dinoz.deleteMany({
+		where: {
+			playerId
+		}
+	});
 
-	dinozRepository.createQueryBuilder().delete().from(Dinoz).where('player.id = :pId', { pId: playerId }).execute();
+	// Delete player dinoz shop
+	await prisma.playerDinozShop.deleteMany({
+		where: {
+			playerId
+		}
+	});
 
-	dinozShopRepository
-		.createQueryBuilder()
-		.delete()
-		.from(PlayerDinozShop)
-		.where('player.id = :pId', { pId: playerId })
-		.execute();
+	// Delete player ingredients
+	await prisma.playerIngredient.deleteMany({
+		where: {
+			playerId
+		}
+	});
 
-	ingredientRepository
-		.createQueryBuilder()
-		.delete()
-		.from(PlayerIngredient)
-		.where('player.id = :pId', { pId: playerId })
-		.execute();
+	// Delete player items
+	await prisma.playerItem.deleteMany({
+		where: {
+			playerId
+		}
+	});
 
-	itemRepository.createQueryBuilder().delete().from(PlayerItem).where('player.id = :pId', { pId: playerId }).execute();
+	// Delete player quests
+	await prisma.playerQuest.deleteMany({
+		where: {
+			playerId
+		}
+	});
 
-	questRepository
-		.createQueryBuilder()
-		.delete()
-		.from(PlayerQuest)
-		.where('player.id = :pId', { pId: playerId })
-		.execute();
-
-	return rewardRepository
-		.createQueryBuilder()
-		.delete()
-		.from(PlayerReward)
-		.where('player.id = :pId', { pId: playerId })
-		.execute();
+	// Delete player rewards
+	await prisma.playerReward.deleteMany({
+		where: {
+			playerId
+		}
+	});
 }
 
 // Getters
 
-export async function getPlayerId(eternalTwinId: string): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id'])
-		.where('player.eternalTwinId = :eId', { eId: eternalTwinId })
-		.getOne();
+export async function getPlayerId(eternalTwinId: string) {
+	const player = await prisma.player.findFirst({
+		where: {
+			eternalTwinId
+		},
+		select: {
+			id: true
+		}
+	});
+
+	return player;
 }
 
-export async function getEternalTwinId(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.eternalTwinId'])
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getEternalTwinId(playerId: number) {
+	const player = await prisma.player.findFirst({
+		where: {
+			id: playerId
+		},
+		select: {
+			eternalTwinId: true
+		}
+	});
+
+	return player;
 }
 
-export async function getCommonDataRequest(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id', 'player.name', 'player.money'])
-		.addSelect([
-			'dinoz.id',
-			'dinoz.following',
-			'dinoz.display',
-			'dinoz.name',
-			'dinoz.life',
-			'dinoz.maxLife',
-			'dinoz.experience',
-			'dinoz.placeId',
-			'dinoz.level',
-			'dinoz.order',
-			'dinoz.raceId'
-		])
-		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false')
-		.leftJoinAndSelect('player.rewards', 'rewards')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getCommonDataRequest(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			name: true,
+			money: true,
+			dinoz: {
+				select: {
+					id: true,
+					following: true,
+					display: true,
+					name: true,
+					life: true,
+					maxLife: true,
+					experience: true,
+					placeId: true,
+					level: true,
+					order: true,
+					raceId: true
+				},
+				where: { isFrozen: false }
+			},
+			rewards: true
+		}
+	});
+
+	return player;
 }
 
-export async function getAllInformationFromPlayer(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select()
-		.leftJoinAndSelect('player.items', 'items')
-		.leftJoinAndSelect('player.ingredients', 'ingredient')
-		.leftJoinAndSelect('player.rewards', 'rewards')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getAllInformationFromPlayer(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		include: {
+			items: true,
+			ingredients: true,
+			rewards: true,
+		}
+	});
+
+	return player;
 }
 
-export async function getImportedData(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.hasImported', 'player.eternalTwinId', 'player.id'])
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getImportedData(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			eternalTwinId: true,
+			hasImported: true
+		}
+	});
+
+	return player;
 }
 
-export async function getImportedTwinoidData(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.eternalTwinId', 'player.id'])
-		.leftJoinAndSelect('player.twinosite', 'twinosite')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getImportedTwinoidData(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			eternalTwinId: true,
+			importedTwinoidSite: true,
+		}
+	});
+
+	return player;
 }
 
-export async function getPlayerMoney(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id', 'player.money'])
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getPlayerMoney(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			money: true
+		}
+	});
+
+	return player;
 }
 
-export async function getPlayerDataRequest(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.createdDate', 'player.name', 'player.customText'])
-		.addSelect(['rewards.rewardId'])
-		.addSelect([
-			'dinoz.id',
-			'dinoz.display',
-			'dinoz.name',
-			'dinoz.level',
-			'dinoz.raceId',
-			'dinoz.life',
-			'dinoz.isFrozen'
-		])
-		.addSelect(['status.statusId'])
-		.addSelect(['rank.dinozCountDisplayed', 'rank.sumPosition', 'rank.sumPointsDisplayed'])
-		.leftJoin('player.rewards', 'rewards')
-		.leftJoin('player.dinoz', 'dinoz')
-		.leftJoin('dinoz.status', 'status')
-		.leftJoin('player.rank', 'rank')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getPlayerDataRequest(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			createdDate: true,
+			name: true,
+			customText: true,
+			rewards: { select: { rewardId: true } },
+			dinoz: { select: {
+				id: true,
+				display: true,
+				name: true,
+				level: true,
+				raceId: true,
+				life: true,
+				isFrozen: true,
+				status: { select: { statusId: true } },
+			} },
+			ranking: { select: {
+				dinozCountDisplayed: true,
+				sumPosition: true,
+				sumPointsDisplayed: true
+			} },
+		}
+	});
+
+	return player;
 }
 
 export async function prepareConcentration(playerId: number) {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id'])
-		.addSelect(['dinoz.id', 'dinoz.placeId', 'dinoz.name', 'dinoz.concentration'])
-		.leftJoin('player.dinoz', 'dinoz')
-		.leftJoinAndSelect('dinoz.status', 'status')
-		.leftJoinAndSelect('dinoz.concentration', 'concentration')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			dinoz: { select: {
+				id: true,
+				placeId: true,
+				name: true,
+				concentration: true,
+				status: true,
+			} }
+		}
+	});
+
+	return player;
 }
 
-export async function searchPlayersByName(playerName: string): Promise<Array<Player>> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id', 'player.eternalTwinId', 'player.name'])
-		.where('player.name iLike :playerId')
-		.setParameter('playerId', `%${playerName}%`)
-		.getMany();
+export async function searchPlayersByName(playerName: string) {
+	const players = await prisma.player.findMany({
+		where: {
+			name: {
+				contains: playerName,
+				mode: 'insensitive'
+			}
+		},
+		select: {
+			id: true,
+			name: true,
+			eternalTwinId: true,
+		}
+	});
+
+	return players;
 }
 
 /**
@@ -187,14 +262,29 @@ export async function searchPlayersByName(playerName: string): Promise<Array<Pla
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerInventoryDataRequest(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id', 'player.shopKeeper'])
-		.addSelect(['items.itemId', 'items.quantity'])
-		.leftJoin('player.items', 'items', 'items.quantity > 0')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getPlayerInventoryDataRequest(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			shopKeeper: true,
+			items: {
+				select: {
+					itemId: true,
+					quantity: true
+				},
+				where: {
+					quantity: {
+						gt: 0
+					}
+				}
+			}
+		}
+	});
+
+	return player;
 }
 
 /**
@@ -203,25 +293,39 @@ export async function getPlayerInventoryDataRequest(playerId: number): Promise<P
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerDinozShopRequest(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id'])
-		.addSelect(['dinozShop.id', 'dinozShop.raceId', 'dinozShop.display'])
-		.leftJoin('player.dinozShop', 'dinozShop')
-		.leftJoinAndSelect('player.rewards', 'rewards')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getPlayerDinozShopRequest(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			dinozShop: {
+				select: {
+					id: true,
+					raceId: true,
+					display: true
+				}
+			},
+			rewards: true
+		}
+	});
+
+	return player;
 }
 
-export async function getPlayerRewardsRequest(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id'])
-		.addSelect(['rewards.rewardId'])
-		.leftJoin('player.rewards', 'rewards')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getPlayerRewardsRequest(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			rewards: { select: { rewardId: true } }
+		}
+	});
+
+	return player;
 }
 
 /**
@@ -229,14 +333,28 @@ export async function getPlayerRewardsRequest(playerId: number): Promise<Player 
  * That includes:  platerId and the dinoz from the shop that it is trying to buy
  * @return Player
  */
-export async function getPlayerSpecificDinozShopRequest(playerId: number, dinozId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id', 'player.money'])
-		.addSelect(['dinozShop.id', 'dinozShop.raceId', 'dinozShop.display'])
-		.leftJoin('player.dinozShop', 'dinozShop', 'dinozShop.id = :dId', { dId: dinozId })
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getPlayerSpecificDinozShopRequest(playerId: number, dinozId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			money: true,
+			dinozShop: {
+				select: {
+					id: true,
+					raceId: true,
+					display: true
+				},
+				where: {
+					id: dinozId
+				}
+			}
+		}
+	});
+
+	return player;
 }
 
 /**
@@ -246,18 +364,36 @@ export async function getPlayerSpecificDinozShopRequest(playerId: number, dinozI
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerShopItemsDataRequest(playerId: number): Promise<Player | null> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
-		.addSelect(['items.itemId', 'items.quantity'])
-		.addSelect(['dinoz.placeId'])
-		.addSelect(['status.statusId'])
-		.leftJoin('player.items', 'items')
-		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false AND dinoz.isSacrificed = false')
-		.leftJoin('dinoz.status', 'status')
-		.where('player.id = :pId', { pId: playerId })
-		.getOne();
+export async function getPlayerShopItemsDataRequest(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			money: true,
+			merchant: true,
+			shopKeeper: true,
+			items: {
+				select: {
+					itemId: true,
+					quantity: true
+				}
+			},
+			dinoz: {
+				select: {
+					placeId: true,
+					status: { select: { statusId: true } },
+				},
+				where: {
+					isFrozen: false,
+					isSacrificed: false
+				}
+			}
+		}
+	});
+
+	return player;
 }
 
 /**
@@ -267,53 +403,83 @@ export async function getPlayerShopItemsDataRequest(playerId: number): Promise<P
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: number): Promise<Player | null> {
-	return await playerRepository
-		.createQueryBuilder('player')
-		.select(['player.id', 'player.money', 'player.merchant', 'player.shopKeeper'])
-		.addSelect(['items.itemId', 'items.quantity', 'items.id'])
-		.addSelect(['dinoz.placeId'])
-		.addSelect(['status.statusId'])
-		.leftJoin('player.items', 'items', 'items.itemId = :itemId OR items.itemId = :napoId', {
-			itemId: itemId,
-			napoId: itemList.GOLDEN_NAPODINO.itemId
-		})
-		.leftJoin('player.dinoz', 'dinoz', 'dinoz.isFrozen = false AND dinoz.isSacrificed = false')
-		.leftJoin('dinoz.status', 'status')
-		.where('player.id = :playerId', { playerId: playerId })
-		.getOne();
+export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			money: true,
+			merchant: true,
+			shopKeeper: true,
+			items: {
+				select: {
+					id: true,
+					itemId: true,
+					quantity: true
+				},
+				where: {
+					itemId: { in: [itemId, itemList.GOLDEN_NAPODINO.itemId] }
+				}
+			},
+			dinoz: {
+				select: {
+					placeId: true,
+					status: { select: { statusId: true } },
+				},
+				where: {
+					isFrozen: false,
+					isSacrificed: false
+				}
+			}
+		}
+	});
+
+	return player;
 }
 
 // Setters
 //TODO
-export async function setPlayer(player: Partial<Player>): Promise<Player> {
-	return playerRepository.save(player);
+export async function addMoney(playerId: number, money: number) {
+	const playerData = await prisma.player.update({
+		where: {
+			id: playerId
+		},
+		data: {
+			money: {
+				increment: money
+			}
+		},
+		select: { money: true }
+	});
+
+	return playerData;
 }
 
-export async function addPlayerMoney(playerId: number, money: number): Promise<UpdateResult> {
-	return playerRepository
-		.createQueryBuilder()
-		.update(Player)
-		.set({ money: () => 'money + :addedMoney' })
-		.setParameter('addedMoney', money)
-		.where('player.id = :pId', { pId: playerId })
-		.execute();
+export async function removeMoney(playerId: number, money: number) {
+	const playerData = await prisma.player.update({
+		where: {
+			id: playerId
+		},
+		data: {
+			money: {
+				decrement: money
+			}
+		},
+		select: { money: true }
+	});
+
+	return playerData;
 }
 
-export async function editCustomText(playerId: number, text: string): Promise<UpdateResult> {
-	return playerRepository
-		.createQueryBuilder()
-		.update(Player)
-		.set({ customText: text })
-		.where('player.id = :pId', { pId: playerId })
-		.execute();
-}
+export async function setPlayer(playerId: number, player: Prisma.PlayerUpdateInput) {
+	const playerData = await prisma.player.update({
+		where: {
+			id: playerId
+		},
+		data: player
+	});
 
-export async function setPlayerMoneyRequest(playerId: number, newMoney: number): Promise<UpdateResult> {
-	return playerRepository
-		.createQueryBuilder('player')
-		.update(Player)
-		.set({ money: newMoney })
-		.where('player.id = :pId', { pId: playerId })
-		.execute();
+	return playerData;
 }

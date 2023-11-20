@@ -1,28 +1,25 @@
-import { GatherType } from '@drpg/core/models/enums/GatherType';
-import { AppDataSource } from '../data-source.js';
-import { PlayerGather } from '../entity/index.js';
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
-const gatherRepository = AppDataSource.getRepository(PlayerGather);
+export async function getCommonGatherInfo(playerId: number) {
+	const gathers = await prisma.playerGather.findMany({
+		where: {
+			playerId
+		},
+		select: {
+			id: true,
+			grid: true,
+			place: true,
+			type: true,
+			player: { select: { id: true } }
+		}
+	});
 
-export async function updateGrid(playerId: number, placeId: number, type: number, grid: Array<Array<number>>) {
-	return gatherRepository
-		.createQueryBuilder('gather')
-		.update(PlayerGather)
-		.set({ grid: grid })
-		.where('place = :plId AND player.id = :pId AND type = :type', { plId: placeId, pId: playerId, type: type })
-		.execute();
+	return gathers;
 }
 
-export async function getCommonGatherInfo(playerId: number): Promise<Array<PlayerGather>> {
-	return gatherRepository
-		.createQueryBuilder('gather')
-		.select(['gather.place', 'gather.grid', 'gather.type', 'gather.id'])
-		.addSelect(['player.id'])
-		.leftJoin('gather.player', 'player')
-		.where('gather.player.id = :pId', { pId: playerId })
-		.getMany();
-}
-
-export async function setGrid(grid: Partial<PlayerGather>): Promise<PlayerGather> {
-	return gatherRepository.save(grid);
+export async function setGrid(grid: Prisma.PlayerGatherCreateInput) {
+	return prisma.playerGather.create({
+		data: grid
+	});
 }

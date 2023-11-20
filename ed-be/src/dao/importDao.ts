@@ -1,80 +1,89 @@
-import { AppDataSource } from '../data-source.js';
-import {
-	ImportedDinoz,
-	ImportedPlayer,
-	ImportedTwinoidAchievements,
-	ImportedTwinoidSite,
-	ImportedTwinoidStats
-} from '../entity/index.js';
-
-const importedPlayerRepository = AppDataSource.getRepository(ImportedPlayer);
-const importedDinozRepository = AppDataSource.getRepository(ImportedDinoz);
-const importedAchievementRepository = AppDataSource.getRepository(ImportedTwinoidAchievements);
-const importedStatsRepository = AppDataSource.getRepository(ImportedTwinoidStats);
-const importedSiteRepository = AppDataSource.getRepository(ImportedTwinoidSite);
+import { ImportedPlayer, ImportedTwinoidAchievement, ImportedTwinoidSite, ImportedTwinoidStat } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
 export async function saveImport(player: ImportedPlayer) {
-	return importedPlayerRepository.save(player);
+	const object = await prisma.importedPlayer.upsert({
+		where: {
+			id: player.id
+		},
+		create: player,
+		update: player,
+		include: {
+			player: { select: { id: true } },
+		}
+	});
+
+	return object;
 }
 
-export async function saveSite(player: Array<Partial<ImportedTwinoidSite>>) {
-	return importedSiteRepository.save(player);
+export async function saveSite(sites: ImportedTwinoidSite[]) {
+	await prisma.importedTwinoidSite.createMany({
+		data: sites
+	});
 }
 
-export async function saveStats(player: Array<Partial<ImportedTwinoidStats>>) {
-	return importedStatsRepository.save(player);
+export async function saveStats(stats: ImportedTwinoidStat[]) {
+	await prisma.importedTwinoidStat.createMany({
+		data: stats
+	});
 }
 
-export async function saveAchievements(player: Array<Partial<ImportedTwinoidAchievements>>) {
-	return importedAchievementRepository.save(player);
-}
-
-export async function saveImportedDinoz(dinoz: ImportedDinoz) {
-	return importedDinozRepository.save(dinoz);
+export async function saveAchievements(achievements: ImportedTwinoidAchievement[]) {
+	await prisma.importedTwinoidAchievement.createMany({
+		data: achievements
+	});
 }
 
 export async function searchImportedPlayer(dinoRPGId: number) {
-	return importedPlayerRepository
-		.createQueryBuilder('imported')
-		.select(['imported.twinId', 'imported.id'])
-		.where('imported.twinId = :dId', { dId: dinoRPGId })
-		.getOne();
+	const importedPlayer = await prisma.importedPlayer.findFirst({
+		where: {
+			twinId: dinoRPGId
+		},
+		select: {
+			id: true,
+			twinId: true
+		}
+	});
+
+	return importedPlayer;
 }
 
 export async function deleteImportedPlayer(playerId: number) {
-	return importedPlayerRepository
-		.createQueryBuilder('imported')
-		.delete()
-		.from(ImportedPlayer)
-		.where('id = :pId', { pId: playerId })
-		.execute();
-}
-
-export async function getImportedPlayerDinoz(dinoRPGId: number) {
-	return importedPlayerRepository
-		.createQueryBuilder('imported')
-		.select(['imported.twinId'])
-		.leftJoinAndSelect('imported.dinoz', 'dinoz')
-		.where('imported.twinId = :dId', { dId: dinoRPGId })
-		.getOne();
+	await prisma.importedPlayer.delete({
+		where: {
+			id: playerId
+		}
+	});
 }
 
 export async function getImportedPlayerSite(playerId: number) {
-	return importedSiteRepository.createQueryBuilder('site').where('site.playerId = :pId', { pId: playerId }).getMany();
+	const playerSite = await prisma.importedTwinoidSite.findMany({
+		where: {
+			playerId
+		},
+	});
+
+	return playerSite;
 }
 
 export async function getImportedPlayerSpecificSiteStat(playerId: number, siteId: number) {
-	return importedStatsRepository
-		.createQueryBuilder('stat')
-		.where('stat.playerId = :pId', { pId: playerId })
-		.andWhere('stat.siteId = :sId', { sId: siteId })
-		.getMany();
+	const playerStats = await prisma.importedTwinoidStat.findMany({
+		where: {
+			playerId,
+			siteId
+		},
+	});
+
+	return playerStats;
 }
 
 export async function getImportedPlayerSpecificSiteAchievements(playerId: number, siteId: number) {
-	return importedAchievementRepository
-		.createQueryBuilder('achiev')
-		.where('achiev.playerId = :pId', { pId: playerId })
-		.andWhere('achiev.siteId = :sId', { sId: siteId })
-		.getMany();
+	const playerAchievements = await prisma.importedTwinoidAchievement.findMany({
+		where: {
+			playerId,
+			siteId
+		},
+	});
+
+	return playerAchievements;
 }

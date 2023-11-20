@@ -41,7 +41,7 @@ import { itemResolution } from '../constants/import/itemResolution.js';
 import { skillNameResolution } from '../constants/import/skillResolution.js';
 import { accentsTidy, parseShop } from '../utils/import.js';
 import { ingredientResolution } from '../constants/import/ingredientResolution.js';
-import { setMultipleDinoz } from '../dao/dinozDao.js';
+import { updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
 import { setMultipleIngredient } from '../dao/playerIngredientDao.js';
 import { setMultipleItem } from '../dao/playerItemDao.js';
 import { addMultipleRewardToPlayer } from '../dao/playerRewardsDao.js';

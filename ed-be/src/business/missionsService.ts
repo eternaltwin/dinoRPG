@@ -5,7 +5,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import {
 	addMissionToDinoz,
 	finishMission,
-	removeMissionToDinoz,
+	removeMissionFromDinoz,
 	updateMissionProgression,
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
@@ -106,7 +106,7 @@ export async function updateMission(req: Request): Promise<boolean> {
 			} else if (npcMissions.find(mission => mission.missionId === missionId)!.status === MissionsStatus.UNAVAILABLE) {
 				throw new ErrorFormator(500, `This mission is unavailable`);
 			} else {
-				await removeMissionToDinoz(dinoz.id, missionId);
+				await removeMissionFromDinoz(dinoz.id, missionId);
 				return true;
 			}
 		default:

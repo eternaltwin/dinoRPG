@@ -1,24 +1,27 @@
-import { UpdateResult } from 'typeorm';
-import { AppDataSource } from '../data-source.js';
-import { News } from '../entity/index.js';
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
-const newsRepository = AppDataSource.getRepository(News);
-
-const createNews = (allText: Partial<News>): Promise<News | null> => {
-	return newsRepository.save(allText);
+export const createNews = async (allText: Prisma.NewsCreateInput) => {
+	await prisma.news.create({
+		data: allText
+	});
 };
 
-const getBatchOfNews = (page: number): Promise<Array<News>> => {
-	return newsRepository
-		.createQueryBuilder('news')
-		.orderBy('news.createdDate', 'DESC')
-		.limit(10)
-		.offset(10 * page - 10)
-		.getMany();
+export const getBatchOfNews = async (page: number) => {
+	const news = await prisma.news.findMany({
+		take: 10,
+		skip: 10 * page - 10,
+		orderBy: {
+			createdDate: 'desc'
+		}
+	});
+
+	return news;
 };
 
-const updateAnyNews = (title: string, newObject: Partial<News>): Promise<UpdateResult> => {
-	return newsRepository.createQueryBuilder().update(News).where('title = :t', { t: title }).set(newObject).execute();
+export const updateAnyNews = async (title: string, newObject: Prisma.NewsUpdateInput) => {
+	await prisma.news.updateMany({
+		where: { title },
+		data: newObject
+	});
 };
-
-export { createNews, getBatchOfNews, updateAnyNews };

@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { Dinoz } from '../entity/index.js';
 import { getRandomNumber } from '../utils/index.js';
 import { getDinozFightDataRequest, setDinoz } from '../dao/dinozDao.js';
-import { setPlayer } from '../dao/playerDao.js';
+import { addMoney } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkMissionFight } from './missionsService.js';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
@@ -182,7 +182,7 @@ export async function rewardFight(
 	// If attackers won
 	if (fightResult.winner) {
 		await setDinoz(dinozData.giveExperience(experienceGained));
-		await setPlayer(dinozData.player.addMoney(gold));
+		await addMoney(dinozData.player.id, gold);
 	}
 	// No need to modify the dinoz's life in db if none was lost
 	if (fightResult.attackers[0].hp_lost != 0) {

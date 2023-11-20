@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
-import { setPlayer } from '../dao/playerDao.js';
+import { addMoney, removeMoney } from '../dao/playerDao.js';
 import {
 	getActiveDinoz,
 	getCanDinozChangeName,
@@ -22,7 +22,7 @@ import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getHUDObjective, getMissionAction } from './missionsService.js';
 import { moveFight } from './fightService.js';
-import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
+import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { digTreasures } from '../constants/digTreasures.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -42,9 +42,9 @@ import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '../utils/checkConditions.js';
 import { getCommonGatherInfo, setGrid } from '../dao/playerGatherDao.js';
-import { setItem } from '../dao/playerItemDao.js';
+import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
-import { setIngredient } from '../dao/playerIngredientDao.js';
+import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { mouvementListener } from './specialService.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
@@ -200,7 +200,7 @@ export async function getDinozFiche(req: Request): Promise<DinozFiche> {
 	const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
 	if (tempStatus.length > 0) {
 		for (const status of tempStatus) {
-			await removeStatusToDinoz(parseInt(req.params.id), status.statusId);
+			await removeStatusFromDinoz(parseInt(req.params.id), status.statusId);
 		}
 	}
 
@@ -234,7 +234,7 @@ export async function getDinozSkill(req: Request): Promise<Array<DinozSkillFiche
 /**
  * @summary Buy a dinoz from the shop
  * @param req
- * @param req.params.id {string} PlayerId
+ * @param req.params.id {string} Dinoz ID
  * @return DinozFiche
  */
 export async function buyDinoz(req: Request): Promise<DinozFiche> {
@@ -275,7 +275,7 @@ export async function buyDinoz(req: Request): Promise<DinozFiche> {
 	const newDinoz = new Dinoz(race.name, dinozShopData.player, dinozShopData.display);
 
 	// Set player money
-	await setPlayer(dinozShopData.player.addMoney(-race.price));
+	await removeMoney(dinozShopData.player.id, race.price);
 
 	// Delete all dinoz from dinoz shop
 	await deleteDinozInShopRequest(req.auth!.playerId);
@@ -506,14 +506,14 @@ export async function digWithDinoz(req: Request): Promise<Rewarder> {
 
 	//Broke shovel
 	if (dinozData.status.some(status => status.statusId === statusList.SHOVEL)) {
-		await removeStatusToDinoz(dinozId, statusList.SHOVEL);
-		await addStatusToDinoz(dinozData, statusList.BROKEN_SHOVEL);
+		await removeStatusFromDinoz(dinozId, statusList.SHOVEL);
+		await addStatusToDinoz(dinozData.id, statusList.BROKEN_SHOVEL);
 	}
 
 	//Try to broke enhanced shovel (75% of keeping it)
 	if (getRandomNumber(0, 100) > 75 && dinozData.status.some(status => status.statusId === statusList.ENHANCED_SHOVEL)) {
-		await removeStatusToDinoz(dinozId, statusList.ENHANCED_SHOVEL);
-		await addStatusToDinoz(dinozData, statusList.BROKEN_ENHANCED_SHOVEL);
+		await removeStatusFromDinoz(dinozId, statusList.ENHANCED_SHOVEL);
+		await addStatusToDinoz(dinozData.id, statusList.BROKEN_ENHANCED_SHOVEL);
 	}
 
 	return reward[0];
@@ -620,7 +620,7 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 			item => item.itemId === gatherPlace.cost.itemId
 		);
 		if (!playerToken) throw new ErrorFormator(500, `You don't have the needed token to gather here.`);
-		await setItem(playerToken.changeItemQuantity(-1));
+		await decreaseItemQuantity(dinozData.player.id, gatherPlace.cost.itemId, 1);
 	}
 
 	// Sanitize the box to open
@@ -658,11 +658,11 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 			itemList.GOLD20000.itemId
 		];
 		if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
-			await setItem(itemToReward.changeItemQuantity(1));
+			await increaseItemQuantity(dinozData.player.id, i.itemId, 1);
 		} else if (itemToReward && goldItems.includes(i.itemId)) {
-			await setPlayer(dinozData.player.addMoney(i.price));
+			await addMoney(dinozData.player.id, i.price);
 		} else {
-			dinozData.player.items.push(await setItem(new PlayerItem(dinozData.player, i.itemId, 1)));
+			dinozData.player.items.push(await insertItem(dinozData.player.id, { itemId: i.itemId, quantity: 1 }));
 		}
 	}
 
@@ -671,11 +671,15 @@ export async function gatherWithDinoz(req: Request): Promise<GatherResult> {
 			ingre => ingre.ingredientId === i.ingredientId
 		);
 		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
-			await setIngredient(ingredientToReward.changeIngredientQuantity(1));
+			await increaseIngredientQuantity(ingredientToReward.player.id, ingredientToReward.ingredientId, 1)
 		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
 			// Do nothing
 		} else {
-			dinozData.player.ingredients.push(await setIngredient(new PlayerIngredient(dinozData.player, i.ingredientId, 1)));
+			dinozData.player.ingredients.push(await setIngredient({
+				player: { connect: { id: dinozData.player.id } },
+				ingredientId: i.ingredientId,
+				quantity: 1
+			}));
 		}
 	}
 

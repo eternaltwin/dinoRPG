@@ -1,35 +1,33 @@
-import { AppDataSource } from '../data-source.js';
-import { PlayerReward } from '../entity/index.js';
-import { DeleteResult } from 'typeorm';
-
-const rewardRepository = AppDataSource.getRepository(PlayerReward);
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
 //TODO
-export async function addRewardToPlayer(player: PlayerReward): Promise<PlayerReward> {
-	return rewardRepository.save(player);
+export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) {
+	return prisma.playerReward.create({
+		data: reward
+	});
 }
 
 //TODO
-export async function addMultipleRewardToPlayer(rewards: Array<PlayerReward>): Promise<Array<PlayerReward>> {
-	return rewardRepository.save(rewards);
+export async function addMultipleRewardToPlayer(rewards: Prisma.PlayerRewardCreateManyInput[]) {
+	await prisma.playerReward.createMany({
+		data: rewards
+	});
 }
 
-export async function removeRewardToPlayer(playerId: number, rewardId: number): Promise<DeleteResult> {
-	return rewardRepository
-		.createQueryBuilder()
-		.delete()
-		.from(PlayerReward)
-		.where('rewardId = :rId AND player.id = :pId', { rId: rewardId, pId: playerId })
-		.execute();
+export async function removeRewardFromPlayer(playerId: number, rewardId: number) {
+	await prisma.playerReward.delete({
+		where: { rewardId_playerId: { rewardId, playerId } }
+	});
 }
 
-export async function getPlayerRewards(playerId: number): Promise<PlayerReward[]> {
-	return rewardRepository.find({
+export async function getPlayerRewards(playerId: number) {
+	return prisma.playerReward.findMany({
 		where: {
-			player: {
-				id: playerId
-			}
+			playerId
 		},
-		select: ['rewardId']
+		select: {
+			rewardId: true,
+		}
 	});
 }

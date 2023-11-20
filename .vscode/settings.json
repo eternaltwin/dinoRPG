@@ -1,3 +1,11 @@
 {
-	"typescript.preferences.importModuleSpecifier": "relative"
+	"typescript.preferences.importModuleSpecifier": "relative",
+  "search.exclude": {
+    "prisma/**/*": true
+  },
+  "eslint.workingDirectories": [
+    "./ed-ui",
+    "./ed-be",
+    "./core"
+  ]
 }

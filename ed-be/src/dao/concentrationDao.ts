@@ -1,25 +1,43 @@
-import { AppDataSource } from '../data-source.js';
-import { Concentration } from '../entity/index.js';
 
-const concentrationRepository = AppDataSource.getRepository(Concentration);
+import { Concentration, Dinoz } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
-export async function setConcentration(concentration: Partial<Concentration>) {
-	return concentrationRepository.save(concentration);
+export async function setConcentration(concentration: Concentration & { dinoz: Pick<Dinoz, 'id'>[] }) {
+	const dinoz = concentration.dinoz.map(d => ({ id: d.id }));
+
+	const object = await prisma.concentration.upsert({
+		where: {
+			id: concentration.id
+		},
+		create: {
+			dinoz: { connect: dinoz }
+		},
+		update: {
+			dinoz: { set: dinoz }
+		},
+		include: {
+			dinoz: true
+		}
+	});
+
+	return object;
 }
 
 export async function getConcentration(concentrationId: number) {
-	return concentrationRepository
-		.createQueryBuilder('concentration')
-		.leftJoinAndSelect('concentration.dinoz', 'dinoz')
-		.where('concentration.id = :cId', { cId: concentrationId })
-		.getOne();
+	const concentration = await prisma.concentration.findUnique({
+		where: {
+			id: concentrationId
+		},
+		include: {
+			dinoz: true
+		}
+	});
+
+	return concentration;
 }
 
-export async function removeConcentration(concentrationId: number) {
-	return concentrationRepository
-		.createQueryBuilder()
-		.delete()
-		.from(Concentration)
-		.where('id = :id', { id: concentrationId })
-		.execute();
+export async function removeConcentration(id: number) {
+	await prisma.concentration.delete({
+		where: { id }
+	});
 }

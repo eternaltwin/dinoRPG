@@ -1,12 +1,12 @@
 import { Request } from 'express';
-import { getAllInformationFromPlayer, getPlayerMoney, setPlayer } from '../dao/playerDao.js';
+import { addMoney, getAllInformationFromPlayer, getEternalTwinId, getPlayerMoney, removeMoney, setPlayer } from '../dao/playerDao.js';
 import { Dinoz } from '../entity/dinoz.js';
 import { Player } from '../entity/player.js';
 import { getAllDinozFromAccount, setDinoz } from '../dao/dinozDao.js';
-import { addMultipleStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
-import { addMultipleSkillToDinoz, removeSkillToDinoz } from '../dao/dinozSkillDao.js';
+import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
+import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { DinozStatus, PlayerReward, DinozSkill, Secret } from '../entity/index.js';
-import { addMultipleRewardToPlayer, removeRewardToPlayer } from '../dao/playerRewardsDao.js';
+import { addMultipleRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
@@ -60,14 +60,11 @@ export async function editDinoz(req: Request): Promise<void> {
 	if (statusList.length > 0 && req.body.statusOperation) {
 		switch (req.body.statusOperation) {
 			case 'add':
-				const statusToAdd: Array<DinozStatus> = statusList.map(
-					status => new DinozStatus(new Dinoz(parseInt(req.params.id)), status)
-				);
-				await addMultipleStatusToDinoz(statusToAdd);
+				await addMultipleStatusToDinoz(+req.params.id, statusList);
 				break;
 			case 'remove':
 				for (const status of statusList) {
-					await removeStatusToDinoz(parseInt(req.params.id), status);
+					await removeStatusFromDinoz(parseInt(req.params.id), status);
 				}
 				break;
 			default:
@@ -86,7 +83,7 @@ export async function editDinoz(req: Request): Promise<void> {
 				break;
 			case 'remove':
 				for (const skill of skillList) {
-					await removeSkillToDinoz(parseInt(req.params.id), skill);
+					await removeSkillFromDinoz(parseInt(req.params.id), skill);
 				}
 				break;
 			default:
@@ -103,27 +100,24 @@ export async function editDinoz(req: Request): Promise<void> {
  * @param req.body.epic {number} Quantity of gold
  * @return string
  */
-export async function setPlayerMoney(req: Request): Promise<string> {
-	const playerGold: Player | null = await getPlayerMoney(parseInt(req.params.id));
-	if (!playerGold) {
-		throw new ErrorFormator(500, `Plyaer ${req.params.id} doesn't exist.`);
+export async function setPlayerMoney(req: Request) {
+	const player = await getEternalTwinId(+req.params.id);
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${req.params.id} doesn't exist.`);
 	}
+	let newMoney = 0;
 	switch (req.body.operation) {
 		case 'add':
-			await setPlayer(playerGold.addMoney(req.body.gold));
+			newMoney = (await addMoney(+req.params.id, +req.body.gold)).money;
 			break;
 		case 'remove':
-			await setPlayer(playerGold.addMoney(-req.body.gold));
+			newMoney = (await removeMoney(+req.params.id, +req.body.gold)).money;
 			break;
 		default:
 			throw new ErrorFormator(500, `You need to select an operation.`);
 	}
 
-	const updatedPlayerGold: Player | null = await getPlayerMoney(parseInt(req.params.id));
-	if (!updatedPlayerGold) {
-		throw new ErrorFormator(500, `Player ${req.auth!.playerId!} doesn't exist.`);
-	}
-	return updatedPlayerGold.money.toString();
+	return newMoney.toString();
 }
 
 /**
@@ -145,7 +139,7 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 			break;
 		case 'remove':
 			for (const reward of rewardList) {
-				await removeRewardToPlayer(parseInt(req.params.id), reward);
+				await removeRewardFromPlayer(parseInt(req.params.id), reward);
 			}
 			break;
 		default:
@@ -199,7 +193,6 @@ export async function listAllDinozFromPlayer(req: Request): Promise<Array<DinozF
  */
 export async function editPlayer(req: Request): Promise<void> {
 	const player = {
-		id: parseInt(req.params.id),
 		hasImported: req.body.hasImported,
 		customText: req.body.customText,
 		quetzuBought: req.body.quetzuBought,
@@ -210,9 +203,9 @@ export async function editPlayer(req: Request): Promise<void> {
 		merchant: req.body.merchant,
 		priest: req.body.priest,
 		teacher: req.body.teacher
-	} as Player;
+	};
 
-	await setPlayer(player);
+	await setPlayer(+req.params.id, player);
 }
 
 /**

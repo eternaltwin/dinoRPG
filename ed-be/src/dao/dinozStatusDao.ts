@@ -1,27 +1,27 @@
-import { AppDataSource } from '../data-source.js';
-import { Dinoz, DinozStatus } from '../entity/index.js';
-import { DeleteResult, UpdateResult } from 'typeorm';
-
-const statusRepository = AppDataSource.getRepository(DinozStatus);
+import { prisma } from "../prisma.js";
 
 //TODO
-export async function addStatusToDinoz(dinoz: Dinoz, statusId: number): Promise<DinozStatus> {
-	return statusRepository.save({
-		dinoz: dinoz,
-		statusId: statusId
+export async function addStatusToDinoz(dinozId: number, statusId: number) {
+	await prisma.dinozStatus.create({
+		data: {
+			dinozId,
+			statusId
+		}
 	});
 }
 
 //TODO
-export async function addMultipleStatusToDinoz(status: Array<DinozStatus>): Promise<Array<DinozStatus>> {
-	return statusRepository.save(status);
+export async function addMultipleStatusToDinoz(dinozId: number, statusIds: number[]) {
+	await prisma.dinozStatus.createMany({
+		data: statusIds.map(statusId => ({
+			dinozId,
+			statusId
+		}))
+	});
 }
 
-export async function removeStatusToDinoz(dinozId: number, statusId: number): Promise<DeleteResult> {
-	return statusRepository
-		.createQueryBuilder()
-		.delete()
-		.from(DinozStatus)
-		.where('statusId = :sId AND dinoz.id = :dId', { sId: statusId, dId: dinozId })
-		.execute();
+export async function removeStatusFromDinoz(dinozId: number, statusId: number) {
+	await prisma.dinozStatus.delete({
+		where: { statusId_dinozId: { dinozId, statusId } }
+	});
 }

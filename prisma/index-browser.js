@@ -140,18 +140,18 @@ exports.Prisma.DinozScalarFieldEnum = {
   concentrationId: 'concentrationId'
 };
 
-exports.Prisma.Dinoz_itemScalarFieldEnum = {
+exports.Prisma.DinozItemScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
   dinozId: 'dinozId'
 };
 
-exports.Prisma.Dinoz_items_dinoz_itemScalarFieldEnum = {
+exports.Prisma.DinozItemToDinozScalarFieldEnum = {
   dinozId: 'dinozId',
   dinozItemId: 'dinozItemId'
 };
 
-exports.Prisma.Dinoz_missionScalarFieldEnum = {
+exports.Prisma.DinozMissionScalarFieldEnum = {
   id: 'id',
   missionId: 'missionId',
   dinozId: 'dinozId',
@@ -160,26 +160,26 @@ exports.Prisma.Dinoz_missionScalarFieldEnum = {
   progress: 'progress'
 };
 
-exports.Prisma.Dinoz_skillScalarFieldEnum = {
+exports.Prisma.DinozSkillScalarFieldEnum = {
   id: 'id',
   skillId: 'skillId',
   state: 'state',
   dinozId: 'dinozId'
 };
 
-exports.Prisma.Dinoz_skill_unlockableScalarFieldEnum = {
+exports.Prisma.DinozSkillUnlockableScalarFieldEnum = {
   id: 'id',
   skillId: 'skillId',
   dinozId: 'dinozId'
 };
 
-exports.Prisma.Dinoz_statusScalarFieldEnum = {
+exports.Prisma.DinozStatusScalarFieldEnum = {
   id: 'id',
   statusId: 'statusId',
   dinozId: 'dinozId'
 };
 
-exports.Prisma.Imported_dinozScalarFieldEnum = {
+exports.Prisma.ImportedDinozScalarFieldEnum = {
   id: 'id',
   importedId: 'importedId',
   name: 'name',
@@ -200,19 +200,19 @@ exports.Prisma.Imported_dinozScalarFieldEnum = {
   isFrozen: 'isFrozen'
 };
 
-exports.Prisma.Imported_dinoz_skillScalarFieldEnum = {
+exports.Prisma.ImportedDinozSkillScalarFieldEnum = {
   id: 'id',
   skillId: 'skillId',
   dinozId: 'dinozId'
 };
 
-exports.Prisma.Imported_dinoz_statusScalarFieldEnum = {
+exports.Prisma.ImportedDinozStatusScalarFieldEnum = {
   id: 'id',
   dinozId: 'dinozId',
   statusId: 'statusId'
 };
 
-exports.Prisma.Imported_playerScalarFieldEnum = {
+exports.Prisma.ImportedPlayerScalarFieldEnum = {
   id: 'id',
   name: 'name',
   twinId: 'twinId',
@@ -222,34 +222,34 @@ exports.Prisma.Imported_playerScalarFieldEnum = {
   playerId: 'playerId'
 };
 
-exports.Prisma.Imported_player_ingredientsScalarFieldEnum = {
+exports.Prisma.ImportedPlayerIngredientScalarFieldEnum = {
   id: 'id',
   ingredientId: 'ingredientId',
   quantity: 'quantity',
   playerId: 'playerId'
 };
 
-exports.Prisma.Imported_player_itemScalarFieldEnum = {
+exports.Prisma.ImportedPlayerItemScalarFieldEnum = {
   id: 'id',
   quantity: 'quantity',
   playerId: 'playerId',
   itemId: 'itemId'
 };
 
-exports.Prisma.Imported_player_rewardScalarFieldEnum = {
+exports.Prisma.ImportedPlayerRewardScalarFieldEnum = {
   id: 'id',
   playerId: 'playerId',
   rewardId: 'rewardId'
 };
 
-exports.Prisma.Imported_player_scenarioScalarFieldEnum = {
+exports.Prisma.ImportedPlayerScenarioScalarFieldEnum = {
   id: 'id',
   questName: 'questName',
   progression: 'progression',
   playerId: 'playerId'
 };
 
-exports.Prisma.Imported_twinoid_achievementsScalarFieldEnum = {
+exports.Prisma.ImportedTwinoidAchievementScalarFieldEnum = {
   id: 'id',
   siteId: 'siteId',
   date: 'date',
@@ -261,7 +261,7 @@ exports.Prisma.Imported_twinoid_achievementsScalarFieldEnum = {
   quantity: 'quantity'
 };
 
-exports.Prisma.Imported_twinoid_siteScalarFieldEnum = {
+exports.Prisma.ImportedTwinoidSiteScalarFieldEnum = {
   id: 'id',
   siteId: 'siteId',
   npoints: 'npoints',
@@ -271,7 +271,7 @@ exports.Prisma.Imported_twinoid_siteScalarFieldEnum = {
   playerId: 'playerId'
 };
 
-exports.Prisma.Imported_twinoid_statsScalarFieldEnum = {
+exports.Prisma.ImportedTwinoidStatScalarFieldEnum = {
   id: 'id',
   siteId: 'siteId',
   score: 'score',
@@ -303,7 +303,7 @@ exports.Prisma.NewsScalarFieldEnum = {
   updatedDate: 'updatedDate'
 };
 
-exports.Prisma.NpcScalarFieldEnum = {
+exports.Prisma.NPCScalarFieldEnum = {
   id: 'id',
   npcId: 'npcId',
   step: 'step',
@@ -329,14 +329,14 @@ exports.Prisma.PlayerScalarFieldEnum = {
   updatedDate: 'updatedDate'
 };
 
-exports.Prisma.Player_dinoz_shopScalarFieldEnum = {
+exports.Prisma.PlayerDinozShopScalarFieldEnum = {
   id: 'id',
   raceId: 'raceId',
   display: 'display',
   playerId: 'playerId'
 };
 
-exports.Prisma.Player_gatherScalarFieldEnum = {
+exports.Prisma.PlayerGatherScalarFieldEnum = {
   id: 'id',
   place: 'place',
   type: 'type',
@@ -344,28 +344,28 @@ exports.Prisma.Player_gatherScalarFieldEnum = {
   playerId: 'playerId'
 };
 
-exports.Prisma.Player_ingredientScalarFieldEnum = {
+exports.Prisma.PlayerIngredientScalarFieldEnum = {
   id: 'id',
   ingredientId: 'ingredientId',
   quantity: 'quantity',
   playerId: 'playerId'
 };
 
-exports.Prisma.Player_itemScalarFieldEnum = {
+exports.Prisma.PlayerItemScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
   quantity: 'quantity',
   playerId: 'playerId'
 };
 
-exports.Prisma.Player_questScalarFieldEnum = {
+exports.Prisma.PlayerQuestScalarFieldEnum = {
   id: 'id',
   questId: 'questId',
   progression: 'progression',
   playerId: 'playerId'
 };
 
-exports.Prisma.Player_rewardScalarFieldEnum = {
+exports.Prisma.PlayerRewardScalarFieldEnum = {
   id: 'id',
   rewardId: 'rewardId',
   playerId: 'playerId'
@@ -406,37 +406,37 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  concentration: 'concentration',
-  dinoz: 'dinoz',
-  dinoz_item: 'dinoz_item',
-  dinoz_items_dinoz_item: 'dinoz_items_dinoz_item',
-  dinoz_mission: 'dinoz_mission',
-  dinoz_skill: 'dinoz_skill',
-  dinoz_skill_unlockable: 'dinoz_skill_unlockable',
-  dinoz_status: 'dinoz_status',
-  imported_dinoz: 'imported_dinoz',
-  imported_dinoz_skill: 'imported_dinoz_skill',
-  imported_dinoz_status: 'imported_dinoz_status',
-  imported_player: 'imported_player',
-  imported_player_ingredients: 'imported_player_ingredients',
-  imported_player_item: 'imported_player_item',
-  imported_player_reward: 'imported_player_reward',
-  imported_player_scenario: 'imported_player_scenario',
-  imported_twinoid_achievements: 'imported_twinoid_achievements',
-  imported_twinoid_site: 'imported_twinoid_site',
-  imported_twinoid_stats: 'imported_twinoid_stats',
+  Concentration: 'Concentration',
+  Dinoz: 'Dinoz',
+  DinozItem: 'DinozItem',
+  DinozItemToDinoz: 'DinozItemToDinoz',
+  DinozMission: 'DinozMission',
+  DinozSkill: 'DinozSkill',
+  DinozSkillUnlockable: 'DinozSkillUnlockable',
+  DinozStatus: 'DinozStatus',
+  ImportedDinoz: 'ImportedDinoz',
+  ImportedDinozSkill: 'ImportedDinozSkill',
+  ImportedDinozStatus: 'ImportedDinozStatus',
+  ImportedPlayer: 'ImportedPlayer',
+  ImportedPlayerIngredient: 'ImportedPlayerIngredient',
+  ImportedPlayerItem: 'ImportedPlayerItem',
+  ImportedPlayerReward: 'ImportedPlayerReward',
+  ImportedPlayerScenario: 'ImportedPlayerScenario',
+  ImportedTwinoidAchievement: 'ImportedTwinoidAchievement',
+  ImportedTwinoidSite: 'ImportedTwinoidSite',
+  ImportedTwinoidStat: 'ImportedTwinoidStat',
   migrations: 'migrations',
-  news: 'news',
-  npc: 'npc',
-  player: 'player',
-  player_dinoz_shop: 'player_dinoz_shop',
-  player_gather: 'player_gather',
-  player_ingredient: 'player_ingredient',
-  player_item: 'player_item',
-  player_quest: 'player_quest',
-  player_reward: 'player_reward',
-  ranking: 'ranking',
-  secret: 'secret'
+  News: 'News',
+  NPC: 'NPC',
+  Player: 'Player',
+  PlayerDinozShop: 'PlayerDinozShop',
+  PlayerGather: 'PlayerGather',
+  PlayerIngredient: 'PlayerIngredient',
+  PlayerItem: 'PlayerItem',
+  PlayerQuest: 'PlayerQuest',
+  PlayerReward: 'PlayerReward',
+  Ranking: 'Ranking',
+  Secret: 'Secret'
 };
 
 /**

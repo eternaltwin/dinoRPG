@@ -1,33 +1,30 @@
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { AppDataSource } from '../data-source.js';
-import { DinozSkill } from '../entity/index.js';
+import { prisma } from '../prisma.js';
+import { DinozSkill, Prisma } from '@drpg/prisma';
 
-const skillRepository = AppDataSource.getRepository(DinozSkill);
-
-export async function setSkillStateRequest(dinozId: number, skillId: number, state: boolean): Promise<UpdateResult> {
-	return skillRepository
-		.createQueryBuilder('skill')
-		.update(DinozSkill)
-		.set({ state: state })
-		.where('skillId = :sId AND dinoz.id = :dId', { sId: skillId, dId: dinozId })
-		.execute();
+export async function setSkillStateRequest(dinozId: number, skillId: number, state: boolean) {
+	await prisma.dinozSkill.update({
+		where: { skillId_dinozId: { dinozId, skillId } },
+		data: { state }
+	});
 }
 
 //TODO
-export async function addSkillToDinoz(skill: DinozSkill): Promise<DinozSkill> {
-	return skillRepository.save(skill);
+export async function addSkillToDinoz(skill: Prisma.DinozSkillCreateInput) {
+	await prisma.dinozSkill.create({
+		data: skill
+	});
 }
 
 //TODO
-export async function addMultipleSkillToDinoz(skills: Array<DinozSkill>): Promise<Array<DinozSkill>> {
-	return skillRepository.save(skills);
+export async function addMultipleSkillToDinoz(skills: Prisma.DinozSkillCreateManyInput[]) {
+	await prisma.dinozSkill.createMany({
+		data: skills
+	});
 }
 
-export async function removeSkillToDinoz(dinozId: number, skillId: number): Promise<DeleteResult> {
-	return skillRepository
-		.createQueryBuilder()
-		.delete()
-		.from(DinozSkill)
-		.where('skillId = :sId AND dinoz.id = :dId', { sId: skillId, dId: dinozId })
-		.execute();
+export async function removeSkillFromDinoz(dinozId: number, skillId: number) {
+	await prisma.dinozSkill.delete({
+		where: { skillId_dinozId: { dinozId, skillId } }
+	});
 }

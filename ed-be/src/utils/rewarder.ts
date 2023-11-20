@@ -1,12 +1,12 @@
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { Dinoz, DinozSkill, Player, PlayerItem, PlayerReward } from '../entity/index.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { addStatusToDinoz, removeStatusToDinoz } from '../dao/dinozStatusDao.js';
+import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { setDinoz } from '../dao/dinozDao.js';
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { unlockDoubleSkills } from '../business/skillService.js';
-import { getPlayerRewardsRequest, getPlayerShopOneItemDataRequest, setPlayer } from '../dao/playerDao.js';
-import { setItem } from '../dao/playerItemDao.js';
+import { addMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } from '../dao/playerDao.js';
+import { increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from './errorFormator.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
@@ -18,10 +18,10 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 		switch (reward.rewardType) {
 			case RewardEnum.STATUS:
 				if (reward.reverse) {
-					await removeStatusToDinoz(dinoz.id, reward.value);
+					await removeStatusFromDinoz(dinoz.id, reward.value);
 				} else {
 					if (dinoz.status.some(status => status.statusId === reward.value)) return;
-					await addStatusToDinoz(dinoz, reward.value);
+					await addStatusToDinoz(dinoz.id, reward.value);
 				}
 				break;
 			case RewardEnum.CHANGE_ELEMENT:
@@ -42,7 +42,7 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 				await setDinoz(dinoz.giveExperience(reward.value));
 				break;
 			case RewardEnum.GOLD:
-				await setPlayer(dinoz.player.addMoney(reward.value));
+				await addMoney(dinoz.player.id, reward.value);
 				break;
 			case RewardEnum.ITEM:
 				const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value)!;
@@ -54,15 +54,13 @@ export async function rewarder(rewards: Array<Rewarder>, dinoz: Dinoz): Promise<
 					item => item.itemId === itemRewarded.itemId
 				);
 				if (playerItemData) {
-					await setItem(
-						playerItemData.changeItemQuantity(
-							itemRewarded.maxQuantity - playerItemData!.quantity >= reward.quantity
-								? reward.quantity
-								: itemRewarded.maxQuantity - playerItemData!.quantity
-						)
-					);
+					const quantityLimitedByMaxQuantity = itemRewarded.maxQuantity - playerItemData.quantity;
+
+					if (quantityLimitedByMaxQuantity <= 0) break;
+
+					await increaseItemQuantity(dinoz.player.id, itemRewarded.itemId, quantityLimitedByMaxQuantity);
 				} else {
-					await setItem(new PlayerItem(playerShopData, itemRewarded.itemId!, reward.quantity));
+					await insertItem(dinoz.player.id, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 				}
 				break;
 			case RewardEnum.EPIC:

@@ -1,19 +1,16 @@
-import { AppDataSource } from '../data-source.js';
-import { DinozSkillUnlockable } from '../entity/index.js';
-import { DeleteResult } from 'typeorm';
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
 
-const skillUnlockableRepository = AppDataSource.getRepository(DinozSkillUnlockable);
 
-export async function removeUnlockableSkillsToDinoz(dinozId: number, skillId: Array<number>): Promise<DeleteResult> {
-	return skillUnlockableRepository
-		.createQueryBuilder()
-		.delete()
-		.from(DinozSkillUnlockable)
-		.where('skillId IN (:...sId) AND dinoz.id = :dId', { sId: skillId, dId: dinozId })
-		.execute();
+export async function removeUnlockableSkillsFromDinoz(dinozId: number, skillId: number[]) {
+	await prisma.dinozSkillUnlockable.deleteMany({
+		where: { dinozId, skillId: { in: skillId } }
+	});
 }
 
 //TODO
-export async function addMultipleUnlockableSkills(skills: Array<DinozSkillUnlockable>) {
-	return skillUnlockableRepository.save(skills);
+export async function addMultipleUnlockableSkills(skills: Prisma.DinozSkillUnlockableCreateManyInput[]) {
+	await prisma.dinozSkillUnlockable.createMany({
+		data: skills
+	});
 }
