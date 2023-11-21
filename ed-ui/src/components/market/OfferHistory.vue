@@ -27,9 +27,11 @@ import DZButton from '../common/DZButton.vue';
 import DZTable from '../common/DZTable.vue';
 import { errorHandler } from '../../utils/index.js';
 import { OfferService } from '../../services/OfferService.js';
+import { EnhancedOffer, OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import OfferLine from './OfferLine.vue';
-import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
+import { getIngredientName } from '@drpg/core/utils/IngredientUtils';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 export default defineComponent({
 	name: 'OfferHistory',
@@ -39,16 +41,27 @@ export default defineComponent({
 	data() {
 		return {
 			now: Math.ceil(new Date().getTime() / 1000),
-			offers: [] as OfferFromGetOffers[],
+			offers: [] as EnhancedOffer[],
 			filter: 'all'
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, OfferLine },
 	methods: {
+		// Transform endDate to Date type and add item names
+		formatOffers(offers: OfferFromGetOffers[]): EnhancedOffer[] {
+			return offers.map(offer => ({
+				...offer,
+				endDate: new Date(offer.endDate),
+				items: offer.items.map(item => ({
+					...item,
+					name: item.isIngredient ? getIngredientName(item.itemId) : itemNameList[item.itemId]
+				}))
+			}));
+		},
 		async fetchOffers() {
 			// Fetch data
 			try {
-				this.offers = await OfferService.getList(this.filter, null, null, true);
+				this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true));
 			} catch (error) {
 				errorHandler.handle(error);
 				return;

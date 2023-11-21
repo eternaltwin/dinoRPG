@@ -9,13 +9,14 @@
 					<Tippy
 						tag="img"
 						theme="normal"
-						:src="getImgURL('item', 'item_' + itemNameList[item.id])"
-						:alt="$t(`item.name.${itemNameList[item.id]}`)"
+						:src="
+							getImgURL(item.isIngredient ? 'ingredients' : 'item', item.isIngredient ? item.name : 'item_' + item.name)
+						"
 					>
-						<p v-html="$t(`item.name.${itemNameList[item.id]}`)" />
+						<p v-html="$t(`${item.isIngredient ? 'ingredients' : 'item'}.name.${item.name}`)" />
 						<template #content>
-							<h1 v-html="formatContent($t(`item.name.${itemNameList[item.id]}`))" />
-							<p v-html="formatContent($t(`item.description.${itemNameList[item.id]}`))" />
+							<h1 v-html="formatContent($t(`${item.isIngredient ? 'ingredients' : 'item'}.name.${item.name}`))" />
+							<p v-html="formatContent($t(`${item.isIngredient ? 'ingredients' : 'item'}.description.${item.name}`))" />
 						</template>
 					</Tippy>
 					<span v-if="item.quantity > 1">x {{ item.quantity }}</span>
@@ -82,17 +83,18 @@ import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { Tippy } from 'vue-tippy';
 import DZUser from '../common/DZUser.vue';
 import { errorHandler, secondsToDhms } from '../../utils/index.js';
-import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
+import { EnhancedOffer } from '@drpg/core/returnTypes/Offer';
 import { goTo } from '../../utils/goTo.js';
 import { OfferService } from '../../services/OfferService.js';
 import { playerStore } from '../../store/index.js';
 import DZInput from '../common/DZInput.vue';
+import { getIngredientName } from '@drpg/core/utils/IngredientUtils';
 
 export default defineComponent({
 	name: 'OfferLine',
 	props: {
 		offer: {
-			type: Object as () => OfferFromGetOffers,
+			type: Object as () => EnhancedOffer,
 			required: true
 		},
 		updateOffer: {
@@ -110,6 +112,7 @@ export default defineComponent({
 			itemNameList,
 			secondsToDhms,
 			goTo,
+			getIngredientName,
 			bidValue: 0
 		};
 	},

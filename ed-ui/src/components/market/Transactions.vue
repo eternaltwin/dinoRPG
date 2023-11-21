@@ -48,6 +48,7 @@
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import DZTable from '../common/DZTable.vue';
+import { EnhancedOffer, OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { OfferService } from '../../services/OfferService.js';
 import { errorHandler, secondsToDhms } from '../../utils/index.js';
 import { playerStore } from '../../store/index.js';
@@ -56,7 +57,8 @@ import { goTo } from '../../utils/goTo.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
 import OfferLine from './OfferLine.vue';
-import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
+import { getIngredientName } from '@drpg/core/utils/IngredientUtils';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -66,12 +68,23 @@ export default defineComponent({
 			secondsToDhms,
 			goTo,
 			now: Math.ceil(new Date().getTime() / 1000),
-			ownOffer: null as OfferFromGetOffers | null,
-			offers: [] as OfferFromGetOffers[]
+			ownOffer: null as EnhancedOffer | null,
+			offers: [] as EnhancedOffer[]
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, DZUser, OfferLine },
 	methods: {
+		// Transform endDate to Date type and add item names
+		formatOffers(offers: OfferFromGetOffers[]): EnhancedOffer[] {
+			return offers.map(offer => ({
+				...offer,
+				endDate: new Date(offer.endDate),
+				items: offer.items.map(item => ({
+					...item,
+					name: item.isIngredient ? getIngredientName(item.itemId) : itemNameList[item.itemId]
+				}))
+			}));
+		},
 		async fetchOffers() {
 			const userId = this.playerStore.playerId;
 
@@ -83,8 +96,8 @@ export default defineComponent({
 
 			// Fetch data
 			try {
-				this.offers = await OfferService.getList('all', null, userId);
-				[this.ownOffer] = await OfferService.getList('all', userId);
+				this.offers = this.formatOffers(await OfferService.getList('all', null, userId));
+				[this.ownOffer] = this.formatOffers(await OfferService.getList('all', userId));
 			} catch (error) {
 				errorHandler.handle(error);
 				return;
@@ -104,12 +117,14 @@ export default defineComponent({
 				return;
 			}
 		},
-		updateOffer(offer: OfferFromGetOffers) {
+		updateOffer(offer: EnhancedOffer) {
 			this.offers = this.offers.map(o => (o.id === offer.id ? offer : o));
 		}
 	},
 	async mounted() {
 		await this.fetchOffers();
+
+		console.log(this.offers);
 
 		// Update time every second
 		setInterval(() => {

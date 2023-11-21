@@ -1,5 +1,5 @@
 import { MARKET_OFFER_DURATION } from "@drpg/core/constants";
-import { Prisma } from "@drpg/prisma";
+import { OfferStatus, Prisma } from "@drpg/prisma";
 import { prisma } from "../prisma.js";
 import { OfferFromGetOffers } from "@drpg/core/returnTypes/Offer";
 
@@ -32,9 +32,9 @@ export async function getOffers(
 	}
 
 	if (expired) {
-		where.endDate = { lte: new Date() };
+		where.status = OfferStatus.ENDED;
 	} else {
-		where.endDate = { gt: new Date() };
+		where.status = OfferStatus.ONGOING;
 	}
 
 	const offers = await prisma.offer.findMany({
@@ -44,7 +44,10 @@ export async function getOffers(
 			dinoz: { select: { id: true, name: true } },
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },
 			bids: {
-				select: { userId: true, value: true },
+				select: {
+					value: true,
+					user: { select: { id: true, name: true } }
+				},
 				orderBy: { value: 'desc' }
 			},
 		}
@@ -77,6 +80,21 @@ export async function insertOffer(
 }
 
 export async function deleteOffer(offerId: number) {
+	// Delete offer items
+	await prisma.offerItem.deleteMany({
+		where: {
+			offerId
+		}
+	});
+
+	// Delete offer bids
+	await prisma.offerBid.deleteMany({
+		where: {
+			offerId
+		}
+	});
+
+	// Delete offer
 	await prisma.offer.delete({
 		where: {
 			id: offerId
@@ -87,7 +105,8 @@ export async function deleteOffer(offerId: number) {
 export async function getOffer(offerId: number) {
 	const offer = await prisma.offer.findUnique({
 		where: {
-			id: offerId
+			id: offerId,
+			status: OfferStatus.ONGOING
 		},
 		include: {
 			seller: { select: { id: true, name: true } },

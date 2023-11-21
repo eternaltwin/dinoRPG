@@ -6,6 +6,7 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 /**
  * Get the list of current offers
@@ -53,7 +54,8 @@ export async function createOffer(req: Request) {
 	const itemsAndIngredients = [];
 
 	itemsAndIngredients.push(...ingredients.map(ingredient => {
-		const ingredientData = ingredientList[ingredient.name];
+		console.log(ingredient);
+		const ingredientData = ingredientList[ingredient.name.toLocaleUpperCase()];
 
 		if (!ingredientData) {
 			throw new Error('Ingredient not found');
@@ -67,14 +69,15 @@ export async function createOffer(req: Request) {
 	}));
 
 	itemsAndIngredients.push(...items.map(item => {
-		const itemData = itemList[item.name];
+		console.log(item);
+		const itemId = Object.entries(itemNameList).find(([, value]) => value === item.name)?.[0];
 
-		if (!itemData) {
+		if (!itemId) {
 			throw new Error('Item not found');
 		}
 
 		return {
-			itemId: itemData.itemId,
+			itemId: +itemId,
 			quantity: item.count,
 			isIngredient: false
 		}
