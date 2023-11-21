@@ -11,7 +11,30 @@ export const getAllIngredientsDataRequest = async (playerId: number) => {
 };
 
 export const increaseIngredientQuantity = async (playerId: number, ingredientId: number, quantity: number) => {
-	const ingredient = await prisma.playerIngredient.update({
+	const ingredient = await prisma.playerIngredient.upsert({
+		where: {
+			ingredientId_playerId: {
+				ingredientId,
+				playerId
+			}
+		},
+		create: {
+			ingredientId,
+			playerId,
+			quantity
+		},
+		update: {
+			quantity: {
+				increment: quantity
+			}
+		}
+	});
+
+	return ingredient;
+}
+
+export const decreaseIngredientQuantity = async (playerId: number, ingredientId: number, quantity: number) => {
+	const item = await prisma.playerIngredient.update({
 		where: {
 			ingredientId_playerId: {
 				ingredientId,
@@ -20,12 +43,22 @@ export const increaseIngredientQuantity = async (playerId: number, ingredientId:
 		},
 		data: {
 			quantity: {
-				increment: quantity
+				decrement: quantity
 			}
 		}
 	});
 
-	return ingredient;
+	// Delete ingredient if quantity is <= 0
+	if (item.quantity <= 0) {
+		await prisma.playerIngredient.delete({
+			where: {
+				ingredientId_playerId: {
+					ingredientId,
+					playerId
+				}
+			}
+		});
+	}
 }
 
 export async function setIngredient(item: Prisma.PlayerIngredientCreateInput) {

@@ -48,7 +48,6 @@
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import DZTable from '../common/DZTable.vue';
-import { Offer } from '@drpg/core/returnTypes/Offer';
 import { OfferService } from '../../services/OfferService.js';
 import { errorHandler, secondsToDhms } from '../../utils/index.js';
 import { playerStore } from '../../store/index.js';
@@ -57,6 +56,7 @@ import { goTo } from '../../utils/goTo.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
 import OfferLine from './OfferLine.vue';
+import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -66,19 +66,12 @@ export default defineComponent({
 			secondsToDhms,
 			goTo,
 			now: Math.ceil(new Date().getTime() / 1000),
-			ownOffer: null as (Omit<Offer, 'endDate'> & { endDate: Date }) | null,
-			offers: [] as (Omit<Offer, 'endDate'> & { endDate: Date })[]
+			ownOffer: null as OfferFromGetOffers | null,
+			offers: [] as OfferFromGetOffers[]
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, DZUser, OfferLine },
 	methods: {
-		// Transform endDate to Date type
-		formatOffers(offers: Offer[]): (Omit<Offer, 'endDate'> & { endDate: Date })[] {
-			return offers.map(offer => ({
-				...offer,
-				endDate: new Date(offer.endDate)
-			}));
-		},
 		async fetchOffers() {
 			const userId = this.playerStore.playerId;
 
@@ -90,8 +83,8 @@ export default defineComponent({
 
 			// Fetch data
 			try {
-				this.offers = this.formatOffers(await OfferService.getList('all', null, userId));
-				[this.ownOffer] = this.formatOffers(await OfferService.getList('all', userId));
+				this.offers = await OfferService.getList('all', null, userId);
+				[this.ownOffer] = await OfferService.getList('all', userId);
 			} catch (error) {
 				errorHandler.handle(error);
 				return;
@@ -111,7 +104,7 @@ export default defineComponent({
 				return;
 			}
 		},
-		updateOffer(offer: Omit<Offer, 'endDate'> & { endDate: Date }) {
+		updateOffer(offer: OfferFromGetOffers) {
 			this.offers = this.offers.map(o => (o.id === offer.id ? offer : o));
 		}
 	},

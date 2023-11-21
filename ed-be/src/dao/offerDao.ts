@@ -1,117 +1,7 @@
-import { Offer } from '@drpg/core/returnTypes/Offer';
-
-// const offerRepository = AppDataSource.getRepository(Offer);
-
-const mockOffers: Offer[] = [
-	{
-		id: 1,
-		seller: {
-			id: 1,
-			name: 'test'
-		},
-		endDate: new Date('2023-12-12').toISOString(),
-		dinoz: null,
-		items: [
-			{ id: 59, quantity: 5, isIngredient: false },
-			{ id: 24, quantity: 2, isIngredient: false },
-			{ id: 2, quantity: 1, isIngredient: true }
-		],
-		total: 5900,
-		bids: [
-			{
-				user: {
-					id: 2,
-					name: 'test2'
-				},
-				value: 100
-			}
-		]
-	},
-	{
-		id: 2,
-		seller: {
-			id: 2,
-			name: 'tes2'
-		},
-		endDate: new Date('2023-12-24').toISOString(),
-		dinoz: {
-			name: 'test'
-		},
-		items: [
-			{ id: 22, quantity: 4, isIngredient: false },
-			{ id: 17, quantity: 4, isIngredient: false },
-			{ id: 13, quantity: 3, isIngredient: false },
-			{ id: 78, quantity: 1, isIngredient: false },
-			{ id: 60, quantity: 1, isIngredient: false },
-		],
-		total: 7900,
-		bids: [
-			{
-				user: {
-					id: 1,
-					name: 'test'
-				},
-				value: 100
-			}
-		]
-	},
-	{
-		id: 3,
-		seller: {
-			id: 3,
-			name: 'test3'
-		},
-		items: [],
-		endDate: new Date('2023-12-01').toISOString(),
-		dinoz: {
-			name: 'test3'
-		},
-		total: 6000,
-		bids: []
-	},
-	{
-		id: 4,
-		seller: {
-			id: 3,
-			name: 'test3'
-		},
-		items: [],
-		endDate: new Date('2023-10-01').toISOString(),
-		dinoz: {
-			name: 'test3'
-		},
-		total: 5000,
-		bids: []
-	},
-	{
-		id: 5,
-		seller: {
-			id: 2,
-			name: 'tes2'
-		},
-		endDate: new Date('2023-10-08').toISOString(),
-		dinoz: {
-			name: 'test'
-		},
-		total: 6000,
-		items: [
-			{ id: 22, quantity: 4, isIngredient: false },
-			{ id: 17, quantity: 4, isIngredient: false },
-			{ id: 13, quantity: 3, isIngredient: false },
-			{ id: 78, quantity: 1, isIngredient: false },
-			{ id: 60, quantity: 1, isIngredient: false },
-		],
-		bids: [
-			{
-				user: {
-					id: 1,
-					name: 'test'
-				},
-				value: 100
-			}
-		]
-	},
-];
+import { MARKET_OFFER_DURATION } from "@drpg/core/constants";
+import { Prisma } from "@drpg/prisma";
+import { prisma } from "../prisma.js";
+import { OfferFromGetOffers } from "@drpg/core/returnTypes/Offer";
 
 export async function getOffers(
 	userId: number,
@@ -119,30 +9,46 @@ export async function getOffers(
 	sellerId: number | null,
 	bidderId: number | null,
 	expired: boolean
-) {
-	let offers = [...mockOffers];
+): Promise<OfferFromGetOffers[]> {
+	const where: Prisma.OfferWhereInput = {};
 
 	if (filter === 'dinoz') {
-		offers = offers.filter(offer => offer.dinoz);
+		where.dinoz = { isNot: null };
 	} else if (filter === 'items') {
-		offers = offers.filter(offer => offer.items.length);
+		where.items = { some: {} };
 	} else if (filter === 'own') {
-		offers = offers.filter(offer => offer.seller.id === userId || offer.bids.find(bid => bid.user.id === userId));
+		where.OR = [
+			{ sellerId: userId },
+			{ bids: { some: { userId } } }
+		];
 	}
 
 	if (sellerId) {
-		offers = offers.filter(offer => offer.seller.id === sellerId);
+		where.sellerId = sellerId;
 	}
 
 	if (bidderId) {
-		offers = offers.filter(offer => offer.bids.find(bid => bid.user.id === bidderId));
+		where.bids = { some: { userId: bidderId } };
 	}
 
 	if (expired) {
-		offers = offers.filter(offer => new Date(offer.endDate) < new Date());
+		where.endDate = { lte: new Date() };
 	} else {
-		offers = offers.filter(offer => new Date(offer.endDate) > new Date());
+		where.endDate = { gt: new Date() };
 	}
+
+	const offers = await prisma.offer.findMany({
+		where,
+		include: {
+			seller: { select: { id: true, name: true } },
+			dinoz: { select: { id: true, name: true } },
+			items: { select: { itemId: true, quantity: true, isIngredient: true } },
+			bids: {
+				select: { userId: true, value: true },
+				orderBy: { value: 'desc' }
+			},
+		}
+	});
 
 	return offers;
 }
@@ -150,25 +56,59 @@ export async function getOffers(
 export async function insertOffer(
 	dinozId: number | null,
 	total: number,
-	ingredients: { name: string; count: number }[],
-	items: { id: number; count: number }[]
+	itemsAndIngredient: {
+		itemId: number;
+		quantity: number;
+		isIngredient: boolean
+	}[],
+	playerId: number,
 ) {
-	console.log('insertOffer', dinozId, total, ingredients, items);
-	// TODO: Insert offer
+	return prisma.offer.create({
+		data: {
+			sellerId: playerId,
+			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
+			dinozId,
+			items: {
+				create: itemsAndIngredient
+			},
+			total,
+		}
+	});
 }
 
 export async function deleteOffer(offerId: number) {
-	console.log('deleteOffer', offerId);
-	// TODO: Cancel offer
+	await prisma.offer.delete({
+		where: {
+			id: offerId
+		}
+	});
 }
 
 export async function getOffer(offerId: number) {
-	console.log('getOffer', offerId);
+	const offer = await prisma.offer.findUnique({
+		where: {
+			id: offerId
+		},
+		include: {
+			seller: { select: { id: true, name: true } },
+			dinoz: { select: { id: true, name: true } },
+			items: { select: { itemId: true, quantity: true, isIngredient: true } },
+			bids: {
+				select: { userId: true, value: true },
+				orderBy: { value: 'desc' }
+			},
+		}
+	});
 
-	return mockOffers.find(offer => offer.id === offerId);
+	return offer;
 }
 
 export async function addBid(offerId: number, userId: number, value: number) {
-	console.log('addBid', offerId, userId, value);
-	// TODO: Add bid
+	await prisma.offerBid.create({
+		data: {
+			offerId,
+			userId,
+			value,
+		}
+	});
 }

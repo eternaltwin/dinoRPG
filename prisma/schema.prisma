@@ -22,6 +22,7 @@ model Dinoz {
   name               String                 @db.VarChar
   isFrozen           Boolean                @default(false)
   isSacrificed       Boolean                @default(false)
+  isSelling          Boolean                @default(false)
   raceId             Int
   level              Int
   missionId          Int?
@@ -52,6 +53,7 @@ model Dinoz {
   status             DinozStatus[]
   npcs               NPC[]
   dinozItemsToDinoz  DinozItemToDinoz[]
+  offers             Offer[]
 
   @@map("dinoz")
 }
@@ -117,7 +119,7 @@ model DinozStatus {
   dinozId  Int?
   dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ec5230fd4ad653770e13558df7d")
 
-	@@unique([statusId, dinozId])
+  @@unique([statusId, dinozId])
   @@map("dinoz_status")
 }
 
@@ -327,6 +329,8 @@ model Player {
   quests                      PlayerQuest[]
   rewards                     PlayerReward[]
   ranking                     Ranking?
+  offers                      Offer[]
+  bids                        OfferBid[]
 
   @@map("player")
 }
@@ -370,7 +374,7 @@ model PlayerItem {
   playerId Int?
   player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_21535fcb93f8613fd893b74b08b")
 
-	@@unique([itemId, playerId])
+  @@unique([itemId, playerId])
   @@map("player_item")
 }
 
@@ -381,7 +385,7 @@ model PlayerQuest {
   playerId    Int?
   player      Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_1b5b041fab3362c845c142ca3b0")
 
-	@@unique([questId, playerId])
+  @@unique([questId, playerId])
   @@map("player_quest")
 }
 
@@ -391,7 +395,7 @@ model PlayerReward {
   playerId Int?
   player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_9cf142b3a6fa3e0faec7f8debfb")
 
-	@@unique([rewardId, playerId])
+  @@unique([rewardId, playerId])
   @@map("player_reward")
 }
 
@@ -416,4 +420,41 @@ model Secret {
   value String @db.VarChar
 
   @@map("secret")
+}
+
+model OfferItem {
+  id           Int     @id @default(autoincrement())
+  offerId      Int
+  offer        Offer   @relation(fields: [offerId], references: [id])
+  itemId       Int
+  quantity     Int
+  isIngredient Boolean
+}
+
+model OfferBid {
+  id      Int    @id @default(autoincrement())
+  offerId Int
+  offer   Offer  @relation(fields: [offerId], references: [id])
+  userId  Int
+  user    Player @relation(fields: [userId], references: [id])
+  value   Int
+}
+
+enum OfferStatus {
+  ONGOING
+  ENDED
+  CANCELLED
+}
+
+model Offer {
+  id       Int         @id @default(autoincrement())
+  sellerId Int
+  seller   Player      @relation(fields: [sellerId], references: [id])
+  endDate  DateTime
+  dinozId  Int?
+  dinoz    Dinoz?      @relation(fields: [dinozId], references: [id])
+  items    OfferItem[]
+  total    Int
+  bids     OfferBid[]
+  status   OfferStatus @default(ONGOING)
 }

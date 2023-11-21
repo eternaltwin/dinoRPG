@@ -168,6 +168,39 @@ export type Ranking = $Result.DefaultSelection<Prisma.$RankingPayload>
  * 
  */
 export type Secret = $Result.DefaultSelection<Prisma.$SecretPayload>
+/**
+ * Model OfferItem
+ * 
+ */
+export type OfferItem = $Result.DefaultSelection<Prisma.$OfferItemPayload>
+/**
+ * Model OfferBid
+ * 
+ */
+export type OfferBid = $Result.DefaultSelection<Prisma.$OfferBidPayload>
+/**
+ * Model Offer
+ * 
+ */
+export type Offer = $Result.DefaultSelection<Prisma.$OfferPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const OfferStatus: {
+  ONGOING: 'ONGOING',
+  ENDED: 'ENDED',
+  CANCELLED: 'CANCELLED'
+};
+
+export type OfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus]
+
+}
+
+export type OfferStatus = $Enums.OfferStatus
+
+export const OfferStatus: typeof $Enums.OfferStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -600,6 +633,36 @@ export class PrismaClient<
     * ```
     */
   get secret(): Prisma.SecretDelegate<ExtArgs>;
+
+  /**
+   * `prisma.offerItem`: Exposes CRUD operations for the **OfferItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OfferItems
+    * const offerItems = await prisma.offerItem.findMany()
+    * ```
+    */
+  get offerItem(): Prisma.OfferItemDelegate<ExtArgs>;
+
+  /**
+   * `prisma.offerBid`: Exposes CRUD operations for the **OfferBid** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OfferBids
+    * const offerBids = await prisma.offerBid.findMany()
+    * ```
+    */
+  get offerBid(): Prisma.OfferBidDelegate<ExtArgs>;
+
+  /**
+   * `prisma.offer`: Exposes CRUD operations for the **Offer** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Offers
+    * const offers = await prisma.offer.findMany()
+    * ```
+    */
+  get offer(): Prisma.OfferDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1100,7 +1163,10 @@ export namespace Prisma {
     PlayerQuest: 'PlayerQuest',
     PlayerReward: 'PlayerReward',
     Ranking: 'Ranking',
-    Secret: 'Secret'
+    Secret: 'Secret',
+    OfferItem: 'OfferItem',
+    OfferBid: 'OfferBid',
+    Offer: 'Offer'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1117,7 +1183,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret'
+      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -3167,6 +3233,204 @@ export namespace Prisma {
           }
         }
       }
+      OfferItem: {
+        payload: Prisma.$OfferItemPayload<ExtArgs>
+        fields: Prisma.OfferItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OfferItemFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OfferItemFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload>
+          }
+          findFirst: {
+            args: Prisma.OfferItemFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OfferItemFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload>
+          }
+          findMany: {
+            args: Prisma.OfferItemFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload>[]
+          }
+          create: {
+            args: Prisma.OfferItemCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload>
+          }
+          createMany: {
+            args: Prisma.OfferItemCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.OfferItemDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload>
+          }
+          update: {
+            args: Prisma.OfferItemUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.OfferItemDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OfferItemUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.OfferItemUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferItemPayload>
+          }
+          aggregate: {
+            args: Prisma.OfferItemAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateOfferItem>
+          }
+          groupBy: {
+            args: Prisma.OfferItemGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<OfferItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OfferItemCountArgs<ExtArgs>,
+            result: $Utils.Optional<OfferItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      OfferBid: {
+        payload: Prisma.$OfferBidPayload<ExtArgs>
+        fields: Prisma.OfferBidFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OfferBidFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OfferBidFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload>
+          }
+          findFirst: {
+            args: Prisma.OfferBidFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OfferBidFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload>
+          }
+          findMany: {
+            args: Prisma.OfferBidFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload>[]
+          }
+          create: {
+            args: Prisma.OfferBidCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload>
+          }
+          createMany: {
+            args: Prisma.OfferBidCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.OfferBidDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload>
+          }
+          update: {
+            args: Prisma.OfferBidUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload>
+          }
+          deleteMany: {
+            args: Prisma.OfferBidDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OfferBidUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.OfferBidUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferBidPayload>
+          }
+          aggregate: {
+            args: Prisma.OfferBidAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateOfferBid>
+          }
+          groupBy: {
+            args: Prisma.OfferBidGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<OfferBidGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OfferBidCountArgs<ExtArgs>,
+            result: $Utils.Optional<OfferBidCountAggregateOutputType> | number
+          }
+        }
+      }
+      Offer: {
+        payload: Prisma.$OfferPayload<ExtArgs>
+        fields: Prisma.OfferFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OfferFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OfferFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload>
+          }
+          findFirst: {
+            args: Prisma.OfferFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OfferFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload>
+          }
+          findMany: {
+            args: Prisma.OfferFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload>[]
+          }
+          create: {
+            args: Prisma.OfferCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload>
+          }
+          createMany: {
+            args: Prisma.OfferCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.OfferDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload>
+          }
+          update: {
+            args: Prisma.OfferUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload>
+          }
+          deleteMany: {
+            args: Prisma.OfferDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OfferUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.OfferUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$OfferPayload>
+          }
+          aggregate: {
+            args: Prisma.OfferAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateOffer>
+          }
+          groupBy: {
+            args: Prisma.OfferGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<OfferGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OfferCountArgs<ExtArgs>,
+            result: $Utils.Optional<OfferCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3357,6 +3621,7 @@ export namespace Prisma {
     status: number
     npcs: number
     dinozItemsToDinoz: number
+    offers: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3367,6 +3632,7 @@ export namespace Prisma {
     status?: boolean | DinozCountOutputTypeCountStatusArgs
     npcs?: boolean | DinozCountOutputTypeCountNpcsArgs
     dinozItemsToDinoz?: boolean | DinozCountOutputTypeCountDinozItemsToDinozArgs
+    offers?: boolean | DinozCountOutputTypeCountOffersArgs
   }
 
   // Custom InputTypes
@@ -3435,6 +3701,14 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountDinozItemsToDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozItemToDinozWhereInput
+  }
+
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountOffersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferWhereInput
   }
 
 
@@ -3606,6 +3880,8 @@ export namespace Prisma {
     items: number
     quests: number
     rewards: number
+    offers: number
+    bids: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3619,6 +3895,8 @@ export namespace Prisma {
     items?: boolean | PlayerCountOutputTypeCountItemsArgs
     quests?: boolean | PlayerCountOutputTypeCountQuestsArgs
     rewards?: boolean | PlayerCountOutputTypeCountRewardsArgs
+    offers?: boolean | PlayerCountOutputTypeCountOffersArgs
+    bids?: boolean | PlayerCountOutputTypeCountBidsArgs
   }
 
   // Custom InputTypes
@@ -3711,6 +3989,66 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountRewardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PlayerRewardWhereInput
+  }
+
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountOffersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferWhereInput
+  }
+
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountBidsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferBidWhereInput
+  }
+
+
+
+  /**
+   * Count Type OfferCountOutputType
+   */
+
+  export type OfferCountOutputType = {
+    items: number
+    bids: number
+  }
+
+  export type OfferCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | OfferCountOutputTypeCountItemsArgs
+    bids?: boolean | OfferCountOutputTypeCountBidsArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * OfferCountOutputType without action
+   */
+  export type OfferCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferCountOutputType
+     */
+    select?: OfferCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * OfferCountOutputType without action
+   */
+  export type OfferCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferItemWhereInput
+  }
+
+
+  /**
+   * OfferCountOutputType without action
+   */
+  export type OfferCountOutputTypeCountBidsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferBidWhereInput
   }
 
 
@@ -4712,6 +5050,7 @@ export namespace Prisma {
     name: string | null
     isFrozen: boolean | null
     isSacrificed: boolean | null
+    isSelling: boolean | null
     raceId: number | null
     level: number | null
     missionId: number | null
@@ -4741,6 +5080,7 @@ export namespace Prisma {
     name: string | null
     isFrozen: boolean | null
     isSacrificed: boolean | null
+    isSelling: boolean | null
     raceId: number | null
     level: number | null
     missionId: number | null
@@ -4770,6 +5110,7 @@ export namespace Prisma {
     name: number
     isFrozen: number
     isSacrificed: number
+    isSelling: number
     raceId: number
     level: number
     missionId: number
@@ -4845,6 +5186,7 @@ export namespace Prisma {
     name?: true
     isFrozen?: true
     isSacrificed?: true
+    isSelling?: true
     raceId?: true
     level?: true
     missionId?: true
@@ -4874,6 +5216,7 @@ export namespace Prisma {
     name?: true
     isFrozen?: true
     isSacrificed?: true
+    isSelling?: true
     raceId?: true
     level?: true
     missionId?: true
@@ -4903,6 +5246,7 @@ export namespace Prisma {
     name?: true
     isFrozen?: true
     isSacrificed?: true
+    isSelling?: true
     raceId?: true
     level?: true
     missionId?: true
@@ -5019,6 +5363,7 @@ export namespace Prisma {
     name: string
     isFrozen: boolean
     isSacrificed: boolean
+    isSelling: boolean
     raceId: number
     level: number
     missionId: number | null
@@ -5067,6 +5412,7 @@ export namespace Prisma {
     name?: boolean
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId?: boolean
     level?: boolean
     missionId?: boolean
@@ -5097,6 +5443,7 @@ export namespace Prisma {
     status?: boolean | Dinoz$statusArgs<ExtArgs>
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
     dinozItemsToDinoz?: boolean | Dinoz$dinozItemsToDinozArgs<ExtArgs>
+    offers?: boolean | Dinoz$offersArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -5106,6 +5453,7 @@ export namespace Prisma {
     name?: boolean
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId?: boolean
     level?: boolean
     missionId?: boolean
@@ -5139,6 +5487,7 @@ export namespace Prisma {
     status?: boolean | Dinoz$statusArgs<ExtArgs>
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
     dinozItemsToDinoz?: boolean | Dinoz$dinozItemsToDinozArgs<ExtArgs>
+    offers?: boolean | Dinoz$offersArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5155,6 +5504,7 @@ export namespace Prisma {
       status: Prisma.$DinozStatusPayload<ExtArgs>[]
       npcs: Prisma.$NPCPayload<ExtArgs>[]
       dinozItemsToDinoz: Prisma.$DinozItemToDinozPayload<ExtArgs>[]
+      offers: Prisma.$OfferPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5162,6 +5512,7 @@ export namespace Prisma {
       name: string
       isFrozen: boolean
       isSacrificed: boolean
+      isSelling: boolean
       raceId: number
       level: number
       missionId: number | null
@@ -5566,6 +5917,8 @@ export namespace Prisma {
 
     dinozItemsToDinoz<T extends Dinoz$dinozItemsToDinozArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$dinozItemsToDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    offers<T extends Dinoz$offersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5599,6 +5952,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Dinoz", 'String'>
     readonly isFrozen: FieldRef<"Dinoz", 'Boolean'>
     readonly isSacrificed: FieldRef<"Dinoz", 'Boolean'>
+    readonly isSelling: FieldRef<"Dinoz", 'Boolean'>
     readonly raceId: FieldRef<"Dinoz", 'Int'>
     readonly level: FieldRef<"Dinoz", 'Int'>
     readonly missionId: FieldRef<"Dinoz", 'Int'>
@@ -6107,6 +6461,27 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DinozItemToDinozScalarFieldEnum | DinozItemToDinozScalarFieldEnum[]
+  }
+
+
+  /**
+   * Dinoz.offers
+   */
+  export type Dinoz$offersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    where?: OfferWhereInput
+    orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
+    cursor?: OfferWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
   }
 
 
@@ -26193,6 +26568,8 @@ export namespace Prisma {
     quests?: boolean | Player$questsArgs<ExtArgs>
     rewards?: boolean | Player$rewardsArgs<ExtArgs>
     ranking?: boolean | Player$rankingArgs<ExtArgs>
+    offers?: boolean | Player$offersArgs<ExtArgs>
+    bids?: boolean | Player$bidsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -26228,6 +26605,8 @@ export namespace Prisma {
     quests?: boolean | Player$questsArgs<ExtArgs>
     rewards?: boolean | Player$rewardsArgs<ExtArgs>
     ranking?: boolean | Player$rankingArgs<ExtArgs>
+    offers?: boolean | Player$offersArgs<ExtArgs>
+    bids?: boolean | Player$bidsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -26247,6 +26626,8 @@ export namespace Prisma {
       quests: Prisma.$PlayerQuestPayload<ExtArgs>[]
       rewards: Prisma.$PlayerRewardPayload<ExtArgs>[]
       ranking: Prisma.$RankingPayload<ExtArgs> | null
+      offers: Prisma.$OfferPayload<ExtArgs>[]
+      bids: Prisma.$OfferBidPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -26653,6 +27034,10 @@ export namespace Prisma {
     rewards<T extends Player$rewardsArgs<ExtArgs> = {}>(args?: Subset<T, Player$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     ranking<T extends Player$rankingArgs<ExtArgs> = {}>(args?: Subset<T, Player$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    offers<T extends Player$offersArgs<ExtArgs> = {}>(args?: Subset<T, Player$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    bids<T extends Player$bidsArgs<ExtArgs> = {}>(args?: Subset<T, Player$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -27248,6 +27633,48 @@ export namespace Prisma {
      */
     include?: RankingInclude<ExtArgs> | null
     where?: RankingWhereInput
+  }
+
+
+  /**
+   * Player.offers
+   */
+  export type Player$offersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    where?: OfferWhereInput
+    orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
+    cursor?: OfferWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+  }
+
+
+  /**
+   * Player.bids
+   */
+  export type Player$bidsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    where?: OfferBidWhereInput
+    orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
+    cursor?: OfferBidWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
   }
 
 
@@ -34970,6 +35397,2978 @@ export namespace Prisma {
 
 
   /**
+   * Model OfferItem
+   */
+
+  export type AggregateOfferItem = {
+    _count: OfferItemCountAggregateOutputType | null
+    _avg: OfferItemAvgAggregateOutputType | null
+    _sum: OfferItemSumAggregateOutputType | null
+    _min: OfferItemMinAggregateOutputType | null
+    _max: OfferItemMaxAggregateOutputType | null
+  }
+
+  export type OfferItemAvgAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    itemId: number | null
+    quantity: number | null
+  }
+
+  export type OfferItemSumAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    itemId: number | null
+    quantity: number | null
+  }
+
+  export type OfferItemMinAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    itemId: number | null
+    quantity: number | null
+    isIngredient: boolean | null
+  }
+
+  export type OfferItemMaxAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    itemId: number | null
+    quantity: number | null
+    isIngredient: boolean | null
+  }
+
+  export type OfferItemCountAggregateOutputType = {
+    id: number
+    offerId: number
+    itemId: number
+    quantity: number
+    isIngredient: number
+    _all: number
+  }
+
+
+  export type OfferItemAvgAggregateInputType = {
+    id?: true
+    offerId?: true
+    itemId?: true
+    quantity?: true
+  }
+
+  export type OfferItemSumAggregateInputType = {
+    id?: true
+    offerId?: true
+    itemId?: true
+    quantity?: true
+  }
+
+  export type OfferItemMinAggregateInputType = {
+    id?: true
+    offerId?: true
+    itemId?: true
+    quantity?: true
+    isIngredient?: true
+  }
+
+  export type OfferItemMaxAggregateInputType = {
+    id?: true
+    offerId?: true
+    itemId?: true
+    quantity?: true
+    isIngredient?: true
+  }
+
+  export type OfferItemCountAggregateInputType = {
+    id?: true
+    offerId?: true
+    itemId?: true
+    quantity?: true
+    isIngredient?: true
+    _all?: true
+  }
+
+  export type OfferItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OfferItem to aggregate.
+     */
+    where?: OfferItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferItems to fetch.
+     */
+    orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OfferItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OfferItems
+    **/
+    _count?: true | OfferItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OfferItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OfferItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OfferItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OfferItemMaxAggregateInputType
+  }
+
+  export type GetOfferItemAggregateType<T extends OfferItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateOfferItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOfferItem[P]>
+      : GetScalarType<T[P], AggregateOfferItem[P]>
+  }
+
+
+
+
+  export type OfferItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferItemWhereInput
+    orderBy?: OfferItemOrderByWithAggregationInput | OfferItemOrderByWithAggregationInput[]
+    by: OfferItemScalarFieldEnum[] | OfferItemScalarFieldEnum
+    having?: OfferItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OfferItemCountAggregateInputType | true
+    _avg?: OfferItemAvgAggregateInputType
+    _sum?: OfferItemSumAggregateInputType
+    _min?: OfferItemMinAggregateInputType
+    _max?: OfferItemMaxAggregateInputType
+  }
+
+  export type OfferItemGroupByOutputType = {
+    id: number
+    offerId: number
+    itemId: number
+    quantity: number
+    isIngredient: boolean
+    _count: OfferItemCountAggregateOutputType | null
+    _avg: OfferItemAvgAggregateOutputType | null
+    _sum: OfferItemSumAggregateOutputType | null
+    _min: OfferItemMinAggregateOutputType | null
+    _max: OfferItemMaxAggregateOutputType | null
+  }
+
+  type GetOfferItemGroupByPayload<T extends OfferItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OfferItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OfferItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OfferItemGroupByOutputType[P]>
+            : GetScalarType<T[P], OfferItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OfferItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    offerId?: boolean
+    itemId?: boolean
+    quantity?: boolean
+    isIngredient?: boolean
+    offer?: boolean | OfferDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["offerItem"]>
+
+  export type OfferItemSelectScalar = {
+    id?: boolean
+    offerId?: boolean
+    itemId?: boolean
+    quantity?: boolean
+    isIngredient?: boolean
+  }
+
+  export type OfferItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    offer?: boolean | OfferDefaultArgs<ExtArgs>
+  }
+
+
+  export type $OfferItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OfferItem"
+    objects: {
+      offer: Prisma.$OfferPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      offerId: number
+      itemId: number
+      quantity: number
+      isIngredient: boolean
+    }, ExtArgs["result"]["offerItem"]>
+    composites: {}
+  }
+
+
+  type OfferItemGetPayload<S extends boolean | null | undefined | OfferItemDefaultArgs> = $Result.GetResult<Prisma.$OfferItemPayload, S>
+
+  type OfferItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OfferItemFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: OfferItemCountAggregateInputType | true
+    }
+
+  export interface OfferItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OfferItem'], meta: { name: 'OfferItem' } }
+    /**
+     * Find zero or one OfferItem that matches the filter.
+     * @param {OfferItemFindUniqueArgs} args - Arguments to find a OfferItem
+     * @example
+     * // Get one OfferItem
+     * const offerItem = await prisma.offerItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends OfferItemFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferItemFindUniqueArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one OfferItem that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {OfferItemFindUniqueOrThrowArgs} args - Arguments to find a OfferItem
+     * @example
+     * // Get one OfferItem
+     * const offerItem = await prisma.offerItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends OfferItemFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferItemFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first OfferItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferItemFindFirstArgs} args - Arguments to find a OfferItem
+     * @example
+     * // Get one OfferItem
+     * const offerItem = await prisma.offerItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends OfferItemFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferItemFindFirstArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first OfferItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferItemFindFirstOrThrowArgs} args - Arguments to find a OfferItem
+     * @example
+     * // Get one OfferItem
+     * const offerItem = await prisma.offerItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends OfferItemFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferItemFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more OfferItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferItemFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OfferItems
+     * const offerItems = await prisma.offerItem.findMany()
+     * 
+     * // Get first 10 OfferItems
+     * const offerItems = await prisma.offerItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const offerItemWithIdOnly = await prisma.offerItem.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends OfferItemFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferItemFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a OfferItem.
+     * @param {OfferItemCreateArgs} args - Arguments to create a OfferItem.
+     * @example
+     * // Create one OfferItem
+     * const OfferItem = await prisma.offerItem.create({
+     *   data: {
+     *     // ... data to create a OfferItem
+     *   }
+     * })
+     * 
+    **/
+    create<T extends OfferItemCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferItemCreateArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many OfferItems.
+     *     @param {OfferItemCreateManyArgs} args - Arguments to create many OfferItems.
+     *     @example
+     *     // Create many OfferItems
+     *     const offerItem = await prisma.offerItem.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends OfferItemCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferItemCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a OfferItem.
+     * @param {OfferItemDeleteArgs} args - Arguments to delete one OfferItem.
+     * @example
+     * // Delete one OfferItem
+     * const OfferItem = await prisma.offerItem.delete({
+     *   where: {
+     *     // ... filter to delete one OfferItem
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends OfferItemDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferItemDeleteArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one OfferItem.
+     * @param {OfferItemUpdateArgs} args - Arguments to update one OfferItem.
+     * @example
+     * // Update one OfferItem
+     * const offerItem = await prisma.offerItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends OfferItemUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferItemUpdateArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more OfferItems.
+     * @param {OfferItemDeleteManyArgs} args - Arguments to filter OfferItems to delete.
+     * @example
+     * // Delete a few OfferItems
+     * const { count } = await prisma.offerItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends OfferItemDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferItemDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OfferItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OfferItems
+     * const offerItem = await prisma.offerItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends OfferItemUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferItemUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OfferItem.
+     * @param {OfferItemUpsertArgs} args - Arguments to update or create a OfferItem.
+     * @example
+     * // Update or create a OfferItem
+     * const offerItem = await prisma.offerItem.upsert({
+     *   create: {
+     *     // ... data to create a OfferItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OfferItem we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends OfferItemUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferItemUpsertArgs<ExtArgs>>
+    ): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of OfferItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferItemCountArgs} args - Arguments to filter OfferItems to count.
+     * @example
+     * // Count the number of OfferItems
+     * const count = await prisma.offerItem.count({
+     *   where: {
+     *     // ... the filter for the OfferItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends OfferItemCountArgs>(
+      args?: Subset<T, OfferItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OfferItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OfferItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OfferItemAggregateArgs>(args: Subset<T, OfferItemAggregateArgs>): Prisma.PrismaPromise<GetOfferItemAggregateType<T>>
+
+    /**
+     * Group by OfferItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OfferItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OfferItemGroupByArgs['orderBy'] }
+        : { orderBy?: OfferItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OfferItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOfferItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OfferItem model
+   */
+  readonly fields: OfferItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OfferItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OfferItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    offer<T extends OfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OfferDefaultArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the OfferItem model
+   */ 
+  interface OfferItemFieldRefs {
+    readonly id: FieldRef<"OfferItem", 'Int'>
+    readonly offerId: FieldRef<"OfferItem", 'Int'>
+    readonly itemId: FieldRef<"OfferItem", 'Int'>
+    readonly quantity: FieldRef<"OfferItem", 'Int'>
+    readonly isIngredient: FieldRef<"OfferItem", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * OfferItem findUnique
+   */
+  export type OfferItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferItem to fetch.
+     */
+    where: OfferItemWhereUniqueInput
+  }
+
+
+  /**
+   * OfferItem findUniqueOrThrow
+   */
+  export type OfferItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferItem to fetch.
+     */
+    where: OfferItemWhereUniqueInput
+  }
+
+
+  /**
+   * OfferItem findFirst
+   */
+  export type OfferItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferItem to fetch.
+     */
+    where?: OfferItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferItems to fetch.
+     */
+    orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OfferItems.
+     */
+    cursor?: OfferItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OfferItems.
+     */
+    distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
+  }
+
+
+  /**
+   * OfferItem findFirstOrThrow
+   */
+  export type OfferItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferItem to fetch.
+     */
+    where?: OfferItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferItems to fetch.
+     */
+    orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OfferItems.
+     */
+    cursor?: OfferItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OfferItems.
+     */
+    distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
+  }
+
+
+  /**
+   * OfferItem findMany
+   */
+  export type OfferItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferItems to fetch.
+     */
+    where?: OfferItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferItems to fetch.
+     */
+    orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OfferItems.
+     */
+    cursor?: OfferItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferItems.
+     */
+    skip?: number
+    distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
+  }
+
+
+  /**
+   * OfferItem create
+   */
+  export type OfferItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OfferItem.
+     */
+    data: XOR<OfferItemCreateInput, OfferItemUncheckedCreateInput>
+  }
+
+
+  /**
+   * OfferItem createMany
+   */
+  export type OfferItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OfferItems.
+     */
+    data: OfferItemCreateManyInput | OfferItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * OfferItem update
+   */
+  export type OfferItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OfferItem.
+     */
+    data: XOR<OfferItemUpdateInput, OfferItemUncheckedUpdateInput>
+    /**
+     * Choose, which OfferItem to update.
+     */
+    where: OfferItemWhereUniqueInput
+  }
+
+
+  /**
+   * OfferItem updateMany
+   */
+  export type OfferItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OfferItems.
+     */
+    data: XOR<OfferItemUpdateManyMutationInput, OfferItemUncheckedUpdateManyInput>
+    /**
+     * Filter which OfferItems to update
+     */
+    where?: OfferItemWhereInput
+  }
+
+
+  /**
+   * OfferItem upsert
+   */
+  export type OfferItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OfferItem to update in case it exists.
+     */
+    where: OfferItemWhereUniqueInput
+    /**
+     * In case the OfferItem found by the `where` argument doesn't exist, create a new OfferItem with this data.
+     */
+    create: XOR<OfferItemCreateInput, OfferItemUncheckedCreateInput>
+    /**
+     * In case the OfferItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OfferItemUpdateInput, OfferItemUncheckedUpdateInput>
+  }
+
+
+  /**
+   * OfferItem delete
+   */
+  export type OfferItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    /**
+     * Filter which OfferItem to delete.
+     */
+    where: OfferItemWhereUniqueInput
+  }
+
+
+  /**
+   * OfferItem deleteMany
+   */
+  export type OfferItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OfferItems to delete
+     */
+    where?: OfferItemWhereInput
+  }
+
+
+  /**
+   * OfferItem without action
+   */
+  export type OfferItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model OfferBid
+   */
+
+  export type AggregateOfferBid = {
+    _count: OfferBidCountAggregateOutputType | null
+    _avg: OfferBidAvgAggregateOutputType | null
+    _sum: OfferBidSumAggregateOutputType | null
+    _min: OfferBidMinAggregateOutputType | null
+    _max: OfferBidMaxAggregateOutputType | null
+  }
+
+  export type OfferBidAvgAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    userId: number | null
+    value: number | null
+  }
+
+  export type OfferBidSumAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    userId: number | null
+    value: number | null
+  }
+
+  export type OfferBidMinAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    userId: number | null
+    value: number | null
+  }
+
+  export type OfferBidMaxAggregateOutputType = {
+    id: number | null
+    offerId: number | null
+    userId: number | null
+    value: number | null
+  }
+
+  export type OfferBidCountAggregateOutputType = {
+    id: number
+    offerId: number
+    userId: number
+    value: number
+    _all: number
+  }
+
+
+  export type OfferBidAvgAggregateInputType = {
+    id?: true
+    offerId?: true
+    userId?: true
+    value?: true
+  }
+
+  export type OfferBidSumAggregateInputType = {
+    id?: true
+    offerId?: true
+    userId?: true
+    value?: true
+  }
+
+  export type OfferBidMinAggregateInputType = {
+    id?: true
+    offerId?: true
+    userId?: true
+    value?: true
+  }
+
+  export type OfferBidMaxAggregateInputType = {
+    id?: true
+    offerId?: true
+    userId?: true
+    value?: true
+  }
+
+  export type OfferBidCountAggregateInputType = {
+    id?: true
+    offerId?: true
+    userId?: true
+    value?: true
+    _all?: true
+  }
+
+  export type OfferBidAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OfferBid to aggregate.
+     */
+    where?: OfferBidWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferBids to fetch.
+     */
+    orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OfferBidWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferBids from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferBids.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OfferBids
+    **/
+    _count?: true | OfferBidCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OfferBidAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OfferBidSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OfferBidMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OfferBidMaxAggregateInputType
+  }
+
+  export type GetOfferBidAggregateType<T extends OfferBidAggregateArgs> = {
+        [P in keyof T & keyof AggregateOfferBid]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOfferBid[P]>
+      : GetScalarType<T[P], AggregateOfferBid[P]>
+  }
+
+
+
+
+  export type OfferBidGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferBidWhereInput
+    orderBy?: OfferBidOrderByWithAggregationInput | OfferBidOrderByWithAggregationInput[]
+    by: OfferBidScalarFieldEnum[] | OfferBidScalarFieldEnum
+    having?: OfferBidScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OfferBidCountAggregateInputType | true
+    _avg?: OfferBidAvgAggregateInputType
+    _sum?: OfferBidSumAggregateInputType
+    _min?: OfferBidMinAggregateInputType
+    _max?: OfferBidMaxAggregateInputType
+  }
+
+  export type OfferBidGroupByOutputType = {
+    id: number
+    offerId: number
+    userId: number
+    value: number
+    _count: OfferBidCountAggregateOutputType | null
+    _avg: OfferBidAvgAggregateOutputType | null
+    _sum: OfferBidSumAggregateOutputType | null
+    _min: OfferBidMinAggregateOutputType | null
+    _max: OfferBidMaxAggregateOutputType | null
+  }
+
+  type GetOfferBidGroupByPayload<T extends OfferBidGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OfferBidGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OfferBidGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OfferBidGroupByOutputType[P]>
+            : GetScalarType<T[P], OfferBidGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OfferBidSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    offerId?: boolean
+    userId?: boolean
+    value?: boolean
+    offer?: boolean | OfferDefaultArgs<ExtArgs>
+    user?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["offerBid"]>
+
+  export type OfferBidSelectScalar = {
+    id?: boolean
+    offerId?: boolean
+    userId?: boolean
+    value?: boolean
+  }
+
+  export type OfferBidInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    offer?: boolean | OfferDefaultArgs<ExtArgs>
+    user?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+
+  export type $OfferBidPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OfferBid"
+    objects: {
+      offer: Prisma.$OfferPayload<ExtArgs>
+      user: Prisma.$PlayerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      offerId: number
+      userId: number
+      value: number
+    }, ExtArgs["result"]["offerBid"]>
+    composites: {}
+  }
+
+
+  type OfferBidGetPayload<S extends boolean | null | undefined | OfferBidDefaultArgs> = $Result.GetResult<Prisma.$OfferBidPayload, S>
+
+  type OfferBidCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OfferBidFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: OfferBidCountAggregateInputType | true
+    }
+
+  export interface OfferBidDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OfferBid'], meta: { name: 'OfferBid' } }
+    /**
+     * Find zero or one OfferBid that matches the filter.
+     * @param {OfferBidFindUniqueArgs} args - Arguments to find a OfferBid
+     * @example
+     * // Get one OfferBid
+     * const offerBid = await prisma.offerBid.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends OfferBidFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferBidFindUniqueArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one OfferBid that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {OfferBidFindUniqueOrThrowArgs} args - Arguments to find a OfferBid
+     * @example
+     * // Get one OfferBid
+     * const offerBid = await prisma.offerBid.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends OfferBidFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferBidFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first OfferBid that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferBidFindFirstArgs} args - Arguments to find a OfferBid
+     * @example
+     * // Get one OfferBid
+     * const offerBid = await prisma.offerBid.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends OfferBidFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferBidFindFirstArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first OfferBid that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferBidFindFirstOrThrowArgs} args - Arguments to find a OfferBid
+     * @example
+     * // Get one OfferBid
+     * const offerBid = await prisma.offerBid.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends OfferBidFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferBidFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more OfferBids that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferBidFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OfferBids
+     * const offerBids = await prisma.offerBid.findMany()
+     * 
+     * // Get first 10 OfferBids
+     * const offerBids = await prisma.offerBid.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const offerBidWithIdOnly = await prisma.offerBid.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends OfferBidFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferBidFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a OfferBid.
+     * @param {OfferBidCreateArgs} args - Arguments to create a OfferBid.
+     * @example
+     * // Create one OfferBid
+     * const OfferBid = await prisma.offerBid.create({
+     *   data: {
+     *     // ... data to create a OfferBid
+     *   }
+     * })
+     * 
+    **/
+    create<T extends OfferBidCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferBidCreateArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many OfferBids.
+     *     @param {OfferBidCreateManyArgs} args - Arguments to create many OfferBids.
+     *     @example
+     *     // Create many OfferBids
+     *     const offerBid = await prisma.offerBid.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends OfferBidCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferBidCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a OfferBid.
+     * @param {OfferBidDeleteArgs} args - Arguments to delete one OfferBid.
+     * @example
+     * // Delete one OfferBid
+     * const OfferBid = await prisma.offerBid.delete({
+     *   where: {
+     *     // ... filter to delete one OfferBid
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends OfferBidDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferBidDeleteArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one OfferBid.
+     * @param {OfferBidUpdateArgs} args - Arguments to update one OfferBid.
+     * @example
+     * // Update one OfferBid
+     * const offerBid = await prisma.offerBid.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends OfferBidUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferBidUpdateArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more OfferBids.
+     * @param {OfferBidDeleteManyArgs} args - Arguments to filter OfferBids to delete.
+     * @example
+     * // Delete a few OfferBids
+     * const { count } = await prisma.offerBid.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends OfferBidDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferBidDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OfferBids.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferBidUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OfferBids
+     * const offerBid = await prisma.offerBid.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends OfferBidUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferBidUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OfferBid.
+     * @param {OfferBidUpsertArgs} args - Arguments to update or create a OfferBid.
+     * @example
+     * // Update or create a OfferBid
+     * const offerBid = await prisma.offerBid.upsert({
+     *   create: {
+     *     // ... data to create a OfferBid
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OfferBid we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends OfferBidUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferBidUpsertArgs<ExtArgs>>
+    ): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of OfferBids.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferBidCountArgs} args - Arguments to filter OfferBids to count.
+     * @example
+     * // Count the number of OfferBids
+     * const count = await prisma.offerBid.count({
+     *   where: {
+     *     // ... the filter for the OfferBids we want to count
+     *   }
+     * })
+    **/
+    count<T extends OfferBidCountArgs>(
+      args?: Subset<T, OfferBidCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OfferBidCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OfferBid.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferBidAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OfferBidAggregateArgs>(args: Subset<T, OfferBidAggregateArgs>): Prisma.PrismaPromise<GetOfferBidAggregateType<T>>
+
+    /**
+     * Group by OfferBid.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferBidGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OfferBidGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OfferBidGroupByArgs['orderBy'] }
+        : { orderBy?: OfferBidGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OfferBidGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOfferBidGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OfferBid model
+   */
+  readonly fields: OfferBidFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OfferBid.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OfferBidClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    offer<T extends OfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OfferDefaultArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    user<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the OfferBid model
+   */ 
+  interface OfferBidFieldRefs {
+    readonly id: FieldRef<"OfferBid", 'Int'>
+    readonly offerId: FieldRef<"OfferBid", 'Int'>
+    readonly userId: FieldRef<"OfferBid", 'Int'>
+    readonly value: FieldRef<"OfferBid", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * OfferBid findUnique
+   */
+  export type OfferBidFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferBid to fetch.
+     */
+    where: OfferBidWhereUniqueInput
+  }
+
+
+  /**
+   * OfferBid findUniqueOrThrow
+   */
+  export type OfferBidFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferBid to fetch.
+     */
+    where: OfferBidWhereUniqueInput
+  }
+
+
+  /**
+   * OfferBid findFirst
+   */
+  export type OfferBidFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferBid to fetch.
+     */
+    where?: OfferBidWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferBids to fetch.
+     */
+    orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OfferBids.
+     */
+    cursor?: OfferBidWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferBids from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferBids.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OfferBids.
+     */
+    distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+  }
+
+
+  /**
+   * OfferBid findFirstOrThrow
+   */
+  export type OfferBidFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferBid to fetch.
+     */
+    where?: OfferBidWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferBids to fetch.
+     */
+    orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OfferBids.
+     */
+    cursor?: OfferBidWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferBids from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferBids.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OfferBids.
+     */
+    distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+  }
+
+
+  /**
+   * OfferBid findMany
+   */
+  export type OfferBidFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * Filter, which OfferBids to fetch.
+     */
+    where?: OfferBidWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OfferBids to fetch.
+     */
+    orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OfferBids.
+     */
+    cursor?: OfferBidWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OfferBids from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OfferBids.
+     */
+    skip?: number
+    distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+  }
+
+
+  /**
+   * OfferBid create
+   */
+  export type OfferBidCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OfferBid.
+     */
+    data: XOR<OfferBidCreateInput, OfferBidUncheckedCreateInput>
+  }
+
+
+  /**
+   * OfferBid createMany
+   */
+  export type OfferBidCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OfferBids.
+     */
+    data: OfferBidCreateManyInput | OfferBidCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * OfferBid update
+   */
+  export type OfferBidUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OfferBid.
+     */
+    data: XOR<OfferBidUpdateInput, OfferBidUncheckedUpdateInput>
+    /**
+     * Choose, which OfferBid to update.
+     */
+    where: OfferBidWhereUniqueInput
+  }
+
+
+  /**
+   * OfferBid updateMany
+   */
+  export type OfferBidUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OfferBids.
+     */
+    data: XOR<OfferBidUpdateManyMutationInput, OfferBidUncheckedUpdateManyInput>
+    /**
+     * Filter which OfferBids to update
+     */
+    where?: OfferBidWhereInput
+  }
+
+
+  /**
+   * OfferBid upsert
+   */
+  export type OfferBidUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OfferBid to update in case it exists.
+     */
+    where: OfferBidWhereUniqueInput
+    /**
+     * In case the OfferBid found by the `where` argument doesn't exist, create a new OfferBid with this data.
+     */
+    create: XOR<OfferBidCreateInput, OfferBidUncheckedCreateInput>
+    /**
+     * In case the OfferBid was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OfferBidUpdateInput, OfferBidUncheckedUpdateInput>
+  }
+
+
+  /**
+   * OfferBid delete
+   */
+  export type OfferBidDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    /**
+     * Filter which OfferBid to delete.
+     */
+    where: OfferBidWhereUniqueInput
+  }
+
+
+  /**
+   * OfferBid deleteMany
+   */
+  export type OfferBidDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OfferBids to delete
+     */
+    where?: OfferBidWhereInput
+  }
+
+
+  /**
+   * OfferBid without action
+   */
+  export type OfferBidDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model Offer
+   */
+
+  export type AggregateOffer = {
+    _count: OfferCountAggregateOutputType | null
+    _avg: OfferAvgAggregateOutputType | null
+    _sum: OfferSumAggregateOutputType | null
+    _min: OfferMinAggregateOutputType | null
+    _max: OfferMaxAggregateOutputType | null
+  }
+
+  export type OfferAvgAggregateOutputType = {
+    id: number | null
+    sellerId: number | null
+    dinozId: number | null
+    total: number | null
+  }
+
+  export type OfferSumAggregateOutputType = {
+    id: number | null
+    sellerId: number | null
+    dinozId: number | null
+    total: number | null
+  }
+
+  export type OfferMinAggregateOutputType = {
+    id: number | null
+    sellerId: number | null
+    endDate: Date | null
+    dinozId: number | null
+    total: number | null
+    status: $Enums.OfferStatus | null
+  }
+
+  export type OfferMaxAggregateOutputType = {
+    id: number | null
+    sellerId: number | null
+    endDate: Date | null
+    dinozId: number | null
+    total: number | null
+    status: $Enums.OfferStatus | null
+  }
+
+  export type OfferCountAggregateOutputType = {
+    id: number
+    sellerId: number
+    endDate: number
+    dinozId: number
+    total: number
+    status: number
+    _all: number
+  }
+
+
+  export type OfferAvgAggregateInputType = {
+    id?: true
+    sellerId?: true
+    dinozId?: true
+    total?: true
+  }
+
+  export type OfferSumAggregateInputType = {
+    id?: true
+    sellerId?: true
+    dinozId?: true
+    total?: true
+  }
+
+  export type OfferMinAggregateInputType = {
+    id?: true
+    sellerId?: true
+    endDate?: true
+    dinozId?: true
+    total?: true
+    status?: true
+  }
+
+  export type OfferMaxAggregateInputType = {
+    id?: true
+    sellerId?: true
+    endDate?: true
+    dinozId?: true
+    total?: true
+    status?: true
+  }
+
+  export type OfferCountAggregateInputType = {
+    id?: true
+    sellerId?: true
+    endDate?: true
+    dinozId?: true
+    total?: true
+    status?: true
+    _all?: true
+  }
+
+  export type OfferAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Offer to aggregate.
+     */
+    where?: OfferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Offers to fetch.
+     */
+    orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OfferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Offers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Offers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Offers
+    **/
+    _count?: true | OfferCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OfferAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OfferSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OfferMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OfferMaxAggregateInputType
+  }
+
+  export type GetOfferAggregateType<T extends OfferAggregateArgs> = {
+        [P in keyof T & keyof AggregateOffer]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOffer[P]>
+      : GetScalarType<T[P], AggregateOffer[P]>
+  }
+
+
+
+
+  export type OfferGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferWhereInput
+    orderBy?: OfferOrderByWithAggregationInput | OfferOrderByWithAggregationInput[]
+    by: OfferScalarFieldEnum[] | OfferScalarFieldEnum
+    having?: OfferScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OfferCountAggregateInputType | true
+    _avg?: OfferAvgAggregateInputType
+    _sum?: OfferSumAggregateInputType
+    _min?: OfferMinAggregateInputType
+    _max?: OfferMaxAggregateInputType
+  }
+
+  export type OfferGroupByOutputType = {
+    id: number
+    sellerId: number
+    endDate: Date
+    dinozId: number | null
+    total: number
+    status: $Enums.OfferStatus
+    _count: OfferCountAggregateOutputType | null
+    _avg: OfferAvgAggregateOutputType | null
+    _sum: OfferSumAggregateOutputType | null
+    _min: OfferMinAggregateOutputType | null
+    _max: OfferMaxAggregateOutputType | null
+  }
+
+  type GetOfferGroupByPayload<T extends OfferGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OfferGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OfferGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OfferGroupByOutputType[P]>
+            : GetScalarType<T[P], OfferGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OfferSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sellerId?: boolean
+    endDate?: boolean
+    dinozId?: boolean
+    total?: boolean
+    status?: boolean
+    seller?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Offer$dinozArgs<ExtArgs>
+    items?: boolean | Offer$itemsArgs<ExtArgs>
+    bids?: boolean | Offer$bidsArgs<ExtArgs>
+    _count?: boolean | OfferCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["offer"]>
+
+  export type OfferSelectScalar = {
+    id?: boolean
+    sellerId?: boolean
+    endDate?: boolean
+    dinozId?: boolean
+    total?: boolean
+    status?: boolean
+  }
+
+  export type OfferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seller?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Offer$dinozArgs<ExtArgs>
+    items?: boolean | Offer$itemsArgs<ExtArgs>
+    bids?: boolean | Offer$bidsArgs<ExtArgs>
+    _count?: boolean | OfferCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+
+  export type $OfferPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Offer"
+    objects: {
+      seller: Prisma.$PlayerPayload<ExtArgs>
+      dinoz: Prisma.$DinozPayload<ExtArgs> | null
+      items: Prisma.$OfferItemPayload<ExtArgs>[]
+      bids: Prisma.$OfferBidPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      sellerId: number
+      endDate: Date
+      dinozId: number | null
+      total: number
+      status: $Enums.OfferStatus
+    }, ExtArgs["result"]["offer"]>
+    composites: {}
+  }
+
+
+  type OfferGetPayload<S extends boolean | null | undefined | OfferDefaultArgs> = $Result.GetResult<Prisma.$OfferPayload, S>
+
+  type OfferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OfferFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: OfferCountAggregateInputType | true
+    }
+
+  export interface OfferDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Offer'], meta: { name: 'Offer' } }
+    /**
+     * Find zero or one Offer that matches the filter.
+     * @param {OfferFindUniqueArgs} args - Arguments to find a Offer
+     * @example
+     * // Get one Offer
+     * const offer = await prisma.offer.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends OfferFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferFindUniqueArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Offer that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {OfferFindUniqueOrThrowArgs} args - Arguments to find a Offer
+     * @example
+     * // Get one Offer
+     * const offer = await prisma.offer.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends OfferFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Offer that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferFindFirstArgs} args - Arguments to find a Offer
+     * @example
+     * // Get one Offer
+     * const offer = await prisma.offer.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends OfferFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferFindFirstArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Offer that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferFindFirstOrThrowArgs} args - Arguments to find a Offer
+     * @example
+     * // Get one Offer
+     * const offer = await prisma.offer.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends OfferFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Offers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Offers
+     * const offers = await prisma.offer.findMany()
+     * 
+     * // Get first 10 Offers
+     * const offers = await prisma.offer.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const offerWithIdOnly = await prisma.offer.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends OfferFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Offer.
+     * @param {OfferCreateArgs} args - Arguments to create a Offer.
+     * @example
+     * // Create one Offer
+     * const Offer = await prisma.offer.create({
+     *   data: {
+     *     // ... data to create a Offer
+     *   }
+     * })
+     * 
+    **/
+    create<T extends OfferCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferCreateArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Offers.
+     *     @param {OfferCreateManyArgs} args - Arguments to create many Offers.
+     *     @example
+     *     // Create many Offers
+     *     const offer = await prisma.offer.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends OfferCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Offer.
+     * @param {OfferDeleteArgs} args - Arguments to delete one Offer.
+     * @example
+     * // Delete one Offer
+     * const Offer = await prisma.offer.delete({
+     *   where: {
+     *     // ... filter to delete one Offer
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends OfferDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferDeleteArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Offer.
+     * @param {OfferUpdateArgs} args - Arguments to update one Offer.
+     * @example
+     * // Update one Offer
+     * const offer = await prisma.offer.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends OfferUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferUpdateArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Offers.
+     * @param {OfferDeleteManyArgs} args - Arguments to filter Offers to delete.
+     * @example
+     * // Delete a few Offers
+     * const { count } = await prisma.offer.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends OfferDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, OfferDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Offers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Offers
+     * const offer = await prisma.offer.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends OfferUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Offer.
+     * @param {OfferUpsertArgs} args - Arguments to update or create a Offer.
+     * @example
+     * // Update or create a Offer
+     * const offer = await prisma.offer.upsert({
+     *   create: {
+     *     // ... data to create a Offer
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Offer we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends OfferUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, OfferUpsertArgs<ExtArgs>>
+    ): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Offers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferCountArgs} args - Arguments to filter Offers to count.
+     * @example
+     * // Count the number of Offers
+     * const count = await prisma.offer.count({
+     *   where: {
+     *     // ... the filter for the Offers we want to count
+     *   }
+     * })
+    **/
+    count<T extends OfferCountArgs>(
+      args?: Subset<T, OfferCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OfferCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Offer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OfferAggregateArgs>(args: Subset<T, OfferAggregateArgs>): Prisma.PrismaPromise<GetOfferAggregateType<T>>
+
+    /**
+     * Group by Offer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OfferGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OfferGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OfferGroupByArgs['orderBy'] }
+        : { orderBy?: OfferGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OfferGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOfferGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Offer model
+   */
+  readonly fields: OfferFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Offer.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OfferClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    seller<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    dinoz<T extends Offer$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Offer$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    items<T extends Offer$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Offer$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    bids<T extends Offer$bidsArgs<ExtArgs> = {}>(args?: Subset<T, Offer$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Offer model
+   */ 
+  interface OfferFieldRefs {
+    readonly id: FieldRef<"Offer", 'Int'>
+    readonly sellerId: FieldRef<"Offer", 'Int'>
+    readonly endDate: FieldRef<"Offer", 'DateTime'>
+    readonly dinozId: FieldRef<"Offer", 'Int'>
+    readonly total: FieldRef<"Offer", 'Int'>
+    readonly status: FieldRef<"Offer", 'OfferStatus'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Offer findUnique
+   */
+  export type OfferFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * Filter, which Offer to fetch.
+     */
+    where: OfferWhereUniqueInput
+  }
+
+
+  /**
+   * Offer findUniqueOrThrow
+   */
+  export type OfferFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * Filter, which Offer to fetch.
+     */
+    where: OfferWhereUniqueInput
+  }
+
+
+  /**
+   * Offer findFirst
+   */
+  export type OfferFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * Filter, which Offer to fetch.
+     */
+    where?: OfferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Offers to fetch.
+     */
+    orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Offers.
+     */
+    cursor?: OfferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Offers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Offers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Offers.
+     */
+    distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+  }
+
+
+  /**
+   * Offer findFirstOrThrow
+   */
+  export type OfferFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * Filter, which Offer to fetch.
+     */
+    where?: OfferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Offers to fetch.
+     */
+    orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Offers.
+     */
+    cursor?: OfferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Offers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Offers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Offers.
+     */
+    distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+  }
+
+
+  /**
+   * Offer findMany
+   */
+  export type OfferFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * Filter, which Offers to fetch.
+     */
+    where?: OfferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Offers to fetch.
+     */
+    orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Offers.
+     */
+    cursor?: OfferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Offers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Offers.
+     */
+    skip?: number
+    distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+  }
+
+
+  /**
+   * Offer create
+   */
+  export type OfferCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Offer.
+     */
+    data: XOR<OfferCreateInput, OfferUncheckedCreateInput>
+  }
+
+
+  /**
+   * Offer createMany
+   */
+  export type OfferCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Offers.
+     */
+    data: OfferCreateManyInput | OfferCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Offer update
+   */
+  export type OfferUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Offer.
+     */
+    data: XOR<OfferUpdateInput, OfferUncheckedUpdateInput>
+    /**
+     * Choose, which Offer to update.
+     */
+    where: OfferWhereUniqueInput
+  }
+
+
+  /**
+   * Offer updateMany
+   */
+  export type OfferUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Offers.
+     */
+    data: XOR<OfferUpdateManyMutationInput, OfferUncheckedUpdateManyInput>
+    /**
+     * Filter which Offers to update
+     */
+    where?: OfferWhereInput
+  }
+
+
+  /**
+   * Offer upsert
+   */
+  export type OfferUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Offer to update in case it exists.
+     */
+    where: OfferWhereUniqueInput
+    /**
+     * In case the Offer found by the `where` argument doesn't exist, create a new Offer with this data.
+     */
+    create: XOR<OfferCreateInput, OfferUncheckedCreateInput>
+    /**
+     * In case the Offer was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OfferUpdateInput, OfferUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Offer delete
+   */
+  export type OfferDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+    /**
+     * Filter which Offer to delete.
+     */
+    where: OfferWhereUniqueInput
+  }
+
+
+  /**
+   * Offer deleteMany
+   */
+  export type OfferDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Offers to delete
+     */
+    where?: OfferWhereInput
+  }
+
+
+  /**
+   * Offer.dinoz
+   */
+  export type Offer$dinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+
+  /**
+   * Offer.items
+   */
+  export type Offer$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferItem
+     */
+    select?: OfferItemSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferItemInclude<ExtArgs> | null
+    where?: OfferItemWhereInput
+    orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
+    cursor?: OfferItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
+  }
+
+
+  /**
+   * Offer.bids
+   */
+  export type Offer$bidsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferBid
+     */
+    select?: OfferBidSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferBidInclude<ExtArgs> | null
+    where?: OfferBidWhereInput
+    orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
+    cursor?: OfferBidWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+  }
+
+
+  /**
+   * Offer without action
+   */
+  export type OfferDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Offer
+     */
+    select?: OfferSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: OfferInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -34996,6 +38395,7 @@ export namespace Prisma {
     name: 'name',
     isFrozen: 'isFrozen',
     isSacrificed: 'isSacrificed',
+    isSelling: 'isSelling',
     raceId: 'raceId',
     level: 'level',
     missionId: 'missionId',
@@ -35358,6 +38758,39 @@ export namespace Prisma {
   export type SecretScalarFieldEnum = (typeof SecretScalarFieldEnum)[keyof typeof SecretScalarFieldEnum]
 
 
+  export const OfferItemScalarFieldEnum: {
+    id: 'id',
+    offerId: 'offerId',
+    itemId: 'itemId',
+    quantity: 'quantity',
+    isIngredient: 'isIngredient'
+  };
+
+  export type OfferItemScalarFieldEnum = (typeof OfferItemScalarFieldEnum)[keyof typeof OfferItemScalarFieldEnum]
+
+
+  export const OfferBidScalarFieldEnum: {
+    id: 'id',
+    offerId: 'offerId',
+    userId: 'userId',
+    value: 'value'
+  };
+
+  export type OfferBidScalarFieldEnum = (typeof OfferBidScalarFieldEnum)[keyof typeof OfferBidScalarFieldEnum]
+
+
+  export const OfferScalarFieldEnum: {
+    id: 'id',
+    sellerId: 'sellerId',
+    endDate: 'endDate',
+    dinozId: 'dinozId',
+    total: 'total',
+    status: 'status'
+  };
+
+  export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -35465,6 +38898,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'OfferStatus'
+   */
+  export type EnumOfferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OfferStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'OfferStatus[]'
+   */
+  export type ListEnumOfferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OfferStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -35527,6 +38974,7 @@ export namespace Prisma {
     name?: StringFilter<"Dinoz"> | string
     isFrozen?: BoolFilter<"Dinoz"> | boolean
     isSacrificed?: BoolFilter<"Dinoz"> | boolean
+    isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
     missionId?: IntNullableFilter<"Dinoz"> | number | null
@@ -35557,6 +39005,7 @@ export namespace Prisma {
     status?: DinozStatusListRelationFilter
     npcs?: NPCListRelationFilter
     dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
+    offers?: OfferListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
@@ -35565,6 +39014,7 @@ export namespace Prisma {
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
+    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     missionId?: SortOrderInput | SortOrder
@@ -35595,6 +39045,7 @@ export namespace Prisma {
     status?: DinozStatusOrderByRelationAggregateInput
     npcs?: NPCOrderByRelationAggregateInput
     dinozItemsToDinoz?: DinozItemToDinozOrderByRelationAggregateInput
+    offers?: OfferOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -35606,6 +39057,7 @@ export namespace Prisma {
     name?: StringFilter<"Dinoz"> | string
     isFrozen?: BoolFilter<"Dinoz"> | boolean
     isSacrificed?: BoolFilter<"Dinoz"> | boolean
+    isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
     missionId?: IntNullableFilter<"Dinoz"> | number | null
@@ -35636,6 +39088,7 @@ export namespace Prisma {
     status?: DinozStatusListRelationFilter
     npcs?: NPCListRelationFilter
     dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
+    offers?: OfferListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
@@ -35644,6 +39097,7 @@ export namespace Prisma {
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
+    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     missionId?: SortOrderInput | SortOrder
@@ -35681,6 +39135,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Dinoz"> | string
     isFrozen?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     isSacrificed?: BoolWithAggregatesFilter<"Dinoz"> | boolean
+    isSelling?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     raceId?: IntWithAggregatesFilter<"Dinoz"> | number
     level?: IntWithAggregatesFilter<"Dinoz"> | number
     missionId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
@@ -36952,6 +40407,8 @@ export namespace Prisma {
     quests?: PlayerQuestListRelationFilter
     rewards?: PlayerRewardListRelationFilter
     ranking?: XOR<RankingNullableRelationFilter, RankingWhereInput> | null
+    offers?: OfferListRelationFilter
+    bids?: OfferBidListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -36983,6 +40440,8 @@ export namespace Prisma {
     quests?: PlayerQuestOrderByRelationAggregateInput
     rewards?: PlayerRewardOrderByRelationAggregateInput
     ranking?: RankingOrderByWithRelationInput
+    offers?: OfferOrderByRelationAggregateInput
+    bids?: OfferBidOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -37017,6 +40476,8 @@ export namespace Prisma {
     quests?: PlayerQuestListRelationFilter
     rewards?: PlayerRewardListRelationFilter
     ranking?: XOR<RankingNullableRelationFilter, RankingWhereInput> | null
+    offers?: OfferListRelationFilter
+    bids?: OfferBidListRelationFilter
   }, "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -37500,6 +40961,189 @@ export namespace Prisma {
     value?: StringWithAggregatesFilter<"Secret"> | string
   }
 
+  export type OfferItemWhereInput = {
+    AND?: OfferItemWhereInput | OfferItemWhereInput[]
+    OR?: OfferItemWhereInput[]
+    NOT?: OfferItemWhereInput | OfferItemWhereInput[]
+    id?: IntFilter<"OfferItem"> | number
+    offerId?: IntFilter<"OfferItem"> | number
+    itemId?: IntFilter<"OfferItem"> | number
+    quantity?: IntFilter<"OfferItem"> | number
+    isIngredient?: BoolFilter<"OfferItem"> | boolean
+    offer?: XOR<OfferRelationFilter, OfferWhereInput>
+  }
+
+  export type OfferItemOrderByWithRelationInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    itemId?: SortOrder
+    quantity?: SortOrder
+    isIngredient?: SortOrder
+    offer?: OfferOrderByWithRelationInput
+  }
+
+  export type OfferItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: OfferItemWhereInput | OfferItemWhereInput[]
+    OR?: OfferItemWhereInput[]
+    NOT?: OfferItemWhereInput | OfferItemWhereInput[]
+    offerId?: IntFilter<"OfferItem"> | number
+    itemId?: IntFilter<"OfferItem"> | number
+    quantity?: IntFilter<"OfferItem"> | number
+    isIngredient?: BoolFilter<"OfferItem"> | boolean
+    offer?: XOR<OfferRelationFilter, OfferWhereInput>
+  }, "id">
+
+  export type OfferItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    itemId?: SortOrder
+    quantity?: SortOrder
+    isIngredient?: SortOrder
+    _count?: OfferItemCountOrderByAggregateInput
+    _avg?: OfferItemAvgOrderByAggregateInput
+    _max?: OfferItemMaxOrderByAggregateInput
+    _min?: OfferItemMinOrderByAggregateInput
+    _sum?: OfferItemSumOrderByAggregateInput
+  }
+
+  export type OfferItemScalarWhereWithAggregatesInput = {
+    AND?: OfferItemScalarWhereWithAggregatesInput | OfferItemScalarWhereWithAggregatesInput[]
+    OR?: OfferItemScalarWhereWithAggregatesInput[]
+    NOT?: OfferItemScalarWhereWithAggregatesInput | OfferItemScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"OfferItem"> | number
+    offerId?: IntWithAggregatesFilter<"OfferItem"> | number
+    itemId?: IntWithAggregatesFilter<"OfferItem"> | number
+    quantity?: IntWithAggregatesFilter<"OfferItem"> | number
+    isIngredient?: BoolWithAggregatesFilter<"OfferItem"> | boolean
+  }
+
+  export type OfferBidWhereInput = {
+    AND?: OfferBidWhereInput | OfferBidWhereInput[]
+    OR?: OfferBidWhereInput[]
+    NOT?: OfferBidWhereInput | OfferBidWhereInput[]
+    id?: IntFilter<"OfferBid"> | number
+    offerId?: IntFilter<"OfferBid"> | number
+    userId?: IntFilter<"OfferBid"> | number
+    value?: IntFilter<"OfferBid"> | number
+    offer?: XOR<OfferRelationFilter, OfferWhereInput>
+    user?: XOR<PlayerRelationFilter, PlayerWhereInput>
+  }
+
+  export type OfferBidOrderByWithRelationInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    userId?: SortOrder
+    value?: SortOrder
+    offer?: OfferOrderByWithRelationInput
+    user?: PlayerOrderByWithRelationInput
+  }
+
+  export type OfferBidWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: OfferBidWhereInput | OfferBidWhereInput[]
+    OR?: OfferBidWhereInput[]
+    NOT?: OfferBidWhereInput | OfferBidWhereInput[]
+    offerId?: IntFilter<"OfferBid"> | number
+    userId?: IntFilter<"OfferBid"> | number
+    value?: IntFilter<"OfferBid"> | number
+    offer?: XOR<OfferRelationFilter, OfferWhereInput>
+    user?: XOR<PlayerRelationFilter, PlayerWhereInput>
+  }, "id">
+
+  export type OfferBidOrderByWithAggregationInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    userId?: SortOrder
+    value?: SortOrder
+    _count?: OfferBidCountOrderByAggregateInput
+    _avg?: OfferBidAvgOrderByAggregateInput
+    _max?: OfferBidMaxOrderByAggregateInput
+    _min?: OfferBidMinOrderByAggregateInput
+    _sum?: OfferBidSumOrderByAggregateInput
+  }
+
+  export type OfferBidScalarWhereWithAggregatesInput = {
+    AND?: OfferBidScalarWhereWithAggregatesInput | OfferBidScalarWhereWithAggregatesInput[]
+    OR?: OfferBidScalarWhereWithAggregatesInput[]
+    NOT?: OfferBidScalarWhereWithAggregatesInput | OfferBidScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"OfferBid"> | number
+    offerId?: IntWithAggregatesFilter<"OfferBid"> | number
+    userId?: IntWithAggregatesFilter<"OfferBid"> | number
+    value?: IntWithAggregatesFilter<"OfferBid"> | number
+  }
+
+  export type OfferWhereInput = {
+    AND?: OfferWhereInput | OfferWhereInput[]
+    OR?: OfferWhereInput[]
+    NOT?: OfferWhereInput | OfferWhereInput[]
+    id?: IntFilter<"Offer"> | number
+    sellerId?: IntFilter<"Offer"> | number
+    endDate?: DateTimeFilter<"Offer"> | Date | string
+    dinozId?: IntNullableFilter<"Offer"> | number | null
+    total?: IntFilter<"Offer"> | number
+    status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
+    seller?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    items?: OfferItemListRelationFilter
+    bids?: OfferBidListRelationFilter
+  }
+
+  export type OfferOrderByWithRelationInput = {
+    id?: SortOrder
+    sellerId?: SortOrder
+    endDate?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    total?: SortOrder
+    status?: SortOrder
+    seller?: PlayerOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+    items?: OfferItemOrderByRelationAggregateInput
+    bids?: OfferBidOrderByRelationAggregateInput
+  }
+
+  export type OfferWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: OfferWhereInput | OfferWhereInput[]
+    OR?: OfferWhereInput[]
+    NOT?: OfferWhereInput | OfferWhereInput[]
+    sellerId?: IntFilter<"Offer"> | number
+    endDate?: DateTimeFilter<"Offer"> | Date | string
+    dinozId?: IntNullableFilter<"Offer"> | number | null
+    total?: IntFilter<"Offer"> | number
+    status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
+    seller?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    items?: OfferItemListRelationFilter
+    bids?: OfferBidListRelationFilter
+  }, "id">
+
+  export type OfferOrderByWithAggregationInput = {
+    id?: SortOrder
+    sellerId?: SortOrder
+    endDate?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    total?: SortOrder
+    status?: SortOrder
+    _count?: OfferCountOrderByAggregateInput
+    _avg?: OfferAvgOrderByAggregateInput
+    _max?: OfferMaxOrderByAggregateInput
+    _min?: OfferMinOrderByAggregateInput
+    _sum?: OfferSumOrderByAggregateInput
+  }
+
+  export type OfferScalarWhereWithAggregatesInput = {
+    AND?: OfferScalarWhereWithAggregatesInput | OfferScalarWhereWithAggregatesInput[]
+    OR?: OfferScalarWhereWithAggregatesInput[]
+    NOT?: OfferScalarWhereWithAggregatesInput | OfferScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Offer"> | number
+    sellerId?: IntWithAggregatesFilter<"Offer"> | number
+    endDate?: DateTimeWithAggregatesFilter<"Offer"> | Date | string
+    dinozId?: IntNullableWithAggregatesFilter<"Offer"> | number | null
+    total?: IntWithAggregatesFilter<"Offer"> | number
+    status?: EnumOfferStatusWithAggregatesFilter<"Offer"> | $Enums.OfferStatus
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -37535,6 +41179,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -37563,6 +41208,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateInput = {
@@ -37571,6 +41217,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -37599,6 +41246,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUpdateInput = {
@@ -37606,6 +41254,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -37634,6 +41283,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
@@ -37642,6 +41292,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -37670,6 +41321,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyInput = {
@@ -37678,6 +41330,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -37706,6 +41359,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -37733,6 +41387,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -38931,6 +42586,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -38962,6 +42619,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUpdateInput = {
@@ -38992,6 +42651,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -39023,6 +42684,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -39473,6 +43136,168 @@ export namespace Prisma {
     value?: StringFieldUpdateOperationsInput | string
   }
 
+  export type OfferItemCreateInput = {
+    itemId: number
+    quantity: number
+    isIngredient: boolean
+    offer: OfferCreateNestedOneWithoutItemsInput
+  }
+
+  export type OfferItemUncheckedCreateInput = {
+    id?: number
+    offerId: number
+    itemId: number
+    quantity: number
+    isIngredient: boolean
+  }
+
+  export type OfferItemUpdateInput = {
+    itemId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    isIngredient?: BoolFieldUpdateOperationsInput | boolean
+    offer?: OfferUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type OfferItemUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    offerId?: IntFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    isIngredient?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OfferItemCreateManyInput = {
+    id?: number
+    offerId: number
+    itemId: number
+    quantity: number
+    isIngredient: boolean
+  }
+
+  export type OfferItemUpdateManyMutationInput = {
+    itemId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    isIngredient?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OfferItemUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    offerId?: IntFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    isIngredient?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OfferBidCreateInput = {
+    value: number
+    offer: OfferCreateNestedOneWithoutBidsInput
+    user: PlayerCreateNestedOneWithoutBidsInput
+  }
+
+  export type OfferBidUncheckedCreateInput = {
+    id?: number
+    offerId: number
+    userId: number
+    value: number
+  }
+
+  export type OfferBidUpdateInput = {
+    value?: IntFieldUpdateOperationsInput | number
+    offer?: OfferUpdateOneRequiredWithoutBidsNestedInput
+    user?: PlayerUpdateOneRequiredWithoutBidsNestedInput
+  }
+
+  export type OfferBidUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    offerId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OfferBidCreateManyInput = {
+    id?: number
+    offerId: number
+    userId: number
+    value: number
+  }
+
+  export type OfferBidUpdateManyMutationInput = {
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OfferBidUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    offerId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OfferCreateInput = {
+    endDate: Date | string
+    total: number
+    status?: $Enums.OfferStatus
+    seller: PlayerCreateNestedOneWithoutOffersInput
+    dinoz?: DinozCreateNestedOneWithoutOffersInput
+    items?: OfferItemCreateNestedManyWithoutOfferInput
+    bids?: OfferBidCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferUncheckedCreateInput = {
+    id?: number
+    sellerId: number
+    endDate: Date | string
+    dinozId?: number | null
+    total: number
+    status?: $Enums.OfferStatus
+    items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferUpdateInput = {
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    dinoz?: DinozUpdateOneWithoutOffersNestedInput
+    items?: OfferItemUpdateManyWithoutOfferNestedInput
+    bids?: OfferBidUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sellerId?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferCreateManyInput = {
+    id?: number
+    sellerId: number
+    endDate: Date | string
+    dinozId?: number | null
+    total: number
+    status?: $Enums.OfferStatus
+  }
+
+  export type OfferUpdateManyMutationInput = {
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+  }
+
+  export type OfferUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sellerId?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -39624,6 +43449,12 @@ export namespace Prisma {
     none?: DinozItemToDinozWhereInput
   }
 
+  export type OfferListRelationFilter = {
+    every?: OfferWhereInput
+    some?: OfferWhereInput
+    none?: OfferWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -39657,12 +43488,17 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type OfferOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type DinozCountOrderByAggregateInput = {
     id?: SortOrder
     following?: SortOrder
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
+    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     missionId?: SortOrder
@@ -39714,6 +43550,7 @@ export namespace Prisma {
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
+    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     missionId?: SortOrder
@@ -39743,6 +43580,7 @@ export namespace Prisma {
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
+    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     missionId?: SortOrder
@@ -40891,6 +44729,12 @@ export namespace Prisma {
     isNot?: RankingWhereInput | null
   }
 
+  export type OfferBidListRelationFilter = {
+    every?: OfferBidWhereInput
+    some?: OfferBidWhereInput
+    none?: OfferBidWhereInput
+  }
+
   export type ImportedTwinoidAchievementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -40924,6 +44768,10 @@ export namespace Prisma {
   }
 
   export type PlayerRewardOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OfferBidOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41310,6 +45158,157 @@ export namespace Prisma {
     value?: SortOrder
   }
 
+  export type OfferRelationFilter = {
+    is?: OfferWhereInput
+    isNot?: OfferWhereInput
+  }
+
+  export type OfferItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    itemId?: SortOrder
+    quantity?: SortOrder
+    isIngredient?: SortOrder
+  }
+
+  export type OfferItemAvgOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    itemId?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type OfferItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    itemId?: SortOrder
+    quantity?: SortOrder
+    isIngredient?: SortOrder
+  }
+
+  export type OfferItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    itemId?: SortOrder
+    quantity?: SortOrder
+    isIngredient?: SortOrder
+  }
+
+  export type OfferItemSumOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    itemId?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type PlayerRelationFilter = {
+    is?: PlayerWhereInput
+    isNot?: PlayerWhereInput
+  }
+
+  export type OfferBidCountOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    userId?: SortOrder
+    value?: SortOrder
+  }
+
+  export type OfferBidAvgOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    userId?: SortOrder
+    value?: SortOrder
+  }
+
+  export type OfferBidMaxOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    userId?: SortOrder
+    value?: SortOrder
+  }
+
+  export type OfferBidMinOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    userId?: SortOrder
+    value?: SortOrder
+  }
+
+  export type OfferBidSumOrderByAggregateInput = {
+    id?: SortOrder
+    offerId?: SortOrder
+    userId?: SortOrder
+    value?: SortOrder
+  }
+
+  export type EnumOfferStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OfferStatus | EnumOfferStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOfferStatusFilter<$PrismaModel> | $Enums.OfferStatus
+  }
+
+  export type OfferItemListRelationFilter = {
+    every?: OfferItemWhereInput
+    some?: OfferItemWhereInput
+    none?: OfferItemWhereInput
+  }
+
+  export type OfferItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OfferCountOrderByAggregateInput = {
+    id?: SortOrder
+    sellerId?: SortOrder
+    endDate?: SortOrder
+    dinozId?: SortOrder
+    total?: SortOrder
+    status?: SortOrder
+  }
+
+  export type OfferAvgOrderByAggregateInput = {
+    id?: SortOrder
+    sellerId?: SortOrder
+    dinozId?: SortOrder
+    total?: SortOrder
+  }
+
+  export type OfferMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sellerId?: SortOrder
+    endDate?: SortOrder
+    dinozId?: SortOrder
+    total?: SortOrder
+    status?: SortOrder
+  }
+
+  export type OfferMinOrderByAggregateInput = {
+    id?: SortOrder
+    sellerId?: SortOrder
+    endDate?: SortOrder
+    dinozId?: SortOrder
+    total?: SortOrder
+    status?: SortOrder
+  }
+
+  export type OfferSumOrderByAggregateInput = {
+    id?: SortOrder
+    sellerId?: SortOrder
+    dinozId?: SortOrder
+    total?: SortOrder
+  }
+
+  export type EnumOfferStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OfferStatus | EnumOfferStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOfferStatusWithAggregatesFilter<$PrismaModel> | $Enums.OfferStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOfferStatusFilter<$PrismaModel>
+    _max?: NestedEnumOfferStatusFilter<$PrismaModel>
+  }
+
   export type DinozCreateNestedManyWithoutConcentrationInput = {
     create?: XOR<DinozCreateWithoutConcentrationInput, DinozUncheckedCreateWithoutConcentrationInput> | DinozCreateWithoutConcentrationInput[] | DinozUncheckedCreateWithoutConcentrationInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutConcentrationInput | DinozCreateOrConnectWithoutConcentrationInput[]
@@ -41421,6 +45420,13 @@ export namespace Prisma {
     connect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
   }
 
+  export type OfferCreateNestedManyWithoutDinozInput = {
+    create?: XOR<OfferCreateWithoutDinozInput, OfferUncheckedCreateWithoutDinozInput> | OfferCreateWithoutDinozInput[] | OfferUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutDinozInput | OfferCreateOrConnectWithoutDinozInput[]
+    createMany?: OfferCreateManyDinozInputEnvelope
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+  }
+
   export type DinozItemUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -41468,6 +45474,13 @@ export namespace Prisma {
     connectOrCreate?: DinozItemToDinozCreateOrConnectWithoutDinozInput | DinozItemToDinozCreateOrConnectWithoutDinozInput[]
     createMany?: DinozItemToDinozCreateManyDinozInputEnvelope
     connect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+  }
+
+  export type OfferUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<OfferCreateWithoutDinozInput, OfferUncheckedCreateWithoutDinozInput> | OfferCreateWithoutDinozInput[] | OfferUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutDinozInput | OfferCreateOrConnectWithoutDinozInput[]
+    createMany?: OfferCreateManyDinozInputEnvelope
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -41608,6 +45621,20 @@ export namespace Prisma {
     deleteMany?: DinozItemToDinozScalarWhereInput | DinozItemToDinozScalarWhereInput[]
   }
 
+  export type OfferUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<OfferCreateWithoutDinozInput, OfferUncheckedCreateWithoutDinozInput> | OfferCreateWithoutDinozInput[] | OfferUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutDinozInput | OfferCreateOrConnectWithoutDinozInput[]
+    upsert?: OfferUpsertWithWhereUniqueWithoutDinozInput | OfferUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: OfferCreateManyDinozInputEnvelope
+    set?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    disconnect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    delete?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    update?: OfferUpdateWithWhereUniqueWithoutDinozInput | OfferUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: OfferUpdateManyWithWhereWithoutDinozInput | OfferUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: OfferScalarWhereInput | OfferScalarWhereInput[]
+  }
+
   export type DinozItemUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -41704,6 +45731,20 @@ export namespace Prisma {
     update?: DinozItemToDinozUpdateWithWhereUniqueWithoutDinozInput | DinozItemToDinozUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DinozItemToDinozUpdateManyWithWhereWithoutDinozInput | DinozItemToDinozUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DinozItemToDinozScalarWhereInput | DinozItemToDinozScalarWhereInput[]
+  }
+
+  export type OfferUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<OfferCreateWithoutDinozInput, OfferUncheckedCreateWithoutDinozInput> | OfferCreateWithoutDinozInput[] | OfferUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutDinozInput | OfferCreateOrConnectWithoutDinozInput[]
+    upsert?: OfferUpsertWithWhereUniqueWithoutDinozInput | OfferUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: OfferCreateManyDinozInputEnvelope
+    set?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    disconnect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    delete?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    update?: OfferUpdateWithWhereUniqueWithoutDinozInput | OfferUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: OfferUpdateManyWithWhereWithoutDinozInput | OfferUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: OfferScalarWhereInput | OfferScalarWhereInput[]
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -42444,6 +46485,20 @@ export namespace Prisma {
     connect?: RankingWhereUniqueInput
   }
 
+  export type OfferCreateNestedManyWithoutSellerInput = {
+    create?: XOR<OfferCreateWithoutSellerInput, OfferUncheckedCreateWithoutSellerInput> | OfferCreateWithoutSellerInput[] | OfferUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutSellerInput | OfferCreateOrConnectWithoutSellerInput[]
+    createMany?: OfferCreateManySellerInputEnvelope
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+  }
+
+  export type OfferBidCreateNestedManyWithoutUserInput = {
+    create?: XOR<OfferBidCreateWithoutUserInput, OfferBidUncheckedCreateWithoutUserInput> | OfferBidCreateWithoutUserInput[] | OfferBidUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutUserInput | OfferBidCreateOrConnectWithoutUserInput[]
+    createMany?: OfferBidCreateManyUserInputEnvelope
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -42524,6 +46579,20 @@ export namespace Prisma {
     create?: XOR<RankingCreateWithoutPlayerInput, RankingUncheckedCreateWithoutPlayerInput>
     connectOrCreate?: RankingCreateOrConnectWithoutPlayerInput
     connect?: RankingWhereUniqueInput
+  }
+
+  export type OfferUncheckedCreateNestedManyWithoutSellerInput = {
+    create?: XOR<OfferCreateWithoutSellerInput, OfferUncheckedCreateWithoutSellerInput> | OfferCreateWithoutSellerInput[] | OfferUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutSellerInput | OfferCreateOrConnectWithoutSellerInput[]
+    createMany?: OfferCreateManySellerInputEnvelope
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+  }
+
+  export type OfferBidUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<OfferBidCreateWithoutUserInput, OfferBidUncheckedCreateWithoutUserInput> | OfferBidCreateWithoutUserInput[] | OfferBidUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutUserInput | OfferBidCreateOrConnectWithoutUserInput[]
+    createMany?: OfferBidCreateManyUserInputEnvelope
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
   }
 
   export type DinozUpdateManyWithoutPlayerNestedInput = {
@@ -42686,6 +46755,34 @@ export namespace Prisma {
     update?: XOR<XOR<RankingUpdateToOneWithWhereWithoutPlayerInput, RankingUpdateWithoutPlayerInput>, RankingUncheckedUpdateWithoutPlayerInput>
   }
 
+  export type OfferUpdateManyWithoutSellerNestedInput = {
+    create?: XOR<OfferCreateWithoutSellerInput, OfferUncheckedCreateWithoutSellerInput> | OfferCreateWithoutSellerInput[] | OfferUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutSellerInput | OfferCreateOrConnectWithoutSellerInput[]
+    upsert?: OfferUpsertWithWhereUniqueWithoutSellerInput | OfferUpsertWithWhereUniqueWithoutSellerInput[]
+    createMany?: OfferCreateManySellerInputEnvelope
+    set?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    disconnect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    delete?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    update?: OfferUpdateWithWhereUniqueWithoutSellerInput | OfferUpdateWithWhereUniqueWithoutSellerInput[]
+    updateMany?: OfferUpdateManyWithWhereWithoutSellerInput | OfferUpdateManyWithWhereWithoutSellerInput[]
+    deleteMany?: OfferScalarWhereInput | OfferScalarWhereInput[]
+  }
+
+  export type OfferBidUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OfferBidCreateWithoutUserInput, OfferBidUncheckedCreateWithoutUserInput> | OfferBidCreateWithoutUserInput[] | OfferBidUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutUserInput | OfferBidCreateOrConnectWithoutUserInput[]
+    upsert?: OfferBidUpsertWithWhereUniqueWithoutUserInput | OfferBidUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OfferBidCreateManyUserInputEnvelope
+    set?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    disconnect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    delete?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    update?: OfferBidUpdateWithWhereUniqueWithoutUserInput | OfferBidUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OfferBidUpdateManyWithWhereWithoutUserInput | OfferBidUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -42846,6 +46943,34 @@ export namespace Prisma {
     update?: XOR<XOR<RankingUpdateToOneWithWhereWithoutPlayerInput, RankingUpdateWithoutPlayerInput>, RankingUncheckedUpdateWithoutPlayerInput>
   }
 
+  export type OfferUncheckedUpdateManyWithoutSellerNestedInput = {
+    create?: XOR<OfferCreateWithoutSellerInput, OfferUncheckedCreateWithoutSellerInput> | OfferCreateWithoutSellerInput[] | OfferUncheckedCreateWithoutSellerInput[]
+    connectOrCreate?: OfferCreateOrConnectWithoutSellerInput | OfferCreateOrConnectWithoutSellerInput[]
+    upsert?: OfferUpsertWithWhereUniqueWithoutSellerInput | OfferUpsertWithWhereUniqueWithoutSellerInput[]
+    createMany?: OfferCreateManySellerInputEnvelope
+    set?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    disconnect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    delete?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+    update?: OfferUpdateWithWhereUniqueWithoutSellerInput | OfferUpdateWithWhereUniqueWithoutSellerInput[]
+    updateMany?: OfferUpdateManyWithWhereWithoutSellerInput | OfferUpdateManyWithWhereWithoutSellerInput[]
+    deleteMany?: OfferScalarWhereInput | OfferScalarWhereInput[]
+  }
+
+  export type OfferBidUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OfferBidCreateWithoutUserInput, OfferBidUncheckedCreateWithoutUserInput> | OfferBidCreateWithoutUserInput[] | OfferBidUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutUserInput | OfferBidCreateOrConnectWithoutUserInput[]
+    upsert?: OfferBidUpsertWithWhereUniqueWithoutUserInput | OfferBidUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OfferBidCreateManyUserInputEnvelope
+    set?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    disconnect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    delete?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    update?: OfferBidUpdateWithWhereUniqueWithoutUserInput | OfferBidUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OfferBidUpdateManyWithWhereWithoutUserInput | OfferBidUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
+  }
+
   export type PlayerCreateNestedOneWithoutDinozShopInput = {
     create?: XOR<PlayerCreateWithoutDinozShopInput, PlayerUncheckedCreateWithoutDinozShopInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutDinozShopInput
@@ -42965,6 +47090,166 @@ export namespace Prisma {
     delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutRankingInput, PlayerUpdateWithoutRankingInput>, PlayerUncheckedUpdateWithoutRankingInput>
+  }
+
+  export type OfferCreateNestedOneWithoutItemsInput = {
+    create?: XOR<OfferCreateWithoutItemsInput, OfferUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: OfferCreateOrConnectWithoutItemsInput
+    connect?: OfferWhereUniqueInput
+  }
+
+  export type OfferUpdateOneRequiredWithoutItemsNestedInput = {
+    create?: XOR<OfferCreateWithoutItemsInput, OfferUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: OfferCreateOrConnectWithoutItemsInput
+    upsert?: OfferUpsertWithoutItemsInput
+    connect?: OfferWhereUniqueInput
+    update?: XOR<XOR<OfferUpdateToOneWithWhereWithoutItemsInput, OfferUpdateWithoutItemsInput>, OfferUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type OfferCreateNestedOneWithoutBidsInput = {
+    create?: XOR<OfferCreateWithoutBidsInput, OfferUncheckedCreateWithoutBidsInput>
+    connectOrCreate?: OfferCreateOrConnectWithoutBidsInput
+    connect?: OfferWhereUniqueInput
+  }
+
+  export type PlayerCreateNestedOneWithoutBidsInput = {
+    create?: XOR<PlayerCreateWithoutBidsInput, PlayerUncheckedCreateWithoutBidsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutBidsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type OfferUpdateOneRequiredWithoutBidsNestedInput = {
+    create?: XOR<OfferCreateWithoutBidsInput, OfferUncheckedCreateWithoutBidsInput>
+    connectOrCreate?: OfferCreateOrConnectWithoutBidsInput
+    upsert?: OfferUpsertWithoutBidsInput
+    connect?: OfferWhereUniqueInput
+    update?: XOR<XOR<OfferUpdateToOneWithWhereWithoutBidsInput, OfferUpdateWithoutBidsInput>, OfferUncheckedUpdateWithoutBidsInput>
+  }
+
+  export type PlayerUpdateOneRequiredWithoutBidsNestedInput = {
+    create?: XOR<PlayerCreateWithoutBidsInput, PlayerUncheckedCreateWithoutBidsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutBidsInput
+    upsert?: PlayerUpsertWithoutBidsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutBidsInput, PlayerUpdateWithoutBidsInput>, PlayerUncheckedUpdateWithoutBidsInput>
+  }
+
+  export type PlayerCreateNestedOneWithoutOffersInput = {
+    create?: XOR<PlayerCreateWithoutOffersInput, PlayerUncheckedCreateWithoutOffersInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutOffersInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutOffersInput = {
+    create?: XOR<DinozCreateWithoutOffersInput, DinozUncheckedCreateWithoutOffersInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutOffersInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type OfferItemCreateNestedManyWithoutOfferInput = {
+    create?: XOR<OfferItemCreateWithoutOfferInput, OfferItemUncheckedCreateWithoutOfferInput> | OfferItemCreateWithoutOfferInput[] | OfferItemUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferItemCreateOrConnectWithoutOfferInput | OfferItemCreateOrConnectWithoutOfferInput[]
+    createMany?: OfferItemCreateManyOfferInputEnvelope
+    connect?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+  }
+
+  export type OfferBidCreateNestedManyWithoutOfferInput = {
+    create?: XOR<OfferBidCreateWithoutOfferInput, OfferBidUncheckedCreateWithoutOfferInput> | OfferBidCreateWithoutOfferInput[] | OfferBidUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutOfferInput | OfferBidCreateOrConnectWithoutOfferInput[]
+    createMany?: OfferBidCreateManyOfferInputEnvelope
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+  }
+
+  export type OfferItemUncheckedCreateNestedManyWithoutOfferInput = {
+    create?: XOR<OfferItemCreateWithoutOfferInput, OfferItemUncheckedCreateWithoutOfferInput> | OfferItemCreateWithoutOfferInput[] | OfferItemUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferItemCreateOrConnectWithoutOfferInput | OfferItemCreateOrConnectWithoutOfferInput[]
+    createMany?: OfferItemCreateManyOfferInputEnvelope
+    connect?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+  }
+
+  export type OfferBidUncheckedCreateNestedManyWithoutOfferInput = {
+    create?: XOR<OfferBidCreateWithoutOfferInput, OfferBidUncheckedCreateWithoutOfferInput> | OfferBidCreateWithoutOfferInput[] | OfferBidUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutOfferInput | OfferBidCreateOrConnectWithoutOfferInput[]
+    createMany?: OfferBidCreateManyOfferInputEnvelope
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+  }
+
+  export type EnumOfferStatusFieldUpdateOperationsInput = {
+    set?: $Enums.OfferStatus
+  }
+
+  export type PlayerUpdateOneRequiredWithoutOffersNestedInput = {
+    create?: XOR<PlayerCreateWithoutOffersInput, PlayerUncheckedCreateWithoutOffersInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutOffersInput
+    upsert?: PlayerUpsertWithoutOffersInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutOffersInput, PlayerUpdateWithoutOffersInput>, PlayerUncheckedUpdateWithoutOffersInput>
+  }
+
+  export type DinozUpdateOneWithoutOffersNestedInput = {
+    create?: XOR<DinozCreateWithoutOffersInput, DinozUncheckedCreateWithoutOffersInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutOffersInput
+    upsert?: DinozUpsertWithoutOffersInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutOffersInput, DinozUpdateWithoutOffersInput>, DinozUncheckedUpdateWithoutOffersInput>
+  }
+
+  export type OfferItemUpdateManyWithoutOfferNestedInput = {
+    create?: XOR<OfferItemCreateWithoutOfferInput, OfferItemUncheckedCreateWithoutOfferInput> | OfferItemCreateWithoutOfferInput[] | OfferItemUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferItemCreateOrConnectWithoutOfferInput | OfferItemCreateOrConnectWithoutOfferInput[]
+    upsert?: OfferItemUpsertWithWhereUniqueWithoutOfferInput | OfferItemUpsertWithWhereUniqueWithoutOfferInput[]
+    createMany?: OfferItemCreateManyOfferInputEnvelope
+    set?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    disconnect?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    delete?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    connect?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    update?: OfferItemUpdateWithWhereUniqueWithoutOfferInput | OfferItemUpdateWithWhereUniqueWithoutOfferInput[]
+    updateMany?: OfferItemUpdateManyWithWhereWithoutOfferInput | OfferItemUpdateManyWithWhereWithoutOfferInput[]
+    deleteMany?: OfferItemScalarWhereInput | OfferItemScalarWhereInput[]
+  }
+
+  export type OfferBidUpdateManyWithoutOfferNestedInput = {
+    create?: XOR<OfferBidCreateWithoutOfferInput, OfferBidUncheckedCreateWithoutOfferInput> | OfferBidCreateWithoutOfferInput[] | OfferBidUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutOfferInput | OfferBidCreateOrConnectWithoutOfferInput[]
+    upsert?: OfferBidUpsertWithWhereUniqueWithoutOfferInput | OfferBidUpsertWithWhereUniqueWithoutOfferInput[]
+    createMany?: OfferBidCreateManyOfferInputEnvelope
+    set?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    disconnect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    delete?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    update?: OfferBidUpdateWithWhereUniqueWithoutOfferInput | OfferBidUpdateWithWhereUniqueWithoutOfferInput[]
+    updateMany?: OfferBidUpdateManyWithWhereWithoutOfferInput | OfferBidUpdateManyWithWhereWithoutOfferInput[]
+    deleteMany?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
+  }
+
+  export type OfferItemUncheckedUpdateManyWithoutOfferNestedInput = {
+    create?: XOR<OfferItemCreateWithoutOfferInput, OfferItemUncheckedCreateWithoutOfferInput> | OfferItemCreateWithoutOfferInput[] | OfferItemUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferItemCreateOrConnectWithoutOfferInput | OfferItemCreateOrConnectWithoutOfferInput[]
+    upsert?: OfferItemUpsertWithWhereUniqueWithoutOfferInput | OfferItemUpsertWithWhereUniqueWithoutOfferInput[]
+    createMany?: OfferItemCreateManyOfferInputEnvelope
+    set?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    disconnect?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    delete?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    connect?: OfferItemWhereUniqueInput | OfferItemWhereUniqueInput[]
+    update?: OfferItemUpdateWithWhereUniqueWithoutOfferInput | OfferItemUpdateWithWhereUniqueWithoutOfferInput[]
+    updateMany?: OfferItemUpdateManyWithWhereWithoutOfferInput | OfferItemUpdateManyWithWhereWithoutOfferInput[]
+    deleteMany?: OfferItemScalarWhereInput | OfferItemScalarWhereInput[]
+  }
+
+  export type OfferBidUncheckedUpdateManyWithoutOfferNestedInput = {
+    create?: XOR<OfferBidCreateWithoutOfferInput, OfferBidUncheckedCreateWithoutOfferInput> | OfferBidCreateWithoutOfferInput[] | OfferBidUncheckedCreateWithoutOfferInput[]
+    connectOrCreate?: OfferBidCreateOrConnectWithoutOfferInput | OfferBidCreateOrConnectWithoutOfferInput[]
+    upsert?: OfferBidUpsertWithWhereUniqueWithoutOfferInput | OfferBidUpsertWithWhereUniqueWithoutOfferInput[]
+    createMany?: OfferBidCreateManyOfferInputEnvelope
+    set?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    disconnect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    delete?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+    update?: OfferBidUpdateWithWhereUniqueWithoutOfferInput | OfferBidUpdateWithWhereUniqueWithoutOfferInput[]
+    updateMany?: OfferBidUpdateManyWithWhereWithoutOfferInput | OfferBidUpdateManyWithWhereWithoutOfferInput[]
+    deleteMany?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -43200,11 +47485,29 @@ export namespace Prisma {
     _max?: NestedBytesNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumOfferStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OfferStatus | EnumOfferStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOfferStatusFilter<$PrismaModel> | $Enums.OfferStatus
+  }
+
+  export type NestedEnumOfferStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OfferStatus | EnumOfferStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOfferStatusWithAggregatesFilter<$PrismaModel> | $Enums.OfferStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOfferStatusFilter<$PrismaModel>
+    _max?: NestedEnumOfferStatusFilter<$PrismaModel>
+  }
+
   export type DinozCreateWithoutConcentrationInput = {
     following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -43232,6 +47535,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutConcentrationInput = {
@@ -43240,6 +47544,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -43267,6 +47572,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutConcentrationInput = {
@@ -43304,6 +47610,7 @@ export namespace Prisma {
     name?: StringFilter<"Dinoz"> | string
     isFrozen?: BoolFilter<"Dinoz"> | boolean
     isSacrificed?: BoolFilter<"Dinoz"> | boolean
+    isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
     missionId?: IntNullableFilter<"Dinoz"> | number | null
@@ -43354,6 +47661,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -43384,6 +47693,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -43548,6 +47859,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type OfferCreateWithoutDinozInput = {
+    endDate: Date | string
+    total: number
+    status?: $Enums.OfferStatus
+    seller: PlayerCreateNestedOneWithoutOffersInput
+    items?: OfferItemCreateNestedManyWithoutOfferInput
+    bids?: OfferBidCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferUncheckedCreateWithoutDinozInput = {
+    id?: number
+    sellerId: number
+    endDate: Date | string
+    total: number
+    status?: $Enums.OfferStatus
+    items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferCreateOrConnectWithoutDinozInput = {
+    where: OfferWhereUniqueInput
+    create: XOR<OfferCreateWithoutDinozInput, OfferUncheckedCreateWithoutDinozInput>
+  }
+
+  export type OfferCreateManyDinozInputEnvelope = {
+    data: OfferCreateManyDinozInput | OfferCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PlayerUpsertWithoutDinozInput = {
     update: XOR<PlayerUpdateWithoutDinozInput, PlayerUncheckedUpdateWithoutDinozInput>
     create: XOR<PlayerCreateWithoutDinozInput, PlayerUncheckedCreateWithoutDinozInput>
@@ -43586,6 +47926,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -43616,6 +47958,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -43816,11 +48160,40 @@ export namespace Prisma {
     dinozItemId?: IntFilter<"DinozItemToDinoz"> | number
   }
 
+  export type OfferUpsertWithWhereUniqueWithoutDinozInput = {
+    where: OfferWhereUniqueInput
+    update: XOR<OfferUpdateWithoutDinozInput, OfferUncheckedUpdateWithoutDinozInput>
+    create: XOR<OfferCreateWithoutDinozInput, OfferUncheckedCreateWithoutDinozInput>
+  }
+
+  export type OfferUpdateWithWhereUniqueWithoutDinozInput = {
+    where: OfferWhereUniqueInput
+    data: XOR<OfferUpdateWithoutDinozInput, OfferUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type OfferUpdateManyWithWhereWithoutDinozInput = {
+    where: OfferScalarWhereInput
+    data: XOR<OfferUpdateManyMutationInput, OfferUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type OfferScalarWhereInput = {
+    AND?: OfferScalarWhereInput | OfferScalarWhereInput[]
+    OR?: OfferScalarWhereInput[]
+    NOT?: OfferScalarWhereInput | OfferScalarWhereInput[]
+    id?: IntFilter<"Offer"> | number
+    sellerId?: IntFilter<"Offer"> | number
+    endDate?: DateTimeFilter<"Offer"> | Date | string
+    dinozId?: IntNullableFilter<"Offer"> | number | null
+    total?: IntFilter<"Offer"> | number
+    status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
+  }
+
   export type DinozCreateWithoutItemsInput = {
     following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -43848,6 +48221,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
@@ -43856,6 +48230,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -43883,6 +48258,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -43924,6 +48300,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -43951,6 +48328,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
@@ -43959,6 +48337,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -43986,6 +48365,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinoz_itemInput = {
@@ -44009,6 +48389,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44036,6 +48417,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutDinozItemsToDinozInput = {
@@ -44044,6 +48426,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44071,6 +48454,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -44110,6 +48494,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44137,6 +48522,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
@@ -44145,6 +48531,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44172,6 +48559,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemUpsertWithoutDinozItemToDinozInput = {
@@ -44201,6 +48589,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44228,6 +48617,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
@@ -44236,6 +48626,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44263,6 +48654,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -44286,6 +48678,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44313,6 +48706,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
@@ -44321,6 +48715,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44348,6 +48743,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
@@ -44355,6 +48751,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44382,6 +48779,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
@@ -44390,6 +48788,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44417,6 +48816,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -44440,6 +48840,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44467,6 +48868,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
@@ -44475,6 +48877,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44502,6 +48905,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -44509,6 +48913,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44536,6 +48941,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -44544,6 +48950,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44571,6 +48978,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -44594,6 +49002,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44621,6 +49030,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -44629,6 +49039,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44656,6 +49067,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -44663,6 +49075,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44690,6 +49103,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
@@ -44698,6 +49112,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -44725,6 +49140,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -44748,6 +49164,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44775,6 +49192,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
@@ -44783,6 +49201,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44810,6 +49229,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type ImportedPlayerCreateWithoutImported_dinozInput = {
@@ -45254,6 +49674,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedPlayerInput = {
@@ -45284,6 +49706,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedPlayerInput = {
@@ -45451,6 +49875,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedPlayerInput = {
@@ -45481,6 +49907,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ImportedPlayerIngredientUpsertWithWhereUniqueWithoutImported_playerInput = {
@@ -45893,6 +50321,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidAchievementsInput = {
@@ -45923,6 +50353,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidAchievementsInput = {
@@ -45968,6 +50400,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidAchievementsInput = {
@@ -45998,6 +50432,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidSiteInput = {
@@ -46027,6 +50463,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidSiteInput = {
@@ -46057,6 +50495,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidSiteInput = {
@@ -46102,6 +50542,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidSiteInput = {
@@ -46132,6 +50574,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidStatsInput = {
@@ -46161,6 +50605,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidStatsInput = {
@@ -46191,6 +50637,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidStatsInput = {
@@ -46236,6 +50684,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidStatsInput = {
@@ -46266,6 +50716,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -46273,6 +50725,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -46300,6 +50753,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutNpcsInput = {
@@ -46308,6 +50762,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -46335,6 +50790,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutNpcsInput = {
@@ -46358,6 +50814,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -46385,6 +50842,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutNpcsInput = {
@@ -46393,6 +50851,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -46420,6 +50879,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutPlayerInput = {
@@ -46427,6 +50887,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -46454,6 +50915,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutPlayerInput = {
@@ -46462,6 +50924,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -46489,6 +50952,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutPlayerInput = {
@@ -46770,6 +51234,56 @@ export namespace Prisma {
   export type RankingCreateOrConnectWithoutPlayerInput = {
     where: RankingWhereUniqueInput
     create: XOR<RankingCreateWithoutPlayerInput, RankingUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type OfferCreateWithoutSellerInput = {
+    endDate: Date | string
+    total: number
+    status?: $Enums.OfferStatus
+    dinoz?: DinozCreateNestedOneWithoutOffersInput
+    items?: OfferItemCreateNestedManyWithoutOfferInput
+    bids?: OfferBidCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferUncheckedCreateWithoutSellerInput = {
+    id?: number
+    endDate: Date | string
+    dinozId?: number | null
+    total: number
+    status?: $Enums.OfferStatus
+    items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferCreateOrConnectWithoutSellerInput = {
+    where: OfferWhereUniqueInput
+    create: XOR<OfferCreateWithoutSellerInput, OfferUncheckedCreateWithoutSellerInput>
+  }
+
+  export type OfferCreateManySellerInputEnvelope = {
+    data: OfferCreateManySellerInput | OfferCreateManySellerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OfferBidCreateWithoutUserInput = {
+    value: number
+    offer: OfferCreateNestedOneWithoutBidsInput
+  }
+
+  export type OfferBidUncheckedCreateWithoutUserInput = {
+    id?: number
+    offerId: number
+    value: number
+  }
+
+  export type OfferBidCreateOrConnectWithoutUserInput = {
+    where: OfferBidWhereUniqueInput
+    create: XOR<OfferBidCreateWithoutUserInput, OfferBidUncheckedCreateWithoutUserInput>
+  }
+
+  export type OfferBidCreateManyUserInputEnvelope = {
+    data: OfferBidCreateManyUserInput | OfferBidCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type DinozUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -47105,6 +51619,48 @@ export namespace Prisma {
     dinozCountDisplayed?: IntFieldUpdateOperationsInput | number
   }
 
+  export type OfferUpsertWithWhereUniqueWithoutSellerInput = {
+    where: OfferWhereUniqueInput
+    update: XOR<OfferUpdateWithoutSellerInput, OfferUncheckedUpdateWithoutSellerInput>
+    create: XOR<OfferCreateWithoutSellerInput, OfferUncheckedCreateWithoutSellerInput>
+  }
+
+  export type OfferUpdateWithWhereUniqueWithoutSellerInput = {
+    where: OfferWhereUniqueInput
+    data: XOR<OfferUpdateWithoutSellerInput, OfferUncheckedUpdateWithoutSellerInput>
+  }
+
+  export type OfferUpdateManyWithWhereWithoutSellerInput = {
+    where: OfferScalarWhereInput
+    data: XOR<OfferUpdateManyMutationInput, OfferUncheckedUpdateManyWithoutSellerInput>
+  }
+
+  export type OfferBidUpsertWithWhereUniqueWithoutUserInput = {
+    where: OfferBidWhereUniqueInput
+    update: XOR<OfferBidUpdateWithoutUserInput, OfferBidUncheckedUpdateWithoutUserInput>
+    create: XOR<OfferBidCreateWithoutUserInput, OfferBidUncheckedCreateWithoutUserInput>
+  }
+
+  export type OfferBidUpdateWithWhereUniqueWithoutUserInput = {
+    where: OfferBidWhereUniqueInput
+    data: XOR<OfferBidUpdateWithoutUserInput, OfferBidUncheckedUpdateWithoutUserInput>
+  }
+
+  export type OfferBidUpdateManyWithWhereWithoutUserInput = {
+    where: OfferBidScalarWhereInput
+    data: XOR<OfferBidUpdateManyMutationInput, OfferBidUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type OfferBidScalarWhereInput = {
+    AND?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
+    OR?: OfferBidScalarWhereInput[]
+    NOT?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
+    id?: IntFilter<"OfferBid"> | number
+    offerId?: IntFilter<"OfferBid"> | number
+    userId?: IntFilter<"OfferBid"> | number
+    value?: IntFilter<"OfferBid"> | number
+  }
+
   export type PlayerCreateWithoutDinozShopInput = {
     hasImported: boolean
     customText?: string | null
@@ -47132,6 +51688,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -47162,6 +51720,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -47207,6 +51767,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -47237,6 +51799,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -47266,6 +51830,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -47296,6 +51862,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -47341,6 +51909,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -47371,6 +51941,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -47400,6 +51972,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -47430,6 +52004,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -47475,6 +52051,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -47505,6 +52083,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -47534,6 +52114,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -47564,6 +52146,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -47609,6 +52193,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -47639,6 +52225,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -47668,6 +52256,8 @@ export namespace Prisma {
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -47698,6 +52288,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -47743,6 +52335,8 @@ export namespace Prisma {
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -47773,6 +52367,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -47802,6 +52398,8 @@ export namespace Prisma {
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -47832,6 +52430,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -47877,6 +52477,8 @@ export namespace Prisma {
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -47907,6 +52509,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -47936,6 +52540,8 @@ export namespace Prisma {
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -47966,6 +52572,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -48011,6 +52619,8 @@ export namespace Prisma {
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -48041,6 +52651,649 @@ export namespace Prisma {
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type OfferCreateWithoutItemsInput = {
+    endDate: Date | string
+    total: number
+    status?: $Enums.OfferStatus
+    seller: PlayerCreateNestedOneWithoutOffersInput
+    dinoz?: DinozCreateNestedOneWithoutOffersInput
+    bids?: OfferBidCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferUncheckedCreateWithoutItemsInput = {
+    id?: number
+    sellerId: number
+    endDate: Date | string
+    dinozId?: number | null
+    total: number
+    status?: $Enums.OfferStatus
+    bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferCreateOrConnectWithoutItemsInput = {
+    where: OfferWhereUniqueInput
+    create: XOR<OfferCreateWithoutItemsInput, OfferUncheckedCreateWithoutItemsInput>
+  }
+
+  export type OfferUpsertWithoutItemsInput = {
+    update: XOR<OfferUpdateWithoutItemsInput, OfferUncheckedUpdateWithoutItemsInput>
+    create: XOR<OfferCreateWithoutItemsInput, OfferUncheckedCreateWithoutItemsInput>
+    where?: OfferWhereInput
+  }
+
+  export type OfferUpdateToOneWithWhereWithoutItemsInput = {
+    where?: OfferWhereInput
+    data: XOR<OfferUpdateWithoutItemsInput, OfferUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type OfferUpdateWithoutItemsInput = {
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    dinoz?: DinozUpdateOneWithoutOffersNestedInput
+    bids?: OfferBidUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferUncheckedUpdateWithoutItemsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sellerId?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferCreateWithoutBidsInput = {
+    endDate: Date | string
+    total: number
+    status?: $Enums.OfferStatus
+    seller: PlayerCreateNestedOneWithoutOffersInput
+    dinoz?: DinozCreateNestedOneWithoutOffersInput
+    items?: OfferItemCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferUncheckedCreateWithoutBidsInput = {
+    id?: number
+    sellerId: number
+    endDate: Date | string
+    dinozId?: number | null
+    total: number
+    status?: $Enums.OfferStatus
+    items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
+  }
+
+  export type OfferCreateOrConnectWithoutBidsInput = {
+    where: OfferWhereUniqueInput
+    create: XOR<OfferCreateWithoutBidsInput, OfferUncheckedCreateWithoutBidsInput>
+  }
+
+  export type PlayerCreateWithoutBidsInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutBidsInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutBidsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutBidsInput, PlayerUncheckedCreateWithoutBidsInput>
+  }
+
+  export type OfferUpsertWithoutBidsInput = {
+    update: XOR<OfferUpdateWithoutBidsInput, OfferUncheckedUpdateWithoutBidsInput>
+    create: XOR<OfferCreateWithoutBidsInput, OfferUncheckedCreateWithoutBidsInput>
+    where?: OfferWhereInput
+  }
+
+  export type OfferUpdateToOneWithWhereWithoutBidsInput = {
+    where?: OfferWhereInput
+    data: XOR<OfferUpdateWithoutBidsInput, OfferUncheckedUpdateWithoutBidsInput>
+  }
+
+  export type OfferUpdateWithoutBidsInput = {
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    dinoz?: DinozUpdateOneWithoutOffersNestedInput
+    items?: OfferItemUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferUncheckedUpdateWithoutBidsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sellerId?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
+  }
+
+  export type PlayerUpsertWithoutBidsInput = {
+    update: XOR<PlayerUpdateWithoutBidsInput, PlayerUncheckedUpdateWithoutBidsInput>
+    create: XOR<PlayerCreateWithoutBidsInput, PlayerUncheckedCreateWithoutBidsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutBidsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutBidsInput, PlayerUncheckedUpdateWithoutBidsInput>
+  }
+
+  export type PlayerUpdateWithoutBidsInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutBidsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+  }
+
+  export type PlayerCreateWithoutOffersInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+  }
+
+  export type PlayerUncheckedCreateWithoutOffersInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type PlayerCreateOrConnectWithoutOffersInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutOffersInput, PlayerUncheckedCreateWithoutOffersInput>
+  }
+
+  export type DinozCreateWithoutOffersInput = {
+    following?: number | null
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    missionId?: number | null
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    player?: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutOffersInput = {
+    id?: number
+    following?: number | null
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    missionId?: number | null
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId?: number | null
+    order?: number | null
+    concentrationId?: number | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutOffersInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutOffersInput, DinozUncheckedCreateWithoutOffersInput>
+  }
+
+  export type OfferItemCreateWithoutOfferInput = {
+    itemId: number
+    quantity: number
+    isIngredient: boolean
+  }
+
+  export type OfferItemUncheckedCreateWithoutOfferInput = {
+    id?: number
+    itemId: number
+    quantity: number
+    isIngredient: boolean
+  }
+
+  export type OfferItemCreateOrConnectWithoutOfferInput = {
+    where: OfferItemWhereUniqueInput
+    create: XOR<OfferItemCreateWithoutOfferInput, OfferItemUncheckedCreateWithoutOfferInput>
+  }
+
+  export type OfferItemCreateManyOfferInputEnvelope = {
+    data: OfferItemCreateManyOfferInput | OfferItemCreateManyOfferInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OfferBidCreateWithoutOfferInput = {
+    value: number
+    user: PlayerCreateNestedOneWithoutBidsInput
+  }
+
+  export type OfferBidUncheckedCreateWithoutOfferInput = {
+    id?: number
+    userId: number
+    value: number
+  }
+
+  export type OfferBidCreateOrConnectWithoutOfferInput = {
+    where: OfferBidWhereUniqueInput
+    create: XOR<OfferBidCreateWithoutOfferInput, OfferBidUncheckedCreateWithoutOfferInput>
+  }
+
+  export type OfferBidCreateManyOfferInputEnvelope = {
+    data: OfferBidCreateManyOfferInput | OfferBidCreateManyOfferInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PlayerUpsertWithoutOffersInput = {
+    update: XOR<PlayerUpdateWithoutOffersInput, PlayerUncheckedUpdateWithoutOffersInput>
+    create: XOR<PlayerCreateWithoutOffersInput, PlayerUncheckedCreateWithoutOffersInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutOffersInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutOffersInput, PlayerUncheckedUpdateWithoutOffersInput>
+  }
+
+  export type PlayerUpdateWithoutOffersInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutOffersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type DinozUpsertWithoutOffersInput = {
+    update: XOR<DinozUpdateWithoutOffersInput, DinozUncheckedUpdateWithoutOffersInput>
+    create: XOR<DinozCreateWithoutOffersInput, DinozUncheckedCreateWithoutOffersInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutOffersInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutOffersInput, DinozUncheckedUpdateWithoutOffersInput>
+  }
+
+  export type DinozUpdateWithoutOffersInput = {
+    following?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    missionId?: NullableIntFieldUpdateOperationsInput | number | null
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    player?: PlayerUpdateOneWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutOffersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    following?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    missionId?: NullableIntFieldUpdateOperationsInput | number | null
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type OfferItemUpsertWithWhereUniqueWithoutOfferInput = {
+    where: OfferItemWhereUniqueInput
+    update: XOR<OfferItemUpdateWithoutOfferInput, OfferItemUncheckedUpdateWithoutOfferInput>
+    create: XOR<OfferItemCreateWithoutOfferInput, OfferItemUncheckedCreateWithoutOfferInput>
+  }
+
+  export type OfferItemUpdateWithWhereUniqueWithoutOfferInput = {
+    where: OfferItemWhereUniqueInput
+    data: XOR<OfferItemUpdateWithoutOfferInput, OfferItemUncheckedUpdateWithoutOfferInput>
+  }
+
+  export type OfferItemUpdateManyWithWhereWithoutOfferInput = {
+    where: OfferItemScalarWhereInput
+    data: XOR<OfferItemUpdateManyMutationInput, OfferItemUncheckedUpdateManyWithoutOfferInput>
+  }
+
+  export type OfferItemScalarWhereInput = {
+    AND?: OfferItemScalarWhereInput | OfferItemScalarWhereInput[]
+    OR?: OfferItemScalarWhereInput[]
+    NOT?: OfferItemScalarWhereInput | OfferItemScalarWhereInput[]
+    id?: IntFilter<"OfferItem"> | number
+    offerId?: IntFilter<"OfferItem"> | number
+    itemId?: IntFilter<"OfferItem"> | number
+    quantity?: IntFilter<"OfferItem"> | number
+    isIngredient?: BoolFilter<"OfferItem"> | boolean
+  }
+
+  export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
+    where: OfferBidWhereUniqueInput
+    update: XOR<OfferBidUpdateWithoutOfferInput, OfferBidUncheckedUpdateWithoutOfferInput>
+    create: XOR<OfferBidCreateWithoutOfferInput, OfferBidUncheckedCreateWithoutOfferInput>
+  }
+
+  export type OfferBidUpdateWithWhereUniqueWithoutOfferInput = {
+    where: OfferBidWhereUniqueInput
+    data: XOR<OfferBidUpdateWithoutOfferInput, OfferBidUncheckedUpdateWithoutOfferInput>
+  }
+
+  export type OfferBidUpdateManyWithWhereWithoutOfferInput = {
+    where: OfferBidScalarWhereInput
+    data: XOR<OfferBidUpdateManyMutationInput, OfferBidUncheckedUpdateManyWithoutOfferInput>
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -48049,6 +53302,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -48076,6 +53330,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48103,6 +53358,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutConcentrationInput = {
@@ -48111,6 +53367,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48138,6 +53395,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutConcentrationInput = {
@@ -48146,6 +53404,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48205,6 +53464,14 @@ export namespace Prisma {
 
   export type DinozItemToDinozCreateManyDinozInput = {
     dinozItemId: number
+  }
+
+  export type OfferCreateManyDinozInput = {
+    id?: number
+    sellerId: number
+    endDate: Date | string
+    total: number
+    status?: $Enums.OfferStatus
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -48318,6 +53585,33 @@ export namespace Prisma {
 
   export type DinozItemToDinozUncheckedUpdateManyWithoutDinozInput = {
     dinozItemId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OfferUpdateWithoutDinozInput = {
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    items?: OfferItemUpdateManyWithoutOfferNestedInput
+    bids?: OfferBidUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sellerId?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sellerId?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
   }
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
@@ -48551,6 +53845,7 @@ export namespace Prisma {
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
+    isSelling?: boolean
     raceId: number
     level: number
     missionId?: number | null
@@ -48638,11 +53933,26 @@ export namespace Prisma {
     rewardId: number
   }
 
+  export type OfferCreateManySellerInput = {
+    id?: number
+    endDate: Date | string
+    dinozId?: number | null
+    total: number
+    status?: $Enums.OfferStatus
+  }
+
+  export type OfferBidCreateManyUserInput = {
+    id?: number
+    offerId: number
+    value: number
+  }
+
   export type DinozUpdateWithoutPlayerInput = {
     following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48670,6 +53980,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPlayerInput = {
@@ -48678,6 +53989,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48705,6 +54017,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutPlayerInput = {
@@ -48713,6 +54026,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     missionId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48921,6 +54235,100 @@ export namespace Prisma {
     rewardId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type OfferUpdateWithoutSellerInput = {
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinoz?: DinozUpdateOneWithoutOffersNestedInput
+    items?: OfferItemUpdateManyWithoutOfferNestedInput
+    bids?: OfferBidUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferUncheckedUpdateWithoutSellerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
+  }
+
+  export type OfferUncheckedUpdateManyWithoutSellerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    total?: IntFieldUpdateOperationsInput | number
+    status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+  }
+
+  export type OfferBidUpdateWithoutUserInput = {
+    value?: IntFieldUpdateOperationsInput | number
+    offer?: OfferUpdateOneRequiredWithoutBidsNestedInput
+  }
+
+  export type OfferBidUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    offerId?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OfferBidUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    offerId?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OfferItemCreateManyOfferInput = {
+    id?: number
+    itemId: number
+    quantity: number
+    isIngredient: boolean
+  }
+
+  export type OfferBidCreateManyOfferInput = {
+    id?: number
+    userId: number
+    value: number
+  }
+
+  export type OfferItemUpdateWithoutOfferInput = {
+    itemId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    isIngredient?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OfferItemUncheckedUpdateWithoutOfferInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    isIngredient?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OfferItemUncheckedUpdateManyWithoutOfferInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    isIngredient?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type OfferBidUpdateWithoutOfferInput = {
+    value?: IntFieldUpdateOperationsInput | number
+    user?: PlayerUpdateOneRequiredWithoutBidsNestedInput
+  }
+
+  export type OfferBidUncheckedUpdateWithoutOfferInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OfferBidUncheckedUpdateManyWithoutOfferInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+  }
+
 
 
   /**
@@ -48950,6 +54358,10 @@ export namespace Prisma {
      * @deprecated Use PlayerCountOutputTypeDefaultArgs instead
      */
     export type PlayerCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OfferCountOutputTypeDefaultArgs instead
+     */
+    export type OfferCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ConcentrationDefaultArgs instead
      */
@@ -49074,6 +54486,18 @@ export namespace Prisma {
      * @deprecated Use SecretDefaultArgs instead
      */
     export type SecretArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SecretDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OfferItemDefaultArgs instead
+     */
+    export type OfferItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferItemDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OfferBidDefaultArgs instead
+     */
+    export type OfferBidArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferBidDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OfferDefaultArgs instead
+     */
+    export type OfferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

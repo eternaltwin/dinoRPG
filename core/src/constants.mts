@@ -2,6 +2,7 @@ import { Dinoz, DinozMission, DinozSkill, DinozStatus, PlayerItem, PlayerReward 
 
 export const MARKET_MIN_VALUE = 5000;
 export const MARKET_MAX_ITEMS = 5;
+export const MARKET_OFFER_DURATION = 2 * 24 * 60 * 60 * 1000; // 48h
 
 export type DinozForConditionCheck = Pick<Dinoz,
 	'level' |

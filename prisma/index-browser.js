@@ -117,6 +117,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   name: 'name',
   isFrozen: 'isFrozen',
   isSacrificed: 'isSacrificed',
+  isSelling: 'isSelling',
   raceId: 'raceId',
   level: 'level',
   missionId: 'missionId',
@@ -389,6 +390,30 @@ exports.Prisma.SecretScalarFieldEnum = {
   value: 'value'
 };
 
+exports.Prisma.OfferItemScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  itemId: 'itemId',
+  quantity: 'quantity',
+  isIngredient: 'isIngredient'
+};
+
+exports.Prisma.OfferBidScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  userId: 'userId',
+  value: 'value'
+};
+
+exports.Prisma.OfferScalarFieldEnum = {
+  id: 'id',
+  sellerId: 'sellerId',
+  endDate: 'endDate',
+  dinozId: 'dinozId',
+  total: 'total',
+  status: 'status'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -403,7 +428,11 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.OfferStatus = exports.$Enums.OfferStatus = {
+  ONGOING: 'ONGOING',
+  ENDED: 'ENDED',
+  CANCELLED: 'CANCELLED'
+};
 
 exports.Prisma.ModelName = {
   Concentration: 'Concentration',
@@ -436,7 +465,10 @@ exports.Prisma.ModelName = {
   PlayerQuest: 'PlayerQuest',
   PlayerReward: 'PlayerReward',
   Ranking: 'Ranking',
-  Secret: 'Secret'
+  Secret: 'Secret',
+  OfferItem: 'OfferItem',
+  OfferBid: 'OfferBid',
+  Offer: 'Offer'
 };
 
 /**

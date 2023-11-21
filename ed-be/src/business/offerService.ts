@@ -1,6 +1,11 @@
 import { Request } from 'express';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { addBid, deleteOffer, getOffer, getOffers, insertOffer } from '../dao/offerDao.js';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { updateDinoz } from '../dao/dinozDao.js';
+import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
+import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 
 /**
  * Get the list of current offers
@@ -31,6 +36,8 @@ export async function createOffer(req: Request) {
 		throw new ErrorFormator(500, 'missingUser');
 	}
 
+	const playerId = req.auth.playerId;
+
 	const dinozId = req.body.dinoz ? +req.body.dinoz : null;
 	const total = +req.body.total;
 	const ingredients = req.body.ingredients as {
@@ -38,23 +45,66 @@ export async function createOffer(req: Request) {
 		count: number;
 	}[];
 	const items = req.body.items as {
-		id: number;
+		name: string;
 		count: number;
 	}[];
 
+	// Group items and ingredients
+	const itemsAndIngredients = [];
+
+	itemsAndIngredients.push(...ingredients.map(ingredient => {
+		const ingredientData = ingredientList[ingredient.name];
+
+		if (!ingredientData) {
+			throw new Error('Ingredient not found');
+		}
+
+		return {
+			itemId: ingredientData.ingredientId,
+			quantity: ingredient.count,
+			isIngredient: true
+		}
+	}));
+
+	itemsAndIngredients.push(...items.map(item => {
+		const itemData = itemList[item.name];
+
+		if (!itemData) {
+			throw new Error('Item not found');
+		}
+
+		return {
+			itemId: itemData.itemId,
+			quantity: item.count,
+			isIngredient: false
+		}
+	}));
+
 	// Insert offer
-	const offers = await insertOffer(
+	await insertOffer(
 		dinozId,
 		total,
-		ingredients,
-		items
+		itemsAndIngredients,
+		playerId
 	);
 
-	console.log(offers);
+	// Set Dinoz as selling
+	if (dinozId) {
+		updateDinoz(dinozId, { isSelling: true });
+	}
 
-	// TODO: Set Dinoz as selling
-	// TODO: Remove items from inventory
-	// TODO: Remove ingredients from inventory
+	const promises = [];
+
+	// Remove items and ingredients from inventory
+	promises.push(...itemsAndIngredients.map(item => {
+		if (item.isIngredient) {
+			return decreaseIngredientQuantity(playerId, item.itemId, item.quantity);
+		} else {
+			return decreaseItemQuantity(playerId, item.itemId, item.quantity);
+		}
+	}));
+
+	await Promise.all(promises);
 }
 
 /**
@@ -66,32 +116,62 @@ export async function cancelOffer(req: Request) {
 		throw new ErrorFormator(500, 'missingUser');
 	}
 
+	const playerId = req.auth.playerId;
 	const offerId = +req.params.offerId;
 
 	// Get user current offers
 	const offer = await getOffer(offerId);
 
 	// Check if user is the seller
-	if (!offer || offer.seller.id !== req.auth.playerId) {
+	if (!offer || offer.seller.id !== playerId) {
 		throw new ErrorFormator(500, 'invalidOffer');
 	}
 
 	const { dinoz, items: itemsAndIngredients } = offer;
 
-	console.log(dinoz);
-
-	// TODO: Set Dinoz as not selling
+	// Set Dinoz as not selling
+	if (dinoz) {
+		updateDinoz(dinoz.id, { isSelling: false });
+	}
 
 	// Separate items and ingredients
-	const ingredients = itemsAndIngredients.filter(item => item.isIngredient);
 	const items = itemsAndIngredients.filter(item => !item.isIngredient);
+	const ingredients = itemsAndIngredients.filter(item => item.isIngredient);
 
-	console.log(ingredients);
-	console.log(items);
+	const promises = [];
 
-	// TODO: Add items to inventory
-	// TODO: Add ingredients to inventory
-	// TODO: Reimburse bidders
+	// Add items to inventory
+	promises.push(...items.map(item => increaseItemQuantity(playerId, item.itemId, item.quantity)));
+
+	// Add ingredients to inventory
+	promises.push(...ingredients.map(item => increaseIngredientQuantity(playerId, item.itemId, item.quantity)));
+
+	await Promise.all(promises);
+
+	// Reimburse bidders
+
+	// Bids can contain multiple bids from the same user, keep only the highest one
+	const bids = offer.bids.reduce((acc, bid) => {
+		if (!acc[bid.userId] || acc[bid.userId] < bid.value) {
+			acc[bid.userId] = bid.value;
+		}
+
+		return acc;
+	}, {} as Record<number, number>);
+
+	const ticketPromises = [];
+
+	// Add tickets to inventory
+	ticketPromises.push(
+		...Object.entries(bids)
+			.map(([userId, value]) => increaseItemQuantity(
+				+userId,
+				itemList.TREASURE_COUPON.itemId,
+				value,
+			))
+	);
+
+	await Promise.all(ticketPromises);
 
 	// Delete offer
 	await deleteOffer(offerId);
@@ -122,7 +202,7 @@ export async function bidOffer(req: Request) {
 	// TODO: Check if user has enough ticket in inventory
 
 	// Get previous own bid value
-	const previousOwnBid = offer.bids.filter(bid => bid.user.id === playerId).pop()?.value || 0;
+	const previousOwnBid = offer.bids.filter(bid => bid.userId === playerId).pop()?.value || 0;
 
 	// Cancel if bid is lower or equal to previous bid
 	if (value <= previousOwnBid) {
@@ -142,10 +222,8 @@ export async function bidOffer(req: Request) {
 	// Add bid
 	await addBid(offerId, req.auth.playerId, value);
 
-	// Remove bid difference from inventory
 	const bidDifference = value - previousOwnBid;
 
-	console.log(bidDifference);
-
-	// TODO: Remove bid difference from inventory
+	// Remove bid difference from inventory
+	await decreaseItemQuantity(playerId, itemList.TREASURE_COUPON.itemId, bidDifference);
 }

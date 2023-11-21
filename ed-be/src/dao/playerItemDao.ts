@@ -2,14 +2,19 @@ import { Prisma } from "@drpg/prisma";
 import { prisma } from "../prisma.js";
 
 export const increaseItemQuantity = async (playerId: number, itemId: number, quantity: number) => {
-	const item = await prisma.playerItem.update({
+	const item = await prisma.playerItem.upsert({
 		where: {
 			itemId_playerId: {
 				itemId,
 				playerId
 			}
 		},
-		data: {
+		create: {
+			itemId,
+			playerId,
+			quantity
+		},
+		update: {
 			quantity: {
 				increment: quantity
 			}
@@ -34,7 +39,17 @@ export const decreaseItemQuantity = async (playerId: number, itemId: number, qua
 		}
 	});
 
-	return item;
+	// Delete item if quantity is <= 0
+	if (item.quantity <= 0) {
+		await prisma.playerItem.delete({
+			where: {
+				itemId_playerId: {
+					itemId,
+					playerId
+				}
+			}
+		});
+	}
 }
 
 export async function insertItem(playerId: number, newItem: Prisma.PlayerItemCreateInput) {

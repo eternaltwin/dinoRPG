@@ -260,13 +260,13 @@ export async function buyDinoz(req: Request) {
 	//Check if player can buy more dinoz
 	const dinozActive = await getActiveDinoz(req.auth.playerId);
 
-	const player = dinozActive[0].player;
-
-	if (!player) {
-		throw new ErrorFormator(500, `Missing player`);
-	}
-
 	if (dinozActive.length > 0) {
+		const player = dinozActive[0].player;
+
+		if (!player) {
+			throw new ErrorFormator(500, `Missing player`);
+		}
+
 		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
 			throw new ErrorFormator(400, 'tooManyActiveDinoz');
 		}

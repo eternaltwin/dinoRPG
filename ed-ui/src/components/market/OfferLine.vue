@@ -82,7 +82,7 @@ import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { Tippy } from 'vue-tippy';
 import DZUser from '../common/DZUser.vue';
 import { errorHandler, secondsToDhms } from '../../utils/index.js';
-import { Offer } from '@drpg/core/returnTypes/Offer';
+import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { goTo } from '../../utils/goTo.js';
 import { OfferService } from '../../services/OfferService.js';
 import { playerStore } from '../../store/index.js';
@@ -92,7 +92,7 @@ export default defineComponent({
 	name: 'OfferLine',
 	props: {
 		offer: {
-			type: Object as () => Omit<Offer, 'endDate'> & { endDate: Date },
+			type: Object as () => OfferFromGetOffers,
 			required: true
 		},
 		updateOffer: {
@@ -110,8 +110,6 @@ export default defineComponent({
 			itemNameList,
 			secondsToDhms,
 			goTo,
-			offers: [] as (Omit<Offer, 'endDate'> & { endDate: Date })[],
-			filter: 'all',
 			bidValue: 0
 		};
 	},

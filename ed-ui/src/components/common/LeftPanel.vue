@@ -277,7 +277,7 @@ export default defineComponent({
 	margin-bottom: 8px;
 
 	.img-wrapper {
-		height: 100px;
+		height: 109px;
 		overflow: hidden;
 
 		img {
