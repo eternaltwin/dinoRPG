@@ -40,7 +40,9 @@
 					<img :src="getImgURL('design', 'small_chrono')" :alt="$t('market.timeLeft')" />
 					<Tippy theme="small">
 						<span v-if="isExpired()">{{ $t('market.auctionExpired') }}</span>
-						<span v-else>{{ $t('market.time', secondsToDhms(Math.ceil(offer.endDate.getTime() / 1000) - now)) }}</span>
+						<span v-else>{{
+							simplifyDisplay($t('market.time', secondsToDhms(Math.ceil(offer.endDate.getTime() / 1000) - now)))
+						}}</span>
 						<template #content>
 							{{ offer.endDate.toLocaleString() }}
 						</template>
@@ -82,7 +84,7 @@ import DZButton from '../common/DZButton.vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { Tippy } from 'vue-tippy';
 import DZUser from '../common/DZUser.vue';
-import { errorHandler, secondsToDhms } from '../../utils/index.js';
+import { errorHandler, secondsToDhms, simplifyDisplay } from '../../utils/index.js';
 import { EnhancedOffer } from '@drpg/core/returnTypes/Offer';
 import { goTo } from '../../utils/goTo.js';
 import { OfferService } from '../../services/OfferService.js';
@@ -111,6 +113,7 @@ export default defineComponent({
 			playerStore: playerStore(),
 			itemNameList,
 			secondsToDhms,
+			simplifyDisplay,
 			goTo,
 			getIngredientName,
 			bidValue: 0

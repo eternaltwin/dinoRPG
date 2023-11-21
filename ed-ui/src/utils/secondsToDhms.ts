@@ -14,8 +14,8 @@ export const secondsToDhms = (seconds: number) => {
 };
 
 export const simplifyDisplay = (displayedTime: string) => {
-	const regex = /( ?\d+)(\w)/g;
+	const regex = /(^| )0\w+/g;
 
 	// Remove values that are 0
-	return displayedTime.replace(regex, '');
+	return displayedTime.replace(regex, '').trim();
 };
