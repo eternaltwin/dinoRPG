@@ -23,6 +23,7 @@ import shopRoutes from './routes/shop.routes.js';
 import { loadConfigFile } from './utils/context.js';
 import { swaggerOptions } from './utils/index.js';
 import { jwtConfig } from './utils/jwt.js';
+import { scheduleOffersExpiration } from './business/offerService.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -75,6 +76,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOption
 // Launch Cron
 resetDinozShopAtMidnight().start();
 updatePlayersPosition().start();
+
+scheduleOffersExpiration();
 
 // Initiate controllers
 //TODO: what is the purpose ?

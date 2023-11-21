@@ -4,7 +4,7 @@ import { prisma } from "../prisma.js";
 import { OfferFromGetOffers } from "@drpg/core/returnTypes/Offer";
 
 export async function getOffers(
-	userId: number,
+	userId: number | null,
 	filter: string,
 	sellerId: number | null,
 	bidderId: number | null,
@@ -17,6 +17,10 @@ export async function getOffers(
 	} else if (filter === 'items') {
 		where.items = { some: {} };
 	} else if (filter === 'own') {
+		if (!userId) {
+			throw new Error('missingUser');
+		}
+
 		where.OR = [
 			{ sellerId: userId },
 			{ bids: { some: { userId } } }
@@ -48,7 +52,7 @@ export async function getOffers(
 					value: true,
 					user: { select: { id: true, name: true } }
 				},
-				orderBy: { value: 'desc' }
+				orderBy: { value: 'asc' }
 			},
 		}
 	});
@@ -114,7 +118,7 @@ export async function getOffer(offerId: number) {
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },
 			bids: {
 				select: { userId: true, value: true },
-				orderBy: { value: 'desc' }
+				orderBy: { value: 'asc' }
 			},
 		}
 	});
@@ -128,6 +132,17 @@ export async function addBid(offerId: number, userId: number, value: number) {
 			offerId,
 			userId,
 			value,
+		}
+	});
+}
+
+export async function updateOfferStatus(offerId: number, status: OfferStatus) {
+	await prisma.offer.update({
+		where: {
+			id: offerId
+		},
+		data: {
+			status
 		}
 	});
 }

@@ -1,12 +1,15 @@
 import { Request } from 'express';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { addBid, deleteOffer, getOffer, getOffers, insertOffer } from '../dao/offerDao.js';
+import { addBid, deleteOffer, getOffer, getOffers, insertOffer, updateOfferStatus } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { OfferStatus } from '@drpg/prisma';
+import { scheduleJob } from 'node-schedule';
+import { sendDiscord } from '../utils/discord.js';
 
 /**
  * Get the list of current offers
@@ -230,3 +233,84 @@ export async function bidOffer(req: Request) {
 	// Remove bid difference from inventory
 	await decreaseItemQuantity(playerId, itemList.TREASURE_COUPON.itemId, bidDifference);
 }
+
+/**
+ * Expire an offer
+ */
+export const expireOffer = async (offerId: number) => {
+	const offer = await getOffer(offerId);
+
+	if (!offer) {
+		throw new Error('Offer not found');
+	}
+
+	// Separate items and ingredients
+	const items = offer.items.filter(item => !item.isIngredient);
+	const ingredients = offer.items.filter(item => item.isIngredient);
+	const promises = [];
+
+	// Process offer if there is at least one bid
+	if (offer.bids.length) {
+		const winnerBid = offer.bids[offer.bids.length - 1];
+
+		if (offer.dinoz) {
+			// Change Dinoz owner and set as not selling
+			updateDinoz(offer.dinoz.id, {
+				player: { connect: { id: winnerBid.userId } },
+				isSelling: false
+			});
+
+			// Add items to winner inventory
+			promises.push(...items.map(item => increaseItemQuantity(winnerBid.userId, item.itemId, item.quantity)));
+
+			// Add ingredients to winner inventory
+			promises.push(...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity)));
+
+			// Send Discord notification
+			sendDiscord(`Offer ${offerId} won by ${winnerBid.userId}`);
+		}
+	} else {
+		// Refund seller if there is no bid
+
+		// Set Dinoz as not selling
+		if (offer.dinoz) {
+			updateDinoz(offer.dinoz.id, { isSelling: false });
+		}
+
+		// Add items to inventory
+		promises.push(...items.map(item => increaseItemQuantity(offer.seller.id, item.itemId, item.quantity)));
+
+		// Add ingredients to inventory
+		promises.push(...ingredients.map(item => increaseIngredientQuantity(offer.seller.id, item.itemId, item.quantity)));
+
+		// Send Discord notification
+		sendDiscord(`Offer ${offerId} expired`);
+	}
+
+	await Promise.all(promises);
+
+	// Update offer status
+	await updateOfferStatus(offerId, OfferStatus.ENDED);
+};
+
+/**
+ * Schedule offers expiration
+ */
+export const scheduleOffersExpiration = async () => {
+	const ongoingOffers = await getOffers(null, 'all', null, null, false);
+
+	// Process outdated offers immediately
+	const outdatedOffers = ongoingOffers.filter(offer => offer.endDate <= new Date());
+	const promises = outdatedOffers.map(offer => expireOffer(offer.id));
+
+	await Promise.all(promises);
+
+	// Schedule expiration for remaining offers
+	const remainingOffers = ongoingOffers.filter(offer => offer.endDate > new Date());
+
+	remainingOffers.forEach(offer => {
+		console.log(`Scheduling offer ${offer.id} expiration at ${offer.endDate}`);
+
+		scheduleJob(offer.endDate, () => expireOffer(offer.id));
+	});
+};

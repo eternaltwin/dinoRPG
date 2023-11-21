@@ -79,8 +79,6 @@ export default defineComponent({
 	async mounted() {
 		await this.fetchOffers();
 
-		console.log(this.offers);
-
 		// Update time every second
 		setInterval(() => {
 			this.now = Math.ceil(new Date().getTime() / 1000);
