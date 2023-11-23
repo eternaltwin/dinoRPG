@@ -75,7 +75,7 @@
 				</tbody>
 			</table>
 		</ul>
-		<DZDisclaimer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
+		<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
 	</div>
 </template>
 

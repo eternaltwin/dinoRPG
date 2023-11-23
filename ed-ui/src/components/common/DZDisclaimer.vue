@@ -1,6 +1,7 @@
 <template>
 	<div class="disclaimer">
-		<img v-if="help" :src="getImgURL('icons', 'question', true)" class="help" />
+		<img v-if="help" :src="getImgURL('icons', 'question', true)" class="icon" />
+		<img v-if="timer" :src="getImgURL('design', 'small_chrono')" class="icon" />
 		<div v-html="formatContent($t(content, params))" />
 	</div>
 </template>
@@ -22,6 +23,10 @@ export default defineComponent({
 		help: {
 			type: Boolean,
 			default: false
+		},
+		timer: {
+			type: Boolean,
+			default: false
 		}
 	}
 });
@@ -39,7 +44,7 @@ export default defineComponent({
 	background-color: #bc683c;
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
-	.help {
+	.icon {
 		margin-right: 5px;
 	}
 }

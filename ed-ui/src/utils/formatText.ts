@@ -21,6 +21,8 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('icons', 'gold', true)}" alt="gold">`;
 			case 'ticket':
 				return `<img src="${mixin.methods.getImgURL('icons', 'ticket', true)}" alt="ticket">`;
+			case 'chrono':
+				return `<img src="${mixin.methods.getImgURL('design', 'small_chrono')}" alt="chrono">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}
@@ -41,5 +43,6 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(/:right:/g, helpers.computeImageHtml('right'));
 	formattedText = formattedText.replace(/:gold:/g, helpers.computeImageHtml('gold'));
 	formattedText = formattedText.replace(/:ticket:/g, helpers.computeImageHtml('ticket'));
+	formattedText = formattedText.replace(/:chrono:/g, helpers.computeImageHtml('chrono'));
 	return formattedText;
 }
