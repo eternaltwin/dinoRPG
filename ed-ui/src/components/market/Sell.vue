@@ -106,8 +106,7 @@
 						:params="{ minValue: MARKET_MIN_VALUE }"
 					/>
 					<div class="total">
-						{{ getTotalValue() }}
-						<img :src="getImgURL('icons', 'gold', true)" />
+						<DZInput type="number" :value="totalValue" @input="totalValue = +$event.target.value" />
 					</div>
 				</td>
 			</tr>
@@ -138,6 +137,7 @@ import { Tippy } from 'vue-tippy';
 import DZHelp from '../common/DZHelp.vue';
 import { MARKET_MIN_VALUE, MARKET_MAX_ITEMS } from '@drpg/core/constants';
 import { OfferService } from '../../services/OfferService.js';
+import DZInput from '../common/DZInput.vue';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -153,13 +153,17 @@ export default defineComponent({
 			ingredients: [] as IngredientFiche[],
 			items: [] as ItemFiche[],
 			sellDinoz: false,
-			selectedItems: {} as Record<string, { type: 'ingredient' | 'item'; count: number }>
+			selectedItems: {} as Record<string, { type: 'ingredient' | 'item'; count: number }>,
+			totalValue: 0
 		};
 	},
-	components: { DZButton, DZDisclaimer, Tippy, DZHelp },
+	components: { DZButton, DZDisclaimer, Tippy, DZHelp, DZInput },
 	methods: {
 		toggleSellDinoz() {
 			this.sellDinoz = !this.sellDinoz;
+
+			// Update total value
+			this.totalValue = this.getTotalValue();
 		},
 		changeItemCount(type: 'ingredient' | 'item', item: ItemFiche | IngredientFiche, value: number) {
 			const name = item.name || '';
@@ -197,9 +201,19 @@ export default defineComponent({
 			}
 
 			this.selectedItems[name].count = newCount;
+
+			// Update total value
+			this.totalValue = this.getTotalValue();
 		},
 		getTotalValue(): number {
-			return Object.entries(this.selectedItems).reduce((total, [name, count]) => {
+			// Dinoz
+			let dinoz = 0;
+			if (this.sellDinoz && this.dinoz) {
+				dinoz = Math.ceil(this.dinoz.race.price * this.dinoz.level ** 0.5);
+			}
+
+			// Items
+			const items = Object.entries(this.selectedItems).reduce((total, [name, count]) => {
 				if (count.type === 'ingredient') {
 					const ingredient = this.ingredients.find(ingredient => ingredient.name === name);
 					if (!ingredient) {
@@ -214,11 +228,19 @@ export default defineComponent({
 					return total + item.price * count.count;
 				}
 			}, 0);
+
+			return dinoz + items;
 		},
 		async createOffer() {
-			const totalValue = this.getTotalValue();
+			const calculatedValue = this.getTotalValue();
+			const manualValue = this.totalValue;
 
-			if (totalValue < MARKET_MIN_VALUE) {
+			if (manualValue < calculatedValue) {
+				EventBus.emit('toast', { type: 'error', message: 'market.minimalValueError' });
+				return;
+			}
+
+			if (calculatedValue < MARKET_MIN_VALUE) {
 				EventBus.emit('toast', { type: 'error', message: 'market.minimalValueError' });
 				return;
 			}
@@ -232,7 +254,7 @@ export default defineComponent({
 				.map(([name, count]) => ({ name, count: count.count }));
 
 			try {
-				await OfferService.createOffer(totalValue, ingredients, items, this.sellDinoz ? this.dinoz?.id : undefined);
+				await OfferService.createOffer(manualValue, ingredients, items, this.sellDinoz ? this.dinoz?.id : undefined);
 				EventBus.emit('toast', { type: 'success', message: 'market.offerCreated' });
 				this.changeTab(0);
 			} catch (error) {
@@ -356,21 +378,6 @@ table {
 						outline-offset: -1px;
 					}
 				}
-			}
-		}
-
-		.total {
-			display: flex;
-			align-items: center;
-			background-color: #853d25;
-			outline: 1px solid #f9e5b7;
-			outline-offset: -2px;
-			color: #ffee92;
-			font-size: 12pt;
-			padding: 4px 8px;
-
-			img {
-				margin-left: 5px;
 			}
 		}
 	}
