@@ -47,6 +47,7 @@ export async function getCommonData(req: Request) {
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PMI)
 		}
 	};
+
 	return commonData;
 }
 

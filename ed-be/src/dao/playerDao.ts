@@ -119,7 +119,8 @@ export async function getCommonDataRequest(playerId: number) {
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } },
 				},
-				where: { isFrozen: false }
+				where: { isFrozen: false },
+				orderBy: [{ order: 'asc' }, { name: 'asc' }]
 			},
 			rewards: true,
 			items: { select: { itemId: true, quantity: true } },

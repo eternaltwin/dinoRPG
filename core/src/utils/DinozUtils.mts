@@ -353,3 +353,19 @@ export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: n
 		life: dinoz.life
 	};
 }
+
+export const orderDinozList = <T extends Pick<Dinoz, 'order' | 'name'>[]> (dinozList: T) => {
+	return dinozList.sort((a, b) => {
+		if (a.order === b.order) {
+			return a.name.localeCompare(b.name);
+		}
+		if (a.order === null) {
+			return 1;
+		}
+		if (b.order === null) {
+			return -1;
+		}
+
+		return a.order - b.order;
+	});
+}

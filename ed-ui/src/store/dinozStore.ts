@@ -16,6 +16,7 @@ export const dinozStore = defineStore('dinozStore', {
 	},
 	actions: {
 		setDinozList(dinozList: Array<DinozFiche>): void {
+			console.log('dinozStore.setDinozList()');
 			this.dinozList = dinozList;
 		},
 		setDinozCount(dinozCount: number): void {
