@@ -75,6 +75,7 @@
 				</tbody>
 			</table>
 		</ul>
+		<DZDisclaimer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
 	</div>
 </template>
 
@@ -99,6 +100,7 @@ import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -108,7 +110,7 @@ export default defineComponent({
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
 			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
-				.missions,
+				.missionHUD,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Array<Rewarder> | undefined,
 			sessionStore: sessionStore(),
@@ -122,7 +124,8 @@ export default defineComponent({
 		Resurect,
 		MissionHUDVue,
 		NPCModal,
-		MissionRewardModal
+		MissionRewardModal,
+		DZDisclaimer
 	},
 	props: {
 		dinozActions: Object as PropType<Array<ActionFiche>>,
@@ -235,7 +238,7 @@ export default defineComponent({
 			this.missionReward = undefined;
 			const dinozId = parseInt(this.$route.params.id as string);
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche;
-			dinozToUpdate.missions = undefined;
+			dinozToUpdate.missionHUD = null;
 			dinozToUpdate.missionId = undefined;
 			this.dinozStore.setDinoz(dinozToUpdate);
 			this.$emit('endMission');
@@ -246,6 +249,11 @@ export default defineComponent({
 		},
 		npcDisplayName(npcId: number): string | undefined {
 			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
+		},
+		isSelling(): boolean {
+			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
+
+			return !!dinoz?.isSelling;
 		}
 	},
 	computed: {
@@ -255,13 +263,13 @@ export default defineComponent({
 			}
 			return undefined;
 		},
-		storeMission(): MissionHUD | undefined {
-			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missions;
+		storeMission(): MissionHUD | null {
+			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missionHUD || null;
 		}
 	},
 	watch: {
-		storeMission: function (missions: MissionHUD) {
-			this.mission = missions;
+		storeMission: function (mission: MissionHUD) {
+			this.mission = mission;
 		}
 	}
 });
@@ -340,5 +348,9 @@ export default defineComponent({
 			}
 		}
 	}
+}
+
+.selling {
+	margin-right: 1px;
 }
 </style>

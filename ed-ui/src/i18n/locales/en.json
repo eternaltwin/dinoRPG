@@ -34,7 +34,8 @@
 			"offerCancelled": "Your offer has been cancelled.",
 			"notEnoughItems": "You don't have enough items.",
 			"notEnoughTickets": "You don't have enough treasury notes."
-		}
+		},
+		"isSelling": "Your Dinoz is currently on sale at the Tamer Market."
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",

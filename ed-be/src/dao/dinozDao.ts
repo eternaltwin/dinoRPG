@@ -108,6 +108,7 @@ export async function getDinozFicheRequest(dinozId: number) {
 			missionId: true,
 			following: true,
 			isFrozen: true,
+			isSelling: true,
 			order: true,
 			player: {
 				select: {

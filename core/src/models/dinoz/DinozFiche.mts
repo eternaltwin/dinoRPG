@@ -8,6 +8,7 @@ export interface DinozFiche {
 	name: string;
 	display: string;
 	isFrozen: boolean;
+	isSelling: boolean;
 	level: number;
 	missionId: number | undefined;
 	missionHUD: MissionHUD | null;

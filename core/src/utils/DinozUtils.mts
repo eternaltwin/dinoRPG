@@ -91,6 +91,7 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 	'name' |
 	'display' |
 	'isFrozen' |
+	'isSelling' |
 	'level' |
 	'following' |
 	'life' |
@@ -119,6 +120,7 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 		name: dinoz.name,
 		display: dinoz.display,
 		isFrozen: dinoz.isFrozen,
+		isSelling: dinoz.isSelling,
 		level: dinoz.level,
 		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId,
 		following: dinoz.following,

@@ -40,7 +40,8 @@
 			"offerCancelled": "Votre offre a été annulée.",
 			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
 			"notEnoughTickets": "Vous n'avez pas assez de bons."
-		}
+		},
+		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Eleveurs."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",

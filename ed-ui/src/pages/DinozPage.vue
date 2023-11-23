@@ -64,7 +64,7 @@ export default defineComponent({
 				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 				dinozToUpdate.missionId = this.dinozData.missionId;
-				dinozToUpdate.missions = this.dinozData.missions;
+				dinozToUpdate.missionHUD = this.dinozData.missionHUD;
 				this.dinozStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 			} catch (err) {

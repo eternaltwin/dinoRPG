@@ -53,7 +53,7 @@ import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
  * @summary Get available action from dinoz
  */
 export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
-	'id' | 'experience'
+	'id' | 'experience' | 'isSelling'
 > & {
 	missions: DinozMission[];
 	concentration: Concentration | null;
@@ -63,6 +63,18 @@ export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
 	}
 
 	const availableActions: ActionFiche[] = [];
+
+	const dinozPlace = actualPlace(dinoz);
+
+	// Market if dinoz is in market
+	if (dinoz.placeId === placeList.PLACE_DU_MARCHE.placeId) {
+		availableActions.push(actionList[Action.MARKET]);
+	}
+
+	// Nothing else if dinoz is being sold
+	if (dinoz.isSelling) {
+		return availableActions;
+	}
 
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
@@ -77,8 +89,6 @@ export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
 	// Default actions
 	availableActions.push(actionList[Action.FIGHT]);
 	//availableActions.push(actionList[Action.FOLLOW]);
-
-	const dinozPlace = actualPlace(dinoz);
 
 	//Gather
 	if (
@@ -150,11 +160,6 @@ export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
 			};
 			availableActions.push(shopAction);
 		}
-	}
-
-	// Market if dinoz is in market
-	if (dinoz.placeId === placeList.PLACE_DU_MARCHE.placeId) {
-		availableActions.push(actionList[Action.MARKET]);
 	}
 
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);

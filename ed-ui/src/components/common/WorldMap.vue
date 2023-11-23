@@ -138,6 +138,12 @@ export default defineComponent({
 				return;
 			}
 
+			// Check if dinoz is being sold
+			if (this.dinozData?.isSelling) {
+				EventBus.emit('toast', { type: 'error', message: 'isSelling' });
+				return;
+			}
+
 			EventBus.emit('isLoading', true);
 			try {
 				const moveTry: FightResult = await DinozService.betaMove(this.dinozData!.id!, placeId);

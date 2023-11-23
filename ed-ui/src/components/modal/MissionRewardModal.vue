@@ -81,7 +81,9 @@ export default defineComponent({
 			const dinozId = this.$route.params.id as string;
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-			return myDinoz.missions!.target;
+			return typeof myDinoz.missionHUD?.target === 'string'
+				? myDinoz.missionHUD?.target
+				: myDinoz.missionHUD?.target[0].name || '';
 		},
 		xp(): number | undefined {
 			const isXP: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EXPERIENCE);
