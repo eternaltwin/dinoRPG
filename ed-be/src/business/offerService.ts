@@ -4,8 +4,8 @@ import { addBid, deleteOffer, getOffer, getOffers, insertOffer, updateOfferStatu
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { updateDinoz } from '../dao/dinozDao.js';
-import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
-import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
+import { decreaseItemQuantity, getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
+import { decreaseIngredientQuantity, getAllIngredientsDataRequest, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { OfferStatus } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
@@ -70,6 +70,27 @@ export async function createOffer(req: Request) {
 			isIngredient: true
 		}
 	}));
+
+	// Get available items and ingredients
+	const availableItems = await getPlayerItems(playerId);
+	const availableIngredients = await getAllIngredientsDataRequest(playerId);
+
+	// Check if user has enough items and ingredients
+	for (const item of itemsAndIngredients) {
+		if (item.isIngredient) {
+			const availableIngredient = availableIngredients.find(availableIngredient => availableIngredient.ingredientId === item.itemId);
+
+			if (!availableIngredient || availableIngredient.quantity < item.quantity) {
+				throw new ErrorFormator(500, 'notEnoughIngredients');
+			}
+		} else {
+			const availableItem = availableItems.find(availableItem => availableItem.itemId === item.itemId);
+
+			if (!availableItem || availableItem.quantity < item.quantity) {
+				throw new ErrorFormator(500, 'notEnoughItems');
+			}
+		}
+	}
 
 	itemsAndIngredients.push(...items.map(item => {
 		console.log(item);

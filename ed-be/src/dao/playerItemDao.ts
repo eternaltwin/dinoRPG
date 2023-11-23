@@ -68,6 +68,7 @@ export async function getPlayerItems(playerId: number) {
 		},
 		select: {
 			itemId: true,
+			quantity: true
 		}
 	});
 }

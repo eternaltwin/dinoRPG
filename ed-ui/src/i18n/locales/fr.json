@@ -37,7 +37,8 @@
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
 			"offerCreated": "Votre offre a été créée.",
-			"offerCancelled": "Votre offre a été annulée."
+			"offerCancelled": "Votre offre a été annulée.",
+			"notEnoughItems": "Vous n'avez pas assez de cet objet."
 		}
 	},
 	"dig": {

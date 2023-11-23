@@ -39,7 +39,7 @@
 									tag="img"
 									theme="small"
 									:src="getImgURL('icons', 'up', true)"
-									@click="changeItemCount('ingredient', ingredient.name, 1)"
+									@click="changeItemCount('ingredient', ingredient, 1)"
 								>
 									<template #content>
 										{{ $t('market.sellView.add') }}
@@ -49,7 +49,7 @@
 									tag="img"
 									theme="small"
 									:src="getImgURL('icons', 'down', true)"
-									@click="changeItemCount('ingredient', ingredient.name, -1)"
+									@click="changeItemCount('ingredient', ingredient, -1)"
 								>
 									<template #content>
 										{{ $t('market.sellView.remove') }}
@@ -76,7 +76,7 @@
 									tag="img"
 									theme="small"
 									:src="getImgURL('icons', 'up', true)"
-									@click="changeItemCount('item', item.name, 1)"
+									@click="changeItemCount('item', item, 1)"
 								>
 									<template #content>
 										{{ $t('market.sellView.add') }}
@@ -86,7 +86,7 @@
 									tag="img"
 									theme="small"
 									:src="getImgURL('icons', 'down', true)"
-									@click="changeItemCount('item', item.name, -1)"
+									@click="changeItemCount('item', item, -1)"
 								>
 									<template #content>
 										{{ $t('market.sellView.remove') }}
@@ -161,14 +161,25 @@ export default defineComponent({
 		toggleSellDinoz() {
 			this.sellDinoz = !this.sellDinoz;
 		},
-		changeItemCount(type: 'ingredient' | 'item', name: string, value: number) {
+		changeItemCount(type: 'ingredient' | 'item', item: ItemFiche | IngredientFiche, value: number) {
+			const name = item.name || '';
 			if (!this.selectedItems[name]) {
 				this.selectedItems[name] = { type, count: 0 };
 			}
 			const currentCount = this.selectedItems[name].count;
 			const newCount = currentCount + value;
 
+			// Prevent negative values
 			if (newCount < 0) {
+				return;
+			}
+
+			// Prevent too many items
+			if (item.quantity && newCount > item.quantity) {
+				EventBus.emit('toast', {
+					type: 'error',
+					message: 'market.notEnoughItems'
+				});
 				return;
 			}
 
@@ -328,6 +339,7 @@ table {
 				outline: 1px solid #ebd18b;
 				outline-offset: -2px;
 				margin-left: -1px;
+				user-select: none;
 			}
 
 			.change-count {

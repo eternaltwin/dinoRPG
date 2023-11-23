@@ -31,7 +31,8 @@
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
 			"offerCreated": "Your offer has been created.",
-			"offerCancelled": "Your offer has been cancelled."
+			"offerCancelled": "Your offer has been cancelled.",
+			"notEnoughItems": "You don't have enough items."
 		}
 	},
 	"dig": {
