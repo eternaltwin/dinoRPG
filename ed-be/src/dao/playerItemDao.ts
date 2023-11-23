@@ -61,10 +61,14 @@ export async function insertItem(playerId: number, newItem: Prisma.PlayerItemCre
 	});
 }
 
-export async function getPlayerItems(playerId: number) {
+export async function getPlayerItems(
+	playerId: number,
+	where?: Prisma.PlayerItemWhereInput,
+	) {
 	return prisma.playerItem.findMany({
 		where: {
-			playerId
+			playerId,
+			...where
 		},
 		select: {
 			itemId: true,

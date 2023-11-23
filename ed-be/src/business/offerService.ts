@@ -246,6 +246,14 @@ export async function bidOffer(req: Request) {
 		throw new ErrorFormator(400, 'bidIsLower');
 	}
 
+	// Check if player has enough tickets
+	const playerItems = await getPlayerItems(playerId, { itemId: itemList.TREASURE_COUPON.itemId });
+	const playerTickets = playerItems[0]?.quantity || 0;
+
+	if (playerTickets < value - previousOwnBid) {
+		throw new ErrorFormator(400, 'market.notEnoughTickets');
+	}
+
 	// Add bid
 	await addBid(offerId, req.auth.playerId, value);
 

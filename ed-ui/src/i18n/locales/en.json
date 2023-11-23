@@ -32,7 +32,8 @@
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
 			"offerCreated": "Your offer has been created.",
 			"offerCancelled": "Your offer has been cancelled.",
-			"notEnoughItems": "You don't have enough items."
+			"notEnoughItems": "You don't have enough items.",
+			"notEnoughTickets": "You don't have enough treasury notes."
 		}
 	},
 	"dig": {
