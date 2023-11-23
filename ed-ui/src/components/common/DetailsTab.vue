@@ -197,6 +197,20 @@
 					<template #content>
 						<h1 v-html="formatContent($t(`details.${stat.name}`))" />
 						<ul class="stat-details">
+							<li v-if="stat.name === SpecialStat.BUBBLE_RATE">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<span>
+									<span />
+									<img :src="getImgURL('elements', 'elem_water')" />
+									<img :src="getImgURL('elements', 'elem_air')" />
+									/
+									<img :src="getImgURL('elements', 'elem_water')" />
+									<img :src="getImgURL('elements', 'elem_air')" />
+									<img :src="getImgURL('elements', 'elem_wood')" />
+									<img :src="getImgURL('elements', 'elem_fire')" />
+									<img :src="getImgURL('elements', 'elem_lightning')" />
+								</span>
+							</li>
 							<li v-for="(detail, i) in stat.details" :key="i">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img
