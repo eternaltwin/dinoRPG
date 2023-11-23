@@ -45,7 +45,21 @@ export async function getOffers(
 		where,
 		include: {
 			seller: { select: { id: true, name: true } },
-			dinoz: { select: { id: true, name: true } },
+			dinoz: {
+				select: {
+					id: true,
+					name: true,
+					level: true,
+					raceId: true,
+					nbrUpFire: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpWood: true,
+					nbrUpAir: true,
+					status: { select: { statusId: true } },
+					skills: { select: { skillId: true } },
+				}
+			},
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },
 			bids: {
 				select: {

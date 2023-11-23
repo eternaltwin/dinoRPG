@@ -1,8 +1,49 @@
 <template>
 	<tr>
-		<td class="dinoz">
-			<div v-if="offer.dinoz">🦖</div>
-		</td>
+		<Tippy
+			v-if="offer.dinoz"
+			tag="td"
+			theme="normal"
+			:class="{
+				dinoz: true,
+				'has-dinoz': !!offer.dinoz
+			}"
+			:data-dinoz-level="offer.dinoz?.level || 0"
+		>
+			🦖
+			<template #content>
+				<h1 v-html="offer.dinoz.name" />
+				<div class="dinoz-details">
+					<p class="race">{{ $t(`race.name.${getRace(offer.dinoz).name}`) }} ({{ offer.dinoz.level }})</p>
+					<ul class="status">
+						<li v-for="status in offer.dinoz.status" :key="status.statusId">
+							<img
+								:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
+								:alt="statusList.imgName[status.statusId]"
+							/>
+						</li>
+					</ul>
+					<ul class="stats">
+						<li v-for="element in Object.values<AssaultElement>(AssaultElement)" :key="element">
+							<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
+							<span>{{ getElementStat(element) }}</span>
+						</li>
+					</ul>
+					<ul class="skills">
+						<li v-for="skill in offer.dinoz.skills" :key="skill.skillId">
+							<img
+								v-for="element in skillList[skill.skillId].element"
+								:key="element"
+								:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
+								:alt="ElementNames[element]"
+							/>
+							<span>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</span>
+						</li>
+					</ul>
+				</div>
+			</template>
+		</Tippy>
+		<td v-else />
 		<td class="items-td">
 			<div class="items">
 				<div v-for="item in offer.items" :key="item.id">
@@ -91,6 +132,11 @@ import { OfferService } from '../../services/OfferService.js';
 import { playerStore } from '../../store/index.js';
 import DZInput from '../common/DZInput.vue';
 import { getIngredientName } from '@drpg/core/utils/IngredientUtils';
+import { getRace } from '@drpg/core/utils/DinozUtils';
+import { statusList } from '../../constants/index.js';
+import { AssaultElement } from '@drpg/core/utils/getAssaultStat';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { ElementNames } from '@drpg/core/models/enums/ElementType';
 
 export default defineComponent({
 	name: 'OfferLine',
@@ -116,6 +162,11 @@ export default defineComponent({
 			simplifyDisplay,
 			goTo,
 			getIngredientName,
+			getRace,
+			AssaultElement,
+			statusList,
+			skillList,
+			ElementNames,
 			bidValue: 0
 		};
 	},
@@ -126,6 +177,23 @@ export default defineComponent({
 		},
 		ownOffer() {
 			return this.offer.seller.id === this.playerStore.playerId;
+		},
+		getElementStat(element: AssaultElement) {
+			if (!this.offer.dinoz) return;
+			switch (element) {
+				case AssaultElement.FIRE:
+					return this.offer.dinoz.nbrUpFire;
+				case AssaultElement.WATER:
+					return this.offer.dinoz.nbrUpWater;
+				case AssaultElement.WOOD:
+					return this.offer.dinoz.nbrUpWood;
+				case AssaultElement.AIR:
+					return this.offer.dinoz.nbrUpAir;
+				case AssaultElement.LIGHTNING:
+					return this.offer.dinoz.nbrUpLightning;
+				default:
+					return 0;
+			}
 		},
 		async bid() {
 			if (!this.bidValue) {
@@ -164,6 +232,103 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.dinoz {
+	position: relative;
+
+	&.has-dinoz {
+		&:before {
+			content: attr(data-dinoz-level);
+			display: block;
+			position: absolute;
+			top: -6px;
+			left: -4px;
+			border: 1px solid #ffee92;
+			background-color: #c2381a;
+			color: #ffee92;
+			padding: 2px 4px;
+		}
+	}
+}
+
+.dinoz-details {
+	.race {
+		font-variant: small-caps;
+	}
+
+	.status {
+		list-style-type: none;
+		margin-left: 12px;
+
+		li {
+			display: inline-block;
+
+			&:not(:last-child) {
+				margin-right: 1px;
+			}
+		}
+	}
+
+	.stats {
+		list-style-type: none;
+		margin-left: 4px;
+
+		li {
+			position: relative;
+			display: inline-flex;
+			align-items: center;
+			justify-content: space-around;
+			min-width: 42px;
+			font-size: 10pt;
+			font-weight: bold;
+			color: white;
+			letter-spacing: -0.2pt;
+			z-index: 2;
+			padding-right: 4px;
+
+			&:not(:last-child) {
+				margin-right: 2px;
+			}
+
+			&::before {
+				content: '';
+				position: absolute;
+				width: 80%;
+				height: 13px;
+				background-color: #90452c;
+				left: 20%;
+				top: 5px;
+				border-radius: 10px;
+				z-index: -1;
+			}
+
+			& > img {
+				width: 22px;
+			}
+
+			span {
+				margin-left: 2px;
+			}
+		}
+	}
+
+	.skills {
+		list-style-type: none;
+		margin-left: 12px;
+
+		li {
+			font-size: 9pt;
+
+			img {
+				margin-right: 2px;
+			}
+
+			span {
+				color: #fce3bc;
+			}
+		}
+	}
+}
+
 .items {
 	display: flex;
 	align-items: center;

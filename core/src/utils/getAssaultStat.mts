@@ -6,9 +6,9 @@ import { Stat } from "../models/enums/SkillStat.mjs";
 export enum AssaultElement {
 	FIRE = "fire",
 	WOOD = "wood",
+	WATER = "water",
 	LIGHTNING = "lightning",
 	AIR = "air",
-	WATER = "water",
 }
 
 export const getAssaultStat = (
@@ -64,7 +64,7 @@ export const getAssaultStat = (
 				details.push({
 					type: "skill",
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)![0].toLocaleLowerCase()),
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)?.[0].toLocaleLowerCase() || ''),
 					value: effect,
 				});
 			} else {
@@ -94,7 +94,7 @@ export const getAssaultStat = (
 				details.push({
 					type: "skill",
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)![0].toLocaleLowerCase()),
+					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)?.[0].toLocaleLowerCase() || ''),
 					value: otherElementValue,
 				});
 			}

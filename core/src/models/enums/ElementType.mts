@@ -6,3 +6,13 @@ export enum ElementType {
 	AIR = 5,
 	VOID = 6
 }
+
+export const ElementNames = [
+	"",
+	"fire",
+	"wood",
+	"water",
+	"lightning",
+	"air",
+	"void"
+];

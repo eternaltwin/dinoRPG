@@ -87,7 +87,7 @@ export const getDefenseStat = (
 					details.push({
 						type: "skill",
 						name: skill.name,
-						elements: skill.element.map((el) => Object.entries(ElementType).find(([, value]) => value === el)![0].toLocaleLowerCase()),
+						elements: skill.element.map((el) => Object.entries(ElementType).find(([, value]) => value === el)?.[0].toLocaleLowerCase() || ''),
 						value: effect,
 					});
 				}

@@ -147,7 +147,7 @@ export const getSpecialStat = (
 				type: "skill",
 				name: skill.name,
 				percent,
-				elements: skill.element.map((el) => Object.entries(ElementType).find(([, value]) => value === el)![0].toLocaleLowerCase()),
+				elements: skill.element.map((el) => Object.entries(ElementType).find(([, value]) => value === el)?.[0].toLocaleLowerCase() || ''),
 				value: percent ? (effectValue * 100) : effectValue,
 			});
 		}
