@@ -102,14 +102,16 @@ type ItemId = u32;
 type StatusId = u32;
 
 /// This structure needs to be exactly the same as FighterFiche in core/src/models/fight/FightConfiguration.mts
-#[derive(Deserialize, Serialize, Debug, Default, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct FighterConfiguration {
     /// ID of the dinoz on the node side if it's a dinoz
     pub dinoz_id: u32,
-    /// Tells if the fighter is a monster, this is important because monsters are initialized differently
-    is_monster: bool,
     /// Name of the fighter
     pub name: String,
+    /// Type of fighter (dinoz or monster)
+    pub ftype: FighterType,
+    /// Display code of the fighter
+    pub display: String,
     /// Health of the fighter at the start of the fight, it cannot go above it during a fight
     pub start_life: u32,
     /// The base elements of the fighter (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
@@ -147,17 +149,27 @@ impl FighterResult {
     }
 }
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Deserialize, Serialize)]
+pub enum FighterType {
+    Monster,
+    Dinoz,
+}
+
 #[derive(Debug, Clone)]
 /// Struct to define a Fighter (dino, monster or anything)
 pub struct Fighter {
     // Used & Documented fields
     /// Fighter ID: to handle fights
-    pub id: usize,
+    pub id: u32,
     /// Name of the fighter
     pub name: String,
+    /// Type of fighter (dinoz or monster)
+    pub ftype: FighterType,
+    /// Display code of the fighter
+    pub display: String,
     /// Dinoz ID: to coordinate with the Node backend if it is a dinoz
     pub dinoz_id: u32,
-    /// Side of the fighter - true: attacker, false: defender
+    /// Side of the fighter
     pub side: TeamSide,
     /// Original side of the fighter (in case it temporarily changes side)
     pub original_side: TeamSide,
@@ -308,37 +320,25 @@ impl Fighter {}
 
 // Un-used & non-documented local functions
 
-//=====================================================================================================================
-//                                             EXPORTED FUNCTIONS
-//=====================================================================================================================
-
-// impl Copy for Fighter { }
-
-// impl Clone for Fighter {
-//     fn clone(&self) -> Fighter {
-//         *self
-//     }
-// }
-
 impl Fighter {
     // Documented exported functions
 
     //---------------------------------------------------------------------------------------------------------------------
     // PURPOSE: Create a new Fighter from a configuration
     // PARAMS:  - config (FighterConfiguration): Initial configuration of the fighter
-    //          - fighter_id (usize): The fighter id assigned to this fighter
+    //          - fighter_id (u32): The fighter id assigned to this fighter
     //          - fighter_side (bool): The side of the fighter - true: attacker, false: defender
     // RETURN:  The newly created Fighter entity
     //---------------------------------------------------------------------------------------------------------------------
     pub fn from_config(
         config: &FighterConfiguration,
-        fighter_id: usize,
+        fighter_id: u32,
         fighter_side: TeamSide,
     ) -> Self {
         let mut temp_defense = Self::compute_defenses(config.base_elements);
         let mut temp_elements = OrderedElements::from_elements_array_no_void(config.base_elements);
         // Monsters can get attack bonus that goes to their void elements and a defense bonus
-        if config.is_monster {
+        if config.ftype == FighterType::Monster {
             if config.attack_bonus > 0 {
                 temp_elements[ElementIndex::Void] += config.attack_bonus as i32;
             }
@@ -383,6 +383,8 @@ impl Fighter {
             // Used & documented fields
             id: fighter_id,
             name: config.name.clone(),
+            ftype: config.ftype,
+            display: config.display.clone(),
             dinoz_id: config.dinoz_id,
             side: fighter_side,
             original_side: fighter_side,
@@ -471,18 +473,20 @@ impl Fighter {
 
     //---------------------------------------------------------------------------------------------------------------------
     // PURPOSE: Create a new Fighter with default values. Prefer using "from_config" instead
-    // PARAMS:  - fighter_id (usize): The fighter id assigned to this fighter
+    // PARAMS:  - fighter_id (u32): The fighter id assigned to this fighter
     //          - life (u32): The start life of the fighter. It cannot be exceeded during a fight
     //          - elements ([u32; 5]): The elements of the fighter
     //          - side (bool): The side of the fighter - true: attacker, false: defender
     // RETURN:  The newly created Fighter entity
     //---------------------------------------------------------------------------------------------------------------------
     // Create a new Fighter
-    pub fn new(fighter_id: usize, life: u32, elements: [i32; 5], side: TeamSide) -> Self {
+    pub fn new(fighter_id: u32, life: u32, elements: [i32; 5], side: TeamSide) -> Self {
         Self {
             // Used & documented fields
             id: fighter_id,
             name: String::new(),
+            ftype: FighterType::Dinoz,
+            display: String::new(),
             dinoz_id: 0,
             side,
             original_side: side,
@@ -580,19 +584,17 @@ impl Fighter {
         info!("--- Processing fighter {:} passive skills ---", self.id);
         let skills = self.skills.clone();
         for s in skills {
-            if s.skill_type == SkillType::PASSIVE {
-                debug!("Processing passive skill {:?}", s.id);
+            if s.skill_type() == SkillType::PASSIVE {
+                debug!("Processing passive skill {:?}", s.id());
                 s.process_skill(self, manager);
             }
         }
         info!("--- Processing fighter {:} passive skills done---", self.id);
     }
 
-    //---------------------------------------------------------------------------------------------------------------------
-    // PURPOSE: Get the index of the current element of the fighter
-    // PARAMS:  - do_increment (bool) - Tells if the index should be moved to the Fighter's next element after getting the element
-    // RETURN:  ElementIndex - The index of the current element of the fighter
-    //---------------------------------------------------------------------------------------------------------------------
+    /// Get the index of the current element of the fighter
+    /// Take as parameter a boolean to tells if the index should be moved to the Fighter's next element after getting the element
+    /// Return the [index](`ElementIndex`) of the current element of the fighter
     pub fn get_current_element_index(&mut self, do_increment: bool) -> ElementIndex {
         let index: ElementIndex = self.ordered_elements.get_current_element_index();
         debug!(
@@ -606,11 +608,9 @@ impl Fighter {
         index
     }
 
-    //---------------------------------------------------------------------------------------------------------------------
-    // PURPOSE: Increment the index of the current element of the fighter
-    // PARAMS:  None
-    // RETURN:  ElementIndex - The index of the current element of the fighter
-    //---------------------------------------------------------------------------------------------------------------------
+    /// PURPOSE: Increment the index of the current element of the fighter
+    /// PARAMS:  None
+    /// RETURN:  ElementIndex - The index of the current element of the fighter
     pub fn increment_current_element_index(&mut self) -> ElementIndex {
         debug!(
             "[Fighter {:}:get_current_element_index] Current element index is {:?}",
@@ -779,4 +779,34 @@ impl Fighter {
     // }
 
     // Un-used & non-documented exported functions
+}
+
+/// A reduced model to represent a fighter
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FighterShort {
+    /// Fighter ID: to handle fights
+    pub id: u32,
+    /// Name of the fighter
+    pub name: String,
+    /// Type of fighter (dinoz or monster)
+    pub ftype: FighterType,
+    /// Display code of the fighter
+    pub display: String,
+    /// Dinoz ID: to coordinate with the Node backend if it is a dinoz
+    pub dinoz_id: u32,
+    /// Original side of the fighter
+    pub side: TeamSide,
+}
+
+impl From<Fighter> for FighterShort {
+    fn from(f: Fighter) -> Self {
+        Self {
+            id: f.id,
+            name: f.name.clone(),
+            ftype: f.ftype,
+            display: f.display.clone(),
+            dinoz_id: f.dinoz_id,
+            side: f.original_side,
+        }
+    }
 }

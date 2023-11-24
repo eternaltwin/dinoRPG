@@ -68,7 +68,8 @@ fn main() {
         "attackers": [
             {
                 "dinoz_id": 123,
-                "is_monster": false,
+                "ftype": "Dinoz",
+                "display": "",
                 "name": "toto",
                 "start_life": 100,
                 "base_elements": [
@@ -91,7 +92,8 @@ fn main() {
             },
             {
                 "dinoz_id": 124,
-                "is_monster": false,
+                "ftype": "Dinoz",
+                "display": "",
                 "name": "bob",
                 "start_life": 100,
                 "base_elements": [
@@ -114,7 +116,8 @@ fn main() {
         "defenders": [
             {
                 "dinoz_id": 22,
-                "is_monster": false,
+                "ftype": "Dinoz",
+                "display": "",
                 "name": "kevin",
                 "start_life": 100,
                 "base_elements": [
@@ -141,7 +144,8 @@ fn main() {
             },
             {
                 "dinoz_id": 23,
-                "is_monster": true,
+                "ftype": "Monster",
+                "display": "",
                 "name": "mega water goupignon",
                 "start_life": 50,
                 "base_elements": [

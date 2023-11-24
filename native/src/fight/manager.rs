@@ -23,6 +23,9 @@ use crate::fight::{
     fighter::{Fighter, FighterConfiguration, FighterResult},
 };
 
+use super::fighter::FighterShort;
+use super::history::FightHistory;
+
 //=====================================================================================================================
 //                                             LOCAL CONSTANTS
 //=====================================================================================================================
@@ -42,10 +45,10 @@ const ASSAULT_POWER_BASE: u32 = 5;
 // const INFINITE: u32 = TIMECOEF * 1000 * 1000;
 // const CYCLE: u32 = TIMECOEF * 6;
 
-type FighterId = usize;
+type FighterId = u32;
 
 /// Enum to define the sides on the fight
-#[derive(Serialize, Debug, Clone, Copy, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Clone, Copy, PartialEq)]
 pub enum TeamSide {
     /// Equivalent to true
     Attackers,
@@ -62,23 +65,32 @@ impl Display for TeamSide {
     }
 }
 
-impl TeamSide {
-    pub fn to_boolean(&self) -> bool {
-        match self {
+impl From<bool> for TeamSide {
+    fn from(value: bool) -> Self {
+        if value {
+            TeamSide::Attackers
+        } else {
+            TeamSide::Defenders
+        }
+    }
+}
+
+impl From<TeamSide> for bool {
+    fn from(value: TeamSide) -> Self {
+        match value {
             TeamSide::Attackers => true,
             TeamSide::Defenders => false,
         }
     }
 }
-//---------------------------------------------------------------------------------------------------------------------
-// PURPOSE: Structure to define the result of a fight.
-// PARAMs:  - winner (bool): defines the winner of the fight, true: the attackers won, false: the defenders won
-//          - attackers (Vec<FighterResults>): contains the list of the original attackers with id, hp lost and items
-//            used
-//          - defenders (Vec<FighterResults>): contains the list of the original defenders with id, hp lost and items
-//            used
-// NOTEs:   This structure needs to be exactly the same as FightProcessResult in ed-be/src/models/fight/FightResult.ts
-//---------------------------------------------------------------------------------------------------------------------
+
+/// PURPOSE: Structure to define the result of a fight.
+/// PARAMs:  - winner (bool): defines the winner of the fight, true: the attackers won, false: the defenders won
+///          - attackers (Vec<FighterResults>): contains the list of the original attackers with id, hp lost and items
+///            used
+///          - defenders (Vec<FighterResults>): contains the list of the original defenders with id, hp lost and items
+///            used
+/// NOTE:   This structure needs to be exactly the same as FightProcessResult in core/src/models/fight/FightResult.mts
 #[derive(Serialize, Debug, Clone)]
 pub struct FightResult {
     // true: attackers won, false: defenders won
@@ -86,28 +98,49 @@ pub struct FightResult {
     seed: u64,
     attackers: Vec<FighterResult>,
     defenders: Vec<FighterResult>,
-    history: String,
+    history: FightHistory,
 }
 
 impl Default for FightResult {
     fn default() -> Self {
         Self {
-            winner: TeamSide::Attackers.to_boolean(),
+            winner: TeamSide::Attackers.into(),
             seed: 0,
             attackers: vec![],
             defenders: vec![],
-            history: String::new(),
+            history: FightHistory::new(),
         }
     }
 }
 
 impl FightResult {
-    /// Appends a string to the history
-    pub fn append_to_history(&mut self, action: &str) {
-        self.history.push_str(format!("- {}\n", action).as_str());
+    /// Add a new fighter to the list of fighters that participate in the fight
+    pub fn log_new_fighter(&mut self, short_fighter: FighterShort) {
+        self.history.log_new_fighter(short_fighter);
     }
 
-    pub fn history(&self) -> String {
+    /// Add to the history the details of an assault
+    pub fn log_assault(
+        &mut self,
+        attacker_id: u32,
+        target_id: u32,
+        element_type: ElementIndex,
+        damage: u32,
+    ) {
+        self.history
+            .log_assault(attacker_id, target_id, element_type, damage);
+    }
+
+    /// Add to the history the team that won
+    pub fn log_end_of_fight(&mut self, winnner: TeamSide) {
+        self.history.log_end(winnner);
+    }
+
+    pub fn log_death(&mut self, fighter_id: u32) {
+        self.history.log_death(fighter_id);
+    }
+
+    pub fn history(&self) -> FightHistory {
         self.history.clone()
     }
 }
@@ -142,7 +175,7 @@ pub struct Manager {
     pub random_generator: ChaCha8Rng,
 
     // ID Generator
-    next_id: usize,
+    next_id: u32,
 
     // Flags
     configuration: ManagerConfiguration,
@@ -178,9 +211,7 @@ impl Manager {
     fn announce_teams(&mut self) {
         let mut temp_fight_result = self.fight_result.clone();
         for (_, f) in self.fighters_all.iter() {
-            let msg = format!("{} joins the fight on the {}'s team", f.name, f.side);
-            debug!("{}", msg);
-            temp_fight_result.append_to_history(msg.as_str());
+            temp_fight_result.log_new_fighter(f.clone().into());
         }
         self.fight_result = temp_fight_result;
     }
@@ -190,7 +221,7 @@ impl Manager {
         info!("{:?}", self.fighters_all);
 
         // Get a copy of the keys to extract and place back the fighter and avoid double borrow of Manager
-        let keys: Vec<usize> = self.fighters_all.clone().into_keys().collect();
+        let keys: Vec<u32> = self.fighters_all.clone().into_keys().collect();
 
         for i in keys {
             // Pop the fighter out
@@ -289,14 +320,13 @@ impl Manager {
 
         // All defenders are dead, meaning the attackers won.
         if all_defenders_dead {
-            self.fight_result.winner = TeamSide::Attackers.to_boolean();
-            self.fight_result.append_to_history("Attackers win!");
+            self.fight_result.log_end_of_fight(TeamSide::Attackers);
+            self.fight_result.winner = TeamSide::Attackers.into();
         }
         // Else, meaning the attackers lost.
         else if all_attackers_dead {
-            self.fight_result.winner = TeamSide::Defenders.to_boolean();
-
-            self.fight_result.append_to_history("Defenders win!");
+            self.fight_result.log_end_of_fight(TeamSide::Defenders);
+            self.fight_result.winner = TeamSide::Defenders.into();
         }
         // TODO check that there may be another case (not all died, so a tie?)
 
@@ -373,7 +403,7 @@ impl Manager {
         // TODO improve this comment
         // TODO check for multi element attack defense
         if sum_power > 0 {
-            defense_score = defense_score / sum_power;
+            defense_score /= sum_power;
         }
 
         // TODO check if attacker ignores armor
@@ -451,13 +481,8 @@ impl Manager {
             "[Manager:process_assault] {:} loses {:} life points, only {:} left",
             target.id, hp_lost, target.life
         );
-        self.fight_result.append_to_history(
-            format!(
-                "{} launches a {} assault on {} and deals {} damage",
-                attacker.name, current_element_index, target.name, hp_lost
-            )
-            .as_str(),
-        );
+        self.fight_result
+            .log_assault(attacker.id, target.id, current_element_index, hp_lost);
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -476,8 +501,7 @@ impl Manager {
 
         // If the target is dead, add it to the dfead list, remove it from the list of alive fighters and remove it from its team.
         if target_new.life == 0 {
-            self.fight_result
-                .append_to_history(format!("{} is dead!", target_new.name).as_str());
+            self.fight_result.log_death(target_new.id);
             self.fighters_dead.insert(target_id);
             self.figthers_all_alive_order.retain(|id| *id != target_id);
             if target_new.original_side == TeamSide::Attackers {
@@ -587,7 +611,7 @@ impl Manager {
         let mut all_order: Vec<FighterId> = Vec::new();
         let mut attackers: HashSet<FighterId> = HashSet::new();
         let mut defenders: HashSet<FighterId> = HashSet::new();
-        let mut id: usize = 0;
+        let mut id: u32 = 0;
 
         for a in config.attackers.iter() {
             let f: Fighter = Fighter::from_config(a, id, TeamSide::Attackers);

@@ -1,12 +1,5 @@
-//=====================================================================================================================
-// FILE: fight/skills.rs
-// PURPOSE: Define skills related types, constants and functions
-// COPYRIGHT:
-//=====================================================================================================================
-
-//=====================================================================================================================
-//                                             IMPORTED ITEMS
-//=====================================================================================================================
+//! This module defines types, constants and functions related to skills.
+//! Skills implementations can be found in the `skills` folder
 
 use log::error;
 use serde::{Deserialize, Serialize};
@@ -44,7 +37,7 @@ pub enum SkillType {
     UNKNOWN,
 }
 
-/// This wrapper type is meant to catch any wrong values from the configuration
+/// This wrapper type is meant to catch any wrong values from the configuration and prevent a crash
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(untagged)]
 pub enum SkillOrUnknown {
@@ -55,22 +48,23 @@ pub enum SkillOrUnknown {
 /// Shortcut to the effect of a skill
 pub type SkillEffect = fn(&mut Fighter, &mut Manager);
 
-/// Definition of a skill
+/// Definition of a skill, fields are kept private because they are not meant to be changed after creation
 #[derive(Clone, Copy)]
 pub struct Skill {
-    /// ID of the skill
-    pub id: SkillId,
+    /// [ID](`SkillId`) of the skill
+    id: SkillId,
     // pub elements: Vec<ElementIndex>, // don't think that's needed
     /// [Type](`SkillType`) of the skill
-    pub skill_type: SkillType, // "type" is a protected keyword in rust
+    /// Note: "type" is a protected keyword in rust
+    skill_type: SkillType,
     /// Amount of energy used by the skill
-    pub energy: u32,
+    energy: u32,
     /// [Effect](`SkillEffect`) of the skill
-    pub effect: SkillEffect,
+    effect: SkillEffect,
     /// If true, the skill should be disabled. This is a not related to the enabled/disabled feature for skills.
-    /// Instead this is a kill switch to disable/ignore a skill quickly.
+    /// Instead this is a kill-switch to disable/ignore a skill quickly.
     /// Also some skills just have no effect in fights, so this field will be used to mark them as such.
-    pub ignore: bool,
+    ignore: bool,
 }
 
 impl std::fmt::Debug for Skill {
@@ -100,12 +94,38 @@ impl Skill {
         skills
     }
 
+    /// Processes the [effect](`SkillEffect`) of a skill
     pub fn process_skill(self, f: &mut Fighter, m: &mut Manager) {
         if !self.ignore {
             (self.effect)(f, m);
         } else {
             error!("Skill {:?} not processed because it is ignored", self.id);
         }
+    }
+
+    /// Getter for the [id](`SkillId`) of the skill
+    pub fn id(&self) -> SkillId {
+        self.id
+    }
+
+    /// Getter for the [type](`SkillType`) of the skill
+    pub fn skill_type(&self) -> SkillType {
+        self.skill_type
+    }
+
+    /// Getter for the energy consumed by the skill
+    pub fn energy(&self) -> u32 {
+        self.energy
+    }
+
+    /// Getter for the [effect](`SkillEffect`) of the skill
+    pub fn effect(&self) -> SkillEffect {
+        self.effect
+    }
+
+    /// Getter for the `ignore` field of the skill
+    pub fn ignore(&self) -> bool {
+        self.ignore
     }
 }
 
@@ -752,12 +772,3 @@ static UNKNOWN_SKILL: Skill = Skill {
     effect: |_f: &mut Fighter, _: &mut Manager| error!("Unknown skill, ignored for fights"),
     ignore: true,
 };
-
-// --- VOID / RACE / OTHER Skills ---
-// static COMPETENCE_DOUBLE => COMPETENCE_DOUBLE,
-// static LIMITE_BRISEE => LIMITE_BRISEE,
-// static INVOCATEUR => INVOCATEUR,
-
-// --- OTHER Skills ---
-
-// --- MONSTER Skills ---
