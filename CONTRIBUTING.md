@@ -24,7 +24,7 @@ make test-lint-front ##for checking lint
 make fix-lint-front ##for fixing the lint
 ```
 
-3- Issue a Merge Request describing summarizing what you have done, wait the approval of an other developper before merging
+3- Issue a Merge Request describing summarizing what you have done, wait the approval of an other developer before merging
 
 4- Try to always merge with squash commit.
 
