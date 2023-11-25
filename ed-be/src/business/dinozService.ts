@@ -6,6 +6,7 @@ import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { gatherList } from '@drpg/core/models/gather/gatherList';
+import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
@@ -14,7 +15,7 @@ import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { DinozForDinozFiche, actualPlace, canChangeSkillState, canGoToThisPlace, canLevelUp, getNumberOfGatheringTries, getRace, initializeDinoz, isAlive, knowSkillId, toDinozFiche, toDinozSkillFiche } from '@drpg/core/utils/DinozUtils';
 import { discoverBox, getGridSize, hideGridIngredients, initializeGatherGrid, saveGrid } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Concentration, Dinoz, DinozMission } from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -22,6 +23,7 @@ import { TemporaryStatus, shopList } from '../constants/index.js';
 import {
 	createDinoz,
 	getActiveDinoz,
+	getAvailableDinozToFollowCount,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
 	getDinozFicheRequest,
@@ -31,11 +33,12 @@ import {
 	getDinozSkillRequest,
 	getManageData,
 	updateDinoz,
-	updateOrderData,
+	updateMultipleDinoz,
+	updateOrderData
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import { addMoney, removeMoney } from '../dao/playerDao.js';
+import { addMoney, ownsDinoz, removeMoney } from '../dao/playerDao.js';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGatherDao.js';
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
@@ -47,16 +50,17 @@ import { rewarder } from '../utils/rewarder.js';
 import { moveFight } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
-import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 
 /**
  * @summary Get available action from dinoz
  */
-export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
-	'id' | 'experience' | 'isSelling'
+export async function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
+	'id' | 'experience' | 'isSelling' | 'leaderId'
 > & {
 	missions: DinozMission[];
 	concentration: Concentration | null;
+	player: (DinozForConditionCheck['player'] & Pick<Player, 'id'>) | null;
+	followers: Pick<Dinoz, 'id'>[];
 }) {
 	if (!dinoz.player) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to any player.`);
@@ -86,14 +90,14 @@ export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
 		return availableActions;
 	}
 
-	// Default actions
-	availableActions.push(actionList[Action.FIGHT]);
-	//availableActions.push(actionList[Action.FOLLOW]);
+	if (!dinoz.leaderId) {
+		availableActions.push(actionList[Action.FIGHT]);
+	}
 
 	//Gather
 	if (
 		dinozPlace.gather !== undefined &&
-		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition, dinoz)
+		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition, [dinoz])
 	) {
 		const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.gather);
 		if (!gatherFound) {
@@ -108,7 +112,7 @@ export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
 	// Special Gather
 	if (
 		dinozPlace.specialGather !== undefined &&
-		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather)?.condition, dinoz)
+		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather)?.condition, [dinoz])
 	) {
 		const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather);
 		if (!gatherFound) {
@@ -164,7 +168,7 @@ export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
 
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
-		if (!npc.condition || checkCondition(npc.condition, dinoz)) {
+		if (!npc.condition || checkCondition(npc.condition, [dinoz])) {
 			availableActions.push({
 				name: actionList[Action.NPC].name,
 				imgName: actionList[Action.NPC].imgName,
@@ -183,10 +187,19 @@ export function getAvailableActions(dinoz: DinozForConditionCheck & Pick<Dinoz,
 	}
 
 	if (canLevelUp(dinoz, gameConfig)) {
-		availableActions.push({
-			name: actionList[Action.LEVEL_UP].name,
-			imgName: actionList[Action.LEVEL_UP].imgName
-		});
+		availableActions.push(actionList[Action.LEVEL_UP]);
+	}
+
+	// If Dinoz is following another dinoz, add the unfollow action
+	if (dinoz.leaderId) {
+		availableActions.push(actionList[Action.UNFOLLOW]);
+	} else {
+		// Check if there is a dinoz to follow
+		const dinozToFollowCount = await getAvailableDinozToFollowCount(dinoz.player.id, dinoz.id);
+
+		if (dinoz.followers.length === 0 && dinozToFollowCount > 0) {
+			availableActions.push(actionList[Action.FOLLOW]);
+		}
 	}
 	return availableActions;
 }
@@ -228,7 +241,8 @@ export async function getDinozFiche(req: Request) {
 
 	// Create the answer that will be sent back
 	const ret = toDinozFiche(dinozData);
-	ret.actions = getAvailableActions(dinozData);
+	ret.actions = await getAvailableActions(dinozData);
+
 	return ret;
 }
 
@@ -318,6 +332,7 @@ export async function buyDinoz(req: Request) {
 		skills: [],
 		missions: [],
 		items: [],
+		followers: [],
 		player: {
 			engineer: false,
 			items: [],
@@ -440,6 +455,12 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
+	const followers = dinoz.followers.map(follower => ({
+		...follower,
+		player: dinoz.player
+	}));
+	const team = [dinoz, ...followers];
+
 	if (dinoz.concentration) {
 		throw new ErrorFormator(400, 'concentration');
 	}
@@ -464,19 +485,23 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(500, `${dinozPlace.name} is not adjacent with ${desiredPlace.name}`);
 	}
 
-	// Check if condition to go to desired place are fullfill
-	if (desiredPlace.conditions && !canGoToThisPlace(dinoz, desiredPlace.conditions)) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
+	// Check if condition to go to desired place are fullfilled for dinoz and followers
+	if (desiredPlace.conditions) {
+		for (const member of team) {
+			if(!canGoToThisPlace(member, desiredPlace.conditions)) {
+				throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
+			}
+		}
 	}
 
 	// If dinoz leave the map, replace by the good place
 	const finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
 
-	let fight = await mouvementListener(dinoz, finalPlace);
+	let fight = await mouvementListener(team, finalPlace);
 	if (!fight) {
-		fight = await moveFight(dinoz, finalPlace);
+		fight = await moveFight(team, finalPlace);
 		if (fight.result) {
-			await updateDinoz(dinoz.id, { placeId: finalPlace });
+			await updateMultipleDinoz(team.map(d =>d.id), { placeId: finalPlace });
 		}
 	}
 	return fight;
@@ -530,12 +555,12 @@ export async function digWithDinoz(req: Request) {
 
 	const digPlace = Object.values(digTreasures).find(dig => dig.place === dinozData.placeId);
 	let reward: Rewarder[];
-	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, dinozData)) {
+	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, [dinozData])) {
 		reward = digPlace.reward;
 	} else {
 		reward = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(100, 500) }];
 	}
-	await rewarder(reward, dinozData);
+	await rewarder(reward, [dinozData]);
 
 	//Broke shovel
 	if (dinozData.status.some(status => status.statusId === statusList.SHOVEL)) {
@@ -588,7 +613,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 		throw new ErrorFormator(500, `Dinoz cannot gather at this place`);
 	}
 
-	if (!checkCondition(gatherPlace.condition, dinozData)) {
+	if (!checkCondition(gatherPlace.condition, [dinozData])) {
 		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
 	}
 
@@ -654,7 +679,7 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ErrorFormator(500, `You don't have generated any grid.`);
 	}
 
-	if (!checkCondition(gatherPlace.condition, dinozData)) {
+	if (!checkCondition(gatherPlace.condition, [dinozData])) {
 		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
 	}
 
@@ -798,4 +823,45 @@ export async function updateOrders(req: Request) {
 
 	// Update orders
 	await updateOrderData(dinozList);
+}
+
+/**
+ * Follow a dinoz
+ */
+export async function followDinoz(req: Request) {
+	const dinozId = +req.params.id;
+	const dinozToFollowId = +req.params.targetId;
+
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(req.auth.playerId, dinozId, dinozToFollowId))) {
+		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	}
+
+	// Update dinoz
+	await updateDinoz(dinozId, { leader: { connect: { id: dinozToFollowId } } });
+}
+
+/**
+ * Unfollow a dinoz
+ */
+export async function unfollowDinoz(req: Request) {
+	const dinozId = +req.params.id;
+
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	}
+
+	// Update dinoz
+	await updateDinoz(dinozId, { leader: { disconnect: true} });
 }

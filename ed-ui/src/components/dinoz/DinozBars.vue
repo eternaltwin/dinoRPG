@@ -36,7 +36,10 @@
 					/>
 				</div>
 			</div>
-			<div class="xptext">{{ dinozData.experience }} / {{ dinozData.maxExperience }}</div>
+			<div class="xptext">
+				{{ dinozData.experience > dinozData.maxExperience ? dinozData.maxExperience : dinozData.experience }} /
+				{{ dinozData.maxExperience }}
+			</div>
 		</div>
 	</div>
 </template>
@@ -50,12 +53,12 @@ export default defineComponent({
 	props: { dinozData: Object as PropType<DinozFiche> },
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
-			let width: number = Math.round((value / maxValue) * 98);
+			// Limit value to max value
+			const actualValue = value > maxValue ? maxValue : value;
+
+			const width = Math.round((actualValue / maxValue) * 98);
 			if (maxValue === 0) {
 				return `width : 0px ; height : 11px`;
-			}
-			if (value > maxValue) {
-				width = 98;
 			}
 			return `width : ${width}px ; height : 11px`;
 		}

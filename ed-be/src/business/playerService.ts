@@ -1,7 +1,7 @@
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
-import { toDinozFiche, toDinozFicheLite } from '@drpg/core/utils/DinozUtils';
+import { orderDinozList, toDinozFiche, toDinozFicheLite } from '@drpg/core/utils/DinozUtils';
 import { Request } from 'express';
 import { getAllDinozFicheLite, getDinozTotalCount } from '../dao/dinozDao.js';
 import {
@@ -47,6 +47,9 @@ export async function getCommonData(req: Request) {
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PMI)
 		}
 	};
+
+	// Order dinoz
+	commonData.dinoz = orderDinozList(commonData.dinoz);
 
 	return commonData;
 }

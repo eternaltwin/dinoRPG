@@ -17,6 +17,9 @@
 						:key="action.name"
 						:id="action.imgName"
 						@click="launch(action)"
+						:class="{
+							hover: action.name === Action.FOLLOW && dinozAvailableToFollow.length > 0
+						}"
 					>
 						<td class="icon">
 							<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
@@ -72,6 +75,19 @@
 							/>
 						</template>
 					</Tippy>
+					<tr
+						v-for="dinozToFollow in dinozAvailableToFollow"
+						:key="dinozToFollow.id"
+						class="dinoz-to-follow"
+						@click="followDinoz(dinozToFollow.id)"
+					>
+						<td class="icon">
+							<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
+						</td>
+						<td class="label">
+							{{ dinozToFollow.name }}
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</ul>
@@ -97,10 +113,11 @@ import Resurect from '../../components/modal/ResurrectModal.vue';
 import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
-import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
+import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -112,12 +129,14 @@ export default defineComponent({
 			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
 				.missionHUD,
 			npcName: undefined as string | undefined,
-			missionReward: undefined as Array<Rewarder> | undefined,
+			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
 			MissionEnum: ConditionEnum,
 			digReward: undefined as Rewarder | undefined,
-			dinozId: this.$route.params.id.toString()
+			dinozId: this.$route.params.id.toString(),
+			dinozAvailableToFollow: [] as DinozFiche[],
+			Action
 		};
 	},
 	components: {
@@ -129,10 +148,11 @@ export default defineComponent({
 	},
 	props: {
 		dinozActions: Object as PropType<Array<ActionFiche>>,
+		updateActions: Function as PropType<(actions: Array<ActionFiche>) => void>,
 		missionId: Number
 	},
 	methods: {
-		async launch(action: ActionFiche): Promise<void> {
+		async launch(action: ActionFiche) {
 			switch (action.name) {
 				case Action.LEVEL_UP:
 					this.$router.push({
@@ -225,16 +245,89 @@ export default defineComponent({
 						name: 'MarketPage'
 					});
 					break;
+				case Action.FOLLOW: {
+					if (!this.dinozStore.getDinozList) {
+						EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+						return;
+					}
+
+					const currentDinoz = this.dinozStore.getDinoz(+this.$route.params.id);
+
+					if (!currentDinoz) {
+						EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+						return;
+					}
+
+					// Display the list of dinoz available to follow
+					const dinozList = this.dinozStore.getDinozList.filter(
+						dinoz =>
+							dinoz.id !== +this.$route.params.id &&
+							!dinoz.isSelling &&
+							!dinoz.leaderId &&
+							dinoz.placeId === currentDinoz.placeId
+					);
+
+					this.dinozAvailableToFollow = dinozList;
+					break;
+				}
+				case Action.UNFOLLOW: {
+					try {
+						await DinozService.unfollow(+this.$route.params.id);
+
+						// Refresh followed and following status
+						let currentDinozList = this.dinozStore.getDinozList;
+						if (!currentDinozList) {
+							EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+							return;
+						}
+
+						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
+						if (!currentDinoz) {
+							EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+							return;
+						}
+
+						const previousLeader = currentDinoz.leaderId;
+
+						// Update current dinoz and previous leader
+						currentDinozList = currentDinozList.map(dinoz => {
+							if (dinoz.id === currentDinoz.id) {
+								dinoz.leaderId = null;
+							} else if (dinoz.id === previousLeader) {
+								dinoz.followers = dinoz.followers.filter(follower => follower !== currentDinoz.id);
+							}
+							return dinoz;
+						});
+
+						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+
+						// Remove unfollow action and add follow and fight actions
+						const dinozActions = this.dinozActions;
+						if (!dinozActions || !this.updateActions) {
+							EventBus.emit('toast', { type: 'error', message: 'missingData' });
+							return;
+						}
+
+						this.updateActions([
+							actionList[Action.FIGHT],
+							...dinozActions.filter(action => action.name !== Action.UNFOLLOW),
+							actionList[Action.FOLLOW]
+						]);
+					} catch (e) {
+						errorHandler.handle(e);
+					}
+					break;
+				}
 				default:
 					console.log(action.name);
 					break;
 			}
 		},
-		continueMission(): void {
+		continueMission() {
 			this.NPCModal = undefined;
 			this.$emit('continueMission');
 		},
-		endMission(): void {
+		endMission() {
 			this.missionReward = undefined;
 			const dinozId = parseInt(this.$route.params.id as string);
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche;
@@ -243,27 +336,69 @@ export default defineComponent({
 			this.dinozStore.setDinoz(dinozToUpdate);
 			this.$emit('endMission');
 		},
-		validateMission(): void {
+		validateMission() {
 			this.missionReward = undefined;
 			EventBus.emit('refreshDinoz', true);
 		},
-		npcDisplayName(npcId: number): string | undefined {
+		npcDisplayName(npcId: number) {
 			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
 		},
-		isSelling(): boolean {
+		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 
 			return !!dinoz?.isSelling;
+		},
+		async followDinoz(targetId: number) {
+			try {
+				await DinozService.follow(+this.$route.params.id, targetId);
+
+				// Reset the list of dinoz available to follow
+				this.dinozAvailableToFollow = [];
+
+				// Refresh followed and following status
+				const currentDinozList = this.dinozStore.getDinozList;
+				if (!currentDinozList) {
+					EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+					return;
+				}
+
+				this.dinozStore.setDinozList(
+					orderDinozList(
+						currentDinozList.map(dinoz => {
+							if (dinoz.id === +this.$route.params.id) {
+								dinoz.leaderId = targetId;
+							} else if (dinoz.id === targetId) {
+								dinoz.followers.push(+this.$route.params.id);
+							}
+							return dinoz;
+						})
+					)
+				);
+
+				// Remove follow and fight actions and add unfollow action
+				const dinozActions = this.dinozActions;
+				if (!dinozActions || !this.updateActions) {
+					EventBus.emit('toast', { type: 'error', message: 'missingData' });
+					return;
+				}
+
+				this.updateActions([
+					...dinozActions.filter(action => action.name !== Action.FOLLOW && action.name !== Action.FIGHT),
+					actionList[Action.UNFOLLOW]
+				]);
+			} catch (e) {
+				errorHandler.handle(e);
+			}
 		}
 	},
 	computed: {
-		missionName(): string | undefined {
+		missionName() {
 			if (this.missionId) {
 				return missionsList[this.missionId!];
 			}
 			return undefined;
 		},
-		storeMission(): MissionHUD | null {
+		storeMission() {
 			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missionHUD || null;
 		}
 	},
@@ -312,13 +447,34 @@ export default defineComponent({
 		border-spacing: 0;
 		margin-bottom: 2px;
 		width: 175px;
-		tr:hover {
-			td {
-				&.icon {
-					outline: 1px solid white;
+		tr {
+			&:hover,
+			&.hover {
+				td {
+					&.icon {
+						outline: 1px solid white;
+					}
+					&.label {
+						background-color: #9a4029;
+					}
 				}
-				&.label {
-					background-color: #9a4029;
+			}
+
+			&.dinoz-to-follow {
+				padding: 2px;
+				.icon {
+					text-align: right;
+					padding-top: 6px;
+					padding-bottom: 6px;
+				}
+
+				&:hover {
+					td {
+						&.icon {
+							outline: none;
+							background-color: #9a4029;
+						}
+					}
 				}
 			}
 		}

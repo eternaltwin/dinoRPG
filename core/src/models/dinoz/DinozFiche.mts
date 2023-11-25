@@ -12,7 +12,8 @@ export interface DinozFiche {
 	level: number;
 	missionId: number | undefined;
 	missionHUD: MissionHUD | null;
-	following: number | null;
+	leaderId: number | null;
+	followers: number[];
 	life: number;
 	maxLife: number;
 	experience: number;

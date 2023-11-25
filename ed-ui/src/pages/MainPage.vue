@@ -42,7 +42,6 @@ import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { errorHandler } from '../utils/index.js';
 import { PlayerService } from '../services/index.js';
 import EventBus from '../events/index.js';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 
 export default defineComponent({
 	name: 'MainPage',
@@ -63,7 +62,7 @@ export default defineComponent({
 
 			// Set data in sessionStore
 			this.playerStore.setMoney(commonData.money);
-			this.dinozStore.setDinozList(orderDinozList(commonData.dinoz));
+			this.dinozStore.setDinozList(commonData.dinoz);
 			this.dinozStore.setDinozCount(commonData.dinozCount);
 			this.playerStore.setPlayerId(commonData.id);
 			this.playerStore.setPlayerName(commonData.name);

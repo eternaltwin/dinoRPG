@@ -113,7 +113,7 @@ exports.Prisma.ConcentrationScalarFieldEnum = {
 
 exports.Prisma.DinozScalarFieldEnum = {
   id: 'id',
-  following: 'following',
+  leaderId: 'leaderId',
   name: 'name',
   isFrozen: 'isFrozen',
   isSacrificed: 'isSacrificed',

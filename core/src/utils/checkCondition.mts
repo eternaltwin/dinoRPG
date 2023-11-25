@@ -5,27 +5,27 @@ import { conditionParser } from './parser.mjs';
 
 export function checkCondition(
 	condition: Condition | undefined,
-	dinoz: DinozForConditionCheck
+	dinozList: DinozForConditionCheck[]
 ): boolean {
 	if (!condition) return true;
 	let conditionResult = true;
 
 	if (condition[Operator.AND]) {
 		for (const subCondition of condition[Operator.AND]) {
-			conditionResult = conditionResult && checkCondition(subCondition, dinoz);
+			conditionResult = conditionResult && checkCondition(subCondition, dinozList);
 		}
 	} else if (condition[Operator.OR]) {
 		conditionResult = false;
 		for (const subCondition of condition[Operator.OR]) {
-			conditionResult = checkCondition(subCondition, dinoz) || conditionResult;
+			conditionResult = checkCondition(subCondition, dinozList) || conditionResult;
 		}
 	} else if (condition[Operator.NOT]) {
-		conditionResult = !checkCondition(condition[Operator.NOT], dinoz);
+		conditionResult = !checkCondition(condition[Operator.NOT], dinozList);
 	}
 
 	if (condition[Operator.AND] || condition[Operator.OR] || condition[Operator.NOT]) {
 		return conditionResult;
 	}
 
-	return conditionParser(condition, dinoz);
+	return conditionParser(condition, dinozList);
 }

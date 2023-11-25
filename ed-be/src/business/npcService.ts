@@ -49,7 +49,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
 	}
 
-	if (pnj.condition && !checkCondition(pnj.condition, dinoz)) {
+	if (pnj.condition && !checkCondition(pnj.condition, [dinoz])) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} don't meet requirement to talk to ${pnj.name}.`);
 	}
 	if (actualPlace.placeId !== pnj.placeId && !req.body.stop) {
@@ -105,7 +105,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		) {
 			throw new ErrorFormator(500, `This step is not reachable.`);
 		}
-		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, dinoz)) {
+		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, [dinoz])) {
 			throw new ErrorFormator(500, `The dinoz doesn't fullfill the conditions.`);
 		}
 
@@ -145,7 +145,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 					};
 				}
 			}
-			await rewarder(nextStepWantedData.reward, dinoz);
+			await rewarder(nextStepWantedData.reward, [dinoz]);
 
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
 			const refreshedDinoz = await getDinozNPCRequest(dinozId);
@@ -170,7 +170,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		if (!dinoz) {
 			throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 		}
-		return condition === undefined || checkCondition(condition, dinoz);
+		return condition === undefined || checkCondition(condition, [dinoz]);
 	});
 
 	return {

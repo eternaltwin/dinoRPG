@@ -3,6 +3,7 @@ import { GatherType } from "../enums/GatherType.mjs";
 export enum Action {
 	FIGHT = 'fight',
 	FOLLOW = 'follow',
+	UNFOLLOW = 'unfollow',
 	SHOP = 'shop',
 	LEVEL_UP = 'levelup',
 	NPC = 'npc',
@@ -34,6 +35,10 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.FOLLOW]: {
 		name: Action.FOLLOW,
 		imgName: 'act_follow'
+	},
+	[Action.UNFOLLOW]: {
+		name: Action.UNFOLLOW,
+		imgName: 'act_follow_stop'
 	},
 	[Action.SHOP]: {
 		name: Action.SHOP,

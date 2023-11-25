@@ -150,7 +150,7 @@ export async function listAllDinozFromPlayer(req: Request) {
 			isSacrificed: dinoz.isSacrificed,
 			level: dinoz.level,
 			canChangeName: dinoz.canChangeName,
-			following: dinoz.following,
+			leaderId: dinoz.leaderId,
 			missionId: dinoz.missionId,
 			life: dinoz.life,
 			maxLife: dinoz.maxLife,

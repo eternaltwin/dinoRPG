@@ -32,6 +32,7 @@
 		"unknownDinoz": "Dinoz inconnu",
 		"missingUser": "Utilisateur manquant",
 		"invalidOffer": "Offre invalide",
+		"missingData": "Données manquantes",
 		"bidIsLower": "Votre enchère est inférieure à la précédente.",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
@@ -100,6 +101,7 @@
 		"description": {
 			"fight": "Recherchez un monstre à combattre à cet endroit. Vous pouvez effectuer **un déplacement ou un combat par jour** et par Dinoz.",
 			"follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
+			"unfollow": "Votre Dinoz suit actuellement un autre de vos Dinoz. Cliquez sur cette action pour qu'il arrête de le suivre.",
 			"levelup": "Votre Dinoz a gagné suffisamment d'expérience pour atteindre le niveau superieur. Cliquez sur cette action pour augmenter la puissance de votre Dinoz.",
 			"resurrect": "Votre Dinoz est mort, il faut donc le Ressusciter avant de pouvoir à nouveau le faire combattre.",
 			"dig": "Votre Dinoz peut **creuser** à cet endroit avec la pelle pour y trouver peut-être un trésor.",
@@ -119,6 +121,7 @@
 		"name": {
 			"fight": "Combattre",
 			"follow": "Suivre",
+			"unfollow": "Ne plus suivre",
 			"levelup": "Niveau Supplémentaire !",
 			"resurrect": "Ressusciter",
 			"dig": "Creuser",
@@ -3605,5 +3608,7 @@
 			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
 			"yourBids": "Vos mises"
 		}
-	}
+	},
+	"following": "Ce Dinoz suit son chef de groupe.",
+	"followed": "Ce Dinoz est chef de groupe."
 }

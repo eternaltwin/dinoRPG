@@ -93,7 +93,7 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 	'isFrozen' |
 	'isSelling' |
 	'level' |
-	'following' |
+	'leaderId' |
 	'life' |
 	'maxLife' |
 	'experience' |
@@ -110,6 +110,7 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 	items: Pick<DinozItem, 'itemId'>[];
 	status: Pick<DinozStatus, 'statusId'>[];
 	skills: Pick<DinozSkill, 'skillId'>[];
+	followers: Pick<Dinoz, 'id'>[];
 	player: Pick<Player, 'engineer'> & {
 		items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
 		rewards: Pick<PlayerReward, 'rewardId'>[];
@@ -123,7 +124,8 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 		isSelling: dinoz.isSelling,
 		level: dinoz.level,
 		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId,
-		following: dinoz.following,
+		leaderId: dinoz.leaderId,
+		followers: dinoz.followers.map(follower => follower.id),
 		life: dinoz.life,
 		maxLife: dinoz.maxLife,
 		experience: dinoz.experience,
@@ -141,7 +143,7 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 				}
 				return place;
 			})
-			.filter(place => !place.conditions || checkCondition(place.conditions, dinoz))
+			.filter(place => !place.conditions || checkCondition(place.conditions, [dinoz]))
 			.map(place => place.placeId),
 		nbrUpFire: dinoz.nbrUpFire,
 		nbrUpWood: dinoz.nbrUpWood,
@@ -160,7 +162,7 @@ export const toDinozFicheLite = (
 		'id' |
 		'name' |
 		'display' |
-		'following' |
+		'leaderId' |
 		'life' |
 		'maxLife' |
 		'experience' |
@@ -174,7 +176,7 @@ export const toDinozFicheLite = (
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		following: dinoz.following,
+		leaderId: dinoz.leaderId,
 		life: dinoz.life,
 		maxLife: dinoz.maxLife,
 		experience: dinoz.experience,
@@ -209,7 +211,7 @@ export const knowSkillId = (dinoz: {
 }
 
 export const canGoToThisPlace = (dinoz: DinozForConditionCheck, condition: Condition) => {
-	return checkCondition(condition, dinoz);
+	return checkCondition(condition, [dinoz]);
 };
 
 export const possessStatus = (dinoz: {
@@ -354,8 +356,14 @@ export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: n
 	};
 }
 
-export const orderDinozList = <T extends Pick<Dinoz, 'order' | 'name'>[]> (dinozList: T) => {
-	return dinozList.sort((a, b) => {
+export const orderDinozList = <T extends Pick<DinozFiche,
+	'id' |
+	'order' |
+	'name' |
+	'leaderId' |
+	'followers'
+>[]> (dinozList: T) => {
+	const sortedByOrderAndName = [...dinozList].sort((a, b) => {
 		if (a.order === b.order) {
 			return a.name.localeCompare(b.name);
 		}
@@ -368,4 +376,20 @@ export const orderDinozList = <T extends Pick<Dinoz, 'order' | 'name'>[]> (dinoz
 
 		return a.order - b.order;
 	});
+
+	// Group by leader
+	for (const leader of sortedByOrderAndName.filter(dinoz => dinoz.followers.length)) {
+		// Find all dinoz that follow this leader
+		const followers = sortedByOrderAndName.filter(dinoz => dinoz.leaderId === leader.id);
+
+		// Remove them from the list
+		for (const follower of followers) {
+			sortedByOrderAndName.splice(sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id), 1);
+		}
+
+		// Add them after the leader
+		sortedByOrderAndName.splice(sortedByOrderAndName.findIndex(dinoz => dinoz.id === leader.id) + 1, 0, ...followers);
+	}
+
+	return sortedByOrderAndName;
 }

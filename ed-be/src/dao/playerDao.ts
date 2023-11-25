@@ -96,7 +96,7 @@ export async function getCommonDataRequest(playerId: number) {
 			dinoz: {
 				select: {
 					id: true,
-					following: true,
+					leaderId: true,
 					display: true,
 					name: true,
 					life: true,
@@ -118,6 +118,7 @@ export async function getCommonDataRequest(playerId: number) {
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } },
+					followers: { select: { id: true } },
 				},
 				where: { isFrozen: false },
 				orderBy: [{ order: 'asc' }, { name: 'asc' }]
@@ -201,35 +202,40 @@ export async function getPlayerDataRequest(playerId: number) {
 			engineer: true,
 			rewards: { select: { rewardId: true } },
 			items: { select: { itemId: true, quantity: true } },
-			dinoz: { select: {
-				id: true,
-				display: true,
-				name: true,
-				level: true,
-				raceId: true,
-				life: true,
-				isFrozen: true,
-				isSelling: true,
-				following: true,
-				placeId: true,
-				maxLife: true,
-				experience: true,
-				nbrUpFire: true,
-				nbrUpWood: true,
-				nbrUpWater: true,
-				nbrUpLightning: true,
-				nbrUpAir: true,
-				order: true,
-				status: { select: { statusId: true } },
-				missions: true,
-				items: { select: { itemId: true } },
-				skills: { select: { skillId: true } },
-			} },
-			ranking: { select: {
-				dinozCountDisplayed: true,
-				sumPosition: true,
-				sumPointsDisplayed: true
-			} },
+			dinoz: {
+				select: {
+					id: true,
+					display: true,
+					name: true,
+					level: true,
+					raceId: true,
+					life: true,
+					isFrozen: true,
+					isSelling: true,
+					leaderId: true,
+					placeId: true,
+					maxLife: true,
+					experience: true,
+					nbrUpFire: true,
+					nbrUpWood: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpAir: true,
+					order: true,
+					status: { select: { statusId: true } },
+					missions: true,
+					items: { select: { itemId: true } },
+					skills: { select: { skillId: true } },
+					followers: { select: { id: true } },
+				}
+			},
+			ranking: {
+				select: {
+					dinozCountDisplayed: true,
+					sumPosition: true,
+					sumPointsDisplayed: true
+				}
+			},
 		}
 	});
 
@@ -243,13 +249,15 @@ export async function prepareConcentration(playerId: number) {
 		},
 		select: {
 			id: true,
-			dinoz: { select: {
-				id: true,
-				placeId: true,
-				name: true,
-				concentration: true,
-				status: true,
-			} }
+			dinoz: {
+				select: {
+					id: true,
+					placeId: true,
+					name: true,
+					concentration: true,
+					status: true,
+				}
+			}
 		}
 	});
 
@@ -501,4 +509,21 @@ export async function setPlayer(playerId: number, player: Prisma.PlayerUpdateInp
 	});
 
 	return playerData;
+}
+
+export async function ownsDinoz(playerId: number, ...dinozIds: number[]) {
+	const player = await prisma.player.count({
+		where: {
+			id: playerId,
+			AND: dinozIds.map(dinozId => ({
+				dinoz: {
+					some: {
+						id: dinozId
+					}
+				}
+			})),
+		},
+	});
+
+	return player > 0;
 }

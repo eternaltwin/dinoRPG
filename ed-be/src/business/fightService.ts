@@ -5,11 +5,11 @@ import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { actualPlace, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
+import { actualPlace, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozItem, DinozSkill, DinozStatus, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import pkg from 'native-dinorpg';
-import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
+import { getDinozFightDataRequest, updateDinoz, updateMultipleDinoz } from '../dao/dinozDao.js';
 import { addMoney } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomNumber } from '../utils/index.js';
@@ -35,6 +35,12 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
+	const followers = dinozData.followers.map(follower => ({
+		...follower,
+		player: dinozData.player
+	}));
+	const team = [dinozData, ...followers];
+
 	if (dinozData.concentration) {
 		throw new ErrorFormator(400, 'concentration');
 	}
@@ -43,17 +49,19 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(400, 'dead');
 	}
 
-	const monster = generateMonster([dinozData]); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
+	const monster = generateMonster(team); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
 
-	const fightResult = calculateFight(dinozData, monster);
+	const fightResult = calculateFight(team, monster);
 
-	const result = await rewardFight(dinozData, monster, fightResult);
+	const result = await rewardFight(team, monster, fightResult);
 
 	// const result = getFightResult(dinozData, monster[0], fightResult);
 
-	//If the dinoz is on a mission, check if the fight result progress the mission
-	if (dinozData.missions.some(mission => !mission.isFinished)) {
-		await checkMissionFight(dinozData, result);
+	//If any dinoz is on a mission, check if the fight result progress the mission
+	for (const dinoz of team) {
+		if (dinoz.missions.some(mission => !mission.isFinished)) {
+			await checkMissionFight(dinoz, result);
+		}
 	}
 
 	// if (getEnvironnement() === 'development') console.log(`Result sent to front: ${JSON.stringify(result)}`);
@@ -62,29 +70,28 @@ export async function processFight(req: Request) {
 }
 
 export async function moveFight(
-	dinoz: DinozToCalculateFight & DinozToRewardFight & DinozToCheckMissionFight,
+	team: (DinozToCalculateFight & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: number
 ) {
-	const monsters = generateMonster([{
-		...dinoz,
-		placeId
-	}]); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
-	const fightResult = calculateFight(dinoz, monsters);
-	const result = await rewardFight(dinoz, monsters, fightResult);
+	const monsters = generateMonster(team); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
+	const fightResult = calculateFight(team, monsters);
+	const result = await rewardFight(team, monsters, fightResult);
 
 	// const result = getFightResult(dinoz, monsters[0], fightResult);
-	//If the dinoz is on a mission, check if the fight result progress the mission
-	if (dinoz.missions.some(mission => !mission.isFinished)) {
-		const dinozAtFuturePlace = structuredClone(dinoz);
-		dinozAtFuturePlace.placeId = placeId;
-		await checkMissionFight(dinozAtFuturePlace, result);
+	//If any dinoz is on a mission, check if the fight result progress the mission
+	for (const dinoz of team) {
+		if (dinoz.missions.some(mission => !mission.isFinished)) {
+			const dinozAtFuturePlace = structuredClone(dinoz);
+			dinozAtFuturePlace.placeId = placeId;
+			await checkMissionFight(dinozAtFuturePlace, result);
+		}
 	}
 	return result;
 }
 
-export type DinozToCalculateFight = Parameters<typeof calculateFight>[0];
+export type DinozToCalculateFight = Parameters<typeof calculateFight>[0][number];
 export function calculateFight(
-	dinozData: Pick<Dinoz,
+	team: (Pick<Dinoz,
 		'id' |
 		'level' |
 		'name' |
@@ -98,26 +105,30 @@ export function calculateFight(
 		items: Pick<DinozItem, 'itemId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
-	},
+	})[],
 	monsters: MonsterFiche[]
 ): FightProcessResult {
-	const listDinozItems = dinozData.items.map(item => item.itemId);
-	const listDinozSkills = dinozData.skills.map(skill => skill.skillId);
-	const listDinozStatus = dinozData.status.map(status => status.statusId);
+	const attackers = team.map(dinoz => {
+		const listDinozItems = dinoz.items.map(item => item.itemId);
+		const listDinozSkills = dinoz.skills.map(skill => skill.skillId);
+		const listDinozStatus = dinoz.status.map(status => status.statusId);
 
-	const attacker = new FighterFiche(
-		dinozData.id,
-		dinozData.level,
-		false,
-		dinozData.name,
-		dinozData.life,
-		[dinozData.nbrUpFire, dinozData.nbrUpWood, dinozData.nbrUpWater, dinozData.nbrUpLightning, dinozData.nbrUpAir],
-		0,
-		0,
-		listDinozItems,
-		listDinozSkills,
-		listDinozStatus
-	);
+		const attacker = new FighterFiche(
+			dinoz.id,
+			dinoz.level,
+			false,
+			dinoz.name,
+			dinoz.life,
+			[dinoz.nbrUpFire, dinoz.nbrUpWood, dinoz.nbrUpWater, dinoz.nbrUpLightning, dinoz.nbrUpAir],
+			0,
+			0,
+			listDinozItems,
+			listDinozSkills,
+			listDinozStatus
+		);
+
+		return attacker;
+	});
 
 	const defender = monsters.map(monster => {
 		return new FighterFiche(
@@ -151,7 +162,7 @@ export function calculateFight(
 		is_balance_enabled: true,
 
 		// Fighters
-		attackers: [attacker],
+		attackers,
 		defenders: defender
 	};
 
@@ -160,23 +171,23 @@ export function calculateFight(
 	return JSON.parse(fight_rust(JSON.stringify(fightConfiguration)));
 }
 
-export type DinozToRewardFight = Parameters<typeof rewardFight>[0];
+export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
 export async function rewardFight(
-	dinozData: Pick<Dinoz,
+	team: (Pick<Dinoz,
 		'id' |
-		'level' |
-		'experience' |
-		'life'
+		'level'
 	> & {
 		player: Pick<Player, 'id'> | null;
 		status: Pick<DinozStatus, 'statusId'>[];
-	},
+	})[],
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult
 ) {
-	if (!dinozData.player) {
+	if (!team.length || !team[0].player) {
 		throw new ErrorFormator(500, 'No player found');
 	}
+
+	const playerId = team[0].player.id;
 
 	const XP_NEWB_BONUS = [15, 10, 6.6, 4.3, 2.5];
 
@@ -186,27 +197,27 @@ export async function rewardFight(
 	let goldFactor = 1.0;
 
 	//TODO use Array<MonsterFiche> input rather than MonsterFiche
-	// Cap experience gained to the max of what the dinoz needs
-	const maxExp = getMaxXp(dinozData);
 
-	if (dinozData.status.some(status => status.statusId === statusList.CURSED)) {
+	if (team.some(dinoz => dinoz.status.some(status => status.statusId === statusList.CURSED))) {
 		goldFactor = 0;
 	}
+
+	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
 
 	let xp = 0;
 	let fgold = 0;
 	for (const monster of monsters) {
-		const factor = monster.level >= dinozData.level ? 1 : 4 / (4 + (dinozData.level - monster.level));
+		const factor = monster.level >= teamLevel ? 1 : 4 / (4 + (teamLevel - monster.level));
 		const monsterGold = monster.gold ?? 1;
 		fgold = monsterGold * factor * goldFactor;
 		xp += Math.round(monster.xp ?? 10 * factor);
 		//Newbie bonus
-		if (dinozData.level <= 5) xp += XP_NEWB_BONUS[dinozData.level - 1];
+		if (teamLevel <= 5) xp += XP_NEWB_BONUS[teamLevel - 1];
 		// bonus for fighters of same level of the monster
-		if (Math.abs(dinozData.level - monster.level) <= 5) xp += monster.xpBonus ?? 0;
+		if (Math.abs(teamLevel - monster.level) <= 5) xp += monster.xpBonus ?? 0;
 	}
 
-	const experienceGained = xp + dinozData.experience > maxExp ? maxExp - dinozData.experience : Math.round(xp);
+	const experienceGained = Math.round(xp);
 
 	const fprob = getRandomNumber(0, 100);
 	let goldMultiplier = 1;
@@ -218,16 +229,29 @@ export async function rewardFight(
 	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
 	// If attackers won
 	if (fightResult.winner) {
-		await updateDinoz(dinozData.id, {
-			experience: dinozData.experience + experienceGained
+		await updateMultipleDinoz(team.map(d => d.id), {
+			experience: {
+				increment: experienceGained
+			}
 		});
-		await addMoney(dinozData.player.id, gold);
+		await addMoney(playerId, gold);
 	}
-	// No need to modify the dinoz's life in db if none was lost
-	if (fightResult.attackers[0].hp_lost != 0) {
-		await updateDinoz(dinozData.id, {
-			life: dinozData.life - fightResult.attackers[0].hp_lost
-		});
+
+	// Update dinoz life
+	for (const dinoz of team) {
+		const attacker = fightResult.attackers.find(a => a.dinoz_id === dinoz.id);
+		if (!attacker) {
+			throw new ErrorFormator(500, `Attacker ${dinoz.id} doesn't exist.`);
+		}
+
+		// No need to modify the dinoz's life in db if none was lost
+		if (attacker.hp_lost != 0) {
+			await updateDinoz(dinoz.id, {
+				life: {
+					decrement: attacker.hp_lost
+				}
+			});
+		}
 	}
 
 	return {
@@ -238,7 +262,6 @@ export async function rewardFight(
 		xpEarned: fightResult.winner ? experienceGained : 0,
 		hpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0),
 		result: fightResult.winner,
-		dinozId: dinozData.id,
 		history: fightResult.history
 	};
 }

@@ -15,97 +15,100 @@ import { updateDinoz } from '../dao/dinozDao.js';
 
 export async function rewarder(
 	rewards: Rewarder[],
-	dinoz: Pick<Dinoz,
+	team: (Pick<Dinoz,
 		'id' |
-		'level' |
-		'experience'
+		'level'
 	> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		player: Pick<Player, 'id'> | null;
-	}
+	})[]
 ) {
-	if (!dinoz.player) {
+	if (!team.length || !team[0].player) {
 		throw new ErrorFormator(500, 'No player found');
 	}
 
-	for (const reward of rewards) {
-		switch (reward.rewardType) {
-			case RewardEnum.STATUS:
-				if (reward.reverse) {
-					await removeStatusFromDinoz(dinoz.id, reward.value);
-				} else {
-					if (dinoz.status.some(status => status.statusId === reward.value)) return;
-					await addStatusToDinoz(dinoz.id, reward.value);
-				}
-				break;
-			case RewardEnum.CHANGE_ELEMENT:
-				await updateDinoz(dinoz.id, { nextUpElementId: reward.value });
-				break;
-			case RewardEnum.MAXEXPERIENCE:
-				const level = levelList.find(level => level.id === dinoz.level);
-				if (!level) {
-					throw new ErrorFormator(500, `Level ${dinoz.level} doesn't exist.`);
-				}
-				const maxExp = level.experience;
-				await updateDinoz(dinoz.id, { experience: maxExp - dinoz.experience });
-				break;
-			case RewardEnum.SKILL:
-				await addSkillToDinoz(dinoz.id, reward.value);
+	const playerId = team[0].player.id;
 
-				if (reward.value === skillList[Skill.COMPETENCE_DOUBLE].id) {
-					await unlockDoubleSkills(dinoz.id);
-				}
-				break;
-			case RewardEnum.EXPERIENCE:
-				await updateDinoz(dinoz.id, { experience: dinoz.experience + reward.value });
-				break;
-			case RewardEnum.GOLD:
-				await addMoney(dinoz.player.id, reward.value);
-				break;
-			case RewardEnum.ITEM:
-				const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value);
-				if (!itemRewarded) {
-					throw new ErrorFormator(500, `Item ${reward.value} doesn't exist.`);
-				}
+	for (const dinoz of team) {
+		for (const reward of rewards) {
+			switch (reward.rewardType) {
+				case RewardEnum.STATUS:
+					if (reward.reverse) {
+						await removeStatusFromDinoz(dinoz.id, reward.value);
+					} else {
+						if (dinoz.status.some(status => status.statusId === reward.value)) return;
+						await addStatusToDinoz(dinoz.id, reward.value);
+					}
+					break;
+				case RewardEnum.CHANGE_ELEMENT:
+					await updateDinoz(dinoz.id, { nextUpElementId: reward.value });
+					break;
+				case RewardEnum.MAXEXPERIENCE:
+					const level = levelList.find(level => level.id === dinoz.level);
+					if (!level) {
+						throw new ErrorFormator(500, `Level ${dinoz.level} doesn't exist.`);
+					}
+					const maxExp = level.experience;
+					await updateDinoz(dinoz.id, { experience: maxExp });
+					break;
+				case RewardEnum.SKILL:
+					await addSkillToDinoz(dinoz.id, reward.value);
 
-				const playerShopData = await getPlayerShopOneItemDataRequest(
-					dinoz.player.id,
-					itemRewarded.itemId
-				);
-				const playerItemData = playerShopData.items.find(
-					item => item.itemId === itemRewarded.itemId
-				);
-				if (playerItemData) {
-					const quantityLimitedByMaxQuantity = itemRewarded.maxQuantity - playerItemData.quantity;
+					if (reward.value === skillList[Skill.COMPETENCE_DOUBLE].id) {
+						await unlockDoubleSkills(dinoz.id);
+					}
+					break;
+				case RewardEnum.EXPERIENCE:
+					await updateDinoz(dinoz.id, { experience: { increment: reward.value } });
+					break;
+				case RewardEnum.GOLD:
+					await addMoney(playerId, reward.value);
+					break;
+				case RewardEnum.ITEM:
+					const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value);
+					if (!itemRewarded) {
+						throw new ErrorFormator(500, `Item ${reward.value} doesn't exist.`);
+					}
 
-					if (quantityLimitedByMaxQuantity <= 0) break;
+					const playerShopData = await getPlayerShopOneItemDataRequest(
+						playerId,
+						itemRewarded.itemId
+					);
+					const playerItemData = playerShopData.items.find(
+						item => item.itemId === itemRewarded.itemId
+					);
+					if (playerItemData) {
+						const quantityLimitedByMaxQuantity = itemRewarded.maxQuantity - playerItemData.quantity;
 
-					await increaseItemQuantity(dinoz.player.id, itemRewarded.itemId, quantityLimitedByMaxQuantity);
-				} else {
-					await insertItem(dinoz.player.id, { itemId: itemRewarded.itemId, quantity: reward.quantity });
-				}
-				break;
-			case RewardEnum.EPIC:
-				const testRewards = await getPlayerRewardsRequest(dinoz.player.id);
-				if (!testRewards) {
-					throw new ErrorFormator(500, `Player ${dinoz.player.id} doesn't exist.`);
-				}
-				if (!testRewards.rewards.some(r => r.rewardId === reward.value)) {
-					await addRewardToPlayer({
-						rewardId: reward.value,
-						player: { connect: { id: dinoz.player.id } }
-					});
-				}
-				break;
-			case RewardEnum.SCENARIO:
-				//TODO: Implement scenario
-				console.log('Scenario are not implemented yet');
-				break;
-			case RewardEnum.TELEPORT:
-				await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
-				break;
-			default:
-				console.log('Not implemented yet');
+						if (quantityLimitedByMaxQuantity <= 0) break;
+
+						await increaseItemQuantity(playerId, itemRewarded.itemId, quantityLimitedByMaxQuantity);
+					} else {
+						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
+					}
+					break;
+				case RewardEnum.EPIC:
+					const testRewards = await getPlayerRewardsRequest(playerId);
+					if (!testRewards) {
+						throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+					}
+					if (!testRewards.rewards.some(r => r.rewardId === reward.value)) {
+						await addRewardToPlayer({
+							rewardId: reward.value,
+							player: { connect: { id: playerId } }
+						});
+					}
+					break;
+				case RewardEnum.SCENARIO:
+					//TODO: Implement scenario
+					console.log('Scenario are not implemented yet');
+					break;
+				case RewardEnum.TELEPORT:
+					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
+					break;
+				default:
+					console.log('Not implemented yet');
+			}
 		}
 	}
 }

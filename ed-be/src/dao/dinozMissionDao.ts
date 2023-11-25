@@ -10,9 +10,16 @@ export const addMissionToDinoz = async (data: Prisma.DinozMissionCreateInput) =>
 	return mission;
 };
 
-export const updateMissionStep = async (dinozId: number, missionId: number, step: number) => {
-	await prisma.dinozMission.update({
-		where: { missionId_dinozId: { dinozId, missionId } },
+export const updateMissionStep = async (
+	dinozIds: number[],
+	missionId: number,
+	step: number
+) => {
+	await prisma.dinozMission.updateMany({
+		where: {
+			dinozId: { in: dinozIds },
+			missionId
+		},
 		data: { step }
 	});
 };

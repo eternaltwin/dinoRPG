@@ -6,64 +6,74 @@ import { DinozForConditionCheck } from '../constants.mjs';
 
 export function conditionParser(
 	condition: Condition,
-	dinoz: DinozForConditionCheck,
+	dinozList: DinozForConditionCheck[],
 	futurPlace?: Place
 ): boolean {
 	let result;
 	const GOTO = condition[ConditionEnum.GOTO];
 	const PLACE_IS = condition[ConditionEnum.PLACE_IS];
 
-	if (condition[ConditionEnum.MINLEVEL]) {
-		result = dinoz.level >= condition[ConditionEnum.MINLEVEL];
-	} else if (condition[ConditionEnum.MAXLEVEL]) {
-		result = dinoz.level <= condition[ConditionEnum.MAXLEVEL];
-	} else if (condition[ConditionEnum.STATUS]) {
-		result = dinoz.status.some(dinozStatus => dinozStatus.statusId === condition[ConditionEnum.STATUS]);
-	} else if (condition[ConditionEnum.FINISHED_MISSION]) {
-		result = dinoz.missions.find(missions => missions.missionId === condition[ConditionEnum.FINISHED_MISSION])
-			?.isFinished ?? false;
-	} else if (condition[ConditionEnum.SKILL]) {
-		result = dinoz.skills.some(DinozSkill => DinozSkill.skillId === condition[ConditionEnum.SKILL]);
+	const MIN_LEVEL = condition[ConditionEnum.MINLEVEL];
+	const MAX_LEVEL = condition[ConditionEnum.MAXLEVEL];
+	const STATUS = condition[ConditionEnum.STATUS];
+	const FINISHED_MISSION = condition[ConditionEnum.FINISHED_MISSION];
+	const SKILL = condition[ConditionEnum.SKILL];
+	const SCENARIO = condition[ConditionEnum.SCENARIO];
+	const POSSESS_OBJECT = condition[ConditionEnum.POSSESS_OBJECT];
+	const RANDOM = condition[ConditionEnum.RANDOM];
+	const NEXT_PLACE = condition[ConditionEnum.NEXT_PLACE];
+	const COLLEC = condition[ConditionEnum.COLLEC];
+	const DINOZ_LIFE = condition[ConditionEnum.DINOZ_LIFE];
+
+	if (MIN_LEVEL) {
+		result = dinozList.every(dinoz => dinoz.level >= MIN_LEVEL);
+	} else if (MAX_LEVEL) {
+		result = dinozList.every(dinoz => dinoz.level <= MAX_LEVEL);
+	} else if (STATUS) {
+		result = dinozList.every(dinoz => dinoz.status.some(st => st.statusId === STATUS));
+	} else if (FINISHED_MISSION) {
+		result = dinozList.every(dinoz => dinoz.missions.find(missions => missions.missionId === FINISHED_MISSION)
+			?.isFinished ?? false);
+	} else if (SKILL) {
+		result = dinozList.every(dinoz => dinoz.skills.some(dinozSkill => dinozSkill.skillId === SKILL));
 	} else if (GOTO) {
 		const place = Object.entries(placeList).find(place => place[0].toUpperCase() === GOTO.toUpperCase());
 		if (!place) {
 			throw new Error(`Place ${GOTO} doesn't exist.`);
 		}
-		result = place[1].placeId === dinoz.placeId;
+		result = dinozList.every(dinoz => place[1].placeId === dinoz.placeId);
 	} else if (PLACE_IS) {
 		const thisplace = Object.values(placeList).find(place => place.name.toUpperCase() === PLACE_IS.toUpperCase());
 		if (!thisplace) {
 			throw new Error(`Place ${PLACE_IS} doesn't exist.`);
 		}
 
-		const placeIdToCompare = thisplace.placeId === 0 ? dinoz.placeId : thisplace.placeId;
-		result = placeIdToCompare === dinoz.placeId;
-	} else if (condition[ConditionEnum.SCENARIO]) {
+		result = dinozList.every(dinoz => (thisplace.placeId || dinoz.placeId) === dinoz.placeId);
+	} else if (SCENARIO) {
 		//TODO: Implement scenario
 		result = false;
-	} else if (condition[ConditionEnum.POSSESS_OBJECT]) {
-		result = dinoz.player?.items.some(item => item.itemId === condition[ConditionEnum.POSSESS_OBJECT]);
-	} else if (condition[ConditionEnum.RANDOM]) {
-		const score = Math.floor(Math.random() * condition[ConditionEnum.RANDOM]);
+	} else if (POSSESS_OBJECT) {
+		result = dinozList.every(dinoz => dinoz.player?.items.some(item => item.itemId === POSSESS_OBJECT));
+	} else if (RANDOM) {
+		const score = Math.floor(Math.random() * RANDOM);
 		const target = 0;
 		result = score == target;
-	} else if (condition[ConditionEnum.NEXT_PLACE]) {
-		result = futurPlace?.placeId === condition[ConditionEnum.NEXT_PLACE].placeId;
-	} else if (condition[ConditionEnum.COLLEC]) {
-		const playerRewards = dinoz.player?.rewards ?? [];
-		result = playerRewards.some(reward => reward.rewardId === condition[ConditionEnum.COLLEC]);
-	} else if (condition[ConditionEnum.DINOZ_LIFE]) {
-		switch (condition[ConditionEnum.DINOZ_LIFE][0]) {
+	} else if (NEXT_PLACE) {
+		result = futurPlace?.placeId === NEXT_PLACE.placeId;
+	} else if (COLLEC) {
+		result = dinozList.every(dinoz => dinoz.player?.rewards.some(reward => reward.rewardId === COLLEC));
+	} else if (DINOZ_LIFE) {
+		switch (DINOZ_LIFE[0]) {
 			case '==':
-				return dinoz.life === condition[ConditionEnum.DINOZ_LIFE][1];
+				return dinozList.every(dinoz => dinoz.life === DINOZ_LIFE[1]);
 			case '>':
-				return dinoz.life > condition[ConditionEnum.DINOZ_LIFE][1];
+				return dinozList.every(dinoz => dinoz.life > DINOZ_LIFE[1]);
 			case '>=':
-				return dinoz.life >= condition[ConditionEnum.DINOZ_LIFE][1];
+				return dinozList.every(dinoz => dinoz.life >= DINOZ_LIFE[1]);
 			case '<':
-				return dinoz.life < condition[ConditionEnum.DINOZ_LIFE][1];
+				return dinozList.every(dinoz => dinoz.life < DINOZ_LIFE[1]);
 			case '<=':
-				return dinoz.life <= condition[ConditionEnum.DINOZ_LIFE][1];
+				return dinozList.every(dinoz => dinoz.life <= DINOZ_LIFE[1]);
 			default:
 				return false;
 		}

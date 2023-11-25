@@ -9,6 +9,7 @@
 		<!--<div class="header" />(à implémenter)-->
 		<DinozActions
 			:dinozActions="dinozData.actions"
+			:updateActions="updateActions"
 			:missionId="dinozData.missionId"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
@@ -29,6 +30,7 @@ import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
 import DinozDisplay from '../components/dinoz/DinozDisplay.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanel from '../components/common/TabPanel.vue';
+import { ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -87,6 +89,9 @@ export default defineComponent({
 					currentDinozId: +dinozId
 				});
 			}
+		},
+		updateActions(actions: ActionFiche[]) {
+			this.dinozData.actions = actions;
 		}
 	},
 	// Get dinoz data

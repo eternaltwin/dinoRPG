@@ -5,16 +5,16 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
+import { Dinoz } from '@drpg/prisma';
 import { Request } from 'express';
 import { specialActions } from '../constants/specialActions.js';
 import { ConcentrationFromGetConcentration, createConcentration, getConcentration, removeConcentration, updateConcentration } from '../dao/concentrationDao.js';
-import { getDinozConcentrationRequest, updateDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
+import { getDinozConcentrationRequest, updateMultipleDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
 import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { prepareConcentration } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
 import { DinozToCalculateFight, DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
-import { Dinoz } from '@drpg/prisma';
 
 export async function concentrate(req: Request) {
 	if (!req.auth || !req.auth.playerId) {
@@ -94,47 +94,53 @@ async function goDarkWorld(dinozList: Pick<Dinoz, 'id'>[]): Promise<void> {
 }
 
 export async function mouvementListener(
-	dinoz: DinozToCalculateFight &
+	team: (DinozToCalculateFight &
 		DinozToRewardFight &
 		DinozForConditionCheck &
-		DinozToGetActualStep,
+		DinozToGetActualStep)[],
 	finalPlace: number
 ) {
 	//Specials actions
 	const potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
 
-	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, dinoz)) {
+	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, team)) {
 		if (potentialSpecialActions.opponents) {
-			const fightResult = calculateFight(dinoz, potentialSpecialActions.opponents);
-			const result = await rewardFight(dinoz, potentialSpecialActions.opponents, fightResult);
+			const fightResult = calculateFight(team, potentialSpecialActions.opponents);
+			const result = await rewardFight(team, potentialSpecialActions.opponents, fightResult);
 			if (fightResult.winner) {
-				await rewarder(potentialSpecialActions.reward, dinoz);
+				await rewarder(potentialSpecialActions.reward, team);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 			}
 			return result;
 		} else {
-			await rewarder(potentialSpecialActions.reward, dinoz);
+			await rewarder(potentialSpecialActions.reward, team);
 			//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 		}
 	}
-	const dinozMission = dinoz.missions.find(m => !m.isFinished);
-	// const isMissionSpecial = Object.values(missionsList).find(mission => mission)
-	if (dinozMission) {
-		const actualStep = getActualStep(dinoz);
-		const placeName = Object.values(placeList).find(place => place.placeId === finalPlace)?.name;
-		if (
-			actualStep &&
-			placeName &&
-			actualStep.place === placeName &&
-			actualStep.requirement.actionType === ConditionEnum.KILL_BOSS
-		) {
-			const fightResult = calculateFight(dinoz, actualStep.requirement.target);
-			const result = await rewardFight(dinoz, actualStep.requirement.target, fightResult);
-			if (fightResult.winner) {
-				await updateMissionStep(dinoz.id, dinozMission.missionId, actualStep.stepId + 1);
-				await updateDinoz(dinoz.id, { placeId: finalPlace });
+
+	// Check if all dinoz have the same unfinished mission
+	const dinozMission = team[0].missions.find(m => !m.isFinished);
+
+	if (dinozMission && team.every(dinoz => dinoz.missions.find(m => !m.isFinished)?.missionId === dinozMission?.missionId)) {
+		// Check if all dinoz are at the same step
+		const actualStep = getActualStep(team[0]);
+
+		if (actualStep && team.every(dinoz => getActualStep(dinoz)?.stepId === actualStep.stepId)) {
+			const placeName = Object.values(placeList).find(place => place.placeId === finalPlace)?.name;
+			if (
+				placeName &&
+				actualStep.place === placeName &&
+				actualStep.requirement.actionType === ConditionEnum.KILL_BOSS
+			) {
+				const fightResult = calculateFight(team, actualStep.requirement.target);
+				const result = await rewardFight(team, actualStep.requirement.target, fightResult);
+				if (fightResult.winner) {
+					const teamIds = team.map(dinoz => dinoz.id);
+					await updateMissionStep(teamIds, dinozMission.missionId, actualStep.stepId + 1);
+					await updateMultipleDinoz(teamIds, { placeId: finalPlace });
+				}
+				return result;
 			}
-			return result;
 		}
 	}
 	return false;

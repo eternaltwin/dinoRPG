@@ -2,7 +2,7 @@ export interface DinozFicheLite {
 	id: number;
 	name: string;
 	display: string;
-	following: number | null;
+	leaderId: number | null;
 	life: number;
 	maxLife: number;
 	experience: number;

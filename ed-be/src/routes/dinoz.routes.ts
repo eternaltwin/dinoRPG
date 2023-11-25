@@ -1,5 +1,4 @@
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { Request, Response, Router } from 'express';
@@ -8,6 +7,7 @@ import {
 	betaMove,
 	buyDinoz,
 	digWithDinoz,
+	followDinoz,
 	gatherWithDinoz,
 	getDinozFiche,
 	getDinozSkill,
@@ -16,6 +16,7 @@ import {
 	resurrectDinoz,
 	setDinozName,
 	setSkillState,
+	unfollowDinoz,
 	updateOrders
 } from '../business/dinozService.js';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
@@ -304,7 +305,7 @@ routes.put(
 		}
 
 		try {
-			const response: FightResult = await betaMove(req);
+			const response = await betaMove(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -527,6 +528,46 @@ routes.post(`${commonPath}/manage`, [body('order').exists().isArray()], async (r
 		await updateOrders(req);
 		return res.status(200).send({
 			message: 'Orders updated'
+		});
+	} catch (err) {
+		const e = err as ErrorFormator;
+		await postError(e, res);
+		res.status(500).send(e.message);
+	}
+});
+
+// Follow
+routes.post(
+	`${commonPath}/:id/follow/:targetId`,
+	[param('id').exists().toInt().isNumeric(), param('targetId').exists().toInt().isNumeric()],
+	async (req: Request, res: Response
+) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		await followDinoz(req);
+		return res.status(200).send({
+			message: 'Dinoz followed'
+		});
+	} catch (err) {
+		const e = err as ErrorFormator;
+		await postError(e, res);
+		res.status(500).send(e.message);
+	}
+});
+
+// Unfollow
+routes.post(`${commonPath}/:id/unfollow`, [param('id').exists().toInt().isNumeric()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		await unfollowDinoz(req);
+		return res.status(200).send({
+			message: 'Dinoz unfollowed'
 		});
 	} catch (err) {
 		const e = err as ErrorFormator;

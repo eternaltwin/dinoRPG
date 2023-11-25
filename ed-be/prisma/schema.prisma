@@ -18,7 +18,8 @@ model Concentration {
 
 model Dinoz {
   id                 Int                    @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
-  following          Int?
+  leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
+  leaderId           Int?                   @map("following")
   name               String                 @db.VarChar
   isFrozen           Boolean                @default(false)
   isSacrificed       Boolean                @default(false)
@@ -54,6 +55,7 @@ model Dinoz {
   npcs               NPC[]
   dinozItemsToDinoz  DinozItemToDinoz[]
   offers             Offer[]
+  followers          Dinoz[]                @relation("DinozFollowers")
 
   @@map("dinoz")
 }

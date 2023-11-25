@@ -15,17 +15,36 @@
 						<span :style="getLifeBarWidth(dinoz.life, dinoz.maxLife)"></span>
 					</span>
 				</span>
-				<span class="name"
-					>{{ dinoz.name }}
+				<span class="name">
+					<span>{{ dinoz.name }}</span>
 					<img
 						v-if="dinoz.experience >= dinoz.maxExperience && dinoz.maxExperience !== 0"
-						src="../../assets/icons/small_lup.webp"
+						:src="getImgURL('icons', 'small_lup')"
 						v-tippy="{
 							content: formatContent($t('levelup.small')),
 							theme: 'small'
 						}"
 						alt="lvlup"
-				/></span>
+					/>
+					<img
+						v-if="dinoz.leaderId"
+						:src="getImgURL('icons', 'small_follow')"
+						v-tippy="{
+							content: formatContent($t('following')),
+							theme: 'small'
+						}"
+						alt="lvlup"
+					/>
+					<img
+						v-if="dinoz.followers.length > 0"
+						:src="getImgURL('icons', 'crown', true)"
+						v-tippy="{
+							content: formatContent($t('followed')),
+							theme: 'small'
+						}"
+						alt="lvlup"
+					/>
+				</span>
 				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
 			</a>
 		</li>
@@ -120,7 +139,8 @@ ul {
 			}
 
 			span.name {
-				display: block;
+				display: flex;
+				align-items: center;
 				float: left;
 				position: relative;
 				width: 87px;
@@ -128,6 +148,11 @@ ul {
 				overflow: hidden;
 				font-weight: bold;
 				font-variant: small-caps;
+
+				img {
+					width: 10px;
+					margin-left: 3px;
+				}
 			}
 
 			.icon {

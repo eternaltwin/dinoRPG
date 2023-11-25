@@ -3622,6 +3622,7 @@ export namespace Prisma {
     npcs: number
     dinozItemsToDinoz: number
     offers: number
+    followers: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3633,6 +3634,7 @@ export namespace Prisma {
     npcs?: boolean | DinozCountOutputTypeCountNpcsArgs
     dinozItemsToDinoz?: boolean | DinozCountOutputTypeCountDinozItemsToDinozArgs
     offers?: boolean | DinozCountOutputTypeCountOffersArgs
+    followers?: boolean | DinozCountOutputTypeCountFollowersArgs
   }
 
   // Custom InputTypes
@@ -3709,6 +3711,14 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountOffersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OfferWhereInput
+  }
+
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountFollowersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozWhereInput
   }
 
 
@@ -5002,7 +5012,7 @@ export namespace Prisma {
 
   export type DinozAvgAggregateOutputType = {
     id: number | null
-    following: number | null
+    leaderId: number | null
     raceId: number | null
     level: number | null
     missionId: number | null
@@ -5024,7 +5034,7 @@ export namespace Prisma {
 
   export type DinozSumAggregateOutputType = {
     id: number | null
-    following: number | null
+    leaderId: number | null
     raceId: number | null
     level: number | null
     missionId: number | null
@@ -5046,7 +5056,7 @@ export namespace Prisma {
 
   export type DinozMinAggregateOutputType = {
     id: number | null
-    following: number | null
+    leaderId: number | null
     name: string | null
     isFrozen: boolean | null
     isSacrificed: boolean | null
@@ -5076,7 +5086,7 @@ export namespace Prisma {
 
   export type DinozMaxAggregateOutputType = {
     id: number | null
-    following: number | null
+    leaderId: number | null
     name: string | null
     isFrozen: boolean | null
     isSacrificed: boolean | null
@@ -5106,7 +5116,7 @@ export namespace Prisma {
 
   export type DinozCountAggregateOutputType = {
     id: number
-    following: number
+    leaderId: number
     name: number
     isFrozen: number
     isSacrificed: number
@@ -5138,7 +5148,7 @@ export namespace Prisma {
 
   export type DinozAvgAggregateInputType = {
     id?: true
-    following?: true
+    leaderId?: true
     raceId?: true
     level?: true
     missionId?: true
@@ -5160,7 +5170,7 @@ export namespace Prisma {
 
   export type DinozSumAggregateInputType = {
     id?: true
-    following?: true
+    leaderId?: true
     raceId?: true
     level?: true
     missionId?: true
@@ -5182,7 +5192,7 @@ export namespace Prisma {
 
   export type DinozMinAggregateInputType = {
     id?: true
-    following?: true
+    leaderId?: true
     name?: true
     isFrozen?: true
     isSacrificed?: true
@@ -5212,7 +5222,7 @@ export namespace Prisma {
 
   export type DinozMaxAggregateInputType = {
     id?: true
-    following?: true
+    leaderId?: true
     name?: true
     isFrozen?: true
     isSacrificed?: true
@@ -5242,7 +5252,7 @@ export namespace Prisma {
 
   export type DinozCountAggregateInputType = {
     id?: true
-    following?: true
+    leaderId?: true
     name?: true
     isFrozen?: true
     isSacrificed?: true
@@ -5359,7 +5369,7 @@ export namespace Prisma {
 
   export type DinozGroupByOutputType = {
     id: number
-    following: number | null
+    leaderId: number | null
     name: string
     isFrozen: boolean
     isSacrificed: boolean
@@ -5408,7 +5418,7 @@ export namespace Prisma {
 
   export type DinozSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    following?: boolean
+    leaderId?: boolean
     name?: boolean
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -5434,6 +5444,7 @@ export namespace Prisma {
     playerId?: boolean
     order?: boolean
     concentrationId?: boolean
+    leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     player?: boolean | Dinoz$playerArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
@@ -5444,12 +5455,13 @@ export namespace Prisma {
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
     dinozItemsToDinoz?: boolean | Dinoz$dinozItemsToDinozArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
+    followers?: boolean | Dinoz$followersArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
   export type DinozSelectScalar = {
     id?: boolean
-    following?: boolean
+    leaderId?: boolean
     name?: boolean
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -5478,6 +5490,7 @@ export namespace Prisma {
   }
 
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     player?: boolean | Dinoz$playerArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
@@ -5488,6 +5501,7 @@ export namespace Prisma {
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
     dinozItemsToDinoz?: boolean | Dinoz$dinozItemsToDinozArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
+    followers?: boolean | Dinoz$followersArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5495,6 +5509,7 @@ export namespace Prisma {
   export type $DinozPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Dinoz"
     objects: {
+      leader: Prisma.$DinozPayload<ExtArgs> | null
       player: Prisma.$PlayerPayload<ExtArgs> | null
       concentration: Prisma.$ConcentrationPayload<ExtArgs> | null
       items: Prisma.$DinozItemPayload<ExtArgs>[]
@@ -5505,10 +5520,11 @@ export namespace Prisma {
       npcs: Prisma.$NPCPayload<ExtArgs>[]
       dinozItemsToDinoz: Prisma.$DinozItemToDinozPayload<ExtArgs>[]
       offers: Prisma.$OfferPayload<ExtArgs>[]
+      followers: Prisma.$DinozPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      following: number | null
+      leaderId: number | null
       name: string
       isFrozen: boolean
       isSacrificed: boolean
@@ -5899,6 +5915,8 @@ export namespace Prisma {
   export interface Prisma__DinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    leader<T extends Dinoz$leaderArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$leaderArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
     player<T extends Dinoz$playerArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     concentration<T extends Dinoz$concentrationArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$concentrationArgs<ExtArgs>>): Prisma__ConcentrationClient<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
@@ -5918,6 +5936,8 @@ export namespace Prisma {
     dinozItemsToDinoz<T extends Dinoz$dinozItemsToDinozArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$dinozItemsToDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     offers<T extends Dinoz$offersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    followers<T extends Dinoz$followersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5948,7 +5968,7 @@ export namespace Prisma {
    */ 
   interface DinozFieldRefs {
     readonly id: FieldRef<"Dinoz", 'Int'>
-    readonly following: FieldRef<"Dinoz", 'Int'>
+    readonly leaderId: FieldRef<"Dinoz", 'Int'>
     readonly name: FieldRef<"Dinoz", 'String'>
     readonly isFrozen: FieldRef<"Dinoz", 'Boolean'>
     readonly isSacrificed: FieldRef<"Dinoz", 'Boolean'>
@@ -6286,6 +6306,22 @@ export namespace Prisma {
 
 
   /**
+   * Dinoz.leader
+   */
+  export type Dinoz$leaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+
+  /**
    * Dinoz.player
    */
   export type Dinoz$playerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6482,6 +6518,27 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+  }
+
+
+  /**
+   * Dinoz.followers
+   */
+  export type Dinoz$followersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+    orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
+    cursor?: DinozWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
   }
 
 
@@ -38391,7 +38448,7 @@ export namespace Prisma {
 
   export const DinozScalarFieldEnum: {
     id: 'id',
-    following: 'following',
+    leaderId: 'leaderId',
     name: 'name',
     isFrozen: 'isFrozen',
     isSacrificed: 'isSacrificed',
@@ -38970,7 +39027,7 @@ export namespace Prisma {
     OR?: DinozWhereInput[]
     NOT?: DinozWhereInput | DinozWhereInput[]
     id?: IntFilter<"Dinoz"> | number
-    following?: IntNullableFilter<"Dinoz"> | number | null
+    leaderId?: IntNullableFilter<"Dinoz"> | number | null
     name?: StringFilter<"Dinoz"> | string
     isFrozen?: BoolFilter<"Dinoz"> | boolean
     isSacrificed?: BoolFilter<"Dinoz"> | boolean
@@ -38996,6 +39053,7 @@ export namespace Prisma {
     playerId?: IntNullableFilter<"Dinoz"> | number | null
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
+    leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
     concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
     items?: DinozItemListRelationFilter
@@ -39006,11 +39064,12 @@ export namespace Prisma {
     npcs?: NPCListRelationFilter
     dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
     offers?: OfferListRelationFilter
+    followers?: DinozListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
     id?: SortOrder
-    following?: SortOrderInput | SortOrder
+    leaderId?: SortOrderInput | SortOrder
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
@@ -39036,6 +39095,7 @@ export namespace Prisma {
     playerId?: SortOrderInput | SortOrder
     order?: SortOrderInput | SortOrder
     concentrationId?: SortOrderInput | SortOrder
+    leader?: DinozOrderByWithRelationInput
     player?: PlayerOrderByWithRelationInput
     concentration?: ConcentrationOrderByWithRelationInput
     items?: DinozItemOrderByRelationAggregateInput
@@ -39046,6 +39106,7 @@ export namespace Prisma {
     npcs?: NPCOrderByRelationAggregateInput
     dinozItemsToDinoz?: DinozItemToDinozOrderByRelationAggregateInput
     offers?: OfferOrderByRelationAggregateInput
+    followers?: DinozOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -39053,7 +39114,7 @@ export namespace Prisma {
     AND?: DinozWhereInput | DinozWhereInput[]
     OR?: DinozWhereInput[]
     NOT?: DinozWhereInput | DinozWhereInput[]
-    following?: IntNullableFilter<"Dinoz"> | number | null
+    leaderId?: IntNullableFilter<"Dinoz"> | number | null
     name?: StringFilter<"Dinoz"> | string
     isFrozen?: BoolFilter<"Dinoz"> | boolean
     isSacrificed?: BoolFilter<"Dinoz"> | boolean
@@ -39079,6 +39140,7 @@ export namespace Prisma {
     playerId?: IntNullableFilter<"Dinoz"> | number | null
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
+    leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
     concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
     items?: DinozItemListRelationFilter
@@ -39089,11 +39151,12 @@ export namespace Prisma {
     npcs?: NPCListRelationFilter
     dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
     offers?: OfferListRelationFilter
+    followers?: DinozListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
     id?: SortOrder
-    following?: SortOrderInput | SortOrder
+    leaderId?: SortOrderInput | SortOrder
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
@@ -39131,7 +39194,7 @@ export namespace Prisma {
     OR?: DinozScalarWhereWithAggregatesInput[]
     NOT?: DinozScalarWhereWithAggregatesInput | DinozScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Dinoz"> | number
-    following?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
+    leaderId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     name?: StringWithAggregatesFilter<"Dinoz"> | string
     isFrozen?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     isSacrificed?: BoolWithAggregatesFilter<"Dinoz"> | boolean
@@ -41175,7 +41238,6 @@ export namespace Prisma {
   }
 
   export type DinozCreateInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -41199,6 +41261,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -41209,11 +41272,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -41247,10 +41311,10 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUpdateInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -41274,6 +41338,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -41284,11 +41349,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -41322,11 +41388,12 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozCreateManyInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -41355,7 +41422,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateManyMutationInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -41383,7 +41449,7 @@ export namespace Prisma {
 
   export type DinozUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -43397,6 +43463,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type DinozNullableRelationFilter = {
+    is?: DinozWhereInput | null
+    isNot?: DinozWhereInput | null
+  }
+
   export type PlayerNullableRelationFilter = {
     is?: PlayerWhereInput | null
     isNot?: PlayerWhereInput | null
@@ -43494,7 +43565,7 @@ export namespace Prisma {
 
   export type DinozCountOrderByAggregateInput = {
     id?: SortOrder
-    following?: SortOrder
+    leaderId?: SortOrder
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
@@ -43524,7 +43595,7 @@ export namespace Prisma {
 
   export type DinozAvgOrderByAggregateInput = {
     id?: SortOrder
-    following?: SortOrder
+    leaderId?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     missionId?: SortOrder
@@ -43546,7 +43617,7 @@ export namespace Prisma {
 
   export type DinozMaxOrderByAggregateInput = {
     id?: SortOrder
-    following?: SortOrder
+    leaderId?: SortOrder
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
@@ -43576,7 +43647,7 @@ export namespace Prisma {
 
   export type DinozMinOrderByAggregateInput = {
     id?: SortOrder
-    following?: SortOrder
+    leaderId?: SortOrder
     name?: SortOrder
     isFrozen?: SortOrder
     isSacrificed?: SortOrder
@@ -43606,7 +43677,7 @@ export namespace Prisma {
 
   export type DinozSumOrderByAggregateInput = {
     id?: SortOrder
-    following?: SortOrder
+    leaderId?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     missionId?: SortOrder
@@ -43680,11 +43751,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type DinozNullableRelationFilter = {
-    is?: DinozWhereInput | null
-    isNot?: DinozWhereInput | null
   }
 
   export type DinozItemCountOrderByAggregateInput = {
@@ -45359,6 +45425,12 @@ export namespace Prisma {
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
+  export type DinozCreateNestedOneWithoutFollowersInput = {
+    create?: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutFollowersInput
+    connect?: DinozWhereUniqueInput
+  }
+
   export type PlayerCreateNestedOneWithoutDinozInput = {
     create?: XOR<PlayerCreateWithoutDinozInput, PlayerUncheckedCreateWithoutDinozInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutDinozInput
@@ -45427,6 +45499,13 @@ export namespace Prisma {
     connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
   }
 
+  export type DinozCreateNestedManyWithoutLeaderInput = {
+    create?: XOR<DinozCreateWithoutLeaderInput, DinozUncheckedCreateWithoutLeaderInput> | DinozCreateWithoutLeaderInput[] | DinozUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutLeaderInput | DinozCreateOrConnectWithoutLeaderInput[]
+    createMany?: DinozCreateManyLeaderInputEnvelope
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+  }
+
   export type DinozItemUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -45483,12 +45562,11 @@ export namespace Prisma {
     connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type DinozUncheckedCreateNestedManyWithoutLeaderInput = {
+    create?: XOR<DinozCreateWithoutLeaderInput, DinozUncheckedCreateWithoutLeaderInput> | DinozCreateWithoutLeaderInput[] | DinozUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutLeaderInput | DinozCreateOrConnectWithoutLeaderInput[]
+    createMany?: DinozCreateManyLeaderInputEnvelope
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -45499,8 +45577,26 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type DinozUpdateOneWithoutFollowersNestedInput = {
+    create?: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutFollowersInput
+    upsert?: DinozUpsertWithoutFollowersInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutFollowersInput, DinozUpdateWithoutFollowersInput>, DinozUncheckedUpdateWithoutFollowersInput>
   }
 
   export type PlayerUpdateOneWithoutDinozNestedInput = {
@@ -45635,6 +45731,20 @@ export namespace Prisma {
     deleteMany?: OfferScalarWhereInput | OfferScalarWhereInput[]
   }
 
+  export type DinozUpdateManyWithoutLeaderNestedInput = {
+    create?: XOR<DinozCreateWithoutLeaderInput, DinozUncheckedCreateWithoutLeaderInput> | DinozCreateWithoutLeaderInput[] | DinozUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutLeaderInput | DinozCreateOrConnectWithoutLeaderInput[]
+    upsert?: DinozUpsertWithWhereUniqueWithoutLeaderInput | DinozUpsertWithWhereUniqueWithoutLeaderInput[]
+    createMany?: DinozCreateManyLeaderInputEnvelope
+    set?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    disconnect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    delete?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    update?: DinozUpdateWithWhereUniqueWithoutLeaderInput | DinozUpdateWithWhereUniqueWithoutLeaderInput[]
+    updateMany?: DinozUpdateManyWithWhereWithoutLeaderInput | DinozUpdateManyWithWhereWithoutLeaderInput[]
+    deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
+  }
+
   export type DinozItemUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -45745,6 +45855,20 @@ export namespace Prisma {
     update?: OfferUpdateWithWhereUniqueWithoutDinozInput | OfferUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: OfferUpdateManyWithWhereWithoutDinozInput | OfferUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: OfferScalarWhereInput | OfferScalarWhereInput[]
+  }
+
+  export type DinozUncheckedUpdateManyWithoutLeaderNestedInput = {
+    create?: XOR<DinozCreateWithoutLeaderInput, DinozUncheckedCreateWithoutLeaderInput> | DinozCreateWithoutLeaderInput[] | DinozUncheckedCreateWithoutLeaderInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutLeaderInput | DinozCreateOrConnectWithoutLeaderInput[]
+    upsert?: DinozUpsertWithWhereUniqueWithoutLeaderInput | DinozUpsertWithWhereUniqueWithoutLeaderInput[]
+    createMany?: DinozCreateManyLeaderInputEnvelope
+    set?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    disconnect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    delete?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    update?: DinozUpdateWithWhereUniqueWithoutLeaderInput | DinozUpdateWithWhereUniqueWithoutLeaderInput[]
+    updateMany?: DinozUpdateManyWithWhereWithoutLeaderInput | DinozUpdateManyWithWhereWithoutLeaderInput[]
+    deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -47503,7 +47627,6 @@ export namespace Prisma {
   }
 
   export type DinozCreateWithoutConcentrationInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -47527,6 +47650,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -47536,11 +47660,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutConcentrationInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -47573,6 +47698,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutConcentrationInput = {
@@ -47606,7 +47732,7 @@ export namespace Prisma {
     OR?: DinozScalarWhereInput[]
     NOT?: DinozScalarWhereInput | DinozScalarWhereInput[]
     id?: IntFilter<"Dinoz"> | number
-    following?: IntNullableFilter<"Dinoz"> | number | null
+    leaderId?: IntNullableFilter<"Dinoz"> | number | null
     name?: StringFilter<"Dinoz"> | string
     isFrozen?: BoolFilter<"Dinoz"> | boolean
     isSacrificed?: BoolFilter<"Dinoz"> | boolean
@@ -47632,6 +47758,86 @@ export namespace Prisma {
     playerId?: IntNullableFilter<"Dinoz"> | number | null
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
+  }
+
+  export type DinozCreateWithoutFollowersInput = {
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    missionId?: number | null
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    player?: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutFollowersInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    missionId?: number | null
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId?: number | null
+    order?: number | null
+    concentrationId?: number | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutFollowersInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
   }
 
   export type PlayerCreateWithoutDinozInput = {
@@ -47886,6 +48092,177 @@ export namespace Prisma {
   export type OfferCreateManyDinozInputEnvelope = {
     data: OfferCreateManyDinozInput | OfferCreateManyDinozInput[]
     skipDuplicates?: boolean
+  }
+
+  export type DinozCreateWithoutLeaderInput = {
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    missionId?: number | null
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    player?: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+  }
+
+  export type DinozUncheckedCreateWithoutLeaderInput = {
+    id?: number
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    missionId?: number | null
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId?: number | null
+    order?: number | null
+    concentrationId?: number | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+  }
+
+  export type DinozCreateOrConnectWithoutLeaderInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutLeaderInput, DinozUncheckedCreateWithoutLeaderInput>
+  }
+
+  export type DinozCreateManyLeaderInputEnvelope = {
+    data: DinozCreateManyLeaderInput | DinozCreateManyLeaderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozUpsertWithoutFollowersInput = {
+    update: XOR<DinozUpdateWithoutFollowersInput, DinozUncheckedUpdateWithoutFollowersInput>
+    create: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutFollowersInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutFollowersInput, DinozUncheckedUpdateWithoutFollowersInput>
+  }
+
+  export type DinozUpdateWithoutFollowersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    missionId?: NullableIntFieldUpdateOperationsInput | number | null
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    player?: PlayerUpdateOneWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutFollowersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    missionId?: NullableIntFieldUpdateOperationsInput | number | null
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutDinozInput = {
@@ -48188,8 +48565,23 @@ export namespace Prisma {
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
   }
 
+  export type DinozUpsertWithWhereUniqueWithoutLeaderInput = {
+    where: DinozWhereUniqueInput
+    update: XOR<DinozUpdateWithoutLeaderInput, DinozUncheckedUpdateWithoutLeaderInput>
+    create: XOR<DinozCreateWithoutLeaderInput, DinozUncheckedCreateWithoutLeaderInput>
+  }
+
+  export type DinozUpdateWithWhereUniqueWithoutLeaderInput = {
+    where: DinozWhereUniqueInput
+    data: XOR<DinozUpdateWithoutLeaderInput, DinozUncheckedUpdateWithoutLeaderInput>
+  }
+
+  export type DinozUpdateManyWithWhereWithoutLeaderInput = {
+    where: DinozScalarWhereInput
+    data: XOR<DinozUpdateManyMutationInput, DinozUncheckedUpdateManyWithoutLeaderInput>
+  }
+
   export type DinozCreateWithoutItemsInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48213,6 +48605,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -48222,11 +48615,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48259,6 +48653,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -48296,7 +48691,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutItemsInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48320,6 +48714,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -48329,11 +48724,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48366,6 +48762,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinoz_itemInput = {
@@ -48385,7 +48782,6 @@ export namespace Prisma {
   }
 
   export type DinozCreateWithoutDinozItemsToDinozInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48409,6 +48805,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -48418,11 +48815,12 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutDinozItemsToDinozInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48455,6 +48853,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -48490,7 +48889,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutDinozItemsToDinozInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48514,6 +48912,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -48523,11 +48922,12 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48560,6 +48960,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozItemUpsertWithoutDinozItemToDinozInput = {
@@ -48585,7 +48986,6 @@ export namespace Prisma {
   }
 
   export type DinozCreateWithoutMissionsInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48609,6 +49009,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -48618,11 +49019,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48655,6 +49057,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -48674,7 +49077,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutMissionsInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48698,6 +49100,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -48707,11 +49110,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48744,10 +49148,10 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48771,6 +49175,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -48780,11 +49185,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48817,6 +49223,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -48836,7 +49243,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutSkillsInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48860,6 +49266,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -48869,11 +49276,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -48906,10 +49314,10 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48933,6 +49341,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -48942,11 +49351,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -48979,6 +49389,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -48998,7 +49409,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutUnlockableSkillsInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -49022,6 +49432,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -49031,11 +49442,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -49068,10 +49480,10 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -49095,6 +49507,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -49104,11 +49517,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -49141,6 +49555,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -49160,7 +49575,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutStatusInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -49184,6 +49598,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -49193,11 +49608,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -49230,6 +49646,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type ImportedPlayerCreateWithoutImported_dinozInput = {
@@ -50721,7 +51138,6 @@ export namespace Prisma {
   }
 
   export type DinozCreateWithoutNpcsInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -50745,6 +51161,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -50754,11 +51171,12 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutNpcsInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -50791,6 +51209,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutNpcsInput = {
@@ -50810,7 +51229,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutNpcsInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -50834,6 +51252,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -50843,11 +51262,12 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutNpcsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -50880,10 +51300,10 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozCreateWithoutPlayerInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -50907,6 +51327,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -50916,11 +51337,12 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutPlayerInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -50953,6 +51375,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutPlayerInput = {
@@ -52974,7 +53397,6 @@ export namespace Prisma {
   }
 
   export type DinozCreateWithoutOffersInput = {
-    following?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -52998,6 +53420,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -53007,11 +53430,12 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozUncheckedCreateWithoutOffersInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -53044,6 +53468,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
   }
 
   export type DinozCreateOrConnectWithoutOffersInput = {
@@ -53181,7 +53606,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutOffersInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -53205,6 +53629,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -53214,11 +53639,12 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutOffersInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -53251,6 +53677,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type OfferItemUpsertWithWhereUniqueWithoutOfferInput = {
@@ -53298,7 +53725,7 @@ export namespace Prisma {
 
   export type DinozCreateManyConcentrationInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -53326,7 +53753,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutConcentrationInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -53350,6 +53776,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -53359,11 +53786,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutConcentrationInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -53396,11 +53824,12 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutConcentrationInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -53472,6 +53901,35 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+  }
+
+  export type DinozCreateManyLeaderInput = {
+    id?: number
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    missionId?: number | null
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId?: number | null
+    order?: number | null
+    concentrationId?: number | null
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -53612,6 +54070,110 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+  }
+
+  export type DinozUpdateWithoutLeaderInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    missionId?: NullableIntFieldUpdateOperationsInput | number | null
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    player?: PlayerUpdateOneWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutLeaderInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    missionId?: NullableIntFieldUpdateOperationsInput | number | null
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+  }
+
+  export type DinozUncheckedUpdateManyWithoutLeaderInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    missionId?: NullableIntFieldUpdateOperationsInput | number | null
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
@@ -53841,7 +54403,7 @@ export namespace Prisma {
 
   export type DinozCreateManyPlayerInput = {
     id?: number
-    following?: number | null
+    leaderId?: number | null
     name: string
     isFrozen?: boolean
     isSacrificed?: boolean
@@ -53948,7 +54510,6 @@ export namespace Prisma {
   }
 
   export type DinozUpdateWithoutPlayerInput = {
-    following?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -53972,6 +54533,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -53981,11 +54543,12 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPlayerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean
@@ -54018,11 +54581,12 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutPlayerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    following?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
     isSacrificed?: BoolFieldUpdateOperationsInput | boolean

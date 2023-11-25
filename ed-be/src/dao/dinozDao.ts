@@ -32,7 +32,7 @@ export async function getAllDinozFromAccount(playerId: number) {
 		},
 		select: {
 			id: true,
-			following: true,
+			leaderId: true,
 			name: true,
 			isFrozen: true,
 			isSacrificed: true,
@@ -60,7 +60,7 @@ export async function getAllDinozFicheLite(playerId: number) {
 			id: true,
 			name: true,
 			display: true,
-			following: true,
+			leaderId: true,
 			life: true,
 			maxLife: true,
 			experience: true,
@@ -106,7 +106,7 @@ export async function getDinozFicheRequest(dinozId: number) {
 			placeId: true,
 			raceId: true,
 			missionId: true,
-			following: true,
+			leaderId: true,
 			isFrozen: true,
 			isSelling: true,
 			order: true,
@@ -118,12 +118,14 @@ export async function getDinozFicheRequest(dinozId: number) {
 						select: { itemId: true, quantity: true }
 					},
 					rewards: { select: { rewardId: true } },
+					dinoz: { select: { leaderId: true } },
 				}
 			},
 			items: { select: { itemId: true } },
 			status: { select: { statusId: true } },
 			missions: true,
 			skills: { select: { skillId: true } },
+			followers: { select: { id: true } },
 			concentration: true,
 		}
 	});
@@ -272,6 +274,25 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			items: { select: { itemId: true } },
 			skills: { select: { skillId: true } },
 			status: { select: { statusId: true } },
+			followers: {
+				select: {
+					id: true,
+					name: true,
+					level: true,
+					placeId: true,
+					life: true,
+					nbrUpFire: true,
+					nbrUpWood: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpAir: true,
+					experience: true,
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					missions: true,
+					skills: { select: { skillId: true } },
+				}
+			},
 			missions: true,
 			concentration: true,
 		}
@@ -420,6 +441,16 @@ export async function updateDinoz(
 	});
 }
 
+export async function updateMultipleDinoz(
+	dinozIds: number[],
+	dinoz: Prisma.DinozUpdateInput
+) {
+	await prisma.dinoz.updateMany({
+		where: { id: { in: dinozIds } },
+		data: dinoz
+	});
+}
+
 export async function updateMultipleDinozPlaceId(dinoz: Pick<Dinoz, 'id'>[], placeId: number) {
 	await prisma.dinoz.updateMany({
 		where: {
@@ -495,4 +526,18 @@ export async function updateOrderData(dinozList: { id: number; order: number }[]
 	}
 
 	await Promise.all(updates);
+}
+
+export async function getAvailableDinozToFollowCount(playerId: number, dinozId: number) {
+	const count = await prisma.dinoz.count({
+		where: {
+			id: { not: dinozId },
+			playerId: playerId,
+			isFrozen: false,
+			isSacrificed: false,
+			isSelling: false,
+		},
+	});
+
+	return count;
 }

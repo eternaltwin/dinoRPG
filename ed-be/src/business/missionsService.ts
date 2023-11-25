@@ -126,10 +126,10 @@ export async function interactMission(req: Request) {
 
 	switch (task) {
 		case ConditionEnum.TALKTO:
-			await updateMissionStep(mission.dinoz.id, mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			await updateMissionStep([mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		case ConditionEnum.DO:
-			await updateMissionStep(mission.dinoz.id, mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			await updateMissionStep([mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		default:
 			return 'error';
@@ -139,7 +139,7 @@ export async function interactMission(req: Request) {
 export async function endMission(req: Request) {
 	const mission = await checkMission(req);
 
-	await rewarder(mission.missionReference.rewards, mission.dinoz);
+	await rewarder(mission.missionReference.rewards, [mission.dinoz]);
 	await finishMission(mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
 }
@@ -219,7 +219,7 @@ function missionSort(missions: Mission[], dinoz: DinozWithMissionData) {
 				Si non => status = MissionsStatus.UNAVAILABLE
 				 */
 		if (!missionKnown) {
-			if (missions.condition && !checkCondition(missions.condition, dinoz)) {
+			if (missions.condition && !checkCondition(missions.condition, [dinoz])) {
 				status = MissionsStatus.UNAVAILABLE;
 			} else {
 				status = MissionsStatus.AVAILABLE;
@@ -287,7 +287,7 @@ export async function checkProgressEnd(dinoz: Pick<Dinoz, 'id'> & { missions: Di
 		progress += 1; //replace by fight.opponent.length when we can fight multiple opponent
 	}
 	if (progress >= progressTarget) {
-		await updateMissionStep(dinoz.id, missionId, actualStep.stepId + 1);
+		await updateMissionStep([dinoz.id], missionId, actualStep.stepId + 1);
 	}
 }
 

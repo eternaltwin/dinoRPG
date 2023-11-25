@@ -147,17 +147,26 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				const moveTry: FightResult = await DinozService.betaMove(this.dinozData!.id!, placeId);
-				moveTry.dinozId = this.dinozData!.id!;
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				if (moveTry.result) {
-					const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-					const dinozToUpdate = dinozList.find(dinozs => dinozs.id == this.dinozData!.id!)!;
-					if (placeList.find(place => place.placeId === placeId)?.alias) {
-						placeId = placeList.find(place => place.placeId === placeId)!.alias!;
+					const dinozList = this.dinozStore.getDinozList;
+					const dinozId = this.dinozData?.id;
+					const place = placeList.find(place => place.placeId === placeId);
+
+					if (!dinozList || !dinozId || !place) {
+						EventBus.emit('toast', { type: 'error', message: 'missingData' });
+						EventBus.emit('isLoading', false);
+						return;
 					}
-					dinozToUpdate.placeId = placeId;
-					this.dinozStore.setDinozList(dinozList);
+					this.dinozStore.setDinozList(
+						dinozList.map(dinoz => {
+							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
+								dinoz.placeId = place.alias || placeId;
+							}
+							return dinoz;
+						})
+					);
 				}
 				EventBus.emit('isLoading', false);
 				this.$router.push({
