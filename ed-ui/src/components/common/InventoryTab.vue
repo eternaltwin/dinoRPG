@@ -130,8 +130,31 @@ export default defineComponent({
 				EventBus.emit('isLoading', true);
 				const dinozId = this.$route.params.id as string;
 				try {
-					await InventoryService.useInventoryItem(item.itemId, parseInt(dinozId));
+					await InventoryService.useInventoryItem(item.itemId, +dinozId);
 					await this.resfreshInventory();
+
+					// Update Dinoz HP bar if item heals
+					const effect = item.effect;
+					if (effect?.category === ItemEffect.HEAL) {
+						const dinozList = this.dinozStore.getDinozList;
+						if (!dinozList) {
+							EventBus.emit('toast', { type: 'error', message: 'missingData' });
+							EventBus.emit('isLoading', false);
+							return;
+						}
+						this.dinozStore.setDinozList(
+							dinozList.map(dinoz => {
+								if (dinoz.id === +dinozId) {
+									dinoz.life += effect.value;
+									if (dinoz.life > dinoz.maxLife) {
+										dinoz.life = dinoz.maxLife;
+									}
+								}
+								return dinoz;
+							})
+						);
+					}
+
 					EventBus.emit('refreshDinoz', true);
 					EventBus.emit('refreshMoney', true);
 					EventBus.emit('isLoading', false);
