@@ -98,7 +98,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList, shopNameList } from '../../constants/index.js';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { sessionStore, dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
@@ -172,17 +171,39 @@ export default defineComponent({
 						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
 					});
 					break;
-				case Action.FIGHT:
+				case Action.FIGHT: {
+					const dinozId = +this.$route.params.id;
+
 					EventBus.emit('isLoading', true);
 					// eslint-disable-next-line
-					const fight: FightResult = await FightService.processFight(parseInt(this.$route.params.id.toString()));
+					const fight = await FightService.processFight(+this.$route.params.id);
 					this.sessionStore.setFightResult(fight);
+
+					const dinozList = this.dinozStore.getDinozList;
+
+					if (!dinozList) {
+						EventBus.emit('toast', { type: 'error', message: 'missingData' });
+						EventBus.emit('isLoading', false);
+						return;
+					}
+
+					this.dinozStore.setDinozList(
+						dinozList.map(dinoz => {
+							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
+								// Update dinoz HP
+								dinoz.life -= fight.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+							}
+							return dinoz;
+						})
+					);
+
 					this.$router.push({
 						name: 'Fight',
 						params: { dinozId: this.$route.params.id.toString() }
 					});
 					EventBus.emit('isLoading', false);
 					break;
+				}
 				case Action.RESURRECT:
 					this.resurect = true;
 					break;

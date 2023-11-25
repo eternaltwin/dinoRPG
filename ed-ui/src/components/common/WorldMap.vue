@@ -52,7 +52,6 @@ import { defineComponent, PropType } from 'vue';
 import { placeList } from '../../constants/index.js';
 import { PlaceDisplayed } from '@drpg/core/models/place/PlaceDisplayed';
 import { svgLines } from '@drpg/core/models/place/svgLines';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { dinozStore, sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService } from '../../services/index.js';
@@ -146,7 +145,7 @@ export default defineComponent({
 
 			EventBus.emit('isLoading', true);
 			try {
-				const moveTry: FightResult = await DinozService.betaMove(this.dinozData!.id!, placeId);
+				const moveTry = await DinozService.betaMove(this.dinozData!.id!, placeId);
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				if (moveTry.result) {
@@ -162,7 +161,11 @@ export default defineComponent({
 					this.dinozStore.setDinozList(
 						dinozList.map(dinoz => {
 							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
+								// Update dinoz place
 								dinoz.placeId = place.alias || placeId;
+
+								// Update dinoz HP
+								dinoz.life -= moveTry.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
 							}
 							return dinoz;
 						})

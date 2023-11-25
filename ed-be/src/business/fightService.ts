@@ -203,18 +203,19 @@ export async function rewardFight(
 	}
 
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
+	const averageTeamLevel = teamLevel / team.length;
 
 	let xp = 0;
 	let fgold = 0;
 	for (const monster of monsters) {
-		const factor = monster.level >= teamLevel ? 1 : 4 / (4 + (teamLevel - monster.level));
+		const factor = monster.level >= averageTeamLevel ? 1 : 4 / (4 + (averageTeamLevel - monster.level));
 		const monsterGold = monster.gold ?? 1;
 		fgold = monsterGold * factor * goldFactor;
 		xp += Math.round(monster.xp ?? 10 * factor);
 		//Newbie bonus
-		if (teamLevel <= 5) xp += XP_NEWB_BONUS[teamLevel - 1];
+		if (averageTeamLevel <= 5) xp += XP_NEWB_BONUS[averageTeamLevel - 1];
 		// bonus for fighters of same level of the monster
-		if (Math.abs(teamLevel - monster.level) <= 5) xp += monster.xpBonus ?? 0;
+		if (Math.abs(averageTeamLevel - monster.level) <= 5) xp += monster.xpBonus ?? 0;
 	}
 
 	const experienceGained = Math.round(xp);
@@ -260,9 +261,17 @@ export async function rewardFight(
 		}),
 		goldEarned: fightResult.winner ? gold : 0,
 		xpEarned: fightResult.winner ? experienceGained : 0,
-		hpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0),
+		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0),
 		result: fightResult.winner,
-		history: fightResult.history
+		history: fightResult.history,
+		hpLost: fightResult.attackers.map(a => ({
+			id: a.dinoz_id,
+			hpLost: a.hp_lost
+		})),
+		itemsUsed: fightResult.attackers.map(a => ({
+			id: a.dinoz_id,
+			itemsUsed: a.items_used
+		})),
 	};
 }
 

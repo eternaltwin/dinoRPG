@@ -25,7 +25,7 @@
 					theme: 'small'
 				}"
 			/>
-			<div class="results life">{{ fight.hpLost }}</div>
+			<div class="results life">{{ fight.totalHpLost }}</div>
 			<div class="results xp">
 				{{ fight.xpEarned }}
 				<img

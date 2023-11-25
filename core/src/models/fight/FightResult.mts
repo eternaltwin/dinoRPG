@@ -4,9 +4,17 @@ export interface FightResult {
 	opponent: string[];
 	goldEarned: number;
 	xpEarned: number;
-	hpLost: number;
+	totalHpLost: number;
 	result: boolean;
 	history: string;
+	hpLost: {
+		id: number;
+		hpLost: number;
+	}[];
+	itemsUsed: {
+		id: number;
+		itemsUsed: number[];
+	}[];
 }
 
 // This structure needs to be exactly the same as FightResult in native/src/fight/manager.rs
