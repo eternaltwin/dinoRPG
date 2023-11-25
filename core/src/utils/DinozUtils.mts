@@ -14,6 +14,8 @@ import { GatherData } from '../models/gather/gatherData.mjs';
 import { GatherType } from '../models/enums/GatherType.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
+import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
+import { Stat } from '../models/enums/SkillStat.mjs';
 
 type Config = {
 	dinoz: {
@@ -355,6 +357,61 @@ export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: n
 		life: dinoz.life
 	};
 }
+
+export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
+	let max = BaseStats[SpecialStat.MAX_FOLLOWERS];
+
+	const skillsAffectingMaxFollowers = Object.values(skillList)
+		.filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
+
+	for (const skill of skillsAffectingMaxFollowers) {
+		if (dinoz.skills.some(s => s === skill.id)) {
+			max += skill.effects?.[Stat.MAX_FOLLOWERS] || 0;
+		}
+	}
+
+	return max;
+};
+
+export const getFollowableDinoz = <T extends Pick<DinozFiche,
+'id' |
+'placeId' |
+'leaderId' |
+'isSelling' |
+'followers' |
+'skills'
+>>(
+	dinozList: T[],
+	potentialFollower: Pick<DinozFiche, 'id' | 'placeId'>
+) => {
+	return dinozList.filter(dinoz => {
+		// Filter out current dinoz
+		if (dinoz.id === potentialFollower.id) {
+			return false;
+		}
+		// Filter out Dinoz being sold
+		if (dinoz.isSelling) {
+			return false;
+		}
+		// Filter out Dinoz that already have a leader
+		if (dinoz.leaderId) {
+			return false;
+		}
+		// Filter out Dinoz that are not in the same place
+		if (dinoz.placeId !== potentialFollower.placeId) {
+			return false;
+		}
+
+		const maxFollowers = getMaxFollowers(dinoz);
+
+		// Filter out Dinoz that have too many followers
+		if (dinoz.followers.length >= maxFollowers) {
+			return false;
+		}
+
+		return true;
+	});
+};
 
 export const orderDinozList = <T extends Pick<DinozFiche,
 	'id' |

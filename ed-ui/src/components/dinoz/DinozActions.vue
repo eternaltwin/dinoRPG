@@ -116,7 +116,7 @@ import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionL
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
+import { getFollowableDinoz, orderDinozList } from '@drpg/core/utils/DinozUtils';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -280,15 +280,7 @@ export default defineComponent({
 					}
 
 					// Display the list of dinoz available to follow
-					const dinozList = this.dinozStore.getDinozList.filter(
-						dinoz =>
-							dinoz.id !== +this.$route.params.id &&
-							!dinoz.isSelling &&
-							!dinoz.leaderId &&
-							dinoz.placeId === currentDinoz.placeId
-					);
-
-					this.dinozAvailableToFollow = dinozList;
+					this.dinozAvailableToFollow = getFollowableDinoz(this.dinozStore.getDinozList, currentDinoz);
 					break;
 				}
 				case Action.UNFOLLOW: {

@@ -12,7 +12,7 @@ import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { DinozForDinozFiche, actualPlace, canChangeSkillState, canGoToThisPlace, canLevelUp, getNumberOfGatheringTries, getRace, initializeDinoz, isAlive, knowSkillId, toDinozFiche, toDinozSkillFiche } from '@drpg/core/utils/DinozUtils';
+import { DinozForDinozFiche, actualPlace, canChangeSkillState, canGoToThisPlace, canLevelUp, getFollowableDinoz, getNumberOfGatheringTries, getRace, initializeDinoz, isAlive, knowSkillId, toDinozFiche, toDinozSkillFiche } from '@drpg/core/utils/DinozUtils';
 import { discoverBox, getGridSize, hideGridIngredients, initializeGatherGrid, saveGrid } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Concentration, Dinoz, DinozMission, Player } from '@drpg/prisma';
@@ -23,7 +23,7 @@ import { TemporaryStatus, shopList } from '../constants/index.js';
 import {
 	createDinoz,
 	getActiveDinoz,
-	getAvailableDinozToFollowCount,
+	getAvailableDinozToFollow,
 	getCanDinozChangeName,
 	getDinozFicheLiteRequest,
 	getDinozFicheRequest,
@@ -195,9 +195,17 @@ export async function getAvailableActions(dinoz: DinozForConditionCheck & Pick<D
 		availableActions.push(actionList[Action.UNFOLLOW]);
 	} else {
 		// Check if there is a dinoz to follow
-		const dinozToFollowCount = await getAvailableDinozToFollowCount(dinoz.player.id, dinoz.id);
+		const potentialDinozToFollow = await getAvailableDinozToFollow(dinoz.player.id, dinoz.id);
+		const dinozToFollow = getFollowableDinoz(
+			potentialDinozToFollow.map(dinoz => ({
+				...dinoz,
+				skills: dinoz.skills.map(skill => skill.skillId),
+				followers: dinoz.followers.map(follower => follower.id)
+			})),
+			dinoz
+		);
 
-		if (dinoz.followers.length === 0 && dinozToFollowCount > 0) {
+		if (dinozToFollow.length > 0) {
 			availableActions.push(actionList[Action.FOLLOW]);
 		}
 	}

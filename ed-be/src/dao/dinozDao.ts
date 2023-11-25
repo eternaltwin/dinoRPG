@@ -528,8 +528,8 @@ export async function updateOrderData(dinozList: { id: number; order: number }[]
 	await Promise.all(updates);
 }
 
-export async function getAvailableDinozToFollowCount(playerId: number, dinozId: number) {
-	const count = await prisma.dinoz.count({
+export async function getAvailableDinozToFollow(playerId: number, dinozId: number) {
+	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			id: { not: dinozId },
 			playerId: playerId,
@@ -537,7 +537,15 @@ export async function getAvailableDinozToFollowCount(playerId: number, dinozId: 
 			isSacrificed: false,
 			isSelling: false,
 		},
+		select: {
+			id: true,
+			placeId: true,
+			leaderId: true,
+			isSelling: true,
+			followers: { select: { id: true } },
+			skills: { select: { skillId: true } },
+		},
 	});
 
-	return count;
+	return dinozList;
 }
