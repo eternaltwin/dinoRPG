@@ -1,3 +1,8 @@
+export enum FighterType {
+	Monster = 'Monster',
+	Dinoz = 'Dinoz',
+}
+
 // This structure needs to be exactly the same as FighterConfiguration in native/src/fight/fighter.rs
 export class FighterFiche {
 	// ID of the fighter in the DB (if it exists)
@@ -5,9 +10,11 @@ export class FighterFiche {
 	//Level of the dinoz (used for calculate monster power)
 	level: number;
 	// Tells if the fighter is a monster
-	is_monster: boolean;
+	ftype: FighterType;
 	// Name of the fighter
 	name: string;
+	// Display code of the fighter
+	display: string;
 	// Health of the fighter at the start of the fight, it cannot go above it during a fight
 	start_life: number;
 	// The base elements of the fighter (in the order 0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
@@ -27,8 +34,9 @@ export class FighterFiche {
 	constructor(
 		dinozId: number,
 		level: number | undefined,
-		is_monster: boolean,
+		ftype: FighterType,
 		name: string,
+		display: string,
 		start_life: number,
 		base_elements: Array<number>,
 		bonus_attack: number | undefined,
@@ -38,8 +46,9 @@ export class FighterFiche {
 		status: Array<number>
 	) {
 		this.dinoz_id = dinozId;
-		this.is_monster = is_monster;
+		this.ftype = ftype;
 		this.name = name;
+		this.display = display;
 		this.start_life = start_life;
 		this.items = items;
 		this.skills = skills;

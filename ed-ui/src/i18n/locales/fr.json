@@ -3416,7 +3416,17 @@
 		"lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
 		"continue": "Continuer",
 		"display": "Afficher le combat",
-		"resume": "Vous avez combattu un {enemy}"
+		"resume": "Vous avez combattu un {enemy}",
+		"event": {
+			"Assault": "{attacker_name} lance un assault {element} sur {target_name} et inflige {damage} dégâts",
+			"Death": "{fighter_name} est mort!",
+			"End": "{team} a gagné le combat!",
+			"Item": "{fighter_name} utilise {item_name}",
+			"Join": "{fighter_name} rejoint les {team}",
+			"Skill": "{fighter_name} utilise {skill_name}",
+			"Status": "Le {status_name} de {fighter_name} prend effet",
+			"Summon": "{fighter_name} invoque {summon_name}"
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",

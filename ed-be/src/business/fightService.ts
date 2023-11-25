@@ -8,7 +8,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkMissionFight } from './missionsService.js';
 import { FightProcessResult, FightResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
-import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
+import { FighterFiche, FighterType } from '@drpg/core/models/fight/FighterFiche';
 import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
@@ -84,8 +84,9 @@ export function calculateFight(dinozData: Dinoz, monsters: Array<MonsterFiche>):
 	const attacker: FighterFiche = new FighterFiche(
 		dinozData.id,
 		dinozData.level,
-		false,
+		FighterType.Dinoz,
 		dinozData.name,
+		dinozData.display,
 		dinozData.life,
 		[dinozData.nbrUpFire, dinozData.nbrUpWood, dinozData.nbrUpWater, dinozData.nbrUpLightning, dinozData.nbrUpAir],
 		0,
@@ -99,7 +100,8 @@ export function calculateFight(dinozData: Dinoz, monsters: Array<MonsterFiche>):
 		return new FighterFiche(
 			0, // TODO have to find a way to define monster's id without conflicting with a dinoz id
 			0,
-			true,
+			FighterType.Monster,
+			monster.name,
 			monster.name,
 			monster.hp,
 			[
@@ -133,7 +135,8 @@ export function calculateFight(dinozData: Dinoz, monsters: Array<MonsterFiche>):
 
 	console.log(`Configuration: ${JSON.stringify(fightConfiguration)}`);
 
-	return JSON.parse(fight_rust(JSON.stringify(fightConfiguration)));
+	let result: FightProcessResult = JSON.parse(fight_rust(JSON.stringify(fightConfiguration)));
+	return result;
 }
 
 export async function rewardFight(

@@ -4,7 +4,11 @@
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
 	{{ fightText }}<br />
-	<p v-html="fightHistory" />
+	<div v-if="fightHistory">
+		<p v-for="(event, i) in fightHistory" :key="i">
+			{{ $t(`fight.event.${event.event_type}`, event ) }}
+		</p>
+	</div>
 	<div class="wrapper">
 		<div class="debrief" :class="lang">
 			<img
@@ -47,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { FightEvent, FightResult } from '@drpg/core/models/fight/FightResult';
 import { FightService } from '../services/index.js';
 import { localStore, playerStore, dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
@@ -70,7 +74,7 @@ export default defineComponent({
 			dinozId: undefined as number | undefined,
 			lang: localStore().getLanguage ?? 'fr',
 			fightText: undefined as string | undefined,
-			fightHistory: undefined as string | undefined
+			fightHistory: undefined as Array<FightEvent> | undefined
 		};
 	},
 	methods: {
@@ -101,7 +105,7 @@ export default defineComponent({
 		},
 		displayFight(): void {
 			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
-			this.fightHistory = this.fight.history.replace(/\n/g, '<br>');
+			this.fightHistory = this.fight.history.events.map(e => Object.values(e)[0]);
 		}
 	},
 	created(): void {

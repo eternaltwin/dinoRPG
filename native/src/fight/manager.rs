@@ -122,13 +122,19 @@ impl FightResult {
     /// Add to the history the details of an assault
     pub fn log_assault(
         &mut self,
-        attacker_id: u32,
-        target_id: u32,
+        attacker: &Fighter,
+        target: &Fighter,
         element_type: ElementIndex,
         damage: u32,
     ) {
-        self.history
-            .log_assault(attacker_id, target_id, element_type, damage);
+        self.history.log_assault(
+            attacker.id,
+            attacker.name.clone(),
+            target.id,
+            target.name.clone(),
+            element_type,
+            damage,
+        );
     }
 
     /// Add to the history the team that won
@@ -136,8 +142,8 @@ impl FightResult {
         self.history.log_end(winnner);
     }
 
-    pub fn log_death(&mut self, fighter_id: u32) {
-        self.history.log_death(fighter_id);
+    pub fn log_death(&mut self, fighter: &Fighter) {
+        self.history.log_death(fighter.id, fighter.name.clone());
     }
 
     pub fn history(&self) -> FightHistory {
@@ -482,7 +488,7 @@ impl Manager {
             target.id, hp_lost, target.life
         );
         self.fight_result
-            .log_assault(attacker.id, target.id, current_element_index, hp_lost);
+            .log_assault(attacker, target, current_element_index, hp_lost);
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -501,7 +507,7 @@ impl Manager {
 
         // If the target is dead, add it to the dfead list, remove it from the list of alive fighters and remove it from its team.
         if target_new.life == 0 {
-            self.fight_result.log_death(target_new.id);
+            self.fight_result.log_death(&target_new);
             self.fighters_dead.insert(target_id);
             self.figthers_all_alive_order.retain(|id| *id != target_id);
             if target_new.original_side == TeamSide::Attackers {

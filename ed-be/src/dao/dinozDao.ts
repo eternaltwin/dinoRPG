@@ -192,6 +192,7 @@ export async function getDinozFightDataRequest(dinozId: number): Promise<Dinoz |
 		.select([
 			'dinoz.id',
 			'dinoz.name',
+			'dinoz.display',
 			'dinoz.level',
 			'dinoz.life',
 			'dinoz.maxLife',
