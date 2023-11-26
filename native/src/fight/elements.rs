@@ -1,5 +1,5 @@
 /// Define element related types and functions
-use log::{debug, error}; // add trace, warn and error as needed
+use log::{debug, error};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::ops::{Index, IndexMut};

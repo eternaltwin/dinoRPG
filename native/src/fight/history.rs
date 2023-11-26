@@ -2,7 +2,12 @@ use std::{collections::HashMap, fmt::Display};
 
 use serde::{Deserialize, Serialize};
 
-use super::{elements::ElementIndex, fighter::FighterShort, manager::TeamSide, skills::SkillId};
+use super::{
+    elements::ElementIndex,
+    fighter::FighterShort,
+    manager::{AttackResult, TeamSide},
+    skills::SkillId,
+};
 
 type FighterId = u32;
 
@@ -124,10 +129,29 @@ impl JoinEvent {
 /// TODO
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SkillEvent {
-    attacker: FighterId,
+    attacker_id: FighterId,
+    attacker_name: String,
     skill: SkillId,
     effect: EffectType,
-    targets_results: Vec<(FighterId, u32)>,
+    results: Vec<(FighterId, AttackResult)>,
+}
+
+impl SkillEvent {
+    pub fn new(
+        attacker_id: FighterId,
+        attacker_name: String,
+        skill: SkillId,
+        effect: EffectType,
+        results: Vec<(FighterId, AttackResult)>,
+    ) -> Self {
+        Self {
+            attacker_id,
+            attacker_name,
+            skill,
+            effect,
+            results,
+        }
+    }
 }
 
 /// Model that contains the details of a status update for a fighter
@@ -206,6 +230,24 @@ impl FightHistory {
         )));
     }
 
+    /// Add to the history the details of a skill performed during the fight
+    pub fn log_skill(
+        &mut self,
+        attacker_id: u32,
+        attacker_name: String,
+        skill_id: SkillId,
+        effect_type: EffectType,
+        results: Vec<(FighterId, AttackResult)>,
+    ) {
+        self.events.push(FightEvent::Skill(SkillEvent::new(
+            attacker_id,
+            attacker_name,
+            skill_id,
+            effect_type,
+            results,
+        )));
+    }
+
     /// Add to the history the details of the death of a fighter
     pub fn log_death(&mut self, fighter_id: FighterId, fighter_name: String) {
         self.events
@@ -237,7 +279,16 @@ impl Display for FightHistory {
                     "{} joins the fight on the {}'s team",
                     join.fighter_name, join.team
                 )?,
-                FightEvent::Skill(_skill) => todo!(),
+                FightEvent::Skill(skill) => {
+                    writeln!(
+                        f,
+                        "{} uses skill {:?} on {:?} and deal respectively {:?} damage",
+                        skill.attacker_name,
+                        skill.skill,
+                        skill.results.iter().map(|(target, _)| target),
+                        skill.results.iter().map(|(_, damage)| damage)
+                    )?;
+                }
                 FightEvent::Status(_status) => todo!(),
                 FightEvent::Summon(_summon) => todo!(),
             }

@@ -6,7 +6,10 @@ use serde::{Deserialize, Serialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::fmt;
 
-use super::{fighter::Fighter, manager::Manager};
+use super::{
+    fighter::Fighter,
+    manager::{AttackResult, Manager},
+};
 
 mod air;
 mod fire;
@@ -46,7 +49,7 @@ pub enum SkillOrUnknown {
 }
 
 /// Shortcut to the effect of a skill
-pub type SkillEffect = fn(&mut Fighter, &mut Manager);
+pub type SkillEffect = fn(&mut Fighter, &mut Manager) -> AttackResult;
 
 /// Definition of a skill, fields are kept private because they are not meant to be changed after creation
 #[derive(Clone, Copy)]
@@ -59,6 +62,10 @@ pub struct Skill {
     skill_type: SkillType,
     /// Amount of energy used by the skill
     energy: u32,
+    /// Priority of the skill when selecting it
+    priority: u32,
+    /// Probability to use the skill
+    probability: u32,
     /// [Effect](`SkillEffect`) of the skill
     effect: SkillEffect,
     /// If true, the skill should be disabled. This is a not related to the enabled/disabled feature for skills.
@@ -71,8 +78,8 @@ impl std::fmt::Debug for Skill {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Skill id {:?}: type: {:?}, energy {:?}",
-            self.id, self.skill_type, self.energy
+            "Skill id {:?}: type: {:?}, energy {:?}, priority {:?}, probability {:?}",
+            self.id, self.skill_type, self.energy, self.priority, self.probability
         )
     }
 }
@@ -95,11 +102,12 @@ impl Skill {
     }
 
     /// Processes the [effect](`SkillEffect`) of a skill
-    pub fn process_skill(self, f: &mut Fighter, m: &mut Manager) {
+    pub fn process_skill(self, f: &mut Fighter, m: &mut Manager) -> AttackResult {
         if !self.ignore {
-            (self.effect)(f, m);
+            return (self.effect)(f, m);
         } else {
             error!("Skill {:?} not processed because it is ignored", self.id);
+            AttackResult::IgnoredSkill
         }
     }
 
@@ -116,6 +124,16 @@ impl Skill {
     /// Getter for the energy consumed by the skill
     pub fn energy(&self) -> u32 {
         self.energy
+    }
+
+    /// Getter for the priority of the skill
+    pub fn priority(&self) -> u32 {
+        self.priority
+    }
+
+    /// Getter for the probability of the skill
+    pub fn probability(&self) -> u32 {
+        self.probability
     }
 
     /// Getter for the [effect](`SkillEffect`) of the skill
@@ -769,6 +787,11 @@ static UNKNOWN_SKILL: Skill = Skill {
     id: SkillId::UNKNOWN,
     skill_type: SkillType::UNKNOWN,
     energy: 0,
-    effect: |_f: &mut Fighter, _: &mut Manager| error!("Unknown skill, ignored for fights"),
+    priority: 0,
+    probability: 0,
+    effect: |_f: &mut Fighter, _: &mut Manager| {
+        error!("Unknown skill, ignored for fights");
+        AttackResult::UnknownSkill
+    },
     ignore: true,
 };

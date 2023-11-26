@@ -17,13 +17,22 @@ export enum EventType {
     Summon = 'Summon',
 }
 
+export enum ElementName {
+	Fire = 'Fire',
+    Wood = 'Wood',
+    Water = 'Water',
+    Lightning = 'Lightning',
+    Air = 'Air',
+    Void = 'Void',
+}
+
 export interface AssaultEvent {
 	event_type: EventType.Assault;
 	attacker_id: number;
 	attacker_name: string;
 	target_id: number;
 	target_name: string;
-	element_type: ElementType;
+	element_type: ElementName;
 	damage: number;
 }
 

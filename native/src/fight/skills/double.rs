@@ -3,7 +3,7 @@ use log::error;
 
 use crate::fight::elements::ElementIndex;
 use crate::fight::fighter::Fighter;
-use crate::fight::manager::{Manager, TIMECOEF};
+use crate::fight::manager::{AttackResult, Manager, TIMECOEF};
 
 use super::{Skill, SkillId, SkillType};
 
@@ -21,8 +21,11 @@ pub static VENDETTA: Skill = Skill {
     id: SkillId::VENDETTA,
     skill_type: SkillType::PASSIVE,
     energy: 0,
+    priority: 0,    // TODO
+    probability: 0, // TODO
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.counter_attack_chance *= 1.2;
+        AttackResult::PassiveSkill
     },
     ignore: false,
 };
@@ -31,8 +34,11 @@ pub static ARMURE_DE_BASALTE: Skill = Skill {
     id: SkillId::ARMURE_DE_BASALTE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
+    priority: 0,    // TODO
+    probability: 0, // TODO
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.armor += 3;
+        AttackResult::PassiveSkill
     },
     ignore: false,
 };
@@ -41,8 +47,11 @@ pub static SPRINT: Skill = Skill {
     id: SkillId::SPRINT,
     skill_type: SkillType::PASSIVE,
     energy: 0,
+    priority: 0,    // TODO
+    probability: 0, // TODO
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.time -= (6.0 * TIMECOEF as f32 * f.initiative_global_multiplier) as i32;
+        AttackResult::PassiveSkill
     },
     ignore: false,
 };
@@ -51,8 +60,11 @@ pub static MAITRE_ELEMENTAIRE: Skill = Skill {
     id: SkillId::MAITRE_ELEMENTAIRE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
+    priority: 0,    // TODO
+    probability: 0, // TODO
     effect: |_: &mut Fighter, _: &mut Manager| {
         // element bonus handled in node
+        AttackResult::PassiveSkill
     },
     ignore: false,
 };
@@ -61,12 +73,15 @@ pub static INCREVABLE: Skill = Skill {
     id: SkillId::INCREVABLE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
+    priority: 0,    // TODO
+    probability: 0, // TODO
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.defense[ElementIndex::Air as usize] += 2.0;
         f.defense[ElementIndex::Fire as usize] += 2.0;
         f.defense[ElementIndex::Lightning as usize] += 2.0;
         f.defense[ElementIndex::Water as usize] += 2.0;
         f.defense[ElementIndex::Wood as usize] += 2.0;
+        AttackResult::PassiveSkill
     },
     ignore: false,
 };
@@ -77,6 +92,8 @@ pub static ELECTROLYSE: Skill = Skill {
     id: SkillId::ELECTROLYSE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
+    priority: 0,    // TODO
+    probability: 0, // TODO
     effect: |f: &mut Fighter, m: &mut Manager| {
         f.speed_global *= 0.95;
         for (_, att) in m.fighters_all.iter_mut() {
@@ -84,6 +101,7 @@ pub static ELECTROLYSE: Skill = Skill {
                 att.speed_global *= 0.95;
             }
         }
+        AttackResult::PassiveSkill
     },
     ignore: false,
 };
@@ -92,12 +110,14 @@ pub static ELECTROLYSE: Skill = Skill {
 
 pub static CHOC: Skill = Skill {
     id: SkillId::CHOC,
-
     skill_type: SkillType::SPECIAL,
     energy: 0,
+    priority: 0,    // TODO
+    probability: 0, // TODO
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
-        error!("Default special skill implementation! Not yet implemented")
+        error!("Default special skill implementation! Not yet implemented");
+        AttackResult::TodoSkill
     },
     ignore: false,
 };

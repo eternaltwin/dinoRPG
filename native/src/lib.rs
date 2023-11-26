@@ -11,10 +11,9 @@
 //                                             IMPORTED ITEMS
 //=====================================================================================================================
 
+use log::{debug, info}; // add trace, warn and error as needed
 use neon::prelude::*;
 use rand::prelude::*;
-extern crate log;
-use log::{debug, info}; // add trace, warn and error as needed
 use std::env;
 
 pub mod fight;

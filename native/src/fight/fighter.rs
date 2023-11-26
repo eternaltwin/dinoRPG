@@ -1,14 +1,6 @@
-//=====================================================================================================================
-// FILE:      fight/fighter.rs
-// PURPOSE:   Structure and function to handle a fighter
-// COPYRIGHT:
-//=====================================================================================================================
+//! Models and methods to handle a fighter
 
-//=====================================================================================================================
-//                                             IMPORTED ITEMS
-//=====================================================================================================================
-
-use log::{debug, info}; // add trace, warn and error as needed
+use log::{debug, info};
 use serde::{Deserialize, Serialize};
 use std::cmp;
 
@@ -158,7 +150,6 @@ pub enum FighterType {
 #[derive(Debug, Clone)]
 /// Struct to define a Fighter (dino, monster or anything)
 pub struct Fighter {
-    // Used & Documented fields
     /// Fighter ID: to handle fights
     pub id: u32,
     /// Name of the fighter
@@ -224,6 +215,7 @@ pub struct Fighter {
     pub minimum_damage: u32,
     /// Minimum damage for an assault, it can supersede minimum_assault_damage
     pub minimum_assault_damage: u32,
+
     /// Global initiative multiplier: affects any time positive or negative effects (this is impacted by the temporal damper notably)
     pub initiative_global_multiplier: f32,
 
@@ -249,6 +241,30 @@ pub struct Fighter {
     pub can_touch_flying: bool,
     /// The fighter ignores the armor of its target
     pub cancel_armor: bool,
+
+    /// List of active skills of the fighter that can be triggered instead of an assault
+    pub active_skills: Vec<Skill>,
+    /// List of event skills of the fighter that can be triggered at the beginning of the turn
+    pub event_skills: Vec<Skill>,
+    /// List of effects triggered when the fighter is hit
+    pub defense_effects: Vec<Skill>,
+    /// WIP: List of effects triggered after the fighter attacked
+    pub after_attack_effects: Vec<Skill>,
+    /// WIP: List of effects triggered after the fighter defended
+    pub after_defense_effects: Vec<Skill>,
+    /// WIP: List of effects triggered after the fight finished
+    pub after_fight_effects: Vec<Skill>,
+    /// WIP: List of effects triggered when a status is applied
+    pub on_status_effects: Vec<Skill>,
+    /// WIP: List of effects triggered when a fighter dies
+    pub on_kill_effects: Vec<Skill>,
+    /// WIP: List of effects triggered when the fighter lost the fight
+    pub on_defeat_effects: Vec<Skill>,
+    /// WIP: List of effects triggered before a new turn starts
+    pub before_turn_effects: Vec<Skill>,
+    /// WIP: List of effects triggered when the fighter is targeted
+    pub on_target_effects: Vec<Skill>,
+    //
     // Un-used & non-documented fields
     // default_max_energy: u32,
     // Number of attacks a Fighter chains (or just chained/is ongoing?)
@@ -420,6 +436,18 @@ impl Fighter {
             can_touch_intangible: false,
             can_touch_flying: false,
             cancel_armor: false,
+            active_skills: vec![],
+            event_skills: vec![],
+            after_defense_effects: vec![],
+            after_attack_effects: vec![],
+            after_fight_effects: vec![],
+            on_status_effects: vec![],
+            defense_effects: vec![],
+            on_kill_effects: vec![],
+            on_defeat_effects: vec![],
+            before_turn_effects: vec![],
+            on_target_effects: vec![],
+            //
             // Un-used & non-documented fields
             // combo: 0,
             // object_chance_multiplier: 1.0,
@@ -522,6 +550,18 @@ impl Fighter {
             can_touch_intangible: false,
             can_touch_flying: false,
             cancel_armor: false,
+            active_skills: vec![],
+            event_skills: vec![],
+            after_defense_effects: vec![],
+            after_attack_effects: vec![],
+            after_fight_effects: vec![],
+            on_status_effects: vec![],
+            defense_effects: vec![],
+            on_kill_effects: vec![],
+            on_defeat_effects: vec![],
+            before_turn_effects: vec![],
+            on_target_effects: vec![],
+            //
             // Un-used & non-documented fields
             // combo: 0,
             // object_chance_multiplier: 1.0,
@@ -575,21 +615,27 @@ impl Fighter {
         }
     }
 
-    //---------------------------------------------------------------------------------------------------------------------
-    // PURPOSE: Get the index of the current element of the fighter
-    // PARAMS:  - do_increment (bool) - Tells if the index should be moved to the Fighter's next element after getting the element
-    // RETURN:  ElementIndex - The index of the current element of the fighter
-    //---------------------------------------------------------------------------------------------------------------------
-    pub fn process_passive_skills(&mut self, manager: &mut Manager) {
-        info!("--- Processing fighter {:} passive skills ---", self.id);
+    /// Prepare the skills of the dinoz:
+    /// - process passive skills
+    /// - load the active skills
+    /// - TODO etc
+    pub fn prepare_skills(&mut self, manager: &mut Manager) {
+        info!("--- Preparing fighter {:} skills ---", self.id);
         let skills = self.skills.clone();
         for s in skills {
-            if s.skill_type() == SkillType::PASSIVE {
-                debug!("Processing passive skill {:?}", s.id());
-                s.process_skill(self, manager);
+            match s.skill_type() {
+                SkillType::PASSIVE => {
+                    debug!("Processing passive skill {:?}", s);
+                    s.process_skill(self, manager);
+                }
+                SkillType::ACTIVE => {
+                    debug!("Loading active skill {:?}", s);
+                    self.active_skills.push(s);
+                }
+                _ => (), // TODO
             }
         }
-        info!("--- Processing fighter {:} passive skills done---", self.id);
+        info!("--- Preparing fighter {:} skills done---", self.id);
     }
 
     /// Get the index of the current element of the fighter
@@ -624,13 +670,11 @@ impl Fighter {
         self.ordered_elements.get_current_element_index()
     }
 
-    //---------------------------------------------------------------------------------------------------------------------
-    // PURPOSE: Calculate defenses of the fighter based on the elements
-    // PARAMS:  - elements: ([u32; 5]) - expects the list of elements of the fighter in the following order
-    //            0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
-    // RETURN:  [f32;6] - An array that corresponds to the defense of the fighter with elements in the following order:
-    //          0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
-    //---------------------------------------------------------------------------------------------------------------------
+    /// PURPOSE: Calculate defenses of the fighter based on the elements
+    /// PARAMS:  - elements: ([u32; 5]) - expects the list of elements of the fighter in the following order
+    ///            0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
+    /// RETURN:  [f32;6] - An array that corresponds to the defense of the fighter with elements in the following order:
+    ///          0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air, 5 - Void
     // TODO consider skills & statuses?
     // TODO can defense be negative?
     pub fn compute_defenses(elements: [i32; 5]) -> [f32; 6] {
@@ -656,7 +700,10 @@ impl Fighter {
     //---------------------------------------------------------------------------------------------------------------------
     pub fn compute_attack(&self, element_type: ElementIndex, power_base: u32) -> [u32; 6] {
         let mut attack: [u32; 6] = [0, 0, 0, 0, 0, 0];
+
+        // Make sure the element value is positive or zero
         let element: u32 = cmp::max(self.ordered_elements.elements[element_type], 0) as u32;
+
         attack[element_type as usize] = power_base * element;
         attack
     }
@@ -695,6 +742,12 @@ impl Fighter {
         // }
         // best_id
     }
+
+    // /// Add an active skill to the list of active skills of the fighter
+    // pub fn add_active_skill(&mut self, priority: u32, probability: u32, skill: Skill) {
+    //     self.active_skills
+    //         .push(ActiveSkill::new(priority, probability, skill));
+    // }
 
     //---------------------------------------------------------------------------------------------------------------------
     // PURPOSE: Set the maximum energy of the Fighter and returns the value set

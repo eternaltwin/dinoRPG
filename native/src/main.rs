@@ -11,9 +11,8 @@
 //                                             IMPORTED ITEMS
 //=====================================================================================================================
 
-extern crate log;
-use log::{debug, info}; // add trace, debug, warn, error as needed
-use std::env;
+use log::{debug, info};
+use std::env; // add trace, debug, warn, error as needed
 
 use crate::fight::manager::{FightResult, Manager, ManagerConfiguration};
 
@@ -83,7 +82,8 @@ fn main() {
                 ],
                 "skills": [
                     11204,
-                    11408
+                    11408,
+                    31101
                 ],
                 "status": [
                 ],
@@ -135,7 +135,8 @@ fn main() {
                     11208,
                     "hbkjn",
                     123567,
-                    51506
+                    51506,
+                    31101
                 ],
                 "status": [
                 ],
@@ -158,6 +159,7 @@ fn main() {
                 "items": [
                 ],
                 "skills": [
+                    31101
                 ],
                 "status": [
                 ],
