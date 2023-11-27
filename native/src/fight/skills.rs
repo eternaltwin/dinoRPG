@@ -27,6 +27,8 @@ use crate::fight::skills::{
     air::*, double::*, fire::*, invocation::*, lightning::*, race::*, sphere::*, water::*, wood::*,
 };
 
+pub const DEFAULT_SKILL_ENERGY_COST: u32 = 20;
+
 /// Type of skill
 #[derive(PartialEq, Deserialize, Serialize, Debug, Copy, Clone)]
 pub enum SkillType {
@@ -52,6 +54,9 @@ pub enum SkillOrUnknown {
 pub type SkillEffect = fn(&mut Fighter, &mut Manager) -> AttackResult;
 
 /// Definition of a skill, fields are kept private because they are not meant to be changed after creation
+///
+/// The energy, priority and probability fields matter only for skills that get triggered
+/// (like invocation, event, active, may be some specials)
 #[derive(Clone, Copy)]
 pub struct Skill {
     /// [ID](`SkillId`) of the skill
@@ -104,7 +109,7 @@ impl Skill {
     /// Processes the [effect](`SkillEffect`) of a skill
     pub fn process_skill(self, f: &mut Fighter, m: &mut Manager) -> AttackResult {
         if !self.ignore {
-            return (self.effect)(f, m);
+            (self.effect)(f, m)
         } else {
             error!("Skill {:?} not processed because it is ignored", self.id);
             AttackResult::IgnoredSkill

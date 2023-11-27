@@ -14,9 +14,9 @@ pub static PERCEPTION: Skill = Skill {
     id: SkillId::PERCEPTION,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Water as usize] += 4;
         f.can_touch_intangible = true;
         AttackResult::PassiveSkill
@@ -28,9 +28,9 @@ pub static MUTATION: Skill = Skill {
     id: SkillId::MUTATION,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
         AttackResult::PassiveSkill
     },
@@ -41,9 +41,9 @@ pub static KARATE_SOUS_MARIN: Skill = Skill {
     id: SkillId::KARATE_SOUS_MARIN,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Water as usize] += 10;
         f.skill_elemental_bonus[ElementIndex::Water as usize] += 10;
         AttackResult::PassiveSkill
@@ -55,9 +55,9 @@ pub static ENTRAINEMENT_SOUS_MARIN: Skill = Skill {
     id: SkillId::ENTRAINEMENT_SOUS_MARIN,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
         AttackResult::PassiveSkill
     },
@@ -68,9 +68,9 @@ pub static SUMO: Skill = Skill {
     id: SkillId::SUMO,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
         AttackResult::PassiveSkill
     },
@@ -81,9 +81,9 @@ pub static ZERO_ABSOLU: Skill = Skill {
     id: SkillId::ZERO_ABSOLU,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
         f.defense[ElementIndex::Fire as usize] += 25.0;
         AttackResult::PassiveSkill
     },
@@ -94,9 +94,9 @@ pub static ENTRAINEMENT_SOUS_MARIN_AVANCE: Skill = Skill {
     id: SkillId::ENTRAINEMENT_SOUS_MARIN_AVANCE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
         AttackResult::PassiveSkill
     },
@@ -107,9 +107,9 @@ pub static MAITRE_NAGEUR: Skill = Skill {
     id: SkillId::MAITRE_NAGEUR,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _: &mut Manager| {
+    priority: 0,
+    probability: 0,
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // element bonus handled in node
         AttackResult::PassiveSkill
     },
@@ -121,8 +121,8 @@ pub static ECAILLES_LUMINESCENTES: Skill = Skill {
     id: SkillId::ECAILLES_LUMINESCENTES,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.armor += 2;
         AttackResult::PassiveSkill
@@ -134,8 +134,8 @@ pub static PEAU_DE_SERPENT: Skill = Skill {
     id: SkillId::PEAU_DE_SERPENT,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_dodge_chance *= 1.1;
         f.speed_per_element[ElementIndex::Water as usize] *= 0.85;
@@ -160,7 +160,7 @@ pub static CANON_A_EAU: Skill = Skill {
 pub static GEL: Skill = Skill {
     id: SkillId::GEL,
     skill_type: SkillType::ACTIVE,
-    energy: 0, // TODO
+    energy: 20,
     priority: 1,
     probability: 10,
     effect: |f: &mut Fighter, m: &mut Manager| {
@@ -176,12 +176,16 @@ pub static GEL: Skill = Skill {
 pub static COUP_SOURNOIS: Skill = Skill {
     id: SkillId::COUP_SOURNOIS,
     skill_type: SkillType::ACTIVE,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO // todo
-    effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // todo
-        error!("Default active skill implementation! Not yet implemented");
+    energy: 20,
+    priority: 3,
+    probability: 7,
+    effect: |f: &mut Fighter, m: &mut Manager| {
+        let result = m.attack_with_assault(f);
+        if let AttackResult::Hit(damage) = result {
+            if damage > 0 {
+                // TODO need to revamp AttackResult to contain the target in it
+            }
+        }
         AttackResult::TodoSkill
     },
     ignore: false,

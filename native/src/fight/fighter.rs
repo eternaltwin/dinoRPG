@@ -632,10 +632,31 @@ impl Fighter {
                     debug!("Loading active skill {:?}", s);
                     self.active_skills.push(s);
                 }
+                SkillType::EVENT => {
+                    debug!("Loading event skill {:?}", s);
+                    self.event_skills.push(s);
+                }
                 _ => (), // TODO
             }
         }
         info!("--- Preparing fighter {:} skills done---", self.id);
+    }
+
+    /// Finalize the preparation phase of the fighter by sorting the active and event skills in decreasing priority order
+    /// i.e highest priority skills are first in the vector
+    pub fn finalize_skills(&mut self) {
+        self.active_skills
+            .sort_by_key(|a| std::cmp::Reverse(a.priority()));
+        debug!(
+            "Fighter {} (id {}): active skills {:?}",
+            self.id, self.name, self.active_skills
+        );
+        self.event_skills
+            .sort_by_key(|a| std::cmp::Reverse(a.priority()));
+        debug!(
+            "Fighter {} (id {}): event skills {:?}",
+            self.id, self.name, self.event_skills
+        );
     }
 
     /// Get the index of the current element of the fighter

@@ -282,11 +282,19 @@ impl Display for FightHistory {
                 FightEvent::Skill(skill) => {
                     writeln!(
                         f,
-                        "{} uses skill {:?} on {:?} and deal respectively {:?} damage",
+                        "{} uses skill {:?} on {:?} and deals respectively {:?} damage",
                         skill.attacker_name,
                         skill.skill,
-                        skill.results.iter().map(|(target, _)| target),
-                        skill.results.iter().map(|(_, damage)| damage)
+                        skill
+                            .results
+                            .iter()
+                            .map(|(target, _)| *target)
+                            .collect::<Vec<u32>>(),
+                        skill
+                            .results
+                            .iter()
+                            .map(|(_, damage)| *damage)
+                            .collect::<Vec<AttackResult>>()
                     )?;
                 }
                 FightEvent::Status(_status) => todo!(),

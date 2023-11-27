@@ -278,6 +278,12 @@ impl Manager {
             // Increase time by a random amount
             f.time += self.random_generator.gen_range(0..=TIMEBASE) * TIMECOEF;
 
+            // Set energy to the max of the fighter
+            f.energy = f.max_energy;
+
+            // Finalize the fighter's skills order
+            f.finalize_skills();
+
             // Place back the fighter
             self.fighters_all.insert(i, f);
         }
@@ -540,7 +546,7 @@ impl Manager {
     /// PURPOSE: Handle an assault
     /// PARAMS:  - attacker (&mut Fighter): mutable pointer of the attacker
     ///          - target (&mut Fighter): mutable pointer of the target
-    fn attack_with_assault(&mut self, attacker: &mut Fighter) -> AttackResult {
+    pub fn attack_with_assault(&mut self, attacker: &mut Fighter) -> AttackResult {
         // TODO check if the dinoz can attack flying or intangible
 
         let mut target = self.pick_target(attacker.side);
@@ -667,6 +673,16 @@ impl Manager {
     ///
     /// This method is in the manager because it uses the random generator
     fn pick_random_event_skill(&mut self, f: &Fighter) -> Option<Skill> {
+        for s in &f.event_skills {
+            // If the fighter does not have enough energy for the skill, it is passed
+            if s.energy() > f.energy {
+                continue;
+            }
+            // Pick the first skill from the probability
+            if self.random_generator.gen_range(0..=100) < s.probability() {
+                return Some(*s);
+            }
+        }
         None
     }
 
