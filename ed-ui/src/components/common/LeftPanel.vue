@@ -70,6 +70,7 @@ import { dinozStore, playerStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
 import DinozList from '../../components/dinoz/DinozList.vue';
 import { placeList } from '@drpg/core/models/place/PlaceList';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -105,9 +106,9 @@ export default defineComponent({
 			return this.playerStore.getMoney;
 		},
 		place(): string | null {
-			if (!this.currentDinozId) return this.place;
+			if (!this.currentDinozId()) return this.place;
 
-			const currentDinoz = this.dinozStore.getDinoz(this.currentDinozId);
+			const currentDinoz = this.dinozStore.getDinoz(this.currentDinozId()) as DinozFiche | undefined;
 			if (!currentDinoz) return this.place;
 
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
