@@ -15,7 +15,7 @@ export const apiRoutes = {
 	playerRoute: '/api/v1/player',
 	rankingRoutes: '/api/v1/ranking',
 	shopRoutes: '/api/v1/shop',
-	offerRoutes: '/api/v1/offer',
+	offerRoutes: '/api/v1/offer'
 };
 
 export const regex = {

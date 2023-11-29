@@ -9,7 +9,8 @@ export const playerStore = defineStore('playerStore', {
 		playerName: '',
 		playerOptions: {
 			hasPDA: false,
-			hasPMI: false
+			hasPMI: false,
+			currentDinozId: undefined
 		}
 	}),
 	getters: {

@@ -1,4 +1,4 @@
-import { GatherType } from "../enums/GatherType.mjs";
+import { GatherType } from '../enums/GatherType.mjs';
 
 export enum Action {
 	FIGHT = 'fight',
@@ -17,8 +17,8 @@ export enum Action {
 	ENERGY = 'energy',
 	HUNT = 'hunt',
 	SEEK = 'seek',
-	ANNIV = 'anniv',
-};
+	ANNIV = 'anniv'
+}
 
 export interface ActionFiche {
 	name: Action | GatherType;

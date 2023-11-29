@@ -15,10 +15,7 @@ import { updateDinoz } from '../dao/dinozDao.js';
 
 export async function rewarder(
 	rewards: Rewarder[],
-	team: (Pick<Dinoz,
-		'id' |
-		'level'
-	> & {
+	team: (Pick<Dinoz, 'id' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		player: Pick<Player, 'id'> | null;
 	})[]
@@ -70,13 +67,8 @@ export async function rewarder(
 						throw new ErrorFormator(500, `Item ${reward.value} doesn't exist.`);
 					}
 
-					const playerShopData = await getPlayerShopOneItemDataRequest(
-						playerId,
-						itemRewarded.itemId
-					);
-					const playerItemData = playerShopData.items.find(
-						item => item.itemId === itemRewarded.itemId
-					);
+					const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemRewarded.itemId);
+					const playerItemData = playerShopData.items.find(item => item.itemId === itemRewarded.itemId);
 					if (playerItemData) {
 						const quantityLimitedByMaxQuantity = itemRewarded.maxQuantity - playerItemData.quantity;
 

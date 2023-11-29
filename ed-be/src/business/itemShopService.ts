@@ -44,9 +44,7 @@ export async function getItemsFromShop(req: Request): Promise<ItemFiche[]> {
 	// All checks passed, let's create the list of items with the proper values
 	return tempShop.listItemsSold.map(itemSold => {
 		// Get the item data if the player has it
-		const itemPlayer = playerShopData.items.find(
-			playerItem => playerItem.itemId === itemSold.itemId
-		);
+		const itemPlayer = playerShopData.items.find(playerItem => playerItem.itemId === itemSold.itemId);
 		// Get the reference of the items from the constants
 		const itemReference = Object.values(itemList).find(item => item.itemId === itemSold.itemId);
 
@@ -204,9 +202,7 @@ async function buyMagicItem(
 	playerItemData: Pick<PlayerItem, 'quantity'> | undefined
 ) {
 	// Get the number of golden napodinos owned by the player
-	const playerNapoData = playerShopData.items.find(
-		item => item.itemId === itemList.GOLDEN_NAPODINO.itemId
-	);
+	const playerNapoData = playerShopData.items.find(item => item.itemId === itemList.GOLDEN_NAPODINO.itemId);
 
 	itemSold.quantity = playerItemData ? quantityBought + playerItemData.quantity : quantityBought;
 

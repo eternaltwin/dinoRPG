@@ -65,9 +65,7 @@ export async function updateMission(req: Request) {
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
-	const npc = Object.values(npcList).find(
-		npc => npc.missions?.find(mission => mission.missionId === missionId)
-	);
+	const npc = Object.values(npcList).find(npc => npc.missions?.find(mission => mission.missionId === missionId));
 	const actualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 
 	if (!actualPlace) {
@@ -192,9 +190,11 @@ async function checkMission(req: Request) {
 	};
 }
 
-export function getMissionAction(dinoz: Pick<Dinoz, 'placeId'> & {
-	missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
-}) {
+export function getMissionAction(
+	dinoz: Pick<Dinoz, 'placeId'> & {
+		missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
+	}
+) {
 	const actualStep = getActualStep(dinoz);
 
 	if (!actualStep) {
@@ -240,10 +240,11 @@ function missionSort(missions: Mission[], dinoz: DinozWithMissionData) {
 
 export type DinozToCheckMissionFight = Parameters<typeof checkMissionFight>[0];
 export async function checkMissionFight(
-	dinoz: DinozToGetActualStep & Pick<Dinoz, 'placeId' | 'id'> & {
-		missions: DinozMission[]
-	},
-	fight: FightResult,
+	dinoz: DinozToGetActualStep &
+		Pick<Dinoz, 'placeId' | 'id'> & {
+			missions: DinozMission[];
+		},
+	fight: FightResult
 ) {
 	//Retrieve mission on its way and the step
 	const actualStep = getActualStep(dinoz);
@@ -271,7 +272,11 @@ export async function checkMissionFight(
 	}
 }
 
-export async function checkProgressEnd(dinoz: Pick<Dinoz, 'id'> & { missions: DinozMission[] }, fight: FightResult, actualStep: MissionSteps): Promise<void> {
+export async function checkProgressEnd(
+	dinoz: Pick<Dinoz, 'id'> & { missions: DinozMission[] },
+	fight: FightResult,
+	actualStep: MissionSteps
+): Promise<void> {
 	if (actualStep.requirement.actionType !== ConditionEnum.KILL) return;
 	const progressTarget = actualStep.requirement.value;
 
@@ -329,29 +334,26 @@ export async function getGlobalMissions(req: Request) {
 
 				return {
 					npc: npc.name,
-					missions: dinoz.missions.reduce<{ id: MissionID; name: string }[]>(
-						(acc, mission) => {
-							// Filter out missions that are not finished
-							if (!mission.isFinished) {
-								return acc;
-							}
-
-							const foundMission = npcMissions.find(npcMission => npcMission.missionId === mission.missionId);
-
-							// Filter out missions that are not from the current NPC
-							if (!foundMission) {
-								return acc;
-							}
-
-							acc.push({
-								id: mission.missionId,
-								name: foundMission.missionName
-							});
-
+					missions: dinoz.missions.reduce<{ id: MissionID; name: string }[]>((acc, mission) => {
+						// Filter out missions that are not finished
+						if (!mission.isFinished) {
 							return acc;
-						},
-						[]
-					)
+						}
+
+						const foundMission = npcMissions.find(npcMission => npcMission.missionId === mission.missionId);
+
+						// Filter out missions that are not from the current NPC
+						if (!foundMission) {
+							return acc;
+						}
+
+						acc.push({
+							id: mission.missionId,
+							name: foundMission.missionName
+						});
+
+						return acc;
+					}, [])
 				};
 			})
 			.filter(npc => npc.missions.length)

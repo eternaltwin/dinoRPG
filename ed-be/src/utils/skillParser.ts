@@ -3,10 +3,7 @@ import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { Dinoz } from '@drpg/prisma';
 
-async function effectParser(
-	effects: SkillEffects,
-	dinoz: Pick<Dinoz, 'id' | 'maxLife'>
-) {
+async function effectParser(effects: SkillEffects, dinoz: Pick<Dinoz, 'id' | 'maxLife'>) {
 	for (const [stat, value] of Object.entries(effects)) {
 		switch (stat) {
 			case Stat.MAX_HP:

@@ -29,10 +29,7 @@ export async function displayTwinoidSpecificSite(req: Request) {
 		if (!req.auth?.playerId) {
 			throw new ErrorFormator(500, `You are not logged in.`);
 		}
-		const playerSite = await getImportedPlayerSpecificSiteAchievements(
-			req.auth.playerId,
-			site
-		);
+		const playerSite = await getImportedPlayerSpecificSiteAchievements(req.auth.playerId, site);
 		return playerSite.map(site => ({
 			name: site.nameId,
 			requirement: site.requirement,

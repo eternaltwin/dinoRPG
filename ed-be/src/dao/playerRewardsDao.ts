@@ -1,5 +1,5 @@
-import { Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 //TODO
 export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) {
@@ -27,7 +27,7 @@ export async function getPlayerRewards(playerId: number) {
 			playerId
 		},
 		select: {
-			rewardId: true,
+			rewardId: true
 		}
 	});
 }

@@ -1,4 +1,4 @@
-import { prisma } from "../prisma.js";
+import { prisma } from '../prisma.js';
 
 //TODO
 export async function addStatusToDinoz(dinozId: number, statusId: number) {

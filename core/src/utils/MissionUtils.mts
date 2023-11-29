@@ -1,12 +1,14 @@
-import { Dinoz, DinozMission } from "@drpg/prisma";
-import { ConditionEnum } from "../models/enums/Parser.mjs";
-import { MissionHUD } from "../models/missions/missionHUD.mjs";
-import { npcList } from "../models/npc/NpcList.mjs";
-import { placeList } from "../models/place/PlaceList.mjs";
+import { Dinoz, DinozMission } from '@drpg/prisma';
+import { ConditionEnum } from '../models/enums/Parser.mjs';
+import { MissionHUD } from '../models/missions/missionHUD.mjs';
+import { npcList } from '../models/npc/NpcList.mjs';
+import { placeList } from '../models/place/PlaceList.mjs';
 
-export function getHUDObjective(dinoz: Pick<Dinoz, 'placeId'> & {
-	missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
-}) {
+export function getHUDObjective(
+	dinoz: Pick<Dinoz, 'placeId'> & {
+		missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
+	}
+) {
 	const actualStep = getActualStep(dinoz);
 
 	if (!actualStep) {
@@ -60,17 +62,13 @@ export function getActualStep(dinoz: {
 		return;
 	}
 
-	const missionReference = Object.values(npc.missions).find(
-		missions => missions.missionId === missionDinoz.missionId
-	);
+	const missionReference = Object.values(npc.missions).find(missions => missions.missionId === missionDinoz.missionId);
 
 	if (!missionReference) {
 		return;
 	}
 
-	const missionReturn = structuredClone(
-		missionReference.steps.find(step => step.stepId === missionDinoz.step)
-	);
+	const missionReturn = structuredClone(missionReference.steps.find(step => step.stepId === missionDinoz.step));
 
 	if (!missionReturn) {
 		return;

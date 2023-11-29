@@ -118,13 +118,13 @@ export async function getCommonDataRequest(playerId: number) {
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } },
-					followers: { select: { id: true } },
+					followers: { select: { id: true } }
 				},
 				where: { isFrozen: false },
 				orderBy: [{ order: 'asc' }, { name: 'asc' }]
 			},
 			rewards: true,
-			items: { select: { itemId: true, quantity: true } },
+			items: { select: { itemId: true, quantity: true } }
 		}
 	});
 
@@ -139,7 +139,7 @@ export async function getAllInformationFromPlayer(playerId: number) {
 		include: {
 			items: true,
 			ingredients: true,
-			rewards: true,
+			rewards: true
 		}
 	});
 
@@ -169,7 +169,7 @@ export async function getImportedTwinoidData(playerId: number) {
 		select: {
 			id: true,
 			eternalTwinId: true,
-			importedTwinoidSite: true,
+			importedTwinoidSite: true
 		}
 	});
 
@@ -226,7 +226,7 @@ export async function getPlayerDataRequest(playerId: number) {
 					missions: true,
 					items: { select: { itemId: true } },
 					skills: { select: { skillId: true } },
-					followers: { select: { id: true } },
+					followers: { select: { id: true } }
 				}
 			},
 			ranking: {
@@ -235,7 +235,7 @@ export async function getPlayerDataRequest(playerId: number) {
 					sumPosition: true,
 					sumPointsDisplayed: true
 				}
-			},
+			}
 		}
 	});
 
@@ -255,7 +255,7 @@ export async function prepareConcentration(playerId: number) {
 					placeId: true,
 					name: true,
 					concentration: true,
-					status: true,
+					status: true
 				}
 			}
 		}
@@ -275,7 +275,7 @@ export async function searchPlayersByName(playerName: string) {
 		select: {
 			id: true,
 			name: true,
-			eternalTwinId: true,
+			eternalTwinId: true
 		}
 	});
 
@@ -410,7 +410,7 @@ export async function getPlayerShopItemsDataRequest(playerId: number) {
 			dinoz: {
 				select: {
 					placeId: true,
-					status: { select: { statusId: true } },
+					status: { select: { statusId: true } }
 				},
 				where: {
 					isFrozen: false,
@@ -453,7 +453,7 @@ export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: 
 			dinoz: {
 				select: {
 					placeId: true,
-					status: { select: { statusId: true } },
+					status: { select: { statusId: true } }
 				},
 				where: {
 					isFrozen: false,
@@ -521,8 +521,8 @@ export async function ownsDinoz(playerId: number, ...dinozIds: number[]) {
 						id: dinozId
 					}
 				}
-			})),
-		},
+			}))
+		}
 	});
 
 	return player > 0;

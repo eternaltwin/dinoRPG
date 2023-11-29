@@ -18,7 +18,7 @@ export async function addSkillToDinoz(dinozId: number, skillId: number) {
 }
 
 //TODO
-export async function addMultipleSkillToDinoz(dinozId: number,  skillIds: number[]) {
+export async function addMultipleSkillToDinoz(dinozId: number, skillIds: number[]) {
 	await prisma.dinozSkill.createMany({
 		data: skillIds.map(skillId => ({
 			dinozId,

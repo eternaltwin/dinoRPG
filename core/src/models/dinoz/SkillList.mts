@@ -1,10 +1,10 @@
-import { ElementType } from "../enums/ElementType.mjs";
-import { Energy } from "../enums/Energy.mjs";
-import { Stat } from "../enums/SkillStat.mjs";
-import { SkillTree } from "../enums/SkillTree.mjs";
-import { SkillType } from "../enums/SkillType.mjs";
-import { DinozSkillFiche } from "./DinozSkillFiche.mjs";
-import { raceList } from "./RaceList.mjs";
+import { ElementType } from '../enums/ElementType.mjs';
+import { Energy } from '../enums/Energy.mjs';
+import { Stat } from '../enums/SkillStat.mjs';
+import { SkillTree } from '../enums/SkillTree.mjs';
+import { SkillType } from '../enums/SkillType.mjs';
+import { DinozSkillFiche } from './DinozSkillFiche.mjs';
+import { raceList } from './RaceList.mjs';
 
 export enum Skill {
 	GRIFFES_ENFLAMMEES = 11101,
@@ -320,8 +320,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: 7,
-		},
+			[Stat.FIRE_ASSAULT]: 7
+		}
 	},
 	[Skill.COLERE]: {
 		id: Skill.COLERE,
@@ -333,7 +333,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FORCE]: {
 		id: Skill.FORCE,
@@ -351,8 +351,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.FIRE_ASSAULT]: 1,
 			[Stat.LIGHTNING_ASSAULT]: 1,
 			[Stat.WATER_ASSAULT]: 1,
-			[Stat.WOOD_ASSAULT]: 1,
-		},
+			[Stat.WOOD_ASSAULT]: 1
+		}
 	},
 	[Skill.BRASERO]: {
 		id: Skill.BRASERO,
@@ -364,7 +364,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.SOUFFLE_ARDENT]: {
 		id: Skill.SOUFFLE_ARDENT,
@@ -376,7 +376,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CHARGE]: {
 		id: Skill.CHARGE,
@@ -388,7 +388,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11103],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SANG_CHAUD]: {
 		id: Skill.SANG_CHAUD,
@@ -402,8 +402,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: 4,
-		},
+			[Stat.INITIATIVE]: 4
+		}
 	},
 	[Skill.FURIE]: {
 		id: Skill.FURIE,
@@ -426,8 +426,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_DEFENSE]: -2,
 			[Stat.AIR_DEFENSE]: -2,
 			[Stat.LIGHTNING_DEFENSE]: -2,
-			[Stat.WOOD_DEFENSE]: -2,
-		},
+			[Stat.WOOD_DEFENSE]: -2
+		}
 	},
 	[Skill.CHASSEUR_DE_GOUPIGNON]: {
 		id: Skill.CHASSEUR_DE_GOUPIGNON,
@@ -439,7 +439,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ARTS_MARTIAUX]: {
 		id: Skill.ARTS_MARTIAUX,
@@ -457,8 +457,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.FIRE_ASSAULT]: 2,
 			[Stat.LIGHTNING_ASSAULT]: 2,
 			[Stat.WATER_ASSAULT]: 2,
-			[Stat.WOOD_ASSAULT]: 2,
-		},
+			[Stat.WOOD_ASSAULT]: 2
+		}
 	},
 	[Skill.DETONATION]: {
 		id: Skill.DETONATION,
@@ -470,7 +470,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11104],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.PROPULSION_DIVINE]: {
 		id: Skill.PROPULSION_DIVINE,
@@ -486,8 +486,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: -2,
-			[Stat.FIRE_SPEED]: 0.3,
-		},
+			[Stat.FIRE_SPEED]: 0.3
+		}
 	},
 	[Skill.VIGILANCE]: {
 		id: Skill.VIGILANCE,
@@ -501,8 +501,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_DEFENSE]: 5,
-		},
+			[Stat.FIRE_DEFENSE]: 5
+		}
 	},
 	[Skill.COEUR_ARDENT]: {
 		id: Skill.COEUR_ARDENT,
@@ -521,8 +521,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_ASSAULT]: 12,
 			[Stat.AIR_ASSAULT]: 12,
 			[Stat.LIGHTNING_ASSAULT]: 12,
-			[Stat.WOOD_ASSAULT]: 12,
-		},
+			[Stat.WOOD_ASSAULT]: 12
+		}
 	},
 	[Skill.COULEE_DE_LAVE]: {
 		id: Skill.COULEE_DE_LAVE,
@@ -534,7 +534,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SIESTE]: {
 		id: Skill.SIESTE,
@@ -546,7 +546,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11203],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.KAMIKAZE]: {
 		id: Skill.KAMIKAZE,
@@ -558,7 +558,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CHASSEUR_DE_GEANT]: {
 		id: Skill.CHASSEUR_DE_GEANT,
@@ -570,7 +570,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BOULE_DE_FEU]: {
 		id: Skill.BOULE_DE_FEU,
@@ -582,7 +582,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.WAIKIKIDO]: {
 		id: Skill.WAIKIKIDO,
@@ -598,8 +598,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		effects: {
 			[Stat.COUNTER]: 0.1,
 			[Stat.MAX_HP]: 20,
-			[Stat.INITIATIVE]: -5,
-		},
+			[Stat.INITIATIVE]: -5
+		}
 	},
 	[Skill.AURA_INCANDESCENTE]: {
 		id: Skill.AURA_INCANDESCENTE,
@@ -614,7 +614,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: 2
-		},
+		}
 	},
 	[Skill.VENGEANCE]: {
 		id: Skill.VENGEANCE,
@@ -629,7 +629,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.COUNTER]: 0.05
-		},
+		}
 	},
 	[Skill.COMBUSTION]: {
 		id: Skill.COMBUSTION,
@@ -641,7 +641,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.PAUME_CHALUMEAU]: {
 		id: Skill.PAUME_CHALUMEAU,
@@ -653,7 +653,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11206],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COEUR_DU_PHOENIX]: {
 		id: Skill.COEUR_DU_PHOENIX,
@@ -668,7 +668,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: true,
 		effects: {
 			[Stat.HP_REGEN]: ['x', 0.15]
-		},
+		}
 	},
 	[Skill.BOUDDHA]: {
 		id: Skill.BOUDDHA,
@@ -681,7 +681,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41201, 11206, 51309, 61121],
 		raceId: [raceList.HIPPOCLAMP.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.GRIFFES_INFERNALES]: {
@@ -695,7 +695,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [11208],
 		raceId: [raceList.QUETZU.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CHASSEUR_DE_DRAGON]: {
 		id: Skill.CHASSEUR_DE_DRAGON,
@@ -707,7 +707,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11306],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BELIER]: {
 		id: Skill.BELIER,
@@ -719,7 +719,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11305],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.TORCHE]: {
 		id: Skill.TORCHE,
@@ -733,8 +733,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_DEFENSE]: 10,
-		},
+			[Stat.FIRE_DEFENSE]: 10
+		}
 	},
 	[Skill.SELF_CONTROL]: {
 		id: Skill.SELF_CONTROL,
@@ -749,7 +749,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: -3
-		},
+		}
 	},
 	[Skill.SPRINT]: {
 		id: Skill.SPRINT,
@@ -764,7 +764,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: 6
-		},
+		}
 	},
 	[Skill.VENDETTA]: {
 		id: Skill.VENDETTA,
@@ -779,7 +779,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.COUNTER]: 0.2
-		},
+		}
 	},
 	[Skill.METEORES]: {
 		id: Skill.METEORES,
@@ -791,7 +791,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11309],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CHEF_DE_GUERRE]: {
 		id: Skill.CHEF_DE_GUERRE,
@@ -803,7 +803,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11301],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.ARMURE_DE_BASALTE]: {
@@ -818,8 +818,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: 3,
-		},
+			[Stat.ARMOR]: 3
+		}
 	},
 	[Skill.MAITRE_ELEMENTAIRE]: {
 		id: Skill.MAITRE_ELEMENTAIRE,
@@ -835,7 +835,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		effects: {
 			[Stat.WATER_ASSAULT]: 2,
 			[Stat.FIRE_ASSAULT]: 2
-		},
+		}
 	},
 	[Skill.SALAMANDRE]: {
 		id: Skill.SALAMANDRE,
@@ -848,7 +848,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [31305, 11312, 61121],
 		raceId: [raceList.FEROSS.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.VULCAIN]: {
 		id: Skill.VULCAIN,
@@ -859,9 +859,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11303, 41312, 61121],
-		raceId: [raceList.MOUEFFE.raceId,raceList.MOUEFFE_DEMON.raceId],
+		raceId: [raceList.MOUEFFE.raceId, raceList.MOUEFFE_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ARMURE_DIFRIT]: {
 		id: Skill.ARMURE_DIFRIT,
@@ -872,9 +872,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11307, 21311, 61121],
-		raceId: [raceList.PIGMOU.raceId,raceList.PIGMOU_DEMON.raceId],
+		raceId: [raceList.PIGMOU.raceId, raceList.PIGMOU_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.BRAVE]: {
@@ -895,8 +895,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_SPEED]: 0.15,
 			[Stat.AIR_SPEED]: 0.15,
 			[Stat.LIGHTNING_SPEED]: 0.15,
-			[Stat.WOOD_SPEED]: 0.15,
-		},
+			[Stat.WOOD_SPEED]: 0.15
+		}
 	},
 	[Skill.PROTEINES_DINOZIENNES]: {
 		id: Skill.PROTEINES_DINOZIENNES,
@@ -911,7 +911,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: 0.3
-		},
+		}
 	},
 	[Skill.EXTENUATION]: {
 		id: Skill.EXTENUATION,
@@ -923,7 +923,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ROUGE]: {
 		id: Skill.ROUGE,
@@ -935,7 +935,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CARAPACE_DE_MAGMA]: {
 		id: Skill.CARAPACE_DE_MAGMA,
@@ -950,8 +950,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 30,
-			[Stat.FIRE_ASSAULT]: 5,
-		},
+			[Stat.FIRE_ASSAULT]: 5
+		}
 	},
 	[Skill.CRI_DE_GUERRE]: {
 		id: Skill.CRI_DE_GUERRE,
@@ -963,7 +963,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FIEVRE_BRULANTE]: {
 		id: Skill.FIEVRE_BRULANTE,
@@ -978,7 +978,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MULTIHIT]: 0.3
-		},
+		}
 	},
 	[Skill.BENEDICTION_DARTEMIS]: {
 		id: Skill.BENEDICTION_DARTEMIS,
@@ -990,7 +990,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12301],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.JOKER]: {
 		id: Skill.JOKER,
@@ -1002,7 +1002,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12302],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ARMURE_DE_FEU]: {
 		id: Skill.ARMURE_DE_FEU,
@@ -1017,7 +1017,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_DEFENSE]: 20
-		},
+		}
 	},
 	[Skill.PAYS_DE_CENDRE]: {
 		id: Skill.PAYS_DE_CENDRE,
@@ -1029,7 +1029,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12401],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.RECEPTACLE_ROCHEUX]: {
 		id: Skill.RECEPTACLE_ROCHEUX,
@@ -1041,7 +1041,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12402],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.PLUMES_DE_PHOENIX]: {
 		id: Skill.PLUMES_DE_PHOENIX,
@@ -1053,7 +1053,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12402],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ACCLAMATION_FRATERNELLE]: {
 		id: Skill.ACCLAMATION_FRATERNELLE,
@@ -1065,7 +1065,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12403],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.POING_DE_FEU]: {
 		id: Skill.POING_DE_FEU,
@@ -1080,7 +1080,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: 20
-		},
+		}
 	},
 	[Skill.CARAPACE]: {
 		id: Skill.CARAPACE,
@@ -1095,7 +1095,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: 1
-		},
+		}
 	},
 	[Skill.SAUVAGERIE]: {
 		id: Skill.SAUVAGERIE,
@@ -1110,7 +1110,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: 5
-		},
+		}
 	},
 	[Skill.ENDURANCE]: {
 		id: Skill.ENDURANCE,
@@ -1125,7 +1125,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_DEFENSE]: 2
-		},
+		}
 	},
 	[Skill.LANCEUR_DE_GLAND]: {
 		id: Skill.LANCEUR_DE_GLAND,
@@ -1137,7 +1137,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.VIGNES]: {
 		id: Skill.VIGNES,
@@ -1149,7 +1149,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.RENFORTS_KORGON]: {
 		id: Skill.RENFORTS_KORGON,
@@ -1161,7 +1161,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SYMPATIQUE]: {
 		id: Skill.SYMPATIQUE,
@@ -1176,7 +1176,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_FOLLOWERS]: 1
-		},
+		}
 	},
 	[Skill.TENACITE]: {
 		id: Skill.TENACITE,
@@ -1188,7 +1188,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FOUILLE]: {
 		id: Skill.FOUILLE,
@@ -1200,7 +1200,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21103],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CROISSANCE]: {
 		id: Skill.CROISSANCE,
@@ -1219,8 +1219,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_ASSAULT]: 1,
 			[Stat.AIR_ASSAULT]: 1,
 			[Stat.LIGHTNING_ASSAULT]: 1,
-			[Stat.WOOD_ASSAULT]: 1,
-		},
+			[Stat.WOOD_ASSAULT]: 1
+		}
 	},
 	[Skill.GRATTEUR]: {
 		id: Skill.GRATTEUR,
@@ -1232,7 +1232,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21104],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.ETAT_PRIMAL]: {
 		id: Skill.ETAT_PRIMAL,
@@ -1244,7 +1244,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DETECTIVE]: {
 		id: Skill.DETECTIVE,
@@ -1256,7 +1256,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COCON]: {
 		id: Skill.COCON,
@@ -1271,7 +1271,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.HP_REGEN]: 2
-		},
+		}
 	},
 	[Skill.INSTINCT_SAUVAGE]: {
 		id: Skill.INSTINCT_SAUVAGE,
@@ -1286,7 +1286,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: 2
-		},
+		}
 	},
 	[Skill.LARGE_MACHOIRE]: {
 		id: Skill.LARGE_MACHOIRE,
@@ -1301,7 +1301,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: 15
-		},
+		}
 	},
 	[Skill.ACROBATE]: {
 		id: Skill.ACROBATE,
@@ -1319,8 +1319,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_SPEED]: 0.15,
 			[Stat.AIR_SPEED]: 0.15,
 			[Stat.LIGHTNING_SPEED]: 0.15,
-			[Stat.WOOD_SPEED]: 0.15,
-		},
+			[Stat.WOOD_SPEED]: 0.15
+		}
 	},
 	[Skill.PRINTEMPS_PRECOCE]: {
 		id: Skill.PRINTEMPS_PRECOCE,
@@ -1332,7 +1332,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CHARISME]: {
 		id: Skill.CHARISME,
@@ -1347,7 +1347,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_FOLLOWERS]: 1
-		},
+		}
 	},
 	[Skill.RESISTANCE_A_LA_MAGIE]: {
 		id: Skill.RESISTANCE_A_LA_MAGIE,
@@ -1359,7 +1359,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.PLANIFICATEUR]: {
 		id: Skill.PLANIFICATEUR,
@@ -1371,7 +1371,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21203],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.HERITAGE_FAROE]: {
 		id: Skill.HERITAGE_FAROE,
@@ -1386,8 +1386,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: 12,
-			[Stat.ARMOR]: 1,
-		},
+			[Stat.ARMOR]: 1
+		}
 	},
 	[Skill.EXPERT_EN_FOUILLE]: {
 		id: Skill.EXPERT_EN_FOUILLE,
@@ -1399,7 +1399,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.GROSSE_BEIGNE]: {
 		id: Skill.GROSSE_BEIGNE,
@@ -1411,7 +1411,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21207],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.ESPRIT_GORILLOZ]: {
 		id: Skill.ESPRIT_GORILLOZ,
@@ -1423,7 +1423,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21311],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.LEADER]: {
 		id: Skill.LEADER,
@@ -1435,7 +1435,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21308],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.INGENIEUR]: {
 		id: Skill.INGENIEUR,
@@ -1447,7 +1447,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21304],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.GEANT]: {
 		id: Skill.GEANT,
@@ -1459,7 +1459,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.GARDE_FORESTIER]: {
 		id: Skill.GARDE_FORESTIER,
@@ -1471,7 +1471,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21307],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.ARCHEOLOGUE]: {
@@ -1484,7 +1484,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21302],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BENEDICTION_DES_FEES]: {
 		id: Skill.BENEDICTION_DES_FEES,
@@ -1495,9 +1495,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11302, 21301, 61121],
-		raceId: [raceList.GORILLOZ.raceId,raceList.GORILLOZ_DEMON.raceId],
+		raceId: [raceList.GORILLOZ.raceId, raceList.GORILLOZ_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.CHOC]: {
@@ -1513,8 +1513,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: Stat.LIGHTNING_ASSAULT,
-			[Stat.LIGHTNING_ASSAULT]: Stat.WOOD_ASSAULT,
-		},
+			[Stat.LIGHTNING_ASSAULT]: Stat.WOOD_ASSAULT
+		}
 	},
 	[Skill.LOUP_GAROU]: {
 		id: Skill.LOUP_GAROU,
@@ -1527,7 +1527,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [21304, 51311, 61121],
 		raceId: [raceList.CASTIVORE.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COLOSSE]: {
 		id: Skill.COLOSSE,
@@ -1551,8 +1551,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_SPEED]: -0.5,
 			[Stat.AIR_SPEED]: -0.5,
 			[Stat.LIGHTNING_SPEED]: -0.5,
-			[Stat.WOOD_SPEED]: -0.5,
-		},
+			[Stat.WOOD_SPEED]: -0.5
+		}
 	},
 	[Skill.OXYGENATION_MUSCULAIRE]: {
 		id: Skill.OXYGENATION_MUSCULAIRE,
@@ -1567,7 +1567,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: 0.2
-		},
+		}
 	},
 	[Skill.VERT]: {
 		id: Skill.VERT,
@@ -1579,7 +1579,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SOURCE_DE_VIE]: {
 		id: Skill.SOURCE_DE_VIE,
@@ -1591,7 +1591,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.VIDE_ENERGETIQUE]: {
 		id: Skill.VIDE_ENERGETIQUE,
@@ -1603,7 +1603,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BOUCLIER_DINOZ]: {
 		id: Skill.BOUCLIER_DINOZ,
@@ -1615,7 +1615,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ACIDE_LACTIQUE]: {
 		id: Skill.ACIDE_LACTIQUE,
@@ -1630,7 +1630,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: -0.15
-		},
+		}
 	},
 	[Skill.LANCER_DE_ROCHE]: {
 		id: Skill.LANCER_DE_ROCHE,
@@ -1642,7 +1642,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COURBATURES]: {
 		id: Skill.COURBATURES,
@@ -1654,7 +1654,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FORCE_CONTROL]: {
 		id: Skill.FORCE_CONTROL,
@@ -1666,7 +1666,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22203],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.PEAU_DE_FER]: {
 		id: Skill.PEAU_DE_FER,
@@ -1681,7 +1681,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 50
-		},
+		}
 	},
 	[Skill.CHAMPOLLION]: {
 		id: Skill.CHAMPOLLION,
@@ -1693,7 +1693,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22301],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COURANT_DE_VIE]: {
 		id: Skill.COURANT_DE_VIE,
@@ -1708,8 +1708,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_DEFENSE]: 20,
-			[Stat.WOOD_ASSAULT]: 20,
-		},
+			[Stat.WOOD_ASSAULT]: 20
+		}
 	},
 	[Skill.BERSERK]: {
 		id: Skill.BERSERK,
@@ -1721,7 +1721,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.RIVIERE_DE_VIE]: {
 		id: Skill.RIVIERE_DE_VIE,
@@ -1735,8 +1735,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.INITIATIVE]: 20,
-		},
+			[Stat.INITIATIVE]: 20
+		}
 	},
 	[Skill.MUR_DE_BOUE]: {
 		id: Skill.MUR_DE_BOUE,
@@ -1748,7 +1748,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22401],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.PEAU_DACIER]: {
 		id: Skill.PEAU_DACIER,
@@ -1763,7 +1763,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 100
-		},
+		}
 	},
 	[Skill.SHARIGNAN]: {
 		id: Skill.SHARIGNAN,
@@ -1775,7 +1775,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22402],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.AMAZONIE]: {
 		id: Skill.AMAZONIE,
@@ -1787,7 +1787,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22403],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.RECEPTACLE_AQUEUX]: {
 		id: Skill.RECEPTACLE_AQUEUX,
@@ -1799,7 +1799,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22404],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CANON_A_EAU]: {
 		id: Skill.CANON_A_EAU,
@@ -1811,7 +1811,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.PERCEPTION]: {
 		id: Skill.PERCEPTION,
@@ -1825,8 +1825,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: 4,
-		},
+			[Stat.WATER_ASSAULT]: 4
+		}
 	},
 	[Skill.MUTATION]: {
 		id: Skill.MUTATION,
@@ -1841,7 +1841,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 30
-		},
+		}
 	},
 	[Skill.VITALITE]: {
 		id: Skill.VITALITE,
@@ -1856,7 +1856,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: true,
 		effects: {
 			[Stat.MAX_HP]: 10
-		},
+		}
 	},
 	[Skill.GEL]: {
 		id: Skill.GEL,
@@ -1868,7 +1868,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DOUCHE_ECOSSAISE]: {
 		id: Skill.DOUCHE_ECOSSAISE,
@@ -1880,7 +1880,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COUP_SOURNOIS]: {
 		id: Skill.COUP_SOURNOIS,
@@ -1892,7 +1892,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.APPRENTI_PECHEUR]: {
 		id: Skill.APPRENTI_PECHEUR,
@@ -1904,7 +1904,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.POCHE_VENTRALE]: {
 		id: Skill.POCHE_VENTRALE,
@@ -1916,7 +1916,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31103],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.KARATE_SOUS_MARIN]: {
 		id: Skill.KARATE_SOUS_MARIN,
@@ -1931,7 +1931,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: 10
-		},
+		}
 	},
 	[Skill.ECAILLES_LUMINESCENTES]: {
 		id: Skill.ECAILLES_LUMINESCENTES,
@@ -1947,7 +1947,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: 2
-		},
+		}
 	},
 	[Skill.MOIGNONS_LIQUIDES]: {
 		id: Skill.MOIGNONS_LIQUIDES,
@@ -1959,7 +1959,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31104],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.ZERO_ABSOLU]: {
 		id: Skill.ZERO_ABSOLU,
@@ -1974,7 +1974,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_DEFENSE]: 25
-		},
+		}
 	},
 	[Skill.PETRIFICATION]: {
 		id: Skill.PETRIFICATION,
@@ -1986,7 +1986,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ACUPUNCTURE]: {
 		id: Skill.ACUPUNCTURE,
@@ -1998,7 +1998,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SAPEUR]: {
 		id: Skill.SAPEUR,
@@ -2010,7 +2010,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COUP_FATAL]: {
 		id: Skill.COUP_FATAL,
@@ -2022,7 +2022,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31203],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ENTRAINEMENT_SOUS_MARIN]: {
 		id: Skill.ENTRAINEMENT_SOUS_MARIN,
@@ -2037,7 +2037,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 10
-		},
+		}
 	},
 	[Skill.PECHEUR_CONFIRME]: {
 		id: Skill.PECHEUR_CONFIRME,
@@ -2049,7 +2049,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MARECAGE]: {
 		id: Skill.MARECAGE,
@@ -2061,7 +2061,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SUMO]: {
 		id: Skill.SUMO,
@@ -2076,7 +2076,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 100
-		},
+		}
 	},
 	[Skill.SANS_PITIE]: {
 		id: Skill.SANS_PITIE,
@@ -2088,7 +2088,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CLONE_AQUEUX]: {
 		id: Skill.CLONE_AQUEUX,
@@ -2100,7 +2100,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31206],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.GRIFFES_EMPOISONNEES]: {
 		id: Skill.GRIFFES_EMPOISONNEES,
@@ -2112,7 +2112,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31206],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DELUGE]: {
 		id: Skill.DELUGE,
@@ -2124,7 +2124,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31208],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.PEAU_DE_SERPENT]: {
 		id: Skill.PEAU_DE_SERPENT,
@@ -2140,8 +2140,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: 0.1,
-			[Stat.WATER_SPEED]: -0.15,
-		},
+			[Stat.WATER_SPEED]: -0.15
+		}
 	},
 	[Skill.RAYON_KAAR_SHER]: {
 		id: Skill.RAYON_KAAR_SHER,
@@ -2153,7 +2153,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31302],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MAGASINIER]: {
 		id: Skill.MAGASINIER,
@@ -2165,7 +2165,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31304],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ENTRAINEMENT_SOUS_MARIN_AVANCE]: {
 		id: Skill.ENTRAINEMENT_SOUS_MARIN_AVANCE,
@@ -2180,7 +2180,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 20
-		},
+		}
 	},
 	[Skill.MAITRE_PECHEUR]: {
 		id: Skill.MAITRE_PECHEUR,
@@ -2192,7 +2192,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31307],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CUISINIER]: {
 		id: Skill.CUISINIER,
@@ -2204,7 +2204,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31309],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SANG_ACIDE]: {
 		id: Skill.SANG_ACIDE,
@@ -2216,7 +2216,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31312],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BULLE]: {
 		id: Skill.BULLE,
@@ -2228,7 +2228,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31304, 51312, 61119],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.INCREVABLE]: {
 		id: Skill.INCREVABLE,
@@ -2246,8 +2246,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_DEFENSE]: 2,
 			[Stat.AIR_DEFENSE]: 2,
 			[Stat.LIGHTNING_DEFENSE]: 2,
-			[Stat.WOOD_DEFENSE]: 2,
-		},
+			[Stat.WOOD_DEFENSE]: 2
+		}
 	},
 	[Skill.ONDINE]: {
 		id: Skill.ONDINE,
@@ -2260,7 +2260,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [31310, 31310, 61121],
 		raceId: [raceList.SIRAIN.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MAITRE_NAGEUR]: {
 		id: Skill.MAITRE_NAGEUR,
@@ -2275,7 +2275,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: 5
-		},
+		}
 	},
 	[Skill.LEVIATHAN]: {
 		id: Skill.LEVIATHAN,
@@ -2288,7 +2288,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [31406, 51206, 61121],
 		raceId: [raceList.MAHAMUTI.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,
@@ -2303,7 +2303,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.HP_REGEN]: ['x', 2]
-		},
+		}
 	},
 	[Skill.RADIATIONS_GAMMA]: {
 		id: Skill.RADIATIONS_GAMMA,
@@ -2323,8 +2323,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_ASSAULT]: 5,
 			[Stat.AIR_ASSAULT]: 5,
 			[Stat.LIGHTNING_ASSAULT]: 5,
-			[Stat.WOOD_ASSAULT]: 5,
-		},
+			[Stat.WOOD_ASSAULT]: 5
+		}
 	},
 	[Skill.BLEU]: {
 		id: Skill.BLEU,
@@ -2336,7 +2336,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MUE_ACQUEUSE]: {
 		id: Skill.MUE_ACQUEUSE,
@@ -2351,7 +2351,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.LIGHTNING_DEFENSE]: 20
-		},
+		}
 	},
 	[Skill.CARAPACE_BLINDEE]: {
 		id: Skill.CARAPACE_BLINDEE,
@@ -2370,8 +2370,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_SPEED]: -0.2,
 			[Stat.AIR_SPEED]: -0.2,
 			[Stat.LIGHTNING_SPEED]: -0.2,
-			[Stat.WOOD_SPEED]: -0.2,
-		},
+			[Stat.WOOD_SPEED]: -0.2
+		}
 	},
 	[Skill.DIETE_CHROMATIQUE]: {
 		id: Skill.DIETE_CHROMATIQUE,
@@ -2383,7 +2383,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.EFFLUVE_APHRODISIAQUE]: {
 		id: Skill.EFFLUVE_APHRODISIAQUE,
@@ -2398,7 +2398,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_FOLLOWERS]: 1
-		},
+		}
 	},
 	[Skill.NEMO]: {
 		id: Skill.NEMO,
@@ -2410,7 +2410,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32301],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CLEPTOMANE]: {
 		id: Skill.CLEPTOMANE,
@@ -2422,7 +2422,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32302],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ABYSSE]: {
 		id: Skill.ABYSSE,
@@ -2434,7 +2434,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BANNI_DES_DIEUX]: {
 		id: Skill.BANNI_DES_DIEUX,
@@ -2446,7 +2446,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.TOURBILLON_MAGIQUE]: {
 		id: Skill.TOURBILLON_MAGIQUE,
@@ -2461,7 +2461,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WATER_ASSAULT]: 20
-		},
+		}
 	},
 	[Skill.HYPERVENTILATION]: {
 		id: Skill.HYPERVENTILATION,
@@ -2473,7 +2473,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32402],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.THERAPIE_DE_GROUPE]: {
 		id: Skill.THERAPIE_DE_GROUPE,
@@ -2485,7 +2485,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32403],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.RECEPTACLE_TESLA]: {
 		id: Skill.RECEPTACLE_TESLA,
@@ -2497,7 +2497,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32404],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.VITALITE_MARINE]: {
 		id: Skill.VITALITE_MARINE,
@@ -2512,7 +2512,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 80
-		},
+		}
 	},
 	[Skill.INTELLIGENCE]: {
 		id: Skill.INTELLIGENCE,
@@ -2524,7 +2524,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FOCUS]: {
 		id: Skill.FOCUS,
@@ -2536,7 +2536,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CELERITE]: {
 		id: Skill.CELERITE,
@@ -2554,8 +2554,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_SPEED]: 0.15,
 			[Stat.WOOD_SPEED]: 0.15,
 			[Stat.FIRE_SPEED]: 0.15,
-			[Stat.LIGHTNING_SPEED]: 0.15,
-		},
+			[Stat.LIGHTNING_SPEED]: 0.15
+		}
 	},
 	[Skill.REFLEX]: {
 		id: Skill.REFLEX,
@@ -2570,7 +2570,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: true,
 		effects: {
 			[Stat.INITIATIVE]: 5
-		},
+		}
 	},
 	[Skill.CONCENTRATION]: {
 		id: Skill.CONCENTRATION,
@@ -2582,7 +2582,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ATTAQUE_ECLAIR]: {
 		id: Skill.ATTAQUE_ECLAIR,
@@ -2597,7 +2597,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.LIGHTNING_SPEED]: 0.4
-		},
+		}
 	},
 	[Skill.PARATONNERRE]: {
 		id: Skill.PARATONNERRE,
@@ -2609,7 +2609,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COUP_DOUBLE]: {
 		id: Skill.COUP_DOUBLE,
@@ -2624,7 +2624,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MULTIHIT]: 0.2
-		},
+		}
 	},
 	[Skill.REGENERESCENCE]: {
 		id: Skill.REGENERESCENCE,
@@ -2639,7 +2639,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.HP_REGEN]: 2
-		},
+		}
 	},
 	[Skill.PREMIERS_SOINS]: {
 		id: Skill.PREMIERS_SOINS,
@@ -2651,7 +2651,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ECLAIR_SINUEUX]: {
 		id: Skill.ECLAIR_SINUEUX,
@@ -2663,7 +2663,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41104],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.FOUDRE]: {
 		id: Skill.FOUDRE,
@@ -2675,7 +2675,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FISSION_ELEMENTAIRE]: {
 		id: Skill.FISSION_ELEMENTAIRE,
@@ -2687,7 +2687,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41203],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.VOIE_DE_KAOS]: {
 		id: Skill.VOIE_DE_KAOS,
@@ -2702,8 +2702,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: 6,
-			[Stat.LIGHTNING_ASSAULT]: 6,
-		},
+			[Stat.LIGHTNING_ASSAULT]: 6
+		}
 	},
 	[Skill.PLAN_DE_CARRIERE]: {
 		id: Skill.PLAN_DE_CARRIERE,
@@ -2715,7 +2715,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ADRENALINE]: {
 		id: Skill.ADRENALINE,
@@ -2730,7 +2730,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_SPEED]: 0.5
-		},
+		}
 	},
 	[Skill.VOIE_DE_GAIA]: {
 		id: Skill.VOIE_DE_GAIA,
@@ -2745,8 +2745,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_DEFENSE]: 3,
-			[Stat.LIGHTNING_DEFENSE]: 3,
-		},
+			[Stat.LIGHTNING_DEFENSE]: 3
+		}
 	},
 	[Skill.MEDECINE]: {
 		id: Skill.MEDECINE,
@@ -2758,7 +2758,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41206],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DANSE_FOUDROYANTE]: {
 		id: Skill.DANSE_FOUDROYANTE,
@@ -2770,7 +2770,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.EMBUCHE]: {
 		id: Skill.EMBUCHE,
@@ -2785,7 +2785,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: 7
-		},
+		}
 	},
 	[Skill.PUREE_SALVATRICE]: {
 		id: Skill.PUREE_SALVATRICE,
@@ -2797,7 +2797,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.AURA_HERMETIQUE]: {
 		id: Skill.AURA_HERMETIQUE,
@@ -2809,7 +2809,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CROCS_DIAMANT]: {
 		id: Skill.CROCS_DIAMANT,
@@ -2827,8 +2827,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WOOD_ASSAULT]: 2,
 			[Stat.LIGHTNING_ASSAULT]: 2,
 			[Stat.WATER_ASSAULT]: 2,
-			[Stat.AIR_ASSAULT]: 2,
-		},
+			[Stat.AIR_ASSAULT]: 2
+		}
 	},
 	[Skill.SURVIE]: {
 		id: Skill.SURVIE,
@@ -2840,7 +2840,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41207],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.AUBE_FEUILLUE]: {
 		id: Skill.AUBE_FEUILLUE,
@@ -2852,7 +2852,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41306],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BRANCARDIER]: {
 		id: Skill.BRANCARDIER,
@@ -2864,7 +2864,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41307],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BENEDICTION]: {
 		id: Skill.BENEDICTION,
@@ -2876,7 +2876,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41310],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CREPUSCULE_FLAMBOYANT]: {
 		id: Skill.CREPUSCULE_FLAMBOYANT,
@@ -2888,7 +2888,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MARCHAND]: {
 		id: Skill.MARCHAND,
@@ -2900,7 +2900,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41302],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.REINCARNATION]: {
 		id: Skill.REINCARNATION,
@@ -2912,7 +2912,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41304],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SURCHARGE]: {
 		id: Skill.SURCHARGE,
@@ -2927,7 +2927,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MULTIHIT]: 0.15
-		},
+		}
 	},
 	[Skill.ELECTROLYSE]: {
 		id: Skill.ELECTROLYSE,
@@ -2939,7 +2939,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41301, 31308, 61119],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.GOLEM]: {
@@ -2953,7 +2953,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41302, 11309, 61121],
 		raceId: [raceList.ROCKY.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.RAIJIN]: {
@@ -2965,9 +2965,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41301, 51302, 61121],
-		raceId: [raceList.PLANAILLE.raceId,raceList.PLANAILLE_DEMON.raceId],
+		raceId: [raceList.PLANAILLE.raceId, raceList.PLANAILLE_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.QUETZACOATL]: {
 		id: Skill.QUETZACOATL,
@@ -2980,7 +2980,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41301],
 		raceId: [raceList.QUETZU.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ROI_DES_SINGES]: {
 		id: Skill.ROI_DES_SINGES,
@@ -2993,7 +2993,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [21308, 41308, 61121],
 		raceId: [raceList.TOUFUFU.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.ARCHANGE_CORROSIF]: {
@@ -3010,7 +3010,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		effects: {
 			[Stat.FIRE_ASSAULT]: 2,
 			[Stat.LIGHTNING_ASSAULT]: 1
-		},
+		}
 	},
 	[Skill.ARCHANGE_GENESIF]: {
 		id: Skill.ARCHANGE_GENESIF,
@@ -3025,8 +3025,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: 2,
-			[Stat.LIGHTNING_ASSAULT]: 1,
-		},
+			[Stat.LIGHTNING_ASSAULT]: 1
+		}
 	},
 	[Skill.PRETRE]: {
 		id: Skill.PRETRE,
@@ -3038,7 +3038,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41403],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.SOUTIEN_MORAL]: {
@@ -3054,7 +3054,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: 0.1
-		},
+		}
 	},
 	[Skill.STIMULATION_CARDIAQUE]: {
 		id: Skill.STIMULATION_CARDIAQUE,
@@ -3066,7 +3066,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.JAUNE]: {
 		id: Skill.JAUNE,
@@ -3078,7 +3078,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MORSURE_DU_SOLEIL]: {
 		id: Skill.MORSURE_DU_SOLEIL,
@@ -3090,7 +3090,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CRAMPE_CHRONIQUE]: {
 		id: Skill.CRAMPE_CHRONIQUE,
@@ -3102,7 +3102,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BATTERIE_SUPPLEMENTAIRE]: {
 		id: Skill.BATTERIE_SUPPLEMENTAIRE,
@@ -3117,8 +3117,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 50,
-			[Stat.INITIATIVE]: -0.15,
-		},
+			[Stat.INITIATIVE]: -0.15
+		}
 	},
 	[Skill.EINSTEIN]: {
 		id: Skill.EINSTEIN,
@@ -3130,7 +3130,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42301],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BARRIERE_ELECTRIFIEE]: {
 		id: Skill.BARRIERE_ELECTRIFIEE,
@@ -3145,7 +3145,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_DEFENSE]: 20
-		},
+		}
 	},
 	[Skill.ORACLE]: {
 		id: Skill.ORACLE,
@@ -3157,7 +3157,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.RECEPTACLE_AERIEN]: {
 		id: Skill.RECEPTACLE_AERIEN,
@@ -3169,7 +3169,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42401],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FEU_DE_ST_ELME]: {
 		id: Skill.FEU_DE_ST_ELME,
@@ -3181,7 +3181,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42402],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FORCE_DE_ZEUS]: {
 		id: Skill.FORCE_DE_ZEUS,
@@ -3196,7 +3196,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.LIGHTNING_ASSAULT]: 20
-		},
+		}
 	},
 	[Skill.REMANENCE_HERTZIENNE]: {
 		id: Skill.REMANENCE_HERTZIENNE,
@@ -3211,7 +3211,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: 0.2
-		},
+		}
 	},
 	[Skill.AGILITE]: {
 		id: Skill.AGILITE,
@@ -3226,7 +3226,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: 5
-		},
+		}
 	},
 	[Skill.STRATEGIE]: {
 		id: Skill.STRATEGIE,
@@ -3238,7 +3238,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MISTRAL]: {
 		id: Skill.MISTRAL,
@@ -3250,7 +3250,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.AIGUILLON]: {
 		id: Skill.AIGUILLON,
@@ -3262,7 +3262,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.ENVOL]: {
 		id: Skill.ENVOL,
@@ -3275,7 +3275,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [],
 		raceId: [raceList.PTEROZ.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ESQUIVE]: {
 		id: Skill.ESQUIVE,
@@ -3290,7 +3290,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: 0.1
-		},
+		}
 	},
 	[Skill.SAUT]: {
 		id: Skill.SAUT,
@@ -3302,7 +3302,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ANALYSE]: {
 		id: Skill.ANALYSE,
@@ -3314,7 +3314,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CUEILLETTE]: {
 		id: Skill.CUEILLETTE,
@@ -3326,7 +3326,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51102],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.TAICHI]: {
 		id: Skill.TAICHI,
@@ -3341,8 +3341,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: 15,
-			[Stat.AIR_SPEED]: -0.2,
-		},
+			[Stat.AIR_SPEED]: -0.2
+		}
 	},
 	[Skill.TORNADE]: {
 		id: Skill.TORNADE,
@@ -3354,7 +3354,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51103],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.AURA_PUANTE]: {
 		id: Skill.AURA_PUANTE,
@@ -3366,7 +3366,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51104],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.DISQUE_VACUUM]: {
 		id: Skill.DISQUE_VACUUM,
@@ -3378,7 +3378,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ELASTICITE]: {
 		id: Skill.ELASTICITE,
@@ -3393,8 +3393,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: 10,
-			[Stat.AIR_DEFENSE]: 3,
-		},
+			[Stat.AIR_DEFENSE]: 3
+		}
 	},
 	[Skill.ATTAQUE_PLONGEANTE]: {
 		id: Skill.ATTAQUE_PLONGEANTE,
@@ -3406,7 +3406,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51202],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FURTIVITE]: {
 		id: Skill.FURTIVITE,
@@ -3422,8 +3422,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		effects: {
 			[Stat.AIR_DEFENSE]: 2,
 			[Stat.WATER_DEFENSE]: 2,
-			[Stat.LIGHTNING_DEFENSE]: 2,
-		},
+			[Stat.LIGHTNING_DEFENSE]: 2
+		}
 	},
 	[Skill.SPECIALISTE]: {
 		id: Skill.SPECIALISTE,
@@ -3435,7 +3435,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51203],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.TALON_DACHILLE]: {
 		id: Skill.TALON_DACHILLE,
@@ -3453,8 +3453,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.AIR_ASSAULT]: 2,
 			[Stat.WOOD_ASSAULT]: 2,
 			[Stat.WATER_ASSAULT]: 2,
-			[Stat.LIGHTNING_ASSAULT]: 2,
-		},
+			[Stat.LIGHTNING_ASSAULT]: 2
+		}
 	},
 	[Skill.NUAGE_TOXIQUE]: {
 		id: Skill.NUAGE_TOXIQUE,
@@ -3466,7 +3466,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.OEIL_DE_LYNX]: {
 		id: Skill.OEIL_DE_LYNX,
@@ -3478,7 +3478,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51204],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.EVEIL]: {
 		id: Skill.EVEIL,
@@ -3493,7 +3493,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_SPEED]: -0.2
-		},
+		}
 	},
 	[Skill.PAUME_EJECTABLE]: {
 		id: Skill.PAUME_EJECTABLE,
@@ -3505,7 +3505,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51205],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.VENT_VIF]: {
 		id: Skill.VENT_VIF,
@@ -3517,7 +3517,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51206],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FORME_VAPOREUSE]: {
 		id: Skill.FORME_VAPOREUSE,
@@ -3529,7 +3529,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51206],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.HYPNOSE]: {
 		id: Skill.HYPNOSE,
@@ -3541,7 +3541,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51207],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.SECOUSSE]: {
 		id: Skill.SECOUSSE,
@@ -3553,7 +3553,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51310, 21304, 61119],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.TROU_NOIR]: {
 		id: Skill.TROU_NOIR,
@@ -3565,7 +3565,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51301],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MAITRE_LEVITATEUR]: {
 		id: Skill.MAITRE_LEVITATEUR,
@@ -3577,7 +3577,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.HALEINE_FETIVE]: {
 		id: Skill.HALEINE_FETIVE,
@@ -3589,7 +3589,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51307],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MEDITATION_SOLITAIRE]: {
 		id: Skill.MEDITATION_SOLITAIRE,
@@ -3604,8 +3604,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_DEFENSE]: 3,
-			[Stat.AIR_SPEED]: -0.5,
-		},
+			[Stat.AIR_SPEED]: -0.5
+		}
 	},
 	[Skill.PROFESSEUR]: {
 		id: Skill.PROFESSEUR,
@@ -3617,7 +3617,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51309],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SOUFFLE_DE_VIE]: {
 		id: Skill.SOUFFLE_DE_VIE,
@@ -3629,7 +3629,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51311],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.TOTEM_ANCESTRAL_AEROPORTE]: {
 		id: Skill.TOTEM_ANCESTRAL_AEROPORTE,
@@ -3640,9 +3640,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11311, 51309, 61121],
-		raceId: [raceList.KABUKI.raceId,raceList.KABUKI_DEMON.raceId],
+		raceId: [raceList.KABUKI.raceId, raceList.KABUKI_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FUJIN]: {
 		id: Skill.FUJIN,
@@ -3655,7 +3655,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41308, 51301, 61121],
 		raceId: [raceList.NUAGOZ.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.MEDITATION_TRANCHANTE]: {
@@ -3672,7 +3672,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		effects: {
 			[Stat.AIR_DEFENSE]: 6,
 			[Stat.AIR_SPEED]: -0.5
-		},
+		}
 	},
 	[Skill.DJINN]: {
 		id: Skill.DJINN,
@@ -3685,7 +3685,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [11201, 51403, 61121],
 		raceId: [raceList.PTEROZ.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.HADES]: {
 		id: Skill.HADES,
@@ -3698,7 +3698,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [51403, 21204, 31203, 61121],
 		raceId: [raceList.SANTAZ.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FORME_ETHERALE]: {
 		id: Skill.FORME_ETHERALE,
@@ -3710,7 +3710,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51501],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MAITRISE_CORPORELLE]: {
 		id: Skill.MAITRISE_CORPORELLE,
@@ -3722,7 +3722,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BLANC]: {
 		id: Skill.BLANC,
@@ -3734,7 +3734,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52101],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ANAEROBIE]: {
 		id: Skill.ANAEROBIE,
@@ -3749,7 +3749,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: -0.25
-		},
+		}
 	},
 	[Skill.DOUBLE_FACE]: {
 		id: Skill.DOUBLE_FACE,
@@ -3761,7 +3761,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FLAGELLATION]: {
 		id: Skill.FLAGELLATION,
@@ -3773,7 +3773,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52201],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SOUFFLE_DANGE]: {
 		id: Skill.SOUFFLE_DANGE,
@@ -3788,7 +3788,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_DEFENSE]: 20
-		},
+		}
 	},
 	[Skill.OURAGAN]: {
 		id: Skill.OURAGAN,
@@ -3803,7 +3803,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: 20
-		},
+		}
 	},
 	[Skill.OURANOS]: {
 		id: Skill.OURANOS,
@@ -3815,7 +3815,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52301],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.TWINOID_500MG]: {
 		id: Skill.TWINOID_500MG,
@@ -3829,8 +3829,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: 0.5,
-		},
+			[Stat.ENERGY]: 0.5
+		}
 	},
 	[Skill.LONDUHAUT]: {
 		id: Skill.LONDUHAUT,
@@ -3842,7 +3842,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52303],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SURPLIS_DHADES]: {
 		id: Skill.SURPLIS_DHADES,
@@ -3854,7 +3854,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52304],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.RECEPTABLE_THERMIQUE]: {
 		id: Skill.RECEPTABLE_THERMIQUE,
@@ -3866,7 +3866,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52304],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.QI_GONG]: {
 		id: Skill.QI_GONG,
@@ -3878,7 +3878,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52401],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.SYLPHIDES]: {
 		id: Skill.SYLPHIDES,
@@ -3890,7 +3890,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52402],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MESSIE]: {
 		id: Skill.MESSIE,
@@ -3902,7 +3902,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52403],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MUTINERIE]: {
 		id: Skill.MUTINERIE,
@@ -3914,7 +3914,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52405],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.MAINS_COLLANTES]: {
 		id: Skill.MAINS_COLLANTES,
@@ -3926,7 +3926,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52404],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COMPETENCE_DOUBLE]: {
 		id: Skill.COMPETENCE_DOUBLE,
@@ -3937,7 +3937,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: false,
 		tree: SkillTree.VANILLA,
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.LIMITE_BRISEE]: {
 		id: Skill.LIMITE_BRISEE,
@@ -3948,7 +3948,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: false,
 		tree: SkillTree.VANILLA,
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.INVOCATEUR]: {
 		id: Skill.INVOCATEUR,
@@ -3959,7 +3959,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: false,
 		tree: SkillTree.VANILLA,
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FRENESIE_COLLECTIVE]: {
 		id: Skill.FRENESIE_COLLECTIVE,
@@ -3971,7 +3971,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.WANWAN_DEMON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.COQUE]: {
 		id: Skill.COQUE,
@@ -3986,7 +3986,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: 1
-		},
+		}
 	},
 	[Skill.CHARGE_CORNUE]: {
 		id: Skill.CHARGE_CORNUE,
@@ -3998,7 +3998,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.PIGMOU.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ROCK]: {
 		id: Skill.ROCK,
@@ -4010,7 +4010,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.ROCKY.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.PIETINEMENT]: {
 		id: Skill.PIETINEMENT,
@@ -4022,7 +4022,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.SANTAZ.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CUIRASSE]: {
 		id: Skill.CUIRASSE,
@@ -4034,7 +4034,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.FEROSS.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.INSAISISSABLE]: {
 		id: Skill.INSAISISSABLE,
@@ -4044,12 +4044,12 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTree.VANILLA,
-		raceId: [raceList.KABUKI.raceId,raceList.KABUKI_DEMON.raceId],
+		raceId: [raceList.KABUKI.raceId, raceList.KABUKI_DEMON.raceId],
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: 0.1
-		},
+		}
 	},
 	[Skill.DEPLACEMENT_INSTANTANE]: {
 		id: Skill.DEPLACEMENT_INSTANTANE,
@@ -4061,7 +4061,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.TOUFUFU.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.NAPOMAGICIEN]: {
 		id: Skill.NAPOMAGICIEN,
@@ -4073,7 +4073,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.SOUFFLET.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.GROS_COSTAUD]: {
 		id: Skill.GROS_COSTAUD,
@@ -4091,8 +4091,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WOOD_ASSAULT]: 6,
 			[Stat.WATER_ASSAULT]: 6,
 			[Stat.LIGHTNING_ASSAULT]: 6,
-			[Stat.AIR_ASSAULT]: 6,
-		},
+			[Stat.AIR_ASSAULT]: 6
+		}
 	},
 	[Skill.ORIGINE_CAUSHEMESHENNE]: {
 		id: Skill.ORIGINE_CAUSHEMESHENNE,
@@ -4104,7 +4104,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.KABUKI_DEMON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ECRASEMENT]: {
 		id: Skill.ECRASEMENT,
@@ -4116,7 +4116,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.MAHAMUTI.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FORCE_DE_LUMIERE]: {
 		id: Skill.FORCE_DE_LUMIERE,
@@ -4128,7 +4128,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.MOUEFFE_DEMON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.CHARGE_PIGMOU]: {
 		id: Skill.CHARGE_PIGMOU,
@@ -4140,7 +4140,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.PIGMOU_DEMON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.FORCE_DES_TENEBRES]: {
 		id: Skill.FORCE_DES_TENEBRES,
@@ -4155,8 +4155,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: 0.25,
-			[Stat.ENERGY_RECOVERY]: 0.25,
-		},
+			[Stat.ENERGY_RECOVERY]: 0.25
+		}
 	},
 	[Skill.BIGMAGNON]: {
 		id: Skill.BIGMAGNON,
@@ -4168,7 +4168,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.TRICERAGNON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DUR_A_CUIRE]: {
 		id: Skill.DUR_A_CUIRE,
@@ -4186,8 +4186,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WOOD_DEFENSE]: 6,
 			[Stat.WATER_DEFENSE]: 6,
 			[Stat.LIGHTNING_DEFENSE]: 6,
-			[Stat.AIR_DEFENSE]: 6,
-		},
+			[Stat.AIR_DEFENSE]: 6
+		}
 	},
 	[Skill.HERCOLUBUS]: {
 		id: Skill.HERCOLUBUS,
@@ -4200,7 +4200,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41501, 51312, 61121],
 		raceId: [raceList.SMOG.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.REINE_DE_LA_RUCHE]: {
 		id: Skill.REINE_DE_LA_RUCHE,
@@ -4213,7 +4213,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [51405, 51311, 61121],
 		raceId: [raceList.SOUFFLET.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.BIG_MAMA]: {
 		id: Skill.BIG_MAMA,
@@ -4226,7 +4226,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [12502, 22504, 61121],
 		raceId: [raceList.TRICERAGNON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.YGGDRASIL]: {
 		id: Skill.YGGDRASIL,
@@ -4237,9 +4237,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21405, 51204],
-		raceId: [raceList.WANWAN.raceId,raceList.WANWAN_DEMON.raceId],
+		raceId: [raceList.WANWAN.raceId, raceList.WANWAN_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	},
 	[Skill.BALEINE_BLANCHE]: {
@@ -4251,9 +4251,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41305, 31404],
-		raceId: [raceList.WINKS.raceId,raceList.WINKS_DEMON.raceId],
+		raceId: [raceList.WINKS.raceId, raceList.WINKS_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 		// TODO: Implement AoE effect
 	}
 };

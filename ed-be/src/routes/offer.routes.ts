@@ -16,7 +16,7 @@ routes.get(
 		param('filter').exists().isString(),
 		query('sellerId').optional().isInt(),
 		query('bidderId').optional().isInt(),
-		query('expired').optional().isBoolean(),
+		query('expired').optional().isBoolean()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -41,7 +41,7 @@ routes.put(
 		body('dinoz').optional().isInt(),
 		body('total').exists().isNumeric(),
 		body('ingredients').exists().isArray(),
-		body('items').exists().isArray(),
+		body('items').exists().isArray()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -51,7 +51,7 @@ routes.put(
 		try {
 			await createOffer(req);
 			return res.status(200).send({
-				message: 'Offer created',
+				message: 'Offer created'
 			});
 		} catch (err) {
 			const e = err as ErrorFormator;
@@ -62,34 +62,27 @@ routes.put(
 );
 
 // Cancel an offer
-routes.delete(
-	`${commonPath}/:offerId`,
-	[param('offerId').exists().isInt()],
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-
-		try {
-			await cancelOffer(req);
-			return res.status(200).send({
-				message: 'Offer canceled',
-			});
-		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(500).send(e.message);
-		}
+routes.delete(`${commonPath}/:offerId`, [param('offerId').exists().isInt()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
 	}
-);
+
+	try {
+		await cancelOffer(req);
+		return res.status(200).send({
+			message: 'Offer canceled'
+		});
+	} catch (err) {
+		const e = err as ErrorFormator;
+		await postError(e, res);
+		res.status(500).send(e.message);
+	}
+});
 
 // Bid on an offer
 routes.post(
 	`${commonPath}/:offerId/bid`,
-	[
-		param('offerId').exists().isInt(),
-		body('value').exists().isInt(),
-	],
+	[param('offerId').exists().isInt(), body('value').exists().isInt()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -98,7 +91,7 @@ routes.post(
 		try {
 			await bidOffer(req);
 			return res.status(200).send({
-				message: 'Bid placed',
+				message: 'Bid placed'
 			});
 		} catch (err) {
 			const e = err as ErrorFormator;

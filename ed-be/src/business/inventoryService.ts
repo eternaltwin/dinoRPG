@@ -1,6 +1,12 @@
 import { Request } from 'express';
 import { addMoney, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
-import { createDinoz, getActiveDinoz, getDinozEquipItemRequest, getDinozFicheItemRequest, updateDinoz } from '../dao/dinozDao.js';
+import {
+	createDinoz,
+	getActiveDinoz,
+	getDinozEquipItemRequest,
+	getDinozFicheItemRequest,
+	updateDinoz
+} from '../dao/dinozDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -19,7 +25,14 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { backpackSlot, heal, initializeDinoz, learnNextSphereSkill, resurrect, useRice } from '@drpg/core/utils/DinozUtils';
+import {
+	backpackSlot,
+	heal,
+	initializeDinoz,
+	learnNextSphereSkill,
+	resurrect,
+	useRice
+} from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozStatus, Player, PlayerItem } from '@drpg/prisma';
 
 /**
@@ -63,7 +76,7 @@ export async function getAllItemsData(req: Request) {
 			canBeEquipped: theItem.canBeEquipped,
 			effect: theItem.effect,
 			itemType: theItem.itemType,
-			isRare: theItem.isRare,
+			isRare: theItem.isRare
 		};
 	});
 
@@ -100,7 +113,7 @@ export async function useItem(req: Request) {
 
 	switch (item.effect?.category) {
 		case ItemEffect.HEAL:
-			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value))
+			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value));
 			break;
 		case ItemEffect.RESURRECT:
 			await updateDinoz(dinoz.id, resurrect(dinoz));
@@ -149,10 +162,7 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
 		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
 			throw new ErrorFormator(400, 'tooManyActiveDinoz');
 		}
-		if (
-			player.leader &&
-			dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus
-		) {
+		if (player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus) {
 			throw new ErrorFormator(400, 'tooManyActiveDinoz');
 		}
 	}
@@ -176,15 +186,20 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
 	);
 
 	// Add base skills to created dinoz
-	await addMultipleSkillToDinoz(dinozCreated.id, skillsToAdd.map(skill => skill.id));
+	await addMultipleSkillToDinoz(
+		dinozCreated.id,
+		skillsToAdd.map(skill => skill.id)
+	);
 }
 
 async function useSpecialItem(
 	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
-		player: Pick<Player, 'id'> & {
-			items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
-		} | null;
+		player:
+			| (Pick<Player, 'id'> & {
+					items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
+			  })
+			| null;
 	},
 	item: ItemFiche
 ) {
@@ -205,9 +220,7 @@ async function useSpecialItem(
 			break;
 		case 'pampleboum':
 			await updateDinoz(dinoz.id, heal(dinoz, 15));
-			const pamp = dinoz.player.items.find(
-				item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId
-			);
+			const pamp = dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId);
 			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList.PAMPLEBOUM_PIT.itemId, quantity: 1 });
 			else await decreaseItemQuantity(dinoz.player.id, pamp.itemId, 1);
 			break;

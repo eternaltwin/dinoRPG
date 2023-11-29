@@ -1,7 +1,7 @@
-import { MARKET_OFFER_DURATION } from "@drpg/core/constants";
-import { OfferStatus, Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
-import { OfferFromGetOffers } from "@drpg/core/returnTypes/Offer";
+import { MARKET_OFFER_DURATION } from '@drpg/core/constants';
+import { OfferStatus, Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
+import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 
 export async function getOffers(
 	userId: number | null,
@@ -21,10 +21,7 @@ export async function getOffers(
 			throw new Error('missingUser');
 		}
 
-		where.OR = [
-			{ sellerId: userId },
-			{ bids: { some: { userId } } }
-		];
+		where.OR = [{ sellerId: userId }, { bids: { some: { userId } } }];
 	}
 
 	if (sellerId) {
@@ -57,7 +54,7 @@ export async function getOffers(
 					nbrUpWood: true,
 					nbrUpAir: true,
 					status: { select: { statusId: true } },
-					skills: { select: { skillId: true } },
+					skills: { select: { skillId: true } }
 				}
 			},
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },
@@ -67,7 +64,7 @@ export async function getOffers(
 					user: { select: { id: true, name: true } }
 				},
 				orderBy: { value: 'asc' }
-			},
+			}
 		}
 	});
 
@@ -80,9 +77,9 @@ export async function insertOffer(
 	itemsAndIngredient: {
 		itemId: number;
 		quantity: number;
-		isIngredient: boolean
+		isIngredient: boolean;
 	}[],
-	playerId: number,
+	playerId: number
 ) {
 	return prisma.offer.create({
 		data: {
@@ -92,7 +89,7 @@ export async function insertOffer(
 			items: {
 				create: itemsAndIngredient
 			},
-			total,
+			total
 		}
 	});
 }
@@ -133,7 +130,7 @@ export async function getOffer(offerId: number) {
 			bids: {
 				select: { userId: true, value: true },
 				orderBy: { value: 'asc' }
-			},
+			}
 		}
 	});
 
@@ -145,7 +142,7 @@ export async function addBid(offerId: number, userId: number, value: number) {
 		data: {
 			offerId,
 			userId,
-			value,
+			value
 		}
 	});
 }

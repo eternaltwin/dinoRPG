@@ -45,7 +45,7 @@
 			</div>
 			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
-		<DinozList :currentDinozId="currentDinozId"></DinozList>
+		<DinozList :currentDinozId="currentDinozId()"></DinozList>
 		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
@@ -95,14 +95,14 @@ export default defineComponent({
 		},
 		isDevEnv(): boolean {
 			return import.meta.env.MODE === 'development';
+		},
+		currentDinozId(): number | undefined {
+			return this.playerStore.playerOptions.currentDinozId;
 		}
 	},
 	computed: {
 		storeMoney(): number | undefined {
 			return this.playerStore.getMoney;
-		},
-		currentDinozId(): number | undefined {
-			return this.playerStore.playerOptions.currentDinozId;
 		},
 		place(): string | null {
 			if (!this.currentDinozId) return this.place;

@@ -10,7 +10,7 @@
 	<div class="disclaimer">
 		{{ $t('levelup.disclaimer') }}
 	</div>
-	<div class="wrapper border">
+	<div class="wrapper border" v-if="availableSkills">
 		<LevelUpGrid
 			v-if="availableSkills.upChance && availableSkills.element"
 			:grid="availableSkills.upChance"
@@ -30,7 +30,7 @@
 			/>
 		</div>
 	</div>
-	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'">
+	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
 		<div class="result" v-if="ElementType[availableSkills.element]">
 			{{ dinozData.name }}
 			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />

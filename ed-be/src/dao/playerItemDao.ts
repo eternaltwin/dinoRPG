@@ -1,5 +1,5 @@
-import { Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 export const increaseItemQuantity = async (playerId: number, itemId: number, quantity: number) => {
 	const item = await prisma.playerItem.upsert({
@@ -22,7 +22,7 @@ export const increaseItemQuantity = async (playerId: number, itemId: number, qua
 	});
 
 	return item;
-}
+};
 
 export const decreaseItemQuantity = async (playerId: number, itemId: number, quantity: number) => {
 	const item = await prisma.playerItem.update({
@@ -50,7 +50,7 @@ export const decreaseItemQuantity = async (playerId: number, itemId: number, qua
 			}
 		});
 	}
-}
+};
 
 export async function insertItem(playerId: number, newItem: Prisma.PlayerItemCreateInput) {
 	return prisma.playerItem.create({
@@ -61,10 +61,7 @@ export async function insertItem(playerId: number, newItem: Prisma.PlayerItemCre
 	});
 }
 
-export async function getPlayerItems(
-	playerId: number,
-	where?: Prisma.PlayerItemWhereInput,
-	) {
+export async function getPlayerItems(playerId: number, where?: Prisma.PlayerItemWhereInput) {
 	return prisma.playerItem.findMany({
 		where: {
 			playerId,

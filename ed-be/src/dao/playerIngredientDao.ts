@@ -1,11 +1,11 @@
-import { Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 export const getAllIngredientsDataRequest = async (playerId: number) => {
 	const ingredients = await prisma.playerIngredient.findMany({
 		where: {
 			playerId
-		},
+		}
 	});
 	return ingredients;
 };
@@ -31,7 +31,7 @@ export const increaseIngredientQuantity = async (playerId: number, ingredientId:
 	});
 
 	return ingredient;
-}
+};
 
 export const decreaseIngredientQuantity = async (playerId: number, ingredientId: number, quantity: number) => {
 	const item = await prisma.playerIngredient.update({
@@ -59,7 +59,7 @@ export const decreaseIngredientQuantity = async (playerId: number, ingredientId:
 			}
 		});
 	}
-}
+};
 
 export async function setIngredient(item: Prisma.PlayerIngredientCreateInput) {
 	return prisma.playerIngredient.create({
@@ -67,9 +67,7 @@ export async function setIngredient(item: Prisma.PlayerIngredientCreateInput) {
 	});
 }
 
-export async function setMultipleIngredient(
-	ingredientList: Prisma.PlayerIngredientCreateManyInput[]
-) {
+export async function setMultipleIngredient(ingredientList: Prisma.PlayerIngredientCreateManyInput[]) {
 	await prisma.playerIngredient.createMany({
 		data: ingredientList
 	});

@@ -1,5 +1,5 @@
-import { ImportedPlayer, ImportedTwinoidAchievement, ImportedTwinoidSite, ImportedTwinoidStat } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { ImportedPlayer, ImportedTwinoidAchievement, ImportedTwinoidSite, ImportedTwinoidStat } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 export async function saveImport(player: ImportedPlayer) {
 	const object = await prisma.importedPlayer.upsert({
@@ -9,7 +9,7 @@ export async function saveImport(player: ImportedPlayer) {
 		create: player,
 		update: player,
 		include: {
-			player: { select: { id: true } },
+			player: { select: { id: true } }
 		}
 	});
 
@@ -60,7 +60,7 @@ export async function getImportedPlayerSite(playerId: number) {
 	const playerSite = await prisma.importedTwinoidSite.findMany({
 		where: {
 			playerId
-		},
+		}
 	});
 
 	return playerSite;
@@ -71,7 +71,7 @@ export async function getImportedPlayerSpecificSiteStat(playerId: number, siteId
 		where: {
 			playerId,
 			siteId
-		},
+		}
 	});
 
 	return playerStats;
@@ -82,7 +82,7 @@ export async function getImportedPlayerSpecificSiteAchievements(playerId: number
 		where: {
 			playerId,
 			siteId
-		},
+		}
 	});
 
 	return playerAchievements;

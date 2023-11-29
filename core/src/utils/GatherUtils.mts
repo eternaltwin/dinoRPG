@@ -1,13 +1,13 @@
-import { PlayerGather, Prisma } from "@drpg/prisma";
-import { GatherData } from "../models/gather/gatherData.mjs";
-import { gatherList } from "../models/gather/gatherList.mjs";
-import { GatherType } from "../models/enums/GatherType.mjs";
-import { DinozForConditionCheck } from "../constants.mjs";
-import { GatherRewards } from "../models/gather/gatherRewards.mjs";
-import { GatherResultGrid } from "../models/gather/gatherResultGrid.mjs";
-import { itemList } from "../models/item/ItemList.mjs";
-import { ingredientList } from "../models/ingredient/ingredientList.mjs";
-import { checkCondition } from "./checkCondition.mjs";
+import { PlayerGather, Prisma } from '@drpg/prisma';
+import { GatherData } from '../models/gather/gatherData.mjs';
+import { gatherList } from '../models/gather/gatherList.mjs';
+import { GatherType } from '../models/enums/GatherType.mjs';
+import { DinozForConditionCheck } from '../constants.mjs';
+import { GatherRewards } from '../models/gather/gatherRewards.mjs';
+import { GatherResultGrid } from '../models/gather/gatherResultGrid.mjs';
+import { itemList } from '../models/item/ItemList.mjs';
+import { ingredientList } from '../models/ingredient/ingredientList.mjs';
+import { checkCondition } from './checkCondition.mjs';
 
 export const initializeGatherGrid = (
 	playerId: number,
@@ -66,7 +66,7 @@ export const getGridSize = (grid: Pick<PlayerGather, 'type'>) => {
 
 export const getPublicGrid = (grid: Pick<PlayerGather, 'grid'>) => {
 	return grid.grid.map(ingredient => (ingredient >= 0 ? 0 : -1));
-}
+};
 
 export const discoverBox = (
 	grid: Pick<PlayerGather, 'grid'>,
@@ -115,7 +115,7 @@ export const discoverBox = (
 		grid: returnGrid,
 		rewards: rewards
 	};
-}
+};
 
 export const saveGrid = (grid: Pick<PlayerGather, 'grid' | 'id' | 'type'>, ...box: [number, number][]) => {
 	for (let i = 0; i < box.length; i++) {
@@ -125,4 +125,4 @@ export const saveGrid = (grid: Pick<PlayerGather, 'grid' | 'id' | 'type'>, ...bo
 		id: grid.id,
 		grid: grid.grid
 	};
-}
+};

@@ -91,16 +91,9 @@ export async function moveFight(
 
 export type DinozToCalculateFight = Parameters<typeof calculateFight>[0][number];
 export function calculateFight(
-	team: (Pick<Dinoz,
-		'id' |
-		'level' |
-		'name' |
-		'life' |
-		'nbrUpFire' |
-		'nbrUpWood' |
-		'nbrUpWater' |
-		'nbrUpLightning' |
-		'nbrUpAir'
+	team: (Pick<
+		Dinoz,
+		'id' | 'level' | 'name' | 'life' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpWater' | 'nbrUpLightning' | 'nbrUpAir'
 	> & {
 		items: Pick<DinozItem, 'itemId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -173,10 +166,7 @@ export function calculateFight(
 
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
 export async function rewardFight(
-	team: (Pick<Dinoz,
-		'id' |
-		'level'
-	> & {
+	team: (Pick<Dinoz, 'id' | 'level'> & {
 		player: Pick<Player, 'id'> | null;
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
@@ -230,11 +220,14 @@ export async function rewardFight(
 	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
 	// If attackers won
 	if (fightResult.winner) {
-		await updateMultipleDinoz(team.map(d => d.id), {
-			experience: {
-				increment: experienceGained
+		await updateMultipleDinoz(
+			team.map(d => d.id),
+			{
+				experience: {
+					increment: experienceGained
+				}
 			}
-		});
+		);
 		await addMoney(playerId, gold);
 	}
 
@@ -271,7 +264,7 @@ export async function rewardFight(
 		itemsUsed: fightResult.attackers.map(a => ({
 			id: a.dinoz_id,
 			itemsUsed: a.items_used
-		})),
+		}))
 	};
 }
 

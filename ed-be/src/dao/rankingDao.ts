@@ -1,5 +1,5 @@
-import { Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 export async function addPlayerInRanking(playerId: number) {
 	return prisma.ranking.create({
@@ -76,12 +76,7 @@ export async function getPlayersSumRanking(page: number) {
 	});
 }
 
-export async function updatePoints(
-	playerId: number,
-	sumPoints: number,
-	averagePoints: number,
-	dinozCount: number
-) {
+export async function updatePoints(playerId: number, sumPoints: number, averagePoints: number, dinozCount: number) {
 	return prisma.ranking.update({
 		where: {
 			playerId

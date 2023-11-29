@@ -26,5 +26,5 @@ export enum Stat {
 	WATER_DEFENSE = 'waterDefense',
 	AIR_DEFENSE = 'airDefense',
 	LIGHTNING_DEFENSE = 'lightningDefense',
-	WOOD_DEFENSE = 'woodDefense',
+	WOOD_DEFENSE = 'woodDefense'
 }

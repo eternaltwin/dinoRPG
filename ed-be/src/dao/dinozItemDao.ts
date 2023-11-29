@@ -1,6 +1,5 @@
 import { prisma } from '../prisma.js';
 
-
 export function addItemToDinoz(dinozId: number, itemId: number) {
 	return prisma.dinozItem.create({
 		data: {

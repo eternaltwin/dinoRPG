@@ -3,10 +3,7 @@ import { Operator } from '../models/enums/Parser.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
 import { conditionParser } from './parser.mjs';
 
-export function checkCondition(
-	condition: Condition | undefined,
-	dinozList: DinozForConditionCheck[]
-): boolean {
+export function checkCondition(condition: Condition | undefined, dinozList: DinozForConditionCheck[]): boolean {
 	if (!condition) return true;
 	let conditionResult = true;
 

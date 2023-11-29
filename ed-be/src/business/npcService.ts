@@ -30,7 +30,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	let dinoz = {
 		...dinozBase,
-		player,
+		player
 	};
 
 	// Check if dinoz belongs to player who do the request
@@ -164,8 +164,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 	// Select nextStep to send to the player
 	const playerChoices = nextStepWantedData.nextStep.filter(possibility => {
-		const condition = Object.values(pnj.data).find(data => data.stepName === possibility)
-			?.condition;
+		const condition = Object.values(pnj.data).find(data => data.stepName === possibility)?.condition;
 		// If there is a condition non-met, replace it with enmpty string
 		if (!dinoz) {
 			throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);

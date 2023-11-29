@@ -107,9 +107,7 @@ export async function getAuthorizationUri() {
 
 function getRfcOauthClient(useDockerUri: boolean) {
 	const config = getConfig();
-	const eternalTwinURI = useDockerUri
-		? config.general.eternalTwinServerUri
-		: config.general.eternalTwinPublicUri;
+	const eternalTwinURI = useDockerUri ? config.general.eternalTwinServerUri : config.general.eternalTwinPublicUri;
 
 	return new RfcOauthClient({
 		authorizationEndpoint: new URL(`${eternalTwinURI}${config.oauth.authorizationUri}`),

@@ -30,7 +30,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				startQuantity: 5,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.PECHEUR_CONFIRME].id
-				},
+				}
 			},
 			{
 				type: 'ingredient',
@@ -89,7 +89,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				startQuantity: 11,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
-				},
+				}
 			},
 			{
 				type: 'ingredient',
@@ -155,10 +155,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
-						{ [ConditionEnum.RANDOM]: 4 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id }, { [ConditionEnum.RANDOM]: 4 }]
 				}
 			},
 			{
@@ -166,10 +163,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
-						{ [ConditionEnum.RANDOM]: 4 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id }, { [ConditionEnum.RANDOM]: 4 }]
 				}
 			},
 			{
@@ -177,10 +171,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.SADIQUAE_MORDICUS.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
-						{ [ConditionEnum.RANDOM]: 4 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id }, { [ConditionEnum.RANDOM]: 4 }]
 				}
 			},
 			{
@@ -524,10 +515,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
-						{ [ConditionEnum.RANDOM]: 5 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id }, { [ConditionEnum.RANDOM]: 5 }]
 				}
 			},
 			{
@@ -535,10 +523,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.CALICE_CISELE.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
-						{ [ConditionEnum.RANDOM]: 5 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id }, { [ConditionEnum.RANDOM]: 5 }]
 				}
 			},
 			{
@@ -546,10 +531,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.COLLIER_KARAT.ingredientId,
 				startQuantity: 2,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
-						{ [ConditionEnum.RANDOM]: 5 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id }, { [ConditionEnum.RANDOM]: 5 }]
 				}
 			},
 			{
@@ -557,10 +539,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
-						{ [ConditionEnum.RANDOM]: 15 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id }, { [ConditionEnum.RANDOM]: 15 }]
 				}
 			},
 			{
@@ -568,10 +547,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				ingredientId: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
 				startQuantity: 1,
 				condition: {
-					[Operator.AND]: [
-						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
-						{ [ConditionEnum.RANDOM]: 15 }
-					]
+					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id }, { [ConditionEnum.RANDOM]: 15 }]
 				}
 			},
 			{

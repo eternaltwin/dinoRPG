@@ -1,36 +1,32 @@
-import { DinozFiche } from "../models/dinoz/DinozFiche.mjs";
-import { DinozSkillFiche } from "../models/dinoz/DinozSkillFiche.mjs";
-import { ElementType } from "../models/enums/ElementType.mjs";
-import { Stat } from "../models/enums/SkillStat.mjs";
+import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
+import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
+import { ElementType } from '../models/enums/ElementType.mjs';
+import { Stat } from '../models/enums/SkillStat.mjs';
 
 export enum AssaultElement {
-	FIRE = "fire",
-	WOOD = "wood",
-	WATER = "water",
-	LIGHTNING = "lightning",
-	AIR = "air",
+	FIRE = 'fire',
+	WOOD = 'wood',
+	WATER = 'water',
+	LIGHTNING = 'lightning',
+	AIR = 'air'
 }
 
-export const getAssaultStat = (
-	dinoz: DinozFiche,
-	skills: DinozSkillFiche[],
-	elementName: AssaultElement
-) => {
+export const getAssaultStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], elementName: AssaultElement) => {
 	let element = 0;
 	switch (elementName) {
-		case "fire":
+		case 'fire':
 			element = dinoz.nbrUpFire || 0;
 			break;
-		case "wood":
+		case 'wood':
 			element = dinoz.nbrUpWood || 0;
 			break;
-		case "lightning":
+		case 'lightning':
 			element = dinoz.nbrUpLightning || 0;
 			break;
-		case "air":
+		case 'air':
 			element = dinoz.nbrUpAir || 0;
 			break;
-		case "water":
+		case 'water':
 			element = dinoz.nbrUpWater || 0;
 			break;
 		default:
@@ -39,33 +35,38 @@ export const getAssaultStat = (
 
 	let bonus = 0;
 	const details: {
-		type: "skill" | "element";
+		type: 'skill' | 'element';
 		name?: string;
 		elements: string[];
 		value: number;
 	}[] = [];
 
 	details.push({
-		type: "element",
+		type: 'element',
 		elements: [elementName],
-		value: element,
+		value: element
 	});
 
 	// Get bonuses from skills
-	skills.forEach((skill) => {
+	skills.forEach(skill => {
 		if (!skill.effects) return;
 
 		const effect = skill.effects[`${elementName}Assault`];
 
 		if (effect) {
 			// Flat value
-			if (typeof effect === "number") {
+			if (typeof effect === 'number') {
 				bonus += effect;
 				details.push({
-					type: "skill",
+					type: 'skill',
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)?.[0].toLocaleLowerCase() || ''),
-					value: effect,
+					elements: skill.element.map(
+						element =>
+							Object.entries(ElementType)
+								.find(([, value]) => value === element)?.[0]
+								.toLocaleLowerCase() || ''
+					),
+					value: effect
 				});
 			} else {
 				// Other element value
@@ -78,7 +79,7 @@ export const getAssaultStat = (
 						otherElementValue = dinoz.nbrUpWood || 0;
 						break;
 					case Stat.LIGHTNING_ASSAULT:
-						otherElementValue= dinoz.nbrUpLightning || 0;
+						otherElementValue = dinoz.nbrUpLightning || 0;
 						break;
 					case Stat.AIR_ASSAULT:
 						otherElementValue = dinoz.nbrUpAir || 0;
@@ -92,10 +93,15 @@ export const getAssaultStat = (
 
 				bonus += otherElementValue;
 				details.push({
-					type: "skill",
+					type: 'skill',
 					name: skill.name,
-					elements: skill.element.map((element) => Object.entries(ElementType).find(([, value]) => value === element)?.[0].toLocaleLowerCase() || ''),
-					value: otherElementValue,
+					elements: skill.element.map(
+						element =>
+							Object.entries(ElementType)
+								.find(([, value]) => value === element)?.[0]
+								.toLocaleLowerCase() || ''
+					),
+					value: otherElementValue
 				});
 			}
 		}
@@ -106,6 +112,6 @@ export const getAssaultStat = (
 	return {
 		name: elementName,
 		value: result,
-		details,
-	}
+		details
+	};
 };

@@ -7,12 +7,4 @@ export enum ElementType {
 	VOID = 6
 }
 
-export const ElementNames = [
-	"",
-	"fire",
-	"wood",
-	"water",
-	"lightning",
-	"air",
-	"void"
-];
+export const ElementNames = ['', 'fire', 'wood', 'water', 'lightning', 'air', 'void'];

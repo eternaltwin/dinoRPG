@@ -1,5 +1,5 @@
-import { Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 export async function getDinozFromDinozShopRequest(playerId: number) {
 	const dinozShop = await prisma.playerDinozShop.findMany({
@@ -8,7 +8,7 @@ export async function getDinozFromDinozShopRequest(playerId: number) {
 		},
 		select: {
 			display: true,
-			player: true,
+			player: true
 		}
 	});
 
@@ -34,18 +34,22 @@ export async function getDinozShopDetailsRequest(dinozId: number) {
 			display: true,
 			raceId: true,
 			id: true,
-			player: { select: {
-				id: true,
-				money: true,
-				ranking: { select: {
+			player: {
+				select: {
 					id: true,
-					dinozCount: true,
-					sumPointsDisplayed: true,
-					sumPoints: true,
-					averagePoints: true,
-					averagePointsDisplayed: true
-				} }
-			} }
+					money: true,
+					ranking: {
+						select: {
+							id: true,
+							dinozCount: true,
+							sumPointsDisplayed: true,
+							sumPoints: true,
+							averagePoints: true,
+							averagePointsDisplayed: true
+						}
+					}
+				}
+			}
 		}
 	});
 

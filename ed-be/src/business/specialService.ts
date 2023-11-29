@@ -8,7 +8,13 @@ import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz } from '@drpg/prisma';
 import { Request } from 'express';
 import { specialActions } from '../constants/specialActions.js';
-import { ConcentrationFromGetConcentration, createConcentration, getConcentration, removeConcentration, updateConcentration } from '../dao/concentrationDao.js';
+import {
+	ConcentrationFromGetConcentration,
+	createConcentration,
+	getConcentration,
+	removeConcentration,
+	updateConcentration
+} from '../dao/concentrationDao.js';
 import { getDinozConcentrationRequest, updateMultipleDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
 import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { prepareConcentration } from '../dao/playerDao.js';
@@ -94,10 +100,7 @@ async function goDarkWorld(dinozList: Pick<Dinoz, 'id'>[]): Promise<void> {
 }
 
 export async function mouvementListener(
-	team: (DinozToCalculateFight &
-		DinozToRewardFight &
-		DinozForConditionCheck &
-		DinozToGetActualStep)[],
+	team: (DinozToCalculateFight & DinozToRewardFight & DinozForConditionCheck & DinozToGetActualStep)[],
 	finalPlace: number
 ) {
 	//Specials actions
@@ -121,7 +124,10 @@ export async function mouvementListener(
 	// Check if all dinoz have the same unfinished mission
 	const dinozMission = team[0].missions.find(m => !m.isFinished);
 
-	if (dinozMission && team.every(dinoz => dinoz.missions.find(m => !m.isFinished)?.missionId === dinozMission?.missionId)) {
+	if (
+		dinozMission &&
+		team.every(dinoz => dinoz.missions.find(m => !m.isFinished)?.missionId === dinozMission?.missionId)
+	) {
 		// Check if all dinoz are at the same step
 		const actualStep = getActualStep(team[0]);
 

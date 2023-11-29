@@ -81,14 +81,10 @@ export default defineComponent({
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
 			this.dinozStore.setDinozList(dinozList);
-
-			// Update current dinoz in player options
-			if (dinozId) {
-				this.playerStore.setPlayerOptions({
-					...this.playerStore.playerOptions,
-					currentDinozId: +dinozId
-				});
-			}
+			this.playerStore.setPlayerOptions({
+				...this.playerStore.playerOptions,
+				currentDinozId: parseInt(dinozId)
+			});
 		},
 		updateActions(actions: ActionFiche[]) {
 			this.dinozData.actions = actions;
@@ -115,9 +111,9 @@ export default defineComponent({
 	},
 	watch: {
 		// Reload page if player go on another dinoz page
-		'$route.params.id': function (to) {
+		'$route.params.id': async function (to) {
 			if (to !== undefined) {
-				this.$router.go(0);
+				await this.getFiche();
 			}
 		}
 	}

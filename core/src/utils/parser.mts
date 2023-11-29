@@ -32,8 +32,9 @@ export function conditionParser(
 	} else if (STATUS) {
 		result = dinozList.every(dinoz => dinoz.status.some(st => st.statusId === STATUS));
 	} else if (FINISHED_MISSION) {
-		result = dinozList.every(dinoz => dinoz.missions.find(missions => missions.missionId === FINISHED_MISSION)
-			?.isFinished ?? false);
+		result = dinozList.every(
+			dinoz => dinoz.missions.find(missions => missions.missionId === FINISHED_MISSION)?.isFinished ?? false
+		);
 	} else if (SKILL) {
 		result = dinozList.every(dinoz => dinoz.skills.some(dinozSkill => dinozSkill.skillId === SKILL));
 	} else if (GOTO) {

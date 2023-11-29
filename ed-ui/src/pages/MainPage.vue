@@ -64,9 +64,13 @@ export default defineComponent({
 			this.playerStore.setMoney(commonData.money);
 			this.dinozStore.setDinozList(commonData.dinoz);
 			this.dinozStore.setDinozCount(commonData.dinozCount);
-			this.playerStore.setPlayerId(commonData.id);
-			this.playerStore.setPlayerName(commonData.name);
-			this.playerStore.setPlayerOptions(commonData.playerOptions);
+
+			if (!this.playerStore.getPlayerId()) {
+				this.playerStore.setPlayerId(commonData.id);
+				this.playerStore.setPlayerName(commonData.name);
+				this.playerStore.setPlayerOptions(commonData.playerOptions);
+			}
+
 			EventBus.emit('isLoading', false);
 		}
 	},

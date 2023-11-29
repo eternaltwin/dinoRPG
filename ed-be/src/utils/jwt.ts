@@ -44,4 +44,3 @@ async function isPlayerAdmin(playerId: number, config: Config): Promise<boolean>
 }
 
 export { checkIsAdmin, forgeJWT, jwtConfig };
-

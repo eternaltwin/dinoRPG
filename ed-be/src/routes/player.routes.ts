@@ -111,7 +111,7 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 		if (!req.auth?.playerId) {
 			throw new ErrorFormator(400, 'No player ID found');
 		}
-		const response = await getPlayerMoney(req.auth.playerId)
+		const response = await getPlayerMoney(req.auth.playerId);
 
 		if (!response) {
 			throw new ErrorFormator(400, 'No player found');

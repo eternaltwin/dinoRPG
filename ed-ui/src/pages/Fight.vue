@@ -54,7 +54,6 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
 import { defineComponent } from 'vue';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'Fight',
@@ -86,9 +85,6 @@ export default defineComponent({
 				if (result.result) {
 					const newMoney: number = this.playerStore.getMoney! + this.fight.goldEarned;
 					this.playerStore.setMoney(newMoney);
-					const dinozInStore: Array<DinozFiche> = this.dinozStore.getDinozList!;
-					const dinoz: DinozFiche = dinozInStore.find(dinoz => dinoz.id! === this.dinozId)!;
-					dinoz.experience! += this.fight.xpEarned;
 				}
 				EventBus.emit('isLoading', false);
 			} catch (err) {

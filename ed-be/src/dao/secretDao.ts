@@ -1,5 +1,5 @@
-import { Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 export function getAllSecretsRequest() {
 	return prisma.secret.findMany();

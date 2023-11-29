@@ -18,7 +18,7 @@ const createDinozStep = async (dinozId: number, npc: Prisma.NPCCreateInput) => {
 		data: {
 			dinoz: { connect: { id: dinozId } },
 			...npc
-		},
+		}
 	});
 
 	return createdNpc;
@@ -36,4 +36,3 @@ const updateDinozStep = async (dinoz: number, npcId: number, step: string) => {
 };
 
 export { createDinozStep, getDinozStep, updateDinozStep };
-

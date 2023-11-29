@@ -1,4 +1,14 @@
-import { DinozItem, DinozMission, DinozSkill, DinozStatus, Player, PlayerItem, PlayerReward, type Dinoz, Prisma } from '@drpg/prisma';
+import {
+	DinozItem,
+	DinozMission,
+	DinozSkill,
+	DinozStatus,
+	Player,
+	PlayerItem,
+	PlayerReward,
+	type Dinoz,
+	Prisma
+} from '@drpg/prisma';
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
@@ -49,10 +59,7 @@ export const remainingXPToLevelUp = (dinoz: Pick<Dinoz, 'experience' | 'level'>)
 	return getMaxXp(dinoz) - dinoz.experience;
 };
 
-export const isMaxLevel = (
-	dinoz: Pick<Dinoz, 'level'>,
-	config: Config
-) => dinoz.level === config.dinoz.maxLevel;
+export const isMaxLevel = (dinoz: Pick<Dinoz, 'level'>, config: Config) => dinoz.level === config.dinoz.maxLevel;
 
 export const canLevelUp = (dinoz: Pick<Dinoz, 'experience' | 'level'>, config: Config) => {
 	return remainingXPToLevelUp(dinoz) <= 0 && !isMaxLevel(dinoz, config);
@@ -68,11 +75,13 @@ export const getRace = (dinoz: Pick<Dinoz, 'raceId'>) => {
 	return race;
 };
 
-export const backpackSlot = (dinoz: Pick<Dinoz, 'id'> & {
-	skills: Pick<DinozSkill, 'skillId'>[];
-	status: Pick<DinozStatus, 'statusId'>[];
-	player: Pick<Player, 'engineer'> | null;
-}) => {
+export const backpackSlot = (
+	dinoz: Pick<Dinoz, 'id'> & {
+		skills: Pick<DinozSkill, 'skillId'>[];
+		status: Pick<DinozStatus, 'statusId'>[];
+		player: Pick<Player, 'engineer'> | null;
+	}
+) => {
 	if (!dinoz.player) {
 		throw new Error(`Dinoz ${dinoz.id} doesn't belong to a player.`);
 	}
@@ -88,36 +97,41 @@ export const backpackSlot = (dinoz: Pick<Dinoz, 'id'> & {
 };
 
 export type DinozForDinozFiche = Parameters<typeof toDinozFiche>[0];
-export const toDinozFiche = (dinoz: Pick<Dinoz,
-	'id' |
-	'name' |
-	'display' |
-	'isFrozen' |
-	'isSelling' |
-	'level' |
-	'leaderId' |
-	'life' |
-	'maxLife' |
-	'experience' |
-	'raceId' |
-	'placeId' |
-	'nbrUpFire' |
-	'nbrUpWood' |
-	'nbrUpWater' |
-	'nbrUpLightning' |
-	'nbrUpAir' |
-	'order'
-> & {
-	missions: DinozMission[];
-	items: Pick<DinozItem, 'itemId'>[];
-	status: Pick<DinozStatus, 'statusId'>[];
-	skills: Pick<DinozSkill, 'skillId'>[];
-	followers: Pick<Dinoz, 'id'>[];
-	player: Pick<Player, 'engineer'> & {
-		items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
-		rewards: Pick<PlayerReward, 'rewardId'>[];
-	} | null;
-}): DinozFiche => {
+export const toDinozFiche = (
+	dinoz: Pick<
+		Dinoz,
+		| 'id'
+		| 'name'
+		| 'display'
+		| 'isFrozen'
+		| 'isSelling'
+		| 'level'
+		| 'leaderId'
+		| 'life'
+		| 'maxLife'
+		| 'experience'
+		| 'raceId'
+		| 'placeId'
+		| 'nbrUpFire'
+		| 'nbrUpWood'
+		| 'nbrUpWater'
+		| 'nbrUpLightning'
+		| 'nbrUpAir'
+		| 'order'
+	> & {
+		missions: DinozMission[];
+		items: Pick<DinozItem, 'itemId'>[];
+		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
+		followers: Pick<Dinoz, 'id'>[];
+		player:
+			| (Pick<Player, 'engineer'> & {
+					items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
+					rewards: Pick<PlayerReward, 'rewardId'>[];
+			  })
+			| null;
+	}
+): DinozFiche => {
 	return {
 		id: dinoz.id,
 		name: dinoz.name,
@@ -137,8 +151,8 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 		items: dinoz.items?.map(item => item.itemId),
 		maxItems: backpackSlot(dinoz),
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
-		borderPlace: actualPlace(dinoz).borderPlace
-			.map(placeId => {
+		borderPlace: actualPlace(dinoz)
+			.borderPlace.map(placeId => {
 				const place = Object.values(placeList).find(place => place.placeId === placeId);
 				if (!place) {
 					throw new Error(`Place ${placeId} doesn't exist.`);
@@ -155,23 +169,24 @@ export const toDinozFiche = (dinoz: Pick<Dinoz,
 		missionHUD: getHUDObjective(dinoz),
 		actions: [],
 		skills: dinoz.skills.map(skill => skill.skillId),
-		order: dinoz.order,
+		order: dinoz.order
 	};
 };
 
 export const toDinozFicheLite = (
-	dinoz: Pick<Dinoz,
-		'id' |
-		'name' |
-		'display' |
-		'leaderId' |
-		'life' |
-		'maxLife' |
-		'experience' |
-		'placeId' |
-		'order' |
-		'isFrozen' |
-		'level'
+	dinoz: Pick<
+		Dinoz,
+		| 'id'
+		| 'name'
+		| 'display'
+		| 'leaderId'
+		| 'life'
+		| 'maxLife'
+		| 'experience'
+		| 'placeId'
+		| 'order'
+		| 'isFrozen'
+		| 'level'
 	>
 ): DinozFicheLite => {
 	return {
@@ -187,40 +202,43 @@ export const toDinozFicheLite = (
 		order: dinoz.order,
 		isFrozen: dinoz.isFrozen
 	};
-}
+};
 
-export const toDinozSkillFiche = (dinoz: {
-	skills: Pick<DinozSkill, 'skillId'>[];
-}) => dinoz.skills.map(skill => {
-	const skillFound = Object.values(skillList).find(skillDinoz => skillDinoz.id === skill.skillId);
-	if (!skillFound) {
-		throw new Error(`Skill ${skill.skillId} doesn't exist.`);
-	}
+export const toDinozSkillFiche = (dinoz: { skills: Pick<DinozSkill, 'skillId'>[] }) =>
+	dinoz.skills.map(skill => {
+		const skillFound = Object.values(skillList).find(skillDinoz => skillDinoz.id === skill.skillId);
+		if (!skillFound) {
+			throw new Error(`Skill ${skill.skillId} doesn't exist.`);
+		}
 
-	return skillFound;
-});
+		return skillFound;
+	});
 
-export const canChangeSkillState = (dinoz: {
-	status: Pick<DinozStatus, 'statusId'>[];
-}) => {
+export const canChangeSkillState = (dinoz: { status: Pick<DinozStatus, 'statusId'>[] }) => {
 	return dinoz.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
-}
+};
 
-export const knowSkillId = (dinoz: {
-	skills: Pick<DinozSkill, 'skillId'>[];
-}, skillId: number) => {
+export const knowSkillId = (
+	dinoz: {
+		skills: Pick<DinozSkill, 'skillId'>[];
+	},
+	skillId: number
+) => {
 	return dinoz.skills.some(skill => skill.skillId === skillId);
-}
+};
 
 export const canGoToThisPlace = (dinoz: DinozForConditionCheck, condition: Condition) => {
 	return checkCondition(condition, [dinoz]);
 };
 
-export const possessStatus = (dinoz: {
-	status: Pick<DinozStatus, 'statusId'>[];
-}, statusId: number) => {
+export const possessStatus = (
+	dinoz: {
+		status: Pick<DinozStatus, 'statusId'>[];
+	},
+	statusId: number
+) => {
 	return dinoz.status.some(status => status.statusId === statusId);
-}
+};
 
 export const getRandomUpElement = (raceUpChance: UpChance) => {
 	const totalUpChance = Object.values(raceUpChance).reduce((total, currentValue) => total + currentValue, 0);
@@ -286,7 +304,7 @@ export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
 		id: dinoz.id,
 		life: dinoz.life
 	};
-}
+};
 
 export const initializeDinoz = (race: DinozRace, playerId: number, display: string): Prisma.DinozCreateInput => {
 	return {
@@ -308,13 +326,16 @@ export const initializeDinoz = (race: DinozRace, playerId: number, display: stri
 		nbrUpAir: race.nbrAir,
 		nextUpElementId: getRandomUpElement(race.upChance),
 		nextUpAltElementId: getRandomUpElement(race.upChance),
-		player: { connect: { id: playerId } },
+		player: { connect: { id: playerId } }
 	};
 };
 
-export const learnNextSphereSkill = (dinoz: {
-	skills: Pick<DinozSkill, 'skillId'>[];
-}, element: ElementType) => {
+export const learnNextSphereSkill = (
+	dinoz: {
+		skills: Pick<DinozSkill, 'skillId'>[];
+	},
+	element: ElementType
+) => {
 	const sphereSkills = Object.values(skillList)
 		.filter(skill => skill.isSphereSkill)
 		.filter(skill => skill.element.some(el => el === element))
@@ -336,7 +357,7 @@ export const learnNextSphereSkill = (dinoz: {
 	}
 
 	return testSphereToLean.id;
-}
+};
 
 export const useRice = (dinoz: Pick<Dinoz, 'id'>) => {
 	return {
@@ -345,7 +366,7 @@ export const useRice = (dinoz: Pick<Dinoz, 'id'>) => {
 		experience: 0,
 		canChangeName: true
 	};
-}
+};
 
 export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: number) => {
 	const lifeHealed = dinoz.maxLife - dinoz.life > lifeToAdd ? lifeToAdd : dinoz.maxLife - dinoz.life;
@@ -356,13 +377,12 @@ export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: n
 		id: dinoz.id,
 		life: dinoz.life
 	};
-}
+};
 
 export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
 	let max = BaseStats[SpecialStat.MAX_FOLLOWERS];
 
-	const skillsAffectingMaxFollowers = Object.values(skillList)
-		.filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
+	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
 
 	for (const skill of skillsAffectingMaxFollowers) {
 		if (dinoz.skills.some(s => s === skill.id)) {
@@ -373,14 +393,9 @@ export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
 	return max;
 };
 
-export const getFollowableDinoz = <T extends Pick<DinozFiche,
-'id' |
-'placeId' |
-'leaderId' |
-'isSelling' |
-'followers' |
-'skills'
->>(
+export const getFollowableDinoz = <
+	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'isSelling' | 'followers' | 'skills'>
+>(
 	dinozList: T[],
 	potentialFollower: Pick<DinozFiche, 'id' | 'placeId'>
 ) => {
@@ -413,13 +428,9 @@ export const getFollowableDinoz = <T extends Pick<DinozFiche,
 	});
 };
 
-export const orderDinozList = <T extends Pick<DinozFiche,
-	'id' |
-	'order' |
-	'name' |
-	'leaderId' |
-	'followers'
->[]> (dinozList: T) => {
+export const orderDinozList = <T extends Pick<DinozFiche, 'id' | 'order' | 'name' | 'leaderId' | 'followers'>[]>(
+	dinozList: T
+) => {
 	const sortedByOrderAndName = [...dinozList].sort((a, b) => {
 		if (a.order === b.order) {
 			return a.name.localeCompare(b.name);
@@ -441,7 +452,10 @@ export const orderDinozList = <T extends Pick<DinozFiche,
 
 		// Remove them from the list
 		for (const follower of followers) {
-			sortedByOrderAndName.splice(sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id), 1);
+			sortedByOrderAndName.splice(
+				sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id),
+				1
+			);
 		}
 
 		// Add them after the leader
@@ -449,4 +463,4 @@ export const orderDinozList = <T extends Pick<DinozFiche,
 	}
 
 	return sortedByOrderAndName;
-}
+};

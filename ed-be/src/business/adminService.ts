@@ -121,10 +121,12 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 	const rewardList: number[] = req.body.epicRewardId;
 	switch (req.body.operation) {
 		case 'add':
-			await addMultipleRewardToPlayer(rewardList.map(reward => ({
-				playerId: +req.params.id,
-				rewardId: reward
-			})));
+			await addMultipleRewardToPlayer(
+				rewardList.map(reward => ({
+					playerId: +req.params.id,
+					rewardId: reward
+				}))
+			);
 			break;
 		case 'remove':
 			const promises = rewardList.map(reward => removeRewardFromPlayer(+req.params.id, reward));
@@ -236,7 +238,7 @@ export async function getAllSecrets() {
 	const response = secrets.map(secret => {
 		return {
 			key: secret.key,
-			value: secret.value,
+			value: secret.value
 		};
 	});
 	return response;

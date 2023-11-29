@@ -36,8 +36,8 @@ export async function getCommonData(req: Request) {
 				player: {
 					engineer: playerCommonData.engineer,
 					rewards: playerCommonData.rewards,
-					items: playerCommonData.items,
-				},
+					items: playerCommonData.items
+				}
 			});
 		}),
 		id: playerCommonData.id,
@@ -94,8 +94,8 @@ export async function getAccountData(req: Request) {
 				player: {
 					engineer: playerInfo.engineer,
 					rewards: playerInfo.rewards,
-					items: playerInfo.items,
-				},
+					items: playerInfo.items
+				}
 			});
 		}),
 		customText: playerInfo.customText

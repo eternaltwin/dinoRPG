@@ -1,5 +1,5 @@
-import { Prisma } from "@drpg/prisma";
-import { prisma } from "../prisma.js";
+import { Prisma } from '@drpg/prisma';
+import { prisma } from '../prisma.js';
 
 export async function getCommonGatherInfo(playerId: number) {
 	const gathers = await prisma.playerGather.findMany({

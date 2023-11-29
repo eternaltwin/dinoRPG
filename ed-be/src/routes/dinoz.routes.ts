@@ -540,40 +540,44 @@ routes.post(`${commonPath}/manage`, [body('order').exists().isArray()], async (r
 routes.post(
 	`${commonPath}/:id/follow/:targetId`,
 	[param('id').exists().toInt().isNumeric(), param('targetId').exists().toInt().isNumeric()],
-	async (req: Request, res: Response
-) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		await followDinoz(req);
-		return res.status(200).send({
-			message: 'Dinoz followed'
-		});
-	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(500).send(e.message);
+		try {
+			await followDinoz(req);
+			return res.status(200).send({
+				message: 'Dinoz followed'
+			});
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(500).send(e.message);
+		}
 	}
-});
+);
 
 // Unfollow
-routes.post(`${commonPath}/:id/unfollow`, [param('id').exists().toInt().isNumeric()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.post(
+	`${commonPath}/:id/unfollow`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		await unfollowDinoz(req);
-		return res.status(200).send({
-			message: 'Dinoz unfollowed'
-		});
-	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(500).send(e.message);
+		try {
+			await unfollowDinoz(req);
+			return res.status(200).send({
+				message: 'Dinoz unfollowed'
+			});
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(500).send(e.message);
+		}
 	}
-});
+);
 
 export default routes;

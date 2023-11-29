@@ -1,4 +1,3 @@
-
 import { Dinoz } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 

@@ -1,7 +1,6 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
-
 export const addMissionToDinoz = async (data: Prisma.DinozMissionCreateInput) => {
 	const mission = await prisma.dinozMission.create({
 		data
@@ -10,11 +9,7 @@ export const addMissionToDinoz = async (data: Prisma.DinozMissionCreateInput) =>
 	return mission;
 };
 
-export const updateMissionStep = async (
-	dinozIds: number[],
-	missionId: number,
-	step: number
-) => {
+export const updateMissionStep = async (dinozIds: number[], missionId: number, step: number) => {
 	await prisma.dinozMission.updateMany({
 		where: {
 			dinozId: { in: dinozIds },

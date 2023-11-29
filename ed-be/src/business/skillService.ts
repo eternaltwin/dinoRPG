@@ -26,9 +26,7 @@ import { getRandomUpElement } from '@drpg/core/utils/DinozUtils';
  *
  * @returns Partial<DinozSkillOwnAndUnlockable> | undefined>
  */
-export async function getLearnableAndUnlockableSkills(
-	req: Request
-) {
+export async function getLearnableAndUnlockableSkills(req: Request) {
 	const dinozId = +req.params.id;
 
 	const dinozSkills = await getDinozForLevelUp(dinozId);
@@ -73,13 +71,7 @@ export async function learnSkill(req: Request) {
 		throw new ErrorFormator(500, `Dinoz race ${dinozSkills.raceId} doesn't exist.`);
 	}
 
-	const skills = getDinozLearnableSkills(
-		req,
-		dinozSkills,
-		dinozRace,
-		dinozId,
-		parseInt(req.body.tryNumber)
-	);
+	const skills = getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, parseInt(req.body.tryNumber));
 
 	const isLearnableSkills =
 		skillIdList.every(skillId => skills.learnableSkills.some(skill => skill.skillId === skillId)) &&
@@ -118,23 +110,18 @@ export async function learnSkill(req: Request) {
 			.filter(skill => !skill.raceId || skill.raceId.includes(dinozSkills.raceId))
 			.map(skill => ({
 				skillId: skill.id,
-				dinozId,
+				dinozId
 			}));
 
 		// Add skill to dinoz in order to have same data than database.
 		dinozSkills.skills.push({
-			skillId: skillIdList[0],
+			skillId: skillIdList[0]
 		});
 
 		await addMultipleUnlockableSkills(newUnlockableSkills);
 	}
 
-	const newDinozData = getNewDinozDataFromLevelUp(
-		dinozId,
-		parseInt(req.body.tryNumber),
-		dinozSkills,
-		dinozRace
-	);
+	const newDinozData = getNewDinozDataFromLevelUp(dinozId, parseInt(req.body.tryNumber), dinozSkills, dinozRace);
 
 	await updateDinoz(newDinozData.id, newDinozData);
 
@@ -145,17 +132,18 @@ export async function learnSkill(req: Request) {
 
 function getDinozLearnableSkills(
 	req: Request,
-	dinoz: Pick<Dinoz,
-		'level' |
-		'experience' |
-		'nextUpElementId' |
-		'nextUpAltElementId' |
-		'nbrUpFire' |
-		'nbrUpWood' |
-		'nbrUpWater' |
-		'nbrUpLightning' |
-		'nbrUpAir' |
-		'raceId'
+	dinoz: Pick<
+		Dinoz,
+		| 'level'
+		| 'experience'
+		| 'nextUpElementId'
+		| 'nextUpAltElementId'
+		| 'nbrUpFire'
+		| 'nbrUpWood'
+		| 'nbrUpWater'
+		| 'nbrUpLightning'
+		| 'nbrUpAir'
+		| 'raceId'
 	> & {
 		player: Pick<Player, 'id'> | null;
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -214,17 +202,18 @@ function getDinozLearnableSkills(
 function getNewDinozDataFromLevelUp(
 	dinozId: number,
 	tryNumber: number,
-	dinozSkills: Pick<Dinoz,
-		'raceId' |
-		'level' |
-		'nextUpElementId' |
-		'nextUpAltElementId' |
-		'nbrUpFire' |
-		'nbrUpWood' |
-		'nbrUpWater' |
-		'nbrUpLightning' |
-		'nbrUpAir' |
-		'display'
+	dinozSkills: Pick<
+		Dinoz,
+		| 'raceId'
+		| 'level'
+		| 'nextUpElementId'
+		| 'nextUpAltElementId'
+		| 'nbrUpFire'
+		| 'nbrUpWood'
+		| 'nbrUpWater'
+		| 'nbrUpLightning'
+		| 'nbrUpAir'
+		| 'display'
 	> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -302,11 +291,14 @@ function getNewDinozDataFromLevelUp(
  * Return all skills that a dinoz can learn (every elements).
  * If the param "elementWanted" is present, return learnable skills from one specific element.
  */
-export function getLearnableSkills(dinoz: Pick<Dinoz, 'raceId'> & {
-	status: Pick<DinozStatus, 'statusId'>[];
-	skills: Pick<DinozSkill, 'skillId'>[];
-	unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
-}, elementWanted?: ElementType) {
+export function getLearnableSkills(
+	dinoz: Pick<Dinoz, 'raceId'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
+		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
+	},
+	elementWanted?: ElementType
+) {
 	const treeType = getTreeType(dinoz.status);
 	let learnableSkills = structuredClone(Object.values(skillList));
 
@@ -343,10 +335,13 @@ export function getLearnableSkills(dinoz: Pick<Dinoz, 'raceId'> & {
  * Return all skills that a dinoz can unlock (every elements).
  * If the param "elementWanted" is present, return unlockable skills from one specific element.
  */
-function getUnlockableSkills(dinoz: {
-	status: Pick<DinozStatus, 'statusId'>[];
-	unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
-}, elementWanted?: ElementType) {
+function getUnlockableSkills(
+	dinoz: {
+		status: Pick<DinozStatus, 'statusId'>[];
+		unlockableSkills: Pick<DinozSkillUnlockable, 'skillId'>[];
+	},
+	elementWanted?: ElementType
+) {
 	const treeType = getTreeType(dinoz.status);
 	let unlockableSkills = dinoz.unlockableSkills.map(skill => {
 		const foundSkill = Object.values(skillList).find(skills => skills.id === skill.skillId);
@@ -362,7 +357,7 @@ function getUnlockableSkills(dinoz: {
 	}
 
 	return unlockableSkills
-		.filter((skill) => skill.tree === treeType)
+		.filter(skill => skill.tree === treeType)
 		.map(skill => {
 			return {
 				skillId: skill.id,
@@ -405,9 +400,7 @@ export async function unlockDoubleSkills(dinozId: number) {
 	const doubleSkillsToUnlock = allLearnableSkills
 		.filter(skill => (skill.element?.length || 0) > 1)
 		.filter(skillToUnlock => {
-			const skillDetail = Object.values(skillList).find(
-				skill => skill.id === skillToUnlock.skillId
-			);
+			const skillDetail = Object.values(skillList).find(skill => skill.id === skillToUnlock.skillId);
 			return skillDetail?.unlockedFrom?.includes(skillList[Skill.COMPETENCE_DOUBLE].id);
 		})
 		.map(skill => ({
