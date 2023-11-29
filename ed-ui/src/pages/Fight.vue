@@ -4,6 +4,7 @@
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
 	{{ fightText }}<br />
+	<FightAnimation />
 	<p v-html="fightHistory" />
 	<div class="wrapper">
 		<div class="debrief" :class="lang">
@@ -54,11 +55,13 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
 import { defineComponent } from 'vue';
+import FightAnimation from '../components/fight/FightAnimation.vue';
 
 export default defineComponent({
 	name: 'Fight',
 	components: {
-		TitleHeader
+		TitleHeader,
+		FightAnimation
 	},
 	data() {
 		return {

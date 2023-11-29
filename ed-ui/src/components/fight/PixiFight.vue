@@ -4,9 +4,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { sdino } from '@drpg/dino-animation';
 import { Application, Sprite } from 'pixi.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	data() {
@@ -16,7 +17,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinoz: { type: Object, required: true },
+		dinoz: { type: Object as PropType<DinozFiche>, required: true },
 		placeName: { type: String, required: true }
 	},
 	mounted(): void {
