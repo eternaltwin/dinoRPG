@@ -2,7 +2,7 @@ export const developers = [
 	'Jérémy "Biosha" Guilbert',
 	'Lucas "Jolu" Lesven',
 	'Sylvain "Jahaa" Hunault',
-	'Franck "Zen" De Moute'
+	'Franck "Zen" Demoute'
 ];
 
 export const helpers = [
