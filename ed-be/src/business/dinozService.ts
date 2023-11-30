@@ -91,6 +91,11 @@ export async function getAvailableActions(
 
 	const dinozPlace = actualPlace(dinoz);
 
+	// Nothing else if dinoz is being sold
+	if (dinoz.isSelling) {
+		return [actionList[Action.MARKET]];
+	}
+
 	// If Dinoz is following another dinoz, add the unfollow action
 	if (dinoz.leaderId) {
 		availableActions.push(actionList[Action.UNFOLLOW]);
@@ -225,10 +230,7 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.MARKET]);
 	}
 
-	// Nothing else if dinoz is being sold
-	if (dinoz.isSelling) {
-		return [actionList[Action.MARKET]];
-	}
+
 	return availableActions;
 }
 
