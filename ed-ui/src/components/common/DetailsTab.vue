@@ -330,61 +330,72 @@ export default defineComponent({
 		},
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
-		}
-	},
-	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		try {
-			const dinozId = this.$route.params.id as string;
-			this.dinozSkill = await DinozService.getDinozSkill(parseInt(dinozId));
-			this.sort();
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err);
-			return;
-		}
+		},
+		async loadComponent(): Promise<void> {
+			EventBus.emit('isLoading', true);
+			try {
+				const dinozId = this.$route.params.id as string;
+				this.dinozSkill = await DinozService.getDinozSkill(parseInt(dinozId));
+				this.sort();
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err);
+				return;
+			}
 
-		const data = this.dinozData;
-		if (!data) {
-			EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
-			return;
-		}
-
-		// Get stats
-		this.assaultStats = Object.values(AssaultElement).map(stat =>
-			getAssaultStat(data, this.dinozSkill, stat as AssaultElement)
-		);
-
-		this.defenseStats = Object.values(DefenseElement).map(stat =>
-			getDefenseStat(data, this.dinozSkill, stat as DefenseElement)
-		);
-
-		this.specialStats = Object.values(SpecialStat)
-			.map(stat => getSpecialStat(data, this.dinozSkill, stat as SpecialStat))
-			.filter(Boolean);
-
-		// Refresh special stats on EventBus `refreshInventory`
-		EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
-			if (!this.dinozData) {
+			const data = this.dinozData;
+			if (!data) {
 				EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
 				return;
 			}
 
-			// Remove torchDamage stat if last lighter was unequipped
-			if (event === 'unequip' && item === itemList.ZIPPO.itemId) {
-				if (this.dinozData.items?.filter(i => i === item).length === 1) {
-					this.specialStats = this.specialStats.filter(stat => stat?.name !== SpecialStat.TORCH_DAMAGE);
+			// Get stats
+			this.assaultStats = Object.values(AssaultElement).map(stat =>
+				getAssaultStat(data, this.dinozSkill, stat as AssaultElement)
+			);
+
+			this.defenseStats = Object.values(DefenseElement).map(stat =>
+				getDefenseStat(data, this.dinozSkill, stat as DefenseElement)
+			);
+
+			this.specialStats = Object.values(SpecialStat)
+				.map(stat => getSpecialStat(data, this.dinozSkill, stat as SpecialStat))
+				.filter(Boolean);
+
+			// Refresh special stats on EventBus `refreshInventory`
+			EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
+				if (!this.dinozData) {
+					EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+					return;
 				}
-			} else if (event === 'equip' && item === itemList.ZIPPO.itemId) {
-				// Add torchDamage stat if lighter was equipped and no other lighter was equipped
-				if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
-					this.specialStats.push(getSpecialStat(this.dinozData, this.dinozSkill, SpecialStat.TORCH_DAMAGE));
+
+				// Remove torchDamage stat if last lighter was unequipped
+				if (event === 'unequip' && item === itemList.ZIPPO.itemId) {
+					if (this.dinozData.items?.filter(i => i === item).length === 1) {
+						this.specialStats = this.specialStats.filter(stat => stat?.name !== SpecialStat.TORCH_DAMAGE);
+					}
+				} else if (event === 'equip' && item === itemList.ZIPPO.itemId) {
+					// Add torchDamage stat if lighter was equipped and no other lighter was equipped
+					if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
+						this.specialStats.push(getSpecialStat(this.dinozData, this.dinozSkill, SpecialStat.TORCH_DAMAGE));
+					}
 				}
-			}
-		});
+			});
+		}
+	},
+	async mounted(): Promise<void> {
+		await this.loadComponent();
 	},
 	unmounted() {
 		EventBus.off('refreshInventory');
+	},
+	watch: {
+		// Reload page if player go on another dinoz page
+		'$route.params.id': async function (to) {
+			if (to !== undefined) {
+				await this.loadComponent();
+			}
+		}
 	}
 });
 </script>

@@ -91,14 +91,23 @@ export async function getAvailableActions(
 
 	const dinozPlace = actualPlace(dinoz);
 
-	// Market if dinoz is in market
-	if (dinoz.placeId === placeList.PLACE_DU_MARCHE.placeId) {
-		availableActions.push(actionList[Action.MARKET]);
-	}
-
-	// Nothing else if dinoz is being sold
-	if (dinoz.isSelling) {
-		return availableActions;
+	// If Dinoz is following another dinoz, add the unfollow action
+	if (dinoz.leaderId) {
+		availableActions.push(actionList[Action.UNFOLLOW]);
+	} else {
+		// Check if there is a dinoz to follow
+		const potentialDinozToFollow = await getAvailableDinozToFollow(dinoz.player.id, dinoz.id);
+		const dinozToFollow = getFollowableDinoz(
+			potentialDinozToFollow.map(dinoz => ({
+				...dinoz,
+				skills: dinoz.skills.map(skill => skill.skillId),
+				followers: dinoz.followers.map(follower => follower.id)
+			})),
+			dinoz
+		);
+		if (dinozToFollow.length > 0) {
+			availableActions.push(actionList[Action.FOLLOW]);
+		}
 	}
 
 	if (!isAlive(dinoz)) {
@@ -211,24 +220,14 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.LEVEL_UP]);
 	}
 
-	// If Dinoz is following another dinoz, add the unfollow action
-	if (dinoz.leaderId) {
-		availableActions.push(actionList[Action.UNFOLLOW]);
-	} else {
-		// Check if there is a dinoz to follow
-		const potentialDinozToFollow = await getAvailableDinozToFollow(dinoz.player.id, dinoz.id);
-		const dinozToFollow = getFollowableDinoz(
-			potentialDinozToFollow.map(dinoz => ({
-				...dinoz,
-				skills: dinoz.skills.map(skill => skill.skillId),
-				followers: dinoz.followers.map(follower => follower.id)
-			})),
-			dinoz
-		);
+	// Market if dinoz is in market
+	if (dinoz.placeId === placeList.PLACE_DU_MARCHE.placeId) {
+		availableActions.push(actionList[Action.MARKET]);
+	}
 
-		if (dinozToFollow.length > 0) {
-			availableActions.push(actionList[Action.FOLLOW]);
-		}
+	// Nothing else if dinoz is being sold
+	if (dinoz.isSelling) {
+		return availableActions;
 	}
 	return availableActions;
 }
