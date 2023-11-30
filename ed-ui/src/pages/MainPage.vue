@@ -38,7 +38,6 @@ import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
 import RightMenu from '../components/common/RightMenu.vue';
 import { playerStore, dinozStore } from '../store/index.js';
-import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { errorHandler } from '../utils/index.js';
 import { PlayerService } from '../services/index.js';
 import EventBus from '../events/index.js';
@@ -56,24 +55,25 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		async firstLoad(): Promise<void> {
+		async firstLoad() {
 			EventBus.emit('isLoading', true);
-			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
+			const commonData = await PlayerService.getLoggedInData();
 
 			// Set data in sessionStore
 			this.playerStore.setMoney(commonData.money);
 			this.dinozStore.setDinozList(commonData.dinoz);
 			this.dinozStore.setDinozCount(commonData.dinozCount);
-			this.playerStore.setPlayerId(commonData.id);
-			this.playerStore.setPlayerName(commonData.name);
-			if (!this.playerStore.getPlayerOptions) {
+
+			if (!this.playerStore.getPlayerId) {
+				this.playerStore.setPlayerId(commonData.id);
+				this.playerStore.setPlayerName(commonData.name);
 				this.playerStore.setPlayerOptions(commonData.playerOptions);
 			}
 
 			EventBus.emit('isLoading', false);
 		}
 	},
-	async mounted(): Promise<void> {
+	async mounted() {
 		try {
 			await this.firstLoad();
 		} catch (err) {
