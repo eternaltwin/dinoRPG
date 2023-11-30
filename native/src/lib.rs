@@ -92,7 +92,8 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
         }
     }
     // Initiliaze logger here so that it is initialized only once for the rest of the execution
-    env_logger::init();
+    // Uncomment to enable logging for backend
+    // env_logger::init();
 
     cx.export_function("randomizer", randomizer)?;
     cx.export_function("fight_rust", fight_rust)?;
