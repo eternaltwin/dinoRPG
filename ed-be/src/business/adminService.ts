@@ -125,7 +125,7 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 			await addMultipleRewardToPlayer(
 				rewardList.map(reward => ({
 					playerId: +req.params.id,
-					rewardId: reward
+					rewardId: +reward
 				}))
 			);
 			break;
