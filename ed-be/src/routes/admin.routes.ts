@@ -33,7 +33,7 @@ routes.get(`${commonPath}/dashboard`, checkIsAdmin, async (req: Request, res: Re
 	} catch (err) {
 		const e = err as ErrorFormator;
 		console.error(e.message);
-		return res.status(e.errorCode).send(e.message);
+		return res.status(e.errorCode || 500).send(e.message);
 	}
 });
 
@@ -67,7 +67,7 @@ routes.put(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );
@@ -91,7 +91,7 @@ routes.put(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );
@@ -115,7 +115,7 @@ routes.put(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );
@@ -135,7 +135,7 @@ routes.get(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );
@@ -167,7 +167,7 @@ routes.put(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );
@@ -187,7 +187,7 @@ routes.get(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );
@@ -203,7 +203,7 @@ routes.get(`${commonPath}/secret/all`, checkIsAdmin, async (req: Request, res: R
 	} catch (err) {
 		const e = err as ErrorFormator;
 		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		res.status(e.errorCode || 500).send(e.message);
 	}
 });
 
@@ -222,7 +222,7 @@ routes.put(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );

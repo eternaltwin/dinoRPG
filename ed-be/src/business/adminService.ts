@@ -49,7 +49,8 @@ export async function editDinoz(req: Request) {
 
 	await updateDinoz(+req.params.id, dinoz);
 
-	const statusList: number[] = req.body.status;
+	const statusListAsString: string[] = req.body.status;
+	const statusList = statusListAsString.map(status => +status);
 	if (statusList.length > 0 && req.body.statusOperation) {
 		switch (req.body.statusOperation) {
 			case 'add':

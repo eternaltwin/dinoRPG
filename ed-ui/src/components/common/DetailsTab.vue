@@ -327,7 +327,7 @@ export default defineComponent({
 		},
 		reverse(): void {
 			this.dinozSkill = this.dinozSkill.reverse();
-		},
+			},
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
 		},
@@ -335,7 +335,7 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				const dinozId = this.$route.params.id as string;
-				this.dinozSkill = await DinozService.getDinozSkill(parseInt(dinozId));
+				this.dinozSkill = await DinozService.getDinozSkill(+dinozId);
 				this.sort();
 				EventBus.emit('isLoading', false);
 			} catch (err) {
@@ -472,10 +472,10 @@ export default defineComponent({
 					width: 200px;
 				}
 				&.type {
-					max-width: 15px;
+					max-width: 26px;
 				}
 				&.state {
-					max-width: 15px;
+					max-width: 38px;
 				}
 			}
 			td {

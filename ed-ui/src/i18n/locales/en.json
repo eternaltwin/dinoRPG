@@ -157,7 +157,7 @@
 		"th": {
 			"comp": "Skill",
 			"type": "Type",
-			"active": "Kill"
+			"active": "Active"
 		},
 		"type": {
 			"name": {
