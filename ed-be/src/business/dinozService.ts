@@ -227,7 +227,7 @@ export async function getAvailableActions(
 
 	// Nothing else if dinoz is being sold
 	if (dinoz.isSelling) {
-		return availableActions;
+		return [actionList[Action.MARKET]];
 	}
 	return availableActions;
 }
