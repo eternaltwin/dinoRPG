@@ -67,7 +67,7 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: [] as Array<DinozFiche>,
+			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
 			hasPDA: false as boolean
 		};
 	},
@@ -84,17 +84,12 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		storeDinozList(): Array<DinozFiche> {
-			if (!this.dinozStore.getDinozList) return [];
-
-			return this.dinozStore.getDinozList;
-		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
 		}
 	},
 	watch: {
-		storeDinozList: function (dinozList: Array<DinozFiche>) {
+		dinozList: function (dinozList: Array<DinozFiche>) {
 			this.dinozList = orderDinozList(dinozList);
 		}
 	},
