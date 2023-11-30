@@ -327,7 +327,7 @@ export default defineComponent({
 		},
 		reverse(): void {
 			this.dinozSkill = this.dinozSkill.reverse();
-			},
+		},
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
 		},
