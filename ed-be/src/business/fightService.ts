@@ -228,7 +228,7 @@ export async function rewardFight(
 				}
 			}
 		);
-		console.log('la')
+		console.log('la');
 		await addMoney(playerId, gold);
 	}
 

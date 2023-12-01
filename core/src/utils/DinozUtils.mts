@@ -27,7 +27,7 @@ import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
-import { ErrorFormator } from 'ed-be/utils/errorFormator';
+import { ErrorFormator } from './errorFormator.mjs';
 
 type Config = {
 	dinoz: {

@@ -230,7 +230,6 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.MARKET]);
 	}
 
-
 	return availableActions;
 }
 
