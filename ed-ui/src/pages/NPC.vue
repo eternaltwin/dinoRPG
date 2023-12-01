@@ -13,9 +13,11 @@
 			<a class="button" @click="stop()">
 				<span v-html="formatContent($t(`npc.stop`))" />
 			</a>
-			<span class="dialog" v-if="npcSpeech.speech">
-				{{ $t(`npc.${npcName}.speech.${npcSpeech.speech}`) }}
-			</span>
+			<span
+				class="dialog"
+				v-if="npcSpeech.speech"
+				v-html="formatContent($t(`npc.${npcName}.speech.${npcSpeech.speech}`))"
+			/>
 		</div>
 	</div>
 	<ul id="answer" v-if="loaded && npcSpeech.playerChoice.length > 0">
