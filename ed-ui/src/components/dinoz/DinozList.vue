@@ -89,14 +89,11 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		dinozList: function (dinozList: Array<DinozFiche>) {
+		'dinozStore.getDinozList': function (dinozList: Array<DinozFiche>) {
 			this.dinozList = orderDinozList(dinozList);
 		}
 	},
 	mounted(): void {
-		if (!this.dinozStore.getDinozList) return;
-
-		this.dinozList = this.dinozStore.getDinozList;
 		this.hasPDA = this.playerStore.getPlayerOptions!.hasPDA;
 	}
 });
