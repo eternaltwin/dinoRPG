@@ -116,7 +116,7 @@ export const M_BAO_BOB: Mission[] = [
 					target: 'artiste'
 				},
 				displayedAction: 'artiste',
-				displayedText: 'amoureux'
+				displayedText: 'artiste'
 			},
 			{
 				stepId: 5,
