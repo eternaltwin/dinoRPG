@@ -193,7 +193,7 @@ export async function rewardFight(
 	}
 
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
-	const averageTeamLevel = teamLevel / team.length;
+	const averageTeamLevel = Math.round(teamLevel / team.length);
 
 	let xp = 0;
 	let fgold = 0;
@@ -228,6 +228,7 @@ export async function rewardFight(
 				}
 			}
 		);
+		console.log('la')
 		await addMoney(playerId, gold);
 	}
 
