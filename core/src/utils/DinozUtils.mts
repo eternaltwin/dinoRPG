@@ -27,6 +27,7 @@ import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
+import { ErrorFormator } from 'ed-be/utils/errorFormator';
 
 type Config = {
 	dinoz: {
@@ -301,7 +302,7 @@ export const getNumberOfGatheringTries = (
 
 export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
 	if (dinoz.life > 0) {
-		throw new Error('DinozNotDead');
+		throw new ErrorFormator(400, 'DinozNotDead');
 	}
 	dinoz.life = 1;
 	return {
@@ -357,7 +358,7 @@ export const learnNextSphereSkill = (
 
 	const testSphereToLean = sphereSkills.find(skill => skill.unlockedFrom?.some(s => s === lastKnownSphere));
 	if (!testSphereToLean) {
-		throw new Error(`AlreadySphere`);
+		throw new ErrorFormator(400, `AlreadySphere`);
 	}
 
 	return testSphereToLean.id;
@@ -374,8 +375,8 @@ export const useRice = (dinoz: Pick<Dinoz, 'id'>) => {
 
 export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: number) => {
 	const lifeHealed = dinoz.maxLife - dinoz.life > lifeToAdd ? lifeToAdd : dinoz.maxLife - dinoz.life;
-	if (lifeHealed === 0) throw new Error('AlreadyAtMaxHealth');
-	if (dinoz.life === 0) throw new Error('DinozIsDead');
+	if (lifeHealed === 0) throw new ErrorFormator(400, 'AlreadyAtMaxHealth');
+	if (dinoz.life === 0) throw new ErrorFormator(400, 'DinozIsDead');
 	dinoz.life += lifeHealed;
 	return {
 		id: dinoz.id,
