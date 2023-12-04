@@ -657,7 +657,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	if (myGrid.grid.every(box => box === -1)) {
 		myGrid = await updateGrid(
 			myGrid.id,
-			initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace, myGrid.id)
+			initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace)
 		);
 	}
 

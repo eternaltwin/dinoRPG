@@ -27,7 +27,7 @@ export async function createGrid(grid: Prisma.PlayerGatherCreateInput) {
 	});
 }
 
-export async function updateGrid(gridId: number, grid: Prisma.PlayerGatherUpdateInput) {
+export async function updateGrid(gridId: number, grid: Omit<Prisma.PlayerGatherUpdateInput, 'id'>) {
 	return prisma.playerGather.update({
 		where: {
 			id: gridId

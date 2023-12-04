@@ -13,12 +13,8 @@ export const initializeGatherGrid = (
 	playerId: number,
 	placeId: number,
 	gridInformation: GatherData,
-	gridId?: number
 ) => {
-	const data: Prisma.PlayerGatherCreateInput & {
-		id?: number;
-	} = {
-		id: gridId || undefined,
+	const data: Prisma.PlayerGatherCreateInput = {
 		player: { connect: { id: playerId } },
 		place: placeId,
 		type: gridInformation.type
@@ -117,12 +113,12 @@ export const discoverBox = (
 	};
 };
 
-export const saveGrid = (grid: Pick<PlayerGather, 'grid' | 'id' | 'type'>, ...box: [number, number][]) => {
+export const saveGrid = (grid: Pick<PlayerGather, 'grid' | 'type'>, ...box: [number, number][]) => {
 	for (let i = 0; i < box.length; i++) {
 		grid.grid[box[i][0] * getGridSize(grid) + box[i][1]] = -1;
 	}
+
 	return {
-		id: grid.id,
 		grid: grid.grid
 	};
 };
