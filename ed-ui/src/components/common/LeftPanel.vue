@@ -106,12 +106,15 @@ export default defineComponent({
 			return this.playerStore.getMoney;
 		},
 		place(): string | null {
+			console.log(`Current dinozId ${this.currentDinozId()}`);
 			if (!this.currentDinozId()) return this.place;
 
 			const currentDinoz = this.dinozStore.getDinoz(this.currentDinozId()) as DinozFiche | undefined;
+			console.log(`CurrentDinoz`, currentDinoz);
 			if (!currentDinoz) return this.place;
 
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
+			console.log('place', place);
 			if (!place) return this.place;
 
 			return place.name;
