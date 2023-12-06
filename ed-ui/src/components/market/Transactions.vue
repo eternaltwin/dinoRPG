@@ -9,7 +9,7 @@
 						<span>{{ ownOffer.bids[0].value }}</span>
 						<img :src="getImgURL('icons', 'ticket', true)" />
 						<span>{{ $t('market.by') }}</span>
-						<DZUser :user="ownOffer.bids[0].user" class="user" />
+						<DZUser :user="ownOffer.bids[0].user" />
 					</p>
 					<p v-else>{{ $t('market.transactionView.noBidYet') }}</p>
 					<DZButton @click="cancelOffer">{{ $t('market.transactionView.cancel') }}</DZButton>

@@ -36,7 +36,7 @@
 				</div>
 				<!-- Fill with empty items if less than 5 -->
 				<div v-for="i in 5 - offer.items.length" :key="i">
-					<img :src="getImgURL('item', 'item_empty')" :alt="$t('market.empty')" />
+					<img :src="getImgURL('item', 'item_empty')" alt="empty" />
 					<span>&nbsp;</span>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 		<td class="bid">
 			<p>
 				<span>{{ $t('market.seller') }}:</span>
-				<DZUser class="user" :user="offer.seller" />
+				<DZUser :user="offer.seller" />
 			</p>
 			<p>
 				<span>{{ $t('market.timeLeft') }}:</span>
@@ -67,7 +67,7 @@
 					<span class="bid-value">{{ offer.bids[offer.bids.length - 1].value }}</span>
 					<img :src="getImgURL('icons', 'ticket', true)" />
 					<span>{{ $t('market.by') }}</span>
-					<DZUser class="user" :user="offer.bids[offer.bids.length - 1].user" />
+					<DZUser :user="offer.bids[offer.bids.length - 1].user" />
 				</span>
 			</p>
 			<p v-else>
@@ -236,28 +236,36 @@ export default defineComponent({
 				errorHandler.handle(error);
 				return;
 			}
-		},
-		displayAnimation(): void {
-			if (!this.offer.dinoz) return;
-			const dinoAnimDiv = document.getElementById(this.offer.dinoz!.id.toString());
-			if (!dinoAnimDiv) return;
-			new sdino({
-				data: this.offer.dinoz.display,
-				flip: 1,
-				pflag: true
-			}).toAnimation(
-				div => {
-					dinoAnimDiv.appendChild(div);
-				},
-				45,
-				45
-			);
 		}
 	},
 	mounted() {
-		setTimeout(() => {
-			this.displayAnimation();
-		}, 1000);
+		if (!this.offer.dinoz) return;
+		const dinoAnimDiv = document.getElementById(this.offer.dinoz!.id.toString());
+		if (!dinoAnimDiv) return;
+		new sdino({
+			data: this.offer.dinoz.display,
+			flip: 1,
+			pflag: true
+		}).toAnimation(
+			div => {
+				dinoAnimDiv.appendChild(div);
+			},
+			45,
+			45
+		);
+
+		setInterval(() => {
+			const e = dinoAnimDiv.firstChild as Element;
+			if (!e) return;
+			const length = parseInt(e.getAttribute('data-length') ?? '0');
+			let idx = parseInt(e.getAttribute('data-idx') ?? '0');
+			if (length > 1) {
+				e.children.item(idx)!.hidden = true;
+				idx = (idx + 1) % length;
+				e.children.item(idx)!.hidden = false;
+				e.setAttribute('data-idx', idx.toString());
+			}
+		}, 1000 / 24.0);
 	}
 });
 </script>

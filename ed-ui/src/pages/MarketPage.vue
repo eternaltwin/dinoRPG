@@ -87,22 +87,6 @@ export default defineComponent({
 			goTo(this.$router, 'MainPage');
 			return;
 		}
-
-		setTimeout(() => {
-			setInterval(() => {
-				for (const e of document.getElementsByClassName('DinoRPG-Animation')) {
-					if (!e) return;
-					const length = parseInt(e.getAttribute('data-length') ?? '0');
-					let idx = parseInt(e.getAttribute('data-idx') ?? '0');
-					if (length > 1) {
-						e.children.item(idx)!.hidden = true;
-						idx = (idx + 1) % length;
-						e.children.item(idx)!.hidden = false;
-						e.setAttribute('data-idx', idx.toString());
-					}
-				}
-			}, 1000 / 24.0);
-		}, 2000);
 	}
 });
 </script>
