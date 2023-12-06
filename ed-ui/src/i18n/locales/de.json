@@ -21,7 +21,28 @@
 		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz.",
 		"concentration": "Votre dinoz se concentre et ne peux rien faire d'autre actuellement.",
 		"nocookie": "Le cookie a expiré ou est invalide, merci de recommencer l'import depuis la page Mon Compte.",
-		"wronglogins": "Les identifiants twino ne sont pas les bons."
+		"wronglogins": "Les identifiants twino ne sont pas les bons.",
+		"notEnoughItem": "Vous n'avez pas assez de cet objet",
+		"notEnoughMoney": "Vous n'avez pas assez d'or",
+		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
+		"noPMI": "Tu as besoin du Petit Missionaire Illustré pour accéder à cette page.",
+		"dinozListMissing": "Liste des Dinoz manquante",
+		"dinozDataMissing": "Données du Dinoz manquantes",
+		"selectADinozAtMarketFirst": "Vous devez d'abord sélectionner un Dinoz au marché.",
+		"unknownDinoz": "Dinoz inconnu",
+		"missingUser": "Utilisateur manquant",
+		"invalidOffer": "Offre invalide",
+		"missingData": "Données manquantes",
+		"bidIsLower": "Votre enchère est inférieure à la précédente.",
+		"market": {
+			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
+			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
+			"offerCreated": "Votre offre a été créée.",
+			"offerCancelled": "Votre offre a été annulée.",
+			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
+			"notEnoughTickets": "Vous n'avez pas assez de bons."
+		},
+		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Eleveurs."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -57,7 +78,8 @@
 		"water": "Element **Wasser**",
 		"lightning": "Element **Blitz**",
 		"air": "Element **Luft**",
-		"neutral": "Element **Leere** && //(Dieses Element wird gegen normale Angriffe von Monstern angewendet.)//"
+		"neutral": "Element **Leere** && //(Dieses Element wird gegen normale Angriffe von Monstern angewendet.)//",
+		"void": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
 	},
 	"resurrection": {
 		"choice1": {
@@ -79,6 +101,7 @@
 		"description": {
 			"fight": "Suche an diesem Ort nach einem Monster, das du bekämpfen kannst. Du kannst **eine Bewegung oder einen Kampf pro Tag** und pro Dinoz durchführen.",
 			"follow": "Dein Dinoz kann **einem anderen deiner Dinoz folgen**, wenn du das möchtest, dann bewegen sie sich gemeinsam und helfen sich im Kampf.",
+			"unfollow": "Votre Dinoz suit actuellement un autre de vos Dinoz. Cliquez sur cette action pour qu'il arrête de le suivre.",
 			"levelup": "Dein Dinoz hat genug Erfahrung gesammelt, um das nächste Level zu erreichen. Klicke auf diese Option, um die Stärke deines Dinoz zu erhöhen.",
 			"resurrect": "Dein Dinoz ist gestorben, also musst du ihn wiederbeleben, bevor er wieder kämpfen kann.",
 			"dig": "Ermöglicht es dem Dinoz, an bestimmten Orten seltene und gefährliche Kreaturen zu jagen.",
@@ -92,11 +115,13 @@
 			"tictac": "Utilisez vos Tickets Taque pour trouver peut-être un trésor trés rare !",
 			"labo": "Chercher l'antidote dans le laboratoire de l'Archidorogon pour soigner le vénérable.",
 			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !",
-			"concentrate": "Dein Dinoz hat sein volles Potenzial entfaltet."
+			"concentrate": "Dein Dinoz hat sein volles Potenzial entfaltet.",
+			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !"
 		},
 		"name": {
 			"fight": "Kämpfen",
 			"follow": "Folgen",
+			"unfollow": "Ne plus suivre",
 			"levelup": "Zusätzliches Level!",
 			"resurrect": "Wiederbelebung",
 			"dig": "Creuser",
@@ -110,7 +135,8 @@
 			"tictac": "Heilsames Püree",
 			"labo": "Laboratoire de l'Archidorogon",
 			"party": "Event",
-			"concentrate": "Arrêter de se concentrer"
+			"concentrate": "Arrêter de se concentrer",
+			"market": "Marché aux éleveurs"
 		}
 	},
 	"button": {
@@ -121,7 +147,8 @@
 		"confirm": "Aktion bestätigen?",
 		"chose": "Auswählen",
 		"generator": "Dinoz-Generator",
-		"sortDinoz": "Meine Dinoz verwalten"
+		"sortDinoz": "Meine Dinoz verwalten",
+		"dinozMissions": "Missions de mes Dinoz"
 	},
 	"chooseDinoz": {
 		"information": "Bevor du diesen Dinoz steuern kannst, musst du es zunächst einen Namen geben.",
@@ -138,7 +165,7 @@
 		"th": {
 			"comp": "Kompetenz",
 			"type": "Typ",
-			"active": "Würfel"
+			"active": "Actif"
 		},
 		"type": {
 			"name": {
@@ -171,7 +198,38 @@
 			"type": "Typ",
 			"state": "Zustand",
 			"title": "Fähigkeiten sortieren"
-		}
+		},
+		"statistics": "Caractéristiques",
+		"assaults": "Assauts",
+		"defenses": "Défenses",
+		"specials": "Spéciales",
+		"base": "Base",
+		"skill": "Skill",
+		"fireAssault": "Assaut de Feu",
+		"woodAssault": "Assaut de Bois",
+		"waterAssault": "Assaut d'Eau",
+		"lightningAssault": "Assaut de Foudre",
+		"airAssault": "Assaut d'Air",
+		"fireDefense": "Défense de Feu",
+		"woodDefense": "Défense de Bois",
+		"waterDefense": "Défense d'Eau",
+		"lightningDefense": "Défense de Foudre",
+		"airDefense": "Défense d'Air",
+		"voidDefense": "Défense Neutre",
+		"baseElementContribution": "Contribution de l'élément de base",
+		"hpRegen": "Régénération de PV",
+		"initiative": "Initiative",
+		"energy": "Energie",
+		"energyRecovery": "Récupération d'énergie",
+		"maxFollowers": "Nombre maximum de suiveurs",
+		"armor": "Armure",
+		"multihit": "Multi-coup",
+		"evasion": "Esquive",
+		"counter": "Contre",
+		"bubbleRate": "Taux de bulle",
+		"torchDamage": "Dégâts du briquet",
+		"acidBloodDamage": "Dégâts de sang acide",
+		"baseValue": "Valeur de base"
 	},
 	"item": {
 		"name": {
@@ -719,7 +777,10 @@
 			"archis": "ArchiSage",
 			"hydargol": "Maître Hydargol",
 			"padamoine": "Apprenti padamoine",
-			"hulot": "Nicolas Mulot"
+			"hulot": "Nicolas Mulot",
+			"rodeur": "Rôdeur Etrange",
+			"rodeur2": "Rôdeur Etrange",
+			"rodeur3": "Rôdeur Etrange"
 		},
 		"professor": {
 			"speech": {
@@ -1234,6 +1295,53 @@
 				"missions": "Consulter la liste des Missions",
 				"curesearch": "Voyons voir ça..."
 			}
+		},
+		"rodeur": {
+			"speech": {
+				"begin": ".........",
+				"go": "Ouf ! Il vaut mieux faire attention en rencontrant des étrangers...",
+				"talk": "Uh ?!??? Quoi ?? Vous pouvez me VOIR ?!? ..... Grrrrr....",
+				"yes": "Uhm... bien... je vois... on m'avait pourtant certifié que cette cape rendait invisible ! Est-ce que tu peux regarder l'indicateur dans le dos, il y a marqué quelque chose ?",
+				"read": "Quoi ?!? \"L'EAU BATTE-RIZ\" ? Uhm... le vendeur parlait effectivement de recharger quelque chose... il va donc falloir que j'utilise du... riz !?! Mais où vais-je pouvoir trouver cela ?!?",
+				"talk2": "Vite ! J'ai BESOIN de ce Riz !"
+			},
+			"playerChoice": {
+				"go": "Ce personnage a l'air dangereux... s'éloigner !",
+				"talk": "Lui parler",
+				"yes": "Euh... Oui",
+				"read": "Lire l'indicateur",
+				"missions": "Aider le Rôdeur",
+				"talk2": "Lui parler"
+			}
+		},
+		"rodeur2": {
+			"speech": {
+				"begin": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
+				"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
+				"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
+				"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
+				"ether": "Aprés des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Celà nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
+				"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
+				"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?"
+			},
+			"playerChoice": {
+				"qual2": "Surement de la mauvaise qualité...",
+				"qual": "Surement de la mauvaise qualité...",
+				"caush": "Caushemesh ?",
+				"ether": "L'Ether ?",
+				"next": "Et...",
+				"more": "...",
+				"missions": "Accepter une mission."
+			}
+		},
+		"rodeur3": {
+			"speech": {
+				"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
+				"next": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
+			},
+			"playerChoice": {
+				"next": "..."
+			}
 		}
 	},
 	"shop": {
@@ -1415,7 +1523,7 @@
 			"RayonKaarSher": "Kaar-Sher-Strahl",
 			"Magasinier": "Lagerarbeiter",
 			"Perception": "Wahrnehmung",
-			"CoupsSournois": "Hinterhältige Schläge",
+			"CoupsSournois": "Coup Sournois",
 			"ApprentiPecheur": "Anglerlehrling",
 			"CoupFatal": "Tödlicher Schlag",
 			"EntrainementSousMarin": "Unterwassertraining",
@@ -1428,11 +1536,11 @@
 			"Sumo": "Sumo",
 			"SansPitie": "Ohne Gnade",
 			"CloneAqueux": "Wässriger Klon",
-			"GriffesEmpoisonnes": "Vergiftete Klauen",
+			"GriffesEmpoisonnees": "Griffes empoisonnées",
 			"Cuisinier": "Koch",
 			"SangAcide": "Saures Blut",
 			"Regenerescence": "Regeneration",
-			"PremierSoins": "Premiers Soins",
+			"PremiersSoins": "Premiers Soins",
 			"PureeSalvatrice": "Heilsames Püree",
 			"AuraHermetique": "Hermetische Aura",
 			"CrepusculeFlambloyant": "Flammende Dämmerung",
@@ -1724,11 +1832,11 @@
 			"Sumo": "Erhöht das maximale Leben um 100.",
 			"SansPitie": "Angriffe zielen auf den Gegner mit den wenigsten Lebenspunkten.",
 			"CloneAqueux": "Erstellt eine Kopie des Anwenders mit 1 Leben.",
-			"GriffesEmpoisonnes": "Gegner, die von einem Wasserangriff getroffen werden, werden vergiftet und erleiden in jeder Runde Schaden, der auf dem Wert des Elements Wasser des Anwenders basiert.",
+			"GriffesEmpoisonnees": "Les ennemis touchés par un assaut eau sont empoisonnés et subissent des dégats basés sur la valeur de l'élément eau du lanceur à chaque tour",
 			"Cuisinier": "Erhöht den Lebensgewinn von Gegenständen bei allen Dinozs um 10%.",
 			"SangAcide": "Feinde, die den Dinoz im Nahkampf angreifen, haben eine Chance, Schaden zu erleiden, der sich auf das Wasserelement des Dinoz bezieht.",
 			"Regenerescence": "Erhöht beim Ausruhen die wiederhergestellten Lebenspunkte pro Stunde um 2.",
-			"PremierSoins": "Permet au Dinoz de récuperer un point de vie à la fin du combat s'il a perdu de la vie",
+			"PremiersSoins": "Permet au Dinoz de récuperer un point de vie à la fin du combat s'il a perdu de la vie",
 			"PureeSalvatrice": "Macht alle negativen Effekte der Gruppe rückgängig.",
 			"AuraHermetique": "Der Dinoz gibt sich selbst den Status Schild (erhöht alle Verteidigungen um 6).",
 			"CrepusculeFlambloyant": "Greift alle Feinde mit der Kraft Feuer 6 + Blitz 6 an.",
@@ -2065,7 +2173,10 @@
 		"missions": "Dino-RPG [ Liste des Missions ]",
 		"dinozNaming": "Dino-RPG [ Choix du Nom ]",
 		"fight": "Dino-RPG [ Combat ! ]",
-		"gather": "Dino-RPG [ "
+		"gather": "Dino-RPG [ ",
+		"dinozMissions": "Dino-RPG [ Missions de mes Dinoz ]",
+		"manageDinoz": "Dino-RPG [ Gestion de mes Dinoz ]",
+		"market": "Dino-RPG [ Marché des Eleveurs ]"
 	},
 	"gather": {
 		"action": {
@@ -2096,6 +2207,10 @@
 	},
 	"missions": {
 		"header": "Liste des Missions",
+		"headers": {
+			"title": "Titre",
+			"status": "Statut"
+		},
 		"xp": "points d'expérience",
 		"gold": "pièces",
 		"item": "Objets :",
@@ -2162,7 +2277,9 @@
 			"toxic": "Allergies",
 			"map": "Cartographie",
 			"hucure": "Remède",
-			"bckpck": "Kit de l'aventurier"
+			"bckpck": "Kit de l'aventurier",
+			"rodriz": "Le Riz Amnésique",
+			"rodlif": "Les Dinoz Sombres"
 		},
 		"tooltip": "Mission : {mission}",
 		"description": {
@@ -2213,7 +2330,9 @@
 			"toxic": "Je suis victime d'allergies à certaines plantes de la Jungle... Mais j'ignore pour le moment lesquelles ! Pourriez-vous me trouver quelques plantes à l'air suspect, afin que je fasse quelques tests ?",
 			"map": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
 			"hucure": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
-			"bckpck": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?"
+			"bckpck": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?",
+			"rodriz": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Iles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
+			"rodlif": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !"
 		},
 		"actions": {
 			"talkTo": "Discuter avec {npc} ...",
@@ -2304,7 +2423,8 @@
 			"minorHalt": "Mineur qui prend sa pause",
 			"afraidFisher": "Pêcheur affairé",
 			"findBobine": "Trouver une bobine",
-			"couturiere": "Couturière"
+			"couturiere": "Couturière",
+			"rice": "Chercher du Riz"
 		},
 		"npc": {
 			"fishVendor": "Marchand de poisson",
@@ -2418,7 +2538,9 @@
 			"minorHalt": "Mineur qui prend sa pause",
 			"afraidFisher": "Pêcheur affairé",
 			"findBobine": "Trouver une bobine",
-			"couturiere": "Couturière"
+			"couturiere": "Couturière",
+			"seekrice": "Chercher du Riz",
+			"pickrice": "Ramasser le Riz"
 		},
 		"place": {
 			"port": "au Port de Prêche",
@@ -2789,6 +2911,14 @@
 				"couturiere2": "Merci mille fois pour votre intervention ! Voici le matériel comme promis...",
 				"afraidFisher2": "Ah c'est tout ce qu'il me faut pour rafistoler votre sac. [Il s'en occupe pendant une petite heure...] Voila ! Il devrait tenir pendant un petit moment encore.",
 				"auree": "Euh vous allez rire... Figurez-vous que j'ai reçu justement un Sac à dos de rechange ! Je l'avais commandé en prévision de mon expédition... Bon écoutez, voilà ce qu'on va faire : je récupère mon vieux sac et je vous donne le nouveau ! Ca marche ?"
+			},
+			"rodriz": {
+				"seekrice": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !",
+				"pickrice": "Félicitations ! Vous obtenez du Riz Amnésique !",
+				"forges": "Ah ! Uhm euh... En fait, j'avais mal compris. Un petit peu d'énergie foudre était seulement nécessaire pour recharger ma cape... Tiens, voilà pour toi, et tu peux garder le riz, je n'en ai pas besoin."
+			},
+			"rodlif": {
+				"forges": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
 			}
 		},
 		"target": {
@@ -2877,6 +3007,8 @@
 		"level": "Niv.",
 		"learn": "Apprendre",
 		"unlock1": "Débloquer ",
+		"confirmSkill": "Désirez-vous apprendre {skill} pour votre passage au niveau {level} ?",
+		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
 		"unlock2": " compétences supplémentaires",
 		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
 		"small": "Ce dinoz a gagné un niveau !",
@@ -3335,6 +3467,7 @@
 		"win": "Vous **remportez** ce combat !",
 		"lose": "Vous avez **perdu**...",
 		"lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
+		"continue": "Continuer",
 		"display": "Afficher le combat",
 		"resume": "Vous avez combattu un {enemy}"
 	},
@@ -3412,5 +3545,71 @@
 			"dent_de_dorogon": "Peu de personnes peuvent se vanter de possèder ce trophée de chasse ! Cette dent de Dorogon fraîchement tombée devrait se vendre à un très bon prix.",
 			"bras_mecanique": "Cet artefact ressemble à une main, elle doit être issu d'une technologie oubliée, même si elle ne fonctionne plus, elle conserve une grande valeur.."
 		}
-	}
+	},
+	"manageDinoz": {
+		"title": "Gestion de mes Dinoz",
+		"disclaimer": "Ce module de gestion est accessible grâce à votre **Pierre en Diamantite Agglomérée** : un véritable concentré de technologie !",
+		"dinoz": "Dinoz",
+		"elements": "Eléments"
+	},
+	"dinozMissions": {
+		"title": "Missions de mes Dinoz",
+		"disclaimer": "Ce module de gestion est accessible grâce à votre **Petit Missionnaire Illustré** : très pratique pour suivre les missions de vos Dinoz !",
+		"dinoz": "Dinoz",
+		"missions": "Missions",
+		"see": "Voir",
+		"total": "Total",
+		"missionsFrom": "Missions de \"{npc}\""
+	},
+	"market": {
+		"title": "Marché des Eleveurs",
+		"disclaimer": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
+		"allOffers": "Toutes les offres",
+		"myTransactions": "Mes transactions",
+		"sell": "Vendre",
+		"history": "Historique",
+		"dinoz": "Dinoz",
+		"items": "Objets",
+		"makeAnOffer": "Faire une offre",
+		"filter": "Filtrer",
+		"all": "Tout",
+		"seller": "Vendeur",
+		"timeLeft": "Temps restant",
+		"auctionExpired": "Enchère expirée",
+		"minimumPrice": "Prix mini",
+		"highestBid": "Enchère actuelle",
+		"by": "par",
+		"details": "Détails",
+		"time": "{days}j {hours}h {minutes}m {seconds}s",
+		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Eleveurs peuvent être obtenus pour l'équivalent de **1** :ticket: **= 1000** :gold: à partir de la **Banque de Dinoland**",
+		"back": "Retour",
+		"bid": "Enchérir",
+		"detail": "Voir détails",
+		"sellView": {
+			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
+			"prepareYourOffer": "Préparez votre offre",
+			"sellYourDinoz": "Vendre votre Dinoz",
+			"itemsAndIngredients": "Objets et Ingrédients",
+			"offerMinimalValue": "Valeur MINIMALE de votre offre",
+			"minimalValueDisclaimer": "Votre offre doit avoir, au MINIMUM, une valeur de **{minValue}** :gold: pour être validée.",
+			"create": "Créer l'offre",
+			"add": "Ajouter",
+			"remove": "Retirer"
+		},
+		"transactionView": {
+			"yourOngoingOffer": "Votre offre en cours",
+			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
+			"bid": "Mise",
+			"noBidYet": "Aucune mise pour l'instant.",
+			"cancel": "Annuler",
+			"yourActiveBids": "Vos mises en cours",
+			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
+		},
+		"historyView": {
+			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
+			"yourBids": "Vos mises"
+		}
+	},
+	"following": "Ce Dinoz suit son chef de groupe.",
+	"followed": "Ce Dinoz est chef de groupe."
 }
