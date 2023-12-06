@@ -5,7 +5,16 @@ export type OfferFromGetOffers = Offer & {
 	dinoz:
 		| (Pick<
 				Dinoz,
-				'id' | 'name' | 'level' | 'raceId' | 'nbrUpFire' | 'nbrUpWater' | 'nbrUpLightning' | 'nbrUpWood' | 'nbrUpAir'
+				| 'id'
+				| 'name'
+				| 'level'
+				| 'raceId'
+				| 'nbrUpFire'
+				| 'nbrUpWater'
+				| 'nbrUpLightning'
+				| 'nbrUpWood'
+				| 'nbrUpAir'
+				| 'display'
 		  > & {
 				status: Pick<DinozStatus, 'statusId'>[];
 				skills: Pick<DinozSkill, 'skillId'>[];

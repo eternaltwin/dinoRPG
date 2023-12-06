@@ -1,48 +1,19 @@
 <template>
 	<tr>
-		<Tippy
+		<td
 			v-if="offer.dinoz"
-			tag="td"
 			theme="normal"
+			:data-dinoz-level="offer.dinoz?.level || 0"
 			:class="{
 				dinoz: true,
 				'has-dinoz': !!offer.dinoz
 			}"
-			:data-dinoz-level="offer.dinoz?.level || 0"
 		>
-			🦖
-			<template #content>
-				<h1 v-html="offer.dinoz.name" />
-				<div class="dinoz-details">
-					<p class="race">{{ $t(`race.name.${getRace(offer.dinoz).name}`) }} ({{ offer.dinoz.level }})</p>
-					<ul class="status">
-						<li v-for="status in offer.dinoz.status" :key="status.statusId">
-							<img
-								:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
-								:alt="statusList.imgName[status.statusId]"
-							/>
-						</li>
-					</ul>
-					<ul class="stats">
-						<li v-for="element in Object.values<AssaultElement>(AssaultElement)" :key="element">
-							<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
-							<span>{{ getElementStat(element) }}</span>
-						</li>
-					</ul>
-					<ul class="skills">
-						<li v-for="skill in offer.dinoz.skills" :key="skill.skillId">
-							<img
-								v-for="element in skillList[skill.skillId].element"
-								:key="element"
-								:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
-								:alt="ElementNames[element]"
-							/>
-							<span>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</span>
-						</li>
-					</ul>
-				</div>
-			</template>
-		</Tippy>
+			<div :id="offer.dinoz.id" />
+			<DZButton size="small" @click="details = !details">
+				{{ $t('market.detail') }}
+			</DZButton>
+		</td>
 		<td v-else />
 		<td class="items-td">
 			<div class="items">
@@ -117,13 +88,50 @@
 			</div>
 		</td>
 	</tr>
+	<tr v-if="details" class="dinoz-details">
+		<td>
+			<h2 v-html="offer.dinoz.name" />
+			<p class="race">{{ $t(`race.name.${getRace(offer.dinoz).name}`) }}</p>
+		</td>
+		<td>
+			<ul class="stats">
+				<li v-for="element in Object.values<AssaultElement>(AssaultElement)" :key="element">
+					<img :src="getImgURL('elements', `elem_${element}`)" :alt="element" />
+					<span>{{ getElementStat(element) }}</span>
+				</li>
+			</ul>
+		</td>
+		<td>
+			<ul class="skills">
+				<li v-for="skill in offer.dinoz.skills" :key="skill.skillId">
+					<img
+						v-for="element in skillList[skill.skillId].element"
+						:key="element"
+						:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
+						:alt="ElementNames[element]"
+					/>
+					<span>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</span>
+				</li>
+			</ul>
+		</td>
+		<td>
+			<template v-for="status in offer.dinoz.status.map(s => s.statusId)" :key="status">
+				<Tippy theme="normal" v-if="statusList.displayed[status]">
+					<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
+					<template #content>
+						<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
+						<p v-html="formatContent($t(`status.description.${status}`))"></p>
+					</template>
+				</Tippy>
+			</template>
+		</td>
+	</tr>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { Tippy } from 'vue-tippy';
 import DZUser from '../common/DZUser.vue';
 import { errorHandler, secondsToDhms, simplifyDisplay } from '../../utils/index.js';
 import { EnhancedOffer } from '@drpg/core/returnTypes/Offer';
@@ -137,6 +145,7 @@ import { statusList } from '../../constants/index.js';
 import { AssaultElement } from '@drpg/core/utils/getAssaultStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
+import { sdino } from '@drpg/dino-animation';
 
 export default defineComponent({
 	name: 'OfferLine',
@@ -167,10 +176,11 @@ export default defineComponent({
 			statusList,
 			skillList,
 			ElementNames,
-			bidValue: 0
+			bidValue: 0,
+			details: false
 		};
 	},
-	components: { DZButton, Tippy, DZUser, DZInput },
+	components: { DZButton, DZUser, DZInput },
 	methods: {
 		isExpired() {
 			return this.offer.endDate.getTime() / 1000 <= this.now;
@@ -226,12 +236,36 @@ export default defineComponent({
 				errorHandler.handle(error);
 				return;
 			}
+		},
+		displayAnimation(): void {
+			if (!this.offer.dinoz) return;
+			const dinoAnimDiv = document.getElementById(this.offer.dinoz!.id.toString());
+			if (!dinoAnimDiv) return;
+			new sdino({
+				data: this.offer.dinoz.display,
+				flip: 1,
+				pflag: true
+			}).toAnimation(
+				div => {
+					dinoAnimDiv.appendChild(div);
+				},
+				45,
+				45
+			);
 		}
+	},
+	mounted() {
+		setTimeout(() => {
+			this.displayAnimation();
+		}, 1000);
 	}
 });
 </script>
 
 <style lang="scss" scoped>
+.details {
+	display: none;
+}
 .dinoz {
 	position: relative;
 
@@ -271,6 +305,9 @@ export default defineComponent({
 	.stats {
 		list-style-type: none;
 		margin-left: 4px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
 
 		li {
 			position: relative;
@@ -323,7 +360,7 @@ export default defineComponent({
 			}
 
 			span {
-				color: #fce3bc;
+				color: #710;
 			}
 		}
 	}

@@ -3584,6 +3584,7 @@
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Eleveurs peuvent être obtenus pour l'équivalent de **1** :ticket: **= 1000** :gold: à partir de la **Banque de Dinoland**",
 		"back": "Retour",
 		"bid": "Enchérir",
+		"detail": "Voir détails",
 		"sellView": {
 			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
 			"prepareYourOffer": "Préparez votre offre",

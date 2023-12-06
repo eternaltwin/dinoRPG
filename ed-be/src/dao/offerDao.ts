@@ -45,6 +45,7 @@ export async function getOffers(
 			dinoz: {
 				select: {
 					id: true,
+					display: true,
 					name: true,
 					level: true,
 					raceId: true,
@@ -54,7 +55,7 @@ export async function getOffers(
 					nbrUpWood: true,
 					nbrUpAir: true,
 					status: { select: { statusId: true } },
-					skills: { select: { skillId: true } }
+					skills: { select: { skillId: true }, orderBy: { skillId: 'asc' } }
 				}
 			},
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },

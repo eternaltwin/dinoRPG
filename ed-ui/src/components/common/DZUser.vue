@@ -1,8 +1,10 @@
 <template>
+	<!-- TODO	<span class="user-component" @click="seePlayer = !seePlayer">-->
 	<span class="user-component">
 		<img src="../../assets/design/small_member.webp" :alt="user.name" />
 		<span>{{ user.name }}</span>
 	</span>
+	<div v-if="seePlayer">Player Resume</div>
 </template>
 
 <script lang="ts">
@@ -15,6 +17,11 @@ export default defineComponent({
 			type: Object,
 			required: true
 		}
+	},
+	data() {
+		return {
+			seePlayer: false
+		};
 	}
 });
 </script>

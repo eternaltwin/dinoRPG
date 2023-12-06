@@ -348,6 +348,7 @@ export const scheduleOffersExpiration = async () => {
 
 	remainingOffers.forEach(offer => {
 		console.log(`Scheduling offer ${offer.id} expiration at ${offer.endDate}`);
+		sendDiscord(`Scheduling offer ${offer.id} expiration at ${offer.endDate}`);
 
 		scheduleJob(offer.endDate, () => expireOffer(offer.id));
 	});

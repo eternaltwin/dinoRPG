@@ -655,10 +655,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 
 	// Generate a new one if all box are empty
 	if (myGrid.grid.every(box => box === -1)) {
-		myGrid = await updateGrid(
-			myGrid.id,
-			initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace)
-		);
+		myGrid = await updateGrid(myGrid.id, initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace));
 	}
 
 	const hiddenGrid = hideGridIngredients(myGrid.grid);
