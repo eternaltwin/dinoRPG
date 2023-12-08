@@ -14,7 +14,7 @@
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
 		/>
-		<TabPanel :dinozData="dinozData" />
+		<TabPanel :dinozData="dinozData" :key="dinozData" />
 		<div class="footer" />
 	</div>
 </template>
