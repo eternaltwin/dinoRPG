@@ -67,7 +67,8 @@ export async function getAllDinozFicheLite(playerId: number) {
 			placeId: true,
 			order: true,
 			isFrozen: true,
-			level: true
+			level: true,
+			status: true
 		}
 	});
 

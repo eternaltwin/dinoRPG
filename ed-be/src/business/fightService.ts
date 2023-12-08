@@ -5,7 +5,7 @@ import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { actualPlace, isAlive } from '@drpg/core/utils/DinozUtils';
+import { actualPlace, canWinXP, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozItem, DinozSkill, DinozStatus, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import pkg from 'native-dinorpg';
@@ -166,7 +166,7 @@ export function calculateFight(
 
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
 export async function rewardFight(
-	team: (Pick<Dinoz, 'id' | 'level'> & {
+	team: (Pick<Dinoz, 'id' | 'level' | 'experience'> & {
 		player: Pick<Player, 'id'> | null;
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
@@ -221,14 +221,15 @@ export async function rewardFight(
 	// If attackers won
 	if (fightResult.winner) {
 		await updateMultipleDinoz(
-			team.map(d => d.id),
+			team
+				.filter(d => canWinXP(d))
+				.map(d => d.id),
 			{
 				experience: {
 					increment: experienceGained
 				}
 			}
 		);
-		console.log('la');
 		await addMoney(playerId, gold);
 	}
 
