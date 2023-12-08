@@ -1109,7 +1109,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: 5
+			[Stat.WOOD_ASSAULT]: 5
 		}
 	},
 	[Skill.ENDURANCE]: {
