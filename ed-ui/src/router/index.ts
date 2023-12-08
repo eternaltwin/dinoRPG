@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { sessionStore } from '../store/index.js';
+import { localStore } from '../store/index.js';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -133,7 +133,7 @@ const router = createRouter({
 });
 
 router.beforeEach(to => {
-	const displayAuth = sessionStore().getJwt === undefined;
+	const displayAuth = localStore().getJwt === undefined;
 	// route to AuthPage if not logged and going to any page
 	if (displayAuth && to.name !== 'AuthenticationPage') {
 		return { name: 'AuthenticationPage' };

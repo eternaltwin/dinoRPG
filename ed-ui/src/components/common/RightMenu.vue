@@ -52,7 +52,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LocaleChange from '../../components/utils/LocaleChange.vue';
-import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
+import { dinozStore, playerStore, localStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'RightMenu',
@@ -60,7 +60,7 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			sessionStore: sessionStore(),
+			localStore: localStore(),
 			time: '' as string
 		};
 	},
@@ -87,14 +87,14 @@ export default defineComponent({
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris' });
 		},
 		logOff(): void {
-			sessionStorage.clear();
+			this.localStore.setJwt(undefined);
 			this.$router.go(0);
 		},
 		isDevEnv(): boolean {
 			return import.meta.env.MODE === 'development';
 		},
 		async jwt(): Promise<void> {
-			await navigator.clipboard.writeText(this.sessionStore.getJwt!);
+			await navigator.clipboard.writeText(this.localStore.getJwt!);
 		}
 	},
 	mounted(): void {

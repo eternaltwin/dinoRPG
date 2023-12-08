@@ -4,19 +4,14 @@ import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 export const sessionStore = defineStore('sessionStore', {
 	state: (): StoreStateSession => ({
-		jwt: undefined,
 		fight: undefined,
 		tab: 1
 	}),
 	getters: {
-		getJwt: (state: StoreStateSession) => state.jwt,
 		getFightResult: (state: StoreStateSession) => state.fight,
 		getTab: (state: StoreStateSession) => state.tab
 	},
 	actions: {
-		setJwt(jwt: string): void {
-			this.jwt = jwt;
-		},
 		setFightResult(fight: FightResult | undefined): void {
 			this.fight = fight;
 		},

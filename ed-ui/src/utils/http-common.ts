@@ -1,12 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
 import urlJoin from 'url-join';
-import { sessionStore } from '../store/index.js';
+import { localStore } from '../store/index.js';
 
 const API_SERVER = new URL(import.meta.env.VITE_API_URL);
 const API_BASE = urlJoin(API_SERVER.toString(), 'api/v1');
 
 export const http = function (): AxiosInstance {
-	const jwt: string | undefined = sessionStore().getJwt;
+	const jwt: string | undefined = localStore().getJwt;
 
 	const authHeaders = jwt === undefined ? {} : ({ Authorization: `Bearer ${jwt}` } as Record<string, string>);
 

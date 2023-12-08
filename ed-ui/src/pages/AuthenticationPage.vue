@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { OauthService } from '../services/index.js';
-import { sessionStore } from '../store/index.js';
+import { localStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 
@@ -15,7 +15,7 @@ export default defineComponent({
 	name: 'Authentication',
 	data() {
 		return {
-			sessionStore: sessionStore(),
+			localStore: localStore(),
 			isCodePresent: false as boolean
 		};
 	},
@@ -31,8 +31,8 @@ export default defineComponent({
 				return;
 			}
 
-			this.sessionStore.setJwt(jwt);
-			this.$router.go(0);
+			this.localStore.setJwt(jwt);
+			this.$router.push({ name: 'News' });
 		},
 		async getRedirectUri(): Promise<void> {
 			const urlToRedirect: string = await OauthService.getRedirectUri();
