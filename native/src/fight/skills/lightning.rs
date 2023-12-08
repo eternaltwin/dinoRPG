@@ -14,11 +14,11 @@ pub static CELERITE: Skill = Skill {
     id: SkillId::CELERITE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.speed_global *= 0.85;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -27,11 +27,11 @@ pub static ATTAQUE_ECLAIR: Skill = Skill {
     id: SkillId::ATTAQUE_ECLAIR,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.speed_per_element[ElementIndex::Lightning as usize] *= 0.60;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -40,11 +40,11 @@ pub static COUP_DOUBLE: Skill = Skill {
     id: SkillId::COUP_DOUBLE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.multi_assault_chance *= 1.2;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -53,12 +53,12 @@ pub static VOIE_DE_KAOS: Skill = Skill {
     id: SkillId::VOIE_DE_KAOS,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Fire as usize] += 6;
         f.assault_elemental_bonus[ElementIndex::Lightning as usize] += 6;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -67,12 +67,12 @@ pub static VOIE_DE_GAIA: Skill = Skill {
     id: SkillId::VOIE_DE_GAIA,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.defense[ElementIndex::Wood as usize] += 3.0;
         f.defense[ElementIndex::Lightning as usize] += 3.0;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -81,11 +81,11 @@ pub static ADRENALINE: Skill = Skill {
     id: SkillId::ADRENALINE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.speed_per_element[ElementIndex::Lightning as usize] *= 0.5;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -94,11 +94,11 @@ pub static EMBUCHE: Skill = Skill {
     id: SkillId::EMBUCHE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.time -= (7.0 * TIMECOEF as f32 * f.initiative_global_multiplier) as i32;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -107,11 +107,11 @@ pub static CROCS_DIAMANT: Skill = Skill {
     id: SkillId::CROCS_DIAMANT,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.all_assaults_bonus += 2;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -120,11 +120,11 @@ pub static ARCHANGE_CORROSIF: Skill = Skill {
     id: SkillId::ARCHANGE_CORROSIF,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // element bonus handled in node
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -133,11 +133,11 @@ pub static ARCHANGE_GENESIF: Skill = Skill {
     id: SkillId::ARCHANGE_GENESIF,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // element bonus handled in node
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };

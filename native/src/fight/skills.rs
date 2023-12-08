@@ -50,8 +50,8 @@ pub enum SkillOrUnknown {
     Unknown(serde_json::Value),
 }
 
-/// Shortcut to the effect of a skill
-pub type SkillEffect = fn(&mut Fighter, &mut Manager) -> AttackResult;
+/// Shortcut to the effect of a skill: returns a vector of tuple (Option<FighterId>, AttackResult)
+pub type SkillEffect = fn(&mut Fighter, &mut Manager) -> Vec<(Option<u32>, AttackResult)>;
 
 /// Definition of a skill, fields are kept private because they are not meant to be changed after creation
 ///
@@ -107,12 +107,16 @@ impl Skill {
     }
 
     /// Processes the [effect](`SkillEffect`) of a skill
-    pub fn process_skill(self, f: &mut Fighter, m: &mut Manager) -> AttackResult {
+    pub fn process_skill(
+        self,
+        f: &mut Fighter,
+        m: &mut Manager,
+    ) -> Vec<(Option<u32>, AttackResult)> {
         if !self.ignore {
             (self.effect)(f, m)
         } else {
             error!("Skill {:?} not processed because it is ignored", self.id);
-            AttackResult::IgnoredSkill
+            vec![(None, AttackResult::IgnoredSkill)]
         }
     }
 
@@ -796,7 +800,7 @@ static UNKNOWN_SKILL: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _: &mut Manager| {
         error!("Unknown skill, ignored for fights");
-        AttackResult::UnknownSkill
+        vec![(None, AttackResult::UnknownSkill)]
     },
     ignore: true,
 };

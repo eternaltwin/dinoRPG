@@ -9,6 +9,7 @@
 //=====================================================================================================================
 
 extern crate log;
+use log::error;
 use log::{debug, info, trace}; // add trace, warn and error as needed
 use rand::prelude::*;
 use rand::Rng;
@@ -53,11 +54,14 @@ type FighterId = u32;
 pub enum AttackResult {
     Hit(u32),
     Dodge,
+    SuperDodge,
     FlewAway,
     Intangible,
     IgnoredSkill,
-    UnknownSkill,
+    UselessSkill,
     PassiveSkill,
+    InvalidTarget,
+    UnknownSkill,
     TodoSkill,
 }
 
@@ -157,7 +161,7 @@ impl FightResult {
         attacker: &Fighter,
         skill_id: SkillId,
         effect: EffectType,
-        results: Vec<(FighterId, AttackResult)>,
+        results: Vec<(Option<FighterId>, AttackResult)>,
     ) {
         self.history.log_skill(
             attacker.id,
@@ -233,10 +237,10 @@ pub struct Manager {
     fighters_dead: HashSet<FighterId>,
     fighters_temp_dead: HashSet<FighterId>,
     fighters_escaped: HashSet<FighterId>,
-    fighters_attackers: HashSet<FighterId>,
-    fighters_defenders: HashSet<FighterId>,
+    fighters_alive_attackers: HashSet<FighterId>,
+    fighters_alive_defenders: HashSet<FighterId>,
     pub fighters_all: HashMap<FighterId, Fighter>,
-    figthers_all_alive_order: Vec<FighterId>,
+    fighters_all_alive_order: Vec<FighterId>,
 }
 
 impl Default for Manager {
@@ -290,11 +294,11 @@ impl Manager {
         info!("{:?}", self.fighters_all);
     }
 
-    /// PURPOSE: Sort the figthers_all_alive_order vector with the FighterId with the smallest time first, and last has the
+    /// PURPOSE: Sort the fighters_all_alive_order vector with the FighterId with the smallest time first, and last has the
     ///          biggest time
     fn sort_all_fighters_by_time_smallest_first(&mut self) {
         // Make a list of all the alive fighters
-        let mut new_order: Vec<FighterId> = self.figthers_all_alive_order.clone();
+        let mut new_order: Vec<FighterId> = self.fighters_all_alive_order.clone();
 
         // Sort that list by time
         new_order.sort_by(|a, b| self.fighters_all[a].time.cmp(&self.fighters_all[b].time));
@@ -308,7 +312,7 @@ impl Manager {
         //     }
         // }
 
-        self.figthers_all_alive_order = new_order;
+        self.fighters_all_alive_order = new_order;
     }
 
     /// PURPOSE: Pick the target from the opposing side
@@ -317,15 +321,23 @@ impl Manager {
     fn pick_target(&mut self, fighter_side: TeamSide) -> Fighter {
         // Attackers attack defenders
         let target_id: FighterId = if fighter_side == TeamSide::Attackers {
-            let defenders_number = self.fighters_defenders.len();
+            let defenders_number = self.fighters_alive_defenders.len();
             let random_number = self.random_generator.gen_range(0..defenders_number);
-            *self.fighters_defenders.iter().nth(random_number).unwrap()
+            *self
+                .fighters_alive_defenders
+                .iter()
+                .nth(random_number)
+                .unwrap()
         }
         // Defenders attack attackers
         else {
-            let attackers_number = self.fighters_attackers.len();
+            let attackers_number = self.fighters_alive_attackers.len();
             let random_number = self.random_generator.gen_range(0..attackers_number);
-            *self.fighters_attackers.iter().nth(random_number).unwrap()
+            *self
+                .fighters_alive_attackers
+                .iter()
+                .nth(random_number)
+                .unwrap()
         };
 
         self.fighters_all[&target_id].clone()
@@ -497,11 +509,11 @@ impl Manager {
         if target.life == 0 {
             self.fight_result.log_death(&target);
             self.fighters_dead.insert(target.id);
-            self.figthers_all_alive_order.retain(|id| *id != target.id);
+            self.fighters_all_alive_order.retain(|id| *id != target.id);
             if target.original_side == TeamSide::Attackers {
-                self.fighters_attackers.remove(&target.id);
+                self.fighters_alive_attackers.remove(&target.id);
             } else {
-                self.fighters_defenders.remove(&target.id);
+                self.fighters_alive_defenders.remove(&target.id);
             }
         }
 
@@ -512,12 +524,47 @@ impl Manager {
         AttackResult::Hit(hp_lost)
     }
 
+    /// Method to inflict a fixed amount of damage to a target
+    pub fn attack_target_with_fixed_damage(
+        &mut self,
+        target: &mut Fighter,
+        damage: u32,
+    ) -> AttackResult {
+        if target.life < damage {
+            target.life = 0;
+        } else {
+            target.life -= damage;
+        }
+        debug!(
+            "[Manager:attack_single_with_skill] {:} loses {:} life points, only {:} left",
+            target.id, damage, target.life
+        );
+
+        // If the target is dead, add it to the dead list, remove it from the list of alive fighters and remove it from its team.
+        if target.life == 0 {
+            self.fight_result.log_death(&target);
+            self.fighters_dead.insert(target.id);
+            self.fighters_all_alive_order.retain(|id| *id != target.id);
+            if target.original_side == TeamSide::Attackers {
+                self.fighters_alive_attackers.remove(&target.id);
+            } else {
+                self.fighters_alive_defenders.remove(&target.id);
+            }
+        }
+
+        // Save the new state of the target
+        // SAFETY: it should be safe to unwrap because target is valid
+        *self.fighters_all.get_mut(&target.id).unwrap() = target.clone();
+
+        AttackResult::Hit(damage)
+    }
+
     /// Method to process an attack with a given attack power on a single target
     pub fn attack_single_target(
         &mut self,
         attacker: &mut Fighter,
         attack_power: [u32; 6],
-    ) -> AttackResult {
+    ) -> Vec<(Option<FighterId>, AttackResult)> {
         let mut target = self.pick_target(attacker.side);
         debug!(
             "[Manager:attack_single_with_skill] Target is {:}",
@@ -525,37 +572,56 @@ impl Manager {
         );
 
         let attack_result = self.attack_target(attacker, &mut target, attack_power, false);
-        if let AttackResult::Hit(hp_lost) = attack_result {
-            debug!(
-                "[Manager:attack_single_with_skill] {:} loses {:} life points, only {:} left",
-                target.id, hp_lost, target.life
-            );
-        } else {
-            debug!(
-                "[Manager:attack_single_with_skill] attack failed {:?}",
-                attack_result
-            );
-        }
-        attack_result
+        debug!(
+            "[Manager:attack_single_with_skill] {:} used skill of power {:?} on {:} and did {:?}",
+            attacker.name, attack_power, target.name, attack_result
+        );
+        vec![(Some(target.id), attack_result)]
     }
 
-    pub fn attack_team(&mut self, attacker: &mut Fighter, attack_power: [u32; 6]) -> AttackResult {
-        AttackResult::Hit(0)
+    // Method to process an attack with a given attack power to a whole team
+    pub fn attack_team(
+        &mut self,
+        attacker: &mut Fighter,
+        attack_power: [u32; 6],
+    ) -> Vec<(Option<FighterId>, AttackResult)> {
+        let mut results: Vec<(Option<FighterId>, AttackResult)> = vec![];
+
+        // Get the IDs of all the opposing fighters
+        let targets = if attacker.side == TeamSide::Attackers {
+            self.fighters_alive_defenders
+        } else {
+            self.fighters_alive_attackers
+        };
+
+        // For each target, process the attack and append the result to the vector of results
+        for t in targets {
+            let temp_result = if let Some(target) = self.fighters_all.get_mut(&t) {
+                self.attack_target(attacker, target, attack_power, false)
+            } else {
+                error!(
+                    "[Manager:attack_single_with_skill] Target (ID: {}) is invalid",
+                    t
+                );
+                AttackResult::InvalidTarget
+            };
+            results.push((Some(t), temp_result));
+        }
+
+        results
     }
 
     /// PURPOSE: Handle an assault
     /// PARAMS:  - attacker (&mut Fighter): mutable pointer of the attacker
     ///          - target (&mut Fighter): mutable pointer of the target
-    pub fn attack_with_assault(&mut self, attacker: &mut Fighter) -> AttackResult {
+    pub fn attack_with_assault(
+        &mut self,
+        attacker: &mut Fighter,
+    ) -> (Option<FighterId>, AttackResult) {
         // TODO check if the dinoz can attack flying or intangible
 
         let mut target = self.pick_target(attacker.side);
         debug!("[Manager:attack_with_assault] Target is {:}", target.id);
-
-        debug!(
-            "[Manager:attack_with_assault] {:} launches an assault on {:}",
-            attacker.id, target.id
-        );
 
         let current_element_index: ElementIndex = attacker.get_current_element_index(false);
         let assault_power: [u32; 6] =
@@ -580,14 +646,18 @@ impl Manager {
                 assault_result
             );
         }
-        assault_result
+        (Some(target.id), assault_result)
     }
 
-    fn process_active_skill(&mut self, attacker: &mut Fighter, skill: Skill) -> AttackResult {
+    fn process_active_skill(
+        &mut self,
+        attacker: &mut Fighter,
+        skill: Skill,
+    ) -> Vec<(Option<FighterId>, AttackResult)> {
         info!("Processing skill {:?}", skill);
         let result = skill.process_skill(attacker, self);
         self.fight_result
-            .log_skill(attacker, skill.id(), EffectType::Damage, vec![(0, result)]);
+            .log_skill(attacker, skill.id(), EffectType::Damage, result);
         result
     }
 
@@ -721,10 +791,10 @@ impl Manager {
             fighters_dead: HashSet::new(),
             fighters_temp_dead: HashSet::new(),
             fighters_escaped: HashSet::new(),
-            fighters_attackers: HashSet::new(),
-            fighters_defenders: HashSet::new(),
+            fighters_alive_attackers: HashSet::new(),
+            fighters_alive_defenders: HashSet::new(),
             fighters_all: HashMap::new(),
-            figthers_all_alive_order: Vec::new(),
+            fighters_all_alive_order: Vec::new(),
         }
     }
 
@@ -786,19 +856,19 @@ impl Manager {
             fighters_dead: HashSet::new(),
             fighters_temp_dead: HashSet::new(),
             fighters_escaped: HashSet::new(),
-            fighters_attackers: attackers,
-            fighters_defenders: defenders,
+            fighters_alive_attackers: attackers,
+            fighters_alive_defenders: defenders,
             fighters_all: all,
-            figthers_all_alive_order: all_order,
+            fighters_all_alive_order: all_order,
         }
     }
 
     // pub fn get_team_by_side(self, side: bool) -> HashSet<FighterId> {
     //     if (side) {
-    //         return self.fighters_attackers;
+    //         return self.fighters_alive_attackers;
     //     }
     //     else {
-    //         return self.fighters_defenders;
+    //         return self.fighters_alive_defenders;
     //     }
     // }
 
@@ -821,7 +891,7 @@ impl Manager {
         // Get smallest time (which can be negative) then remove it from all fighters to make sure on a 0-based time
         // Example: a fighter has an initiative boost to start first, that's a base time of -5.
         // By removing 5 from every fighter, the one with the initiative boost will be at 0 and the others at 5
-        let _t0 = self.fighters_all[&self.figthers_all_alive_order[0]].time;
+        let _t0 = self.fighters_all[&self.fighters_all_alive_order[0]].time;
         for f in self.fighters_all.values_mut() {
             f.time -= _t0;
         }
@@ -829,7 +899,7 @@ impl Manager {
         info!("--- Preparation done ---");
 
         // Process only if there are both attackers and defenders
-        if !self.fighters_attackers.is_empty() && !self.fighters_defenders.is_empty() {
+        if !self.fighters_alive_attackers.is_empty() && !self.fighters_alive_defenders.is_empty() {
             info!("--- Fight start ---");
 
             // To protect dev of infinite loops
@@ -840,7 +910,7 @@ impl Manager {
                 self.sort_all_fighters_by_time_smallest_first();
                 // SAFETY: it should be safe to unwrap here because there are at least 2 fighters (one attacker, one defender) still in play
                 let mut current_fighter: Fighter =
-                    self.fighters_all[self.figthers_all_alive_order.first().unwrap()].clone();
+                    self.fighters_all[self.fighters_all_alive_order.first().unwrap()].clone();
 
                 // Process its turn
                 self.process_turn(&mut current_fighter);
@@ -867,7 +937,7 @@ impl Manager {
                 // SAFETY: it is safe to unwrap here because there are at least 2 fighters (one attacker, one defender) still in play
                 *self
                     .fighters_all
-                    .get_mut(self.figthers_all_alive_order.first().unwrap())
+                    .get_mut(self.fighters_all_alive_order.first().unwrap())
                     .unwrap() = current_fighter;
 
                 debug!("-- END OF TURN {:} --", i);

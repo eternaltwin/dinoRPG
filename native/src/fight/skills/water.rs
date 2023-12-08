@@ -1,6 +1,7 @@
 /// Implementations of all water skills from Vanilla and Ether skill trees
 use log::{error, trace};
 
+use crate::fight::fighter::{FighterId, FighterType};
 use crate::fight::manager::{AttackResult, Manager, TIMECOEF};
 use crate::fight::{elements::ElementIndex, fighter::Fighter};
 
@@ -18,8 +19,9 @@ pub static PERCEPTION: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Water as usize] += 4;
+        f.perception = true;
         f.can_touch_intangible = true;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -32,7 +34,7 @@ pub static MUTATION: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -46,7 +48,7 @@ pub static KARATE_SOUS_MARIN: Skill = Skill {
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Water as usize] += 10;
         f.skill_elemental_bonus[ElementIndex::Water as usize] += 10;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -59,7 +61,7 @@ pub static ENTRAINEMENT_SOUS_MARIN: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -72,7 +74,7 @@ pub static SUMO: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -85,7 +87,7 @@ pub static ZERO_ABSOLU: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.defense[ElementIndex::Fire as usize] += 25.0;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -98,7 +100,7 @@ pub static ENTRAINEMENT_SOUS_MARIN_AVANCE: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -111,7 +113,7 @@ pub static MAITRE_NAGEUR: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // element bonus handled in node
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -125,7 +127,7 @@ pub static ECAILLES_LUMINESCENTES: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.armor += 2;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -139,7 +141,7 @@ pub static PEAU_DE_SERPENT: Skill = Skill {
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_dodge_chance *= 1.1;
         f.speed_per_element[ElementIndex::Water as usize] *= 0.85;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -165,8 +167,13 @@ pub static GEL: Skill = Skill {
     probability: 10,
     effect: |f: &mut Fighter, m: &mut Manager| {
         let result = m.attack_single_target(f, f.compute_attack(ElementIndex::Water, 5));
-        if result != AttackResult::Dodge {
-            // TODO apply slow status
+        if let Some((Some(target_id), attack_result)) = result.first() {
+            // Apply the slow effect only if the attack was not dodged
+            if *attack_result != AttackResult::SuperDodge {
+                // TODO apply slow status
+            }
+        } else {
+            error!("[Skill GEL]: No target found after processing skill");
         }
         result
     },
@@ -180,13 +187,22 @@ pub static COUP_SOURNOIS: Skill = Skill {
     priority: 3,
     probability: 7,
     effect: |f: &mut Fighter, m: &mut Manager| {
-        let result = m.attack_with_assault(f);
-        if let AttackResult::Hit(damage) = result {
+        let mut results: Vec<(Option<FighterId>, AttackResult)> = vec![];
+        let assault_result = m.attack_with_assault(f);
+        results.push(assault_result.clone());
+        if let (Some(target_id), AttackResult::Hit(damage)) = assault_result {
             if damage > 0 {
-                // TODO need to revamp AttackResult to contain the target in it
+                let mut target = m.fighters_all[&target_id].clone();
+                // The effect only works on non-boss fighters and is canceled by perception
+                let effect_damage = if target.ftype == FighterType::Boss || target.perception {
+                    0
+                } else {
+                    (target.life as f32 / 2.0) as u32
+                };
+                results.push((Some(target.id), AttackResult::Hit(effect_damage)));
             }
         }
-        AttackResult::TodoSkill
+        results
     },
     ignore: false,
 };
@@ -194,13 +210,26 @@ pub static COUP_SOURNOIS: Skill = Skill {
 pub static COUP_FATAL: Skill = Skill {
     id: SkillId::COUP_FATAL,
     skill_type: SkillType::ACTIVE,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO // todo
-    effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // todo
-        error!("Default active skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+    energy: 20,
+    priority: 4,
+    probability: 2,
+    effect: |f: &mut Fighter, m: &mut Manager| {
+        let mut results: Vec<(Option<FighterId>, AttackResult)> = vec![];
+        let assault_result = m.attack_with_assault(f);
+        results.push(assault_result.clone());
+        if let (Some(target_id), AttackResult::Hit(damage)) = assault_result {
+            if damage > 0 {
+                let mut target = m.fighters_all[&target_id].clone();
+                // The effect only works on non-boss fighters and is canceled by perception
+                let effect_damage = if target.ftype == FighterType::Boss || target.perception {
+                    0
+                } else {
+                    target.life
+                };
+                results.push((Some(target.id), AttackResult::Hit(effect_damage)));
+            }
+        }
+        results
     },
     ignore: false,
 };
@@ -209,13 +238,13 @@ pub static PETRIFICATION: Skill = Skill {
     id: SkillId::PETRIFICATION,
 
     skill_type: SkillType::ACTIVE,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO // todo
+    energy: 20,
+    priority: 1,
+    probability: 10,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default active skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -224,13 +253,12 @@ pub static RAYON_KAAR_SHER: Skill = Skill {
     id: SkillId::RAYON_KAAR_SHER,
 
     skill_type: SkillType::ACTIVE,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO // todo
-    effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // todo
-        error!("Default active skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+    energy: 40,
+    priority: 1,
+    probability: 20,
+    effect: |f: &mut Fighter, m: &mut Manager| {
+        // TODO breaks mud wall
+        m.attack_team(f, f.compute_attack(ElementIndex::Water, 7))
     },
     ignore: false,
 };
@@ -238,15 +266,12 @@ pub static RAYON_KAAR_SHER: Skill = Skill {
 // --- WATER VANILLA Event Skills ---
 pub static DOUCHE_ECOSSAISE: Skill = Skill {
     id: SkillId::DOUCHE_ECOSSAISE,
-
     skill_type: SkillType::EVENT,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO // todo
-    effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // todo
-        error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+    energy: 20,
+    priority: 1,
+    probability: 40,
+    effect: |f: &mut Fighter, m: &mut Manager| {
+        m.attack_team(f, f.compute_attack(ElementIndex::Water, 2))
     },
     ignore: false,
 };
@@ -255,28 +280,27 @@ pub static MARECAGE: Skill = Skill {
     id: SkillId::MARECAGE,
 
     skill_type: SkillType::EVENT,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO // todo
+    energy: 20,
+    priority: 6,
+    probability: 15,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
 
 pub static CLONE_AQUEUX: Skill = Skill {
     id: SkillId::CLONE_AQUEUX,
-
     skill_type: SkillType::EVENT,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO // todo
+    energy: 35,
+    priority: 8,
+    probability: 15,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -286,26 +310,25 @@ pub static POCHE_VENTRALE: Skill = Skill {
     id: SkillId::POCHE_VENTRALE,
     skill_type: SkillType::SPECIAL,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // extra item space handled in node;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: true,
 };
 
 pub static SANS_PITIE: Skill = Skill {
     id: SkillId::SANS_PITIE,
-
     skill_type: SkillType::SPECIAL,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default special skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -314,12 +337,12 @@ pub static GRIFFES_EMPOISONNEES: Skill = Skill {
     id: SkillId::GRIFFES_EMPOISONNEES,
     skill_type: SkillType::SPECIAL,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default special skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -333,7 +356,7 @@ pub static ACUPUNCTURE: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default special skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -342,12 +365,12 @@ pub static SAPEUR: Skill = Skill {
     id: SkillId::SAPEUR,
     skill_type: SkillType::SPECIAL,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default special skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -356,12 +379,12 @@ pub static SANG_ACIDE: Skill = Skill {
     id: SkillId::SANG_ACIDE,
     skill_type: SkillType::SPECIAL,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default special skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -371,11 +394,11 @@ pub static APPRENTI_PECHEUR: Skill = Skill {
     id: SkillId::APPRENTI_PECHEUR,
     skill_type: SkillType::COLLECT,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Collect skill, ignored for fights by default");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::UselessSkill)]
     },
     ignore: true,
 };
@@ -384,11 +407,11 @@ pub static PECHEUR_CONFIRME: Skill = Skill {
     id: SkillId::PECHEUR_CONFIRME,
     skill_type: SkillType::COLLECT,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Collect skill, ignored for fights by default");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::UselessSkill)]
     },
     ignore: true,
 };
@@ -398,11 +421,11 @@ pub static MAITRE_PECHEUR: Skill = Skill {
 
     skill_type: SkillType::COLLECT,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Collect skill, ignored for fights by default");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::UselessSkill)]
     },
     ignore: true,
 };
@@ -410,14 +433,13 @@ pub static MAITRE_PECHEUR: Skill = Skill {
 // --- WATER VANILLA Universal Skills ---
 pub static MAGASINIER: Skill = Skill {
     id: SkillId::MAGASINIER,
-
     skill_type: SkillType::UNIVERSAL,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Universal skill, ignored for fights by default");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::UselessSkill)]
     },
     ignore: true,
 };
@@ -426,12 +448,12 @@ pub static CUISINIER: Skill = Skill {
     id: SkillId::CUISINIER,
     skill_type: SkillType::UNIVERSAL,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Universal skill cuisinier not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: true,
 };
@@ -443,13 +465,13 @@ pub static RADIATIONS_GAMMA: Skill = Skill {
     id: SkillId::RADIATIONS_GAMMA,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.all_assaults_bonus += 5;
         f.time += (10.0 * TIMECOEF as f32 * f.initiative_global_multiplier) as i32;
         // hp bonus handled in node
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -458,11 +480,11 @@ pub static BLEU: Skill = Skill {
     id: SkillId::BLEU,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -471,11 +493,11 @@ pub static MUE_ACQUEUSE: Skill = Skill {
     id: SkillId::MUE_ACQUEUSE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.defense[ElementIndex::Lightning as usize] += 20.0;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -484,12 +506,12 @@ pub static CARAPACE_BLINDEE: Skill = Skill {
     id: SkillId::CARAPACE_BLINDEE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.armor += 10;
         f.speed_global *= 1.2;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -498,11 +520,11 @@ pub static TOURBILLON_MAGIQUE: Skill = Skill {
     id: SkillId::TOURBILLON_MAGIQUE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Water as usize] += 20;
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -511,11 +533,11 @@ pub static VITALITE_MARINE: Skill = Skill {
     id: SkillId::VITALITE_MARINE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
-        AttackResult::PassiveSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -523,14 +545,14 @@ pub static VITALITE_MARINE: Skill = Skill {
 // --- WATER ETHER Active Skills ---
 pub static ABYSSE: Skill = Skill {
     id: SkillId::ABYSSE,
+    skill_type: SkillType::ACTIVE,
     energy: 0,
     priority: 0,    // TODO
     probability: 0, // TODO
-    skill_type: SkillType::ACTIVE,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default active skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -544,7 +566,7 @@ pub static HYPERVENTILATION: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default active skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -558,7 +580,7 @@ pub static RECEPTACLE_TESLA: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default active skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -573,7 +595,7 @@ pub static DIETE_CHROMATIQUE: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -587,7 +609,7 @@ pub static THERAPIE_DE_GROUPE: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -600,7 +622,7 @@ pub static CLEPTOMANE: Skill = Skill {
     probability: 0, // TODO
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -614,7 +636,7 @@ pub static EAU_DIVINE: Skill = Skill {
     probability: 0, // TODO
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // useless in fights
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: true,
 };
@@ -627,7 +649,7 @@ pub static EFFLUVE_APHRODISIAQUE: Skill = Skill {
     probability: 0, // TODO
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // useless in fights
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: true,
 };
@@ -640,14 +662,13 @@ pub static NEMO: Skill = Skill {
     probability: 0, // TODO
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // useless in fights
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: true,
 };
 
 pub static BANNI_DES_DIEUX: Skill = Skill {
     id: SkillId::BANNI_DES_DIEUX,
-
     skill_type: SkillType::SPECIAL,
     energy: 0,
     priority: 0,    // TODO
@@ -655,7 +676,7 @@ pub static BANNI_DES_DIEUX: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default special skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };

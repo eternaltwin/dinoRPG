@@ -15,11 +15,11 @@ pub static GRIFFES_ENFLAMMEES: Skill = Skill {
     id: SkillId::GRIFFES_ENFLAMMEES,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Fire as usize] += 7;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -28,11 +28,11 @@ pub static FORCE: Skill = Skill {
     id: SkillId::FORCE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.all_assaults_bonus += 1;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -41,11 +41,11 @@ pub static CHARGE: Skill = Skill {
     id: SkillId::CHARGE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.next_assault_bonus += 5;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -54,11 +54,11 @@ pub static SANG_CHAUD: Skill = Skill {
     id: SkillId::SANG_CHAUD,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.time -= (4.0 * TIMECOEF as f32 * f.initiative_global_multiplier) as i32;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -67,14 +67,14 @@ pub static FURIE: Skill = Skill {
     id: SkillId::FURIE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.all_assaults_bonus += 3;
         for d in f.defense.iter_mut() {
             *d -= 2.0;
         }
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -83,11 +83,11 @@ pub static ARTS_MARTIAUX: Skill = Skill {
     id: SkillId::ARTS_MARTIAUX,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.all_assaults_bonus += 2;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -96,11 +96,11 @@ pub static VIGILANCE: Skill = Skill {
     id: SkillId::VIGILANCE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.defense[ElementIndex::Fire as usize] += 5.0;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -109,12 +109,12 @@ pub static COEUR_ARDENT: Skill = Skill {
     id: SkillId::COEUR_ARDENT,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.assault_elemental_bonus[ElementIndex::Fire as usize] += 12;
         // hp bonus handled in node
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -123,13 +123,13 @@ pub static WAIKIKIDO: Skill = Skill {
     id: SkillId::WAIKIKIDO,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.counter_attack_chance *= 1.1;
         // hp bonus handled in node
         f.time += (5.0 * TIMECOEF as f32 * f.initiative_global_multiplier) as i32;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -138,11 +138,11 @@ pub static AURA_INCANDESCENTE: Skill = Skill {
     id: SkillId::AURA_INCANDESCENTE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // element bonus handled in node
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -151,11 +151,11 @@ pub static VENGEANCE: Skill = Skill {
     id: SkillId::VENGEANCE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.counter_attack_chance *= 1.05;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -164,11 +164,11 @@ pub static BELIER: Skill = Skill {
     id: SkillId::BELIER,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.next_assault_bonus += 20;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -177,8 +177,8 @@ pub static CHEF_DE_GUERRE: Skill = Skill {
     id: SkillId::CHEF_DE_GUERRE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, m: &mut Manager| {
         f.all_assaults_bonus += 2;
         for (_, att) in m.fighters_all.iter_mut() {
@@ -186,7 +186,7 @@ pub static CHEF_DE_GUERRE: Skill = Skill {
                 att.all_assaults_bonus += 2;
             }
         }
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -196,12 +196,12 @@ pub static PROPULSION_DIVINE: Skill = Skill {
     id: SkillId::PROPULSION_DIVINE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.speed_per_element[ElementIndex::Fire as usize] *= 0.7;
         // elem change done in node
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -477,12 +477,12 @@ pub static CARAPACE_DE_MAGMA: Skill = Skill {
     id: SkillId::CARAPACE_DE_MAGMA,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         // hp bonus handled in node
         f.assault_elemental_bonus[ElementIndex::Fire as usize] += 5;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };
@@ -491,11 +491,11 @@ pub static FIEVRE_BRULANTE: Skill = Skill {
     id: SkillId::FIEVRE_BRULANTE,
     skill_type: SkillType::PASSIVE,
     energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
+    priority: 0,
+    probability: 0,
     effect: |f: &mut Fighter, _m: &mut Manager| {
         f.multi_assault_chance *= 1.3;
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::PassiveSkill)]
     },
     ignore: false,
 };

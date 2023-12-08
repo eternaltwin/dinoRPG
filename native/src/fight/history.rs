@@ -4,12 +4,10 @@ use serde::{Deserialize, Serialize};
 
 use super::{
     elements::ElementIndex,
-    fighter::FighterShort,
+    fighter::{FighterId, FighterShort},
     manager::{AttackResult, TeamSide},
     skills::SkillId,
 };
-
-type FighterId = u32;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum EffectType {
@@ -133,7 +131,7 @@ pub struct SkillEvent {
     attacker_name: String,
     skill: SkillId,
     effect: EffectType,
-    results: Vec<(FighterId, AttackResult)>,
+    results: Vec<(Option<FighterId>, AttackResult)>,
 }
 
 impl SkillEvent {
@@ -142,7 +140,7 @@ impl SkillEvent {
         attacker_name: String,
         skill: SkillId,
         effect: EffectType,
-        results: Vec<(FighterId, AttackResult)>,
+        results: Vec<(Option<FighterId>, AttackResult)>,
     ) -> Self {
         Self {
             attacker_id,
@@ -237,7 +235,7 @@ impl FightHistory {
         attacker_name: String,
         skill_id: SkillId,
         effect_type: EffectType,
-        results: Vec<(FighterId, AttackResult)>,
+        results: Vec<(Option<FighterId>, AttackResult)>,
     ) {
         self.events.push(FightEvent::Skill(SkillEvent::new(
             attacker_id,
@@ -289,7 +287,7 @@ impl Display for FightHistory {
                             .results
                             .iter()
                             .map(|(target, _)| *target)
-                            .collect::<Vec<u32>>(),
+                            .collect::<Vec<Option<FighterId>>>(),
                         skill
                             .results
                             .iter()

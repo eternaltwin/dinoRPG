@@ -93,6 +93,8 @@ const DEFENSE_CALCULATOR: [f32; 5] = [1.0, 0.5, 0.5, 1.5, 1.5];
 type ItemId = u32;
 type StatusId = u32;
 
+pub type FighterId = u32;
+
 /// This structure needs to be exactly the same as FighterFiche in core/src/models/fight/FightConfiguration.mts
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct FighterConfiguration {
@@ -143,18 +145,19 @@ impl FighterResult {
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Deserialize, Serialize)]
 pub enum FighterType {
-    Monster,
+    Boss,
     Dinoz,
+    Monster,
 }
 
 #[derive(Debug, Clone)]
 /// Struct to define a Fighter (dino, monster or anything)
 pub struct Fighter {
     /// Fighter ID: to handle fights
-    pub id: u32,
+    pub id: FighterId,
     /// Name of the fighter
     pub name: String,
-    /// Type of fighter (dinoz or monster)
+    /// Type of fighter (boss, dinoz or monster)
     pub ftype: FighterType,
     /// Display code of the fighter
     pub display: String,
@@ -164,7 +167,6 @@ pub struct Fighter {
     pub side: TeamSide,
     /// Original side of the fighter (in case it temporarily changes side)
     pub original_side: TeamSide,
-
     /// Array of elements of the fighter ordered from highest to lowest
     pub ordered_elements: OrderedElements,
     /// The element of the fighter is locked
@@ -264,6 +266,12 @@ pub struct Fighter {
     pub before_turn_effects: Vec<Skill>,
     /// WIP: List of effects triggered when the fighter is targeted
     pub on_target_effects: Vec<Skill>,
+
+    // Skill based effects
+    /// Flag to specify if the fighter has perception
+    pub perception: bool,
+    /// Flag to specify if the fighter has rock
+    pub rock: bool,
     //
     // Un-used & non-documented fields
     // default_max_energy: u32,
@@ -447,6 +455,9 @@ impl Fighter {
             on_defeat_effects: vec![],
             before_turn_effects: vec![],
             on_target_effects: vec![],
+
+            perception: false,
+            rock: false,
             //
             // Un-used & non-documented fields
             // combo: 0,
@@ -561,6 +572,9 @@ impl Fighter {
             on_defeat_effects: vec![],
             before_turn_effects: vec![],
             on_target_effects: vec![],
+
+            perception: false,
+            rock: false,
             //
             // Un-used & non-documented fields
             // combo: 0,

@@ -18,7 +18,7 @@ pub static DETONATION: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -33,7 +33,7 @@ pub static BRASERO: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -46,7 +46,7 @@ pub static COEUR_DE_PHOENIX: Skill = Skill {
     probability: 0, // TODO
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Coeur de Phoenix skill is useless in fights");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: true,
 };
@@ -61,7 +61,7 @@ pub static LANCEUR_DE_GLAND: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default active skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
@@ -75,7 +75,7 @@ pub static GRATTEUR: Skill = Skill {
     probability: 0, // TODO
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         trace!("Collect skill, ignored for fights by default");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: true,
 };
@@ -90,7 +90,7 @@ pub static GROSSE_BEIGNE: Skill = Skill {
     effect: |_f: &mut Fighter, _m: &mut Manager| {
         // todo
         error!("Default event skill implementation! Not yet implemented");
-        AttackResult::TodoSkill
+        vec![(None, AttackResult::TodoSkill)]
     },
     ignore: false,
 };
