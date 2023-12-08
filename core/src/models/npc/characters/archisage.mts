@@ -1,5 +1,5 @@
 import { statusList } from '../../dinoz/StatusList.mjs';
-import { RewardEnum, TriggerEnum } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum, TriggerEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -31,6 +31,13 @@ export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 		action: {
 			enemies: [bossList.ELEMENTAIRE_TERRE],
 			actionType: TriggerEnum.FIGHT
+		},
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: statusList.BASALT_SHARD },
+				{ [ConditionEnum.STATUS]: statusList.PURE_WATER },
+				{ [ConditionEnum.STATUS]: statusList.SWAMP_MUD }
+			]
 		},
 		reward: [
 			{
