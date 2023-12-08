@@ -14,7 +14,7 @@
 						tag="tr"
 						theme="normal"
 						v-for="action in dinozActions"
-						:key="action.name"
+						:key="action"
 						:id="action.imgName"
 						@click="launch(action)"
 						:class="{
@@ -394,7 +394,6 @@ export default defineComponent({
 					EventBus.emit('toast', { type: 'error', message: 'missingData' });
 					return;
 				}
-
 				this.updateActions([
 					...dinozActions.filter(action => action.name !== Action.FOLLOW && action.name !== Action.FIGHT),
 					actionList[Action.UNFOLLOW]
