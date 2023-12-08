@@ -405,7 +405,7 @@ export async function unlockDoubleSkills(dinozId: number) {
 		})
 		.map(skill => ({
 			skillId: skill.skillId,
-			dinoz: { connect: { id: dinozId } }
+			dinozId
 		}));
 
 	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
