@@ -49,7 +49,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
 	}
 
-	if (pnj.condition && !checkCondition(pnj.condition, [dinoz])) {
+	if (req.body.stop !== true && pnj.condition && !checkCondition(pnj.condition, [dinoz])) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} don't meet requirement to talk to ${pnj.name}.`);
 	}
 	if (actualPlace.placeId !== pnj.placeId && !req.body.stop) {
