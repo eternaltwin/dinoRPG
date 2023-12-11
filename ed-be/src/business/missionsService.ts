@@ -60,6 +60,11 @@ export async function updateMission(req: Request) {
 	const dinozId = +req.params.dinozId;
 	const missionId = +req.params.missionId;
 	const status = req.body.status;
+	const playerId = req.auth?.playerId;
+
+	if (!playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
 
 	const dinoz = await getDinozMissionsInfo(dinozId);
 	if (!dinoz) {
@@ -92,7 +97,7 @@ export async function updateMission(req: Request) {
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
 				throw new ErrorFormator(500, `This mission is unavailable`);
 			} else {
-				await addMissionToDinoz({
+				await addMissionToDinoz(req.auth.playerId, {
 					dinoz: { connect: { id: dinozId } },
 					missionId: missionId,
 					step: 0,
@@ -109,7 +114,7 @@ export async function updateMission(req: Request) {
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
 				throw new ErrorFormator(500, `This mission is unavailable`);
 			} else {
-				await removeMissionFromDinoz(dinoz.id, missionId);
+				await removeMissionFromDinoz(playerId, dinoz.id, missionId);
 				return true;
 			}
 		default:
@@ -118,16 +123,22 @@ export async function updateMission(req: Request) {
 }
 
 export async function interactMission(req: Request) {
+	const playerId = req.auth?.playerId;
+
+	if (!playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
 	const mission = await checkMission(req);
 
 	const task = mission.actualStep.requirement.actionType;
 
 	switch (task) {
 		case ConditionEnum.TALKTO:
-			await updateMissionStep([mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			await updateMissionStep(playerId, [mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		case ConditionEnum.DO:
-			await updateMissionStep([mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			await updateMissionStep(playerId, [mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		default:
 			return 'error';
@@ -137,8 +148,14 @@ export async function interactMission(req: Request) {
 export async function endMission(req: Request) {
 	const mission = await checkMission(req);
 
+	const playerId = req.auth?.playerId;
+
+	if (!playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
 	await rewarder(mission.missionReference.rewards, [mission.dinoz]);
-	await finishMission(mission.dinoz.id, mission.dinozMission.missionId);
+	await finishMission(playerId, mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
 }
 
@@ -241,7 +258,7 @@ function missionSort(missions: Mission[], dinoz: DinozWithMissionData) {
 export type DinozToCheckMissionFight = Parameters<typeof checkMissionFight>[0];
 export async function checkMissionFight(
 	dinoz: DinozToGetActualStep &
-		Pick<Dinoz, 'placeId' | 'id'> & {
+		Pick<Dinoz, 'placeId' | 'id' | 'playerId'> & {
 			missions: DinozMission[];
 		},
 	fight: FightResult
@@ -273,10 +290,14 @@ export async function checkMissionFight(
 }
 
 export async function checkProgressEnd(
-	dinoz: Pick<Dinoz, 'id'> & { missions: DinozMission[] },
+	dinoz: Pick<Dinoz, 'id' | 'playerId'> & { missions: DinozMission[] },
 	fight: FightResult,
 	actualStep: MissionSteps
 ): Promise<void> {
+	if (!dinoz.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
 	if (actualStep.requirement.actionType !== ConditionEnum.KILL) return;
 	const progressTarget = actualStep.requirement.value;
 
@@ -292,7 +313,7 @@ export async function checkProgressEnd(
 		progress += 1; //replace by fight.opponent.length when we can fight multiple opponent
 	}
 	if (progress >= progressTarget) {
-		await updateMissionStep([dinoz.id], missionId, actualStep.stepId + 1);
+		await updateMissionStep(dinoz.playerId, [dinoz.id], missionId, actualStep.stepId + 1);
 	}
 }
 

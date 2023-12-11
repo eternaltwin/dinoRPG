@@ -1,6 +1,7 @@
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { Prisma } from '@drpg/prisma';
+import { LogType, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
+import { createLog } from './logDao.js';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -108,7 +109,6 @@ export async function getCommonDataRequest(playerId: number) {
 					raceId: true,
 					isFrozen: true,
 					isSelling: true,
-					missionId: true,
 					missions: true,
 					nbrUpFire: true,
 					nbrUpWood: true,
@@ -481,6 +481,8 @@ export async function addMoney(playerId: number, money: number) {
 		select: { money: true }
 	});
 
+	await createLog(LogType.GoldWon, playerId, undefined, money.toString());
+
 	return playerData;
 }
 
@@ -496,6 +498,8 @@ export async function removeMoney(playerId: number, money: number) {
 		},
 		select: { money: true }
 	});
+
+	await createLog(LogType.GoldLost, playerId, undefined, money.toString());
 
 	return playerData;
 }

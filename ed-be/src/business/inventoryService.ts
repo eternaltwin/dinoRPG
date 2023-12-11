@@ -33,7 +33,8 @@ import {
 	resurrect,
 	useRice
 } from '@drpg/core/utils/DinozUtils';
-import { Dinoz, DinozStatus, Player, PlayerItem } from '@drpg/prisma';
+import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
+import { createLog } from '../dao/logDao.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -143,6 +144,8 @@ export async function useItem(req: Request) {
 	}
 
 	await decreaseItemQuantity(dinoz.player.id, itemData.itemId, 1);
+
+	await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
 }
 
 async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
@@ -195,11 +198,9 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
 async function useSpecialItem(
 	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
-		player:
-			| (Pick<Player, 'id'> & {
-					items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
-			  })
-			| null;
+		player: (Pick<Player, 'id'> & {
+			items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
+		}) | null;
 	},
 	item: ItemFiche
 ) {

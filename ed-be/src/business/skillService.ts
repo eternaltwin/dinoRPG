@@ -7,7 +7,7 @@ import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillTree } from '@drpg/core/models/enums/SkillTree';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { Dinoz, DinozItem, DinozSkill, DinozSkillUnlockable, DinozStatus, Player } from '@drpg/prisma';
+import { Dinoz, DinozItem, DinozSkill, DinozSkillUnlockable, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getDinozForLevelUp, getDinozSkillsLearnableAndUnlockable, updateDinoz } from '../dao/dinozDao.js';
@@ -16,6 +16,7 @@ import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '..
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
 import { getRandomUpElement } from '@drpg/core/utils/DinozUtils';
+import { createLog } from '../dao/logDao.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -124,6 +125,8 @@ export async function learnSkill(req: Request) {
 	const newDinozData = getNewDinozDataFromLevelUp(dinozId, parseInt(req.body.tryNumber), dinozSkills, dinozRace);
 
 	await updateDinoz(newDinozData.id, newDinozData);
+
+	await createLog(LogType.LevelUp, dinozSkills.player.id, dinozSkills.id, newDinozData.level.toString());
 
 	const newMaxExperience = levelList.find(level => level.id === dinozSkills.level + 1)?.experience;
 

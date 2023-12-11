@@ -26,7 +26,6 @@ model Dinoz {
   isSelling          Boolean                @default(false)
   raceId             Int
   level              Int
-  missionId          Int?
   nextUpElementId    Int
   nextUpAltElementId Int
   placeId            Int
@@ -56,6 +55,7 @@ model Dinoz {
   dinozItemsToDinoz  DinozItemToDinoz[]
   offers             Offer[]
   followers          Dinoz[]                @relation("DinozFollowers")
+  logs               Log[]
 
   @@map("dinoz")
 }
@@ -333,6 +333,7 @@ model Player {
   ranking                     Ranking?
   offers                      Offer[]
   bids                        OfferBid[]
+  logs                        Log[]
 
   @@map("player")
 }
@@ -459,4 +460,33 @@ model Offer {
   total    Int
   bids     OfferBid[]
   status   OfferStatus @default(ONGOING)
+}
+
+enum LogType {
+  ItemUsed
+  ItemBought
+  GoldWon
+  GoldLost
+  Move
+  LevelUp
+  Fight
+  Death
+  Revive
+  MissionStep
+  MissionFinished
+	MissionCanceled
+  Gather
+	CreateDinoz
+	ChangeDinozOrder
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  player    Player   @relation(fields: [playerId], references: [id])
+  playerId  Int
+  dinoz     Dinoz?   @relation(fields: [dinozId], references: [id])
+  dinozId   Int?
+  type      LogType
+  values    String[] @default([])
+  createdAt DateTime @default(now()) @db.Timestamp(6)
 }

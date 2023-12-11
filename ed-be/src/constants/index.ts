@@ -8,6 +8,7 @@ export const apiRoutes = {
 	ingredientRoute: '/api/v1/ingredients',
 	inventoryRoute: '/api/v1/inventory',
 	levelRoute: '/api/v1/level',
+	logRoute: '/api/v1/log',
 	missionsRoutes: '/api/v1/missions',
 	newsRoute: '/api/v1/news',
 	npcRoute: '/api/v1/npc',
