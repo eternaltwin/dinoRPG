@@ -19,7 +19,7 @@ export type Condition = {
 	[ConditionEnum.NEXT_PLACE]?: Place;
 	[ConditionEnum.CURRENT_MISSION]?: number;
 	[ConditionEnum.POSSESS_INGREDIENT]?: string;
-	[ConditionEnum.ACTIVE]?: string;
+	[ConditionEnum.ACTIVE]?: boolean;
 	[ConditionEnum.PLAYER_EPIC]?: string;
 	[ConditionEnum.HOUR_RAND]?: string;
 	[ConditionEnum.TAG]?: string;

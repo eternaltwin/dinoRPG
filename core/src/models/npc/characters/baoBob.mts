@@ -39,7 +39,8 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY } },
-				{ [ConditionEnum.STATUS]: statusList.FLIPPERS }
+				{ [ConditionEnum.STATUS]: statusList.FLIPPERS },
+				{ [ConditionEnum.ACTIVE]: false } //Disable concentration and darkworld
 			]
 		},
 		nextStep: ['where2', 'how', 'danger', 'bye']

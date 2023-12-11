@@ -837,7 +837,7 @@ export const placeList: Record<
 		placeId: 114,
 		name: 'rechut',
 		conditions: {
-			[ConditionEnum.ACTIVE]: ''
+			[ConditionEnum.ACTIVE]: false
 		},
 		borderPlace: [],
 		alias: 25,

@@ -24,6 +24,7 @@ export function conditionParser(
 	const NEXT_PLACE = condition[ConditionEnum.NEXT_PLACE];
 	const COLLEC = condition[ConditionEnum.COLLEC];
 	const DINOZ_LIFE = condition[ConditionEnum.DINOZ_LIFE];
+	const ACTIVE = condition[ConditionEnum.ACTIVE];
 
 	if (MIN_LEVEL) {
 		result = dinozList.every(dinoz => dinoz.level >= MIN_LEVEL);
@@ -78,6 +79,8 @@ export function conditionParser(
 			default:
 				return false;
 		}
+	} else if (ACTIVE) {
+		result = ACTIVE
 	} else {
 		result = false;
 	}
