@@ -110,7 +110,7 @@ export async function getAvailableActions(
 			})),
 			dinoz
 		);
-		if (dinozToFollow.length > 0 && isAlive(dinoz)) {
+		if (dinozToFollow.length > 0 && isAlive(dinoz) && dinoz.followers.length === 0) {
 			availableActions.push(actionList[Action.FOLLOW]);
 		}
 	}
