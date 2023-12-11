@@ -6,7 +6,8 @@
 			:class="{
 				dead: dinoz.life === 0,
 				selected: currentDinozId ? dinoz.id === currentDinozId : dinoz.id === pageId,
-				light: true
+				light: true,
+				group: getLeaderGroup(dinoz)
 			}"
 		>
 			<a @click="goToDinozPage(dinoz.id)">
@@ -81,6 +82,23 @@ export default defineComponent({
 		},
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)!.name;
+		},
+		getLeaderGroup(dinoz: DinozFiche): boolean {
+			const leader = this.dinozStore.getDinoz(dinoz.leaderId) as DinozFiche;
+			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId) as DinozFiche;
+			if (dinoz.leaderId && leader.followers.includes(this.currentDinozId)) {
+				return true;
+			}
+			if (dinoz.followers && dinoz.followers.includes(this.currentDinozId)) {
+				return true;
+			}
+			if (dinoz.id === this.currentDinozId) {
+				return true;
+			}
+			if (selectedDinoz.followers.includes(dinoz.id)) {
+				return true;
+			}
+			return false;
 		}
 	},
 	computed: {
@@ -204,6 +222,10 @@ ul {
 				width: 150px;
 				font-size: 7.5pt;
 			}
+		}
+
+		&.group {
+			background-color: #f2ca8e;
 		}
 	}
 }
