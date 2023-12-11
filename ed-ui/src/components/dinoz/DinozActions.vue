@@ -10,16 +10,14 @@
 		<ul>
 			<table class="action_button">
 				<tbody>
+					<DZFollow v-if="dinozActions.some(a => a.name === Action.FOLLOW)"></DZFollow>
 					<Tippy
 						tag="tr"
 						theme="normal"
-						v-for="action in dinozActions"
+						v-for="action in dinozActions.filter(a => a.name !== Action.FOLLOW)"
 						:key="action"
 						:id="action.imgName"
 						@click="launch(action)"
-						:class="{
-							hover: action.name === Action.FOLLOW && dinozAvailableToFollow.length > 0
-						}"
 					>
 						<td class="icon">
 							<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
@@ -75,19 +73,6 @@
 							/>
 						</template>
 					</Tippy>
-					<tr
-						v-for="dinozToFollow in dinozAvailableToFollow"
-						:key="dinozToFollow.id"
-						class="dinoz-to-follow"
-						@click="followDinoz(dinozToFollow.id)"
-					>
-						<td class="icon">
-							<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
-						</td>
-						<td class="label">
-							{{ dinozToFollow.name }}
-						</td>
-					</tr>
 				</tbody>
 			</table>
 		</ul>
@@ -116,7 +101,8 @@ import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionL
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
-import { getFollowableDinoz, orderDinozList } from '@drpg/core/utils/DinozUtils';
+import { orderDinozList } from '@drpg/core/utils/DinozUtils';
+import DZFollow from '../../components/dinoz/DZFollow.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -134,7 +120,6 @@ export default defineComponent({
 			MissionEnum: ConditionEnum,
 			digReward: undefined as Rewarder | undefined,
 			dinozId: this.$route.params.id.toString(),
-			dinozAvailableToFollow: [] as DinozFiche[],
 			Action
 		};
 	},
@@ -143,7 +128,8 @@ export default defineComponent({
 		MissionHUDVue,
 		NPCModal,
 		MissionRewardModal,
-		DZDisclaimer
+		DZDisclaimer,
+		DZFollow
 	},
 	props: {
 		dinozActions: Object as PropType<Array<ActionFiche>>,
@@ -271,16 +257,6 @@ export default defineComponent({
 						EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
 						return;
 					}
-
-					const currentDinoz = this.dinozStore.getDinoz(+this.$route.params.id);
-
-					if (!currentDinoz) {
-						EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
-						return;
-					}
-
-					// Display the list of dinoz available to follow
-					this.dinozAvailableToFollow = getFollowableDinoz(this.dinozStore.getDinozList, currentDinoz);
 					break;
 				}
 				case Action.UNFOLLOW: {
@@ -360,47 +336,6 @@ export default defineComponent({
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 
 			return !!dinoz?.isSelling;
-		},
-		async followDinoz(targetId: number) {
-			try {
-				await DinozService.follow(+this.$route.params.id, targetId);
-
-				// Reset the list of dinoz available to follow
-				this.dinozAvailableToFollow = [];
-
-				// Refresh followed and following status
-				const currentDinozList = this.dinozStore.getDinozList;
-				if (!currentDinozList) {
-					EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
-					return;
-				}
-
-				this.dinozStore.setDinozList(
-					orderDinozList(
-						currentDinozList.map(dinoz => {
-							if (dinoz.id === +this.$route.params.id) {
-								dinoz.leaderId = targetId;
-							} else if (dinoz.id === targetId) {
-								dinoz.followers.push(+this.$route.params.id);
-							}
-							return dinoz;
-						})
-					)
-				);
-
-				// Remove follow and fight actions and add unfollow action
-				const dinozActions = this.dinozActions;
-				if (!dinozActions || !this.updateActions) {
-					EventBus.emit('toast', { type: 'error', message: 'missingData' });
-					return;
-				}
-				this.updateActions([
-					...dinozActions.filter(action => action.name !== Action.FOLLOW && action.name !== Action.FIGHT),
-					actionList[Action.UNFOLLOW]
-				]);
-			} catch (e) {
-				errorHandler.handle(e);
-			}
 		}
 	},
 	computed: {
