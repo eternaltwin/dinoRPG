@@ -112,7 +112,7 @@ export default defineComponent({
 	watch: {
 		// Reload page if player go on another dinoz page
 		'$route.params.id': async function (to) {
-			if (to !== undefined) {
+			if (to !== undefined && this.$route.name === 'DinozPage') {
 				await this.getFiche();
 			}
 		}
