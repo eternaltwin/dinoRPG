@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { createNews, getBatchOfNews, updateAnyNews } from '../dao/newsDao.js';
+import { createNews, getBatchOfNews, getNewsIllus, updateAnyNews } from '../dao/newsDao.js';
 
 /**
  * @summary Create a news
@@ -18,7 +18,7 @@ import { createNews, getBatchOfNews, updateAnyNews } from '../dao/newsDao.js';
 export async function postNews(req: Request) {
 	await createNews({
 		title: req.params.title,
-		image: req.file?.buffer as Buffer,
+		image: req.file?.buffer,
 		frenchTitle: req.body.frenchTitle,
 		englishTitle: req.body.englishTitle,
 		spanishTitle: req.body.spanishTitle,
@@ -68,4 +68,13 @@ export async function updateNews(req: Request) {
 		spanishText: req.body.spanishText,
 		germanText: req.body.germanText
 	});
+}
+
+export async function getNewsIllustration(req: Request<{ id: string }>) {
+	console.log(req.params.id);
+	console.log(typeof req.params.id);
+
+	const news = await getNewsIllus(+req.params.id);
+
+	return news.image;
 }

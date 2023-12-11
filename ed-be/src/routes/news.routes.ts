@@ -1,11 +1,12 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import multer from 'multer';
-import { getNews, postNews, updateNews } from '../business/newsService.js';
+import { getNews, getNewsIllustration, postNews, updateNews } from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkIsAdmin } from '../utils/jwt.js';
+import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 
 const routes: Router = Router();
 
@@ -92,7 +93,7 @@ routes.put(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );
@@ -128,13 +129,13 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 	}
 
 	try {
-		const response = await getNews(req);
+		const response: NewsGetResponse = await getNews(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator as ErrorFormator;
+		const e = err as ErrorFormator;
 		console.error(e.message);
 		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		res.status(e.errorCode || 500).send(e.message);
 	}
 });
 
@@ -219,7 +220,26 @@ routes.put(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/:id/illustration`,
+	param('id').exists().toInt().isInt(),
+	async (req: Request<{ id: string }>, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const illustration = await getNewsIllustration(req);
+			return res.status(200).contentType('image/webp').send(illustration);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );

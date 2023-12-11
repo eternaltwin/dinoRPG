@@ -1,70 +1,66 @@
 <template>
 	<div
 		:class="news.hide ? 'bloc hide' : 'bloc'"
-		v-for="(news, index) in displayedBatch"
-		:key="index"
+		v-for="news in displayedBatch"
+		:key="news.id"
 		@click="news.hide = !news.hide"
-		:id="index"
 	>
 		<h1>{{ news.title }}</h1>
-		<img v-if="news.image" :src="`data:image/webp;base64,${transformImage(news.image.data)}`" />
+		<img :src="`${API_BASE}/news/${news.id}/illustration`" />
 		<p v-html="news.text" />
 	</div>
 	<a v-if="displayedBatch.length % 10 === 0" class="overload" @click="overload(page + 1)"> {{ $t('news.overload') }}</a>
 </template>
 
 <script lang="ts">
+import { DisplayedNews } from '@drpg/core/models/news/DisplayedNews';
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { NewsService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { DisplayedNews } from '@drpg/core/models/news/DisplayedNews';
-import { AllNews } from '@drpg/core/models/news/AllNews';
-import { Image } from '@drpg/core/models/news/Image';
 import { localStore } from '../../store/index.js';
+import { API_BASE, errorHandler } from '../../utils/index.js';
+import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 
 export default defineComponent({
 	name: 'News',
 	data() {
 		return {
 			localStore: localStore(),
-			batch: [] as Array<Partial<AllNews>>,
-			displayedBatch: [] as Array<Partial<DisplayedNews>>,
-			page: 1 as number
+			batch: [] as NewsGetResponse,
+			displayedBatch: [] as DisplayedNews[],
+			page: 1,
+			API_BASE
 		};
 	},
 	computed: {
-		language(): string | undefined {
+		language() {
 			return this.localStore.getLanguage;
 		}
 	},
 	methods: {
-		transformLanguage(news: Array<Partial<AllNews>>): Array<Partial<DisplayedNews>> {
+		transformLanguage(news: NewsGetResponse) {
 			switch (this.localStore.getLanguage) {
 				case 'fr':
-					return news.map(news => this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!));
+					return news.map(news => this.getBatchData(news.id, news.frenchTitle, news.frenchText));
 				case 'en':
-					return news.map(news => this.getBatchData(news.englishTitle!, news.image!, news.englishText!));
+					return news.map(news => this.getBatchData(news.id, news.englishTitle, news.englishText));
 				case 'de':
-					return news.map(news => this.getBatchData(news.germanTitle!, news.image!, news.germanText!));
+					return news.map(news => this.getBatchData(news.id, news.germanTitle, news.germanText));
 				case 'es':
-					return news.map(news => this.getBatchData(news.spanishTitle!, news.image!, news.spanishText!));
+					return news.map(news => this.getBatchData(news.id, news.spanishTitle, news.spanishText));
 				default:
-					return news.map(news => this.getBatchData(news.frenchTitle!, news.image!, news.frenchText!));
+					return news.map(news => this.getBatchData(news.id, news.frenchTitle, news.frenchText));
 			}
 		},
-		getBatchData(title: string, image: Image, text: string): DisplayedNews {
+		getBatchData(id: number, title: string | null, text: string | null): DisplayedNews {
 			return {
-				title: title,
-				image: image,
-				text: text,
+				id,
+				title: title || '',
+				text: text || '',
 				hide: true
 			};
 		},
-		transformImage(image: Array<number>): string {
-			return btoa(image.reduce((data: string, byte: number) => data + String.fromCharCode(byte), ''));
-		},
-		async overload(page: number): Promise<void> {
+		async overload(page: number) {
 			EventBus.emit('isLoading', true);
 			try {
 				const newLoad = await NewsService.getNewsFromPage(page);
@@ -76,7 +72,7 @@ export default defineComponent({
 				return Promise.reject(err);
 			}
 		},
-		async getFirstNews(): Promise<void> {
+		async getFirstNews() {
 			EventBus.emit('isLoading', true);
 			try {
 				this.batch = await NewsService.getNewsFromPage(this.page);
@@ -91,11 +87,11 @@ export default defineComponent({
 			}
 		}
 	},
-	async mounted(): Promise<void> {
+	async mounted() {
 		await this.getFirstNews();
 	},
 	watch: {
-		language(): void {
+		language() {
 			this.page = 1;
 			this.getFirstNews();
 		}
@@ -118,15 +114,14 @@ export default defineComponent({
 	display: block;
 	text-align: center;
 	margin: 10px;
-	&:hover {
-		color: yellow;
-	}
+	padding: 2px;
+	cursor: pointer;
 }
 .bloc {
 	background-image: url('../../assets/background/bloc_news.webp');
 	background-repeat: repeat-y;
 	margin-bottom: 10px;
-	margin-right: 10px;
+	margin-right: 11px;
 	border: 1px solid #ffee92;
 	outline: 1px solid #92471f;
 	transition: max-height 0.9s ease-out;

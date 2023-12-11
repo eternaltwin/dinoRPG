@@ -1,8 +1,6 @@
-import { Image } from './Image.mjs';
-
 export interface DisplayedNews {
+	id: number;
 	title: string;
-	image: Image;
 	text: string;
 	hide: boolean;
 }
