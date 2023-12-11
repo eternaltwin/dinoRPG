@@ -89,7 +89,7 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		'dinozStore.getDinozList': function (dinozList: Array<DinozFiche>) {
+		getDinozList: function (dinozList: Array<DinozFiche>) {
 			this.dinozList = orderDinozList(dinozList);
 		}
 	},

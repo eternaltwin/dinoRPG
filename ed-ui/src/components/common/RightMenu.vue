@@ -88,6 +88,8 @@ export default defineComponent({
 		},
 		logOff(): void {
 			this.localStore.setJwt(undefined);
+			this.dinozStore.$reset;
+			this.playerStore.$reset;
 			this.$router.go(0);
 		},
 		isDevEnv(): boolean {
