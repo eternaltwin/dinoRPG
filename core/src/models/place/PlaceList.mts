@@ -127,7 +127,8 @@ export const placeList: Record<
 		placeId: 13,
 		name: 'gomisl',
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.JOVEBOZE
+			[ConditionEnum.STATUS]: statusList.JOVEBOZE,
+			[ConditionEnum.ACTIVE]: false
 		},
 		borderPlace: [1],
 		alias: 92,
@@ -203,7 +204,8 @@ export const placeList: Record<
 		name: 'gostep',
 		borderPlace: [20],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY
+			[ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY,
+			[ConditionEnum.ACTIVE]: false
 		},
 		alias: 55,
 		map: MapZone.STEPPE
@@ -424,7 +426,10 @@ export const placeList: Record<
 		placeId: 52,
 		name: 'tourbt',
 		borderPlace: [47, 53],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		conditions: {
+			[ConditionEnum.ACTIVE]: false //'roid'
+		}
 	},
 	GO_TO_CELESTIAL_ISLAND: {
 		placeId: 53,
