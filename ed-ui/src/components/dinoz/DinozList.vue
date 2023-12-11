@@ -89,8 +89,13 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		getDinozList: function (dinozList: Array<DinozFiche>) {
+		'dinozStore.getDinozList': function (dinozList: Array<DinozFiche>) {
+			console.log('here');
 			this.dinozList = orderDinozList(dinozList);
+		},
+		'dinozStore.getDinozList.length': function () {
+			const list = this.dinozStore.getDinozList as Array<DinozFiche>;
+			this.dinozList = orderDinozList(list);
 		}
 	},
 	mounted(): void {

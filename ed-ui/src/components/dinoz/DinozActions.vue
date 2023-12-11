@@ -323,18 +323,22 @@ export default defineComponent({
 							return;
 						}
 
-						const previousLeader = currentDinoz.leaderId;
+						const previousLeader = currentDinoz.id;
+						const followingdinoz = currentDinozList
+							.filter(dinoz => dinoz.leaderId === previousLeader && dinoz.id !== previousLeader)
+							.map(d => d.id);
 
 						currentDinozList = currentDinozList.map(dinoz => {
 							if (dinoz.id === currentDinoz.id) {
+								dinoz.followers = [];
+							} else if (followingdinoz.includes(dinoz.id)) {
 								dinoz.leaderId = null;
-							} else if (dinoz.id === previousLeader) {
-								dinoz.followers = dinoz.followers.filter(follower => follower !== currentDinoz.id);
 							}
 							return dinoz;
 						});
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
 						errorHandler.handle(e);
 					}
