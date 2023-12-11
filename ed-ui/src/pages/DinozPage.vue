@@ -6,13 +6,13 @@
 		<DinozDisplay :dinozData="dinozData" />
 	</div>
 	<div class="dinozPanels" v-if="nameChoosen === true">
-		<!--<div class="header" />(à implémenter)-->
 		<DinozActions
 			:dinozActions="dinozData.actions"
 			:updateActions="updateActions"
 			:missionId="dinozData.missionId"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
+			:key="dinozData"
 		/>
 		<TabPanel :dinozData="dinozData" :key="dinozData" />
 		<div class="footer" />

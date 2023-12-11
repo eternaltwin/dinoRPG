@@ -110,6 +110,7 @@ export async function getAvailableActions(
 			})),
 			dinoz
 		);
+		console.log(dinozToFollow)
 		if (dinozToFollow.length > 0 && isAlive(dinoz)) {
 			availableActions.push(actionList[Action.FOLLOW]);
 		}

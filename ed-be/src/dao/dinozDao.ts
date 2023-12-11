@@ -549,6 +549,7 @@ export async function getAvailableDinozToFollow(playerId: number, dinozId: numbe
 			placeId: true,
 			leaderId: true,
 			isSelling: true,
+			life: true,
 			followers: { select: { id: true } },
 			skills: { select: { skillId: true } }
 		}

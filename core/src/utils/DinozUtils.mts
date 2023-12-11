@@ -411,7 +411,7 @@ export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
 };
 
 export const getFollowableDinoz = <
-	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'isSelling' | 'followers' | 'skills'>
+	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'isSelling' | 'followers' | 'skills' | 'life'>
 >(
 	dinozList: T[],
 	potentialFollower: Pick<DinozFiche, 'id' | 'placeId'>
@@ -432,6 +432,10 @@ export const getFollowableDinoz = <
 		// Filter out Dinoz that are not in the same place
 		if (dinoz.placeId !== potentialFollower.placeId) {
 			return false;
+		}
+
+		if (dinoz.life <= 0) {
+			return false
 		}
 
 		const maxFollowers = getMaxFollowers(dinoz);
