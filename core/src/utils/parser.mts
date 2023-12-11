@@ -80,7 +80,7 @@ export function conditionParser(
 				return false;
 		}
 	} else if (ACTIVE) {
-		result = ACTIVE
+		result = ACTIVE;
 	} else {
 		result = false;
 	}

@@ -47,33 +47,40 @@ export const actualPlace = (dinoz: Pick<Dinoz, 'placeId'>) => {
 	return place;
 };
 
-export const getMaxXp = (dinoz: Pick<Dinoz, 'level'> & {
-	status: Pick<DinozStatus, 'statusId'>[];
-}) => {
+export const getMaxXp = (
+	dinoz: Pick<Dinoz, 'level'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	}
+) => {
 	const level = levelList.find(level => level.id === dinoz.level);
 
 	if (!level) {
 		throw new Error(`Level ${dinoz.level} doesn't exist.`);
 	}
 
-	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_3) && dinoz.level === 70) return 0
-	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_2) && dinoz.level === 60) return 0
-	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_1) && dinoz.level === 50) return 0
+	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_3) && dinoz.level === 70) return 0;
+	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_2) && dinoz.level === 60) return 0;
+	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_1) && dinoz.level === 50) return 0;
 
 	return level.experience;
 };
 
-export const remainingXPToLevelUp = (dinoz: Pick<Dinoz, 'experience' | 'level'> & {
-	status: Pick<DinozStatus, 'statusId'>[];
-}) => {
+export const remainingXPToLevelUp = (
+	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	}
+) => {
 	return getMaxXp(dinoz) - dinoz.experience;
 };
 
 export const isMaxLevel = (dinoz: Pick<Dinoz, 'level'>, config: Config) => dinoz.level === config.dinoz.maxLevel;
 
-export const canLevelUp = (dinoz: Pick<Dinoz, 'experience' | 'level'> & {
-	status: Pick<DinozStatus, 'statusId'>[];
-}, config: Config) => {
+export const canLevelUp = (
+	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	},
+	config: Config
+) => {
 	return remainingXPToLevelUp(dinoz) <= 0 && !isMaxLevel(dinoz, config);
 };
 
@@ -435,7 +442,7 @@ export const getFollowableDinoz = <
 		}
 
 		if (dinoz.life <= 0) {
-			return false
+			return false;
 		}
 
 		const maxFollowers = getMaxFollowers(dinoz);
@@ -486,13 +493,15 @@ export const orderDinozList = <T extends Pick<DinozFiche, 'id' | 'order' | 'name
 	return sortedByOrderAndName;
 };
 
-export const canWinXP = (dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & {
-	status: Pick<DinozStatus, 'statusId'>[];
-}) => {
-	if (dinoz.status.some(s => s.statusId === statusList.CURSED)) return false
-	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_3)) return true
-	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_2) && dinoz.level < 70) return true
-	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_1) && dinoz.level < 60) return true
-	if (dinoz.level < 50) return true
-	else return false
+export const canWinXP = (
+	dinoz: Pick<Dinoz, 'id' | 'experience' | 'level'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	}
+) => {
+	if (dinoz.status.some(s => s.statusId === statusList.CURSED)) return false;
+	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_3)) return true;
+	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_2) && dinoz.level < 70) return true;
+	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_1) && dinoz.level < 60) return true;
+	if (dinoz.level < 50) return true;
+	else return false;
 };

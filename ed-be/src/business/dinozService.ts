@@ -110,7 +110,6 @@ export async function getAvailableActions(
 			})),
 			dinoz
 		);
-		console.log(dinozToFollow)
 		if (dinozToFollow.length > 0 && isAlive(dinoz)) {
 			availableActions.push(actionList[Action.FOLLOW]);
 		}
@@ -483,6 +482,10 @@ export async function betaMove(req: Request) {
 	// Check if dinoz belongs to player who do the request
 	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+	}
+
+	if (dinoz.leaderId) {
+		throw new ErrorFormator(400, 'notLeader');
 	}
 
 	const followers = dinoz.followers.map(follower => ({

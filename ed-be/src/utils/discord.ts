@@ -82,7 +82,6 @@ export async function sendDiscord(props: string) {
 	const discordChannel = secrets.find(s => s.key === 'channel');
 	try {
 		if (!(discordToken && discordChannel)) {
-			console.log(props);
 			return;
 		}
 		const webhookClient = new WebhookClient({
@@ -97,7 +96,6 @@ export async function sendDiscord(props: string) {
 }
 
 export async function sendJSONToDiscord(functionName: string, description: string, json: object, json2?: object) {
-	console.log(json);
 	const secrets = await getAllSecretsRequest();
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');

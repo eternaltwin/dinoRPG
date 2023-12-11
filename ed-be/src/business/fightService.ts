@@ -221,9 +221,7 @@ export async function rewardFight(
 	// If attackers won
 	if (fightResult.winner) {
 		await updateMultipleDinoz(
-			team
-				.filter(d => canWinXP(d))
-				.map(d => d.id),
+			team.filter(d => canWinXP(d)).map(d => d.id),
 			{
 				experience: {
 					increment: experienceGained

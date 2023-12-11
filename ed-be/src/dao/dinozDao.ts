@@ -271,6 +271,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			nbrUpLightning: true,
 			nbrUpAir: true,
 			placeId: true,
+			leaderId: true,
 			player: {
 				select: {
 					id: true,

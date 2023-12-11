@@ -62,7 +62,6 @@ export async function createOffer(req: Request) {
 
 	itemsAndIngredients.push(
 		...ingredients.map(ingredient => {
-			console.log(ingredient);
 			const ingredientData = ingredientList[ingredient.name.toLocaleUpperCase()];
 
 			if (!ingredientData) {
@@ -102,7 +101,6 @@ export async function createOffer(req: Request) {
 
 	itemsAndIngredients.push(
 		...items.map(item => {
-			console.log(item);
 			const itemId = Object.entries(itemNameList).find(([, value]) => value === item.name)?.[0];
 
 			if (!itemId) {
