@@ -83,7 +83,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { missionsList, shopNameList } from '../../constants/index.js';
-import { sessionStore, dinozStore } from '../../store/index.js';
+import { dinozStore, sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -307,6 +307,38 @@ export default defineComponent({
 					}
 					break;
 				}
+				case Action.DISBAND:
+					try {
+						await DinozService.disband(+this.$route.params.id);
+
+						let currentDinozList = this.dinozStore.getDinozList;
+						if (!currentDinozList) {
+							EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+							return;
+						}
+
+						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
+						if (!currentDinoz) {
+							EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+							return;
+						}
+
+						const previousLeader = currentDinoz.leaderId;
+
+						currentDinozList = currentDinozList.map(dinoz => {
+							if (dinoz.id === currentDinoz.id) {
+								dinoz.leaderId = null;
+							} else if (dinoz.id === previousLeader) {
+								dinoz.followers = dinoz.followers.filter(follower => follower !== currentDinoz.id);
+							}
+							return dinoz;
+						});
+
+						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+					} catch (e) {
+						errorHandler.handle(e);
+					}
+					break;
 				default:
 					console.log(action.name);
 					break;

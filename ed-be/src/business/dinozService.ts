@@ -51,6 +51,7 @@ import {
 	getDinozGatherData,
 	getDinozSkillAndStatusRequest,
 	getDinozSkillRequest,
+	getFollowingDinoz,
 	getManageData,
 	updateDinoz,
 	updateMultipleDinoz,
@@ -113,6 +114,10 @@ export async function getAvailableActions(
 		if (dinozToFollow.length > 0 && isAlive(dinoz) && dinoz.followers.length === 0) {
 			availableActions.push(actionList[Action.FOLLOW]);
 		}
+	}
+	console.log(dinoz);
+	if (dinoz.followers.length > 0) {
+		availableActions.push(actionList[Action.DISBAND]);
 	}
 
 	if (!isAlive(dinoz)) {
@@ -894,4 +899,27 @@ export async function unfollowDinoz(req: Request) {
 
 	// Update dinoz
 	await updateDinoz(dinozId, { leader: { disconnect: true } });
+}
+
+export async function disband(req: Request) {
+	const dinozId = +req.params.id;
+
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	}
+	const dinoz = await getFollowingDinoz(dinozId);
+
+	if (!dinoz) {
+		throw new ErrorFormator(500, 'No dinoz found');
+	}
+
+	for (const d of dinoz.followers) {
+		await updateDinoz(d.id, { leader: { disconnect: true } });
+	}
 }

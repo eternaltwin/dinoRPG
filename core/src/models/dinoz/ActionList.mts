@@ -17,7 +17,8 @@ export enum Action {
 	ENERGY = 'energy',
 	HUNT = 'hunt',
 	SEEK = 'seek',
-	ANNIV = 'anniv'
+	ANNIV = 'anniv',
+	DISBAND = 'disband'
 }
 
 export interface ActionFiche {
@@ -96,5 +97,9 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.ANNIV]: {
 		name: Action.ANNIV,
 		imgName: 'act_default'
+	},
+	[Action.DISBAND]: {
+		name: Action.DISBAND,
+		imgName: 'act_follow_stop'
 	}
 };

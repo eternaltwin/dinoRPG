@@ -7,6 +7,7 @@ import {
 	betaMove,
 	buyDinoz,
 	digWithDinoz,
+	disband,
 	followDinoz,
 	gatherWithDinoz,
 	getDinozFiche,
@@ -569,6 +570,28 @@ routes.post(
 
 		try {
 			await unfollowDinoz(req);
+			return res.status(200).send({
+				message: 'Dinoz unfollowed'
+			});
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(500).send(e.message);
+		}
+	}
+);
+
+// Disband
+routes.post(
+	`${commonPath}/:id/disband`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await disband(req);
 			return res.status(200).send({
 				message: 'Dinoz unfollowed'
 			});

@@ -129,5 +129,11 @@ export const DinozService = {
 			.post(`/dinoz/${dinozId}/unfollow`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	disband(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/disband`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
