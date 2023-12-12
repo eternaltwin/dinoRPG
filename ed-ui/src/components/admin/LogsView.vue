@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { LogsService } from '../../services/index.js';
-import { Log, LogType } from '@drpg/prisma';
+import prisma = require('@drpg/prisma');
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
 
@@ -16,11 +16,11 @@ export default defineComponent({
 	name: 'LogsView',
 	data() {
 		return {
-			logs: [] as Log[],
-			type: null as LogType | null,
+			logs: [] as prisma.Log[],
+			type: null as prisma.LogType | null,
 			userId: null as number | null,
 			dinozId: null as number | null,
-			LogType
+			LogType: prisma.LogType
 		};
 	},
 	methods: {

@@ -1578,7 +1578,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@drpg/prisma@workspace:prisma":
+"@drpg/prisma@workspace:^, @drpg/prisma@workspace:prisma":
   version: 0.0.0-use.local
   resolution: "@drpg/prisma@workspace:prisma"
   languageName: unknown
@@ -6424,6 +6424,7 @@ __metadata:
   dependencies:
     "@drpg/core": "workspace:^"
     "@drpg/dino-animation": "workspace:^"
+    "@drpg/prisma": "workspace:^"
     "@types/url-join": "npm:^4.0.2"
     "@types/vue-i18n": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.10.0"

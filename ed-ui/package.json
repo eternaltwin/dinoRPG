@@ -7,7 +7,7 @@
     "serve:app": "yarn run build:deps && yarn run lint:fix && vite --host",
     "serve:deps": "yarn run build:deps --watch",
     "build": "yarn run build:deps && vite build",
-    "build:deps": "tsc --project ./tsconfig.deps.json --noEmit",
+    "build:deps": "tsc --build ./tsconfig.deps.json",
     "preview": "vite preview",
     "lint:test": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .ts,vue --ignore-path .gitignore . --fix"
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@drpg/core": "workspace:^",
     "@drpg/dino-animation": "workspace:^",
+    "@drpg/prisma": "workspace:^",
     "@types/url-join": "^4.0.2",
     "@types/vue-i18n": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",

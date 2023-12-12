@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
     "composite": true,
+		"noEmit": true,
     "outDir": "ts-out"
   },
   "files": [],
   "include": [],
   "references": [
     {
-      "path": "../core"
+      "path": "../core/tsconfig.json"
     },
     {
-      "path": "../prisma"
+      "path": "../prisma/tsconfig.json"
     }
   ]
 }
