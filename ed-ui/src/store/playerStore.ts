@@ -11,7 +11,8 @@ export const playerStore = defineStore('playerStore', {
 			hasPDA: false,
 			hasPMI: false,
 			currentDinozId: undefined
-		}
+		},
+		admin: false
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
@@ -33,6 +34,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setPlayerOptions(playerOptions: PlayerOptions): void {
 			this.playerOptions = playerOptions;
+		},
+		setAdmin(admin: boolean): void {
+			this.admin = admin;
 		}
 	},
 	persist: {

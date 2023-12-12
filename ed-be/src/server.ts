@@ -12,6 +12,7 @@ import fightRoutes from './routes/fight.routes.js';
 import ingredientRoutes from './routes/ingredient.routes.js';
 import inventoryRoutes from './routes/inventory.routes.js';
 import levelRoutes from './routes/level.routes.js';
+import logRoutes from './routes/log.routes.js';
 import missionsRoutes from './routes/missions.routes.js';
 import newsRoutes from './routes/news.routes.js';
 import npcRoutes from './routes/npc.routes.js';
@@ -70,6 +71,7 @@ app.use(playerRoutes);
 app.use(shopRoutes);
 app.use(rankingRoutes);
 app.use(offerRoutes);
+app.use(logRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 

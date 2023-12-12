@@ -4,7 +4,7 @@ import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
 import { ImportResponse } from '@drpg/core/models/import/ImportResponse';
-import { TwinoStat } from '@drpg/core/dist/models/import/twinoStat.mjs';
+import { TwinoStat } from '@drpg/core/models/import/twinoStat';
 import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 

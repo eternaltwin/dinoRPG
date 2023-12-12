@@ -183,6 +183,11 @@ export type OfferBid = $Result.DefaultSelection<Prisma.$OfferBidPayload>
  * 
  */
 export type Offer = $Result.DefaultSelection<Prisma.$OfferPayload>
+/**
+ * Model Log
+ * 
+ */
+export type Log = $Result.DefaultSelection<Prisma.$LogPayload>
 
 /**
  * Enums
@@ -196,11 +201,36 @@ export namespace $Enums {
 
 export type OfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus]
 
+
+export const LogType: {
+  ItemUsed: 'ItemUsed',
+  ItemBought: 'ItemBought',
+  GoldWon: 'GoldWon',
+  GoldLost: 'GoldLost',
+  Move: 'Move',
+  LevelUp: 'LevelUp',
+  Fight: 'Fight',
+  Death: 'Death',
+  Revive: 'Revive',
+  MissionStep: 'MissionStep',
+  MissionFinished: 'MissionFinished',
+  MissionCanceled: 'MissionCanceled',
+  Gather: 'Gather',
+  CreateDinoz: 'CreateDinoz',
+  ChangeDinozOrder: 'ChangeDinozOrder'
+};
+
+export type LogType = (typeof LogType)[keyof typeof LogType]
+
 }
 
 export type OfferStatus = $Enums.OfferStatus
 
 export const OfferStatus: typeof $Enums.OfferStatus
+
+export type LogType = $Enums.LogType
+
+export const LogType: typeof $Enums.LogType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -663,6 +693,16 @@ export class PrismaClient<
     * ```
     */
   get offer(): Prisma.OfferDelegate<ExtArgs>;
+
+  /**
+   * `prisma.log`: Exposes CRUD operations for the **Log** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Logs
+    * const logs = await prisma.log.findMany()
+    * ```
+    */
+  get log(): Prisma.LogDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -720,8 +760,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.6.0
-   * Query Engine version: e95e739751f42d8ca026f6b910f5a2dc5adeaeee
+   * Prisma Client JS version: 5.7.0
+   * Query Engine version: 79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
    */
   export type PrismaVersion = {
     client: string
@@ -1166,7 +1206,8 @@ export namespace Prisma {
     Secret: 'Secret',
     OfferItem: 'OfferItem',
     OfferBid: 'OfferBid',
-    Offer: 'Offer'
+    Offer: 'Offer',
+    Log: 'Log'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1183,7 +1224,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer'
+      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer' | 'log'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -3431,6 +3472,72 @@ export namespace Prisma {
           }
         }
       }
+      Log: {
+        payload: Prisma.$LogPayload<ExtArgs>
+        fields: Prisma.LogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LogFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LogFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
+          }
+          findFirst: {
+            args: Prisma.LogFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LogFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
+          }
+          findMany: {
+            args: Prisma.LogFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>[]
+          }
+          create: {
+            args: Prisma.LogCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
+          }
+          createMany: {
+            args: Prisma.LogCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.LogDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
+          }
+          update: {
+            args: Prisma.LogUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
+          }
+          deleteMany: {
+            args: Prisma.LogDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LogUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.LogUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$LogPayload>
+          }
+          aggregate: {
+            args: Prisma.LogAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateLog>
+          }
+          groupBy: {
+            args: Prisma.LogGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<LogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LogCountArgs<ExtArgs>,
+            result: $Utils.Optional<LogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3623,6 +3730,7 @@ export namespace Prisma {
     dinozItemsToDinoz: number
     offers: number
     followers: number
+    logs: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3635,6 +3743,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: boolean | DinozCountOutputTypeCountDinozItemsToDinozArgs
     offers?: boolean | DinozCountOutputTypeCountOffersArgs
     followers?: boolean | DinozCountOutputTypeCountFollowersArgs
+    logs?: boolean | DinozCountOutputTypeCountLogsArgs
   }
 
   // Custom InputTypes
@@ -3719,6 +3828,14 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountFollowersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozWhereInput
+  }
+
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogWhereInput
   }
 
 
@@ -3892,6 +4009,7 @@ export namespace Prisma {
     rewards: number
     offers: number
     bids: number
+    logs: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3907,6 +4025,7 @@ export namespace Prisma {
     rewards?: boolean | PlayerCountOutputTypeCountRewardsArgs
     offers?: boolean | PlayerCountOutputTypeCountOffersArgs
     bids?: boolean | PlayerCountOutputTypeCountBidsArgs
+    logs?: boolean | PlayerCountOutputTypeCountLogsArgs
   }
 
   // Custom InputTypes
@@ -4015,6 +4134,14 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountBidsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OfferBidWhereInput
+  }
+
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogWhereInput
   }
 
 
@@ -5015,7 +5142,6 @@ export namespace Prisma {
     leaderId: number | null
     raceId: number | null
     level: number | null
-    missionId: number | null
     nextUpElementId: number | null
     nextUpAltElementId: number | null
     placeId: number | null
@@ -5037,7 +5163,6 @@ export namespace Prisma {
     leaderId: number | null
     raceId: number | null
     level: number | null
-    missionId: number | null
     nextUpElementId: number | null
     nextUpAltElementId: number | null
     placeId: number | null
@@ -5063,7 +5188,6 @@ export namespace Prisma {
     isSelling: boolean | null
     raceId: number | null
     level: number | null
-    missionId: number | null
     nextUpElementId: number | null
     nextUpAltElementId: number | null
     placeId: number | null
@@ -5093,7 +5217,6 @@ export namespace Prisma {
     isSelling: boolean | null
     raceId: number | null
     level: number | null
-    missionId: number | null
     nextUpElementId: number | null
     nextUpAltElementId: number | null
     placeId: number | null
@@ -5123,7 +5246,6 @@ export namespace Prisma {
     isSelling: number
     raceId: number
     level: number
-    missionId: number
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -5151,7 +5273,6 @@ export namespace Prisma {
     leaderId?: true
     raceId?: true
     level?: true
-    missionId?: true
     nextUpElementId?: true
     nextUpAltElementId?: true
     placeId?: true
@@ -5173,7 +5294,6 @@ export namespace Prisma {
     leaderId?: true
     raceId?: true
     level?: true
-    missionId?: true
     nextUpElementId?: true
     nextUpAltElementId?: true
     placeId?: true
@@ -5199,7 +5319,6 @@ export namespace Prisma {
     isSelling?: true
     raceId?: true
     level?: true
-    missionId?: true
     nextUpElementId?: true
     nextUpAltElementId?: true
     placeId?: true
@@ -5229,7 +5348,6 @@ export namespace Prisma {
     isSelling?: true
     raceId?: true
     level?: true
-    missionId?: true
     nextUpElementId?: true
     nextUpAltElementId?: true
     placeId?: true
@@ -5259,7 +5377,6 @@ export namespace Prisma {
     isSelling?: true
     raceId?: true
     level?: true
-    missionId?: true
     nextUpElementId?: true
     nextUpAltElementId?: true
     placeId?: true
@@ -5376,7 +5493,6 @@ export namespace Prisma {
     isSelling: boolean
     raceId: number
     level: number
-    missionId: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -5425,7 +5541,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId?: boolean
     level?: boolean
-    missionId?: boolean
     nextUpElementId?: boolean
     nextUpAltElementId?: boolean
     placeId?: boolean
@@ -5456,6 +5571,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: boolean | Dinoz$dinozItemsToDinozArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
+    logs?: boolean | Dinoz$logsArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -5468,7 +5584,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId?: boolean
     level?: boolean
-    missionId?: boolean
     nextUpElementId?: boolean
     nextUpAltElementId?: boolean
     placeId?: boolean
@@ -5502,6 +5617,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: boolean | Dinoz$dinozItemsToDinozArgs<ExtArgs>
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
+    logs?: boolean | Dinoz$logsArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5521,6 +5637,7 @@ export namespace Prisma {
       dinozItemsToDinoz: Prisma.$DinozItemToDinozPayload<ExtArgs>[]
       offers: Prisma.$OfferPayload<ExtArgs>[]
       followers: Prisma.$DinozPayload<ExtArgs>[]
+      logs: Prisma.$LogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5531,7 +5648,6 @@ export namespace Prisma {
       isSelling: boolean
       raceId: number
       level: number
-      missionId: number | null
       nextUpElementId: number
       nextUpAltElementId: number
       placeId: number
@@ -5939,6 +6055,8 @@ export namespace Prisma {
 
     followers<T extends Dinoz$followersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5975,7 +6093,6 @@ export namespace Prisma {
     readonly isSelling: FieldRef<"Dinoz", 'Boolean'>
     readonly raceId: FieldRef<"Dinoz", 'Int'>
     readonly level: FieldRef<"Dinoz", 'Int'>
-    readonly missionId: FieldRef<"Dinoz", 'Int'>
     readonly nextUpElementId: FieldRef<"Dinoz", 'Int'>
     readonly nextUpAltElementId: FieldRef<"Dinoz", 'Int'>
     readonly placeId: FieldRef<"Dinoz", 'Int'>
@@ -6539,6 +6656,27 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+  }
+
+
+  /**
+   * Dinoz.logs
+   */
+  export type Dinoz$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    where?: LogWhereInput
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    cursor?: LogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
   }
 
 
@@ -26627,6 +26765,7 @@ export namespace Prisma {
     ranking?: boolean | Player$rankingArgs<ExtArgs>
     offers?: boolean | Player$offersArgs<ExtArgs>
     bids?: boolean | Player$bidsArgs<ExtArgs>
+    logs?: boolean | Player$logsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -26664,6 +26803,7 @@ export namespace Prisma {
     ranking?: boolean | Player$rankingArgs<ExtArgs>
     offers?: boolean | Player$offersArgs<ExtArgs>
     bids?: boolean | Player$bidsArgs<ExtArgs>
+    logs?: boolean | Player$logsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -26685,6 +26825,7 @@ export namespace Prisma {
       ranking: Prisma.$RankingPayload<ExtArgs> | null
       offers: Prisma.$OfferPayload<ExtArgs>[]
       bids: Prisma.$OfferBidPayload<ExtArgs>[]
+      logs: Prisma.$LogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -27095,6 +27236,8 @@ export namespace Prisma {
     offers<T extends Player$offersArgs<ExtArgs> = {}>(args?: Subset<T, Player$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     bids<T extends Player$bidsArgs<ExtArgs> = {}>(args?: Subset<T, Player$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    logs<T extends Player$logsArgs<ExtArgs> = {}>(args?: Subset<T, Player$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -27732,6 +27875,27 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+  }
+
+
+  /**
+   * Player.logs
+   */
+  export type Player$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    where?: LogWhereInput
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    cursor?: LogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
   }
 
 
@@ -38426,6 +38590,994 @@ export namespace Prisma {
 
 
   /**
+   * Model Log
+   */
+
+  export type AggregateLog = {
+    _count: LogCountAggregateOutputType | null
+    _avg: LogAvgAggregateOutputType | null
+    _sum: LogSumAggregateOutputType | null
+    _min: LogMinAggregateOutputType | null
+    _max: LogMaxAggregateOutputType | null
+  }
+
+  export type LogAvgAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    dinozId: number | null
+  }
+
+  export type LogSumAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    dinozId: number | null
+  }
+
+  export type LogMinAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    dinozId: number | null
+    type: $Enums.LogType | null
+    createdAt: Date | null
+  }
+
+  export type LogMaxAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    dinozId: number | null
+    type: $Enums.LogType | null
+    createdAt: Date | null
+  }
+
+  export type LogCountAggregateOutputType = {
+    id: number
+    playerId: number
+    dinozId: number
+    type: number
+    values: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LogAvgAggregateInputType = {
+    id?: true
+    playerId?: true
+    dinozId?: true
+  }
+
+  export type LogSumAggregateInputType = {
+    id?: true
+    playerId?: true
+    dinozId?: true
+  }
+
+  export type LogMinAggregateInputType = {
+    id?: true
+    playerId?: true
+    dinozId?: true
+    type?: true
+    createdAt?: true
+  }
+
+  export type LogMaxAggregateInputType = {
+    id?: true
+    playerId?: true
+    dinozId?: true
+    type?: true
+    createdAt?: true
+  }
+
+  export type LogCountAggregateInputType = {
+    id?: true
+    playerId?: true
+    dinozId?: true
+    type?: true
+    values?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Log to aggregate.
+     */
+    where?: LogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Logs to fetch.
+     */
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Logs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Logs
+    **/
+    _count?: true | LogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LogMaxAggregateInputType
+  }
+
+  export type GetLogAggregateType<T extends LogAggregateArgs> = {
+        [P in keyof T & keyof AggregateLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLog[P]>
+      : GetScalarType<T[P], AggregateLog[P]>
+  }
+
+
+
+
+  export type LogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LogWhereInput
+    orderBy?: LogOrderByWithAggregationInput | LogOrderByWithAggregationInput[]
+    by: LogScalarFieldEnum[] | LogScalarFieldEnum
+    having?: LogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LogCountAggregateInputType | true
+    _avg?: LogAvgAggregateInputType
+    _sum?: LogSumAggregateInputType
+    _min?: LogMinAggregateInputType
+    _max?: LogMaxAggregateInputType
+  }
+
+  export type LogGroupByOutputType = {
+    id: number
+    playerId: number
+    dinozId: number | null
+    type: $Enums.LogType
+    values: string[]
+    createdAt: Date
+    _count: LogCountAggregateOutputType | null
+    _avg: LogAvgAggregateOutputType | null
+    _sum: LogSumAggregateOutputType | null
+    _min: LogMinAggregateOutputType | null
+    _max: LogMaxAggregateOutputType | null
+  }
+
+  type GetLogGroupByPayload<T extends LogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LogGroupByOutputType[P]>
+            : GetScalarType<T[P], LogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    dinozId?: boolean
+    type?: boolean
+    values?: boolean
+    createdAt?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Log$dinozArgs<ExtArgs>
+  }, ExtArgs["result"]["log"]>
+
+  export type LogSelectScalar = {
+    id?: boolean
+    playerId?: boolean
+    dinozId?: boolean
+    type?: boolean
+    values?: boolean
+    createdAt?: boolean
+  }
+
+  export type LogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Log$dinozArgs<ExtArgs>
+  }
+
+
+  export type $LogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Log"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+      dinoz: Prisma.$DinozPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      playerId: number
+      dinozId: number | null
+      type: $Enums.LogType
+      values: string[]
+      createdAt: Date
+    }, ExtArgs["result"]["log"]>
+    composites: {}
+  }
+
+
+  type LogGetPayload<S extends boolean | null | undefined | LogDefaultArgs> = $Result.GetResult<Prisma.$LogPayload, S>
+
+  type LogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<LogFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: LogCountAggregateInputType | true
+    }
+
+  export interface LogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Log'], meta: { name: 'Log' } }
+    /**
+     * Find zero or one Log that matches the filter.
+     * @param {LogFindUniqueArgs} args - Arguments to find a Log
+     * @example
+     * // Get one Log
+     * const log = await prisma.log.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends LogFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, LogFindUniqueArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Log that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {LogFindUniqueOrThrowArgs} args - Arguments to find a Log
+     * @example
+     * // Get one Log
+     * const log = await prisma.log.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends LogFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, LogFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Log that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogFindFirstArgs} args - Arguments to find a Log
+     * @example
+     * // Get one Log
+     * const log = await prisma.log.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends LogFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, LogFindFirstArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Log that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogFindFirstOrThrowArgs} args - Arguments to find a Log
+     * @example
+     * // Get one Log
+     * const log = await prisma.log.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends LogFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, LogFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Logs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Logs
+     * const logs = await prisma.log.findMany()
+     * 
+     * // Get first 10 Logs
+     * const logs = await prisma.log.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const logWithIdOnly = await prisma.log.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends LogFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, LogFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Log.
+     * @param {LogCreateArgs} args - Arguments to create a Log.
+     * @example
+     * // Create one Log
+     * const Log = await prisma.log.create({
+     *   data: {
+     *     // ... data to create a Log
+     *   }
+     * })
+     * 
+    **/
+    create<T extends LogCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, LogCreateArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Logs.
+     *     @param {LogCreateManyArgs} args - Arguments to create many Logs.
+     *     @example
+     *     // Create many Logs
+     *     const log = await prisma.log.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends LogCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, LogCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Log.
+     * @param {LogDeleteArgs} args - Arguments to delete one Log.
+     * @example
+     * // Delete one Log
+     * const Log = await prisma.log.delete({
+     *   where: {
+     *     // ... filter to delete one Log
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends LogDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, LogDeleteArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Log.
+     * @param {LogUpdateArgs} args - Arguments to update one Log.
+     * @example
+     * // Update one Log
+     * const log = await prisma.log.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends LogUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, LogUpdateArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Logs.
+     * @param {LogDeleteManyArgs} args - Arguments to filter Logs to delete.
+     * @example
+     * // Delete a few Logs
+     * const { count } = await prisma.log.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends LogDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, LogDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Logs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Logs
+     * const log = await prisma.log.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends LogUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, LogUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Log.
+     * @param {LogUpsertArgs} args - Arguments to update or create a Log.
+     * @example
+     * // Update or create a Log
+     * const log = await prisma.log.upsert({
+     *   create: {
+     *     // ... data to create a Log
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Log we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends LogUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, LogUpsertArgs<ExtArgs>>
+    ): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Logs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogCountArgs} args - Arguments to filter Logs to count.
+     * @example
+     * // Count the number of Logs
+     * const count = await prisma.log.count({
+     *   where: {
+     *     // ... the filter for the Logs we want to count
+     *   }
+     * })
+    **/
+    count<T extends LogCountArgs>(
+      args?: Subset<T, LogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Log.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LogAggregateArgs>(args: Subset<T, LogAggregateArgs>): Prisma.PrismaPromise<GetLogAggregateType<T>>
+
+    /**
+     * Group by Log.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LogGroupByArgs['orderBy'] }
+        : { orderBy?: LogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Log model
+   */
+  readonly fields: LogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Log.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    dinoz<T extends Log$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Log$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Log model
+   */ 
+  interface LogFieldRefs {
+    readonly id: FieldRef<"Log", 'Int'>
+    readonly playerId: FieldRef<"Log", 'Int'>
+    readonly dinozId: FieldRef<"Log", 'Int'>
+    readonly type: FieldRef<"Log", 'LogType'>
+    readonly values: FieldRef<"Log", 'String[]'>
+    readonly createdAt: FieldRef<"Log", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Log findUnique
+   */
+  export type LogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * Filter, which Log to fetch.
+     */
+    where: LogWhereUniqueInput
+  }
+
+
+  /**
+   * Log findUniqueOrThrow
+   */
+  export type LogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * Filter, which Log to fetch.
+     */
+    where: LogWhereUniqueInput
+  }
+
+
+  /**
+   * Log findFirst
+   */
+  export type LogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * Filter, which Log to fetch.
+     */
+    where?: LogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Logs to fetch.
+     */
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Logs.
+     */
+    cursor?: LogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Logs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Logs.
+     */
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
+  }
+
+
+  /**
+   * Log findFirstOrThrow
+   */
+  export type LogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * Filter, which Log to fetch.
+     */
+    where?: LogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Logs to fetch.
+     */
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Logs.
+     */
+    cursor?: LogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Logs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Logs.
+     */
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
+  }
+
+
+  /**
+   * Log findMany
+   */
+  export type LogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * Filter, which Logs to fetch.
+     */
+    where?: LogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Logs to fetch.
+     */
+    orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Logs.
+     */
+    cursor?: LogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Logs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Logs.
+     */
+    skip?: number
+    distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
+  }
+
+
+  /**
+   * Log create
+   */
+  export type LogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Log.
+     */
+    data: XOR<LogCreateInput, LogUncheckedCreateInput>
+  }
+
+
+  /**
+   * Log createMany
+   */
+  export type LogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Logs.
+     */
+    data: LogCreateManyInput | LogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Log update
+   */
+  export type LogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Log.
+     */
+    data: XOR<LogUpdateInput, LogUncheckedUpdateInput>
+    /**
+     * Choose, which Log to update.
+     */
+    where: LogWhereUniqueInput
+  }
+
+
+  /**
+   * Log updateMany
+   */
+  export type LogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Logs.
+     */
+    data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyInput>
+    /**
+     * Filter which Logs to update
+     */
+    where?: LogWhereInput
+  }
+
+
+  /**
+   * Log upsert
+   */
+  export type LogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Log to update in case it exists.
+     */
+    where: LogWhereUniqueInput
+    /**
+     * In case the Log found by the `where` argument doesn't exist, create a new Log with this data.
+     */
+    create: XOR<LogCreateInput, LogUncheckedCreateInput>
+    /**
+     * In case the Log was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LogUpdateInput, LogUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Log delete
+   */
+  export type LogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+    /**
+     * Filter which Log to delete.
+     */
+    where: LogWhereUniqueInput
+  }
+
+
+  /**
+   * Log deleteMany
+   */
+  export type LogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Logs to delete
+     */
+    where?: LogWhereInput
+  }
+
+
+  /**
+   * Log.dinoz
+   */
+  export type Log$dinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+
+  /**
+   * Log without action
+   */
+  export type LogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Log
+     */
+    select?: LogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LogInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -38455,7 +39607,6 @@ export namespace Prisma {
     isSelling: 'isSelling',
     raceId: 'raceId',
     level: 'level',
-    missionId: 'missionId',
     nextUpElementId: 'nextUpElementId',
     nextUpAltElementId: 'nextUpAltElementId',
     placeId: 'placeId',
@@ -38848,6 +39999,18 @@ export namespace Prisma {
   export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
 
 
+  export const LogScalarFieldEnum: {
+    id: 'id',
+    playerId: 'playerId',
+    dinozId: 'dinozId',
+    type: 'type',
+    values: 'values',
+    createdAt: 'createdAt'
+  };
+
+  export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -38969,6 +40132,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'LogType'
+   */
+  export type EnumLogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LogType'>
+    
+
+
+  /**
+   * Reference to a field of type 'LogType[]'
+   */
+  export type ListEnumLogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LogType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -39034,7 +40211,6 @@ export namespace Prisma {
     isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
-    missionId?: IntNullableFilter<"Dinoz"> | number | null
     nextUpElementId?: IntFilter<"Dinoz"> | number
     nextUpAltElementId?: IntFilter<"Dinoz"> | number
     placeId?: IntFilter<"Dinoz"> | number
@@ -39065,6 +40241,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
     offers?: OfferListRelationFilter
     followers?: DinozListRelationFilter
+    logs?: LogListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
@@ -39076,7 +40253,6 @@ export namespace Prisma {
     isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
-    missionId?: SortOrderInput | SortOrder
     nextUpElementId?: SortOrder
     nextUpAltElementId?: SortOrder
     placeId?: SortOrder
@@ -39107,6 +40283,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozOrderByRelationAggregateInput
     offers?: OfferOrderByRelationAggregateInput
     followers?: DinozOrderByRelationAggregateInput
+    logs?: LogOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -39121,7 +40298,6 @@ export namespace Prisma {
     isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
-    missionId?: IntNullableFilter<"Dinoz"> | number | null
     nextUpElementId?: IntFilter<"Dinoz"> | number
     nextUpAltElementId?: IntFilter<"Dinoz"> | number
     placeId?: IntFilter<"Dinoz"> | number
@@ -39152,6 +40328,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
     offers?: OfferListRelationFilter
     followers?: DinozListRelationFilter
+    logs?: LogListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
@@ -39163,7 +40340,6 @@ export namespace Prisma {
     isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
-    missionId?: SortOrderInput | SortOrder
     nextUpElementId?: SortOrder
     nextUpAltElementId?: SortOrder
     placeId?: SortOrder
@@ -39201,7 +40377,6 @@ export namespace Prisma {
     isSelling?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     raceId?: IntWithAggregatesFilter<"Dinoz"> | number
     level?: IntWithAggregatesFilter<"Dinoz"> | number
-    missionId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     nextUpElementId?: IntWithAggregatesFilter<"Dinoz"> | number
     nextUpAltElementId?: IntWithAggregatesFilter<"Dinoz"> | number
     placeId?: IntWithAggregatesFilter<"Dinoz"> | number
@@ -40472,6 +41647,7 @@ export namespace Prisma {
     ranking?: XOR<RankingNullableRelationFilter, RankingWhereInput> | null
     offers?: OfferListRelationFilter
     bids?: OfferBidListRelationFilter
+    logs?: LogListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -40505,6 +41681,7 @@ export namespace Prisma {
     ranking?: RankingOrderByWithRelationInput
     offers?: OfferOrderByRelationAggregateInput
     bids?: OfferBidOrderByRelationAggregateInput
+    logs?: LogOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -40541,6 +41718,7 @@ export namespace Prisma {
     ranking?: XOR<RankingNullableRelationFilter, RankingWhereInput> | null
     offers?: OfferListRelationFilter
     bids?: OfferBidListRelationFilter
+    logs?: LogListRelationFilter
   }, "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -41207,6 +42385,71 @@ export namespace Prisma {
     status?: EnumOfferStatusWithAggregatesFilter<"Offer"> | $Enums.OfferStatus
   }
 
+  export type LogWhereInput = {
+    AND?: LogWhereInput | LogWhereInput[]
+    OR?: LogWhereInput[]
+    NOT?: LogWhereInput | LogWhereInput[]
+    id?: IntFilter<"Log"> | number
+    playerId?: IntFilter<"Log"> | number
+    dinozId?: IntNullableFilter<"Log"> | number | null
+    type?: EnumLogTypeFilter<"Log"> | $Enums.LogType
+    values?: StringNullableListFilter<"Log">
+    createdAt?: DateTimeFilter<"Log"> | Date | string
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }
+
+  export type LogOrderByWithRelationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    values?: SortOrder
+    createdAt?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type LogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: LogWhereInput | LogWhereInput[]
+    OR?: LogWhereInput[]
+    NOT?: LogWhereInput | LogWhereInput[]
+    playerId?: IntFilter<"Log"> | number
+    dinozId?: IntNullableFilter<"Log"> | number | null
+    type?: EnumLogTypeFilter<"Log"> | $Enums.LogType
+    values?: StringNullableListFilter<"Log">
+    createdAt?: DateTimeFilter<"Log"> | Date | string
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }, "id">
+
+  export type LogOrderByWithAggregationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    values?: SortOrder
+    createdAt?: SortOrder
+    _count?: LogCountOrderByAggregateInput
+    _avg?: LogAvgOrderByAggregateInput
+    _max?: LogMaxOrderByAggregateInput
+    _min?: LogMinOrderByAggregateInput
+    _sum?: LogSumOrderByAggregateInput
+  }
+
+  export type LogScalarWhereWithAggregatesInput = {
+    AND?: LogScalarWhereWithAggregatesInput | LogScalarWhereWithAggregatesInput[]
+    OR?: LogScalarWhereWithAggregatesInput[]
+    NOT?: LogScalarWhereWithAggregatesInput | LogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Log"> | number
+    playerId?: IntWithAggregatesFilter<"Log"> | number
+    dinozId?: IntNullableWithAggregatesFilter<"Log"> | number | null
+    type?: EnumLogTypeWithAggregatesFilter<"Log"> | $Enums.LogType
+    values?: StringNullableListFilter<"Log">
+    createdAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -41244,7 +42487,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -41273,6 +42515,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateInput = {
@@ -41284,7 +42527,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -41312,6 +42554,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUpdateInput = {
@@ -41321,7 +42564,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -41350,6 +42592,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
@@ -41361,7 +42604,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -41389,6 +42631,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyInput = {
@@ -41400,7 +42643,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -41428,7 +42670,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -41456,7 +42697,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -42654,6 +43894,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -42687,6 +43928,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -42719,6 +43961,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -42752,6 +43995,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -43364,6 +44608,64 @@ export namespace Prisma {
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
   }
 
+  export type LogCreateInput = {
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutLogsInput
+    dinoz?: DinozCreateNestedOneWithoutLogsInput
+  }
+
+  export type LogUncheckedCreateInput = {
+    id?: number
+    playerId: number
+    dinozId?: number | null
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type LogUpdateInput = {
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutLogsNestedInput
+    dinoz?: DinozUpdateOneWithoutLogsNestedInput
+  }
+
+  export type LogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogCreateManyInput = {
+    id?: number
+    playerId: number
+    dinozId?: number | null
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type LogUpdateManyMutationInput = {
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -43526,6 +44828,12 @@ export namespace Prisma {
     none?: OfferWhereInput
   }
 
+  export type LogListRelationFilter = {
+    every?: LogWhereInput
+    some?: LogWhereInput
+    none?: LogWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -43563,6 +44871,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type LogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type DinozCountOrderByAggregateInput = {
     id?: SortOrder
     leaderId?: SortOrder
@@ -43572,7 +44884,6 @@ export namespace Prisma {
     isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
-    missionId?: SortOrder
     nextUpElementId?: SortOrder
     nextUpAltElementId?: SortOrder
     placeId?: SortOrder
@@ -43598,7 +44909,6 @@ export namespace Prisma {
     leaderId?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
-    missionId?: SortOrder
     nextUpElementId?: SortOrder
     nextUpAltElementId?: SortOrder
     placeId?: SortOrder
@@ -43624,7 +44934,6 @@ export namespace Prisma {
     isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
-    missionId?: SortOrder
     nextUpElementId?: SortOrder
     nextUpAltElementId?: SortOrder
     placeId?: SortOrder
@@ -43654,7 +44963,6 @@ export namespace Prisma {
     isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
-    missionId?: SortOrder
     nextUpElementId?: SortOrder
     nextUpAltElementId?: SortOrder
     placeId?: SortOrder
@@ -43680,7 +44988,6 @@ export namespace Prisma {
     leaderId?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
-    missionId?: SortOrder
     nextUpElementId?: SortOrder
     nextUpAltElementId?: SortOrder
     placeId?: SortOrder
@@ -45375,6 +46682,68 @@ export namespace Prisma {
     _max?: NestedEnumOfferStatusFilter<$PrismaModel>
   }
 
+  export type EnumLogTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.LogType | EnumLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLogTypeFilter<$PrismaModel> | $Enums.LogType
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type LogCountOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrder
+    type?: SortOrder
+    values?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogAvgOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type LogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogMinOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LogSumOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type EnumLogTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LogType | EnumLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLogTypeWithAggregatesFilter<$PrismaModel> | $Enums.LogType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLogTypeFilter<$PrismaModel>
+    _max?: NestedEnumLogTypeFilter<$PrismaModel>
+  }
+
   export type DinozCreateNestedManyWithoutConcentrationInput = {
     create?: XOR<DinozCreateWithoutConcentrationInput, DinozUncheckedCreateWithoutConcentrationInput> | DinozCreateWithoutConcentrationInput[] | DinozUncheckedCreateWithoutConcentrationInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutConcentrationInput | DinozCreateOrConnectWithoutConcentrationInput[]
@@ -45506,6 +46875,13 @@ export namespace Prisma {
     connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
   }
 
+  export type LogCreateNestedManyWithoutDinozInput = {
+    create?: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput> | LogCreateWithoutDinozInput[] | LogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutDinozInput | LogCreateOrConnectWithoutDinozInput[]
+    createMany?: LogCreateManyDinozInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
   export type DinozItemUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -45569,6 +46945,13 @@ export namespace Prisma {
     connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
   }
 
+  export type LogUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput> | LogCreateWithoutDinozInput[] | LogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutDinozInput | LogCreateOrConnectWithoutDinozInput[]
+    createMany?: LogCreateManyDinozInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -45577,16 +46960,16 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type DinozUpdateOneWithoutFollowersNestedInput = {
@@ -45745,6 +47128,20 @@ export namespace Prisma {
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
+  export type LogUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput> | LogCreateWithoutDinozInput[] | LogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutDinozInput | LogCreateOrConnectWithoutDinozInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutDinozInput | LogUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: LogCreateManyDinozInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutDinozInput | LogUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutDinozInput | LogUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
+  }
+
   export type DinozItemUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -45869,6 +47266,20 @@ export namespace Prisma {
     update?: DinozUpdateWithWhereUniqueWithoutLeaderInput | DinozUpdateWithWhereUniqueWithoutLeaderInput[]
     updateMany?: DinozUpdateManyWithWhereWithoutLeaderInput | DinozUpdateManyWithWhereWithoutLeaderInput[]
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
+  }
+
+  export type LogUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput> | LogCreateWithoutDinozInput[] | LogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutDinozInput | LogCreateOrConnectWithoutDinozInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutDinozInput | LogUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: LogCreateManyDinozInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutDinozInput | LogUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutDinozInput | LogUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -46623,6 +48034,13 @@ export namespace Prisma {
     connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
   }
 
+  export type LogCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<LogCreateWithoutPlayerInput, LogUncheckedCreateWithoutPlayerInput> | LogCreateWithoutPlayerInput[] | LogUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutPlayerInput | LogCreateOrConnectWithoutPlayerInput[]
+    createMany?: LogCreateManyPlayerInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -46717,6 +48135,13 @@ export namespace Prisma {
     connectOrCreate?: OfferBidCreateOrConnectWithoutUserInput | OfferBidCreateOrConnectWithoutUserInput[]
     createMany?: OfferBidCreateManyUserInputEnvelope
     connect?: OfferBidWhereUniqueInput | OfferBidWhereUniqueInput[]
+  }
+
+  export type LogUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<LogCreateWithoutPlayerInput, LogUncheckedCreateWithoutPlayerInput> | LogCreateWithoutPlayerInput[] | LogUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutPlayerInput | LogCreateOrConnectWithoutPlayerInput[]
+    createMany?: LogCreateManyPlayerInputEnvelope
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
   }
 
   export type DinozUpdateManyWithoutPlayerNestedInput = {
@@ -46907,6 +48332,20 @@ export namespace Prisma {
     deleteMany?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
   }
 
+  export type LogUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<LogCreateWithoutPlayerInput, LogUncheckedCreateWithoutPlayerInput> | LogCreateWithoutPlayerInput[] | LogUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutPlayerInput | LogCreateOrConnectWithoutPlayerInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutPlayerInput | LogUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: LogCreateManyPlayerInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutPlayerInput | LogUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutPlayerInput | LogUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -47093,6 +48532,20 @@ export namespace Prisma {
     update?: OfferBidUpdateWithWhereUniqueWithoutUserInput | OfferBidUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: OfferBidUpdateManyWithWhereWithoutUserInput | OfferBidUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
+  }
+
+  export type LogUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<LogCreateWithoutPlayerInput, LogUncheckedCreateWithoutPlayerInput> | LogCreateWithoutPlayerInput[] | LogUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: LogCreateOrConnectWithoutPlayerInput | LogCreateOrConnectWithoutPlayerInput[]
+    upsert?: LogUpsertWithWhereUniqueWithoutPlayerInput | LogUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: LogCreateManyPlayerInputEnvelope
+    set?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    disconnect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    delete?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+    update?: LogUpdateWithWhereUniqueWithoutPlayerInput | LogUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: LogUpdateManyWithWhereWithoutPlayerInput | LogUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutDinozShopInput = {
@@ -47376,6 +48829,49 @@ export namespace Prisma {
     deleteMany?: OfferBidScalarWhereInput | OfferBidScalarWhereInput[]
   }
 
+  export type LogCreatevaluesInput = {
+    set: string[]
+  }
+
+  export type PlayerCreateNestedOneWithoutLogsInput = {
+    create?: XOR<PlayerCreateWithoutLogsInput, PlayerUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutLogsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutLogsInput = {
+    create?: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutLogsInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type EnumLogTypeFieldUpdateOperationsInput = {
+    set?: $Enums.LogType
+  }
+
+  export type LogUpdatevaluesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type PlayerUpdateOneRequiredWithoutLogsNestedInput = {
+    create?: XOR<PlayerCreateWithoutLogsInput, PlayerUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutLogsInput
+    upsert?: PlayerUpsertWithoutLogsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutLogsInput, PlayerUpdateWithoutLogsInput>, PlayerUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type DinozUpdateOneWithoutLogsNestedInput = {
+    create?: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutLogsInput
+    upsert?: DinozUpsertWithoutLogsInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutLogsInput, DinozUpdateWithoutLogsInput>, DinozUncheckedUpdateWithoutLogsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -47626,6 +49122,23 @@ export namespace Prisma {
     _max?: NestedEnumOfferStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumLogTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.LogType | EnumLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLogTypeFilter<$PrismaModel> | $Enums.LogType
+  }
+
+  export type NestedEnumLogTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LogType | EnumLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LogType[] | ListEnumLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumLogTypeWithAggregatesFilter<$PrismaModel> | $Enums.LogType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLogTypeFilter<$PrismaModel>
+    _max?: NestedEnumLogTypeFilter<$PrismaModel>
+  }
+
   export type DinozCreateWithoutConcentrationInput = {
     name: string
     isFrozen?: boolean
@@ -47633,7 +49146,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -47661,6 +49173,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutConcentrationInput = {
@@ -47672,7 +49185,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -47699,6 +49211,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutConcentrationInput = {
@@ -47739,7 +49252,6 @@ export namespace Prisma {
     isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
-    missionId?: IntNullableFilter<"Dinoz"> | number | null
     nextUpElementId?: IntFilter<"Dinoz"> | number
     nextUpAltElementId?: IntFilter<"Dinoz"> | number
     placeId?: IntFilter<"Dinoz"> | number
@@ -47767,7 +49279,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -47795,6 +49306,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutFollowersInput = {
@@ -47806,7 +49318,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -47833,6 +49344,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutFollowersInput = {
@@ -47869,6 +49381,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -47901,6 +49414,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -48101,7 +49615,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -48129,6 +49642,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLeaderInput = {
@@ -48139,7 +49653,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -48167,6 +49680,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLeaderInput = {
@@ -48176,6 +49690,31 @@ export namespace Prisma {
 
   export type DinozCreateManyLeaderInputEnvelope = {
     data: DinozCreateManyLeaderInput | DinozCreateManyLeaderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogCreateWithoutDinozInput = {
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+    player: PlayerCreateNestedOneWithoutLogsInput
+  }
+
+  export type LogUncheckedCreateWithoutDinozInput = {
+    id?: number
+    playerId: number
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type LogCreateOrConnectWithoutDinozInput = {
+    where: LogWhereUniqueInput
+    create: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput>
+  }
+
+  export type LogCreateManyDinozInputEnvelope = {
+    data: LogCreateManyDinozInput | LogCreateManyDinozInput[]
     skipDuplicates?: boolean
   }
 
@@ -48197,7 +49736,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -48225,6 +49763,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutFollowersInput = {
@@ -48236,7 +49775,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -48263,6 +49801,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutDinozInput = {
@@ -48305,6 +49844,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -48337,6 +49877,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -48581,6 +50122,34 @@ export namespace Prisma {
     data: XOR<DinozUpdateManyMutationInput, DinozUncheckedUpdateManyWithoutLeaderInput>
   }
 
+  export type LogUpsertWithWhereUniqueWithoutDinozInput = {
+    where: LogWhereUniqueInput
+    update: XOR<LogUpdateWithoutDinozInput, LogUncheckedUpdateWithoutDinozInput>
+    create: XOR<LogCreateWithoutDinozInput, LogUncheckedCreateWithoutDinozInput>
+  }
+
+  export type LogUpdateWithWhereUniqueWithoutDinozInput = {
+    where: LogWhereUniqueInput
+    data: XOR<LogUpdateWithoutDinozInput, LogUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type LogUpdateManyWithWhereWithoutDinozInput = {
+    where: LogScalarWhereInput
+    data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type LogScalarWhereInput = {
+    AND?: LogScalarWhereInput | LogScalarWhereInput[]
+    OR?: LogScalarWhereInput[]
+    NOT?: LogScalarWhereInput | LogScalarWhereInput[]
+    id?: IntFilter<"Log"> | number
+    playerId?: IntFilter<"Log"> | number
+    dinozId?: IntNullableFilter<"Log"> | number | null
+    type?: EnumLogTypeFilter<"Log"> | $Enums.LogType
+    values?: StringNullableListFilter<"Log">
+    createdAt?: DateTimeFilter<"Log"> | Date | string
+  }
+
   export type DinozCreateWithoutItemsInput = {
     name: string
     isFrozen?: boolean
@@ -48588,7 +50157,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -48616,6 +50184,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
@@ -48627,7 +50196,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -48654,6 +50222,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -48697,7 +50266,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -48725,6 +50293,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
@@ -48736,7 +50305,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -48763,6 +50331,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinoz_itemInput = {
@@ -48788,7 +50357,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -48816,6 +50384,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutDinozItemsToDinozInput = {
@@ -48827,7 +50396,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -48854,6 +50422,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -48895,7 +50464,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -48923,6 +50491,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
@@ -48934,7 +50503,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -48961,6 +50529,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemUpsertWithoutDinozItemToDinozInput = {
@@ -48992,7 +50561,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49020,6 +50588,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
@@ -49031,7 +50600,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49058,6 +50626,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -49083,7 +50652,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49111,6 +50679,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
@@ -49122,7 +50691,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49149,6 +50717,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
@@ -49158,7 +50727,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49186,6 +50754,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
@@ -49197,7 +50766,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49224,6 +50792,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -49249,7 +50818,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49277,6 +50845,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
@@ -49288,7 +50857,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49315,6 +50883,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -49324,7 +50893,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49352,6 +50920,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -49363,7 +50932,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49390,6 +50958,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -49415,7 +50984,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49443,6 +51011,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -49454,7 +51023,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49481,6 +51049,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -49490,7 +51059,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49518,6 +51086,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
@@ -49529,7 +51098,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -49556,6 +51124,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -49581,7 +51150,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49609,6 +51177,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
@@ -49620,7 +51189,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -49647,6 +51215,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type ImportedPlayerCreateWithoutImported_dinozInput = {
@@ -50093,6 +51662,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedPlayerInput = {
@@ -50125,6 +51695,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedPlayerInput = {
@@ -50294,6 +51865,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedPlayerInput = {
@@ -50326,6 +51898,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ImportedPlayerIngredientUpsertWithWhereUniqueWithoutImported_playerInput = {
@@ -50740,6 +52313,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidAchievementsInput = {
@@ -50772,6 +52346,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidAchievementsInput = {
@@ -50819,6 +52394,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidAchievementsInput = {
@@ -50851,6 +52427,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidSiteInput = {
@@ -50882,6 +52459,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidSiteInput = {
@@ -50914,6 +52492,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidSiteInput = {
@@ -50961,6 +52540,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidSiteInput = {
@@ -50993,6 +52573,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidStatsInput = {
@@ -51024,6 +52605,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidStatsInput = {
@@ -51056,6 +52638,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidStatsInput = {
@@ -51103,6 +52686,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidStatsInput = {
@@ -51135,6 +52719,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -51144,7 +52729,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -51172,6 +52756,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutNpcsInput = {
@@ -51183,7 +52768,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -51210,6 +52794,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutNpcsInput = {
@@ -51235,7 +52820,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -51263,6 +52847,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutNpcsInput = {
@@ -51274,7 +52859,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -51301,6 +52885,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutPlayerInput = {
@@ -51310,7 +52895,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -51338,6 +52922,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutPlayerInput = {
@@ -51349,7 +52934,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -51376,6 +52960,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutPlayerInput = {
@@ -51706,6 +53291,31 @@ export namespace Prisma {
 
   export type OfferBidCreateManyUserInputEnvelope = {
     data: OfferBidCreateManyUserInput | OfferBidCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LogCreateWithoutPlayerInput = {
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+    dinoz?: DinozCreateNestedOneWithoutLogsInput
+  }
+
+  export type LogUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    dinozId?: number | null
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+  }
+
+  export type LogCreateOrConnectWithoutPlayerInput = {
+    where: LogWhereUniqueInput
+    create: XOR<LogCreateWithoutPlayerInput, LogUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type LogCreateManyPlayerInputEnvelope = {
+    data: LogCreateManyPlayerInput | LogCreateManyPlayerInput[]
     skipDuplicates?: boolean
   }
 
@@ -52084,6 +53694,22 @@ export namespace Prisma {
     value?: IntFilter<"OfferBid"> | number
   }
 
+  export type LogUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: LogWhereUniqueInput
+    update: XOR<LogUpdateWithoutPlayerInput, LogUncheckedUpdateWithoutPlayerInput>
+    create: XOR<LogCreateWithoutPlayerInput, LogUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type LogUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: LogWhereUniqueInput
+    data: XOR<LogUpdateWithoutPlayerInput, LogUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type LogUpdateManyWithWhereWithoutPlayerInput = {
+    where: LogScalarWhereInput
+    data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyWithoutPlayerInput>
+  }
+
   export type PlayerCreateWithoutDinozShopInput = {
     hasImported: boolean
     customText?: string | null
@@ -52113,6 +53739,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -52145,6 +53772,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -52192,6 +53820,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -52224,6 +53853,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -52255,6 +53885,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -52287,6 +53918,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -52334,6 +53966,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -52366,6 +53999,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -52397,6 +54031,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -52429,6 +54064,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -52476,6 +54112,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -52508,6 +54145,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -52539,6 +54177,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -52571,6 +54210,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -52618,6 +54258,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -52650,6 +54291,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -52681,6 +54323,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -52713,6 +54356,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -52760,6 +54404,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -52792,6 +54437,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -52823,6 +54469,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -52855,6 +54502,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -52902,6 +54550,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -52934,6 +54583,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -52965,6 +54615,7 @@ export namespace Prisma {
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -52997,6 +54648,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -53044,6 +54696,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -53076,6 +54729,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -53185,6 +54839,7 @@ export namespace Prisma {
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -53217,6 +54872,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -53294,6 +54950,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -53326,6 +54983,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutOffersInput = {
@@ -53357,6 +55015,7 @@ export namespace Prisma {
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -53389,6 +55048,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -53403,7 +55063,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -53431,6 +55090,7 @@ export namespace Prisma {
     npcs?: NPCCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutOffersInput = {
@@ -53442,7 +55102,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -53469,6 +55128,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutOffersInput = {
@@ -53560,6 +55220,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -53592,6 +55253,7 @@ export namespace Prisma {
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutOffersInput = {
@@ -53612,7 +55274,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -53640,6 +55301,7 @@ export namespace Prisma {
     npcs?: NPCUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutOffersInput = {
@@ -53651,7 +55313,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -53678,6 +55339,7 @@ export namespace Prisma {
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type OfferItemUpsertWithWhereUniqueWithoutOfferInput = {
@@ -53723,6 +55385,318 @@ export namespace Prisma {
     data: XOR<OfferBidUpdateManyMutationInput, OfferBidUncheckedUpdateManyWithoutOfferInput>
   }
 
+  export type PlayerCreateWithoutLogsInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+  }
+
+  export type PlayerUncheckedCreateWithoutLogsInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type PlayerCreateOrConnectWithoutLogsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutLogsInput, PlayerUncheckedCreateWithoutLogsInput>
+  }
+
+  export type DinozCreateWithoutLogsInput = {
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    player?: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+  }
+
+  export type DinozUncheckedCreateWithoutLogsInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId?: number | null
+    order?: number | null
+    concentrationId?: number | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+  }
+
+  export type DinozCreateOrConnectWithoutLogsInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+  }
+
+  export type PlayerUpsertWithoutLogsInput = {
+    update: XOR<PlayerUpdateWithoutLogsInput, PlayerUncheckedUpdateWithoutLogsInput>
+    create: XOR<PlayerCreateWithoutLogsInput, PlayerUncheckedCreateWithoutLogsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutLogsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutLogsInput, PlayerUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type PlayerUpdateWithoutLogsInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutLogsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type DinozUpsertWithoutLogsInput = {
+    update: XOR<DinozUpdateWithoutLogsInput, DinozUncheckedUpdateWithoutLogsInput>
+    create: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutLogsInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutLogsInput, DinozUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type DinozUpdateWithoutLogsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    player?: PlayerUpdateOneWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutLogsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+  }
+
   export type DinozCreateManyConcentrationInput = {
     id?: number
     leaderId?: number | null
@@ -53732,7 +55706,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -53759,7 +55732,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -53787,6 +55759,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutConcentrationInput = {
@@ -53798,7 +55771,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -53825,6 +55797,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutConcentrationInput = {
@@ -53836,7 +55809,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -53911,7 +55883,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -53930,6 +55901,14 @@ export namespace Prisma {
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+  }
+
+  export type LogCreateManyDinozInput = {
+    id?: number
+    playerId: number
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -54079,7 +56058,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -54107,6 +56085,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLeaderInput = {
@@ -54117,7 +56096,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -54145,6 +56123,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutLeaderInput = {
@@ -54155,7 +56134,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -54174,6 +56152,29 @@ export namespace Prisma {
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type LogUpdateWithoutDinozInput = {
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutLogsNestedInput
+  }
+
+  export type LogUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
@@ -54410,7 +56411,6 @@ export namespace Prisma {
     isSelling?: boolean
     raceId: number
     level: number
-    missionId?: number | null
     nextUpElementId: number
     nextUpAltElementId: number
     placeId: number
@@ -54509,6 +56509,14 @@ export namespace Prisma {
     value: number
   }
 
+  export type LogCreateManyPlayerInput = {
+    id?: number
+    dinozId?: number | null
+    type: $Enums.LogType
+    values?: LogCreatevaluesInput | string[]
+    createdAt?: Date | string
+  }
+
   export type DinozUpdateWithoutPlayerInput = {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
@@ -54516,7 +56524,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -54544,6 +56551,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPlayerInput = {
@@ -54555,7 +56563,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -54582,6 +56589,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutPlayerInput = {
@@ -54593,7 +56601,6 @@ export namespace Prisma {
     isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
-    missionId?: NullableIntFieldUpdateOperationsInput | number | null
     nextUpElementId?: IntFieldUpdateOperationsInput | number
     nextUpAltElementId?: IntFieldUpdateOperationsInput | number
     placeId?: IntFieldUpdateOperationsInput | number
@@ -54843,6 +56850,29 @@ export namespace Prisma {
     value?: IntFieldUpdateOperationsInput | number
   }
 
+  export type LogUpdateWithoutPlayerInput = {
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUpdateOneWithoutLogsNestedInput
+  }
+
+  export type LogUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LogUncheckedUpdateManyWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
+    values?: LogUpdatevaluesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OfferItemCreateManyOfferInput = {
     id?: number
     itemId: number
@@ -55062,6 +57092,10 @@ export namespace Prisma {
      * @deprecated Use OfferDefaultArgs instead
      */
     export type OfferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use LogDefaultArgs instead
+     */
+    export type LogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

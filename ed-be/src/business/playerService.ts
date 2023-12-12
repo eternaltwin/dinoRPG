@@ -45,7 +45,8 @@ export async function getCommonData(req: Request) {
 		playerOptions: {
 			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PDA),
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PMI)
-		}
+		},
+		admin: req.auth.isAdmin || false
 	};
 
 	// Order dinoz

@@ -96,6 +96,7 @@
 			"fight": "Search for a monster to fight at this location. You can perform **one move or fight per day** and by Dinoz.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
 			"unfollow": "Your Dinoz is currently following another Dinoz. Click this action to stop following.",
+			"disband": "Your DInoz is currently followed by other Dinoz. Click this action to disband the group.",
 			"levelup": "Your Dinoz earned enough experience to reach the next level. Click this action to increase the power of your Dinoz.",
 			"resurrect": "Your Dinoz is dead, thus you need to resurrect it before you can have it fight again.",
 			"dig": "Your Dinoz can **dig up** this place with the shovel to find a treasure maybe.",
@@ -115,6 +116,7 @@
 			"fight": "Fight",
 			"follow": "Follow",
 			"unfollow": "Stop following",
+			"disband": "Disband",
 			"levelup": "Extra level!",
 			"resurrect": "Resurrect",
 			"dig": "Dig",
@@ -3115,5 +3117,22 @@
 		}
 	},
 	"following": "This Dinoz is following their group leader.",
-	"followed": "This Dinoz is a group leader."
+	"followed": "This Dinoz is a group leader.",
+	"logs": {
+		"ItemUsed": "**{player} ({playerId})** used **{quantity}x {item}** with dinoz **{dinoz} ({dinozId})**.",
+		"ItemBought": "**{player} ({playerId})** bought **{quantity}x {item}**.",
+		"GoldWon": "**{player} ({playerId})** won **{quantity} :gold:**.",
+		"GoldLost": "**{player} ({playerId})** lost **{quantity} :gold:**.",
+		"Move": "**{player} ({playerId})** moved dinoz **{dinoz} ({dinozId})** to **{location}**.",
+		"LevelUp": "**{player} ({playerId})** leveled up dinoz **{dinoz} ({dinozId})** to **level {level}**.",
+		"Fight": "**{player} ({playerId})** fought and lost **{hpLost}HP**, gained **{gold} :gold:** and **{xp}XP**.",
+		"Death": "**{player} ({playerId})**'s dinoz **{dinoz} ({dinozId})** died.",
+		"Revive": "**{player} ({playerId})** revived dinoz **{dinoz} ({dinozId})**.",
+		"MissionStep": "**{player} ({playerId})** advanced **{mission}** to **step {step}** with dinoz **{dinoz} ({dinozId})**.",
+		"MissionFinished": "**{player} ({playerId})** finished **{mission}** with dinoz **{dinoz} ({dinozId})**.",
+		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
+		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
+		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
+		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+	}
 }

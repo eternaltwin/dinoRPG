@@ -71,7 +71,7 @@ export async function concentrate(req: Request) {
 
 	//If 7 dinoz concentrate process the next events
 	if (concentration.dinoz.length === 7) {
-		await goDarkWorld(concentration.dinoz);
+		await goDarkWorld(player.id, concentration.dinoz);
 		await removeConcentration(concentration.id);
 	}
 }
@@ -95,8 +95,8 @@ export async function cancelConcentrate(req: Request) {
 	await updateConcentration(dinoz.concentration.id, dinoz.concentration.dinoz);
 }
 
-async function goDarkWorld(dinozList: Pick<Dinoz, 'id'>[]): Promise<void> {
-	await updateMultipleDinozPlaceId(dinozList, placeList.PORTAIL.placeId);
+async function goDarkWorld(playerId: number, dinozList: Pick<Dinoz, 'id'>[]) {
+	await updateMultipleDinozPlaceId(playerId, dinozList, placeList.PORTAIL.placeId);
 }
 
 export async function mouvementListener(
@@ -142,7 +142,11 @@ export async function mouvementListener(
 				const result = await rewardFight(team, actualStep.requirement.target, fightResult);
 				if (fightResult.winner) {
 					const teamIds = team.map(dinoz => dinoz.id);
-					await updateMissionStep(teamIds, dinozMission.missionId, actualStep.stepId + 1);
+
+					if (!team[0].player) {
+						throw new ErrorFormator(500, `Dinoz ${team[0].id} doesn't have a player`);
+					}
+					await updateMissionStep(team[0].player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);
 					await updateMultipleDinoz(teamIds, { placeId: finalPlace });
 				}
 				return result;

@@ -1,5 +1,6 @@
-import { Dinoz, Prisma } from '@drpg/prisma';
+import { Dinoz, LogType, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
+import { createLog, createLogForMultipleDinoz } from './logDao.js';
 
 // Getters
 
@@ -37,7 +38,6 @@ export async function getAllDinozFromAccount(playerId: number) {
 			isFrozen: true,
 			isSacrificed: true,
 			level: true,
-			missionId: true,
 			placeId: true,
 			canChangeName: true,
 			life: true,
@@ -106,7 +106,6 @@ export async function getDinozFicheRequest(dinozId: number) {
 			level: true,
 			placeId: true,
 			raceId: true,
-			missionId: true,
 			leaderId: true,
 			isFrozen: true,
 			isSelling: true,
@@ -260,6 +259,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 		where: { id: dinozId },
 		select: {
 			id: true,
+			playerId: true,
 			name: true,
 			level: true,
 			life: true,
@@ -286,6 +286,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			followers: {
 				select: {
 					id: true,
+					playerId: true,
 					name: true,
 					level: true,
 					placeId: true,
@@ -438,9 +439,17 @@ export async function getDinozGatherData(dinozId: number) {
 // Setters
 //TODO
 export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
-	return prisma.dinoz.create({
+	if (!dinoz.player?.connect?.id) {
+		throw new Error('Missing player id');
+	}
+
+	const newDinoz = await prisma.dinoz.create({
 		data: dinoz as Prisma.DinozCreateInput
 	});
+
+	await createLog(LogType.CreateDinoz, dinoz.player.connect.id, newDinoz.id);
+
+	return newDinoz;
 }
 
 export async function updateDinoz(dinozId: number, dinoz: Prisma.DinozUpdateInput) {
@@ -457,7 +466,7 @@ export async function updateMultipleDinoz(dinozIds: number[], dinoz: Prisma.Dino
 	});
 }
 
-export async function updateMultipleDinozPlaceId(dinoz: Pick<Dinoz, 'id'>[], placeId: number) {
+export async function updateMultipleDinozPlaceId(playerId: number, dinoz: Pick<Dinoz, 'id'>[], placeId: number) {
 	await prisma.dinoz.updateMany({
 		where: {
 			id: {
@@ -468,6 +477,8 @@ export async function updateMultipleDinozPlaceId(dinoz: Pick<Dinoz, 'id'>[], pla
 			placeId
 		}
 	});
+
+	await createLogForMultipleDinoz(LogType.Move, playerId, dinoz.map(d => d.id), placeId.toString());
 }
 
 export async function getGlobalMissionsData(playerId: number) {
@@ -521,19 +532,22 @@ export async function getManageData(userID: number) {
 	return dinozList;
 }
 
-export async function updateOrderData(dinozList: { id: number; order: number }[]) {
+export async function updateOrderData(playerId: number, dinozList: { id: number; order: number }[]) {
 	const updates = [];
 
 	for (const dinoz of dinozList) {
 		updates.push(
 			prisma.dinoz.update({
 				where: { id: dinoz.id },
-				data: { order: dinoz.order }
+				data: { order: dinoz.order },
+				select: { id: true }
 			})
 		);
 	}
 
 	await Promise.all(updates);
+
+	await createLogForMultipleDinoz(LogType.ChangeDinozOrder, playerId, dinozList.map(d => d.id));
 }
 
 export async function getAvailableDinozToFollow(playerId: number, dinozId: number) {

@@ -10,7 +10,8 @@ import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
-import { Dinoz, DinozStatus, PlayerItem } from '@drpg/prisma';
+import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
+import { createLog } from '../dao/logDao.js';
 
 /**
  * @summary Get all items from a shop
@@ -180,6 +181,8 @@ export async function buyItem(req: Request) {
 	else {
 		await insertItem(playerId, { itemId: itemReference.itemId, quantity: itemReference.quantity });
 	}
+
+	await createLog(LogType.ItemBought, playerId, undefined, itemReference.itemId.toString(), itemReference.quantity.toString());
 }
 
 /**

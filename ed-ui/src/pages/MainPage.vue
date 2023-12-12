@@ -68,6 +68,7 @@ export default defineComponent({
 				this.playerStore.setPlayerId(commonData.id);
 				this.playerStore.setPlayerName(commonData.name);
 				this.playerStore.setPlayerOptions(commonData.playerOptions);
+				this.playerStore.setAdmin(commonData.admin);
 			}
 
 			EventBus.emit('isLoading', false);

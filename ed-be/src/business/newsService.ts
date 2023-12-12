@@ -71,9 +71,6 @@ export async function updateNews(req: Request) {
 }
 
 export async function getNewsIllustration(req: Request<{ id: string }>) {
-	console.log(req.params.id);
-	console.log(typeof req.params.id);
-
 	const news = await getNewsIllus(+req.params.id);
 
 	return news.image;

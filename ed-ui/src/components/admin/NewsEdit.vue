@@ -59,13 +59,14 @@ import { NewsService } from '../../services/index.js';
 import { AllNews } from '@drpg/core/models/news/AllNews';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 
 export default defineComponent({
 	name: 'NewsEdit',
 	data() {
 		return {
 			newsEdit: {} as Partial<AllNews>,
-			batchNews: [] as Array<Partial<AllNews>>,
+			batchNews: [] as NewsGetResponse,
 			formData: new FormData(),
 			newSelect: false as boolean
 		};

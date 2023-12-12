@@ -6,7 +6,7 @@ import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { actualPlace, canWinXP, isAlive } from '@drpg/core/utils/DinozUtils';
-import { Dinoz, DinozItem, DinozSkill, DinozStatus, Player } from '@drpg/prisma';
+import { Dinoz, DinozItem, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import pkg from 'native-dinorpg';
 import { getDinozFightDataRequest, updateDinoz, updateMultipleDinoz } from '../dao/dinozDao.js';
@@ -14,6 +14,7 @@ import { addMoney } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
+import { createLog } from '../dao/logDao.js';
 
 const { fight_rust } = pkg;
 
@@ -166,7 +167,7 @@ export function calculateFight(
 
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
 export async function rewardFight(
-	team: (Pick<Dinoz, 'id' | 'level' | 'experience'> & {
+	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life'> & {
 		player: Pick<Player, 'id'> | null;
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
@@ -245,8 +246,22 @@ export async function rewardFight(
 					decrement: attacker.hp_lost
 				}
 			});
+
+			// Log death if dinoz is dead
+			if (attacker.hp_lost >= dinoz.life) {
+				await createLog(LogType.Death, playerId, dinoz.id);
+			}
 		}
 	}
+
+	await createLog(
+		LogType.Fight,
+		playerId,
+		undefined,
+		fightResult.winner ? gold : 0,
+		fightResult.winner ? experienceGained : 0,
+		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0)
+	);
 
 	return {
 		opponent: monsters.map(m => {

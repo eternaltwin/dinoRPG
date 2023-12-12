@@ -35,7 +35,7 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Concentration, Dinoz, DinozMission, Player } from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -71,6 +71,7 @@ import { rewarder } from '../utils/rewarder.js';
 import { moveFight } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
+import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 
 /**
  * @summary Get available action from dinoz
@@ -115,7 +116,6 @@ export async function getAvailableActions(
 			availableActions.push(actionList[Action.FOLLOW]);
 		}
 	}
-	console.log(dinoz);
 	if (dinoz.followers.length > 0) {
 		availableActions.push(actionList[Action.DISBAND]);
 	}
@@ -543,6 +543,8 @@ export async function betaMove(req: Request) {
 				team.map(d => d.id),
 				{ placeId: finalPlace }
 			);
+
+			await createLogForMultipleDinoz(LogType.Move, dinoz.player.id, team.map(d => d.id), finalPlace.toString());
 		}
 	}
 	return fight;
@@ -572,6 +574,8 @@ export async function resurrectDinoz(req: Request) {
 		experience: Math.round(dinozData.experience / 2),
 		placeId: placeList.DINOVILLE.placeId
 	});
+
+	await createLog(LogType.Revive, dinozData.player.id, dinozId);
 }
 
 export async function digWithDinoz(req: Request) {
@@ -664,7 +668,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 
 	// Generate a new one if all box are empty
 	if (myGrid.grid.every(box => box === -1)) {
-		myGrid = await updateGrid(myGrid.id, initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace));
+		myGrid = await updateGrid(dinozData.player.id, dinozId, myGrid.id, initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace));
 	}
 
 	const hiddenGrid = hideGridIngredients(myGrid.grid);
@@ -725,6 +729,8 @@ export async function gatherWithDinoz(req: Request) {
 		const playerToken = dinozData.player.items.find(item => item.itemId === gatherPlace.cost.itemId);
 		if (!playerToken) throw new ErrorFormator(500, `You don't have the needed token to gather here.`);
 		await decreaseItemQuantity(dinozData.player.id, gatherPlace.cost.itemId, 1);
+
+		await createLog(LogType.ItemUsed, dinozData.player.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
 	}
 
 	// Sanitize the box to open
@@ -746,7 +752,7 @@ export async function gatherWithDinoz(req: Request) {
 	}
 
 	const returnGrid = discoverBox(myGrid, dinozData, gatherPlace, ...boxToOpen);
-	await updateGrid(myGrid.id, saveGrid(myGrid, ...boxToOpen));
+	await updateGrid(dinozData.player.id, dinozId, myGrid.id, saveGrid(myGrid, ...boxToOpen));
 
 	for (const i of returnGrid.rewards.item) {
 		const itemToReward = dinozData.player.items.find(items => items.itemId === i.itemId);
@@ -857,7 +863,7 @@ export async function updateOrders(req: Request) {
 	}));
 
 	// Update orders
-	await updateOrderData(dinozList);
+	await updateOrderData(playerId, dinozList);
 }
 
 /**

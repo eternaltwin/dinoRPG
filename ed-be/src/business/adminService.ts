@@ -154,7 +154,6 @@ export async function listAllDinozFromPlayer(req: Request) {
 			level: dinoz.level,
 			canChangeName: dinoz.canChangeName,
 			leaderId: dinoz.leaderId,
-			missionId: dinoz.missionId,
 			life: dinoz.life,
 			maxLife: dinoz.maxLife,
 			experience: dinoz.experience,

@@ -16,12 +16,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.6.0
- * Query Engine version: e95e739751f42d8ca026f6b910f5a2dc5adeaeee
+ * Prisma Client JS version: 5.7.0
+ * Query Engine version: 79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
  */
 Prisma.prismaVersion = {
-  client: "5.6.0",
-  engine: "e95e739751f42d8ca026f6b910f5a2dc5adeaeee"
+  client: "5.7.0",
+  engine: "79fb5193cf0a8fdbef536e4b4a159cad677ab1b9"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -120,7 +120,6 @@ exports.Prisma.DinozScalarFieldEnum = {
   isSelling: 'isSelling',
   raceId: 'raceId',
   level: 'level',
-  missionId: 'missionId',
   nextUpElementId: 'nextUpElementId',
   nextUpAltElementId: 'nextUpAltElementId',
   placeId: 'placeId',
@@ -414,6 +413,15 @@ exports.Prisma.OfferScalarFieldEnum = {
   status: 'status'
 };
 
+exports.Prisma.LogScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  dinozId: 'dinozId',
+  type: 'type',
+  values: 'values',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -432,6 +440,24 @@ exports.OfferStatus = exports.$Enums.OfferStatus = {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
   CANCELLED: 'CANCELLED'
+};
+
+exports.LogType = exports.$Enums.LogType = {
+  ItemUsed: 'ItemUsed',
+  ItemBought: 'ItemBought',
+  GoldWon: 'GoldWon',
+  GoldLost: 'GoldLost',
+  Move: 'Move',
+  LevelUp: 'LevelUp',
+  Fight: 'Fight',
+  Death: 'Death',
+  Revive: 'Revive',
+  MissionStep: 'MissionStep',
+  MissionFinished: 'MissionFinished',
+  MissionCanceled: 'MissionCanceled',
+  Gather: 'Gather',
+  CreateDinoz: 'CreateDinoz',
+  ChangeDinozOrder: 'ChangeDinozOrder'
 };
 
 exports.Prisma.ModelName = {
@@ -468,7 +494,8 @@ exports.Prisma.ModelName = {
   Secret: 'Secret',
   OfferItem: 'OfferItem',
   OfferBid: 'OfferBid',
-  Offer: 'Offer'
+  Offer: 'Offer',
+  Log: 'Log'
 };
 
 /**

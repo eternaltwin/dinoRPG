@@ -18,7 +18,7 @@
 		<li>
 			<a @click="goToPage('Ingredients')">{{ $t('rightMenu.ingredients') }}</a>
 		</li>
-		<li>
+		<li v-if="getPlayerId">
 			<a @click="goToMyAccount('MyAccount', getPlayerId)">{{ $t('rightMenu.account') }}</a>
 		</li>
 		<li>
@@ -42,6 +42,9 @@
 		</li>
 		<li>
 			<LocaleChange />
+		</li>
+		<li v-if="isAdmin">
+			<a @click="goToPage('Admin')">Admin</a>
 		</li>
 		<li>
 			<a @click="logOff()">{{ $t('rightMenu.logout') }}</a>
@@ -68,11 +71,14 @@ export default defineComponent({
 		LocaleChange
 	},
 	computed: {
-		dinozCount(): number | undefined {
+		dinozCount() {
 			return this.dinozStore.getDinozCount;
 		},
-		getPlayerId(): number | undefined {
+		getPlayerId() {
 			return this.playerStore.getPlayerId;
+		},
+		isAdmin(): boolean {
+			return this.playerStore.admin;
 		}
 	},
 	methods: {

@@ -5,4 +5,5 @@ export interface StorePlayer {
 	playerId?: number;
 	playerName: string;
 	playerOptions: PlayerOptions;
+	admin: boolean;
 }

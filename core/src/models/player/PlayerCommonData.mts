@@ -8,4 +8,5 @@ export interface PlayerCommonData {
 	id: number;
 	name: string;
 	playerOptions: PlayerOptions;
+	admin: boolean;
 }
