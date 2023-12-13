@@ -223,7 +223,8 @@ async function useSpecialItem(
 			await updateDinoz(dinoz.id, heal(dinoz, 15));
 			const pamp = dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId);
 			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList.PAMPLEBOUM_PIT.itemId, quantity: 1 });
-			else await decreaseItemQuantity(dinoz.player.id, pamp.itemId, 1);
+			else await increaseItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM_PIT.itemId, 1);
+			await decreaseItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM.itemId, 1 );
 			break;
 		default:
 			throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);
