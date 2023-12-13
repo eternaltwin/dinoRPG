@@ -7,19 +7,24 @@ const createLog = async (type: LogType, playerId: number, dinozId?: number, ...v
 			player: { connect: { id: playerId } },
 			dinoz: dinozId ? { connect: { id: dinozId } } : undefined,
 			type,
-			values: values.map((value) => value.toString())
+			values: values.map(value => value.toString())
 		},
 		select: { id: true }
 	});
 };
 
-const createLogForMultipleDinoz = async (type: LogType, playerId: number, dinozIds: number[], ...values: (string | number)[]) => {
+const createLogForMultipleDinoz = async (
+	type: LogType,
+	playerId: number,
+	dinozIds: number[],
+	...values: (string | number)[]
+) => {
 	await prisma.log.createMany({
-		data: dinozIds.map((dinozId) => ({
+		data: dinozIds.map(dinozId => ({
 			playerId,
 			dinozId,
 			type,
-			values: values.map((value) => value.toString())
+			values: values.map(value => value.toString())
 		}))
 	});
 };
@@ -39,7 +44,6 @@ const getLogList = async (page: number, type?: LogType, playerId?: number, dinoz
 			dinoz: { select: { id: true, name: true } }
 		}
 	});
-}
+};
 
 export { createLog, createLogForMultipleDinoz, getLogList };
-

@@ -478,7 +478,12 @@ export async function updateMultipleDinozPlaceId(playerId: number, dinoz: Pick<D
 		}
 	});
 
-	await createLogForMultipleDinoz(LogType.Move, playerId, dinoz.map(d => d.id), placeId.toString());
+	await createLogForMultipleDinoz(
+		LogType.Move,
+		playerId,
+		dinoz.map(d => d.id),
+		placeId.toString()
+	);
 }
 
 export async function getGlobalMissionsData(playerId: number) {
@@ -547,7 +552,11 @@ export async function updateOrderData(playerId: number, dinozList: { id: number;
 
 	await Promise.all(updates);
 
-	await createLogForMultipleDinoz(LogType.ChangeDinozOrder, playerId, dinozList.map(d => d.id));
+	await createLogForMultipleDinoz(
+		LogType.ChangeDinozOrder,
+		playerId,
+		dinozList.map(d => d.id)
+	);
 }
 
 export async function getAvailableDinozToFollow(playerId: number, dinozId: number) {

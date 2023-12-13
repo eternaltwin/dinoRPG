@@ -35,6 +35,7 @@
 	<MissionInformation
 		:enabled="information"
 		:mission="mission"
+		:dinozId="dinozId"
 		@close="information = !information"
 		@reload="reload()"
 	/>
@@ -88,6 +89,11 @@ export default defineComponent({
 		},
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
+		}
+	},
+	computed: {
+		dinozId(): number {
+			return +this.$route.params.id;
 		}
 	},
 	async mounted(): Promise<void> {

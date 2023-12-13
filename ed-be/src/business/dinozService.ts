@@ -544,7 +544,12 @@ export async function betaMove(req: Request) {
 				{ placeId: finalPlace }
 			);
 
-			await createLogForMultipleDinoz(LogType.Move, dinoz.player.id, team.map(d => d.id), finalPlace.toString());
+			await createLogForMultipleDinoz(
+				LogType.Move,
+				dinoz.player.id,
+				team.map(d => d.id),
+				finalPlace.toString()
+			);
 		}
 	}
 	return fight;
@@ -668,7 +673,12 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 
 	// Generate a new one if all box are empty
 	if (myGrid.grid.every(box => box === -1)) {
-		myGrid = await updateGrid(dinozData.player.id, dinozId, myGrid.id, initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace));
+		myGrid = await updateGrid(
+			dinozData.player.id,
+			dinozId,
+			myGrid.id,
+			initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace)
+		);
 	}
 
 	const hiddenGrid = hideGridIngredients(myGrid.grid);

@@ -135,10 +135,20 @@ export async function interactMission(req: Request) {
 
 	switch (task) {
 		case ConditionEnum.TALKTO:
-			await updateMissionStep(playerId, [mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			await updateMissionStep(
+				playerId,
+				[mission.dinoz.id],
+				mission.dinozMission.missionId,
+				mission.actualStep.stepId + 1
+			);
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		case ConditionEnum.DO:
-			await updateMissionStep(playerId, [mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+			await updateMissionStep(
+				playerId,
+				[mission.dinoz.id],
+				mission.dinozMission.missionId,
+				mission.actualStep.stepId + 1
+			);
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		default:
 			return 'error';

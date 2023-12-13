@@ -12,12 +12,7 @@ const commonPath: string = apiRoutes.logRoute;
 
 routes.get(
 	`${commonPath}/list/:page/:type/:playerId/:dinozId`,
-	[
-		param('type').exists(),
-		param('playerId').exists(),
-		param('dinozId').exists(),
-		param('page').isInt({ min: 1 }),
-	],
+	[param('type').exists(), param('playerId').exists(), param('dinozId').exists(), param('page').isInt({ min: 1 })],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

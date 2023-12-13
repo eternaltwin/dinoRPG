@@ -5,7 +5,14 @@
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<MissionHUDVue v-if="mission && missionId" :missionId="missionId" @abort="endMission()" />
+		<template v-for="didi in dinozFullParty" :key="didi">
+			<MissionHUDVue
+				:missionId="didi.missionId"
+				:dinozName="didi.name"
+				:dinozId="didi.id"
+				@abort="endMission(didi.id)"
+			/>
+		</template>
 		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
 		<ul>
 			<table class="action_button">
@@ -194,7 +201,7 @@ export default defineComponent({
 					this.resurect = true;
 					break;
 				case Action.MISSION:
-					if (this.mission!.actionType === ConditionEnum.FINISH_MISSION) {
+					if (this.mission && this.mission.actionType === ConditionEnum.FINISH_MISSION) {
 						this.missionReward = await MissionService.finishMission(this.$route.params.id.toString(), this.missionId!);
 					} else {
 						try {
@@ -352,9 +359,8 @@ export default defineComponent({
 			this.NPCModal = undefined;
 			this.$emit('continueMission');
 		},
-		endMission() {
+		endMission(dinozId: number) {
 			this.missionReward = undefined;
-			const dinozId = parseInt(this.$route.params.id as string);
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche;
 			dinozToUpdate.missionHUD = null;
 			dinozToUpdate.missionId = undefined;
@@ -383,6 +389,14 @@ export default defineComponent({
 		},
 		storeMission() {
 			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missionHUD || null;
+		},
+		dinoz() {
+			return dinozStore().getDinoz(+this.dinozId);
+		},
+		dinozFullParty() {
+			return dinozStore().getDinozList!.filter(
+				dinoz => this.dinoz?.followers.includes(dinoz.id) || dinoz.id === this.dinoz?.id
+			);
 		}
 	},
 	watch: {

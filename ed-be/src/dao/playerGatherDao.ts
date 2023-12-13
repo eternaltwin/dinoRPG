@@ -28,7 +28,12 @@ export async function createGrid(grid: Prisma.PlayerGatherCreateInput) {
 	});
 }
 
-export async function updateGrid(playerId: number, dinozId: number, gridId: number, grid: Omit<Prisma.PlayerGatherUpdateInput, 'id'>) {
+export async function updateGrid(
+	playerId: number,
+	dinozId: number,
+	gridId: number,
+	grid: Omit<Prisma.PlayerGatherUpdateInput, 'id'>
+) {
 	const newGrid = prisma.playerGather.update({
 		where: {
 			id: gridId

@@ -1,5 +1,6 @@
 <template>
 	<Tippy theme="normal" tag="div" v-if="missionId" class="mission" @click="getInformation(mission)">
+		<p class="dinozName">{{ dinozName }}</p>
 		<p class="name">
 			{{ $t(`missions.name.${missionName}`) }}
 		</p>
@@ -44,6 +45,7 @@
 	<MissionInformationModal
 		:enabled="information"
 		:mission="mission"
+		:dinozId="dinozId"
 		@close="information = !information"
 		@reload="reload()"
 	/>
@@ -93,16 +95,17 @@ export default defineComponent({
 		}
 	},
 	props: {
-		missionId: { type: Number, required: true }
+		missionId: { type: Number, required: true },
+		dinozName: { type: String, required: true },
+		dinozId: { type: Number, required: true }
 	},
 	computed: {
 		missionName(): string {
 			return missionsList[this.missionId];
 		},
 		missionDetail(): MissionHUD | null {
-			const dinozId = this.$route.params.id as string;
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId);
+			const myDinoz = dinozList.find(dinoz => dinoz.id === this.dinozId);
 
 			if (!myDinoz) {
 				return null;
@@ -117,6 +120,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.dinozName {
+	color: #ffee92;
+	font-variant: small-caps;
+	font-weight: bold;
+}
 .mission {
 	margin: 0 10px 10px;
 	padding: 5px 5px 5px 20px;

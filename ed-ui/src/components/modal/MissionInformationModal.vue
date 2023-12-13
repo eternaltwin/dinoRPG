@@ -39,18 +39,19 @@ export default defineComponent({
 	},
 	props: {
 		mission: Object as PropType<MissionList>,
-		enabled: Boolean
+		enabled: Boolean,
+		dinozId: { type: Number, required: true }
 	},
 	methods: {
 		async updateMission(status: string) {
-			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
+			const dinozToUpdate = dinozList.find(dinoz => dinoz.id === this.dinozId)!;
 			try {
-				await MissionService.updateMissions(dinozId, this.mission!.missionId, status);
+				await MissionService.updateMissions(this.dinozId, this.mission!.missionId, status);
 				if (status === 'start') {
 					dinozToUpdate.missionId = this.mission!.missionId;
+					this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 				} else {
 					dinozToUpdate.missionId = undefined;
 				}
@@ -69,7 +70,7 @@ export default defineComponent({
 		},
 		dinoz(): DinozFiche {
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			return dinozList.find(dinozs => dinozs.id == parseInt(this.$route.params.id as string))!;
+			return dinozList.find(dinozs => dinozs.id === this.dinozId)!;
 		}
 	}
 });

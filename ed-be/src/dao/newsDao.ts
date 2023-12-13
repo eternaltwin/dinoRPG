@@ -25,7 +25,7 @@ export const getBatchOfNews = async (page: number) => {
 			frenchTitle: true,
 			englishTitle: true,
 			spanishTitle: true,
-			germanTitle: true,
+			germanTitle: true
 		}
 	});
 
@@ -35,7 +35,7 @@ export const getBatchOfNews = async (page: number) => {
 export const updateAnyNews = async (title: string, newObject: Prisma.NewsUpdateInput) => {
 	await prisma.news.updateMany({
 		where: { title },
-		data: newObject,
+		data: newObject
 	});
 };
 
@@ -48,4 +48,4 @@ export const getNewsIllus = async (id: number) => {
 	if (!news) throw new Error('News not found');
 
 	return news;
-}
+};

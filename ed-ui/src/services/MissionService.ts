@@ -10,7 +10,7 @@ export const MissionService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	updateMissions(dinozId: string, missionId: number, status: string): Promise<boolean> {
+	updateMissions(dinozId: number, missionId: number, status: string): Promise<boolean> {
 		return http()
 			.put(`/missions/update/${dinozId}/${missionId}`, { status: status })
 			.then(res => Promise.resolve(res.data))

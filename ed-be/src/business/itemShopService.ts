@@ -182,7 +182,13 @@ export async function buyItem(req: Request) {
 		await insertItem(playerId, { itemId: itemReference.itemId, quantity: itemReference.quantity });
 	}
 
-	await createLog(LogType.ItemBought, playerId, undefined, itemReference.itemId.toString(), itemReference.quantity.toString());
+	await createLog(
+		LogType.ItemBought,
+		playerId,
+		undefined,
+		itemReference.itemId.toString(),
+		itemReference.quantity.toString()
+	);
 }
 
 /**

@@ -267,28 +267,70 @@ export async function editPlayer(req: Request) {
 	await setPlayer(+req.params.id, player);
 
 	if (typeof player.hasImported !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'hasImported', player.hasImported);
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'hasImported',
+			player.hasImported
+		);
 	}
 	if (typeof player.customText !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'customText', player.customText);
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'customText',
+			player.customText
+		);
 	}
 	if (typeof player.quetzuBought !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'quetzuBought', player.quetzuBought);
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'quetzuBought',
+			player.quetzuBought
+		);
 	}
 	if (typeof player.leader !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'leader', player.leader);
 	}
 	if (typeof player.engineer !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'engineer', player.engineer);
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'engineer',
+			player.engineer
+		);
 	}
 	if (typeof player.cooker !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'cooker', player.cooker);
 	}
 	if (typeof player.shopKeeper !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'shopKeeper', player.shopKeeper);
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'shopKeeper',
+			player.shopKeeper
+		);
 	}
 	if (typeof player.merchant !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'merchant', player.merchant);
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'merchant',
+			player.merchant
+		);
 	}
 	if (typeof player.priest !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'priest', player.priest);
