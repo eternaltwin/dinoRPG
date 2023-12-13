@@ -28,7 +28,7 @@ pub static COQUE: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _m_: &mut Manager| {
         f.armor += 1;
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -41,7 +41,7 @@ pub static CHARGE_CORNUE: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _m_: &mut Manager| {
         f.next_assault_multiplier = 1.2;
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -58,7 +58,7 @@ pub static DUR_A_CUIRE: Skill = Skill {
         f.defense[ElementIndex::Lightning as usize] += 6.0;
         f.defense[ElementIndex::Water as usize] += 6.0;
         f.defense[ElementIndex::Wood as usize] += 6.0;
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -71,7 +71,7 @@ pub static GROS_COSTAUD: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.all_assaults_bonus += 5;
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -84,7 +84,7 @@ pub static ORIGINE_CAUSHEMESHENNE: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _: &mut Manager| {
         // todo
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -97,7 +97,7 @@ pub static FORCE_DE_LUMIERE: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _: &mut Manager| {
         // todo
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -111,7 +111,7 @@ pub static FORCE_DES_TENEBRES: Skill = Skill {
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.recovery_multiplier *= 1.25;
         f.max_energy = (f.max_energy as f32 * 1.25) as u32;
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -128,7 +128,7 @@ pub static PIETINEMENT: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.cancel_armor = true;
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -143,7 +143,7 @@ pub static INSAISISSABLE: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.assault_dodge_chance *= 1.1;
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };
@@ -156,7 +156,7 @@ pub static DEPLACEMENT_INSTANTANE: Skill = Skill {
     probability: 0,
     effect: |_f: &mut Fighter, _: &mut Manager| {
         // todo
-        vec![(None, AttackResult::PassiveSkill)]
+        vec![AttackResult::PassiveSkill()]
     },
     ignore: false,
 };

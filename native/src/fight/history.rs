@@ -131,7 +131,7 @@ pub struct SkillEvent {
     attacker_name: String,
     skill: SkillId,
     effect: EffectType,
-    results: Vec<(Option<FighterId>, AttackResult)>,
+    results: Vec<AttackResult>,
 }
 
 impl SkillEvent {
@@ -140,7 +140,7 @@ impl SkillEvent {
         attacker_name: String,
         skill: SkillId,
         effect: EffectType,
-        results: Vec<(Option<FighterId>, AttackResult)>,
+        results: Vec<AttackResult>,
     ) -> Self {
         Self {
             attacker_id,
@@ -235,7 +235,7 @@ impl FightHistory {
         attacker_name: String,
         skill_id: SkillId,
         effect_type: EffectType,
-        results: Vec<(Option<FighterId>, AttackResult)>,
+        results: Vec<AttackResult>,
     ) {
         self.events.push(FightEvent::Skill(SkillEvent::new(
             attacker_id,
@@ -280,20 +280,12 @@ impl Display for FightHistory {
                 FightEvent::Skill(skill) => {
                     writeln!(
                         f,
-                        "{} uses skill {:?} on {:?} and deals respectively {:?} damage",
-                        skill.attacker_name,
-                        skill.skill,
-                        skill
-                            .results
-                            .iter()
-                            .map(|(target, _)| *target)
-                            .collect::<Vec<Option<FighterId>>>(),
-                        skill
-                            .results
-                            .iter()
-                            .map(|(_, damage)| *damage)
-                            .collect::<Vec<AttackResult>>()
+                        "{} uses skill {:?} and results in:",
+                        skill.attacker_name, skill.skill
                     )?;
+                    for result in skill.results {
+                        writeln!(f, "{}", result);
+                    }
                 }
                 FightEvent::Status(_status) => todo!(),
                 FightEvent::Summon(_summon) => todo!(),

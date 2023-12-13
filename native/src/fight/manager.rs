@@ -23,7 +23,7 @@ use crate::fight::{
     fighter::{Fighter, FighterConfiguration, FighterResult},
 };
 
-use super::fighter::FighterShort;
+use super::fighter::{FighterId, FighterShort};
 use super::history::EffectType;
 use super::history::FightHistory;
 use super::skills::Skill;
@@ -48,21 +48,56 @@ const ASSAULT_POWER_BASE: u32 = 5;
 // const INFINITE: u32 = TIMECOEF * 1000 * 1000;
 // const CYCLE: u32 = TIMECOEF * 6;
 
-type FighterId = u32;
-
+/// Model the result of an attack from a hit to an skill that needs to be implemented
+///
+/// This is more broadly used for passive skills and other for compatibility sake.
+/// So the "attack" vocabulary is not entirely correct.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub enum AttackResult {
-    Hit(u32),
-    Dodge,
-    SuperDodge,
-    FlewAway,
-    Intangible,
-    IgnoredSkill,
-    UselessSkill,
-    PassiveSkill,
-    InvalidTarget,
+    /// The attack (assault or skill) resulted in damage to a target
+    Hit(FighterId, u32),
+    /// The attack (assault) and was dodged
+    Dodge(FighterId),
+    /// The attack (skill) and was dodged
+    SuperDodge(FighterId),
+    /// The attack (assault) was dodged due to the target flying
+    FlewAway(FighterId),
+    /// The attack (?) did not damage the target because it is intangible
+    Intangible(FighterId),
+    /// The processed skill is ignored (i.e de-activated)
+    IgnoredSkill(SkillId),
+    /// The processed skill is useless (i.e no effect in fight)
+    UselessSkill(SkillId),
+    /// The processed skill is a passive skill
+    PassiveSkill(SkillId),
+    /// The attack had an invalid target
+    InvalidTarget(FighterId),
+    /// The attack was an unknown skill and ignored
     UnknownSkill,
-    TodoSkill,
+    /// The skill is not implemented yet
+    TodoSkill(SkillId),
+}
+
+impl Display for AttackResult {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Hit(id, damage) => {
+                writeln!(f, "Target {} suffered {} damage", id, damage)
+            }
+            Self::Dodge(id) => writeln!(f, "Target {} dodged the assault", id),
+            Self::SuperDodge(id) => writeln!(f, "Target {} super-dodged the skill", id),
+            Self::FlewAway(id) => writeln!(f, "Target {} flew away from the assault", id),
+            Self::Intangible(id) => {
+                writeln!(f, "Target {} is intangible and avoided the attack", id)
+            }
+            Self::IgnoredSkill(id) => writeln!(f, "Skill {} is ignored", id),
+            Self::UselessSkill(id) => writeln!(f, "Skill {} is useless", id),
+            Self::PassiveSkill(id) => writeln!(f, "Skill {} is a passive skill", id),
+            Self::InvalidTarget(id) => writeln!(f, "Target {} is invalid", id),
+            Self::UnknownSkill => writeln!(f, "Skill unknown executed"),
+            Self::TodoSkill(id) => writeln!(f, "Skill {} has yet to be implemented", id),
+        }
+    }
 }
 
 /// Enum to define the sides on the fight
@@ -161,7 +196,7 @@ impl FightResult {
         attacker: &Fighter,
         skill_id: SkillId,
         effect: EffectType,
-        results: Vec<(Option<FighterId>, AttackResult)>,
+        results: Vec<AttackResult>,
     ) {
         self.history.log_skill(
             attacker.id,
@@ -521,7 +556,7 @@ impl Manager {
         // SAFETY: it should be safe to unwrap because target is valid
         *self.fighters_all.get_mut(&target.id).unwrap() = target.clone();
 
-        AttackResult::Hit(hp_lost)
+        AttackResult::Hit(target.id, hp_lost)
     }
 
     /// Method to inflict a fixed amount of damage to a target
@@ -556,7 +591,7 @@ impl Manager {
         // SAFETY: it should be safe to unwrap because target is valid
         *self.fighters_all.get_mut(&target.id).unwrap() = target.clone();
 
-        AttackResult::Hit(damage)
+        AttackResult::Hit(target.id, damage)
     }
 
     /// Method to process an attack with a given attack power on a single target
@@ -564,7 +599,7 @@ impl Manager {
         &mut self,
         attacker: &mut Fighter,
         attack_power: [u32; 6],
-    ) -> Vec<(Option<FighterId>, AttackResult)> {
+    ) -> Vec<AttackResult> {
         let mut target = self.pick_target(attacker.side);
         debug!(
             "[Manager:attack_single_with_skill] Target is {:}",
@@ -576,7 +611,7 @@ impl Manager {
             "[Manager:attack_single_with_skill] {:} used skill of power {:?} on {:} and did {:?}",
             attacker.name, attack_power, target.name, attack_result
         );
-        vec![(Some(target.id), attack_result)]
+        vec![attack_result]
     }
 
     // Method to process an attack with a given attack power to a whole team
@@ -584,8 +619,8 @@ impl Manager {
         &mut self,
         attacker: &mut Fighter,
         attack_power: [u32; 6],
-    ) -> Vec<(Option<FighterId>, AttackResult)> {
-        let mut results: Vec<(Option<FighterId>, AttackResult)> = vec![];
+    ) -> Vec<AttackResult> {
+        let mut results: Vec<AttackResult> = vec![];
 
         // Get the IDs of all the opposing fighters
         let targets = if attacker.side == TeamSide::Attackers {
@@ -603,9 +638,9 @@ impl Manager {
                     "[Manager:attack_single_with_skill] Target (ID: {}) is invalid",
                     t
                 );
-                AttackResult::InvalidTarget
+                AttackResult::InvalidTarget(t)
             };
-            results.push((Some(t), temp_result));
+            results.push(temp_result);
         }
 
         results
@@ -614,10 +649,7 @@ impl Manager {
     /// PURPOSE: Handle an assault
     /// PARAMS:  - attacker (&mut Fighter): mutable pointer of the attacker
     ///          - target (&mut Fighter): mutable pointer of the target
-    pub fn attack_with_assault(
-        &mut self,
-        attacker: &mut Fighter,
-    ) -> (Option<FighterId>, AttackResult) {
+    pub fn attack_with_assault(&mut self, attacker: &mut Fighter) -> AttackResult {
         // TODO check if the dinoz can attack flying or intangible
 
         let mut target = self.pick_target(attacker.side);
@@ -633,7 +665,7 @@ impl Manager {
 
         let assault_result = self.attack_target(attacker, &mut target, assault_power, true);
 
-        if let AttackResult::Hit(hp_lost) = assault_result {
+        if let AttackResult::Hit(_, hp_lost) = assault_result {
             debug!(
                 "[Manager:attack_with_assault] {:} loses {:} life points, only {:} left",
                 target.id, hp_lost, target.life
@@ -646,14 +678,10 @@ impl Manager {
                 assault_result
             );
         }
-        (Some(target.id), assault_result)
+        assault_result
     }
 
-    fn process_active_skill(
-        &mut self,
-        attacker: &mut Fighter,
-        skill: Skill,
-    ) -> Vec<(Option<FighterId>, AttackResult)> {
+    fn process_active_skill(&mut self, attacker: &mut Fighter, skill: Skill) -> Vec<AttackResult> {
         info!("Processing skill {:?}", skill);
         let result = skill.process_skill(attacker, self);
         self.fight_result
