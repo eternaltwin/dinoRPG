@@ -3613,6 +3613,7 @@
 		}
 	},
 	"following": "Ce Dinoz suit son chef de groupe.",
+	"follow": "Le chef de groupe est {leader}.",
 	"followed": "Ce Dinoz est chef de groupe.",
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}x {item}** with dinoz **{dinoz} ({dinozId})**.",

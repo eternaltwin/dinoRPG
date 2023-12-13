@@ -14,6 +14,12 @@
 			/>
 		</template>
 		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
+		<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
+			{{ $t('following') }}
+			<template #content>
+				{{ $t(`follow`, { leader: leaderDinoz.name }) }}
+			</template>
+		</Tippy>
 		<ul>
 			<table class="action_button">
 				<tbody>
@@ -378,6 +384,10 @@ export default defineComponent({
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 
 			return !!dinoz?.isSelling;
+		},
+		goToLeader() {
+			if (!this.leaderDinoz) return;
+			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
 		}
 	},
 	computed: {
@@ -397,6 +407,9 @@ export default defineComponent({
 			return dinozStore().getDinozList!.filter(
 				dinoz => this.dinoz?.followers.includes(dinoz.id) || dinoz.id === this.dinoz?.id
 			);
+		},
+		leaderDinoz() {
+			return dinozStore().getDinoz(this.dinoz.leaderId);
 		}
 	},
 	watch: {
@@ -408,6 +421,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.follow {
+	margin: 0 10px 10px;
+	padding: 5px 5px 5px 20px;
+	font-size: 10pt;
+	background-color: #bc683c;
+	background-image: url('../../assets/icons/small_missAct.webp');
+	background-position: 5px 8px;
+	background-repeat: no-repeat;
+	line-height: 10pt;
+	overflow: hidden;
+	color: #774828;
+	cursor: pointer;
+	font-style: italic;
+	color: #fce3bc;
+	font-size: 9pt;
+}
 .actions {
 	background:
 		url('../../assets/background/banniere_left.webp') no-repeat,
