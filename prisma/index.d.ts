@@ -217,7 +217,18 @@ export const LogType: {
   MissionCanceled: 'MissionCanceled',
   Gather: 'Gather',
   CreateDinoz: 'CreateDinoz',
-  ChangeDinozOrder: 'ChangeDinozOrder'
+  ChangeDinozOrder: 'ChangeDinozOrder',
+  AdminUpdateDinoz: 'AdminUpdateDinoz',
+  AdminAddStatus: 'AdminAddStatus',
+  AdminRemoveStatus: 'AdminRemoveStatus',
+  AdminAddSkill: 'AdminAddSkill',
+  AdminRemoveSkill: 'AdminRemoveSkill',
+  AdminAddMoney: 'AdminAddMoney',
+  AdminRemoveMoney: 'AdminRemoveMoney',
+  AdminAddReward: 'AdminAddReward',
+  AdminRemoveReward: 'AdminRemoveReward',
+  AdminUpdatePlayer: 'AdminUpdatePlayer',
+  AdminUpdateSecret: 'AdminUpdateSecret'
 };
 
 export type LogType = (typeof LogType)[keyof typeof LogType]

@@ -3133,6 +3133,17 @@
 		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
-		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**.",
+		"AdminUpdateDinoz": "**Admin {player} ({playerId})** set dinoz **{dinoz} ({dinozId}) {stat}** to **{value}**.",
+		"AdminAddStatus": "**Admin {player} ({playerId})** added status **{status}** to dinoz **{dinoz} ({dinozId})**.",
+		"AdminRemoveStatus": "**Admin {player} ({playerId})** removed status **{status}** from dinoz **{dinoz} ({dinozId})**.",
+		"AdminAddSkill": "**Admin {player} ({playerId})** added skill **{skill}** to dinoz **{dinoz} ({dinozId})**.",
+		"AdminRemoveSkill": "**Admin {player} ({playerId})** removed skill **{skill}** from dinoz **{dinoz} ({dinozId})**.",
+		"AdminAddMoney": "**Admin {player} ({playerId})** added **{quantity} :gold:** to player with ID **{targetId}**.",
+		"AdminRemoveMoney": "**Admin {player} ({playerId})** removed **{quantity} :gold:** from player with ID **{targetId}**.",
+		"AdminAddReward": "**Admin {player} ({playerId})** added reward **{reward}** to player with ID **{targetId}**.",
+		"AdminRemoveReward": "**Admin {player} ({playerId})** removed reward **{reward}** from player with ID **{targetId}**.",
+		"AdminUpdatePlayer": "**Admin {player} ({playerId})** set player **{targetId} {stat}** to **{value}**.",
+		"AdminUpdateSecret": "**Admin {player} ({playerId})** set secret **{key}** to **{value}**."
 	}
 }

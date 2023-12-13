@@ -478,6 +478,17 @@ enum LogType {
   Gather
 	CreateDinoz
 	ChangeDinozOrder
+	AdminUpdateDinoz
+	AdminAddStatus
+	AdminRemoveStatus
+	AdminAddSkill
+	AdminRemoveSkill
+	AdminAddMoney
+	AdminRemoveMoney
+	AdminAddReward
+	AdminRemoveReward
+	AdminUpdatePlayer
+	AdminUpdateSecret
 }
 
 model Log {

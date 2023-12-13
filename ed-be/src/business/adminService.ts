@@ -6,6 +6,8 @@ import { addMoney, getAllInformationFromPlayer, getEternalTwinId, removeMoney, s
 import { addMultipleRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { createLog } from '../dao/logDao.js';
+import { LogType } from '@drpg/prisma';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -35,6 +37,10 @@ export async function getAdminDashBoard(): Promise<boolean> {
  * @param req.body.removeSkill {number} Skill to remove to the dinoz
  */
 export async function editDinoz(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `You need to be logged in.`);
+	}
+
 	const dinoz = {
 		name: req.body.name,
 		canChangeName: req.body.canChangeName,
@@ -49,16 +55,50 @@ export async function editDinoz(req: Request) {
 
 	await updateDinoz(+req.params.id, dinoz);
 
+	if (typeof dinoz.name !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'name', dinoz.name);
+	}
+	if (typeof dinoz.canChangeName !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'canChangeName', dinoz.canChangeName);
+	}
+	if (typeof dinoz.isFrozen !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'isFrozen', dinoz.isFrozen);
+	}
+	if (typeof dinoz.isSacrificed !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'isSacrificed', dinoz.isSacrificed);
+	}
+	if (typeof dinoz.level !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'level', dinoz.level);
+	}
+	if (typeof dinoz.placeId !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'placeId', dinoz.placeId);
+	}
+	if (typeof dinoz.life !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'life', dinoz.life);
+	}
+	if (typeof dinoz.maxLife !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'maxLife', dinoz.maxLife);
+	}
+	if (typeof dinoz.experience !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'experience', dinoz.experience);
+	}
+
 	const statusListAsString: string[] = req.body.status;
 	const statusList = statusListAsString.map(status => +status);
 	if (statusList.length > 0 && req.body.statusOperation) {
 		switch (req.body.statusOperation) {
 			case 'add':
 				await addMultipleStatusToDinoz(+req.params.id, statusList);
+
+				for (const status of statusList) {
+					await createLog(LogType.AdminAddStatus, req.auth.playerId, +req.params.id, status);
+				}
 				break;
 			case 'remove':
 				for (const status of statusList) {
 					await removeStatusFromDinoz(parseInt(req.params.id), status);
+
+					await createLog(LogType.AdminRemoveStatus, req.auth.playerId, +req.params.id, status);
 				}
 				break;
 			default:
@@ -71,10 +111,18 @@ export async function editDinoz(req: Request) {
 		switch (req.body.skillOperation) {
 			case 'add':
 				await addMultipleSkillToDinoz(+req.params.id, skillList);
+
+				for (const skill of skillList) {
+					await createLog(LogType.AdminAddSkill, req.auth.playerId, +req.params.id, skill);
+				}
 				break;
 			case 'remove':
 				const promises = skillList.map(skill => removeSkillFromDinoz(+req.params.id, skill));
 				await Promise.all(promises);
+
+				for (const skill of skillList) {
+					await createLog(LogType.AdminRemoveSkill, req.auth.playerId, +req.params.id, skill);
+				}
 				break;
 			default:
 				throw new ErrorFormator(500, `You need to select an operation.`);
@@ -91,6 +139,10 @@ export async function editDinoz(req: Request) {
  * @return string
  */
 export async function setPlayerMoney(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `You need to be logged in.`);
+	}
+
 	const player = await getEternalTwinId(+req.params.id);
 	if (!player) {
 		throw new ErrorFormator(500, `Player ${req.params.id} doesn't exist.`);
@@ -98,9 +150,11 @@ export async function setPlayerMoney(req: Request) {
 	let newMoney = 0;
 	switch (req.body.operation) {
 		case 'add':
+			await createLog(LogType.AdminAddMoney, req.auth.playerId, undefined, +req.params.id, req.body.gold);
 			newMoney = (await addMoney(+req.params.id, +req.body.gold)).money;
 			break;
 		case 'remove':
+			await createLog(LogType.AdminRemoveMoney, req.auth.playerId, undefined, +req.params.id, req.body.gold);
 			newMoney = (await removeMoney(+req.params.id, +req.body.gold)).money;
 			break;
 		default:
@@ -119,6 +173,10 @@ export async function setPlayerMoney(req: Request) {
  * @return void
  */
 export async function givePlayerEpicReward(req: Request): Promise<void> {
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `You need to be logged in.`);
+	}
+
 	const rewardList: number[] = req.body.epicRewardId;
 	switch (req.body.operation) {
 		case 'add':
@@ -128,10 +186,18 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 					rewardId: +reward
 				}))
 			);
+
+			for (const reward of rewardList) {
+				await createLog(LogType.AdminAddReward, req.auth.playerId, undefined, +req.params.id, reward);
+			}
 			break;
 		case 'remove':
 			const promises = rewardList.map(reward => removeRewardFromPlayer(+req.params.id, reward));
 			await Promise.all(promises);
+
+			for (const reward of rewardList) {
+				await createLog(LogType.AdminRemoveReward, req.auth.playerId, undefined, +req.params.id, reward);
+			}
 			break;
 		default:
 			throw new ErrorFormator(500, `You need to select an operation.`);
@@ -181,6 +247,10 @@ export async function listAllDinozFromPlayer(req: Request) {
  * @param req.body.teacher {boolean}
  */
 export async function editPlayer(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `You need to be logged in.`);
+	}
+
 	const player = {
 		hasImported: req.body.hasImported,
 		customText: req.body.customText,
@@ -195,6 +265,37 @@ export async function editPlayer(req: Request) {
 	};
 
 	await setPlayer(+req.params.id, player);
+
+	if (typeof player.hasImported !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'hasImported', player.hasImported);
+	}
+	if (typeof player.customText !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'customText', player.customText);
+	}
+	if (typeof player.quetzuBought !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'quetzuBought', player.quetzuBought);
+	}
+	if (typeof player.leader !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'leader', player.leader);
+	}
+	if (typeof player.engineer !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'engineer', player.engineer);
+	}
+	if (typeof player.cooker !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'cooker', player.cooker);
+	}
+	if (typeof player.shopKeeper !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'shopKeeper', player.shopKeeper);
+	}
+	if (typeof player.merchant !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'merchant', player.merchant);
+	}
+	if (typeof player.priest !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'priest', player.priest);
+	}
+	if (typeof player.teacher !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'teacher', player.teacher);
+	}
 }
 
 /**
@@ -248,11 +349,17 @@ export async function getAllSecrets() {
  * @summary Add a secret to the store
  */
 export async function addSecret(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `You need to be logged in.`);
+	}
+
 	await addNewSecret({
 		key: req.body.key,
 		value: req.body.value
 	});
 	const secrets = await getAllSecretsRequest();
+
+	await createLog(LogType.AdminUpdateSecret, req.auth.playerId, undefined, req.body.key, req.body.value);
 
 	return secrets;
 }

@@ -26,6 +26,8 @@ import { LogListResponse } from '@drpg/core/returnTypes/log';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { missionsList } from '../../constants/missions.js';
 import { placeList } from '../../constants/place.js';
+import { epicList } from '../../constants/epic.js';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 const LogTypes = [
 	'ItemUsed',
@@ -42,7 +44,18 @@ const LogTypes = [
 	'MissionCanceled',
 	'Gather',
 	'CreateDinoz',
-	'ChangeDinozOrder'
+	'ChangeDinozOrder',
+	'AdminUpdateDinoz',
+	'AdminAddStatus',
+	'AdminRemoveStatus',
+	'AdminAddSkill',
+	'AdminRemoveSkill',
+	'AdminAddMoney',
+	'AdminRemoveMoney',
+	'AdminAddReward',
+	'AdminRemoveReward',
+	'AdminUpdatePlayer',
+	'AdminUpdateSecret'
 ] as const;
 
 const pad = (n: number) => (n < 10 ? `0${n}` : n);
@@ -62,7 +75,7 @@ const getLogPropsForTranslation = (
 	$t: (key: string, options?: Record<string, string>) => string,
 	log: LogListResponse[number]
 ) => {
-	let values;
+	let values: Record<string, string> = {};
 
 	switch (log.type) {
 		case 'ItemUsed':
@@ -137,6 +150,69 @@ const getLogPropsForTranslation = (
 		case 'ChangeDinozOrder':
 			values = {};
 			break;
+		case 'AdminUpdateDinoz':
+			values = {
+				stat: log.values[0],
+				value: log.values[1]
+			};
+			break;
+		case 'AdminAddStatus':
+			values = {
+				status: $t(`status.name.${+log.values[0]}`)
+			};
+			break;
+		case 'AdminRemoveStatus':
+			values = {
+				status: $t(`status.name.${+log.values[0]}`)
+			};
+			break;
+		case 'AdminAddSkill':
+			values = {
+				skill: $t(`skill.name.${skillList[+log.values[0]].name}`)
+			};
+			break;
+		case 'AdminRemoveSkill':
+			values = {
+				skill: $t(`skill.name.${skillList[+log.values[0]].name}`)
+			};
+			break;
+		case 'AdminAddMoney':
+			values = {
+				targetId: log.values[0],
+				quantity: log.values[1]
+			};
+			break;
+		case 'AdminRemoveMoney':
+			values = {
+				targetId: log.values[0],
+				quantity: log.values[1]
+			};
+			break;
+		case 'AdminAddReward':
+			values = {
+				targetId: log.values[0],
+				reward: $t(`rewards.name.${epicList.imgName[+log.values[1]]}`)
+			};
+			break;
+		case 'AdminRemoveReward':
+			values = {
+				targetId: log.values[0],
+				reward: $t(`rewards.name.${epicList.imgName[+log.values[1]]}`)
+			};
+			break;
+		case 'AdminUpdatePlayer':
+			values = {
+				targetId: log.values[0],
+				stat: log.values[1],
+				value: log.values[2]
+			};
+			break;
+		case 'AdminUpdateSecret':
+			values = {
+				key: log.values[0],
+				value: log.values[1]
+			};
+			break;
 		default:
 			break;
 	}
@@ -205,6 +281,10 @@ export default defineComponent({
 table td {
 	font-family: monospace;
 	font-size: 12px;
+
+	&:first-child {
+		width: 106px;
+	}
 
 	:deep(strong) {
 		color: inherit;
