@@ -62,9 +62,7 @@ export class SVGAdapter {
 	/**
 	 * Format the SVG contained in the "sprites" folder of ffdoc extraction.
 	 *
-	 * The "sprites" folder is comprised of multiple sub-folders. We go through all of them and only parse the SVG which:
-	 * 1. Are the only element of a folder
-	 * 2. Fit the given XSD format
+	 * The "sprites" folder is comprised of multiple sub-folders. We go through all of them and only parse the SVG which fit the given XSD format
 	 *
 	 * Formatted SVG will have their default g node removed, the content of the defs node will be move up to the root svg node.
 	 * The size of the SVG will be increased by 2px in both direction, the translate of the transform will be moved up by 1 and the stroke-width will be set to 1.
@@ -79,8 +77,8 @@ export class SVGAdapter {
 			if (matchSymb) {
 				const symbol = matchSymb[1];
 				const files = fs.readdirSync(path.join(folder, symbFolder));
-				if (files.length === 1) {
-					const svgContent = fs.readFileSync(path.join(folder, symbFolder, files[0]));
+				for (let i = 0; i < files.length; ++i) {
+					const svgContent = fs.readFileSync(path.join(folder, symbFolder, files[i]));
 					const svgDoc = libxmljs.parseXml(svgContent.toString());
 					if (svgDoc.validate(schema)) {
 						const data = this._parser.parse(svgContent);
@@ -89,13 +87,15 @@ export class SVGAdapter {
 							if (n.svg) {
 								this.increaseSize(n[':@'], '@_height');
 								this.increaseSize(n[':@'], '@_width');
+								if (!n.svg[0][':@']['@_transform']) {
+									throw new Error(`Symbol ${symbol} does not have a top 'g' tag with a transform.`);
+								}
+								offset = this.increaseTransform(n.svg[0][':@'], '@_transform');
+								const transform = n.svg[0][':@']['@_transform'];
 								n.svg = n.svg[1].defs;
 								for (const g of n.svg) {
 									if (g.g) {
-										let svgOffset = this.increaseTransform(g[':@'], '@_transform');
-										if (!offset) {
-											offset = svgOffset;
-										}
+										g[':@']['@_transform'] = transform;
 										for (const path of g.g) {
 											if (path.path && path[':@'] && path[':@']['@_stroke-width'] === '0.05') {
 												path[':@']['@_stroke-width'] = '1';
@@ -105,8 +105,9 @@ export class SVGAdapter {
 								}
 							}
 						}
-						this.saveAdaptedSVG(resultFolder, symbol, this._builder.build(data));
-						this.addToReferences(symbol, this._referencesBuilder.build(data), references, offset);
+						const name = symbol + (files.length > 1 ? `_${i + 1}` : '');
+						this.saveAdaptedSVG(resultFolder, name, this._builder.build(data));
+						this.addToReferences(name, this._referencesBuilder.build(data), references, offset);
 					} else {
 						//console.log(`${symbol}: ${svgDoc.validationErrors}`);
 					}
@@ -176,15 +177,15 @@ export class SVGAdapter {
 	}
 
 	/**
-	 * The the created SVG to the result folder.
+	 * Save the created SVG to the result folder.
 	 * Will check if the SVG has to be renamed based on the mapping file.
 	 * @param {string} folder Path to the folder where the results have to be saved.
 	 * @param {string} fileName Symbol name of the file.
 	 * @param {any} content Formatted SVG content to save.
 	 */
 	saveAdaptedSVG(folder, fileName, content) {
-		const name = path.parse(fileName).name;
-		const mappedName = (mapping[name] ?? name) + '.svg';
+		const names = path.parse(fileName).name.split('_');
+		const mappedName = (mapping[names[0]] ?? names[0]) + (names[1] ? `_${names[1]}` : '') + '.svg';
 		const fullPath = path.join(folder, mappedName);
 		const directory = path.dirname(fullPath);
 		if (!fs.existsSync(directory)) {
@@ -202,9 +203,11 @@ export class SVGAdapter {
 	 * @param {object} offset Offset of the SVG matrix.
 	 */
 	addToReferences(symbol, content, references, offset) {
-		const ref = mapping[symbol];
+		const names = symbol.split('_');
+		let ref = mapping[names[0]];
 		let node = references;
 		if (ref) {
+			ref += names[1] ? `_${names[1]}` : '';
 			for (const p of ref.split('/')) {
 				if (!node[p]) {
 					node[p] = {};

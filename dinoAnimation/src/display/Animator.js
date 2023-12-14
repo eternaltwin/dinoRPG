@@ -28,8 +28,8 @@ export class Animator extends Container {
 	_body = new Animation();
 
 	/**
-	 * Controls if the animation is playing or not.
-	 * Setting it to false will freeze the animation on its current frame.
+	 * Controls if the animator is running or not.
+	 * Setting it to false will freeze the animation and all its subanimation on its current frame.
 	 * @type {boolean}
 	 */
 	playing = true;
@@ -57,11 +57,12 @@ export class Animator extends Container {
 		this.addChild(this._body);
 		const ticker = Ticker.shared;
 		ticker.add(() => this.update());
-		this.registerCallback('stop', () => {
-			this.playing = false;
+		this.registerCallback('stop', (animation) => {
+			animation.stop();
 		});
-		this.registerCallback('gotoAndPlay', (idx) => {
-			this.setFrame(idx, false);
+		this.registerCallback('gotoAndPlay', (animation, idx) => {
+			animation.setCurrentIdx(idx);
+			animation.updateAnimation();
 		});
 	}
 
@@ -69,21 +70,11 @@ export class Animator extends Container {
 	 * Register a new callback for the Animator.
 	 * The callback will be triggered if a frame has registered a callback of the same name.
 	 * @param {string} name Name of the callback to register.
-	 * @param {*} callback Function called when the callback is triggered. Will receive an array as parameter if any arguments are passed along.
+	 * @param {*} callback Function called when the callback is triggered. Will receive the animation triggering the callback
+	 * as well as an array as parameter if any arguments are passed along.
 	 */
 	registerCallback(name, callback) {
 		this._callbacks[name] = callback;
-	}
-
-	/**
-	 * Execute all the callbacks for the current frame, if any.
-	 */
-	executeCallbacks() {
-		for (const f of this._body.getCallbacks()) {
-			if (this._callbacks[f[0]]) {
-				this._callbacks[f[0]](f.slice(1));
-			}
-		}
 	}
 
 	/**
@@ -142,7 +133,7 @@ export class Animator extends Container {
 	playAnim(animation) {
 		this._body.setAnimation(animation.anim ?? animation);
 		this._body.setOffsetIdx(animation.offset ?? 0);
-		this.playing = true;
+		this._body.play();
 		this.setFrame(0);
 	}
 
@@ -160,7 +151,7 @@ export class Animator extends Container {
 			this._body.increaseCurrentIdx(Math.floor(this._time / this._tickRate));
 			this._time = this._time % this._tickRate;
 			this._body.updateAnimation();
-			this.executeCallbacks();
+			this._body.executeCallbacks(this._callbacks);
 		}
 	}
 

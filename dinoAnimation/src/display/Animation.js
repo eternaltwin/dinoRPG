@@ -1,5 +1,5 @@
 // @ts-check
-import { Container, Filter, Matrix } from 'pixi.js';
+import { BlurFilter, Container, Filter, Matrix } from 'pixi.js';
 import { offsetShader } from './shaders/ColorOffsetShader.js';
 
 /**
@@ -27,11 +27,17 @@ export class Animation extends Container {
 	 */
 	_animation = null;
 	/**
-	 * An array containing all the parts having a sub-animation.
+	 * An array containing all the parts having an animation in their children.
 	 * Those parts will be updated when a frame change is triggered.
 	 * @type {Animation[]}
 	 */
-	_subanimations = [];
+	_childAnimations = [];
+	/**
+	 * Controls if the animation is running or not.
+	 * Setting it to false will freeze the animation on its current frame but the sub animation will still run.
+	 * @type {boolean}
+	 */
+	_playing = true;
 
 	/**
 	 * Current index of the animation being played.
@@ -49,19 +55,33 @@ export class Animation extends Container {
 	 * @type {Filter}
 	 */
 	_colorTransform;
+	/**
+	 * Blur filter of the animation.
+	 * @type {BlurFilter}
+	 */
+	_blurFilter;
+
+	/**
+	 * Add a child animation to the object.
+	 * The child animation may or may not have an actual playing animation.
+	 * @param {Animation} anim A PixiJS Container containing multiple sprites and possibly an animation in its children.
+	 */
+	addAnim(anim) {
+		this.addChild(anim);
+		if (anim.getAnimationLength() > 0 || anim.hasChildAnimation()) {
+			this._childAnimations.push(anim);
+		}
+	}
 
 	/**
 	 * Add a part to the animation.
-	 * A part is another Animation.
+	 * A part is another Animation which is referenced via a name.
 	 * @param {string} partName Name of the part to add. Has to be the same name as one part in the animation.
-	 * @param {Animation} part A PixiJS Container containing multiple sprites and possibly a sub-animation.
+	 * @param {Animation} part A PixiJS Container containing multiple sprites and possibly some animations in its children.
 	 */
 	addPart(partName, part) {
-		this.addChild(part);
+		this.addAnim(part);
 		this._parts[partName] = part;
-		if (part.getAnimationLength() > 0) {
-			this._subanimations.push(part);
-		}
 	}
 
 	/**
@@ -69,51 +89,60 @@ export class Animation extends Container {
 	 * If a part does not have a definition for the current keyframe, it will be hidden.
 	 */
 	updateAnimation() {
-		const frame = this._animation?.frames ? this._animation.frames[this.getCurrentIdx()] : undefined;
-		for (const p in this._parts) {
-			if (frame && frame[p]) {
-				this._parts[p].visible = true;
-				this._parts[p].alpha = frame[p].alpha ?? 1;
-				this._parts[p].transform.setFromMatrix(
-					new Matrix(
-						frame[p].a ?? 1,
-						frame[p].b ?? 0,
-						frame[p].c ?? 0,
-						frame[p].d ?? 1,
-						(frame[p].tx ?? 0) * this._scale,
-						(frame[p].ty ?? 0) * this._scale
-					)
-				);
-				this._parts[p].setColorTransform(
-					frame[p].or,
-					frame[p].og,
-					frame[p].ob,
-					frame[p].mr,
-					frame[p].mg,
-					frame[p].mb
-				);
-				// Ordering of the parts display
-				if (frame[p].l !== undefined) {
-					this.swapChildren(this._parts[p], this.getChildAt(frame[p].l));
+		if (this._playing) {
+			const frame = this._animation?.frames ? this._animation.frames[this.getCurrentIdx()] : undefined;
+			for (const p in this._parts) {
+				if (frame && frame[p]) {
+					this._parts[p].visible = true;
+					this._parts[p].alpha = frame[p].alpha ?? 1;
+					this._parts[p].transform.setFromMatrix(
+						new Matrix(
+							frame[p].a ?? 1,
+							frame[p].b ?? 0,
+							frame[p].c ?? 0,
+							frame[p].d ?? 1,
+							(frame[p].tx ?? 0) * this._scale,
+							(frame[p].ty ?? 0) * this._scale
+						)
+					);
+					this._parts[p].setColorTransform(
+						frame[p].or,
+						frame[p].og,
+						frame[p].ob,
+						frame[p].mr,
+						frame[p].mg,
+						frame[p].mb
+					);
+					this._parts[p].setBlurFilter(frame[p].blx, frame[p].bly, frame[p].blq);
+					// Ordering of the parts display
+					if (frame[p].l !== undefined) {
+						this.swapChildren(this._parts[p], this.getChildAt(frame[p].l));
+					}
+				} else {
+					this._parts[p].visible = false;
 				}
-			} else {
-				this._parts[p].visible = false;
 			}
 		}
-		for (const a of this._subanimations) {
+		for (const a of this._childAnimations) {
 			a.updateAnimation();
 		}
 	}
 
 	/**
-	 * Returns the callbacks contained at the current frame of the animation.
-	 * @returns {Array} An array containing all the callbacks of the current frame, or an empty array if there are no callbacks.
+	 * Executes all the callbacks at the current frame using the functions registered as parameters.
+	 * @param {object} callbacksFunc Object containing the references to the callbacks functions.
 	 */
-	getCallbacks() {
-		if (this._animation?.callbacks) {
-			return this._animation.callbacks[this.getCurrentIdx()] ?? [];
+	executeCallbacks(callbacksFunc) {
+		if (this._playing && this._animation?.callbacks) {
+			for (const f of this._animation.callbacks[this.getCurrentIdx()] ?? []) {
+				if (callbacksFunc[f[0]]) {
+					callbacksFunc[f[0]](this, f.slice(1));
+				}
+			}
 		}
-		return [];
+		for (const c of this._childAnimations) {
+			c.executeCallbacks(callbacksFunc);
+		}
 	}
 
 	/**
@@ -136,12 +165,12 @@ export class Animation extends Container {
 	/**
 	 * Increase the current animation index by the given number.
 	 * Animation length and offset are computed to get the new current index.
-	 * This will be propagated to all sub-animations.
+	 * This will be propagated to all children animations.
 	 * @param {number} idx The new animation index.
 	 */
 	increaseCurrentIdx(idx) {
 		this.setCurrentIdx(this._currentIdx + idx);
-		for (const a of this._subanimations) {
+		for (const a of this._childAnimations) {
 			a.increaseCurrentIdx(idx);
 		}
 	}
@@ -149,7 +178,7 @@ export class Animation extends Container {
 	/**
 	 * Set the current animation index.
 	 * Will be impacted by animation length and offset.
-	 * Sub animations are not impacted.
+	 * Child animations are not impacted.
 	 * @param {number} idx The desired current index.
 	 */
 	setCurrentIdx(idx) {
@@ -182,6 +211,28 @@ export class Animation extends Container {
 	}
 
 	/**
+	 * Indicates if the animation has children animations registered.
+	 * @returns {boolean} True if at least a child animation has been registered, false otherwise.
+	 */
+	hasChildAnimation() {
+		return this._childAnimations.length > 0;
+	}
+
+	/**
+	 * Stop the current animation from updating and using callbacks.
+	 */
+	stop() {
+		this._playing = false;
+	}
+
+	/**
+	 * Start an animation which is stopped.
+	 */
+	play() {
+		this._playing = true;
+	}
+
+	/**
 	 * Set the color transformation for the animation. If none exist, a new one will be created.
 	 * @param {number} offsetRed The red color offset. 0 if undefined.
 	 * @param {number} offsetGreen The green color offset. 0 if undefined.
@@ -197,7 +248,10 @@ export class Animation extends Container {
 					offset: new Float32Array(),
 					mult: new Float32Array()
 				});
-				this.filters = [this._colorTransform];
+				if (!this.filters) {
+					this.filters = [];
+				}
+				this.filters.push(this._colorTransform);
 			}
 			this._colorTransform.uniforms.offset = new Float32Array([
 				offsetRed ?? 0,
@@ -205,6 +259,27 @@ export class Animation extends Container {
 				offsetBlue ?? 0
 			]);
 			this._colorTransform.uniforms.mult = new Float32Array([multRed ?? 1, multGreen ?? 1, multBlue ?? 1]);
+		}
+	}
+
+	/**
+	 * Set the blur filter for the animation. If none exist, a new one will be created.
+	 * @param {number} blurX The x distanc of the blur. 0 if undefined.
+	 * @param {number} blurY The y distance of the blur. 0 if undefined.
+	 * @param {number} blurQuality The quality of the blur. 0 if undefined.
+	 */
+	setBlurFilter(blurX, blurY, blurQuality) {
+		if (this._blurFilter || blurX || blurY || blurQuality) {
+			if (!this._blurFilter) {
+				this._blurFilter = new BlurFilter();
+				if (!this.filters) {
+					this.filters = [];
+				}
+				this.filters.push(this._blurFilter);
+			}
+			this._blurFilter.blurX = blurX ?? 0;
+			this._blurFilter.blurY = blurY ?? 0;
+			this._blurFilter.quality = blurQuality ?? 1;
 		}
 	}
 }
