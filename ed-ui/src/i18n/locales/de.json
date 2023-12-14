@@ -116,7 +116,8 @@
 			"labo": "Chercher l'antidote dans le laboratoire de l'Archidorogon pour soigner le vénérable.",
 			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !",
 			"concentrate": "Dein Dinoz hat sein volles Potenzial entfaltet.",
-			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !"
+			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
+			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz."
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -136,7 +137,8 @@
 			"labo": "Laboratoire de l'Archidorogon",
 			"party": "Event",
 			"concentrate": "Arrêter de se concentrer",
-			"market": "Marché aux éleveurs"
+			"market": "Marché aux éleveurs",
+			"disband": "Dissoudre le groupe"
 		}
 	},
 	"button": {
@@ -1450,7 +1452,7 @@
 			"Champollion": "Humboldt",
 			"ReceptacleAqueux": "Wässriges Gefäß",
 			"MurDeBoue": "Schlammwand",
-			"PeauDacier": "Stahlhaut",
+			"PeauDAcier": "Peau d'acier",
 			"Mutation": "Mutation",
 			"PocheVentrale": "Bauchtasche",
 			"Intelligence": "Intelligenz",
@@ -3611,5 +3613,23 @@
 		}
 	},
 	"following": "Ce Dinoz suit son chef de groupe.",
-	"followed": "Ce Dinoz est chef de groupe."
+	"follow": "Le chef de groupe est {leader}.",
+	"followed": "Ce Dinoz est chef de groupe.",
+	"logs": {
+		"ItemUsed": "**{player} ({playerId})** used **{quantity}x {item}** with dinoz **{dinoz} ({dinozId})**.",
+		"ItemBought": "**{player} ({playerId})** bought **{quantity}x {item}**.",
+		"GoldWon": "**{player} ({playerId})** won **{quantity} :gold:**.",
+		"GoldLost": "**{player} ({playerId})** lost **{quantity} :gold:**.",
+		"Move": "**{player} ({playerId})** moved dinoz **{dinoz} ({dinozId})** to **{location}**.",
+		"LevelUp": "**{player} ({playerId})** leveled up dinoz **{dinoz} ({dinozId})** to **level {level}**.",
+		"Fight": "**{player} ({playerId})** fought and lost **{hpLost}HP**, gained **{gold} :gold:** and **{xp}XP**.",
+		"Death": "**{player} ({playerId})**'s dinoz **{dinoz} ({dinozId})** died.",
+		"Revive": "**{player} ({playerId})** revived dinoz **{dinoz} ({dinozId})**.",
+		"MissionStep": "**{player} ({playerId})** advanced **{mission}** to **step {step}** with dinoz **{dinoz} ({dinozId})**.",
+		"MissionFinished": "**{player} ({playerId})** finished **{mission}** with dinoz **{dinoz} ({dinozId})**.",
+		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
+		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
+		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
+		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+	}
 }
