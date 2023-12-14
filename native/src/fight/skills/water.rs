@@ -316,7 +316,7 @@ pub static POCHE_VENTRALE: Skill = Skill {
     priority: 0,
     probability: 0,
     effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // extra item space handled in node;
+        // extra item space handled in node
         vec![AttackResult::PassiveSkill(SkillId::POCHE_VENTRALE)]
     },
     ignore: true,

@@ -506,16 +506,12 @@ impl SkillId {
             SkillId::VENGEANCE => VENGEANCE,
             SkillId::COMBUSTION => COMBUSTION,
             SkillId::PAUME_CHALUMEAU => PAUME_CHALUMEAU,
-            SkillId::BOUDDHA => BOUDDHA,
             SkillId::GRIFFES_INFERNALES => GRIFFES_INFERNALES,
             SkillId::BELIER => BELIER,
             SkillId::TORCHE => TORCHE,
             SkillId::SELF_CONTROL => SELF_CONTROL,
             SkillId::METEORES => METEORES,
             SkillId::CHEF_DE_GUERRE => CHEF_DE_GUERRE,
-            SkillId::SALAMANDRE => SALAMANDRE,
-            SkillId::VULCAIN => VULCAIN,
-            SkillId::ARMURE_DIFRIT => ARMURE_DIFRIT,
             SkillId::BRAVE => BRAVE,
 
             // Ether FIRE Skills
@@ -557,8 +553,6 @@ impl SkillId {
             SkillId::ESPRIT_GORILLOZ => ESPRIT_GORILLOZ,
             SkillId::GEANT => GEANT,
             SkillId::GARDE_FORESTIER => GARDE_FORESTIER,
-            SkillId::BENEDICTION_DES_FEES => BENEDICTION_DES_FEES,
-            SkillId::LOUP_GAROU => LOUP_GAROU,
             SkillId::COLOSSE => COLOSSE,
 
             // Ether WOOD Skills
@@ -703,7 +697,6 @@ impl SkillId {
             SkillId::ESQUIVE => ESQUIVE,
             SkillId::SAUT => SAUT,
             SkillId::ANALYSE => ANALYSE,
-            SkillId::CUEILLETTE => CUEILLETTE,
             SkillId::TAICHI => TAICHI,
             SkillId::TORNADE => TORNADE,
             SkillId::DISQUE_VACUUM => DISQUE_VACUUM,
@@ -713,7 +706,6 @@ impl SkillId {
             SkillId::SPECIALISTE => SPECIALISTE,
             SkillId::TALON_DACHILLE => TALON_DACHILLE,
             SkillId::NUAGE_TOXIQUE => NUAGE_TOXIQUE,
-            SkillId::OEIL_DE_LYNX => OEIL_DE_LYNX,
             SkillId::EVEIL => EVEIL,
             SkillId::PAUME_EJECTABLE => PAUME_EJECTABLE,
             SkillId::VENT_VIF => VENT_VIF,
@@ -722,7 +714,6 @@ impl SkillId {
             SkillId::MAITRE_LEVITATEUR => MAITRE_LEVITATEUR,
             SkillId::HALEINE_FETIVE => HALEINE_FETIVE,
             SkillId::MEDITATION_SOLITAIRE => MEDITATION_SOLITAIRE,
-            SkillId::PROFESSEUR => PROFESSEUR,
             SkillId::SOUFFLE_DE_VIE => SOUFFLE_DE_VIE,
             SkillId::MEDITATION_TRANCHANTE => MEDITATION_TRANCHANTE,
             SkillId::FORME_ETHERALE => FORME_ETHERALE,
@@ -737,16 +728,19 @@ impl SkillId {
             SkillId::OURAGAN => OURAGAN,
             SkillId::OURANOS => OURANOS,
             SkillId::TWINOID_500MG => TWINOID_500MG,
-            SkillId::LONDUHAUT => LONDUHAUT,
             SkillId::SURPLIS_DHADES => SURPLIS_DHADES,
             SkillId::RECEPTABLE_THERMIQUE => RECEPTABLE_THERMIQUE,
             SkillId::QI_GONG => QI_GONG,
             SkillId::SYLPHIDES => SYLPHIDES,
-            SkillId::MESSIE => MESSIE,
             SkillId::MUTINERIE => MUTINERIE,
             SkillId::MAINS_COLLANTES => MAINS_COLLANTES,
 
             // Ignored AIR Skills because they are useless in fights, they are intentionally commented
+            // SkillId::CUEILLETTE => CUEILLETTE,
+            // SkillId::OEIL_DE_LYNX => OEIL_DE_LYNX,
+            // SkillId::PROFESSEUR => PROFESSEUR,
+            // SkillId::LONDUHAUT => LONDUHAUT,
+            // SkillId::MESSIE => MESSIE,
 
             // VOID Skills
 
@@ -775,7 +769,6 @@ impl SkillId {
             // Sphere FIRE Skills
             SkillId::BRASERO => BRASERO,
             SkillId::DETONATION => DETONATION,
-            SkillId::COEUR_DE_PHOENIX => COEUR_DE_PHOENIX,
 
             // Sphere WOOD Skills
             SkillId::LANCEUR_DE_GLAND => LANCEUR_DE_GLAND,
@@ -809,23 +802,30 @@ impl SkillId {
             SkillId::SURCHARGE => SURCHARGE,
 
             // Invocation Skills
-            SkillId::HERCOLUBUS => HERCOLUBUS,
-            SkillId::REINE_DE_LA_RUCHE => REINE_DE_LA_RUCHE,
-            SkillId::BIG_MAMA => BIG_MAMA,
-            SkillId::YGGDRASIL => YGGDRASIL,
+            SkillId::SALAMANDRE => SALAMANDRE,
+            SkillId::VULCAIN => VULCAIN,
+            SkillId::ARMURE_DIFRIT => ARMURE_DIFRIT,
             SkillId::BALEINE_BLANCHE => BALEINE_BLANCHE,
-            SkillId::DJINN => DJINN,
-            SkillId::HADES => HADES,
-            SkillId::TOTEM_ANCESTRAL_AEROPORTE => TOTEM_ANCESTRAL_AEROPORTE,
-            SkillId::FUJIN => FUJIN,
-            SkillId::GOLEM => GOLEM,
-            SkillId::RAIJIN => RAIJIN,
-            SkillId::QUETZACOATL => QUETZACOATL,
-            SkillId::ROI_DES_SINGES => ROI_DES_SINGES,
-            SkillId::ONDINE => ONDINE,
             SkillId::LEVIATHAN => LEVIATHAN,
+            SkillId::ONDINE => ONDINE,
+            SkillId::LOUP_GAROU => LOUP_GAROU,
+            SkillId::BENEDICTION_DES_FEES => BENEDICTION_DES_FEES,
+            SkillId::YGGDRASIL => YGGDRASIL,
+            SkillId::BIG_MAMA => BIG_MAMA,
+            SkillId::RAIJIN => RAIJIN,
+            SkillId::GOLEM => GOLEM,
+            SkillId::ROI_DES_SINGES => ROI_DES_SINGES,
+            SkillId::DJINN => DJINN,
+            SkillId::FUJIN => FUJIN,
+            SkillId::TOTEM_ANCESTRAL_AEROPORTE => TOTEM_ANCESTRAL_AEROPORTE,
+            SkillId::BOUDDHA => BOUDDHA,
+            SkillId::HADES => HADES,
+            SkillId::REINE_DE_LA_RUCHE => REINE_DE_LA_RUCHE,
+            SkillId::HERCOLUBUS => HERCOLUBUS,
+            SkillId::QUETZACOATL => QUETZACOATL,
 
             // Other ignored Skills, they are intentionally commented
+            // SkillId::COEUR_DE_PHOENIX => COEUR_DE_PHOENIX,
             // SkillId::GRATTEUR => GRATTEUR,
             // SkillId::COMPETENCE_DOUBLE => COMPETENCE_DOUBLE,
             // SkillId::LIMITE_BRISEE => LIMITE_BRISEE,

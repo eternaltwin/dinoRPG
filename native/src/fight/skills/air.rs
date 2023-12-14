@@ -147,27 +147,227 @@ pub static MEDITATION_TRANCHANTE: Skill = Skill {
 };
 
 // --- AIR VANILLA Active Skills ---
-// pub static MISTRAL => MISTRAL,
-// pub static ENVOL =>  ENVOL,
-// pub static TORNADE => TORNADE,
-// pub static DISQUE_VACUUM => DISQUE_VACUUM,
-// pub static ATTAQUE_PLONGEANTE => ATTAQUE_PLONGEANTE,
-// pub static NUAGE_TOXIQUE => NUAGE_TOXIQUE,
-// pub static PAUME_EJECTABLE => PAUME_EJECTABLE,
-// pub static TROU_NOIR => TROU_NOIR,
+pub static MISTRAL: Skill = Skill {
+    id: SkillId::MISTRAL,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::MISTRAL)]
+    },
+    ignore: false,
+};
+
+pub static ENVOL: Skill = Skill {
+    id: SkillId::ENVOL,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::ENVOL)]
+    },
+    ignore: false,
+};
+
+pub static TORNADE: Skill = Skill {
+    id: SkillId::TORNADE,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::TORNADE)]
+    },
+    ignore: false,
+};
+
+pub static DISQUE_VACUUM: Skill = Skill {
+    id: SkillId::DISQUE_VACUUM,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::DISQUE_VACUUM)]
+    },
+    ignore: false,
+};
+
+pub static ATTAQUE_PLONGEANTE: Skill = Skill {
+    id: SkillId::ATTAQUE_PLONGEANTE,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::ATTAQUE_PLONGEANTE)]
+    },
+    ignore: false,
+};
+
+pub static NUAGE_TOXIQUE: Skill = Skill {
+    id: SkillId::NUAGE_TOXIQUE,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::NUAGE_TOXIQUE)]
+    },
+    ignore: false,
+};
+
+pub static PAUME_EJECTABLE: Skill = Skill {
+    id: SkillId::PAUME_EJECTABLE,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::PAUME_EJECTABLE)]
+    },
+    ignore: false,
+};
+
+pub static TROU_NOIR: Skill = Skill {
+    id: SkillId::TROU_NOIR,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::TROU_NOIR)]
+    },
+    ignore: false,
+};
 
 // --- AIR VANILLA Event Skills ---
-// pub static VENT_VIF => VENT_VIF,
+pub static VENT_VIF: Skill = Skill {
+    id: SkillId::VENT_VIF,
+    skill_type: SkillType::EVENT,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::VENT_VIF)]
+    },
+    ignore: false,
+};
 
 // --- AIR VANILLA Special Skills ---
-// pub static STRATEGIE => STRATEGIE,
-// pub static ANALYSE => ANALYSE,
-// pub static SPECIALISTE => SPECIALISTE,
-// pub static FORME_VAPOREUSE => FORME_VAPOREUSE,
-// pub static MAITRE_LEVITATEUR => MAITRE_LEVITATEUR,
-// pub static HALEINE_FETIVE => HALEINE_FETIVE,
-// pub static SOUFFLE_DE_VIE => SOUFFLE_DE_VIE,
-// pub static FORME_ETHERALE => FORME_ETHERALE,
+pub static STRATEGIE: Skill = Skill {
+    id: SkillId::STRATEGIE,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::STRATEGIE)]
+    },
+    ignore: false,
+};
+
+pub static ANALYSE: Skill = Skill {
+    id: SkillId::ANALYSE,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::ANALYSE)]
+    },
+    ignore: false,
+};
+
+pub static SPECIALISTE: Skill = Skill {
+    id: SkillId::SPECIALISTE,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::SPECIALISTE)]
+    },
+    ignore: false,
+};
+pub static FORME_VAPOREUSE: Skill = Skill {
+    id: SkillId::FORME_VAPOREUSE,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::FORME_VAPOREUSE)]
+    },
+    ignore: false,
+};
+
+pub static MAITRE_LEVITATEUR: Skill = Skill {
+    id: SkillId::MAITRE_LEVITATEUR,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::MAITRE_LEVITATEUR)]
+    },
+    ignore: false,
+};
+
+pub static HALEINE_FETIVE: Skill = Skill {
+    id: SkillId::HALEINE_FETIVE,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::HALEINE_FETIVE)]
+    },
+    ignore: false,
+};
+
+pub static SOUFFLE_DE_VIE: Skill = Skill {
+    id: SkillId::SOUFFLE_DE_VIE,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::SOUFFLE_DE_VIE)]
+    },
+    ignore: false,
+};
+
+pub static FORME_ETHERALE: Skill = Skill {
+    id: SkillId::FORME_ETHERALE,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::FORME_ETHERALE)]
+    },
+    ignore: false,
+};
 
 // --- AIR ETHER Skills ---
 // --- AIR ETHER Passive Skills ---
@@ -281,17 +481,95 @@ pub static TWINOID_500MG: Skill = Skill {
 };
 
 // --- AIR ETHER Active Skills ---
-// pub static OURANOS => OURANOS,
-// pub static RECEPTABLE_THERMIQUE => RECEPTABLE_THERMIQUE,
-// pub static SYLPHIDES => SYLPHIDES,
+pub static OURANOS: Skill = Skill {
+    id: SkillId::OURANOS,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::OURANOS)]
+    },
+    ignore: false,
+};
+
+pub static RECEPTABLE_THERMIQUE: Skill = Skill {
+    id: SkillId::RECEPTABLE_THERMIQUE,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::RECEPTABLE_THERMIQUE)]
+    },
+    ignore: false,
+};
+
+pub static SYLPHIDES: Skill = Skill {
+    id: SkillId::SYLPHIDES,
+    skill_type: SkillType::ACTIVE,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::SYLPHIDES)]
+    },
+    ignore: false,
+};
 
 // --- AIR ETHER Event Skills ---
-// pub static QI_GONG => QI_GONG,
-// pub static MUTINERIE => MUTINERIE,
-// pub static MAINS_COLLANTES => MAINS_COLLANTES,
+pub static QI_GONG: Skill = Skill {
+    id: SkillId::QI_GONG,
+    skill_type: SkillType::EVENT,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::QI_GONG)]
+    },
+    ignore: false,
+};
+
+pub static MUTINERIE: Skill = Skill {
+    id: SkillId::MUTINERIE,
+    skill_type: SkillType::EVENT,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::MUTINERIE)]
+    },
+    ignore: false,
+};
+
+pub static MAINS_COLLANTES: Skill = Skill {
+    id: SkillId::MAINS_COLLANTES,
+    skill_type: SkillType::EVENT,
+    energy: 0,      // TODO
+    priority: 0,    // TODO
+    probability: 0, // TODO
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // TODO
+        vec![AttackResult::TodoSkill(SkillId::MAINS_COLLANTES)]
+    },
+    ignore: false,
+};
 
 // --- AIR ETHER Special Skills ---
-// pub static SURPLIS_DHADES => SURPLIS_DHADES,
-
-// --- AIR ETHER Universal Skills ---
-// pub static MESSIE => MESSIE,
+pub static SURPLIS_DHADES: Skill = Skill {
+    id: SkillId::SURPLIS_DHADES,
+    skill_type: SkillType::SPECIAL,
+    energy: 0,
+    priority: 0,
+    probability: 0,
+    effect: |f: &mut Fighter, _m: &mut Manager| {
+        // extra item space handled in node
+        vec![AttackResult::PassiveSkill(SkillId::SURPLIS_DHADES)]
+    },
+    ignore: false,
+};

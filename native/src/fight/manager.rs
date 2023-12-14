@@ -624,15 +624,16 @@ impl Manager {
 
         // Get the IDs of all the opposing fighters
         let targets = if attacker.side == TeamSide::Attackers {
-            self.fighters_alive_defenders
+            self.fighters_alive_defenders.clone()
         } else {
-            self.fighters_alive_attackers
+            self.fighters_alive_attackers.clone()
         };
 
         // For each target, process the attack and append the result to the vector of results
         for t in targets {
             let temp_result = if let Some(target) = self.fighters_all.get_mut(&t) {
-                self.attack_target(attacker, target, attack_power, false)
+                let temp_target = &mut target.clone();
+                self.attack_target(attacker, temp_target, attack_power, false)
             } else {
                 error!(
                     "[Manager:attack_single_with_skill] Target (ID: {}) is invalid",
@@ -685,7 +686,7 @@ impl Manager {
         info!("Processing skill {:?}", skill);
         let result = skill.process_skill(attacker, self);
         self.fight_result
-            .log_skill(attacker, skill.id(), EffectType::Damage, result);
+            .log_skill(attacker, skill.id(), EffectType::Damage, result.clone());
         result
     }
 
