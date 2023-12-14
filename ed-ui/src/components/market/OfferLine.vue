@@ -359,6 +359,8 @@ export default defineComponent({
 	.skills {
 		list-style-type: none;
 		margin-left: 12px;
+		height: 150px;
+		overflow: scroll;
 
 		li {
 			font-size: 9pt;

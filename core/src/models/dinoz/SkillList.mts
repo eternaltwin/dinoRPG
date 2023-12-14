@@ -2916,7 +2916,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.SURCHARGE]: {
 		id: Skill.SURCHARGE,
-		name: 'Surchage',
+		name: 'Surcharge',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING, ElementType.AIR],
