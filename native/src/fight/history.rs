@@ -284,7 +284,7 @@ impl Display for FightHistory {
                         skill.attacker_name, skill.skill
                     )?;
                     for result in skill.results {
-                        writeln!(f, "{}", result);
+                        writeln!(f, "{}", result)?
                     }
                 }
                 FightEvent::Status(_status) => todo!(),

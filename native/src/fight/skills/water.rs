@@ -194,7 +194,7 @@ pub static COUP_SOURNOIS: Skill = Skill {
     effect: |f: &mut Fighter, m: &mut Manager| {
         let mut results: Vec<AttackResult> = vec![];
         let assault_result = m.attack_with_assault(f);
-        results.push(assault_result.clone());
+        results.push(assault_result);
         if let AttackResult::Hit(target_id, damage) = assault_result {
             if damage > 0 {
                 let mut target = m.fighters_all[&target_id].clone();
@@ -204,7 +204,8 @@ pub static COUP_SOURNOIS: Skill = Skill {
                 } else {
                     (target.life as f32 / 2.0) as u32
                 };
-                results.push(AttackResult::Hit(target_id, effect_damage));
+                let effect_result = m.attack_target_with_fixed_damage(&mut target, effect_damage);
+                results.push(effect_result);
             }
         }
         results
@@ -221,7 +222,7 @@ pub static COUP_FATAL: Skill = Skill {
     effect: |f: &mut Fighter, m: &mut Manager| {
         let mut results: Vec<AttackResult> = vec![];
         let assault_result = m.attack_with_assault(f);
-        results.push(assault_result.clone());
+        results.push(assault_result);
         if let AttackResult::Hit(target_id, damage) = assault_result {
             if damage > 0 {
                 let mut target = m.fighters_all[&target_id].clone();
@@ -231,7 +232,8 @@ pub static COUP_FATAL: Skill = Skill {
                 } else {
                     target.life
                 };
-                results.push(AttackResult::Hit(target_id, effect_damage));
+                let effect_result = m.attack_target_with_fixed_damage(&mut target, effect_damage);
+                results.push(effect_result);
             }
         }
         results
