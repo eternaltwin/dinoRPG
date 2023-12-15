@@ -460,16 +460,15 @@ export const orderDinozList = <T extends Pick<DinozFiche, 'id' | 'order' | 'name
 	dinozList: T
 ) => {
 	const sortedByOrderAndName = [...dinozList].sort((a, b) => {
+		if (a.order === null) {
+			a.order = a.id;
+		}
+		if (b.order === null) {
+			b.order = b.id
+		}
 		if (a.order === b.order) {
 			return a.name.localeCompare(b.name);
 		}
-		if (a.order === null) {
-			return 1;
-		}
-		if (b.order === null) {
-			return -1;
-		}
-
 		return a.order - b.order;
 	});
 
