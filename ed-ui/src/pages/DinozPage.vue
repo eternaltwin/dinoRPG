@@ -80,6 +80,14 @@ export default defineComponent({
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
 			dinozList.splice(dinozToUpdate, 1, this.dinozData);
+			if (this.dinozData.followers.length >= 1) {
+				for (const follower of this.dinozData.followers) {
+					const followerToUpdate = await DinozService.getDinozFiche(follower);
+					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
+					dinozList.splice(followerIndex, 1, followerToUpdate);
+				}
+			}
+			console.log(dinozList);
 			this.dinozStore.setDinozList(dinozList);
 			this.playerStore.setPlayerOptions({
 				...this.playerStore.playerOptions,
