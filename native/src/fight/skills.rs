@@ -1,7 +1,7 @@
 //! This module defines types, constants and functions related to skills.
 //! Skills implementations can be found in the `skills` folder
 
-use log::error;
+use log::{error, trace};
 use serde::{Deserialize, Serialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::fmt::{self, Display};
@@ -98,7 +98,11 @@ impl Skill {
 
         for s in list_ids {
             match s {
-                SkillOrUnknown::Skill(s) => skills.push(s.get_skill()),
+                SkillOrUnknown::Skill(s) => {
+                    if let Some(s) = s.get_skill() {
+                        skills.push(s)
+                    }
+                }
                 SkillOrUnknown::Unknown(v) => {
                     error!("Unknown skill from config: {:?}", v);
                 }
@@ -482,373 +486,408 @@ impl Display for SkillId {
 }
 
 impl SkillId {
-    /// Matches the [`SkillId`] with the [`Skill`] definition
-    fn get_skill(self) -> Skill {
+    /// Matches the [SkillId] with the [Skill] definition
+    ///
+    /// Returns `None` if no matching [Skill] exists
+    fn get_skill(self) -> Option<Skill> {
         match self {
             // Vanilla FIRE Skills
-            SkillId::GRIFFES_ENFLAMMEES => GRIFFES_ENFLAMMEES,
-            SkillId::COLERE => COLERE,
-            SkillId::FORCE => FORCE,
-            SkillId::SOUFFLE_ARDENT => SOUFFLE_ARDENT,
-            SkillId::CHARGE => CHARGE,
-            SkillId::SANG_CHAUD => SANG_CHAUD,
-            SkillId::FURIE => FURIE,
-            SkillId::ARTS_MARTIAUX => ARTS_MARTIAUX,
-            SkillId::PROPULSION_DIVINE => PROPULSION_DIVINE,
-            SkillId::VIGILANCE => VIGILANCE,
-            SkillId::COEUR_ARDENT => COEUR_ARDENT,
-            SkillId::COULEE_DE_LAVE => COULEE_DE_LAVE,
-            SkillId::SIESTE => SIESTE,
-            SkillId::KAMIKAZE => KAMIKAZE,
-            SkillId::BOULE_DE_FEU => BOULE_DE_FEU,
-            SkillId::WAIKIKIDO => WAIKIKIDO,
-            SkillId::AURA_INCANDESCENTE => AURA_INCANDESCENTE,
-            SkillId::VENGEANCE => VENGEANCE,
-            SkillId::COMBUSTION => COMBUSTION,
-            SkillId::PAUME_CHALUMEAU => PAUME_CHALUMEAU,
-            SkillId::GRIFFES_INFERNALES => GRIFFES_INFERNALES,
-            SkillId::BELIER => BELIER,
-            SkillId::TORCHE => TORCHE,
-            SkillId::SELF_CONTROL => SELF_CONTROL,
-            SkillId::METEORES => METEORES,
-            SkillId::CHEF_DE_GUERRE => CHEF_DE_GUERRE,
-            SkillId::BRAVE => BRAVE,
+            SkillId::GRIFFES_ENFLAMMEES => Some(GRIFFES_ENFLAMMEES),
+            SkillId::COLERE => Some(COLERE),
+            SkillId::FORCE => Some(FORCE),
+            SkillId::SOUFFLE_ARDENT => Some(SOUFFLE_ARDENT),
+            SkillId::CHARGE => Some(CHARGE),
+            SkillId::SANG_CHAUD => Some(SANG_CHAUD),
+            SkillId::FURIE => Some(FURIE),
+            SkillId::ARTS_MARTIAUX => Some(ARTS_MARTIAUX),
+            SkillId::PROPULSION_DIVINE => Some(PROPULSION_DIVINE),
+            SkillId::VIGILANCE => Some(VIGILANCE),
+            SkillId::COEUR_ARDENT => Some(COEUR_ARDENT),
+            SkillId::COULEE_DE_LAVE => Some(COULEE_DE_LAVE),
+            SkillId::SIESTE => Some(SIESTE),
+            SkillId::KAMIKAZE => Some(KAMIKAZE),
+            SkillId::BOULE_DE_FEU => Some(BOULE_DE_FEU),
+            SkillId::WAIKIKIDO => Some(WAIKIKIDO),
+            SkillId::AURA_INCANDESCENTE => Some(AURA_INCANDESCENTE),
+            SkillId::VENGEANCE => Some(VENGEANCE),
+            SkillId::COMBUSTION => Some(COMBUSTION),
+            SkillId::PAUME_CHALUMEAU => Some(PAUME_CHALUMEAU),
+            SkillId::GRIFFES_INFERNALES => Some(GRIFFES_INFERNALES),
+            SkillId::BELIER => Some(BELIER),
+            SkillId::TORCHE => Some(TORCHE),
+            SkillId::SELF_CONTROL => Some(SELF_CONTROL),
+            SkillId::METEORES => Some(METEORES),
+            SkillId::CHEF_DE_GUERRE => Some(CHEF_DE_GUERRE),
+            SkillId::BRAVE => Some(BRAVE),
 
             // Ether FIRE Skills
-            SkillId::PROTEINES_DINOZIENNES => PROTEINES_DINOZIENNES,
-            SkillId::EXTENUATION => EXTENUATION,
-            SkillId::ROUGE => ROUGE,
-            SkillId::CARAPACE_DE_MAGMA => CARAPACE_DE_MAGMA,
-            SkillId::CRI_DE_GUERRE => CRI_DE_GUERRE,
-            SkillId::FIEVRE_BRULANTE => FIEVRE_BRULANTE,
-            SkillId::JOKER => JOKER,
-            SkillId::ARMURE_DE_FEU => ARMURE_DE_FEU,
-            SkillId::PAYS_DE_CENDRE => PAYS_DE_CENDRE,
-            SkillId::RECEPTACLE_ROCHEUX => RECEPTACLE_ROCHEUX,
-            SkillId::PLUMES_DE_PHOENIX => PLUMES_DE_PHOENIX,
-            SkillId::ACCLAMATION_FRATERNELLE => ACCLAMATION_FRATERNELLE,
-            SkillId::POING_DE_FEU => POING_DE_FEU,
+            SkillId::PROTEINES_DINOZIENNES => Some(PROTEINES_DINOZIENNES),
+            SkillId::EXTENUATION => Some(EXTENUATION),
+            SkillId::ROUGE => Some(ROUGE),
+            SkillId::CARAPACE_DE_MAGMA => Some(CARAPACE_DE_MAGMA),
+            SkillId::CRI_DE_GUERRE => Some(CRI_DE_GUERRE),
+            SkillId::FIEVRE_BRULANTE => Some(FIEVRE_BRULANTE),
+            SkillId::JOKER => Some(JOKER),
+            SkillId::ARMURE_DE_FEU => Some(ARMURE_DE_FEU),
+            SkillId::PAYS_DE_CENDRE => Some(PAYS_DE_CENDRE),
+            SkillId::RECEPTACLE_ROCHEUX => Some(RECEPTACLE_ROCHEUX),
+            SkillId::PLUMES_DE_PHOENIX => Some(PLUMES_DE_PHOENIX),
+            SkillId::ACCLAMATION_FRATERNELLE => Some(ACCLAMATION_FRATERNELLE),
+            SkillId::POING_DE_FEU => Some(POING_DE_FEU),
 
             // Ignored FIRE Skills because they are useless in fights, they are intentionally commented
-            // SkillId::CHASSEUR_DE_GOUPIGNON => CHASSEUR_DE_GOUPIGNON,
-            // SkillId::CHASSEUR_DE_GEANT => CHASSEUR_DE_GEANT,
-            // SkillId::CHASSEUR_DE_DRAGON => CHASSEUR_DE_DRAGON,
-            // SkillId::BENEDICTION_DARTEMIS => BENEDICTION_DARTEMIS,
+            // SkillId::CHASSEUR_DE_GOUPIGNON => Some(CHASSEUR_DE_GOUPIGNON),
+            // SkillId::CHASSEUR_DE_GEANT => Some(CHASSEUR_DE_GEANT),
+            // SkillId::CHASSEUR_DE_DRAGON => Some(CHASSEUR_DE_DRAGON),
+            // SkillId::BENEDICTION_DARTEMIS => Some(BENEDICTION_DARTEMIS),
 
             // Vanilla WOOD Skills
-            SkillId::CARAPACE => CARAPACE,
-            SkillId::SAUVAGERIE => SAUVAGERIE,
-            SkillId::ENDURANCE => ENDURANCE,
-            SkillId::VIGNES => VIGNES,
-            SkillId::RENFORTS_KORGON => RENFORTS_KORGON,
-            SkillId::TENACITE => TENACITE,
-            SkillId::CROISSANCE => CROISSANCE,
-            SkillId::ETAT_PRIMAL => ETAT_PRIMAL,
-            SkillId::INSTINCT_SAUVAGE => INSTINCT_SAUVAGE,
-            SkillId::LARGE_MACHOIRE => LARGE_MACHOIRE,
-            SkillId::ACROBATE => ACROBATE,
-            SkillId::PRINTEMPS_PRECOCE => PRINTEMPS_PRECOCE,
-            SkillId::RESISTANCE_A_LA_MAGIE => RESISTANCE_A_LA_MAGIE,
-            SkillId::HERITAGE_FAROE => HERITAGE_FAROE,
-            SkillId::ESPRIT_GORILLOZ => ESPRIT_GORILLOZ,
-            SkillId::GEANT => GEANT,
-            SkillId::GARDE_FORESTIER => GARDE_FORESTIER,
-            SkillId::COLOSSE => COLOSSE,
+            SkillId::CARAPACE => Some(CARAPACE),
+            SkillId::SAUVAGERIE => Some(SAUVAGERIE),
+            SkillId::ENDURANCE => Some(ENDURANCE),
+            SkillId::VIGNES => Some(VIGNES),
+            SkillId::RENFORTS_KORGON => Some(RENFORTS_KORGON),
+            SkillId::TENACITE => Some(TENACITE),
+            SkillId::CROISSANCE => Some(CROISSANCE),
+            SkillId::ETAT_PRIMAL => Some(ETAT_PRIMAL),
+            SkillId::INSTINCT_SAUVAGE => Some(INSTINCT_SAUVAGE),
+            SkillId::LARGE_MACHOIRE => Some(LARGE_MACHOIRE),
+            SkillId::ACROBATE => Some(ACROBATE),
+            SkillId::PRINTEMPS_PRECOCE => Some(PRINTEMPS_PRECOCE),
+            SkillId::RESISTANCE_A_LA_MAGIE => Some(RESISTANCE_A_LA_MAGIE),
+            SkillId::HERITAGE_FAROE => Some(HERITAGE_FAROE),
+            SkillId::ESPRIT_GORILLOZ => Some(ESPRIT_GORILLOZ),
+            SkillId::GEANT => Some(GEANT),
+            SkillId::GARDE_FORESTIER => Some(GARDE_FORESTIER),
+            SkillId::COLOSSE => Some(COLOSSE),
 
             // Ether WOOD Skills
-            SkillId::OXYGENATION_MUSCULAIRE => OXYGENATION_MUSCULAIRE,
-            SkillId::VERT => VERT,
-            SkillId::SOURCE_DE_VIE => SOURCE_DE_VIE,
-            SkillId::VIDE_ENERGETIQUE => VIDE_ENERGETIQUE,
-            SkillId::BOUCLIER_DINOZ => BOUCLIER_DINOZ,
-            SkillId::ACIDE_LACTIQUE => ACIDE_LACTIQUE,
-            SkillId::LANCER_DE_ROCHE => LANCER_DE_ROCHE,
-            SkillId::COURBATURES => COURBATURES,
-            SkillId::FORCE_CONTROL => FORCE_CONTROL,
-            SkillId::PEAU_DE_FER => PEAU_DE_FER,
-            SkillId::COURANT_DE_VIE => COURANT_DE_VIE,
-            SkillId::BERSERK => BERSERK,
-            SkillId::RIVIERE_DE_VIE => RIVIERE_DE_VIE,
-            SkillId::MUR_DE_BOUE => MUR_DE_BOUE,
-            SkillId::PEAU_DACIER => PEAU_DACIER,
-            SkillId::SHARIGNAN => SHARIGNAN,
-            SkillId::AMAZONIE => AMAZONIE,
-            SkillId::RECEPTACLE_AQUEUX => RECEPTACLE_AQUEUX,
+            SkillId::OXYGENATION_MUSCULAIRE => Some(OXYGENATION_MUSCULAIRE),
+            SkillId::VERT => Some(VERT),
+            SkillId::SOURCE_DE_VIE => Some(SOURCE_DE_VIE),
+            SkillId::VIDE_ENERGETIQUE => Some(VIDE_ENERGETIQUE),
+            SkillId::BOUCLIER_DINOZ => Some(BOUCLIER_DINOZ),
+            SkillId::ACIDE_LACTIQUE => Some(ACIDE_LACTIQUE),
+            SkillId::LANCER_DE_ROCHE => Some(LANCER_DE_ROCHE),
+            SkillId::COURBATURES => Some(COURBATURES),
+            SkillId::FORCE_CONTROL => Some(FORCE_CONTROL),
+            SkillId::PEAU_DE_FER => Some(PEAU_DE_FER),
+            SkillId::COURANT_DE_VIE => Some(COURANT_DE_VIE),
+            SkillId::BERSERK => Some(BERSERK),
+            SkillId::RIVIERE_DE_VIE => Some(RIVIERE_DE_VIE),
+            SkillId::MUR_DE_BOUE => Some(MUR_DE_BOUE),
+            SkillId::PEAU_DACIER => Some(PEAU_DACIER),
+            SkillId::SHARIGNAN => Some(SHARIGNAN),
+            SkillId::AMAZONIE => Some(AMAZONIE),
+            SkillId::RECEPTACLE_AQUEUX => Some(RECEPTACLE_AQUEUX),
 
             // Ignored WOOD Skills because they are useless in fights, they are intentionally commented
-            // SkillId::COCON => COCON,
-            // SkillId::SYMPATIQUE => SYMPATIQUE,
-            // SkillId::CHARISME => CHARISME,
-            // SkillId::DETECTIVE => DETECTIVE,
-            // SkillId::FOUILLE => FOUILLE,
-            // SkillId::PLANIFICATEUR => PLANIFICATEUR,
-            // SkillId::EXPERT_EN_FOUILLE => EXPERT_EN_FOUILLE,
-            // SkillId::ARCHEOLOGUE => ARCHEOLOGUE,
-            // SkillId::LEADER => LEADER,
-            // SkillId::INGENIEUR => INGENIEUR,
-            // SkillId::CHAMPOLLION => CHAMPOLLION,
+            // SkillId::COCON => Some(COCON),
+            // SkillId::SYMPATIQUE => Some(SYMPATIQUE),
+            // SkillId::CHARISME => Some(CHARISME),
+            // SkillId::DETECTIVE => Some(DETECTIVE),
+            // SkillId::FOUILLE => Some(FOUILLE),
+            // SkillId::PLANIFICATEUR => Some(PLANIFICATEUR),
+            // SkillId::EXPERT_EN_FOUILLE => Some(EXPERT_EN_FOUILLE),
+            // SkillId::ARCHEOLOGUE => Some(ARCHEOLOGUE),
+            // SkillId::LEADER => Some(LEADER),
+            // SkillId::INGENIEUR => Some(INGENIEUR),
+            // SkillId::CHAMPOLLION => Some(CHAMPOLLION),
 
             // Vanilla WATER Skills
-            SkillId::CANON_A_EAU => CANON_A_EAU,
-            SkillId::PERCEPTION => PERCEPTION,
-            SkillId::MUTATION => MUTATION,
-            SkillId::GEL => GEL,
-            SkillId::DOUCHE_ECOSSAISE => DOUCHE_ECOSSAISE,
-            SkillId::COUP_SOURNOIS => COUP_SOURNOIS,
-            SkillId::POCHE_VENTRALE => POCHE_VENTRALE,
-            SkillId::KARATE_SOUS_MARIN => KARATE_SOUS_MARIN,
-            SkillId::ECAILLES_LUMINESCENTES => ECAILLES_LUMINESCENTES,
-            SkillId::ZERO_ABSOLU => ZERO_ABSOLU,
-            SkillId::PETRIFICATION => PETRIFICATION,
-            SkillId::ACUPUNCTURE => ACUPUNCTURE,
-            SkillId::SAPEUR => SAPEUR,
-            SkillId::COUP_FATAL => COUP_FATAL,
-            SkillId::ENTRAINEMENT_SOUS_MARIN => ENTRAINEMENT_SOUS_MARIN,
-            SkillId::MARECAGE => MARECAGE,
-            SkillId::SUMO => SUMO,
-            SkillId::SANS_PITIE => SANS_PITIE,
-            SkillId::CLONE_AQUEUX => CLONE_AQUEUX,
-            SkillId::GRIFFES_EMPOISONNEES => GRIFFES_EMPOISONNEES,
-            SkillId::PEAU_DE_SERPENT => PEAU_DE_SERPENT,
-            SkillId::RAYON_KAAR_SHER => RAYON_KAAR_SHER,
-            SkillId::ENTRAINEMENT_SOUS_MARIN_AVANCE => ENTRAINEMENT_SOUS_MARIN_AVANCE,
-            SkillId::SANG_ACIDE => SANG_ACIDE,
-            SkillId::MAITRE_NAGEUR => MAITRE_NAGEUR,
+            SkillId::CANON_A_EAU => Some(CANON_A_EAU),
+            SkillId::PERCEPTION => Some(PERCEPTION),
+            SkillId::MUTATION => Some(MUTATION),
+            SkillId::GEL => Some(GEL),
+            SkillId::DOUCHE_ECOSSAISE => Some(DOUCHE_ECOSSAISE),
+            SkillId::COUP_SOURNOIS => Some(COUP_SOURNOIS),
+            SkillId::POCHE_VENTRALE => Some(POCHE_VENTRALE),
+            SkillId::KARATE_SOUS_MARIN => Some(KARATE_SOUS_MARIN),
+            SkillId::ECAILLES_LUMINESCENTES => Some(ECAILLES_LUMINESCENTES),
+            SkillId::ZERO_ABSOLU => Some(ZERO_ABSOLU),
+            SkillId::PETRIFICATION => Some(PETRIFICATION),
+            SkillId::ACUPUNCTURE => Some(ACUPUNCTURE),
+            SkillId::SAPEUR => Some(SAPEUR),
+            SkillId::COUP_FATAL => Some(COUP_FATAL),
+            SkillId::ENTRAINEMENT_SOUS_MARIN => Some(ENTRAINEMENT_SOUS_MARIN),
+            SkillId::MARECAGE => Some(MARECAGE),
+            SkillId::SUMO => Some(SUMO),
+            SkillId::SANS_PITIE => Some(SANS_PITIE),
+            SkillId::CLONE_AQUEUX => Some(CLONE_AQUEUX),
+            SkillId::GRIFFES_EMPOISONNEES => Some(GRIFFES_EMPOISONNEES),
+            SkillId::PEAU_DE_SERPENT => Some(PEAU_DE_SERPENT),
+            SkillId::RAYON_KAAR_SHER => Some(RAYON_KAAR_SHER),
+            SkillId::ENTRAINEMENT_SOUS_MARIN_AVANCE => Some(ENTRAINEMENT_SOUS_MARIN_AVANCE),
+            SkillId::SANG_ACIDE => Some(SANG_ACIDE),
+            SkillId::MAITRE_NAGEUR => Some(MAITRE_NAGEUR),
 
             // Ether WATER Skills
-            SkillId::RADIATIONS_GAMMA => RADIATIONS_GAMMA,
-            SkillId::BLEU => BLEU,
-            SkillId::MUE_ACQUEUSE => MUE_ACQUEUSE,
-            SkillId::CARAPACE_BLINDEE => CARAPACE_BLINDEE,
-            SkillId::DIETE_CHROMATIQUE => DIETE_CHROMATIQUE,
-            SkillId::CLEPTOMANE => CLEPTOMANE,
-            SkillId::ABYSSE => ABYSSE,
-            SkillId::BANNI_DES_DIEUX => BANNI_DES_DIEUX,
-            SkillId::TOURBILLON_MAGIQUE => TOURBILLON_MAGIQUE,
-            SkillId::HYPERVENTILATION => HYPERVENTILATION,
-            SkillId::THERAPIE_DE_GROUPE => THERAPIE_DE_GROUPE,
-            SkillId::RECEPTACLE_TESLA => RECEPTACLE_TESLA,
-            SkillId::VITALITE_MARINE => VITALITE_MARINE,
+            SkillId::RADIATIONS_GAMMA => Some(RADIATIONS_GAMMA),
+            SkillId::BLEU => Some(BLEU),
+            SkillId::MUE_ACQUEUSE => Some(MUE_ACQUEUSE),
+            SkillId::CARAPACE_BLINDEE => Some(CARAPACE_BLINDEE),
+            SkillId::DIETE_CHROMATIQUE => Some(DIETE_CHROMATIQUE),
+            SkillId::CLEPTOMANE => Some(CLEPTOMANE),
+            SkillId::ABYSSE => Some(ABYSSE),
+            SkillId::BANNI_DES_DIEUX => Some(BANNI_DES_DIEUX),
+            SkillId::TOURBILLON_MAGIQUE => Some(TOURBILLON_MAGIQUE),
+            SkillId::HYPERVENTILATION => Some(HYPERVENTILATION),
+            SkillId::THERAPIE_DE_GROUPE => Some(THERAPIE_DE_GROUPE),
+            SkillId::RECEPTACLE_TESLA => Some(RECEPTACLE_TESLA),
+            SkillId::VITALITE_MARINE => Some(VITALITE_MARINE),
 
             // Ignored WATER Skills because they are useless in fights, they are intentionally commented
-            // SkillId::APPRENTI_PECHEUR => APPRENTI_PECHEUR,
-            // SkillId::PECHEUR_CONFIRME => PECHEUR_CONFIRME,
-            // SkillId::MAITRE_PECHEUR => MAITRE_PECHEUR,
-            // SkillId::CUISINIER => CUISINIER,
-            // SkillId::MAGASINIER => MAGASINIER,
-            // SkillId::EAU_DIVINE => EAU_DIVINE,
-            // SkillId::EFFLUVE_APHRODISIAQUE => EFFLUVE_APHRODISIAQUE,
-            // SkillId::NEMO => NEMO,
+            // SkillId::APPRENTI_PECHEUR => Some(APPRENTI_PECHEUR),
+            // SkillId::PECHEUR_CONFIRME => Some(PECHEUR_CONFIRME),
+            // SkillId::MAITRE_PECHEUR => Some(MAITRE_PECHEUR),
+            // SkillId::CUISINIER => Some(CUISINIER),
+            // SkillId::MAGASINIER => Some(MAGASINIER),
+            // SkillId::EAU_DIVINE => Some(EAU_DIVINE),
+            // SkillId::EFFLUVE_APHRODISIAQUE => Some(EFFLUVE_APHRODISIAQUE),
+            // SkillId::NEMO => Some(NEMO),
 
             // Vanilla LIGHTNING Skills
-            SkillId::FOCUS => FOCUS,
-            SkillId::CELERITE => CELERITE,
-            SkillId::CONCENTRATION => CONCENTRATION,
-            SkillId::ATTAQUE_ECLAIR => ATTAQUE_ECLAIR,
-            SkillId::COUP_DOUBLE => COUP_DOUBLE,
-            SkillId::PREMIERS_SOINS => PREMIERS_SOINS,
-            SkillId::FOUDRE => FOUDRE,
-            SkillId::VOIE_DE_KAOS => VOIE_DE_KAOS,
-            SkillId::ADRENALINE => ADRENALINE,
-            SkillId::VOIE_DE_GAIA => VOIE_DE_GAIA,
-            SkillId::MEDECINE => MEDECINE,
-            SkillId::DANSE_FOUDROYANTE => DANSE_FOUDROYANTE,
-            SkillId::EMBUCHE => EMBUCHE,
-            SkillId::PUREE_SALVATRICE => PUREE_SALVATRICE,
-            SkillId::AURA_HERMETIQUE => AURA_HERMETIQUE,
-            SkillId::CROCS_DIAMANT => CROCS_DIAMANT,
-            SkillId::AUBE_FEUILLUE => AUBE_FEUILLUE,
-            SkillId::BRANCARDIER => BRANCARDIER,
-            SkillId::BENEDICTION => BENEDICTION,
-            SkillId::CREPUSCULE_FLAMBOYANT => CREPUSCULE_FLAMBOYANT,
-            SkillId::ARCHANGE_CORROSIF => ARCHANGE_CORROSIF,
-            SkillId::ARCHANGE_GENESIF => ARCHANGE_GENESIF,
+            SkillId::FOCUS => Some(FOCUS),
+            SkillId::CELERITE => Some(CELERITE),
+            SkillId::CONCENTRATION => Some(CONCENTRATION),
+            SkillId::ATTAQUE_ECLAIR => Some(ATTAQUE_ECLAIR),
+            SkillId::COUP_DOUBLE => Some(COUP_DOUBLE),
+            SkillId::PREMIERS_SOINS => Some(PREMIERS_SOINS),
+            SkillId::FOUDRE => Some(FOUDRE),
+            SkillId::VOIE_DE_KAOS => Some(VOIE_DE_KAOS),
+            SkillId::ADRENALINE => Some(ADRENALINE),
+            SkillId::VOIE_DE_GAIA => Some(VOIE_DE_GAIA),
+            SkillId::MEDECINE => Some(MEDECINE),
+            SkillId::DANSE_FOUDROYANTE => Some(DANSE_FOUDROYANTE),
+            SkillId::EMBUCHE => Some(EMBUCHE),
+            SkillId::PUREE_SALVATRICE => Some(PUREE_SALVATRICE),
+            SkillId::AURA_HERMETIQUE => Some(AURA_HERMETIQUE),
+            SkillId::CROCS_DIAMANT => Some(CROCS_DIAMANT),
+            SkillId::AUBE_FEUILLUE => Some(AUBE_FEUILLUE),
+            SkillId::BRANCARDIER => Some(BRANCARDIER),
+            SkillId::BENEDICTION => Some(BENEDICTION),
+            SkillId::CREPUSCULE_FLAMBOYANT => Some(CREPUSCULE_FLAMBOYANT),
+            SkillId::ARCHANGE_CORROSIF => Some(ARCHANGE_CORROSIF),
+            SkillId::ARCHANGE_GENESIF => Some(ARCHANGE_GENESIF),
 
             // Ether LIGHTNING Skills
-            SkillId::SOUTIEN_MORAL => SOUTIEN_MORAL,
-            SkillId::STIMULATION_CARDIAQUE => STIMULATION_CARDIAQUE,
-            SkillId::JAUNE => JAUNE,
-            SkillId::MORSURE_DU_SOLEIL => MORSURE_DU_SOLEIL,
-            SkillId::CRAMPE_CHRONIQUE => CRAMPE_CHRONIQUE,
-            SkillId::BATTERIE_SUPPLEMENTAIRE => BATTERIE_SUPPLEMENTAIRE,
-            SkillId::BARRIERE_ELECTRIFIEE => BARRIERE_ELECTRIFIEE,
-            SkillId::ORACLE => ORACLE,
-            SkillId::RECEPTACLE_AERIEN => RECEPTACLE_AERIEN,
-            SkillId::FEU_DE_ST_ELME => FEU_DE_ST_ELME,
-            SkillId::FORCE_DE_ZEUS => FORCE_DE_ZEUS,
-            SkillId::REMANENCE_HERTZIENNE => REMANENCE_HERTZIENNE,
+            SkillId::SOUTIEN_MORAL => Some(SOUTIEN_MORAL),
+            SkillId::STIMULATION_CARDIAQUE => Some(STIMULATION_CARDIAQUE),
+            SkillId::JAUNE => Some(JAUNE),
+            SkillId::MORSURE_DU_SOLEIL => Some(MORSURE_DU_SOLEIL),
+            SkillId::CRAMPE_CHRONIQUE => Some(CRAMPE_CHRONIQUE),
+            SkillId::BATTERIE_SUPPLEMENTAIRE => Some(BATTERIE_SUPPLEMENTAIRE),
+            SkillId::BARRIERE_ELECTRIFIEE => Some(BARRIERE_ELECTRIFIEE),
+            SkillId::ORACLE => Some(ORACLE),
+            SkillId::RECEPTACLE_AERIEN => Some(RECEPTACLE_AERIEN),
+            SkillId::FEU_DE_ST_ELME => Some(FEU_DE_ST_ELME),
+            SkillId::FORCE_DE_ZEUS => Some(FORCE_DE_ZEUS),
+            SkillId::REMANENCE_HERTZIENNE => Some(REMANENCE_HERTZIENNE),
 
             // Ignored LIGHTNING Skills because they are useless in fights, they are intentionally commented
-            // SkillId::INTELLIGENCE => INTELLIGENCE,
-            // SkillId::REGENERESCENCE => REGENERESCENCE,
-            // SkillId::PARATONNERRE => PARATONNERRE,
-            // SkillId::FISSION_ELEMENTAIRE => FISSION_ELEMENTAIRE,
-            // SkillId::PLAN_DE_CARRIERE => PLAN_DE_CARRIERE,
-            // SkillId::MARCHAND => MARCHAND,
-            // SkillId::REINCARNATION => REINCARNATION,
-            // SkillId::PRETRE => PRETRE,
-            // SkillId::EINSTEIN => EINSTEIN,
+            // SkillId::INTELLIGENCE => Some(INTELLIGENCE),
+            // SkillId::REGENERESCENCE => Some(REGENERESCENCE),
+            // SkillId::PARATONNERRE => Some(PARATONNERRE),
+            // SkillId::FISSION_ELEMENTAIRE => Some(FISSION_ELEMENTAIRE),
+            // SkillId::PLAN_DE_CARRIERE => Some(PLAN_DE_CARRIERE),
+            // SkillId::MARCHAND => Some(MARCHAND),
+            // SkillId::REINCARNATION => Some(REINCARNATION),
+            // SkillId::PRETRE => Some(PRETRE),
+            // SkillId::EINSTEIN => Some(EINSTEIN),
 
             // Vanilla AIR Skills
-            SkillId::AGILITE => AGILITE,
-            SkillId::STRATEGIE => STRATEGIE,
-            SkillId::MISTRAL => MISTRAL,
-            SkillId::ENVOL => ENVOL,
-            SkillId::ESQUIVE => ESQUIVE,
-            SkillId::SAUT => SAUT,
-            SkillId::ANALYSE => ANALYSE,
-            SkillId::TAICHI => TAICHI,
-            SkillId::TORNADE => TORNADE,
-            SkillId::DISQUE_VACUUM => DISQUE_VACUUM,
-            SkillId::ELASTICITE => ELASTICITE,
-            SkillId::ATTAQUE_PLONGEANTE => ATTAQUE_PLONGEANTE,
-            SkillId::FURTIVITE => FURTIVITE,
-            SkillId::SPECIALISTE => SPECIALISTE,
-            SkillId::TALON_DACHILLE => TALON_DACHILLE,
-            SkillId::NUAGE_TOXIQUE => NUAGE_TOXIQUE,
-            SkillId::EVEIL => EVEIL,
-            SkillId::PAUME_EJECTABLE => PAUME_EJECTABLE,
-            SkillId::VENT_VIF => VENT_VIF,
-            SkillId::FORME_VAPOREUSE => FORME_VAPOREUSE,
-            SkillId::TROU_NOIR => TROU_NOIR,
-            SkillId::MAITRE_LEVITATEUR => MAITRE_LEVITATEUR,
-            SkillId::HALEINE_FETIVE => HALEINE_FETIVE,
-            SkillId::MEDITATION_SOLITAIRE => MEDITATION_SOLITAIRE,
-            SkillId::SOUFFLE_DE_VIE => SOUFFLE_DE_VIE,
-            SkillId::MEDITATION_TRANCHANTE => MEDITATION_TRANCHANTE,
-            SkillId::FORME_ETHERALE => FORME_ETHERALE,
+            SkillId::AGILITE => Some(AGILITE),
+            SkillId::STRATEGIE => Some(STRATEGIE),
+            SkillId::MISTRAL => Some(MISTRAL),
+            SkillId::ENVOL => Some(ENVOL),
+            SkillId::ESQUIVE => Some(ESQUIVE),
+            SkillId::SAUT => Some(SAUT),
+            SkillId::ANALYSE => Some(ANALYSE),
+            SkillId::TAICHI => Some(TAICHI),
+            SkillId::TORNADE => Some(TORNADE),
+            SkillId::DISQUE_VACUUM => Some(DISQUE_VACUUM),
+            SkillId::ELASTICITE => Some(ELASTICITE),
+            SkillId::ATTAQUE_PLONGEANTE => Some(ATTAQUE_PLONGEANTE),
+            SkillId::FURTIVITE => Some(FURTIVITE),
+            SkillId::SPECIALISTE => Some(SPECIALISTE),
+            SkillId::TALON_DACHILLE => Some(TALON_DACHILLE),
+            SkillId::NUAGE_TOXIQUE => Some(NUAGE_TOXIQUE),
+            SkillId::EVEIL => Some(EVEIL),
+            SkillId::PAUME_EJECTABLE => Some(PAUME_EJECTABLE),
+            SkillId::VENT_VIF => Some(VENT_VIF),
+            SkillId::FORME_VAPOREUSE => Some(FORME_VAPOREUSE),
+            SkillId::TROU_NOIR => Some(TROU_NOIR),
+            SkillId::MAITRE_LEVITATEUR => Some(MAITRE_LEVITATEUR),
+            SkillId::HALEINE_FETIVE => Some(HALEINE_FETIVE),
+            SkillId::MEDITATION_SOLITAIRE => Some(MEDITATION_SOLITAIRE),
+            SkillId::SOUFFLE_DE_VIE => Some(SOUFFLE_DE_VIE),
+            SkillId::MEDITATION_TRANCHANTE => Some(MEDITATION_TRANCHANTE),
+            SkillId::FORME_ETHERALE => Some(FORME_ETHERALE),
 
             // Ether AIR Skills
-            SkillId::MAITRISE_CORPORELLE => MAITRISE_CORPORELLE,
-            SkillId::BLANC => BLANC,
-            SkillId::ANAEROBIE => ANAEROBIE,
-            SkillId::DOUBLE_FACE => DOUBLE_FACE,
-            SkillId::FLAGELLATION => FLAGELLATION,
-            SkillId::SOUFFLE_DANGE => SOUFFLE_DANGE,
-            SkillId::OURAGAN => OURAGAN,
-            SkillId::OURANOS => OURANOS,
-            SkillId::TWINOID_500MG => TWINOID_500MG,
-            SkillId::SURPLIS_DHADES => SURPLIS_DHADES,
-            SkillId::RECEPTABLE_THERMIQUE => RECEPTABLE_THERMIQUE,
-            SkillId::QI_GONG => QI_GONG,
-            SkillId::SYLPHIDES => SYLPHIDES,
-            SkillId::MUTINERIE => MUTINERIE,
-            SkillId::MAINS_COLLANTES => MAINS_COLLANTES,
+            SkillId::MAITRISE_CORPORELLE => Some(MAITRISE_CORPORELLE),
+            SkillId::BLANC => Some(BLANC),
+            SkillId::ANAEROBIE => Some(ANAEROBIE),
+            SkillId::DOUBLE_FACE => Some(DOUBLE_FACE),
+            SkillId::FLAGELLATION => Some(FLAGELLATION),
+            SkillId::SOUFFLE_DANGE => Some(SOUFFLE_DANGE),
+            SkillId::OURAGAN => Some(OURAGAN),
+            SkillId::OURANOS => Some(OURANOS),
+            SkillId::TWINOID_500MG => Some(TWINOID_500MG),
+            SkillId::SURPLIS_DHADES => Some(SURPLIS_DHADES),
+            SkillId::RECEPTABLE_THERMIQUE => Some(RECEPTABLE_THERMIQUE),
+            SkillId::QI_GONG => Some(QI_GONG),
+            SkillId::SYLPHIDES => Some(SYLPHIDES),
+            SkillId::MUTINERIE => Some(MUTINERIE),
+            SkillId::MAINS_COLLANTES => Some(MAINS_COLLANTES),
 
             // Ignored AIR Skills because they are useless in fights, they are intentionally commented
-            // SkillId::CUEILLETTE => CUEILLETTE,
-            // SkillId::OEIL_DE_LYNX => OEIL_DE_LYNX,
-            // SkillId::PROFESSEUR => PROFESSEUR,
-            // SkillId::LONDUHAUT => LONDUHAUT,
-            // SkillId::MESSIE => MESSIE,
+            // SkillId::CUEILLETTE => Some(CUEILLETTE),
+            // SkillId::OEIL_DE_LYNX => Some(OEIL_DE_LYNX),
+            // SkillId::PROFESSEUR => Some(PROFESSEUR),
+            // SkillId::LONDUHAUT => Some(LONDUHAUT),
+            // SkillId::MESSIE => Some(MESSIE),
 
             // VOID Skills
 
             // Race Skills
-            SkillId::PIETINEMENT => PIETINEMENT,
-            SkillId::ROCK => ROCK,
-            SkillId::CHARGE_CORNUE => CHARGE_CORNUE,
-            SkillId::INSAISISSABLE => INSAISISSABLE,
-            SkillId::COQUE => COQUE,
-            SkillId::CUIRASSE => CUIRASSE,
-            SkillId::ECRASEMENT => ECRASEMENT,
-            SkillId::DEPLACEMENT_INSTANTANE => DEPLACEMENT_INSTANTANE,
-            SkillId::NAPOMAGICIEN => NAPOMAGICIEN,
-            SkillId::BIGMAGNON => BIGMAGNON,
+            SkillId::PIETINEMENT => Some(PIETINEMENT),
+            SkillId::ROCK => Some(ROCK),
+            SkillId::CHARGE_CORNUE => Some(CHARGE_CORNUE),
+            SkillId::INSAISISSABLE => Some(INSAISISSABLE),
+            SkillId::COQUE => Some(COQUE),
+            SkillId::CUIRASSE => Some(CUIRASSE),
+            SkillId::ECRASEMENT => Some(ECRASEMENT),
+            SkillId::DEPLACEMENT_INSTANTANE => Some(DEPLACEMENT_INSTANTANE),
+            SkillId::NAPOMAGICIEN => Some(NAPOMAGICIEN),
+            SkillId::BIGMAGNON => Some(BIGMAGNON),
 
             // Race (Demon) Skills
-            SkillId::DUR_A_CUIRE => DUR_A_CUIRE,
-            SkillId::GROS_COSTAUD => GROS_COSTAUD,
-            SkillId::CHARGE_PIGMOU => CHARGE_PIGMOU,
-            SkillId::FRENESIE_COLLECTIVE => FRENESIE_COLLECTIVE,
-            SkillId::FORCE_DE_LUMIERE => FORCE_DE_LUMIERE,
-            SkillId::ORIGINE_CAUSHEMESHENNE => ORIGINE_CAUSHEMESHENNE,
-            SkillId::FORCE_DES_TENEBRES => FORCE_DES_TENEBRES,
+            SkillId::DUR_A_CUIRE => Some(DUR_A_CUIRE),
+            SkillId::GROS_COSTAUD => Some(GROS_COSTAUD),
+            SkillId::CHARGE_PIGMOU => Some(CHARGE_PIGMOU),
+            SkillId::FRENESIE_COLLECTIVE => Some(FRENESIE_COLLECTIVE),
+            SkillId::FORCE_DE_LUMIERE => Some(FORCE_DE_LUMIERE),
+            SkillId::ORIGINE_CAUSHEMESHENNE => Some(ORIGINE_CAUSHEMESHENNE),
+            SkillId::FORCE_DES_TENEBRES => Some(FORCE_DES_TENEBRES),
 
             // Sphere Skills
             // Sphere FIRE Skills
-            SkillId::BRASERO => BRASERO,
-            SkillId::DETONATION => DETONATION,
+            SkillId::BRASERO => Some(BRASERO),
+            SkillId::DETONATION => Some(DETONATION),
 
             // Sphere WOOD Skills
-            SkillId::LANCEUR_DE_GLAND => LANCEUR_DE_GLAND,
-            SkillId::GROSSE_BEIGNE => GROSSE_BEIGNE,
+            SkillId::LANCEUR_DE_GLAND => Some(LANCEUR_DE_GLAND),
+            SkillId::GROSSE_BEIGNE => Some(GROSSE_BEIGNE),
 
             // Sphere WATER Skills
-            SkillId::VITALITE => VITALITE,
-            SkillId::MOIGNONS_LIQUIDES => MOIGNONS_LIQUIDES,
-            SkillId::DELUGE => DELUGE,
+            SkillId::VITALITE => Some(VITALITE),
+            SkillId::MOIGNONS_LIQUIDES => Some(MOIGNONS_LIQUIDES),
+            SkillId::DELUGE => Some(DELUGE),
 
             // Sphere LIGHTNING Skills
-            SkillId::REFLEX => REFLEX,
-            SkillId::ECLAIR_SINUEUX => ECLAIR_SINUEUX,
-            SkillId::SURVIE => SURVIE,
+            SkillId::REFLEX => Some(REFLEX),
+            SkillId::ECLAIR_SINUEUX => Some(ECLAIR_SINUEUX),
+            SkillId::SURVIE => Some(SURVIE),
 
             // Sphere AIR Skills
-            SkillId::AIGUILLON => AIGUILLON,
-            SkillId::AURA_PUANTE => AURA_PUANTE,
-            SkillId::HYPNOSE => HYPNOSE,
+            SkillId::AIGUILLON => Some(AIGUILLON),
+            SkillId::AURA_PUANTE => Some(AURA_PUANTE),
+            SkillId::HYPNOSE => Some(HYPNOSE),
 
             // Double Skills
-            SkillId::ARMURE_DE_BASALTE => ARMURE_DE_BASALTE,
-            SkillId::MAITRE_ELEMENTAIRE => MAITRE_ELEMENTAIRE,
-            SkillId::SPRINT => SPRINT,
-            SkillId::VENDETTA => VENDETTA,
-            SkillId::INCREVABLE => INCREVABLE,
-            SkillId::CHOC => CHOC,
-            SkillId::SECOUSSE => SECOUSSE,
-            SkillId::ELECTROLYSE => ELECTROLYSE,
-            SkillId::BULLE => BULLE,
-            SkillId::SURCHARGE => SURCHARGE,
+            SkillId::ARMURE_DE_BASALTE => Some(ARMURE_DE_BASALTE),
+            SkillId::MAITRE_ELEMENTAIRE => Some(MAITRE_ELEMENTAIRE),
+            SkillId::SPRINT => Some(SPRINT),
+            SkillId::VENDETTA => Some(VENDETTA),
+            SkillId::INCREVABLE => Some(INCREVABLE),
+            SkillId::CHOC => Some(CHOC),
+            SkillId::SECOUSSE => Some(SECOUSSE),
+            SkillId::ELECTROLYSE => Some(ELECTROLYSE),
+            SkillId::BULLE => Some(BULLE),
+            SkillId::SURCHARGE => Some(SURCHARGE),
 
             // Invocation Skills
-            SkillId::SALAMANDRE => SALAMANDRE,
-            SkillId::VULCAIN => VULCAIN,
-            SkillId::ARMURE_DIFRIT => ARMURE_DIFRIT,
-            SkillId::BALEINE_BLANCHE => BALEINE_BLANCHE,
-            SkillId::LEVIATHAN => LEVIATHAN,
-            SkillId::ONDINE => ONDINE,
-            SkillId::LOUP_GAROU => LOUP_GAROU,
-            SkillId::BENEDICTION_DES_FEES => BENEDICTION_DES_FEES,
-            SkillId::YGGDRASIL => YGGDRASIL,
-            SkillId::BIG_MAMA => BIG_MAMA,
-            SkillId::RAIJIN => RAIJIN,
-            SkillId::GOLEM => GOLEM,
-            SkillId::ROI_DES_SINGES => ROI_DES_SINGES,
-            SkillId::DJINN => DJINN,
-            SkillId::FUJIN => FUJIN,
-            SkillId::TOTEM_ANCESTRAL_AEROPORTE => TOTEM_ANCESTRAL_AEROPORTE,
-            SkillId::BOUDDHA => BOUDDHA,
-            SkillId::HADES => HADES,
-            SkillId::REINE_DE_LA_RUCHE => REINE_DE_LA_RUCHE,
-            SkillId::HERCOLUBUS => HERCOLUBUS,
-            SkillId::QUETZACOATL => QUETZACOATL,
+            SkillId::SALAMANDRE => Some(SALAMANDRE),
+            SkillId::VULCAIN => Some(VULCAIN),
+            SkillId::ARMURE_DIFRIT => Some(ARMURE_DIFRIT),
+            SkillId::BALEINE_BLANCHE => Some(BALEINE_BLANCHE),
+            SkillId::LEVIATHAN => Some(LEVIATHAN),
+            SkillId::ONDINE => Some(ONDINE),
+            SkillId::LOUP_GAROU => Some(LOUP_GAROU),
+            SkillId::BENEDICTION_DES_FEES => Some(BENEDICTION_DES_FEES),
+            SkillId::YGGDRASIL => Some(YGGDRASIL),
+            SkillId::BIG_MAMA => Some(BIG_MAMA),
+            SkillId::RAIJIN => Some(RAIJIN),
+            SkillId::GOLEM => Some(GOLEM),
+            SkillId::ROI_DES_SINGES => Some(ROI_DES_SINGES),
+            SkillId::DJINN => Some(DJINN),
+            SkillId::FUJIN => Some(FUJIN),
+            SkillId::TOTEM_ANCESTRAL_AEROPORTE => Some(TOTEM_ANCESTRAL_AEROPORTE),
+            SkillId::BOUDDHA => Some(BOUDDHA),
+            SkillId::HADES => Some(HADES),
+            SkillId::REINE_DE_LA_RUCHE => Some(REINE_DE_LA_RUCHE),
+            SkillId::HERCOLUBUS => Some(HERCOLUBUS),
+            SkillId::QUETZACOATL => Some(QUETZACOATL),
 
-            // Other ignored Skills, they are intentionally commented
-            // SkillId::COEUR_DE_PHOENIX => COEUR_DE_PHOENIX,
-            // SkillId::GRATTEUR => GRATTEUR,
-            // SkillId::COMPETENCE_DOUBLE => COMPETENCE_DOUBLE,
-            // SkillId::LIMITE_BRISEE => LIMITE_BRISEE,
-            // SkillId::INVOCATEUR => INVOCATEUR,
+            // Other ignored Skills because they are useless in fights, they are intentionally commented
+            // SkillId::COEUR_DE_PHOENIX => Some(COEUR_DE_PHOENIX),
+            // SkillId::GRATTEUR => Some(GRATTEUR),
+            // SkillId::COMPETENCE_DOUBLE => Some(COMPETENCE_DOUBLE),
+            // SkillId::LIMITE_BRISEE => Some(LIMITE_BRISEE),
+            // SkillId::INVOCATEUR => Some(INVOCATEUR),
 
-            // TODO add the other skills
+            // All those skills are the skills that have no effects in a fight. They are intentionally commented above in the match
+            // and then they are regrouped here to be matched with `None` instead of being handled the same way as an unknown skill
+            SkillId::CHASSEUR_DE_GOUPIGNON
+            | SkillId::CHASSEUR_DE_GEANT
+            | SkillId::CHASSEUR_DE_DRAGON
+            | SkillId::BENEDICTION_DARTEMIS
+            | SkillId::COCON
+            | SkillId::SYMPATIQUE
+            | SkillId::CHARISME
+            | SkillId::DETECTIVE
+            | SkillId::FOUILLE
+            | SkillId::PLANIFICATEUR
+            | SkillId::EXPERT_EN_FOUILLE
+            | SkillId::ARCHEOLOGUE
+            | SkillId::LEADER
+            | SkillId::INGENIEUR
+            | SkillId::CHAMPOLLION
+            | SkillId::APPRENTI_PECHEUR
+            | SkillId::PECHEUR_CONFIRME
+            | SkillId::MAITRE_PECHEUR
+            | SkillId::CUISINIER
+            | SkillId::MAGASINIER
+            | SkillId::EAU_DIVINE
+            | SkillId::EFFLUVE_APHRODISIAQUE
+            | SkillId::NEMO
+            | SkillId::INTELLIGENCE
+            | SkillId::REGENERESCENCE
+            | SkillId::PARATONNERRE
+            | SkillId::FISSION_ELEMENTAIRE
+            | SkillId::PLAN_DE_CARRIERE
+            | SkillId::MARCHAND
+            | SkillId::REINCARNATION
+            | SkillId::PRETRE
+            | SkillId::EINSTEIN
+            | SkillId::CUEILLETTE
+            | SkillId::OEIL_DE_LYNX
+            | SkillId::PROFESSEUR
+            | SkillId::LONDUHAUT
+            | SkillId::MESSIE
+            | SkillId::COEUR_DE_PHOENIX
+            | SkillId::GRATTEUR
+            | SkillId::COMPETENCE_DOUBLE
+            | SkillId::LIMITE_BRISEE
+            | SkillId::INVOCATEUR => {
+                trace!("This skill ({}) is intentionally not implemented because it has no effects in fights", self);
+                None
+            }
             _ => {
-                error!("Unknown or not yet implemented skill {:?}", self);
-                UNKNOWN_SKILL
+                error!("Unknown skill {}, report this to a developer", self);
+                None
             }
         }
     }
 }
-
-static UNKNOWN_SKILL: Skill = Skill {
-    id: SkillId::UNKNOWN,
-    skill_type: SkillType::UNKNOWN,
-    energy: 0,
-    priority: 0,
-    probability: 0,
-    effect: |_f: &mut Fighter, _: &mut Manager| {
-        error!("Unknown skill, ignored for fights");
-        vec![AttackResult::UnknownSkill]
-    },
-    ignore: true,
-};
