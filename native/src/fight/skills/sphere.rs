@@ -1,5 +1,5 @@
 /// Implementations of all sphere skills
-use log::{error, trace};
+use log::{error};
 
 use crate::fight::manager::{Manager, TIMECOEF};
 use crate::fight::{fighter::Fighter, manager::AttackResult};

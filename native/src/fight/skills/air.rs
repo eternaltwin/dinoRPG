@@ -153,7 +153,7 @@ pub static MISTRAL: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::MISTRAL)]
     },
@@ -166,7 +166,7 @@ pub static ENVOL: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::ENVOL)]
     },
@@ -179,7 +179,7 @@ pub static TORNADE: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::TORNADE)]
     },
@@ -192,7 +192,7 @@ pub static DISQUE_VACUUM: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::DISQUE_VACUUM)]
     },
@@ -205,7 +205,7 @@ pub static ATTAQUE_PLONGEANTE: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::ATTAQUE_PLONGEANTE)]
     },
@@ -218,7 +218,7 @@ pub static NUAGE_TOXIQUE: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::NUAGE_TOXIQUE)]
     },
@@ -231,7 +231,7 @@ pub static PAUME_EJECTABLE: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::PAUME_EJECTABLE)]
     },
@@ -244,7 +244,7 @@ pub static TROU_NOIR: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::TROU_NOIR)]
     },
@@ -258,7 +258,7 @@ pub static VENT_VIF: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::VENT_VIF)]
     },
@@ -272,7 +272,7 @@ pub static STRATEGIE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::STRATEGIE)]
     },
@@ -285,7 +285,7 @@ pub static ANALYSE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::ANALYSE)]
     },
@@ -298,7 +298,7 @@ pub static SPECIALISTE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::SPECIALISTE)]
     },
@@ -310,7 +310,7 @@ pub static FORME_VAPOREUSE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::FORME_VAPOREUSE)]
     },
@@ -323,7 +323,7 @@ pub static MAITRE_LEVITATEUR: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::MAITRE_LEVITATEUR)]
     },
@@ -336,7 +336,7 @@ pub static HALEINE_FETIVE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::HALEINE_FETIVE)]
     },
@@ -349,7 +349,7 @@ pub static SOUFFLE_DE_VIE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::SOUFFLE_DE_VIE)]
     },
@@ -362,7 +362,7 @@ pub static FORME_ETHERALE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::FORME_ETHERALE)]
     },
@@ -487,7 +487,7 @@ pub static OURANOS: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::OURANOS)]
     },
@@ -500,7 +500,7 @@ pub static RECEPTABLE_THERMIQUE: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::RECEPTABLE_THERMIQUE)]
     },
@@ -513,7 +513,7 @@ pub static SYLPHIDES: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::SYLPHIDES)]
     },
@@ -527,7 +527,7 @@ pub static QI_GONG: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::QI_GONG)]
     },
@@ -540,7 +540,7 @@ pub static MUTINERIE: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::MUTINERIE)]
     },
@@ -553,7 +553,7 @@ pub static MAINS_COLLANTES: Skill = Skill {
     energy: 0,      // TODO
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::MAINS_COLLANTES)]
     },
@@ -567,7 +567,7 @@ pub static SURPLIS_DHADES: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _m: &mut Manager| {
+    effect: |_f: &mut Fighter, _m: &mut Manager| {
         // extra item space handled in node
         vec![AttackResult::PassiveSkill(SkillId::SURPLIS_DHADES)]
     },

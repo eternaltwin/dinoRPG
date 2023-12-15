@@ -1,5 +1,5 @@
 /// Implementations of all fire skills from Vanilla and Ether skill trees
-use log::{error, trace};
+use log::{error};
 
 use crate::fight::manager::{AttackResult, Manager, TIMECOEF};
 use crate::fight::{elements::ElementIndex, fighter::Fighter};

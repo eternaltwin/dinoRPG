@@ -184,7 +184,7 @@ pub static CUIRASSE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    effect: |_f: &mut Fighter, _: &mut Manager| {
         // todo
         vec![AttackResult::TodoSkill(SkillId::CUIRASSE)]
     },

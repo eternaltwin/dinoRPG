@@ -17,7 +17,7 @@ pub static SECOUSSE: Skill = Skill {
     energy: 0,
     priority: 0,    // TODO
     probability: 0, // TODO
-    effect: |f: &mut Fighter, _: &mut Manager| {
+    effect: |_f: &mut Fighter, _: &mut Manager| {
         // TODO
         vec![AttackResult::TodoSkill(SkillId::SECOUSSE)]
     },
