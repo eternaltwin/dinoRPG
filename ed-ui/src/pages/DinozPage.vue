@@ -87,7 +87,6 @@ export default defineComponent({
 					dinozList.splice(followerIndex, 1, followerToUpdate);
 				}
 			}
-			console.log(dinozList);
 			this.dinozStore.setDinozList(dinozList);
 			this.playerStore.setPlayerOptions({
 				...this.playerStore.playerOptions,
