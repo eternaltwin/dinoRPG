@@ -20,10 +20,10 @@
 			</p>
 		</template>
 	</Tippy>
-	<DinozElements :dinozData="dinozData" />
-	<DinozBars :dinozData="dinozData" />
-	<DinozEquip :dinozData="dinozData" />
-	<DinozStatus :dinozStatus="dinozData.status" />
+	<DinozElements :dinozData="dinozData" :key="dinozData" />
+	<DinozBars :dinozData="dinozData" :key="dinozData" />
+	<DinozEquip :dinozData="dinozData" :key="dinozData" />
+	<DinozStatus :dinozStatus="dinozData.status" :key="dinozData" />
 </template>
 
 <script lang="ts">
