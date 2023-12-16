@@ -632,7 +632,9 @@ impl Fighter {
     /// Prepare the skills of the dinoz:
     /// - process passive skills
     /// - load the active skills
-    /// - TODO etc
+    /// - load the event skills
+    /// - do something with the special skills
+    /// - etc.
     pub fn prepare_skills(&mut self, manager: &mut Manager) {
         info!("--- Preparing fighter {:} skills ---", self.id);
         let skills = self.skills.clone();
@@ -725,14 +727,14 @@ impl Fighter {
         defense
     }
 
-    //---------------------------------------------------------------------------------------------------------------------
-    // PURPOSE: Calculate the power value of an attack given its element type and power base
-    //          The power value equals to: power_base * element
-    //          For example, the power base of an assault is 5, so the result is 5 * element
-    // PARAMS:  - element_type: u32 (0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
-    //          - power_base: u32 - Base value of the attack. For example, 5 for an assault.
-    // RETURN:  The power value of the attack at its proper element index in a [u32;6]
-    //---------------------------------------------------------------------------------------------------------------------
+    ///---------------------------------------------------------------------------------------------------------------------
+    /// PURPOSE: Calculate the power value of an attack given its element type and power base
+    ///          The power value equals to: power_base * element
+    ///          For example, the power base of an assault is 5, so the result is 5 * element
+    /// PARAMS:  - element_type: u32 (0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
+    ///          - power_base: u32 - Base value of the attack. For example, 5 for an assault.
+    /// RETURN:  The power value of the attack at its proper element index in a [u32;6]
+    ///---------------------------------------------------------------------------------------------------------------------
     pub fn compute_attack(&self, element_type: ElementIndex, power_base: u32) -> [u32; 6] {
         let mut attack: [u32; 6] = [0, 0, 0, 0, 0, 0];
 
@@ -743,13 +745,13 @@ impl Fighter {
         attack
     }
 
-    //---------------------------------------------------------------------------------------------------------------------
-    // PURPOSE: Calculate the power value of a multi element attack given the element types type and power bases for each
-    //          The element types of attack are inferred from the power bases (a power base of 0 means this element does not take part in the attack)
-    // PARAMS:  - element_type: u32 (0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
-    //          - power_base: [u32; 6]
-    // RETURN:  The power value of the attack at its proper element index in a [u32;6]
-    //---------------------------------------------------------------------------------------------------------------------
+    ///---------------------------------------------------------------------------------------------------------------------
+    /// PURPOSE: Calculate the power value of a multi element attack given the element types type and power bases for each
+    ///          The element types of attack are inferred from the power bases (a power base of 0 means this element does not take part in the attack)
+    /// PARAMS:  - element_type: u32 (0 - Fire, 1 - Wood, 2 - Water, 3 - Lightning, 4 - Air)
+    ///          - power_base: [u32; 6]
+    /// RETURN:  The power value of the attack at its proper element index in a [u32;6]
+    ///---------------------------------------------------------------------------------------------------------------------
     pub fn compute_multi_element_attack(&self, power_base: [i32; 6]) -> [i32; 6] {
         let mut attack: [i32; 6] = power_base;
         let elements = self.ordered_elements.elements.to_array();

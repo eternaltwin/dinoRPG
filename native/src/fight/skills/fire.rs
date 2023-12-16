@@ -1,5 +1,5 @@
 /// Implementations of all fire skills from Vanilla and Ether skill trees
-use log::{error};
+use log::error;
 
 use crate::fight::manager::{AttackResult, Manager, TIMECOEF};
 use crate::fight::{elements::ElementIndex, fighter::Fighter};
@@ -210,13 +210,11 @@ pub static PROPULSION_DIVINE: Skill = Skill {
 pub static SOUFFLE_ARDENT: Skill = Skill {
     id: SkillId::SOUFFLE_ARDENT,
     skill_type: SkillType::ACTIVE,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // todo
-        error!("Default active skill implementation! Not yet implemented");
-        vec![AttackResult::TodoSkill(SkillId::SOUFFLE_ARDENT)]
+    energy: 20,
+    priority: 1,
+    probability: 10,
+    effect: |f: &mut Fighter, m: &mut Manager| {
+        m.attack_team(f, f.compute_attack(ElementIndex::Fire, 5))
     },
     ignore: false,
 };
@@ -224,13 +222,11 @@ pub static SOUFFLE_ARDENT: Skill = Skill {
 pub static COULEE_DE_LAVE: Skill = Skill {
     id: SkillId::COULEE_DE_LAVE,
     skill_type: SkillType::ACTIVE,
-    energy: 0,
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // todo
-        error!("Default active skill implementation! Not yet implemented");
-        vec![AttackResult::TodoSkill(SkillId::COULEE_DE_LAVE)]
+    energy: 25,
+    priority: 8,
+    probability: 5,
+    effect: |f: &mut Fighter, m: &mut Manager| {
+        m.attack_single_target(f, f.compute_attack(ElementIndex::Fire, 12))
     },
     ignore: false,
 };

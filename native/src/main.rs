@@ -69,10 +69,10 @@ fn main() {
                 "dinoz_id": 123,
                 "ftype": "Dinoz",
                 "display": "",
-                "name": "toto",
+                "name": "FireBoy",
                 "start_life": 100,
                 "base_elements": [
-                    1,
+                    4,
                     0,
                     0,
                     0,
@@ -83,7 +83,9 @@ fn main() {
                 "skills": [
                     11204,
                     11408,
-                    31101
+                    31101,
+                    11201,
+                    11303
                 ],
                 "status": [
                 ],
@@ -159,7 +161,9 @@ fn main() {
                 "items": [
                 ],
                 "skills": [
-                    31101
+                    31101,
+                    31202,
+                    31201
                 ],
                 "status": [
                 ],

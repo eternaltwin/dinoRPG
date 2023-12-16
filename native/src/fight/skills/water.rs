@@ -1,7 +1,7 @@
 /// Implementations of all water skills from Vanilla and Ether skill trees
-use log::{error};
+use log::error;
 
-use crate::fight::fighter::{FighterType};
+use crate::fight::fighter::FighterType;
 use crate::fight::manager::{AttackResult, Manager, TIMECOEF};
 use crate::fight::{elements::ElementIndex, fighter::Fighter};
 

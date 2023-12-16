@@ -9,8 +9,8 @@
 //=====================================================================================================================
 
 extern crate log;
-use log::error;
 use log::{debug, info, trace}; // add trace, warn and error as needed
+use log::{error, warn};
 use rand::prelude::*;
 use rand::Rng;
 use rand_chacha::ChaCha8Rng;
@@ -682,7 +682,7 @@ impl Manager {
         assault_result
     }
 
-    fn process_active_skill(&mut self, attacker: &mut Fighter, skill: Skill) -> Vec<AttackResult> {
+    fn process_skill(&mut self, attacker: &mut Fighter, skill: Skill) -> Vec<AttackResult> {
         info!("Processing skill {:?}", skill);
         let result = skill.process_skill(attacker, self);
         self.fight_result
@@ -694,18 +694,22 @@ impl Manager {
     fn process_turn(&mut self, fighter: &mut Fighter) {
         debug!("[Manager:process_turn] It's {:}'s turn", fighter.id);
 
-        // TODO check if the fighter uses an event skill
+        // Tentatively pick an event skill
+        let event = self.pick_random_event_skill(fighter);
 
-        // if let Some(event) = f.get_event() {
-        //     process_event(f, event);
-        // }
+        // If a skill was drawn from the fighter's pool of event skills, process it.
+        // Otherwise, the attacker will do an assault.
+        if let Some(event) = event {
+            self.process_skill(fighter, event);
+        }
 
-        // TODO check if the fighter uses an active skill if not it uses an assaults
+        // Tentatively pick an active skill
         let skill = self.pick_random_active_skill(fighter);
 
-        // if assault or targetted skill:
+        // If a skill was drawn from the fighter's pool of active skills, process it.
+        // Otherwise, the attacker will do an assault.
         if let Some(skill) = skill {
-            self.process_active_skill(fighter, skill);
+            self.process_skill(fighter, skill);
         } else {
             self.attack_with_assault(fighter);
         }
@@ -751,7 +755,7 @@ impl Manager {
         }
     }
 
-    /// Pick a random active for the given fighter from its pool of active skills
+    /// Pick a random active skill for the given fighter from its pool of active skills
     ///
     /// This method is in the manager because it uses the random generator
     fn pick_random_active_skill(&mut self, f: &Fighter) -> Option<Skill> {
@@ -768,7 +772,7 @@ impl Manager {
         None
     }
 
-    /// Pick a random active for the given fighter from its pool of event skills
+    /// Pick a random event skill for the given fighter from its pool of event skills
     ///
     /// This method is in the manager because it uses the random generator
     fn pick_random_event_skill(&mut self, f: &Fighter) -> Option<Skill> {
@@ -784,8 +788,6 @@ impl Manager {
         }
         None
     }
-
-    // Un-used & non-documented local functions
 
     // Documented exported functions
 
@@ -927,7 +929,7 @@ impl Manager {
 
         info!("--- Preparation done ---");
 
-        // Process only if there are both attackers and defenders
+        // Process only if there are at least one fighter left on each team
         if !self.fighters_alive_attackers.is_empty() && !self.fighters_alive_defenders.is_empty() {
             info!("--- Fight start ---");
 
@@ -935,44 +937,52 @@ impl Manager {
             for i in 0..=MAX_TURNS {
                 debug!("-- BEGINNING OF TURN {:} --", i);
 
-                // Pick first alive fighter
+                // 1- Pick first alive fighter
                 self.sort_all_fighters_by_time_smallest_first();
                 // SAFETY: it should be safe to unwrap here because there are at least 2 fighters (one attacker, one defender) still in play
-                let mut current_fighter: Fighter =
-                    self.fighters_all[self.fighters_all_alive_order.first().unwrap()].clone();
+                let fighter_id = *self.fighters_all_alive_order.first().unwrap();
+                let mut current_fighter: Fighter = self.fighters_all[&fighter_id].clone();
 
-                // Process its turn
+                // TODO regenerate energy
+
+                // TODO process environment effect (like Ouranos, etc.)
+
+                // TODO process status
+
+                // 2- Process its turn
                 self.process_turn(&mut current_fighter);
 
-                // Increase time
+                // 3- Increase its time
                 // TODO not final
-                let mut _dt: u32 = (TIMEBASE as f32
+                let dt: u32 = (TIMEBASE as f32
                     * TIMECOEF as f32
                     * current_fighter.speed_global
                     * current_fighter.speed_per_element
                         [current_fighter.get_current_element_index(false) as usize])
                     .floor() as u32;
-                current_fighter.time += _dt as i32;
+                current_fighter.time += dt as i32;
                 trace!(
                     "Fighter {:} new time is {:}",
                     current_fighter.id,
                     current_fighter.time
                 );
 
-                // Increment the element of the fighter
+                // 4- Increment the element of the fighter
                 current_fighter.increment_current_element_index();
 
-                // Update the fighter that just did its turn
-                // SAFETY: it is safe to unwrap here because there are at least 2 fighters (one attacker, one defender) still in play
-                *self
-                    .fighters_all
-                    .get_mut(self.fighters_all_alive_order.first().unwrap())
-                    .unwrap() = current_fighter;
+                // 5- Update the fighter that just did its turn
+                // SAFETY: it is safe to unwrap here because at this point we know this fighter exists
+                *self.fighters_all.get_mut(&fighter_id).unwrap() = current_fighter;
 
                 debug!("-- END OF TURN {:} --", i);
 
+                // 6- Check if the fight is finished
                 if self.is_fight_finished() {
                     break;
+                }
+
+                if i == MAX_TURNS {
+                    warn!("Maximum number of turns reached! Finishing the fight early...");
                 }
             }
 
