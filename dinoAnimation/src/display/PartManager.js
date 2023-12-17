@@ -132,10 +132,11 @@ export class PartManager {
 		if (part.special && (partsDetail.length <= 15 || partsDetail[15] <= 0)) {
 			return null;
 		}
-		let texture = TextureManager.getTextureFromCompressedReference(part.ref.svg, scale);
+		const resolution = part.resolution ?? TextureManager.DEFAULT_RESOLUTION;
+		let texture = TextureManager.getTextureFromCompressedReference(part.ref.svg, scale * resolution);
 		const sprite = Sprite.from(texture);
 		const filters = [];
-		sprite.scale.set(1 / TextureManager.RESOLUTION);
+		sprite.scale.set(1 / resolution);
 		// TODO: Remove later if texture loading is not required
 		/*sprite.visible = false;
 		if (texture.valid) {
@@ -159,6 +160,7 @@ export class PartManager {
 			const blurFilter = new BlurFilter();
 			blurFilter.blurX = part.blur.x ?? 0;
 			blurFilter.blurY = part.blur.y ?? 0;
+			blurFilter.quality = part.blur.quality ?? 1;
 			filters.push(blurFilter);
 		}
 		if (part.colorOffset || part.colorMultiplier) {
