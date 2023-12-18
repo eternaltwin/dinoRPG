@@ -216,6 +216,11 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 			name: true,
 			level: true,
 			placeId: true,
+			nbrUpWater: true,
+			nbrUpWood: true,
+			nbrUpAir: true,
+			nbrUpLightning: true,
+			nbrUpFire: true,
 			player: {
 				select: {
 					id: true,

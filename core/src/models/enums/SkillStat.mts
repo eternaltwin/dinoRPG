@@ -26,5 +26,11 @@ export enum Stat {
 	WATER_DEFENSE = 'waterDefense',
 	AIR_DEFENSE = 'airDefense',
 	LIGHTNING_DEFENSE = 'lightningDefense',
-	WOOD_DEFENSE = 'woodDefense'
+	WOOD_DEFENSE = 'woodDefense',
+	// Element
+	FIRE_ELEMENT = 'fireElement',
+	WATER_ELEMENT = 'waterElement',
+	AIR_ELEMENT = 'airElement',
+	LIGHTNING_ELEMENT = 'lightningElement',
+	WOOD_ELEMENT = 'woodElement',
 }

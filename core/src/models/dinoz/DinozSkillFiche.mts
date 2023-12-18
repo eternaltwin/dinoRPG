@@ -35,6 +35,11 @@ export type SkillEffects = {
 	[Stat.AIR_DEFENSE]?: number;
 	[Stat.LIGHTNING_DEFENSE]?: number;
 	[Stat.WOOD_DEFENSE]?: number;
+	[Stat.FIRE_ELEMENT]?: number;
+	[Stat.WATER_ELEMENT]?: number;
+	[Stat.AIR_ELEMENT]?: number;
+	[Stat.LIGHTNING_ELEMENT]?: number;
+	[Stat.WOOD_ELEMENT]?: number;
 };
 
 export interface DinozSkillFiche {

@@ -485,7 +485,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: -2,
+			[Stat.FIRE_ELEMENT]: -2,
 			[Stat.FIRE_SPEED]: 0.3
 		}
 	},
@@ -613,7 +613,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: 2
+			[Stat.FIRE_ELEMENT]: 2
 		}
 	},
 	[Skill.VENGEANCE]: {
@@ -833,8 +833,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: 2,
-			[Stat.FIRE_ASSAULT]: 2
+			[Stat.WOOD_ELEMENT]: 2,
+			[Stat.FIRE_ELEMENT]: 2
 		}
 	},
 	[Skill.SALAMANDRE]: {
@@ -890,7 +890,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 50,
-			[Stat.FIRE_ASSAULT]: 6,
+			[Stat.FIRE_ELEMENT]: 6,
 			[Stat.FIRE_SPEED]: 0.15,
 			[Stat.WATER_SPEED]: 0.15,
 			[Stat.AIR_SPEED]: 0.15,
@@ -1285,7 +1285,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: 2
+			[Stat.WOOD_ELEMENT]: 2
 		}
 	},
 	[Skill.LARGE_MACHOIRE]: {
@@ -2274,7 +2274,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: 5
+			[Stat.WATER_ELEMENT]: 5
 		}
 	},
 	[Skill.LEVIATHAN]: {
@@ -3008,8 +3008,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: 2,
-			[Stat.LIGHTNING_ASSAULT]: 1
+			[Stat.FIRE_ELEMENT]: 2,
+			[Stat.LIGHTNING_ELEMENT]: 1
 		}
 	},
 	[Skill.ARCHANGE_GENESIF]: {
@@ -3024,8 +3024,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: 2,
-			[Stat.LIGHTNING_ASSAULT]: 1
+			[Stat.WOOD_ELEMENT]: 2,
+			[Stat.LIGHTNING_ELEMENT]: 1
 		}
 	},
 	[Skill.PRETRE]: {
