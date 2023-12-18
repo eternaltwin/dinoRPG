@@ -15,6 +15,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
 import { createLog } from '../dao/logDao.js';
+import { sendDiscord } from '../utils/discord.js';
 
 const { fight_rust } = pkg;
 
@@ -233,6 +234,10 @@ export async function rewardFight(
 				}
 			}
 		);
+		if (gold > 10000) {
+			const monsterlist = monsters.map(m => m.name).toString()
+			sendDiscord(`Player ${playerId} has been rewarded ${gold} gold when fighting ${monsterlist}.`)
+		}
 		await addMoney(playerId, gold);
 	}
 
