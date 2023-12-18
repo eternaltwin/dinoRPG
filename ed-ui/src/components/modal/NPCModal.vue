@@ -6,7 +6,7 @@
 					<div class="name">{{ $t(`missions.npc.${npcName}`) }} :</div>
 				</div>
 				<div class="footer">
-					<a class="button" @click="$emit('close')">{{ $t(`npc.continue`) }}</a>
+					<DZButton class="continue" @click="$emit('close')">{{ $t(`npc.continue`) }}</DZButton>
 					<span class="dialog">
 						{{ $t(`missions.dialog.${text}`) }}
 					</span>
@@ -18,9 +18,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import DZButton from '../common/DZButton.vue';
 
 export default defineComponent({
 	name: 'NPCModal',
+	components: { DZButton },
 	props: {
 		text: String,
 		npcName: String
@@ -71,19 +73,9 @@ export default defineComponent({
 			background-position: bottom left;
 			overflow: hidden;
 
-			.button {
-				position: absolute;
-				margin-left: 419px;
-				margin-top: 107px;
-				padding-top: 4px;
-				font-size: 9pt;
-				line-height: 7pt;
-				width: 95px;
-				background-image: url('../../assets/button/button_small.webp');
-
-				&:hover {
-					background-image: url('../../assets/button/button_small_hover.webp');
-				}
+			.continue {
+				top: 100px;
+				left: 15px;
 			}
 
 			.dialog {
