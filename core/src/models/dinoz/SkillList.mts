@@ -3273,7 +3273,13 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
-		raceId: [raceList.PTEROZ.raceId],
+		raceId: [
+			raceList.PTEROZ.raceId,
+			raceList.PLANAILLE.raceId,
+			raceList.PLANAILLE_DEMON.raceId,
+			raceList.NUAGOZ.raceId,
+			raceList.SOUFFLET.raceId
+		],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},

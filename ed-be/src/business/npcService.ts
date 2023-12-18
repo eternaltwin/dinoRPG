@@ -29,7 +29,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 
 	if (dinozBase.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`)
+		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
 
 	let dinoz = {

@@ -38,7 +38,7 @@ export async function getMissionsList(req: Request) {
 	}
 
 	if (dinoz.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`)
+		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
 
 	if (!currentPlace) {
