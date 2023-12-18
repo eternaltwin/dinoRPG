@@ -900,7 +900,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.PROTEINES_DINOZIENNES]: {
 		id: Skill.PROTEINES_DINOZIENNES,
-		name: 'ProteinesDinoziennes',
+		name: 'ProteinesDinozienne',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
@@ -2184,7 +2184,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.MAITRE_PECHEUR]: {
 		id: Skill.MAITRE_PECHEUR,
-		name: 'MaitrePecher',
+		name: 'MaitrePecheur',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
@@ -2880,7 +2880,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.CREPUSCULE_FLAMBOYANT]: {
 		id: Skill.CREPUSCULE_FLAMBOYANT,
-		name: 'CrepusculeFlamboyant',
+		name: 'CrepusculeFlambloyant',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.LIGHTNING],
@@ -3445,7 +3445,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.TALON_DACHILLE]: {
 		id: Skill.TALON_DACHILLE,
-		name: 'TalonDachille',
+		name: 'TalonDAchille',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
@@ -3840,7 +3840,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.LONDUHAUT]: {
 		id: Skill.LONDUHAUT,
-		name: 'LondUHaut',
+		name: 'LonDuhaut',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
@@ -3864,7 +3864,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.RECEPTABLE_THERMIQUE]: {
 		id: Skill.RECEPTABLE_THERMIQUE,
-		name: 'ReceptableThermique',
+		name: 'ReceptacleThermique',
 		type: SkillType.A,
 		energy: Energy.HIGH,
 		element: [ElementType.AIR],
@@ -4102,7 +4102,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	},
 	[Skill.ORIGINE_CAUSHEMESHENNE]: {
 		id: Skill.ORIGINE_CAUSHEMESHENNE,
-		name: 'OrigineCausheMeshenne',
+		name: 'OrigineCaushemeshenne',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
