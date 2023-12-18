@@ -79,13 +79,13 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getGatherGrid(dinozId: number, gridType: GatherType): Promise<GatherPublicGrid> {
+	getGatherGrid(dinozId: number, gridType: string): Promise<GatherPublicGrid> {
 		return http()
 			.get(`/dinoz/gather/${dinozId}/${gridType}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	gatherWithDinoz(dinozId: number, gridType: GatherType, box: number[][]): Promise<GatherResult> {
+	gatherWithDinoz(dinozId: number, gridType: string, box: number[][]): Promise<GatherResult> {
 		return http()
 			.put(`/dinoz/gather/${dinozId}`, {
 				type: gridType,

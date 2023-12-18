@@ -60,11 +60,11 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			grid: undefined as GatherPublicGrid,
+			grid: undefined as GatherPublicGrid | undefined,
 			loaded: false as boolean,
 			clickedBox: [] as Array<Array<number>>,
 			gatherOver: false as boolean,
-			gatherResult: undefined as GatherResult
+			gatherResult: undefined as GatherResult | undefined
 		};
 	},
 	methods: {
@@ -72,6 +72,7 @@ export default defineComponent({
 			this.$router.go(-1);
 		},
 		async selectBox(row: number, box: number): Promise<void> {
+			if (!this.grid) return;
 			if (this.gatherOver) return;
 			const isNotDiscover = this.grid.grid[row][box] === 0;
 			const toPush = [row, box];
@@ -92,12 +93,8 @@ export default defineComponent({
 				this.gatherOver = true;
 				EventBus.emit('isLoading', false);
 			}
-			if (
-				this.grid.grid.reduce((partSum, b) => b.reduce((partialSum, a) => partialSum + a, 0) + partSum, 0) +
-					this.grid.grid[0].length * this.grid.grid[0].length -
-					this.grid.gatherTurn <
-				this.grid.gatherTurn
-			) {
+			const leftSquare = Math.pow(this.grid.grid[0].length, 2) + this.sumOfArrays(this.grid.grid);
+			if (leftSquare - this.clickedBox.length == 0) {
 				EventBus.emit('isLoading', true);
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
@@ -113,6 +110,17 @@ export default defineComponent({
 		isSelected(row: number, box: number): boolean {
 			const toTest = [row, box];
 			return this.clickedBox.some(a => a.every((val, index) => val === toTest[index]));
+		},
+		sumOfArrays(arrays: Array<Array<number>>) {
+			let sum = 0;
+
+			for (let i = 0; i < arrays.length; i++) {
+				for (let j = 0; j < arrays[i].length; j++) {
+					sum += arrays[i][j];
+				}
+			}
+
+			return sum;
 		}
 	},
 	computed: {
