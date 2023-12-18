@@ -4,7 +4,6 @@ import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
-import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';

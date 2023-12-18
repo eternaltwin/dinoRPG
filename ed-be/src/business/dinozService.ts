@@ -489,6 +489,10 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
+	if (dinoz.canChangeName) {
+		throw new ErrorFormator(500, `Dinoz has to be named`);
+	}
+
 	if (dinoz.leaderId) {
 		throw new ErrorFormator(400, 'notLeader');
 	}
@@ -883,9 +887,15 @@ export async function followDinoz(req: Request) {
 	const dinozId = +req.params.id;
 	const dinozToFollowId = +req.params.targetId;
 
+	const dinoz = await getDinozFicheRequest(dinozId);
+
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
 		throw new ErrorFormator(500, 'No player found');
+	}
+
+	if (dinoz && dinoz.canChangeName) {
+		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
 
 	// Check if the player owns the dinoz

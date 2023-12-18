@@ -110,6 +110,7 @@ export async function getDinozFicheRequest(dinozId: number) {
 			isFrozen: true,
 			isSelling: true,
 			order: true,
+			canChangeName: true,
 			player: {
 				select: {
 					id: true,
@@ -144,6 +145,7 @@ export async function getDinozMissionsInfo(dinozId: number) {
 			placeId: true,
 			experience: true,
 			life: true,
+			canChangeName: true,
 			player: {
 				select: {
 					id: true,
@@ -272,6 +274,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			nbrUpAir: true,
 			placeId: true,
 			leaderId: true,
+			canChangeName: true,
 			player: {
 				select: {
 					id: true,
@@ -321,6 +324,7 @@ export async function getDinozNPCRequest(dinozId: number) {
 			name: true,
 			level: true,
 			placeId: true,
+			canChangeName: true,
 			skills: { select: { skillId: true } },
 			items: { select: { itemId: true } },
 			status: { select: { statusId: true } },
@@ -376,6 +380,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			nbrUpWater: true,
 			nbrUpLightning: true,
 			nbrUpAir: true,
+			canChangeName: true,
 			player: {
 				select: {
 					id: true,

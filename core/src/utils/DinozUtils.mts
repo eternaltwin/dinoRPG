@@ -464,7 +464,7 @@ export const orderDinozList = <T extends Pick<DinozFiche, 'id' | 'order' | 'name
 			a.order = a.id;
 		}
 		if (b.order === null) {
-			b.order = b.id
+			b.order = b.id;
 		}
 		if (a.order === b.order) {
 			return a.name.localeCompare(b.name);

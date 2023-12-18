@@ -36,6 +36,10 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
+	if (dinozData.canChangeName) {
+		throw new ErrorFormator(500, `Dinoz has to be named.`);
+	}
+
 	const followers = dinozData.followers.map(follower => ({
 		...follower,
 		player: dinozData.player

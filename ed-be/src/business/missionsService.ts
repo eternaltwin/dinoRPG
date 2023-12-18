@@ -37,6 +37,10 @@ export async function getMissionsList(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
+	if (dinoz.canChangeName) {
+		throw new ErrorFormator(500, `Dinoz has to be named.`)
+	}
+
 	if (!currentPlace) {
 		throw new ErrorFormator(500, `Place ${dinoz.placeId} doesn't exist.`);
 	}

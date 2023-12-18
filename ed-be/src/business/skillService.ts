@@ -35,6 +35,14 @@ export async function getLearnableAndUnlockableSkills(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
 
+	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+	}
+
+	if (dinozSkills.canChangeName) {
+		throw new ErrorFormator(500, `Dinoz has to be named.`);
+	}
+
 	const dinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId);
 
 	if (!dinozRace) {
@@ -62,8 +70,12 @@ export async function learnSkill(req: Request) {
 	if (!dinozSkills) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
-	if (!dinozSkills.player) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to anyone.`);
+	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+	}
+
+	if (dinozSkills.canChangeName) {
+		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
 
 	const dinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId);

@@ -28,6 +28,10 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
 	}
 
+	if (dinozBase.canChangeName) {
+		throw new ErrorFormator(500, `Dinoz has to be named.`)
+	}
+
 	let dinoz = {
 		...dinozBase,
 		player
