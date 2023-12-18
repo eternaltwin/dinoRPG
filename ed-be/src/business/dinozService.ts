@@ -1,6 +1,6 @@
 import { DinozForConditionCheck } from '@drpg/core/constants';
 import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionList';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -72,6 +72,8 @@ import { moveFight } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
+import { BaseStats, SpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { Stat } from '@drpg/core/models/enums/SkillStat';
 
 /**
  * @summary Get available action from dinoz
@@ -888,15 +890,41 @@ export async function followDinoz(req: Request) {
 	const dinozToFollowId = +req.params.targetId;
 
 	const dinoz = await getDinozFicheRequest(dinozId);
+	const leader = await getDinozFicheRequest(dinozToFollowId);
 
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
 		throw new ErrorFormator(500, 'No player found');
 	}
 
-	if (dinoz && dinoz.canChangeName) {
+	if (!dinoz || !leader) {
+		throw new ErrorFormator(500, 'No dinoz found');
+	}
+
+	if (dinoz.canChangeName || leader.canChangeName) {
 		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
+
+	//Check if leader is not at max followers
+	let max = BaseStats[SpecialStat.MAX_FOLLOWERS];
+
+	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
+
+	for (const skill of skillsAffectingMaxFollowers) {
+		if (dinoz.skills.some(s => s.skillId === skill.id)) {
+			max += skill.effects?.[Stat.MAX_FOLLOWERS] || 0;
+		}
+	}
+
+	if (leader.followers.length >= max) {
+		throw new ErrorFormator(500, 'Dinoz cannot be followed by any dinoz');
+	}
+
+	if (dinoz.skills.some(s => s.skillId === Skill.BRAVE) || leader.skills.some(s => s.skillId === Skill.BRAVE)) {
+		throw new ErrorFormator(500, 'Dinoz cannot follow any dinoz');
+	}
+
+
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(req.auth.playerId, dinozId, dinozToFollowId))) {
