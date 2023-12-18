@@ -285,7 +285,8 @@ export async function getDinozFightDataRequest(dinozId: number) {
 					id: true,
 					money: true,
 					items: { select: { itemId: true, quantity: true } },
-					rewards: { select: { rewardId: true } }
+					rewards: { select: { rewardId: true } },
+					teacher: true
 				}
 			},
 			items: { select: { itemId: true } },

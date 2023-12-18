@@ -504,3 +504,22 @@ export const canWinXP = (
 	if (dinoz.level < 50) return true;
 	else return false;
 };
+
+export const calculateXPBonus = (
+	dinoz: Pick<Dinoz, 'id'> & {
+		skills: Pick<DinozSkill, 'skillId'>[];
+		status: Pick<DinozStatus, 'statusId'>[];
+		player: Pick<Player, 'teacher'> | null;
+	},
+	xp: number
+) => {
+	let f = 1.0;
+	if (dinoz.skills.some(s => s.skillId === Skill.INTELLIGENCE)) f *= 1.05;
+	if (dinoz.player && dinoz.player.teacher) f *= 1.05;
+	//TODO encyclopedie et maudit
+	/*if( d.hasEquip(Data.OBJECTS.list.mencly) )
+		f *= 1.15;
+	if( d.hasEffect(Data.EFFECTS.list.maudit) )
+		f = 0;*/
+	return Math.round(xp * f);
+};

@@ -426,7 +426,10 @@ export async function unlockDoubleSkills(dinozId: number) {
 	await addMultipleUnlockableSkills(doubleSkillsToUnlock);
 }
 
-export async function applySkillEffect(dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>, skill: DinozSkillFiche) {
+export async function applySkillEffect(
+	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
+	skill: DinozSkillFiche
+) {
 	if (skill.effects) {
 		await effectParser(skill.effects, dinoz);
 	}

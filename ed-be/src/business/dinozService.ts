@@ -924,8 +924,6 @@ export async function followDinoz(req: Request) {
 		throw new ErrorFormator(500, 'Dinoz cannot follow any dinoz');
 	}
 
-
-
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(req.auth.playerId, dinozId, dinozToFollowId))) {
 		throw new ErrorFormator(500, 'Player does not own this dinoz');

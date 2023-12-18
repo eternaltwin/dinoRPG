@@ -5,7 +5,7 @@ import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { actualPlace, canWinXP, isAlive } from '@drpg/core/utils/DinozUtils';
+import { actualPlace, calculateXPBonus, canWinXP, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozItem, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import pkg from 'native-dinorpg';
@@ -16,6 +16,7 @@ import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
 import { createLog } from '../dao/logDao.js';
 import { sendDiscord } from '../utils/discord.js';
+import gameConfig from '../config/game.config.js';
 
 const { fight_rust } = pkg;
 
@@ -165,7 +166,7 @@ export function calculateFight(
 		defenders: defender
 	};
 
-	console.log(`Configuration: ${JSON.stringify(fightConfiguration)}`);
+	// console.log(`Configuration: ${JSON.stringify(fightConfiguration)}`);
 
 	return JSON.parse(fight_rust(JSON.stringify(fightConfiguration)));
 }
@@ -173,8 +174,9 @@ export function calculateFight(
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
 export async function rewardFight(
 	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life'> & {
-		player: Pick<Player, 'id'> | null;
+		player: Pick<Player, 'id' | 'teacher'> | null;
 		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
 	})[],
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult
@@ -190,31 +192,85 @@ export async function rewardFight(
 	// let teamLevel = 0;
 	// teamLevel += dinozData.level;
 
-	let goldFactor = 1.0;
+	const goldFactor = 1.0;
+	const xpFactor = 1.0;
+	let totalWinXP = 0;
 
 	//TODO use Array<MonsterFiche> input rather than MonsterFiche
 
-	if (team.some(dinoz => dinoz.status.some(status => status.statusId === statusList.CURSED))) {
-		goldFactor = 0;
-	}
-
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
-	const averageTeamLevel = Math.round(teamLevel / team.length);
 
-	let xp = 0;
 	let fgold = 0;
-	for (const monster of monsters) {
-		const factor = monster.level >= averageTeamLevel ? 1 : 4 / (4 + (averageTeamLevel - monster.level));
-		const monsterGold = monster.gold ?? 1;
-		fgold = monsterGold * factor * goldFactor;
-		xp += Math.round(monster.xp ?? 10 * factor);
-		//Newbie bonus
-		if (averageTeamLevel <= 5) xp += XP_NEWB_BONUS[averageTeamLevel - 1];
-		// bonus for fighters of same level of the monster
-		if (Math.abs(averageTeamLevel - monster.level) <= 5) xp += monster.xpBonus ?? 0;
-	}
 
-	const experienceGained = Math.round(xp);
+	for (const d of team) {
+		//TODO escape
+		/*//if escaped, no XP !
+		if( Lambda.has( escaped, r.f) )
+			continue;*/
+
+		let xp = 0;
+		const cur = d.level / teamLevel;
+
+		/** HACK to restrict the use of low level dinoz in order to make easy money **/
+		let gfact = 1.0;
+		if (d.experience >= getMaxXp(d) && d.level <= 5) gfact = 0.1;
+		/** HACK to make dinoz with malediction not generating gold **/
+		if (d.status.some(status => status.statusId === statusList.CURSED)) {
+			gfact = 0.0;
+		}
+
+		for (const f of monsters) {
+			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
+			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
+			xp += Math.round(f.xp ?? 10 * factor * cur);
+			// newbie bonus
+			if (d.level <= 5) xp += XP_NEWB_BONUS[d.level - 1] * cur;
+			// bonus for fighters of same level of the monster
+			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) xp += f.xpBonus;
+		}
+		//TODO ??
+		/*if( !disableTrophies && d.life <= 0 ) {
+			if( d.owner != null )
+				d.owner.incrVar(Data.USERVARS.list.deaths, 1);
+			continue;
+		}*/
+
+		//previous xp coef computation
+		const lvlDiff = gameConfig.dinoz.maxLevel - d.level;
+		let xpf = 1.2 + 0.8 * (lvlDiff / gameConfig.dinoz.maxLevel);
+		if (xpf < 1.0) xpf = 1.0;
+
+		//new one, applied if better
+		if (gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel > xpf)
+			xpf = gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel;
+
+		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf));
+		const max = getMaxXp(d);
+		if (d.experience + xp > max) {
+			xp = max - d.experience;
+			if (xp < 0) xp = 0;
+		}
+		totalWinXP += xp;
+
+		const attacker = fightResult.attackers.find(a => a.dinoz_id === d.id);
+		if (!attacker) {
+			throw new ErrorFormator(500, `Attacker ${d.id} doesn't exist.`);
+		}
+
+		await updateDinoz(d.id, {
+			life: {
+				decrement: attacker.hp_lost
+			},
+			experience: {
+				increment: fightResult.winner ? xp : 0
+			}
+		});
+
+		// Log death if dinoz is dead
+		if (attacker.hp_lost >= d.life) {
+			await createLog(LogType.Death, playerId, d.id);
+		}
+	}
 
 	const fprob = getRandomNumber(0, 100);
 	let goldMultiplier = 1;
@@ -226,41 +282,11 @@ export async function rewardFight(
 	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
 	// If attackers won
 	if (fightResult.winner) {
-		await updateMultipleDinoz(
-			team.filter(d => canWinXP(d)).map(d => d.id),
-			{
-				experience: {
-					increment: experienceGained
-				}
-			}
-		);
 		if (gold > 10000) {
-			const monsterlist = monsters.map(m => m.name).toString()
-			sendDiscord(`Player ${playerId} has been rewarded ${gold} gold when fighting ${monsterlist}.`)
+			const monsterlist = monsters.map(m => m.name).toString();
+			sendDiscord(`Player ${playerId} has been rewarded ${gold} gold when fighting ${monsterlist}.`);
 		}
 		await addMoney(playerId, gold);
-	}
-
-	// Update dinoz life
-	for (const dinoz of team) {
-		const attacker = fightResult.attackers.find(a => a.dinoz_id === dinoz.id);
-		if (!attacker) {
-			throw new ErrorFormator(500, `Attacker ${dinoz.id} doesn't exist.`);
-		}
-
-		// No need to modify the dinoz's life in db if none was lost
-		if (attacker.hp_lost != 0) {
-			await updateDinoz(dinoz.id, {
-				life: {
-					decrement: attacker.hp_lost
-				}
-			});
-
-			// Log death if dinoz is dead
-			if (attacker.hp_lost >= dinoz.life) {
-				await createLog(LogType.Death, playerId, dinoz.id);
-			}
-		}
 	}
 
 	await createLog(
@@ -268,7 +294,7 @@ export async function rewardFight(
 		playerId,
 		undefined,
 		fightResult.winner ? gold : 0,
-		fightResult.winner ? experienceGained : 0,
+		fightResult.winner ? totalWinXP : 0,
 		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0)
 	);
 
@@ -277,7 +303,7 @@ export async function rewardFight(
 			return m.name;
 		}),
 		goldEarned: fightResult.winner ? gold : 0,
-		xpEarned: fightResult.winner ? experienceGained : 0,
+		xpEarned: fightResult.winner ? totalWinXP : 0,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0),
 		result: fightResult.winner,
 		history: fightResult.history,

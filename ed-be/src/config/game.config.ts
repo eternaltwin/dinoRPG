@@ -3,9 +3,10 @@ import { getEnvironnement } from '../utils/context.js';
 const gameConfig: GameConfig = {
 	development: {
 		dinoz: {
-			maxLevel: 80,
+			maxLevel: 50,
 			maxQuantity: 10,
-			leaderBonus: 3
+			leaderBonus: 3,
+			initialMaxLevel: 50
 		},
 		shop: {
 			dinozNumber: 30,
@@ -17,9 +18,10 @@ const gameConfig: GameConfig = {
 	},
 	production: {
 		dinoz: {
-			maxLevel: 80,
+			maxLevel: 50,
 			maxQuantity: 18,
-			leaderBonus: 3
+			leaderBonus: 3,
+			initialMaxLevel: 50
 		},
 		shop: {
 			dinozNumber: 30,
@@ -37,6 +39,7 @@ interface GameConfig {
 			maxLevel: number;
 			maxQuantity: number;
 			leaderBonus: number;
+			initialMaxLevel: number;
 		};
 		shop: {
 			dinozNumber: number;

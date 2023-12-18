@@ -32,5 +32,5 @@ export enum Stat {
 	WATER_ELEMENT = 'waterElement',
 	AIR_ELEMENT = 'airElement',
 	LIGHTNING_ELEMENT = 'lightningElement',
-	WOOD_ELEMENT = 'woodElement',
+	WOOD_ELEMENT = 'woodElement'
 }

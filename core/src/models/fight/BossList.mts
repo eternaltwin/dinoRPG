@@ -12,7 +12,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 40,
 		odds: 1,
 		level: 30,
@@ -28,7 +28,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 50,
 		odds: 1,
 		level: 5,
@@ -44,7 +44,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 50,
 		odds: 1,
 		level: 5,
@@ -60,7 +60,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 1,
 			air: 2
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 100,
 		odds: 1,
 		level: 10,
@@ -76,7 +76,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 2,
 			air: 2
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 100,
 		odds: 1,
 		level: 10,
@@ -92,7 +92,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 2,
 			air: 3
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 50,
 		odds: 1,
 		level: 7,
@@ -109,7 +109,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 1,
 			air: 1
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 50,
 		odds: 1,
 		level: 7,
@@ -126,7 +126,7 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 			lightning: 6,
 			air: 3
 		},
-		gold: 1000,
+		gold: 0,
 		xp: 50,
 		odds: 1,
 		level: 12,
