@@ -161,11 +161,16 @@ export default defineComponent({
 					this.dinozStore.setDinozList(
 						dinozList.map(dinoz => {
 							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
-								// Update dinoz place
-								dinoz.placeId = place.alias || placeId;
+								if (dinoz.life !== 0) {
+									// Update dinoz place
+									dinoz.placeId = place.alias || placeId;
 
-								// Update dinoz HP
-								dinoz.life -= moveTry.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+									// Update dinoz HP
+									dinoz.life -= moveTry.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+								} else {
+									//Remove dead dinoz from the party
+									dinoz.leaderId = null;
+								}
 							}
 							return dinoz;
 						})

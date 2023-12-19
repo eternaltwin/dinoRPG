@@ -352,7 +352,8 @@ function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[]) {
 		if (fighter.level > maxLevel) maxLevel = fighter.level;
 	}
 
-	const dif = (fighters.length + 2) / (fighters.length * 2 + 1);
+	const count = fighters.length
+	const dif = (count + 2) / (count * 2 + 1);
 	teamLevel = Math.round(teamLevel * dif);
 	teamLevel += (pow - 1) * 3;
 	teamLevel += (pow - 1) * 0.3 * teamLevel;

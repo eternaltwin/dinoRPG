@@ -503,6 +503,13 @@ export async function betaMove(req: Request) {
 		...follower,
 		player: dinoz.player
 	}));
+	if (followers.filter(d => !isAlive(d)).length > 0) {
+		for (const dino of followers.filter(d => !isAlive(d))) {
+			await updateDinoz(dino.id, { leader: { disconnect: true } });
+			followers.splice(followers.indexOf(dino), 1)
+		}
+	}
+
 	const team = [dinoz, ...followers];
 
 	if (dinoz.concentration) {
