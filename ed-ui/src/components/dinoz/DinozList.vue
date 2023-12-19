@@ -84,8 +84,10 @@ export default defineComponent({
 			return placeList.find(place => place.placeId === placeId)!.name;
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
-			if (!dinoz.leaderId || !this.currentDinozId) return false;
-
+			if (!dinoz.leaderId && this.currentDinozId) {
+				const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId);
+				if (selectedDinoz && selectedDinoz.leaderId === dinoz.id) return true;
+			}
 			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
 			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId);
 			if (dinoz.leaderId && leader?.followers.includes(this.currentDinozId)) {
@@ -109,12 +111,11 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		'dinozStore.getDinozList': function (dinozList: Array<DinozFiche>) {
-			this.dinozList = orderDinozList(dinozList);
-		},
-		'dinozStore.getDinozList.length': function () {
-			const list = this.dinozStore.getDinozList as Array<DinozFiche>;
-			this.dinozList = orderDinozList(list);
+		'dinozStore.getDinozList': {
+			handler(dinozList: Array<DinozFiche>) {
+				this.dinozList = orderDinozList(dinozList);
+			},
+			deep: true
 		}
 	},
 	mounted(): void {

@@ -294,11 +294,15 @@ export async function checkMissionFight(
 			actualStep.requirement.target === 'any')
 	) {
 		const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
-
+		const presentOpponents = actualStep.requirement.target.split(':').filter(value => fight.opponent.includes(value));
+		let count = 0;
+		for (const opponent of fight.opponent) {
+			if (presentOpponents.includes(opponent)) count++;
+		}
 		if (!dinozMission) {
 			throw new ErrorFormator(500, 'No mission found');
 		}
-		await updateMissionProgression(dinoz.id, dinozMission.missionId, 1);
+		await updateMissionProgression(dinoz.id, dinozMission.missionId, { progress: { increment: count } });
 		await checkProgressEnd(dinoz, fight, actualStep);
 	}
 }

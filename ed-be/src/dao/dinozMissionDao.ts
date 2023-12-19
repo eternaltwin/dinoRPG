@@ -27,10 +27,14 @@ export const updateMissionStep = async (playerId: number, dinozIds: number[], mi
 	await createLogForMultipleDinoz(LogType.MissionStep, playerId, dinozIds, missionId, step);
 };
 
-export const updateMissionProgression = async (dinozId: number, missionId: number, progress: number) => {
+export const updateMissionProgression = async (
+	dinozId: number,
+	missionId: number,
+	progress: Prisma.DinozMissionUpdateInput
+) => {
 	await prisma.dinozMission.update({
 		where: { missionId_dinozId: { dinozId, missionId } },
-		data: { progress }
+		data: progress
 	});
 };
 
