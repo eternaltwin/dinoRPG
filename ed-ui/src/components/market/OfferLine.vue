@@ -9,7 +9,7 @@
 				'has-dinoz': !!offer.dinoz
 			}"
 		>
-			<div :id="offer.dinoz.id" />
+			<DinozMini :display="offer.dinoz.display" />
 			<DZButton size="small" @click="details = !details">
 				{{ $t('market.detail') }}
 			</DZButton>
@@ -145,7 +145,7 @@ import { statusList } from '../../constants/index.js';
 import { AssaultElement } from '@drpg/core/utils/getAssaultStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
-import { sdino } from '@drpg/dino-animation';
+import DinozMini from '../dinoz/DinozMini.vue';
 
 export default defineComponent({
 	name: 'OfferLine',
@@ -180,7 +180,7 @@ export default defineComponent({
 			details: false
 		};
 	},
-	components: { DZButton, DZUser, DZInput },
+	components: { DinozMini, DZButton, DZUser, DZInput },
 	methods: {
 		isExpired() {
 			return this.offer.endDate.getTime() / 1000 <= this.now;
@@ -237,35 +237,6 @@ export default defineComponent({
 				return;
 			}
 		}
-	},
-	mounted() {
-		if (!this.offer.dinoz) return;
-		const dinoAnimDiv = document.getElementById(this.offer.dinoz!.id.toString());
-		if (!dinoAnimDiv) return;
-		new sdino({
-			data: this.offer.dinoz.display,
-			flip: 1,
-			pflag: true
-		}).toAnimation(
-			div => {
-				dinoAnimDiv.appendChild(div);
-			},
-			45,
-			45
-		);
-
-		setInterval(() => {
-			const e = dinoAnimDiv.firstChild as Element;
-			if (!e) return;
-			const length = parseInt(e.getAttribute('data-length') ?? '0');
-			let idx = parseInt(e.getAttribute('data-idx') ?? '0');
-			if (length > 1) {
-				e.children.item(idx)!.hidden = true;
-				idx = (idx + 1) % length;
-				e.children.item(idx)!.hidden = false;
-				e.setAttribute('data-idx', idx.toString());
-			}
-		}, 1000 / 24.0);
 	}
 });
 </script>

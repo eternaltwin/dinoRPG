@@ -13,7 +13,9 @@
 			</tr>
 
 			<tr v-for="dinoz in dinozList as ManagePageData" :key="dinoz.id">
-				<td class="dinoz">🦖</td>
+				<td class="dinoz">
+					<DinozMini :display="dinoz.display" />
+				</td>
 				<td class="level">{{ dinoz.level }}</td>
 				<Tippy tag="td" theme="small">
 					<span>{{ dinoz.name }}</span>
@@ -66,10 +68,12 @@ import { statusList } from '../constants/status.js';
 import { errorHandler } from '../utils/index.js';
 import { getMaxXp } from '@drpg/core/utils/DinozUtils';
 import Elements from '../components/data/Elements.vue';
+import DinozMini from '../components/dinoz/DinozMini.vue';
 
 export default defineComponent({
 	name: 'ManageDinoz',
 	components: {
+		DinozMini,
 		TitleHeader,
 		Elements
 	},
