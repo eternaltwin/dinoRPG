@@ -25,7 +25,7 @@ import {
 	isAlive,
 	knowSkillId,
 	toDinozFiche,
-	toDinozSkillFiche
+	toDinozSkillFiche, getMaxFollowers
 } from '@drpg/core/utils/DinozUtils';
 import {
 	discoverBox,
@@ -913,16 +913,7 @@ export async function followDinoz(req: Request) {
 	}
 
 	//Check if leader is not at max followers
-	let max = BaseStats[SpecialStat.MAX_FOLLOWERS];
-
-	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
-
-	for (const skill of skillsAffectingMaxFollowers) {
-		if (dinoz.skills.some(s => s.skillId === skill.id)) {
-			max += skill.effects?.[Stat.MAX_FOLLOWERS] || 0;
-		}
-	}
-
+	const max = getMaxFollowers(toDinozFiche(leader))
 	if (leader.followers.length >= max) {
 		throw new ErrorFormator(500, 'Dinoz cannot be followed by any dinoz');
 	}
