@@ -257,7 +257,6 @@ pub static PETRIFICATION: Skill = Skill {
 
 pub static RAYON_KAAR_SHER: Skill = Skill {
     id: SkillId::RAYON_KAAR_SHER,
-
     skill_type: SkillType::ACTIVE,
     energy: 40,
     priority: 1,

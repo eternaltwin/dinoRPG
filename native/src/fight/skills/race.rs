@@ -1,3 +1,5 @@
+use rand::Rng;
+
 /// Implementations of all race (including demons) skills
 use crate::fight::{
     elements::ElementIndex,
@@ -184,9 +186,23 @@ pub static CUIRASSE: Skill = Skill {
     energy: 0,
     priority: 0,
     probability: 0,
-    effect: |_f: &mut Fighter, _: &mut Manager| {
-        // todo
-        vec![AttackResult::TodoSkill(SkillId::CUIRASSE)]
+    effect: |f: &mut Fighter, _: &mut Manager| {
+        f.defensive_effects.push(
+            |_a: &mut Fighter,
+             _t: &mut Fighter,
+             m: &mut Manager,
+             damage: &mut i32,
+             is_assault: bool,
+             _| {
+                if is_assault && m.random_generator.gen_range(0..=100) < 5 {
+                    *damage -= 5;
+                    if *damage < 0 {
+                        *damage = 0;
+                    }
+                }
+            },
+        );
+        vec![AttackResult::PassiveSkill(SkillId::CUIRASSE)]
     },
     ignore: false,
 };

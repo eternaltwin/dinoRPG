@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp;
 
 use super::elements::{ElementIndex, OrderedElements};
+use super::history::EffectType;
 use super::manager::{Manager, TeamSide};
 use super::skills::{Skill, SkillOrUnknown, SkillType};
 
@@ -94,6 +95,14 @@ type ItemId = u32;
 type StatusId = u32;
 
 pub type FighterId = u32;
+pub type DefensiveEffect = fn(
+    attacker: &mut Fighter,
+    target: &mut Fighter,
+    manager: &mut Manager,
+    damage: &mut i32,
+    is_assault: bool,
+    is_dodged: bool,
+);
 
 /// This structure needs to be exactly the same as FighterFiche in core/src/models/fight/FightConfiguration.mts
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -247,13 +256,13 @@ pub struct Fighter {
     /// List of active skills of the fighter that can be triggered instead of an assault
     pub active_skills: Vec<Skill>,
     /// List of event skills of the fighter that can be triggered at the beginning of the turn
-    pub event_skills: Vec<Skill>,
-    /// List of effects triggered when the fighter is hit
-    pub defense_effects: Vec<Skill>,
+    pub event_skills_items: Vec<Skill>,
+    /// List of effects triggered when the fighter is hit that can affect the damage received
+    pub defensive_effects: Vec<DefensiveEffect>,
     /// WIP: List of effects triggered after the fighter attacked
     pub after_attack_effects: Vec<Skill>,
     /// WIP: List of effects triggered after the fighter defended
-    pub after_defense_effects: Vec<Skill>,
+    pub after_defensive_effects: Vec<Skill>,
     /// WIP: List of effects triggered after the fight finished
     pub after_fight_effects: Vec<Skill>,
     /// WIP: List of effects triggered when a status is applied
@@ -445,12 +454,12 @@ impl Fighter {
             can_touch_flying: false,
             cancel_armor: false,
             active_skills: vec![],
-            event_skills: vec![],
-            after_defense_effects: vec![],
+            event_skills_items: vec![],
+            after_defensive_effects: vec![],
             after_attack_effects: vec![],
             after_fight_effects: vec![],
             on_status_effects: vec![],
-            defense_effects: vec![],
+            defensive_effects: vec![],
             on_kill_effects: vec![],
             on_defeat_effects: vec![],
             before_turn_effects: vec![],
@@ -562,12 +571,12 @@ impl Fighter {
             can_touch_flying: false,
             cancel_armor: false,
             active_skills: vec![],
-            event_skills: vec![],
-            after_defense_effects: vec![],
+            event_skills_items: vec![],
+            after_defensive_effects: vec![],
             after_attack_effects: vec![],
             after_fight_effects: vec![],
             on_status_effects: vec![],
-            defense_effects: vec![],
+            defensive_effects: vec![],
             on_kill_effects: vec![],
             on_defeat_effects: vec![],
             before_turn_effects: vec![],
@@ -650,7 +659,7 @@ impl Fighter {
                 }
                 SkillType::EVENT => {
                     debug!("Loading event skill {:?}", s);
-                    self.event_skills.push(s);
+                    self.event_skills_items.push(s);
                 }
                 _ => (), // TODO
             }
@@ -667,11 +676,11 @@ impl Fighter {
             "Fighter {} (id {}): active skills {:?}",
             self.id, self.name, self.active_skills
         );
-        self.event_skills
+        self.event_skills_items
             .sort_by_key(|a| std::cmp::Reverse(a.priority()));
         debug!(
             "Fighter {} (id {}): event skills {:?}",
-            self.id, self.name, self.event_skills
+            self.id, self.name, self.event_skills_items
         );
     }
 
@@ -778,6 +787,38 @@ impl Fighter {
         //     }
         // }
         // best_id
+    }
+
+    /// Consume the energy of the fighter
+    ///
+    /// The energy cannot become negative
+    pub fn consume_energy(&mut self, energy_consumed: u32) {
+        if energy_consumed > self.energy {
+            self.energy = 0;
+        } else {
+            self.energy -= energy_consumed;
+        }
+        debug!(
+            "{} consumed {} energy, it now has {} energy left",
+            self.name, energy_consumed, self.energy
+        );
+    }
+
+    /// Regenerate the energy of the fighter
+    ///
+    /// The energy cannot be negative
+    /// This method will apply automatically the recovery multiplier of the fighter
+    pub fn regenerate_energy(&mut self, energy_regenerated: u32) {
+        let energy_regenerated = (energy_regenerated as f32 * self.recovery_multiplier) as u32;
+        if energy_regenerated + self.energy > self.max_energy {
+            self.energy = self.max_energy;
+        } else {
+            self.energy += energy_regenerated;
+        }
+        debug!(
+            "{} regenerated {} energy, it now has {} energy left",
+            self.name, energy_regenerated, self.energy
+        );
     }
 
     // /// Add an active skill to the list of active skills of the fighter

@@ -176,12 +176,11 @@ pub static ENVOL: Skill = Skill {
 pub static TORNADE: Skill = Skill {
     id: SkillId::TORNADE,
     skill_type: SkillType::ACTIVE,
-    energy: 0,      // TODO
-    priority: 0,    // TODO
-    probability: 0, // TODO
-    effect: |_f: &mut Fighter, _m: &mut Manager| {
-        // TODO
-        vec![AttackResult::TodoSkill(SkillId::TORNADE)]
+    energy: 30,
+    priority: 5,
+    probability: 3,
+    effect: |f: &mut Fighter, m: &mut Manager| {
+        m.attack_team(f, f.compute_attack(ElementIndex::Air, 5))
     },
     ignore: false,
 };

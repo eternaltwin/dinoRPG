@@ -69,12 +69,12 @@ fn main() {
                 "dinoz_id": 123,
                 "ftype": "Dinoz",
                 "display": "",
-                "name": "FireBoy",
+                "name": "WaterFireBoy",
                 "start_life": 100,
                 "base_elements": [
                     4,
                     0,
-                    0,
+                    1,
                     0,
                     0
                 ],
@@ -96,18 +96,19 @@ fn main() {
                 "dinoz_id": 124,
                 "ftype": "Dinoz",
                 "display": "",
-                "name": "bob",
+                "name": "AirBoy",
                 "start_life": 100,
                 "base_elements": [
                     0,
-                    2,
                     0,
                     0,
-                    0
+                    0,
+                    2
                 ],
                 "items": [
                 ],
                 "skills": [
+                    51206
                 ],
                 "status": [
                 ],

@@ -53,7 +53,7 @@ pub enum SkillOrUnknown {
 /// Shortcut to the effect of a skill: returns a vector of [AttackResult] to support skills that affect multiple targets
 ///
 /// A single target skill will return `vec![TargetId]` whereas a whole team skill will return a vector containing the result for each target
-pub type SkillEffect = fn(&mut Fighter, &mut Manager) -> Vec<AttackResult>;
+pub type SkillEffect = fn(caster: &mut Fighter, manager: &mut Manager) -> Vec<AttackResult>;
 
 /// Definition of a skill, fields are kept private because they are not meant to be changed after creation
 ///

@@ -42,6 +42,9 @@ const DEFENSE_SCORE_BASE: u32 = 0;
 const ATTACK_GLOBAL_BONUS: f32 = 3.0;
 const ATTACK_GLOBAL_FACTOR: f32 = 0.9;
 const ASSAULT_POWER_BASE: u32 = 5;
+const ASSAULT_ENERGY_COST: u32 = 4;
+const MINIMUM_ENERGY_TO_ACT: u32 = 5;
+const BASE_ATTACK_ENERGY_COST: u32 = 2;
 
 // Constants from MT's code but currently not used
 // const PROBA_MULTIPLIER: u32 = 1;
@@ -267,14 +270,23 @@ pub struct Manager {
     // Result
     fight_result: FightResult,
 
+    // Current time
+    current_time: u32,
+
     // Fighter lists
     // IDEA: separate in teams in order to identify team wide effects
+    // List of the IDs of the dead fighters
     fighters_dead: HashSet<FighterId>,
     fighters_temp_dead: HashSet<FighterId>,
+    // List of the IDs of the fighters that escaped/were black holed, etc.
     fighters_escaped: HashSet<FighterId>,
+    // List of the IDs of the fighters in the attacking team
     fighters_alive_attackers: HashSet<FighterId>,
+    // List of the IDs of the fighters in the defending team
     fighters_alive_defenders: HashSet<FighterId>,
+    // List of all the fighters (even the dead ones)
     pub fighters_all: HashMap<FighterId, Fighter>,
+    // List of IDs of alive fighters meant to be ordered
     fighters_all_alive_order: Vec<FighterId>,
 }
 
@@ -298,8 +310,6 @@ impl Manager {
 
     /// Prepare the teams before starting the fight (passive skills, magic  items and consumable items)
     fn prepare_teams(&mut self) {
-        info!("{:?}", self.fighters_all);
-
         // Get a copy of the keys to extract and place back the fighter and avoid double borrow of Manager
         let keys: Vec<u32> = self.fighters_all.clone().into_keys().collect();
 
@@ -326,7 +336,7 @@ impl Manager {
             // Place back the fighter
             self.fighters_all.insert(i, f);
         }
-        info!("{:?}", self.fighters_all);
+        debug!("Fighters details: {:#?}", self.fighters_all);
     }
 
     /// PURPOSE: Sort the fighters_all_alive_order vector with the FighterId with the smallest time first, and last has the
@@ -353,7 +363,7 @@ impl Manager {
     /// PURPOSE: Pick the target from the opposing side
     /// PARAMS:  - fighter_side (pool): side of the attacker picking a target
     /// RETURN:  Fighter id of the target picked
-    fn pick_target(&mut self, fighter_side: TeamSide) -> Fighter {
+    fn pick_target(&mut self, fighter_side: TeamSide, is_assault: bool) -> Fighter {
         // Attackers attack defenders
         let target_id: FighterId = if fighter_side == TeamSide::Attackers {
             let defenders_number = self.fighters_alive_defenders.len();
@@ -441,15 +451,20 @@ impl Manager {
         let mut attack_score: u32 = ATTACK_SCORE_BASE;
         let mut defense_score: u32 = DEFENSE_SCORE_BASE;
         let mut sum_power: u32 = 0;
+        // TODO increment the energy cost when combos are done
+        let energy_cost: u32 = BASE_ATTACK_ENERGY_COST;
+        let mut total_hp_lost: u32 = 0;
 
-        for i in 0..=5 {
-            let temp_power = attack_power[i];
+        // 1- Go through the elements of the attack to calculate the defense and the attack
+        for (i, power) in attack_power.iter().enumerate() {
+            let temp_power = *power;
             attack_score += temp_power;
             sum_power += temp_power;
 
             if temp_power > 0 {
                 // Add the element defense from the target to the defense score for the corresponding elements of the attack
                 defense_score += target.defense[i].ceil() as u32 * temp_power;
+
                 // Add the corresponding element bonus to the attack
                 if is_assault {
                     debug!(
@@ -467,10 +482,11 @@ impl Manager {
             }
         }
 
-        // Apply global bonuses and multipliers to assaults
+        // 2- Apply global bonuses and multipliers to assaults
         if is_assault {
             debug!("[Manager:attack_target] Assault bonuses: all {:}, next {:}, all multiplier {:}, next multiplier {:}",
                 attacker.all_assaults_bonus, attacker.next_assault_bonus, attacker.all_assault_multiplier, attacker.next_assault_multiplier);
+
             attack_score += attacker.all_assaults_bonus + attacker.next_assault_bonus;
             attack_score = (attack_score as f32
                 * attacker.all_assault_multiplier
@@ -481,18 +497,18 @@ impl Manager {
             attacker.next_assault_multiplier = 1.0;
         }
 
-        // if multi-elements attack, defends with average, not sum
+        // 3- If multi-elements attack, defends with average, not sum
         // TODO improve this comment
-        // TODO check for multi element attack defense
         if sum_power > 0 {
             defense_score /= sum_power;
         }
 
-        // TODO check if attacker ignores armor
-        defense_score += target.armor;
+        if !attacker.cancel_armor {
+            defense_score += target.armor;
+        }
         debug!(
-            "[Manager:attack_target] Defense breakdown: armor: {:}, defenses {:?}",
-            target.armor, target.defense
+            "[Manager:attack_target] Defense breakdown: armor: {:} (ignored: {}), defenses {:?}",
+            target.armor, attacker.cancel_armor, target.defense
         );
         debug!("[Manager:attack_target] Defense score: {:}", defense_score);
 
@@ -501,48 +517,66 @@ impl Manager {
         // Up to one third bonus
         let attack_random_bonus = random * attack_score as f32 / ATTACK_GLOBAL_BONUS;
 
-        // Final attack score
-        debug!("[Manager:attack_target] Attack breakdown: power{:?}, attack score {:}, random bonus {:}, global factor {:}",
-            attack_power, attack_score, attack_random_bonus, ATTACK_GLOBAL_FACTOR);
-        attack_score =
+        // Final attack score: (base score + random bonus) * global factor
+        let final_attack_score =
             ((attack_random_bonus + attack_score as f32) * ATTACK_GLOBAL_FACTOR).round() as u32;
-        debug!("[Manager:attack_target] Attack score: {:}", attack_score);
+        debug!("[Manager:attack_target] Attack breakdown - total {}: power{:?}, score {:}, random bonus {:}, global factor {:}",
+            final_attack_score, attack_power, attack_score, attack_random_bonus, ATTACK_GLOBAL_FACTOR);
 
-        // Get first attack score
-        let mut damage_score = attack_score as i32 - defense_score as i32;
+        // Determine initial damage score
+        let mut damage_score = final_attack_score as i32 - defense_score as i32;
         debug!(
             "[Manager:attack_target] Intermediate damage score: {:} - {:} = {:}",
-            attack_score, defense_score, damage_score
+            final_attack_score, defense_score, damage_score
         );
 
         // Apply attacker minimum damage
         if damage_score < attacker.minimum_damage as i32 {
             damage_score = attacker.minimum_damage as i32;
         }
-        if damage_score < attacker.minimum_assault_damage as i32 {
+        if is_assault && damage_score < attacker.minimum_assault_damage as i32 {
             damage_score = attacker.minimum_assault_damage as i32;
         }
         debug!(
-            "[Manager:attack_target] Applied minimum damage ({:} , {:}): damage score {:}",
+            "[Manager:attack_target] Applied minimum damage (global: {:}, assault: {:}): damage score {:}",
             attacker.minimum_damage, attacker.minimum_assault_damage, damage_score
         );
 
-        // TODO much more to check here (dodge, etc)
-        let hp_lost = damage_score as u32;
+        // Apply target's defense effects
+        for effect in target.clone().defensive_effects {
+            effect(attacker, target, self, &mut damage_score, is_assault, false);
+        }
 
-        if target.life < hp_lost {
+        // TODO check for dodge
+
+        // TODO check for flying
+
+        // TODO check for intangible
+
+        // TODO much more to check before here (dodge, etc)
+
+        total_hp_lost += damage_score as u32;
+
+        // TODO apply attacker's after attack effects
+
+        // TODO apply target's after defense effects
+
+        // Attacking a target has a small energy cost
+        attacker.consume_energy(energy_cost);
+
+        if target.life < total_hp_lost {
             target.life = 0;
         } else {
-            target.life -= hp_lost;
+            target.life -= total_hp_lost;
         }
         debug!(
             "[Manager:attack_single_with_skill] {:} loses {:} life points, only {:} left",
-            target.id, hp_lost, target.life
+            target.id, total_hp_lost, target.life
         );
 
         // If the target is dead, add it to the dead list, remove it from the list of alive fighters and remove it from its team.
         if target.life == 0 {
-            self.fight_result.log_death(&target);
+            self.fight_result.log_death(target);
             self.fighters_dead.insert(target.id);
             self.fighters_all_alive_order.retain(|id| *id != target.id);
             if target.original_side == TeamSide::Attackers {
@@ -551,12 +585,15 @@ impl Manager {
                 self.fighters_alive_defenders.remove(&target.id);
             }
         }
+        // TODO else check for counter attack if it was an assault
+
+        // TODO log history of the attack here instead of elsewhere
 
         // Save the new state of the target
         // SAFETY: it should be safe to unwrap because target is valid
         *self.fighters_all.get_mut(&target.id).unwrap() = target.clone();
 
-        AttackResult::Hit(target.id, hp_lost)
+        AttackResult::Hit(target.id, total_hp_lost)
     }
 
     /// Method to inflict a fixed amount of damage to a target
@@ -587,6 +624,8 @@ impl Manager {
             }
         }
 
+        // TODO log history
+
         // Save the new state of the target
         // SAFETY: it should be safe to unwrap because target is valid
         *self.fighters_all.get_mut(&target.id).unwrap() = target.clone();
@@ -600,7 +639,7 @@ impl Manager {
         attacker: &mut Fighter,
         attack_power: [u32; 6],
     ) -> Vec<AttackResult> {
-        let mut target = self.pick_target(attacker.side);
+        let mut target = self.pick_target(attacker.side, false);
         debug!(
             "[Manager:attack_single_with_skill] Target is {:}",
             target.id
@@ -653,9 +692,11 @@ impl Manager {
     pub fn attack_with_assault(&mut self, attacker: &mut Fighter) -> AttackResult {
         // TODO check if the dinoz can attack flying or intangible
 
-        let mut target = self.pick_target(attacker.side);
+        // 1- Pick the target of the assault
+        let mut target = self.pick_target(attacker.side, true);
         debug!("[Manager:attack_with_assault] Target is {:}", target.id);
 
+        // 2- Calculate the base power of the assault based on the attacker's current element
         let current_element_index: ElementIndex = attacker.get_current_element_index(false);
         let assault_power: [u32; 6] =
             attacker.compute_attack(current_element_index, ASSAULT_POWER_BASE);
@@ -664,8 +705,13 @@ impl Manager {
             assault_power
         );
 
+        // 3- Attack the target
         let assault_result = self.attack_target(attacker, &mut target, assault_power, true);
 
+        // 4- Consume energy for the assault
+        attacker.consume_energy(ASSAULT_ENERGY_COST);
+
+        // TODO move this logging into "attack target"
         if let AttackResult::Hit(_, hp_lost) = assault_result {
             debug!(
                 "[Manager:attack_with_assault] {:} loses {:} life points, only {:} left",
@@ -685,6 +731,7 @@ impl Manager {
     fn process_skill(&mut self, attacker: &mut Fighter, skill: Skill) -> Vec<AttackResult> {
         info!("Processing skill {:?}", skill);
         let result = skill.process_skill(attacker, self);
+        attacker.consume_energy(skill.energy());
         self.fight_result
             .log_skill(attacker, skill.id(), EffectType::Damage, result.clone());
         result
@@ -694,24 +741,29 @@ impl Manager {
     fn process_turn(&mut self, fighter: &mut Fighter) {
         debug!("[Manager:process_turn] It's {:}'s turn", fighter.id);
 
-        // Tentatively pick an event skill
-        let event = self.pick_random_event_skill(fighter);
+        // A fighter needs a minimum of energy to do its turn
+        if self.configuration.is_energy_enabled && fighter.energy >= MINIMUM_ENERGY_TO_ACT {
+            // Tentatively pick an event (skill or item)
+            let event = self.pick_random_event(fighter);
 
-        // If a skill was drawn from the fighter's pool of event skills, process it.
-        // Otherwise, the attacker will do an assault.
-        if let Some(event) = event {
-            self.process_skill(fighter, event);
-        }
+            // If a skill was drawn from the fighter's pool of event skills, process it.
+            // Otherwise, the attacker will do an assault.
+            if let Some(event) = event {
+                self.process_skill(fighter, event);
+            }
 
-        // Tentatively pick an active skill
-        let skill = self.pick_random_active_skill(fighter);
+            // Tentatively pick an active skill
+            let skill = self.pick_random_active_skill(fighter);
 
-        // If a skill was drawn from the fighter's pool of active skills, process it.
-        // Otherwise, the attacker will do an assault.
-        if let Some(skill) = skill {
-            self.process_skill(fighter, skill);
+            // If a skill was drawn from the fighter's pool of active skills, process it.
+            // Otherwise, the attacker will do an assault.
+            if let Some(skill) = skill {
+                self.process_skill(fighter, skill);
+            } else {
+                self.attack_with_assault(fighter);
+            }
         } else {
-            self.attack_with_assault(fighter);
+            // The fighter passes its turn
         }
     }
 
@@ -761,7 +813,7 @@ impl Manager {
     fn pick_random_active_skill(&mut self, f: &Fighter) -> Option<Skill> {
         for s in &f.active_skills {
             // If the fighter does not have enough energy for the skill, it is passed
-            if s.energy() > f.energy {
+            if self.configuration.is_energy_enabled && s.energy() > f.energy {
                 continue;
             }
             // Pick the first skill from the probability
@@ -772,13 +824,13 @@ impl Manager {
         None
     }
 
-    /// Pick a random event skill for the given fighter from its pool of event skills
+    /// Pick a random event (skill or item) for the given fighter from its pool of events
     ///
     /// This method is in the manager because it uses the random generator
-    fn pick_random_event_skill(&mut self, f: &Fighter) -> Option<Skill> {
-        for s in &f.event_skills {
+    fn pick_random_event(&mut self, f: &Fighter) -> Option<Skill> {
+        for s in &f.event_skills_items {
             // If the fighter does not have enough energy for the skill, it is passed
-            if s.energy() > f.energy {
+            if self.configuration.is_energy_enabled && s.energy() > f.energy {
                 continue;
             }
             // Pick the first skill from the probability
@@ -817,6 +869,8 @@ impl Manager {
 
             // Result
             fight_result: temp_result,
+
+            current_time: 0,
 
             // Fighter lists
             fighters_dead: HashSet::new(),
@@ -883,6 +937,8 @@ impl Manager {
             // Result
             fight_result: temp_result,
 
+            current_time: 0,
+
             // Fighter lists
             fighters_dead: HashSet::new(),
             fighters_temp_dead: HashSet::new(),
@@ -919,7 +975,7 @@ impl Manager {
 
         // Sort fighters by time
         self.sort_all_fighters_by_time_smallest_first();
-        // Get smallest time (which can be negative) then remove it from all fighters to make sure on a 0-based time
+        // Get smallest time (which can be negative) then remove it from all fighters to make sure everything is aligned with a 0-based time
         // Example: a fighter has an initiative boost to start first, that's a base time of -5.
         // By removing 5 from every fighter, the one with the initiative boost will be at 0 and the others at 5
         let _t0 = self.fighters_all[&self.fighters_all_alive_order[0]].time;
@@ -933,6 +989,8 @@ impl Manager {
         if !self.fighters_alive_attackers.is_empty() && !self.fighters_alive_defenders.is_empty() {
             info!("--- Fight start ---");
 
+            self.current_time = 0;
+
             // To protect dev of infinite loops
             for i in 0..=MAX_TURNS {
                 debug!("-- BEGINNING OF TURN {:} --", i);
@@ -942,8 +1000,35 @@ impl Manager {
                 // SAFETY: it should be safe to unwrap here because there are at least 2 fighters (one attacker, one defender) still in play
                 let fighter_id = *self.fighters_all_alive_order.first().unwrap();
                 let mut current_fighter: Fighter = self.fighters_all[&fighter_id].clone();
+                debug!(
+                    "[Manager:execute_fight] It is {}'s turn",
+                    current_fighter.name
+                );
 
-                // TODO regenerate energy
+                // 2-a- Determine how much time elapsed
+                let delta = current_fighter.time - self.current_time as i32;
+                debug!("[Manager:execute_fight] Elapsed time is: {}", delta);
+
+                // 2-b- Regenerate the energy of all alive fighters except the one that is playing its turn
+                if self.configuration.is_energy_enabled {
+                    for id in &self.fighters_all_alive_order {
+                        if *id != fighter_id {
+                            self.fighters_all
+                                .get_mut(id)
+                                .unwrap()
+                                .regenerate_energy((delta as f32 * 0.5) as u32);
+                        }
+                    }
+                }
+
+                // 2-c- Update the current time only if time moved forward
+                if delta > 0 {
+                    self.current_time += delta as u32;
+                    debug!(
+                        "[Manager:execute_fight] Current time is: {}",
+                        self.current_time
+                    );
+                }
 
                 // TODO process environment effect (like Ouranos, etc.)
 
@@ -952,15 +1037,15 @@ impl Manager {
                 // 2- Process its turn
                 self.process_turn(&mut current_fighter);
 
-                // 3- Increase its time
+                // 3- Set the fighter's next turn time
                 // TODO not final
-                let dt: u32 = (TIMEBASE as f32
+                let next_time: u32 = (TIMEBASE as f32
                     * TIMECOEF as f32
                     * current_fighter.speed_global
                     * current_fighter.speed_per_element
                         [current_fighter.get_current_element_index(false) as usize])
                     .floor() as u32;
-                current_fighter.time += dt as i32;
+                current_fighter.time += next_time as i32;
                 trace!(
                     "Fighter {:} new time is {:}",
                     current_fighter.id,
