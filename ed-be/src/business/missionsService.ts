@@ -303,14 +303,15 @@ export async function checkMissionFight(
 			throw new ErrorFormator(500, 'No mission found');
 		}
 		await updateMissionProgression(dinoz.id, dinozMission.missionId, { progress: { increment: count } });
-		await checkProgressEnd(dinoz, fight, actualStep);
+		await checkProgressEnd(dinoz, fight, actualStep, count);
 	}
 }
 
 export async function checkProgressEnd(
 	dinoz: Pick<Dinoz, 'id' | 'playerId'> & { missions: DinozMission[] },
 	fight: FightResult,
-	actualStep: MissionSteps
+	actualStep: MissionSteps,
+	killedProgress: number
 ): Promise<void> {
 	if (!dinoz.playerId) {
 		throw new ErrorFormator(500, 'No player found');
@@ -328,7 +329,7 @@ export async function checkProgressEnd(
 	const missionId = dinozMission.missionId;
 
 	if (fight.result) {
-		progress += 1; //replace by fight.opponent.length when we can fight multiple opponent
+		progress += killedProgress; //replace by fight.opponent.length when we can fight multiple opponent
 	}
 	if (progress >= progressTarget) {
 		await updateMissionStep(dinoz.playerId, [dinoz.id], missionId, actualStep.stepId + 1);

@@ -21,7 +21,7 @@ export const updateMissionStep = async (playerId: number, dinozIds: number[], mi
 			dinozId: { in: dinozIds },
 			missionId
 		},
-		data: { step }
+		data: { step, progress: 0 }
 	});
 
 	await createLogForMultipleDinoz(LogType.MissionStep, playerId, dinozIds, missionId, step);
