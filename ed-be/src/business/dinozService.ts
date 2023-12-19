@@ -25,7 +25,8 @@ import {
 	isAlive,
 	knowSkillId,
 	toDinozFiche,
-	toDinozSkillFiche, getMaxFollowers
+	toDinozSkillFiche,
+	getMaxFollowers
 } from '@drpg/core/utils/DinozUtils';
 import {
 	discoverBox,
@@ -72,8 +73,6 @@ import { moveFight } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
-import { BaseStats, SpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { Stat } from '@drpg/core/models/enums/SkillStat';
 
 /**
  * @summary Get available action from dinoz
@@ -913,7 +912,7 @@ export async function followDinoz(req: Request) {
 	}
 
 	//Check if leader is not at max followers
-	const max = getMaxFollowers(toDinozFiche(leader))
+	const max = getMaxFollowers(toDinozFiche(leader));
 	if (leader.followers.length >= max) {
 		throw new ErrorFormator(500, 'Dinoz cannot be followed by any dinoz');
 	}
