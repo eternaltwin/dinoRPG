@@ -6,7 +6,7 @@ use std::cmp;
 
 use super::elements::{ElementIndex, OrderedElements};
 use super::history::EffectType;
-use super::manager::{Manager, TeamSide};
+use super::manager::{AttackInfos, Manager, TeamSide};
 use super::skills::{Skill, SkillOrUnknown, SkillType};
 
 //=====================================================================================================================
@@ -99,9 +99,7 @@ pub type DefensiveEffect = fn(
     attacker: &mut Fighter,
     target: &mut Fighter,
     manager: &mut Manager,
-    damage: &mut i32,
-    is_assault: bool,
-    is_dodged: bool,
+    attack_infos: &mut AttackInfos,
 );
 
 /// This structure needs to be exactly the same as FighterFiche in core/src/models/fight/FightConfiguration.mts
@@ -242,9 +240,15 @@ pub struct Fighter {
 
     /// % chance to do another assault after one: 1.0 means 0% chance
     pub multi_assault_chance: f32,
+    /// Current multi-attack combo of the fighter
+    pub current_combo: u32,
 
     /// % chance to dodge an assault: 1.0 means 0%
     pub assault_dodge_chance: f32,
+    /// Fighter cancel dodge from its targets
+    pub cancel_dodge: bool,
+    /// & chance to dodge a skill: 1.0 means 0%
+    pub super_dodge_chance: f32,
 
     /// The fighter can touch and damage intangible fighters
     pub can_touch_intangible: bool,
@@ -449,7 +453,10 @@ impl Fighter {
             energy: DEFAULT_MAX_ENERGY,
             recovery_multiplier: 1.0,
             multi_assault_chance: 1.0,
+            current_combo: 0,
             assault_dodge_chance: 1.0,
+            cancel_dodge: false,
+            super_dodge_chance: 1.0,
             can_touch_intangible: false,
             can_touch_flying: false,
             cancel_armor: false,
@@ -566,7 +573,10 @@ impl Fighter {
             energy: DEFAULT_MAX_ENERGY,
             recovery_multiplier: 1.0,
             multi_assault_chance: 1.0,
+            current_combo: 0,
             assault_dodge_chance: 1.0,
+            cancel_dodge: false,
+            super_dodge_chance: 1.0,
             can_touch_intangible: false,
             can_touch_flying: false,
             cancel_armor: false,

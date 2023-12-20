@@ -37,19 +37,56 @@ const MAX_TURNS: u32 = 1000;
 pub const TIMEBASE: i32 = 10; //base time, used to ensure compatibility
 pub const TIMECOEF: i32 = 10;
 
+/// Base attack score for any attack
 const ATTACK_SCORE_BASE: u32 = 2;
+/// Base defense score for any defense
 const DEFENSE_SCORE_BASE: u32 = 0;
-const ATTACK_GLOBAL_BONUS: f32 = 3.0;
+/// Maximum random bonus for any attack: up to one third
+const ATTACK_MAX_RANDOM_BONUS: f32 = 1.0 / 3.0;
+/// Global factor applied to any attack
 const ATTACK_GLOBAL_FACTOR: f32 = 0.9;
+/// Power base for any assault
 const ASSAULT_POWER_BASE: u32 = 5;
+/// Energy base cost for any assault
 const ASSAULT_ENERGY_COST: u32 = 4;
+/// Minimum energy needed to do an action
 const MINIMUM_ENERGY_TO_ACT: u32 = 5;
+/// Base energy consumption for landing an attack on a target
 const BASE_ATTACK_ENERGY_COST: u32 = 2;
+/// Maximum number of allowed combos
+const MAX_COMBO: u32 = 10;
 
 // Constants from MT's code but currently not used
 // const PROBA_MULTIPLIER: u32 = 1;
 // const INFINITE: u32 = TIMECOEF * 1000 * 1000;
 // const CYCLE: u32 = TIMECOEF * 6;
+
+/// Model to regroup the info when processing the attack on a target
+#[derive(Clone, Copy, Default)]
+pub struct AttackInfos {
+    /// Damage score of the attack
+    pub damage_score: u32,
+    /// Flag to tell if the attack is an assault
+    is_assault: bool,
+    /// Flag to tell if the attack was dodged
+    is_dodged: bool,
+    /// Flag to tell if the attack damage was canceled altogether
+    is_damage_canceled: bool,
+}
+
+impl AttackInfos {
+    pub fn is_assault(&self) -> bool {
+        self.is_assault
+    }
+
+    pub fn is_dodged(&self) -> bool {
+        self.is_dodged
+    }
+
+    pub fn is_damage_canceled(&self) -> bool {
+        self.is_damage_canceled
+    }
+}
 
 /// Model the result of an attack from a hit to an skill that needs to be implemented
 ///
@@ -363,7 +400,7 @@ impl Manager {
     /// PURPOSE: Pick the target from the opposing side
     /// PARAMS:  - fighter_side (pool): side of the attacker picking a target
     /// RETURN:  Fighter id of the target picked
-    fn pick_target(&mut self, fighter_side: TeamSide, is_assault: bool) -> Fighter {
+    fn pick_target(&mut self, fighter_side: TeamSide, _is_assault: bool) -> Fighter {
         // Attackers attack defenders
         let target_id: FighterId = if fighter_side == TeamSide::Attackers {
             let defenders_number = self.fighters_alive_defenders.len();
@@ -448,17 +485,16 @@ impl Manager {
         attack_power: [u32; 6],
         is_assault: bool,
     ) -> AttackResult {
-        let mut attack_score: u32 = ATTACK_SCORE_BASE;
+        let mut base_attack_score: u32 = ATTACK_SCORE_BASE;
         let mut defense_score: u32 = DEFENSE_SCORE_BASE;
         let mut sum_power: u32 = 0;
-        // TODO increment the energy cost when combos are done
-        let energy_cost: u32 = BASE_ATTACK_ENERGY_COST;
+        let mut energy_cost: u32 = BASE_ATTACK_ENERGY_COST;
         let mut total_hp_lost: u32 = 0;
 
         // 1- Go through the elements of the attack to calculate the defense and the attack
         for (i, power) in attack_power.iter().enumerate() {
             let temp_power = *power;
-            attack_score += temp_power;
+            base_attack_score += temp_power;
             sum_power += temp_power;
 
             if temp_power > 0 {
@@ -471,13 +507,13 @@ impl Manager {
                         "[Manager:attack_target] Assault element ({:}) bonus: {:}",
                         i, attacker.assault_elemental_bonus[i]
                     );
-                    attack_score += attacker.assault_elemental_bonus[i];
+                    base_attack_score += attacker.assault_elemental_bonus[i];
                 } else {
                     debug!(
                         "[Manager:attack_target] Skill element ({:}) bonus: {:}",
                         i, attacker.skill_elemental_bonus[i]
                     );
-                    attack_score += attacker.skill_elemental_bonus[i];
+                    base_attack_score += attacker.skill_elemental_bonus[i];
                 }
             }
         }
@@ -487,8 +523,8 @@ impl Manager {
             debug!("[Manager:attack_target] Assault bonuses: all {:}, next {:}, all multiplier {:}, next multiplier {:}",
                 attacker.all_assaults_bonus, attacker.next_assault_bonus, attacker.all_assault_multiplier, attacker.next_assault_multiplier);
 
-            attack_score += attacker.all_assaults_bonus + attacker.next_assault_bonus;
-            attack_score = (attack_score as f32
+            base_attack_score += attacker.all_assaults_bonus + attacker.next_assault_bonus;
+            base_attack_score = (base_attack_score as f32
                 * attacker.all_assault_multiplier
                 * attacker.next_assault_multiplier)
                 .round() as u32;
@@ -497,7 +533,7 @@ impl Manager {
             attacker.next_assault_multiplier = 1.0;
         }
 
-        // 3- If multi-elements attack, defends with average, not sum
+        // 3- If multi-elements attack, target defends with average, not sum
         // TODO improve this comment
         if sum_power > 0 {
             defense_score /= sum_power;
@@ -512,57 +548,93 @@ impl Manager {
         );
         debug!("[Manager:attack_target] Defense score: {:}", defense_score);
 
-        // Generate float between 0 and 1
-        let random = self.random_generator.gen_range(0.0..=1.0);
-        // Up to one third bonus
-        let attack_random_bonus = random * attack_score as f32 / ATTACK_GLOBAL_BONUS;
+        while attacker.current_combo < MAX_COMBO {
+            attacker.current_combo += 1;
+            let mut attack_infos = AttackInfos {
+                is_assault,
+                ..Default::default()
+            };
 
-        // Final attack score: (base score + random bonus) * global factor
-        let final_attack_score =
-            ((attack_random_bonus + attack_score as f32) * ATTACK_GLOBAL_FACTOR).round() as u32;
-        debug!("[Manager:attack_target] Attack breakdown - total {}: power{:?}, score {:}, random bonus {:}, global factor {:}",
-            final_attack_score, attack_power, attack_score, attack_random_bonus, ATTACK_GLOBAL_FACTOR);
+            // Generate float between 0 and 1
+            let random = self.random_generator.gen_range(0.0..=1.0);
+            // Random bonus up to one third of attack score
+            let attack_random_bonus = base_attack_score as f32 * random * ATTACK_MAX_RANDOM_BONUS;
 
-        // Determine initial damage score
-        let mut damage_score = final_attack_score as i32 - defense_score as i32;
-        debug!(
-            "[Manager:attack_target] Intermediate damage score: {:} - {:} = {:}",
-            final_attack_score, defense_score, damage_score
-        );
+            // Final attack score: (base score + random bonus) * global factor
+            let final_attack_score = ((attack_random_bonus + base_attack_score as f32)
+                * ATTACK_GLOBAL_FACTOR)
+                .round() as u32;
+            debug!("[Manager:attack_target] Attack breakdown - total {}: power{:?}, score {:}, random bonus {:}, global factor {:}",
+            final_attack_score, attack_power, base_attack_score, attack_random_bonus, ATTACK_GLOBAL_FACTOR);
 
-        // Apply attacker minimum damage
-        if damage_score < attacker.minimum_damage as i32 {
-            damage_score = attacker.minimum_damage as i32;
+            // Determine initial damage score
+            attack_infos.damage_score = if (defense_score >= final_attack_score) {
+                0
+            } else {
+                final_attack_score - defense_score
+            };
+            debug!(
+                "[Manager:attack_target] Intermediate damage score: {:} - {:} = {:}",
+                final_attack_score, defense_score, attack_infos.damage_score
+            );
+
+            // Apply attacker minimum damage
+            if attack_infos.damage_score < attacker.minimum_damage {
+                attack_infos.damage_score = attacker.minimum_damage;
+            }
+            if is_assault && attack_infos.damage_score < attacker.minimum_assault_damage {
+                attack_infos.damage_score = attacker.minimum_assault_damage;
+            }
+            debug!(
+                "[Manager:attack_target] Applied minimum damage (global: {:}, assault: {:}): damage score {:}",
+                attacker.minimum_damage, attacker.minimum_assault_damage, attack_infos.damage_score
+            );
+
+            // Apply target's defense effects
+            for effect in target.clone().defensive_effects {
+                effect(attacker, target, self, &mut attack_infos);
+            }
+
+            // If it is an assault, and the attacker does not cancel dodge, roll for a dodge
+            let is_dodged = is_assault
+                && self.roll_random_percent(target.assault_dodge_chance)
+                && !attacker.cancel_dodge;
+
+            // TODO cannot super dodge if petrified, sleeping, flying or stunned
+            let is_super_dodged =
+                !is_assault && self.roll_random_percent(target.super_dodge_chance);
+
+            // TODO check for flying
+
+            // TODO check for intangible
+
+            // TODO check for more ?
+
+            // Cancel damage if dodged
+            if is_dodged || is_super_dodged {
+                attack_infos.is_dodged = true;
+                attack_infos.damage_score = 0;
+            }
+
+            total_hp_lost += attack_infos.damage_score;
+
+            // Attacking a target has a small energy cost
+            if self.configuration.is_energy_enabled {
+                attacker.consume_energy(energy_cost);
+            }
+
+            // TODO apply attacker's after attack effects
+
+            // TODO apply target's after defense effects
+
+            // Only for assaults: check if the attacker succeeds to combo
+            if is_assault && self.roll_random_percent(attacker.multi_assault_chance) {
+                energy_cost += 1;
+                // continue to the next iteration
+            } else {
+                break;
+            }
         }
-        if is_assault && damage_score < attacker.minimum_assault_damage as i32 {
-            damage_score = attacker.minimum_assault_damage as i32;
-        }
-        debug!(
-            "[Manager:attack_target] Applied minimum damage (global: {:}, assault: {:}): damage score {:}",
-            attacker.minimum_damage, attacker.minimum_assault_damage, damage_score
-        );
-
-        // Apply target's defense effects
-        for effect in target.clone().defensive_effects {
-            effect(attacker, target, self, &mut damage_score, is_assault, false);
-        }
-
-        // TODO check for dodge
-
-        // TODO check for flying
-
-        // TODO check for intangible
-
-        // TODO much more to check before here (dodge, etc)
-
-        total_hp_lost += damage_score as u32;
-
-        // TODO apply attacker's after attack effects
-
-        // TODO apply target's after defense effects
-
-        // Attacking a target has a small energy cost
-        attacker.consume_energy(energy_cost);
 
         if target.life < total_hp_lost {
             target.life = 0;
@@ -584,8 +656,16 @@ impl Manager {
             } else {
                 self.fighters_alive_defenders.remove(&target.id);
             }
+        } else if is_assault && self.roll_random_percent(target.counter_attack_chance) {
+            // TODO do something of that result
+            let target_element = target.get_current_element_index(false);
+            let _ = self.attack_target(
+                target,
+                attacker,
+                target.compute_attack(target_element, ASSAULT_POWER_BASE),
+                true,
+            );
         }
-        // TODO else check for counter attack if it was an assault
 
         // TODO log history of the attack here instead of elsewhere
 
@@ -684,6 +764,14 @@ impl Manager {
         }
 
         results
+    }
+
+    /// Roll a random number. Return `true` if the number is below the given value and `false` otherwise
+    ///
+    /// Example: percent=1.50 means 50% chance, if the random number is between 0 and 49, it succeeded.
+    /// Between 50 and 99 it failed.
+    pub fn roll_random_percent(&mut self, percent: f32) -> bool {
+        self.random_generator.gen_range(0..=100) < ((percent - 1.0) * 100.0) as u32
     }
 
     /// PURPOSE: Handle an assault

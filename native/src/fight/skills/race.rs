@@ -4,7 +4,7 @@ use rand::Rng;
 use crate::fight::{
     elements::ElementIndex,
     fighter::Fighter,
-    manager::{AttackResult, Manager},
+    manager::{AttackInfos, AttackResult, Manager},
 };
 
 use super::{Skill, SkillId, SkillType};
@@ -188,16 +188,12 @@ pub static CUIRASSE: Skill = Skill {
     probability: 0,
     effect: |f: &mut Fighter, _: &mut Manager| {
         f.defensive_effects.push(
-            |_a: &mut Fighter,
-             _t: &mut Fighter,
-             m: &mut Manager,
-             damage: &mut i32,
-             is_assault: bool,
-             _| {
-                if is_assault && m.random_generator.gen_range(0..=100) < 5 {
-                    *damage -= 5;
-                    if *damage < 0 {
-                        *damage = 0;
+            |_a: &mut Fighter, _t: &mut Fighter, m: &mut Manager, infos: &mut AttackInfos| {
+                if infos.is_assault() && m.random_generator.gen_range(0..=100) < 5 {
+                    if infos.damage_score < 5 {
+                        infos.damage_score = 0;
+                    } else {
+                        infos.damage_score -= 5;
                     }
                 }
             },
