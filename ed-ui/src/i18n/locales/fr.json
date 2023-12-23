@@ -16,7 +16,7 @@
 		"DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
 		"AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
 		"DinozNotDead": "Votre dinoz est déjà en vie.",
-		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement des lettres et des chiffres peuvent être utilisés.",
+		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement entre 3 et 16 lettres et chiffres peuvent être utilisés.",
 		"tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs.",
 		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz.",
 		"concentration": "Votre dinoz se concentre et ne peux rien faire d'autre actuellement.",
