@@ -139,3 +139,6 @@ examples
 XFLConverter/results
 XFLConverter/resources
 !XFLConverter/resources/*.swf
+
+# Build
+public/dinorpg-animations-test.min.js
