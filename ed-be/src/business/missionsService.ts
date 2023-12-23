@@ -298,6 +298,7 @@ export async function checkMissionFight(
 		let count = 0;
 		for (const opponent of fight.opponent) {
 			if (presentOpponents.includes(opponent)) count++;
+			else if (actualStep.requirement.target === 'any') count++;
 		}
 		if (!dinozMission) {
 			throw new ErrorFormator(500, 'No mission found');
