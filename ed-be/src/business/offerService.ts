@@ -14,6 +14,7 @@ import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { OfferStatus } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
 import { sendDiscord } from '../utils/discord.js';
+import { ownsDinoz } from '../dao/playerDao.js';
 
 /**
  * Get the list of current offers
@@ -56,6 +57,15 @@ export async function createOffer(req: Request) {
 		name: string;
 		count: number;
 	}[];
+
+	if (dinozId) {
+		// Check if player owns the Dinoz
+		const owns = await ownsDinoz(playerId, dinozId);
+
+		if (!owns) {
+			throw new ErrorFormator(500, 'invalidDinoz');
+		}
+	}
 
 	// Group items and ingredients
 	const itemsAndIngredients = [];
@@ -159,6 +169,11 @@ export async function cancelOffer(req: Request) {
 		throw new ErrorFormator(500, 'invalidOffer');
 	}
 
+	// Check if the offer can be cancelled
+	if (offer.status !== OfferStatus.ONGOING) {
+		throw new ErrorFormator(500, 'invalidOffer');
+	}
+
 	const { dinoz, items: itemsAndIngredients } = offer;
 
 	// Set Dinoz as not selling
@@ -231,7 +246,10 @@ export async function bidOffer(req: Request) {
 		throw new ErrorFormator(400, 'invalidOffer');
 	}
 
-	// TODO: Check if user has enough ticket in inventory
+	// Check if the offer can be bid on
+	if (offer.status !== OfferStatus.ONGOING) {
+		throw new ErrorFormator(400, 'invalidOffer');
+	}
 
 	// Get previous own bid value
 	const previousOwnBid = offer.bids.filter(bid => bid.userId === playerId).pop()?.value || 0;
