@@ -49,27 +49,45 @@ export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], ele
 		value: number;
 	}[] = [];
 
+	// x1
 	const element = {
 		name: elementName,
 		value: elementStat[elementName],
 		bonus: 0
 	};
-	const weakElementName =
+
+	// x0.5
+	const firstWeakElementName =
 		elementWheel[(elementWheel.indexOf(elementName) - 1 + elementWheel.length) % elementWheel.length];
-	const weakElement = {
-		name: weakElementName,
-		value: elementStat[weakElementName],
+	const firstWeakElement = {
+		name: firstWeakElementName,
+		value: elementStat[firstWeakElementName],
 		bonus: 0
 	};
-	const strongElementName = elementWheel[(elementWheel.indexOf(elementName) + 1) % elementWheel.length];
-	const strongElement = {
-		name: strongElementName,
-		value: elementStat[strongElementName],
+	const secondWeakElementName =
+		elementWheel[(elementWheel.indexOf(elementName) - 2 + elementWheel.length) % elementWheel.length];
+	const secondWeakElement = {
+		name: secondWeakElementName,
+		value: elementStat[secondWeakElementName],
+		bonus: 0
+	};
+
+	// x1.5
+	const firstStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 1) % elementWheel.length];
+	const firstStrongElement = {
+		name: firstStrongElementName,
+		value: elementStat[firstStrongElementName],
+		bonus: 0
+	};
+	const secondStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 2) % elementWheel.length];
+	const secondStrongElement = {
+		name: secondStrongElementName,
+		value: elementStat[secondStrongElementName],
 		bonus: 0
 	};
 
 	// Get bonuses from skills for the 3 elements
-	[weakElement, element, strongElement].forEach(elem => {
+	[secondWeakElement, firstWeakElement, element, firstStrongElement, secondStrongElement].forEach(elem => {
 		skills.forEach(skill => {
 			if (!skill.effects) return;
 
@@ -98,15 +116,19 @@ export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], ele
 	});
 
 	const result = Math.ceil(
-		0.5 * (weakElement.value + weakElement.bonus) +
-			(element.value + element.bonus) +
-			1.5 * (strongElement.value + strongElement.bonus)
+		0.5 * (secondWeakElement.value + secondWeakElement.bonus) +
+		0.5 * (firstWeakElement.value + firstWeakElement.bonus) +
+		(element.value + element.bonus) +
+		1.5 * (firstStrongElement.value + firstStrongElement.bonus) +
+		1.5 * (secondStrongElement.value + secondStrongElement.bonus)
 	);
 
 	return {
 		name: elementName,
-		strong: strongElement,
-		weak: weakElement,
+		strong1: firstStrongElement,
+		strong2: secondStrongElement,
+		weak1: firstWeakElement,
+		weak2: secondWeakElement,
 		element,
 		details,
 		value: result

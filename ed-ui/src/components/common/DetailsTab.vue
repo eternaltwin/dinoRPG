@@ -146,8 +146,14 @@
 						<ul class="stat-details">
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-								<img :src="getImgURL('elements', `elem_${stat.weak.name}`)" alt="info_button" class="ml-4" />
-								<span>{{ stat.weak.value + stat.weak.bonus }}</span>
+								<img :src="getImgURL('elements', `elem_${stat.weak2.name}`)" alt="info_button" class="ml-4" />
+								<span>{{ stat.weak2.value + stat.weak2.bonus }}</span>
+								<span class="detail-name"> x 0.5</span>
+							</li>
+							<li v-if="!stat.neutral">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('elements', `elem_${stat.weak1.name}`)" alt="info_button" class="ml-4" />
+								<span>{{ stat.weak1.value + stat.weak1.bonus }}</span>
 								<span class="detail-name"> x 0.5</span>
 							</li>
 							<li v-if="!stat.neutral">
@@ -157,8 +163,14 @@
 							</li>
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-								<img :src="getImgURL('elements', `elem_${stat.strong.name}`)" alt="info_button" class="ml-4" />
-								<span>{{ stat.strong.value + stat.strong.bonus }}</span>
+								<img :src="getImgURL('elements', `elem_${stat.strong1.name}`)" alt="info_button" class="ml-4" />
+								<span>{{ stat.strong1.value + stat.strong1.bonus }}</span>
+								<span class="detail-name"> x 1.5</span>
+							</li>
+							<li v-if="!stat.neutral">
+								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('elements', `elem_${stat.strong2.name}`)" alt="info_button" class="ml-4" />
+								<span>{{ stat.strong2.value + stat.strong2.bonus }}</span>
 								<span class="detail-name"> x 1.5</span>
 							</li>
 							<li v-for="(detail, i) in stat.details" :key="i">

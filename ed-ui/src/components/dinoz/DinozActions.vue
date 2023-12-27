@@ -7,6 +7,7 @@
 		</div>
 		<template v-for="didi in dinozFullParty" :key="didi">
 			<MissionHUDVue
+				v-if="didi.missionId"
 				:missionId="didi.missionId"
 				:dinozName="didi.name"
 				:dinozId="didi.id"
