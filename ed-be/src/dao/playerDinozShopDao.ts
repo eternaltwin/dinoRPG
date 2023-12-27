@@ -42,10 +42,8 @@ export async function getDinozShopDetailsRequest(dinozId: number) {
 						select: {
 							id: true,
 							dinozCount: true,
-							sumPointsDisplayed: true,
-							sumPoints: true,
-							averagePoints: true,
-							averagePointsDisplayed: true
+							points: true,
+							average: true,
 						}
 					}
 				}

@@ -73,6 +73,7 @@ import { moveFight } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
+import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 
 /**
  * @summary Get available action from dinoz
@@ -311,7 +312,7 @@ export async function buyDinoz(req: Request) {
 		throw new ErrorFormator(500, `Unauthorized`);
 	}
 
-	//Check if player can buy more dinoz
+	// Check if player can buy more dinoz
 	const dinozActive = await getActiveDinoz(req.auth.playerId);
 
 	if (dinozActive.length > 0) {
@@ -382,12 +383,9 @@ export async function buyDinoz(req: Request) {
 		skillsToAdd.map(skill => skill.id)
 	);
 
-	// // Add a point in the ranking to the player
-	// const playerRanking: Ranking = dinozShopData.player.rank;
-	// const dinozCount = playerRanking!.dinozCount + 1;
-	// const sumPoints = playerRanking!.sumPoints + 1;
-	// const averagePoints = Math.round(sumPoints / dinozCount);
-	// await updatePoints(req.auth!.playerId, sumPoints, averagePoints, dinozCount);
+	// Update player points and dinoz count
+	await updatePoints(req.auth.playerId, 1);
+	await updateDinozCount(req.auth.playerId, 1);
 
 	return toDinozFiche(newDinoz);
 }

@@ -17,6 +17,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
 import { getRandomUpElement } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
+import { updatePoints } from '../dao/rankingDao.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -137,6 +138,9 @@ export async function learnSkill(req: Request) {
 	const newDinozData = getNewDinozDataFromLevelUp(dinozId, parseInt(req.body.tryNumber), dinozSkills, dinozRace);
 
 	await updateDinoz(newDinozData.id, newDinozData);
+
+	// Update player points
+	await updatePoints(dinozSkills.player.id, 1);
 
 	await createLog(LogType.LevelUp, dinozSkills.player.id, dinozSkills.id, newDinozData.level.toString());
 

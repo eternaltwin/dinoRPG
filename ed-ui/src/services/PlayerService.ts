@@ -1,12 +1,12 @@
 import { http } from '../utils/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
-import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { DinozFicheLite } from '@drpg/core/models/dinoz/DinozFicheLite';
 import { ImportResponse } from '@drpg/core/models/import/ImportResponse';
 import { TwinoStat } from '@drpg/core/models/import/twinoStat';
 import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
+import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 
 export const PlayerService = {
 	getLoggedInData(): Promise<PlayerCommonData> {
@@ -15,7 +15,7 @@ export const PlayerService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getPlayersRanking(sort: string, page: number): Promise<Array<PlayerRanking>> {
+	getPlayersRanking(sort: string, page: number): Promise<RankingGetResponse> {
 		return http()
 			.get(`/ranking/${sort}/${page}`)
 			.then(res => Promise.resolve(res.data))
@@ -88,6 +88,12 @@ export const PlayerService = {
 	getTwinoSpecificItem(playerId: number, type: 'stat' | 'achiev', site: number): Promise<Array<SiteAchiev | SiteStat>> {
 		return http()
 			.get(`/player/twinoStats/${playerId}/${type}/${site}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getPosition(playerId: number): Promise<{ position: number }> {
+		return http()
+			.get(`/ranking/${playerId}/get/position`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

@@ -16,8 +16,8 @@
 				{{ $t(`myAccount.ranking`) }}
 			</dt>
 			<dd>
-				<a href="">{{ accountData.rank }}</a> ({{ accountData.pointCount }}
-				points)
+				<a v-if="playerPosition" href="/ranking" @click="goToRankingPage">{{ playerPosition }}</a>
+				({{ accountData.pointCount }} points)
 			</dd>
 			<dt>
 				{{ $t(`myAccount.inscription`) }}
@@ -62,6 +62,7 @@ import ImportAccount from '../../components/data/ImportAccount.vue';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { playerStore } from '../../store/index.js';
+import { goTo } from '../../utils/goTo.js';
 
 export default defineComponent({
 	name: 'Profile',
@@ -75,7 +76,8 @@ export default defineComponent({
 			isEditOn: false as boolean,
 			customText: this.accountData?.customText as string | null,
 			customTextEdit: this.accountData?.customText as string | null,
-			channel: import.meta.env.VITE_API_RELEASE_CHANNEL as string
+			channel: import.meta.env.VITE_API_RELEASE_CHANNEL as string,
+			playerPosition: null as number | null
 		};
 	},
 	props: {
@@ -84,34 +86,6 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		// Import are not available
-		/*getCode(): void {
-			let server: string;
-			let API: number;
-			console.log(this.channel);
-			switch (this.channel) {
-				case 'development':
-					server = 'http://localhost:8080';
-					API = 425;
-					break;
-				case 'dinorpg.staging':
-					server = 'https://staging.dinorpg.eternaltwin.org';
-					API = 408;
-					break;
-				case 'dinorpg.production':
-					server = 'https://dinorpg.eternaltwin.org';
-					API = 424;
-					break;
-				default:
-					server = 'http://localhost:8080';
-					API = 425;
-					break;
-			}
-			window.open(
-				`https://twinoid.com/oauth/auth?response_type=code&client_id=${API}&redirect_uri=${server}/import&scope=rockfaller.com+mush.twinoid.com+mush.twinoid.es+arkadeo_plays+arkadeo.com+mush_ship_data+mush.vg+www.zombinoia.com+www.dieverdammten.de+www.die2nite.com+www.hordes.fr+applications+groups+contacts+www.dinorpg.com+es.dinorpg.com+en.dinorpg.com&state=authentification`,
-				'_self'
-			);
-		},*/
 		hasPlume(): boolean {
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
@@ -135,9 +109,18 @@ export default defineComponent({
 				return;
 			}
 			this.isEditOn = false;
+		},
+		goToRankingPage(e: Event) {
+			e.preventDefault();
+			goTo(this.$router, 'Ranking');
 		}
 	},
 	mounted() {
+		// Fetch player position
+		PlayerService.getPosition(+this.$route.params.id).then(({ position }) => {
+			this.playerPosition = position;
+		});
+
 		if (this.customText) {
 			this.customText = this.customText.replace(/\n/g, '<br>');
 		}

@@ -126,7 +126,7 @@ export async function getOffer(offerId: number) {
 		},
 		include: {
 			seller: { select: { id: true, name: true } },
-			dinoz: { select: { id: true, name: true } },
+			dinoz: { select: { id: true, name: true, level: true } },
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },
 			bids: {
 				select: { userId: true, value: true },

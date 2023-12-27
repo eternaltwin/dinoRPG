@@ -15,6 +15,7 @@ import { OfferStatus } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
 import { sendDiscord } from '../utils/discord.js';
 import { ownsDinoz } from '../dao/playerDao.js';
+import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 
 /**
  * Get the list of current offers
@@ -311,6 +312,14 @@ export const expireOffer = async (offerId: number) => {
 				player: { connect: { id: winnerBid.userId } },
 				isSelling: false
 			});
+
+			// Update seller ranking
+			await updatePoints(offer.seller.id, -offer.dinoz.level);
+			await updateDinozCount(offer.seller.id, -1);
+
+			// Update winner ranking
+			await updatePoints(winnerBid.userId, offer.dinoz.level);
+			await updateDinozCount(winnerBid.userId, 1);
 
 			// Add items to winner inventory
 			promises.push(...items.map(item => increaseItemQuantity(winnerBid.userId, item.itemId, item.quantity)));

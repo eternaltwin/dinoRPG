@@ -82,9 +82,8 @@ export async function getAccountData(req: Request) {
 	}
 
 	const infoToSend: PlayerInfo = {
-		dinozCount: playerInfo.ranking.dinozCountDisplayed,
-		rank: playerInfo.ranking.sumPosition,
-		pointCount: playerInfo.ranking.sumPointsDisplayed,
+		dinozCount: playerInfo.ranking.dinozCount,
+		pointCount: playerInfo.ranking.points,
 		subscribeAt: subscribe,
 		clan: clan,
 		playerName: playerInfo.name,

@@ -1,4 +1,3 @@
-import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
 export async function addPlayerInRanking(playerId: number) {
@@ -12,14 +11,7 @@ export async function addPlayerInRanking(playerId: number) {
 export async function getPlayersPoints() {
 	return prisma.ranking.findMany({
 		select: {
-			sumPoints: true,
-			averagePoints: true,
-			dinozCount: true,
-			player: {
-				select: {
-					id: true
-				}
-			}
+			points: true,
 		}
 	});
 }
@@ -27,10 +19,9 @@ export async function getPlayersPoints() {
 export async function getPlayersAverageRanking(page: number) {
 	return prisma.ranking.findMany({
 		select: {
-			averagePosition: true,
-			sumPointsDisplayed: true,
-			dinozCountDisplayed: true,
-			averagePointsDisplayed: true,
+			points: true,
+			average: true,
+			dinozCount: true,
 			player: {
 				select: {
 					id: true,
@@ -38,25 +29,21 @@ export async function getPlayersAverageRanking(page: number) {
 				}
 			}
 		},
-		where: {
-			averagePosition: {
-				gte: (page - 1) * 20 + 1,
-				lte: page * 20
-			}
-		},
-		orderBy: {
-			averagePosition: 'asc'
-		}
+		orderBy: [
+			{ average: 'desc' },
+			{ player: { name: 'asc' } }
+		],
+		take: 20,
+		skip: (page - 1) * 20
 	});
 }
 
 export async function getPlayersSumRanking(page: number) {
 	return prisma.ranking.findMany({
 		select: {
-			sumPosition: true,
-			sumPointsDisplayed: true,
-			dinozCountDisplayed: true,
-			averagePointsDisplayed: true,
+			points: true,
+			average: true,
+			dinozCount: true,
 			player: {
 				select: {
 					id: true,
@@ -64,42 +51,110 @@ export async function getPlayersSumRanking(page: number) {
 				}
 			}
 		},
-		where: {
-			sumPosition: {
-				gte: (page - 1) * 20 + 1,
-				lte: page * 20
-			}
-		},
-		orderBy: {
-			sumPosition: 'asc'
-		}
+		orderBy: [
+			{ points: 'desc' },
+			{ player: { name: 'asc' } }
+		],
+		take: 20,
+		skip: (page - 1) * 20
 	});
 }
 
-export async function updatePoints(playerId: number, sumPoints: number, averagePoints: number, dinozCount: number) {
-	return prisma.ranking.update({
+
+export async function updatePoints(playerId: number, points: number) {
+	const ranking = await prisma.ranking.findUnique({
+		where: {
+			playerId
+		},
+		select: {
+			points: true,
+			dinozCount: true,
+		}
+	});
+
+	if (!ranking) {
+		throw new Error('Player ranking not found');
+	}
+
+	const newPoints = ranking.points + points;
+
+	await prisma.ranking.update({
 		where: {
 			playerId
 		},
 		data: {
-			sumPoints,
-			averagePoints,
-			dinozCount
+			points: newPoints,
+			average: Math.round(newPoints / ranking.dinozCount),
 		}
 	});
 }
 
-export async function updateRanking(id: number, newRanking: Prisma.RankingUpdateInput) {
-	return prisma.ranking.update({
+export async function updateDinozCount(playerId: number, dinozCount: number) {
+	const ranking = await prisma.ranking.findUnique({
 		where: {
-			id
+			playerId
 		},
-		data: {
-			sumPosition: newRanking.sumPosition,
-			averagePosition: newRanking.averagePosition,
-			sumPointsDisplayed: newRanking.sumPointsDisplayed,
-			averagePointsDisplayed: newRanking.averagePointsDisplayed,
-			dinozCountDisplayed: newRanking.dinozCountDisplayed
+		select: {
+			points: true,
+			dinozCount: true,
 		}
 	});
+
+	if (!ranking) {
+		throw new Error('Player ranking not found');
+	}
+
+	await prisma.ranking.update({
+		where: {
+			playerId
+		},
+		data: {
+			dinozCount,
+			average: Math.round(ranking.points / dinozCount),
+		}
+	});
+}
+
+export async function getPlayerPositionDAO(playerId: number) {
+	const playerRanking = await prisma.ranking.findUnique({
+		where: {
+			playerId
+		},
+		select: {
+			points: true,
+			player: {
+				select: {
+					name: true
+				},
+			},
+		}
+	});
+
+	if (playerRanking === null) {
+		throw new Error('Player ranking not found');
+	}
+
+	const above = await prisma.ranking.count({
+		where: {
+			OR: [
+				{
+					points: {
+						gt: playerRanking.points
+					}
+				},
+				{
+					points: {
+						equals: playerRanking.points
+					},
+					player: {
+						name: {
+							lt: playerRanking.player?.name ?? ''
+						}
+					}
+				}
+			]
+		}
+	});
+
+	return above + 1;
 }

@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
-import { getRanking } from '../business/rankingService.js';
+import { getPlayerPosition, getRanking } from '../business/rankingService.js';
 import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -54,7 +54,26 @@ routes.get(
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			res.status(e.errorCode || 500).send(e.message);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/:playerId/get/position`,
+	[param('playerId').exists().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const position = await getPlayerPosition(req);
+			return res.status(200).send({ position });
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode || 500).send(e.message);
 		}
 	}
 );

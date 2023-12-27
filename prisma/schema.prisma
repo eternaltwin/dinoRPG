@@ -1,7 +1,8 @@
 generator client {
-  provider      = "prisma-client-js"
-  output        = "../../prisma"
-  binaryTargets = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
+  provider        = "prisma-client-js"
+  output          = "../../prisma"
+  binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
+  previewFeatures = ["relationJoins", "nativeDistinct"]
 }
 
 datasource db {
@@ -403,17 +404,12 @@ model PlayerReward {
 }
 
 model Ranking {
-  id                     Int     @id(map: "PK_bf82b8f271e50232e6a3fcb09a9") @default(autoincrement())
-  sumPosition            Int     @default(0)
-  sumPoints              Int     @default(0)
-  sumPointsDisplayed     Int     @default(0)
-  averagePosition        Int     @default(0)
-  averagePoints          Int     @default(0)
-  averagePointsDisplayed Int     @default(0)
-  dinozCount             Int     @default(0)
-  dinozCountDisplayed    Int     @default(0)
-  playerId               Int?    @unique(map: "REL_3ac96196d0a3851989be8c52a9")
-  player                 Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3ac96196d0a3851989be8c52a9a")
+  id         Int     @id(map: "PK_bf82b8f271e50232e6a3fcb09a9") @default(autoincrement())
+  points     Int     @default(0)
+  average    Int     @default(0)
+  dinozCount Int     @default(0)
+  playerId   Int?    @unique(map: "REL_3ac96196d0a3851989be8c52a9")
+  player     Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3ac96196d0a3851989be8c52a9a")
 
   @@map("ranking")
 }
@@ -474,21 +470,21 @@ enum LogType {
   Revive
   MissionStep
   MissionFinished
-	MissionCanceled
+  MissionCanceled
   Gather
-	CreateDinoz
-	ChangeDinozOrder
-	AdminUpdateDinoz
-	AdminAddStatus
-	AdminRemoveStatus
-	AdminAddSkill
-	AdminRemoveSkill
-	AdminAddMoney
-	AdminRemoveMoney
-	AdminAddReward
-	AdminRemoveReward
-	AdminUpdatePlayer
-	AdminUpdateSecret
+  CreateDinoz
+  ChangeDinozOrder
+  AdminUpdateDinoz
+  AdminAddStatus
+  AdminRemoveStatus
+  AdminAddSkill
+  AdminRemoveSkill
+  AdminAddMoney
+  AdminRemoveMoney
+  AdminAddReward
+  AdminRemoveReward
+  AdminUpdatePlayer
+  AdminUpdateSecret
 }
 
 model Log {

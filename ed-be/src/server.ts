@@ -5,7 +5,6 @@ import 'reflect-metadata';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
-import { updatePlayersPosition } from './cron/updatePlayersPosition.js';
 import adminRoutes from './routes/admin.routes.js';
 import dinozRoutes from './routes/dinoz.routes.js';
 import fightRoutes from './routes/fight.routes.js';
@@ -77,7 +76,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOption
 
 // Launch Cron
 resetDinozShopAtMidnight().start();
-updatePlayersPosition().start();
 
 scheduleOffersExpiration();
 

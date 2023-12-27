@@ -771,8 +771,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.7.0
-   * Query Engine version: 79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
+   * Prisma Client JS version: 5.7.1
+   * Query Engine version: 0ca5ccbcfa6bdc81c003cf549abe4269f59c41e5
    */
   export type PrismaVersion = {
     client: string
@@ -33746,66 +33746,41 @@ export namespace Prisma {
 
   export type RankingAvgAggregateOutputType = {
     id: number | null
-    sumPosition: number | null
-    sumPoints: number | null
-    sumPointsDisplayed: number | null
-    averagePosition: number | null
-    averagePoints: number | null
-    averagePointsDisplayed: number | null
+    points: number | null
+    average: number | null
     dinozCount: number | null
-    dinozCountDisplayed: number | null
     playerId: number | null
   }
 
   export type RankingSumAggregateOutputType = {
     id: number | null
-    sumPosition: number | null
-    sumPoints: number | null
-    sumPointsDisplayed: number | null
-    averagePosition: number | null
-    averagePoints: number | null
-    averagePointsDisplayed: number | null
+    points: number | null
+    average: number | null
     dinozCount: number | null
-    dinozCountDisplayed: number | null
     playerId: number | null
   }
 
   export type RankingMinAggregateOutputType = {
     id: number | null
-    sumPosition: number | null
-    sumPoints: number | null
-    sumPointsDisplayed: number | null
-    averagePosition: number | null
-    averagePoints: number | null
-    averagePointsDisplayed: number | null
+    points: number | null
+    average: number | null
     dinozCount: number | null
-    dinozCountDisplayed: number | null
     playerId: number | null
   }
 
   export type RankingMaxAggregateOutputType = {
     id: number | null
-    sumPosition: number | null
-    sumPoints: number | null
-    sumPointsDisplayed: number | null
-    averagePosition: number | null
-    averagePoints: number | null
-    averagePointsDisplayed: number | null
+    points: number | null
+    average: number | null
     dinozCount: number | null
-    dinozCountDisplayed: number | null
     playerId: number | null
   }
 
   export type RankingCountAggregateOutputType = {
     id: number
-    sumPosition: number
-    sumPoints: number
-    sumPointsDisplayed: number
-    averagePosition: number
-    averagePoints: number
-    averagePointsDisplayed: number
+    points: number
+    average: number
     dinozCount: number
-    dinozCountDisplayed: number
     playerId: number
     _all: number
   }
@@ -33813,66 +33788,41 @@ export namespace Prisma {
 
   export type RankingAvgAggregateInputType = {
     id?: true
-    sumPosition?: true
-    sumPoints?: true
-    sumPointsDisplayed?: true
-    averagePosition?: true
-    averagePoints?: true
-    averagePointsDisplayed?: true
+    points?: true
+    average?: true
     dinozCount?: true
-    dinozCountDisplayed?: true
     playerId?: true
   }
 
   export type RankingSumAggregateInputType = {
     id?: true
-    sumPosition?: true
-    sumPoints?: true
-    sumPointsDisplayed?: true
-    averagePosition?: true
-    averagePoints?: true
-    averagePointsDisplayed?: true
+    points?: true
+    average?: true
     dinozCount?: true
-    dinozCountDisplayed?: true
     playerId?: true
   }
 
   export type RankingMinAggregateInputType = {
     id?: true
-    sumPosition?: true
-    sumPoints?: true
-    sumPointsDisplayed?: true
-    averagePosition?: true
-    averagePoints?: true
-    averagePointsDisplayed?: true
+    points?: true
+    average?: true
     dinozCount?: true
-    dinozCountDisplayed?: true
     playerId?: true
   }
 
   export type RankingMaxAggregateInputType = {
     id?: true
-    sumPosition?: true
-    sumPoints?: true
-    sumPointsDisplayed?: true
-    averagePosition?: true
-    averagePoints?: true
-    averagePointsDisplayed?: true
+    points?: true
+    average?: true
     dinozCount?: true
-    dinozCountDisplayed?: true
     playerId?: true
   }
 
   export type RankingCountAggregateInputType = {
     id?: true
-    sumPosition?: true
-    sumPoints?: true
-    sumPointsDisplayed?: true
-    averagePosition?: true
-    averagePoints?: true
-    averagePointsDisplayed?: true
+    points?: true
+    average?: true
     dinozCount?: true
-    dinozCountDisplayed?: true
     playerId?: true
     _all?: true
   }
@@ -33965,14 +33915,9 @@ export namespace Prisma {
 
   export type RankingGroupByOutputType = {
     id: number
-    sumPosition: number
-    sumPoints: number
-    sumPointsDisplayed: number
-    averagePosition: number
-    averagePoints: number
-    averagePointsDisplayed: number
+    points: number
+    average: number
     dinozCount: number
-    dinozCountDisplayed: number
     playerId: number | null
     _count: RankingCountAggregateOutputType | null
     _avg: RankingAvgAggregateOutputType | null
@@ -33997,28 +33942,18 @@ export namespace Prisma {
 
   export type RankingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    sumPosition?: boolean
-    sumPoints?: boolean
-    sumPointsDisplayed?: boolean
-    averagePosition?: boolean
-    averagePoints?: boolean
-    averagePointsDisplayed?: boolean
+    points?: boolean
+    average?: boolean
     dinozCount?: boolean
-    dinozCountDisplayed?: boolean
     playerId?: boolean
     player?: boolean | Ranking$playerArgs<ExtArgs>
   }, ExtArgs["result"]["ranking"]>
 
   export type RankingSelectScalar = {
     id?: boolean
-    sumPosition?: boolean
-    sumPoints?: boolean
-    sumPointsDisplayed?: boolean
-    averagePosition?: boolean
-    averagePoints?: boolean
-    averagePointsDisplayed?: boolean
+    points?: boolean
+    average?: boolean
     dinozCount?: boolean
-    dinozCountDisplayed?: boolean
     playerId?: boolean
   }
 
@@ -34034,14 +33969,9 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      sumPosition: number
-      sumPoints: number
-      sumPointsDisplayed: number
-      averagePosition: number
-      averagePoints: number
-      averagePointsDisplayed: number
+      points: number
+      average: number
       dinozCount: number
-      dinozCountDisplayed: number
       playerId: number | null
     }, ExtArgs["result"]["ranking"]>
     composites: {}
@@ -34439,14 +34369,9 @@ export namespace Prisma {
    */ 
   interface RankingFieldRefs {
     readonly id: FieldRef<"Ranking", 'Int'>
-    readonly sumPosition: FieldRef<"Ranking", 'Int'>
-    readonly sumPoints: FieldRef<"Ranking", 'Int'>
-    readonly sumPointsDisplayed: FieldRef<"Ranking", 'Int'>
-    readonly averagePosition: FieldRef<"Ranking", 'Int'>
-    readonly averagePoints: FieldRef<"Ranking", 'Int'>
-    readonly averagePointsDisplayed: FieldRef<"Ranking", 'Int'>
+    readonly points: FieldRef<"Ranking", 'Int'>
+    readonly average: FieldRef<"Ranking", 'Int'>
     readonly dinozCount: FieldRef<"Ranking", 'Int'>
-    readonly dinozCountDisplayed: FieldRef<"Ranking", 'Int'>
     readonly playerId: FieldRef<"Ranking", 'Int'>
   }
     
@@ -39955,14 +39880,9 @@ export namespace Prisma {
 
   export const RankingScalarFieldEnum: {
     id: 'id',
-    sumPosition: 'sumPosition',
-    sumPoints: 'sumPoints',
-    sumPointsDisplayed: 'sumPointsDisplayed',
-    averagePosition: 'averagePosition',
-    averagePoints: 'averagePoints',
-    averagePointsDisplayed: 'averagePointsDisplayed',
+    points: 'points',
+    average: 'average',
     dinozCount: 'dinozCount',
-    dinozCountDisplayed: 'dinozCountDisplayed',
     playerId: 'playerId'
   };
 
@@ -42099,28 +42019,18 @@ export namespace Prisma {
     OR?: RankingWhereInput[]
     NOT?: RankingWhereInput | RankingWhereInput[]
     id?: IntFilter<"Ranking"> | number
-    sumPosition?: IntFilter<"Ranking"> | number
-    sumPoints?: IntFilter<"Ranking"> | number
-    sumPointsDisplayed?: IntFilter<"Ranking"> | number
-    averagePosition?: IntFilter<"Ranking"> | number
-    averagePoints?: IntFilter<"Ranking"> | number
-    averagePointsDisplayed?: IntFilter<"Ranking"> | number
+    points?: IntFilter<"Ranking"> | number
+    average?: IntFilter<"Ranking"> | number
     dinozCount?: IntFilter<"Ranking"> | number
-    dinozCountDisplayed?: IntFilter<"Ranking"> | number
     playerId?: IntNullableFilter<"Ranking"> | number | null
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
   }
 
   export type RankingOrderByWithRelationInput = {
     id?: SortOrder
-    sumPosition?: SortOrder
-    sumPoints?: SortOrder
-    sumPointsDisplayed?: SortOrder
-    averagePosition?: SortOrder
-    averagePoints?: SortOrder
-    averagePointsDisplayed?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
     dinozCount?: SortOrder
-    dinozCountDisplayed?: SortOrder
     playerId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
   }
@@ -42131,27 +42041,17 @@ export namespace Prisma {
     AND?: RankingWhereInput | RankingWhereInput[]
     OR?: RankingWhereInput[]
     NOT?: RankingWhereInput | RankingWhereInput[]
-    sumPosition?: IntFilter<"Ranking"> | number
-    sumPoints?: IntFilter<"Ranking"> | number
-    sumPointsDisplayed?: IntFilter<"Ranking"> | number
-    averagePosition?: IntFilter<"Ranking"> | number
-    averagePoints?: IntFilter<"Ranking"> | number
-    averagePointsDisplayed?: IntFilter<"Ranking"> | number
+    points?: IntFilter<"Ranking"> | number
+    average?: IntFilter<"Ranking"> | number
     dinozCount?: IntFilter<"Ranking"> | number
-    dinozCountDisplayed?: IntFilter<"Ranking"> | number
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
   }, "id" | "playerId">
 
   export type RankingOrderByWithAggregationInput = {
     id?: SortOrder
-    sumPosition?: SortOrder
-    sumPoints?: SortOrder
-    sumPointsDisplayed?: SortOrder
-    averagePosition?: SortOrder
-    averagePoints?: SortOrder
-    averagePointsDisplayed?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
     dinozCount?: SortOrder
-    dinozCountDisplayed?: SortOrder
     playerId?: SortOrderInput | SortOrder
     _count?: RankingCountOrderByAggregateInput
     _avg?: RankingAvgOrderByAggregateInput
@@ -42165,14 +42065,9 @@ export namespace Prisma {
     OR?: RankingScalarWhereWithAggregatesInput[]
     NOT?: RankingScalarWhereWithAggregatesInput | RankingScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Ranking"> | number
-    sumPosition?: IntWithAggregatesFilter<"Ranking"> | number
-    sumPoints?: IntWithAggregatesFilter<"Ranking"> | number
-    sumPointsDisplayed?: IntWithAggregatesFilter<"Ranking"> | number
-    averagePosition?: IntWithAggregatesFilter<"Ranking"> | number
-    averagePoints?: IntWithAggregatesFilter<"Ranking"> | number
-    averagePointsDisplayed?: IntWithAggregatesFilter<"Ranking"> | number
+    points?: IntWithAggregatesFilter<"Ranking"> | number
+    average?: IntWithAggregatesFilter<"Ranking"> | number
     dinozCount?: IntWithAggregatesFilter<"Ranking"> | number
-    dinozCountDisplayed?: IntWithAggregatesFilter<"Ranking"> | number
     playerId?: IntNullableWithAggregatesFilter<"Ranking"> | number | null
   }
 
@@ -44336,89 +44231,54 @@ export namespace Prisma {
   }
 
   export type RankingCreateInput = {
-    sumPosition?: number
-    sumPoints?: number
-    sumPointsDisplayed?: number
-    averagePosition?: number
-    averagePoints?: number
-    averagePointsDisplayed?: number
+    points?: number
+    average?: number
     dinozCount?: number
-    dinozCountDisplayed?: number
     player?: PlayerCreateNestedOneWithoutRankingInput
   }
 
   export type RankingUncheckedCreateInput = {
     id?: number
-    sumPosition?: number
-    sumPoints?: number
-    sumPointsDisplayed?: number
-    averagePosition?: number
-    averagePoints?: number
-    averagePointsDisplayed?: number
+    points?: number
+    average?: number
     dinozCount?: number
-    dinozCountDisplayed?: number
     playerId?: number | null
   }
 
   export type RankingUpdateInput = {
-    sumPosition?: IntFieldUpdateOperationsInput | number
-    sumPoints?: IntFieldUpdateOperationsInput | number
-    sumPointsDisplayed?: IntFieldUpdateOperationsInput | number
-    averagePosition?: IntFieldUpdateOperationsInput | number
-    averagePoints?: IntFieldUpdateOperationsInput | number
-    averagePointsDisplayed?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
-    dinozCountDisplayed?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneWithoutRankingNestedInput
   }
 
   export type RankingUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    sumPosition?: IntFieldUpdateOperationsInput | number
-    sumPoints?: IntFieldUpdateOperationsInput | number
-    sumPointsDisplayed?: IntFieldUpdateOperationsInput | number
-    averagePosition?: IntFieldUpdateOperationsInput | number
-    averagePoints?: IntFieldUpdateOperationsInput | number
-    averagePointsDisplayed?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
-    dinozCountDisplayed?: IntFieldUpdateOperationsInput | number
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type RankingCreateManyInput = {
     id?: number
-    sumPosition?: number
-    sumPoints?: number
-    sumPointsDisplayed?: number
-    averagePosition?: number
-    averagePoints?: number
-    averagePointsDisplayed?: number
+    points?: number
+    average?: number
     dinozCount?: number
-    dinozCountDisplayed?: number
     playerId?: number | null
   }
 
   export type RankingUpdateManyMutationInput = {
-    sumPosition?: IntFieldUpdateOperationsInput | number
-    sumPoints?: IntFieldUpdateOperationsInput | number
-    sumPointsDisplayed?: IntFieldUpdateOperationsInput | number
-    averagePosition?: IntFieldUpdateOperationsInput | number
-    averagePoints?: IntFieldUpdateOperationsInput | number
-    averagePointsDisplayed?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
-    dinozCountDisplayed?: IntFieldUpdateOperationsInput | number
   }
 
   export type RankingUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    sumPosition?: IntFieldUpdateOperationsInput | number
-    sumPoints?: IntFieldUpdateOperationsInput | number
-    sumPointsDisplayed?: IntFieldUpdateOperationsInput | number
-    averagePosition?: IntFieldUpdateOperationsInput | number
-    averagePoints?: IntFieldUpdateOperationsInput | number
-    averagePointsDisplayed?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
-    dinozCountDisplayed?: IntFieldUpdateOperationsInput | number
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -46464,66 +46324,41 @@ export namespace Prisma {
 
   export type RankingCountOrderByAggregateInput = {
     id?: SortOrder
-    sumPosition?: SortOrder
-    sumPoints?: SortOrder
-    sumPointsDisplayed?: SortOrder
-    averagePosition?: SortOrder
-    averagePoints?: SortOrder
-    averagePointsDisplayed?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
     dinozCount?: SortOrder
-    dinozCountDisplayed?: SortOrder
     playerId?: SortOrder
   }
 
   export type RankingAvgOrderByAggregateInput = {
     id?: SortOrder
-    sumPosition?: SortOrder
-    sumPoints?: SortOrder
-    sumPointsDisplayed?: SortOrder
-    averagePosition?: SortOrder
-    averagePoints?: SortOrder
-    averagePointsDisplayed?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
     dinozCount?: SortOrder
-    dinozCountDisplayed?: SortOrder
     playerId?: SortOrder
   }
 
   export type RankingMaxOrderByAggregateInput = {
     id?: SortOrder
-    sumPosition?: SortOrder
-    sumPoints?: SortOrder
-    sumPointsDisplayed?: SortOrder
-    averagePosition?: SortOrder
-    averagePoints?: SortOrder
-    averagePointsDisplayed?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
     dinozCount?: SortOrder
-    dinozCountDisplayed?: SortOrder
     playerId?: SortOrder
   }
 
   export type RankingMinOrderByAggregateInput = {
     id?: SortOrder
-    sumPosition?: SortOrder
-    sumPoints?: SortOrder
-    sumPointsDisplayed?: SortOrder
-    averagePosition?: SortOrder
-    averagePoints?: SortOrder
-    averagePointsDisplayed?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
     dinozCount?: SortOrder
-    dinozCountDisplayed?: SortOrder
     playerId?: SortOrder
   }
 
   export type RankingSumOrderByAggregateInput = {
     id?: SortOrder
-    sumPosition?: SortOrder
-    sumPoints?: SortOrder
-    sumPointsDisplayed?: SortOrder
-    averagePosition?: SortOrder
-    averagePoints?: SortOrder
-    averagePointsDisplayed?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
     dinozCount?: SortOrder
-    dinozCountDisplayed?: SortOrder
     playerId?: SortOrder
   }
 
@@ -53228,26 +53063,16 @@ export namespace Prisma {
   }
 
   export type RankingCreateWithoutPlayerInput = {
-    sumPosition?: number
-    sumPoints?: number
-    sumPointsDisplayed?: number
-    averagePosition?: number
-    averagePoints?: number
-    averagePointsDisplayed?: number
+    points?: number
+    average?: number
     dinozCount?: number
-    dinozCountDisplayed?: number
   }
 
   export type RankingUncheckedCreateWithoutPlayerInput = {
     id?: number
-    sumPosition?: number
-    sumPoints?: number
-    sumPointsDisplayed?: number
-    averagePosition?: number
-    averagePoints?: number
-    averagePointsDisplayed?: number
+    points?: number
+    average?: number
     dinozCount?: number
-    dinozCountDisplayed?: number
   }
 
   export type RankingCreateOrConnectWithoutPlayerInput = {
@@ -53641,26 +53466,16 @@ export namespace Prisma {
   }
 
   export type RankingUpdateWithoutPlayerInput = {
-    sumPosition?: IntFieldUpdateOperationsInput | number
-    sumPoints?: IntFieldUpdateOperationsInput | number
-    sumPointsDisplayed?: IntFieldUpdateOperationsInput | number
-    averagePosition?: IntFieldUpdateOperationsInput | number
-    averagePoints?: IntFieldUpdateOperationsInput | number
-    averagePointsDisplayed?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
-    dinozCountDisplayed?: IntFieldUpdateOperationsInput | number
   }
 
   export type RankingUncheckedUpdateWithoutPlayerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    sumPosition?: IntFieldUpdateOperationsInput | number
-    sumPoints?: IntFieldUpdateOperationsInput | number
-    sumPointsDisplayed?: IntFieldUpdateOperationsInput | number
-    averagePosition?: IntFieldUpdateOperationsInput | number
-    averagePoints?: IntFieldUpdateOperationsInput | number
-    averagePointsDisplayed?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
-    dinozCountDisplayed?: IntFieldUpdateOperationsInput | number
   }
 
   export type OfferUpsertWithWhereUniqueWithoutSellerInput = {

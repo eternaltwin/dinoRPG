@@ -231,9 +231,8 @@ export async function getPlayerDataRequest(playerId: number) {
 			},
 			ranking: {
 				select: {
-					dinozCountDisplayed: true,
-					sumPosition: true,
-					sumPointsDisplayed: true
+					points: true,
+					dinozCount: true
 				}
 			}
 		}

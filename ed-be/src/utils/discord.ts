@@ -5,13 +5,15 @@ import { ErrorFormator } from './errorFormator.js';
 
 export async function postError(e: ErrorFormator, res: Response) {
 	const secrets = await getAllSecretsRequest();
-	if (secrets.length === 0) return;
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');
 	//Do no send Discord notification if error is to display toast
 	if (e.errorCode === 400) return;
 	try {
-		if (!(discordToken && discordChannel)) return;
+		if (!(discordToken && discordChannel)) {
+			console.error(e);
+			return;
+		};
 		const webhookClient = new WebhookClient({
 			id: discordChannel.value,
 			token: discordToken.value

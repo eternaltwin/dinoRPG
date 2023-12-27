@@ -15,30 +15,30 @@
 					</td>
 				</tr>
 				<tr
-					v-for="(player, index) in ranking"
-					:key="player.position"
+					v-for="(ranking, index) in rankings"
+					:key="ranking.player.id"
 					class="select"
 					:class="(index + 1) % 2 === 0 ? 'even' : ''"
-					@click="goToAccount(player.playerId)"
+					@click="goToAccount(ranking.player.id)"
 				>
 					<td class="pos">
-						{{ player.position }}
+						{{ (page - 1) * 20 + (index + 1) }}
 					</td>
 					<td class="other">
-						{{ player.playerName }}
+						{{ ranking.player.name }}
 					</td>
 					<td class="other">
-						{{ player.dinozCount }}
+						{{ ranking.dinozCount }}
 					</td>
 					<td class="other">
-						{{ player.pointCount }}
+						{{ ranking.points }}
 					</td>
 					<td class="other">
-						{{ player.pointAverage }}
+						{{ ranking.average }}
 					</td>
 				</tr>
 			</tbody>
-			<tr class="select" @click="changePage(1)" :class="{ hidden: ranking.length < 20 }">
+			<tr class="select" @click="changePage(1)" :class="{ hidden: rankings.length < 20 }">
 				<td class="pos" colspan="5" style="text-align: center">
 					{{ $t('ranking.page.next') }}
 				</td>
@@ -52,13 +52,13 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { PlayerRanking } from '@drpg/core/models/player/PlayerRanking';
+import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 
 export default defineComponent({
 	name: 'PlayerRanking',
 	data() {
 		return {
-			ranking: {} as Array<PlayerRanking>,
+			rankings: [] as RankingGetResponse,
 			page: 1 as number
 		};
 	},
@@ -72,7 +72,7 @@ export default defineComponent({
 		async getRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.ranking = await PlayerService.getPlayersRanking(this.sort!, this.page);
+				this.rankings = await PlayerService.getPlayersRanking(this.sort!, this.page);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err);

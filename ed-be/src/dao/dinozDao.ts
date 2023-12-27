@@ -390,7 +390,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			player: {
 				select: {
 					id: true,
-					ranking: { select: { sumPoints: true, averagePoints: true, dinozCount: true } }
+					ranking: { select: { points: true, average: true, dinozCount: true } }
 				}
 			},
 			items: { select: { itemId: true } },

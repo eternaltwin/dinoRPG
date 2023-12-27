@@ -135,7 +135,6 @@ import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import DZUser from '../common/DZUser.vue';
 import { errorHandler, secondsToDhms, simplifyDisplay } from '../../utils/index.js';
 import { EnhancedOffer } from '@drpg/core/returnTypes/Offer';
-import { goTo } from '../../utils/goTo.js';
 import { OfferService } from '../../services/OfferService.js';
 import { playerStore } from '../../store/index.js';
 import DZInput from '../common/DZInput.vue';
@@ -169,7 +168,6 @@ export default defineComponent({
 			itemNameList,
 			secondsToDhms,
 			simplifyDisplay,
-			goTo,
 			getIngredientName,
 			getRace,
 			AssaultElement,
