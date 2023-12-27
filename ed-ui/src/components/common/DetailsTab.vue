@@ -147,30 +147,31 @@
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.weak2.name}`)" alt="info_button" class="ml-4" />
-								<span>{{ stat.weak2.value + stat.weak2.bonus }}</span>
+								<span>{{ stat.weak2.value }}</span>
 								<span class="detail-name"> x 0.5</span>
 							</li>
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.weak1.name}`)" alt="info_button" class="ml-4" />
-								<span>{{ stat.weak1.value + stat.weak1.bonus }}</span>
+								<span>{{ stat.weak1.value }}</span>
 								<span class="detail-name"> x 0.5</span>
 							</li>
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.element.name}`)" alt="info_button" class="ml-4" />
-								<span>{{ stat.element.value + stat.element.bonus }}</span>
+								<span>{{ stat.element.value }}</span>
+								<span class="detail-name"> x 1</span>
 							</li>
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.strong1.name}`)" alt="info_button" class="ml-4" />
-								<span>{{ stat.strong1.value + stat.strong1.bonus }}</span>
+								<span>{{ stat.strong1.value }}</span>
 								<span class="detail-name"> x 1.5</span>
 							</li>
 							<li v-if="!stat.neutral">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.strong2.name}`)" alt="info_button" class="ml-4" />
-								<span>{{ stat.strong2.value + stat.strong2.bonus }}</span>
+								<span>{{ stat.strong2.value }}</span>
 								<span class="detail-name"> x 1.5</span>
 							</li>
 							<li v-for="(detail, i) in stat.details" :key="i">
@@ -183,6 +184,13 @@
 									class="ml-4"
 								/>
 								<span v-if="detail.type === 'skill'">+{{ detail.value }}</span>
+								<span v-if="detail.type === 'skill' && detail.global" class="detail-name">
+									{{ 'x ' }}
+									<span v-if="detail.element === stat.weak1?.name || detail.element === stat.weak2?.name"> 0.5</span>
+									<span v-else-if="detail.element === stat.element?.name">1</span>
+									<span v-else>1.5</span>
+									{{ ' - ' }}
+								</span>
 								<span v-if="detail.type === 'skill'" class="detail-name">
 									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
 									<img

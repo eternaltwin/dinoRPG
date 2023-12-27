@@ -500,7 +500,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [11206],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
+		globalEffects: {
 			[Stat.FIRE_DEFENSE]: 5
 		}
 	},
@@ -1123,7 +1123,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
+		globalEffects: {
 			[Stat.WOOD_DEFENSE]: 2
 		}
 	},
@@ -1471,7 +1471,10 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21307],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		globalEffects: {
+			[Stat.WOOD_DEFENSE]: 3 // This should be applied to the whole group, not just the caster
+		}
 		// TODO: Implement AoE effect
 	},
 	[Skill.ARCHEOLOGUE]: {
@@ -2743,7 +2746,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41201],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
+		globalEffects: {
 			[Stat.WOOD_DEFENSE]: 3,
 			[Stat.LIGHTNING_DEFENSE]: 3
 		}
@@ -3399,6 +3402,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: 10,
+		},
+		globalEffects: {
 			[Stat.AIR_DEFENSE]: 3
 		}
 	},
@@ -3425,7 +3430,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [51202],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
+		globalEffects: {
 			[Stat.AIR_DEFENSE]: 2,
 			[Stat.WATER_DEFENSE]: 2,
 			[Stat.LIGHTNING_DEFENSE]: 2
@@ -3609,8 +3614,10 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_DEFENSE]: 3,
 			[Stat.AIR_SPEED]: -0.5
+		},
+		globalEffects: {
+			[Stat.AIR_DEFENSE]: 3,
 		}
 	},
 	[Skill.PROFESSEUR]: {
@@ -3676,8 +3683,10 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_DEFENSE]: 6,
 			[Stat.AIR_SPEED]: -0.5
+		},
+		globalEffects: {
+			[Stat.AIR_DEFENSE]: 6,
 		}
 	},
 	[Skill.DJINN]: {

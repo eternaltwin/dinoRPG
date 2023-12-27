@@ -56,4 +56,5 @@ export interface DinozSkillFiche {
 	isBaseSkill: boolean; // If true : dinoz knows this skill when he's bought
 	isSphereSkill: boolean; // true : the skill can only be learned with a sphere object
 	effects?: SkillEffects;
+	globalEffects?: SkillEffects;
 }

@@ -36,8 +36,11 @@ export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], ele
 			value: Object.values(elementStat).reduce((acc, cur) => acc + cur, 0),
 			details: Object.entries(elementStat).map(([key, value]) => ({
 				type: 'element',
+				name: key,
+				element: key,
 				elements: [key],
-				value
+				value,
+				global: false
 			}))
 		};
 	}
@@ -45,15 +48,18 @@ export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], ele
 	const details: {
 		type: 'skill' | 'element';
 		name?: string;
+		element: string;
 		elements: string[];
 		value: number;
+		global?: boolean;
 	}[] = [];
 
 	// x1
 	const element = {
 		name: elementName,
 		value: elementStat[elementName],
-		bonus: 0
+		bonus: 0,
+		globalBonus: 0
 	};
 
 	// x0.5
@@ -62,14 +68,16 @@ export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], ele
 	const firstWeakElement = {
 		name: firstWeakElementName,
 		value: elementStat[firstWeakElementName],
-		bonus: 0
+		bonus: 0,
+		globalBonus: 0
 	};
 	const secondWeakElementName =
 		elementWheel[(elementWheel.indexOf(elementName) - 2 + elementWheel.length) % elementWheel.length];
 	const secondWeakElement = {
 		name: secondWeakElementName,
 		value: elementStat[secondWeakElementName],
-		bonus: 0
+		bonus: 0,
+		globalBonus: 0
 	};
 
 	// x1.5
@@ -77,50 +85,76 @@ export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], ele
 	const firstStrongElement = {
 		name: firstStrongElementName,
 		value: elementStat[firstStrongElementName],
-		bonus: 0
+		bonus: 0,
+		globalBonus: 0
 	};
 	const secondStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 2) % elementWheel.length];
 	const secondStrongElement = {
 		name: secondStrongElementName,
 		value: elementStat[secondStrongElementName],
-		bonus: 0
+		bonus: 0,
+		globalBonus: 0
 	};
 
-	// Get bonuses from skills for the 3 elements
+	// Get global bonuses from skills for the 5 elements
 	[secondWeakElement, firstWeakElement, element, firstStrongElement, secondStrongElement].forEach(elem => {
 		skills.forEach(skill => {
-			if (!skill.effects) return;
+			if (!skill.globalEffects) return;
 
-			const effect = skill.effects[`${elem.name}Defense`];
+			const effect = skill.globalEffects[`${elem.name}Defense`];
 
 			if (effect) {
 				// Flat value
-				elem.bonus += effect;
+				elem.globalBonus += effect;
 
-				// Keep details for the base element only
-				if (elem.name === elementName) {
-					details.push({
-						type: 'skill',
-						name: skill.name,
-						elements: skill.element.map(
-							el =>
-								Object.entries(ElementType)
-									.find(([, value]) => value === el)?.[0]
-									.toLocaleLowerCase() || ''
-						),
-						value: effect
-					});
-				}
+				details.push({
+					type: 'skill',
+					name: skill.name,
+					element: elem.name,
+					elements: skill.element.map(
+						el =>
+							Object.entries(ElementType)
+								.find(([, value]) => value === el)?.[0]
+								.toLocaleLowerCase() || ''
+					),
+					value: effect,
+					global: true
+				});
 			}
 		});
 	});
 
+	// Get fixed bonuses from skills for the main element
+	skills.forEach(skill => {
+		if (!skill.effects) return;
+
+		const effect = skill.effects[`${elementName}Defense`];
+
+		if (effect) {
+			// Flat value
+			element.bonus += effect;
+
+			details.push({
+				type: 'skill',
+				name: skill.name,
+				element: element.name,
+				elements: skill.element.map(
+					el =>
+						Object.entries(ElementType)
+							.find(([, value]) => value === el)?.[0]
+							.toLocaleLowerCase() || ''
+				),
+				value: effect
+			});
+		}
+	});
+
 	const result = Math.ceil(
-		0.5 * (secondWeakElement.value + secondWeakElement.bonus) +
-		0.5 * (firstWeakElement.value + firstWeakElement.bonus) +
-		(element.value + element.bonus) +
-		1.5 * (firstStrongElement.value + firstStrongElement.bonus) +
-		1.5 * (secondStrongElement.value + secondStrongElement.bonus)
+		0.5 * (secondWeakElement.value + secondWeakElement.globalBonus) + secondWeakElement.bonus +
+		0.5 * (firstWeakElement.value + firstWeakElement.globalBonus) + firstWeakElement.bonus +
+		(element.value + element.bonus) + element.bonus +
+		1.5 * (firstStrongElement.value + firstStrongElement.globalBonus) + firstStrongElement.bonus +
+		1.5 * (secondStrongElement.value + secondStrongElement.globalBonus) + secondStrongElement.bonus
 	);
 
 	return {
