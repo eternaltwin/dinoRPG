@@ -1735,6 +1735,16 @@ export const itemList: Readonly<Record<string, ItemFiche>> = {
 		maxQuantity: 5000,
 		price: 0
 	},
+	// Daily ticket
+	DAILY_TICKET: {
+		itemId: 997,
+		canBeEquipped: false,
+		canBeUsedNow: true,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 9999,
+		price: 0
+	},
 	// Empty item
 	EMPTY: {
 		itemId: 998,

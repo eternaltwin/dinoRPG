@@ -326,7 +326,8 @@ exports.Prisma.PlayerScalarFieldEnum = {
   priest: 'priest',
   teacher: 'teacher',
   createdDate: 'createdDate',
-  updatedDate: 'updatedDate'
+  updatedDate: 'updatedDate',
+  lastLogin: 'lastLogin'
 };
 
 exports.Prisma.PlayerDinozShopScalarFieldEnum = {

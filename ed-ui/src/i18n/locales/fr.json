@@ -356,6 +356,7 @@
 			"easter_egg": "Oeuf de Madame Urma",
 			"fire_cracker": "Pétard magique",
 			"special_potion_irma": "Potion de Madame Irma spéciale",
+			"daily_ticket": "Ticket Quotidien",
 			"empty": "Vide",
 			"undefined": "Inconnu"
 		},
@@ -481,6 +482,7 @@
 			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
 			"fire_cracker": "Ce pétard vous permet de déclencher un feu d'artice à Dinoville pour gagner des trésors !",
 			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
+			"daily_ticket": "Ce ticket vous permet de débloquer une case quotidienne.",
 			"empty": "Il n'y a aucun objet dans cette case",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},

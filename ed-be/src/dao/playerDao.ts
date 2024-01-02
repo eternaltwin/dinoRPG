@@ -94,6 +94,7 @@ export async function getCommonDataRequest(playerId: number) {
 			name: true,
 			money: true,
 			engineer: true,
+			lastLogin: true,
 			dinoz: {
 				select: {
 					id: true,

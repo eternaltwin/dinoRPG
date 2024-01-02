@@ -12,6 +12,9 @@ import {
 	setPlayer
 } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import moment from 'moment';
+import { increaseItemQuantity } from '../dao/playerItemDao.js';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 /**
  * @summary Get data from player on login
@@ -25,6 +28,15 @@ export async function getCommonData(req: Request) {
 	const playerCommonData = await getCommonDataRequest(req.auth.playerId);
 	if (!playerCommonData) {
 		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
+	}
+
+	// Check if it's the first login of the day
+	if (!moment(playerCommonData.lastLogin).isSame(moment(), 'day')) {
+		// Add 1 daily ticket
+		await increaseItemQuantity(req.auth.playerId, itemList.DAILY_TICKET.itemId, 1);
+
+		// Update last login
+		await setPlayer(req.auth.playerId, { lastLogin: new Date() });
 	}
 
 	const commonData: PlayerCommonData = {

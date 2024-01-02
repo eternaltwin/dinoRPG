@@ -6394,6 +6394,7 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-junit: "npm:^16.0.0"
     jsonwebtoken: "npm:^9.0.2"
+    moment: "npm:^2.30.1"
     multer: "npm:^1.4.5-lts.1"
     native-dinorpg: "workspace:^*"
     node-fetch: "npm:^3.3.2"
@@ -10515,6 +10516,13 @@ __metadata:
   bin:
     mkdirp: dist/cjs/src/bin.js
   checksum: 4672fadb94dca8d2eafeb6fff53f2c5ea74e885565ef23251791709064f216105167c2387088c61ef068901bd0776648999785e341d74728164fa551b1c65996
+  languageName: node
+  linkType: hard
+
+"moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: ae42d876d4ec831ef66110bdc302c0657c664991e45cf2afffc4b0f6cd6d251dde11375c982a5c0564ccc0fa593fc564576ddceb8c8845e87c15f58aa6baca69
   languageName: node
   linkType: hard
 

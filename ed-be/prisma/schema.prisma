@@ -320,7 +320,8 @@ model Player {
   teacher                     Boolean
   createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
   updatedDate                 DateTime                     @default(now()) @db.Timestamp(6) @updatedAt
-  dinoz                       Dinoz[]
+  lastLogin                   DateTime 									 	 @default(now()) @db.Timestamp(6)
+	dinoz                       Dinoz[]
   importedPlayer              ImportedPlayer?
   importedTwinoidAchievements ImportedTwinoidAchievement[]
   importedTwinoidSite         ImportedTwinoidSite[]

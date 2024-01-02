@@ -26509,6 +26509,7 @@ export namespace Prisma {
     teacher: boolean | null
     createdDate: Date | null
     updatedDate: Date | null
+    lastLogin: Date | null
   }
 
   export type PlayerMaxAggregateOutputType = {
@@ -26528,6 +26529,7 @@ export namespace Prisma {
     teacher: boolean | null
     createdDate: Date | null
     updatedDate: Date | null
+    lastLogin: Date | null
   }
 
   export type PlayerCountAggregateOutputType = {
@@ -26547,6 +26549,7 @@ export namespace Prisma {
     teacher: number
     createdDate: number
     updatedDate: number
+    lastLogin: number
     _all: number
   }
 
@@ -26580,6 +26583,7 @@ export namespace Prisma {
     teacher?: true
     createdDate?: true
     updatedDate?: true
+    lastLogin?: true
   }
 
   export type PlayerMaxAggregateInputType = {
@@ -26599,6 +26603,7 @@ export namespace Prisma {
     teacher?: true
     createdDate?: true
     updatedDate?: true
+    lastLogin?: true
   }
 
   export type PlayerCountAggregateInputType = {
@@ -26618,6 +26623,7 @@ export namespace Prisma {
     teacher?: true
     createdDate?: true
     updatedDate?: true
+    lastLogin?: true
     _all?: true
   }
 
@@ -26724,6 +26730,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate: Date
     updatedDate: Date
+    lastLogin: Date
     _count: PlayerCountAggregateOutputType | null
     _avg: PlayerAvgAggregateOutputType | null
     _sum: PlayerSumAggregateOutputType | null
@@ -26762,6 +26769,7 @@ export namespace Prisma {
     teacher?: boolean
     createdDate?: boolean
     updatedDate?: boolean
+    lastLogin?: boolean
     dinoz?: boolean | Player$dinozArgs<ExtArgs>
     importedPlayer?: boolean | Player$importedPlayerArgs<ExtArgs>
     importedTwinoidAchievements?: boolean | Player$importedTwinoidAchievementsArgs<ExtArgs>
@@ -26797,6 +26805,7 @@ export namespace Prisma {
     teacher?: boolean
     createdDate?: boolean
     updatedDate?: boolean
+    lastLogin?: boolean
   }
 
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -26855,6 +26864,7 @@ export namespace Prisma {
       teacher: boolean
       createdDate: Date
       updatedDate: Date
+      lastLogin: Date
     }, ExtArgs["result"]["player"]>
     composites: {}
   }
@@ -27294,6 +27304,7 @@ export namespace Prisma {
     readonly teacher: FieldRef<"Player", 'Boolean'>
     readonly createdDate: FieldRef<"Player", 'DateTime'>
     readonly updatedDate: FieldRef<"Player", 'DateTime'>
+    readonly lastLogin: FieldRef<"Player", 'DateTime'>
   }
     
 
@@ -39812,7 +39823,8 @@ export namespace Prisma {
     priest: 'priest',
     teacher: 'teacher',
     createdDate: 'createdDate',
-    updatedDate: 'updatedDate'
+    updatedDate: 'updatedDate',
+    lastLogin: 'lastLogin'
   };
 
   export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
@@ -41564,6 +41576,7 @@ export namespace Prisma {
     teacher?: BoolFilter<"Player"> | boolean
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
+    lastLogin?: DateTimeFilter<"Player"> | Date | string
     dinoz?: DinozListRelationFilter
     importedPlayer?: XOR<ImportedPlayerNullableRelationFilter, ImportedPlayerWhereInput> | null
     importedTwinoidAchievements?: ImportedTwinoidAchievementListRelationFilter
@@ -41598,6 +41611,7 @@ export namespace Prisma {
     teacher?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
+    lastLogin?: SortOrder
     dinoz?: DinozOrderByRelationAggregateInput
     importedPlayer?: ImportedPlayerOrderByWithRelationInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementOrderByRelationAggregateInput
@@ -41635,6 +41649,7 @@ export namespace Prisma {
     teacher?: BoolFilter<"Player"> | boolean
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
+    lastLogin?: DateTimeFilter<"Player"> | Date | string
     dinoz?: DinozListRelationFilter
     importedPlayer?: XOR<ImportedPlayerNullableRelationFilter, ImportedPlayerWhereInput> | null
     importedTwinoidAchievements?: ImportedTwinoidAchievementListRelationFilter
@@ -41669,6 +41684,7 @@ export namespace Prisma {
     teacher?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
+    lastLogin?: SortOrder
     _count?: PlayerCountOrderByAggregateInput
     _avg?: PlayerAvgOrderByAggregateInput
     _max?: PlayerMaxOrderByAggregateInput
@@ -41696,6 +41712,7 @@ export namespace Prisma {
     teacher?: BoolWithAggregatesFilter<"Player"> | boolean
     createdDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
+    lastLogin?: DateTimeWithAggregatesFilter<"Player"> | Date | string
   }
 
   export type PlayerDinozShopWhereInput = {
@@ -43786,6 +43803,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -43820,6 +43838,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -43853,6 +43872,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -43887,6 +43907,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -43921,6 +43942,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
   }
 
   export type PlayerUpdateManyMutationInput = {
@@ -43939,6 +43961,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PlayerUncheckedUpdateManyInput = {
@@ -43958,6 +43981,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PlayerDinozShopCreateInput = {
@@ -46036,6 +46060,7 @@ export namespace Prisma {
     teacher?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
+    lastLogin?: SortOrder
   }
 
   export type PlayerAvgOrderByAggregateInput = {
@@ -46061,6 +46086,7 @@ export namespace Prisma {
     teacher?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
+    lastLogin?: SortOrder
   }
 
   export type PlayerMinOrderByAggregateInput = {
@@ -46080,6 +46106,7 @@ export namespace Prisma {
     teacher?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
+    lastLogin?: SortOrder
   }
 
   export type PlayerSumOrderByAggregateInput = {
@@ -49214,6 +49241,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
@@ -49247,6 +49275,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
@@ -49677,6 +49706,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
@@ -49710,6 +49740,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -51495,6 +51526,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
@@ -51528,6 +51560,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
@@ -51698,6 +51731,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
@@ -51731,6 +51765,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -52146,6 +52181,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
@@ -52179,6 +52215,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
@@ -52227,6 +52264,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
@@ -52260,6 +52298,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -52292,6 +52331,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -52325,6 +52365,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -52373,6 +52414,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -52406,6 +52448,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -52438,6 +52481,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -52471,6 +52515,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -52519,6 +52564,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -52552,6 +52598,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -53552,6 +53599,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -53585,6 +53633,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -53633,6 +53682,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -53666,6 +53716,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -53698,6 +53749,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -53731,6 +53783,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -53779,6 +53832,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -53812,6 +53866,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -53844,6 +53899,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -53877,6 +53933,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -53925,6 +53982,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -53958,6 +54016,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -53990,6 +54049,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -54023,6 +54083,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -54071,6 +54132,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -54104,6 +54166,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -54136,6 +54199,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -54169,6 +54233,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -54217,6 +54282,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -54250,6 +54316,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -54282,6 +54349,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -54315,6 +54383,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -54363,6 +54432,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -54396,6 +54466,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -54428,6 +54499,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -54461,6 +54533,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -54509,6 +54582,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -54542,6 +54616,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -54652,6 +54727,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -54685,6 +54761,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -54763,6 +54840,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -54796,6 +54874,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -54828,6 +54907,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -54861,6 +54941,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -55033,6 +55114,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -55066,6 +55148,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -55227,6 +55310,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -55260,6 +55344,7 @@ export namespace Prisma {
     teacher: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
+    lastLogin?: Date | string
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -55388,6 +55473,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -55421,6 +55507,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
