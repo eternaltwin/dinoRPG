@@ -299,7 +299,7 @@ export default defineComponent({
 			defenseStats: [] as ReturnType<typeof getDefenseStat>[],
 			SpecialStat: SpecialStat,
 			getSpecialStat,
-			specialStats: [] as ReturnType<typeof getSpecialStat>[]
+			specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[]
 		};
 	},
 	methods: {
@@ -380,7 +380,7 @@ export default defineComponent({
 
 			this.specialStats = Object.values(SpecialStat)
 				.map(stat => getSpecialStat(data, this.dinozSkill, stat as SpecialStat))
-				.filter(Boolean);
+				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 
 			// Refresh special stats on EventBus `refreshInventory`
 			EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
@@ -397,7 +397,11 @@ export default defineComponent({
 				} else if (event === 'equip' && item === itemList.ZIPPO.itemId) {
 					// Add torchDamage stat if lighter was equipped and no other lighter was equipped
 					if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
-						this.specialStats.push(getSpecialStat(this.dinozData, this.dinozSkill, SpecialStat.TORCH_DAMAGE));
+						const torchDamage = getSpecialStat(this.dinozData, this.dinozSkill, SpecialStat.TORCH_DAMAGE);
+
+						if (torchDamage) {
+							this.specialStats.push(torchDamage);
+						}
 					}
 				}
 			});

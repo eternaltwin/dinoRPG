@@ -20,6 +20,7 @@ export enum SpecialStat {
 }
 
 export enum SpecialStatAsPercent {
+	ENERGY = 'energy',
 	MULTIHIT = 'multihit',
 	EVASION = 'evasion',
 	COUNTER = 'counter',
@@ -35,7 +36,7 @@ export const BaseStats = {
 		{} as Record<SpecialStat, number>
 	),
 	[SpecialStat.HP_REGEN]: 1,
-	[SpecialStat.ENERGY]: 100,
+	[SpecialStat.ENERGY]: 1,
 	[SpecialStat.MAX_FOLLOWERS]: 2
 };
 
@@ -120,11 +121,13 @@ export const getSpecialStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], sta
 
 	// Add base details if not 0
 	if (value !== 0) {
+		const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
+
 		details.push({
 			type: 'base',
-			percent: false,
+			percent,
 			elements: [],
-			value
+			value: percent ? value * 100 : value
 		});
 	}
 
