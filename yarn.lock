@@ -3799,7 +3799,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:^8.5.5, @types/ws@npm:^8.5.9":
+"@types/ws@npm:^8, @types/ws@npm:^8.5.5, @types/ws@npm:^8.5.9":
   version: 8.5.10
   resolution: "@types/ws@npm:8.5.10"
   dependencies:
@@ -6233,6 +6233,7 @@ __metadata:
     "@types/swagger-jsdoc": "npm:^6.0.3"
     "@types/swagger-ui-express": "npm:^4.1.6"
     "@types/validator": "npm:^13.11.6"
+    "@types/ws": "npm:^8"
     babel-jest: "npm:^29.7.0"
     body-parser: "npm:^1.20.2"
     concurrently: "npm:^8.2.2"
@@ -6265,6 +6266,7 @@ __metadata:
     tsc-watch: "npm:^6.0.4"
     typescript: "npm:^5.2.2"
     url: "npm:^0.11.3"
+    ws: "npm:^8.15.1"
   languageName: unknown
   linkType: soft
 
@@ -13989,6 +13991,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 815ff01d9bc20a249b2228825d9739268a03a4408c2e0b14d49b0e2ae89d7f10847e813b587ba26992bdc33e9d03bed131e4cae73ff996baf789d53e99c31186
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.15.1":
+  version: 8.15.1
+  resolution: "ws@npm:8.15.1"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 746a3102d43e8df7b09f5814bec858f12d10185a7abd655537f3291b687d440bb80fc9d1e082f8dee42d4d74307f78a96810e18a2c8e13053b003c6608c1c648
   languageName: node
   linkType: hard
 

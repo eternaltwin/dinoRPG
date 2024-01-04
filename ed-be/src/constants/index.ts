@@ -16,9 +16,12 @@ export const apiRoutes = {
 	playerRoute: '/api/v1/player',
 	rankingRoutes: '/api/v1/ranking',
 	shopRoutes: '/api/v1/shop',
-	offerRoutes: '/api/v1/offer'
+	offerRoutes: '/api/v1/offer',
+	webSocketRoute: '/api/v1/websockets'
 };
 
 export const regex = {
 	DINOZ_NAME: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/
 };
+
+export const wsTicketMaxTime = 300000; // 5 minutes (in ms)

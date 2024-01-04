@@ -20,10 +20,22 @@ import offerRoutes from './routes/offer.routes.js';
 import playerRoutes from './routes/player.routes.js';
 import rankingRoutes from './routes/ranking.routes.js';
 import shopRoutes from './routes/shop.routes.js';
+import webSocketRoutes from './routes/websockets.routes.js';
 import { loadConfigFile } from './utils/context.js';
 import { swaggerOptions } from './utils/index.js';
 import { jwtConfig } from './utils/jwt.js';
 import { scheduleOffersExpiration } from './business/offerService.js';
+import http, { IncomingMessage } from 'http';
+import {
+	checkIfClientsAreAlive,
+	connectUserToChannel,
+	disconnectUser,
+	processIncomingMessage,
+	setConnectionToAlive
+} from './business/webSocketService.js';
+import { RawData, WebSocketServer } from 'ws';
+import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
+import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -71,6 +83,7 @@ app.use(shopRoutes);
 app.use(rankingRoutes);
 app.use(offerRoutes);
 app.use(logRoutes);
+app.use(webSocketRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 
@@ -82,4 +95,28 @@ scheduleOffersExpiration();
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+const server = http.createServer(app);
+
+const wss = new WebSocketServer({ server });
+
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+
+wss.on('connection', (ws: WebSocketCustom, req: IncomingMessage) => {
+	try {
+		connectUserToChannel(ws, req);
+	} catch (err) {
+		ws.close();
+	}
+
+	ws.on('message', (data: RawData) => processIncomingMessage(wss as WebSocketServerCustom, ws.id, data));
+
+	ws.on('close', () => disconnectUser(ws));
+
+	ws.on('pong', () => setConnectionToAlive(ws));
+
+	ws.on('error', console.error);
+});
+
+const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
+
+wss.on('close', () => clearInterval(interval));
