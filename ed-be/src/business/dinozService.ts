@@ -384,8 +384,8 @@ export async function buyDinoz(req: Request) {
 	);
 
 	// Update player points and dinoz count
-	await updatePoints(req.auth.playerId, 1);
 	await updateDinozCount(req.auth.playerId, 1);
+	await updatePoints(req.auth.playerId, 1);
 
 	return toDinozFiche(newDinoz);
 }
