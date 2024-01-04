@@ -3401,7 +3401,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ASSAULT]: 10,
+			[Stat.AIR_ASSAULT]: 10
 		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 3
@@ -3617,7 +3617,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.AIR_SPEED]: -0.5
 		},
 		globalEffects: {
-			[Stat.AIR_DEFENSE]: 3,
+			[Stat.AIR_DEFENSE]: 3
 		}
 	},
 	[Skill.PROFESSEUR]: {
@@ -3686,7 +3686,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.AIR_SPEED]: -0.5
 		},
 		globalEffects: {
-			[Stat.AIR_DEFENSE]: 6,
+			[Stat.AIR_DEFENSE]: 6
 		}
 	},
 	[Skill.DJINN]: {

@@ -22,7 +22,7 @@ import { defineComponent } from 'vue';
 import { LogsService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { LogListResponse } from '@drpg/core/returnTypes/log';
+import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { missionsList } from '../../constants/missions.js';
 import { placeList } from '../../constants/place.js';

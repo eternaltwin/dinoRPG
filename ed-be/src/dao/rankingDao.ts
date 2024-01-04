@@ -11,7 +11,7 @@ export async function addPlayerInRanking(playerId: number) {
 export async function getPlayersPoints() {
 	return prisma.ranking.findMany({
 		select: {
-			points: true,
+			points: true
 		}
 	});
 }
@@ -29,10 +29,7 @@ export async function getPlayersAverageRanking(page: number) {
 				}
 			}
 		},
-		orderBy: [
-			{ average: 'desc' },
-			{ player: { name: 'asc' } }
-		],
+		orderBy: [{ average: 'desc' }, { player: { name: 'asc' } }],
 		take: 20,
 		skip: (page - 1) * 20
 	});
@@ -51,15 +48,11 @@ export async function getPlayersSumRanking(page: number) {
 				}
 			}
 		},
-		orderBy: [
-			{ points: 'desc' },
-			{ player: { name: 'asc' } }
-		],
+		orderBy: [{ points: 'desc' }, { player: { name: 'asc' } }],
 		take: 20,
 		skip: (page - 1) * 20
 	});
 }
-
 
 export async function updatePoints(playerId: number, points: number) {
 	const ranking = await prisma.ranking.findUnique({
@@ -68,7 +61,7 @@ export async function updatePoints(playerId: number, points: number) {
 		},
 		select: {
 			points: true,
-			dinozCount: true,
+			dinozCount: true
 		}
 	});
 
@@ -84,7 +77,7 @@ export async function updatePoints(playerId: number, points: number) {
 		},
 		data: {
 			points: newPoints,
-			average: Math.round(newPoints / ranking.dinozCount),
+			average: Math.round(newPoints / ranking.dinozCount)
 		}
 	});
 }
@@ -96,7 +89,7 @@ export async function updateDinozCount(playerId: number, dinozCount: number) {
 		},
 		select: {
 			points: true,
-			dinozCount: true,
+			dinozCount: true
 		}
 	});
 
@@ -110,7 +103,7 @@ export async function updateDinozCount(playerId: number, dinozCount: number) {
 		},
 		data: {
 			dinozCount,
-			average: Math.round(ranking.points / dinozCount),
+			average: Math.round(ranking.points / dinozCount)
 		}
 	});
 }
@@ -125,8 +118,8 @@ export async function getPlayerPositionDAO(playerId: number) {
 			player: {
 				select: {
 					name: true
-				},
-			},
+				}
+			}
 		}
 	});
 

@@ -43,7 +43,7 @@ export async function getDinozShopDetailsRequest(dinozId: number) {
 							id: true,
 							dinozCount: true,
 							points: true,
-							average: true,
+							average: true
 						}
 					}
 				}

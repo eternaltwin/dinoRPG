@@ -150,11 +150,16 @@ export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], ele
 	});
 
 	const result = Math.ceil(
-		0.5 * (secondWeakElement.value + secondWeakElement.globalBonus) + secondWeakElement.bonus +
-		0.5 * (firstWeakElement.value + firstWeakElement.globalBonus) + firstWeakElement.bonus +
-		(element.value + element.bonus) + element.bonus +
-		1.5 * (firstStrongElement.value + firstStrongElement.globalBonus) + firstStrongElement.bonus +
-		1.5 * (secondStrongElement.value + secondStrongElement.globalBonus) + secondStrongElement.bonus
+		0.5 * (secondWeakElement.value + secondWeakElement.globalBonus) +
+			secondWeakElement.bonus +
+			0.5 * (firstWeakElement.value + firstWeakElement.globalBonus) +
+			firstWeakElement.bonus +
+			(element.value + element.bonus) +
+			element.bonus +
+			1.5 * (firstStrongElement.value + firstStrongElement.globalBonus) +
+			firstStrongElement.bonus +
+			1.5 * (secondStrongElement.value + secondStrongElement.globalBonus) +
+			secondStrongElement.bonus
 	);
 
 	return {

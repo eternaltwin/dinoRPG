@@ -13,7 +13,7 @@ export async function postError(e: ErrorFormator, res: Response) {
 		if (!(discordToken && discordChannel)) {
 			console.error(e);
 			return;
-		};
+		}
 		const webhookClient = new WebhookClient({
 			id: discordChannel.value,
 			token: discordToken.value

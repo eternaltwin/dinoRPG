@@ -152,7 +152,7 @@ export const itemNames = [
 	'UNDEFINED'
 ] as const;
 
-export type ItemName = typeof itemNames[number];
+export type ItemName = (typeof itemNames)[number];
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.
