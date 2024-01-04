@@ -1,4 +1,5 @@
-import { FighterResultFiche } from './FighterFiche.mjs';
+import { FightStep } from './FightStep.mjs';
+import { FighterResultFiche } from './DetailedFighter.mjs';
 
 export interface FightResult {
 	opponent: string[];
@@ -6,7 +7,7 @@ export interface FightResult {
 	xpEarned: number;
 	totalHpLost: number;
 	result: boolean;
-	history: string;
+	history: FightStep[];
 	hpLost: {
 		id: number;
 		hpLost: number;
@@ -17,16 +18,13 @@ export interface FightResult {
 	}[];
 }
 
-// This structure needs to be exactly the same as FightResult in native/src/fight/manager.rs
 export interface FightProcessResult {
 	// true: attackers won, false: defenders won
 	winner: boolean;
-	// Seed used to generate random in the fight
-	seed: number;
 	// List of attackers
 	attackers: FighterResultFiche[];
 	// List of defenders
 	defenders: FighterResultFiche[];
 	// History of the fight
-	history: string;
+	steps: FightStep[];
 }

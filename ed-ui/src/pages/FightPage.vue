@@ -22,6 +22,7 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler } from '../utils/errorHandler.js';
 import PixiFight from '../components/fight/PixiFight.vue';
 import { placeList } from '../constants/index.js';
+import translateFightStep from '../utils/translateFightStep.js';
 
 export default defineComponent({
 	name: 'Fight',
@@ -55,7 +56,7 @@ export default defineComponent({
 		...mapActions(playerStore, ['setMoney']),
 		displayFight(): void {
 			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
-			this.fightHistory = this.fight.history.replace(/\n/g, '<br>');
+			this.fightHistory = this.fight.history.map(step => translateFightStep(step, this.$t)).join('<br />');
 		},
 		async processFight() {
 			EventBus.emit('isLoading', true);

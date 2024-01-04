@@ -68,3 +68,5 @@ export const statusList = {
 	HUMISS: 21,
 	SPHERE: 68
 } as const;
+
+export type Status = typeof statusList[keyof typeof statusList];

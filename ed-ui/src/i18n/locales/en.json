@@ -2977,7 +2977,21 @@
 		"lvlup": "A dinoz earned an **extra level**!",
 		"continue": "Continue",
 		"display": "Show the battle",
-		"resume": "You fought an {enemy}"
+		"resume": "You fought an {enemy}",
+		"monster": {
+		},
+		"step": {
+			"arrive": "{name} has arrived !",
+			"resist": "{dinoz} resisted and reduced the damage.",
+			"hit": "{fighter} dealt {damage} damage to {target}.",
+			"poison": "{dinoz} dealt {damage} poison damage to {target}.",
+			"moveTo": "{fighter} moved to {target}.",
+			"moveBack": "{fighter} went back to his position.",
+			"attemptHit": "{fighter} tried attacking {target}.",
+			"evade": "{fighter} evaded the hit.",
+			"death": "{fighter} succumbed to his injuries!",
+			"counter": "{fighter} countered {opponent}."
+		}
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",

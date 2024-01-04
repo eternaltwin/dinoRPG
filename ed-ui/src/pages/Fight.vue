@@ -56,6 +56,7 @@ import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
 import { defineComponent } from 'vue';
 import FightAnimation from '../components/fight/FightAnimation.vue';
+import translateFightStep from '../utils/translateFightStep.js';
 
 export default defineComponent({
 	name: 'Fight',
@@ -100,7 +101,7 @@ export default defineComponent({
 		},
 		displayFight(): void {
 			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
-			this.fightHistory = this.fight.history.replace(/\n/g, '<br>');
+			this.fightHistory = this.fight.history.map(step => translateFightStep(step, this.$t)).join('<br />');
 		}
 	},
 	created(): void {

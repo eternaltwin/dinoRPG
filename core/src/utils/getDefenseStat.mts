@@ -11,7 +11,11 @@ export enum DefenseElement {
 	NEUTRAL = 'void'
 }
 
-export const getDefenseStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], elementName: DefenseElement) => {
+export const getDefenseStat = (
+	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
+	skills: (Pick<DinozSkillFiche, 'effects' | 'name' | 'element' | 'globalEffects'>)[],
+	elementName: DefenseElement,
+) => {
 	const elementWheel = [
 		DefenseElement.FIRE,
 		DefenseElement.WOOD,

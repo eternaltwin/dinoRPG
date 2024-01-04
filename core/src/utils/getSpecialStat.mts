@@ -27,6 +27,8 @@ export enum SpecialStatAsPercent {
 	BUBBLE_RATE = 'bubbleRate'
 }
 
+export type SpecialStatUsedInFights = Exclude<SpecialStat, SpecialStat.HP_REGEN | SpecialStat.MAX_FOLLOWERS>;
+
 export const BaseStats = {
 	...Object.values(SpecialStat).reduce(
 		(acc, value) => {
@@ -40,7 +42,11 @@ export const BaseStats = {
 	[SpecialStat.MAX_FOLLOWERS]: 2
 };
 
-export const getSpecialStat = (dinoz: DinozFiche, skills: DinozSkillFiche[], stat: SpecialStat) => {
+export const getSpecialStat = (
+	dinoz: Pick<DinozFiche, 'items' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
+	skills: (Pick<DinozSkillFiche, 'id' | 'effects' | 'name' | 'element'>)[],
+	stat: SpecialStat,
+) => {
 	// Special case for BUBBLE_RATE (value not influenced by skills)
 	if (stat === SpecialStat.BUBBLE_RATE) {
 		// Return null if no bubble skill

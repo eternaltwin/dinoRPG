@@ -2,23 +2,21 @@ import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
-import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { actualPlace, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozItem, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
-import pkg from 'native-dinorpg';
+import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
+import { createLog } from '../dao/logDao.js';
 import { addMoney } from '../dao/playerDao.js';
+import { sendDiscord } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import generateFight from '../utils/fight/generateFight.js';
+import getFighters from '../utils/fight/getFighters.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
-import { createLog } from '../dao/logDao.js';
-import { sendDiscord } from '../utils/discord.js';
-import gameConfig from '../config/game.config.js';
-
-const { fight_rust } = pkg;
 
 /**
  * @summary Process a fight
@@ -108,48 +106,12 @@ export function calculateFight(
 	})[],
 	monsters: MonsterFiche[]
 ): FightProcessResult {
-	const attackers = team.map(dinoz => {
-		const listDinozItems = dinoz.items.map(item => item.itemId);
-		const listDinozSkills = dinoz.skills.map(skill => skill.skillId);
-		const listDinozStatus = dinoz.status.map(status => status.statusId);
-
-		const attacker = new FighterFiche(
-			dinoz.id,
-			dinoz.level,
-			false,
-			dinoz.name,
-			dinoz.life,
-			[dinoz.nbrUpFire, dinoz.nbrUpWood, dinoz.nbrUpWater, dinoz.nbrUpLightning, dinoz.nbrUpAir],
-			0,
-			0,
-			listDinozItems,
-			listDinozSkills,
-			listDinozStatus
-		);
-
-		return attacker;
-	});
-
-	const defender = monsters.map(monster => {
-		return new FighterFiche(
-			0, // TODO have to find a way to define monster's id without conflicting with a dinoz id
-			0,
-			true,
-			monster.name,
-			monster.hp,
-			[
-				monster.elements.fire,
-				monster.elements.wood,
-				monster.elements.water,
-				monster.elements.lightning,
-				monster.elements.air
-			],
-			1,
-			monster.bonus_defense,
-			[],
-			[],
-			[]
-		);
+	const fighters = getFighters({
+		dinozList: team,
+		monsterList: [],
+	}, {
+		dinozList: [],
+		monsterList: monsters,
 	});
 
 	const fightConfiguration: FightConfiguration = {
@@ -162,13 +124,10 @@ export function calculateFight(
 		is_balance_enabled: true,
 
 		// Fighters
-		attackers,
-		defenders: defender
+		fighters,
 	};
 
-	// console.log(`Configuration: ${JSON.stringify(fightConfiguration)}`);
-
-	return JSON.parse(fight_rust(JSON.stringify(fightConfiguration)));
+	return generateFight(fightConfiguration);
 }
 
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
@@ -306,7 +265,7 @@ export async function rewardFight(
 		xpEarned: fightResult.winner ? totalWinXP : 0,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0),
 		result: fightResult.winner,
-		history: fightResult.history,
+		history: fightResult.steps,
 		hpLost: fightResult.attackers.map(a => ({
 			id: a.dinoz_id,
 			hpLost: a.hp_lost
