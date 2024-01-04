@@ -35,6 +35,7 @@ import {
 } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import { createLog } from '../dao/logDao.js';
+import { updateDinozCount } from '../dao/rankingDao.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -193,6 +194,7 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
 		dinozCreated.id,
 		skillsToAdd.map(skill => skill.id)
 	);
+	await updateDinozCount(playerId, 1);
 }
 
 async function useSpecialItem(
