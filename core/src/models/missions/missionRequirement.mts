@@ -4,7 +4,7 @@ import { MonsterFiche } from '../fight/MonsterFiche.mjs';
 export type missionRequirement =
 	| {
 			actionType: ConditionEnum.KILL;
-			target: string;
+			target: MonsterFiche[];
 			value: number;
 	  }
 	| {

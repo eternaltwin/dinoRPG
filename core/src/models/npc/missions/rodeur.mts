@@ -4,6 +4,7 @@ import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 import { bossList } from '../../fight/BossList.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_RODEUR: Mission[] = [
 	// Missions 49 to 50
@@ -37,7 +38,7 @@ export const M_RODEUR: Mission[] = [
 				place: placeList.MARAIS_COLLANT.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'pira',
+					target: [monsterList.PIRA],
 					value: 30
 				},
 				displayedAction: 'killPira',

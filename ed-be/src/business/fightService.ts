@@ -5,11 +5,11 @@ import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { FighterFiche } from '@drpg/core/models/fight/FighterFiche';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { actualPlace, calculateXPBonus, canWinXP, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
+import { actualPlace, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozItem, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import pkg from 'native-dinorpg';
-import { getDinozFightDataRequest, updateDinoz, updateMultipleDinoz } from '../dao/dinozDao.js';
+import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addMoney } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomNumber } from '../utils/index.js';
@@ -67,7 +67,7 @@ export async function processFight(req: Request) {
 	//If any dinoz is on a mission, check if the fight result progress the mission
 	for (const dinoz of team) {
 		if (dinoz.missions.some(mission => !mission.isFinished)) {
-			await checkMissionFight(dinoz, result);
+			await checkMissionFight(dinoz, result, monster);
 		}
 	}
 
@@ -90,7 +90,7 @@ export async function moveFight(
 		if (dinoz.missions.some(mission => !mission.isFinished)) {
 			const dinozAtFuturePlace = structuredClone(dinoz);
 			dinozAtFuturePlace.placeId = placeId;
-			await checkMissionFight(dinozAtFuturePlace, result);
+			await checkMissionFight(dinozAtFuturePlace, result, monsters);
 		}
 	}
 	return result;

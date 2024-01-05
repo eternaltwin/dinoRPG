@@ -8,5 +8,6 @@ export enum MapZone {
 	NIMBAO = 'zone_nimbao',
 	ILEMONSTRE = 'zone_monisl',
 	ALL = 'all',
-	DARKWORLD = 'zone_atdark'
+	DARKWORLD = 'zone_atdark',
+	NOWHERE = 'nowhere'
 }

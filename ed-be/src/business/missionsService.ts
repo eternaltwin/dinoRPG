@@ -22,6 +22,8 @@ import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
+import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
+import { monsterList } from '@drpg/core/models/fight/MonsterList';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
@@ -275,7 +277,8 @@ export async function checkMissionFight(
 		Pick<Dinoz, 'placeId' | 'id' | 'playerId'> & {
 			missions: DinozMission[];
 		},
-	fight: FightResult
+	fight: FightResult,
+	monsters: MonsterFiche[]
 ) {
 	//Retrieve mission on its way and the step
 	const actualStep = getActualStep(dinoz);
@@ -290,15 +293,16 @@ export async function checkMissionFight(
 			actualStep.place === placeList.ANYWHERE.name) &&
 		fight.result &&
 		actualStep.requirement.actionType === ConditionEnum.KILL &&
-		(actualStep.requirement.target.split(':').filter(value => fight.opponent.includes(value)).length > 0 ||
-			actualStep.requirement.target === 'any')
+		(actualStep.requirement.target.map(t => t.name).includes(monsterList.ANY.name) ||
+			actualStep.requirement.target.map(t => t.name).filter(value => monsters.map(t => t.name).includes(value)).length >
+				0)
 	) {
 		const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
-		const presentOpponents = actualStep.requirement.target.split(':').filter(value => fight.opponent.includes(value));
+		// const presentOpponents = actualStep.requirement.target.filter(value => monsters.includes(value));
 		let count = 0;
-		for (const opponent of fight.opponent) {
-			if (presentOpponents.includes(opponent)) count++;
-			else if (actualStep.requirement.target === 'any') count++;
+		for (const opponent of monsters.map(t => t.name)) {
+			if (actualStep.requirement.target.map(t => t.name).includes(monsterList.ANY.name)) count++;
+			else if (actualStep.requirement.target.map(t => t.name).includes(opponent)) count++;
 		}
 		if (!dinozMission) {
 			throw new ErrorFormator(500, 'No mission found');

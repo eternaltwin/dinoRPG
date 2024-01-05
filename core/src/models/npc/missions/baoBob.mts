@@ -4,6 +4,7 @@ import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
 import { rewardList } from '../../reward/RewardList.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_BAO_BOB: Mission[] = [
 	// Missions 12 to 21
@@ -22,7 +23,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.MARAIS_COLLANT.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'pira',
+					target: [monsterList.PIRA],
 					value: 6
 				},
 				displayedAction: 'killPira'
@@ -162,7 +163,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.DOME_SOULAFLOTTE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'kazka',
+					target: [monsterList.KAZKA],
 					value: 6
 				},
 				displayedAction: 'killKazka',
@@ -202,7 +203,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'anguil',
+					target: [monsterList.ANGUIL],
 					value: 10
 				},
 				displayedAction: 'killAnguil',
@@ -282,7 +283,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'kazka:pira',
+					target: [monsterList.KAZKA, monsterList.PIRA],
 					value: 30
 				},
 				displayedAction: 'killAll',

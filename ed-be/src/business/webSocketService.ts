@@ -181,7 +181,7 @@ function sendMessageToPeopleInChannel(
 		return;
 	}
 
-	sendDiscord(`Message sent to channel ${channel[0]}: ${message}`)
+	sendDiscord(`Message sent to channel ${channel[0]}: ${message}`);
 
 	const usersInChannel = channel[1].filter(user => user.connectionId !== wsId);
 

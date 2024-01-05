@@ -518,5 +518,21 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		odds: 100,
 		level: 15,
 		zone: MapZone.DINOWEST
+	},
+	ANY: {
+		name: 'any',
+		hp: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 40,
+		odds: 1,
+		level: 100,
+		zone: MapZone.NOWHERE
 	}
 };

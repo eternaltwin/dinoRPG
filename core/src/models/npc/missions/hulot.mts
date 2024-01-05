@@ -4,6 +4,7 @@ import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_HULOT: Mission[] = [
 	// Missions 44 to 48
@@ -32,7 +33,7 @@ export const M_HULOT: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'any',
+					target: [monsterList.ANY],
 					value: 6
 				},
 				displayedAction: 'killAny',
@@ -173,7 +174,7 @@ export const M_HULOT: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'bat',
+					target: [monsterList.BAT],
 					value: 1
 				},
 				displayedAction: 'killFauve',
@@ -276,7 +277,7 @@ export const M_HULOT: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon',
+					target: [monsterList.KORGON],
 					value: 4
 				},
 				displayedAction: 'killKorgon',
@@ -297,7 +298,7 @@ export const M_HULOT: Mission[] = [
 				place: placeList.FLEUVE_JUMIN.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'bat',
+					target: [monsterList.BAT],
 					value: 5
 				},
 				displayedAction: 'killBat',
@@ -441,7 +442,7 @@ export const M_HULOT: Mission[] = [
 				place: placeList.FOUTAINE_DE_JOUVENCE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'coq',
+					target: [monsterList.COQ],
 					value: 2
 				},
 				displayedAction: 'killCoqAcharne',

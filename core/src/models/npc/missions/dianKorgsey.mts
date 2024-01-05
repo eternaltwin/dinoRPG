@@ -4,6 +4,7 @@ import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_DIANKORGSEY: Mission[] = [
 	// Missions 22 to 25
@@ -97,7 +98,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon',
+					target: [monsterList.KORGON],
 					value: 10
 				},
 				displayedAction: 'kill_south_korgon',
@@ -158,7 +159,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				place: placeList.PORTE_DE_SYLVENOIRE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'any',
+					target: [monsterList.ANY],
 					value: 6
 				},
 				displayedAction: 'killany',
@@ -248,7 +249,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon',
+					target: [monsterList.KORGON],
 					value: 3
 				},
 				displayedAction: 'killambush_korgons',
@@ -281,7 +282,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon:ronciv',
+					target: [monsterList.KORGON, monsterList.RONCIV],
 					value: 8
 				},
 				displayedAction: 'killalliedK',

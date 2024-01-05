@@ -4,6 +4,7 @@ import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_GARDIEN: Mission[] = [
 	// Missions 37 to 43
@@ -171,7 +172,7 @@ export const M_GARDIEN: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon:ronciv',
+					target: [monsterList.KORGON, monsterList.RONCIV],
 					value: 8
 				},
 				displayedAction: 'killKorRonc',
@@ -300,7 +301,7 @@ export const M_GARDIEN: Mission[] = [
 				place: placeList.AUREE_DE_LA_FORET.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon:ronciv',
+					target: [monsterList.KORGON, monsterList.RONCIV],
 					value: 2
 				},
 				displayedAction: 'killKorRonc',
@@ -311,7 +312,7 @@ export const M_GARDIEN: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon:ronciv',
+					target: [monsterList.KORGON, monsterList.RONCIV],
 					value: 3
 				},
 				displayedAction: 'killKorRonc',
@@ -322,7 +323,7 @@ export const M_GARDIEN: Mission[] = [
 				place: placeList.FLEUVE_JUMIN.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon:ronciv',
+					target: [monsterList.KORGON, monsterList.RONCIV],
 					value: 3
 				},
 				displayedAction: 'killKorRonc',
@@ -333,7 +334,7 @@ export const M_GARDIEN: Mission[] = [
 				place: placeList.JUNGLE_SAUVAGE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'korgon:ronciv',
+					target: [monsterList.KORGON, monsterList.RONCIV],
 					value: 6
 				},
 				displayedAction: 'killKorRonc',
@@ -384,7 +385,7 @@ export const M_GARDIEN: Mission[] = [
 				place: placeList.RUINES_ASHPOUK.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'any',
+					target: [monsterList.ANY],
 					value: 3
 				},
 				displayedAction: 'killAny',
@@ -405,7 +406,7 @@ export const M_GARDIEN: Mission[] = [
 				place: placeList.RUINES_ASHPOUK.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: 'any',
+					target: [monsterList.ANY],
 					value: 6
 				},
 				displayedAction: 'killAny',
