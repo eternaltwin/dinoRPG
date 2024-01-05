@@ -2979,6 +2979,11 @@
 		"display": "Show the battle",
 		"resume": "You fought an {enemy}",
 		"monster": {
+			"goupignon": "Smashroom",
+			"wolf": "Wolf",
+			"gluon": "Gluon",
+			"greeng": "Green Giant",
+			"coq": "Giant Chicken"
 		},
 		"step": {
 			"arrive": "{name} has arrived !",
@@ -2990,7 +2995,8 @@
 			"attemptHit": "{fighter} tried attacking {target}.",
 			"evade": "{fighter} evaded the hit.",
 			"death": "{fighter} succumbed to his injuries!",
-			"counter": "{fighter} countered {opponent}."
+			"counter": "{fighter} countered {opponent}.",
+			"survive": "{dinoz} survived the attack."
 		}
 	},
 	"ingredients": {

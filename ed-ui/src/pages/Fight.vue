@@ -101,7 +101,10 @@ export default defineComponent({
 		},
 		displayFight(): void {
 			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
-			this.fightHistory = this.fight.history.map(step => translateFightStep(step, this.$t)).join('<br />');
+			this.fightHistory = this.fight.history
+				.map(step => translateFightStep(step, this.$t))
+				.filter(Boolean)
+				.join('<br />');
 		}
 	},
 	created(): void {

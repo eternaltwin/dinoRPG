@@ -2943,7 +2943,6 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41301, 31308, 61119],
 		isBaseSkill: false,
 		isSphereSkill: false
-		// TODO: Implement AoE effect
 	},
 	[Skill.GOLEM]: {
 		id: Skill.GOLEM,

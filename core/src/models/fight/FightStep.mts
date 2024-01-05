@@ -55,7 +55,11 @@ export interface PoisonStep {
   target: StepFighter;
   damage: number;
 }
+export interface SurviveStep {
+  action: 'survive';
+  dinoz: StepFighter;
+}
 
 export type FightStep = ArriveStep | ResistStep | HitStep
 | AttemptHitStep | EvadeStep | DeathStep | MoveStep
-| CounterStep | MoveBackStep | PoisonStep;
+| CounterStep | MoveBackStep | PoisonStep | SurviveStep;

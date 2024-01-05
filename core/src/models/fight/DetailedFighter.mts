@@ -2,6 +2,7 @@ import { AssaultElement } from "../../utils/getAssaultStat.mjs";
 import { DefenseElement } from "../../utils/getDefenseStat.mjs";
 import { SpecialStatUsedInFights } from "../../utils/getSpecialStat.mjs";
 import { DinozSkillFiche } from "../dinoz/DinozSkillFiche.mjs";
+import { Skill } from "../dinoz/SkillList.mjs";
 import { Status } from "../dinoz/StatusList.mjs";
 import { ItemFiche } from "../item/ItemFiche.mjs";
 
@@ -19,6 +20,7 @@ export interface DetailedFighter {
 		assault: Record<AssaultElement, number>,
 		defense: Record<DefenseElement, number>,
 		special: Record<SpecialStatUsedInFights, number | undefined>,
+		speed: Record<AssaultElement | 'global', number>,
 	}
 	// Items
 	items: ItemFiche[];
@@ -35,16 +37,29 @@ export interface DetailedFighter {
 	poisonedBy?: {
 		id: number,
 		type: 'dinoz' | 'monster',
+		skill: Skill,
 	},
 	// Burned
 	burnedBy?: {
 		id: number,
 		type: 'dinoz' | 'monster',
 	},
-	// Current element
+	// Elements
+	elements: AssaultElement[],
 	element: AssaultElement,
 	// Min damage
 	minDamage: number,
+	// Can hit flying
+	canHitFlying?: boolean,
+	// Can hit intangible
+	canHitIntangible?: boolean,
+	// Next hit bonus
+	nextHitBonus: number,
+	nextHitMultiplier: number,
+	// Cancel armor
+	cancelArmor?: boolean,
+	// Survival
+	canSurvive?: boolean,
 }
 
 // This structure needs to be exactly the same as FighterResult in native/src/fight/fighter.rs

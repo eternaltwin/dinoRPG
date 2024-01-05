@@ -38,6 +38,15 @@ const getRandomOpponent = (
 ) => {
 	const opponents = getOpponents(fightData, fighter, dinozOnly, monsterOnly);
 
+	// Prioritize dinoz with Rock skill
+	const withRock = opponents.filter((opponent) => opponent.skills.find((skill) => skill.id === Skill.ROCK));
+
+	if (withRock.length) {
+		const random = randomBetween(0, withRock.length - 1);
+
+		return withRock[random];
+	}
+
 	const random = randomBetween(0, opponents.length - 1);
 
 	return opponents[random];
@@ -83,7 +92,7 @@ export const stepFighter = (
 
 const registerHit = (
 	fightData: DetailedFight,
-	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker'>,
+	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'nextHitBonus' | 'nextHitMultiplier'>,
 	opponents: DetailedFighter[],
 	damage: number,
 	skill?: Skill,
@@ -94,11 +103,26 @@ const registerHit = (
 	}), {});
 
 	opponents.forEach((opponent) => {
+		// Reduce damage by bulle percentage
 		if (opponent.stats.special.bubbleRate) {
-			// Reduce damage by bulle percentage
-			actualDamage[opponent.id] = Math.floor(damage * opponent.stats.special.bubbleRate / 100);
+			actualDamage[opponent.id] = Math.round(damage * opponent.stats.special.bubbleRate / 100);
 
 			if (actualDamage[opponent.id] < damage) {
+				// Add resist step
+				fightData.steps.push({
+					action: 'resist',
+					dinoz: stepFighter(opponent),
+				});
+			}
+		}
+
+		// 5% chance to reduce damage by 5 if Skill.CUIRASSE
+		if (opponent.skills.find((s) => s.id === Skill.CUIRASSE)) {
+			const random = Math.random();
+
+			if (random < 0.05) {
+				actualDamage[opponent.id] -= 5;
+
 				// Add resist step
 				fightData.steps.push({
 					action: 'resist',
@@ -137,6 +161,25 @@ const registerHit = (
 			});
 		}
 	});
+
+
+  opponents.forEach((opponent) => {
+    // Survive with 1 HP if canSurvive
+    if (opponent.canSurvive && opponent.hp <= 1) {
+      opponent.canSurvive = false;
+      opponent.hp = 1;
+
+      // Add survival step
+      fightData.steps.push({
+        action: 'survive',
+        dinoz: stepFighter(opponent),
+      });
+    }
+  });
+
+	// Remove next hit bonus
+	fighter.nextHitBonus = 0;
+	fighter.nextHitMultiplier = 1;
 };
 
 const activateSuper = (
@@ -145,6 +188,22 @@ const activateSuper = (
 ): boolean => {
 	// Get current fighter
 	// const fighter = fightData.fighters[0];
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const evadedSkill = (opponent: DetailedFighter) => {
+		if (opponent.hp <= 0) return false;
+
+		let evasion = 0;
+
+		// 10% chance to evade skill with Skill.DEPLACEMENT_INSTANTANE
+		if (opponent.skills.find((s) => s.id === Skill.DEPLACEMENT_INSTANTANE)) {
+			evasion += 0.1;
+		}
+
+		const random = Math.random();
+
+		return random < evasion;
+	};
 
 	switch (skill.id) {
 		case Skill.TORNADE: {
@@ -211,6 +270,9 @@ const attack = (
 	if (damage) {
 		registerHit(fightData, fighter, [opponent], damage);
 	}
+
+	// Change fighter element
+	fighter.element = fighter.elements[fighter.elements.indexOf(fighter.element) + 1 % fighter.elements.length];
 };
 
 export const checkDeaths = (
@@ -225,6 +287,7 @@ export const checkDeaths = (
 		// Only add death step if fighter is dead and hasn't died yet
 		if (fighter.hp <= 0 && fightData.steps.filter((step) => step.action === 'death'
 			&& step.fighter.id === fighter.id
+			&& step.fighter.name === fighter.name
 			&& step.fighter.type === fighter.type).length === 0) {
 			// Add death step
 			fightData.steps.push({
@@ -262,6 +325,15 @@ const startAttack = (
 
 	// Trigger fighter attack
 	attack(fightData, fighter, opponent);
+
+	// Poison fighter if opponent has Skill.AURA_PUANTE
+	if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
+		fighter.poisonedBy = {
+			id: opponent.id,
+			type: opponent.type,
+			skill: Skill.AURA_PUANTE,
+		};
+	}
 
 	// Get combo chances
 	const combo = (fighter.stats.special.multihit ?? 0) / 100;
@@ -348,6 +420,8 @@ export const playFighterTurn = (
 				name: 'God',
 				type: 'monster' as const,
 				attacker: false,
+				nextHitBonus: 0,
+				nextHitMultiplier: 1,
 			};
 
 			// Register the hit
@@ -361,16 +435,29 @@ export const playFighterTurn = (
 			}
 
 			// Get poison damage
-			const poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
+			let poisonDamage = 0;
+			switch (poisonedBy.skill) {
+				case Skill.SANG_ACIDE: {
+					poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
+					break;
+				}
+				case Skill.AURA_PUANTE: {
+					poisonDamage = 10;
+					break;
+				}
+				default:
+					console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
+					break;
+			}
+
 
 			// Register the hit
-			registerHit(fightData, poisoner, [fighter], poisonDamage, Skill.SANG_ACIDE);
+			registerHit(fightData, poisoner, [fighter], poisonDamage, poisonedBy.skill);
 		}
 	}
 
-	// Increase own initiative
-	const random = randomBetween(0, 10);
-	const tempo = 1 + (random / 100);
-
-	fighter.initiative += tempo;
+	// Increase own initiative (1 = a supposed turn) (lower is better)
+	fighter.initiative += 1
+		* fighter.stats.speed.global
+		* fighter.stats.speed[fighter.element];
 };

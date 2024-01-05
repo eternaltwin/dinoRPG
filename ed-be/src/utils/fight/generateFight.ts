@@ -3,6 +3,7 @@ import { FightConfiguration } from "@drpg/core/models/fight/FightConfiguration";
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { checkDeaths, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { Skill } from "@drpg/core/models/dinoz/SkillList";
 
 export type DetailedFight = {
 	loser: 'attackers' | 'defenders' | null,
@@ -63,6 +64,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
         fighter.poisonedBy = {
 					id: -666,
 					type: 'monster',
+					skill: 0 as Skill,
 				};
       });
     }
@@ -79,13 +81,13 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	const winner = fightData.loser === 'defenders';
 
 	// Get dinoz results
-	const attackersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => fighter.attacker && fighter.id).map((dinoz) => ({
+	const attackersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
 		dinoz_id: dinoz.id,
 		hp_lost: dinoz.maxHp - dinoz.hp,
 		items_used: dinoz.itemsUsed,
 	}));
 
-	const defendersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => !fighter.attacker && fighter.id).map((dinoz) => ({
+	const defendersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => !fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
 		dinoz_id: dinoz.id,
 		hp_lost: dinoz.maxHp - dinoz.hp,
 		items_used: dinoz.itemsUsed,

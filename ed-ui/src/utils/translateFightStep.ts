@@ -2,10 +2,16 @@ import { FightStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 
 type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
+const IGNORE_STEPS = ['moveTo', 'moveBack'];
+
 const getFighterName = (fighter: StepFighter, t: TFunction) =>
 	fighter.type === 'dinoz' ? fighter.name : t(`fight.monster.${fighter.name}`);
 
 const translateFightStep = (fightStep: FightStep, t: TFunction) => {
+	if (IGNORE_STEPS.includes(fightStep.action)) {
+		return '';
+	}
+
 	switch (fightStep.action) {
 		case 'arrive':
 			return t(`fight.step.${fightStep.action}`, {
@@ -55,6 +61,10 @@ const translateFightStep = (fightStep: FightStep, t: TFunction) => {
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t),
 				opponent: getFighterName(fightStep.opponent, t)
+			});
+		case 'survive':
+			return t(`fight.step.${fightStep.action}`, {
+				dinoz: getFighterName(fightStep.dinoz, t)
 			});
 		default:
 			return JSON.stringify(fightStep);

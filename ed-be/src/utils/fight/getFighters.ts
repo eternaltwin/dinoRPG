@@ -7,15 +7,84 @@ import { AssaultElement, getAssaultStat } from "@drpg/core/utils/getAssaultStat"
 import { DefenseElement, getDefenseStat } from "@drpg/core/utils/getDefenseStat";
 import { SpecialStat, getSpecialStat } from "@drpg/core/utils/getSpecialStat";
 import { DinozToCalculateFight } from "../../business/fightService.js";
+import { Stat } from "@drpg/core/models/enums/SkillStat";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
   monsterList: MonsterFiche[];
+	[Skill.ELECTROLYSE]?: boolean;
 }
 
-const handleSkills = (fighter: DetailedFighter) => {
-  if (fighter.skills.some((skill) => skill.id === Skill.TENACITE)) {
+const handleSkills = (team: Team, fighter: DetailedFighter) => {
+	const fighterHas = fighter.skills.reduce((acc, skill) => {
+		acc[skill.id as Skill] = true;
+
+		// Process speed changes
+		if (skill.effects?.[Stat.FIRE_SPEED]) {
+			fighter.stats.speed[AssaultElement.FIRE] -= skill.effects[Stat.FIRE_SPEED];
+		}
+		if (skill.effects?.[Stat.WATER_SPEED]) {
+			fighter.stats.speed[AssaultElement.WATER] -= skill.effects[Stat.WATER_SPEED];
+		}
+		if (skill.effects?.[Stat.WOOD_SPEED]) {
+			fighter.stats.speed[AssaultElement.WOOD] -= skill.effects[Stat.WOOD_SPEED];
+		}
+		if (skill.effects?.[Stat.LIGHTNING_SPEED]) {
+			fighter.stats.speed[AssaultElement.LIGHTNING] -= skill.effects[Stat.LIGHTNING_SPEED];
+		}
+		if (skill.effects?.[Stat.AIR_SPEED]) {
+			fighter.stats.speed[AssaultElement.AIR] -= skill.effects[Stat.AIR_SPEED];
+		}
+
+		return acc;
+	}, {} as Record<Skill, boolean>);
+
+	// WOOD
+  if (fighterHas[Skill.TENACITE]) {
 		fighter.minDamage += 1;
+	}
+
+	// AIR
+  if (fighterHas[Skill.SAUT]) {
+		fighter.canHitFlying = true;
+	}
+
+	// 50% chance to get positive / negative initiative
+  if (fighterHas[Skill.DOUBLE_FACE]) {
+		fighter.initiative += Math.random() > 0.5 ? 1 : -1;
+	}
+
+	// FIRE
+	if (fighterHas[Skill.CHARGE]) {
+		fighter.nextHitBonus += 5;
+	}
+
+	if (fighterHas[Skill.BELIER]) {
+		fighter.nextHitBonus += 20;
+	}
+
+	// WATER
+	if (fighterHas[Skill.PERCEPTION]) {
+		fighter.canHitIntangible = true;
+	}
+
+	// RACE
+	if (fighterHas[Skill.CHARGE_CORNUE]) {
+		fighter.nextHitMultiplier += 0.2;
+	}
+
+	if (fighterHas[Skill.PIETINEMENT]) {
+		fighter.cancelArmor = true;
+	}
+
+	// DOUBLE
+	if (fighterHas[Skill.ELECTROLYSE]) {
+		team[Skill.ELECTROLYSE] = true;
+	}
+
+	// SPHERE
+	if (fighterHas[Skill.SURVIE]) {
+		fighter.canSurvive = true;
 	}
 
 	// TODO: handle other skills
@@ -23,6 +92,8 @@ const handleSkills = (fighter: DetailedFighter) => {
 
 const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
   const fighters: DetailedFighter[] = [];
+
+	const existingMonsters: Record<string, number> = {};
 
   [team1, team2].forEach((team, index) => {
     const { dinozList, monsterList } = team;
@@ -92,6 +163,14 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 						[SpecialStat.TORCH_DAMAGE]: getSpecialStat(dinozWithItems, skills, SpecialStat.TORCH_DAMAGE)?.value,
 						[SpecialStat.ACID_BLOOD_DAMAGE]: getSpecialStat(dinozWithItems, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value,
 					},
+					speed: {
+						[AssaultElement.AIR]: 1,
+						[AssaultElement.FIRE]: 1,
+						[AssaultElement.LIGHTNING]: 1,
+						[AssaultElement.WATER]: 1,
+						[AssaultElement.WOOD]: 1,
+						global: 1,
+					},
 				},
 				items,
 				itemsUsed: [],
@@ -99,63 +178,118 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 				skills,
 				status: dinoz.status.map((status) => status.statusId as Status),
 				activeSkills: [],
+				elements: [],
 				element: AssaultElement.AIR,
 				minDamage: 1,
+				nextHitBonus: 0,
+				nextHitMultiplier: 1,
 			};
 
-      handleSkills(fighter);
+      handleSkills(team, fighter);
+
+			// Initiative
+			fighter.initiative -= (fighter.stats.special.initiative ?? 0) / 10;
+
+			// Handle elements (from highest to lowest)
+			const elements = [
+				{ element: AssaultElement.FIRE, value: fighter.stats.assault[AssaultElement.FIRE] },
+				{ element: AssaultElement.WOOD, value: fighter.stats.assault[AssaultElement.WOOD] },
+				{ element: AssaultElement.WATER, value: fighter.stats.assault[AssaultElement.WATER] },
+				{ element: AssaultElement.LIGHTNING, value: fighter.stats.assault[AssaultElement.LIGHTNING] },
+				{ element: AssaultElement.AIR, value: fighter.stats.assault[AssaultElement.AIR] },
+			];
+
+			elements.sort((a, b) => b.value - a.value);
+
+			fighter.elements = elements.map((element) => element.element);
+			fighter.element = fighter.elements[0];
 
 			return fighter;
 		}));
 
 		// Monsters
-		fighters.push(...monsterList.map((monster) => ({
-			id: 0,
-			name: monster.name,
-			level: monster.level,
-			type: 'monster' as const,
-			attacker: index === 0,
-			maxHp: monster.hp,
-			hp: monster.hp,
-			stats: {
-				assault: {
-					[AssaultElement.AIR]: monster.elements.air + (monster.bonus_attack ?? 0),
-					[AssaultElement.FIRE]: monster.elements.fire + (monster.bonus_attack ?? 0),
-					[AssaultElement.LIGHTNING]: monster.elements.lightning + (monster.bonus_attack ?? 0),
-					[AssaultElement.WATER]: monster.elements.water + (monster.bonus_attack ?? 0),
-					[AssaultElement.WOOD]: monster.elements.wood + (monster.bonus_attack ?? 0),
+		fighters.push(...monsterList.map((monster) => {
+			existingMonsters[monster.name] = (existingMonsters[monster.name] ?? 0) + 1;
+
+			return {
+				id: existingMonsters[monster.name],
+				name: monster.name,
+				level: monster.level,
+				type: 'monster' as const,
+				attacker: index === 0,
+				maxHp: monster.hp,
+				hp: monster.hp,
+				stats: {
+					assault: {
+						[AssaultElement.AIR]: monster.elements.air + (monster.bonus_attack ?? 0),
+						[AssaultElement.FIRE]: monster.elements.fire + (monster.bonus_attack ?? 0),
+						[AssaultElement.LIGHTNING]: monster.elements.lightning + (monster.bonus_attack ?? 0),
+						[AssaultElement.WATER]: monster.elements.water + (monster.bonus_attack ?? 0),
+						[AssaultElement.WOOD]: monster.elements.wood + (monster.bonus_attack ?? 0),
+					},
+					defense: {
+						[DefenseElement.AIR]: monster.elements.air + (monster.bonus_defense ?? 0),
+						[DefenseElement.FIRE]: monster.elements.fire + (monster.bonus_defense ?? 0),
+						[DefenseElement.LIGHTNING]: monster.elements.lightning + (monster.bonus_defense ?? 0),
+						[DefenseElement.WATER]: monster.elements.water + (monster.bonus_defense ?? 0),
+						[DefenseElement.WOOD]: monster.elements.wood + (monster.bonus_defense ?? 0),
+						[DefenseElement.NEUTRAL]: monster.bonus_defense ?? 0,
+					},
+					special: {
+						[SpecialStat.INITIATIVE]: 0,
+						[SpecialStat.ENERGY]: 0,
+						[SpecialStat.ENERGY_RECOVERY]: 0,
+						[SpecialStat.ARMOR]: 0,
+						[SpecialStat.MULTIHIT]: 0,
+						[SpecialStat.EVASION]: 0,
+						[SpecialStat.COUNTER]: 0,
+						[SpecialStat.BUBBLE_RATE]: 0,
+						[SpecialStat.TORCH_DAMAGE]: 0,
+						[SpecialStat.ACID_BLOOD_DAMAGE]: 0,
+					},
+					speed: {
+						[AssaultElement.AIR]: 1,
+						[AssaultElement.FIRE]: 1,
+						[AssaultElement.LIGHTNING]: 1,
+						[AssaultElement.WATER]: 1,
+						[AssaultElement.WOOD]: 1,
+						global: 1,
+					},
 				},
-				defense: {
-					[DefenseElement.AIR]: monster.elements.air + (monster.bonus_defense ?? 0),
-					[DefenseElement.FIRE]: monster.elements.fire + (monster.bonus_defense ?? 0),
-					[DefenseElement.LIGHTNING]: monster.elements.lightning + (monster.bonus_defense ?? 0),
-					[DefenseElement.WATER]: monster.elements.water + (monster.bonus_defense ?? 0),
-					[DefenseElement.WOOD]: monster.elements.wood + (monster.bonus_defense ?? 0),
-					[DefenseElement.NEUTRAL]: monster.bonus_defense ?? 0,
-				},
-				special: {
-					[SpecialStat.INITIATIVE]: 0,
-					[SpecialStat.ENERGY]: 0,
-					[SpecialStat.ENERGY_RECOVERY]: 0,
-					[SpecialStat.ARMOR]: 0,
-					[SpecialStat.MULTIHIT]: 0,
-					[SpecialStat.EVASION]: 0,
-					[SpecialStat.COUNTER]: 0,
-					[SpecialStat.BUBBLE_RATE]: 0,
-					[SpecialStat.TORCH_DAMAGE]: 0,
-					[SpecialStat.ACID_BLOOD_DAMAGE]: 0,
-				},
-			},
-			items: [],
-			itemsUsed: [],
-			initiative: 0,
-			skills: [],
-			status: [],
-			activeSkills: [],
-			element: AssaultElement.AIR,
-			minDamage: 1,
-		})));
+				items: [],
+				itemsUsed: [],
+				initiative: 0,
+				skills: [],
+				status: [],
+				activeSkills: [],
+				elements: [
+					AssaultElement.FIRE,
+					AssaultElement.WOOD,
+					AssaultElement.WATER,
+					AssaultElement.LIGHTNING,
+					AssaultElement.AIR,
+				],
+				element: AssaultElement.FIRE,
+				minDamage: 1,
+				nextHitBonus: 0,
+				nextHitMultiplier: 1,
+			};
+		}));
   });
+
+	// Handle team wide modifiers
+	if (team1[Skill.ELECTROLYSE]) {
+		fighters.forEach((fighter) => {
+			if (!fighter.attacker) return;
+			fighter.stats.speed.global -= 0.05;
+		});
+	}
+	if (team2[Skill.ELECTROLYSE]) {
+		fighters.forEach((fighter) => {
+			if (fighter.attacker) return;
+			fighter.stats.speed.global -= 0.05;
+		});
+	}
 
   return fighters;
 };
