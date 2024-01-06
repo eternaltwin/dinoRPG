@@ -352,10 +352,10 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 		// FIRE
 		if (team[Skill.CHEF_DE_GUERRE]) {
 			fighter.stats.assault[AssaultElement.AIR] += 2;
-			fighter.stats.defense[DefenseElement.FIRE] += 2;
-			fighter.stats.defense[DefenseElement.WOOD] += 2;
-			fighter.stats.defense[DefenseElement.WATER] += 2;
-			fighter.stats.defense[DefenseElement.LIGHTNING] += 2;
+			fighter.stats.assault[AssaultElement.FIRE] += 2;
+			fighter.stats.assault[AssaultElement.WOOD] += 2;
+			fighter.stats.assault[AssaultElement.WATER] += 2;
+			fighter.stats.assault[AssaultElement.LIGHTNING] += 2;
 		}
 		// WOOD
 		if (team[Skill.GARDE_FORESTIER]) {
@@ -363,7 +363,7 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 		}
 		// LIGHTNING
 		if (team[Skill.ELECTROLYSE]) {
-			fighter.stats.speed.global -= 0.05;
+			fighter.stats.speed.global *= 0.95;
 		}
 	});
 
