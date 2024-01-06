@@ -30,6 +30,15 @@ const getDamage = (
 				fixedDamage = true;
 				return opponent.stats.base[AssaultElement.WOOD];
 			}
+			case Skill.BOULE_DE_FEU: {
+				return 7 * fighter.stats.base[AssaultElement.FIRE];
+			}
+			case Skill.COULEE_DE_LAVE: {
+				return 12 * fighter.stats.base[AssaultElement.FIRE];
+			}
+			case Skill.METEORES: {
+				return 10 * fighter.stats.base[AssaultElement.FIRE];
+			}
 			default: {
 				return 0;
 			}

@@ -519,6 +519,38 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		level: 15,
 		zone: MapZone.DINOWEST
 	},
+	KORGON_REINFORCEMENT: {
+		name: 'rkrgns',
+		hp: 10,
+		elements: {
+			fire: 1,
+			wood: 3,
+			water: 1,
+			lightning: 1,
+			air: 1
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		odds: 0,
+		level: 0,
+		zone: MapZone.ALL
+	},
+	GORILLOZ_SPIRIT: {
+		name: 'egrllz',
+		hp: 40,
+		elements: {
+			fire: 5,
+			wood: 8,
+			water: 3,
+			lightning: 3,
+			air: 3
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		odds: 0,
+		level: 0,
+		zone: MapZone.ALL
+	},
 	ANY: {
 		name: 'any',
 		hp: 30,

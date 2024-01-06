@@ -2,12 +2,59 @@
 
 import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
-import { DetailedFighter } from "@drpg/core/models/fight/DetailedFighter";
+import { BadFighterStatus, DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { StepFighter } from "@drpg/core/models/fight/FightStep";
 import { DetailedFight } from "./generateFight.js";
 import getDamage from "./getDamage.js";
 import randomBetween from "./randomBetween.js";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
+import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
+import { initializeMonster } from "./getFighters.js";
+import { monsterList } from "@drpg/core/models/fight/MonsterList";
+import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
+
+export const getFighters = (
+	fightData: DetailedFight,
+	dinozOnly?: boolean,
+	monsterOnly?: boolean,
+) => {
+	let fighters = [];
+
+	// Remove dead fighters
+	fighters = fightData.fighters.filter((f) => f.hp > 0);
+
+	if (dinozOnly) {
+		fighters = fighters.filter((f) => f.type === 'dinoz');
+	}
+
+	if (monsterOnly) {
+		fighters = fighters.filter((f) => f.type === 'monster');
+	}
+
+	return fighters;
+}
+
+export const getAllies = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	dinozOnly?: boolean,
+	monsterOnly?: boolean,
+) => {
+	let allies = [];
+
+	// Remove Dead fighters and other team
+	allies = fightData.fighters.filter((f) => f.hp > 0 && f.attacker === fighter.attacker);
+
+	if (dinozOnly) {
+		allies = allies.filter((f) => f.type === 'dinoz');
+	}
+
+	if (monsterOnly) {
+		allies = allies.filter((f) => f.type === 'monster');
+	}
+
+	return allies;
+}
 
 export const getOpponents = (
 	fightData: DetailedFight,
@@ -56,7 +103,7 @@ const getRandomOpponent = (
 const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 	// TODO: Handle items usage as an event
 
-	const events = dinoz.skills.filter((skill) => skill.activatable && skill.type === SkillType.E);
+	const events = dinoz.skills.filter((skill) => skill.type === SkillType.E);
 
 	if (!events.length) return null;
 
@@ -67,7 +114,7 @@ const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 		// Skip if not enough energy
 		if (dinoz.energy < event.energy) continue;
 
-		if (randomBetween(0, 100) < (event.probability ?? 0)) {
+		if (randomBetween(1, 100) < (event.probability ?? 0)) {
 			return event;
 		}
 	}
@@ -76,7 +123,7 @@ const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 };
 
 const randomlyGetSkill = (fightData: DetailedFight, dinoz: DetailedFighter) => {
-	const skills = dinoz.skills.filter((skill) => skill.activatable && skill.type === SkillType.A);
+	const skills = dinoz.skills.filter((skill) => skill.type === SkillType.A);
 
 	if (!skills.length) return null;
 
@@ -87,7 +134,7 @@ const randomlyGetSkill = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 		// Skip if not enough energy
 		if (dinoz.energy < skill.energy) continue;
 
-		if (randomBetween(0, 100) < (skill.probability ?? 0)) {
+		if (randomBetween(1, 100) < (skill.probability ?? 0)) {
 			return skill;
 		}
 	}
@@ -161,6 +208,9 @@ const registerHit = (
 			damage: actualDamage[opponent.id],
 			skill,
 		});
+
+		// Wake up
+		removeStatus(fightData, opponent, FighterStatus.ASLEEP);
 	});
 
 
@@ -264,6 +314,30 @@ const targetAllOpponents = (
 	});
 };
 
+const createMonster = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	monsterData: MonsterFiche,
+) => {
+	// Count monsters of this type
+	const count = fightData.fighters.filter((f) => f.type === 'monster' && f.name === monsterData.name).length;
+
+	// Initialize monster
+	const monster = initializeMonster(
+		{ [monsterData.name]: count + 1 },
+		fighter.attacker ? 0 : 1,
+		monsterData,
+	);
+
+	// Adjust initiative
+	monster.initiative = fighter.initiative;
+
+	// Add monster to fighters
+	fightData.fighters.push(monster);
+
+	return monster;
+};
+
 const activateEvent = (
 	fightData: DetailedFight,
 	skill: DinozSkillFiche,
@@ -284,6 +358,70 @@ const activateEvent = (
 			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
+		// WOOD
+		case Skill.RENFORTS_KORGON: {
+			createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
+			break;
+		}
+		case Skill.VIGNES: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			if (!opponent.status.includes(FighterStatus.FLYING)) {
+				// Reduce opponent initiative
+				opponent.initiative += 1.5;
+			}
+			break;
+		}
+		case Skill.RESISTANCE_A_LA_MAGIE: {
+			// Remove all bad status
+			removeStatus(fightData, fighter, ...fighter.status.filter((s) => !BadFighterStatus.includes(s)));
+			break;
+		}
+		case Skill.ETAT_PRIMAL: {
+			getFighters(fightData).forEach((f) => {
+				// Remove team bad status
+				if (f.attacker === fighter.attacker) {
+					removeStatus(fightData, f, ...f.status.filter((s) => !BadFighterStatus.includes(s)));
+				} else {
+					// Remove opponent team good status
+					removeStatus(fightData, f, ...f.status.filter((s) => BadFighterStatus.includes(s)));
+				}
+			});
+			break;
+		}
+		case Skill.PRINTEMPS_PRECOCE: {
+			// Heal all allies
+			getAllies(fightData, fighter).forEach((f) => {
+				// Skip self
+				if (f.id === fighter.id && f.type === fighter.type) return;
+
+				// Heal 1-wood HP
+				let hpHealed = randomBetween(1, fighter.stats.base[AssaultElement.WOOD]);
+
+				// Don't overheal
+				if (f.hp + hpHealed > f.maxHp) {
+					hpHealed = f.maxHp - f.hp;
+				}
+
+				f.hp += hpHealed;
+
+				// Add heal step
+				fightData.steps.push({
+					action: 'heal',
+					fighter: stepFighter(f),
+					hp: hpHealed,
+				});
+			});
+			break;
+		}
+		case Skill.ESPRIT_GORILLOZ: {
+			const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
+
+			// Set intangible
+			addStatus(fightData, monster, FighterStatus.INTANGIBLE);
+			break;
+		}
 		default:
 			return false;
 	}
@@ -302,6 +440,52 @@ const activateEvent = (
 	return true;
 };
 
+const addStatus = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	status: FighterStatus,
+) => {
+	// Check if fighter already has the status
+	if (fighter.status.includes(status)) return;
+
+	// Bad status
+	const isBad = BadFighterStatus.includes(status);
+
+	// Negate if SELF_CONTROL
+	if (isBad && fighter.skills.find((skill) => skill.id === Skill.SELF_CONTROL)) return;
+
+	// Add status
+	fighter.status.push(status);
+
+	// Add status step
+	fightData.steps.push({
+		action: 'addStatus',
+		fighter: stepFighter(fighter),
+		status,
+	});
+};
+
+const removeStatus = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	...statusList: FighterStatus[]
+) => {
+	statusList.forEach((status) => {
+		// Check if fighter has the status
+		if (!fighter.status.includes(status)) return;
+
+		// Add status step
+		fightData.steps.push({
+			action: 'removeStatus',
+			fighter: stepFighter(fighter),
+			status,
+		});
+	});
+
+	// Remove status
+	fighter.status = fighter.status.filter((s) => !statusList.includes(s));
+}
+
 const activateSkill = (
 	fightData: DetailedFight,
 	skill: DinozSkillFiche,
@@ -311,8 +495,14 @@ const activateSkill = (
 
 	switch (skill.id) {
 		// FIRE
-		case Skill.SOUFFLE_ARDENT: {
+		case Skill.SOUFFLE_ARDENT:
+		case Skill.METEORES: {
 			targetAllOpponents(fightData, fighter, skill);
+			break;
+		}
+		case Skill.BOULE_DE_FEU:
+		case Skill.COULEE_DE_LAVE: {
+			targetSingleOpponent(fightData, fighter, skill);
 			break;
 		}
 		case Skill.PAUME_CHALUMEAU: {
@@ -335,6 +525,22 @@ const activateSkill = (
 				fighter: stepFighter(fighter),
 				hp: hpLost,
 			});
+			break;
+		}
+		case Skill.SIESTE: {
+			// Heal 1-20 HP
+			const hpHealed = randomBetween(1, 20);
+			fighter.hp += hpHealed;
+
+			// Add heal step
+			fightData.steps.push({
+				action: 'heal',
+				fighter: stepFighter(fighter),
+				hp: hpHealed,
+			});
+
+			// Fall asleep
+			addStatus(fightData, fighter, FighterStatus.ASLEEP);
 			break;
 		}
 		default:
@@ -409,8 +615,17 @@ const attack = (
 		registerHit(fightData, fighter, [opponent], damage);
 	}
 
+	// Torch damage
+	if (fighter.status.includes(FighterStatus.TORCHED)) {
+		const damage = fighter.stats.special.torchDamage ?? 0;
+
+		registerHit(fightData, fighter, [opponent], damage, Skill.TORCHE);
+	}
+
 	// Change fighter element
-	fighter.element = fighter.elements[fighter.elements.indexOf(fighter.element) + 1 % fighter.elements.length];
+	if (!fighter.status.includes(FighterStatus.LOCKED)) {
+		fighter.element = fighter.elements[fighter.elements.indexOf(fighter.element) + 1 % fighter.elements.length];
+	}
 };
 
 export const checkDeaths = (
@@ -508,6 +723,11 @@ export const playFighterTurn = (
 		f.energy += (f.stats.special.energyRecovery ?? 1) * 5;
 	});
 
+	// Torch damage
+	if (fighter.status.includes(FighterStatus.TORCHED)) {
+		registerHit(fightData, fighter, [fighter], 1, Skill.TORCHE);
+	}
+
 	// Event activation
 	const possibleEvent = randomlyGetEvent(fightData, fighter);
 	if (possibleEvent) {
@@ -517,10 +737,10 @@ export const playFighterTurn = (
 	// Skill activation
 	const possibleSkill = randomlyGetSkill(fightData, fighter);
 	if (possibleSkill) {
-    // End turn if skill activated
-    if (activateSkill(fightData, possibleSkill)) {
-      return;
-    }
+		// End turn if skill activated
+		if (activateSkill(fightData, possibleSkill)) {
+			return;
+		}
 	}
 
 	// Get opponent

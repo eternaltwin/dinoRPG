@@ -1,4 +1,5 @@
 import { Skill } from "../dinoz/SkillList.mjs";
+import { FighterStatus } from "./DetailedFighter.mjs";
 
 export interface StepFighter {
 	id: number;
@@ -51,12 +52,6 @@ export interface MoveBackStep {
   action: 'moveBack';
   fighter: StepFighter;
 }
-export interface PoisonStep {
-  action: 'poison';
-  fighter: StepFighter;
-  target: StepFighter;
-  damage: number;
-}
 export interface SurviveStep {
   action: 'survive';
   dinoz: StepFighter;
@@ -77,8 +72,24 @@ export interface LooseHpStep {
 	fighter: StepFighter;
 	hp: number;
 }
+export interface HealStep {
+	action: 'heal';
+	fighter: StepFighter;
+	hp: number;
+}
+export interface AddStatusStep {
+	action: 'addStatus';
+	fighter: StepFighter;
+	status: FighterStatus;
+}
+export interface RemoveStatusStep {
+	action: 'removeStatus';
+	fighter: StepFighter;
+	status: FighterStatus;
+}
 
 export type FightStep = ArriveStep | ResistStep | HitStep
 | AttemptHitStep | EvadeStep | DeathStep | MoveStep
 | CounterStep | MoveBackStep | SurviveStep
-| SkillActivateStep | SkillExpireStep | LooseHpStep;
+| SkillActivateStep | SkillExpireStep | LooseHpStep
+| HealStep | AddStatusStep | RemoveStatusStep;

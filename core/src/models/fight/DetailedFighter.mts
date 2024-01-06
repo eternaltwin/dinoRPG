@@ -3,8 +3,36 @@ import { DefenseElement } from "../../utils/getDefenseStat.mjs";
 import { SpecialStatUsedInFights } from "../../utils/getSpecialStat.mjs";
 import { DinozSkillFiche } from "../dinoz/DinozSkillFiche.mjs";
 import { Skill } from "../dinoz/SkillList.mjs";
-import { Status } from "../dinoz/StatusList.mjs";
 import { ItemFiche } from "../item/ItemFiche.mjs";
+
+export enum FighterStatus {
+	ASLEEP,
+	SLOWED,
+	PETRIFIED,
+	POISONED,
+	BURNED,
+	LOCKED,
+	DAZZLED,
+	STUNNED,
+	TORCHED,
+	INTANGIBLE,
+	FLYING,
+	QUICKENED,
+	SHIELDED,
+	BLESSED,
+	HEALING,
+};
+
+export const BadFighterStatus = [
+	FighterStatus.ASLEEP,
+	FighterStatus.SLOWED,
+	FighterStatus.PETRIFIED,
+	FighterStatus.POISONED,
+	FighterStatus.BURNED,
+	FighterStatus.LOCKED,
+	FighterStatus.DAZZLED,
+	FighterStatus.STUNNED,
+];
 
 export interface DetailedFighter {
   // Metadata
@@ -32,7 +60,7 @@ export interface DetailedFighter {
   // Available skills
   skills: DinozSkillFiche[],
   // Current status
-  status: Status[],
+  status: FighterStatus[],
   // Active skills
   activeSkills: Skill[],
 	// Poisoned
@@ -52,10 +80,8 @@ export interface DetailedFighter {
 	// Min damage
 	minDamage: number,
 	// Flying
-	flying?: boolean,
 	canHitFlying?: boolean,
 	// Intangible
-	intangible?: boolean,
 	canHitIntangible?: boolean,
 	// Next hit bonus
 	nextHitBonus: number,
