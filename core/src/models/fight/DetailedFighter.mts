@@ -57,8 +57,8 @@ export interface DetailedFighter {
 	// Items
 	items: ItemFiche[];
 	itemsUsed: number[];
-  // Initiative
-  initiative: number, // Lower attacks next
+  // Time of the fighter, determines when its turn is
+  time: number, // Lower attacks next
   // Available skills
   skills: DinozSkillFiche[],
   // Current status

@@ -10,7 +10,7 @@ export type DetailedFight = {
 	steps: FightStep[],
 	initialDinozList: DinozToGetFighter[],
 	fighters: DetailedFighter[],
-	initiative: number,
+	time: number,
 };
 
 const orderFighters = (fightData: DetailedFight) => {
@@ -19,11 +19,11 @@ const orderFighters = (fightData: DetailedFight) => {
     if (a.hp <= 0) return 1;
     if (b.hp <= 0) return -1;
     // Random is initiatives are equal
-    if (a.initiative === b.initiative) {
+    if (a.time === b.time) {
       return Math.random() > 0.5 ? 1 : -1;
     }
     // Lower initiative first
-    return a.initiative - b.initiative;
+    return a.time - b.time;
   });
 };
 
@@ -33,7 +33,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		steps: [] as FightStep[],
 		initialDinozList: config.initialDinozList,
 		fighters: config.fighters,
-		initiative: 0,
+		time: 0,
 	};
 
 	// Add arrive step for all fighters
@@ -55,9 +55,6 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
     // Order fighters by initiative (random if equal)
     orderFighters(fightData);
-
-    // Set current initiative to first fighter
-    fightData.initiative = fightData.fighters[0].initiative;
 
     // Poison fighters if turn > 1000
     if (turn > 1000) {

@@ -103,7 +103,7 @@ export const initializeDinoz = (
 		},
 		items,
 		itemsUsed: [],
-		initiative: 0,
+		time: 0,
 		skills,
 		status: [],
 		activeSkills: [],
@@ -130,9 +130,9 @@ export const initializeDinoz = (
 
 	// Initiative
 	// Deduct the initiative from the fighter's initial time
-	fighter.initiative -= (fighter.stats.special.initiative ?? 0) / 10;
+	fighter.time -= (fighter.stats.special.initiative ?? 0) / 10;
 	// Add a random amount of initiative between 0 and 10 to randomize the first fighter
-	fighter.initiative += Math.round(Math.random() * 10);
+	fighter.time += Math.round(Math.random() * 10);
 
 	// Energy
 	fighter.energy = (fighter.stats.special.energy ?? 1) * 100;
@@ -223,7 +223,7 @@ export const initializeMonster = (
 		},
 		items: [],
 		itemsUsed: [],
-		initiative: 0,
+		time: 0,
 		skills: [],
 		status: [],
 		activeSkills: [],
@@ -315,7 +315,7 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 
 	// 50% chance to get positive / negative initiative
   if (fighterHas[Skill.DOUBLE_FACE]) {
-		fighter.initiative += Math.random() > 0.5 ? 1 : -1;
+		fighter.time += Math.random() > 0.5 ? 1 : -1;
 	}
 
 	// RACE

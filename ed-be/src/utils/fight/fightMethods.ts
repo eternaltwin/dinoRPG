@@ -367,7 +367,7 @@ const createMonster = (
 	);
 
 	// Adjust initiative
-	monster.initiative = fighter.initiative;
+	monster.time = fighter.time;
 
 	// Add monster to fighters
 	fightData.fighters.push(monster);
@@ -414,7 +414,7 @@ const activateEvent = (
 
 			if (!opponent.status.includes(FighterStatus.FLYING)) {
 				// Reduce opponent initiative
-				opponent.initiative += 1.5;
+				opponent.time += 1.5;
 			}
 			break;
 		}
@@ -486,7 +486,7 @@ const activateEvent = (
 			clone.type = 'clone';
 
 			// Adjust initiative
-			clone.initiative = fighter.initiative;
+			clone.time = fighter.time;
 
 			// Add clone to fighters
 			fightData.fighters.push(clone);
@@ -582,7 +582,7 @@ const activateSkill = (
 			targetSingleOpponent(fightData, fighter, skill);
 
 			// Increase initiative
-			fighter.initiative += 1.5;
+			fighter.time += 1.5;
 			break;
 		}
 		case Skill.KAMIKAZE: {
@@ -897,11 +897,17 @@ export const playFighterTurn = (
 ) => {
 	const attacker = fightData.fighters[0];
 
+	// Calculate the elapsed time
+	const elapsed_time = attacker.time - fightData.time;
+		
+    // Set current initiative to first fighter
+    fightData.time = fightData.fighters[0].time;
+
 	// 1. Recover energy for all fighters except the current one
 	fightData.fighters.forEach((f) => {
 		if (f.id === attacker.id) return;
 		// TODO multiply by the time elapsed since the last turn
-		f.energy += (f.stats.special.energyRecovery ?? 1) * 5;
+		f.energy += (f.stats.special.energyRecovery ?? 1) * elapsed_time * 5;
 	});
 
 	// TODO
@@ -1047,5 +1053,5 @@ export const playFighterTurn = (
 		time /= 1.5;
 	}
 
-	attacker.initiative += time;
+	attacker.time += time;
 };
