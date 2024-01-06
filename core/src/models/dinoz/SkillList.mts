@@ -1844,13 +1844,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.CANON_A_EAU,
 		name: 'CanonAEau',
 		type: SkillType.A,
-		energy: Energy.E20,
+		energy: Energy.E5,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 25,
 	},
 	[Skill.PERCEPTION]: {
 		id: Skill.PERCEPTION,
@@ -1907,7 +1909,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31101],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 10
 	},
 	[Skill.DOUCHE_ECOSSAISE]: {
 		id: Skill.DOUCHE_ECOSSAISE,
@@ -1919,7 +1923,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31101],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 40,
 	},
 	[Skill.COUP_SOURNOIS]: {
 		id: Skill.COUP_SOURNOIS,
@@ -1931,7 +1937,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31102],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 7,
 	},
 	[Skill.APPRENTI_PECHEUR]: {
 		id: Skill.APPRENTI_PECHEUR,
@@ -2061,7 +2069,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31203],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 2
 	},
 	[Skill.ENTRAINEMENT_SOUS_MARIN]: {
 		id: Skill.ENTRAINEMENT_SOUS_MARIN,
@@ -2100,7 +2110,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31204],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 6,
+		probability: 5
 	},
 	[Skill.SUMO]: {
 		id: Skill.SUMO,
@@ -2133,13 +2145,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.CLONE_AQUEUX,
 		name: 'CloneAqueux',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31206],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 8,
+		probability: 15
 	},
 	[Skill.GRIFFES_EMPOISONNEES]: {
 		id: Skill.GRIFFES_EMPOISONNEES,

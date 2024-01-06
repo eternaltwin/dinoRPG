@@ -1,5 +1,5 @@
 import { DetailedFighter, FighterResultFiche } from "@drpg/core/models/fight/DetailedFighter";
-import { FightConfiguration } from "@drpg/core/models/fight/FightConfiguration";
+import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/FightConfiguration";
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { checkDeaths, playFighterTurn, stepFighter } from "./fightMethods.js";
@@ -8,6 +8,7 @@ import { Skill } from "@drpg/core/models/dinoz/SkillList";
 export type DetailedFight = {
 	loser: 'attackers' | 'defenders' | null,
 	steps: FightStep[],
+	initialDinozList: DinozToGetFighter[],
 	fighters: DetailedFighter[],
 	initiative: number,
 };
@@ -30,6 +31,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
   const fightData: DetailedFight = {
 		loser: null,
 		steps: [] as FightStep[],
+		initialDinozList: config.initialDinozList,
 		fighters: config.fighters,
 		initiative: 0,
 	};

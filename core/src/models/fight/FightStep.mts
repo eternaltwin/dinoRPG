@@ -1,10 +1,10 @@
 import { Skill } from "../dinoz/SkillList.mjs";
-import { FighterStatus } from "./DetailedFighter.mjs";
+import { FighterStatus, FighterType } from "./DetailedFighter.mjs";
 
 export interface StepFighter {
 	id: number;
   name: string;
-  type: 'dinoz' | 'monster';
+  type: FighterType;
   attacker: boolean;
 }
 

@@ -34,12 +34,14 @@ export const BadFighterStatus = [
 	FighterStatus.STUNNED,
 ];
 
+export type FighterType = 'dinoz' | 'monster' | 'boss' | 'clone';
+
 export interface DetailedFighter {
   // Metadata
   id: number;
   name: string;
   level: number;
-  type: 'dinoz' | 'monster';
+  type: FighterType;
 	attacker: boolean;
   // Raw stats
   maxHp: number;
@@ -66,13 +68,13 @@ export interface DetailedFighter {
 	// Poisoned
 	poisonedBy?: {
 		id: number,
-		type: 'dinoz' | 'monster',
+		type: FighterType,
 		skill: Skill,
 	},
 	// Burned
 	burnedBy?: {
 		id: number,
-		type: 'dinoz' | 'monster',
+		type: FighterType,
 	},
 	// Elements
 	elements: AssaultElement[],

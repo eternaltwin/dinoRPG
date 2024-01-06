@@ -1,4 +1,13 @@
+import { Dinoz, DinozItem, DinozSkill } from '@drpg/prisma';
 import { DetailedFighter } from './DetailedFighter.mjs';
+
+export type DinozToGetFighter = Pick<
+	Dinoz,
+	'id' | 'level' | 'name' | 'life' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpWater' | 'nbrUpLightning' | 'nbrUpAir'
+> & {
+	items: Pick<DinozItem, 'itemId'>[];
+	skills: Pick<DinozSkill, 'skillId'>[];
+}
 
 export interface FightConfiguration {
 	// Seed (optional, only to replay a fight)
@@ -13,5 +22,6 @@ export interface FightConfiguration {
 	is_balance_enabled: boolean;
 
 	// Fighters
+	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 }

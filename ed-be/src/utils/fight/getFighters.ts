@@ -17,7 +17,7 @@ interface Team {
 }
 
 export const initializeDinoz = (
-	team: Team,
+	team: Team | null,
 	teamIndex: number,
 	dinoz: DinozToCalculateFight
 ) => {
@@ -231,7 +231,7 @@ export const initializeMonster = (
 	};
 };
 
-const handleSkills = (team: Team, fighter: DetailedFighter) => {
+const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 	const fighterHas = fighter.skills.reduce((acc, skill) => {
 		acc[skill.id as Skill] = true;
 
@@ -264,7 +264,7 @@ const handleSkills = (team: Team, fighter: DetailedFighter) => {
 		fighter.nextHitBonus += 20;
 	}
 
-	if (fighterHas[Skill.CHEF_DE_GUERRE]) {
+	if (team && fighterHas[Skill.CHEF_DE_GUERRE]) {
 		team[Skill.CHEF_DE_GUERRE] = true;
 	}
 
@@ -277,8 +277,17 @@ const handleSkills = (team: Team, fighter: DetailedFighter) => {
 		fighter.minDamage += 1;
 	}
 
-  if (fighterHas[Skill.GARDE_FORESTIER]) {
+  if (team && fighterHas[Skill.GARDE_FORESTIER]) {
 		team[Skill.GARDE_FORESTIER] = true;
+	}
+
+	// WATER
+	if (fighterHas[Skill.PERCEPTION]) {
+		fighter.canHitIntangible = true;
+	}
+
+	if (fighterHas[Skill.KARATE_SOUS_MARIN]) {
+		fighter.stats.base[AssaultElement.WATER] += 10;
 	}
 
 	// AIR
@@ -291,11 +300,6 @@ const handleSkills = (team: Team, fighter: DetailedFighter) => {
 		fighter.initiative += Math.random() > 0.5 ? 1 : -1;
 	}
 
-	// WATER
-	if (fighterHas[Skill.PERCEPTION]) {
-		fighter.canHitIntangible = true;
-	}
-
 	// RACE
 	if (fighterHas[Skill.CHARGE_CORNUE]) {
 		fighter.nextHitMultiplier += 0.2;
@@ -306,7 +310,7 @@ const handleSkills = (team: Team, fighter: DetailedFighter) => {
 	}
 
 	// DOUBLE
-	if (fighterHas[Skill.ELECTROLYSE]) {
+	if (team && fighterHas[Skill.ELECTROLYSE]) {
 		team[Skill.ELECTROLYSE] = true;
 	}
 

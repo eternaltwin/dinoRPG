@@ -1,11 +1,11 @@
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
-import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { actualPlace, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
-import { Dinoz, DinozItem, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
+import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
@@ -96,14 +96,7 @@ export async function moveFight(
 
 export type DinozToCalculateFight = Parameters<typeof calculateFight>[0][number];
 export function calculateFight(
-	team: (Pick<
-		Dinoz,
-		'id' | 'level' | 'name' | 'life' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpWater' | 'nbrUpLightning' | 'nbrUpAir'
-	> & {
-		items: Pick<DinozItem, 'itemId'>[];
-		skills: Pick<DinozSkill, 'skillId'>[];
-		status: Pick<DinozStatus, 'statusId'>[];
-	})[],
+	team: DinozToGetFighter[],
 	monsters: MonsterFiche[]
 ): FightProcessResult {
 	const fighters = getFighters({
@@ -124,6 +117,7 @@ export function calculateFight(
 		is_balance_enabled: true,
 
 		// Fighters
+		initialDinozList: team,
 		fighters,
 	};
 

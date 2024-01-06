@@ -1,5 +1,5 @@
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
-import { DetailedFighter } from "@drpg/core/models/fight/DetailedFighter";
+import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 
 const BASE_ATTACK_VALUE = 2;
@@ -15,6 +15,11 @@ const getDamage = (
 
 	// Damage from a skill hit
 	if (skill) {
+		// Cancel if intangible
+		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
+			return 0;
+		}
+
 		switch (skill) {
 			// FIRE
 			case Skill.SOUFFLE_ARDENT: {
@@ -39,11 +44,31 @@ const getDamage = (
 			case Skill.METEORES: {
 				return 10 * fighter.stats.base[AssaultElement.FIRE];
 			}
+			// WATER
+			case Skill.CANON_A_EAU: {
+				return 6 * fighter.stats.base[AssaultElement.WATER];
+			}
+			case Skill.GEL: {
+				return 5 * fighter.stats.base[AssaultElement.WATER];
+			}
+			case Skill.DOUCHE_ECOSSAISE: {
+				return 2 * fighter.stats.base[AssaultElement.WATER];
+			}
 			default: {
 				return 0;
 			}
 		}
 	} else {
+		// Intangible
+		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
+			// Can hit intangible or is air element
+			if (fighter.canHitIntangible || fighter.element === AssaultElement.AIR) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+
 		// Damage from a normal hit
 		const base = fighter.stats.assault[fighter.element];
 
@@ -65,9 +90,11 @@ const getDamage = (
 
 	damage = Math.round(damage);
 
-	// Set minimum damage
-	if (damage < fighter.minDamage) {
-		damage = fighter.minDamage;
+	if (!fixedDamage) {
+		// Set minimum damage
+		if (damage < fighter.minDamage) {
+			damage = fighter.minDamage;
+		}
 	}
 
 	return damage;

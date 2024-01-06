@@ -9,7 +9,7 @@ import getDamage from "./getDamage.js";
 import randomBetween from "./randomBetween.js";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
-import { initializeMonster } from "./getFighters.js";
+import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 
@@ -85,6 +85,25 @@ const getRandomOpponent = (
 	monsterOnly?: boolean,
 ) => {
 	const opponents = getOpponents(fightData, fighter, dinozOnly, monsterOnly);
+
+	// Target lowest HP opponent if Skill.SANS_PITIE
+	if (fighter.skills.find((skill) => skill.id === Skill.SANS_PITIE)) {
+		let lowestHp = Infinity;
+		let lowestHpOpponent: DetailedFighter | null = null;
+
+		opponents.forEach((opponent) => {
+			if (opponent.hp < lowestHp) {
+				lowestHp = opponent.hp;
+				lowestHpOpponent = opponent;
+			}
+		});
+
+		if (!lowestHpOpponent) {
+			throw new Error('No lowest HP opponent found');
+		}
+
+		return lowestHpOpponent;
+	}
 
 	// Prioritize dinoz with Rock skill
 	const withRock = opponents.filter((opponent) => opponent.skills.find((skill) => skill.id === Skill.ROCK));
@@ -211,6 +230,11 @@ const registerHit = (
 
 		// Wake up
 		removeStatus(fightData, opponent, FighterStatus.ASLEEP);
+
+		// Intangible
+		if (opponent.status.includes(FighterStatus.INTANGIBLE) && actualDamage[opponent.id]) {
+			removeStatus(fightData, opponent, FighterStatus.INTANGIBLE);
+		}
 	});
 
 
@@ -284,6 +308,8 @@ const targetSingleOpponent = (
 
 	// Register the hit
 	registerHit(fightData, fighter, [opponent], damage, skill.id);
+
+	return opponent;
 }
 
 const targetAllOpponents = (
@@ -344,6 +370,14 @@ const activateEvent = (
 ): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
+
+	// Add skillActivate step
+	fightData.steps.push({
+		action: 'skillActivate',
+		dinoz: stepFighter(fighter),
+		skill: skill.id,
+		energy: skill.energy,
+	});
 
 	switch (skill.id) {
 		// FIRE
@@ -422,20 +456,40 @@ const activateEvent = (
 			addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 			break;
 		}
+		// WATER
+		case Skill.CLONE_AQUEUX: {
+			const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
+
+			if (!initialDinoz) {
+				throw new Error('No initial dinoz found');
+			}
+
+			const clone = initializeDinoz(
+				null,
+				fighter.attacker ? 0 : 1,
+				initialDinoz
+			);
+
+			clone.level = 1;
+			clone.hp = 1;
+			clone.type = 'clone';
+
+			// Adjust initiative
+			clone.initiative = fighter.initiative;
+
+			// Add clone to fighters
+			fightData.fighters.push(clone);
+			break;
+		}
 		default:
+			// Remove last step
+			fightData.steps.pop();
+
 			return false;
 	}
 
 	// Consume energy
 	fighter.energy -= skill.energy;
-
-	// Add skillActivate step
-	fightData.steps.push({
-		action: 'skillActivate',
-		dinoz: stepFighter(fighter),
-		skill: skill.id,
-		energy: skill.energy,
-	});
 
 	return true;
 };
@@ -493,6 +547,14 @@ const activateSkill = (
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
+	// Add skillActivate step
+	fightData.steps.push({
+		action: 'skillActivate',
+		dinoz: stepFighter(fighter),
+		skill: skill.id,
+		energy: skill.energy,
+	});
+
 	switch (skill.id) {
 		// FIRE
 		case Skill.SOUFFLE_ARDENT:
@@ -543,20 +605,96 @@ const activateSkill = (
 			addStatus(fightData, fighter, FighterStatus.ASLEEP);
 			break;
 		}
+		// WATER
+		case Skill.CANON_A_EAU: {
+			targetSingleOpponent(fightData, fighter, skill);
+			break;
+		}
+		case Skill.COUP_SOURNOIS: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			let damage = getDamage(fighter, opponent, skill.id);
+
+			// Cancel if no damage
+			if (!damage) {
+				// Remove last step
+				fightData.steps.pop();
+
+				return false;
+			}
+
+			// 0 damage if boss or Skill.PERCEPTION
+			if (opponent.skills.find((s) => s.id === Skill.PERCEPTION) || opponent.type === 'boss') {
+				damage = 0;
+			} else {
+				// 50% HP otherwise
+				damage = Math.round(opponent.hp / 2);
+
+				registerHit(fightData, fighter, [opponent], damage, skill.id);
+			}
+			break;
+		}
+		case Skill.GEL: {
+			const opponent = targetSingleOpponent(fightData, fighter, skill);
+
+			if (opponent) {
+				// Slow opponent
+				addStatus(fightData, opponent, FighterStatus.SLOWED);
+			}
+			break;
+		}
+		case Skill.DOUCHE_ECOSSAISE: {
+			targetAllOpponents(fightData, fighter, skill);
+			break;
+		}
+		case Skill.COUP_FATAL: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			let damage = getDamage(fighter, opponent, skill.id);
+
+			// Cancel if no damage
+			if (!damage) {
+				// Remove last step
+				fightData.steps.pop();
+
+				return false;
+			}
+
+			// 0 damage if boss or Skill.PERCEPTION
+			if (opponent.skills.find((s) => s.id === Skill.PERCEPTION) || opponent.type === 'boss') {
+				damage = 0;
+			} else {
+				// 100% HP otherwise
+				damage = opponent.hp;
+
+				registerHit(fightData, fighter, [opponent], damage, skill.id);
+			}
+			break;
+		}
+		case Skill.MARECAGE: {
+			const opponents = getOpponents(fightData, fighter);
+
+			// Slow opponents
+			opponents.forEach((opponent) => {
+				addStatus(fightData, opponent, FighterStatus.SLOWED);
+			});
+			break;
+		}
+		case Skill.PETRIFICATION: {
+
+			break;
+		}
 		default:
+			// Remove last step
+			fightData.steps.pop();
+
 			return false;
 	}
 
 	// Consume energy
 	fighter.energy -= skill.energy;
-
-	// Add skillActivate step
-	fightData.steps.push({
-		action: 'skillActivate',
-		dinoz: stepFighter(fighter),
-		skill: skill.id,
-		energy: skill.energy,
-	});
 
 	return true;
 };
@@ -613,13 +751,39 @@ const attack = (
 	// Register hit if damage was done
 	if (damage) {
 		registerHit(fightData, fighter, [opponent], damage);
-	}
 
-	// Torch damage
-	if (fighter.status.includes(FighterStatus.TORCHED)) {
-		const damage = fighter.stats.special.torchDamage ?? 0;
+		if (!fighter.status.includes(FighterStatus.POISONED)) {
+			// Poison fighter if opponent has Skill.AURA_PUANTE
+			if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
+				fighter.poisonedBy = {
+					id: opponent.id,
+					type: opponent.type,
+					skill: Skill.AURA_PUANTE,
+				};
 
-		registerHit(fightData, fighter, [opponent], damage, Skill.TORCHE);
+				addStatus(fightData, fighter, FighterStatus.POISONED);
+			}
+		}
+
+		if (!opponent.status.includes(FighterStatus.POISONED)) {
+			// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
+			if (fighter.skills.find((skill) => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
+				opponent.poisonedBy = {
+					id: opponent.id,
+					type: opponent.type,
+					skill: Skill.GRIFFES_EMPOISONNEES,
+				};
+
+				addStatus(fightData, opponent, FighterStatus.POISONED);
+			}
+		}
+
+		// Torch damage
+		if (fighter.status.includes(FighterStatus.TORCHED)) {
+			const damage = fighter.stats.special.torchDamage ?? 0;
+
+			registerHit(fightData, fighter, [opponent], damage, Skill.TORCHE);
+		}
 	}
 
 	// Change fighter element
@@ -678,15 +842,6 @@ const startAttack = (
 
 	// Trigger fighter attack
 	attack(fightData, fighter, opponent);
-
-	// Poison fighter if opponent has Skill.AURA_PUANTE
-	if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
-		fighter.poisonedBy = {
-			id: opponent.id,
-			type: opponent.type,
-			skill: Skill.AURA_PUANTE,
-		};
-	}
 
 	// Get combo chances
 	const combo = (fighter.stats.special.multihit ?? 0) / 100;
@@ -772,7 +927,8 @@ export const playFighterTurn = (
 		startAttack(fightData, fighter, opponent);
 	}
 
-
+	// Consume energy
+	fighter.energy -= 4;
 
 	// Check if fighter is not dead
 	if (fighter.hp > 0) {
@@ -819,6 +975,10 @@ export const playFighterTurn = (
 					poisonDamage = 10;
 					break;
 				}
+				case Skill.GRIFFES_EMPOISONNEES: {
+					poisonDamage = 14;
+					break;
+				}
 				default:
 					console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
 					break;
@@ -831,7 +991,19 @@ export const playFighterTurn = (
 	}
 
 	// Increase own initiative (1 = a supposed turn) (lower is better)
-	fighter.initiative += 1
+	let time = 1
 		* fighter.stats.speed.global
 		* fighter.stats.speed[fighter.element];
+
+	// Increase time lost if slowed
+	if (fighter.status.includes(FighterStatus.SLOWED)) {
+		time *= 1.5;
+	}
+
+	// Decrease time if quickened
+	if (fighter.status.includes(FighterStatus.QUICKENED)) {
+		time /= 1.5;
+	}
+
+	fighter.initiative += time;
 };
