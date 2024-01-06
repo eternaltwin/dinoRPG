@@ -129,10 +129,10 @@ export const initializeDinoz = (
 		return Math.random() > 0.5 ? 1 : -1;
 	});
 
-	// Initiative
-	// Deduct the initiative from the fighter's initial time
+	// Time
+	// Deduct the time from the fighter's initial time
 	fighter.time -= (fighter.stats.special.initiative ?? 0) * TIME_FACTOR;
-	// Add a random amount of initiative between 0 and 10 to randomize the first fighter
+	// Add a random amount of time between 0 and 10 to randomize the first fighter
 	fighter.time += Math.round(Math.random() * TIME_BASE) * TIME_FACTOR;
 
 	// Energy
@@ -224,7 +224,7 @@ export const initializeMonster = (
 		},
 		items: [],
 		itemsUsed: [],
-		// Add a random amount of initiative between 0 and 10 to randomize the first fighter
+		// Add a random amount of time between 0 and 10 to randomize the first fighter
 		time: Math.round(Math.random() * TIME_BASE) * TIME_FACTOR,
 		skills: [],
 		status: [],
@@ -315,9 +315,9 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 		fighter.canHitFlying = true;
 	}
 
-	// 50% chance to get positive / negative initiative
+	// 50% chance to get positive / negative time
   if (fighterHas[Skill.DOUBLE_FACE]) {
-		fighter.time += (Math.random() > 0.5 ? 10 : -10) * TIME_FACTOR;
+		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
 	}
 
 	// RACE

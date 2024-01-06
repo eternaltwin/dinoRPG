@@ -13,6 +13,7 @@ import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 import { ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
+import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
 
 export const getFighters = (
 	fightData: DetailedFight,
@@ -121,18 +122,33 @@ const getRandomOpponent = (
 };
 
 const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
-	// TODO: Handle items usage as an event
+	const events: (DinozSkillFiche | ItemFiche)[] = dinoz.skills.filter((skill) => skill.type === SkillType.E);
 
-	const events = dinoz.skills.filter((skill) => skill.type === SkillType.E);
+	events.push(...dinoz.items.filter((item) => item.probability));
 
 	if (!events.length) return null;
+
+	// Order events by probability
+	events.sort((a, b) => {
+		const aPriority = a.priority ?? 0;
+		const bPriority = b.priority ?? 0;
+
+		if (aPriority !== bPriority) {
+			return bPriority - aPriority;
+		}
+
+		return Math.random() > 0.5 ? 1 : -1;
+	});
 
 	// Go through each event and roll the dice
 	for (let i = 0; i < events.length; i++) {
 		const event = events[i];
 
-		// Skip if not enough energy
-		if (dinoz.energy < event.energy) continue;
+		// Check if event is a skill
+		if ('id' in event) {
+			// Skip if not enough energy
+			if (dinoz.energy < event.energy) continue;
+		}
 
 		if (randomBetween(1, 100) < (event.probability ?? 0)) {
 			return event;
@@ -367,7 +383,7 @@ const createMonster = (
 		monsterData,
 	);
 
-	// Adjust initiative
+	// Adjust time
 	monster.time = fighter.time;
 
 	// Add monster to fighters
@@ -378,130 +394,135 @@ const createMonster = (
 
 const activateEvent = (
 	fightData: DetailedFight,
-	skill: DinozSkillFiche,
+	event: DinozSkillFiche | ItemFiche,
 ): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
-	// Add skillActivate step
-	fightData.steps.push({
-		action: 'skillActivate',
-		dinoz: stepFighter(fighter),
-		skill: skill.id,
-		energy: skill.energy,
-	});
+	// If event is a skill
+	if ('id' in event) {
+		// Add skillActivate step
+		fightData.steps.push({
+			action: 'skillActivate',
+			dinoz: stepFighter(fighter),
+			skill: event.id,
+			energy: event.energy,
+		});
 
-	switch (skill.id) {
-		// FIRE
-		case Skill.COLERE: {
-			fighter.nextHitMultiplier *= 1.25;
+		switch (event.id) {
+			// FIRE
+			case Skill.COLERE: {
+				fighter.nextHitMultiplier *= 1.25;
 
-			// Add to active skills
-			fighter.activeSkills.push(skill.id);
-			break;
-		}
-		case Skill.COMBUSTION: {
-			targetAllOpponents(fightData, fighter, skill);
-			break;
-		}
-		// WOOD
-		case Skill.RENFORTS_KORGON: {
-			createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
-			break;
-		}
-		case Skill.VIGNES: {
-			// Get random opponent
-			const opponent = getRandomOpponent(fightData, fighter);
-
-			if (!opponent.status.includes(FighterStatus.FLYING)) {
-				// Increase the opponent's time
-				opponent.time += 15 * TIME_FACTOR;
+				// Add to active skills
+				fighter.activeSkills.push(event.id);
+				break;
 			}
-			break;
-		}
-		case Skill.RESISTANCE_A_LA_MAGIE: {
-			// Remove all bad status
-			removeStatus(fightData, fighter, ...fighter.status.filter((s) => !BadFighterStatus.includes(s)));
-			break;
-		}
-		case Skill.ETAT_PRIMAL: {
-			getFighters(fightData).forEach((f) => {
-				// Remove team bad status
-				if (f.attacker === fighter.attacker) {
-					removeStatus(fightData, f, ...f.status.filter((s) => !BadFighterStatus.includes(s)));
-				} else {
-					// Remove opponent team good status
-					removeStatus(fightData, f, ...f.status.filter((s) => BadFighterStatus.includes(s)));
+			case Skill.COMBUSTION: {
+				targetAllOpponents(fightData, fighter, event);
+				break;
+			}
+			// WOOD
+			case Skill.RENFORTS_KORGON: {
+				createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
+				break;
+			}
+			case Skill.VIGNES: {
+				// Get random opponent
+				const opponent = getRandomOpponent(fightData, fighter);
+
+				if (!opponent.status.includes(FighterStatus.FLYING)) {
+					// Increase the opponent's time
+					opponent.time += 15 * TIME_FACTOR;
 				}
-			});
-			break;
-		}
-		case Skill.PRINTEMPS_PRECOCE: {
-			// Heal all allies
-			getAllies(fightData, fighter).forEach((f) => {
-				// Skip self
-				if (f.id === fighter.id && f.type === fighter.type) return;
-
-				// Heal 1-wood HP
-				let hpHealed = randomBetween(1, fighter.stats.base[AssaultElement.WOOD]);
-
-				// Don't overheal
-				if (f.hp + hpHealed > f.maxHp) {
-					hpHealed = f.maxHp - f.hp;
-				}
-
-				f.hp += hpHealed;
-
-				// Add heal step
-				fightData.steps.push({
-					action: 'heal',
-					fighter: stepFighter(f),
-					hp: hpHealed,
+				break;
+			}
+			case Skill.RESISTANCE_A_LA_MAGIE: {
+				// Remove all bad status
+				removeStatus(fightData, fighter, ...fighter.status.filter((s) => !BadFighterStatus.includes(s)));
+				break;
+			}
+			case Skill.ETAT_PRIMAL: {
+				getFighters(fightData).forEach((f) => {
+					// Remove team bad status
+					if (f.attacker === fighter.attacker) {
+						removeStatus(fightData, f, ...f.status.filter((s) => !BadFighterStatus.includes(s)));
+					} else {
+						// Remove opponent team good status
+						removeStatus(fightData, f, ...f.status.filter((s) => BadFighterStatus.includes(s)));
+					}
 				});
-			});
-			break;
-		}
-		case Skill.ESPRIT_GORILLOZ: {
-			const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
-
-			// Set intangible
-			addStatus(fightData, monster, FighterStatus.INTANGIBLE);
-			break;
-		}
-		// WATER
-		case Skill.CLONE_AQUEUX: {
-			const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
-
-			if (!initialDinoz) {
-				throw new Error('No initial dinoz found');
+				break;
 			}
+			case Skill.PRINTEMPS_PRECOCE: {
+				// Heal all allies
+				getAllies(fightData, fighter).forEach((f) => {
+					// Skip self
+					if (f.id === fighter.id && f.type === fighter.type) return;
 
-			const clone = initializeDinoz(
-				null,
-				fighter.attacker ? 0 : 1,
-				initialDinoz
-			);
+					// Heal 1-wood HP
+					let hpHealed = randomBetween(1, fighter.stats.base[AssaultElement.WOOD]);
 
-			clone.level = 1;
-			clone.hp = 1;
-			clone.type = 'clone';
+					// Don't overheal
+					if (f.hp + hpHealed > f.maxHp) {
+						hpHealed = f.maxHp - f.hp;
+					}
 
-			// Set the clone's time to the fighter's time
-			clone.time = fighter.time;
+					f.hp += hpHealed;
 
-			// Add clone to fighters
-			fightData.fighters.push(clone);
-			break;
+					// Add heal step
+					fightData.steps.push({
+						action: 'heal',
+						fighter: stepFighter(f),
+						hp: hpHealed,
+					});
+				});
+				break;
+			}
+			case Skill.ESPRIT_GORILLOZ: {
+				const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
+
+				// Set intangible
+				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
+				break;
+			}
+			// WATER
+			case Skill.CLONE_AQUEUX: {
+				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
+
+				if (!initialDinoz) {
+					throw new Error('No initial dinoz found');
+				}
+
+				const clone = initializeDinoz(
+					null,
+					fighter.attacker ? 0 : 1,
+					initialDinoz
+				);
+
+				clone.level = 1;
+				clone.hp = 1;
+				clone.type = 'clone';
+
+				// Set the clone's time to the fighter's time
+				clone.time = fighter.time;
+
+				// Add clone to fighters
+				fightData.fighters.push(clone);
+				break;
+			}
+			default:
+				// Remove last step
+				fightData.steps.pop();
+
+				return false;
 		}
-		default:
-			// Remove last step
-			fightData.steps.pop();
 
-			return false;
+		// Consume energy
+		fighter.energy -= event.energy;
+	} else {
+		// Event is an item
 	}
-
-	// Consume energy
-	fighter.energy -= skill.energy;
 
 	return true;
 };
@@ -582,7 +603,7 @@ const activateSkill = (
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill);
 
-			// Increase initiative
+			// Increase time
 			fighter.time += 15 * TIME_FACTOR;
 			break;
 		}
@@ -900,9 +921,9 @@ export const playFighterTurn = (
 
 	// Calculate the elapsed time
 	const elapsed_time = attacker.time - fightData.time;
-		
-    // Set current initiative to first fighter
-    fightData.time = fightData.fighters[0].time;
+
+	// Set current time to first fighter time
+	fightData.time = fightData.fighters[0].time;
 
 	// 1. Recover energy for all fighters except the current one
 	fightData.fighters.forEach((f) => {

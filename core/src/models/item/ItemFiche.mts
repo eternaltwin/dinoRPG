@@ -12,4 +12,6 @@ export interface ItemFiche {
 	isRare: boolean;
 	price: number;
 	effect?: ItemEffects;
+	priority?: number;
+	probability?: number;
 }

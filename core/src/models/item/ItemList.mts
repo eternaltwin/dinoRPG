@@ -197,7 +197,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.HEAL,
 			value: 10
-		}
+		},
+		priority: 1,
+		probability: 50,
 	},
 	// Authentic hot bread: heals 100
 	HOT_BREAD: {
