@@ -135,7 +135,15 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 				attacker: index === 0,
 				maxHp: dinoz.life,
 				hp: dinoz.life,
+				energy: 100,
 				stats: {
+					base: {
+						[AssaultElement.AIR]: dinoz.nbrUpAir,
+						[AssaultElement.FIRE]: dinoz.nbrUpFire,
+						[AssaultElement.LIGHTNING]: dinoz.nbrUpLightning,
+						[AssaultElement.WATER]: dinoz.nbrUpWater,
+						[AssaultElement.WOOD]: dinoz.nbrUpWood,
+					},
 					assault: {
 						[AssaultElement.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR).value,
 						[AssaultElement.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE).value,
@@ -190,6 +198,9 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 			// Initiative
 			fighter.initiative -= (fighter.stats.special.initiative ?? 0) / 10;
 
+			// Energy
+			fighter.energy = (fighter.stats.special.energy ?? 1) * 100;
+
 			// Handle elements (from highest to lowest)
 			const elements = [
 				{ element: AssaultElement.FIRE, value: fighter.stats.assault[AssaultElement.FIRE] },
@@ -219,7 +230,15 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 				attacker: index === 0,
 				maxHp: monster.hp,
 				hp: monster.hp,
+				energy: 100,
 				stats: {
+					base: {
+						[AssaultElement.AIR]: monster.elements.air,
+						[AssaultElement.FIRE]: monster.elements.fire,
+						[AssaultElement.LIGHTNING]: monster.elements.lightning,
+						[AssaultElement.WATER]: monster.elements.water,
+						[AssaultElement.WOOD]: monster.elements.wood,
+					},
 					assault: {
 						[AssaultElement.AIR]: monster.elements.air + (monster.bonus_attack ?? 0),
 						[AssaultElement.FIRE]: monster.elements.fire + (monster.bonus_attack ?? 0),

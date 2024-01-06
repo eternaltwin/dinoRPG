@@ -1,3 +1,4 @@
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { FightStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 
 type TFunction = (key: string, data?: Record<string, string | number>) => string;
@@ -22,18 +23,20 @@ const translateFightStep = (fightStep: FightStep, t: TFunction) => {
 				dinoz: getFighterName(fightStep.dinoz, t)
 			});
 		case 'hit': {
+			if (fightStep.skill) {
+				return t(`fight.step.skillHit`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					damage: fightStep.damage,
+					target: getFighterName(fightStep.target, t),
+					skill: t(`skill.${fightStep.skill}`)
+				});
+			}
 			return t('fight.step.hit', {
 				fighter: getFighterName(fightStep.fighter, t),
 				damage: fightStep.damage,
 				target: getFighterName(fightStep.target, t)
 			});
 		}
-		case 'poison':
-			return t(`fight.step.${fightStep.action}`, {
-				dinoz: getFighterName(fightStep.fighter, t),
-				damage: fightStep.damage,
-				target: getFighterName(fightStep.target, t)
-			});
 		case 'moveTo':
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t),
@@ -65,6 +68,22 @@ const translateFightStep = (fightStep: FightStep, t: TFunction) => {
 		case 'survive':
 			return t(`fight.step.${fightStep.action}`, {
 				dinoz: getFighterName(fightStep.dinoz, t)
+			});
+		case 'skillActivate':
+			return t(`fight.step.${fightStep.action}`, {
+				dinoz: getFighterName(fightStep.dinoz, t),
+				skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+				energy: fightStep.energy
+			});
+		case 'skillExpire':
+			return t(`fight.step.${fightStep.action}`, {
+				dinoz: getFighterName(fightStep.dinoz, t),
+				skill: t(`skill.name.${skillList[fightStep.skill].name}`)
+			});
+		case 'looseHp':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t),
+				hp: fightStep.hp
 			});
 		default:
 			return JSON.stringify(fightStep);

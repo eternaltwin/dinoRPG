@@ -16,7 +16,9 @@ export interface DetailedFighter {
   // Raw stats
   maxHp: number;
   hp: number,
+	energy: number,
 	stats: {
+		base: Record<AssaultElement, number>,
 		assault: Record<AssaultElement, number>,
 		defense: Record<DefenseElement, number>,
 		special: Record<SpecialStatUsedInFights, number | undefined>,
@@ -32,7 +34,7 @@ export interface DetailedFighter {
   // Current status
   status: Status[],
   // Active skills
-  activeSkills: DinozSkillFiche[],
+  activeSkills: Skill[],
 	// Poisoned
 	poisonedBy?: {
 		id: number,
@@ -49,9 +51,11 @@ export interface DetailedFighter {
 	element: AssaultElement,
 	// Min damage
 	minDamage: number,
-	// Can hit flying
+	// Flying
+	flying?: boolean,
 	canHitFlying?: boolean,
-	// Can hit intangible
+	// Intangible
+	intangible?: boolean,
 	canHitIntangible?: boolean,
 	// Next hit bonus
 	nextHitBonus: number,

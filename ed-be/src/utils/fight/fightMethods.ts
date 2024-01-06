@@ -7,6 +7,7 @@ import { StepFighter } from "@drpg/core/models/fight/FightStep";
 import { DetailedFight } from "./generateFight.js";
 import getDamage from "./getDamage.js";
 import randomBetween from "./randomBetween.js";
+import { SkillType } from "@drpg/core/models/enums/SkillType";
 
 export const getOpponents = (
 	fightData: DetailedFight,
@@ -52,27 +53,44 @@ const getRandomOpponent = (
 	return opponents[random];
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const randomlyGetSuper = (fightData: DetailedFight, dinoz: DetailedFighter) => {
-	// TODO
+const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
+	// TODO: Handle items usage as an event
 
-	// const supers = dinoz.skills.filter((skill) => skill.activatable);
+	const events = dinoz.skills.filter((skill) => skill.activatable && skill.type === SkillType.E);
 
-	// if (!supers.length) return null;
+	if (!events.length) return null;
 
-	// const NO_SUPER_TOSS = 10;
-	// const randomSuper = randomBetween(
-	//   0,
-	//   supers.reduce((acc, skill) => acc + (skill.toss || 0), 0) + NO_SUPER_TOSS,
-	// );
+	// Go through each event and roll the dice
+	for (let i = 0; i < events.length; i++) {
+		const event = events[i];
 
-	// let toss = 0;
-	// for (let i = 0; i < supers.length; i += 1) {
-	//   toss += supers[i].toss || 0;
-	//   if (randomSuper < toss) {
-	//     return supers[i];
-	//   }
-	// }
+		// Skip if not enough energy
+		if (dinoz.energy < event.energy) continue;
+
+		if (randomBetween(0, 100) < (event.probability ?? 0)) {
+			return event;
+		}
+	}
+
+	return null;
+};
+
+const randomlyGetSkill = (fightData: DetailedFight, dinoz: DetailedFighter) => {
+	const skills = dinoz.skills.filter((skill) => skill.activatable && skill.type === SkillType.A);
+
+	if (!skills.length) return null;
+
+	// Go through each event and roll the dice
+	for (let i = 0; i < skills.length; i++) {
+		const skill = skills[i];
+
+		// Skip if not enough energy
+		if (dinoz.energy < skill.energy) continue;
+
+		if (randomBetween(0, 100) < (skill.probability ?? 0)) {
+			return skill;
+		}
+	}
 
 	return null;
 };
@@ -92,7 +110,7 @@ export const stepFighter = (
 
 const registerHit = (
 	fightData: DetailedFight,
-	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'nextHitBonus' | 'nextHitMultiplier'>,
+	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'nextHitBonus' | 'nextHitMultiplier' | 'activeSkills'>,
 	opponents: DetailedFighter[],
 	damage: number,
 	skill?: Skill,
@@ -135,84 +153,204 @@ const registerHit = (
 	});
 
 	opponents.forEach((opponent) => {
-		if (skill) {
-			switch (skill) {
-				case Skill.SANG_ACIDE: {
-					// Add hit step
-					fightData.steps.push({
-						action: 'poison',
-						fighter: stepFighter(fighter),
-						target: stepFighter(opponent),
-						damage: actualDamage[opponent.id],
-					});
-					break;
-				}
-				default:
-					console.warn(`Skill ${skill} not implemented`);
-					break;
-			}
-		} else {
-			// Add hit step
+		// Add hit step
+		fightData.steps.push({
+			action: 'hit',
+			fighter: stepFighter(fighter),
+			target: stepFighter(opponent),
+			damage: actualDamage[opponent.id],
+			skill,
+		});
+	});
+
+
+	opponents.forEach((opponent) => {
+		// Survive with 1 HP if canSurvive
+		if (opponent.canSurvive && opponent.hp <= 1) {
+			opponent.canSurvive = false;
+			opponent.hp = 1;
+
+			// Add survival step
 			fightData.steps.push({
-				action: 'hit',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent),
-				damage: actualDamage[opponent.id],
+				action: 'survive',
+				dinoz: stepFighter(opponent),
 			});
 		}
 	});
 
-
-  opponents.forEach((opponent) => {
-    // Survive with 1 HP if canSurvive
-    if (opponent.canSurvive && opponent.hp <= 1) {
-      opponent.canSurvive = false;
-      opponent.hp = 1;
-
-      // Add survival step
-      fightData.steps.push({
-        action: 'survive',
-        dinoz: stepFighter(opponent),
-      });
-    }
-  });
-
 	// Remove next hit bonus
 	fighter.nextHitBonus = 0;
 	fighter.nextHitMultiplier = 1;
+
+	// Expire Skill.COLERE if present
+	if (fighter.activeSkills.includes(Skill.COLERE)) {
+		fighter.activeSkills = fighter.activeSkills.filter((skill) => skill !== Skill.COLERE);
+
+		// Add skillExpire step
+		fightData.steps.push({
+			action: 'skillExpire',
+			dinoz: stepFighter(fighter),
+			skill: Skill.COLERE,
+		});
+	}
 };
 
-const activateSuper = (
+const evadedSkill = (opponent: DetailedFighter, skill: DinozSkillFiche) => {
+	if (opponent.hp <= 0) return false;
+
+	let evasion = 0;
+
+	// 10% chance to evade skills A with Skill.DEPLACEMENT_INSTANTANE
+	if (skill.type === SkillType.A && opponent.skills.find((s) => s.id === Skill.DEPLACEMENT_INSTANTANE)) {
+		evasion += 0.1;
+	}
+
+	const random = Math.random();
+
+	return random < evasion;
+};
+
+const targetSingleOpponent = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	skill: DinozSkillFiche,
+) => {
+	// Get random opponent
+	const opponent = getRandomOpponent(fightData, fighter);
+
+	// Check if opponent evaded
+	if (evadedSkill(opponent, skill)) {
+		// Add evade step
+		fightData.steps.push({
+			action: 'evade',
+			fighter: stepFighter(opponent),
+		});
+
+		return;
+	}
+
+	// Get damage
+	const damage = getDamage(fighter, opponent, skill.id);
+
+	// Register the hit
+	registerHit(fightData, fighter, [opponent], damage, skill.id);
+}
+
+const targetAllOpponents = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	skill: DinozSkillFiche,
+) => {
+	// Attack each opponent
+	const opponents = getOpponents(fightData, fighter);
+
+	opponents.forEach((opponent) => {
+		// Check if opponent evaded
+		if (evadedSkill(opponent, skill)) {
+			// Add evade step
+			fightData.steps.push({
+				action: 'evade',
+				fighter: stepFighter(opponent),
+			});
+
+			return;
+		}
+
+		// Get damage
+		const damage = getDamage(fighter, opponent, skill.id);
+
+		// Register the hit
+		registerHit(fightData, fighter, [opponent], damage, skill.id);
+	});
+};
+
+const activateEvent = (
 	fightData: DetailedFight,
 	skill: DinozSkillFiche,
 ): boolean => {
 	// Get current fighter
-	// const fighter = fightData.fighters[0];
-
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const evadedSkill = (opponent: DetailedFighter) => {
-		if (opponent.hp <= 0) return false;
-
-		let evasion = 0;
-
-		// 10% chance to evade skill with Skill.DEPLACEMENT_INSTANTANE
-		if (opponent.skills.find((s) => s.id === Skill.DEPLACEMENT_INSTANTANE)) {
-			evasion += 0.1;
-		}
-
-		const random = Math.random();
-
-		return random < evasion;
-	};
+	const fighter = fightData.fighters[0];
 
 	switch (skill.id) {
-		case Skill.TORNADE: {
-			// TODO
+		// FIRE
+		case Skill.COLERE: {
+			fighter.nextHitMultiplier *= 1.25;
+
+			// Add to active skills
+			fighter.activeSkills.push(skill.id);
+			break;
+		}
+		case Skill.COMBUSTION: {
+			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
 		default:
 			return false;
 	}
+
+	// Consume energy
+	fighter.energy -= skill.energy;
+
+	// Add skillActivate step
+	fightData.steps.push({
+		action: 'skillActivate',
+		dinoz: stepFighter(fighter),
+		skill: skill.id,
+		energy: skill.energy,
+	});
+
+	return true;
+};
+
+const activateSkill = (
+	fightData: DetailedFight,
+	skill: DinozSkillFiche,
+): boolean => {
+	// Get current fighter
+	const fighter = fightData.fighters[0];
+
+	switch (skill.id) {
+		// FIRE
+		case Skill.SOUFFLE_ARDENT: {
+			targetAllOpponents(fightData, fighter, skill);
+			break;
+		}
+		case Skill.PAUME_CHALUMEAU: {
+			targetSingleOpponent(fightData, fighter, skill);
+
+			// Increase initiative
+			fighter.initiative += 1.5;
+			break;
+		}
+		case Skill.KAMIKAZE: {
+			targetSingleOpponent(fightData, fighter, skill);
+
+			// Loose 50% HP
+			const hpLost = Math.round(fighter.hp / 2);
+			fighter.hp -= hpLost;
+
+			// Add looseHp step
+			fightData.steps.push({
+				action: 'looseHp',
+				fighter: stepFighter(fighter),
+				hp: hpLost,
+			});
+			break;
+		}
+		default:
+			return false;
+	}
+
+	// Consume energy
+	fighter.energy -= skill.energy;
+
+	// Add skillActivate step
+	fightData.steps.push({
+		action: 'skillActivate',
+		dinoz: stepFighter(fighter),
+		skill: skill.id,
+		energy: skill.energy,
+	});
 
 	return true;
 };
@@ -363,13 +501,26 @@ export const playFighterTurn = (
 ) => {
 	const fighter = fightData.fighters[0];
 
-	// Super activation
-	const possibleSuper = randomlyGetSuper(fightData, fighter);
-	if (possibleSuper) {
-		// End turn if super activated
-		if (activateSuper(fightData, possibleSuper)) {
-			return;
-		}
+	// Regen energy for all fighters except the current one
+	fightData.fighters.forEach((f) => {
+		if (f.id === fighter.id) return;
+
+		f.energy += (f.stats.special.energyRecovery ?? 1) * 5;
+	});
+
+	// Event activation
+	const possibleEvent = randomlyGetEvent(fightData, fighter);
+	if (possibleEvent) {
+		activateEvent(fightData, possibleEvent);
+	}
+
+	// Skill activation
+	const possibleSkill = randomlyGetSkill(fightData, fighter);
+	if (possibleSkill) {
+    // End turn if skill activated
+    if (activateSkill(fightData, possibleSkill)) {
+      return;
+    }
 	}
 
 	// Get opponent
@@ -401,6 +552,8 @@ export const playFighterTurn = (
 		startAttack(fightData, fighter, opponent);
 	}
 
+
+
 	// Check if fighter is not dead
 	if (fighter.hp > 0) {
 		// Add moveBack step
@@ -422,6 +575,7 @@ export const playFighterTurn = (
 				attacker: false,
 				nextHitBonus: 0,
 				nextHitMultiplier: 1,
+				activeSkills: [],
 			};
 
 			// Register the hit

@@ -2989,6 +2989,7 @@
 			"arrive": "{name} has arrived !",
 			"resist": "{dinoz} resisted and reduced the damage.",
 			"hit": "{fighter} dealt {damage} damage to {target}.",
+			"hit-skill": "{fighter} dealt {damage} damage to {target} with {skill}.",
 			"poison": "{dinoz} dealt {damage} poison damage to {target}.",
 			"moveTo": "{fighter} moved to {target}.",
 			"moveBack": "{fighter} went back to his position.",
@@ -2996,7 +2997,10 @@
 			"evade": "{fighter} evaded the hit.",
 			"death": "{fighter} succumbed to his injuries!",
 			"counter": "{fighter} countered {opponent}.",
-			"survive": "{dinoz} survived the attack."
+			"survive": "{dinoz} survived the attack.",
+			"skillActivate": "{dinoz} used {skill} (-{energy} energy).",
+			"skillExpire": "{dinoz}'s {skill} expired.",
+			"looseHp": "{fighter} lost {hp} HP."
 		}
 	},
 	"ingredients": {

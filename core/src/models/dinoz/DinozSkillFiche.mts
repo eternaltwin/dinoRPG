@@ -3,6 +3,7 @@ import { Energy } from '../enums/Energy.mjs';
 import { Stat } from '../enums/SkillStat.mjs';
 import { SkillTree } from '../enums/SkillTree.mjs';
 import { SkillType } from '../enums/SkillType.mjs';
+import { Skill } from './SkillList.mjs';
 
 type OtherAssaults<T> = Exclude<
 	Stat.FIRE_ASSAULT | Stat.WATER_ASSAULT | Stat.AIR_ASSAULT | Stat.LIGHTNING_ASSAULT | Stat.WOOD_ASSAULT,
@@ -43,7 +44,7 @@ export type SkillEffects = {
 };
 
 export interface DinozSkillFiche {
-	id: number;
+	id: Skill;
 	name: string;
 	type: SkillType;
 	energy: Energy;
@@ -57,4 +58,6 @@ export interface DinozSkillFiche {
 	isSphereSkill: boolean; // true : the skill can only be learned with a sphere object
 	effects?: SkillEffects;
 	globalEffects?: SkillEffects;
+	priority?: number;
+	probability?: number;
 }
