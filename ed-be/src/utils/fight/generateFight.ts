@@ -18,11 +18,11 @@ const orderFighters = (fightData: DetailedFight) => {
     // Last if hp <= 0
     if (a.hp <= 0) return 1;
     if (b.hp <= 0) return -1;
-    // Random is initiatives are equal
+    // Random if times are equal
     if (a.time === b.time) {
       return Math.random() > 0.5 ? 1 : -1;
     }
-    // Lower initiative first
+    // Lowest time first
     return a.time - b.time;
   });
 };
@@ -45,6 +45,10 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
   });
 
   let turn = 0;
+
+  // Zero the time origin to start from clean origin
+	const first_fighter_time = fightData.fighters[0].time;
+  fightData.fighters.map(fighter => fighter.time -= first_fighter_time);
 
   // Fight loop
   while (!fightData.loser) {

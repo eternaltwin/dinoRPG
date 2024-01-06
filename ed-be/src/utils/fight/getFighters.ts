@@ -7,6 +7,7 @@ import { AssaultElement, getAssaultStat } from "@drpg/core/utils/getAssaultStat"
 import { DefenseElement, getDefenseStat } from "@drpg/core/utils/getDefenseStat";
 import { SpecialStat, getSpecialStat } from "@drpg/core/utils/getSpecialStat";
 import { DinozToCalculateFight } from "../../business/fightService.js";
+import { TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -130,9 +131,9 @@ export const initializeDinoz = (
 
 	// Initiative
 	// Deduct the initiative from the fighter's initial time
-	fighter.time -= (fighter.stats.special.initiative ?? 0) / 10;
+	fighter.time -= (fighter.stats.special.initiative ?? 0) * TIME_FACTOR;
 	// Add a random amount of initiative between 0 and 10 to randomize the first fighter
-	fighter.time += Math.round(Math.random() * 10);
+	fighter.time += Math.round(Math.random() * TIME_BASE) * TIME_FACTOR;
 
 	// Energy
 	fighter.energy = (fighter.stats.special.energy ?? 1) * 100;
@@ -223,7 +224,8 @@ export const initializeMonster = (
 		},
 		items: [],
 		itemsUsed: [],
-		time: 0,
+		// Add a random amount of initiative between 0 and 10 to randomize the first fighter
+		time: Math.round(Math.random() * TIME_BASE) * TIME_FACTOR,
 		skills: [],
 		status: [],
 		activeSkills: [],
@@ -315,7 +317,7 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 
 	// 50% chance to get positive / negative initiative
   if (fighterHas[Skill.DOUBLE_FACE]) {
-		fighter.time += Math.random() > 0.5 ? 1 : -1;
+		fighter.time += (Math.random() > 0.5 ? 10 : -10) * TIME_FACTOR;
 	}
 
 	// RACE

@@ -12,6 +12,7 @@ import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
+import { ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 
 export const getFighters = (
 	fightData: DetailedFight,
@@ -413,8 +414,8 @@ const activateEvent = (
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			if (!opponent.status.includes(FighterStatus.FLYING)) {
-				// Reduce opponent initiative
-				opponent.time += 1.5;
+				// Increase the opponent's time
+				opponent.time += 15 * TIME_FACTOR;
 			}
 			break;
 		}
@@ -485,7 +486,7 @@ const activateEvent = (
 			clone.hp = 1;
 			clone.type = 'clone';
 
-			// Adjust initiative
+			// Set the clone's time to the fighter's time
 			clone.time = fighter.time;
 
 			// Add clone to fighters
@@ -582,7 +583,7 @@ const activateSkill = (
 			targetSingleOpponent(fightData, fighter, skill);
 
 			// Increase initiative
-			fighter.time += 1.5;
+			fighter.time += 15 * TIME_FACTOR;
 			break;
 		}
 		case Skill.KAMIKAZE: {
@@ -906,8 +907,7 @@ export const playFighterTurn = (
 	// 1. Recover energy for all fighters except the current one
 	fightData.fighters.forEach((f) => {
 		if (f.id === attacker.id) return;
-		// TODO multiply by the time elapsed since the last turn
-		f.energy += (f.stats.special.energyRecovery ?? 1) * elapsed_time * 5;
+		f.energy += (f.stats.special.energyRecovery ?? 1) * elapsed_time * ENERGY_RECOVERY_BASE_FACTOR;
 	});
 
 	// TODO
@@ -1038,11 +1038,12 @@ export const playFighterTurn = (
 		}
 	}
 
-	// Increase own initiative (1 = a supposed turn) (lower is better)
-	let time = 1
+	// Increase attacker's time
+	let time = TIME_BASE * TIME_FACTOR
 		* attacker.stats.speed.global
 		* attacker.stats.speed[attacker.element];
 
+	// TODO need to handle this differently because the status will expire
 	// Increase time lost if slowed
 	if (attacker.status.includes(FighterStatus.SLOWED)) {
 		time *= 1.5;
@@ -1053,5 +1054,10 @@ export const playFighterTurn = (
 		time /= 1.5;
 	}
 
-	attacker.time += time;
+	// Minimum time
+	if (time < 0) {
+		time = 1;
+	}
+
+	attacker.time += Math.round(time);
 };
