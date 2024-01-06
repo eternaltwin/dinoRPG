@@ -129,21 +129,31 @@ export const initializeDinoz = (
 	});
 
 	// Initiative
+	// Deduct the initiative from the fighter's initial time
 	fighter.initiative -= (fighter.stats.special.initiative ?? 0) / 10;
+	// Add a random amount of initiative between 0 and 10 to randomize the first fighter
+	fighter.initiative += Math.round(Math.random() * 10);
 
 	// Energy
 	fighter.energy = (fighter.stats.special.energy ?? 1) * 100;
 
 	// Handle elements (from highest to lowest)
 	const elements = [
-		{ element: AssaultElement.FIRE, value: fighter.stats.assault[AssaultElement.FIRE] },
-		{ element: AssaultElement.WOOD, value: fighter.stats.assault[AssaultElement.WOOD] },
-		{ element: AssaultElement.WATER, value: fighter.stats.assault[AssaultElement.WATER] },
-		{ element: AssaultElement.LIGHTNING, value: fighter.stats.assault[AssaultElement.LIGHTNING] },
-		{ element: AssaultElement.AIR, value: fighter.stats.assault[AssaultElement.AIR] },
+		{ element: AssaultElement.FIRE, value: fighter.stats.base[AssaultElement.FIRE] },
+		{ element: AssaultElement.WOOD, value: fighter.stats.base[AssaultElement.WOOD] },
+		{ element: AssaultElement.WATER, value: fighter.stats.base[AssaultElement.WATER] },
+		{ element: AssaultElement.LIGHTNING, value: fighter.stats.base[AssaultElement.LIGHTNING] },
+		{ element: AssaultElement.AIR, value: fighter.stats.base[AssaultElement.AIR] },
 	];
 
-	elements.sort((a, b) => b.value - a.value);
+	// Order the elements from highest to lowest, random if equal
+	elements.sort((a, b) => {
+		if (b.value !== a.value) {
+			return b.value - a.value
+		}
+		return Math.random() > 0.5 ? 1 : -1;
+		}
+	);
 
 	fighter.elements = elements.map((element) => element.element);
 	fighter.element = fighter.elements[0];

@@ -66,10 +66,12 @@ $ git checkout develop
 $ yarn install
 ```
 - Créer deux bases de données sur votre serveur postgresql, une pour drpg et une pour etwin
-- Configurer dans `./Eternaltwin` le fichier etwin.toml
-- Configurer dans `./ed-be` le fichier config_development.toml
-- Installer `cargo`: https://win.rustup.rs/
-- Aller dans le dossier `./native` et lancer la commande `cargo build`
+- Configurer dans `./Eternaltwin` le fichier `etwin.toml`
+- Configurer dans `./ed-be` le fichier `config_development.toml`
+- Configurer dans `./ed-be` le fichier `.env` en suivant le schema suivant:
+```
+DATABASE_URL="postgresql://<user>:<user-password>@localhost:5432/<database-name>?schema=public"
+```
 - Aller dans le dossier `./Eternaltwin` et lancer la commande `yarn install`
 - Revenir à la racine du projet et lancer la commande `yarn dev:windows`
 
@@ -78,6 +80,20 @@ Une fois le lancement terminé vous devriez pouvoir accéder à :
   - Eternal Twin local : http://localhost:50320
 
 # Erreurs possibles
+En cas d'erreurs, il est recommendé de lancer chaque partie indépendemment des autres pour mieux diagnostiquer les problèmes.
+- Pour lancer Eternal Twin seul: `yarn etwin:run`
+- Pour lancer le backend seul: `yarn start:back`
+- Pour lancer le frontend seul: `yarn start:front`
+
+## Dépendances Yarn
+Si des erreurs de composants sont remotées. Essayer de ré-installer avec `yarn clean` puis `yarn install`.
+
+## Erreur d'authentification
+Si vous voyez l'erreur suivante:
+```
+[back] Error: getaddrinfo EAI_AGAIN drpg_eternal_twin
+```
+Alors il faut changer `eternalTwinServerUri` dans `ed-be/config_development.toml` pour `http://localhost:50320/'`.
 
 ## Base de données
 
@@ -124,7 +140,9 @@ docker exec -it drpg bash
 #yarn install
 ```
 
-## Native
+# Native
+
+Note: The native section will eventually be removed
 
 La partie "Native" contient le code Rust. Cette partie doit être compilée
 lorsque les dockers ont été lancés. Une fois lancés (avec `make docker-bash`
@@ -161,7 +179,7 @@ DEBUG):
 RUST_LOG=INFO ./target/<release|debug>/main
 ```
 
-### Clippy
+## Clippy
 
 Cargo donne déjà de bon conseils pour garder du code propre.
 [Clippy](https://github.com/rust-lang/rust-clippy) en met encore une couche et

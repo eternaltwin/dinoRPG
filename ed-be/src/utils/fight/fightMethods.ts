@@ -895,40 +895,44 @@ const startAttack = (
 export const playFighterTurn = (
 	fightData: DetailedFight,
 ) => {
-	const fighter = fightData.fighters[0];
+	const attacker = fightData.fighters[0];
 
-	// Regen energy for all fighters except the current one
+	// 1. Recover energy for all fighters except the current one
 	fightData.fighters.forEach((f) => {
-		if (f.id === fighter.id) return;
-
+		if (f.id === attacker.id) return;
+		// TODO multiply by the time elapsed since the last turn
 		f.energy += (f.stats.special.energyRecovery ?? 1) * 5;
 	});
 
+	// TODO
+	// 2. Check status of all fighters only if at least one unit of time has elapsed
 	// Torch damage
-	if (fighter.status.includes(FighterStatus.TORCHED)) {
-		registerHit(fightData, fighter, [fighter], 1, Skill.TORCHE);
+	if (attacker.status.includes(FighterStatus.TORCHED)) {
+		registerHit(fightData, attacker, [attacker], 1, Skill.TORCHE);
 	}
 
 	// ACUPUNCTURE heal
-	if (fighter.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
-		fighter.hp += 1;
+	if (attacker.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
+		attacker.hp += 1;
 
 		// Add heal step
 		fightData.steps.push({
 			action: 'heal',
-			fighter: stepFighter(fighter),
+			fighter: stepFighter(attacker),
 			hp: 1,
 		});
 	}
 
+	// TODO check any deads from the status
+
 	// Event activation
-	const possibleEvent = randomlyGetEvent(fightData, fighter);
+	const possibleEvent = randomlyGetEvent(fightData, attacker);
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
 	}
 
 	// Skill activation
-	const possibleSkill = randomlyGetSkill(fightData, fighter);
+	const possibleSkill = randomlyGetSkill(fightData, attacker);
 	if (possibleSkill) {
 		// End turn if skill activated
 		if (activateSkill(fightData, possibleSkill)) {
@@ -937,14 +941,14 @@ export const playFighterTurn = (
 	}
 
 	// Get opponent
-	const opponent = getRandomOpponent(fightData, fighter);
+	const opponent = getRandomOpponent(fightData, attacker);
 
-	const countered = counterAttack(fighter, opponent);
+	const countered = counterAttack(attacker, opponent);
 
 	// Add moveTo step
 	fightData.steps.push({
 		action: 'moveTo',
-		fighter: stepFighter(fighter),
+		fighter: stepFighter(attacker),
 		target: stepFighter(opponent),
 		countered,
 	});
@@ -955,31 +959,32 @@ export const playFighterTurn = (
 		fightData.steps.push({
 			action: 'counter',
 			fighter: stepFighter(opponent),
-			opponent: stepFighter(fighter),
+			opponent: stepFighter(attacker),
 		});
 
 		// Opponent attacks fighter
-		startAttack(fightData, opponent, fighter, true);
+		startAttack(fightData, opponent, attacker, true);
 	} else {
 		// Fighter attacks opponent
-		startAttack(fightData, fighter, opponent);
+		startAttack(fightData, attacker, opponent);
 	}
 
 	// Consume energy
-	fighter.energy -= 4;
+	attacker.energy -= 4;
 
 	// Check if fighter is not dead
-	if (fighter.hp > 0) {
+	if (attacker.hp > 0) {
 		// Add moveBack step
 		fightData.steps.push({
 			action: 'moveBack',
-			fighter: stepFighter(fighter),
+			fighter: stepFighter(attacker),
 		});
 	}
 
 	// Check if fighter is poisoned
-	const poisonedBy = fighter.poisonedBy;
-	if (!fightData.loser && fighter.hp > 0 && poisonedBy) {
+	const poisonedBy = attacker.poisonedBy;
+	if (!fightData.loser && attacker.hp > 0 && poisonedBy) {
+		// TODO: Temporary code to avoid endless fights
 		// Forced poison to end the fight
 		if (poisonedBy.id === -666) {
 			const poisoner = {
@@ -993,7 +998,7 @@ export const playFighterTurn = (
 			};
 
 			// Register the hit
-			registerHit(fightData, poisoner, [fighter], 100, Skill.SANG_ACIDE);
+			registerHit(fightData, poisoner, [attacker], 100, Skill.SANG_ACIDE);
 		} else {
 			// Get poisoner
 			const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
@@ -1022,26 +1027,25 @@ export const playFighterTurn = (
 					break;
 			}
 
-
 			// Register the hit
-			registerHit(fightData, poisoner, [fighter], poisonDamage, poisonedBy.skill);
+			registerHit(fightData, poisoner, [attacker], poisonDamage, poisonedBy.skill);
 		}
 	}
 
 	// Increase own initiative (1 = a supposed turn) (lower is better)
 	let time = 1
-		* fighter.stats.speed.global
-		* fighter.stats.speed[fighter.element];
+		* attacker.stats.speed.global
+		* attacker.stats.speed[attacker.element];
 
 	// Increase time lost if slowed
-	if (fighter.status.includes(FighterStatus.SLOWED)) {
+	if (attacker.status.includes(FighterStatus.SLOWED)) {
 		time *= 1.5;
 	}
 
 	// Decrease time if quickened
-	if (fighter.status.includes(FighterStatus.QUICKENED)) {
+	if (attacker.status.includes(FighterStatus.QUICKENED)) {
 		time /= 1.5;
 	}
 
-	fighter.initiative += time;
+	attacker.initiative += time;
 };
