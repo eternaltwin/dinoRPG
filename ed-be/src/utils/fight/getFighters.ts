@@ -290,6 +290,14 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 		fighter.stats.base[AssaultElement.WATER] += 10;
 	}
 
+	if (fighterHas[Skill.ACUPUNCTURE]) {
+		fighter.status.push(FighterStatus.HEALING);
+	}
+
+	if (fighterHas[Skill.SAPEUR]) {
+		// TODO: increase item use probability by 50%
+	}
+
 	// AIR
   if (fighterHas[Skill.SAUT]) {
 		fighter.canHitFlying = true;

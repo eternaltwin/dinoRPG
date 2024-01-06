@@ -272,6 +272,17 @@ const registerHit = (
 const evadedSkill = (opponent: DetailedFighter, skill: DinozSkillFiche) => {
 	if (opponent.hp <= 0) return false;
 
+	// Some statues prevent skill evasion
+	const statusesPreventingEvasion = [
+		FighterStatus.ASLEEP,
+		FighterStatus.PETRIFIED,
+		FighterStatus.FLYING,
+		FighterStatus.STUNNED,
+	];
+	if (statusesPreventingEvasion.some((status) => opponent.status.includes(status))) {
+		return false;
+	}
+
 	let evasion = 0;
 
 	// 10% chance to evade skills A with Skill.DEPLACEMENT_INSTANTANE
@@ -683,7 +694,17 @@ const activateSkill = (
 			break;
 		}
 		case Skill.PETRIFICATION: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Petrify opponent
+			removeStatus(fightData, opponent, FighterStatus.FLYING, FighterStatus.INTANGIBLE);
+			addStatus(fightData, opponent, FighterStatus.PETRIFIED);
+
+			// Instantly cancel if boss
+			if (opponent.type === 'boss') {
+				removeStatus(fightData, opponent, FighterStatus.PETRIFIED);
+			}
 			break;
 		}
 		default:
@@ -784,6 +805,11 @@ const attack = (
 
 			registerHit(fightData, fighter, [opponent], damage, Skill.TORCHE);
 		}
+
+		// ACUPUNCTURE damage
+		if (opponent.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
+			registerHit(fightData, opponent, [fighter], 1, Skill.ACUPUNCTURE);
+		}
 	}
 
 	// Change fighter element
@@ -881,6 +907,18 @@ export const playFighterTurn = (
 	// Torch damage
 	if (fighter.status.includes(FighterStatus.TORCHED)) {
 		registerHit(fightData, fighter, [fighter], 1, Skill.TORCHE);
+	}
+
+	// ACUPUNCTURE heal
+	if (fighter.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
+		fighter.hp += 1;
+
+		// Add heal step
+		fightData.steps.push({
+			action: 'heal',
+			fighter: stepFighter(fighter),
+			hp: 1,
+		});
 	}
 
 	// Event activation

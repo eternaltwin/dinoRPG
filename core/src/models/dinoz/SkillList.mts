@@ -2033,7 +2033,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31201],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 10
 	},
 	[Skill.ACUPUNCTURE]: {
 		id: Skill.ACUPUNCTURE,
