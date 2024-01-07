@@ -551,6 +551,22 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		level: 0,
 		zone: MapZone.ALL
 	},
+	BAMBOOZ_SPROUTING: {
+		name: 'bamboo',
+		hp: 30,
+		elements: {
+			fire: 0,
+			wood: 4,
+			water: 0,
+			lightning: 4,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		odds: 0,
+		level: 0,
+		zone: MapZone.ALL
+	},
 	ANY: {
 		name: 'any',
 		hp: 30,

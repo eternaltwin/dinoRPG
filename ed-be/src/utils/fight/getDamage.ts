@@ -14,7 +14,6 @@ const getDamage = (
     let attack = BASE_ATTACK_VALUE;
     let defense = BASE_DEFENSE_VALUE;
     let attack_element = AssaultElement.FIRE;
-    // let fixedDamage = false;
 
     // Calculate the attacker's attack score
     if (skill) {
@@ -113,14 +112,11 @@ const getDamage = (
     }
 
     // Add random attack bonus: up to 33%
-    let random_attack_bonus = Math.random() * attack / 3;
+    const random_attack_bonus = Math.random() * attack / 3;
     attack += random_attack_bonus;
 
     // Apply global attack factor
     attack *= ATTACK_GLOBAL_FACTOR;
-
-    // if (!fixedDamage) {
-    // }
 
     // Calculate the opponent's defense score
     // TODO for multi-element skills, there's a different calculation to use
@@ -134,9 +130,6 @@ const getDamage = (
     let damage = attack - defense;
 
     damage = Math.round(damage);
-
-    // if (!fixedDamage) {
-    // }
 
     // Set minimum damage
     if (damage < attacker.minDamage) {

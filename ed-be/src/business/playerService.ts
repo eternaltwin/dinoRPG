@@ -1,9 +1,11 @@
+import { Item } from '@drpg/core/models/item/ItemList';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche, toDinozFicheLite } from '@drpg/core/utils/DinozUtils';
+import dayjs from 'dayjs';
 import { Request } from 'express';
-import { getAllDinozFicheLite, getDinozTotalCount } from '../dao/dinozDao.js';
+import { getAllDinozFicheLite, getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
 import {
 	getCommonDataRequest,
 	getPlayerDataRequest,
@@ -11,10 +13,8 @@ import {
 	searchPlayersByName,
 	setPlayer
 } from '../dao/playerDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { itemList } from '@drpg/core/models/item/ItemList';
-import dayjs from 'dayjs';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 /**
  * @summary Get data from player on login
@@ -33,10 +33,19 @@ export async function getCommonData(req: Request) {
 	// Check if it's the first login of the day
 	if (!dayjs().isSame(playerCommonData.lastLogin, 'day')) {
 		// Add 1 daily ticket
-		await increaseItemQuantity(req.auth.playerId, itemList.DAILY_TICKET.itemId, 1);
+		await increaseItemQuantity(req.auth.playerId, Item.DAILY_TICKET, 1);
 
 		// Update last login
 		await setPlayer(req.auth.playerId, { lastLogin: new Date() });
+
+		// Tik bracelet regen
+		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz => dinoz.items.some(item => item.itemId === Item.TIK_BRACELET));
+
+		for (const dinoz of dinozWithTikBracelet) {
+			// Regen 10 HP
+			const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
+			await updateDinoz(dinoz.id, { life: newHp });
+		}
 	}
 
 	const commonData: PlayerCommonData = {

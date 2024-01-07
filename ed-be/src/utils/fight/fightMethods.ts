@@ -8,13 +8,15 @@ import { StepFighter } from "@drpg/core/models/fight/FightStep";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
+import { Item } from "@drpg/core/models/item/ItemList";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
+import { DefenseElement } from "@drpg/core/utils/getDefenseStat";
 import { ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 import { DetailedFight } from "./generateFight.js";
 import getDamage from "./getDamage.js";
 import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import randomBetween from "./randomBetween.js";
-import { Item } from "@drpg/core/models/item/ItemList";
+import weightedRandom from "./weightedRandom.js";
 
 export const getFighters = (
 	fightData: DetailedFight,
@@ -271,17 +273,17 @@ const registerHit = (
 	});
 
 	if (!skill) {
-	// Expire Skill.COLERE if present
-	if (fighter.activeSkills.includes(Skill.COLERE)) {
-		fighter.activeSkills = fighter.activeSkills.filter((skill) => skill !== Skill.COLERE);
+		// Expire Skill.COLERE if present
+		if (fighter.activeSkills.includes(Skill.COLERE)) {
+			fighter.activeSkills = fighter.activeSkills.filter((skill) => skill !== Skill.COLERE);
 
-		// Add skillExpire step
-		fightData.steps.push({
-			action: 'skillExpire',
-			dinoz: stepFighter(fighter),
-			skill: Skill.COLERE,
-		});
-	}
+			// Add skillExpire step
+			fightData.steps.push({
+				action: 'skillExpire',
+				dinoz: stepFighter(fighter),
+				skill: Skill.COLERE,
+			});
+		}
 	}
 };
 
@@ -388,7 +390,50 @@ const createMonster = (
 	// Add monster to fighters
 	fightData.fighters.push(monster);
 
+	// Add arrive step
+	fightData.steps.push({
+		action: 'arrive',
+		fighter: stepFighter(monster),
+	});
+
+	checkInvocationBan(fightData, monster);
+
 	return monster;
+};
+
+const checkInvocationBan = (
+	fightData: DetailedFight,
+	invocation: DetailedFighter,
+) => {
+	// Get fighters
+	const fighters = getFighters(fightData);
+
+	// Check if a fighter has Item.BANISHMENT
+	const banisher = fighters.find((f) => f.items.some((item) => item.itemId === Item.BANISHMENT));
+
+	if (!banisher) return;
+
+	// Add item use step
+	fightData.steps.push({
+		action: 'itemUse',
+		fighter: stepFighter(banisher),
+		itemId: Item.BANISHMENT,
+	});
+
+	// Add leave step
+	fightData.steps.push({
+		action: 'leave',
+		fighter: stepFighter(invocation),
+	});
+
+	// Remove invocation
+	const invocationIndex = fightData.fighters.findIndex((f) => f.id === invocation.id);
+
+	if (invocationIndex === -1) {
+		throw new Error('Invocation not found');
+	}
+
+	fightData.fighters.splice(invocationIndex, 1);
 };
 
 const activateEvent = (
@@ -460,21 +505,7 @@ const activateEvent = (
 					if (f.id === fighter.id && f.type === fighter.type) return;
 
 					// Heal 1-wood HP
-					let hpHealed = randomBetween(1, fighter.stats.base[AssaultElement.WOOD]);
-
-					// Don't overheal
-					if (f.hp + hpHealed > f.maxHp) {
-						hpHealed = f.maxHp - f.hp;
-					}
-
-					f.hp += hpHealed;
-
-					// Add heal step
-					fightData.steps.push({
-						action: 'heal',
-						fighter: stepFighter(f),
-						hp: hpHealed,
-					});
+					heal(fightData, f, randomBetween(1, fighter.stats.base[AssaultElement.WOOD]));
 				});
 				break;
 			}
@@ -508,6 +539,14 @@ const activateEvent = (
 
 				// Add clone to fighters
 				fightData.fighters.push(clone);
+
+				// Add arrive step
+				fightData.steps.push({
+					action: 'arrive',
+					fighter: stepFighter(clone),
+				});
+
+				checkInvocationBan(fightData, clone);
 				break;
 			}
 			default:
@@ -522,6 +561,9 @@ const activateEvent = (
 	} else {
 		// Event is an item
 
+		// Set this to false if item is not one-use
+		let itemUsed = true;
+
 		// Add item use step
 		fightData.steps.push({
 			action: 'itemUse',
@@ -529,25 +571,23 @@ const activateEvent = (
 			itemId: event.itemId,
 		});
 
+		// Cancel method to use if the item ends up not being triggered
+		const cancel = () => {
+			// Remove last step
+			fightData.steps.pop();
+
+			return false;
+		}
+
 		switch (event.itemId) {
 			case Item.CLOUD_BURGER: {
 				// Cancel if HP requirement not met
-				if (fighter.hp === fighter.startingHp || (fighter.hp > 15 && fighter.startingHp - fighter.hp < 10)){
-					// Remove last step
-					fightData.steps.pop();
-
-					return false;
+				if (fighter.hp === fighter.startingHp || (fighter.hp > 15 && fighter.startingHp - fighter.hp < 10)) {
+					return cancel();
 				}
 
 				// Heal 10 HP
-				fighter.hp += 10;
-
-				// Add heal step
-				fightData.steps.push({
-					action: 'heal',
-					fighter: stepFighter(fighter),
-					hp: 10,
-				});
+				heal(fightData, fighter, 10);
 				break;
 			}
 			case Item.FIGHT_RATION: {
@@ -556,31 +596,185 @@ const activateEvent = (
 				if (hpDelta < 0) hpDelta = 0;
 
 				// Less chance to heal if HP if lost HP is less than 20. Sure to heal if lost HP is 20+
-				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) != 0){
-					// Remove last step
-					fightData.steps.pop();
-
-					return false;
+				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) != 0) {
+					return cancel();
 				}
 
 				// Heal 20 HP
-				fighter.hp += 20;
+				heal(fightData, fighter, 20);
+				break;
+			}
+			case Item.SOS_HELMET: {
+				fighter.stats.special.armor = (fighter.stats.special.armor ?? 0) + 1;
+				break;
+			}
+			case Item.PAMPLEBOUM_PIT:
+			case Item.LITTLE_PEPPER: {
+				fighter.nextAssaultBonus += 10;
+				break;
+			}
+			case Item.ZIPPO: {
+				addStatus(fightData, fighter, FighterStatus.TORCHED);
+				break;
+			}
+			case Item.SOS_FLAME: {
+				createMonster(fightData, fighter, monsterList.FLAM);
+				break;
+			}
+			case Item.REFRIGERATED_SHIELD: {
+				fighter.stats.defense[DefenseElement.FIRE] += 10;
+				break;
+			}
+			case Item.GOBLIN_MERGUEZ: {
+				// Cancel if no HP lost
+				if (fighter.hp === fighter.startingHp) {
+					return cancel();
+				}
 
-				// Add heal step
+				// -10% all defenses
+				fighter.stats.defense[DefenseElement.FIRE] -= 10;
+				fighter.stats.defense[DefenseElement.WATER] -= 10;
+				fighter.stats.defense[DefenseElement.WOOD] -= 10;
+				fighter.stats.defense[DefenseElement.LIGHTNING] -= 10;
+				fighter.stats.defense[DefenseElement.AIR] -= 10;
+
+				// Regen 1-4 HP (weighted)
+				heal(fightData, fighter, weightedRandom([10, 7, 5, 3]));
+				break;
+			}
+			case Item.PORTABLE_LOVE: {
+				// Check if an opponent is flying
+				const opponent = getOpponents(fightData, fighter)
+					.find((f) => f.status.includes(FighterStatus.FLYING));
+
+				if (!opponent) {
+					return cancel();
+				}
+
+				fighter.canHitFlying = true;
+				break;
+			}
+			case Item.MONOCHROMATIC: {
+				// Check if an opponent has an Antichromatic
+				const opponent = getOpponents(fightData, fighter)
+					.find((f) => f.items.some((item) => item.itemId === Item.ANTICHROMATIC));
+
+				// Don't cancel, just don't apply the effect and trigger the ANTICHROMATIC
+				if (opponent) {
+					// Add item use step
+					fightData.steps.push({
+						action: 'itemUse',
+						fighter: stepFighter(opponent),
+						itemId: Item.ANTICHROMATIC,
+					});
+					break;
+				}
+
+				// Get dinoz best element
+				const bestElement = fighter.elements.reduce((acc, element) => {
+					if (fighter.stats.base[element] > fighter.stats.base[acc]) {
+						return element;
+					}
+
+					return acc;
+				}, AssaultElement.FIRE);
+
+				// Set element
+				fighter.element = bestElement;
+
+				// Lock element
+				addStatus(fightData, fighter, FighterStatus.LOCKED);
+				break;
+			}
+			case Item.FUCA_PILL: {
+				// Check if another FUCA was already used
+				if (fighter.itemsUsed.includes(Item.FUCA_PILL)) {
+					return cancel();
+				}
+
+				// Cancel if speed is already x2
+				if (fighter.stats.speed.global <= 0.5) {
+					return cancel();
+				}
+
+				// Increase speed
+				fighter.stats.speed.global *= 0.75;
+				break;
+			}
+			case Item.LORIS_COSTUME: {
+				// Get opponents
+				const opponents = getOpponents(fightData, fighter);
+
+				// Cancel if less than 2 opponents
+				if (opponents.length < 2) {
+					return cancel();
+				}
+
+				// Cancel if petrifed or stunned
+				if (fighter.status.includes(FighterStatus.PETRIFIED) || fighter.status.includes(FighterStatus.STUNNED)) {
+					return cancel();
+				}
+
+				// Get random opponent attacker
+				const opponentAttacker = getRandomOpponent(fightData, fighter);
+
+				// Get other opponents
+				const opponentsWithoutAttacker = opponents.filter((opponent) => opponent.id !== opponentAttacker.id);
+
+				// Get random opponent defender
+				const opponentDefender = opponentsWithoutAttacker[randomBetween(0, opponentsWithoutAttacker.length - 1)];
+
+				// Add moveTo step
 				fightData.steps.push({
-					action: 'heal',
-					fighter: stepFighter(fighter),
-					hp: 20,
+					action: 'moveTo',
+					fighter: stepFighter(opponentAttacker),
+					target: stepFighter(opponentDefender),
+				});
+
+				// Attack defender
+				startAttack(fightData, opponentAttacker, opponentDefender);
+
+				// Check if fighter is not dead
+				if (opponentAttacker.hp > 0) {
+					// Add moveBack step
+					fightData.steps.push({
+						action: 'moveBack',
+						fighter: stepFighter(opponentAttacker),
+					});
+				}
+				break;
+			}
+			case Item.STRONG_TEA: {
+				// Get allies
+				const allies = getAllies(fightData, fighter);
+
+				// Check if the team has BEER status
+				const hasBeer = allies.some((f) => f.status.includes(FighterStatus.BEER));
+
+				if (!hasBeer) {
+					return cancel();
+				}
+
+				// Remove BEER status
+				allies.forEach((f) => {
+					removeStatus(fightData, f, FighterStatus.BEER);
 				});
 				break;
 			}
 			default:
-				// Remove last step
-				fightData.steps.pop();
-
 				console.warn('Unknown item', event.itemId);
+				return cancel();
+		}
 
-				return false;
+		if (itemUsed) {
+			// Add to items used
+			fighter.itemsUsed.push(event.itemId);
+
+			// Get item index
+			const itemIndex = fighter.items.findIndex((item) => item.itemId === event.itemId);
+
+			// Remove from items
+			fighter.items.splice(itemIndex, 1);
 		}
 	}
 
@@ -684,15 +878,7 @@ const activateSkill = (
 		}
 		case Skill.SIESTE: {
 			// Heal 1-20 HP
-			const hpHealed = randomBetween(1, 20);
-			fighter.hp += hpHealed;
-
-			// Add heal step
-			fightData.steps.push({
-				action: 'heal',
-				fighter: stepFighter(fighter),
-				hp: hpHealed,
-			});
+			heal(fightData, fighter, randomBetween(1, 20));
 
 			// Fall asleep
 			addStatus(fightData, fighter, FighterStatus.ASLEEP);
@@ -707,8 +893,7 @@ const activateSkill = (
 				registerHit(fightData, fighter, [fighter], 5, skill.id);
 			}
 			// Increase the time of all other fighters to make it look like the caster "gained" time
-			let fighters = getFighters(fightData);
-			fighters.map(f => {
+			getFighters(fightData).forEach(f => {
 				if (f.id !== fighter.id) {
 					f.time += 15 * TIME_FACTOR;
 				}
@@ -835,6 +1020,87 @@ const evade = (opponent: DetailedFighter) => {
 	return random < ((opponent.stats.special.evasion ?? 0) / 100);
 };
 
+const poison = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	poisoner: DetailedFighter,
+	skill: Skill
+) => {
+	// No poison if fighter is dead
+	if (fighter.hp <= 0) return;
+
+	// No poison if fighter is already poisoned
+	if (fighter.status.includes(FighterStatus.POISONED)) return;
+
+	// No poison if fighter is cured
+	if (fighter.status.includes(FighterStatus.CURED)) return;
+
+	// Check if fighter has Item.ANTIDOTE
+	if (fighter.items.some((item) => item.itemId === Item.ANTIDOTE)) {
+		// Add item use step
+		fightData.steps.push({
+			action: 'itemUse',
+			fighter: stepFighter(fighter),
+			itemId: Item.ANTIDOTE,
+		});
+
+		// Set CURED
+		addStatus(fightData, fighter, FighterStatus.CURED);
+		return;
+	}
+
+	// Check if fighter has Item.POISONITE_SHOT
+	if (fighter.items.some((item) => item.itemId === Item.POISONITE_SHOT)) {
+		// Remove item
+		const itemIndex = fighter.items.findIndex((item) => item.itemId === Item.POISONITE_SHOT);
+		fighter.items.splice(itemIndex, 1);
+
+		// Add to items used
+		fighter.itemsUsed.push(Item.POISONITE_SHOT);
+
+		// Add item use step
+		fightData.steps.push({
+			action: 'itemUse',
+			fighter: stepFighter(fighter),
+			itemId: Item.POISONITE_SHOT,
+		});
+
+		// Set CURED
+		addStatus(fightData, fighter, FighterStatus.CURED);
+		return;
+	}
+
+	fighter.poisonedBy = {
+		id: poisoner.id,
+		type: poisoner.type,
+		skill,
+	};
+
+	addStatus(fightData, fighter, FighterStatus.POISONED);
+};
+
+const heal = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	hp: number,
+) => {
+	// No heal if fighter is dead
+	if (fighter.hp <= 0) return;
+
+	// No heal if BEER
+	if (fighter.status.includes(FighterStatus.BEER)) return;
+
+	const heal = Math.min(hp, fighter.maxHp - fighter.hp);
+	fighter.hp += heal;
+
+	// Add heal step
+	fightData.steps.push({
+		action: 'heal',
+		fighter: stepFighter(fighter),
+		hp: heal,
+	});
+}
+
 const attack = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
@@ -870,30 +1136,14 @@ const attack = (
 	if (damage) {
 		registerHit(fightData, fighter, [opponent], damage);
 
-		if (!fighter.status.includes(FighterStatus.POISONED)) {
-			// Poison fighter if opponent has Skill.AURA_PUANTE
-			if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
-				fighter.poisonedBy = {
-					id: opponent.id,
-					type: opponent.type,
-					skill: Skill.AURA_PUANTE,
-				};
-
-				addStatus(fightData, fighter, FighterStatus.POISONED);
-			}
+		// Poison fighter if opponent has Skill.AURA_PUANTE
+		if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
+			poison(fightData, fighter, opponent, Skill.AURA_PUANTE);
 		}
 
-		if (!opponent.status.includes(FighterStatus.POISONED)) {
-			// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
-			if (fighter.skills.find((skill) => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
-				opponent.poisonedBy = {
-					id: opponent.id,
-					type: opponent.type,
-					skill: Skill.GRIFFES_EMPOISONNEES,
-				};
-
-				addStatus(fightData, opponent, FighterStatus.POISONED);
-			}
+		// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
+		if (fighter.skills.find((skill) => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
+			poison(fightData, opponent, fighter, Skill.GRIFFES_EMPOISONNEES);
 		}
 
 		// Torch damage
@@ -1015,14 +1265,8 @@ export const playFighterTurn = (
 
 	// ACUPUNCTURE heal
 	if (attacker.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
-		attacker.hp += 1;
-
-		// Add heal step
-		fightData.steps.push({
-			action: 'heal',
-			fighter: stepFighter(attacker),
-			hp: 1,
-		});
+		// Heal 1 HP
+		heal(fightData, attacker, 1);
 	}
 
 	// TODO check any deads from the status

@@ -21,6 +21,8 @@ export enum FighterStatus {
   SHIELDED,
   BLESSED,
   HEALING,
+	CURED,
+	BEER,
 };
 
 export const BadFighterStatus = [
@@ -85,7 +87,7 @@ export interface DetailedFighter {
   minAssaultDamage: number,
   // Flying
   canHitFlying?: boolean,
-  // Intangible 
+  // Intangible
   canHitIntangible?: boolean,
   // Skill bonuses
   skillElementalBonus: Record<AssaultElement, number>,

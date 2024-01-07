@@ -407,7 +407,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5,
-		price: 500 // TODO double check
+		price: 500, // TODO double check
+		priority: 1,
+		probability: 20,
 	},
 	// Pampleboum: heals 15
 	PAMPLEBOUM: {
@@ -431,7 +433,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 15,
-		price: 150 // TODO double check
+		price: 150, // TODO double check
+		priority: 1,
+		probability: 50,
 	},
 	// Little pepper: increases next assault value by 10
 	LITTLE_PEPPER: {
@@ -441,7 +445,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 15,
-		price: 150 // TODO double check
+		price: 150, // TODO double check
+		priority: 1,
+		probability: 50,
 	},
 	// Zippo: Set dino on fire during a fight
 	ZIPPO: {
@@ -451,7 +457,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 15,
-		price: 150 // TODO double check
+		price: 150, // TODO double check
+		priority: 1,
+		probability: 50,
 	},
 	// SOS flame: summons a flame to fight with you
 	SOS_FLAME: {
@@ -461,7 +469,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 15,
-		price: 150 // TODO double check
+		price: 150, // TODO double check
+		priority: 1,
+		probability: 50,
 	},
 	// Refrigerated Shield: Increases fire defense by 20 during a fight
 	REFRIGERATED_SHIELD: {
@@ -471,7 +481,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 15,
-		price: 150 // TODO double check
+		price: 150, // TODO double check
+		priority: 1,
+		probability: 50,
 	},
 	// Fuca Pill: increases attack speed by 50% during a fight
 	FUCA_PILL: {
@@ -481,7 +493,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5,
-		price: 150 // TODO double check
+		price: 1000,
+		priority: 3,
+		probability: 20,
 	},
 	// Monochromatic: all standards assault hit of the highest element of the dino during a fight (but speed follows normal rotation)
 	MONOCHROMATIC: {
@@ -491,7 +505,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5,
-		price: 5000
+		price: 5000,
+		priority: 5,
+		probability: 15,
 	},
 	// Poisonite Shot: heals poison during a fight / prevents to be poisoned during a fight??
 	POISONITE_SHOT: {
@@ -511,7 +527,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 10,
-		price: 400
+		price: 400,
+		priority: 4,
+		probability: 30,
 	},
 	// Vegetox Guard's Costume: Disguise a dino into a vegetox guard
 	VEGETOX_COSTUME: {
@@ -541,7 +559,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 15,
-		price: 1234 // TODO double check
+		price: 1234, // TODO double check
+		priority: 1,
+		probability: 50,
 	},
 	// Portable Love: can attack flying dinoz
 	PORTABLE_LOVE: {
@@ -551,7 +571,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 10,
-		price: 300
+		price: 300,
+		priority: 1,
+		probability: 70,
 	},
 	// Danger Detector: protects against an attack that inflicts more than 25 hp
 	DANGER_DETECTOR: {
@@ -656,7 +678,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 10,
-		price: 2000
+		price: 2000,
+		priority: 1,
+		probability: 60,
 	},
 	// Temporal Stabiliser: ??
 	TEMPORAL_STABILISER: {

@@ -2,12 +2,13 @@ import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
 import { Stat } from "@drpg/core/models/enums/SkillStat";
 import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
-import { itemList } from "@drpg/core/models/item/ItemList";
+import { Item, itemList } from "@drpg/core/models/item/ItemList";
 import { AssaultElement, getAssaultStat } from "@drpg/core/utils/getAssaultStat";
 import { DefenseElement, getDefenseStat } from "@drpg/core/utils/getDefenseStat";
 import { SpecialStat, getSpecialStat } from "@drpg/core/utils/getSpecialStat";
 import { DinozToCalculateFight } from "../../business/fightService.js";
 import { TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
+import { monsterList } from "@drpg/core/models/fight/MonsterList";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -15,6 +16,8 @@ interface Team {
 	[Skill.ELECTROLYSE]?: boolean;
 	[Skill.CHEF_DE_GUERRE]?: boolean;
 	[Skill.GARDE_FORESTIER]?: boolean;
+	[Item.EMBER]?: boolean;
+	[Item.BEER]?: boolean;
 }
 
 export const initializeDinoz = (
@@ -28,6 +31,11 @@ export const initializeDinoz = (
 
 		if (!itemFiche) {
 			throw new Error(`Item ${item.itemId} not found`);
+		}
+
+		// Add bamboo monster
+		if (team && itemFiche.itemId === Item.BAMBOO_FRIEND) {
+			team.monsterList.push(monsterList.BAMBOOZ_SPROUTING);
 		}
 
 		return itemFiche;
@@ -414,6 +422,14 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 		// LIGHTNING
 		if (team[Skill.ELECTROLYSE]) {
 			fighter.stats.speed.global *= 0.95;
+		}
+
+		// ITEMS
+		if (team1[Item.EMBER] || team2[Item.EMBER]) {
+			fighter.stats.assault[AssaultElement.FIRE] *= 1.3;
+		}
+		if (team1[Item.BEER] || team2[Item.BEER]) {
+			fighter.status.push(FighterStatus.BEER);
 		}
 	});
 

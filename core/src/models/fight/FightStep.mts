@@ -12,6 +12,10 @@ export interface ArriveStep {
   action: 'arrive';
   fighter: StepFighter;
 }
+export interface LeaveStep {
+  action: 'leave';
+  fighter: StepFighter;
+}
 export interface ResistStep {
   action: 'resist';
   dinoz: StepFighter;
@@ -93,8 +97,8 @@ export interface ItemUseStep {
 	itemId: number;
 }
 
-export type FightStep = ArriveStep | ResistStep | HitStep
-| AttemptHitStep | EvadeStep | DeathStep | MoveStep
+export type FightStep = ArriveStep | LeaveStep | ResistStep
+| HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
 | CounterStep | MoveBackStep | SurviveStep
 | SkillActivateStep | SkillExpireStep | LooseHpStep
 | HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep;
