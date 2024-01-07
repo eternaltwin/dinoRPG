@@ -56,6 +56,10 @@ const getDamage = (
                 attack = 10 * attacker.stats.base[AssaultElement.FIRE];
                 attack_element = AssaultElement.FIRE;
             }
+            case Skill.BRASERO: {
+                attack = 3 * attacker.stats.base[AssaultElement.FIRE];
+                attack_element = AssaultElement.FIRE;
+            }
             // WATER
             case Skill.CANON_A_EAU: {
                 attack = 6 * attacker.stats.base[AssaultElement.WATER];

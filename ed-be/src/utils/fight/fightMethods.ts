@@ -698,6 +698,21 @@ const activateSkill = (
 			addStatus(fightData, fighter, FighterStatus.ASLEEP);
 			break;
 		}
+		case Skill.BRASERO:
+			targetAllOpponents(fightData, fighter, skill);
+			break;
+		case Skill.DETONATION:
+			// The fighter will not suicide with the skill, it just loses its roll
+			if (fighter.hp > 5) {
+				registerHit(fightData, fighter, [fighter], 5, skill.id);
+			}
+			// Increase the time of all other fighters to make it look like the caster "gained" time
+			let fighters = getFighters(fightData);
+			fighters.map(f => {
+				if (f.id !== fighter.id) {
+					f.time += 15 * TIME_FACTOR;
+				}
+			})
 		// WATER
 		case Skill.CANON_A_EAU: {
 			targetSingleOpponent(fightData, fighter, skill);

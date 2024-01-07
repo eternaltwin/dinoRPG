@@ -360,13 +360,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.BRASERO,
 		name: 'Brasero',
 		type: SkillType.E,
-		energy: Energy.E25,
+		energy: Energy.E30,
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 1,
+		probability: 25
 	},
 	[Skill.SOUFFLE_ARDENT]: {
 		id: Skill.SOUFFLE_ARDENT,
@@ -468,13 +470,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.DETONATION,
 		name: 'Detonation',
 		type: SkillType.E,
-		energy: Energy.NONE,
+		energy: Energy.E60,
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11104],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 1,
+		probability: 10,
 	},
 	[Skill.PROPULSION_DIVINE]: {
 		id: Skill.PROPULSION_DIVINE,
