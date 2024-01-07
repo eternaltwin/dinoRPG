@@ -10,12 +10,14 @@ export enum Stat {
 	ENERGY = 'energy',
 	ENERGY_RECOVERY = 'energyRecovery',
 	// Assaults
+	ALL_ASSAULT = 'allAssault',
 	FIRE_ASSAULT = 'fireAssault',
 	WATER_ASSAULT = 'waterAssault',
 	AIR_ASSAULT = 'airAssault',
 	LIGHTNING_ASSAULT = 'lightningAssault',
 	WOOD_ASSAULT = 'woodAssault',
 	// Speeds
+	SPEED = 'speed',
 	FIRE_SPEED = 'fireSpeed',
 	WATER_SPEED = 'waterSpeed',
 	AIR_SPEED = 'airSpeed',

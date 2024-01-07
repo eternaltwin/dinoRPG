@@ -21,11 +21,13 @@ export type SkillEffects = {
 	[Stat.MAX_FOLLOWERS]?: number;
 	[Stat.ENERGY]?: number;
 	[Stat.ENERGY_RECOVERY]?: number;
+	[Stat.ALL_ASSAULT]?: number;
 	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
 	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
 	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;
 	[Stat.LIGHTNING_ASSAULT]?: number | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
 	[Stat.WOOD_ASSAULT]?: number | OtherAssaults<Stat.WOOD_ASSAULT>;
+	[Stat.SPEED]?: number;
 	[Stat.FIRE_SPEED]?: number;
 	[Stat.WATER_SPEED]?: number;
 	[Stat.AIR_SPEED]?: number;

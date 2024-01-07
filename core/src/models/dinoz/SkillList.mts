@@ -494,7 +494,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ELEMENT]: -2,
-			[Stat.FIRE_SPEED]: 0.3
+			[Stat.FIRE_SPEED]: 0.7
 		}
 	},
 	[Skill.VIGILANCE]: {
@@ -912,11 +912,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		effects: {
 			[Stat.MAX_HP]: 50,
 			[Stat.FIRE_ELEMENT]: 6,
-			[Stat.FIRE_SPEED]: 0.15,
-			[Stat.WATER_SPEED]: 0.15,
-			[Stat.AIR_SPEED]: 0.15,
-			[Stat.LIGHTNING_SPEED]: 0.15,
-			[Stat.WOOD_SPEED]: 0.15
+			[Stat.SPEED]: 0.85,
 		}
 	},
 	[Skill.PROTEINES_DINOZIENNES]: {
@@ -1340,11 +1336,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_SPEED]: 0.15,
-			[Stat.WATER_SPEED]: 0.15,
-			[Stat.AIR_SPEED]: 0.15,
-			[Stat.LIGHTNING_SPEED]: 0.15,
-			[Stat.WOOD_SPEED]: 0.15
+			[Stat.SPEED]: 0.85,
 		}
 	},
 	[Skill.PRINTEMPS_PRECOCE]: {
@@ -1498,11 +1490,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.WATER_ASSAULT]: 5,
 			[Stat.LIGHTNING_ASSAULT]: 5,
 			[Stat.MAX_HP]: 30,
-			[Stat.AIR_SPEED]: -0.2,
-			[Stat.FIRE_SPEED]: -0.2,
-			[Stat.WATER_SPEED]: -0.2,
-			[Stat.LIGHTNING_SPEED]: -0.2,
-			[Stat.WOOD_SPEED]: -0.2
+			[Stat.SPEED]: 1.2,
 		}
 	},
 	[Skill.GARDE_FORESTIER]: {
@@ -1590,11 +1578,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.AIR_ASSAULT]: 15,
 			[Stat.LIGHTNING_ASSAULT]: 15,
 			[Stat.WOOD_ASSAULT]: 15,
-			[Stat.FIRE_SPEED]: -0.2,
-			[Stat.WATER_SPEED]: -0.2,
-			[Stat.AIR_SPEED]: -0.2,
-			[Stat.LIGHTNING_SPEED]: -0.2,
-			[Stat.WOOD_SPEED]: -0.2
+			[Stat.SPEED]: 1.2,
 		}
 	},
 	[Skill.OXYGENATION_MUSCULAIRE]: {
@@ -2199,7 +2183,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: 0.1,
-			[Stat.WATER_SPEED]: -0.15
+			[Stat.WATER_SPEED]: 1.15
 		}
 	},
 	[Skill.RAYON_KAAR_SHER]: {
@@ -2425,11 +2409,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ARMOR]: 10,
-			[Stat.FIRE_SPEED]: -0.2,
-			[Stat.WATER_SPEED]: -0.2,
-			[Stat.AIR_SPEED]: -0.2,
-			[Stat.LIGHTNING_SPEED]: -0.2,
-			[Stat.WOOD_SPEED]: -0.2
+			[Stat.SPEED]: 1.2,
 		}
 	},
 	[Skill.DIETE_CHROMATIQUE]: {
@@ -2609,11 +2589,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: 0.15,
-			[Stat.WATER_SPEED]: 0.15,
-			[Stat.WOOD_SPEED]: 0.15,
-			[Stat.FIRE_SPEED]: 0.15,
-			[Stat.LIGHTNING_SPEED]: 0.15
+			[Stat.SPEED]: 0.85,
 		}
 	},
 	[Skill.REFLEX]: {
@@ -2655,7 +2631,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.LIGHTNING_SPEED]: 0.4
+			[Stat.LIGHTNING_SPEED]: 0.6
 		}
 	},
 	[Skill.PARATONNERRE]: {
@@ -2788,7 +2764,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: 0.5
+			[Stat.LIGHTNING_SPEED]: 0.5
 		}
 	},
 	[Skill.VOIE_DE_GAIA]: {
@@ -3405,7 +3381,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: 15,
-			[Stat.AIR_SPEED]: -0.2
+			[Stat.AIR_SPEED]: 1.2
 		}
 	},
 	[Skill.TORNADE]: {
@@ -3558,7 +3534,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: -0.2
+			[Stat.AIR_SPEED]: 1.2
 		}
 	},
 	[Skill.PAUME_EJECTABLE]: {
@@ -3669,7 +3645,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: -0.5
+			[Stat.AIR_SPEED]: 1.5
 		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 3
@@ -3738,7 +3714,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: -0.5
+			[Stat.AIR_SPEED]: 1.5
 		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 6

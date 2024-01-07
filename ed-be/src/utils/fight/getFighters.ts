@@ -283,20 +283,23 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 
 		// TODO this is multiplicative not additive
 		// Process speed changes
+		if (skill.effects?.[Stat.SPEED]) {
+			fighter.stats.speed.global *= skill.effects[Stat.SPEED];
+		}
 		if (skill.effects?.[Stat.FIRE_SPEED]) {
-			fighter.stats.speed[AssaultElement.FIRE] -= skill.effects[Stat.FIRE_SPEED];
+			fighter.stats.speed[AssaultElement.FIRE] *= skill.effects[Stat.FIRE_SPEED];
 		}
 		if (skill.effects?.[Stat.WATER_SPEED]) {
-			fighter.stats.speed[AssaultElement.WATER] -= skill.effects[Stat.WATER_SPEED];
+			fighter.stats.speed[AssaultElement.WATER] *= skill.effects[Stat.WATER_SPEED];
 		}
 		if (skill.effects?.[Stat.WOOD_SPEED]) {
-			fighter.stats.speed[AssaultElement.WOOD] -= skill.effects[Stat.WOOD_SPEED];
+			fighter.stats.speed[AssaultElement.WOOD] *= skill.effects[Stat.WOOD_SPEED];
 		}
 		if (skill.effects?.[Stat.LIGHTNING_SPEED]) {
-			fighter.stats.speed[AssaultElement.LIGHTNING] -= skill.effects[Stat.LIGHTNING_SPEED];
+			fighter.stats.speed[AssaultElement.LIGHTNING] *= skill.effects[Stat.LIGHTNING_SPEED];
 		}
 		if (skill.effects?.[Stat.AIR_SPEED]) {
-			fighter.stats.speed[AssaultElement.AIR] -= skill.effects[Stat.AIR_SPEED];
+			fighter.stats.speed[AssaultElement.AIR] *= skill.effects[Stat.AIR_SPEED];
 		}
 
 		return acc;
