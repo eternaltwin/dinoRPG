@@ -45,6 +45,7 @@ export interface DetailedFighter {
   attacker: boolean;
   // Raw stats
   maxHp: number;
+	startingHp: number;
   hp: number,
   energy: number,
   stats: {

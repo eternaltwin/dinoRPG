@@ -3,7 +3,7 @@ import { DetailedFighter } from './DetailedFighter.mjs';
 
 export type DinozToGetFighter = Pick<
 	Dinoz,
-	'id' | 'level' | 'name' | 'life' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpWater' | 'nbrUpLightning' | 'nbrUpAir'
+	'id' | 'level' | 'name' | 'life' | 'maxLife' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpWater' | 'nbrUpLightning' | 'nbrUpAir'
 > & {
 	items: Pick<DinozItem, 'itemId'>[];
 	skills: Pick<DinozSkill, 'skillId'>[];

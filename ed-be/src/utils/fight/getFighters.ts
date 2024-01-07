@@ -55,7 +55,8 @@ export const initializeDinoz = (
 		level: dinoz.level,
 		type: 'dinoz' as const,
 		attacker: teamIndex === 0,
-		maxHp: dinoz.life,
+		maxHp: dinoz.maxLife,
+		startingHp: dinoz.life,
 		hp: dinoz.life,
 		energy: 100,
 		stats: {
@@ -192,6 +193,7 @@ export const initializeMonster = (
 		type: 'monster' as const,
 		attacker: teamIndex === 0,
 		maxHp: monster.hp,
+		startingHp: monster.hp,
 		hp: monster.hp,
 		energy: 100,
 		stats: {

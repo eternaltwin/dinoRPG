@@ -87,9 +87,14 @@ export interface RemoveStatusStep {
 	fighter: StepFighter;
 	status: FighterStatus;
 }
+export interface ItemUseStep {
+	action: 'itemUse';
+	fighter: StepFighter;
+	itemId: number;
+}
 
 export type FightStep = ArriveStep | ResistStep | HitStep
 | AttemptHitStep | EvadeStep | DeathStep | MoveStep
 | CounterStep | MoveBackStep | SurviveStep
 | SkillActivateStep | SkillExpireStep | LooseHpStep
-| HealStep | AddStatusStep | RemoveStatusStep;
+| HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep;

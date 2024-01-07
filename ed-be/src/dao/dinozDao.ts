@@ -303,6 +303,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 					level: true,
 					placeId: true,
 					life: true,
+					maxLife: true,
 					nbrUpFire: true,
 					nbrUpWood: true,
 					nbrUpWater: true,

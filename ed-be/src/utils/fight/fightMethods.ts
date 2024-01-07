@@ -2,18 +2,19 @@
 
 import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
+import { SkillType } from "@drpg/core/models/enums/SkillType";
 import { BadFighterStatus, DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { StepFighter } from "@drpg/core/models/fight/FightStep";
-import { DetailedFight } from "./generateFight.js";
-import getDamage from "./getDamage.js";
-import randomBetween from "./randomBetween.js";
-import { SkillType } from "@drpg/core/models/enums/SkillType";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
-import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
+import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 import { ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
-import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
+import { DetailedFight } from "./generateFight.js";
+import getDamage from "./getDamage.js";
+import { initializeDinoz, initializeMonster } from "./getFighters.js";
+import randomBetween from "./randomBetween.js";
+import { Item } from "@drpg/core/models/item/ItemList";
 
 export const getFighters = (
 	fightData: DetailedFight,
@@ -520,6 +521,67 @@ const activateEvent = (
 		fighter.energy -= event.energy;
 	} else {
 		// Event is an item
+
+		// Add item use step
+		fightData.steps.push({
+			action: 'itemUse',
+			fighter: stepFighter(fighter),
+			itemId: event.itemId,
+		});
+
+		switch (event.itemId) {
+			case Item.CLOUD_BURGER: {
+				// Cancel if HP requirement not met
+				if (fighter.hp === fighter.startingHp || (fighter.hp > 15 && fighter.startingHp - fighter.hp < 10)){
+					// Remove last step
+					fightData.steps.pop();
+
+					return false;
+				}
+
+				// Heal 10 HP
+				fighter.hp += 10;
+
+				// Add heal step
+				fightData.steps.push({
+					action: 'heal',
+					fighter: stepFighter(fighter),
+					hp: 10,
+				});
+				break;
+			}
+			case Item.FIGHT_RATION: {
+				let hpDelta = 20 - (fighter.startingHp - fighter.hp);
+
+				if (hpDelta < 0) hpDelta = 0;
+
+				// Less chance to heal if HP if lost HP is less than 20. Sure to heal if lost HP is 20+
+				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) != 0){
+					// Remove last step
+					fightData.steps.pop();
+
+					return false;
+				}
+
+				// Heal 20 HP
+				fighter.hp += 20;
+
+				// Add heal step
+				fightData.steps.push({
+					action: 'heal',
+					fighter: stepFighter(fighter),
+					hp: 20,
+				});
+				break;
+			}
+			default:
+				// Remove last step
+				fightData.steps.pop();
+
+				console.warn('Unknown item', event.itemId);
+
+				return false;
+		}
 	}
 
 	return true;

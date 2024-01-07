@@ -1,9 +1,10 @@
 import { ItemType } from '../enums/ItemType.mjs';
 import { ItemEffects } from './ItemEffects.mjs';
+import { Item } from './ItemList.mjs';
 
 export interface ItemFiche {
 	name?: string;
-	itemId: number;
+	itemId: Item;
 	quantity?: number;
 	maxQuantity: number;
 	canBeEquipped: boolean;
