@@ -16,6 +16,8 @@ export type DetailedFight = {
 		caster: DetailedFighter,
 		turnsLeft: number,
 	},
+	timeManipulatorUsed?: boolean,
+	temporalStabilityUsed?: boolean,
 };
 
 const orderFighters = (fightData: DetailedFight) => {

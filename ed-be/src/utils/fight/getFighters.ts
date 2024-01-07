@@ -38,7 +38,7 @@ export const initializeDinoz = (
 			team.monsterList.push(monsterList.BAMBOOZ_SPROUTING);
 		}
 
-		return itemFiche;
+		return { ...itemFiche };
 	});
 
 	// Find skills
@@ -49,7 +49,7 @@ export const initializeDinoz = (
 			throw new Error(`Skill ${skill.skillId} not found`);
 		}
 
-		return skillFiche;
+		return { ...skillFiche };
 	});
 
 	const dinozWithItems = {
@@ -353,7 +353,10 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 	}
 
 	if (fighterHas[Skill.SAPEUR]) {
-		// TODO: increase item use probability by 50%
+		// Increase item use probability by 50%
+		fighter.items.forEach((item) => {
+			item.probability = (item.probability ?? 0) * 1.5;
+		});
 	}
 
 	// AIR

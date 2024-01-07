@@ -124,9 +124,54 @@ const getRandomOpponent = (
 	return opponents[random];
 };
 
-const randomlyGetEvent = (dinoz: DetailedFighter) => {
+const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 	// No event if NO_EVENT
 	if (dinoz.status.includes(FighterStatus.NO_EVENT)) return null;
+
+	// Check if a time manipulator is present
+	if (fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed) return null;
+
+	// Check if a fighter has Item.TIME_MANIPULATOR
+	if (!fightData.timeManipulatorUsed) {
+		const timeManipulator = fightData.fighters.find((f) => f.items.some((item) => item.itemId === Item.TIME_MANIPULATOR));
+
+		if (timeManipulator) {
+			fightData.timeManipulatorUsed = true;
+
+			// Add item use step
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(timeManipulator),
+				itemId: Item.TIME_MANIPULATOR,
+			});
+
+			// Check if a fighter has Item.TEMPORAL_STABILISER
+			const temporalStabiliser = fightData.fighters.find((f) => f.items.some((item) => item.itemId === Item.TEMPORAL_STABILISER));
+
+			if (temporalStabiliser) {
+				fightData.temporalStabilityUsed = true;
+
+				// Add item use step
+				fightData.steps.push({
+					action: 'itemUse',
+					fighter: stepFighter(timeManipulator),
+					itemId: Item.TEMPORAL_STABILISER,
+				});
+
+				// Add to items used
+				temporalStabiliser.itemsUsed.push(Item.TEMPORAL_STABILISER);
+
+				// Get item index
+				const itemIndex = temporalStabiliser.items.findIndex((item) => item.itemId === Item.TEMPORAL_STABILISER);
+
+				// Remove from items
+				temporalStabiliser.items.splice(itemIndex, 1);
+			} else {
+				// Cancel all events
+				return null;
+			}
+		}
+	}
 
 	const events: (DinozSkillFiche | ItemFiche)[] = dinoz.skills.filter((skill) => skill.type === SkillType.E);
 
