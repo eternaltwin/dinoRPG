@@ -111,8 +111,24 @@ export const initializeDinoz = (
 		elements: [],
 		element: AssaultElement.AIR,
 		minDamage: 1,
-		nextHitBonus: 0,
-		nextHitMultiplier: 1,
+		minAssaultDamage: 1,
+		skillElementalBonus: {
+			[AssaultElement.AIR]: 0,
+			[AssaultElement.FIRE]: 0,
+			[AssaultElement.LIGHTNING]: 0,
+			[AssaultElement.WATER]: 0,
+			[AssaultElement.WOOD]: 0,
+		},
+		allAssaultBonus: 0,
+		assaultElementalBonus: {
+			[AssaultElement.AIR]: 0,
+			[AssaultElement.FIRE]: 0,
+			[AssaultElement.LIGHTNING]: 0,
+			[AssaultElement.WATER]: 0,
+			[AssaultElement.WOOD]: 0,
+		},
+		nextAssaultBonus: 0,
+		nextAssaultMultiplier: 1,
 	};
 
 	handleSkills(team, fighter);
@@ -238,8 +254,24 @@ export const initializeMonster = (
 		],
 		element: AssaultElement.FIRE,
 		minDamage: 1,
-		nextHitBonus: 0,
-		nextHitMultiplier: 1,
+		minAssaultDamage: 1,
+		skillElementalBonus: {
+			[AssaultElement.AIR]: 0,
+			[AssaultElement.FIRE]: 0,
+			[AssaultElement.LIGHTNING]: 0,
+			[AssaultElement.WATER]: 0,
+			[AssaultElement.WOOD]: 0,
+		},
+		allAssaultBonus: 0,
+		assaultElementalBonus: {
+			[AssaultElement.AIR]: 0,
+			[AssaultElement.FIRE]: 0,
+			[AssaultElement.LIGHTNING]: 0,
+			[AssaultElement.WATER]: 0,
+			[AssaultElement.WOOD]: 0,
+		},
+		nextAssaultBonus: 0,
+		nextAssaultMultiplier: 1,
 	};
 };
 
@@ -247,6 +279,7 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 	const fighterHas = fighter.skills.reduce((acc, skill) => {
 		acc[skill.id as Skill] = true;
 
+		// TODO this is multiplicative not additive
 		// Process speed changes
 		if (skill.effects?.[Stat.FIRE_SPEED]) {
 			fighter.stats.speed[AssaultElement.FIRE] -= skill.effects[Stat.FIRE_SPEED];
@@ -269,11 +302,11 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 
 	// FIRE
 	if (fighterHas[Skill.CHARGE]) {
-		fighter.nextHitBonus += 5;
+		fighter.nextAssaultBonus += 5;
 	}
 
 	if (fighterHas[Skill.BELIER]) {
-		fighter.nextHitBonus += 20;
+		fighter.nextAssaultBonus += 20;
 	}
 
 	if (team && fighterHas[Skill.CHEF_DE_GUERRE]) {
@@ -322,7 +355,7 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 
 	// RACE
 	if (fighterHas[Skill.CHARGE_CORNUE]) {
-		fighter.nextHitMultiplier += 0.2;
+		fighter.nextAssaultMultiplier += 0.2;
 	}
 
 	if (fighterHas[Skill.PIETINEMENT]) {

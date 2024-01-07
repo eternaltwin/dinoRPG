@@ -193,7 +193,7 @@ export const stepFighter = (
 
 const registerHit = (
 	fightData: DetailedFight,
-	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'nextHitBonus' | 'nextHitMultiplier' | 'activeSkills'>,
+	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'activeSkills'>,
 	opponents: DetailedFighter[],
 	damage: number,
 	skill?: Skill,
@@ -269,10 +269,7 @@ const registerHit = (
 		}
 	});
 
-	// Remove next hit bonus
-	fighter.nextHitBonus = 0;
-	fighter.nextHitMultiplier = 1;
-
+	if (!skill) {
 	// Expire Skill.COLERE if present
 	if (fighter.activeSkills.includes(Skill.COLERE)) {
 		fighter.activeSkills = fighter.activeSkills.filter((skill) => skill !== Skill.COLERE);
@@ -283,6 +280,7 @@ const registerHit = (
 			dinoz: stepFighter(fighter),
 			skill: Skill.COLERE,
 		});
+	}
 	}
 };
 
@@ -412,7 +410,7 @@ const activateEvent = (
 		switch (event.id) {
 			// FIRE
 			case Skill.COLERE: {
-				fighter.nextHitMultiplier *= 1.25;
+				fighter.nextAssaultMultiplier *= 1.25;
 
 				// Add to active skills
 				fighter.activeSkills.push(event.id);
@@ -925,14 +923,14 @@ export const playFighterTurn = (
 	// Set current time to first fighter time
 	fightData.time = fightData.fighters[0].time;
 
-	// 1. Recover energy for all fighters except the current one
+	// Recover energy for all fighters except the current one
 	fightData.fighters.forEach((f) => {
 		if (f.id === attacker.id) return;
 		f.energy += (f.stats.special.energyRecovery ?? 1) * elapsed_time * ENERGY_RECOVERY_BASE_FACTOR;
 	});
 
 	// TODO
-	// 2. Check status of all fighters only if at least one unit of time has elapsed
+	// Check status of all fighters only if at least one unit of time has elapsed
 	// Torch damage
 	if (attacker.status.includes(FighterStatus.TORCHED)) {
 		registerHit(fightData, attacker, [attacker], 1, Skill.TORCHE);
