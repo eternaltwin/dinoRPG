@@ -593,7 +593,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CURSED,
 		isRare: false,
 		maxQuantity: 10,
-		price: 1234 // TODO double check
+		price: 1234, // TODO double check
+		priority: 1,
+		probability: 50,
 	},
 	// Devil Ointment: removes the curse from a dino, and restoring its ability
 	// to gain XP during fights.
@@ -644,7 +646,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 1,
-		price: 2000
+		price: 2000,
+		priority: 1,
+		probability: 100,
 	},
 	// St Elma's Fire: surrounds the combat zone with a powerful magnetic field.
 	// All Dinoz with a Lightning element of less than 10 points will lose 5% of

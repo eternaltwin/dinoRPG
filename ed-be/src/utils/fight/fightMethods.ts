@@ -249,7 +249,9 @@ const registerHit = (
 		});
 
 		// Wake up
-		removeStatus(fightData, opponent, FighterStatus.ASLEEP);
+		if (fightData.environment?.type !== Item.AMAZON || actualDamage[opponent.id] >= 10) {
+			removeStatus(fightData, opponent, FighterStatus.ASLEEP);
+		}
 
 		// Intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE) && actualDamage[opponent.id]) {
@@ -761,6 +763,31 @@ const activateEvent = (
 				});
 				break;
 			}
+			case Item.PIRHANOZ_IN_BAG: {
+				createMonster(fightData, fighter, monsterList.PIRA);
+				break;
+			}
+			case Item.AMAZON: {
+				// Only one environment active at a time
+				if (fightData.environment) {
+					return cancel();
+				}
+
+				// Set environment
+				fightData.environment = {
+					type: Item.AMAZON,
+					caster: fighter,
+					turnsLeft: 3,
+				}
+
+				// Make all fighters with WOOD < 10 fall asleep
+				getFighters(fightData).forEach((f) => {
+					if (f.stats.base[AssaultElement.WOOD] < 10) {
+						addStatus(fightData, f, FighterStatus.ASLEEP);
+					}
+				});
+				break;
+			}
 			default:
 				console.warn('Unknown item', event.itemId);
 				return cancel();
@@ -1179,6 +1206,24 @@ export const checkDeaths = (
 			&& step.fighter.id === fighter.id
 			&& step.fighter.name === fighter.name
 			&& step.fighter.type === fighter.type).length === 0) {
+			// Check if dinoz has SCALE
+			if (fighter.items.some((item) => item.itemId === Item.SCALE)) {
+				// Get random opponent
+				const opponent = getRandomOpponent(fightData, fighter);
+
+				if (opponent) {
+					// Add item use step
+					fightData.steps.push({
+						action: 'itemUse',
+						fighter: stepFighter(fighter),
+						itemId: Item.SCALE,
+					});
+
+					// Kill opponent
+					registerHit(fightData, fighter, [opponent], opponent.hp);
+				};
+			}
+
 			// Add death step
 			fightData.steps.push({
 				action: 'death',
@@ -1244,6 +1289,30 @@ export const playFighterTurn = (
 ) => {
 	const attacker = fightData.fighters[0];
 
+	// Environment
+	if (fightData.environment
+		&& attacker.id === fightData.environment.caster.id
+		&& attacker.type === fightData.environment.caster.type) {
+		// Decrease turns left
+		fightData.environment.turnsLeft--;
+
+		// Remove environment if no more turns left
+		if (fightData.environment.turnsLeft <= 0) {
+			switch (fightData.environment.type) {
+				case Item.AMAZON: {
+					// Wake up all fighters
+					getFighters(fightData).forEach((f) => {
+						removeStatus(fightData, f, FighterStatus.ASLEEP);
+					});
+				}
+				default:
+					console.warn('Unknown environment', fightData.environment.type);
+					break;
+			}
+			fightData.environment = undefined;
+		}
+	}
+
 	// Calculate the elapsed time
 	const elapsed_time = attacker.time - fightData.time;
 
@@ -1269,7 +1338,7 @@ export const playFighterTurn = (
 		heal(fightData, attacker, 1);
 	}
 
-	// TODO check any deads from the status
+	checkDeaths(fightData);
 
 	// Event activation
 	const possibleEvent = randomlyGetEvent(fightData, attacker);
