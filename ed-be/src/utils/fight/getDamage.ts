@@ -109,6 +109,11 @@ const getDamage = (
         // Add next assault multiplier
         attack *= attacker.nextAssaultMultiplier;
         attacker.nextAssaultMultiplier = 1;
+
+				// -25% damage if WEAKENED
+				if (attacker.status.includes(FighterStatus.WEAKENED)) {
+					attack *= 0.75;
+				}
     }
 
     // Add random attack bonus: up to 33%

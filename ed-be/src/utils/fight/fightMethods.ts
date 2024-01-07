@@ -124,7 +124,10 @@ const getRandomOpponent = (
 	return opponents[random];
 };
 
-const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
+const randomlyGetEvent = (dinoz: DetailedFighter) => {
+	// No event if NO_EVENT
+	if (dinoz.status.includes(FighterStatus.NO_EVENT)) return null;
+
 	const events: (DinozSkillFiche | ItemFiche)[] = dinoz.skills.filter((skill) => skill.type === SkillType.E);
 
 	events.push(...dinoz.items.filter((item) => item.probability));
@@ -161,7 +164,10 @@ const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 	return null;
 };
 
-const randomlyGetSkill = (fightData: DetailedFight, dinoz: DetailedFighter) => {
+const randomlyGetSkill = (dinoz: DetailedFighter) => {
+	// No skill if NO_SKILL
+	if (dinoz.status.includes(FighterStatus.NO_SKILL)) return null;
+
 	const skills = dinoz.skills.filter((skill) => skill.type === SkillType.A);
 
 	if (!skills.length) return null;
@@ -249,7 +255,7 @@ const registerHit = (
 		});
 
 		// Wake up
-		if (fightData.environment?.type !== Item.AMAZON || actualDamage[opponent.id] >= 10) {
+		if (fightData.environment?.type !== Skill.AMAZONIE || actualDamage[opponent.id] >= 10) {
 			removeStatus(fightData, opponent, FighterStatus.ASLEEP);
 		}
 
@@ -437,6 +443,25 @@ const checkInvocationBan = (
 
 	fightData.fighters.splice(invocationIndex, 1);
 };
+
+const activateEnvironment = (
+	fightData: DetailedFight,
+	caster: DetailedFighter,
+	environment: Skill,
+) => {
+	// Set environment
+	fightData.environment = {
+		type: environment,
+		caster,
+		turnsLeft: 3,
+	}
+
+	// Add activate environment step
+	fightData.steps.push({
+		action: 'activateEnvironment',
+		environment,
+	});
+}
 
 const activateEvent = (
 	fightData: DetailedFight,
@@ -773,17 +798,77 @@ const activateEvent = (
 					return cancel();
 				}
 
-				// Set environment
-				fightData.environment = {
-					type: Item.AMAZON,
-					caster: fighter,
-					turnsLeft: 3,
-				}
+				activateEnvironment(fightData, fighter, Skill.AMAZONIE);
 
 				// Make all fighters with WOOD < 10 fall asleep
 				getFighters(fightData).forEach((f) => {
 					if (f.stats.base[AssaultElement.WOOD] < 10) {
 						addStatus(fightData, f, FighterStatus.ASLEEP);
+					}
+				});
+				break;
+			}
+			case Item.LAND_OF_ASHES: {
+				// Only one environment active at a time
+				if (fightData.environment) {
+					return cancel();
+				}
+
+				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
+
+				// Add NO_EVENT, NO_SKILL to all fighters with FIRE < 10
+				getFighters(fightData).forEach((f) => {
+					if (f.stats.base[AssaultElement.FIRE] < 10) {
+						addStatus(fightData, f, FighterStatus.NO_EVENT);
+						addStatus(fightData, f, FighterStatus.NO_SKILL);
+					}
+				});
+				break;
+			}
+			case Item.ABYSS: {
+				// Only one environment active at a time
+				if (fightData.environment) {
+					return cancel();
+				}
+
+				activateEnvironment(fightData, fighter, Skill.ABYSSE);
+
+				// Add WEAKENED to all fighters with WATER < 10
+				getFighters(fightData).forEach((f) => {
+					if (f.stats.base[AssaultElement.WATER] < 10) {
+						addStatus(fightData, f, FighterStatus.WEAKENED);
+					}
+				});
+				break;
+			}
+			case Item.ST_ELMAS_FIRE: {
+				// Only one environment active at a time
+				if (fightData.environment) {
+					return cancel();
+				}
+
+				activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
+
+				// Add LIGHTNING_WEAKENED to all fighters with LIGHTNING < 10
+				getFighters(fightData).forEach((f) => {
+					if (f.stats.base[AssaultElement.LIGHTNING] < 10) {
+						addStatus(fightData, f, FighterStatus.LIGHTNING_STRUCK);
+					}
+				});
+				break;
+			}
+			case Item.UVAVU: {
+				// Only one environment active at a time
+				if (fightData.environment) {
+					return cancel();
+				}
+
+				activateEnvironment(fightData, fighter, Skill.OURANOS);
+
+				// Add AIR_SLOWED to all fighters with AIR < 10
+				getFighters(fightData).forEach((f) => {
+					if (f.stats.base[AssaultElement.AIR] < 10) {
+						addStatus(fightData, f, FighterStatus.AIR_SLOWED);
 					}
 				});
 				break;
@@ -1299,17 +1384,65 @@ export const playFighterTurn = (
 		// Remove environment if no more turns left
 		if (fightData.environment.turnsLeft <= 0) {
 			switch (fightData.environment.type) {
-				case Item.AMAZON: {
+				case Skill.AMAZONIE: {
 					// Wake up all fighters
 					getFighters(fightData).forEach((f) => {
 						removeStatus(fightData, f, FighterStatus.ASLEEP);
 					});
+					break;
+				}
+				case Skill.PAYS_DE_CENDRE: {
+					// Remove NO_EVENT, NO_SKILL from all fighters
+					getFighters(fightData).forEach((f) => {
+						removeStatus(fightData, f, FighterStatus.NO_EVENT, FighterStatus.NO_SKILL);
+					});
+					break;
+				}
+				case Skill.ABYSSE: {
+					// Remove WEAKENED from all fighters
+					getFighters(fightData).forEach((f) => {
+						removeStatus(fightData, f, FighterStatus.WEAKENED);
+					});
+					break;
+				}
+				case Skill.FEU_DE_ST_ELME: {
+					// Remove LIGHTNING_STRUCK from all fighters
+					getFighters(fightData).forEach((f) => {
+						removeStatus(fightData, f, FighterStatus.LIGHTNING_STRUCK);
+					});
+					break;
+				}
+				case Skill.OURANOS: {
+					// Remove AIR_SLOWED from all fighters
+					getFighters(fightData).forEach((f) => {
+						removeStatus(fightData, f, FighterStatus.AIR_SLOWED);
+					});
+					break;
 				}
 				default:
 					console.warn('Unknown environment', fightData.environment.type);
 					break;
 			}
+
+			// Add expire environment step
+			fightData.steps.push({
+				action: 'expireEnvironment',
+				environment: fightData.environment.type,
+			});
+
 			fightData.environment = undefined;
+		} else {
+			if (fightData.environment.type === Skill.FEU_DE_ST_ELME) {
+				// Take 5% HP for LIGHTNING_STRUCK fighters
+				getFighters(fightData).forEach((f) => {
+					if (f.status.includes(FighterStatus.LIGHTNING_STRUCK)) {
+						const damage = Math.round(f.hp * 0.05);
+
+						// Register the hit
+						registerHit(fightData, attacker, [f], damage, Skill.FEU_DE_ST_ELME);
+					}
+				});
+			}
 		}
 	}
 
@@ -1341,13 +1474,13 @@ export const playFighterTurn = (
 	checkDeaths(fightData);
 
 	// Event activation
-	const possibleEvent = randomlyGetEvent(fightData, attacker);
+	const possibleEvent = randomlyGetEvent(attacker);
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
 	}
 
 	// Skill activation
-	const possibleSkill = randomlyGetSkill(fightData, attacker);
+	const possibleSkill = randomlyGetSkill(attacker);
 	if (possibleSkill) {
 		// End turn if skill activated
 		if (activateSkill(fightData, possibleSkill)) {
@@ -1461,6 +1594,11 @@ export const playFighterTurn = (
 	// Decrease time if quickened
 	if (attacker.status.includes(FighterStatus.QUICKENED)) {
 		time /= 1.5;
+	}
+
+	// Increase time lost if AIR_SLOWED
+	if (attacker.status.includes(FighterStatus.AIR_SLOWED)) {
+		time *= 1.5;
 	}
 
 	// Minimum time

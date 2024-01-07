@@ -1,10 +1,9 @@
+import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { DetailedFighter, FighterResultFiche } from "@drpg/core/models/fight/DetailedFighter";
 import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/FightConfiguration";
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { checkDeaths, playFighterTurn, stepFighter } from "./fightMethods.js";
-import { Skill } from "@drpg/core/models/dinoz/SkillList";
-import { Item } from "@drpg/core/models/item/ItemList";
 
 export type DetailedFight = {
 	loser: 'attackers' | 'defenders' | null,
@@ -13,7 +12,7 @@ export type DetailedFight = {
 	fighters: DetailedFighter[],
 	time: number,
 	environment?: {
-		type: Item,
+		type: Skill,
 		caster: DetailedFighter,
 		turnsLeft: number,
 	},

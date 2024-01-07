@@ -622,7 +622,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 1,
-		price: 2000
+		price: 2000,
+		priority: 1,
+		probability: 100,
 	},
 	// Abyss: plunges the combat zone into an abyss.
 	// All Dinoz with a Water element of less than 10 points will see the strength
@@ -634,7 +636,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 1,
-		price: 2000
+		price: 2000,
+		priority: 1,
+		probability: 100,
 	},
 	// Amazon: transports the combat zone into the middle of a tropical jungle.
 	// All Dinoz with a Wood element of less than 10 points will sleep for the
@@ -660,7 +664,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 1,
-		price: 2000
+		price: 2000,
+		priority: 1,
+		probability: 100,
 	},
 	// Uvavu: plunges the combat zone into the middle of a devastating storm.
 	// All Dinoz with an Air element of less than 10 points will lose 50% of
@@ -672,7 +678,9 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 1,
-		price: 2000
+		price: 2000,
+		priority: 1,
+		probability: 100,
 	},
 	// Strong Tea: allows you to cancel the effects of beer on the opposing team.
 	STRONG_TEA: {

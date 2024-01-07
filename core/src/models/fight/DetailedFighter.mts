@@ -21,8 +21,15 @@ export enum FighterStatus {
   SHIELDED,
   BLESSED,
   HEALING,
+	// Items
 	CURED,
 	BEER,
+	// Environments
+	NO_EVENT,
+	NO_SKILL,
+	WEAKENED,
+	LIGHTNING_STRUCK,
+	AIR_SLOWED,
 };
 
 export const BadFighterStatus = [

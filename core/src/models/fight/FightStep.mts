@@ -1,4 +1,5 @@
 import { Skill } from "../dinoz/SkillList.mjs";
+import { Item } from "../item/ItemList.mjs";
 import { FighterStatus, FighterType } from "./DetailedFighter.mjs";
 
 export interface StepFighter {
@@ -94,11 +95,20 @@ export interface RemoveStatusStep {
 export interface ItemUseStep {
 	action: 'itemUse';
 	fighter: StepFighter;
-	itemId: number;
+	itemId: Item;
+}
+export interface ActivateEnvironmentStep {
+	action: 'activateEnvironment';
+	environment: Skill;
+}
+export interface ExpireEnvironmentStep {
+	action: 'expireEnvironment';
+	environment: Skill;
 }
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
 | CounterStep | MoveBackStep | SurviveStep
 | SkillActivateStep | SkillExpireStep | LooseHpStep
-| HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep;
+| HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep
+| ActivateEnvironmentStep | ExpireEnvironmentStep;
