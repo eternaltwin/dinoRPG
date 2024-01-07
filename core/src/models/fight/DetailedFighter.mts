@@ -99,8 +99,6 @@ export interface DetailedFighter {
   // Skill bonuses
   skillElementalBonus: Record<AssaultElement, number>,
   // Assault bonuses
-  allAssaultBonus: number,
-  assaultElementalBonus: Record<AssaultElement, number>,
   nextAssaultBonus: number,
   nextAssaultMultiplier: number,
   // Cancel armor

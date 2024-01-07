@@ -21,7 +21,6 @@ export type SkillEffects = {
 	[Stat.MAX_FOLLOWERS]?: number;
 	[Stat.ENERGY]?: number;
 	[Stat.ENERGY_RECOVERY]?: number;
-	[Stat.ALL_ASSAULT]?: number;
 	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
 	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
 	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;

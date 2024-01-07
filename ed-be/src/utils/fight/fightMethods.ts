@@ -124,9 +124,9 @@ const getRandomOpponent = (
 	return opponents[random];
 };
 
-const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
+const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No event if NO_EVENT
-	if (dinoz.status.includes(FighterStatus.NO_EVENT)) return null;
+	if (fighter.status.includes(FighterStatus.NO_EVENT)) return null;
 
 	// Check if a time manipulator is present
 	if (fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed) return null;
@@ -173,9 +173,9 @@ const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 		}
 	}
 
-	const events: (DinozSkillFiche | ItemFiche)[] = dinoz.skills.filter((skill) => skill.type === SkillType.E);
+	const events: (DinozSkillFiche | ItemFiche)[] = fighter.skills.filter((skill) => skill.type === SkillType.E);
 
-	events.push(...dinoz.items.filter((item) => item.probability));
+	events.push(...fighter.items.filter((item) => item.probability));
 
 	if (!events.length) return null;
 
@@ -198,7 +198,7 @@ const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 		// Check if event is a skill
 		if ('id' in event) {
 			// Skip if not enough energy
-			if (dinoz.energy < event.energy) continue;
+			if (fighter.energy < event.energy) continue;
 		}
 
 		if (randomBetween(1, 100) < (event.probability ?? 0)) {
@@ -209,11 +209,11 @@ const randomlyGetEvent = (fightData: DetailedFight, dinoz: DetailedFighter) => {
 	return null;
 };
 
-const randomlyGetSkill = (dinoz: DetailedFighter) => {
+const randomlyGetSkill = (fighter: DetailedFighter) => {
 	// No skill if NO_SKILL
-	if (dinoz.status.includes(FighterStatus.NO_SKILL)) return null;
+	if (fighter.status.includes(FighterStatus.NO_SKILL)) return null;
 
-	const skills = dinoz.skills.filter((skill) => skill.type === SkillType.A);
+	const skills = fighter.skills.filter((skill) => skill.type === SkillType.A);
 
 	if (!skills.length) return null;
 
@@ -222,7 +222,7 @@ const randomlyGetSkill = (dinoz: DetailedFighter) => {
 		const skill = skills[i];
 
 		// Skip if not enough energy
-		if (dinoz.energy < skill.energy) continue;
+		if (fighter.energy < skill.energy) continue;
 
 		if (randomBetween(1, 100) < (skill.probability ?? 0)) {
 			return skill;
@@ -589,6 +589,10 @@ const activateEvent = (
 				break;
 			}
 			// WATER
+			case Skill.DOUCHE_ECOSSAISE: {
+				targetSingleOpponent(fightData, fighter, event);
+				break;
+			}
 			case Skill.CLONE_AQUEUX: {
 				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
 
@@ -619,6 +623,21 @@ const activateEvent = (
 				});
 
 				checkInvocationBan(fightData, clone);
+				break;
+			}
+			case Skill.DIETE_CHROMATIQUE: {
+				// Pick a random opponent (no filtering is applied intentionally)
+				const opponents = getOpponents(fightData, fighter);
+				const opponent = opponents[randomBetween(0, opponents.length - 1)];
+
+				// Lock that opponent to a random element
+				opponent.element = opponent.elements[Math.round(Math.random() * opponent.elements.length)]
+				addStatus(fightData, opponent, FighterStatus.LOCKED);
+				break;
+			}
+			// LIGHTNING
+			case Skill.FOCUS: {
+				fighter.nextAssaultBonus += fighter.stats.base[AssaultElement.LIGHTNING];
 				break;
 			}
 			default:
@@ -1000,17 +1019,29 @@ const activateSkill = (
 	});
 
 	switch (skill.id) {
+		// Simple multi-target skills
 		// FIRE
 		case Skill.SOUFFLE_ARDENT:
-		case Skill.METEORES: {
+		case Skill.METEORES:
+		case Skill.BRASERO: {
 			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
+		
+		// Simple single-target skills
+		// FIRE
 		case Skill.BOULE_DE_FEU:
-		case Skill.COULEE_DE_LAVE: {
+		case Skill.COULEE_DE_LAVE:
+		// WATER
+		case Skill.CANON_A_EAU:
+		// WOOD
+		case Skill.LANCEUR_DE_GLAND: {
 			targetSingleOpponent(fightData, fighter, skill);
 			break;
 		}
+
+		// Other skills
+		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill);
 
@@ -1041,25 +1072,20 @@ const activateSkill = (
 			addStatus(fightData, fighter, FighterStatus.ASLEEP);
 			break;
 		}
-		case Skill.BRASERO:
-			targetAllOpponents(fightData, fighter, skill);
-			break;
-		case Skill.DETONATION:
+		case Skill.DETONATION: {
 			// The fighter will not suicide with the skill, it just loses its roll
 			if (fighter.hp > 5) {
 				registerHit(fightData, fighter, [fighter], 5, skill.id);
+				// Increase the time of all other fighters to make it look like the caster "gained" time
+				getFighters(fightData).forEach(f => {
+					if (f.id !== fighter.id) {
+						f.time += 15 * TIME_FACTOR;
+					}
+				})
 			}
-			// Increase the time of all other fighters to make it look like the caster "gained" time
-			getFighters(fightData).forEach(f => {
-				if (f.id !== fighter.id) {
-					f.time += 15 * TIME_FACTOR;
-				}
-			})
-		// WATER
-		case Skill.CANON_A_EAU: {
-			targetSingleOpponent(fightData, fighter, skill);
 			break;
 		}
+		// WATER
 		case Skill.COUP_SOURNOIS: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
@@ -1092,10 +1118,6 @@ const activateSkill = (
 				// Slow opponent
 				addStatus(fightData, opponent, FighterStatus.SLOWED);
 			}
-			break;
-		}
-		case Skill.DOUCHE_ECOSSAISE: {
-			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
 		case Skill.COUP_FATAL: {
@@ -1145,6 +1167,24 @@ const activateSkill = (
 				removeStatus(fightData, opponent, FighterStatus.PETRIFIED);
 			}
 			break;
+		}
+		case Skill.RAYON_KAAR_SHER: {
+			targetAllOpponents(fightData, fighter, skill);
+
+			// Remove mud wall of all opponents
+			const opponents = getOpponents(fightData, fighter);
+			opponents.forEach((opponent) => {
+				// TODO
+			});
+			break;
+		}
+		case Skill.DELUGE: {
+			targetAllOpponents(fightData, fighter, skill);
+			// Increase time of all opponents by 5
+			const opponents = getOpponents(fightData, fighter);
+			opponents.forEach((opponent) => {
+				opponent.time += 5 * TIME_FACTOR;
+			});
 		}
 		default:
 			// Remove last step
@@ -1519,7 +1559,7 @@ export const playFighterTurn = (
 	checkDeaths(fightData);
 
 	// Event activation
-	const possibleEvent = randomlyGetEvent(attacker);
+	const possibleEvent = randomlyGetEvent(fightData, attacker);
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
 	}
@@ -1533,20 +1573,28 @@ export const playFighterTurn = (
 		}
 	}
 
+	// At this point this is an assault
+
 	// Get opponent
 	const opponent = getRandomOpponent(fightData, attacker);
 
-	const countered = counterAttack(attacker, opponent);
 
 	// Add moveTo step
 	fightData.steps.push({
 		action: 'moveTo',
 		fighter: stepFighter(attacker),
-		target: stepFighter(opponent),
-		countered,
+		target: stepFighter(opponent)
 	});
 
-	// Check if opponent is not trapped and countered
+	// Fighter attacks opponent
+	startAttack(fightData, attacker, opponent);
+
+	// Consume energy
+	attacker.energy -= 4;
+
+	const countered = counterAttack(attacker, opponent);
+
+	// If the opponent succeeds at countering, execute the counter
 	if (countered) {
 		// Add counter step
 		fightData.steps.push({
@@ -1557,13 +1605,8 @@ export const playFighterTurn = (
 
 		// Opponent attacks fighter
 		startAttack(fightData, opponent, attacker, true);
-	} else {
-		// Fighter attacks opponent
-		startAttack(fightData, attacker, opponent);
 	}
 
-	// Consume energy
-	attacker.energy -= 4;
 
 	// Check if fighter is not dead
 	if (attacker.hp > 0) {
@@ -1625,12 +1668,11 @@ export const playFighterTurn = (
 		}
 	}
 
-	// Increase attacker's time
+	// Calculate new attacker's time
 	let time = TIME_BASE * TIME_FACTOR
 		* attacker.stats.speed.global
 		* attacker.stats.speed[attacker.element];
 
-	// TODO need to handle this differently because the status will expire
 	// Increase time lost if slowed
 	if (attacker.status.includes(FighterStatus.SLOWED)) {
 		time *= 1.5;
@@ -1646,10 +1688,14 @@ export const playFighterTurn = (
 		time *= 1.5;
 	}
 
+	// Round up time
+	time = Math.round(time);
+
 	// Minimum time
-	if (time < 0) {
+	if (time <= 0) {
 		time = 1;
 	}
 
+	// Add the new time to the attacker
 	attacker.time += Math.round(time);
 };

@@ -128,14 +128,6 @@ export const initializeDinoz = (
 			[AssaultElement.WATER]: 0,
 			[AssaultElement.WOOD]: 0,
 		},
-		allAssaultBonus: 0,
-		assaultElementalBonus: {
-			[AssaultElement.AIR]: 0,
-			[AssaultElement.FIRE]: 0,
-			[AssaultElement.LIGHTNING]: 0,
-			[AssaultElement.WATER]: 0,
-			[AssaultElement.WOOD]: 0,
-		},
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
 	};
@@ -272,14 +264,6 @@ export const initializeMonster = (
 			[AssaultElement.WATER]: 0,
 			[AssaultElement.WOOD]: 0,
 		},
-		allAssaultBonus: 0,
-		assaultElementalBonus: {
-			[AssaultElement.AIR]: 0,
-			[AssaultElement.FIRE]: 0,
-			[AssaultElement.LIGHTNING]: 0,
-			[AssaultElement.WATER]: 0,
-			[AssaultElement.WOOD]: 0,
-		},
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
 	};
@@ -331,11 +315,11 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 	}
 
 	// WOOD
-  if (fighterHas[Skill.TENACITE]) {
+	if (fighterHas[Skill.TENACITE]) {
 		fighter.minDamage += 1;
 	}
 
-  if (team && fighterHas[Skill.GARDE_FORESTIER]) {
+	if (team && fighterHas[Skill.GARDE_FORESTIER]) {
 		team[Skill.GARDE_FORESTIER] = true;
 	}
 
@@ -360,12 +344,12 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 	}
 
 	// AIR
-  if (fighterHas[Skill.SAUT]) {
+	if (fighterHas[Skill.SAUT]) {
 		fighter.canHitFlying = true;
 	}
 
 	// 50% chance to get positive / negative time
-  if (fighterHas[Skill.DOUBLE_FACE]) {
+	if (fighterHas[Skill.DOUBLE_FACE]) {
 		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
 	}
 
@@ -397,7 +381,7 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 	const existingMonsters: Record<string, number> = {};
 
   [team1, team2].forEach((team, index) => {
-    const { dinozList, monsterList } = team;
+	const { dinozList, monsterList } = team;
 
 		// Dinoz
 		fighters.push(...dinozList.map((dinoz) => initializeDinoz(team, index, dinoz)));

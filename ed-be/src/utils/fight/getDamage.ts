@@ -2,6 +2,7 @@ import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 import { ATTACK_GLOBAL_FACTOR } from "./fightConstants.js";
+import { SkillAttacks } from "./skillAttacks.js";
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -25,55 +26,22 @@ const getDamage = (
         // May be put this in a method
         // Get the skill base damage relative to the skill power
         switch (skill) {
-            // FIRE
-            case Skill.SOUFFLE_ARDENT: {
-                attack = 5 * attacker.stats.base[AssaultElement.FIRE];
-                attack_element = AssaultElement.FIRE;
-            }
-            case Skill.PAUME_CHALUMEAU: {
-                attack = 10 * attacker.stats.base[AssaultElement.FIRE];
-                attack_element = AssaultElement.FIRE;
-            }
-            case Skill.KAMIKAZE: {
-                attack = 15 * attacker.stats.base[AssaultElement.FIRE];
-                attack_element = AssaultElement.FIRE;
-            }
             // Combustion inflicts a fixed amount, so the value is directly returned
             case Skill.COMBUSTION: {
                 // fixedDamage = true;
                 return opponent.stats.base[AssaultElement.WOOD];
             }
-            case Skill.BOULE_DE_FEU: {
-                attack = 7 * attacker.stats.base[AssaultElement.FIRE];
-                attack_element = AssaultElement.FIRE;
-            }
-            case Skill.COULEE_DE_LAVE: {
-                attack = 12 * attacker.stats.base[AssaultElement.FIRE];
-                attack_element = AssaultElement.FIRE;
-            }
-            case Skill.METEORES: {
-                attack = 10 * attacker.stats.base[AssaultElement.FIRE];
-                attack_element = AssaultElement.FIRE;
-            }
-            case Skill.BRASERO: {
-                attack = 3 * attacker.stats.base[AssaultElement.FIRE];
-                attack_element = AssaultElement.FIRE;
-            }
-            // WATER
-            case Skill.CANON_A_EAU: {
-                attack = 6 * attacker.stats.base[AssaultElement.WATER];
-                attack_element = AssaultElement.WATER;
-            }
-            case Skill.GEL: {
-                attack = 5 * attacker.stats.base[AssaultElement.WATER];
-                attack_element = AssaultElement.WATER;
-            }
-            case Skill.DOUCHE_ECOSSAISE: {
-                attack = 2 * attacker.stats.base[AssaultElement.WATER];
-                attack_element = AssaultElement.WATER;
-            }
+            // Handle by default skills as an offensive skill with a given power and element
             default: {
-                attack = 0;
+                const skillAttack = SkillAttacks[skill];
+
+                if (!skillAttack) {
+                  throw new Error(`Skill attack ${skill} not found`);
+                }
+
+                attack_element = skillAttack.element;
+                attack = skillAttack.power * attacker.stats.base[attack_element];
+                break;
             }
         }
 
@@ -96,17 +64,11 @@ const getDamage = (
         // Damage from a normal hit
         attack += attacker.stats.assault[attacker.element];
 
-        // Add assault permanent bonus
-        attack += attacker.allAssaultBonus;
-
-        // Add assault elemental bonus
-        attack += attacker.assaultElementalBonus[attacker.element];
-
         // Add next assault bonus
         attack += attacker.nextAssaultBonus;
         attacker.nextAssaultBonus = 0;
 
-        // Add next assault multiplier
+        // Multiply by next assault multiplier
         attack *= attacker.nextAssaultMultiplier;
         attacker.nextAssaultMultiplier = 1;
 

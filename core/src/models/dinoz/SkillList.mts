@@ -308,6 +308,7 @@ export enum Skill {
 // C = Column of the skill
 // DE = Number of the skill in this column
 export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
+	// FIRE Skills
 	[Skill.GRIFFES_ENFLAMMEES]: {
 		id: Skill.GRIFFES_ENFLAMMEES,
 		name: 'GriffesEnflammees',
@@ -1099,6 +1100,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.FIRE_ASSAULT]: 20
 		}
 	},
+	// WOOD Skills
 	[Skill.CARAPACE]: {
 		id: Skill.CARAPACE,
 		name: 'Carapace',
@@ -1904,7 +1906,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	[Skill.DOUCHE_ECOSSAISE]: {
 		id: Skill.DOUCHE_ECOSSAISE,
 		name: 'DoucheEcossaise',
-		type: SkillType.A,
+		type: SkillType.E,
 		energy: Energy.E20,
 		element: [ElementType.WATER],
 		activatable: true,
@@ -2102,7 +2104,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 6,
-		probability: 5
+		probability: 15
 	},
 	[Skill.SUMO]: {
 		id: Skill.SUMO,
@@ -2167,7 +2169,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31208],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 5,
+		probability: 5
 	},
 	[Skill.PEAU_DE_SERPENT]: {
 		id: Skill.PEAU_DE_SERPENT,
@@ -2190,13 +2194,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.RAYON_KAAR_SHER,
 		name: 'RayonKaarSher',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E40,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31302],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 20
 	},
 	[Skill.MAGASINIER]: {
 		id: Skill.MAGASINIER,
@@ -2416,13 +2422,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.DIETE_CHROMATIQUE,
 		name: 'DieteChromatique',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32202],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 8,
+		probability: 15
 	},
 	[Skill.EFFLUVE_APHRODISIAQUE]: {
 		id: Skill.EFFLUVE_APHRODISIAQUE,
@@ -2553,6 +2561,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 			[Stat.MAX_HP]: 80
 		}
 	},
+	// LIGHTNING
 	[Skill.INTELLIGENCE]: {
 		id: Skill.INTELLIGENCE,
 		name: 'Intelligence',
@@ -2575,7 +2584,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 30
 	},
 	[Skill.CELERITE]: {
 		id: Skill.CELERITE,
