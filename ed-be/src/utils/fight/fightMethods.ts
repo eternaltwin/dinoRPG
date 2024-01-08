@@ -1200,7 +1200,47 @@ const activateSkill = (
 			break;
 		}
 		case Skill.DANSE_FOUDROYANTE: {
-			// TODO generate 5 thunder assaults of power 3
+			// Attack a random opponent 5 times
+
+			// Get opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent)
+			});
+
+			for (let i = 0; i < 5; i++) {
+				// Fighter attacks opponent
+				startAttack(fightData, fighter, opponent, true, Skill.DANSE_FOUDROYANTE);
+
+				const countered = counterAttack(fighter, opponent);
+
+				// If the opponent succeeds at countering, execute the counter
+				if (countered) {
+					// Add counter step
+					fightData.steps.push({
+						action: 'counter',
+						fighter: stepFighter(opponent),
+						opponent: stepFighter(fighter),
+					});
+
+					// Opponent attacks fighter
+					startAttack(fightData, opponent, fighter, true);
+				}
+			}
+
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
 			break;
 		}
 		case Skill.ECLAIR_SINUEUX: {
@@ -1426,12 +1466,13 @@ const attack = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	opponent: DetailedFighter,
+	skill?: Skill,
 ) => {
 	// Abort if fighter is dead
 	if (fighter.hp <= 0) return;
 
 	// Get damage
-	let damage = getDamage(fighter, opponent);
+	let damage = getDamage(fighter, opponent, skill);
 
 	const evaded = evade(opponent);
 
@@ -1481,7 +1522,7 @@ const attack = (
 	}
 
 	// Change fighter element
-	if (!fighter.status.includes(FighterStatus.LOCKED)) {
+	if (!skill && !fighter.status.includes(FighterStatus.LOCKED)) {
 		fighter.element = fighter.elements[fighter.elements.indexOf(fighter.element) + 1 % fighter.elements.length];
 	}
 };
@@ -1548,12 +1589,13 @@ const startAttack = (
 	fighter: DetailedFighter,
 	opponent: DetailedFighter,
 	isCounter?: boolean,
+	skill?: Skill,
 ) => {
 	// Keep track of initial fighter HP
 	const initialFighterHp = fighter.hp;
 
 	// Trigger fighter attack
-	attack(fightData, fighter, opponent);
+	attack(fightData, fighter, opponent, skill);
 
 	// Get combo chances
 	const combo = (fighter.stats.special.multihit ?? 0) / 100;
@@ -1568,7 +1610,7 @@ const startAttack = (
 			}
 
 			// Trigger fighter attack
-			attack(fightData, fighter, opponent);
+			attack(fightData, fighter, opponent, skill);
 
 			random = Math.random();
 		}
