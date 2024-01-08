@@ -334,6 +334,29 @@ const registerHit = (
 				opponent.escaped = true;
 			}
 		}
+
+		// LIFE_STEALER
+		if (actualDamage[opponent.id]
+			&& opponent.hp < 20
+			&& !opponent.status.includes(FighterStatus.STOLE_LIFE)
+			&& opponent.items.some((item) => item.itemId === Item.LIFE_STEALER)) {
+			// Steal 30 HP from a random opponent
+			const randomOpponent = getRandomOpponent(fightData, opponent);
+
+			// Add item use step
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(opponent),
+				itemId: Item.LIFE_STEALER,
+			});
+
+			registerHit(fightData, opponent, [randomOpponent], 30);
+
+			heal(fightData, opponent, 30);
+
+			// Add status
+			addStatus(fightData, opponent, FighterStatus.STOLE_LIFE);
+		}
 	});
 
 

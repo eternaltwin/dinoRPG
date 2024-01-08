@@ -26,6 +26,7 @@ export enum FighterStatus {
 	// Items
 	CURED,
 	BEER,
+	STOLE_LIFE,
 	// Environments
 	NO_EVENT,
 	NO_SKILL,
