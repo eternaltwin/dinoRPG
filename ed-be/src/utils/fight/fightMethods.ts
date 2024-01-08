@@ -971,6 +971,41 @@ const addStatus = (
 	// Negate if SELF_CONTROL
 	if (isBad && fighter.skills.find((skill) => skill.id === Skill.SELF_CONTROL)) return;
 
+	// Handle the immediate effect of the status
+	switch (status) {
+		case FighterStatus.TORCHED: {
+			fighter.stats.defense[AssaultElement.FIRE] += 10;
+			break;
+		}
+		case FighterStatus.SLOWED: {
+			fighter.stats.speed.global *= 1.5;
+			break;
+		}
+		case FighterStatus.QUICKENED: {
+			fighter.stats.speed.global /= 1.5;
+			break;
+		}
+		case FighterStatus.PETRIFIED:
+		case FighterStatus.SHIELDED: {
+			if (!fighter.stats.special.armor) {
+				fighter.stats.special.armor = 5;
+			} else {
+				fighter.stats.special.armor += 5;
+			}
+		}
+		case FighterStatus.BLESSED: {
+			fighter.stats.assault[AssaultElement.AIR] += 3;
+			fighter.stats.assault[AssaultElement.FIRE] += 3;
+			fighter.stats.assault[AssaultElement.LIGHTNING] += 3;
+			fighter.stats.assault[AssaultElement.WATER] += 3;
+			fighter.stats.assault[AssaultElement.WOOD] += 3;
+			break;
+		}
+		default: {
+			break;
+		}
+	};
+
 	// Add status
 	fighter.status.push(status);
 
@@ -997,7 +1032,43 @@ const removeStatus = (
 			fighter: stepFighter(fighter),
 			status,
 		});
+
+		// Reverse the effect of the status
+		switch (status) {
+			case FighterStatus.TORCHED: {
+				fighter.stats.defense[AssaultElement.FIRE] -= 10;
+				break;
+			}
+			case FighterStatus.SLOWED: {
+				fighter.stats.speed.global /= 1.5;
+				break;
+			}
+			case FighterStatus.QUICKENED: {
+				fighter.stats.speed.global *= 1.5;
+				break;
+			}
+			case FighterStatus.PETRIFIED:
+			case FighterStatus.SHIELDED: {
+				if (!fighter.stats.special.armor || fighter.stats.special.armor <= 5) {
+					fighter.stats.special.armor = 0;
+				} else {
+					fighter.stats.special.armor -= 5;
+				}
+			}
+			case FighterStatus.BLESSED: {
+				fighter.stats.assault[AssaultElement.AIR] -= 3;
+				fighter.stats.assault[AssaultElement.FIRE] -= 3;
+				fighter.stats.assault[AssaultElement.LIGHTNING]-= 3;
+				fighter.stats.assault[AssaultElement.WATER] -= 3;
+				fighter.stats.assault[AssaultElement.WOOD] -= 3;
+				break;
+			}
+			default: {
+				break;
+			}
+		};
 	});
+
 
 	// Remove status
 	fighter.status = fighter.status.filter((s) => !statusList.includes(s));
@@ -1672,16 +1743,6 @@ export const playFighterTurn = (
 	let time = TIME_BASE * TIME_FACTOR
 		* attacker.stats.speed.global
 		* attacker.stats.speed[attacker.element];
-
-	// Increase time lost if slowed
-	if (attacker.status.includes(FighterStatus.SLOWED)) {
-		time *= 1.5;
-	}
-
-	// Decrease time if quickened
-	if (attacker.status.includes(FighterStatus.QUICKENED)) {
-		time /= 1.5;
-	}
 
 	// Increase time lost if AIR_SLOWED
 	if (attacker.status.includes(FighterStatus.AIR_SLOWED)) {
