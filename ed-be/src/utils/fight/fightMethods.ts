@@ -1526,53 +1526,64 @@ const attack = (
 	// Abort if fighter is dead
 	if (fighter.hp <= 0) return;
 
-	// Get damage
-	let damage = getDamage(fighter, opponent, skill);
+	const attackers = [fighter];
 
-	const evaded = evade(opponent);
-
-	// Add attempt step
-	fightData.steps.push({
-		action: 'attemptHit',
-		fighter: stepFighter(fighter),
-		target: stepFighter(opponent),
-	});
-
-	// Check if opponent evaded
-	if (evaded) {
-		damage = 0;
-
-		// Add evade step
-		fightData.steps.push({
-			action: 'evade',
-			fighter: stepFighter(opponent),
-		});
+	// Add teammates if Item.FRIENDLY_WHISTLE
+	if (fighter.items.some((item) => item.itemId === Item.FRIENDLY_WHISTLE)) {
+		const allies = getAllies(fightData, fighter)
+			.filter((ally) => (ally.id !== fighter.id && ally.type === fighter.type) && !ally.items.some((item) => item.itemId === Item.FRIENDLY_WHISTLE));
+		attackers.push(...allies);
 	}
 
-	// Register hit if damage was done
-	if (damage) {
-		registerHit(fightData, fighter, [opponent], damage);
+	for (const attacker of attackers) {
+		// Get damage
+		let damage = getDamage(attacker, opponent, skill);
 
-		// Poison fighter if opponent has Skill.AURA_PUANTE
-		if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
-			poison(fightData, fighter, opponent, Skill.AURA_PUANTE);
+		const evaded = evade(opponent);
+
+		// Add attempt step
+		fightData.steps.push({
+			action: 'attemptHit',
+			fighter: stepFighter(attacker),
+			target: stepFighter(opponent),
+		});
+
+		// Check if opponent evaded
+		if (evaded) {
+			damage = 0;
+
+			// Add evade step
+			fightData.steps.push({
+				action: 'evade',
+				fighter: stepFighter(opponent),
+			});
 		}
 
-		// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
-		if (fighter.skills.find((skill) => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
-			poison(fightData, opponent, fighter, Skill.GRIFFES_EMPOISONNEES);
-		}
+		// Register hit if damage was done
+		if (damage) {
+			registerHit(fightData, attacker, [opponent], damage);
 
-		// Torch damage
-		if (fighter.status.includes(FighterStatus.TORCHED)) {
-			const damage = fighter.stats.special.torchDamage ?? 0;
+			// Poison fighter if opponent has Skill.AURA_PUANTE
+			if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
+				poison(fightData, attacker, opponent, Skill.AURA_PUANTE);
+			}
 
-			registerHit(fightData, fighter, [opponent], damage, Skill.TORCHE);
-		}
+			// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
+			if (attacker.skills.find((skill) => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
+				poison(fightData, opponent, attacker, Skill.GRIFFES_EMPOISONNEES);
+			}
 
-		// ACUPUNCTURE damage
-		if (opponent.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
-			registerHit(fightData, opponent, [fighter], 1, Skill.ACUPUNCTURE);
+			// Torch damage
+			if (attacker.status.includes(FighterStatus.TORCHED)) {
+				const damage = attacker.stats.special.torchDamage ?? 0;
+
+				registerHit(fightData, attacker, [opponent], damage, Skill.TORCHE);
+			}
+
+			// ACUPUNCTURE damage
+			if (opponent.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
+				registerHit(fightData, opponent, [attacker], 1, Skill.ACUPUNCTURE);
+			}
 		}
 	}
 
