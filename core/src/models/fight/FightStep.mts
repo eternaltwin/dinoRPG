@@ -9,6 +9,11 @@ export interface StepFighter {
   attacker: boolean;
 }
 
+export enum LeaveAnimation {
+	RUN,
+	BLACKHOLE,
+}
+
 export interface ArriveStep {
   action: 'arrive';
   fighter: StepFighter;
@@ -16,6 +21,7 @@ export interface ArriveStep {
 export interface LeaveStep {
   action: 'leave';
   fighter: StepFighter;
+	animation?: LeaveAnimation;
 }
 export interface ResistStep {
   action: 'resist';

@@ -3,6 +3,7 @@ import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/Detailed
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 import { ATTACK_GLOBAL_FACTOR } from "./fightConstants.js";
 import { SkillAttacks } from "./skillAttacks.js";
+import { Item } from "@drpg/core/models/item/ItemList";
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -11,6 +12,7 @@ const getDamage = (
 	attacker: DetailedFighter,
 	opponent: DetailedFighter,
 	skill?: Skill,
+	item?: Item,
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
@@ -54,6 +56,17 @@ const getDamage = (
 			attack += attacker.skillElementalBonus[element];
 		}
 
+	} else if (item) {
+		switch (item) {
+			case Item.SORCERERS_STICK: {
+				// 30% of the opponent's HP
+				attack = opponent.hp * 0.3;
+			}
+			default: {
+				console.warn(`Item ${item} not handled`);
+				break;
+			}
+		}
 	} else {
 		// Intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {

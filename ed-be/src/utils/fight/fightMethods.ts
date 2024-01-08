@@ -4,11 +4,11 @@ import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
 import { BadFighterStatus, DetailedFighter, FighterStatus, GoodFighterStatus } from "@drpg/core/models/fight/DetailedFighter";
-import { StepFighter } from "@drpg/core/models/fight/FightStep";
+import { LeaveAnimation, StepFighter } from "@drpg/core/models/fight/FightStep";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
-import { Item } from "@drpg/core/models/item/ItemList";
+import { Item, itemList } from "@drpg/core/models/item/ItemList";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 import { DefenseElement } from "@drpg/core/utils/getDefenseStat";
 import { ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
@@ -25,8 +25,8 @@ export const getFighters = (
 ) => {
 	let fighters = [];
 
-	// Remove dead fighters
-	fighters = fightData.fighters.filter((f) => f.hp > 0);
+	// Remove dead and escaped fighters
+	fighters = fightData.fighters.filter((f) => f.hp > 0 && !f.escaped);
 
 	if (dinozOnly) {
 		fighters = fighters.filter((f) => f.type === 'dinoz');
@@ -47,8 +47,8 @@ export const getAllies = (
 ) => {
 	let allies = [];
 
-	// Remove Dead fighters and other team
-	allies = fightData.fighters.filter((f) => f.hp > 0 && f.attacker === fighter.attacker);
+	// Remove dead and escaped fighters and other team
+	allies = fightData.fighters.filter((f) => f.hp > 0 && !f.escaped && f.attacker === fighter.attacker);
 
 	if (dinozOnly) {
 		allies = allies.filter((f) => f.type === 'dinoz');
@@ -69,8 +69,8 @@ export const getOpponents = (
 ) => {
 	let opponents = [];
 
-	// Remove Dead fighters and same team
-	opponents = fightData.fighters.filter((f) => f.hp > 0 && f.attacker !== fighter.attacker);
+	// Remove dead and escaped fighters and same team
+	opponents = fightData.fighters.filter((f) => f.hp > 0 && !f.escaped && f.attacker !== fighter.attacker);
 
 	if (dinozOnly) {
 		opponents = opponents.filter((f) => f.type === 'dinoz');
@@ -133,7 +133,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 
 	// Check if a fighter has Item.TIME_MANIPULATOR
 	if (!fightData.timeManipulatorUsed) {
-		const timeManipulator = fightData.fighters.find((f) => f.items.some((item) => item.itemId === Item.TIME_MANIPULATOR));
+		const timeManipulator = getFighters(fightData).find((f) => f.items.some((item) => item.itemId === Item.TIME_MANIPULATOR));
 
 		if (timeManipulator) {
 			fightData.timeManipulatorUsed = true;
@@ -146,7 +146,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 			});
 
 			// Check if a fighter has Item.TEMPORAL_STABILISER
-			const temporalStabiliser = fightData.fighters.find((f) => f.items.some((item) => item.itemId === Item.TEMPORAL_STABILISER));
+			const temporalStabiliser = getFighters(fightData).find((f) => f.items.some((item) => item.itemId === Item.TEMPORAL_STABILISER));
 
 			if (temporalStabiliser) {
 				fightData.temporalStabilityUsed = true;
@@ -308,6 +308,32 @@ const registerHit = (
 		if (opponent.status.includes(FighterStatus.INTANGIBLE) && actualDamage[opponent.id]) {
 			removeStatus(fightData, opponent, FighterStatus.INTANGIBLE);
 		}
+
+		// Dimensional powder item
+
+		// Check if any fighter has Item.DIMENSIONAL_POWDER
+		const dimensionalPowderUser = getFighters(fightData).find((f) => f.items.some((item) => item.itemId === Item.DIMENSIONAL_POWDER));
+
+		if (dimensionalPowderUser) {
+			// Add item use step
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(dimensionalPowderUser),
+				itemId: Item.DIMENSIONAL_POWDER,
+			});
+
+			// Escape opponent if HP requirement is met
+			if (opponent.startingHp > 10 && opponent.hp > 0 && opponent.hp < 10) {
+				// Add leave step
+				fightData.steps.push({
+					action: 'leave',
+					fighter: stepFighter(opponent),
+					animation: LeaveAnimation.BLACKHOLE,
+				});
+
+				opponent.escaped = true;
+			}
+		}
 	});
 
 
@@ -369,27 +395,40 @@ const evadedSkill = (opponent: DetailedFighter, skill: DinozSkillFiche) => {
 const targetSingleOpponent = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	skill: DinozSkillFiche,
+	skillOrItem: DinozSkillFiche | ItemFiche
 ) => {
 	// Get random opponent
 	const opponent = getRandomOpponent(fightData, fighter);
 
-	// Check if opponent evaded
-	if (evadedSkill(opponent, skill)) {
-		// Add evade step
-		fightData.steps.push({
-			action: 'evade',
-			fighter: stepFighter(opponent),
-		});
+	// Skill
+	if ('id' in skillOrItem) {
+		const skill = skillOrItem;
 
-		return;
+		// Check if opponent evaded
+		if (evadedSkill(opponent, skill)) {
+			// Add evade step
+			fightData.steps.push({
+				action: 'evade',
+				fighter: stepFighter(opponent),
+			});
+
+			return;
+		}
+
+		// Get damage
+		const damage = getDamage(fighter, opponent, skill.id);
+
+		// Register the hit
+		registerHit(fightData, fighter, [opponent], damage, skill.id);
+
+		return opponent;
 	}
 
-	// Get damage
-	const damage = getDamage(fighter, opponent, skill.id);
+	// Item
+	const damage = getDamage(fighter, opponent, undefined, skillOrItem.itemId);
 
 	// Register the hit
-	registerHit(fightData, fighter, [opponent], damage, skill.id);
+	registerHit(fightData, fighter, [opponent], damage);
 
 	return opponent;
 }
@@ -488,14 +527,7 @@ const checkInvocationBan = (
 		fighter: stepFighter(invocation),
 	});
 
-	// Remove invocation
-	const invocationIndex = fightData.fighters.findIndex((f) => f.id === invocation.id);
-
-	if (invocationIndex === -1) {
-		throw new Error('Invocation not found');
-	}
-
-	fightData.fighters.splice(invocationIndex, 1);
+	invocation.escaped = true;
 };
 
 const activateEnvironment = (
@@ -1620,6 +1652,92 @@ const startAttack = (
 	checkDeaths(fightData);
 };
 
+const endTurnChecks = (
+	fightData: DetailedFight,
+	attacker: DetailedFighter,
+) => {
+	// Check if fighter is not dead
+	if (attacker.hp > 0) {
+		// Add moveBack step
+		fightData.steps.push({
+			action: 'moveBack',
+			fighter: stepFighter(attacker),
+		});
+	}
+
+	// Check if fighter is poisoned
+	const poisonedBy = attacker.poisonedBy;
+	if (!fightData.loser && attacker.hp > 0 && poisonedBy) {
+		// TODO: Temporary code to avoid endless fights
+		// Forced poison to end the fight
+		if (poisonedBy.id === -666) {
+			const poisoner = {
+				id: -666,
+				name: 'God',
+				type: 'monster' as const,
+				attacker: false,
+				nextHitBonus: 0,
+				nextHitMultiplier: 1,
+				activeSkills: [],
+			};
+
+			// Register the hit
+			registerHit(fightData, poisoner, [attacker], 100, Skill.SANG_ACIDE);
+		} else {
+			// Get poisoner
+			const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
+
+			if (!poisoner) {
+				throw new Error('Poisoner not found');
+			}
+
+			// Get poison damage
+			let poisonDamage = 0;
+			switch (poisonedBy.skill) {
+				case Skill.SANG_ACIDE: {
+					poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
+					break;
+				}
+				case Skill.AURA_PUANTE: {
+					poisonDamage = 10;
+					break;
+				}
+				case Skill.GRIFFES_EMPOISONNEES: {
+					poisonDamage = 14;
+					break;
+				}
+				default:
+					console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
+					break;
+			}
+
+			// Register the hit
+			registerHit(fightData, poisoner, [attacker], poisonDamage, poisonedBy.skill);
+		}
+	}
+
+	// Calculate new attacker's time
+	let time = TIME_BASE * TIME_FACTOR
+		* attacker.stats.speed.global
+		* attacker.stats.speed[attacker.element];
+
+	// Increase time lost if AIR_SLOWED
+	if (attacker.status.includes(FighterStatus.AIR_SLOWED)) {
+		time *= 1.5;
+	}
+
+	// Round up time
+	time = Math.round(time);
+
+	// Minimum time
+	if (time <= 0) {
+		time = 1;
+	}
+
+	// Add the new time to the attacker
+	attacker.time += Math.round(time);
+};
+
 export const playFighterTurn = (
 	fightData: DetailedFight,
 ) => {
@@ -1704,7 +1822,7 @@ export const playFighterTurn = (
 	fightData.time = fightData.fighters[0].time;
 
 	// Recover energy for all fighters except the current one
-	fightData.fighters.forEach((f) => {
+	getFighters(fightData).forEach((f) => {
 		if (f.id === attacker.id) return;
 		f.energy += (f.stats.special.energyRecovery ?? 1) * elapsed_time * ENERGY_RECOVERY_BASE_FACTOR;
 	});
@@ -1735,8 +1853,16 @@ export const playFighterTurn = (
 	if (possibleSkill) {
 		// End turn if skill activated
 		if (activateSkill(fightData, possibleSkill)) {
+			endTurnChecks(fightData, attacker);
 			return;
 		}
+	}
+
+	// Sorceror's Wand replaces attacks
+	if (attacker.items.some((item) => item.itemId === Item.SORCERERS_STICK)) {
+		targetSingleOpponent(fightData, attacker, itemList.SORCERERS_STICK);
+		endTurnChecks(fightData, attacker);
+		return;
 	}
 
 	// At this point this is an assault
@@ -1773,85 +1899,5 @@ export const playFighterTurn = (
 		startAttack(fightData, opponent, attacker, true);
 	}
 
-
-	// Check if fighter is not dead
-	if (attacker.hp > 0) {
-		// Add moveBack step
-		fightData.steps.push({
-			action: 'moveBack',
-			fighter: stepFighter(attacker),
-		});
-	}
-
-	// Check if fighter is poisoned
-	const poisonedBy = attacker.poisonedBy;
-	if (!fightData.loser && attacker.hp > 0 && poisonedBy) {
-		// TODO: Temporary code to avoid endless fights
-		// Forced poison to end the fight
-		if (poisonedBy.id === -666) {
-			const poisoner = {
-				id: -666,
-				name: 'God',
-				type: 'monster' as const,
-				attacker: false,
-				nextHitBonus: 0,
-				nextHitMultiplier: 1,
-				activeSkills: [],
-			};
-
-			// Register the hit
-			registerHit(fightData, poisoner, [attacker], 100, Skill.SANG_ACIDE);
-		} else {
-			// Get poisoner
-			const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
-
-			if (!poisoner) {
-				throw new Error('Poisoner not found');
-			}
-
-			// Get poison damage
-			let poisonDamage = 0;
-			switch (poisonedBy.skill) {
-				case Skill.SANG_ACIDE: {
-					poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
-					break;
-				}
-				case Skill.AURA_PUANTE: {
-					poisonDamage = 10;
-					break;
-				}
-				case Skill.GRIFFES_EMPOISONNEES: {
-					poisonDamage = 14;
-					break;
-				}
-				default:
-					console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
-					break;
-			}
-
-			// Register the hit
-			registerHit(fightData, poisoner, [attacker], poisonDamage, poisonedBy.skill);
-		}
-	}
-
-	// Calculate new attacker's time
-	let time = TIME_BASE * TIME_FACTOR
-		* attacker.stats.speed.global
-		* attacker.stats.speed[attacker.element];
-
-	// Increase time lost if AIR_SLOWED
-	if (attacker.status.includes(FighterStatus.AIR_SLOWED)) {
-		time *= 1.5;
-	}
-
-	// Round up time
-	time = Math.round(time);
-
-	// Minimum time
-	if (time <= 0) {
-		time = 1;
-	}
-
-	// Add the new time to the attacker
-	attacker.time += Math.round(time);
+	endTurnChecks(fightData, attacker);
 };

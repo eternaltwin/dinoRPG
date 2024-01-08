@@ -64,6 +64,7 @@ export interface DetailedFighter {
   level: number;
   type: FighterType;
   attacker: boolean;
+	escaped?: boolean;
   // Raw stats
   maxHp: number;
 	startingHp: number;

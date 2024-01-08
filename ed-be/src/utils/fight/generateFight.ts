@@ -22,9 +22,10 @@ export type DetailedFight = {
 
 const orderFighters = (fightData: DetailedFight) => {
   fightData.fighters = fightData.fighters.sort((a, b) => {
-    // Last if hp <= 0
-    if (a.hp <= 0) return 1;
-    if (b.hp <= 0) return -1;
+    // Last if hp <= 0 or escaped
+    if (a.hp <= 0 || a.escaped) return 1;
+    if (b.hp <= 0 || b.escaped) return -1;
+
     // Random if times are equal
     if (a.time === b.time) {
       return Math.random() > 0.5 ? 1 : -1;
