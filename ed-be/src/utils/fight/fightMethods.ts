@@ -3,7 +3,7 @@
 import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
-import { BadFighterStatus, DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
+import { BadFighterStatus, DetailedFighter, FighterStatus, GoodFighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { StepFighter } from "@drpg/core/models/fight/FightStep";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
@@ -405,8 +405,8 @@ const targetAllOpponents = (
 
 	// Reduce the list of impacted of opponents to a random count only if a specific count is impacted
 	if (count) {
-		while( opponents.length > count ) {
-			let random_index = Math.round(Math.random() * opponents.length);
+		while (opponents.length > count) {
+			const random_index = Math.round(Math.random() * opponents.length);
 			opponents.splice(random_index, 1);
 		}
 	}
@@ -537,6 +537,7 @@ const activateEvent = (
 		switch (event.id) {
 			// AIR
 			// FIRE
+			case Skill.COMBUSTION:
 			case Skill.BRASERO: {
 				targetAllOpponents(fightData, fighter, event);
 				break;
@@ -548,7 +549,6 @@ const activateEvent = (
 				fighter.activeSkills.push(event.id);
 				break;
 			}
-			case Skill.COMBUSTION:
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
 				addStatus(fightData, fighter, FighterStatus.SHIELDED);
@@ -565,9 +565,7 @@ const activateEvent = (
 			case Skill.PUREE_SALVATRICE: {
 				// Remove all the bad status of the group
 				getAllies(fightData, fighter).forEach(fighter => {
-					BadFighterStatus.forEach(status => {
-						removeStatus(fightData, fighter, status)
-					})
+					removeStatus(fightData, fighter, ...fighter.status.filter((s) => BadFighterStatus.includes(s)));
 				})
 				break;
 			}
@@ -635,17 +633,17 @@ const activateEvent = (
 			}
 			case Skill.RESISTANCE_A_LA_MAGIE: {
 				// Remove all bad status
-				removeStatus(fightData, fighter, ...fighter.status.filter((s) => !BadFighterStatus.includes(s)));
+				removeStatus(fightData, fighter, ...fighter.status.filter((s) => BadFighterStatus.includes(s)));
 				break;
 			}
 			case Skill.ETAT_PRIMAL: {
 				getFighters(fightData).forEach((f) => {
 					// Remove team bad status
 					if (f.attacker === fighter.attacker) {
-						removeStatus(fightData, f, ...f.status.filter((s) => !BadFighterStatus.includes(s)));
+						removeStatus(fightData, f, ...f.status.filter((s) => BadFighterStatus.includes(s)));
 					} else {
 						// Remove opponent team good status
-						removeStatus(fightData, f, ...f.status.filter((s) => BadFighterStatus.includes(s)));
+						removeStatus(fightData, f, ...f.status.filter((s) => GoodFighterStatus.includes(s)));
 					}
 				});
 				break;
@@ -1086,7 +1084,7 @@ const removeStatus = (
 			case FighterStatus.BLESSED: {
 				fighter.stats.assault[AssaultElement.AIR] -= 3;
 				fighter.stats.assault[AssaultElement.FIRE] -= 3;
-				fighter.stats.assault[AssaultElement.LIGHTNING]-= 3;
+				fighter.stats.assault[AssaultElement.LIGHTNING] -= 3;
 				fighter.stats.assault[AssaultElement.WATER] -= 3;
 				fighter.stats.assault[AssaultElement.WOOD] -= 3;
 				break;
@@ -1126,7 +1124,7 @@ const activateSkill = (
 			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
-		
+
 		// Simple single-target skills
 		// AIR
 		// FIRE
@@ -1190,10 +1188,10 @@ const activateSkill = (
 		}
 		// LIGHTNING
 		case Skill.AUBE_FEUILLUE: {
-			// Heal each fighter of the caster's group 
-			const heal_amount = fighter.stats.base[AssaultElement.LIGHTNING] * 2 + fighter.stats.base[AssaultElement.WOOD] * 2;
-			getAllies(fightData, fighter).forEach(fighter => {
-				heal(fightData, fighter, heal_amount);
+			// Heal each fighter of the caster's group
+			const hpHealed = fighter.stats.base[AssaultElement.LIGHTNING] * 2 + fighter.stats.base[AssaultElement.WOOD] * 2;
+			getAllies(fightData, fighter).forEach(ally => {
+				heal(fightData, ally, hpHealed);
 			})
 			break;
 		}

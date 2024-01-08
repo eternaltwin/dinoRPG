@@ -6,6 +6,7 @@ import { Skill } from "../dinoz/SkillList.mjs";
 import { ItemFiche } from "../item/ItemFiche.mjs";
 
 export enum FighterStatus {
+	// Bad
   ASLEEP,
   SLOWED,
   PETRIFIED,
@@ -14,6 +15,7 @@ export enum FighterStatus {
   LOCKED,
   DAZZLED,
   STUNNED,
+	// Good
   TORCHED,
   INTANGIBLE,
   FLYING,
@@ -31,6 +33,16 @@ export enum FighterStatus {
 	LIGHTNING_STRUCK,
 	AIR_SLOWED,
 };
+
+export const GoodFighterStatus = [
+  FighterStatus.TORCHED,
+  FighterStatus.INTANGIBLE,
+  FighterStatus.FLYING,
+  FighterStatus.QUICKENED,
+  FighterStatus.SHIELDED,
+  FighterStatus.BLESSED,
+  FighterStatus.HEALING,
+];
 
 export const BadFighterStatus = [
   FighterStatus.ASLEEP,
