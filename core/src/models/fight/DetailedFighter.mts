@@ -4,6 +4,7 @@ import { SpecialStatUsedInFights } from "../../utils/getSpecialStat.mjs";
 import { DinozSkillFiche } from "../dinoz/DinozSkillFiche.mjs";
 import { Skill } from "../dinoz/SkillList.mjs";
 import { ItemFiche } from "../item/ItemFiche.mjs";
+import { MonsterFiche } from "./MonsterFiche.mjs";
 
 export enum FighterStatus {
 	// Bad
@@ -119,6 +120,7 @@ export interface DetailedFighter {
   cancelArmor?: boolean,
   // Survival
   canSurvive?: boolean,
+	costume?: MonsterFiche,
 }
 
 // This structure needs to be exactly the same as FighterResult in native/src/fight/fighter.rs

@@ -25,6 +25,9 @@ export const initializeDinoz = (
 	teamIndex: number,
 	dinoz: DinozToCalculateFight
 ) => {
+	// Costume
+	let costume: MonsterFiche | undefined = undefined;
+
 	// Find items
 	const items = dinoz.items.map((item) => {
 		const itemFiche = Object.values(itemList).find((i) => i.itemId === item.itemId);
@@ -36,6 +39,14 @@ export const initializeDinoz = (
 		// Add bamboo monster
 		if (team && itemFiche.itemId === Item.BAMBOO_FRIEND) {
 			team.monsterList.push(monsterList.BAMBOOZ_SPROUTING);
+		}
+
+		// Set costume
+		if (team && itemFiche.itemId === Item.VEGETOX_COSTUME) {
+			costume = monsterList.VEGETOX_GUARD;
+		}
+		if (team && itemFiche.itemId === Item.GOBLIN_COSTUME) {
+			costume = monsterList.GOBLIN;
 		}
 
 		return { ...itemFiche };
@@ -130,6 +141,7 @@ export const initializeDinoz = (
 		},
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
+		costume,
 	};
 
 	handleSkills(team, fighter);

@@ -535,6 +535,22 @@ export const monsterList: Readonly<Record<string, MonsterFiche>> = {
 		level: 0,
 		zone: MapZone.ALL
 	},
+	VEGETOX_GUARD: {
+		name: 'mugard',
+		hp: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 30,
+		bonus_defense: 15,
+		odds: 0,
+		level: 22,
+		zone: MapZone.ILEMONSTRE
+	},
 	GORILLOZ_SPIRIT: {
 		name: 'egrllz',
 		hp: 40,

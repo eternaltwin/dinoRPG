@@ -111,10 +111,20 @@ export interface ExpireEnvironmentStep {
 	action: 'expireEnvironment';
 	environment: Skill;
 }
+export interface SetCostumeStep {
+	action: 'setCostume';
+	fighter: StepFighter;
+	costume: string;
+}
+export interface RemoveCostumeStep {
+	action: 'removeCostume';
+	fighter: StepFighter;
+}
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
 | CounterStep | MoveBackStep | SurviveStep
 | SkillActivateStep | SkillExpireStep | LooseHpStep
 | HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep
-| ActivateEnvironmentStep | ExpireEnvironmentStep;
+| ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
+| RemoveCostumeStep;

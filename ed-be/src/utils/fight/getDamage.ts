@@ -16,26 +16,31 @@ const getDamage = (
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
+	let attackElements: AssaultElement[] = [];
 
 	// Calculate the attacker's attack score
 	if (skill) {
-		let attackElements = [AssaultElement.FIRE];
-
 		// Cancel if intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
-			return 0;
+			return {
+				damage: 0,
+				elements: [],
+			};
 		}
 
 		// Get the skill base damage relative to the skill power
 		switch (skill) {
 			// Combustion inflicts a fixed amount, so the value is directly returned
 			case Skill.COMBUSTION: {
-				// fixedDamage = true;
-				return opponent.stats.base[AssaultElement.WOOD];
+				return {
+					damage: opponent.stats.base[AssaultElement.WOOD],
+					elements: [AssaultElement.WOOD],
+				};
 			}
 			case Skill.CREPUSCULE_FLAMBOYANT: {
 				attackElements = [AssaultElement.FIRE, AssaultElement.LIGHTNING];
 				attack = 6 * attacker.stats.base[AssaultElement.FIRE] + 6 * attacker.stats.base[AssaultElement.LIGHTNING];
+				break;
 			}
 			// Handle by default skills as an offensive skill with a given power and element
 			default: {
@@ -72,9 +77,15 @@ const getDamage = (
 		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
 			// Can hit intangible or is air element
 			if (attacker.canHitIntangible || attacker.element === AssaultElement.AIR) {
-				return 1;
+				return {
+					damage: 1,
+					elements: [attacker.element],
+				};
 			} else {
-				return 0;
+				return {
+					damage: 0,
+					elements: [attacker.element],
+				};
 			}
 		}
 
@@ -123,7 +134,10 @@ const getDamage = (
 	if (!skill && damage < attacker.minAssaultDamage) {
 		damage = attacker.minAssaultDamage;
 	}
-	return damage;
+	return {
+		damage,
+		elements: attackElements,
+	};
 };
 
 export default getDamage;

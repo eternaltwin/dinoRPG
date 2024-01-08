@@ -21,22 +21,22 @@ export type DetailedFight = {
 };
 
 const orderFighters = (fightData: DetailedFight) => {
-  fightData.fighters = fightData.fighters.sort((a, b) => {
-    // Last if hp <= 0 or escaped
-    if (a.hp <= 0 || a.escaped) return 1;
-    if (b.hp <= 0 || b.escaped) return -1;
+	fightData.fighters = fightData.fighters.sort((a, b) => {
+		// Last if hp <= 0 or escaped
+		if (a.hp <= 0 || a.escaped) return 1;
+		if (b.hp <= 0 || b.escaped) return -1;
 
-    // Random if times are equal
-    if (a.time === b.time) {
-      return Math.random() > 0.5 ? 1 : -1;
-    }
-    // Lowest time first
-    return a.time - b.time;
-  });
+		// Random if times are equal
+		if (a.time === b.time) {
+			return Math.random() > 0.5 ? 1 : -1;
+		}
+		// Lowest time first
+		return a.time - b.time;
+	});
 };
 
 const generateFight = (config: FightConfiguration): FightProcessResult => {
-  const fightData: DetailedFight = {
+	const fightData: DetailedFight = {
 		loser: null,
 		steps: [] as FightStep[],
 		initialDinozList: config.initialDinozList,
@@ -45,49 +45,58 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	};
 
 	// Add arrive step for all fighters
-  fightData.fighters.forEach((fighter) => {
-    fightData.steps.push({
-      action: 'arrive',
-      fighter: stepFighter(fighter),
-    });
-  });
+	fightData.fighters.forEach((fighter) => {
+		// Handle costumes
+		if (fighter.costume) {
+			fightData.steps.push({
+				action: 'setCostume',
+				fighter: stepFighter(fighter),
+				costume: fighter.costume.name,
+			});
+		}
 
-  let turn = 0;
+		fightData.steps.push({
+			action: 'arrive',
+			fighter: stepFighter(fighter),
+		});
+	});
 
-  // Zero the time origin to start from clean origin
+	let turn = 0;
+
+	// Zero the time origin to start from clean origin
 	const first_fighter_time = fightData.fighters[0].time;
-  fightData.fighters.map(fighter => fighter.time -= first_fighter_time);
+	fightData.fighters.map(fighter => fighter.time -= first_fighter_time);
 
-  // Fight loop
-  while (!fightData.loser) {
-    if (!fightData.fighters.length) {
-      // No fighters left
-      break;
-    }
+	// Fight loop
+	while (!fightData.loser) {
+		if (!fightData.fighters.length) {
+			// No fighters left
+			break;
+		}
 
-    // Order fighters by initiative (random if equal)
-    orderFighters(fightData);
+		// Order fighters by initiative (random if equal)
+		orderFighters(fightData);
 
-    // Poison fighters if turn > 1000
-    if (turn > 1000) {
-      fightData.fighters.forEach((fighter) => {
-        // eslint-disable-next-line no-param-reassign
-        fighter.poisonedBy = {
+		// Poison fighters if turn > 1000
+		if (turn > 1000) {
+			fightData.fighters.forEach((fighter) => {
+				// eslint-disable-next-line no-param-reassign
+				fighter.poisonedBy = {
 					id: -666,
 					type: 'monster',
 					skill: 0 as Skill,
 				};
-      });
-    }
+			});
+		}
 
-    // Play fighter turn
-    playFighterTurn(fightData);
+		// Play fighter turn
+		playFighterTurn(fightData);
 
-    // Check deaths
-    checkDeaths(fightData);
+		// Check deaths
+		checkDeaths(fightData);
 
-    turn += 1;
-  }
+		turn += 1;
+	}
 
 	const winner = fightData.loser === 'defenders';
 

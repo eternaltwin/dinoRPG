@@ -250,6 +250,7 @@ const registerHit = (
 	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'activeSkills'>,
 	opponents: DetailedFighter[],
 	damage: number,
+	damageElements: AssaultElement[] = [],
 	skill?: Skill,
 ) => {
 	const actualDamage: Record<number, number> = opponents.reduce((acc, opponent) => ({
@@ -287,9 +288,7 @@ const registerHit = (
 		}
 
 		opponent.hp -= actualDamage[opponent.id];
-	});
 
-	opponents.forEach((opponent) => {
 		// Add hit step
 		fightData.steps.push({
 			action: 'hit',
@@ -307,6 +306,18 @@ const registerHit = (
 		// Intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE) && actualDamage[opponent.id]) {
 			removeStatus(fightData, opponent, FighterStatus.INTANGIBLE);
+		}
+
+		// Survive with 1 HP if canSurvive
+		if (opponent.canSurvive && opponent.hp <= 1) {
+			opponent.canSurvive = false;
+			opponent.hp = 1;
+
+			// Add survival step
+			fightData.steps.push({
+				action: 'survive',
+				dinoz: stepFighter(opponent),
+			});
 		}
 
 		// Dimensional powder item
@@ -357,19 +368,30 @@ const registerHit = (
 			// Add status
 			addStatus(fightData, opponent, FighterStatus.STOLE_LIFE);
 		}
-	});
 
+		// Remove costume if fire damage
+		if (opponent.costume && damage && damageElements.includes(AssaultElement.FIRE)) {
+			// Take 3 damage
+			registerHit(fightData, opponent, [opponent], 3);
 
-	opponents.forEach((opponent) => {
-		// Survive with 1 HP if canSurvive
-		if (opponent.canSurvive && opponent.hp <= 1) {
-			opponent.canSurvive = false;
-			opponent.hp = 1;
-
-			// Add survival step
+			// Add leave step
 			fightData.steps.push({
-				action: 'survive',
-				dinoz: stepFighter(opponent),
+				action: 'leave',
+				fighter: stepFighter(opponent),
+			});
+
+			// Add remove costume step
+			fightData.steps.push({
+				action: 'removeCostume',
+				fighter: stepFighter(opponent),
+			});
+
+			opponent.costume = undefined;
+
+			// Add arrive step
+			fightData.steps.push({
+				action: 'arrive',
+				fighter: stepFighter(opponent),
 			});
 		}
 	});
@@ -439,19 +461,19 @@ const targetSingleOpponent = (
 		}
 
 		// Get damage
-		const damage = getDamage(fighter, opponent, skill.id);
+		const { damage, elements } = getDamage(fighter, opponent, skill.id);
 
 		// Register the hit
-		registerHit(fightData, fighter, [opponent], damage, skill.id);
+		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
 
 		return opponent;
 	}
 
 	// Item
-	const damage = getDamage(fighter, opponent, undefined, skillOrItem.itemId);
+	const { damage, elements } = getDamage(fighter, opponent, undefined, skillOrItem.itemId);
 
 	// Register the hit
-	registerHit(fightData, fighter, [opponent], damage);
+	registerHit(fightData, fighter, [opponent], damage, elements);
 
 	return opponent;
 }
@@ -486,10 +508,10 @@ const targetAllOpponents = (
 		}
 
 		// Get damage
-		const damage = getDamage(fighter, opponent, skill.id);
+		const { damage, elements } = getDamage(fighter, opponent, skill.id);
 
 		// Register the hit
-		registerHit(fightData, fighter, [opponent], damage, skill.id);
+		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
 	});
 };
 
@@ -1231,7 +1253,7 @@ const activateSkill = (
 		case Skill.DETONATION: {
 			// The fighter will not suicide with the skill, it just loses its roll
 			if (fighter.hp > 5) {
-				registerHit(fightData, fighter, [fighter], 5, skill.id);
+				registerHit(fightData, fighter, [fighter], 5, [AssaultElement.FIRE], skill.id);
 				// Increase the time of all other fighters to make it look like the caster "gained" time
 				getFighters(fightData).forEach(f => {
 					if (f.id !== fighter.id) {
@@ -1307,7 +1329,9 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			let damage = getDamage(fighter, opponent, skill.id);
+			const damageAndElements = getDamage(fighter, opponent, skill.id);
+			let { damage } = damageAndElements;
+			const { elements } = damageAndElements;
 
 			// Cancel if no damage
 			if (!damage) {
@@ -1324,7 +1348,7 @@ const activateSkill = (
 				// 50% HP otherwise
 				damage = Math.round(opponent.hp / 2);
 
-				registerHit(fightData, fighter, [opponent], damage, skill.id);
+				registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
 			}
 			break;
 		}
@@ -1341,7 +1365,9 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			let damage = getDamage(fighter, opponent, skill.id);
+			const damageAndElements = getDamage(fighter, opponent, skill.id);
+			let { damage } = damageAndElements;
+			const { elements } = damageAndElements;
 
 			// Cancel if no damage
 			if (!damage) {
@@ -1358,7 +1384,7 @@ const activateSkill = (
 				// 100% HP otherwise
 				damage = opponent.hp;
 
-				registerHit(fightData, fighter, [opponent], damage, skill.id);
+				registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
 			}
 			break;
 		}
@@ -1537,7 +1563,9 @@ const attack = (
 
 	for (const attacker of attackers) {
 		// Get damage
-		let damage = getDamage(attacker, opponent, skill);
+		const damageAndElements = getDamage(attacker, opponent, skill);
+		let { damage } = damageAndElements;
+		const { elements } = damageAndElements;
 
 		const evaded = evade(opponent);
 
@@ -1561,7 +1589,7 @@ const attack = (
 
 		// Register hit if damage was done
 		if (damage) {
-			registerHit(fightData, attacker, [opponent], damage);
+			registerHit(fightData, attacker, [opponent], damage, elements, skill);
 
 			// Poison fighter if opponent has Skill.AURA_PUANTE
 			if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
@@ -1577,12 +1605,12 @@ const attack = (
 			if (attacker.status.includes(FighterStatus.TORCHED)) {
 				const damage = attacker.stats.special.torchDamage ?? 0;
 
-				registerHit(fightData, attacker, [opponent], damage, Skill.TORCHE);
+				registerHit(fightData, attacker, [opponent], damage, [AssaultElement.FIRE], Skill.TORCHE);
 			}
 
 			// ACUPUNCTURE damage
 			if (opponent.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
-				registerHit(fightData, opponent, [attacker], 1, Skill.ACUPUNCTURE);
+				registerHit(fightData, opponent, [attacker], 1, [], Skill.ACUPUNCTURE);
 			}
 		}
 	}
@@ -1716,7 +1744,7 @@ const endTurnChecks = (
 			};
 
 			// Register the hit
-			registerHit(fightData, poisoner, [attacker], 100, Skill.SANG_ACIDE);
+			registerHit(fightData, poisoner, [attacker], 100, [], Skill.SANG_ACIDE);
 		} else {
 			// Get poisoner
 			const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
@@ -1746,7 +1774,7 @@ const endTurnChecks = (
 			}
 
 			// Register the hit
-			registerHit(fightData, poisoner, [attacker], poisonDamage, poisonedBy.skill);
+			registerHit(fightData, poisoner, [attacker], poisonDamage, [], poisonedBy.skill);
 		}
 	}
 
@@ -1842,7 +1870,7 @@ export const playFighterTurn = (
 						const damage = Math.round(f.hp * 0.05);
 
 						// Register the hit
-						registerHit(fightData, attacker, [f], damage, Skill.FEU_DE_ST_ELME);
+						registerHit(fightData, attacker, [f], damage, [AssaultElement.LIGHTNING], Skill.FEU_DE_ST_ELME);
 					}
 				});
 			}
@@ -1865,7 +1893,7 @@ export const playFighterTurn = (
 	// Check status of all fighters only if at least one unit of time has elapsed
 	// Torch damage
 	if (attacker.status.includes(FighterStatus.TORCHED)) {
-		registerHit(fightData, attacker, [attacker], 1, Skill.TORCHE);
+		registerHit(fightData, attacker, [attacker], 1, [AssaultElement.FIRE], Skill.TORCHE);
 	}
 
 	// ACUPUNCTURE heal
