@@ -289,6 +289,30 @@ const registerHit = (
 
 		opponent.hp -= actualDamage[opponent.id];
 
+		// Danger detector (prevent hit if damage > 25)
+		if (opponent.items.some((item) => item.itemId === Item.DANGER_DETECTOR) && actualDamage[opponent.id] > 25) {
+			// Add item use step
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(opponent),
+				itemId: Item.DANGER_DETECTOR,
+			});
+
+			// Add to items used
+			opponent.itemsUsed.push(Item.DANGER_DETECTOR);
+
+			// Get item index
+			const itemIndex = opponent.items.findIndex((item) => item.itemId === Item.DANGER_DETECTOR);
+
+			// Remove from items
+			opponent.items.splice(itemIndex, 1);
+
+			// Restore HP
+			opponent.hp += actualDamage[opponent.id];
+
+			actualDamage[opponent.id] = 0;
+		}
+
 		// Add hit step
 		fightData.steps.push({
 			action: 'hit',
