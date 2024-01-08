@@ -813,8 +813,8 @@ const activateEvent = (
 
 				if (hpDelta < 0) hpDelta = 0;
 
-				// Less chance to heal if HP if lost HP is less than 20. Sure to heal if lost HP is 20+
-				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) != 0) {
+				// Less chance to heal if lost HP is less than 20. Sure to heal if lost HP is 20+
+				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) !== 0) {
 					return cancel();
 				}
 
@@ -1062,6 +1062,20 @@ const activateEvent = (
 						addStatus(fightData, f, FighterStatus.AIR_SLOWED);
 					}
 				});
+				break;
+			}
+			case Item.SURVIVING_RATION: {
+				let hpDelta = Math.round((50 - (fighter.startingHp - fighter.hp)) / 10);
+
+				if (hpDelta < 0) hpDelta = 0;
+
+				// Less chance to heal if lost HP is less than 50. Sure to heal if lost HP is 50+
+				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) !== 0) {
+					return cancel();
+				}
+
+				// Heal 40 HP
+				heal(fightData, fighter, 40);
 				break;
 			}
 			default:
