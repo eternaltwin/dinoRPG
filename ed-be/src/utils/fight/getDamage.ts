@@ -31,6 +31,11 @@ const getDamage = (
                 // fixedDamage = true;
                 return opponent.stats.base[AssaultElement.WOOD];
             }
+            case Skill.CREPUSCULE_FLAMBOYANT: {
+				// TODO: need to come up with a way to handle multi-element attacks
+				// attack_element = AssaultElement.LIGHTNING;
+                // attack = 6 * attacker.stats.base[AssaultElement.LIGHTNING] + 6 * attacker.stats.base[AssaultElement.FIRE];
+            }
             // Handle by default skills as an offensive skill with a given power and element
             default: {
                 const skillAttack = SkillAttacks[skill];

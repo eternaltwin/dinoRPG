@@ -2,6 +2,7 @@ import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 
 export const SkillAttacks: Partial<Record<Skill, { power: number, element: AssaultElement }>> = {
+	// AIR
 	// FIRE
 	[Skill.SOUFFLE_ARDENT]: {
 		power: 5,
@@ -30,6 +31,15 @@ export const SkillAttacks: Partial<Record<Skill, { power: number, element: Assau
 	[Skill.BRASERO]: {
 		power: 3,
 		element: AssaultElement.FIRE,
+	},
+	// LIGHTNING
+	[Skill.FOUDRE]: {
+		power: 10,
+		element: AssaultElement.LIGHTNING,
+	},
+	[Skill.ECLAIR_SINUEUX]: {
+		power: 10,
+		element: AssaultElement.LIGHTNING,
 	},
 	// WATER
 	[Skill.CANON_A_EAU]: {

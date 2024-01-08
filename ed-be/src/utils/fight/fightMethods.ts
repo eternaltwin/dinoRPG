@@ -398,9 +398,18 @@ const targetAllOpponents = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	skill: DinozSkillFiche,
+	count?: number,
 ) => {
 	// Attack each opponent
 	const opponents = getOpponents(fightData, fighter);
+
+	// Reduce the list of impacted of opponents to a random count only if a specific count is impacted
+	if (count) {
+		while( opponents.length > count ) {
+			let random_index = Math.round(Math.random() * opponents.length);
+			opponents.splice(random_index, 1);
+		}
+	}
 
 	opponents.forEach((opponent) => {
 		// Check if opponent evaded
@@ -526,7 +535,12 @@ const activateEvent = (
 		});
 
 		switch (event.id) {
+			// AIR
 			// FIRE
+			case Skill.BRASERO: {
+				targetAllOpponents(fightData, fighter, event);
+				break;
+			}
 			case Skill.COLERE: {
 				fighter.nextAssaultMultiplier *= 1.25;
 
@@ -534,8 +548,74 @@ const activateEvent = (
 				fighter.activeSkills.push(event.id);
 				break;
 			}
-			case Skill.COMBUSTION: {
-				targetAllOpponents(fightData, fighter, event);
+			case Skill.COMBUSTION:
+			// LIGHTNING
+			case Skill.AURA_HERMETIQUE: {
+				addStatus(fightData, fighter, FighterStatus.SHIELDED);
+				break;
+			}
+			case Skill.BENEDICTION: {
+				addStatus(fightData, fighter, FighterStatus.BLESSED);
+				break;
+			}
+			case Skill.FOCUS: {
+				fighter.nextAssaultBonus += fighter.stats.base[AssaultElement.LIGHTNING];
+				break;
+			}
+			case Skill.PUREE_SALVATRICE: {
+				// Remove all the bad status of the group
+				getAllies(fightData, fighter).forEach(fighter => {
+					BadFighterStatus.forEach(status => {
+						removeStatus(fightData, fighter, status)
+					})
+				})
+				break;
+			}
+			// WATER
+			case Skill.DOUCHE_ECOSSAISE: {
+				targetSingleOpponent(fightData, fighter, event);
+				break;
+			}
+			case Skill.CLONE_AQUEUX: {
+				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
+
+				if (!initialDinoz) {
+					throw new Error('No initial dinoz found');
+				}
+
+				const clone = initializeDinoz(
+					null,
+					fighter.attacker ? 0 : 1,
+					initialDinoz
+				);
+
+				clone.level = 1;
+				clone.hp = 1;
+				clone.type = 'clone';
+
+				// Set the clone's time to the fighter's time
+				clone.time = fighter.time;
+
+				// Add clone to fighters
+				fightData.fighters.push(clone);
+
+				// Add arrive step
+				fightData.steps.push({
+					action: 'arrive',
+					fighter: stepFighter(clone),
+				});
+
+				checkInvocationBan(fightData, clone);
+				break;
+			}
+			case Skill.DIETE_CHROMATIQUE: {
+				// Pick a random opponent (no filtering is applied intentionally)
+				const opponents = getOpponents(fightData, fighter);
+				const opponent = opponents[randomBetween(0, opponents.length - 1)];
+
+				// Lock that opponent to a random element
+				opponent.element = opponent.elements[Math.round(Math.random() * opponent.elements.length)]
+				addStatus(fightData, opponent, FighterStatus.LOCKED);
 				break;
 			}
 			// WOOD
@@ -586,58 +666,6 @@ const activateEvent = (
 
 				// Set intangible
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
-				break;
-			}
-			// WATER
-			case Skill.DOUCHE_ECOSSAISE: {
-				targetSingleOpponent(fightData, fighter, event);
-				break;
-			}
-			case Skill.CLONE_AQUEUX: {
-				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
-
-				if (!initialDinoz) {
-					throw new Error('No initial dinoz found');
-				}
-
-				const clone = initializeDinoz(
-					null,
-					fighter.attacker ? 0 : 1,
-					initialDinoz
-				);
-
-				clone.level = 1;
-				clone.hp = 1;
-				clone.type = 'clone';
-
-				// Set the clone's time to the fighter's time
-				clone.time = fighter.time;
-
-				// Add clone to fighters
-				fightData.fighters.push(clone);
-
-				// Add arrive step
-				fightData.steps.push({
-					action: 'arrive',
-					fighter: stepFighter(clone),
-				});
-
-				checkInvocationBan(fightData, clone);
-				break;
-			}
-			case Skill.DIETE_CHROMATIQUE: {
-				// Pick a random opponent (no filtering is applied intentionally)
-				const opponents = getOpponents(fightData, fighter);
-				const opponent = opponents[randomBetween(0, opponents.length - 1)];
-
-				// Lock that opponent to a random element
-				opponent.element = opponent.elements[Math.round(Math.random() * opponent.elements.length)]
-				addStatus(fightData, opponent, FighterStatus.LOCKED);
-				break;
-			}
-			// LIGHTNING
-			case Skill.FOCUS: {
-				fighter.nextAssaultBonus += fighter.stats.base[AssaultElement.LIGHTNING];
 				break;
 			}
 			default:
@@ -1091,18 +1119,21 @@ const activateSkill = (
 
 	switch (skill.id) {
 		// Simple multi-target skills
+		// AIR
 		// FIRE
 		case Skill.SOUFFLE_ARDENT:
-		case Skill.METEORES:
-		case Skill.BRASERO: {
+		case Skill.METEORES: {
 			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
 		
 		// Simple single-target skills
+		// AIR
 		// FIRE
 		case Skill.BOULE_DE_FEU:
 		case Skill.COULEE_DE_LAVE:
+		// LIGHTNING
+		case Skill.FOUDRE:
 		// WATER
 		case Skill.CANON_A_EAU:
 		// WOOD
@@ -1112,6 +1143,7 @@ const activateSkill = (
 		}
 
 		// Other skills
+		// AIR
 		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill);
@@ -1154,6 +1186,27 @@ const activateSkill = (
 					}
 				})
 			}
+			break;
+		}
+		// LIGHTNING
+		case Skill.AUBE_FEUILLUE: {
+			// Heal each fighter of the caster's group 
+			const heal_amount = fighter.stats.base[AssaultElement.LIGHTNING] * 2 + fighter.stats.base[AssaultElement.WOOD] * 2;
+			getAllies(fightData, fighter).forEach(fighter => {
+				heal(fightData, fighter, heal_amount);
+			})
+			break;
+		}
+		case Skill.CREPUSCULE_FLAMBOYANT: {
+			targetAllOpponents(fightData, fighter, skill);
+			break;
+		}
+		case Skill.DANSE_FOUDROYANTE: {
+			// TODO generate 5 thunder assaults of power 3
+			break;
+		}
+		case Skill.ECLAIR_SINUEUX: {
+			targetAllOpponents(fightData, fighter, skill, 3);
 			break;
 		}
 		// WATER
@@ -1257,6 +1310,7 @@ const activateSkill = (
 				opponent.time += 5 * TIME_FACTOR;
 			});
 		}
+		// WOOD
 		default:
 			// Remove last step
 			fightData.steps.pop();
@@ -1347,6 +1401,7 @@ const poison = (
 	addStatus(fightData, fighter, FighterStatus.POISONED);
 };
 
+// Helper method to heal a fighter
 const heal = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,

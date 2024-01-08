@@ -2703,13 +2703,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.ECLAIR_SINUEUX,
 		name: 'EclairSinueux',
 		type: SkillType.A,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41104],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 3,
+		probability: 10
 	},
 	[Skill.FOUDRE]: {
 		id: Skill.FOUDRE,
@@ -2721,7 +2723,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41204],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.FISSION_ELEMENTAIRE]: {
 		id: Skill.FISSION_ELEMENTAIRE,
@@ -2810,13 +2814,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.DANSE_FOUDROYANTE,
 		name: 'DanseFoudroyante',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41204],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 10
 	},
 	[Skill.EMBUCHE]: {
 		id: Skill.EMBUCHE,
@@ -2837,13 +2843,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.PUREE_SALVATRICE,
 		name: 'PureeSalvatrice',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41205],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 15
+
 	},
 	[Skill.AURA_HERMETIQUE]: {
 		id: Skill.AURA_HERMETIQUE,
@@ -2855,7 +2864,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41205],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 30
 	},
 	[Skill.CROCS_DIAMANT]: {
 		id: Skill.CROCS_DIAMANT,
@@ -2892,13 +2903,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.AUBE_FEUILLUE,
 		name: 'AubeFeuillue',
 		type: SkillType.A,
-		energy: Energy.E75,
+		energy: Energy.E65,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41306],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 10
 	},
 	[Skill.BRANCARDIER]: {
 		id: Skill.BRANCARDIER,
@@ -2922,19 +2935,23 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41310],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 25
 	},
 	[Skill.CREPUSCULE_FLAMBOYANT]: {
 		id: Skill.CREPUSCULE_FLAMBOYANT,
 		name: 'CrepusculeFlambloyant',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E40,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41303],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 5
 	},
 	[Skill.MARCHAND]: {
 		id: Skill.MARCHAND,
@@ -3084,7 +3101,6 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		unlockedFrom: [41403],
 		isBaseSkill: false,
 		isSphereSkill: false
-		// TODO: Implement AoE effect
 	},
 	[Skill.SOUTIEN_MORAL]: {
 		id: Skill.SOUTIEN_MORAL,
