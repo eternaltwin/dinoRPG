@@ -3604,13 +3604,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.HYPNOSE,
 		name: 'Hypnose',
 		type: SkillType.A,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51207],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 7,
+		probability: 5,
 	},
 	[Skill.SECOUSSE]: {
 		id: Skill.SECOUSSE,

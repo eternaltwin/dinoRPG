@@ -120,7 +120,10 @@ export interface DetailedFighter {
   cancelArmor?: boolean,
   // Survival
   canSurvive?: boolean,
+	// Costume
 	costume?: MonsterFiche,
+	// Hypnotized
+	hypnotized?: number,
 }
 
 // This structure needs to be exactly the same as FighterResult in native/src/fight/fighter.rs

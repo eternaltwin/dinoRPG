@@ -3,7 +3,7 @@
 import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
-import { BadFighterStatus, DetailedFighter, FighterStatus, GoodFighterStatus } from "@drpg/core/models/fight/DetailedFighter";
+import { BadFighterStatus, DetailedFighter, FighterStatus, FighterType, GoodFighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { LeaveAnimation, StepFighter } from "@drpg/core/models/fight/FightStep";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
@@ -64,20 +64,15 @@ export const getAllies = (
 export const getOpponents = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	dinozOnly?: boolean,
-	monsterOnly?: boolean,
+	limitTypes?: FighterType[],
 ) => {
 	let opponents = [];
 
 	// Remove dead and escaped fighters and same team
 	opponents = fightData.fighters.filter((f) => f.hp > 0 && !f.escaped && f.attacker !== fighter.attacker);
 
-	if (dinozOnly) {
-		opponents = opponents.filter((f) => f.type === 'dinoz');
-	}
-
-	if (monsterOnly) {
-		opponents = opponents.filter((f) => f.type === 'monster');
+	if (limitTypes?.length) {
+		opponents = opponents.filter((f) => limitTypes.includes(f.type));
 	}
 
 	return opponents;
@@ -86,10 +81,9 @@ export const getOpponents = (
 const getRandomOpponent = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	dinozOnly?: boolean,
-	monsterOnly?: boolean,
+	limitTypes?: FighterType[],
 ) => {
-	const opponents = getOpponents(fightData, fighter, dinozOnly, monsterOnly);
+	const opponents = getOpponents(fightData, fighter, limitTypes);
 
 	// Target lowest HP opponent if Skill.SANS_PITIE
 	if (fighter.skills.find((skill) => skill.id === Skill.SANS_PITIE)) {
@@ -1230,6 +1224,14 @@ const activateSkill = (
 		energy: skill.energy,
 	});
 
+	// Cancel method to use if the skil ends up not being triggered
+	const cancel = () => {
+		// Remove last step
+		fightData.steps.pop();
+
+		return false;
+	}
+
 	switch (skill.id) {
 		// Simple multi-target skills
 		// AIR
@@ -1373,10 +1375,7 @@ const activateSkill = (
 
 			// Cancel if no damage
 			if (!damage) {
-				// Remove last step
-				fightData.steps.pop();
-
-				return false;
+				return cancel();
 			}
 
 			// 0 damage if boss or Skill.PERCEPTION
@@ -1409,10 +1408,7 @@ const activateSkill = (
 
 			// Cancel if no damage
 			if (!damage) {
-				// Remove last step
-				fightData.steps.pop();
-
-				return false;
+				return cancel();
 			}
 
 			// 0 damage if boss or Skill.PERCEPTION
@@ -1466,6 +1462,47 @@ const activateSkill = (
 			opponents.forEach((opponent) => {
 				opponent.time += 5 * TIME_FACTOR;
 			});
+		}
+		case Skill.HYPNOSE: {
+			// Get non boss opponents
+			const opponents = getOpponents(fightData, fighter, ['dinoz', 'monster', 'clone']);
+
+			if (!opponents.length) {
+				return cancel();
+			}
+
+			// Get random opponent
+			const opponent = opponents[randomBetween(0, opponents.length - 1)];
+
+			// Prevent if some opponent has CUZCUSSIAN_MASK
+			const opponentWithMask = getOpponents(fightData, fighter).find((opponent) => opponent.items.some((item) => item.itemId === Item.CUZCUSSIAN_MASK))
+
+			if (opponentWithMask) {
+				// Add item use step
+				fightData.steps.push({
+					action: 'itemUse',
+					fighter: stepFighter(opponentWithMask),
+					itemId: Item.CUZCUSSIAN_MASK,
+				});
+
+				// Add hypnotize step
+				fightData.steps.push({
+					action: 'endHypnosis',
+					fighter: stepFighter(opponent),
+				});
+			} else {
+				// Hypnotized for 3 turns
+				opponent.hypnotized = 4;
+
+				// Change team
+				opponent.attacker = !opponent.attacker;
+
+				// Add hypnotize step
+				fightData.steps.push({
+					action: 'hypnotize',
+					fighter: stepFighter(opponent),
+				});
+			}
 		}
 		// WOOD
 		default:
@@ -1912,6 +1949,25 @@ export const playFighterTurn = (
 					}
 				});
 			}
+		}
+	}
+
+	// Hypnosis
+	if (attacker.hypnotized) {
+		// Decrease turns left
+		attacker.hypnotized--;
+
+		// Remove hypnotize if no more turns left
+		if (attacker.hypnotized <= 0) {
+			// Change team
+			attacker.attacker = !attacker.attacker;
+			attacker.hypnotized = undefined;
+
+			// Add hypnotize step
+			fightData.steps.push({
+				action: 'endHypnosis',
+				fighter: stepFighter(attacker),
+			});
 		}
 	}
 
