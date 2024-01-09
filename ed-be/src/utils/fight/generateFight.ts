@@ -4,6 +4,7 @@ import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/F
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { checkDeaths, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { Item } from "@drpg/core/models/item/ItemList";
 
 export type DetailedFight = {
 	loser: 'attackers' | 'defenders' | null,
@@ -59,6 +60,15 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 			action: 'arrive',
 			fighter: stepFighter(fighter),
 		});
+
+		// Temportal reduction
+		if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(fighter),
+				itemId: Item.TEMPORAL_REDUCTION,
+			});
+		}
 	});
 
 	let turn = 0;
