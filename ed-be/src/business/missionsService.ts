@@ -277,8 +277,7 @@ export async function checkMissionFight(
 		Pick<Dinoz, 'placeId' | 'id' | 'playerId'> & {
 			missions: DinozMission[];
 		},
-	fight: FightResult,
-	monsters: MonsterFiche[]
+	fight: FightResult
 ) {
 	//Retrieve mission on its way and the step
 	const actualStep = getActualStep(dinoz);
@@ -293,16 +292,15 @@ export async function checkMissionFight(
 			actualStep.place === placeList.ANYWHERE.name) &&
 		fight.result &&
 		actualStep.requirement.actionType === ConditionEnum.KILL &&
-		(actualStep.requirement.target.map(t => t.name).includes(monsterList.ANY.name) ||
-			actualStep.requirement.target.map(t => t.name).filter(value => monsters.map(t => t.name).includes(value)).length >
-				0)
+		(actualStep.requirement.target.includes(monsterList.ANY.name) ||
+			actualStep.requirement.target.filter(value => fight.opponent.includes(value)).length > 0)
 	) {
 		const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
 		// const presentOpponents = actualStep.requirement.target.filter(value => monsters.includes(value));
 		let count = 0;
-		for (const opponent of monsters.map(t => t.name)) {
-			if (actualStep.requirement.target.map(t => t.name).includes(monsterList.ANY.name)) count++;
-			else if (actualStep.requirement.target.map(t => t.name).includes(opponent)) count++;
+		for (const opponent of fight.opponent) {
+			if (actualStep.requirement.target.includes(monsterList.ANY.name)) count++;
+			else if (actualStep.requirement.target.includes(opponent)) count++;
 		}
 		if (!dinozMission) {
 			throw new ErrorFormator(500, 'No mission found');

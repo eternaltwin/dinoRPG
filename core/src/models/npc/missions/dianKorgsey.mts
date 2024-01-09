@@ -98,7 +98,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.KORGON],
+					target: [monsterList.KORGON.name],
 					value: 10
 				},
 				displayedAction: 'kill_south_korgon',
@@ -159,7 +159,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				place: placeList.PORTE_DE_SYLVENOIRE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.ANY],
+					target: [monsterList.ANY.name],
 					value: 6
 				},
 				displayedAction: 'killany',
@@ -249,7 +249,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.KORGON],
+					target: [monsterList.KORGON.name],
 					value: 3
 				},
 				displayedAction: 'killambush_korgons',
@@ -282,7 +282,7 @@ export const M_DIANKORGSEY: Mission[] = [
 				place: placeList.CHEMIN_GLAUQUE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.KORGON, monsterList.RONCIV],
+					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
 					value: 8
 				},
 				displayedAction: 'killalliedK',

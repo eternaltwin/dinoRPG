@@ -38,7 +38,7 @@ export const M_RODEUR: Mission[] = [
 				place: placeList.MARAIS_COLLANT.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.PIRA],
+					target: [monsterList.PIRA.name],
 					value: 30
 				},
 				displayedAction: 'killPira',

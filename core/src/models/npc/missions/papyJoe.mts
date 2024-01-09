@@ -125,7 +125,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.COLLINES_ESCARPEES.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GOUPIGNON, monsterList.WOLF],
+					target: [monsterList.GOUPIGNON.name, monsterList.WOLF.name],
 					value: 6
 				},
 				displayedAction: 'killGoupi',
@@ -165,7 +165,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.FORCEBRUT.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.WOLF],
+					target: [monsterList.WOLF.name],
 					value: 2
 				},
 				displayedAction: 'killWolf',
@@ -176,7 +176,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.FOUTAINE_DE_JOUVENCE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.WOLF],
+					target: [monsterList.WOLF.name],
 					value: 2
 				},
 				displayedAction: 'killWolf',
@@ -187,7 +187,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.DINOVILLE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.WOLF],
+					target: [monsterList.WOLF.name],
 					value: 2
 				},
 				displayedAction: 'killWolf',
@@ -198,7 +198,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.UNIVERSITE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.WOLF],
+					target: [monsterList.WOLF.name],
 					value: 2
 				},
 				displayedAction: 'killWolf',
@@ -328,7 +328,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.FOUTAINE_DE_JOUVENCE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GOUPIGNON],
+					target: [monsterList.GOUPIGNON.name],
 					value: 15
 				},
 				displayedAction: 'killGoupi',
@@ -413,7 +413,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GLUON],
+					target: [monsterList.GLUON.name],
 					value: 1
 				},
 				displayedAction: 'killGluon',
@@ -456,7 +456,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GREEN_GIANT],
+					target: [monsterList.GREEN_GIANT.name],
 					value: 12
 				},
 				displayedAction: 'killGvert',
@@ -499,7 +499,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.COQ],
+					target: [monsterList.COQ.name],
 					value: 20
 				},
 				displayedAction: 'killCoq',

@@ -67,7 +67,7 @@ export async function processFight(req: Request) {
 	//If any dinoz is on a mission, check if the fight result progress the mission
 	for (const dinoz of team) {
 		if (dinoz.missions.some(mission => !mission.isFinished)) {
-			await checkMissionFight(dinoz, result, monster);
+			await checkMissionFight(dinoz, result);
 		}
 	}
 
@@ -90,7 +90,7 @@ export async function moveFight(
 		if (dinoz.missions.some(mission => !mission.isFinished)) {
 			const dinozAtFuturePlace = structuredClone(dinoz);
 			dinozAtFuturePlace.placeId = placeId;
-			await checkMissionFight(dinozAtFuturePlace, result, monsters);
+			await checkMissionFight(dinozAtFuturePlace, result);
 		}
 	}
 	return result;

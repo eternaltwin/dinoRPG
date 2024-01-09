@@ -83,7 +83,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.REPAIRE_DU_VENERABLE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.BARCHE],
+					target: [monsterList.BARCHE.name],
 					value: 1
 				},
 				displayedAction: 'killBarche',
@@ -114,7 +114,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.FORGES_DU_GTC.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.ANY],
+					target: [monsterList.ANY.name],
 					value: 6
 				},
 				displayedAction: 'killAny',
@@ -135,7 +135,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.FORGES_DU_GTC.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.ANY],
+					target: [monsterList.ANY.name],
 					value: 6
 				},
 				displayedAction: 'killAny',
@@ -185,7 +185,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.FLAM],
+					target: [monsterList.FLAM.name],
 					value: 3
 				},
 				displayedAction: 'killFlam',
@@ -226,7 +226,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.RUINES_ASHPOUK.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.FLAM],
+					target: [monsterList.FLAM.name],
 					value: 5
 				},
 				displayedAction: 'killFlam',
@@ -440,7 +440,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.FORGES_DU_GTC.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.ANY],
+					target: [monsterList.ANY.name],
 					value: 15
 				},
 				displayedText: 'killAny',
@@ -471,7 +471,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.PENTES_DE_BASALTE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.ANY],
+					target: [monsterList.ANY.name],
 					value: 5
 				},
 				displayedText: 'killAny',
@@ -547,7 +547,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.PENTES_DE_BASALTE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GOBLIN],
+					target: [monsterList.GOBLIN.name],
 					value: 4
 				},
 				displayedText: 'killGob',
@@ -599,7 +599,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GOBLIN],
+					target: [monsterList.GOBLIN.name],
 					value: 6
 				},
 				displayedAction: 'killGob',
@@ -724,7 +724,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GOBLIN],
+					target: [monsterList.GOBLIN.name],
 					value: 1
 				},
 				displayedText: 'killGob',
@@ -755,7 +755,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.REPAIRE_DU_VENERABLE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GOBLIN],
+					target: [monsterList.GOBLIN.name],
 					value: 3
 				},
 				displayedText: 'killGoblin',
@@ -776,7 +776,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.GOBLIN],
+					target: [monsterList.GOBLIN.name],
 					value: 3
 				},
 				displayedAction: 'killGob',

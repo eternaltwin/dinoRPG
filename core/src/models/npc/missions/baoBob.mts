@@ -23,7 +23,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.MARAIS_COLLANT.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.PIRA],
+					target: [monsterList.PIRA.name],
 					value: 6
 				},
 				displayedAction: 'killPira'
@@ -163,7 +163,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.DOME_SOULAFLOTTE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.KAZKA],
+					target: [monsterList.KAZKA.name],
 					value: 6
 				},
 				displayedAction: 'killKazka',
@@ -203,7 +203,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.ANGUIL],
+					target: [monsterList.ANGUIL.name],
 					value: 10
 				},
 				displayedAction: 'killAnguil',
@@ -283,7 +283,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: placeList.ANYWHERE.name,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.KAZKA, monsterList.PIRA],
+					target: [monsterList.KAZKA.name, monsterList.PIRA.name],
 					value: 30
 				},
 				displayedAction: 'killAll',
