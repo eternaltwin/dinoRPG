@@ -743,6 +743,10 @@ const activateEvent = (
 				});
 				break;
 			}
+			case Skill.GROSSE_BEIGNE: {
+				fighter.nextAssaultMultiplier *= 2;
+				break;
+			}
 			case Skill.PRINTEMPS_PRECOCE: {
 				// Heal all allies
 				getAllies(fightData, fighter).forEach((f) => {
@@ -1429,6 +1433,11 @@ const activateSkill = (
 			opponents.forEach((opponent) => {
 				addStatus(fightData, opponent, FighterStatus.SLOWED);
 			});
+			break;
+		}
+		case Skill.MOIGNONS_LIQUIDES: {
+			const opponent = getRandomOpponent(fightData, fighter);
+			opponent.time += 15 * TIME_FACTOR;
 			break;
 		}
 		case Skill.PETRIFICATION: {

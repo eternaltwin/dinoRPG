@@ -1323,7 +1323,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ASSAULT]: 15
+			[Stat.WOOD_ASSAULT]: 15
 		}
 	},
 	[Skill.ACROBATE]: {
@@ -1428,13 +1428,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.GROSSE_BEIGNE,
 		name: 'GrosseBeigne',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21207],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.ESPRIT_GORILLOZ]: {
 		id: Skill.ESPRIT_GORILLOZ,
@@ -1830,6 +1832,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
+	// WATER
 	[Skill.CANON_A_EAU]: {
 		id: Skill.CANON_A_EAU,
 		name: 'CanonAEau',
@@ -1996,7 +1999,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31104],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 4,
+		probability: 8,
 	},
 	[Skill.ZERO_ABSOLU]: {
 		id: Skill.ZERO_ABSOLU,
