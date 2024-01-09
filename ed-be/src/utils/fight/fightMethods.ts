@@ -689,6 +689,11 @@ const activateEvent = (
 				// Set the clone's time to the fighter's time
 				clone.time = fighter.time;
 
+				// Set HP to 10% if Item.TEAR_OF_LIFE
+				if (fighter.items.some((item) => item.itemId === Item.TEAR_OF_LIFE)) {
+					clone.hp = Math.round(clone.startingHp * 0.1);
+				}
+
 				// Add clone to fighters
 				fightData.fighters.push(clone);
 

@@ -73,18 +73,20 @@ const getDamage = (
 			}
 		}
 	} else {
+		attackElements = [attacker.element];
+
 		// Intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
 			// Can hit intangible or is air element
-			if (attacker.canHitIntangible || attacker.element === AssaultElement.AIR) {
+			if (attacker.canHitIntangible || attackElements.includes(AssaultElement.AIR)) {
 				return {
 					damage: 1,
-					elements: [attacker.element],
+					elements: attackElements,
 				};
 			} else {
 				return {
 					damage: 0,
-					elements: [attacker.element],
+					elements: attackElements,
 				};
 			}
 		}
