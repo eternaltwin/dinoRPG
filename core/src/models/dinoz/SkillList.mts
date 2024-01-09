@@ -3635,13 +3635,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.TROU_NOIR,
 		name: 'TrouNoir',
 		type: SkillType.A,
-		energy: Energy.E75,
+		energy: Energy.E60,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51301],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 10,
+		probability: 3,
 	},
 	[Skill.MAITRE_LEVITATEUR]: {
 		id: Skill.MAITRE_LEVITATEUR,

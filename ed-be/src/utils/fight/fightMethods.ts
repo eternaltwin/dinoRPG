@@ -1477,6 +1477,41 @@ const activateSkill = (
 				opponent.time += 5 * TIME_FACTOR;
 			});
 		}
+		// WOOD
+		// AIR
+		case Skill.TROU_NOIR: {
+			// Prevent if item.ANTI_GRAVE_SUIT
+			const opponentWithSuit = getOpponents(fightData, fighter).find((opponent) => opponent.items.some((item) => item.itemId === Item.ANTI_GRAVE_SUIT));
+
+			if (opponentWithSuit) {
+				// Add item use step
+				fightData.steps.push({
+					action: 'itemUse',
+					fighter: stepFighter(opponentWithSuit),
+					itemId: Item.ANTI_GRAVE_SUIT,
+				});
+
+				return true;
+			}
+
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Instantly cancel if boss
+			if (opponent.type === 'boss') {
+				return cancel();
+			}
+
+			// Add leave step
+			fightData.steps.push({
+				action: 'leave',
+				fighter: stepFighter(opponent),
+				animation: LeaveAnimation.BLACKHOLE,
+			});
+
+			opponent.escaped = true;
+			break;
+		}
+		// SPHERE
 		case Skill.HYPNOSE: {
 			// Get non boss opponents
 			const opponents = getOpponents(fightData, fighter, ['dinoz', 'monster', 'clone']);
@@ -1518,7 +1553,6 @@ const activateSkill = (
 				});
 			}
 		}
-		// WOOD
 		default:
 			// Remove last step
 			fightData.steps.pop();
