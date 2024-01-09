@@ -41,6 +41,10 @@ export const SkillAttacks: Partial<Record<Skill, { power: number, element: Assau
 		power: 10,
 		element: AssaultElement.LIGHTNING,
 	},
+	[Skill.DANSE_FOUDROYANTE]: {
+		power: 3,
+		element: AssaultElement.LIGHTNING,
+	},
 	// WATER
 	[Skill.CANON_A_EAU]: {
 		power: 6,
