@@ -105,6 +105,7 @@ export interface DetailedFighter {
   // Elements
   elements: AssaultElement[],
   element: AssaultElement,
+	locked?: number,
   // Min damage
   minDamage: number,
   minAssaultDamage: number,

@@ -78,7 +78,7 @@ export const getOpponents = (
 	return opponents;
 };
 
-const getRandomOpponent = (
+export const getRandomOpponent = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	limitTypes?: FighterType[],
@@ -111,6 +111,10 @@ const getRandomOpponent = (
 		const random = randomBetween(0, withRock.length - 1);
 
 		return withRock[random];
+	}
+
+	if (!opponents.length) {
+		throw new Error('No opponent found');
 	}
 
 	const random = randomBetween(0, opponents.length - 1);
@@ -1155,7 +1159,7 @@ const activateEvent = (
 	return true;
 };
 
-const addStatus = (
+export const addStatus = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	status: FighterStatus,
@@ -2070,6 +2074,20 @@ export const playFighterTurn = (
 				action: 'endHypnosis',
 				fighter: stepFighter(attacker),
 			});
+		}
+	}
+
+	// Curse locker
+	if (attacker.locked) {
+		// Decrease turns left
+		attacker.locked--;
+
+		// Remove curse if no more turns left
+		if (attacker.locked <= 0) {
+			attacker.locked = undefined;
+
+			// Remove LOCKED
+			removeStatus(fightData, attacker, FighterStatus.LOCKED);
 		}
 	}
 

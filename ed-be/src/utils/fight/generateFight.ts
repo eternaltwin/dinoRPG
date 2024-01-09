@@ -1,10 +1,11 @@
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
-import { DetailedFighter, FighterResultFiche } from "@drpg/core/models/fight/DetailedFighter";
+import { DetailedFighter, FighterResultFiche, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/FightConfiguration";
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
-import { checkDeaths, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { addStatus, checkDeaths, getRandomOpponent, playFighterTurn, stepFighter } from "./fightMethods.js";
 import { Item } from "@drpg/core/models/item/ItemList";
+import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
 
 export type DetailedFight = {
 	loser: 'attackers' | 'defenders' | null,
@@ -68,6 +69,25 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				fighter: stepFighter(fighter),
 				itemId: Item.TEMPORAL_REDUCTION,
 			});
+		}
+
+		// Curse locker
+		if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
+			const opponent = getRandomOpponent(fightData, fighter, ['dinoz']);
+
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(fighter),
+				itemId: Item.CURSE_LOCKER,
+			});
+
+			// Find weakest assault element
+			const weakestElement = Object.entries(fighter.stats.assault).sort(([, a], [, b]) => a - b)[0][0] as AssaultElement;
+
+			// Lock opponent for 3 turns
+			opponent.element = weakestElement;
+			opponent.locked = 4;
+			addStatus(fightData, opponent, FighterStatus.LOCKED);
 		}
 	});
 
