@@ -285,6 +285,24 @@ const registerHit = (
 			}
 		}
 
+		// Check for mud wall
+		if (opponent.mudWall) {
+			const tempDamage = actualDamage[opponent.id];
+			actualDamage[opponent.id] -= opponent.mudWall;
+			opponent.mudWall -= tempDamage;
+
+			if (opponent.mudWall <= 0) {
+				opponent.mudWall = undefined;
+
+				// Add skillExpire step
+				fightData.steps.push({
+					action: 'skillExpire',
+					dinoz: stepFighter(opponent),
+					skill: Skill.MUR_DE_BOUE,
+				});
+			}
+		}
+
 		opponent.hp -= actualDamage[opponent.id];
 
 		// Danger detector (prevent hit if damage > 25)
@@ -848,9 +866,6 @@ const activateEvent = (
 	} else {
 		// Event is an item
 
-		// Set this to false if item is not one-use
-		let itemUsed = true;
-
 		// Add item use step
 		fightData.steps.push({
 			action: 'itemUse',
@@ -1144,16 +1159,14 @@ const activateEvent = (
 				return cancel();
 		}
 
-		if (itemUsed) {
-			// Add to items used
-			fighter.itemsUsed.push(event.itemId);
+		// Add to items used
+		fighter.itemsUsed.push(event.itemId);
 
-			// Get item index
-			const itemIndex = fighter.items.findIndex((item) => item.itemId === event.itemId);
+		// Get item index
+		const itemIndex = fighter.items.findIndex((item) => item.itemId === event.itemId);
 
-			// Remove from items
-			fighter.items.splice(itemIndex, 1);
-		}
+		// Remove from items
+		fighter.items.splice(itemIndex, 1);
 	}
 
 	return true;
@@ -1523,7 +1536,14 @@ const activateSkill = (
 			// Remove mud wall of all opponents
 			const opponents = getOpponents(fightData, fighter);
 			opponents.forEach((opponent) => {
-				// TODO
+				opponent.mudWall = undefined;
+
+				// Add skillExpire step
+				fightData.steps.push({
+					action: 'skillExpire',
+					dinoz: stepFighter(opponent),
+					skill: Skill.MUR_DE_BOUE,
+				});
 			});
 			break;
 		}
@@ -1536,6 +1556,11 @@ const activateSkill = (
 			});
 		}
 		// WOOD
+		case Skill.MUR_DE_BOUE: {
+			// Add 30 HP mud wall
+			fighter.mudWall = 30;
+			break;
+		}
 		// AIR
 		case Skill.TROU_NOIR: {
 			// Prevent if item.ANTI_GRAVE_SUIT

@@ -1775,13 +1775,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.MUR_DE_BOUE,
 		name: 'MurDeBoue',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22401],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 8,
+		probability: 5,
 	},
 	[Skill.PEAU_DACIER]: {
 		id: Skill.PEAU_DACIER,

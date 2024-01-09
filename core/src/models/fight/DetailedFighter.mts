@@ -126,6 +126,8 @@ export interface DetailedFighter {
 	costume?: MonsterFiche,
 	// Hypnotized
 	hypnotized?: number,
+	// Mud wall
+	mudWall?: number,
 }
 
 // This structure needs to be exactly the same as FighterResult in native/src/fight/fighter.rs

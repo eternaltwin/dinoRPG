@@ -136,6 +136,7 @@ const getDamage = (
 	if (!skill && damage < attacker.minAssaultDamage) {
 		damage = attacker.minAssaultDamage;
 	}
+
 	return {
 		damage,
 		elements: attackElements,
