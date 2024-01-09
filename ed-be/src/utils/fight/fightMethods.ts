@@ -619,6 +619,14 @@ const activateEvent = (
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
+	// Cancel method to use if the item ends up not being triggered
+	const cancel = () => {
+		// Remove last step
+		fightData.steps.pop();
+
+		return false;
+	}
+
 	// If event is a skill
 	if ('id' in event) {
 		// Add skillActivate step
@@ -770,6 +778,26 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.COURBATURES: {
+				const opponent = getRandomOpponent(fightData, fighter);
+
+				// Reduce max energy by 30%
+				let newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
+
+				// Don't go below 100 if Item.ENCHANTED_STEROID
+				if (opponent.items.some((item) => item.itemId === Item.ENCHANTED_STEROID)) {
+					newMaxEnergy = Math.max(newMaxEnergy, 100);
+				}
+
+				// Cancel if no change
+				if (newMaxEnergy === opponent.maxEnergy) {
+					return cancel();
+				}
+
+				opponent.maxEnergy = newMaxEnergy;
+				opponent.energy = Math.min(opponent.energy, opponent.maxEnergy);
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();
@@ -791,14 +819,6 @@ const activateEvent = (
 			fighter: stepFighter(fighter),
 			itemId: event.itemId,
 		});
-
-		// Cancel method to use if the item ends up not being triggered
-		const cancel = () => {
-			// Remove last step
-			fightData.steps.pop();
-
-			return false;
-		}
 
 		switch (event.itemId) {
 			case Item.CLOUD_BURGER: {
@@ -2029,6 +2049,11 @@ export const playFighterTurn = (
 	getFighters(fightData).forEach((f) => {
 		if (f.id === attacker.id) return;
 		f.energy += (f.stats.special.energyRecovery ?? 1) * elapsed_time * ENERGY_RECOVERY_BASE_FACTOR;
+
+		// Limit to maxEnergy
+		if (f.energy > f.maxEnergy) {
+			f.energy = f.maxEnergy;
+		}
 	});
 
 	// TODO

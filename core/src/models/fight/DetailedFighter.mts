@@ -72,6 +72,7 @@ export interface DetailedFighter {
 	startingHp: number;
   hp: number,
   energy: number,
+	maxEnergy: number,
   stats: {
     base: Record<AssaultElement, number>,
     assault: Record<AssaultElement, number>,

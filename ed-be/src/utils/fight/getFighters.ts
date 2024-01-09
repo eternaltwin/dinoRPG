@@ -78,6 +78,7 @@ export const initializeDinoz = (
 		startingHp: dinoz.life,
 		hp: dinoz.life,
 		energy: 100,
+		maxEnergy: 100,
 		stats: {
 			base: {
 				[AssaultElement.AIR]: dinoz.nbrUpAir,
@@ -174,6 +175,7 @@ export const initializeDinoz = (
 
 	// Energy
 	fighter.energy = (fighter.stats.special.energy ?? 1) * 100;
+	fighter.maxEnergy = fighter.energy;
 
 	// Handle elements (from highest to lowest)
 	const elements = [
@@ -216,6 +218,7 @@ export const initializeMonster = (
 		startingHp: monster.hp,
 		hp: monster.hp,
 		energy: 100,
+		maxEnergy: 100,
 		stats: {
 			base: {
 				[AssaultElement.AIR]: monster.elements.air,
