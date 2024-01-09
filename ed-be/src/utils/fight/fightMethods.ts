@@ -724,6 +724,34 @@ const activateEvent = (
 				addStatus(fightData, opponent, FighterStatus.LOCKED);
 				break;
 			}
+			case Skill.HYPERVENTILATION: {
+				const opponents = getOpponents(fightData, fighter);
+
+				opponents.forEach((opponent) => {
+					// Reduce max energy by 20%
+					let newMaxEnergy = Math.round(opponent.maxEnergy * 0.8);
+
+					// Don't go below 100 if Item.ENCHANTED_STEROID
+					if (opponent.items.some((item) => item.itemId === Item.ENCHANTED_STEROID)) {
+						newMaxEnergy = Math.max(newMaxEnergy, 100);
+					}
+
+					// Cancel if no change
+					if (newMaxEnergy === opponent.maxEnergy) {
+						return cancel();
+					}
+
+					opponent.maxEnergy = newMaxEnergy;
+					opponent.energy = Math.min(opponent.energy, opponent.maxEnergy);
+
+					// Add reduce energy step
+					fightData.steps.push({
+						action: 'reduceEnergy',
+						fighter: stepFighter(opponent),
+					});
+				});
+				break;
+			}
 			// WOOD
 			case Skill.RENFORTS_KORGON: {
 				createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
@@ -796,6 +824,12 @@ const activateEvent = (
 
 				opponent.maxEnergy = newMaxEnergy;
 				opponent.energy = Math.min(opponent.energy, opponent.maxEnergy);
+
+				// Add reduce energy step
+				fightData.steps.push({
+					action: 'reduceEnergy',
+					fighter: stepFighter(opponent),
+				});
 				break;
 			}
 			default:

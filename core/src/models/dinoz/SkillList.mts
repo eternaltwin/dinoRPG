@@ -2521,13 +2521,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.HYPERVENTILATION,
 		name: 'Hyperventilation',
 		type: SkillType.A,
-		energy: Energy.E75,
+		energy: Energy.E55,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32402],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 8,
+		probability: 15,
 	},
 	[Skill.THERAPIE_DE_GROUPE]: {
 		id: Skill.THERAPIE_DE_GROUPE,

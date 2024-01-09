@@ -128,6 +128,10 @@ export interface EndHypnosisStep {
 	action: 'endHypnosis';
 	fighter: StepFighter;
 }
+export interface ReduceEnergyStep {
+	action: 'reduceEnergy';
+	fighter: StepFighter;
+}
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
@@ -135,4 +139,5 @@ export type FightStep = ArriveStep | LeaveStep | ResistStep
 | SkillActivateStep | SkillExpireStep | LooseHpStep
 | HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep
 | ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
-| RemoveCostumeStep | HypnotizeStep | EndHypnosisStep;
+| RemoveCostumeStep | HypnotizeStep | EndHypnosisStep
+| ReduceEnergyStep;
