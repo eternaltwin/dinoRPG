@@ -1656,6 +1656,38 @@ const activateSkill = (
 			});
 			break;
 		}
+		case Skill.BIGMAGNON: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent),
+			});
+
+			// Attack opponent
+			startAttack(fightData, fighter, opponent);
+
+			// Cancel FLYING and INTANGIBLE
+			removeStatus(fightData, opponent, FighterStatus.FLYING, FighterStatus.INTANGIBLE);
+
+			// Add STUNNED if not boss
+			if (opponent.type !== 'boss') {
+				addStatus(fightData, opponent, FighterStatus.STUNNED);
+			}
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();

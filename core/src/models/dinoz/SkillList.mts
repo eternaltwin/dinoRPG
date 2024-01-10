@@ -4256,7 +4256,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.TRICERAGNON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 8,
+		probability: 15,
 	},
 	[Skill.DUR_A_CUIRE]: {
 		id: Skill.DUR_A_CUIRE,
