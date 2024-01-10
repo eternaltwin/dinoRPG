@@ -2549,13 +2549,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.RECEPTACLE_TESLA,
 		name: 'ReceptacleTesla',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32404],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 15,
 	},
 	[Skill.VITALITE_MARINE]: {
 		id: Skill.VITALITE_MARINE,

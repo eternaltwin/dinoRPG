@@ -1725,6 +1725,21 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.RECEPTACLE_TESLA: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Remove lightning sphere skills
+			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.LIGHTNING));
+
+			// Add lose sphere step
+			fightData.steps.push({
+				action: 'loseSphere',
+				fighter: stepFighter(opponent),
+				element: ElementType.LIGHTNING,
+			});
+			break;
+		}
 		case Skill.RECEPTACLE_AERIEN: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
