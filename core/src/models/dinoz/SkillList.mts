@@ -1569,14 +1569,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.LOUP_GAROU,
 		name: 'LoupGarou',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21304, 51311, 61121],
 		raceId: [raceList.CASTIVORE.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.COLOSSE]: {
 		id: Skill.COLOSSE,
