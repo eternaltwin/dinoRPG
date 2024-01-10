@@ -862,3 +862,15 @@ export const placeList: Record<
 		map: MapZone.ALL
 	}
 };
+
+export const PlacesByMap = Object.values(placeList).reduce((acc, place) => {
+	const currentMap = acc[place.map];
+
+	if (currentMap) {
+		currentMap.push(place.placeId);
+	} else {
+		acc[place.map] = [place.placeId];
+	}
+
+	return acc;
+}, {} as Partial<Record<MapZone, PlaceEnum[]>>);

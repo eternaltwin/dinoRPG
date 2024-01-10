@@ -107,7 +107,7 @@ export function calculateFight(
 	}, {
 		dinozList: [],
 		monsterList: monsters,
-	});
+	}, place);
 
 	const fightConfiguration: FightConfiguration = {
 		// Flags

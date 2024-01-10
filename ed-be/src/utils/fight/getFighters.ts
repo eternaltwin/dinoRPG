@@ -10,6 +10,9 @@ import { DinozToCalculateFight } from "../../business/fightService.js";
 import { TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
+import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
+import { PlacesByMap } from "@drpg/core/models/place/PlaceList";
+import { MapZone } from "@drpg/core/models/enums/MapZone";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -24,7 +27,8 @@ interface Team {
 export const initializeDinoz = (
 	team: Team | null,
 	teamIndex: number,
-	dinoz: DinozToCalculateFight
+	dinoz: DinozToCalculateFight,
+	place: PlaceEnum,
 ) => {
 	// Costume
 	let costume: MonsterFiche | undefined = undefined;
@@ -151,7 +155,7 @@ export const initializeDinoz = (
 		invocations: 1,
 	};
 
-	handleSkills(team, fighter);
+	handleSkills(team, fighter, place);
 
 	// Order skills by priority, random if equal
 	fighter.skills.sort((a, b) => {
@@ -303,7 +307,11 @@ export const initializeMonster = (
 	};
 };
 
-const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
+const handleSkills = (
+	team: Team | null,
+	fighter: DetailedFighter,
+	place: PlaceEnum,
+) => {
 	const fighterHas = fighter.skills.reduce((acc, skill) => {
 		acc[skill.id as Skill] = true;
 
@@ -387,6 +395,17 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
 	}
 
+	if (fighterHas[Skill.BLANC]) {
+		// +20 assault damage if on Nimbao
+		if (PlacesByMap[MapZone.NIMBAO]?.includes(place)) {
+			fighter.stats.assault[ElementType.AIR] += 20;
+			fighter.stats.assault[ElementType.FIRE] += 20;
+			fighter.stats.assault[ElementType.WOOD] += 20;
+			fighter.stats.assault[ElementType.WATER] += 20;
+			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+		}
+	}
+
 	// RACE
 	if (fighterHas[Skill.CHARGE_CORNUE]) {
 		fighter.nextAssaultMultiplier += 0.2;
@@ -409,7 +428,7 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 	// TODO: handle other skills
 };
 
-const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
+const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighter[] => {
   const fighters: DetailedFighter[] = [];
 
 	const existingMonsters: Record<string, number> = {};
@@ -418,7 +437,7 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 	const { dinozList, monsterList } = team;
 
 		// Dinoz
-		fighters.push(...dinozList.map((dinoz) => initializeDinoz(team, index, dinoz)));
+		fighters.push(...dinozList.map((dinoz) => initializeDinoz(team, index, dinoz, place)));
 
 		// Monsters
 		fighters.push(...monsterList.map((monster) => initializeMonster(existingMonsters, index, monster)));

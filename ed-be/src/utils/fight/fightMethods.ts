@@ -775,7 +775,8 @@ const activateEvent = (
 				const clone = initializeDinoz(
 					null,
 					fighter.attacker ? 0 : 1,
-					initialDinoz
+					initialDinoz,
+					fightData.place,
 				);
 
 				clone.level = 1;
