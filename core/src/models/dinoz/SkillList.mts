@@ -3138,7 +3138,10 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42101],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ENERGY_RECOVERY]: 0.2
+		}
 	},
 	[Skill.JAUNE]: {
 		id: Skill.JAUNE,
@@ -3247,13 +3250,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.FEU_DE_ST_ELME,
 		name: 'FeuDeStElme',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E40,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42402],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 20,
 	},
 	[Skill.FORCE_DE_ZEUS]: {
 		id: Skill.FORCE_DE_ZEUS,

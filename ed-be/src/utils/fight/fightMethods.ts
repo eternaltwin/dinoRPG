@@ -1698,6 +1698,15 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.FEU_DE_ST_ELME: {
+			// Only one environment active at a time
+			if (fightData.environment) {
+				return cancel();
+			}
+
+			activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
+			break;
+		}
 		case Skill.OURANOS: {
 			// Only one environment active at a time
 			if (fightData.environment) {
