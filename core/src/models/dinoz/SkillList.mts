@@ -1080,14 +1080,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	[Skill.ACCLAMATION_FRATERNELLE]: {
 		id: Skill.ACCLAMATION_FRATERNELLE,
 		name: 'AcclamationFraternelle',
-		type: SkillType.E,
-		energy: Energy.E25,
+		type: SkillType.A,
+		energy: Energy.E20,
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12403],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 6,
+		probability: 15,
 	},
 	[Skill.POING_DE_FEU]: {
 		id: Skill.POING_DE_FEU,

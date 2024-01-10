@@ -1869,6 +1869,19 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.ACCLAMATION_FRATERNELLE: {
+			// Increase energy regen for all allies
+			getAllies(fightData, fighter).forEach((ally) => {
+				ally.stats.special.energyRecovery *= 1.3;
+
+				// Add gain energy step
+				fightData.steps.push({
+					action: 'gainEnergy',
+					fighter: stepFighter(ally),
+				});
+			});
+			break;
+		}
 		case Skill.EXTENUATION: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
