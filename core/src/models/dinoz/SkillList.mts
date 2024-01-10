@@ -4353,14 +4353,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.REINE_DE_LA_RUCHE,
 		name: 'ReineDeLaRuche',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51405, 51311, 61121],
 		raceId: [raceList.SOUFFLET.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.BIG_MAMA]: {
 		id: Skill.BIG_MAMA,

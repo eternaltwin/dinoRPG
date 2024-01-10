@@ -1867,6 +1867,26 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.REINE_DE_LA_RUCHE: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				// Set energy to 0
+				opponent.energy = 0;
+
+				// Add reduce energy step
+				fightData.steps.push({
+					action: 'reduceEnergy',
+					fighter: stepFighter(opponent),
+				});
+			});
+			break;
+		}
 		case Skill.QUETZACOATL: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {
