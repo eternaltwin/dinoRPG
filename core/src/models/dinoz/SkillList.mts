@@ -4417,14 +4417,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.BALEINE_BLANCHE,
 		name: 'BaleineBlanche',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41305, 31404],
 		raceId: [raceList.WINKS.raceId, raceList.WINKS_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	}
 };

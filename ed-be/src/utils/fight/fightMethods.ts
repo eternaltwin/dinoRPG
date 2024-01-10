@@ -1867,6 +1867,20 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.BALEINE_BLANCHE: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getAllies(fightData, fighter).forEach((ally) => {
+				// Increase WATER defense
+				ally.stats.defense[ElementType.WATER] += 20;
+			});
+			break;
+		}
 		case Skill.LEVIATHAN: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {
