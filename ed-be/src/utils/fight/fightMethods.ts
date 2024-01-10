@@ -2344,6 +2344,27 @@ export const checkDeaths = (
 				action: 'death',
 				fighter: stepFighter(fighter),
 			});
+
+			// Phoenix Feather
+			if (fighter.skills.some((skill) => skill.id === Skill.PLUMES_DE_PHOENIX)) {
+				// Add skillActivate step
+				fightData.steps.push({
+					action: 'skillActivate',
+					dinoz: stepFighter(fighter),
+					skill: Skill.PLUMES_DE_PHOENIX,
+					energy: 0,
+				});
+
+				// Heal to 12 HP
+				heal(fightData, fighter, 12 - fighter.hp);
+
+				// Increase other fighters time by 10 * speed
+				getFighters(fightData).forEach((f) => {
+					if (f.id !== fighter.id) {
+						f.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
+					}
+				});
+			}
 		}
 
 		// Count alive fighters
