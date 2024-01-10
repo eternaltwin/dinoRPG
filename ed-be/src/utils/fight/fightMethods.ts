@@ -1867,6 +1867,29 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.FUJIN: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			// Cancel if an ally used FUJIN already
+			const allies = getAllies(fightData, fighter);
+
+			if (allies.some((ally) => ally.status.includes(FighterStatus.USED_FUJIN))) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			allies.forEach((ally) => {
+				// Fasten
+				ally.stats.speed.global *= 0.5;
+			});
+
+			addStatus(fightData, fighter, FighterStatus.USED_FUJIN);
+			break;
+		}
 		case Skill.TOTEM_ANCESTRAL_AEROPORTE: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

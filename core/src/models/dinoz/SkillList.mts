@@ -3778,15 +3778,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.FUJIN,
 		name: 'Fujin',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E80,
 		element: [ElementType.AIR, ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41308, 51301, 61121],
 		raceId: [raceList.NUAGOZ.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.MEDITATION_TRANCHANTE]: {
 		id: Skill.MEDITATION_TRANCHANTE,
