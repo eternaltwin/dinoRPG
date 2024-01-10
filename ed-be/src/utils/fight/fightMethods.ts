@@ -205,6 +205,8 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 
 	if (!skills.length) return null;
 
+	const hasOracle = fighter.skills.some((skill) => skill.id === Skill.ORACLE);
+
 	// Go through each event and roll the dice
 	for (let i = 0; i < skills.length; i++) {
 		const skill = skills[i];
@@ -212,7 +214,14 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 		// Skip if not enough energy
 		if (fighter.energy < skill.energy) continue;
 
-		if (randomBetween(1, 100) < (skill.probability ?? 0)) {
+		let probability = skill.probability ?? 0;
+
+		if (skill.type === SkillType.I && hasOracle) {
+			// x2 probability if Skill.ORACLE
+			probability *= 2;
+		}
+
+		if (randomBetween(1, 100) < probability) {
 			return skill;
 		}
 	}
