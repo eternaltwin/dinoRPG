@@ -1538,15 +1538,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.BENEDICTION_DES_FEES,
 		name: 'BenedictionDesFees',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11302, 21301, 61121],
 		raceId: [raceList.GORILLOZ.raceId, raceList.GORILLOZ_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.CHOC]: {
 		id: Skill.CHOC,

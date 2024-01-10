@@ -1867,6 +1867,20 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.BENEDICTION_DES_FEES: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				// Increase time
+				opponent.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
+			});
+			break;
+		}
 		case Skill.YGGDRASIL: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {
