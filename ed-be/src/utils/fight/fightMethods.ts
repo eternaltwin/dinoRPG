@@ -1867,6 +1867,31 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.SECOUSSE: {
+			// Get non flying enemies
+			const opponents = getOpponents(fightData, fighter)
+				.filter((opponent) => !opponent.status.includes(FighterStatus.FLYING));
+
+			opponents.forEach((opponent) => {
+				// Check if opponent evaded
+				if (evadedSkill(opponent, skill)) {
+					// Add evade step
+					fightData.steps.push({
+						action: 'evade',
+						fighter: stepFighter(opponent),
+					});
+
+					return;
+				}
+
+				// Get damage
+				const { damage, elements } = getDamage(fighter, opponent, Skill.SECOUSSE);
+
+				// Register the hit
+				registerHit(fightData, fighter, [opponent], damage, elements, Skill.SECOUSSE);
+			});
+			break;
+		}
 		case Skill.HERCOLUBUS: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

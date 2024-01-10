@@ -44,6 +44,11 @@ const getDamage = (
 				attack = 6 * attacker.stats.base[ElementType.FIRE] + 6 * attacker.stats.base[ElementType.LIGHTNING];
 				break;
 			}
+			case Skill.SECOUSSE: {
+				attackElements = [ElementType.WOOD, ElementType.AIR];
+				attack = 4 * attacker.stats.base[ElementType.WOOD] + 4 * attacker.stats.base[ElementType.AIR];
+				break;
+			}
 			case Skill.HERCOLUBUS: {
 				attackElements = [
 					ElementType.FIRE,

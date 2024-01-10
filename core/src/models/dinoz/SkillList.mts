@@ -3693,7 +3693,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51310, 21304, 61119],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 2,
+		probability: 20
 	},
 	[Skill.TROU_NOIR]: {
 		id: Skill.TROU_NOIR,
