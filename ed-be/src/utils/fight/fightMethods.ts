@@ -936,6 +936,31 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.BOUCLIER_DINOZ: {
+				// Get allies dinoz
+				const allies = getAllies(fightData, fighter, ['dinoz']);
+
+				if (allies.length < 2) {
+					return cancel();
+				}
+
+				// Get lowest HP ally
+				const lowestHpAlly = allies.reduce((acc, ally) => {
+					if (ally.id !== fighter.id && (!acc || ally.hp < acc.hp)) {
+						return ally;
+					}
+
+					return acc;
+				}, null as DetailedFighter | null);
+
+				if (!lowestHpAlly) {
+					throw new Error('No lowest HP ally found');
+				}
+
+				// Protect lowest HP ally
+				fighter.protecting = lowestHpAlly.id;
+				break;
+			}
 			case Skill.COURBATURES: {
 				const opponent = getRandomOpponent(fightData, fighter);
 
@@ -2156,9 +2181,25 @@ const attack = (
 		attackers.push(...allies);
 	}
 
+	let realOpponent = opponent;
+
+	// Check if a dinoz is protecting the opponent
+	const protector = getOpponents(fightData, fighter).find((opponent) => opponent.protecting === opponent.id);
+
+	if (protector) {
+		realOpponent = protector;
+
+		// Add moveTo step
+		fightData.steps.push({
+			action: 'moveTo',
+			fighter: stepFighter(protector),
+			target: stepFighter(opponent),
+		});
+	}
+
 	for (const attacker of attackers) {
 		// Get damage
-		const damageAndElements = getDamage(attacker, opponent, skill);
+		const damageAndElements = getDamage(attacker, realOpponent, skill);
 		let { damage } = damageAndElements;
 		const { elements } = damageAndElements;
 
@@ -2166,7 +2207,7 @@ const attack = (
 		fightData.steps.push({
 			action: 'attemptHit',
 			fighter: stepFighter(attacker),
-			target: stepFighter(opponent),
+			target: stepFighter(realOpponent),
 		});
 
 		if (miss(attacker)) {
@@ -2179,43 +2220,51 @@ const attack = (
 			});
 		} else {
 			// Check if opponent evaded
-			if (evade(opponent)) {
+			if (evade(realOpponent)) {
 				damage = 0;
 
 				// Add evade step
 				fightData.steps.push({
 					action: 'evade',
-					fighter: stepFighter(opponent),
+					fighter: stepFighter(realOpponent),
 				});
 			}
 		}
 
 		// Register hit if damage was done
 		if (damage) {
-			registerHit(fightData, attacker, [opponent], damage, elements, skill);
+			registerHit(fightData, attacker, [realOpponent], damage, elements, skill);
 
 			// Poison fighter if opponent has Skill.AURA_PUANTE
-			if (opponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
-				poison(fightData, attacker, opponent, Skill.AURA_PUANTE);
+			if (realOpponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
+				poison(fightData, attacker, realOpponent, Skill.AURA_PUANTE);
 			}
 
 			// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
 			if (attacker.skills.find((skill) => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
-				poison(fightData, opponent, attacker, Skill.GRIFFES_EMPOISONNEES);
+				poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES);
 			}
 
 			// Torch damage
 			if (attacker.status.includes(FighterStatus.TORCHED)) {
 				const damage = attacker.stats.special.torchDamage;
 
-				registerHit(fightData, attacker, [opponent], damage, [ElementType.FIRE], Skill.TORCHE);
+				registerHit(fightData, attacker, [realOpponent], damage, [ElementType.FIRE], Skill.TORCHE);
 			}
 
 			// ACUPUNCTURE damage
-			if (opponent.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
-				registerHit(fightData, opponent, [attacker], 1, [], Skill.ACUPUNCTURE);
+			if (realOpponent.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
+				registerHit(fightData, realOpponent, [attacker], 1, [], Skill.ACUPUNCTURE);
 			}
 		}
+	}
+
+	if (protector) {
+		// Add moveBack step
+		fightData.steps.push({
+			action: 'moveBack',
+			fighter: stepFighter(protector),
+		});
 	}
 
 	// Change fighter element
