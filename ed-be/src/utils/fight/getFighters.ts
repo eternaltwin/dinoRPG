@@ -365,6 +365,12 @@ const handleSkills = (
 		team[Skill.GARDE_FORESTIER] = true;
 	}
 
+	if (fighterHas[Skill.FORCE_CONTROL]) {
+		if (fighter.minDamage < 10) {
+			fighter.minDamage = 10;
+		}
+	}
+
 	// WATER
 	if (fighterHas[Skill.PERCEPTION]) {
 		fighter.canHitIntangible = true;

@@ -1694,8 +1694,8 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	[Skill.FORCE_CONTROL]: {
 		id: Skill.FORCE_CONTROL,
 		name: 'ForceControl',
-		type: SkillType.E,
-		energy: Energy.E20,
+		type: SkillType.P,
+		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.ETHER,
