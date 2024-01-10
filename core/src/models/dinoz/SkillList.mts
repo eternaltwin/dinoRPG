@@ -1804,7 +1804,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.SHARIGNAN,
 		name: 'Sharignan',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.ETHER,

@@ -1301,6 +1301,33 @@ const activateEvent = (
 		fighter.items.splice(itemIndex, 1);
 	}
 
+	if ('id' in event &&  fighter.type !== 'boss') {
+		// Get opponents with SHARIGNAN
+		const opponentsWithSharingan = getOpponents(fightData, fighter)
+			.filter((opponent) => opponent.skills.some((skill) => skill.id === Skill.SHARIGNAN));
+
+		opponentsWithSharingan.forEach((opponent) => {
+			// Abort if opponent already has the skill
+			if (opponent.skills.some((skill) => skill.id === event.id)) return;
+
+			// 20% chance to copy the skill
+			const random = Math.random();
+
+			if (random < 0.2) {
+				// Add skillActivate step
+				fightData.steps.push({
+					action: 'skillActivate',
+					dinoz: stepFighter(opponent),
+					skill: Skill.SHARIGNAN,
+					energy: 0,
+				});
+
+				// Add skill to opponent
+				opponent.skills.push({ ...event });
+			}
+		});
+	};
+
 	return true;
 };
 
@@ -1944,6 +1971,33 @@ const activateSkill = (
 
 	// Consume energy
 	fighter.energy -= skill.energy;
+
+	if (fighter.type !== 'boss') {
+		// Get opponents with SHARIGNAN
+		const opponentsWithSharingan = getOpponents(fightData, fighter)
+			.filter((opponent) => opponent.skills.some((skill) => skill.id === Skill.SHARIGNAN));
+
+		opponentsWithSharingan.forEach((opponent) => {
+			// Abort if opponent already has the skill
+			if (opponent.skills.some((s) => s.id === skill.id)) return;
+
+			// 20% chance to copy the skill
+			const random = Math.random();
+
+			if (random < 0.2) {
+				// Add skillActivate step
+				fightData.steps.push({
+					action: 'skillActivate',
+					dinoz: stepFighter(opponent),
+					skill: Skill.SHARIGNAN,
+					energy: 0,
+				});
+
+				// Add skill to opponent
+				opponent.skills.push({ ...skill });
+			}
+		});
+	};
 
 	return true;
 };
