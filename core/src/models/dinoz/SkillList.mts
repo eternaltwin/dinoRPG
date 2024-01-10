@@ -4307,14 +4307,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.BIG_MAMA,
 		name: 'BigMama',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WOOD, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [12502, 22504, 61121],
 		raceId: [raceList.TRICERAGNON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 6,
+		probability: 15,
 	},
 	[Skill.YGGDRASIL]: {
 		id: Skill.YGGDRASIL,

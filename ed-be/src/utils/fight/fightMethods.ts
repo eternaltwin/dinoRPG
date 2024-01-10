@@ -1636,11 +1636,29 @@ const activateSkill = (
 				});
 			}
 		}
-		default:
-			// Remove last step
-			fightData.steps.pop();
+		case Skill.BIG_MAMA: {
+			// Cancel if no invocation left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
 
-			return false;
+			fighter.invocations -= 1;
+
+			getFighters(fightData).forEach((f) => {
+				// Empty everyone's energy
+				f.energy = 0;
+
+				// Alter opponents statuses
+				if (f.attacker !== fighter.attacker) {
+					removeStatus(fightData, f, FighterStatus.FLYING, FighterStatus.INTANGIBLE);
+					addStatus(fightData, f, FighterStatus.STUNNED);
+				}
+			});
+			break;
+		}
+		default:
+			console.warn('Unknown skill', skill.id);
+			return cancel();
 	}
 
 	// Consume energy

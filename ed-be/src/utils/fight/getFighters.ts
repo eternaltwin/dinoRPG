@@ -143,6 +143,7 @@ export const initializeDinoz = (
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
 		costume,
+		invocations: 1,
 	};
 
 	handleSkills(team, fighter);
@@ -289,6 +290,7 @@ export const initializeMonster = (
 		},
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
+		invocations: 0,
 	};
 };
 
