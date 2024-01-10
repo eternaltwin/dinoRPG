@@ -1869,6 +1869,20 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.EXTENUATION: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Reduce energy recovery by 25%
+			opponent.stats.special.energyRecovery *= 0.75;
+
+			// Add reduce energy step
+			fightData.steps.push({
+				action: 'reduceEnergy',
+				fighter: stepFighter(opponent),
+			});
+			break;
+		}
 		case Skill.AMAZONIE: {
 			// Only one environment active at a time
 			if (fightData.environment) {
