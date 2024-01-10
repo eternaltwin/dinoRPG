@@ -1869,6 +1869,21 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.RECEPTACLE_ROCHEUX: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Remove wood sphere skills
+			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.WOOD));
+
+			// Add lose sphere step
+			fightData.steps.push({
+				action: 'loseSphere',
+				fighter: stepFighter(opponent),
+				element: ElementType.WOOD,
+			});
+			break;
+		}
 		case Skill.ACCLAMATION_FRATERNELLE: {
 			// Increase energy regen for all allies
 			getAllies(fightData, fighter).forEach((ally) => {

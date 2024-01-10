@@ -1057,13 +1057,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.RECEPTACLE_ROCHEUX,
 		name: 'ReceptacleRocheux',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12402],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 15,
 	},
 	[Skill.PLUMES_DE_PHOENIX]: {
 		id: Skill.PLUMES_DE_PHOENIX,
