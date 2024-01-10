@@ -1041,13 +1041,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.PAYS_DE_CENDRE,
 		name: 'PaysDeCendre',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12401],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 20,
 	},
 	[Skill.RECEPTACLE_ROCHEUX]: {
 		id: Skill.RECEPTACLE_ROCHEUX,

@@ -961,6 +961,15 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.PAYS_DE_CENDRE: {
+				// Only one environment active at a time
+				if (fightData.environment) {
+					return cancel();
+				}
+
+				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
+				break;
+			}
 			case Skill.BOUCLIER_DINOZ: {
 				// Get allies dinoz
 				const allies = getAllies(fightData, fighter, ['dinoz']);
