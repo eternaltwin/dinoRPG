@@ -206,7 +206,7 @@ export const initializeMonster = (
 	existingMonsters: Record<string, number>,
 	teamIndex: number,
 	monster: MonsterFiche,
-) => {
+): DetailedFighter => {
 	existingMonsters[monster.name] = (existingMonsters[monster.name] ?? 0) + 1;
 
 	return {

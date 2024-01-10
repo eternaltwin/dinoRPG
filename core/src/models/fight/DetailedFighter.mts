@@ -67,6 +67,7 @@ export interface DetailedFighter {
   name: string;
   level: number;
   type: FighterType;
+	master?: number;
   attacker: boolean;
 	escaped?: boolean;
   // Raw stats

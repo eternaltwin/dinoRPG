@@ -3996,13 +3996,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.MUTINERIE,
 		name: 'Mutinerie',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E40,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52405],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 10,
+		probability: 10,
 	},
 	[Skill.MAINS_COLLANTES]: {
 		id: Skill.MAINS_COLLANTES,

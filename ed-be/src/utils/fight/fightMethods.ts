@@ -20,20 +20,15 @@ import weightedRandom from "./weightedRandom.js";
 
 export const getFighters = (
 	fightData: DetailedFight,
-	dinozOnly?: boolean,
-	monsterOnly?: boolean,
+	limitTypes?: FighterType[],
 ) => {
 	let fighters = [];
 
 	// Remove dead and escaped fighters
 	fighters = fightData.fighters.filter((f) => f.hp > 0 && !f.escaped);
 
-	if (dinozOnly) {
-		fighters = fighters.filter((f) => f.type === 'dinoz');
-	}
-
-	if (monsterOnly) {
-		fighters = fighters.filter((f) => f.type === 'monster');
+	if (limitTypes?.length) {
+		fighters = fighters.filter((f) => limitTypes.includes(f.type));
 	}
 
 	return fighters;
@@ -42,20 +37,15 @@ export const getFighters = (
 export const getAllies = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	dinozOnly?: boolean,
-	monsterOnly?: boolean,
+	limitTypes?: FighterType[],
 ) => {
 	let allies = [];
 
 	// Remove dead and escaped fighters and other team
 	allies = fightData.fighters.filter((f) => f.hp > 0 && !f.escaped && f.attacker === fighter.attacker);
 
-	if (dinozOnly) {
-		allies = allies.filter((f) => f.type === 'dinoz');
-	}
-
-	if (monsterOnly) {
-		allies = allies.filter((f) => f.type === 'monster');
+	if (limitTypes?.length) {
+		allies = allies.filter((f) => limitTypes.includes(f.type));
 	}
 
 	return allies;
@@ -593,6 +583,8 @@ const createMonster = (
 		monsterData,
 	);
 
+	monster.master = fighter.id;
+
 	// Adjust time
 	monster.time = fighter.time;
 
@@ -738,6 +730,7 @@ const activateEvent = (
 				clone.level = 1;
 				clone.hp = 1;
 				clone.type = 'clone';
+				clone.master = fighter.id;
 
 				// Set the clone's time to the fighter's time
 				clone.time = fighter.time;
@@ -888,6 +881,21 @@ const activateEvent = (
 
 				// Add status
 				addStatus(fightData, opponent, FighterStatus.NO_DODGE);
+				break;
+			}
+			case Skill.MUTINERIE: {
+				// Get clones
+				const clones = getFighters(fightData, ['clone']);
+
+				// Cancel if no clones
+				if (!clones.length) {
+					return cancel();
+				}
+
+				clones.forEach((clone) => {
+					// Change team
+					clone.attacker = !clone.attacker;
+				});
 				break;
 			}
 			default:
