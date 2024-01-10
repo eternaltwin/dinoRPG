@@ -1667,13 +1667,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.LANCER_DE_ROCHE,
 		name: 'LancerDeRoche',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22201],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 10,
 	},
 	[Skill.COURBATURES]: {
 		id: Skill.COURBATURES,

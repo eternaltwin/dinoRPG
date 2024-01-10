@@ -936,6 +936,32 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.COURBATURES: {
+				const opponent = getRandomOpponent(fightData, fighter);
+
+				// Reduce max energy by 30%
+				let newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
+
+				// Don't go below 100 if Item.ENCHANTED_STEROID
+				if (opponent.items.some((item) => item.itemId === Item.ENCHANTED_STEROID)) {
+					newMaxEnergy = Math.max(newMaxEnergy, 100);
+				}
+
+				// Cancel if no change
+				if (newMaxEnergy === opponent.maxEnergy) {
+					return cancel();
+				}
+
+				opponent.maxEnergy = newMaxEnergy;
+				opponent.energy = Math.min(opponent.energy, opponent.maxEnergy);
+
+				// Add reduce energy step
+				fightData.steps.push({
+					action: 'reduceEnergy',
+					fighter: stepFighter(opponent),
+				});
+				break;
+			}
 			case Skill.BERSERK: {
 				// Remove all skills and events
 				fighter.skills = [];
@@ -977,32 +1003,6 @@ const activateEvent = (
 				fightData.steps.push({
 					action: 'reduceEnergy',
 					fighter: stepFighter(fighter),
-				});
-				break;
-			}
-			case Skill.COURBATURES: {
-				const opponent = getRandomOpponent(fightData, fighter);
-
-				// Reduce max energy by 30%
-				let newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
-
-				// Don't go below 100 if Item.ENCHANTED_STEROID
-				if (opponent.items.some((item) => item.itemId === Item.ENCHANTED_STEROID)) {
-					newMaxEnergy = Math.max(newMaxEnergy, 100);
-				}
-
-				// Cancel if no change
-				if (newMaxEnergy === opponent.maxEnergy) {
-					return cancel();
-				}
-
-				opponent.maxEnergy = newMaxEnergy;
-				opponent.energy = Math.min(opponent.energy, opponent.maxEnergy);
-
-				// Add reduce energy step
-				fightData.steps.push({
-					action: 'reduceEnergy',
-					fighter: stepFighter(opponent),
 				});
 				break;
 			}
@@ -1505,6 +1505,7 @@ const activateSkill = (
 		// WATER
 		case Skill.CANON_A_EAU:
 		// WOOD
+		case Skill.LANCER_DE_ROCHE:
 		case Skill.LANCEUR_DE_GLAND: {
 			targetSingleOpponent(fightData, fighter, skill);
 			break;
