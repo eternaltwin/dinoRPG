@@ -500,6 +500,17 @@ const registerHit = (
 				});
 			}
 		}
+
+		// Skill.SOURCE_DE_VIE
+		if (actualDamage[opponent.id] && opponent.skills.some((skill) => skill.id === Skill.SOURCE_DE_VIE)) {
+			// 1/6 Chance to steal 5% HP
+			if (randomBetween(0, 5) === 0) {
+				const hpStolen = Math.round(opponent.hp * 0.05);
+
+				registerHit(fightData, opponent, [fighter], hpStolen);
+				heal(fightData, opponent, hpStolen);
+			}
+		}
 	});
 
 	if (!skill) {
