@@ -1815,14 +1815,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	[Skill.AMAZONIE]: {
 		id: Skill.AMAZONIE,
 		name: 'Amazonie',
-		type: SkillType.E,
-		energy: Energy.E50,
+		type: SkillType.A,
+		energy: Energy.E40,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22403],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 20,
 	},
 	[Skill.RECEPTACLE_AQUEUX]: {
 		id: Skill.RECEPTACLE_AQUEUX,

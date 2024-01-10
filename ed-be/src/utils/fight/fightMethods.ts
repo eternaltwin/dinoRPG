@@ -1768,6 +1768,15 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.AMAZONIE: {
+			// Only one environment active at a time
+			if (fightData.environment) {
+				return cancel();
+			}
+
+			activateEnvironment(fightData, fighter, Skill.AMAZONIE);
+			break;
+		}
 		case Skill.RECEPTACLE_AQUEUX: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
