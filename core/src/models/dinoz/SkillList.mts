@@ -2484,13 +2484,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.ABYSSE,
 		name: 'Abysse',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32303],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 20,
 	},
 	[Skill.BANNI_DES_DIEUX]: {
 		id: Skill.BANNI_DES_DIEUX,

@@ -1729,6 +1729,15 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.ABYSSE: {
+			// Only one environment active at a time
+			if (fightData.environment) {
+				return cancel();
+			}
+
+			activateEnvironment(fightData, fighter, Skill.ABYSSE);
+			break;
+		}
 		case Skill.RECEPTACLE_TESLA: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
