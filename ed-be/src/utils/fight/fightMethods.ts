@@ -905,6 +905,13 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.MORSURE_DU_SOLEIL: {
+				// Get random opponent
+				const opponent = getRandomOpponent(fightData, fighter);
+
+				addStatus(fightData, opponent, FighterStatus.DAZZLED);
+				break;
+			}
 			case Skill.CRAMPE_CHRONIQUE: {
 				fighter.energy -= 10;
 				fighter.stats.special.energyRecovery *= 0.85;
@@ -1868,6 +1875,16 @@ const evade = (opponent: DetailedFighter) => {
 	return random < (opponent.stats.special.evasion / 100);
 };
 
+const miss = (fighter: DetailedFighter) => {
+	// No miss if not DAZZLED
+	if (!fighter.status.includes(FighterStatus.DAZZLED)) return false;
+
+	const random = Math.random();
+
+	// 30% chance to miss
+	return random < 0.3;
+};
+
 const poison = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
@@ -1974,8 +1991,6 @@ const attack = (
 		let { damage } = damageAndElements;
 		const { elements } = damageAndElements;
 
-		const evaded = evade(opponent);
-
 		// Add attempt step
 		fightData.steps.push({
 			action: 'attemptHit',
@@ -1983,15 +1998,25 @@ const attack = (
 			target: stepFighter(opponent),
 		});
 
-		// Check if opponent evaded
-		if (evaded) {
+		if (miss(attacker)) {
 			damage = 0;
 
-			// Add evade step
+			// Add miss step
 			fightData.steps.push({
-				action: 'evade',
-				fighter: stepFighter(opponent),
+				action: 'miss',
+				fighter: stepFighter(attacker),
 			});
+		} else {
+			// Check if opponent evaded
+			if (evade(opponent)) {
+				damage = 0;
+
+				// Add evade step
+				fightData.steps.push({
+					action: 'evade',
+					fighter: stepFighter(opponent),
+				});
+			}
 		}
 
 		// Register hit if damage was done

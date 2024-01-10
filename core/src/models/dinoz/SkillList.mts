@@ -3159,13 +3159,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.MORSURE_DU_SOLEIL,
 		name: 'MorsureDuSoleil',
 		type: SkillType.E,
-		energy: Energy.E25,
+		energy: Energy.E30,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42201],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 15
 	},
 	[Skill.CRAMPE_CHRONIQUE]: {
 		id: Skill.CRAMPE_CHRONIQUE,

@@ -143,6 +143,10 @@ export interface LoseSphereStep {
 	fighter: StepFighter;
 	element: ElementType;
 }
+export interface MissStep {
+  action: 'miss';
+  fighter: StepFighter;
+}
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
@@ -151,4 +155,4 @@ export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep
 | ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
 | RemoveCostumeStep | HypnotizeStep | EndHypnosisStep
-| GainEnergyStep | ReduceEnergyStep | LoseSphereStep;
+| GainEnergyStep | ReduceEnergyStep | LoseSphereStep | MissStep;
