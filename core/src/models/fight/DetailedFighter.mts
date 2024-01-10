@@ -119,6 +119,7 @@ export interface DetailedFighter {
   canHitIntangible?: boolean,
   // Skill bonuses
   skillElementalBonus: Record<ElementType, number>,
+	nextSkill?: DinozSkillFiche,
   // Assault bonuses
   nextAssaultBonus: number,
   nextAssaultMultiplier: number,

@@ -976,14 +976,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	[Skill.CRI_DE_GUERRE]: {
 		id: Skill.CRI_DE_GUERRE,
 		name: 'CriDeGuerre',
-		type: SkillType.E,
-		energy: Energy.E50,
+		type: SkillType.A,
+		energy: Energy.E25,
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12202],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 10,
 	},
 	[Skill.FIEVRE_BRULANTE]: {
 		id: Skill.FIEVRE_BRULANTE,

@@ -2,6 +2,7 @@
 
 import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
+import { SkillLevel } from "@drpg/core/models/dinoz/SkillLevel";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
 import { BadFighterStatus, DetailedFighter, FighterStatus, FighterType, GoodFighterStatus } from "@drpg/core/models/fight/DetailedFighter";
@@ -1869,6 +1870,27 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.CRI_DE_GUERRE: {
+			// Find strongest Skill
+			const strongestSkill = fighter.skills.reduce((acc, skill) => {
+				if (skill.type !== SkillType.A) return acc;
+
+				if (SkillLevel[skill.id] > SkillLevel[acc.id]) {
+					return skill;
+				}
+
+				// Random if same level
+				if (SkillLevel[skill.id] === SkillLevel[acc.id]) {
+					return randomBetween(0, 1) ? skill : acc;
+				}
+
+				return acc;
+			}, fighter.skills[0]);
+
+			// Set next skill to strongest skill
+			fighter.nextSkill = strongestSkill;
+			break;
+		}
 		case Skill.RECEPTACLE_ROCHEUX: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
@@ -2114,6 +2136,11 @@ const activateSkill = (
 			}
 		});
 	};
+
+	// Reset next skill
+	if (skill.id === fighter.nextSkill?.id) {
+		fighter.nextSkill = undefined;
+	}
 
 	return true;
 };
@@ -2696,7 +2723,7 @@ export const playFighterTurn = (
 	}
 
 	// Skill activation
-	const possibleSkill = randomlyGetSkill(attacker);
+	const possibleSkill = attacker.nextSkill || randomlyGetSkill(attacker);
 	if (possibleSkill) {
 		// End turn if skill activated
 		if (activateSkill(fightData, possibleSkill)) {
