@@ -26,6 +26,7 @@ export enum FighterStatus {
 	// Skills
 	NO_DODGE,
 	COPY_HEAL,
+	NO_INVOCATION,
 	// Items
 	CURED,
 	BEER,

@@ -2504,7 +2504,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [32303],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 8,
+		probability: 10,
 	},
 	[Skill.TOURBILLON_MAGIQUE]: {
 		id: Skill.TOURBILLON_MAGIQUE,

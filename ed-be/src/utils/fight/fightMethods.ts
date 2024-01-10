@@ -248,6 +248,11 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 		}
 
 		if (randomBetween(1, 100) < probability) {
+			// Check if NO_INVOCATION
+			if (skill.type === SkillType.I && fighter.status.includes(FighterStatus.NO_INVOCATION)) {
+				return null;
+			}
+
 			return skill;
 		}
 	}
@@ -929,6 +934,14 @@ const activateEvent = (
 
 				// Set intangible
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
+				break;
+			}
+			case Skill.BANNI_DES_DIEUX: {
+				// Get random opponent
+				const opponent = getRandomOpponent(fightData, fighter);
+
+				// Disable invocations
+				addStatus(fightData, opponent, FighterStatus.NO_INVOCATION);
 				break;
 			}
 			case Skill.THERAPIE_DE_GROUPE: {
