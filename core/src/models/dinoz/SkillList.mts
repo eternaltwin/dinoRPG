@@ -2367,14 +2367,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.LEVIATHAN,
 		name: 'Leviathan',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WATER, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31406, 51206, 61121],
 		raceId: [raceList.MAHAMUTI.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,

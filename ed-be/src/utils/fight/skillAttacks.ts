@@ -82,6 +82,10 @@ export const SkillAttacks: Partial<Record<Skill, { power: number, element: Eleme
 		power: 10,
 		element: ElementType.WATER,
 	},
+	[Skill.LEVIATHAN]: {
+		power: 20,
+		element: ElementType.WATER,
+	},
 	[Skill.ONDINE]: {
 		power: 30,
 		element: ElementType.WATER,
