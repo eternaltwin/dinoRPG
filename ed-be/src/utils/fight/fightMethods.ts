@@ -799,6 +799,11 @@ const activateEvent = (
 				targetAllOpponents(fightData, fighter, event);
 				break;
 			}
+			case Skill.DOUCHE_ECOSSAISE:
+			case Skill.AIGUILLON: {
+				targetSingleOpponent(fightData, fighter, event);
+				break;
+			}
 			case Skill.COLERE: {
 				fighter.nextAssaultMultiplier *= 1.25;
 
@@ -827,10 +832,6 @@ const activateEvent = (
 				break;
 			}
 			// WATER
-			case Skill.DOUCHE_ECOSSAISE: {
-				targetSingleOpponent(fightData, fighter, event);
-				break;
-			}
 			case Skill.CLONE_AQUEUX: {
 				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
 

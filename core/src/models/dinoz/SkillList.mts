@@ -3386,13 +3386,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.AIGUILLON,
 		name: 'Aiguillon',
 		type: SkillType.E,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		priority: 1,
+		probability: 15
 	},
 	[Skill.ENVOL]: {
 		id: Skill.ENVOL,
