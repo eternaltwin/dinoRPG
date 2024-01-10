@@ -2472,7 +2472,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.CLEPTOMANE,
 		name: 'Cleptomane',
 		type: SkillType.P,
-		energy: Energy.NONE,
+		energy: Energy.E45,
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.ETHER,

@@ -67,13 +67,10 @@ export const getOpponents = (
 	return opponents;
 };
 
-export const getRandomOpponent = (
-	fightData: DetailedFight,
+const chooseRandomOpponent = (
 	fighter: DetailedFighter,
-	limitTypes?: FighterType[],
+	opponents: DetailedFighter[],
 ) => {
-	const opponents = getOpponents(fightData, fighter, limitTypes);
-
 	// Target lowest HP opponent if Skill.SANS_PITIE
 	if (fighter.skills.find((skill) => skill.id === Skill.SANS_PITIE)) {
 		let lowestHp = Infinity;
@@ -103,12 +100,41 @@ export const getRandomOpponent = (
 	}
 
 	if (!opponents.length) {
-		throw new Error('No opponent found');
+		return null;
 	}
 
 	const random = randomBetween(0, opponents.length - 1);
 
 	return opponents[random];
+}
+
+export const getLimitedRandomOpponent = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	limitTypes?: FighterType[],
+) => {
+	const opponents = getOpponents(fightData, fighter, limitTypes);
+
+	return chooseRandomOpponent(fighter, opponents);
+};
+
+export const getRandomOpponent = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+) => {
+	const opponents = getOpponents(fightData, fighter);
+
+	if (!opponents.length) {
+		throw new Error('No opponent found');
+	}
+
+	const randomOpponent = chooseRandomOpponent(fighter, opponents);
+
+	if (!randomOpponent) {
+		throw new Error('No opponent found');
+	}
+
+	return randomOpponent;
 };
 
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {

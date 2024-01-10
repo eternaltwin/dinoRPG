@@ -1,12 +1,12 @@
-import { Skill } from "@drpg/core/models/dinoz/SkillList";
+import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
+import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
 import { DetailedFighter, FighterResultFiche, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/FightConfiguration";
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { Item } from "@drpg/core/models/item/ItemList";
-import { addStatus, checkDeaths, getRandomOpponent, playFighterTurn, stepFighter } from "./fightMethods.js";
-import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
+import { addStatus, checkDeaths, getLimitedRandomOpponent, playFighterTurn, stepFighter } from "./fightMethods.js";
 
 export type DetailedFight = {
 	place: PlaceEnum,
@@ -76,21 +76,50 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
 		// Curse locker
 		if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
-			const opponent = getRandomOpponent(fightData, fighter, ['dinoz']);
+			const opponent = getLimitedRandomOpponent(fightData, fighter, ['dinoz']);
 
-			fightData.steps.push({
-				action: 'itemUse',
-				fighter: stepFighter(fighter),
-				itemId: Item.CURSE_LOCKER,
-			});
+			if (opponent) {
+				fightData.steps.push({
+					action: 'itemUse',
+					fighter: stepFighter(fighter),
+					itemId: Item.CURSE_LOCKER,
+				});
 
-			// Find weakest assault element
-			const weakestElement = +Object.entries(fighter.stats.assault).sort(([, a], [, b]) => a - b)[0][0] as ElementType;
+				// Find weakest assault element
+				const weakestElement = +Object.entries(fighter.stats.assault).sort(([, a], [, b]) => a - b)[0][0] as ElementType;
 
-			// Lock opponent for 3 turns
-			opponent.element = weakestElement;
-			opponent.locked = 4;
-			addStatus(fightData, opponent, FighterStatus.LOCKED);
+				// Lock opponent for 3 turns
+				opponent.element = weakestElement;
+				opponent.locked = 4;
+				addStatus(fightData, opponent, FighterStatus.LOCKED);
+			}
+		}
+
+		// Cleptomania
+		if (fighter.skills.some(skill => skill.id === Skill.CLEPTOMANE)) {
+			const opponent = getLimitedRandomOpponent(fightData, fighter, ['dinoz']);
+
+			if (opponent) {
+				const nonMagicItems = opponent.items.filter(item => !item.isRare);
+
+				// Remove non magic items
+				opponent.items = opponent.items.filter(item => item.isRare);
+
+				// Add skill step
+				fightData.steps.push({
+					action: 'skillActivate',
+					dinoz: stepFighter(fighter),
+					skill: Skill.CLEPTOMANE,
+					energy: skillList[Skill.CLEPTOMANE].energy,
+				});
+
+				// Add disabled items step
+				fightData.steps.push({
+					action: 'disabledItems',
+					fighter: stepFighter(opponent),
+					items: nonMagicItems.map(item => item.itemId),
+				});
+			}
 		}
 	});
 
