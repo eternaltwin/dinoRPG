@@ -121,6 +121,20 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				});
 			}
 		}
+
+		// JOKER
+		if (fighter.skills.some(skill => skill.id === Skill.JOKER)) {
+			// 50% chance to get 25% / -25% speed
+			fighter.stats.speed.global *= Math.random() > 0.5 ? 1.25 : 0.75;
+
+			// Add skill step
+			fightData.steps.push({
+				action: 'skillActivate',
+				dinoz: stepFighter(fighter),
+				skill: Skill.JOKER,
+				energy: 0,
+			});
+		}
 	});
 
 	let turn = 0;
