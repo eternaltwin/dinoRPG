@@ -1867,6 +1867,20 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.ARMURE_DIFRIT: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getAllies(fightData, fighter).forEach((ally) => {
+				// Increase FIRE defense
+				ally.stats.defense[ElementType.FIRE] += 20;
+			});
+			break;
+		}
 		case Skill.SALAMANDRE: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

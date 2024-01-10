@@ -892,15 +892,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.ARMURE_DIFRIT,
 		name: 'ArmureDIfrit',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.FIRE, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11307, 21311, 61121],
 		raceId: [raceList.PIGMOU.raceId, raceList.PIGMOU_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.BRAVE]: {
 		id: Skill.BRAVE,
