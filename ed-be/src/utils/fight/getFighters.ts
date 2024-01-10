@@ -9,6 +9,7 @@ import { SpecialStat, getSpecialStat } from "@drpg/core/utils/getSpecialStat";
 import { DinozToCalculateFight } from "../../business/fightService.js";
 import { TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
+import { ElementType } from "@drpg/core/models/enums/ElementType";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -81,26 +82,28 @@ export const initializeDinoz = (
 		maxEnergy: 100,
 		stats: {
 			base: {
-				[AssaultElement.AIR]: dinoz.nbrUpAir,
-				[AssaultElement.FIRE]: dinoz.nbrUpFire,
-				[AssaultElement.LIGHTNING]: dinoz.nbrUpLightning,
-				[AssaultElement.WATER]: dinoz.nbrUpWater,
-				[AssaultElement.WOOD]: dinoz.nbrUpWood,
+				[ElementType.AIR]: dinoz.nbrUpAir,
+				[ElementType.FIRE]: dinoz.nbrUpFire,
+				[ElementType.LIGHTNING]: dinoz.nbrUpLightning,
+				[ElementType.WATER]: dinoz.nbrUpWater,
+				[ElementType.WOOD]: dinoz.nbrUpWood,
+				[ElementType.VOID]: 0,
 			},
 			assault: {
-				[AssaultElement.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR).value,
-				[AssaultElement.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE).value,
-				[AssaultElement.LIGHTNING]: getAssaultStat(dinoz, skills, AssaultElement.LIGHTNING).value,
-				[AssaultElement.WATER]: getAssaultStat(dinoz, skills, AssaultElement.WATER).value,
-				[AssaultElement.WOOD]: getAssaultStat(dinoz, skills, AssaultElement.WOOD).value,
+				[ElementType.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR).value,
+				[ElementType.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE).value,
+				[ElementType.LIGHTNING]: getAssaultStat(dinoz, skills, AssaultElement.LIGHTNING).value,
+				[ElementType.WATER]: getAssaultStat(dinoz, skills, AssaultElement.WATER).value,
+				[ElementType.WOOD]: getAssaultStat(dinoz, skills, AssaultElement.WOOD).value,
+				[ElementType.VOID]: 0,
 			},
 			defense: {
-				[DefenseElement.AIR]: getDefenseStat(dinoz, skills, DefenseElement.AIR).value,
-				[DefenseElement.FIRE]: getDefenseStat(dinoz, skills, DefenseElement.FIRE).value,
-				[DefenseElement.LIGHTNING]: getDefenseStat(dinoz, skills, DefenseElement.LIGHTNING).value,
-				[DefenseElement.WATER]: getDefenseStat(dinoz, skills, DefenseElement.WATER).value,
-				[DefenseElement.WOOD]: getDefenseStat(dinoz, skills, DefenseElement.WOOD).value,
-				[DefenseElement.NEUTRAL]: getDefenseStat(dinoz, skills, DefenseElement.NEUTRAL).value,
+				[ElementType.AIR]: getDefenseStat(dinoz, skills, DefenseElement.AIR).value,
+				[ElementType.FIRE]: getDefenseStat(dinoz, skills, DefenseElement.FIRE).value,
+				[ElementType.LIGHTNING]: getDefenseStat(dinoz, skills, DefenseElement.LIGHTNING).value,
+				[ElementType.WATER]: getDefenseStat(dinoz, skills, DefenseElement.WATER).value,
+				[ElementType.WOOD]: getDefenseStat(dinoz, skills, DefenseElement.WOOD).value,
+				[ElementType.VOID]: getDefenseStat(dinoz, skills, DefenseElement.NEUTRAL).value,
 			},
 			special: {
 				[SpecialStat.INITIATIVE]: getSpecialStat(dinozWithItems, skills, SpecialStat.INITIATIVE)?.value,
@@ -115,11 +118,12 @@ export const initializeDinoz = (
 				[SpecialStat.ACID_BLOOD_DAMAGE]: getSpecialStat(dinozWithItems, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value,
 			},
 			speed: {
-				[AssaultElement.AIR]: 1,
-				[AssaultElement.FIRE]: 1,
-				[AssaultElement.LIGHTNING]: 1,
-				[AssaultElement.WATER]: 1,
-				[AssaultElement.WOOD]: 1,
+				[ElementType.AIR]: 1,
+				[ElementType.FIRE]: 1,
+				[ElementType.LIGHTNING]: 1,
+				[ElementType.WATER]: 1,
+				[ElementType.WOOD]: 1,
+				[ElementType.VOID]: 1,
 				global: 1,
 			},
 		},
@@ -130,15 +134,16 @@ export const initializeDinoz = (
 		status: [],
 		activeSkills: [],
 		elements: [],
-		element: AssaultElement.AIR,
+		element: ElementType.AIR,
 		minDamage: 1,
 		minAssaultDamage: 1,
 		skillElementalBonus: {
-			[AssaultElement.AIR]: 0,
-			[AssaultElement.FIRE]: 0,
-			[AssaultElement.LIGHTNING]: 0,
-			[AssaultElement.WATER]: 0,
-			[AssaultElement.WOOD]: 0,
+			[ElementType.AIR]: 0,
+			[ElementType.FIRE]: 0,
+			[ElementType.LIGHTNING]: 0,
+			[ElementType.WATER]: 0,
+			[ElementType.WOOD]: 0,
+			[ElementType.VOID]: 0,
 		},
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
@@ -180,11 +185,11 @@ export const initializeDinoz = (
 
 	// Handle elements (from highest to lowest)
 	const elements = [
-		{ element: AssaultElement.FIRE, value: fighter.stats.base[AssaultElement.FIRE] },
-		{ element: AssaultElement.WOOD, value: fighter.stats.base[AssaultElement.WOOD] },
-		{ element: AssaultElement.WATER, value: fighter.stats.base[AssaultElement.WATER] },
-		{ element: AssaultElement.LIGHTNING, value: fighter.stats.base[AssaultElement.LIGHTNING] },
-		{ element: AssaultElement.AIR, value: fighter.stats.base[AssaultElement.AIR] },
+		{ element: ElementType.FIRE, value: fighter.stats.base[ElementType.FIRE] },
+		{ element: ElementType.WOOD, value: fighter.stats.base[ElementType.WOOD] },
+		{ element: ElementType.WATER, value: fighter.stats.base[ElementType.WATER] },
+		{ element: ElementType.LIGHTNING, value: fighter.stats.base[ElementType.LIGHTNING] },
+		{ element: ElementType.AIR, value: fighter.stats.base[ElementType.AIR] },
 	];
 
 	// Order the elements from highest to lowest, random if equal
@@ -222,26 +227,28 @@ export const initializeMonster = (
 		maxEnergy: 100,
 		stats: {
 			base: {
-				[AssaultElement.AIR]: monster.elements.air,
-				[AssaultElement.FIRE]: monster.elements.fire,
-				[AssaultElement.LIGHTNING]: monster.elements.lightning,
-				[AssaultElement.WATER]: monster.elements.water,
-				[AssaultElement.WOOD]: monster.elements.wood,
+				[ElementType.AIR]: monster.elements.air,
+				[ElementType.FIRE]: monster.elements.fire,
+				[ElementType.LIGHTNING]: monster.elements.lightning,
+				[ElementType.WATER]: monster.elements.water,
+				[ElementType.WOOD]: monster.elements.wood,
+				[ElementType.VOID]: 0,
 			},
 			assault: {
-				[AssaultElement.AIR]: monster.elements.air + (monster.bonus_attack ?? 0),
-				[AssaultElement.FIRE]: monster.elements.fire + (monster.bonus_attack ?? 0),
-				[AssaultElement.LIGHTNING]: monster.elements.lightning + (monster.bonus_attack ?? 0),
-				[AssaultElement.WATER]: monster.elements.water + (monster.bonus_attack ?? 0),
-				[AssaultElement.WOOD]: monster.elements.wood + (monster.bonus_attack ?? 0),
+				[ElementType.AIR]: monster.elements.air + (monster.bonus_attack ?? 0),
+				[ElementType.FIRE]: monster.elements.fire + (monster.bonus_attack ?? 0),
+				[ElementType.LIGHTNING]: monster.elements.lightning + (monster.bonus_attack ?? 0),
+				[ElementType.WATER]: monster.elements.water + (monster.bonus_attack ?? 0),
+				[ElementType.WOOD]: monster.elements.wood + (monster.bonus_attack ?? 0),
+				[ElementType.VOID]: 0,
 			},
 			defense: {
-				[DefenseElement.AIR]: monster.elements.air + (monster.bonus_defense ?? 0),
-				[DefenseElement.FIRE]: monster.elements.fire + (monster.bonus_defense ?? 0),
-				[DefenseElement.LIGHTNING]: monster.elements.lightning + (monster.bonus_defense ?? 0),
-				[DefenseElement.WATER]: monster.elements.water + (monster.bonus_defense ?? 0),
-				[DefenseElement.WOOD]: monster.elements.wood + (monster.bonus_defense ?? 0),
-				[DefenseElement.NEUTRAL]: monster.bonus_defense ?? 0,
+				[ElementType.AIR]: monster.elements.air + (monster.bonus_defense ?? 0),
+				[ElementType.FIRE]: monster.elements.fire + (monster.bonus_defense ?? 0),
+				[ElementType.LIGHTNING]: monster.elements.lightning + (monster.bonus_defense ?? 0),
+				[ElementType.WATER]: monster.elements.water + (monster.bonus_defense ?? 0),
+				[ElementType.WOOD]: monster.elements.wood + (monster.bonus_defense ?? 0),
+				[ElementType.VOID]: monster.bonus_defense ?? 0,
 			},
 			special: {
 				[SpecialStat.INITIATIVE]: 0,
@@ -256,11 +263,12 @@ export const initializeMonster = (
 				[SpecialStat.ACID_BLOOD_DAMAGE]: 0,
 			},
 			speed: {
-				[AssaultElement.AIR]: 1,
-				[AssaultElement.FIRE]: 1,
-				[AssaultElement.LIGHTNING]: 1,
-				[AssaultElement.WATER]: 1,
-				[AssaultElement.WOOD]: 1,
+				[ElementType.AIR]: 1,
+				[ElementType.FIRE]: 1,
+				[ElementType.LIGHTNING]: 1,
+				[ElementType.WATER]: 1,
+				[ElementType.WOOD]: 1,
+				[ElementType.VOID]: 1,
 				global: 1,
 			},
 		},
@@ -272,21 +280,22 @@ export const initializeMonster = (
 		status: [],
 		activeSkills: [],
 		elements: [
-			AssaultElement.FIRE,
-			AssaultElement.WOOD,
-			AssaultElement.WATER,
-			AssaultElement.LIGHTNING,
-			AssaultElement.AIR,
+			ElementType.FIRE,
+			ElementType.WOOD,
+			ElementType.WATER,
+			ElementType.LIGHTNING,
+			ElementType.AIR,
 		],
-		element: AssaultElement.FIRE,
+		element: ElementType.FIRE,
 		minDamage: 1,
 		minAssaultDamage: 1,
 		skillElementalBonus: {
-			[AssaultElement.AIR]: 0,
-			[AssaultElement.FIRE]: 0,
-			[AssaultElement.LIGHTNING]: 0,
-			[AssaultElement.WATER]: 0,
-			[AssaultElement.WOOD]: 0,
+			[ElementType.AIR]: 0,
+			[ElementType.FIRE]: 0,
+			[ElementType.LIGHTNING]: 0,
+			[ElementType.WATER]: 0,
+			[ElementType.WOOD]: 0,
+			[ElementType.VOID]: 0,
 		},
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
@@ -304,19 +313,19 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 			fighter.stats.speed.global *= skill.effects[Stat.SPEED];
 		}
 		if (skill.effects?.[Stat.FIRE_SPEED]) {
-			fighter.stats.speed[AssaultElement.FIRE] *= skill.effects[Stat.FIRE_SPEED];
+			fighter.stats.speed[ElementType.FIRE] *= skill.effects[Stat.FIRE_SPEED];
 		}
 		if (skill.effects?.[Stat.WATER_SPEED]) {
-			fighter.stats.speed[AssaultElement.WATER] *= skill.effects[Stat.WATER_SPEED];
+			fighter.stats.speed[ElementType.WATER] *= skill.effects[Stat.WATER_SPEED];
 		}
 		if (skill.effects?.[Stat.WOOD_SPEED]) {
-			fighter.stats.speed[AssaultElement.WOOD] *= skill.effects[Stat.WOOD_SPEED];
+			fighter.stats.speed[ElementType.WOOD] *= skill.effects[Stat.WOOD_SPEED];
 		}
 		if (skill.effects?.[Stat.LIGHTNING_SPEED]) {
-			fighter.stats.speed[AssaultElement.LIGHTNING] *= skill.effects[Stat.LIGHTNING_SPEED];
+			fighter.stats.speed[ElementType.LIGHTNING] *= skill.effects[Stat.LIGHTNING_SPEED];
 		}
 		if (skill.effects?.[Stat.AIR_SPEED]) {
-			fighter.stats.speed[AssaultElement.AIR] *= skill.effects[Stat.AIR_SPEED];
+			fighter.stats.speed[ElementType.AIR] *= skill.effects[Stat.AIR_SPEED];
 		}
 
 		return acc;
@@ -354,7 +363,7 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter) => {
 	}
 
 	if (fighterHas[Skill.KARATE_SOUS_MARIN]) {
-		fighter.stats.base[AssaultElement.WATER] += 10;
+		fighter.skillElementalBonus[ElementType.WATER] += 10;
 	}
 
 	if (fighterHas[Skill.ACUPUNCTURE]) {
@@ -421,15 +430,15 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 
 		// FIRE
 		if (team[Skill.CHEF_DE_GUERRE]) {
-			fighter.stats.assault[AssaultElement.AIR] += 2;
-			fighter.stats.assault[AssaultElement.FIRE] += 2;
-			fighter.stats.assault[AssaultElement.WOOD] += 2;
-			fighter.stats.assault[AssaultElement.WATER] += 2;
-			fighter.stats.assault[AssaultElement.LIGHTNING] += 2;
+			fighter.stats.assault[ElementType.AIR] += 2;
+			fighter.stats.assault[ElementType.FIRE] += 2;
+			fighter.stats.assault[ElementType.WOOD] += 2;
+			fighter.stats.assault[ElementType.WATER] += 2;
+			fighter.stats.assault[ElementType.LIGHTNING] += 2;
 		}
 		// WOOD
 		if (team[Skill.GARDE_FORESTIER]) {
-			fighter.stats.defense[DefenseElement.WOOD] += 3;
+			fighter.stats.defense[ElementType.WOOD] += 3;
 		}
 		// LIGHTNING
 		if (team[Skill.ELECTROLYSE]) {
@@ -438,7 +447,7 @@ const getFighters = (team1: Team, team2: Team): DetailedFighter[] => {
 
 		// ITEMS
 		if (team1[Item.EMBER] || team2[Item.EMBER]) {
-			fighter.stats.assault[AssaultElement.FIRE] *= 1.3;
+			fighter.stats.assault[ElementType.FIRE] *= 1.3;
 		}
 		if (team1[Item.BEER] || team2[Item.BEER]) {
 			fighter.status.push(FighterStatus.BEER);

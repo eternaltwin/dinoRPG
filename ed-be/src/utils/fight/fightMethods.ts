@@ -2,6 +2,7 @@
 
 import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
+import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
 import { BadFighterStatus, DetailedFighter, FighterStatus, FighterType, GoodFighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { LeaveAnimation, StepFighter } from "@drpg/core/models/fight/FightStep";
@@ -9,8 +10,6 @@ import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
 import { Item, itemList } from "@drpg/core/models/item/ItemList";
-import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
-import { DefenseElement } from "@drpg/core/utils/getDefenseStat";
 import { ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 import { DetailedFight } from "./generateFight.js";
 import getDamage from "./getDamage.js";
@@ -239,7 +238,7 @@ const registerHit = (
 	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'activeSkills' | 'maxEnergy' | 'energy' | 'skills'>,
 	opponents: DetailedFighter[],
 	damage: number,
-	damageElements: AssaultElement[] = [],
+	damageElements: ElementType[] = [],
 	skill?: Skill,
 ) => {
 	const actualDamage: Record<number, number> = opponents.reduce((acc, opponent) => ({
@@ -401,7 +400,7 @@ const registerHit = (
 		}
 
 		// Remove costume if fire damage
-		if (opponent.costume && damage && damageElements.includes(AssaultElement.FIRE)) {
+		if (opponent.costume && damage && damageElements.includes(ElementType.FIRE)) {
 			// Take 3 damage
 			registerHit(fightData, opponent, [opponent], 3);
 
@@ -699,7 +698,7 @@ const activateEvent = (
 				break;
 			}
 			case Skill.FOCUS: {
-				fighter.nextAssaultBonus += fighter.stats.base[AssaultElement.LIGHTNING];
+				fighter.nextAssaultBonus += fighter.stats.base[ElementType.LIGHTNING];
 				break;
 			}
 			case Skill.PUREE_SALVATRICE: {
@@ -833,7 +832,7 @@ const activateEvent = (
 					if (f.id === fighter.id && f.type === fighter.type) return;
 
 					// Heal 1-wood HP
-					heal(fightData, f, randomBetween(1, fighter.stats.base[AssaultElement.WOOD]));
+					heal(fightData, f, randomBetween(1, fighter.stats.base[ElementType.WOOD]));
 				});
 				break;
 			}
@@ -960,7 +959,7 @@ const activateEvent = (
 				break;
 			}
 			case Item.REFRIGERATED_SHIELD: {
-				fighter.stats.defense[DefenseElement.FIRE] += 10;
+				fighter.stats.defense[ElementType.FIRE] += 10;
 				break;
 			}
 			case Item.GOBLIN_MERGUEZ: {
@@ -970,11 +969,13 @@ const activateEvent = (
 				}
 
 				// -10% all defenses
-				fighter.stats.defense[DefenseElement.FIRE] -= 10;
-				fighter.stats.defense[DefenseElement.WATER] -= 10;
-				fighter.stats.defense[DefenseElement.WOOD] -= 10;
-				fighter.stats.defense[DefenseElement.LIGHTNING] -= 10;
-				fighter.stats.defense[DefenseElement.AIR] -= 10;
+				fighter.stats.defense[ElementType.FIRE] -= 10;
+				fighter.stats.defense[ElementType.WATER] -= 10;
+				fighter.stats.defense[ElementType.WOOD] -= 10;
+				fighter.stats.defense[ElementType.LIGHTNING] -= 10;
+				fighter.stats.defense[ElementType.AIR] -= 10;
+				fighter.stats.defense[ElementType.VOID] -= 10;
+
 
 				// Regen 1-4 HP (weighted)
 				heal(fightData, fighter, weightedRandom([10, 7, 5, 3]));
@@ -1015,7 +1016,7 @@ const activateEvent = (
 					}
 
 					return acc;
-				}, AssaultElement.FIRE);
+				}, ElementType.FIRE);
 
 				// Set element
 				fighter.element = bestElement;
@@ -1113,7 +1114,7 @@ const activateEvent = (
 
 				// Make all fighters with WOOD < 10 fall asleep
 				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[AssaultElement.WOOD] < 10) {
+					if (f.stats.base[ElementType.WOOD] < 10) {
 						addStatus(fightData, f, FighterStatus.ASLEEP);
 					}
 				});
@@ -1129,7 +1130,7 @@ const activateEvent = (
 
 				// Add NO_EVENT, NO_SKILL to all fighters with FIRE < 10
 				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[AssaultElement.FIRE] < 10) {
+					if (f.stats.base[ElementType.FIRE] < 10) {
 						addStatus(fightData, f, FighterStatus.NO_EVENT);
 						addStatus(fightData, f, FighterStatus.NO_SKILL);
 					}
@@ -1146,7 +1147,7 @@ const activateEvent = (
 
 				// Add WEAKENED to all fighters with WATER < 10
 				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[AssaultElement.WATER] < 10) {
+					if (f.stats.base[ElementType.WATER] < 10) {
 						addStatus(fightData, f, FighterStatus.WEAKENED);
 					}
 				});
@@ -1162,7 +1163,7 @@ const activateEvent = (
 
 				// Add LIGHTNING_WEAKENED to all fighters with LIGHTNING < 10
 				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[AssaultElement.LIGHTNING] < 10) {
+					if (f.stats.base[ElementType.LIGHTNING] < 10) {
 						addStatus(fightData, f, FighterStatus.LIGHTNING_STRUCK);
 					}
 				});
@@ -1178,7 +1179,7 @@ const activateEvent = (
 
 				// Add AIR_SLOWED to all fighters with AIR < 10
 				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[AssaultElement.AIR] < 10) {
+					if (f.stats.base[ElementType.AIR] < 10) {
 						addStatus(fightData, f, FighterStatus.AIR_SLOWED);
 					}
 				});
@@ -1233,7 +1234,7 @@ export const addStatus = (
 	// Handle the immediate effect of the status
 	switch (status) {
 		case FighterStatus.TORCHED: {
-			fighter.stats.defense[AssaultElement.FIRE] += 10;
+			fighter.stats.defense[ElementType.FIRE] += 10;
 			break;
 		}
 		case FighterStatus.SLOWED: {
@@ -1253,11 +1254,11 @@ export const addStatus = (
 			}
 		}
 		case FighterStatus.BLESSED: {
-			fighter.stats.assault[AssaultElement.AIR] += 3;
-			fighter.stats.assault[AssaultElement.FIRE] += 3;
-			fighter.stats.assault[AssaultElement.LIGHTNING] += 3;
-			fighter.stats.assault[AssaultElement.WATER] += 3;
-			fighter.stats.assault[AssaultElement.WOOD] += 3;
+			fighter.stats.assault[ElementType.AIR] += 3;
+			fighter.stats.assault[ElementType.FIRE] += 3;
+			fighter.stats.assault[ElementType.LIGHTNING] += 3;
+			fighter.stats.assault[ElementType.WATER] += 3;
+			fighter.stats.assault[ElementType.WOOD] += 3;
 			break;
 		}
 		default: {
@@ -1295,7 +1296,7 @@ const removeStatus = (
 		// Reverse the effect of the status
 		switch (status) {
 			case FighterStatus.TORCHED: {
-				fighter.stats.defense[AssaultElement.FIRE] -= 10;
+				fighter.stats.defense[ElementType.FIRE] -= 10;
 				break;
 			}
 			case FighterStatus.SLOWED: {
@@ -1315,11 +1316,11 @@ const removeStatus = (
 				}
 			}
 			case FighterStatus.BLESSED: {
-				fighter.stats.assault[AssaultElement.AIR] -= 3;
-				fighter.stats.assault[AssaultElement.FIRE] -= 3;
-				fighter.stats.assault[AssaultElement.LIGHTNING] -= 3;
-				fighter.stats.assault[AssaultElement.WATER] -= 3;
-				fighter.stats.assault[AssaultElement.WOOD] -= 3;
+				fighter.stats.assault[ElementType.AIR] -= 3;
+				fighter.stats.assault[ElementType.FIRE] -= 3;
+				fighter.stats.assault[ElementType.LIGHTNING] -= 3;
+				fighter.stats.assault[ElementType.WATER] -= 3;
+				fighter.stats.assault[ElementType.WOOD] -= 3;
 				break;
 			}
 			default: {
@@ -1417,7 +1418,7 @@ const activateSkill = (
 		case Skill.DETONATION: {
 			// The fighter will not suicide with the skill, it just loses its roll
 			if (fighter.hp > 5) {
-				registerHit(fightData, fighter, [fighter], 5, [AssaultElement.FIRE], skill.id);
+				registerHit(fightData, fighter, [fighter], 5, [ElementType.FIRE], skill.id);
 				// Increase the time of all other fighters to make it look like the caster "gained" time
 				getFighters(fightData).forEach(f => {
 					if (f.id !== fighter.id) {
@@ -1430,7 +1431,7 @@ const activateSkill = (
 		// LIGHTNING
 		case Skill.AUBE_FEUILLUE: {
 			// Heal each fighter of the caster's group
-			const hpHealed = fighter.stats.base[AssaultElement.LIGHTNING] * 2 + fighter.stats.base[AssaultElement.WOOD] * 2;
+			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 2 + fighter.stats.base[ElementType.WOOD] * 2;
 			getAllies(fightData, fighter).forEach(ally => {
 				heal(fightData, ally, hpHealed);
 			})
@@ -1680,6 +1681,21 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.RECEPTABLE_THERMIQUE: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Remove fire sphere skills
+			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.FIRE));
+
+			// Add lose sphere step
+			fightData.steps.push({
+				action: 'loseSphere',
+				fighter: stepFighter(opponent),
+				element: ElementType.FIRE,
+			});
+			break;
+		}
 		case Skill.SYLPHIDES: {
 			// Get dinoz opponents
 			const opponents = getOpponents(fightData, fighter, ['dinoz']);
@@ -1926,7 +1942,7 @@ const attack = (
 			if (attacker.status.includes(FighterStatus.TORCHED)) {
 				const damage = attacker.stats.special.torchDamage ?? 0;
 
-				registerHit(fightData, attacker, [opponent], damage, [AssaultElement.FIRE], Skill.TORCHE);
+				registerHit(fightData, attacker, [opponent], damage, [ElementType.FIRE], Skill.TORCHE);
 			}
 
 			// ACUPUNCTURE damage
@@ -2194,7 +2210,7 @@ export const playFighterTurn = (
 						const damage = Math.round(f.hp * 0.05);
 
 						// Register the hit
-						registerHit(fightData, attacker, [f], damage, [AssaultElement.LIGHTNING], Skill.FEU_DE_ST_ELME);
+						registerHit(fightData, attacker, [f], damage, [ElementType.LIGHTNING], Skill.FEU_DE_ST_ELME);
 					}
 				});
 			}
@@ -2255,7 +2271,7 @@ export const playFighterTurn = (
 	// Check status of all fighters only if at least one unit of time has elapsed
 	// Torch damage
 	if (attacker.status.includes(FighterStatus.TORCHED)) {
-		registerHit(fightData, attacker, [attacker], 1, [AssaultElement.FIRE], Skill.TORCHE);
+		registerHit(fightData, attacker, [attacker], 1, [ElementType.FIRE], Skill.TORCHE);
 	}
 
 	// ACUPUNCTURE heal

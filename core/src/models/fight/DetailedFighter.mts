@@ -1,8 +1,7 @@
-import { AssaultElement } from "../../utils/getAssaultStat.mjs";
-import { DefenseElement } from "../../utils/getDefenseStat.mjs";
 import { SpecialStatUsedInFights } from "../../utils/getSpecialStat.mjs";
 import { DinozSkillFiche } from "../dinoz/DinozSkillFiche.mjs";
 import { Skill } from "../dinoz/SkillList.mjs";
+import { ElementType } from "../enums/ElementType.mjs";
 import { ItemFiche } from "../item/ItemFiche.mjs";
 import { MonsterFiche } from "./MonsterFiche.mjs";
 
@@ -77,11 +76,11 @@ export interface DetailedFighter {
   energy: number,
 	maxEnergy: number,
   stats: {
-    base: Record<AssaultElement, number>,
-    assault: Record<AssaultElement, number>,
-    defense: Record<DefenseElement, number>,
+    base: Record<ElementType, number>,
+    assault: Record<ElementType, number>,
+    defense: Record<ElementType, number>,
     special: Record<SpecialStatUsedInFights, number | undefined>,
-    speed: Record<AssaultElement | 'global', number>,
+    speed: Record<ElementType | 'global', number>,
   }
   // Items
   items: ItemFiche[];
@@ -106,8 +105,8 @@ export interface DetailedFighter {
     type: FighterType,
   },
   // Elements
-  elements: AssaultElement[],
-  element: AssaultElement,
+  elements: ElementType[],
+  element: ElementType,
 	locked?: number,
   // Min damage
   minDamage: number,
@@ -117,7 +116,7 @@ export interface DetailedFighter {
   // Intangible
   canHitIntangible?: boolean,
   // Skill bonuses
-  skillElementalBonus: Record<AssaultElement, number>,
+  skillElementalBonus: Record<ElementType, number>,
   // Assault bonuses
   nextAssaultBonus: number,
   nextAssaultMultiplier: number,

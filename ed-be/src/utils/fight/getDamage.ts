@@ -1,9 +1,9 @@
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
+import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
-import { AssaultElement } from "@drpg/core/utils/getAssaultStat";
+import { Item } from "@drpg/core/models/item/ItemList";
 import { ATTACK_GLOBAL_FACTOR } from "./fightConstants.js";
 import { SkillAttacks } from "./skillAttacks.js";
-import { Item } from "@drpg/core/models/item/ItemList";
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -16,7 +16,7 @@ const getDamage = (
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
-	let attackElements: AssaultElement[] = [];
+	let attackElements: ElementType[] = [];
 
 	// Calculate the attacker's attack score
 	if (skill) {
@@ -33,13 +33,13 @@ const getDamage = (
 			// Combustion inflicts a fixed amount, so the value is directly returned
 			case Skill.COMBUSTION: {
 				return {
-					damage: opponent.stats.base[AssaultElement.WOOD],
-					elements: [AssaultElement.WOOD],
+					damage: opponent.stats.base[ElementType.WOOD],
+					elements: [ElementType.WOOD],
 				};
 			}
 			case Skill.CREPUSCULE_FLAMBOYANT: {
-				attackElements = [AssaultElement.FIRE, AssaultElement.LIGHTNING];
-				attack = 6 * attacker.stats.base[AssaultElement.FIRE] + 6 * attacker.stats.base[AssaultElement.LIGHTNING];
+				attackElements = [ElementType.FIRE, ElementType.LIGHTNING];
+				attack = 6 * attacker.stats.base[ElementType.FIRE] + 6 * attacker.stats.base[ElementType.LIGHTNING];
 				break;
 			}
 			// Handle by default skills as an offensive skill with a given power and element
@@ -78,7 +78,7 @@ const getDamage = (
 		// Intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
 			// Can hit intangible or is air element
-			if (attacker.canHitIntangible || attackElements.includes(AssaultElement.AIR)) {
+			if (attacker.canHitIntangible || attackElements.includes(ElementType.AIR)) {
 				return {
 					damage: 1,
 					elements: attackElements,

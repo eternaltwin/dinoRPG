@@ -3948,13 +3948,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.RECEPTABLE_THERMIQUE,
 		name: 'ReceptacleThermique',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52304],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 15,
 	},
 	[Skill.QI_GONG]: {
 		id: Skill.QI_GONG,

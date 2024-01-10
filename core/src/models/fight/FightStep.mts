@@ -1,4 +1,5 @@
 import { Skill } from "../dinoz/SkillList.mjs";
+import { ElementType } from "../enums/ElementType.mjs";
 import { Item } from "../item/ItemList.mjs";
 import { FighterStatus, FighterType } from "./DetailedFighter.mjs";
 
@@ -137,6 +138,11 @@ export interface ReduceEnergyStep {
 	action: 'reduceEnergy';
 	fighter: StepFighter;
 }
+export interface LoseSphereStep {
+	action: 'loseSphere';
+	fighter: StepFighter;
+	element: ElementType;
+}
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
@@ -145,4 +151,4 @@ export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep
 | ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
 | RemoveCostumeStep | HypnotizeStep | EndHypnosisStep
-| GainEnergyStep | ReduceEnergyStep;
+| GainEnergyStep | ReduceEnergyStep | LoseSphereStep;
