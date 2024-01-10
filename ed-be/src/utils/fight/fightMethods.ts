@@ -1867,6 +1867,20 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.ROI_DES_SINGES: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getAllies(fightData, fighter).forEach((ally) => {
+				// Increase evasion
+				ally.stats.special.evasion *= 1.2;
+			});
+			break;
+		}
 		case Skill.DJINN: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

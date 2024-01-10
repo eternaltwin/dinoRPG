@@ -3090,15 +3090,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.ROI_DES_SINGES,
 		name: 'RoiDesSinges',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.LIGHTNING, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21308, 41308, 61121],
 		raceId: [raceList.TOUFUFU.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.ARCHANGE_CORROSIF]: {
 		id: Skill.ARCHANGE_CORROSIF,
