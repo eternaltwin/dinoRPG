@@ -1867,6 +1867,20 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.GOLEM: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getAllies(fightData, fighter).forEach((ally) => {
+				// Increase LIGHTNING defense
+				ally.stats.defense[ElementType.LIGHTNING] += 20;
+			});
+			break;
+		}
 		case Skill.ROI_DES_SINGES: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

@@ -3048,15 +3048,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.GOLEM,
 		name: 'Golem',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.LIGHTNING, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41302, 11309, 61121],
 		raceId: [raceList.ROCKY.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.RAIJIN]: {
 		id: Skill.RAIJIN,
