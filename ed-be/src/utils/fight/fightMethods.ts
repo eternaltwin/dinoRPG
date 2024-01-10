@@ -275,7 +275,7 @@ export const stepFighter = (
 
 const registerHit = (
 	fightData: DetailedFight,
-	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'activeSkills' | 'maxEnergy' | 'energy' | 'skills'>,
+	fighter: DetailedFighter,
 	opponents: DetailedFighter[],
 	damage: number,
 	damageElements: ElementType[] = [],
@@ -482,6 +482,20 @@ const registerHit = (
 				// Add gain energy step
 				fightData.steps.push({
 					action: 'gainEnergy',
+					fighter: stepFighter(fighter),
+				});
+			}
+		}
+
+		// Skill.VIDE_ENERGETIQUE
+		if (actualDamage[opponent.id] && opponent.skills.some((skill) => skill.id === Skill.VIDE_ENERGETIQUE)) {
+			// 1/6 Chance to reduce energy recovery
+			if (randomBetween(0, 5) === 0) {
+				fighter.stats.special.energyRecovery *= 0.85;
+
+				// Add reduce energy step
+				fightData.steps.push({
+					action: 'reduceEnergy',
 					fighter: stepFighter(fighter),
 				});
 			}
@@ -2388,15 +2402,8 @@ const endTurnChecks = (
 			const poisoner = {
 				id: -666,
 				name: 'God',
-				type: 'monster' as const,
-				attacker: false,
-				nextHitBonus: 0,
-				nextHitMultiplier: 1,
-				activeSkills: [],
-				skills: [],
-				maxEnergy: 0,
-				energy: 0,
-			};
+				type: 'boss' as const,
+			} as DetailedFighter;
 
 			// Register the hit
 			registerHit(fightData, poisoner, [attacker], 100, [], Skill.SANG_ACIDE);
