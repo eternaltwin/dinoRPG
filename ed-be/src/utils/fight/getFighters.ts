@@ -395,9 +395,9 @@ const handleSkills = (
 		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
 	}
 
-	if (fighterHas[Skill.BLANC]) {
-		// +20 assault damage if on NIMBAO
-		if (PlacesByMap[MapZone.NIMBAO]?.includes(place)) {
+	if (fighterHas[Skill.BLEU]) {
+		// +20 assault damage if on ILES
+		if (PlacesByMap[MapZone.ILES]?.includes(place)) {
 			fighter.stats.assault[ElementType.AIR] += 20;
 			fighter.stats.assault[ElementType.FIRE] += 20;
 			fighter.stats.assault[ElementType.WOOD] += 20;
@@ -409,6 +409,17 @@ const handleSkills = (
 	if (fighterHas[Skill.JAUNE]) {
 		// +20 assault damage if on STEPPE
 		if (PlacesByMap[MapZone.STEPPE]?.includes(place)) {
+			fighter.stats.assault[ElementType.AIR] += 20;
+			fighter.stats.assault[ElementType.FIRE] += 20;
+			fighter.stats.assault[ElementType.WOOD] += 20;
+			fighter.stats.assault[ElementType.WATER] += 20;
+			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+		}
+	}
+
+	if (fighterHas[Skill.BLANC]) {
+		// +20 assault damage if on NIMBAO
+		if (PlacesByMap[MapZone.NIMBAO]?.includes(place)) {
 			fighter.stats.assault[ElementType.AIR] += 20;
 			fighter.stats.assault[ElementType.FIRE] += 20;
 			fighter.stats.assault[ElementType.WOOD] += 20;
