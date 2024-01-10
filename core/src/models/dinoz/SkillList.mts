@@ -3810,7 +3810,10 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ENERGY_RECOVERY]: 0.25
+		}
 	},
 	[Skill.BLANC]: {
 		id: Skill.BLANC,
@@ -3861,7 +3864,10 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52201],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ENERGY_RECOVERY]: -0.15
+		}
 	},
 	[Skill.SOUFFLE_DANGE]: {
 		id: Skill.SOUFFLE_DANGE,
@@ -3910,7 +3916,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 	[Skill.TWINOID_500MG]: {
 		id: Skill.TWINOID_500MG,
 		name: 'Twinoid500mg',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
