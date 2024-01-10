@@ -936,6 +936,20 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.BERSERK: {
+				// Remove all skills and events
+				fighter.skills = [];
+				fighter.items = [];
+
+				// x2 to assault damages
+				fighter.stats.assault[ElementType.FIRE] *= 2;
+				fighter.stats.assault[ElementType.WATER] *= 2;
+				fighter.stats.assault[ElementType.WOOD] *= 2;
+				fighter.stats.assault[ElementType.LIGHTNING] *= 2;
+				fighter.stats.assault[ElementType.AIR] *= 2;
+
+				break;
+			}
 			case Skill.BANNI_DES_DIEUX: {
 				// Get random opponent
 				const opponent = getRandomOpponent(fightData, fighter);
