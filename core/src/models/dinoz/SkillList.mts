@@ -3074,14 +3074,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.QUETZACOATL,
 		name: 'Quetzacoatl',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41301],
 		raceId: [raceList.QUETZU.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.ROI_DES_SINGES]: {
 		id: Skill.ROI_DES_SINGES,

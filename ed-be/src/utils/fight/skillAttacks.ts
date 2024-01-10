@@ -45,6 +45,10 @@ export const SkillAttacks: Partial<Record<Skill, { power: number, element: Eleme
 		power: 3,
 		element: ElementType.LIGHTNING,
 	},
+	[Skill.QUETZACOATL]: {
+		power: 40,
+		element: ElementType.LIGHTNING,
+	},
 	// WATER
 	[Skill.CANON_A_EAU]: {
 		power: 6,

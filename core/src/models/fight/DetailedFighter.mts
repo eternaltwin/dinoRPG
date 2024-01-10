@@ -105,6 +105,8 @@ export interface DetailedFighter {
   burnedBy?: {
     id: number,
     type: FighterType,
+		skill: Skill,
+		damage: number,
   },
   // Elements
   elements: ElementType[],

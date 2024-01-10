@@ -1375,7 +1375,7 @@ const activateEvent = (
 		fighter.items.splice(itemIndex, 1);
 	}
 
-	if ('id' in event &&  fighter.type !== 'boss') {
+	if ('id' in event && fighter.type !== 'boss') {
 		// Get opponents with SHARIGNAN
 		const opponentsWithSharingan = getOpponents(fightData, fighter)
 			.filter((opponent) => opponent.skills.some((skill) => skill.id === Skill.SHARIGNAN));
@@ -1550,7 +1550,8 @@ const activateSkill = (
 		// AIR
 		// FIRE
 		case Skill.SOUFFLE_ARDENT:
-		case Skill.METEORES: {
+		case Skill.METEORES:
+		case Skill.CREPUSCULE_FLAMBOYANT: {
 			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
@@ -1624,10 +1625,6 @@ const activateSkill = (
 			getAllies(fightData, fighter).forEach(ally => {
 				heal(fightData, ally, hpHealed);
 			})
-			break;
-		}
-		case Skill.CREPUSCULE_FLAMBOYANT: {
-			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
 		case Skill.DANSE_FOUDROYANTE: {
@@ -1869,6 +1866,17 @@ const activateSkill = (
 					fighter: stepFighter(opponent),
 				});
 			}
+		}
+		case Skill.QUETZACOATL: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			targetAllOpponents(fightData, fighter, skill);
+			break;
 		}
 		case Skill.CRI_DE_GUERRE: {
 			// Find strongest Skill
@@ -2360,6 +2368,19 @@ const attack = (
 			if (realOpponent.skills.find((skill) => skill.id === Skill.ACUPUNCTURE)) {
 				registerHit(fightData, realOpponent, [attacker], 1, [], Skill.ACUPUNCTURE);
 			}
+
+			// GRIFFES_INFERNALES damage
+			if (attacker.skills.find((skill) => skill.id === Skill.GRIFFES_INFERNALES)) {
+				const damage = attacker.stats.base[ElementType.FIRE];
+
+				opponent.burnedBy = {
+					id: attacker.id,
+					type: attacker.type,
+					skill: Skill.GRIFFES_INFERNALES,
+					damage,
+				};
+				addStatus(fightData, realOpponent, FighterStatus.BURNED);
+			}
 		}
 	}
 
@@ -2505,50 +2526,68 @@ const endTurnChecks = (
 		});
 	}
 
-	// Check if fighter is poisoned
-	const poisonedBy = attacker.poisonedBy;
-	if (!fightData.loser && attacker.hp > 0 && poisonedBy) {
-		// TODO: Temporary code to avoid endless fights
-		// Forced poison to end the fight
-		if (poisonedBy.id === -666) {
-			const poisoner = {
-				id: -666,
-				name: 'God',
-				type: 'boss' as const,
-			} as DetailedFighter;
+	if (!fightData.loser && attacker.hp > 0) {
+		// Check if fighter is poisoned
+		const poisonedBy = attacker.poisonedBy;
 
-			// Register the hit
-			registerHit(fightData, poisoner, [attacker], 100, [], Skill.SANG_ACIDE);
-		} else {
-			// Get poisoner
-			const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
+		if (poisonedBy) {
+			// TODO: Temporary code to avoid endless fights
+			// Forced poison to end the fight
+			if (poisonedBy.id === -666) {
+				const poisoner = {
+					id: -666,
+					name: 'God',
+					type: 'boss' as const,
+				} as DetailedFighter;
 
-			if (!poisoner) {
-				throw new Error('Poisoner not found');
+				// Register the hit
+				registerHit(fightData, poisoner, [attacker], 100, [], Skill.SANG_ACIDE);
+			} else {
+				// Get poisoner
+				const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
+
+				if (!poisoner) {
+					throw new Error('Poisoner not found');
+				}
+
+				// Get poison damage
+				let poisonDamage = 0;
+				switch (poisonedBy.skill) {
+					case Skill.SANG_ACIDE: {
+						poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
+						break;
+					}
+					case Skill.AURA_PUANTE: {
+						poisonDamage = 10;
+						break;
+					}
+					case Skill.GRIFFES_EMPOISONNEES: {
+						poisonDamage = 14;
+						break;
+					}
+					default:
+						console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
+						break;
+				}
+
+				// Register the hit
+				registerHit(fightData, poisoner, [attacker], poisonDamage, [], poisonedBy.skill);
+			}
+		}
+
+		// Check if fighter is burned
+		const burnedBy = attacker.burnedBy;
+
+		if (burnedBy) {
+			// Get burner
+			const burner = fightData.fighters.find((f) => f.id === burnedBy.id && f.type === burnedBy.type);
+
+			if (!burner) {
+				throw new Error('Burner not found');
 			}
 
-			// Get poison damage
-			let poisonDamage = 0;
-			switch (poisonedBy.skill) {
-				case Skill.SANG_ACIDE: {
-					poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
-					break;
-				}
-				case Skill.AURA_PUANTE: {
-					poisonDamage = 10;
-					break;
-				}
-				case Skill.GRIFFES_EMPOISONNEES: {
-					poisonDamage = 14;
-					break;
-				}
-				default:
-					console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
-					break;
-			}
-
 			// Register the hit
-			registerHit(fightData, poisoner, [attacker], poisonDamage, [], poisonedBy.skill);
+			registerHit(fightData, burner, [attacker], burnedBy.damage, [], burnedBy.skill);
 		}
 	}
 
