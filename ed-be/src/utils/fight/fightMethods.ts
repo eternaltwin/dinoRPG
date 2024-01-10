@@ -1867,6 +1867,17 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.TOTEM_ANCESTRAL_AEROPORTE: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			targetSingleOpponent(fightData, fighter, skill);
+			break;
+		}
 		case Skill.BOUDDHA: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

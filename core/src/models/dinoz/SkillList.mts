@@ -3763,14 +3763,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.TOTEM_ANCESTRAL_AEROPORTE,
 		name: 'TotemAncestralAeroporte',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11311, 51309, 61121],
 		raceId: [raceList.KABUKI.raceId, raceList.KABUKI_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.FUJIN]: {
 		id: Skill.FUJIN,

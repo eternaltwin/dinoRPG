@@ -1,4 +1,4 @@
-import { Skill } from "@drpg/core/models/dinoz/SkillList";
+import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { Item } from "@drpg/core/models/item/ItemList";
@@ -21,7 +21,7 @@ const getDamage = (
 	let attackElements: ElementType[] = [];
 
 	// Calculate the attacker's attack score
-	if (skill) {
+	if (skill && !power) {
 		// Cancel if intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
 			return {
@@ -75,7 +75,11 @@ const getDamage = (
 			}
 		}
 	} else {
-		attackElements = [attacker.element];
+		if (power && skill) {
+			attackElements = [...skillList[skill].element];
+		} else {
+			attackElements = [attacker.element];
+		}
 
 		// Intangible
 		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
