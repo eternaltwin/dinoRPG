@@ -44,6 +44,10 @@ export const SkillAttacks: Partial<Record<Skill, { power: number, element: Eleme
 		power: 3,
 		element: ElementType.FIRE,
 	},
+	[Skill.VULCAIN]: {
+		power: 20,
+		element: ElementType.FIRE,
+	},
 	[Skill.SALAMANDRE]: {
 		power: 30,
 		element: ElementType.FIRE,
