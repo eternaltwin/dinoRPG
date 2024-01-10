@@ -955,7 +955,9 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		tree: SkillTree.ETHER,
 		unlockedFrom: [12101],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 10,
 	},
 	[Skill.CARAPACE_DE_MAGMA]: {
 		id: Skill.CARAPACE_DE_MAGMA,
