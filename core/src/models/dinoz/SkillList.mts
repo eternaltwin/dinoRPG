@@ -3238,13 +3238,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.RECEPTACLE_AERIEN,
 		name: 'ReceptacleAerien',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E20,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [42401],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 15
 	},
 	[Skill.FEU_DE_ST_ELME]: {
 		id: Skill.FEU_DE_ST_ELME,

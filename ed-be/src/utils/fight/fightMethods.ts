@@ -1698,6 +1698,21 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.RECEPTACLE_AERIEN: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Remove air sphere skills
+			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.AIR));
+
+			// Add lose sphere step
+			fightData.steps.push({
+				action: 'loseSphere',
+				fighter: stepFighter(opponent),
+				element: ElementType.AIR,
+			});
+			break;
+		}
 		case Skill.FEU_DE_ST_ELME: {
 			// Only one environment active at a time
 			if (fightData.environment) {
