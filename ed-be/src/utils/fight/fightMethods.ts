@@ -246,7 +246,7 @@ export const stepFighter = (
 
 const registerHit = (
 	fightData: DetailedFight,
-	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'activeSkills'>,
+	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'activeSkills' | 'maxEnergy' | 'energy' | 'skills'>,
 	opponents: DetailedFighter[],
 	damage: number,
 	damageElements: AssaultElement[] = [],
@@ -434,6 +434,28 @@ const registerHit = (
 				action: 'arrive',
 				fighter: stepFighter(opponent),
 			});
+		}
+
+		// Qi Gong
+		if (actualDamage[opponent.id] && fighter.skills.some((skill) => skill.id === Skill.QI_GONG)) {
+			// 30% Chance to deplete energy
+			if (Math.random() < 0.3) {
+				const energyTransferred = Math.max(fighter.maxEnergy - fighter.energy, opponent.energy);
+				opponent.energy = 0;
+				fighter.energy += energyTransferred;
+
+				// Add reduce energy step
+				fightData.steps.push({
+					action: 'reduceEnergy',
+					fighter: stepFighter(opponent),
+				});
+
+				// Add gain energy step
+				fightData.steps.push({
+					action: 'gainEnergy',
+					fighter: stepFighter(fighter),
+				});
+			}
 		}
 	});
 
@@ -2011,6 +2033,9 @@ const endTurnChecks = (
 				nextHitBonus: 0,
 				nextHitMultiplier: 1,
 				activeSkills: [],
+				skills: [],
+				maxEnergy: 0,
+				energy: 0,
 			};
 
 			// Register the hit

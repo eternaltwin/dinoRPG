@@ -3960,7 +3960,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.QI_GONG,
 		name: 'QiGong',
 		type: SkillType.E,
-		energy: Energy.E75,
+		energy: Energy.E55,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.ETHER,
