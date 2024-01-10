@@ -401,6 +401,17 @@ const handleSkills = (
 		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
 	}
 
+	if (fighterHas[Skill.VERT]) {
+		// +20 assault damage if on JUNGLE
+		if (PlacesByMap[MapZone.JUNGLE]?.includes(place)) {
+			fighter.stats.assault[ElementType.AIR] += 20;
+			fighter.stats.assault[ElementType.FIRE] += 20;
+			fighter.stats.assault[ElementType.WOOD] += 20;
+			fighter.stats.assault[ElementType.WATER] += 20;
+			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+		}
+	}
+
 	if (fighterHas[Skill.BLEU]) {
 		// +20 assault damage if on ILES
 		if (PlacesByMap[MapZone.ILES]?.includes(place)) {
