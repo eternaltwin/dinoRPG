@@ -24,6 +24,8 @@ export enum FighterStatus {
   SHIELDED,
   BLESSED,
   HEALING,
+	// Skills
+	NO_DODGE,
 	// Items
 	CURED,
 	BEER,

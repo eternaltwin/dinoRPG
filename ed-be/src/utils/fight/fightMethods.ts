@@ -171,7 +171,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		}
 	}
 
-	const events: (DinozSkillFiche | ItemFiche)[] = fighter.skills.filter((skill) => skill.type === SkillType.E);
+	const events: (DinozSkillFiche | ItemFiche)[] = fighter.skills.filter((skill) => skill.probability && skill.type === SkillType.E);
 
 	events.push(...fighter.items.filter((item) => item.probability));
 
@@ -211,7 +211,8 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 	// No skill if NO_SKILL
 	if (fighter.status.includes(FighterStatus.NO_SKILL)) return null;
 
-	const skills = fighter.skills.filter((skill) => skill.type === SkillType.A);
+	const skills = fighter.skills.filter((skill) => skill.probability
+		&& skill.type !== SkillType.E);
 
 	if (!skills.length) return null;
 
@@ -852,6 +853,19 @@ const activateEvent = (
 					action: 'reduceEnergy',
 					fighter: stepFighter(opponent),
 				});
+				break;
+			}
+			case Skill.MAINS_COLLANTES: {
+				// Get random opponent
+				const opponent = getRandomOpponent(fightData, fighter);
+
+				// Check if NO_DODGE
+				if (opponent.status.includes(FighterStatus.NO_DODGE)) {
+					return cancel();
+				}
+
+				// Add status
+				addStatus(fightData, opponent, FighterStatus.NO_DODGE);
 				break;
 			}
 			default:
