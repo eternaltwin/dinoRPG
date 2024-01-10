@@ -1867,6 +1867,17 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.DJINN: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			targetSingleOpponent(fightData, fighter, skill);
+			break;
+		}
 		case Skill.FUJIN: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

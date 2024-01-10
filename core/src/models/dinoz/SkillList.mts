@@ -3811,14 +3811,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.DJINN,
 		name: 'Djinn',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.AIR, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11201, 51403, 61121],
 		raceId: [raceList.PTEROZ.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.HADES]: {
 		id: Skill.HADES,
