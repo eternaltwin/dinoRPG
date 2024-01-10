@@ -864,14 +864,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.SALAMANDRE,
 		name: 'Salamandre',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.FIRE, ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31305, 11312, 61121],
 		raceId: [raceList.FEROSS.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.VULCAIN]: {
 		id: Skill.VULCAIN,
