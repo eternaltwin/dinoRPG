@@ -17,6 +17,7 @@ import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 /**
  * @summary Process a fight
@@ -56,7 +57,7 @@ export async function processFight(req: Request) {
 
 	const monster = generateMonster(team); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
 
-	const fightResult = calculateFight(team, monster);
+	const fightResult = calculateFight(team, monster, dinozData.placeId);
 
 	const result = await rewardFight(team, monster, fightResult);
 
@@ -76,10 +77,10 @@ export async function processFight(req: Request) {
 
 export async function moveFight(
 	team: (DinozToCalculateFight & DinozToRewardFight & DinozToCheckMissionFight)[],
-	placeId: number
+	placeId: PlaceEnum
 ) {
 	const monsters = generateMonster(team); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
-	const fightResult = calculateFight(team, monsters);
+	const fightResult = calculateFight(team, monsters, placeId);
 	const result = await rewardFight(team, monsters, fightResult);
 
 	// const result = getFightResult(dinoz, monsters[0], fightResult);
@@ -97,7 +98,8 @@ export async function moveFight(
 export type DinozToCalculateFight = Parameters<typeof calculateFight>[0][number];
 export function calculateFight(
 	team: DinozToGetFighter[],
-	monsters: MonsterFiche[]
+	monsters: MonsterFiche[],
+	place: PlaceEnum,
 ): FightProcessResult {
 	const fighters = getFighters({
 		dinozList: team,
@@ -119,6 +121,9 @@ export function calculateFight(
 		// Fighters
 		initialDinozList: team,
 		fighters,
+
+		// Place
+		place,
 	};
 
 	return generateFight(fightConfiguration);
@@ -126,7 +131,7 @@ export function calculateFight(
 
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
 export async function rewardFight(
-	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life'> & {
+	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
 		player: Pick<Player, 'id' | 'teacher'> | null;
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];

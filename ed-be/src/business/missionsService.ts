@@ -3,7 +3,7 @@ import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { Mission } from '@drpg/core/models/missions/mission';
 import { MissionID } from '@drpg/core/models/missions/missionList';
-import { MissionSteps } from '@drpg/core/models/missions/missionSteps';
+import { MissionStep } from '@drpg/core/models/missions/missionSteps';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
@@ -24,6 +24,7 @@ import { rewarder } from '../utils/rewarder.js';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
@@ -210,8 +211,8 @@ async function checkMission(req: Request) {
 		throw new ErrorFormator(500, 'No step found');
 	}
 	if (
-		dinoz.placeId != Object.values(placeList).find(place => place.name === actualStep.place)?.placeId &&
-		actualStep.place !== placeList.ANYWHERE.name
+		dinoz.placeId !== actualStep.place &&
+		actualStep.place !== PlaceEnum.ANYWHERE
 	) {
 		throw new ErrorFormator(500, 'The dinoz is not at the expected place.');
 	}
@@ -235,8 +236,8 @@ export function getMissionAction(
 	}
 
 	if (
-		(dinoz.placeId === Object.entries(placeList).find(place => place[1].name === actualStep.place)?.[1].placeId ||
-			actualStep.place === placeList.ANYWHERE.name) &&
+		(dinoz.placeId === actualStep.place ||
+			actualStep.place === PlaceEnum.ANYWHERE) &&
 		!actualStep.displayedAction.includes('kill')
 	) {
 		return actualStep.displayedAction;
@@ -288,8 +289,8 @@ export async function checkMissionFight(
 
 	//Increment the progress of killing mobs
 	if (
-		(dinoz.placeId === Object.values(placeList).find(place => place.name === actualStep.place)?.placeId ||
-			actualStep.place === placeList.ANYWHERE.name) &&
+		(dinoz.placeId === actualStep.place ||
+			actualStep.place === PlaceEnum.ANYWHERE) &&
 		fight.result &&
 		actualStep.requirement.actionType === ConditionEnum.KILL &&
 		(actualStep.requirement.target.includes(monsterList.ANY.name) ||
@@ -313,7 +314,7 @@ export async function checkMissionFight(
 export async function checkProgressEnd(
 	dinoz: Pick<Dinoz, 'id' | 'playerId'> & { missions: DinozMission[] },
 	fight: FightResult,
-	actualStep: MissionSteps,
+	actualStep: MissionStep,
 	killedProgress: number
 ): Promise<void> {
 	if (!dinoz.playerId) {

@@ -1,10 +1,10 @@
-import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { placeList } from '../../place/PlaceList.mjs';
 import { rewardList } from '../../reward/RewardList.mjs';
-import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_PAPY_JOE: Mission[] = [
 	// Missions 1 to 10
@@ -20,7 +20,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'fishVendor'
@@ -30,7 +30,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'mmeseyche'
@@ -40,7 +40,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -63,7 +63,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.COLLINES_ESCARPEES.name,
+				place: PlaceEnum.COLLINES_ESCARPEES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'mmeducraft1'
@@ -73,7 +73,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -84,7 +84,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.COLLINES_ESCARPEES.name,
+				place: PlaceEnum.COLLINES_ESCARPEES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'mmeducraft2'
@@ -94,7 +94,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -122,7 +122,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.COLLINES_ESCARPEES.name,
+				place: PlaceEnum.COLLINES_ESCARPEES,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOUPIGNON.name, monsterList.WOLF.name],
@@ -133,7 +133,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -162,7 +162,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FORCEBRUT.name,
+				place: PlaceEnum.FORCEBRUT,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
@@ -173,7 +173,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FOUTAINE_DE_JOUVENCE.name,
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
@@ -184,7 +184,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
@@ -195,7 +195,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.UNIVERSITE.name,
+				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
@@ -206,7 +206,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -231,7 +231,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FOUTAINE_DE_JOUVENCE.name,
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'pureWater'
@@ -241,7 +241,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'mmeseyche'
@@ -251,7 +251,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -276,7 +276,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.UNIVERSITE.name,
+				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'kbook'
@@ -286,7 +286,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'mmeseyche'
@@ -296,7 +296,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -325,7 +325,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FOUTAINE_DE_JOUVENCE.name,
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOUPIGNON.name],
@@ -336,7 +336,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FOUTAINE_DE_JOUVENCE.name,
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'timbre'
@@ -346,7 +346,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -371,7 +371,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'mmeseyche'
@@ -381,7 +381,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -410,7 +410,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GLUON.name],
@@ -421,7 +421,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -453,7 +453,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GREEN_GIANT.name],
@@ -464,7 +464,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'
@@ -496,7 +496,7 @@ export const M_PAPY_JOE: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.COQ.name],
@@ -507,7 +507,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'papyjoe'

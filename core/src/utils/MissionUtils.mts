@@ -3,6 +3,7 @@ import { ConditionEnum } from '../models/enums/Parser.mjs';
 import { MissionHUD } from '../models/missions/missionHUD.mjs';
 import { npcList } from '../models/npc/NpcList.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
+import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 
 export function getHUDObjective(
 	dinoz: Pick<Dinoz, 'placeId'> & {
@@ -32,13 +33,13 @@ export function getHUDObjective(
 		return HUD;
 	}
 
-	if (dinozActualPlace.name === actualStep.place || actualStep.place === placeList.ANYWHERE.name) {
+	if (dinozActualPlace.placeId === actualStep.place || actualStep.place === PlaceEnum.ANYWHERE) {
 		return HUD;
 	} else if (!actualStep.hidePlace && HUD.actionType === ConditionEnum.FINISH_MISSION) {
 		return HUD;
 	} else if (!actualStep.hidePlace) {
 		HUD.actionType = ConditionEnum.GOTO;
-		HUD.target = actualStep.place;
+		HUD.target = placeList[actualStep.place].name;
 		return HUD;
 	} else {
 		HUD.actionType = ConditionEnum.HIDE_PLACE;

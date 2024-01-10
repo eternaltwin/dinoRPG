@@ -81,7 +81,7 @@ export default defineComponent({
 		// Check if the dinoz is at the market
 		const atMarket =
 			Object.values(placeList).find(place => place.placeId === currentDinoz.placeId)?.placeId ===
-			placeList.PLACE_DU_MARCHE.placeId;
+			PlaceEnum.PLACE_DU_MARCHE;
 		if (!atMarket) {
 			EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
 			goTo(this.$router, 'MainPage');

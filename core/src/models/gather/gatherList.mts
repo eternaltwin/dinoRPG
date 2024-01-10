@@ -1,11 +1,11 @@
-import { GatherData } from './gatherData.mjs';
-import { ConditionEnum, Operator } from '../enums/Parser.mjs';
-import { GatherType } from '../enums/GatherType.mjs';
-import { placeList } from '../place/PlaceList.mjs';
-import { itemList } from '../item/ItemList.mjs';
-import { Skill, skillList } from '../dinoz/SkillList.mjs';
 import { Action } from '../dinoz/ActionList.mjs';
+import { Skill, skillList } from '../dinoz/SkillList.mjs';
+import { GatherType } from '../enums/GatherType.mjs';
+import { ConditionEnum, Operator } from '../enums/Parser.mjs';
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { ingredientList } from '../ingredient/ingredientList.mjs';
+import { itemList } from '../item/ItemList.mjs';
+import { GatherData } from './gatherData.mjs';
 
 export const gatherList: Record<GatherType, GatherData> = {
 	[GatherType.FISH]: {
@@ -39,7 +39,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.MAITRE_PECHEUR].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.PORT_DE_PRECHE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.PORT_DE_PRECHE }
 					]
 				}
 			},
@@ -50,7 +50,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.MAITRE_PECHEUR].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.CHUTES_MUTANTES.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.CHUTES_MUTANTES }
 					]
 				}
 			},
@@ -61,7 +61,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.MAITRE_PECHEUR].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.FLEUVE_JUMIN.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.FLEUVE_JUMIN }
 					]
 				}
 			}
@@ -98,7 +98,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.FORGES_DU_GTC.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.FORGES_DU_GTC }
 					]
 				}
 			},
@@ -109,7 +109,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.CHEMIN_GLAUQUE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.CHEMIN_GLAUQUE }
 					]
 				}
 			},
@@ -120,7 +120,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.MARAIS_COLLANT.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.MARAIS_COLLANT }
 					]
 				}
 			}
@@ -181,7 +181,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.BOIS_GIVRES.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.BOIS_GIVRES }
 					]
 				}
 			}
@@ -302,7 +302,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.FORCEBRUT.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.FORCEBRUT }
 					]
 				}
 			},
@@ -313,7 +313,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.PENTES_DE_BASALTE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.PENTES_DE_BASALTE }
 					]
 				}
 			},
@@ -324,7 +324,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.PORTE_DE_SYLVENOIRE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.PORTE_DE_SYLVENOIRE }
 					]
 				}
 			},
@@ -335,7 +335,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.FISSION_ELEMENTAIRE].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.DOME_SOULAFLOTTE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.DOME_SOULAFLOTTE }
 					]
 				}
 			}
@@ -445,7 +445,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id },
 						{ [ConditionEnum.RANDOM]: 3 },
-						{ [Operator.NOT]: { [ConditionEnum.PLACE_IS]: placeList.LAC_CELESTE.name } }
+						{ [Operator.NOT]: { [ConditionEnum.PLACE_IS]: PlaceEnum.LAC_CELESTE } }
 					]
 				}
 			},
@@ -457,7 +457,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id },
 						{ [ConditionEnum.RANDOM]: 3 },
-						{ [ConditionEnum.PLACE_IS]: placeList.LAC_CELESTE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.LAC_CELESTE }
 					]
 				}
 			},
@@ -469,7 +469,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id },
 						{ [ConditionEnum.RANDOM]: 3 },
-						{ [ConditionEnum.PLACE_IS]: placeList.LAC_CELESTE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.LAC_CELESTE }
 					]
 				}
 			},
@@ -480,7 +480,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 				condition: {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_GEANT].id },
-						{ [ConditionEnum.PLACE_IS]: placeList.NOWHERE.name } //TODO: lieu caushemesh
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.NOWHERE } //TODO: lieu caushemesh
 					]
 				}
 			}
@@ -558,7 +558,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 					[Operator.AND]: [
 						{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id },
 						{ [ConditionEnum.RANDOM]: 10 },
-						{ [ConditionEnum.PLACE_IS]: placeList.TETE_DE_L_ILE.name }
+						{ [ConditionEnum.PLACE_IS]: PlaceEnum.TETE_DE_L_ILE }
 					]
 				}
 			}
@@ -573,7 +573,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.POSSESS_OBJECT]: itemList.CANDLE_CARD.itemId },
-				{ [ConditionEnum.PLACE_IS]: placeList.PORT_DE_PRECHE.name }
+				{ [ConditionEnum.PLACE_IS]: PlaceEnum.PORT_DE_PRECHE }
 			]
 		},
 		cost: {

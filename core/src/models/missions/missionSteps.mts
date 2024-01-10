@@ -1,8 +1,9 @@
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { missionRequirement } from './missionRequirement.mjs';
 
-export interface MissionSteps {
+export interface MissionStep {
 	stepId: number;
-	place: string;
+	place: PlaceEnum;
 	hidePlace?: boolean;
 	displayedAction: string;
 	displayedText?: string;

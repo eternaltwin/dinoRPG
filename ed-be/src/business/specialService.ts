@@ -1,7 +1,7 @@
 import { DinozForConditionCheck } from '@drpg/core/constants';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
@@ -38,7 +38,7 @@ export async function concentrate(req: Request) {
 	}
 
 	//Check if dinoz is at Bao Bob's location
-	if (actualPlace(dinoz).placeId !== placeList.BAO_BOB.placeId) {
+	if (actualPlace(dinoz).placeId !== PlaceEnum.BAO_BOB) {
 		throw new ErrorFormator(500, `Dinoz ${dinoz.id} is not at the right place`);
 	}
 
@@ -96,19 +96,19 @@ export async function cancelConcentrate(req: Request) {
 }
 
 async function goDarkWorld(playerId: number, dinozList: Pick<Dinoz, 'id'>[]) {
-	await updateMultipleDinozPlaceId(playerId, dinozList, placeList.PORTAIL.placeId);
+	await updateMultipleDinozPlaceId(playerId, dinozList, PlaceEnum.PORTAIL);
 }
 
 export async function mouvementListener(
 	team: (DinozToCalculateFight & DinozToRewardFight & DinozForConditionCheck & DinozToGetActualStep)[],
-	finalPlace: number
+	finalPlace: PlaceEnum
 ) {
 	//Specials actions
 	const potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
 
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, team)) {
 		if (potentialSpecialActions.opponents) {
-			const fightResult = calculateFight(team, potentialSpecialActions.opponents);
+			const fightResult = calculateFight(team, potentialSpecialActions.opponents, finalPlace);
 			const result = await rewardFight(team, potentialSpecialActions.opponents, fightResult);
 			if (fightResult.winner) {
 				await rewarder(potentialSpecialActions.reward, team);
@@ -132,13 +132,11 @@ export async function mouvementListener(
 		const actualStep = getActualStep(team[0]);
 
 		if (actualStep && team.every(dinoz => getActualStep(dinoz)?.stepId === actualStep.stepId)) {
-			const placeName = Object.values(placeList).find(place => place.placeId === finalPlace)?.name;
 			if (
-				placeName &&
-				actualStep.place === placeName &&
+				actualStep.place === finalPlace &&
 				actualStep.requirement.actionType === ConditionEnum.KILL_BOSS
 			) {
-				const fightResult = calculateFight(team, actualStep.requirement.target);
+				const fightResult = calculateFight(team, actualStep.requirement.target, finalPlace);
 				const result = await rewardFight(team, actualStep.requirement.target, fightResult);
 				if (fightResult.winner) {
 					const teamIds = team.map(dinoz => dinoz.id);

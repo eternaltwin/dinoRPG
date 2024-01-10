@@ -28,6 +28,7 @@ import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
 import { ErrorFormator } from './errorFormator.mjs';
+import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 
 type Config = {
 	dinoz: {
@@ -337,7 +338,7 @@ export const initializeDinoz = (race: DinozRace, playerId: number, display: stri
 		isSacrificed: false,
 		raceId: race.raceId,
 		level: 1,
-		placeId: placeList.DINOVILLE.placeId,
+		placeId: PlaceEnum.DINOVILLE,
 		display: display,
 		life: 100,
 		maxLife: 100,

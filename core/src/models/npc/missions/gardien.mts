@@ -1,10 +1,10 @@
 import { statusList } from '../../dinoz/StatusList.mjs';
-import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { placeList } from '../../place/PlaceList.mjs';
-import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_GARDIEN: Mission[] = [
 	// Missions 37 to 43
@@ -25,7 +25,7 @@ export const M_GARDIEN: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -36,7 +36,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.MARAIS_COLLANT.name,
+				place: PlaceEnum.MARAIS_COLLANT,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -47,7 +47,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FOUTAINE_DE_JOUVENCE.name,
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -58,7 +58,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.GORGES_PROFONDES.name,
+				place: PlaceEnum.GORGES_PROFONDES,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -69,7 +69,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'racine'
@@ -79,7 +79,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'garde'
@@ -109,7 +109,7 @@ export const M_GARDIEN: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickwater'
@@ -119,7 +119,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'worchid'
@@ -129,7 +129,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.CAMP_KORGON.name,
+				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'talkingorchide'
@@ -139,7 +139,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'garde'
@@ -169,7 +169,7 @@ export const M_GARDIEN: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
@@ -180,7 +180,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'garde'
@@ -217,7 +217,7 @@ export const M_GARDIEN: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.COLLINES_HANTEES.name,
+				place: PlaceEnum.COLLINES_HANTEES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'yell'
@@ -227,7 +227,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -238,7 +238,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickorchid'
@@ -248,7 +248,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.COLLINES_HANTEES.name,
+				place: PlaceEnum.COLLINES_HANTEES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'plantorchid'
@@ -258,7 +258,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'garde'
@@ -288,7 +288,7 @@ export const M_GARDIEN: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'tosscoin'
@@ -298,7 +298,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
@@ -309,7 +309,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
@@ -320,7 +320,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
@@ -331,7 +331,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.JUNGLE_SAUVAGE.name,
+				place: PlaceEnum.JUNGLE_SAUVAGE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
@@ -342,7 +342,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'garde'
@@ -372,7 +372,7 @@ export const M_GARDIEN: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'benevole'
@@ -382,7 +382,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -393,7 +393,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'liftrock'
@@ -403,7 +403,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -414,7 +414,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'benevole'
@@ -424,7 +424,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'liftrock'
@@ -434,7 +434,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'benevole'
@@ -444,7 +444,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'garde'
@@ -480,7 +480,7 @@ export const M_GARDIEN: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'bucket'
@@ -490,7 +490,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'garde'

@@ -1,7 +1,7 @@
-import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
-import { placeList } from '@drpg/core/models/place/PlaceList';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
 
 // Prices are as they were before the abandon of Twinoid (they were lowered to half the price after the game became free)
 // listItemSold is filled with a copy of each item from itemList with the price changed.
@@ -10,7 +10,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Flying Shop
 	FLYING_SHOP: {
 		shopId: 1,
-		placeId: placeList.ANYWHERE.placeId,
+		placeId: PlaceEnum.ANYWHERE,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			// Irma's potion sold for 900 gold
@@ -48,7 +48,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Forges Shop
 	FORGE_SHOP: {
 		shopId: 2,
-		placeId: placeList.FORGES_DU_GTC.placeId,
+		placeId: PlaceEnum.FORGES_DU_GTC,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -76,7 +76,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Magic Shop, price is in golden napodino instead of gold
 	MAGIC_SHOP: {
 		shopId: 3,
-		placeId: placeList.DINOVILLE.placeId,
+		placeId: PlaceEnum.DINOVILLE,
 		type: ShopType.MAGICAL,
 		listItemsSold: [
 			{
@@ -164,7 +164,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Cursed Shop, only accessible by cursed dinoz
 	CURSED_SHOP: {
 		shopId: 4,
-		placeId: placeList.RUINES_ASHPOUK.placeId,
+		placeId: PlaceEnum.RUINES_ASHPOUK,
 		type: ShopType.CURSED,
 		listItemsSold: [
 			{
@@ -180,7 +180,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Fruity Shop
 	FRUITY_SHOP: {
 		shopId: 5,
-		placeId: placeList.PORTE_DE_SYLVENOIRE.placeId,
+		placeId: PlaceEnum.PORTE_DE_SYLVENOIRE,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -192,7 +192,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Razad's Shop
 	RAZADS_SHOP: {
 		shopId: 6,
-		placeId: placeList.AVANT_POSTE_ROCKY.placeId,
+		placeId: PlaceEnum.AVANT_POSTE_ROCKY,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -208,7 +208,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Souk Lightning Sales
 	SOUK_LIGHTNING_SALES: {
 		shopId: 7,
-		placeId: placeList.PYLONES_DE_MAGNETITES.placeId,
+		placeId: PlaceEnum.PYLONES_DE_MAGNETITES,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -224,7 +224,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Purveyor of Neerhel
 	PURVEYOR_OF_NEERHEL: {
 		shopId: 8,
-		placeId: placeList.SENTIER_DE_TOUTEMBA.placeId,
+		placeId: PlaceEnum.SENTIER_DE_TOUTEMBA,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -240,7 +240,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Barbarian Trader
 	BARBARIAN_TRADER: {
 		shopId: 9,
-		placeId: placeList.CAMP_DES_EMMEMMA.placeId,
+		placeId: PlaceEnum.CAMP_DES_EMMEMMA,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -256,7 +256,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Steps Secret Shop
 	STEPS_SECRET_SHOP: {
 		shopId: 10,
-		placeId: placeList.REPAIRE_DE_LA_TEAM_W.placeId,
+		placeId: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -284,7 +284,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Elite Camp
 	ELITE_CAMP: {
 		shopId: 11,
-		placeId: placeList.CAMP_D_ELIT.placeId,
+		placeId: PlaceEnum.CAMP_D_ELITE,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
@@ -308,7 +308,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Chen's Skillshack
 	CHENS_SKILLSHACK: {
 		shopId: 12,
-		placeId: placeList.CITE_ARBORIS.placeId,
+		placeId: PlaceEnum.CITE_ARBORIS,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{

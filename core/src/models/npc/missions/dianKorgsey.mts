@@ -1,10 +1,10 @@
 import { statusList } from '../../dinoz/StatusList.mjs';
-import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { placeList } from '../../place/PlaceList.mjs';
-import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_DIANKORGSEY: Mission[] = [
 	// Missions 22 to 25
@@ -24,7 +24,7 @@ export const M_DIANKORGSEY: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CAMP_KORGON.name,
+				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'list'
@@ -34,7 +34,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'tools'
@@ -44,7 +44,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -55,7 +55,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -66,7 +66,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.CAMP_KORGON.name,
+				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'camp'
@@ -95,7 +95,7 @@ export const M_DIANKORGSEY: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name],
@@ -106,7 +106,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'trophee'
@@ -116,7 +116,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.CAMP_KORGON.name,
+				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'camp'
@@ -145,7 +145,7 @@ export const M_DIANKORGSEY: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -156,7 +156,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -167,7 +167,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'branch'
@@ -177,7 +177,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.CAMP_KORGON.name,
+				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'camp'
@@ -214,7 +214,7 @@ export const M_DIANKORGSEY: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.COLLINES_HANTEES.name,
+				place: PlaceEnum.COLLINES_HANTEES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'seve'
@@ -224,7 +224,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PORTE_DE_SYLVENOIRE.name,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'trap'
@@ -234,7 +234,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.JUNGLE_SAUVAGE.name,
+				place: PlaceEnum.JUNGLE_SAUVAGE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -245,7 +245,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.JUNGLE_SAUVAGE.name,
+				place: PlaceEnum.JUNGLE_SAUVAGE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.KILL,
@@ -257,7 +257,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -268,7 +268,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -279,7 +279,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
@@ -290,7 +290,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'fiquoia'
@@ -300,7 +300,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 8,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'dian'
@@ -310,7 +310,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 9,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'hide'
@@ -320,7 +320,7 @@ export const M_DIANKORGSEY: Mission[] = [
 			},
 			{
 				stepId: 10,
-				place: placeList.CAMP_KORGON.name,
+				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'camp'

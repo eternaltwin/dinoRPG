@@ -1,10 +1,10 @@
-import { RewardEnum, ConditionEnum } from '../../enums/Parser.mjs';
+import { ConditionEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
+import { bossList } from '../../fight/BossList.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { placeList } from '../../place/PlaceList.mjs';
-import { bossList } from '../../fight/BossList.mjs';
-import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_RODEUR: Mission[] = [
 	// Missions 49 to 50
@@ -25,7 +25,7 @@ export const M_RODEUR: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.MARAIS_COLLANT.name,
+				place: PlaceEnum.MARAIS_COLLANT,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'rice'
@@ -35,7 +35,7 @@ export const M_RODEUR: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.MARAIS_COLLANT.name,
+				place: PlaceEnum.MARAIS_COLLANT,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.PIRA.name],
@@ -46,7 +46,7 @@ export const M_RODEUR: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.MARAIS_COLLANT.name,
+				place: PlaceEnum.MARAIS_COLLANT,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'rice'
@@ -56,7 +56,7 @@ export const M_RODEUR: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'forges'
@@ -85,7 +85,7 @@ export const M_RODEUR: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				requirement: {
 					actionType: ConditionEnum.KILL_BOSS,
 					target: [bossList.PTEROZ, bossList.HIPPOCLAMP, bossList.ROCKY]
@@ -95,7 +95,7 @@ export const M_RODEUR: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'forges'

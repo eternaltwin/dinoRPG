@@ -1,17 +1,17 @@
-import { Request } from 'express';
-import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
-import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeMoney } from '../dao/playerDao.js';
-import { shopList } from '../constants/index.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
 import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
+import { Request } from 'express';
+import { shopList } from '../constants/index.js';
 import { createLog } from '../dao/logDao.js';
+import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeMoney } from '../dao/playerDao.js';
+import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 /**
  * @summary Get all items from a shop
@@ -240,7 +240,7 @@ function checkDinozPlace(
 	},
 	shopId: number
 ) {
-	if (theShop.placeId !== placeList.ANYWHERE.placeId) {
+	if (theShop.placeId !== PlaceEnum.ANYWHERE) {
 		// For cursed shops, the player needs a non frozen, non sacrificed dinoz with the curse status at the location of the shop
 		if (theShop.type == ShopType.CURSED) {
 			const hasCursedDinozAtShop = player.dinoz.some(

@@ -4,11 +4,12 @@ import { MapZone } from '../enums/MapZone.mjs';
 import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { Condition } from '../npc/NpcConditions.mjs';
 import { MissionID } from '../missions/missionList.mjs';
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 
 export const placeList: Record<
-	string,
+	PlaceEnum,
 	{
-		placeId: number;
+		placeId: PlaceEnum;
 		name: string;
 		borderPlace: number[];
 		map: MapZone;
@@ -19,70 +20,70 @@ export const placeList: Record<
 	}
 > = {
 	// Useful for the few things accessible from any where like the flying shop
-	ANYWHERE: {
-		placeId: 0,
+	[PlaceEnum.ANYWHERE]: {
+		placeId: PlaceEnum.ANYWHERE,
 		name: 'anywhere',
 		borderPlace: [],
 		map: MapZone.ALL
 	},
-	PORT_DE_PRECHE: {
-		placeId: 1,
+	[PlaceEnum.PORT_DE_PRECHE]: {
+		placeId: PlaceEnum.PORT_DE_PRECHE,
 		name: 'port',
 		borderPlace: [7, 10, 11, 13],
 		map: MapZone.DINOLAND,
 		gather: GatherType.FISH,
 		specialGather: GatherType.ANNIV
 	},
-	PLACE_DU_MARCHE: {
-		placeId: 2,
+	[PlaceEnum.PLACE_DU_MARCHE]: {
+		placeId: PlaceEnum.PLACE_DU_MARCHE,
 		name: 'market',
 		borderPlace: [4],
 		map: MapZone.DINOLAND
 	},
-	PAPY_JOE: {
-		placeId: 3,
+	[PlaceEnum.PAPY_JOE]: {
+		placeId: PlaceEnum.PAPY_JOE,
 		name: 'papy',
 		borderPlace: [4, 6, 7],
 		map: MapZone.DINOLAND,
 		gather: GatherType.HUNT
 	},
-	FORCEBRUT: {
-		placeId: 4,
+	[PlaceEnum.FORCEBRUT]: {
+		placeId: PlaceEnum.FORCEBRUT,
 		name: 'forcebrut',
 		borderPlace: [2, 3, 7],
 		map: MapZone.DINOLAND,
 		gather: GatherType.ENERGY1
 	},
-	DINOVILLE: {
-		placeId: 5,
+	[PlaceEnum.DINOVILLE]: {
+		placeId: PlaceEnum.DINOVILLE,
 		name: 'dnv',
 		borderPlace: [6, 7, 12],
 		map: MapZone.DINOLAND,
 		gather: GatherType.SEEK
 	},
-	UNIVERSITE: {
-		placeId: 6,
+	[PlaceEnum.UNIVERSITE]: {
+		placeId: PlaceEnum.UNIVERSITE,
 		name: 'universite',
 		borderPlace: [3, 5, 8],
 		map: MapZone.DINOLAND,
 		gather: GatherType.CUEILLE1
 	},
-	FOUTAINE_DE_JOUVENCE: {
-		placeId: 7,
+	[PlaceEnum.FOUTAINE_DE_JOUVENCE]: {
+		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 		name: 'fountj',
 		borderPlace: [1, 3, 4, 5],
 		map: MapZone.DINOLAND,
 		gather: GatherType.CUEILLE1
 	},
-	COLLINES_ESCARPEES: {
-		placeId: 8,
+	[PlaceEnum.COLLINES_ESCARPEES]: {
+		placeId: PlaceEnum.COLLINES_ESCARPEES,
 		name: 'colesc',
 		borderPlace: [6, 9],
 		map: MapZone.DINOLAND,
 		gather: GatherType.HUNT
 	},
-	GO_TO_GRAND_TOUT_CHAUD: {
-		placeId: 9,
+	[PlaceEnum.GO_TO_GRAND_TOUT_CHAUD]: {
+		placeId: PlaceEnum.GO_TO_GRAND_TOUT_CHAUD,
 		name: 'gogtc',
 		borderPlace: [8],
 		alias: 43,
@@ -91,8 +92,8 @@ export const placeList: Record<
 		},
 		map: MapZone.GTOUTCHAUD
 	},
-	GO_TO_ATLANTEINES_ISLAND: {
-		placeId: 10,
+	[PlaceEnum.GO_TO_ATLANTEINES_ISLAND]: {
+		placeId: PlaceEnum.GO_TO_ATLANTEINES_ISLAND,
 		name: 'goiles',
 		borderPlace: [1],
 		alias: 31,
@@ -101,8 +102,8 @@ export const placeList: Record<
 		},
 		map: MapZone.ILES
 	},
-	CIMETIERE: {
-		placeId: 11,
+	[PlaceEnum.CIMETIERE]: {
+		placeId: PlaceEnum.CIMETIERE,
 		name: 'skull',
 		borderPlace: [1],
 		conditions: {
@@ -113,8 +114,8 @@ export const placeList: Record<
 		},
 		map: MapZone.DINOLAND
 	},
-	GO_TO_DINOPLAZA: {
-		placeId: 12,
+	[PlaceEnum.GO_TO_DINOPLAZA]: {
+		placeId: PlaceEnum.GO_TO_DINOPLAZA,
 		name: 'goplaz',
 		borderPlace: [5],
 		alias: 35,
@@ -123,8 +124,8 @@ export const placeList: Record<
 		},
 		map: MapZone.DINOWEST
 	},
-	GO_TO_MONSTER_ISLAND: {
-		placeId: 13,
+	[PlaceEnum.GO_TO_MONSTER_ISLAND]: {
+		placeId: PlaceEnum.GO_TO_MONSTER_ISLAND,
 		name: 'gomisl',
 		conditions: {
 			[ConditionEnum.STATUS]: statusList.JOVEBOZE,
@@ -134,36 +135,36 @@ export const placeList: Record<
 		alias: 92,
 		map: MapZone.ILEMONSTRE
 	},
-	AUREE_DE_LA_FORET: {
-		placeId: 14,
+	[PlaceEnum.AUREE_DE_LA_FORET]: {
+		placeId: PlaceEnum.AUREE_DE_LA_FORET,
 		name: 'auree',
 		borderPlace: [15, 23],
 		map: MapZone.JUNGLE,
 		gather: GatherType.CUEILLE1
 	},
-	CHEMIN_GLAUQUE: {
-		placeId: 15,
+	[PlaceEnum.CHEMIN_GLAUQUE]: {
+		placeId: PlaceEnum.CHEMIN_GLAUQUE,
 		name: 'chemin',
 		borderPlace: [14, 16, 17],
 		map: MapZone.JUNGLE,
 		gather: GatherType.CUEILLE1
 	},
-	COLLINES_HANTEES: {
-		placeId: 16,
+	[PlaceEnum.COLLINES_HANTEES]: {
+		placeId: PlaceEnum.COLLINES_HANTEES,
 		name: 'collin',
 		borderPlace: [15, 17],
 		map: MapZone.JUNGLE,
 		gather: GatherType.SEEK
 	},
-	FLEUVE_JUMIN: {
-		placeId: 17,
+	[PlaceEnum.FLEUVE_JUMIN]: {
+		placeId: PlaceEnum.FLEUVE_JUMIN,
 		name: 'fleuve',
 		borderPlace: [15, 16, 19, 18],
 		map: MapZone.JUNGLE,
 		gather: GatherType.FISH
 	},
-	FLEUVE_JUMIN_BIS: {
-		placeId: 102,
+	[PlaceEnum.FLEUVE_JUMIN_BIS]: {
+		placeId: PlaceEnum.FLEUVE_JUMIN_BIS,
 		name: 'fleuve',
 		borderPlace: [18],
 		conditions: {
@@ -172,8 +173,8 @@ export const placeList: Record<
 		alias: 17,
 		map: MapZone.JUNGLE
 	},
-	CAMP_KORGON: {
-		placeId: 18,
+	[PlaceEnum.CAMP_KORGON]: {
+		placeId: PlaceEnum.CAMP_KORGON,
 		name: 'camp',
 		borderPlace: [22, 102],
 		conditions: {
@@ -182,8 +183,8 @@ export const placeList: Record<
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT
 	},
-	JUNGLE_SAUVAGE: {
-		placeId: 19,
+	[PlaceEnum.JUNGLE_SAUVAGE]: {
+		placeId: PlaceEnum.JUNGLE_SAUVAGE,
 		name: 'jungle',
 		borderPlace: [17, 20],
 		conditions: {
@@ -192,15 +193,15 @@ export const placeList: Record<
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT
 	},
-	PORTE_DE_SYLVENOIRE: {
-		placeId: 20,
+	[PlaceEnum.PORTE_DE_SYLVENOIRE]: {
+		placeId: PlaceEnum.PORTE_DE_SYLVENOIRE,
 		name: 'garde',
 		borderPlace: [19, 21],
 		map: MapZone.JUNGLE,
 		gather: GatherType.ENERGY1
 	},
-	GO_TO_STEPPES: {
-		placeId: 21,
+	[PlaceEnum.GO_TO_STEPPES]: {
+		placeId: PlaceEnum.GO_TO_STEPPES,
 		name: 'gostep',
 		borderPlace: [20],
 		conditions: {
@@ -210,22 +211,22 @@ export const placeList: Record<
 		alias: 55,
 		map: MapZone.STEPPE
 	},
-	GO_TO_GORGES_PROFONDES: {
-		placeId: 22,
+	[PlaceEnum.GO_TO_GORGES_PROFONDES]: {
+		placeId: PlaceEnum.GO_TO_GORGES_PROFONDES,
 		name: 'goorg',
 		borderPlace: [18],
 		alias: 49,
 		map: MapZone.GTOUTCHAUD
 	},
-	GO_TO_CHUTES: {
-		placeId: 23,
+	[PlaceEnum.GO_TO_CHUTES]: {
+		placeId: PlaceEnum.GO_TO_CHUTES,
 		name: 'gochut',
 		borderPlace: [14],
 		alias: 25,
 		map: MapZone.ILES
 	},
-	GO_TO_FOREST: {
-		placeId: 24,
+	[PlaceEnum.GO_TO_FOREST]: {
+		placeId: PlaceEnum.GO_TO_FOREST,
 		name: 'gogrum',
 		borderPlace: [25],
 		conditions: {
@@ -234,15 +235,15 @@ export const placeList: Record<
 		alias: 14,
 		map: MapZone.JUNGLE
 	},
-	CHUTES_MUTANTES: {
-		placeId: 25,
+	[PlaceEnum.CHUTES_MUTANTES]: {
+		placeId: PlaceEnum.CHUTES_MUTANTES,
 		name: 'chutes',
 		borderPlace: [24, 26, 27, 29],
 		map: MapZone.ILES,
 		gather: GatherType.FISH
 	},
-	GO_TO_DOME_SOULAFLOTTE: {
-		placeId: 26,
+	[PlaceEnum.GO_TO_DOME_SOULAFLOTTE]: {
+		placeId: PlaceEnum.GO_TO_DOME_SOULAFLOTTE,
 		name: 'rasca',
 		borderPlace: [25],
 		alias: 28,
@@ -251,15 +252,15 @@ export const placeList: Record<
 		},
 		map: MapZone.ILES
 	},
-	BAO_BOB: {
-		placeId: 27,
+	[PlaceEnum.BAO_BOB]: {
+		placeId: PlaceEnum.BAO_BOB,
 		name: 'baobob',
 		borderPlace: [25],
 		map: MapZone.ILES,
 		gather: GatherType.HUNT
 	},
-	DOME_SOULAFLOTTE: {
-		placeId: 28,
+	[PlaceEnum.DOME_SOULAFLOTTE]: {
+		placeId: PlaceEnum.DOME_SOULAFLOTTE,
 		name: 'dome',
 		borderPlace: [25],
 		conditions: {
@@ -268,145 +269,145 @@ export const placeList: Record<
 		map: MapZone.ILES,
 		gather: GatherType.ENERGY1
 	},
-	MARAIS_COLLANT: {
-		placeId: 29,
+	[PlaceEnum.MARAIS_COLLANT]: {
+		placeId: PlaceEnum.MARAIS_COLLANT,
 		name: 'marais',
 		borderPlace: [25, 30, 31, 33],
 		map: MapZone.ILES,
 		gather: GatherType.CUEILLE1
 	},
-	MINES_DE_CORAIL: {
-		placeId: 30,
+	[PlaceEnum.MINES_DE_CORAIL]: {
+		placeId: PlaceEnum.MINES_DE_CORAIL,
 		name: 'corail',
 		borderPlace: [29, 31],
 		map: MapZone.ILES,
 		gather: GatherType.SEEK
 	},
-	ILE_WAIKIKI: {
-		placeId: 31,
+	[PlaceEnum.ILE_WAIKIKI]: {
+		placeId: PlaceEnum.ILE_WAIKIKI,
 		name: 'ilewkk',
 		borderPlace: [29, 30, 32],
 		map: MapZone.ILES,
 		gather: GatherType.FISH
 	},
-	GO_TO_PORT_DE_PRECHE: {
-		placeId: 32,
+	[PlaceEnum.GO_TO_PORT_DE_PRECHE]: {
+		placeId: PlaceEnum.GO_TO_PORT_DE_PRECHE,
 		name: 'goport',
 		borderPlace: [31],
 		alias: 1,
 		map: MapZone.DINOLAND
 	},
-	ATELIER_BROC: {
-		placeId: 33,
+	[PlaceEnum.ATELIER_BROC]: {
+		placeId: PlaceEnum.ATELIER_BROC,
 		name: 'chbroc',
 		borderPlace: [29],
 		map: MapZone.ILES
 	},
-	GO_TO_DINOVILLE: {
-		placeId: 34,
+	[PlaceEnum.GO_TO_DINOVILLE]: {
+		placeId: PlaceEnum.GO_TO_DINOVILLE,
 		name: 'godnv',
 		borderPlace: [35],
 		alias: 5,
 		map: MapZone.DINOLAND
 	},
-	DINOPLAZA: {
-		placeId: 35,
+	[PlaceEnum.DINOPLAZA]: {
+		placeId: PlaceEnum.DINOPLAZA,
 		name: 'dplaza',
 		borderPlace: [36, 37, 38, 34],
 		map: MapZone.DINOWEST
 	},
-	VILLA: {
-		placeId: 36,
+	[PlaceEnum.VILLA]: {
+		placeId: PlaceEnum.VILLA,
 		name: 'villa',
 		borderPlace: [35, 37],
 		map: MapZone.DINOWEST
 	},
-	CINEMA_PARADINO: {
-		placeId: 37,
+	[PlaceEnum.CINEMA_PARADINO]: {
+		placeId: PlaceEnum.CINEMA_PARADINO,
 		name: 'dcine',
 		borderPlace: [36, 35, 38, 40],
 		map: MapZone.DINOWEST
 	},
-	CLINIQUE: {
-		placeId: 38,
+	[PlaceEnum.CLINIQUE]: {
+		placeId: PlaceEnum.CLINIQUE,
 		name: 'clinik',
 		borderPlace: [35, 37],
 		map: MapZone.DINOWEST
 	},
-	CHATEAU_DE_DINOVILLE: {
-		placeId: 39,
+	[PlaceEnum.CHATEAU_DE_DINOVILLE]: {
+		placeId: PlaceEnum.CHATEAU_DE_DINOVILLE,
 		name: 'chato',
 		borderPlace: [40],
 		map: MapZone.DINOWEST
 	},
-	POSTE_DE_GARDE: {
-		placeId: 40,
+	[PlaceEnum.POSTE_DE_GARDE]: {
+		placeId: PlaceEnum.POSTE_DE_GARDE,
 		name: 'poste',
 		borderPlace: [39, 41, 37],
 		map: MapZone.DINOWEST
 	},
-	GO_TO_VOIE_TEMPLE_CELESTE: {
-		placeId: 41,
+	[PlaceEnum.GO_TO_VOIE_TEMPLE_CELESTE]: {
+		placeId: PlaceEnum.GO_TO_VOIE_TEMPLE_CELESTE,
 		name: 'portal',
 		borderPlace: [40],
 		map: MapZone.DINOWEST
 	},
-	GO_TO_COLLINES_ESCARPEES: {
-		placeId: 42,
+	[PlaceEnum.GO_TO_COLLINES_ESCARPEES]: {
+		placeId: PlaceEnum.GO_TO_COLLINES_ESCARPEES,
 		name: 'gocol',
 		borderPlace: [43],
 		alias: 8,
 		map: MapZone.DINOLAND
 	},
-	PENTES_DE_BASALTE: {
-		placeId: 43,
+	[PlaceEnum.PENTES_DE_BASALTE]: {
+		placeId: PlaceEnum.PENTES_DE_BASALTE,
 		name: 'bslt',
 		borderPlace: [42, 44],
 		map: MapZone.GTOUTCHAUD,
 		gather: GatherType.ENERGY1
 	},
-	FORGES_DU_GTC: {
-		placeId: 44,
+	[PlaceEnum.FORGES_DU_GTC]: {
+		placeId: PlaceEnum.FORGES_DU_GTC,
 		name: 'forges',
 		borderPlace: [43, 45, 46, 47],
 		map: MapZone.GTOUTCHAUD,
 		gather: GatherType.CUEILLE1
 	},
-	RUINES_ASHPOUK: {
-		placeId: 45,
+	[PlaceEnum.RUINES_ASHPOUK]: {
+		placeId: PlaceEnum.RUINES_ASHPOUK,
 		name: 'rashpk',
 		borderPlace: [44],
 		map: MapZone.GTOUTCHAUD,
 		gather: GatherType.SEEK
 	},
-	FOSSELAVE: {
-		placeId: 46,
+	[PlaceEnum.FOSSELAVE]: {
+		placeId: PlaceEnum.FOSSELAVE,
 		name: 'fosslv',
 		borderPlace: [44, 48],
 		map: MapZone.GTOUTCHAUD,
 		gather: GatherType.SEEK
 	},
-	REPAIRE_DU_VENERABLE: {
-		placeId: 47,
+	[PlaceEnum.REPAIRE_DU_VENERABLE]: {
+		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
 		name: 'vener',
 		borderPlace: [44, 52],
 		map: MapZone.GTOUTCHAUD,
 		gather: GatherType.HUNT
 	},
-	TUNNEL_SOUS_LA_BRANCHE: {
-		placeId: 48,
+	[PlaceEnum.TUNNEL_SOUS_LA_BRANCHE]: {
+		placeId: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 		name: 'tunel',
 		borderPlace: [46, 50],
 		map: MapZone.GTOUTCHAUD
 	},
-	GORGES_PROFONDES: {
-		placeId: 49,
+	[PlaceEnum.GORGES_PROFONDES]: {
+		placeId: PlaceEnum.GORGES_PROFONDES,
 		name: 'gorges',
 		borderPlace: [48, 51],
 		map: MapZone.GTOUTCHAUD
 	},
-	GO_TO_TUNNEL: {
-		placeId: 50,
+	[PlaceEnum.GO_TO_TUNNEL]: {
+		placeId: PlaceEnum.GO_TO_TUNNEL,
 		name: 'stunel',
 		borderPlace: [48],
 		conditions: {
@@ -415,15 +416,15 @@ export const placeList: Record<
 		alias: 49,
 		map: MapZone.GTOUTCHAUD
 	},
-	GO_TO_CAMP_KORGON: {
-		placeId: 51,
+	[PlaceEnum.GO_TO_CAMP_KORGON]: {
+		placeId: PlaceEnum.GO_TO_CAMP_KORGON,
 		name: 'gocamp',
 		borderPlace: [50],
 		alias: 18,
 		map: MapZone.JUNGLE
 	},
-	GO_TO_KARINBAO_TOWER: {
-		placeId: 52,
+	[PlaceEnum.GO_TO_KARINBAO_TOWER]: {
+		placeId: PlaceEnum.GO_TO_KARINBAO_TOWER,
 		name: 'tourbt',
 		borderPlace: [47, 53],
 		map: MapZone.GTOUTCHAUD,
@@ -431,334 +432,334 @@ export const placeList: Record<
 			[ConditionEnum.ACTIVE]: false //'roid'
 		}
 	},
-	GO_TO_CELESTIAL_ISLAND: {
-		placeId: 53,
+	[PlaceEnum.GO_TO_CELESTIAL_ISLAND]: {
+		placeId: PlaceEnum.GO_TO_CELESTIAL_ISLAND,
 		name: 'toursk',
 		borderPlace: [52],
 		alias: 81,
 		map: MapZone.NIMBAO
 	},
-	GO_TO_SYLVENOIRE_DOOR: {
-		placeId: 54,
+	[PlaceEnum.GO_TO_SYLVENOIRE_DOOR]: {
+		placeId: PlaceEnum.GO_TO_SYLVENOIRE_DOOR,
 		name: 'gosylv',
 		borderPlace: [55],
 		alias: 20,
 		map: MapZone.JUNGLE
 	},
-	FRONTIERE_CREPITANTE: {
-		placeId: 55,
+	[PlaceEnum.FRONTIERE_CREPITANTE]: {
+		placeId: PlaceEnum.FRONTIERE_CREPITANTE,
 		name: 'senter',
 		borderPlace: [54, 56, 57],
 		map: MapZone.STEPPE,
 		gather: GatherType.CUEILLE1
 	},
-	CROISEE_DES_NOMADES: {
-		placeId: 56,
+	[PlaceEnum.CROISEE_DES_NOMADES]: {
+		placeId: PlaceEnum.CROISEE_DES_NOMADES,
 		name: 'scross',
 		borderPlace: [58, 55, 61],
 		map: MapZone.STEPPE
 	},
-	AVANT_POSTE_ROCKY: {
-		placeId: 57,
+	[PlaceEnum.AVANT_POSTE_ROCKY]: {
+		placeId: PlaceEnum.AVANT_POSTE_ROCKY,
 		name: 'svillg',
 		borderPlace: [55, 58],
 		map: MapZone.STEPPE,
 		gather: GatherType.HUNT
 	},
-	CITADELLE_DU_ROI: {
-		placeId: 58,
+	[PlaceEnum.CITADELLE_DU_ROI]: {
+		placeId: PlaceEnum.CITADELLE_DU_ROI,
 		name: 'sking',
 		borderPlace: [56, 57, 59, 62],
 		map: MapZone.STEPPE,
 		gather: GatherType.SEEK
 	},
-	PYLONES_DE_MAGNETITES: {
-		placeId: 59,
+	[PlaceEnum.PYLONES_DE_MAGNETITES]: {
+		placeId: PlaceEnum.PYLONES_DE_MAGNETITES,
 		name: 'spylon',
 		borderPlace: [58, 60, 63],
 		map: MapZone.STEPPE,
 		gather: GatherType.ENERGY1
 	},
-	SYPHON_SIFFLEUR: {
-		placeId: 60,
+	[PlaceEnum.SYPHON_SIFFLEUR]: {
+		placeId: PlaceEnum.SYPHON_SIFFLEUR,
 		name: 'slake',
 		borderPlace: [59, 61, 64, 65, 101],
 		map: MapZone.STEPPE,
 		gather: GatherType.FISH
 	},
-	SENTIER_DE_TOUTEMBA: {
-		placeId: 61,
+	[PlaceEnum.SENTIER_DE_TOUTEMBA]: {
+		placeId: PlaceEnum.SENTIER_DE_TOUTEMBA,
 		name: 'scanyo',
 		borderPlace: [56, 60],
 		map: MapZone.STEPPE,
 		gather: GatherType.ENERGY1
 	},
-	DEVOREUSE_DE_L_EST: {
-		placeId: 62,
+	[PlaceEnum.DEVOREUSE_DE_L_EST]: {
+		placeId: PlaceEnum.DEVOREUSE_DE_L_EST,
 		name: 'stowr1',
 		borderPlace: [58],
 		map: MapZone.STEPPE
 	},
-	DEVOREUSE_DU_NORD: {
-		placeId: 63,
+	[PlaceEnum.DEVOREUSE_DU_NORD]: {
+		placeId: PlaceEnum.DEVOREUSE_DU_NORD,
 		name: 'stowr2',
 		borderPlace: [59],
 		map: MapZone.STEPPE
 	},
-	DEVOREUSE_DE_L_OUEST: {
-		placeId: 64,
+	[PlaceEnum.DEVOREUSE_DE_L_OUEST]: {
+		placeId: PlaceEnum.DEVOREUSE_DE_L_OUEST,
 		name: 'stowr3',
 		borderPlace: [60],
 		map: MapZone.STEPPE
 	},
-	TAUDIS_DES_ZAXA: {
-		placeId: 65,
+	[PlaceEnum.TAUDIS_DES_ZAXA]: {
+		placeId: PlaceEnum.TAUDIS_DES_ZAXA,
 		name: 'sband1',
 		borderPlace: [60, 66, 67],
 		map: MapZone.STEPPE
 	},
-	CAMP_DES_EMMEMMA: {
-		placeId: 66,
+	[PlaceEnum.CAMP_DES_EMMEMMA]: {
+		placeId: PlaceEnum.CAMP_DES_EMMEMMA,
 		name: 'sband2',
 		borderPlace: [65, 67, 70],
 		map: MapZone.STEPPE
 	},
-	CAMPEMENT_DES_MATTMUT: {
-		placeId: 67,
+	[PlaceEnum.CAMPEMENT_DES_MATTMUT]: {
+		placeId: PlaceEnum.CAMPEMENT_DES_MATTMUT,
 		name: 'sband3',
 		borderPlace: [65, 66, 68],
 		map: MapZone.STEPPE
 	},
-	REPAIRE_DE_LA_TEAM_W: {
-		placeId: 68,
+	[PlaceEnum.REPAIRE_DE_LA_TEAM_W]: {
+		placeId: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
 		name: 'scampw',
 		borderPlace: [67],
 		map: MapZone.STEPPE,
 		gather: GatherType.SEEK
 	},
-	CONFINS_DES_STEPPES: {
-		placeId: 69,
+	[PlaceEnum.CONFINS_DES_STEPPES]: {
+		placeId: PlaceEnum.CONFINS_DES_STEPPES,
 		name: 'scaush',
 		borderPlace: [66, 70, 71],
 		map: MapZone.STEPPE,
 		gather: GatherType.CUEILLE1
 	},
-	PORTES_DE_CAUSHEMESH: {
-		placeId: 70,
+	[PlaceEnum.PORTES_DE_CAUSHEMESH]: {
+		placeId: PlaceEnum.PORTES_DE_CAUSHEMESH,
 		name: 'sport',
 		borderPlace: [66, 69],
 		map: MapZone.STEPPE,
 		gather: GatherType.CUEILLE1
 	},
-	APPROCHER_SYPHON: {
-		placeId: 71,
+	[PlaceEnum.APPROCHER_SYPHON]: {
+		placeId: PlaceEnum.APPROCHER_SYPHON,
 		name: 'sinto1',
 		borderPlace: [69],
 		alias: 60,
 		map: MapZone.STEPPE
 	},
-	TETE_DE_L_ILE: {
-		placeId: 72,
+	[PlaceEnum.TETE_DE_L_ILE]: {
+		placeId: PlaceEnum.TETE_DE_L_ILE,
 		name: 'iroche',
 		borderPlace: [73],
 		map: MapZone.NIMBAO,
 		gather: GatherType.SEEK
 	},
-	PONT: {
-		placeId: 73,
+	[PlaceEnum.PONT]: {
+		placeId: PlaceEnum.PONT,
 		name: 'ipont',
 		borderPlace: [72, 74],
 		map: MapZone.NIMBAO
 	},
-	PORTE_DE_NIVEAU_SUPERIEUR: {
-		placeId: 74,
+	[PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR]: {
+		placeId: PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR,
 		name: 'iporte',
 		borderPlace: [73, 77, 83, 75, 88],
 		map: MapZone.NIMBAO
 	},
-	CITE_ARBORIS: {
-		placeId: 75,
+	[PlaceEnum.CITE_ARBORIS]: {
+		placeId: PlaceEnum.CITE_ARBORIS,
 		name: 'icite',
 		borderPlace: [74, 76, 81, 89],
 		map: MapZone.NIMBAO
 	},
-	LAC_CELESTE: {
-		placeId: 76,
+	[PlaceEnum.LAC_CELESTE]: {
+		placeId: PlaceEnum.LAC_CELESTE,
 		name: 'ilacro',
 		borderPlace: [75, 88, 90],
 		map: MapZone.NIMBAO,
 		gather: GatherType.HUNT
 	},
-	PLAINES_ENNEIGEES: {
-		placeId: 77,
+	[PlaceEnum.PLAINES_ENNEIGEES]: {
+		placeId: PlaceEnum.PLAINES_ENNEIGEES,
 		name: 'iplain',
 		borderPlace: [74, 78],
 		map: MapZone.NIMBAO
 	},
-	BOIS_GIVRES: {
-		placeId: 78,
+	[PlaceEnum.BOIS_GIVRES]: {
+		placeId: PlaceEnum.BOIS_GIVRES,
 		name: 'isnow2',
 		borderPlace: [77, 79],
 		map: MapZone.NIMBAO,
 		gather: GatherType.CUEILLE2
 	},
-	MONT_SACRE_D_EVEROUEST: {
-		placeId: 79,
+	[PlaceEnum.MONT_SACRE_D_EVEROUEST]: {
+		placeId: PlaceEnum.MONT_SACRE_D_EVEROUEST,
 		name: 'imont',
 		borderPlace: [78, 80],
 		map: MapZone.NIMBAO
 	},
-	SOMMET_DU_MONT_SACRE: {
-		placeId: 80,
+	[PlaceEnum.SOMMET_DU_MONT_SACRE]: {
+		placeId: PlaceEnum.SOMMET_DU_MONT_SACRE,
 		name: 'ihaut',
 		borderPlace: [79],
 		map: MapZone.NIMBAO
 	},
-	CHEMIN_OBSERVATOIRE: {
-		placeId: 81,
+	[PlaceEnum.CHEMIN_OBSERVATOIRE]: {
+		placeId: PlaceEnum.CHEMIN_OBSERVATOIRE,
 		name: 'voie',
 		borderPlace: [75, 82, 91],
 		map: MapZone.NIMBAO //Redescente tout chaud
 	},
-	OBSERVATOIRE: {
-		placeId: 82,
+	[PlaceEnum.OBSERVATOIRE]: {
+		placeId: PlaceEnum.OBSERVATOIRE,
 		name: 'observ',
 		borderPlace: [81],
 		map: MapZone.NIMBAO
 	},
-	QUARTIER_LUXURIANT: {
-		placeId: 83,
+	[PlaceEnum.QUARTIER_LUXURIANT]: {
+		placeId: PlaceEnum.QUARTIER_LUXURIANT,
 		name: 'ville1',
 		borderPlace: [74, 84, 87],
 		map: MapZone.NIMBAO
 	},
-	QUARTIER_EXUBERANT: {
-		placeId: 84,
+	[PlaceEnum.QUARTIER_EXUBERANT]: {
+		placeId: PlaceEnum.QUARTIER_EXUBERANT,
 		name: 'ville2',
 		borderPlace: [83, 85],
 		map: MapZone.NIMBAO
 	},
-	CHEMIN_VERS_PALAIS: {
-		placeId: 85,
+	[PlaceEnum.CHEMIN_VERS_PALAIS]: {
+		placeId: PlaceEnum.CHEMIN_VERS_PALAIS,
 		name: 'sommet',
 		borderPlace: [84, 86, 87],
 		map: MapZone.NIMBAO
 	},
-	PALAIS_DE_L_ARCHIDOROGON: {
-		placeId: 86,
+	[PlaceEnum.PALAIS_DE_L_ARCHIDOROGON]: {
+		placeId: PlaceEnum.PALAIS_DE_L_ARCHIDOROGON,
 		name: 'palais',
 		borderPlace: [85],
 		map: MapZone.NIMBAO
 	},
-	EGOUTS_DU_PALAIS: {
-		placeId: 87,
+	[PlaceEnum.EGOUTS_DU_PALAIS]: {
+		placeId: PlaceEnum.EGOUTS_DU_PALAIS,
 		name: 'egout',
 		borderPlace: [83, 85],
 		map: MapZone.NIMBAO
 	},
-	CHUTES_DE_NIRVANA: {
-		placeId: 88,
+	[PlaceEnum.CHUTES_DE_NIRVANA]: {
+		placeId: PlaceEnum.CHUTES_DE_NIRVANA,
 		name: 'ilac',
 		borderPlace: [74, 76],
 		map: MapZone.NIMBAO,
 		gather: GatherType.ENERGY2
 	},
-	PRIRANESE: {
-		placeId: 89,
+	[PlaceEnum.PRIRANESE]: {
+		placeId: PlaceEnum.PRIRANESE,
 		name: 'prison',
 		borderPlace: [75, 90],
 		map: MapZone.NIMBAO
 	},
-	AILE_OUEST_DU_DRAGON: {
-		placeId: 90,
+	[PlaceEnum.AILE_OUEST_DU_DRAGON]: {
+		placeId: PlaceEnum.AILE_OUEST_DU_DRAGON,
 		name: 'ilac2',
 		borderPlace: [89, 76],
 		map: MapZone.NIMBAO
 	},
-	TOURUP: {
-		placeId: 91,
+	[PlaceEnum.TOURUP]: {
+		placeId: PlaceEnum.TOURUP,
 		name: 'tourup',
 		borderPlace: [89, 76, 81],
 		alias: 52,
 		map: MapZone.NIMBAO
 	},
-	PORT_MONSTRUEUX: {
-		placeId: 92,
+	[PlaceEnum.PORT_MONSTRUEUX]: {
+		placeId: PlaceEnum.PORT_MONSTRUEUX,
 		name: 'mport',
 		borderPlace: [98, 96, 93],
 		map: MapZone.ILEMONSTRE
 	},
-	AVANT_POSTE_FRUTOX: {
-		placeId: 93,
+	[PlaceEnum.AVANT_POSTE_FRUTOX]: {
+		placeId: PlaceEnum.AVANT_POSTE_FRUTOX,
 		name: 'mfoutp',
 		borderPlace: [92, 96, 95, 94],
 		map: MapZone.ILEMONSTRE
 	},
-	PALAIS_DU_GROTOX: {
-		placeId: 94,
+	[PlaceEnum.PALAIS_DU_GROTOX]: {
+		placeId: PlaceEnum.PALAIS_DU_GROTOX,
 		name: 'mfpalc',
 		borderPlace: [93, 95],
 		map: MapZone.ILEMONSTRE
 	},
-	FORET_KAZE_KAMI: {
-		placeId: 95,
+	[PlaceEnum.FORET_KAZE_KAMI]: {
+		placeId: PlaceEnum.FORET_KAZE_KAMI,
 		name: 'mforst',
 		borderPlace: [93, 94, 99],
 		map: MapZone.ILEMONSTRE
 	},
-	AVANT_POSTE_VEGETOX: {
-		placeId: 96,
+	[PlaceEnum.AVANT_POSTE_VEGETOX]: {
+		placeId: PlaceEnum.AVANT_POSTE_VEGETOX,
 		name: 'mvoutp',
 		borderPlace: [92, 93, 97],
 		map: MapZone.ILEMONSTRE
 	},
-	PALAIX_D_ANTRAXOV: {
-		placeId: 97,
+	[PlaceEnum.PALAIX_D_ANTRAXOV]: {
+		placeId: PlaceEnum.PALAIX_D_ANTRAXOV,
 		name: 'mvpalc',
 		borderPlace: [96, 100],
 		map: MapZone.ILEMONSTRE
 	},
-	GO_TO_PORT_DE_PRECHE_THROUGHT_MONSTER_ISLAND: {
-		placeId: 98,
+	[PlaceEnum.GO_TO_PORT_DE_PRECHE_THROUGHT_MONSTER_ISLAND]: {
+		placeId: PlaceEnum.GO_TO_PORT_DE_PRECHE_THROUGHT_MONSTER_ISLAND,
 		name: 'bkport',
 		borderPlace: [92],
 		alias: 1,
 		map: MapZone.DINOLAND
 	},
-	RUINES_DE_CUSCOUZ: {
-		placeId: 99,
+	[PlaceEnum.RUINES_DE_CUSCOUZ]: {
+		placeId: PlaceEnum.RUINES_DE_CUSCOUZ,
 		name: 'mcuzco',
 		borderPlace: [95, 100],
 		map: MapZone.ILEMONSTRE
 	},
-	CAMP_D_ELIT: {
-		placeId: 100,
+	[PlaceEnum.CAMP_D_ELITE]: {
+		placeId: PlaceEnum.CAMP_D_ELITE,
 		name: 'mcelit',
 		borderPlace: [97, 99],
 		map: MapZone.ILEMONSTRE
 	},
-	APPROCHER_SYPHON2: {
-		placeId: 101,
+	[PlaceEnum.APPROCHER_SYPHON2]: {
+		placeId: PlaceEnum.APPROCHER_SYPHON2,
 		name: 'sinto2',
 		borderPlace: [60],
 		alias: 69,
 		map: MapZone.STEPPE
 	},
 	//DarkWorld
-	GOUFFRE: {
-		placeId: 103,
+	[PlaceEnum.GOUFFRE]: {
+		placeId: PlaceEnum.GOUFFRE,
 		name: 'dkchut',
 		borderPlace: [104, 114, 111, 114, 115],
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE: {
-		placeId: 104,
+	[PlaceEnum.TOUR_SOMBRE]: {
+		placeId: PlaceEnum.TOUR_SOMBRE,
 		name: 'dktow',
 		borderPlace: [103, 113, 105],
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE_1: {
-		placeId: 105,
+	[PlaceEnum.TOUR_SOMBRE_1]: {
+		placeId: PlaceEnum.TOUR_SOMBRE_1,
 		name: 'dktow2',
 		borderPlace: [104, 106],
 		conditions: {
@@ -771,38 +772,38 @@ export const placeList: Record<
 		},
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE_2: {
-		placeId: 106,
+	[PlaceEnum.TOUR_SOMBRE_2]: {
+		placeId: PlaceEnum.TOUR_SOMBRE_2,
 		name: 'dktow3',
 		borderPlace: [105, 107],
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE_DONJON_1: {
-		placeId: 107,
+	[PlaceEnum.TOUR_SOMBRE_DONJON_1]: {
+		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_1,
 		name: 'dktow4',
 		borderPlace: [106, 108, 109],
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE_DONJON_2: {
-		placeId: 108,
+	[PlaceEnum.TOUR_SOMBRE_DONJON_2]: {
+		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_2,
 		name: 'dktowa',
 		borderPlace: [107, 110],
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE_DONJON_3: {
-		placeId: 109,
+	[PlaceEnum.TOUR_SOMBRE_DONJON_3]: {
+		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_3,
 		name: 'dktowb',
 		borderPlace: [107, 110],
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE_DONJON_LAST: {
-		placeId: 110,
+	[PlaceEnum.TOUR_SOMBRE_DONJON_LAST]: {
+		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_LAST,
 		name: 'dktows',
 		borderPlace: [108, 109],
 		map: MapZone.DARKWORLD
 	},
-	DARK_FAKE: {
-		placeId: 111,
+	[PlaceEnum.DARK_FAKE]: {
+		placeId: PlaceEnum.DARK_FAKE,
 		name: 'fake',
 		borderPlace: [103],
 		conditions: {
@@ -815,8 +816,8 @@ export const placeList: Record<
 		},
 		map: MapZone.DARKWORLD
 	},
-	DARK_FAKE_2: {
-		placeId: 112,
+	[PlaceEnum.DARK_FAKE_2]: {
+		placeId: PlaceEnum.DARK_FAKE_2,
 		name: 'fake2',
 		borderPlace: [102],
 		conditions: {
@@ -824,8 +825,8 @@ export const placeList: Record<
 		},
 		map: MapZone.DARKWORLD
 	},
-	TOUR_SOMBRE_ENTREE: {
-		placeId: 113,
+	[PlaceEnum.TOUR_SOMBRE_ENTREE]: {
+		placeId: PlaceEnum.TOUR_SOMBRE_ENTREE,
 		name: 'gotow',
 		borderPlace: [104],
 		conditions: {
@@ -838,8 +839,8 @@ export const placeList: Record<
 		alias: 105,
 		map: MapZone.DARKWORLD
 	},
-	RETOUR_SURFACE: {
-		placeId: 114,
+	[PlaceEnum.RETOUR_SURFACE]: {
+		placeId: PlaceEnum.RETOUR_SURFACE,
 		name: 'rechut',
 		conditions: {
 			[ConditionEnum.ACTIVE]: false
@@ -848,14 +849,14 @@ export const placeList: Record<
 		alias: 25,
 		map: MapZone.DARKWORLD
 	},
-	PORTAIL: {
-		placeId: 115,
+	[PlaceEnum.PORTAIL]: {
+		placeId: PlaceEnum.PORTAIL,
 		name: 'dkbao',
 		borderPlace: [103, 112],
 		map: MapZone.DARKWORLD
 	},
-	NOWHERE: {
-		placeId: 999,
+	[PlaceEnum.NOWHERE]: {
+		placeId: PlaceEnum.NOWHERE,
 		name: 'nowhere',
 		borderPlace: [],
 		map: MapZone.ALL

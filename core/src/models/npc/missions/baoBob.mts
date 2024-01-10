@@ -1,10 +1,10 @@
 import { statusList } from '../../dinoz/StatusList.mjs';
-import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { placeList } from '../../place/PlaceList.mjs';
 import { rewardList } from '../../reward/RewardList.mjs';
-import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_BAO_BOB: Mission[] = [
 	// Missions 12 to 21
@@ -20,7 +20,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.MARAIS_COLLANT.name,
+				place: PlaceEnum.MARAIS_COLLANT,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.PIRA.name],
@@ -30,7 +30,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.ILE_WAIKIKI.name,
+				place: PlaceEnum.ILE_WAIKIKI,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'sophie'
@@ -40,7 +40,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -66,7 +66,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.MINES_DE_CORAIL.name,
+				place: PlaceEnum.MINES_DE_CORAIL,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -77,7 +77,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.ILE_WAIKIKI.name,
+				place: PlaceEnum.ILE_WAIKIKI,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -88,7 +88,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -99,7 +99,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.MARAIS_COLLANT.name,
+				place: PlaceEnum.MARAIS_COLLANT,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -110,7 +110,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.MINES_DE_CORAIL.name,
+				place: PlaceEnum.MINES_DE_CORAIL,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -121,7 +121,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -132,7 +132,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -160,7 +160,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.DOME_SOULAFLOTTE.name,
+				place: PlaceEnum.DOME_SOULAFLOTTE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KAZKA.name],
@@ -171,7 +171,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -200,7 +200,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANGUIL.name],
@@ -211,7 +211,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'marchandvin'
@@ -221,7 +221,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'pecheur'
@@ -231,7 +231,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'mmeseyche'
@@ -241,7 +241,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PAPY_JOE.name,
+				place: PlaceEnum.PAPY_JOE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'adam'
@@ -251,7 +251,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -280,7 +280,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KAZKA.name, monsterList.PIRA.name],
@@ -291,7 +291,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -313,7 +313,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -323,7 +323,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -348,7 +348,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -358,7 +358,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.UNIVERSITE.name,
+				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -368,7 +368,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -393,7 +393,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.MINES_DE_CORAIL.name,
+				place: PlaceEnum.MINES_DE_CORAIL,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -403,7 +403,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FORCEBRUT.name,
+				place: PlaceEnum.FORCEBRUT,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -413,7 +413,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -423,7 +423,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -448,7 +448,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -458,7 +458,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'
@@ -490,7 +490,7 @@ export const M_BAO_BOB: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.ILE_WAIKIKI.name,
+				place: PlaceEnum.ILE_WAIKIKI,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -500,7 +500,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FORCEBRUT.name,
+				place: PlaceEnum.FORCEBRUT,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -510,7 +510,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.COLLINES_ESCARPEES.name,
+				place: PlaceEnum.COLLINES_ESCARPEES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -520,7 +520,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -530,7 +530,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.CAMP_KORGON.name,
+				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -540,7 +540,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'etape'
@@ -550,7 +550,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.BAO_BOB.name,
+				place: PlaceEnum.BAO_BOB,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'bob'

@@ -45,10 +45,7 @@ export function conditionParser(
 		}
 		result = dinozList.every(dinoz => place[1].placeId === dinoz.placeId);
 	} else if (PLACE_IS) {
-		const thisplace = Object.values(placeList).find(place => place.name.toUpperCase() === PLACE_IS.toUpperCase());
-		if (!thisplace) {
-			throw new Error(`Place ${PLACE_IS} doesn't exist.`);
-		}
+		const thisplace = placeList[PLACE_IS];
 
 		result = dinozList.every(dinoz => (thisplace.placeId || dinoz.placeId) === dinoz.placeId);
 	} else if (SCENARIO) {

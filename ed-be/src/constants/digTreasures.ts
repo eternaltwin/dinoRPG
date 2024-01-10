@@ -1,12 +1,12 @@
 import { DigData } from '@drpg/core/models/dinoz/DigData';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum, Operator, RewardEnum } from '@drpg/core/models/enums/Parser';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 export const digTreasures: Readonly<Record<string, DigData>> = {
 	BASALT: {
 		name: 'basalt',
-		place: placeList.PENTES_DE_BASALTE.placeId,
+		place: PlaceEnum.PENTES_DE_BASALTE,
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -22,7 +22,7 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 	},
 	PURE_WATER: {
 		name: 'PURE_WATER',
-		place: placeList.FOUTAINE_DE_JOUVENCE.placeId,
+		place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -38,7 +38,7 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 	},
 	SWAMP_MUD: {
 		name: 'SWAMP_MUD',
-		place: placeList.MARAIS_COLLANT.placeId,
+		place: PlaceEnum.MARAIS_COLLANT,
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -54,7 +54,7 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 	},
 	OLD_STONE: {
 		name: 'OLD_STONE',
-		place: placeList.RUINES_ASHPOUK.placeId,
+		place: PlaceEnum.RUINES_ASHPOUK,
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,

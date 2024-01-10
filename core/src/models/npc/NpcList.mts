@@ -1,6 +1,8 @@
 import { statusList } from '../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator } from '../enums/Parser.mjs';
-import { placeList } from '../place/PlaceList.mjs';
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
+import { itemList } from '../item/ItemList.mjs';
+import { MissionID } from '../missions/missionList.mjs';
 import { ALPHA } from './characters/alpha.mjs';
 import { ARCHISAGE } from './characters/archisage.mjs';
 import { BAOBOB } from './characters/baoBob.mjs';
@@ -19,6 +21,7 @@ import { MMEX } from './characters/mmex.mjs';
 import { PADAMOINE } from './characters/padamoine.mjs';
 import { PAPYJOE } from './characters/papyJoe.mjs';
 import { PROFESSOR } from './characters/prof.mjs';
+import { RODEUR, RODEUR2, RODEUR3 } from './characters/rodeur.mjs';
 import { SHAMAN } from './characters/shaman.mjs';
 import { SOFIA } from './characters/sofia.mjs';
 import { M_BAO_BOB } from './missions/baoBob.mjs';
@@ -26,19 +29,16 @@ import { M_DIANKORGSEY } from './missions/dianKorgsey.mjs';
 import { M_GARDIEN } from './missions/gardien.mjs';
 import { M_HULOT } from './missions/hulot.mjs';
 import { M_PAPY_JOE } from './missions/papyJoe.mjs';
-import { M_SHAMAN_MOU } from './missions/shaman.mjs';
-import { RODEUR, RODEUR2, RODEUR3 } from './characters/rodeur.mjs';
 import { M_RODEUR } from './missions/rodeur.mjs';
-import { MissionID } from '../missions/missionList.mjs';
+import { M_SHAMAN_MOU } from './missions/shaman.mjs';
 import { Npc } from './npc.mjs';
-import { itemList } from '../item/ItemList.mjs';
 import { M_MMEX } from './missions/mmex.mjs';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
 		name: 'alpha_test',
 		id: 0,
-		placeId: placeList.DINOVILLE.placeId,
+		placeId: PlaceEnum.DINOVILLE,
 		data: ALPHA,
 		condition: undefined,
 		missions: undefined,
@@ -47,21 +47,21 @@ export const npcList: Record<string, Npc> = {
 	// CRIEUR: {
 	// 	name: 'street_shouter',
 	// 	id: 1,
-	// 	placeId: placeList.DINOVILLE.placeId,
+	//	placeId: PlaceEnum.DINOVILLE,
 	// 	condition: NpcTrigger.ALWAYS,
 	// 	data: PROFESSOR,
 	// },
 	// MICHEL: {
 	// 	name: 'michel',
 	// 	id: 2,
-	// 	placeId: placeList.DINOVILLE.placeId,
+	//	placeId: PlaceEnum.DINOVILLE,
 	// 	condition: NpcTrigger.ALWAYS,
 	// 	data: PROFESSOR
 	// },
 	PROFESSOR: {
 		name: 'professor',
 		id: 3,
-		placeId: placeList.UNIVERSITE.placeId,
+		placeId: PlaceEnum.UNIVERSITE,
 		data: PROFESSOR,
 		condition: undefined,
 		missions: undefined,
@@ -70,7 +70,7 @@ export const npcList: Record<string, Npc> = {
 	SOFIA: {
 		name: 'sofia',
 		id: 4,
-		placeId: placeList.VILLA.placeId,
+		placeId: PlaceEnum.VILLA,
 		data: SOFIA,
 		flashvars: 'frame=plage&background=2',
 		condition: undefined,
@@ -79,7 +79,7 @@ export const npcList: Record<string, Npc> = {
 	MMEX: {
 		name: 'mmex',
 		id: 5,
-		placeId: placeList.FORCEBRUT.placeId,
+		placeId: PlaceEnum.FORCEBRUT,
 		data: MMEX,
 		condition: undefined,
 		missions: M_MMEX,
@@ -88,7 +88,7 @@ export const npcList: Record<string, Npc> = {
 	MINEUR: {
 		name: 'mineur',
 		id: 6,
-		placeId: placeList.MINES_DE_CORAIL.placeId,
+		placeId: PlaceEnum.MINES_DE_CORAIL,
 		data: MINEUR,
 		condition: undefined,
 		missions: undefined,
@@ -97,7 +97,7 @@ export const npcList: Record<string, Npc> = {
 	PAPY: {
 		name: 'papy',
 		id: 7,
-		placeId: placeList.PAPY_JOE.placeId,
+		placeId: PlaceEnum.PAPY_JOE,
 		missions: M_PAPY_JOE,
 		data: PAPYJOE,
 		condition: undefined,
@@ -106,7 +106,7 @@ export const npcList: Record<string, Npc> = {
 	FORGERON: {
 		name: 'forgeron',
 		id: 8,
-		placeId: placeList.FORGES_DU_GTC.placeId,
+		placeId: PlaceEnum.FORGES_DU_GTC,
 		// condition: set to epic(medaillon à trois yeux) later
 		data: FORGERON,
 		flashvars: 'frame=blabla',
@@ -116,7 +116,7 @@ export const npcList: Record<string, Npc> = {
 	BOB: {
 		name: 'bob',
 		id: 9,
-		placeId: placeList.BAO_BOB.placeId,
+		placeId: PlaceEnum.BAO_BOB,
 		missions: M_BAO_BOB,
 		data: BAOBOB,
 		condition: undefined,
@@ -125,7 +125,7 @@ export const npcList: Record<string, Npc> = {
 	BAOFAN: {
 		name: 'baofan',
 		id: 10,
-		placeId: placeList.BAO_BOB.placeId,
+		placeId: PlaceEnum.BAO_BOB,
 		data: BAOFAN,
 		condition: undefined,
 		missions: undefined,
@@ -134,7 +134,7 @@ export const npcList: Record<string, Npc> = {
 	DIAN_KORGSEY: {
 		name: 'dian',
 		id: 11,
-		placeId: placeList.CAMP_KORGON.placeId,
+		placeId: PlaceEnum.CAMP_KORGON,
 		data: DIANKORGSEY,
 		missions: M_DIANKORGSEY,
 		condition: undefined,
@@ -143,7 +143,7 @@ export const npcList: Record<string, Npc> = {
 	MERGUEZ: {
 		name: 'merguez',
 		id: 12,
-		placeId: placeList.RUINES_ASHPOUK.placeId,
+		placeId: PlaceEnum.RUINES_ASHPOUK,
 		data: MERGUEZ,
 		condition: undefined,
 		missions: undefined,
@@ -152,7 +152,7 @@ export const npcList: Record<string, Npc> = {
 	SHAMAN: {
 		name: 'shaman',
 		id: 13,
-		placeId: placeList.FOSSELAVE.placeId,
+		placeId: PlaceEnum.FOSSELAVE,
 		data: SHAMAN,
 		missions: M_SHAMAN_MOU,
 		condition: undefined,
@@ -161,7 +161,7 @@ export const npcList: Record<string, Npc> = {
 	GARDIEN: {
 		name: 'gardien',
 		id: 14,
-		placeId: placeList.PORTE_DE_SYLVENOIRE.placeId,
+		placeId: PlaceEnum.PORTE_DE_SYLVENOIRE,
 		data: GARDIEN,
 		missions: M_GARDIEN,
 		condition: undefined,
@@ -170,7 +170,7 @@ export const npcList: Record<string, Npc> = {
 	FOU: {
 		name: 'fou',
 		id: 15,
-		placeId: placeList.COLLINES_HANTEES.placeId,
+		placeId: PlaceEnum.COLLINES_HANTEES,
 		data: FOU,
 		condition: undefined,
 		missions: undefined,
@@ -179,7 +179,7 @@ export const npcList: Record<string, Npc> = {
 	GARDE_ATLANTE: {
 		name: 'garde_atlante',
 		id: 16,
-		placeId: placeList.CHUTES_MUTANTES.placeId,
+		placeId: PlaceEnum.CHUTES_MUTANTES,
 		data: GARDE_ATLANTE,
 		condition: undefined,
 		missions: undefined,
@@ -188,7 +188,7 @@ export const npcList: Record<string, Npc> = {
 	JOVE_BOZE_RASCA: {
 		name: 'joveboze',
 		id: 17,
-		placeId: placeList.PORT_DE_PRECHE.placeId,
+		placeId: PlaceEnum.PORT_DE_PRECHE,
 		condition: {
 			[ConditionEnum.STATUS]: statusList.JVBZ
 		},
@@ -199,7 +199,7 @@ export const npcList: Record<string, Npc> = {
 	ARCHISAGE: {
 		name: 'archis',
 		id: 18,
-		placeId: placeList.DOME_SOULAFLOTTE.placeId,
+		placeId: PlaceEnum.DOME_SOULAFLOTTE,
 		condition: {
 			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE }
 		},
@@ -210,7 +210,7 @@ export const npcList: Record<string, Npc> = {
 	HYDARGOL: {
 		name: 'hydargol',
 		id: 19,
-		placeId: placeList.CHUTES_MUTANTES.placeId,
+		placeId: PlaceEnum.CHUTES_MUTANTES,
 		data: HYDARGOL,
 		condition: undefined,
 		missions: undefined,
@@ -219,7 +219,7 @@ export const npcList: Record<string, Npc> = {
 	PADAMOINE: {
 		name: 'padamoine',
 		id: 20,
-		placeId: placeList.PORT_DE_PRECHE.placeId,
+		placeId: PlaceEnum.PORT_DE_PRECHE,
 		condition: {
 			[ConditionEnum.STATUS]: statusList.ZENBRO
 		},
@@ -230,7 +230,7 @@ export const npcList: Record<string, Npc> = {
 	HULOT: {
 		name: 'hulot',
 		id: 21,
-		placeId: placeList.AUREE_DE_LA_FORET.placeId,
+		placeId: PlaceEnum.AUREE_DE_LA_FORET,
 		data: HULOT,
 		missions: M_HULOT,
 		condition: undefined,
@@ -239,7 +239,7 @@ export const npcList: Record<string, Npc> = {
 	RODEUR: {
 		name: 'rodeur',
 		id: 22,
-		placeId: placeList.FORGES_DU_GTC.placeId,
+		placeId: PlaceEnum.FORGES_DU_GTC,
 		data: RODEUR,
 		missions: M_RODEUR,
 		condition: {
@@ -253,7 +253,7 @@ export const npcList: Record<string, Npc> = {
 	RODEUR2: {
 		name: 'rodeur2',
 		id: 23,
-		placeId: placeList.FORGES_DU_GTC.placeId,
+		placeId: PlaceEnum.FORGES_DU_GTC,
 		data: RODEUR2,
 		missions: M_RODEUR,
 		condition: {
@@ -268,7 +268,7 @@ export const npcList: Record<string, Npc> = {
 	RODEUR3: {
 		name: 'rodeur3',
 		id: 24,
-		placeId: placeList.FORGES_DU_GTC.placeId,
+		placeId: PlaceEnum.FORGES_DU_GTC,
 		data: RODEUR3,
 		missions: undefined,
 		condition: {

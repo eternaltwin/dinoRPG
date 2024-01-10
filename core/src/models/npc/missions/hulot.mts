@@ -1,10 +1,10 @@
 import { statusList } from '../../dinoz/StatusList.mjs';
-import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { placeList } from '../../place/PlaceList.mjs';
-import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_HULOT: Mission[] = [
 	// Missions 44 to 48
@@ -30,7 +30,7 @@ export const M_HULOT: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -41,7 +41,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'auree'
@@ -67,7 +67,7 @@ export const M_HULOT: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickfigo'
@@ -77,7 +77,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.COLLINES_HANTEES.name,
+				place: PlaceEnum.COLLINES_HANTEES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickpuru'
@@ -87,7 +87,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickvisqueuse'
@@ -97,7 +97,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'auree'
@@ -129,7 +129,7 @@ export const M_HULOT: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.COLLINES_HANTEES.name,
+				place: PlaceEnum.COLLINES_HANTEES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'drawMap'
@@ -140,7 +140,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.COLLINES_HANTEES.name,
+				place: PlaceEnum.COLLINES_HANTEES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'catchBat'
@@ -150,7 +150,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'bat'
@@ -161,7 +161,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'launchRock'
@@ -171,7 +171,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.BAT.name],
@@ -182,7 +182,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickNote'
@@ -192,7 +192,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.COLLINES_HANTEES.name,
+				place: PlaceEnum.COLLINES_HANTEES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'redraw'
@@ -203,7 +203,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'auree'
@@ -233,7 +233,7 @@ export const M_HULOT: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickherbs'
@@ -243,7 +243,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'moinemedecin'
@@ -253,7 +253,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.MINES_DE_CORAIL.name,
+				place: PlaceEnum.MINES_DE_CORAIL,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickCoral'
@@ -263,7 +263,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'moinemedecin'
@@ -274,7 +274,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name],
@@ -285,7 +285,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.CHEMIN_GLAUQUE.name,
+				place: PlaceEnum.CHEMIN_GLAUQUE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickTeeth'
@@ -295,7 +295,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.BAT.name],
@@ -306,7 +306,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.FLEUVE_JUMIN.name,
+				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickWings'
@@ -316,7 +316,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 8,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'moinemedecin'
@@ -327,7 +327,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 9,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickMedecine'
@@ -337,7 +337,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 10,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'auree'
@@ -369,7 +369,7 @@ export const M_HULOT: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.CHUTES_MUTANTES.name,
+				place: PlaceEnum.CHUTES_MUTANTES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'extremFisher'
@@ -379,7 +379,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.MARAIS_COLLANT.name,
+				place: PlaceEnum.MARAIS_COLLANT,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'alguae'
@@ -389,7 +389,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.MINES_DE_CORAIL.name,
+				place: PlaceEnum.MINES_DE_CORAIL,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'interogateMinors'
@@ -399,7 +399,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.MINES_DE_CORAIL.name,
+				place: PlaceEnum.MINES_DE_CORAIL,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'minorHalt'
@@ -409,7 +409,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'afraidFisher'
@@ -419,7 +419,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'findBobine'
@@ -429,7 +429,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'couturiere'
@@ -439,7 +439,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.FOUTAINE_DE_JOUVENCE.name,
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.COQ.name],
@@ -450,7 +450,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 8,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'couturiere'
@@ -461,7 +461,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 9,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'afraidFisher'
@@ -471,7 +471,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				stepId: 10,
-				place: placeList.AUREE_DE_LA_FORET.name,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'auree'

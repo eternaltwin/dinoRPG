@@ -74,6 +74,7 @@ import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 /**
  * @summary Get available action from dinoz
@@ -233,7 +234,7 @@ export async function getAvailableActions(
 	}
 
 	// Market if dinoz is in market
-	if (dinoz.placeId === placeList.PLACE_DU_MARCHE.placeId) {
+	if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
 		availableActions.push(actionList[Action.MARKET]);
 	}
 
@@ -587,7 +588,7 @@ export async function resurrectDinoz(req: Request) {
 	await updateDinoz(dinozId, {
 		life: 1,
 		experience: Math.round(dinozData.experience / 2),
-		placeId: placeList.DINOVILLE.placeId
+		placeId: PlaceEnum.DINOVILLE
 	});
 
 	await createLog(LogType.Revive, dinozData.player.id, dinozId);

@@ -1,16 +1,17 @@
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum, Operator, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { SpecialActions } from '@drpg/core/models/missions/specialActions';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 
 export const specialActions: Record<string, SpecialActions> = {
 	ENTER_TOWER: {
-		place: placeList.TOUR_SOMBRE_1.placeId,
+		place: PlaceEnum.TOUR_SOMBRE_1,
 		condition: {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY } },
-				{ [ConditionEnum.PLACE_IS]: placeList.TOUR_SOMBRE.name }
+				{ [ConditionEnum.PLACE_IS]: PlaceEnum.TOUR_SOMBRE }
 			]
 		},
 		opponents: [bossList.GARDIEN_TOUR],
@@ -21,7 +22,7 @@ export const specialActions: Record<string, SpecialActions> = {
 			},
 			{
 				rewardType: RewardEnum.TELEPORT,
-				place: placeList.MARAIS_COLLANT
+				place: placeList[PlaceEnum.MARAIS_COLLANT]
 			}
 		]
 	}

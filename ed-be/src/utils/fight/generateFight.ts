@@ -6,8 +6,10 @@ import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { Item } from "@drpg/core/models/item/ItemList";
 import { addStatus, checkDeaths, getRandomOpponent, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
 
 export type DetailedFight = {
+	place: PlaceEnum,
 	loser: 'attackers' | 'defenders' | null,
 	steps: FightStep[],
 	initialDinozList: DinozToGetFighter[],
@@ -44,6 +46,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		initialDinozList: config.initialDinozList,
 		fighters: config.fighters,
 		time: 0,
+		place: config.place,
 	};
 
 	// Add arrive step for all fighters

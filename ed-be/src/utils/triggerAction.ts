@@ -13,7 +13,7 @@ export async function triggerAction(action: NpcAction, dinoz: DinozToRewardFight
 			if (!fightingDinoz) {
 				throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't exist.`);
 			}
-			const fightResult = calculateFight([fightingDinoz], action.enemies);
+			const fightResult = calculateFight([fightingDinoz], action.enemies, dinoz.placeId);
 			await rewardFight([dinoz], action.enemies, fightResult);
 			if (fightResult.winner) {
 				result = true;

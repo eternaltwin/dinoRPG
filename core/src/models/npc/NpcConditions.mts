@@ -1,4 +1,5 @@
 import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { Place } from '../place/Place.mjs';
 
 // Choisit le type de value en fonction de l'enum utilisée
@@ -36,7 +37,7 @@ export type Condition = {
 	[ConditionEnum.KILL]?: string;
 	[ConditionEnum.DO]?: string;
 	[ConditionEnum.HIDE_PLACE]?: string;
-	[ConditionEnum.PLACE_IS]?: string;
+	[ConditionEnum.PLACE_IS]?: PlaceEnum;
 	[ConditionEnum.OVERWRITE]?: string;
 	[ConditionEnum.LAUNCH_FIGHT]?: string;
 };

@@ -1,10 +1,10 @@
 import { statusList } from '../../dinoz/StatusList.mjs';
-import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
+import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { placeList } from '../../place/PlaceList.mjs';
-import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_SHAMAN_MOU: Mission[] = [
 	//Missions 26 to 36
@@ -20,7 +20,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'inscriptions'
@@ -30,7 +30,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.UNIVERSITE.name,
+				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'dictionnaire'
@@ -41,7 +41,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'inscriptions_decrypt'
@@ -51,7 +51,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -80,7 +80,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.REPAIRE_DU_VENERABLE.name,
+				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.BARCHE.name],
@@ -91,7 +91,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.REPAIRE_DU_VENERABLE.name,
+				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'claw'
@@ -101,7 +101,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'forgeron'
@@ -111,7 +111,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -122,7 +122,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'garde'
@@ -132,7 +132,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -143,7 +143,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'garde'
@@ -153,7 +153,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -182,7 +182,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.FLAM.name],
@@ -193,7 +193,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'cinder'
@@ -203,7 +203,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'artisan'
@@ -213,7 +213,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'sniff'
@@ -223,7 +223,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.FLAM.name],
@@ -234,7 +234,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'seek'
@@ -244,7 +244,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -274,7 +274,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'sbranch'
@@ -284,7 +284,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.REPAIRE_DU_VENERABLE.name,
+				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'ecaille'
@@ -294,7 +294,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.REPAIRE_DU_VENERABLE.name,
+				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'floor'
@@ -304,7 +304,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.REPAIRE_DU_VENERABLE.name,
+				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'search'
@@ -314,7 +314,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'basalte'
@@ -324,7 +324,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'mix'
@@ -334,7 +334,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'use'
@@ -344,7 +344,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -373,7 +373,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.PORT_DE_PRECHE.name,
+				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'rfish'
@@ -383,7 +383,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.UNIVERSITE.name,
+				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'strap'
@@ -393,7 +393,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -427,7 +427,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'garde'
@@ -437,7 +437,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -448,7 +448,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'garde'
@@ -458,7 +458,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'eclaireur'
@@ -468,7 +468,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
@@ -479,7 +479,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'banner'
@@ -489,7 +489,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.FORGES_DU_GTC.name,
+				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'garde'
@@ -499,7 +499,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -533,7 +533,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
@@ -544,7 +544,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
@@ -555,7 +555,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'convoy'
@@ -565,7 +565,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'pickup'
@@ -575,7 +575,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.PENTES_DE_BASALTE.name,
+				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'convoy'
@@ -585,7 +585,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -596,7 +596,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
@@ -607,7 +607,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'marchandise'
@@ -617,7 +617,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 8,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'convoy'
@@ -627,7 +627,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 9,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -656,7 +656,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.RUINES_ASHPOUK.name,
+				place: PlaceEnum.RUINES_ASHPOUK,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'babioles'
@@ -666,7 +666,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.DINOVILLE.name,
+				place: PlaceEnum.DINOVILLE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'market'
@@ -676,7 +676,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -710,7 +710,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.DO,
@@ -721,7 +721,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
@@ -732,7 +732,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'nextInstruction'
@@ -742,7 +742,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.ANYWHERE.name,
+				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'shamana'
@@ -752,7 +752,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.REPAIRE_DU_VENERABLE.name,
+				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
@@ -763,7 +763,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 5,
-				place: placeList.REPAIRE_DU_VENERABLE.name,
+				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'donga'
@@ -773,7 +773,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 6,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
@@ -784,7 +784,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 7,
-				place: placeList.TUNNEL_SOUS_LA_BRANCHE.name,
+				place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'wahhh'
@@ -794,7 +794,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 8,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'rock'
@@ -804,7 +804,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 9,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -838,7 +838,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.GORGES_PROFONDES.name,
+				place: PlaceEnum.GORGES_PROFONDES,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'hieroglyphes'
@@ -848,7 +848,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
@@ -882,7 +882,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 		steps: [
 			{
 				stepId: 0,
-				place: placeList.UNIVERSITE.name,
+				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'profLetter'
@@ -892,7 +892,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 1,
-				place: placeList.ILE_WAIKIKI.name,
+				place: PlaceEnum.ILE_WAIKIKI,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'yolande'
@@ -902,7 +902,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: placeList.FORCEBRUT.name,
+				place: PlaceEnum.FORCEBRUT,
 				requirement: {
 					actionType: ConditionEnum.DO,
 					target: 'foundArcheo'
@@ -912,7 +912,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 3,
-				place: placeList.GORGES_PROFONDES.name,
+				place: PlaceEnum.GORGES_PROFONDES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'archeo'
@@ -922,7 +922,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				stepId: 4,
-				place: placeList.FOSSELAVE.name,
+				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.FINISH_MISSION,
 					target: 'shaman'
