@@ -82,6 +82,10 @@ export const SkillAttacks: Partial<Record<Skill, { power: number, element: Eleme
 		power: 10,
 		element: ElementType.WATER,
 	},
+	[Skill.ONDINE]: {
+		power: 30,
+		element: ElementType.WATER,
+	},
 	// WOOD
 	[Skill.LANCEUR_DE_GLAND]: {
 		power: 5,

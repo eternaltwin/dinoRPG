@@ -1867,6 +1867,17 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.ONDINE: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			targetSingleOpponent(fightData, fighter, skill);
+			break;
+		}
 		case Skill.LOUP_GAROU: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

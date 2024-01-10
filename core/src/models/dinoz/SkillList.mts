@@ -2337,14 +2337,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.ONDINE,
 		name: 'Ondine',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31310, 31310, 61121],
 		raceId: [raceList.SIRAIN.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.MAITRE_NAGEUR]: {
 		id: Skill.MAITRE_NAGEUR,
