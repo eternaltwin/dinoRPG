@@ -3,6 +3,10 @@ import { ElementType } from "@drpg/core/models/enums/ElementType";
 
 export const SkillAttacks: Partial<Record<Skill, { power: number, element: ElementType }>> = {
 	// AIR
+	[Skill.RAIJIN]: {
+		power: 20,
+		element: ElementType.AIR,
+	},
 	[Skill.DJINN]: {
 		power: 20,
 		element: ElementType.AIR,

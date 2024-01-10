@@ -1867,6 +1867,31 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.YGGDRASIL: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getAllies(fightData, fighter).forEach((ally) => {
+				// Increase WOOD defense
+				ally.stats.defense[ElementType.WOOD] += 20;
+			});
+			break;
+		}
+		case Skill.RAIJIN: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			targetAllOpponents(fightData, fighter, skill);
+			break;
+		}
 		case Skill.GOLEM: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

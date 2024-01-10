@@ -3063,14 +3063,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.RAIJIN,
 		name: 'Raijin',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41301, 51302, 61121],
 		raceId: [raceList.PLANAILLE.raceId, raceList.PLANAILLE_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.QUETZACOATL]: {
 		id: Skill.QUETZACOATL,
@@ -4393,15 +4395,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.YGGDRASIL,
 		name: 'Yggdrasil',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WOOD, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21405, 51204],
 		raceId: [raceList.WANWAN.raceId, raceList.WANWAN_DEMON.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.BALEINE_BLANCHE]: {
 		id: Skill.BALEINE_BLANCHE,
