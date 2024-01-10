@@ -1867,6 +1867,25 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.BOUDDHA: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getAllies(fightData, fighter).forEach((ally) => {
+				// Increase each defense by 10
+				ally.stats.defense[ElementType.FIRE] += 10;
+				ally.stats.defense[ElementType.WATER] += 10;
+				ally.stats.defense[ElementType.WOOD] += 10;
+				ally.stats.defense[ElementType.LIGHTNING] += 10;
+				ally.stats.defense[ElementType.AIR] += 10;
+				ally.stats.defense[ElementType.VOID] += 10;
+			});
+			break;
+		}
 		case Skill.HADES: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

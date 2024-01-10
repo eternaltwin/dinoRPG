@@ -695,15 +695,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.BOUDDHA,
 		name: 'Bouddha',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.FIRE, ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41201, 11206, 51309, 61121],
 		raceId: [raceList.HIPPOCLAMP.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
-		// TODO: Implement AoE effect
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
 	},
 	[Skill.GRIFFES_INFERNALES]: {
 		id: Skill.GRIFFES_INFERNALES,
