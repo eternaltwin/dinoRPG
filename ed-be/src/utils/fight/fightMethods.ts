@@ -1867,6 +1867,17 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.HERCOLUBUS: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			targetAllOpponents(fightData, fighter, skill);
+			break;
+		}
 		case Skill.VULCAIN: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {

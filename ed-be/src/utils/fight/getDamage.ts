@@ -44,6 +44,21 @@ const getDamage = (
 				attack = 6 * attacker.stats.base[ElementType.FIRE] + 6 * attacker.stats.base[ElementType.LIGHTNING];
 				break;
 			}
+			case Skill.HERCOLUBUS: {
+				attackElements = [
+					ElementType.FIRE,
+					ElementType.LIGHTNING,
+					ElementType.WOOD,
+					ElementType.WATER,
+					ElementType.AIR,
+				];
+				attack = 10 * attacker.stats.base[ElementType.FIRE]
+					+ 10 * attacker.stats.base[ElementType.LIGHTNING]
+					+ 10 * attacker.stats.base[ElementType.WOOD]
+					+ 10 * attacker.stats.base[ElementType.WATER]
+					+ 10 * attacker.stats.base[ElementType.AIR];
+				break;
+			}
 			// Handle by default skills as an offensive skill with a given power and element
 			default: {
 				const skillAttack = SkillAttacks[skill];
