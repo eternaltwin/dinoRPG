@@ -1828,13 +1828,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.RECEPTACLE_AQUEUX,
 		name: 'ReceptacleAqueux',
 		type: SkillType.A,
-		energy: Energy.E75,
+		energy: Energy.E50,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [22404],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 7,
+		probability: 15,
 	},
 	// WATER
 	[Skill.CANON_A_EAU]: {

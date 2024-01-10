@@ -1768,6 +1768,21 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.RECEPTACLE_AQUEUX: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Remove water sphere skills
+			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.WATER));
+
+			// Add lose sphere step
+			fightData.steps.push({
+				action: 'loseSphere',
+				fighter: stepFighter(opponent),
+				element: ElementType.WATER,
+			});
+			break;
+		}
 		case Skill.ABYSSE: {
 			// Only one environment active at a time
 			if (fightData.environment) {
