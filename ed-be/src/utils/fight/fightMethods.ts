@@ -646,6 +646,58 @@ const activateEnvironment = (
 		action: 'activateEnvironment',
 		environment,
 	});
+
+	switch (environment) {
+		case Skill.AMAZONIE: {
+			// Make all fighters with WOOD < 10 fall asleep
+			getFighters(fightData).forEach((f) => {
+				if (f.stats.base[ElementType.WOOD] < 10) {
+					addStatus(fightData, f, FighterStatus.ASLEEP);
+				}
+			});
+			break;
+		}
+		case Skill.PAYS_DE_CENDRE: {
+			// Add NO_EVENT, NO_SKILL to all fighters with FIRE < 10
+			getFighters(fightData).forEach((f) => {
+				if (f.stats.base[ElementType.FIRE] < 10) {
+					addStatus(fightData, f, FighterStatus.NO_EVENT);
+					addStatus(fightData, f, FighterStatus.NO_SKILL);
+				}
+			});
+			break;
+		}
+		case Skill.ABYSSE: {
+			// Add WEAKENED to all fighters with WATER < 10
+			getFighters(fightData).forEach((f) => {
+				if (f.stats.base[ElementType.WATER] < 10) {
+					addStatus(fightData, f, FighterStatus.WEAKENED);
+				}
+			});
+			break;
+		}
+		case Skill.FEU_DE_ST_ELME: {
+			// Add LIGHTNING_WEAKENED to all fighters with LIGHTNING < 10
+			getFighters(fightData).forEach((f) => {
+				if (f.stats.base[ElementType.LIGHTNING] < 10) {
+					addStatus(fightData, f, FighterStatus.LIGHTNING_STRUCK);
+				}
+			});
+			break;
+		}
+		case Skill.OURANOS: {
+			// Add AIR_SLOWED to all fighters with AIR < 10
+			getFighters(fightData).forEach((f) => {
+				if (f.stats.base[ElementType.AIR] < 10) {
+					addStatus(fightData, f, FighterStatus.AIR_SLOWED);
+				}
+			});
+			break;
+		}
+		default: {
+			throw new Error(`Environment ${environment} not implemented`);
+		}
+	}
 }
 
 const activateEvent = (
@@ -1111,13 +1163,6 @@ const activateEvent = (
 				}
 
 				activateEnvironment(fightData, fighter, Skill.AMAZONIE);
-
-				// Make all fighters with WOOD < 10 fall asleep
-				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[ElementType.WOOD] < 10) {
-						addStatus(fightData, f, FighterStatus.ASLEEP);
-					}
-				});
 				break;
 			}
 			case Item.LAND_OF_ASHES: {
@@ -1127,14 +1172,6 @@ const activateEvent = (
 				}
 
 				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
-
-				// Add NO_EVENT, NO_SKILL to all fighters with FIRE < 10
-				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[ElementType.FIRE] < 10) {
-						addStatus(fightData, f, FighterStatus.NO_EVENT);
-						addStatus(fightData, f, FighterStatus.NO_SKILL);
-					}
-				});
 				break;
 			}
 			case Item.ABYSS: {
@@ -1144,13 +1181,6 @@ const activateEvent = (
 				}
 
 				activateEnvironment(fightData, fighter, Skill.ABYSSE);
-
-				// Add WEAKENED to all fighters with WATER < 10
-				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[ElementType.WATER] < 10) {
-						addStatus(fightData, f, FighterStatus.WEAKENED);
-					}
-				});
 				break;
 			}
 			case Item.ST_ELMAS_FIRE: {
@@ -1160,13 +1190,6 @@ const activateEvent = (
 				}
 
 				activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
-
-				// Add LIGHTNING_WEAKENED to all fighters with LIGHTNING < 10
-				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[ElementType.LIGHTNING] < 10) {
-						addStatus(fightData, f, FighterStatus.LIGHTNING_STRUCK);
-					}
-				});
 				break;
 			}
 			case Item.UVAVU: {
@@ -1176,13 +1199,6 @@ const activateEvent = (
 				}
 
 				activateEnvironment(fightData, fighter, Skill.OURANOS);
-
-				// Add AIR_SLOWED to all fighters with AIR < 10
-				getFighters(fightData).forEach((f) => {
-					if (f.stats.base[ElementType.AIR] < 10) {
-						addStatus(fightData, f, FighterStatus.AIR_SLOWED);
-					}
-				});
 				break;
 			}
 			case Item.SURVIVING_RATION: {
@@ -1680,6 +1696,15 @@ const activateSkill = (
 					fighter: stepFighter(opponent),
 				});
 			}
+		}
+		case Skill.OURANOS: {
+			// Only one environment active at a time
+			if (fightData.environment) {
+				return cancel();
+			}
+
+			activateEnvironment(fightData, fighter, Skill.OURANOS);
+			break;
 		}
 		case Skill.RECEPTABLE_THERMIQUE: {
 			// Get random opponent
