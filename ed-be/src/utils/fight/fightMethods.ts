@@ -1644,7 +1644,7 @@ const activateSkill = (
 
 			for (let i = 0; i < 5; i++) {
 				// Fighter attacks opponent
-				startAttack(fightData, fighter, opponent, true, Skill.DANSE_FOUDROYANTE);
+				startAttack(fightData, fighter, opponent, true, Skill.DANSE_FOUDROYANTE, 3);
 
 				const countered = counterAttack(fighter, opponent);
 
@@ -2216,6 +2216,7 @@ const attack = (
 	fighter: DetailedFighter,
 	opponent: DetailedFighter,
 	skill?: Skill,
+	power?: number,
 ) => {
 	// Abort if fighter is dead
 	if (fighter.hp <= 0) return;
@@ -2247,7 +2248,7 @@ const attack = (
 
 	for (const attacker of attackers) {
 		// Get damage
-		const damageAndElements = getDamage(attacker, realOpponent, skill);
+		const damageAndElements = getDamage(attacker, realOpponent, skill, undefined, power);
 		let { damage } = damageAndElements;
 		const { elements } = damageAndElements;
 
@@ -2405,12 +2406,13 @@ const startAttack = (
 	opponent: DetailedFighter,
 	isCounter?: boolean,
 	skill?: Skill,
+	power?: number,
 ) => {
 	// Keep track of initial fighter HP
 	const initialFighterHp = fighter.hp;
 
 	// Trigger fighter attack
-	attack(fightData, fighter, opponent, skill);
+	attack(fightData, fighter, opponent, skill, power);
 
 	// Get combo chances
 	const combo = fighter.stats.special.multihit / 100;
@@ -2425,7 +2427,7 @@ const startAttack = (
 			}
 
 			// Trigger fighter attack
-			attack(fightData, fighter, opponent, skill);
+			attack(fightData, fighter, opponent, skill, power);
 
 			random = Math.random();
 		}

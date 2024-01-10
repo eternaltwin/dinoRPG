@@ -7,12 +7,14 @@ import { SkillAttacks } from "./skillAttacks.js";
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
+export const DEFAULT_ATTACK_POWER = 5;
 
 const getDamage = (
 	attacker: DetailedFighter,
 	opponent: DetailedFighter,
 	skill?: Skill,
 	item?: Item,
+	power?: number,
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
@@ -92,7 +94,7 @@ const getDamage = (
 		}
 
 		// Damage from a normal hit
-		attack += attacker.stats.assault[attacker.element];
+		attack += attacker.stats.assault[attacker.element] * (power || DEFAULT_ATTACK_POWER);
 
 		// Add next assault bonus
 		attack += attacker.nextAssaultBonus;

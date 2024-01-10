@@ -94,11 +94,11 @@ export const initializeDinoz = (
 				[ElementType.VOID]: 0,
 			},
 			assault: {
-				[ElementType.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR).value,
-				[ElementType.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE).value,
-				[ElementType.LIGHTNING]: getAssaultStat(dinoz, skills, AssaultElement.LIGHTNING).value,
-				[ElementType.WATER]: getAssaultStat(dinoz, skills, AssaultElement.WATER).value,
-				[ElementType.WOOD]: getAssaultStat(dinoz, skills, AssaultElement.WOOD).value,
+				[ElementType.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR, 1).value,
+				[ElementType.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE, 1).value,
+				[ElementType.LIGHTNING]: getAssaultStat(dinoz, skills, AssaultElement.LIGHTNING, 1).value,
+				[ElementType.WATER]: getAssaultStat(dinoz, skills, AssaultElement.WATER, 1).value,
+				[ElementType.WOOD]: getAssaultStat(dinoz, skills, AssaultElement.WOOD, 1).value,
 				[ElementType.VOID]: 0,
 			},
 			defense: {
