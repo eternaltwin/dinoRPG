@@ -3820,14 +3820,16 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.HADES,
 		name: 'Hades',
 		type: SkillType.I,
-		energy: Energy.E75,
+		energy: Energy.E60,
 		element: [ElementType.AIR, ElementType.WOOD],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51403, 21204, 31203, 61121],
 		raceId: [raceList.SANTAZ.raceId],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10
 	},
 	[Skill.FORME_ETHERALE]: {
 		id: Skill.FORME_ETHERALE,

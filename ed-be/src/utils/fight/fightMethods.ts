@@ -1867,6 +1867,23 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.HADES: {
+			// Cancel if no invocations left
+			if (fighter.invocations <= 0) {
+				return cancel();
+			}
+
+			fighter.invocations -= 1;
+
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				// Poison
+				poison(fightData, opponent, fighter, Skill.HADES);
+
+				// Slow
+				opponent.stats.speed.global *= 1.5;
+			});
+			break;
+		}
 		case Skill.REINE_DE_LA_RUCHE: {
 			// Cancel if no invocations left
 			if (fighter.invocations <= 0) {
@@ -2582,6 +2599,10 @@ const endTurnChecks = (
 						break;
 					}
 					case Skill.GRIFFES_EMPOISONNEES: {
+						poisonDamage = 14;
+						break;
+					}
+					case Skill.HADES: {
 						poisonDamage = 14;
 						break;
 					}
