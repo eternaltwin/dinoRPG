@@ -1680,6 +1680,27 @@ const activateSkill = (
 				});
 			}
 		}
+		case Skill.SYLPHIDES: {
+			// Get dinoz opponents
+			const opponents = getOpponents(fightData, fighter, ['dinoz']);
+
+			if (!opponents.length) {
+				return cancel();
+			}
+
+			// Get random opponent
+			const opponent = opponents[randomBetween(0, opponents.length - 1)];
+
+			// Add leave step
+			fightData.steps.push({
+				action: 'leave',
+				fighter: stepFighter(opponent),
+				animation: LeaveAnimation.FLYING,
+			});
+
+			opponent.escaped = true;
+			break;
+		}
 		case Skill.BIG_MAMA: {
 			// Cancel if no invocation left
 			if (fighter.invocations <= 0) {

@@ -12,6 +12,7 @@ export interface StepFighter {
 export enum LeaveAnimation {
 	RUN,
 	BLACKHOLE,
+	FLYING,
 }
 
 export interface ArriveStep {

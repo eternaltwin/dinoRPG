@@ -3972,13 +3972,15 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.SYLPHIDES,
 		name: 'Sylphides',
 		type: SkillType.A,
-		energy: Energy.E75,
+		energy: Energy.E65,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.ETHER,
 		unlockedFrom: [52402],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 10,
+		probability: 10,
 	},
 	[Skill.MESSIE]: {
 		id: Skill.MESSIE,
