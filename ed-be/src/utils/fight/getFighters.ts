@@ -396,8 +396,19 @@ const handleSkills = (
 	}
 
 	if (fighterHas[Skill.BLANC]) {
-		// +20 assault damage if on Nimbao
+		// +20 assault damage if on NIMBAO
 		if (PlacesByMap[MapZone.NIMBAO]?.includes(place)) {
+			fighter.stats.assault[ElementType.AIR] += 20;
+			fighter.stats.assault[ElementType.FIRE] += 20;
+			fighter.stats.assault[ElementType.WOOD] += 20;
+			fighter.stats.assault[ElementType.WATER] += 20;
+			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+		}
+	}
+
+	if (fighterHas[Skill.JAUNE]) {
+		// +20 assault damage if on STEPPE
+		if (PlacesByMap[MapZone.STEPPE]?.includes(place)) {
 			fighter.stats.assault[ElementType.AIR] += 20;
 			fighter.stats.assault[ElementType.FIRE] += 20;
 			fighter.stats.assault[ElementType.WOOD] += 20;
