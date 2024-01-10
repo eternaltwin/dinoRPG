@@ -121,7 +121,7 @@ const getDamage = (
 
 	// Add armor to the defense unless the attacker cancels it
 	if (!attacker.cancelArmor) {
-		defense += opponent.stats.special.armor ?? 0;
+		defense += opponent.stats.special.armor;
 	}
 
 	let damage = attack - defense;

@@ -905,6 +905,17 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.CRAMPE_CHRONIQUE: {
+				fighter.energy -= 10;
+				fighter.stats.special.energyRecovery *= 0.85;
+
+				// Add reduce energy step
+				fightData.steps.push({
+					action: 'reduceEnergy',
+					fighter: stepFighter(fighter),
+				});
+				break;
+			}
 			case Skill.COURBATURES: {
 				const opponent = getRandomOpponent(fightData, fighter);
 
@@ -1004,7 +1015,7 @@ const activateEvent = (
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor = (fighter.stats.special.armor ?? 0) + 1;
+				fighter.stats.special.armor += 1;
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
@@ -1845,7 +1856,7 @@ const counterAttack = (fighter: DetailedFighter, opponent: DetailedFighter) => {
 
 	const random = Math.random();
 
-	return random < ((opponent.stats.special.counter ?? 0) / 100);
+	return random < (opponent.stats.special.counter / 100);
 };
 
 const evade = (opponent: DetailedFighter) => {
@@ -1854,7 +1865,7 @@ const evade = (opponent: DetailedFighter) => {
 
 	const random = Math.random();
 
-	return random < ((opponent.stats.special.evasion ?? 0) / 100);
+	return random < (opponent.stats.special.evasion / 100);
 };
 
 const poison = (
@@ -1999,7 +2010,7 @@ const attack = (
 
 			// Torch damage
 			if (attacker.status.includes(FighterStatus.TORCHED)) {
-				const damage = attacker.stats.special.torchDamage ?? 0;
+				const damage = attacker.stats.special.torchDamage;
 
 				registerHit(fightData, attacker, [opponent], damage, [ElementType.FIRE], Skill.TORCHE);
 			}
@@ -2088,7 +2099,7 @@ const startAttack = (
 	attack(fightData, fighter, opponent, skill);
 
 	// Get combo chances
-	const combo = (fighter.stats.special.multihit ?? 0) / 100;
+	const combo = fighter.stats.special.multihit / 100;
 
 	// Repeat attack only if not countering
 	if (!isCounter) {
