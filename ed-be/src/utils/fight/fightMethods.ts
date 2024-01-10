@@ -905,6 +905,10 @@ const activateEvent = (
 				addStatus(fightData, monster, FighterStatus.INTANGIBLE);
 				break;
 			}
+			case Skill.THERAPIE_DE_GROUPE: {
+				addStatus(fightData, fighter, FighterStatus.COPY_HEAL);
+				break;
+			}
 			case Skill.MORSURE_DU_SOLEIL: {
 				// Get random opponent
 				const opponent = getRandomOpponent(fightData, fighter);
@@ -1971,14 +1975,25 @@ const heal = (
 	// No heal if BEER
 	if (fighter.status.includes(FighterStatus.BEER)) return;
 
-	const heal = Math.min(hp, fighter.maxHp - fighter.hp);
-	fighter.hp += heal;
+	const healAmount = Math.min(hp, fighter.maxHp - fighter.hp);
+	fighter.hp += healAmount;
 
 	// Add heal step
 	fightData.steps.push({
 		action: 'heal',
 		fighter: stepFighter(fighter),
-		hp: heal,
+		hp: healAmount,
+	});
+
+	// Group therapy
+	const opponentsWhoCanCopyHeal = getOpponents(fightData, fighter)
+		.filter((opponent) => opponent.status.includes(FighterStatus.COPY_HEAL));
+
+	opponentsWhoCanCopyHeal.forEach((opponent) => {
+		// Heal opponent
+		heal(fightData, opponent, healAmount);
+
+		removeStatus(fightData, opponent, FighterStatus.COPY_HEAL);
 	});
 }
 

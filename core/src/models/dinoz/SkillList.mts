@@ -2537,7 +2537,7 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		id: Skill.THERAPIE_DE_GROUPE,
 		name: 'TherapieDeGroupe',
 		type: SkillType.E,
-		energy: Energy.E75,
+		energy: Energy.E55,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.ETHER,
