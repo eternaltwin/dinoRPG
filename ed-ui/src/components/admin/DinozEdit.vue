@@ -172,7 +172,7 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 
 export default defineComponent({
 	name: 'DinozEdit',
@@ -187,7 +187,7 @@ export default defineComponent({
 			statusOperation: '' as string,
 			statusListFiltered: [] as Array<string>,
 			skillList,
-			skillListFiltered: [] as DinozSkillFiche[],
+			skillListFiltered: [] as SkillDetails[],
 			skillOperation: '' as string
 		};
 	},

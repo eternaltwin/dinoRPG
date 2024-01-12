@@ -13,6 +13,7 @@ import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
 import { PlacesByMap } from "@drpg/core/models/place/PlaceList";
 import { MapZone } from "@drpg/core/models/enums/MapZone";
+import { MonsterBonus } from "./monsterBonuses.js";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -59,13 +60,13 @@ export const initializeDinoz = (
 
 	// Find skills
 	const skills = dinoz.skills.map((skill) => {
-		const skillFiche = skillList[skill.skillId as Skill]
+		const skillDetails = skillList[skill.skillId as Skill]
 
-		if (!skillFiche) {
+		if (!skillDetails) {
 			throw new Error(`Skill ${skill.skillId} not found`);
 		}
 
-		return { ...skillFiche };
+		return { ...skillDetails };
 	});
 
 	const dinozWithItems = {
@@ -213,12 +214,35 @@ export const initializeDinoz = (
 
 export const initializeMonster = (
 	existingMonsters: Record<string, number>,
+	team: Team | null,
 	teamIndex: number,
 	monster: MonsterFiche,
+	place: PlaceEnum,
 ): DetailedFighter => {
 	existingMonsters[monster.name] = (existingMonsters[monster.name] ?? 0) + 1;
 
-	return {
+	// Find skills
+	const skills = monster.skills?.map((skill) => {
+		const skillDetails = skillList[skill]
+
+		if (!skillDetails) {
+			throw new Error(`Skill ${skill} not found`);
+		}
+
+		// Reduce probability by 3.5 for each consecutive M_RENFORTS
+		let probability = skillDetails.probability ?? 0;
+
+		if (skill === Skill.M_RENFORTS) {
+			probability -= 3.5 * (existingMonsters[monster.name] - 1);
+		}
+
+		return {
+			...skillDetails,
+			probability,
+		};
+	}) ?? [];
+
+	const fighter: DetailedFighter = {
 		id: existingMonsters[monster.name],
 		name: monster.name,
 		level: monster.level,
@@ -280,7 +304,7 @@ export const initializeMonster = (
 		itemsUsed: [],
 		// Add a random amount of time between 0 and 10 to randomize the first fighter
 		time: Math.round(Math.random() * TIME_BASE) * TIME_FACTOR,
-		skills: [],
+		skills,
 		status: [],
 		activeSkills: [],
 		elements: [
@@ -305,6 +329,18 @@ export const initializeMonster = (
 		nextAssaultMultiplier: 1,
 		invocations: 0,
 	};
+
+	// Handle bonuses
+	const handleMonsterBonuses = MonsterBonus[monster.id];
+
+	if (handleMonsterBonuses) {
+		handleMonsterBonuses(fighter);
+	}
+
+	// Skills
+	handleSkills(team, fighter, place);
+
+	return fighter;
 };
 
 const handleSkills = (
@@ -490,7 +526,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		fighters.push(...dinozList.map((dinoz) => initializeDinoz(team, index, dinoz, place)));
 
 		// Monsters
-		fighters.push(...monsterList.map((monster) => initializeMonster(existingMonsters, index, monster)));
+		fighters.push(...monsterList.map((monster) => initializeMonster(existingMonsters, team, index, monster, place)));
 	});
 
 	// Handle team wide modifiers

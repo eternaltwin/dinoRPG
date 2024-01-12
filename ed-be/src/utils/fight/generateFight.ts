@@ -108,7 +108,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				// Add skill step
 				fightData.steps.push({
 					action: 'skillActivate',
-					dinoz: stepFighter(fighter),
+					fighter: stepFighter(fighter),
 					skill: Skill.CLEPTOMANE,
 					energy: skillList[Skill.CLEPTOMANE].energy,
 				});
@@ -130,7 +130,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 			// Add skill step
 			fightData.steps.push({
 				action: 'skillActivate',
-				dinoz: stepFighter(fighter),
+				fighter: stepFighter(fighter),
 				skill: Skill.JOKER,
 				energy: 0,
 			});

@@ -3,7 +3,7 @@ import { Energy } from '../enums/Energy.mjs';
 import { Stat } from '../enums/SkillStat.mjs';
 import { SkillTree } from '../enums/SkillTree.mjs';
 import { SkillType } from '../enums/SkillType.mjs';
-import { DinozSkillFiche } from './DinozSkillFiche.mjs';
+import { SkillDetails } from './SkillDetails.mjs';
 import { raceList } from './RaceList.mjs';
 
 export enum Skill {
@@ -299,7 +299,12 @@ export enum Skill {
 	REINE_DE_LA_RUCHE = 41505,
 	BIG_MAMA = 51506,
 	YGGDRASIL = 41507,
-	BALEINE_BLANCHE = 41508
+	BALEINE_BLANCHE = 41508,
+	// Monster Skills
+	M_RENFORTS = 99901,
+	M_FLIGHT = 99907,
+	M_RESISTANCE = 99909,
+	M_FEBREZ = 99947,
 }
 
 // skillId are counted like this : ABCDE
@@ -307,7 +312,7 @@ export enum Skill {
 // B = Tree (Vanilla or Ether)
 // C = Column of the skill
 // DE = Number of the skill in this column
-export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
+export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	// FIRE Skills
 	[Skill.GRIFFES_ENFLAMMEES]: {
 		id: Skill.GRIFFES_ENFLAMMEES,
@@ -4438,5 +4443,53 @@ export const skillList: Readonly<Record<Skill, DinozSkillFiche>> = {
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10,
-	}
+	},
+	[Skill.M_RENFORTS]: {
+		id: Skill.M_RENFORTS,
+		name: 'Renforts',
+		type: SkillType.A,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 1,
+		probability: 10,
+	},
+	[Skill.M_FLIGHT]: {
+		id: Skill.M_FLIGHT,
+		name: 'Flight',
+		type: SkillType.A,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 1,
+		probability: 60,
+	},
+	[Skill.M_FEBREZ]: {
+		id: Skill.M_FEBREZ,
+		name: 'Febrez',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+	},
+	[Skill.M_RESISTANCE]: {
+		id: Skill.M_RESISTANCE,
+		name: 'Resistance',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+	},
 };

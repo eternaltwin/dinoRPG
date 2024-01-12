@@ -1,5 +1,5 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
-import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
+import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 
 export enum DefenseElement {
@@ -13,7 +13,7 @@ export enum DefenseElement {
 
 export const getDefenseStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
-	skills: (Pick<DinozSkillFiche, 'effects' | 'name' | 'element' | 'globalEffects'>)[],
+	skills: (Pick<SkillDetails, 'effects' | 'name' | 'element' | 'globalEffects'>)[],
 	elementName: DefenseElement,
 ) => {
 	const elementWheel = [

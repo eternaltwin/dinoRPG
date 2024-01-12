@@ -71,7 +71,7 @@ export interface SurviveStep {
 }
 export interface SkillActivateStep {
   action: 'skillActivate';
-  dinoz: StepFighter;
+  fighter: StepFighter;
   skill: Skill;
 	energy: number;
 }

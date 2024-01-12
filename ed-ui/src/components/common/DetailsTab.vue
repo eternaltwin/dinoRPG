@@ -31,7 +31,7 @@
 					</th>
 				</tr>
 				<tr
-					v-for="skill in dinozSkill as DinozSkillFiche[]"
+					v-for="skill in dinozSkill as SkillDetails[]"
 					:key="skill.id"
 					:class="skill.state === false ? 'disabled' : ''"
 				>
@@ -266,7 +266,7 @@
 <script lang="ts" scoped>
 import { defineComponent, PropType } from 'vue';
 import { statusList } from '../../constants/index.js';
-import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -285,7 +285,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			dinozSkill: [] as Array<DinozSkillFiche>,
+			dinozSkill: [] as Array<SkillDetails>,
 			skillList,
 			selectedSort: 'Default' as string,
 			picked: 'Ascendant' as string,
@@ -303,7 +303,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		async changeState(skill: DinozSkillFiche): Promise<void> {
+		async changeState(skill: SkillDetails): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			EventBus.emit('isLoading', true);
 			try {
@@ -322,22 +322,22 @@ export default defineComponent({
 		sort(): void {
 			switch (this.selectedSort) {
 				case 'Default':
-					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
+					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
 						a.id > b.id ? 1 : b.id > a.id ? -1 : 0
 					);
 					break;
 				case 'Type':
-					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
+					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
 						a.type > b.type ? 1 : b.type > a.type ? -1 : 0
 					);
 					break;
 				case 'Energy':
-					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
+					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
 						a.energy > b.energy ? 1 : b.energy > a.energy ? -1 : 0
 					);
 					break;
 				case 'State':
-					this.dinozSkill = this.dinozSkill.sort((a: DinozSkillFiche, b: DinozSkillFiche) =>
+					this.dinozSkill = this.dinozSkill.sort((a: SkillDetails, b: SkillDetails) =>
 						!!a.state > !!b.state ? 1 : !!b.state > !!a.state ? -1 : 0
 					);
 					break;

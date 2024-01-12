@@ -1,5 +1,5 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
-import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
+import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 
@@ -13,7 +13,7 @@ export enum AssaultElement {
 
 export const getAssaultStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
-	skills: (Pick<DinozSkillFiche, 'effects' | 'name' | 'element'>)[],
+	skills: (Pick<SkillDetails, 'effects' | 'name' | 'element'>)[],
 	elementName: AssaultElement,
 	power = 5,
 ) => {

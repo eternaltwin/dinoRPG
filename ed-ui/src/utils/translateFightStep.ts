@@ -71,7 +71,7 @@ const translateFightStep = (fightStep: FightStep, t: TFunction) => {
 			});
 		case 'skillActivate':
 			return t(`fight.step.${fightStep.action}`, {
-				dinoz: getFighterName(fightStep.dinoz, t),
+				dinoz: getFighterName(fightStep.fighter, t),
 				skill: t(`skill.name.${skillList[fightStep.skill].name}`),
 				energy: fightStep.energy
 			});

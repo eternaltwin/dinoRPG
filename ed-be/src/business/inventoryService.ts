@@ -16,7 +16,7 @@ import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import gameConfig from '../config/game.config.js';
 import { getRandomLetter } from '../utils/index.js';
-import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { applySkillEffect } from './skillService.js';
 import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
@@ -185,7 +185,7 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
 	// Create a new dinoz that belongs to player
 	const dinozCreated = await createDinoz(initializeDinoz(race, playerId, randomDisplay));
 
-	const skillsToAdd: DinozSkillFiche[] = Object.values(skillList).filter(
+	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
 		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
 	);
 

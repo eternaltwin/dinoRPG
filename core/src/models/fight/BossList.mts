@@ -1,8 +1,20 @@
 import { MapZone } from '../enums/MapZone.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
 
-export const bossList: Readonly<Record<string, MonsterFiche>> = {
-	GARDIEN_TOUR: {
+export enum Boss {
+	GARDIEN_TOUR = 'GARDIEN_TOUR',
+	ELEMENTAIRE_FEU = 'ELEMENTAIRE_FEU',
+	ELEMENTAIRE_EAU = 'ELEMENTAIRE_EAU',
+	RASCAPHANDRE = 'RASCAPHANDRE',
+	ELEMENTAIRE_TERRE = 'ELEMENTAIRE_TERRE',
+	PTEROZ = 'PTEROZ',
+	HIPPOCLAMP = 'HIPPOCLAMP',
+	ROCKY = 'ROCKY'
+}
+
+export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
+	[Boss.GARDIEN_TOUR]: {
+		id: Boss.GARDIEN_TOUR,
 		name: 'towgrd',
 		hp: 300,
 		elements: {
@@ -16,9 +28,11 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 40,
 		odds: 1,
 		level: 30,
-		zone: MapZone.DARKWORLD
+		zones: [MapZone.DARKWORLD],
+		canBeCaptured: false,
 	},
-	ELEMENTAIRE_FEU: {
+	[Boss.ELEMENTAIRE_FEU]: {
+		id: Boss.ELEMENTAIRE_FEU,
 		name: 'efire',
 		hp: 60,
 		elements: {
@@ -32,9 +46,11 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 50,
 		odds: 1,
 		level: 5,
-		zone: MapZone.DARKWORLD
+		zones: [MapZone.DARKWORLD],
+		canBeCaptured: false,
 	},
-	ELEMENTAIRE_EAU: {
+	[Boss.ELEMENTAIRE_EAU]: {
+		id: Boss.ELEMENTAIRE_EAU,
 		name: 'ewater',
 		hp: 50,
 		elements: {
@@ -48,9 +64,11 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 50,
 		odds: 1,
 		level: 5,
-		zone: MapZone.DARKWORLD
+		zones: [MapZone.DARKWORLD],
+		canBeCaptured: false,
 	},
-	RASCAPHANDRE: {
+	[Boss.RASCAPHANDRE]: {
+		id: Boss.RASCAPHANDRE,
 		name: 'rasca',
 		hp: 60,
 		elements: {
@@ -64,9 +82,11 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 100,
 		odds: 1,
 		level: 10,
-		zone: MapZone.ILES
+		zones: [MapZone.ILES],
+		canBeCaptured: false,
 	},
-	ELEMENTAIRE_TERRE: {
+	[Boss.ELEMENTAIRE_TERRE]: {
+		id: Boss.ELEMENTAIRE_TERRE,
 		name: 'eearth',
 		hp: 100,
 		elements: {
@@ -80,9 +100,11 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 100,
 		odds: 1,
 		level: 10,
-		zone: MapZone.ILES
+		zones: [MapZone.ILES],
+		canBeCaptured: false,
 	},
-	PTEROZ: {
+	[Boss.PTEROZ]: {
+		id: Boss.PTEROZ,
 		name: 'pteroz',
 		hp: 70,
 		elements: {
@@ -96,10 +118,12 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 50,
 		odds: 1,
 		level: 7,
-		zone: MapZone.ALL,
-		skills: [11102, 11103, 41102, 11101, 51105]
+		zones: [MapZone.ALL],
+		skills: [11102, 11103, 41102, 11101, 51105],
+		canBeCaptured: false,
 	},
-	HIPPOCLAMP: {
+	[Boss.HIPPOCLAMP]: {
+		id: Boss.HIPPOCLAMP,
 		name: 'hippo',
 		hp: 70,
 		elements: {
@@ -113,10 +137,12 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 50,
 		odds: 1,
 		level: 7,
-		zone: MapZone.ALL,
-		skills: [21101, 21102, 31101, 21103]
+		zones: [MapZone.ALL],
+		skills: [21101, 21102, 31101, 21103],
+		canBeCaptured: false,
 	},
-	ROCKY: {
+	[Boss.ROCKY]: {
+		id: Boss.ROCKY,
 		name: 'rocky',
 		hp: 100,
 		elements: {
@@ -130,7 +156,8 @@ export const bossList: Readonly<Record<string, MonsterFiche>> = {
 		xp: 50,
 		odds: 1,
 		level: 12,
-		zone: MapZone.ALL,
-		skills: [21101, 41102, 41301, 41103, 41204]
+		zones: [MapZone.ALL],
+		skills: [21101, 41102, 41301, 41103, 41204],
+		canBeCaptured: false,
 	}
 };

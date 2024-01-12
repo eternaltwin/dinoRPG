@@ -1,5 +1,5 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
-import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
+import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { Skill } from '../models/dinoz/SkillList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { itemList } from '../models/item/ItemList.mjs';
@@ -44,7 +44,7 @@ export const BaseStats = {
 
 export const getSpecialStat = (
 	dinoz: Pick<DinozFiche, 'items' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
-	skills: (Pick<DinozSkillFiche, 'id' | 'effects' | 'name' | 'element'>)[],
+	skills: (Pick<SkillDetails, 'id' | 'effects' | 'name' | 'element'>)[],
 	stat: SpecialStat,
 ) => {
 	// Special case for BUBBLE_RATE (value not influenced by skills)

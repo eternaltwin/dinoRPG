@@ -1,7 +1,16 @@
+import { Skill } from '../dinoz/SkillList.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
+import { Boss } from './BossList.mjs';
+import { Monster } from './MonsterList.mjs';
+
+export enum GameEvent {
+	CHRISTMAS = 'CHRISTMAS',
+	VALENTINE = 'VALENTINE',
+}
 
 export type MonsterFiche = {
+	id: Monster | Boss;
 	name: string;
 	hp: number;
 	elements: { air: number; fire: number; lightning: number; water: number; wood: number };
@@ -16,8 +25,10 @@ export type MonsterFiche = {
 	// Chance of encountering this monster.
 	odds: number;
 	level: number;
-	zone: MapZone;
-	place?: PlaceEnum;
+	zones: MapZone[];
+	places?: PlaceEnum[];
 	special?: boolean;
-	skills?: number[];
+	skills?: Skill[];
+	canBeCaptured: boolean;
+	events?: GameEvent[];
 };

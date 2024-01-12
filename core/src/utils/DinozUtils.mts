@@ -26,7 +26,7 @@ import { ElementType } from '../models/enums/ElementType.mjs';
 import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
-import { DinozSkillFiche } from '../models/dinoz/DinozSkillFiche.mjs';
+import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { ErrorFormator } from './errorFormator.mjs';
 import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 
@@ -226,7 +226,7 @@ export const toDinozFicheLite = (
 	};
 };
 
-export const toDinozSkillFiche = (dinoz: { skills: Pick<DinozSkill, 'skillId' | 'state'>[] }): DinozSkillFiche[] =>
+export const toSkillDetails = (dinoz: { skills: Pick<DinozSkill, 'skillId' | 'state'>[] }): SkillDetails[] =>
 	dinoz.skills.map(skill => {
 		const skillFound = Object.values(skillList).find(skillDinoz => skillDinoz.id === skill.skillId);
 		if (!skillFound) {

@@ -321,7 +321,12 @@ function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[]) {
 	const specialProb = getRandomNumber(0, 100);
 	const place = actualPlace(fighters[0]);
 	const monsters = Object.values(monsterList)
-		.filter(m => m.zone === place.map || m.zone === MapZone.ALL)
+		.filter(m => {
+			// Limit to defined places if any
+			if (m.places && !m.places.includes(place.placeId)) return false;
+
+			return m.zones.includes(place.map) || m.zones.includes(MapZone.ALL);
+		})
 		.map(m => {
 			if (m.special) {
 				const display = m.odds >= specialProb;

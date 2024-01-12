@@ -1,4 +1,4 @@
-import { SkillEffects } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { SkillEffects } from '@drpg/core/models/dinoz/SkillDetails';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { Dinoz } from '@drpg/prisma';

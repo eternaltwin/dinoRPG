@@ -1,6 +1,6 @@
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
@@ -392,8 +392,8 @@ function getTreeType(status: Pick<DinozStatus, 'statusId'>[]) {
 // Get up chance for one element
 // If the dinoz can't learn more skill from that element, return 0 -> Element can't be selected at next level.
 function getElementUpChance(
-	learnableSkillsAllElements: Partial<DinozSkillFiche>[],
-	unlockableSkillsAllElements: Partial<DinozSkillFiche>[],
+	learnableSkillsAllElements: Partial<SkillDetails>[],
+	unlockableSkillsAllElements: Partial<SkillDetails>[],
 	element: ElementType,
 	elementValue: number
 ) {
@@ -432,7 +432,7 @@ export async function unlockDoubleSkills(dinozId: number) {
 
 export async function applySkillEffect(
 	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
-	skill: DinozSkillFiche
+	skill: SkillDetails
 ) {
 	if (skill.effects) {
 		await effectParser(skill.effects, dinoz);

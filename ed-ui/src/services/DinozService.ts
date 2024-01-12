@@ -1,6 +1,6 @@
 import { http } from '../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { DinozSkillFiche } from '@drpg/core/models/dinoz/DinozSkillFiche';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
@@ -27,7 +27,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getDinozSkill(id: number): Promise<Array<DinozSkillFiche>> {
+	getDinozSkill(id: number): Promise<Array<SkillDetails>> {
 		return http()
 			.get(`/dinoz/skill/${id}`)
 			.then(res => Promise.resolve(res.data))

@@ -44,7 +44,7 @@ export type SkillEffects = {
 	[Stat.WOOD_ELEMENT]?: number;
 };
 
-export interface DinozSkillFiche {
+export interface SkillDetails {
 	id: Skill;
 	name: string;
 	type: SkillType;
@@ -52,7 +52,7 @@ export interface DinozSkillFiche {
 	element: ElementType[];
 	activatable: boolean;
 	state?: boolean;
-	tree: SkillTree;
+	tree?: SkillTree;
 	unlockedFrom?: Skill[];
 	raceId?: number[]; // For specific race skill (ex : fly for Pteroz)
 	isBaseSkill: boolean; // If true : dinoz knows this skill when he's bought

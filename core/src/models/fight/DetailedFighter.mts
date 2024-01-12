@@ -1,5 +1,5 @@
 import { SpecialStatUsedInFights } from "../../utils/getSpecialStat.mjs";
-import { DinozSkillFiche } from "../dinoz/DinozSkillFiche.mjs";
+import { SkillDetails } from "../dinoz/SkillDetails.mjs";
 import { Skill } from "../dinoz/SkillList.mjs";
 import { ElementType } from "../enums/ElementType.mjs";
 import { ItemFiche } from "../item/ItemFiche.mjs";
@@ -91,7 +91,7 @@ export interface DetailedFighter {
   // Time of the fighter, determines when its turn is
   time: number, // Lower attacks next
   // Available skills
-  skills: DinozSkillFiche[],
+  skills: SkillDetails[],
   // Current status
   status: FighterStatus[],
   // Active skills
@@ -122,7 +122,7 @@ export interface DetailedFighter {
   canHitIntangible?: boolean,
   // Skill bonuses
   skillElementalBonus: Record<ElementType, number>,
-	nextSkill?: DinozSkillFiche,
+	nextSkill?: SkillDetails,
   // Assault bonuses
   nextAssaultBonus: number,
   nextAssaultMultiplier: number,

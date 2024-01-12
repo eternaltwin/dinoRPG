@@ -25,7 +25,7 @@ import {
 	isAlive,
 	knowSkillId,
 	toDinozFiche,
-	toDinozSkillFiche,
+	toSkillDetails,
 	getMaxFollowers
 } from '@drpg/core/utils/DinozUtils';
 import {
@@ -299,7 +299,7 @@ export async function getDinozSkill(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozSkillData.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
-	return toDinozSkillFiche(dinozSkillData);
+	return toSkillDetails(dinozSkillData);
 }
 
 /**

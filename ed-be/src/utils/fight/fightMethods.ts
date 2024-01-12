@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { DinozSkillFiche } from "@drpg/core/models/dinoz/DinozSkillFiche";
+import { SkillDetails } from "@drpg/core/models/dinoz/SkillDetails";
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { SkillLevel } from "@drpg/core/models/dinoz/SkillLevel";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
@@ -17,6 +17,7 @@ import getDamage from "./getDamage.js";
 import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import randomBetween from "./randomBetween.js";
 import weightedRandom from "./weightedRandom.js";
+import { bossList } from "@drpg/core/models/fight/BossList";
 
 export const getFighters = (
 	fightData: DetailedFight,
@@ -187,7 +188,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		}
 	}
 
-	const events: (DinozSkillFiche | ItemFiche)[] = fighter.skills.filter((skill) => skill.probability && skill.type === SkillType.E);
+	const events: (SkillDetails | ItemFiche)[] = fighter.skills.filter((skill) => skill.probability && skill.type === SkillType.E);
 
 	events.push(...fighter.items.filter((item) => item.probability));
 
@@ -330,6 +331,22 @@ const registerHit = (
 					action: 'skillExpire',
 					dinoz: stepFighter(opponent),
 					skill: Skill.MUR_DE_BOUE,
+				});
+			}
+		}
+
+		// M_RESISTANCE
+		if (opponent.skills.find((s) => s.id === Skill.M_RESISTANCE)) {
+			// 0 damage if skill
+			if (skill) {
+				actualDamage[opponent.id] = 0;
+
+				// Add skill step
+				fightData.steps.push({
+					action: 'skillActivate',
+					fighter: stepFighter(opponent),
+					skill,
+					energy: 0,
 				});
 			}
 		}
@@ -529,7 +546,7 @@ const registerHit = (
 	}
 };
 
-const evadedSkill = (opponent: DetailedFighter, skill: DinozSkillFiche) => {
+const evadedSkill = (opponent: DetailedFighter, skill: SkillDetails) => {
 	if (opponent.hp <= 0) return false;
 
 	// Some statues prevent skill evasion
@@ -558,7 +575,7 @@ const evadedSkill = (opponent: DetailedFighter, skill: DinozSkillFiche) => {
 const targetSingleOpponent = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	skillOrItem: DinozSkillFiche | ItemFiche
+	skillOrItem: SkillDetails | ItemFiche
 ) => {
 	// Get random opponent
 	const opponent = getRandomOpponent(fightData, fighter);
@@ -599,7 +616,7 @@ const targetSingleOpponent = (
 const targetAllOpponents = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	skill: DinozSkillFiche,
+	skill: SkillDetails,
 	count?: number,
 ) => {
 	// Attack each opponent
@@ -644,8 +661,10 @@ const createMonster = (
 	// Initialize monster
 	const monster = initializeMonster(
 		{ [monsterData.name]: count + 1 },
+		null,
 		fighter.attacker ? 0 : 1,
 		monsterData,
+		fightData.place,
 	);
 
 	monster.master = fighter.id;
@@ -768,7 +787,7 @@ const activateEnvironment = (
 
 const activateEvent = (
 	fightData: DetailedFight,
-	event: DinozSkillFiche | ItemFiche,
+	event: SkillDetails | ItemFiche,
 ): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
@@ -786,7 +805,7 @@ const activateEvent = (
 		// Add skillActivate step
 		fightData.steps.push({
 			action: 'skillActivate',
-			dinoz: stepFighter(fighter),
+			fighter: stepFighter(fighter),
 			skill: event.id,
 			energy: event.energy,
 		});
@@ -1392,7 +1411,7 @@ const activateEvent = (
 				// Add skillActivate step
 				fightData.steps.push({
 					action: 'skillActivate',
-					dinoz: stepFighter(opponent),
+					fighter: stepFighter(opponent),
 					skill: Skill.SHARIGNAN,
 					energy: 0,
 				});
@@ -1525,7 +1544,7 @@ const removeStatus = (
 
 const activateSkill = (
 	fightData: DetailedFight,
-	skill: DinozSkillFiche,
+	skill: SkillDetails,
 ): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
@@ -1533,7 +1552,7 @@ const activateSkill = (
 	// Add skillActivate step
 	fightData.steps.push({
 		action: 'skillActivate',
-		dinoz: stepFighter(fighter),
+		fighter: stepFighter(fighter),
 		skill: skill.id,
 		energy: skill.energy,
 	});
@@ -2398,6 +2417,31 @@ const activateSkill = (
 			}
 			break;
 		}
+		// Monster skills
+		case Skill.M_RENFORTS: {
+			const monsterDetails = Object.values(monsterList).find((monster) => monster.name === fighter.name)
+				|| Object.values(bossList).find((boss) => boss.name === fighter.name);
+
+			if (!monsterDetails) {
+				throw new Error(`Monster ${fighter.name} not found`);
+			}
+
+			createMonster(fightData, fighter, monsterDetails);
+			break;
+		}
+		case Skill.M_FLIGHT: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Attack opponent
+			startAttack(fightData, fighter, opponent);
+
+			// Add FLYING if not dead
+			if (fighter.hp > 0) {
+				addStatus(fightData, fighter, FighterStatus.FLYING);
+			}
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();
@@ -2422,7 +2466,7 @@ const activateSkill = (
 				// Add skillActivate step
 				fightData.steps.push({
 					action: 'skillActivate',
-					dinoz: stepFighter(opponent),
+					fighter: stepFighter(opponent),
 					skill: Skill.SHARIGNAN,
 					energy: 0,
 				});
@@ -2669,6 +2713,12 @@ const attack = (
 				};
 				addStatus(fightData, realOpponent, FighterStatus.BURNED);
 			}
+
+			// M_FEBREZ
+			if (opponent.type === 'dinoz' && attacker.skills.find((skill) => skill.id === Skill.M_FEBREZ)) {
+				// Regen 5% HP
+				heal(fightData, opponent, Math.round(opponent.maxHp * 0.05 + 0.5));
+			}
 		}
 	}
 
@@ -2729,7 +2779,7 @@ export const checkDeaths = (
 				// Add skillActivate step
 				fightData.steps.push({
 					action: 'skillActivate',
-					dinoz: stepFighter(fighter),
+					fighter: stepFighter(fighter),
 					skill: Skill.PLUMES_DE_PHOENIX,
 					energy: 0,
 				});
