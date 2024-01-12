@@ -1120,6 +1120,15 @@ const activateEvent = (
 				});
 				break;
 			}
+			// MONSTER
+			case Skill.M_REGENERATION: {
+				if (fighter.hp >= fighter.startingHp) {
+					return cancel();
+				}
+
+				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1));
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();

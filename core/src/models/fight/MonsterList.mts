@@ -151,6 +151,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 14,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
+		skills: [Skill.M_REGENERATION],
 	},
 	[Monster.COQ]: {
 		id: Monster.COQ,

@@ -303,6 +303,7 @@ export enum Skill {
 	// Monster Skills
 	M_RENFORTS = 99901,
 	M_ABSORPTION = 99902,
+	M_REGENERATION = 99903,
 	M_FLIGHT = 99907,
 	M_RESISTANCE = 99909,
 	M_FEBREZ = 99947,
@@ -4470,6 +4471,19 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 25,
+	},
+	[Skill.M_REGENERATION]: {
+		id: Skill.M_REGENERATION,
+		name: 'Regeneration',
+		type: SkillType.E,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 1,
+		probability: 60,
 	},
 	[Skill.M_FLIGHT]: {
 		id: Skill.M_FLIGHT,
