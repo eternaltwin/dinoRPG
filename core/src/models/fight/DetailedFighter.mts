@@ -28,6 +28,7 @@ export enum FighterStatus {
 	COPY_HEAL,
 	NO_INVOCATION,
 	USED_FUJIN,
+	M_ABSORB,
 	// Items
 	CURED,
 	BEER,

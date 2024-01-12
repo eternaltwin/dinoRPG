@@ -529,6 +529,12 @@ const registerHit = (
 				heal(fightData, opponent, hpStolen);
 			}
 		}
+
+		// Status.M_ABSORB
+		if (actualDamage[opponent.id] && fighter.status.includes(FighterStatus.M_ABSORB)) {
+			// Heal damage done
+			heal(fightData, fighter, actualDamage[opponent.id]);
+		}
 	});
 
 	if (!skill) {
@@ -2427,6 +2433,20 @@ const activateSkill = (
 			}
 
 			createMonster(fightData, fighter, monsterDetails);
+			break;
+		}
+		case Skill.M_ABSORPTION: {
+			// Add status
+			addStatus(fightData, fighter, FighterStatus.M_ABSORB);
+
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Attack opponent
+			startAttack(fightData, fighter, opponent);
+
+			// Remove status
+			removeStatus(fightData, fighter, FighterStatus.M_ABSORB);
 			break;
 		}
 		case Skill.M_FLIGHT: {
