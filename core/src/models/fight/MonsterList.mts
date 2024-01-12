@@ -132,6 +132,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
+		skills: [Skill.M_ABSORPTION],
 	},
 	[Monster.GREEN_GIANT]: {
 		id: Monster.GREEN_GIANT,
