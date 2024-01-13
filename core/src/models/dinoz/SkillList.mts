@@ -3559,8 +3559,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_ASSAULT]: 10,
-			[Stat.AIR_DEFENSE]: 3
 		},
+		globalEffects: {
+			[Stat.AIR_DEFENSE]: 3,
+		}
 	},
 	[Skill.ATTAQUE_PLONGEANTE]: {
 		id: Skill.ATTAQUE_PLONGEANTE,
