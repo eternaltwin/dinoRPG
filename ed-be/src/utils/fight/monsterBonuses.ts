@@ -42,18 +42,23 @@ const stinger = (monster: DetailedFighter) => {
 	monster.status.push(FighterStatus.NO_POISON);
 };
 
+const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
+	const skill = monster.skills.find((skill) => skill.id === skillId);
+
+	if (!skill) {
+		throw new Error(`Skill ${skillId} not found`);
+	}
+
+	skill.probability = (skill.probability ?? 0) * multiplier;
+}
+
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
 	[Monster.GOBLIN]: (monster) => {
 		monster.stats.special.counter += 50;
 		monster.stats.special.multihit += 30;
 	},
 	[Monster.DARK_SMASHROOM]: (monster) => {
-		// x2 M_RENFORTS probability
-		const renforts = monster.skills.find((skill) => skill.id === Skill.M_RENFORTS);
-
-		if (renforts) {
-			renforts.probability = (renforts.probability ?? 0) * 2;
-		}
+		multiplySkillProbability(monster, Skill.M_RENFORTS, 2);
 	},
 	[Monster.WORM]: (monster) => {
 		worm(monster);
@@ -101,13 +106,14 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.speed.global *= 1.3;
 		monster.spikes = 2;
 	},
+	[Monster.TRIPOU_THE_SOFTY]: (monster) => {
+		multiplySkillProbability(monster, Skill.EMBUCHE, 6);
+	},
+	[Monster.EMMEMA_BANDIT]: (monster) => {
+		multiplySkillProbability(monster, Skill.EMBUCHE, 6);
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
-		// x3 CELERITE probability
-		const celerite = monster.skills.find((skill) => skill.id === Skill.CELERITE);
-
-		if (celerite) {
-			celerite.probability = (celerite.probability ?? 0) * 3;
-		}
+		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
 	[Boss.PR_IGOR]: (monster) => {
 		monster.stats.special.evasion += 25;

@@ -2652,6 +2652,20 @@ const activateSkill = (
 			stinger.probability = Math.round((stinger.probability ?? 0) / 2);
 			break;
 		}
+		case Skill.M_INSTANT_FLEE: {
+			if (fighter.escaped || fighter.hp <= 0) {
+				return cancel();
+			}
+
+			// Add leave step
+			fightData.steps.push({
+				action: 'leave',
+				fighter: stepFighter(fighter),
+			});
+
+			fighter.escaped = true;
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();

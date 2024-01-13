@@ -63,6 +63,8 @@ export enum Monster {
 	STINGOZ = 'STINGOZ',
 	SCORPWINK_THIEF = 'SCORPWINK_THIEF',
 	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
+	TRIPOU_THE_SOFTY = 'TRIPOU_THE_SOFTY',
+	EMMEMA_BANDIT = 'EMMEMA_BANDIT',
 	ANY = 'ANY'
 }
 
@@ -1203,6 +1205,52 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.ATTAQUE_ECLAIR,
 			Skill.M_STINGER,
 		],
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.TRIPOU_THE_SOFTY]: {
+		id: Monster.TRIPOU_THE_SOFTY,
+		name: 'tripo2',
+		level: 25,
+		elements: {
+			fire: 10,
+			wood: 10,
+			water: 10,
+			lightning: 10,
+			air: 10
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 9999,
+		odds: 100,
+		skills: [
+			Skill.M_INSTANT_FLEE,
+			Skill.EMBUCHE,
+		],
+		xp: 1,
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.EMMEMA_BANDIT]: {
+		id: Monster.EMMEMA_BANDIT,
+		name: 'coward',
+		level: 25,
+		elements: {
+			fire: 10,
+			wood: 10,
+			water: 10,
+			lightning: 10,
+			air: 10
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 9999,
+		odds: 100,
+		skills: [
+			Skill.M_INSTANT_FLEE,
+			Skill.EMBUCHE,
+		],
+		xp: 1,
 		zones: [],
 		canBeCaptured: true,
 	},
