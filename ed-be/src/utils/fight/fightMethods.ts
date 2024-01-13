@@ -351,6 +351,14 @@ const registerHit = (
 			}
 		}
 
+		// M_PROTECTION
+		if (opponent.skills.find((s) => s.id === Skill.M_PROTECTION)) {
+			// Only tak 1/3 damage on assaults
+			if (!skill) {
+				actualDamage[opponent.id] = Math.round(actualDamage[opponent.id] / 3);
+			}
+		}
+
 		opponent.hp -= actualDamage[opponent.id];
 
 		// Danger detector (prevent hit if damage > 25)
