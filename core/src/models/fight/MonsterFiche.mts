@@ -31,4 +31,5 @@ export type MonsterFiche = {
 	skills?: Skill[];
 	canBeCaptured: boolean;
 	events?: GameEvent[];
+	noMove?: boolean;
 };

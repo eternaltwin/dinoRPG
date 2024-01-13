@@ -15,6 +15,10 @@ export enum Boss {
 	PIRHANOS_3 = 'PIRHANOS_3',
 	TW_BIGBEASTLY = 'TW_BIGBEASTLY',
 	PR_IGOR = 'PR_IGOR',
+	VENERABLE = 'VENERABLE',
+	VENERABLE_2 = 'VENERABLE_2',
+	VENERABLE_3 = 'VENERABLE_3',
+	VENERABLE_4 = 'VENERABLE_4',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -265,5 +269,98 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		],
 		zones: [],
 		canBeCaptured: false,
+	},
+	[Boss.VENERABLE]: {
+		id: Boss.VENERABLE,
+		name: 'vener',
+		level: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 60,
+		hp: 1000,
+		odds: 100,
+		skills: [
+			Skill.M_VENERABLE,
+		],
+		xp: 1000,
+		zones: [],
+		canBeCaptured: false,
+		noMove: true,
+	},
+	[Boss.VENERABLE_2]: {
+		id: Boss.VENERABLE_2,
+		name: 'vener2',
+		level: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 60,
+		hp: 1000,
+		odds: 100,
+		skills: [
+			Skill.M_VENERABLE,
+		],
+		xp: 0,
+		zones: [],
+		canBeCaptured: false,
+		noMove: true,
+	},
+	[Boss.VENERABLE_3]: {
+		id: Boss.VENERABLE_3,
+		name: 'vener3',
+		level: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 5,
+		hp: 500,
+		odds: 100,
+		skills: [
+			Skill.M_VENERABLE,
+		],
+		xp: 0,
+		gold: 0,
+		zones: [],
+		canBeCaptured: false,
+		noMove: true,
+	},
+	[Boss.VENERABLE_4]: {
+		id: Boss.VENERABLE_4,
+		name: 'vener4',
+		level: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 40,
+		hp: 700,
+		odds: 100,
+		skills: [
+			Skill.M_VENERABLE,
+		],
+		xp: 100,
+		zones: [],
+		canBeCaptured: false,
+		noMove: true,
 	},
 };

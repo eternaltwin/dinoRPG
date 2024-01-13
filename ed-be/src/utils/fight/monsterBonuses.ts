@@ -1,7 +1,7 @@
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { Boss } from "@drpg/core/models/fight/BossList";
-import { DetailedFighter } from "@drpg/core/models/fight/DetailedFighter";
+import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
 import { Monster } from "@drpg/core/models/fight/MonsterList";
 
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
@@ -27,10 +27,12 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.RONCIV]: (monster) => {
 		monster.stats.special.counter += 90;
+		monster.status.push(FighterStatus.NO_ASSAULT);
 	},
 	[Monster.GRDIEN]: (monster) => {
 		// Sentinel
 		monster.stats.special.counter += 90;
+		monster.status.push(FighterStatus.NO_ASSAULT);
 
 		// Comet
 		monster.stats.speed.global *= 1.5;

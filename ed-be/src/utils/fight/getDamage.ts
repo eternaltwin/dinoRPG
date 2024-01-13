@@ -39,41 +39,7 @@ const getDamage = (
 					elements: [ElementType.WOOD],
 				};
 			}
-			case Skill.CREPUSCULE_FLAMBOYANT: {
-				attackElements = [ElementType.FIRE, ElementType.LIGHTNING];
-				attack = 6 * attacker.stats.base[ElementType.FIRE] + 6 * attacker.stats.base[ElementType.LIGHTNING];
-				break;
-			}
-			case Skill.SECOUSSE: {
-				attackElements = [ElementType.WOOD, ElementType.AIR];
-				attack = 4 * attacker.stats.base[ElementType.WOOD] + 4 * attacker.stats.base[ElementType.AIR];
-				break;
-			}
-			case Skill.HERCOLUBUS: {
-				attackElements = [
-					ElementType.FIRE,
-					ElementType.LIGHTNING,
-					ElementType.WOOD,
-					ElementType.WATER,
-					ElementType.AIR,
-				];
-				attack = 10 * attacker.stats.base[ElementType.FIRE]
-					+ 10 * attacker.stats.base[ElementType.LIGHTNING]
-					+ 10 * attacker.stats.base[ElementType.WOOD]
-					+ 10 * attacker.stats.base[ElementType.WATER]
-					+ 10 * attacker.stats.base[ElementType.AIR];
-				break;
-			}
-			case Skill.M_COMET: {
-				attackElements = [
-					ElementType.FIRE,
-					ElementType.AIR,
-				];
-				attack = 20 * attacker.stats.base[ElementType.FIRE]
-					+ 30 * attacker.stats.base[ElementType.AIR];
-				break;
-			}
-			// Handle by default skills as an offensive skill with a given power and element
+			// Handle by default skills as an offensive skill with a list of element powers
 			default: {
 				const skillAttack = SkillAttacks[skill];
 
@@ -81,8 +47,13 @@ const getDamage = (
 					throw new Error(`Skill attack ${skill} not found`);
 				}
 
-				attackElements = [skillAttack.element];
-				attack = skillAttack.power * attacker.stats.base[skillAttack.element];
+				attackElements = Object.keys(skillAttack).map((element) => +element as ElementType);
+				attack = attackElements.reduce((acc, element) => {
+					const elementPower = skillAttack[element] || 0;
+					const elementValue = opponent.stats.base[element];
+					return acc + elementPower * elementValue;
+				}, 0);
+
 				break;
 			}
 		}

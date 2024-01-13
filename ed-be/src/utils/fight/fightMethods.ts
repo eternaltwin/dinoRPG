@@ -1611,7 +1611,8 @@ const activateSkill = (
 		case Skill.SOUFFLE_ARDENT:
 		case Skill.METEORES:
 		case Skill.CREPUSCULE_FLAMBOYANT:
-		case Skill.M_COMET: {
+		case Skill.M_COMET:
+		case Skill.M_VENERABLE: {
 			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
@@ -3181,8 +3182,8 @@ export const playFighterTurn = (
 		return;
 	}
 
-	// No assaults for M_SENTINEL
-	if (attacker.skills.some((skill) => skill.id === Skill.M_SENTINEL)) {
+	// No assaults for NO_ASSAULT
+	if (attacker.status.includes(FighterStatus.NO_ASSAULT)) {
 		endTurnChecks(fightData, attacker);
 		return;
 	}

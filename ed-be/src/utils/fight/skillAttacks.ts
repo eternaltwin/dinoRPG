@@ -1,118 +1,114 @@
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 
-export const SkillAttacks: Partial<Record<Skill, { power: number, element: ElementType }>> = {
+export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, number>>>> = {
 	// AIR
 	[Skill.AIGUILLON]: {
-		power: 3,
-		element: ElementType.AIR,
+		[ElementType.AIR]: 3,
 	},
 	[Skill.RAIJIN]: {
-		power: 20,
-		element: ElementType.AIR,
+		[ElementType.AIR]: 20,
 	},
 	[Skill.DJINN]: {
-		power: 20,
-		element: ElementType.AIR,
+		[ElementType.AIR]: 20,
 	},
 	[Skill.TOTEM_ANCESTRAL_AEROPORTE]: {
-		power: 30,
-		element: ElementType.AIR,
+		[ElementType.AIR]: 30,
 	},
 	// FIRE
 	[Skill.SOUFFLE_ARDENT]: {
-		power: 5,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 5,
 	},
 	[Skill.PAUME_CHALUMEAU]: {
-		power: 10,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 10,
 	},
 	[Skill.KAMIKAZE]: {
-		power: 15,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 15,
 	},
 	[Skill.BOULE_DE_FEU]: {
-		power: 7,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 7,
 	},
 	[Skill.COULEE_DE_LAVE]: {
-		power: 12,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 12,
 	},
 	[Skill.METEORES]: {
-		power: 10,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 10,
 	},
 	[Skill.BRASERO]: {
-		power: 3,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 3,
 	},
 	[Skill.VULCAIN]: {
-		power: 20,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 20,
 	},
 	[Skill.SALAMANDRE]: {
-		power: 30,
-		element: ElementType.FIRE,
+		[ElementType.FIRE]: 30,
+	},
+	[Skill.CREPUSCULE_FLAMBOYANT]: {
+		[ElementType.FIRE]: 6,
+		[ElementType.LIGHTNING]: 6,
 	},
 	// LIGHTNING
 	[Skill.FOUDRE]: {
-		power: 10,
-		element: ElementType.LIGHTNING,
+		[ElementType.LIGHTNING]: 10,
 	},
 	[Skill.ECLAIR_SINUEUX]: {
-		power: 10,
-		element: ElementType.LIGHTNING,
+		[ElementType.LIGHTNING]: 10,
 	},
 	[Skill.DANSE_FOUDROYANTE]: {
-		power: 3,
-		element: ElementType.LIGHTNING,
+		[ElementType.LIGHTNING]: 3,
 	},
 	[Skill.QUETZACOATL]: {
-		power: 40,
-		element: ElementType.LIGHTNING,
+		[ElementType.LIGHTNING]: 40,
 	},
 	// WATER
 	[Skill.CANON_A_EAU]: {
-		power: 6,
-		element: ElementType.WATER,
+		[ElementType.WATER]: 6,
 	},
 	[Skill.GEL]: {
-		power: 5,
-		element: ElementType.WATER,
+		[ElementType.WATER]: 5,
 	},
 	[Skill.DOUCHE_ECOSSAISE]: {
-		power: 2,
-		element: ElementType.WATER,
+		[ElementType.WATER]: 2,
 	},
 	[Skill.RAYON_KAAR_SHER]: {
-		power: 7,
-		element: ElementType.WATER,
+		[ElementType.WATER]: 7,
 	},
 	[Skill.DELUGE]: {
-		power: 10,
-		element: ElementType.WATER,
+		[ElementType.WATER]: 10,
 	},
 	[Skill.LEVIATHAN]: {
-		power: 20,
-		element: ElementType.WATER,
+		[ElementType.WATER]: 20,
 	},
 	[Skill.ONDINE]: {
-		power: 30,
-		element: ElementType.WATER,
+		[ElementType.WATER]: 30,
 	},
 	// WOOD
 	[Skill.LANCEUR_DE_GLAND]: {
-		power: 5,
-		element: ElementType.WOOD,
+		[ElementType.WOOD]: 5,
 	},
 	[Skill.LOUP_GAROU]: {
-		power: 30,
-		element: ElementType.WOOD,
+		[ElementType.WOOD]: 30,
 	},
 	[Skill.LANCER_DE_ROCHE]: {
-		power: 10,
-		element: ElementType.WOOD,
-	}
+		[ElementType.WOOD]: 10,
+	},
+	[Skill.SECOUSSE]: {
+		[ElementType.WOOD]: 4,
+		[ElementType.AIR]: 4,
+	},
+	[Skill.HERCOLUBUS]: {
+		[ElementType.FIRE]: 10,
+		[ElementType.LIGHTNING]: 10,
+		[ElementType.WOOD]: 10,
+		[ElementType.WATER]: 10,
+		[ElementType.AIR]: 10,
+	},
+	[Skill.M_COMET]: {
+		[ElementType.FIRE]: 20,
+		[ElementType.VOID]: 30,
+	},
+	[Skill.M_VENERABLE]: {
+		[ElementType.FIRE]: 50,
+		[ElementType.AIR]: 50,
+	},
 };

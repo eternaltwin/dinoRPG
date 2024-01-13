@@ -242,6 +242,13 @@ export const initializeMonster = (
 		};
 	}) ?? [];
 
+	// Statuses
+	const status = [];
+
+	if (monster.noMove) {
+		status.push(FighterStatus.NO_ASSAULT);
+	}
+
 	const fighter: DetailedFighter = {
 		id: existingMonsters[monster.name],
 		name: monster.name,
@@ -305,7 +312,7 @@ export const initializeMonster = (
 		// Add a random amount of time between 0 and 10 to randomize the first fighter
 		time: Math.round(Math.random() * TIME_BASE) * TIME_FACTOR,
 		skills,
-		status: [],
+		status,
 		activeSkills: [],
 		elements: [
 			ElementType.FIRE,
