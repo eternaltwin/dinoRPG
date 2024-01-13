@@ -67,6 +67,7 @@ export enum Monster {
 	EMMEMA_BANDIT = 'EMMEMA_BANDIT',
 	BARATRIBOR = 'BARATRIBOR',
 	MERGUEZ_THIEF = 'MERGUEZ_THIEF',
+	ELEMENTAL_DISCIPLE = 'ELEMENTAL_DISCIPLE',
 	ANY = 'ANY'
 }
 
@@ -1306,6 +1307,27 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		skills: [
 			Skill.COUP_DOUBLE,
+		],
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.ELEMENTAL_DISCIPLE]: {
+		id: Monster.ELEMENTAL_DISCIPLE,
+		name: 'elhelp',
+		level: 0,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 20,
+		bonus_defense: 20,
+		hp: 200,
+		odds: 100,
+		skills: [
+			Skill.M_ELEMENTAL_DISCIPLE,
 		],
 		zones: [],
 		canBeCaptured: true,

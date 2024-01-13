@@ -169,6 +169,9 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.GROPI]: (monster) => {
 		ggoupi(monster);
 	},
+	[Monster.ELEMENTAL_DISCIPLE]: (monster) => {
+		monster.time -= 100 * TIME_FACTOR;
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},

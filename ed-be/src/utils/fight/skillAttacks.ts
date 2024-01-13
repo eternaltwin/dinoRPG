@@ -115,4 +115,7 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 	[Skill.M_WORM_2]: {
 		[ElementType.VOID]: 5,
 	},
+	[Skill.M_ELEMENTAL_DISCIPLE]: {
+		[ElementType.AIR]: 200,
+	},
 };

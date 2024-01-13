@@ -2763,6 +2763,18 @@ const activateSkill = (
 			}
 			break;
 		}
+		case Skill.M_ELEMENTAL_DISCIPLE: {
+			targetAllOpponents(fightData, fighter, skill);
+
+			fighter.escaped = true;
+
+			// Add leave step
+			fightData.steps.push({
+				action: 'leave',
+				fighter: stepFighter(fighter),
+			});
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();
@@ -3068,6 +3080,9 @@ export const checkDeaths = (
 
 	for (let i = 0; i < fightData.fighters.length; i++) {
 		const fighter = fightData.fighters[i];
+
+		// Skip escaped fighters
+		if (fighter.escaped) continue;
 
 		// Only add death step if fighter is dead and hasn't died yet
 		if (fighter.hp <= 0 && fightData.steps.filter((step) => step.action === 'death'
