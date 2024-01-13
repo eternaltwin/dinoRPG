@@ -2487,6 +2487,13 @@ const activateSkill = (
 			}
 			break;
 		}
+		case Skill.M_INVISIBILITY: {
+			getAllies(fightData, fighter).forEach((ally) => {
+				// Add INTANGIBLE
+				addStatus(fightData, ally, FighterStatus.INTANGIBLE);
+			});
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();

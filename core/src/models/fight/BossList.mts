@@ -13,6 +13,8 @@ export enum Boss {
 	ROCKY = 'ROCKY',
 	MASTER_CHA = 'MASTER_CHA',
 	PIRHANOS_3 = 'PIRHANOS_3',
+	TW_BIGBEASTLY = 'TW_BIGBEASTLY',
+	PR_IGOR = 'PR_IGOR',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -213,6 +215,55 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		groups: [0, 0, 1],
 		xp: 50,
 		skills: [Skill.M_FLIGHT],
+		canBeCaptured: false,
+	},
+	[Boss.TW_BIGBEASTLY]: {
+		id: Boss.TW_BIGBEASTLY,
+		name: 'wbour2',
+		level: 35,
+		elements: {
+			fire: 0,
+			wood: 11,
+			water: 0,
+			lightning: 20,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 300,
+		odds: 100,
+		xp: 50,
+		skills: [
+			Skill.CELERITE,
+			Skill.ATTAQUE_ECLAIR,
+			Skill.FOUDRE,
+			Skill.COUP_DOUBLE,
+			Skill.DANSE_FOUDROYANTE,
+			Skill.M_RESISTANCE
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.PR_IGOR]: {
+		id: Boss.PR_IGOR,
+		name: 'igor',
+		level: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 20,
+		bonus_defense: 20,
+		hp: 200,
+		odds: 100,
+		skills: [
+			Skill.M_RESISTANCE,
+			Skill.M_INVISIBILITY,
+		],
+		zones: [],
 		canBeCaptured: false,
 	},
 };
