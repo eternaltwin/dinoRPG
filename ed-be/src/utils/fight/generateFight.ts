@@ -178,15 +178,17 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
-		dinoz_id: dinoz.id,
-		hp_lost: dinoz.maxHp - dinoz.hp,
-		items_used: dinoz.itemsUsed,
+		dinozId: dinoz.id,
+		hpLost: dinoz.maxHp - dinoz.hp,
+		itemsUsed: dinoz.itemsUsed,
+		goldLost: fightData.fighters.filter((fighter) => !fighter.attacker && fighter.goldStolen?.[dinoz.id]).reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
 	}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => !fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
-		dinoz_id: dinoz.id,
-		hp_lost: dinoz.maxHp - dinoz.hp,
-		items_used: dinoz.itemsUsed,
+		dinozId: dinoz.id,
+		hpLost: dinoz.maxHp - dinoz.hp,
+		itemsUsed: dinoz.itemsUsed,
+		goldLost: 0,
 	}));
 
 	return {

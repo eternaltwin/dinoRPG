@@ -10,7 +10,7 @@ import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
-import { addMoney } from '../dao/playerDao.js';
+import { addMoney, removeMoney } from '../dao/playerDao.js';
 import { sendDiscord } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import generateFight from '../utils/fight/generateFight.js';
@@ -210,14 +210,14 @@ export async function rewardFight(
 		}
 		totalWinXP += xp;
 
-		const attacker = fightResult.attackers.find(a => a.dinoz_id === d.id);
+		const attacker = fightResult.attackers.find(a => a.dinozId === d.id);
 		if (!attacker) {
 			throw new ErrorFormator(500, `Attacker ${d.id} doesn't exist.`);
 		}
 
 		await updateDinoz(d.id, {
 			life: {
-				decrement: attacker.hp_lost
+				decrement: attacker.hpLost
 			},
 			experience: {
 				increment: fightResult.winner ? xp : 0
@@ -225,7 +225,7 @@ export async function rewardFight(
 		});
 
 		// Log death if dinoz is dead
-		if (attacker.hp_lost >= d.life) {
+		if (attacker.hpLost >= d.life) {
 			await createLog(LogType.Death, playerId, d.id);
 		}
 	}
@@ -238,6 +238,10 @@ export async function rewardFight(
 	let gold = (getRandomNumber(0, 10) + 20) * 10;
 
 	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
+
+	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
+	gold -= goldLost;
+
 	// If attackers won
 	if (fightResult.winner) {
 		if (gold > 10000) {
@@ -245,33 +249,35 @@ export async function rewardFight(
 			sendDiscord(`Player ${playerId} has been rewarded ${gold} gold when fighting ${monsterlist}.`);
 		}
 		await addMoney(playerId, gold);
+	} else if (goldLost) {
+		await removeMoney(playerId, goldLost);
 	}
 
 	await createLog(
 		LogType.Fight,
 		playerId,
 		undefined,
-		fightResult.winner ? gold : 0,
+		fightResult.winner ? gold : -goldLost,
 		fightResult.winner ? totalWinXP : 0,
-		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0)
+		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0)
 	);
 
 	return {
 		opponent: monsters.map(m => {
 			return m.name;
 		}),
-		goldEarned: fightResult.winner ? gold : 0,
+		goldEarned: fightResult.winner ? gold : -goldLost,
 		xpEarned: fightResult.winner ? totalWinXP : 0,
-		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hp_lost, 0),
+		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
 		result: fightResult.winner,
 		history: fightResult.steps,
 		hpLost: fightResult.attackers.map(a => ({
-			id: a.dinoz_id,
-			hpLost: a.hp_lost
+			id: a.dinozId,
+			hpLost: a.hpLost
 		})),
 		itemsUsed: fightResult.attackers.map(a => ({
-			id: a.dinoz_id,
-			itemsUsed: a.items_used
+			id: a.dinozId,
+			itemsUsed: a.itemsUsed
 		}))
 	};
 }

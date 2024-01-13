@@ -152,6 +152,12 @@ export interface DisabledItemsStep {
   fighter: StepFighter;
 	items: Item[];
 }
+export interface StealGoldStep {
+	action: 'stealGold';
+	fighter: StepFighter;
+	target: StepFighter;
+	gold: number;
+}
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
@@ -161,4 +167,4 @@ export type FightStep = ArriveStep | LeaveStep | ResistStep
 | ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
 | RemoveCostumeStep | HypnotizeStep | EndHypnosisStep
 | GainEnergyStep | ReduceEnergyStep | LoseSphereStep | MissStep
-| DisabledItemsStep;
+| DisabledItemsStep | StealGoldStep;

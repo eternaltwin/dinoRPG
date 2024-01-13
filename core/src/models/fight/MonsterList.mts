@@ -65,6 +65,8 @@ export enum Monster {
 	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
 	TRIPOU_THE_SOFTY = 'TRIPOU_THE_SOFTY',
 	EMMEMA_BANDIT = 'EMMEMA_BANDIT',
+	ZAXA_BANDIT = 'ZAXA_BANDIT',
+	BARATRIBOR = 'BARATRIBOR',
 	ANY = 'ANY'
 }
 
@@ -1201,7 +1203,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 50,
 		odds: 100,
 		skills: [
-			// TODO: Skill.BANDIT_1,
+			Skill.M_STEAL,
 			Skill.ATTAQUE_ECLAIR,
 			Skill.M_STINGER,
 		],
@@ -1251,6 +1253,49 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.EMBUCHE,
 		],
 		xp: 1,
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.ZAXA_BANDIT]: {
+		id: Monster.ZAXA_BANDIT,
+		name: 'brig1',
+		level: 25,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 70,
+		bonus_defense: 0,
+		hp: 30,
+		odds: 10,
+		groups: [0, 1],
+		skills: [
+			Skill.M_STEAL,
+		],
+		zones: [MapZone.STEPPE],
+		canBeCaptured: true,
+	},
+	[Monster.BARATRIBOR]: {
+		id: Monster.BARATRIBOR,
+		name: 'baratr',
+		level: 15,
+		elements: {
+			fire: 0,
+			wood: 3,
+			water: 6,
+			lightning: 6,
+			air: 3
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 70,
+		odds: 100,
+		skills: [
+			Skill.COUP_DOUBLE,
+		],
 		zones: [],
 		canBeCaptured: true,
 	},

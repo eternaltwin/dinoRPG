@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { SkillDetails } from "@drpg/core/models/dinoz/SkillDetails";
-import { Skill } from "@drpg/core/models/dinoz/SkillList";
+import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
 import { SkillLevel } from "@drpg/core/models/dinoz/SkillLevel";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
@@ -194,7 +194,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 
 	if (!events.length) return null;
 
-	// Order events by probability
+	// Order events by priority
 	events.sort((a, b) => {
 		const aPriority = a.priority ?? 0;
 		const bPriority = b.priority ?? 0;
@@ -234,6 +234,18 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 	if (!skills.length) return null;
 
 	const hasOracle = fighter.skills.some((skill) => skill.id === Skill.ORACLE);
+
+	// Order skills by priority
+	skills.sort((a, b) => {
+		const aPriority = a.priority ?? 0;
+		const bPriority = b.priority ?? 0;
+
+		if (aPriority !== bPriority) {
+			return bPriority - aPriority;
+		}
+
+		return Math.random() > 0.5 ? 1 : -1;
+	});
 
 	// Go through each event and roll the dice
 	for (let i = 0; i < skills.length; i++) {
@@ -2643,13 +2655,7 @@ const activateSkill = (
 			}
 
 			// Half the probability of this skill
-			const stinger = fighter.skills.find((s) => s.id === Skill.M_STINGER);
-
-			if (!stinger) {
-				throw new Error('M_STINGER not found');
-			}
-
-			stinger.probability = Math.round((stinger.probability ?? 0) / 2);
+			skill.probability = Math.round((skill.probability ?? 0) / 2);
 			break;
 		}
 		case Skill.M_INSTANT_FLEE:
@@ -2672,6 +2678,53 @@ const activateSkill = (
 
 			// Remove skill
 			fighter.skills = fighter.skills.filter((s) => s.id !== Skill.M_WORM_CALL);
+			break;
+		}
+		case Skill.M_STEAL: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent)
+			});
+
+			// Fighter attacks opponent
+			startAttack(fightData, fighter, opponent);
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				const goldStolen = (randomBetween(0, 5) + 8) * 10;
+				fighter.goldStolen = {
+					...fighter.goldStolen,
+					[opponent.id]: (fighter.goldStolen?.[opponent.id] ?? 0) + goldStolen,
+				};
+
+				// Add stealGold step
+				fightData.steps.push({
+					action: 'stealGold',
+					fighter: stepFighter(fighter),
+					target: stepFighter(opponent),
+					gold: goldStolen,
+				});
+
+				// Disable skill
+				skill.probability = 0;
+
+				// Add M_FLEE
+				const flee = { ...skillList[Skill.M_FLEE] };
+				flee.priority = 1;
+				flee.probability = 60;
+				fighter.skills.push(flee);
+
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
 			break;
 		}
 		default:
@@ -3029,6 +3082,9 @@ export const checkDeaths = (
 					}
 				});
 			}
+
+			// Reset stolen gold
+			fighter.goldStolen = undefined;
 		}
 
 		// Count alive fighters

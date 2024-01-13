@@ -52,6 +52,16 @@ const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, mult
 	skill.probability = (skill.probability ?? 0) * multiplier;
 }
 
+const setSkillProbability = (monster: DetailedFighter, skillId: Skill, value: number) => {
+	const skill = monster.skills.find((skill) => skill.id === skillId);
+
+	if (!skill) {
+		throw new Error(`Skill ${skillId} not found`);
+	}
+
+	skill.probability = value;
+}
+
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
 	[Monster.GOBLIN]: (monster) => {
 		monster.stats.special.counter += 50;
@@ -101,6 +111,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.SCORPWINK_THIEF_2]: (monster) => {
 		stinger(monster);
+		setSkillProbability(monster, Skill.M_STEAL, 10);
 	},
 	[Monster.CACTUS]: (monster) => {
 		monster.stats.special.evasion += 30;
@@ -112,6 +123,10 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.EMMEMA_BANDIT]: (monster) => {
 		multiplySkillProbability(monster, Skill.EMBUCHE, 6);
+	},
+	[Monster.ZAXA_BANDIT]: (monster) => {
+		monster.stats.speed.global *= 1.7;
+		setSkillProbability(monster, Skill.M_STEAL, 10);
 	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);

@@ -3,6 +3,7 @@ import { SkillDetails } from "../dinoz/SkillDetails.mjs";
 import { Skill } from "../dinoz/SkillList.mjs";
 import { ElementType } from "../enums/ElementType.mjs";
 import { ItemFiche } from "../item/ItemFiche.mjs";
+import { Item } from "../item/ItemList.mjs";
 import { MonsterFiche } from "./MonsterFiche.mjs";
 
 export enum FighterStatus {
@@ -147,14 +148,13 @@ export interface DetailedFighter {
 	absorbed?: number,
 	// Spikes
 	spikes?: number,
+	// Gold stolen
+	goldStolen?: Record<number, number>,
 }
 
-// This structure needs to be exactly the same as FighterResult in native/src/fight/fighter.rs
 export interface FighterResultFiche {
-  // ID of the dinoz in the DB
-  dinoz_id: number;
-  // The health lost by the dinoz in the fight in comparison to its starting life
-  hp_lost: number;
-  // The items used by the dinoz during the fight
-  items_used: number[];
+  dinozId: number;
+  hpLost: number;
+  itemsUsed: Item[];
+	goldLost: number;
 }
