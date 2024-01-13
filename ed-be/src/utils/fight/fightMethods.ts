@@ -1703,7 +1703,7 @@ const activateSkill = (
 
 			for (let i = 0; i < 5; i++) {
 				// Fighter attacks opponent
-				startAttack(fightData, fighter, opponent, true, Skill.DANSE_FOUDROYANTE, 3);
+				startAttack(fightData, fighter, opponent, false, Skill.DANSE_FOUDROYANTE, 3);
 
 				const countered = counterAttack(fighter, opponent);
 
@@ -2502,6 +2502,15 @@ const activateSkill = (
 				// Add INTANGIBLE
 				addStatus(fightData, ally, FighterStatus.INTANGIBLE);
 			});
+			break;
+		}
+		case Skill.M_BITE: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Fighter attacks opponent
+			startAttack(fightData, fighter, opponent, false, Skill.M_BITE, 7);
+
 			break;
 		}
 		default:

@@ -117,6 +117,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOLAND],
 		groups: [5, 3, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_BITE],
 	},
 	[Monster.GLUON]: {
 		id: Monster.GLUON,
