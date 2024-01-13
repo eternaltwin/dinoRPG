@@ -150,6 +150,9 @@ export interface DetailedFighter {
 	spikes?: number,
 	// Gold stolen
 	goldStolen?: Record<number, number>,
+	// Cursed
+	initiallyCursed: boolean,
+	cursed?: boolean,
 }
 
 export interface FighterResultFiche {
@@ -157,4 +160,5 @@ export interface FighterResultFiche {
   hpLost: number;
   itemsUsed: Item[];
 	goldLost: number;
+	cursed: boolean;
 }

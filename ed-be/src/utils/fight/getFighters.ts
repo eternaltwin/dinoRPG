@@ -14,6 +14,7 @@ import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
 import { PlacesByMap } from "@drpg/core/models/place/PlaceList";
 import { MapZone } from "@drpg/core/models/enums/MapZone";
 import { MonsterBonus } from "./monsterBonuses.js";
+import { statusList } from "@drpg/core/models/dinoz/StatusList";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -154,6 +155,7 @@ export const initializeDinoz = (
 		nextAssaultMultiplier: 1,
 		costume,
 		invocations: 1,
+		initiallyCursed: dinoz.status.some((status) => status.statusId === statusList.CURSED),
 	};
 
 	handleSkills(team, fighter, place);
@@ -336,6 +338,7 @@ export const initializeMonster = (
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
 		invocations: 0,
+		initiallyCursed: false,
 	};
 
 	// Handle bonuses

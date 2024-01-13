@@ -18,6 +18,7 @@ import getFighters from '../utils/fight/getFighters.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 
 /**
  * @summary Process a fight
@@ -227,6 +228,11 @@ export async function rewardFight(
 		// Log death if dinoz is dead
 		if (attacker.hpLost >= d.life) {
 			await createLog(LogType.Death, playerId, d.id);
+		}
+
+		// Add CURSED status if dinoz is cursed
+		if (attacker.cursed) {
+			await addStatusToDinoz(d.id, statusList.CURSED);
 		}
 	}
 

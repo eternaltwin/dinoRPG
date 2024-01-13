@@ -191,4 +191,10 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Boss.DARK_MEGASHROOM_2]: (monster) => {
 		ggoupi(monster);
 	},
+	[Boss.MASKED_KORGON]: (monster) => {
+		multiplySkillProbability(monster, Skill.LANCEUR_DE_GLAND, 2);
+	},
+	[Boss.SOUTHERN_KORGON]: (monster) => {
+		multiplySkillProbability(monster, Skill.LANCEUR_DE_GLAND, 2);
+	},
 };

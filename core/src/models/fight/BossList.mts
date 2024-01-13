@@ -25,6 +25,8 @@ export enum Boss {
 	YAKUZI = 'YAKUZI',
 	DARK_MEGASHROOM = 'DARK_MEGASHROOM',
 	DARK_MEGASHROOM_2 = 'DARK_MEGASHROOM_2',
+	MASKED_KORGON = 'MASKED_KORGON',
+	SOUTHERN_KORGON = 'SOUTHERN_KORGON',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -500,6 +502,50 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 60,
 		skills: [
 			Skill.M_CONTAMINATION,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.MASKED_KORGON]: {
+		id: Boss.MASKED_KORGON,
+		name: 'kvenbs',
+		level: 15,
+		elements: {
+			fire: 6,
+			wood: 12,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 60,
+		odds: 100,
+		skills: [
+			Skill.M_CURSED_WAND,
+			Skill.LANCEUR_DE_GLAND,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.SOUTHERN_KORGON]: {
+		id: Boss.SOUTHERN_KORGON,
+		name: 'ksudbs',
+		level: 35,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 30,
+		hp: 150,
+		odds: 100,
+		skills: [
+			Skill.M_CURSED_WAND,
+			Skill.LANCEUR_DE_GLAND,
 		],
 		zones: [],
 		canBeCaptured: false,

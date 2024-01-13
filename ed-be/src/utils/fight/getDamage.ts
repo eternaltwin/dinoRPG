@@ -39,6 +39,13 @@ const getDamage = (
 					elements: [ElementType.WOOD],
 				};
 			}
+			// 50% of the opponent's HP
+			case Skill.M_CURSED_WAND: {
+				return {
+					damage: Math.round(opponent.hp * 0.5),
+					elements: [ElementType.VOID],
+				};
+			}
 			// Handle by default skills as an offensive skill with a list of element powers
 			default: {
 				const skillAttack = SkillAttacks[skill];

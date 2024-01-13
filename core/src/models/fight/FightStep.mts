@@ -158,6 +158,10 @@ export interface StealGoldStep {
 	target: StepFighter;
 	gold: number;
 }
+export interface CursedStep {
+	action: 'cursed';
+	fighter: StepFighter;
+}
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
@@ -167,4 +171,4 @@ export type FightStep = ArriveStep | LeaveStep | ResistStep
 | ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
 | RemoveCostumeStep | HypnotizeStep | EndHypnosisStep
 | GainEnergyStep | ReduceEnergyStep | LoseSphereStep | MissStep
-| DisabledItemsStep | StealGoldStep;
+| DisabledItemsStep | StealGoldStep | CursedStep;

@@ -693,6 +693,32 @@ const targetSingleOpponent = (
 	return opponent;
 }
 
+const targetMultipleOpponents = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	opponents: DetailedFighter[],
+	skill: SkillDetails,
+) => {
+	opponents.forEach((opponent) => {
+		// Check if opponent evaded
+		if (evadedSkill(opponent, skill)) {
+			// Add evade step
+			fightData.steps.push({
+				action: 'evade',
+				fighter: stepFighter(opponent),
+			});
+
+			return;
+		}
+
+		// Get damage
+		const { damage, elements } = getDamage(fighter, opponent, skill.id);
+
+		// Register the hit
+		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
+	});
+};
+
 const targetAllOpponents = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
@@ -1248,6 +1274,13 @@ const activateEvent = (
 				});
 
 				checkInvocationBan(fightData, clone);
+				break;
+			}
+			case Skill.M_CURSED_WAND: {
+				// Get all opponent dinoz
+				const opponents = getOpponents(fightData, fighter, ['dinoz']);
+
+				targetMultipleOpponents(fightData, fighter, opponents, event);
 				break;
 			}
 			default:

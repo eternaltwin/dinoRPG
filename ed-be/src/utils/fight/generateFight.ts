@@ -176,12 +176,33 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
 	const winner = fightData.loser === 'defenders';
 
+	if (winner) {
+		// Curse if any M_CURSED_WAND
+		if (fightData.fighters.some((fighter) => fighter.skills.some((skill) => skill.id === Skill.M_CURSED_WAND))) {
+			fightData.fighters.forEach((f) => {
+				if (!f.attacker || f.initiallyCursed) return;
+
+				// No curse if SOUFFLE_DE_VIE
+				if (f.skills.some((skill) => skill.id === Skill.SOUFFLE_DE_VIE)) return;
+
+				f.cursed = true;
+
+				// Add cursed step
+				fightData.steps.push({
+					action: 'cursed',
+					fighter: stepFighter(f),
+				});
+			});
+		}
+	}
+
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
 		dinozId: dinoz.id,
 		hpLost: dinoz.maxHp - dinoz.hp,
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: fightData.fighters.filter((fighter) => !fighter.attacker && fighter.goldStolen?.[dinoz.id]).reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
+		cursed: !dinoz.initiallyCursed && !!dinoz.cursed,
 	}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => !fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
@@ -189,6 +210,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		hpLost: dinoz.maxHp - dinoz.hp,
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: 0,
+		cursed: false,
 	}));
 
 	return {
