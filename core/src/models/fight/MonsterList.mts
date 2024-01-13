@@ -375,7 +375,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 15,
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
-		skills: [Skill.M_PROTECTION],
+		skills: [Skill.M_PROTECTION, Skill.M_SENTINEL],
 	},
 	[Monster.BAT]: {
 		id: Monster.BAT,
@@ -413,6 +413,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 25,
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
+		skills: [Skill.M_SENTINEL],
 	},
 	[Monster.WORM2]: {
 		id: Monster.WORM2,

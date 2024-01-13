@@ -3180,6 +3180,12 @@ export const playFighterTurn = (
 		return;
 	}
 
+	// No assaults for M_SENTINEL
+	if (attacker.skills.some((skill) => skill.id === Skill.M_SENTINEL)) {
+		endTurnChecks(fightData, attacker);
+		return;
+	}
+
 	// At this point this is an assault
 
 	// Get opponent
