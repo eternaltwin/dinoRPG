@@ -42,6 +42,22 @@ const stinger = (monster: DetailedFighter) => {
 	monster.status.push(FighterStatus.NO_POISON);
 };
 
+const brig1 = (monster: DetailedFighter) => {
+	monster.stats.speed.global *= 1.7;
+	setSkillProbability(monster, Skill.M_STEAL, 10);
+};
+
+const brig2 = (monster: DetailedFighter) => {
+	monster.stats.speed.global *= 0.7;
+	monster.time -= 15 * TIME_FACTOR;
+	monster.stats.special.multihit += 30;
+	setSkillProbability(monster, Skill.M_STEAL, 5);
+};
+
+const brig3 = (monster: DetailedFighter) => {
+	setSkillProbability(monster, Skill.M_STEAL, 30);
+};
+
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
 	const skill = monster.skills.find((skill) => skill.id === skillId);
 
@@ -108,6 +124,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.SCORPWINK_THIEF]: (monster) => {
 		stinger(monster);
+		brig3(monster);
 	},
 	[Monster.SCORPWINK_THIEF_2]: (monster) => {
 		stinger(monster);
@@ -124,9 +141,26 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.EMMEMA_BANDIT]: (monster) => {
 		multiplySkillProbability(monster, Skill.EMBUCHE, 6);
 	},
-	[Monster.ZAXA_BANDIT]: (monster) => {
-		monster.stats.speed.global *= 1.7;
-		setSkillProbability(monster, Skill.M_STEAL, 10);
+	[Monster.BRIG1_ALL]: (monster) => {
+		brig1(monster);
+	},
+	[Monster.BRIG1_HOME]: (monster) => {
+		brig1(monster);
+	},
+	[Monster.BRIG2_ALL]: (monster) => {
+		brig2(monster);
+	},
+	[Monster.BRIG2_HOME]: (monster) => {
+		brig2(monster);
+	},
+	[Monster.MERGUEZ_THIEF]: (monster) => {
+		brig2(monster);
+	},
+	[Monster.BRIG3_ALL]: (monster) => {
+		brig3(monster);
+	},
+	[Monster.BRIG3_HOME]: (monster) => {
+		brig3(monster);
 	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);

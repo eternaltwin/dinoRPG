@@ -65,8 +65,8 @@ export enum Monster {
 	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
 	TRIPOU_THE_SOFTY = 'TRIPOU_THE_SOFTY',
 	EMMEMA_BANDIT = 'EMMEMA_BANDIT',
-	ZAXA_BANDIT = 'ZAXA_BANDIT',
 	BARATRIBOR = 'BARATRIBOR',
+	MERGUEZ_THIEF = 'MERGUEZ_THIEF',
 	ANY = 'ANY'
 }
 
@@ -519,6 +519,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.STEPPE],
 		groups: [0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_STEAL],
 	},
 	[Monster.BRIG1_HOME]: {
 		id: Monster.BRIG1_HOME,
@@ -539,11 +540,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		places: [PlaceEnum.TAUDIS_DES_ZAXA],
 		groups: [0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_STEAL],
 	},
 	[Monster.BRIG2_ALL]: {
 		id: Monster.BRIG2_ALL,
 		name: 'brig2',
-		hp: 30,
+		hp: 5,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -555,14 +557,16 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		odds: 10,
 		level: 25,
+		xp: 6,
 		zones: [MapZone.STEPPE],
 		groups: [0, 0, 0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_STEAL],
 	},
 	[Monster.BRIG2_HOME]: {
 		id: Monster.BRIG2_HOME,
 		name: 'brig2',
-		hp: 30,
+		hp: 5,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -574,15 +578,17 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		odds: 500,
 		level: 25,
+		xp: 6,
 		zones: [MapZone.STEPPE],
 		places: [PlaceEnum.CAMP_DES_EMMEMMA],
 		groups: [0, 0, 0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_STEAL],
 	},
 	[Monster.BRIG3_ALL]: {
 		id: Monster.BRIG3_ALL,
 		name: 'brig3',
-		hp: 30,
+		hp: 20,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -594,14 +600,16 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 20,
 		odds: 10,
 		level: 25,
+		xp: 7,
 		zones: [MapZone.STEPPE],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_STEAL],
 	},
 	[Monster.BRIG3_HOME]: {
 		id: Monster.BRIG3_HOME,
 		name: 'brig3',
-		hp: 30,
+		hp: 20,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -613,10 +621,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 20,
 		odds: 500,
 		level: 25,
+		xp: 7,
 		zones: [MapZone.STEPPE],
 		places: [PlaceEnum.CAMPEMENT_DES_MATTMUT],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_STEAL],
 	},
 	[Monster.GROPI]: {
 		id: Monster.GROPI,
@@ -1178,7 +1188,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 1000,
 		odds: 100,
 		skills: [
-			// TODO: Skill.BANDIT_3,
+			Skill.M_STEAL,
 			Skill.ATTAQUE_ECLAIR,
 			Skill.CELERITE,
 			Skill.M_STINGER,
@@ -1256,10 +1266,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: true,
 	},
-	[Monster.ZAXA_BANDIT]: {
-		id: Monster.ZAXA_BANDIT,
-		name: 'brig1',
-		level: 25,
+	[Monster.MERGUEZ_THIEF]: {
+		id: Monster.MERGUEZ_THIEF,
+		name: 'vol1',
+		level: 35,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -1267,15 +1277,15 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			lightning: 0,
 			air: 0
 		},
-		bonus_attack: 70,
+		bonus_attack: 0,
 		bonus_defense: 0,
-		hp: 30,
-		odds: 10,
-		groups: [0, 1],
+		hp: 50,
+		odds: 100,
 		skills: [
-			Skill.M_STEAL,
+			Skill.M_STEAL
 		],
-		zones: [MapZone.STEPPE],
+		xp: 10,
+		zones: [],
 		canBeCaptured: true,
 	},
 	[Monster.BARATRIBOR]: {
