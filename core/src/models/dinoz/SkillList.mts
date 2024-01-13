@@ -4288,11 +4288,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.FIRE_ASSAULT]: 6,
-			[Stat.WOOD_ASSAULT]: 6,
-			[Stat.WATER_ASSAULT]: 6,
-			[Stat.LIGHTNING_ASSAULT]: 6,
-			[Stat.AIR_ASSAULT]: 6
+			[Stat.FIRE_ASSAULT]: 5,
+			[Stat.WOOD_ASSAULT]: 5,
+			[Stat.WATER_ASSAULT]: 5,
+			[Stat.LIGHTNING_ASSAULT]: 5,
+			[Stat.AIR_ASSAULT]: 5
 		}
 	},
 	[Skill.ORIGINE_CAUSHEMESHENNE]: {
