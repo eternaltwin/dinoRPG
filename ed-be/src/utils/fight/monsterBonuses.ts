@@ -30,6 +30,12 @@ const elemental = (monster: DetailedFighter) => {
 	monster.element = randomElement;
 };
 
+const stinger = (monster: DetailedFighter) => {
+	monster.stats.special.evasion += 60;
+	monster.stats.speed.global *= 1.5;
+	monster.status.push(FighterStatus.NO_POISON);
+};
+
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
 	[Monster.GOBLIN]: (monster) => {
 		monster.stats.special.counter += 50;
@@ -64,6 +70,18 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.TW_BIGBEASTLY_1]: (monster) => {
 		monster.time += 100000 * TIME_FACTOR;
 		monster.status.push(FighterStatus.ASLEEP);
+	},
+	[Monster.SCORP]: (monster) => {
+		stinger(monster);
+	},
+	[Monster.STINGOZ]: (monster) => {
+		stinger(monster);
+	},
+	[Monster.SCORPWINK_THIEF]: (monster) => {
+		stinger(monster);
+	},
+	[Monster.SCORPWINK_THIEF_2]: (monster) => {
+		stinger(monster);
 	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		// x3 CELERITE probability

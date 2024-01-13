@@ -30,6 +30,7 @@ export enum FighterStatus {
 	USED_FUJIN,
 	M_ABSORB,
 	NO_ASSAULT,
+	NO_POISON,
 	// Items
 	CURED,
 	BEER,

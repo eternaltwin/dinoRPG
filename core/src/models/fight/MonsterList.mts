@@ -59,6 +59,9 @@ export enum Monster {
 	EARTHWORM_MATRIARCH = 'EARTHWORM_MATRIARCH',
 	GROULEM = 'GROULEM',
 	TW_BIGBEASTLY_1 = 'TW_BIGBEASTLY_1',
+	STINGOZ = 'STINGOZ',
+	SCORPWINK_THIEF = 'SCORPWINK_THIEF',
+	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
 	ANY = 'ANY'
 }
 
@@ -468,6 +471,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 30,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
+		skills: [Skill.M_STINGER],
 	},
 	[Monster.CACTUS]: {
 		id: Monster.CACTUS,
@@ -1098,6 +1102,73 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_DISABLE],
 		zones: [],
 		canBeCaptured: false,
+	},
+	[Monster.STINGOZ]: {
+		id: Monster.STINGOZ,
+		name: 'pikouz',
+		level: 25,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 12,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 50,
+		odds: 100,
+		skills: [Skill.M_STINGER],
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.SCORPWINK_THIEF]: {
+		id: Monster.SCORPWINK_THIEF,
+		name: 'thief',
+		level: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 9,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 1000,
+		odds: 100,
+		skills: [
+			// TODO: Skill.BANDIT_3,
+			Skill.ATTAQUE_ECLAIR,
+			Skill.CELERITE,
+			Skill.M_STINGER,
+			// TODO: Skill.FLEE,
+		],
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.SCORPWINK_THIEF_2]: {
+		id: Monster.SCORPWINK_THIEF_2,
+		name: 'thief2',
+		level: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 9,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 50,
+		odds: 100,
+		skills: [
+			// TODO: Skill.BANDIT_1,
+			Skill.ATTAQUE_ECLAIR,
+			Skill.M_STINGER,
+		],
+		zones: [],
+		canBeCaptured: true,
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,

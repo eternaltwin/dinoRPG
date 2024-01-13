@@ -2523,8 +2523,24 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent),
+			});
+
 			// Attack opponent
 			startAttack(fightData, fighter, opponent);
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
 
 			// Remove status
 			removeStatus(fightData, fighter, FighterStatus.M_ABSORB);
@@ -2534,12 +2550,26 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent),
+			});
+
 			// Attack opponent
 			startAttack(fightData, fighter, opponent);
 
-			// Add FLYING if not dead
+			// If not dead
 			if (fighter.hp > 0) {
+				// Add FLYING
 				addStatus(fightData, fighter, FighterStatus.FLYING);
+
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
 			}
 			break;
 		}
@@ -2554,9 +2584,63 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent)
+			});
+
 			// Fighter attacks opponent
 			startAttack(fightData, fighter, opponent, false, Skill.M_BITE, 7);
 
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
+			break;
+		}
+		case Skill.M_STINGER: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent)
+			});
+
+			// Fighter attacks opponent
+			startAttack(fightData, fighter, opponent, false, Skill.M_BITE, 7);
+
+			// Check if opponent is not dead
+			if (opponent.hp > 0) {
+				// Add poison
+				poison(fightData, opponent, fighter, Skill.M_STINGER);
+			}
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
+
+			// Half the probability of this skill
+			const stinger = fighter.skills.find((s) => s.id === Skill.M_STINGER);
+
+			if (!stinger) {
+				throw new Error('M_STINGER not found');
+			}
+
+			stinger.probability = Math.round((stinger.probability ?? 0) / 2);
 			break;
 		}
 		default:
@@ -2644,6 +2728,9 @@ const poison = (
 
 	// No poison if fighter is cured
 	if (fighter.status.includes(FighterStatus.CURED)) return;
+
+	// No poison if fighter has NO_POISON
+	if (fighter.status.includes(FighterStatus.NO_POISON)) return;
 
 	// Check if fighter has Item.ANTIDOTE
 	if (fighter.items.some((item) => item.itemId === Item.ANTIDOTE)) {
@@ -3022,6 +3109,10 @@ const endTurnChecks = (
 					}
 					case Skill.HADES: {
 						poisonDamage = 14;
+						break;
+					}
+					case Skill.M_STINGER: {
+						poisonDamage = 5;
 						break;
 					}
 					default:
