@@ -68,6 +68,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.EARTHWORM_MATRIARCH]: (monster) => {
 		worm(monster);
+		multiplySkillProbability(monster, Skill.M_WORM_CALL, 2);
 	},
 	[Monster.EARTHWORM_BABY]: (monster) => {
 		worm(monster);

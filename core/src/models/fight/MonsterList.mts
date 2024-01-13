@@ -1069,7 +1069,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.M_ELECTROCUTION,
 			Skill.M_WORM,
 			Skill.EMBUCHE,
-			// TODO: Skill.WORM_CALL
+			Skill.M_WORM_CALL,
 		],
 		zones: [],
 		canBeCaptured: true,

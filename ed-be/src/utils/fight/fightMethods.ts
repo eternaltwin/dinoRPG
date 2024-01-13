@@ -2666,6 +2666,13 @@ const activateSkill = (
 			fighter.escaped = true;
 			break;
 		}
+		case Skill.M_WORM_CALL: {
+			createMonster(fightData, fighter, monsterList.EARTHWORM_BABY);
+
+			// Remove skill
+			fighter.skills = fighter.skills.filter((s) => s.id !== Skill.M_WORM_CALL);
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();
