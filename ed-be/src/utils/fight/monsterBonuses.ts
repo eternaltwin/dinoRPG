@@ -5,10 +5,7 @@ import { Monster } from "@drpg/core/models/fight/MonsterList";
 
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
 	[Monster.GOBLIN]: (monster) => {
-		// +50% counter
 		monster.stats.special.counter += 50;
-
-		// +30% multi
 		monster.stats.special.multihit += 30;
 	},
 	[Monster.DARK_SMASHROOM]: (monster) => {
@@ -20,13 +17,11 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		}
 	},
 	[Monster.EARTHWORM_MATRIARCH]: (monster) => {
-		// +1 armor
 		monster.stats.special.armor += 1;
-
-		// Can hit flying
 		monster.canHitFlying = true;
-
-		// Start at half health
 		monster.hp = monster.startingHp / 2;
+	},
+	[Monster.COQ]: (monster) => {
+		monster.stats.speed.global *= 0.4;
 	},
 };

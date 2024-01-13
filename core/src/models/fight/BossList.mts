@@ -12,6 +12,7 @@ export enum Boss {
 	HIPPOCLAMP = 'HIPPOCLAMP',
 	ROCKY = 'ROCKY',
 	MASTER_CHA = 'MASTER_CHA',
+	PIRHANOS_3 = 'PIRHANOS_3',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -191,6 +192,27 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			Skill.M_ELECTROCUTION
 		],
 		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.PIRHANOS_3]: {
+		id: Boss.PIRHANOS_3,
+		name: 'pirao3',
+		zones: [],
+		level: 15,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 30,
+		bonus_defense: 20,
+		odds: 100,
+		hp: 30,
+		groups: [0, 0, 1],
+		xp: 50,
+		skills: [Skill.M_FLIGHT],
 		canBeCaptured: false,
 	},
 };

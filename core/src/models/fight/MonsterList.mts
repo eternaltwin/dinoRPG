@@ -48,6 +48,7 @@ export enum Monster {
 	ULTRA_PIGLOU = 'ULTRA_PIGLOU',
 	FEBREZA = 'FEBREZA',
 	PIRHANOS = 'PIRHANOS',
+	PIRHANOS_2 = 'PIRHANOS_2',
 	WEREZORE = 'WEREZORE',
 	AMENCIAO = 'AMENCIAO',
 	AMENPENNE = 'AMENPENNE',
@@ -192,6 +193,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		places: [PlaceEnum.CIMETIERE],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_FLIGHT],
 	},
 	[Monster.FLAM]: {
 		id: Monster.FLAM,
@@ -282,6 +284,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.ILES],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
+		skills: [Skill.M_FLIGHT],
 	},
 	[Monster.KAZKA]: {
 		id: Monster.KAZKA,
@@ -389,6 +392,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 20,
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
+		skills: [Skill.M_FLIGHT],
 	},
 	[Monster.GRDIEN]: {
 		id: Monster.GRDIEN,
@@ -864,6 +868,25 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		groups: [0, 0, 1],
 		skills: [Skill.M_FLIGHT],
 		canBeCaptured: false,
+	},
+	[Monster.PIRHANOS_2]: {
+		id: Monster.PIRHANOS_2,
+		name: 'pirao2',
+		zones: [MapZone.DARKWORLD],
+		level: 15,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 50,
+		bonus_defense: 30,
+		odds: 100,
+		hp: 10,
+		skills: [Skill.M_FLIGHT],
+		canBeCaptured: true,
 	},
 	[Monster.WEREZORE]: {
 		id: Monster.WEREZORE,
