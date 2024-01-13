@@ -1180,7 +1180,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.ATTAQUE_ECLAIR,
 			Skill.CELERITE,
 			Skill.M_STINGER,
-			// TODO: Skill.FLEE,
+			Skill.M_FLEE,
 		],
 		zones: [],
 		canBeCaptured: true,

@@ -2652,7 +2652,8 @@ const activateSkill = (
 			stinger.probability = Math.round((stinger.probability ?? 0) / 2);
 			break;
 		}
-		case Skill.M_INSTANT_FLEE: {
+		case Skill.M_INSTANT_FLEE:
+		case Skill.M_FLEE: {
 			if (fighter.escaped || fighter.hp <= 0) {
 				return cancel();
 			}
