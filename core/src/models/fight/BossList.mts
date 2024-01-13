@@ -1,3 +1,4 @@
+import { Skill } from '../dinoz/SkillList.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
 
@@ -9,7 +10,8 @@ export enum Boss {
 	ELEMENTAIRE_TERRE = 'ELEMENTAIRE_TERRE',
 	PTEROZ = 'PTEROZ',
 	HIPPOCLAMP = 'HIPPOCLAMP',
-	ROCKY = 'ROCKY'
+	ROCKY = 'ROCKY',
+	MASTER_CHA = 'MASTER_CHA',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -159,5 +161,36 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [MapZone.ALL],
 		skills: [21101, 41102, 41301, 41103, 41204],
 		canBeCaptured: false,
-	}
+	},
+	[Boss.MASTER_CHA]: {
+		id: Boss.MASTER_CHA,
+		name: 'mcha',
+		level: 80,
+		elements: {
+			fire: 20,
+			wood: 40,
+			water: 20,
+			lightning: 40,
+			air: 20
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 500,
+		odds: 100,
+		xp: 200,
+		skills: [
+			Skill.BRAVE,
+			Skill.ZERO_ABSOLU,
+			Skill.CLONE_AQUEUX,
+			Skill.MUR_DE_BOUE,
+			// Missing Skill.SKILL_FORGER
+			Skill.MAINS_COLLANTES,
+			Skill.BERSERK,
+			Skill.AMAZONIE,
+			Skill.PERCEPTION,
+			Skill.M_ELECTROCUTION
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
 };

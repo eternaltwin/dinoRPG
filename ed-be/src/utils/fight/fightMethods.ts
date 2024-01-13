@@ -535,6 +535,14 @@ const registerHit = (
 			// Heal damage done
 			heal(fightData, fighter, actualDamage[opponent.id]);
 		}
+
+		// M_WORM
+		if (opponent.absorbed && opponent.skills.some((skill) => skill.id === Skill.M_WORM)) {
+			// Heal damage absorbed
+			heal(fightData, opponent, opponent.absorbed);
+
+			opponent.absorbed = undefined;
+		}
 	});
 
 	if (!skill) {

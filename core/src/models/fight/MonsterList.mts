@@ -55,6 +55,8 @@ export enum Monster {
 	DARK_SMASHROOM = 'DARK_SMASHROOM',
 	DARK_LEECH = 'DARK_LEECH',
 	LONG_LEGGED_LEECH = 'LONG_LEGGED_LEECH',
+	EARTHWORM_MATRIARCH = 'EARTHWORM_MATRIARCH',
+	GROULEM = 'GROULEM',
 	ANY = 'ANY'
 }
 
@@ -314,6 +316,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 18,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
+		skills: [Skill.M_ELECTROCUTION],
 	},
 	[Monster.BORG]: {
 		id: Monster.BORG,
@@ -1003,6 +1006,48 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.PERCEPTION, Skill.M_RENFORTS],
 		zones: [MapZone.DINOLAND, MapZone.ILES],
 		canBeCaptured: true,
+	},
+	[Monster.EARTHWORM_MATRIARCH]: {
+		id: Monster.EARTHWORM_MATRIARCH,
+		name: 'wormom',
+		level: 35,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 15,
+			lightning: 20,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 160,
+		odds: 100,
+		skills: [Skill.M_ELECTROCUTION, Skill.M_WORM],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Monster.GROULEM]: {
+		id: Monster.GROULEM,
+		name: 'groule',
+		places: [
+			// TODO: add Caushemesh places
+		],
+		level: 54,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 70,
+		hp: 80,
+		odds: 100,
+		xp: 30,
+		skills: [Skill.M_ELECTROCUTION],
+		zones: [],
+		canBeCaptured: false,
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,

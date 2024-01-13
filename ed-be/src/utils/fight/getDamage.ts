@@ -163,6 +163,14 @@ const getDamage = (
 		damage = attacker.minAssaultDamage;
 	}
 
+	// Absorb water damage if M_WORM
+	if (opponent.skills.some((skill) => skill.id === Skill.M_WORM)) {
+		if (attackElements.includes(ElementType.WATER)) {
+			opponent.absorbed = damage;
+			damage = 0;
+		}
+	}
+
 	return {
 		damage,
 		elements: attackElements,
