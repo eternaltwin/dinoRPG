@@ -22,6 +22,7 @@ export enum Boss {
 	VENERABLE_3 = 'VENERABLE_3',
 	VENERABLE_4 = 'VENERABLE_4',
 	SCORPIOUS = 'SCORPIOUS',
+	YAKUZI = 'YAKUZI',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -432,6 +433,28 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			Skill.ZERO_ABSOLU,
 			Skill.CLONE_AQUEUX,
 			Skill.SOUFFLE_DE_VIE,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.YAKUZI]: {
+		id: Boss.YAKUZI,
+		name: 'yakuzi',
+		level: 15,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 22,
+		bonus_defense: 22,
+		hp: 50,
+		odds: 100,
+		skills: [
+			Skill.M_YAKUZI,
+			Skill.PERCEPTION,
 		],
 		zones: [],
 		canBeCaptured: false,

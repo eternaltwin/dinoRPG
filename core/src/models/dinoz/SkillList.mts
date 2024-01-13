@@ -323,6 +323,7 @@ export enum Skill {
 	M_FLEE = 99923,
 	M_STEAL = 99924,
 	M_INVISIBILITY = 99927,
+	M_YAKUZI = 99928,
 	M_FEBREZ = 99947,
 }
 
@@ -4736,6 +4737,19 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30,
+	},
+	[Skill.M_YAKUZI]: {
+		id: Skill.M_YAKUZI,
+		name: 'Yakuzi',
+		type: SkillType.E,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 8,
+		probability: 15,
 	},
 	[Skill.M_FEBREZ]: {
 		id: Skill.M_FEBREZ,

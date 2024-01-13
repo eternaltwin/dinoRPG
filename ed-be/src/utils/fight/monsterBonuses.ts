@@ -172,4 +172,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Boss.TOWER_GUARDIAN]: (monster) => {
 		elemental(monster);
 	},
+	[Boss.YAKUZI]: (monster) => {
+		monster.stats.special.multihit += 25;
+	},
 };

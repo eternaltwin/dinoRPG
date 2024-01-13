@@ -1214,6 +1214,33 @@ const activateEvent = (
 				fighter.elements = [randomElement];
 				break;
 			}
+			case Skill.M_YAKUZI: {
+				const clone = createMonster(
+					fightData,
+					fighter,
+					bossList.YAKUZI,
+				);
+
+				clone.level = 1;
+				clone.hp = 1;
+				clone.type = 'clone';
+				clone.master = fighter.id;
+
+				// Set the clone's time to the fighter's time
+				clone.time = fighter.time;
+
+				// Add clone to fighters
+				fightData.fighters.push(clone);
+
+				// Add arrive step
+				fightData.steps.push({
+					action: 'arrive',
+					fighter: stepFighter(clone),
+				});
+
+				checkInvocationBan(fightData, clone);
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();
