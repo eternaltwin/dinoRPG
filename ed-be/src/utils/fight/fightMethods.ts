@@ -592,12 +592,21 @@ const registerHit = (
 
 			opponent.absorbed = undefined;
 		}
+
 		// Spikes
 		if (actualDamage[opponent.id] && opponent.spikes) {
 			// Take spike damage on assaults
 			if (!skill) {
 				registerHit(fightData, opponent, [fighter], opponent.spikes, undefined, Skill.M_POISONED_PICKS);
 				opponent.spikes += 1;
+			}
+		}
+
+		// M_CONTAMINATION
+		if (actualDamage[opponent.id] && opponent.skills.some((skill) => skill.id === Skill.M_CONTAMINATION)) {
+			// 1/6 Chance to poison on assaults
+			if (!skill && randomBetween(0, 5) === 0) {
+				poison(fightData, opponent, fighter, Skill.M_CONTAMINATION);
 			}
 		}
 	});
@@ -3227,6 +3236,10 @@ const endTurnChecks = (
 					}
 					case Skill.M_STINGER: {
 						poisonDamage = 5;
+						break;
+					}
+					case Skill.M_CONTAMINATION: {
+						poisonDamage = 3;
 						break;
 					}
 					default:

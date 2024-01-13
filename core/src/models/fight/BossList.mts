@@ -23,6 +23,8 @@ export enum Boss {
 	VENERABLE_4 = 'VENERABLE_4',
 	SCORPIOUS = 'SCORPIOUS',
 	YAKUZI = 'YAKUZI',
+	DARK_MEGASHROOM = 'DARK_MEGASHROOM',
+	DARK_MEGASHROOM_2 = 'DARK_MEGASHROOM_2',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -455,6 +457,49 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [
 			Skill.M_YAKUZI,
 			Skill.PERCEPTION,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.DARK_MEGASHROOM]: {
+		id: Boss.DARK_MEGASHROOM,
+		name: 'megoup',
+		level: 7,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 12,
+		hp: 50,
+		odds: 100,
+		skills: [
+			Skill.M_CONTAMINATION,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.DARK_MEGASHROOM_2]: {
+		id: Boss.DARK_MEGASHROOM_2,
+		name: 'megou2',
+		level: 7,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 12,
+		hp: 50,
+		odds: 100,
+		xp: 60,
+		skills: [
+			Skill.M_CONTAMINATION,
 		],
 		zones: [],
 		canBeCaptured: false,

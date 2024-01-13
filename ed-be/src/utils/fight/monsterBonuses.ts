@@ -58,6 +58,10 @@ const brig3 = (monster: DetailedFighter) => {
 	setSkillProbability(monster, Skill.M_STEAL, 30);
 };
 
+const ggoupi = (monster: DetailedFighter) => {
+	monster.status.push(FighterStatus.NO_POISON);
+};
+
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
 	const skill = monster.skills.find((skill) => skill.id === skillId);
 
@@ -162,6 +166,9 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.BRIG3_HOME]: (monster) => {
 		brig3(monster);
 	},
+	[Monster.GROPI]: (monster) => {
+		ggoupi(monster);
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
@@ -174,5 +181,11 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Boss.YAKUZI]: (monster) => {
 		monster.stats.special.multihit += 25;
+	},
+	[Boss.DARK_MEGASHROOM]: (monster) => {
+		ggoupi(monster);
+	},
+	[Boss.DARK_MEGASHROOM_2]: (monster) => {
+		ggoupi(monster);
 	},
 };

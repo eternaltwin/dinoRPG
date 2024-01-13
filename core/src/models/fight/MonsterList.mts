@@ -645,6 +645,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.DINOWEST],
 		canBeCaptured: true,
+		skills: [Skill.M_CONTAMINATION],
 	},
 	[Monster.MIMIC]: {
 		id: Monster.MIMIC,
