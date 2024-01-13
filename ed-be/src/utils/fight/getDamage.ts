@@ -64,6 +64,15 @@ const getDamage = (
 					+ 10 * attacker.stats.base[ElementType.AIR];
 				break;
 			}
+			case Skill.M_COMET: {
+				attackElements = [
+					ElementType.FIRE,
+					ElementType.AIR,
+				];
+				attack = 20 * attacker.stats.base[ElementType.FIRE]
+					+ 30 * attacker.stats.base[ElementType.AIR];
+				break;
+			}
 			// Handle by default skills as an offensive skill with a given power and element
 			default: {
 				const skillAttack = SkillAttacks[skill];

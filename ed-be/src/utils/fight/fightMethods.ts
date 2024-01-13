@@ -1610,7 +1610,8 @@ const activateSkill = (
 		// FIRE
 		case Skill.SOUFFLE_ARDENT:
 		case Skill.METEORES:
-		case Skill.CREPUSCULE_FLAMBOYANT: {
+		case Skill.CREPUSCULE_FLAMBOYANT:
+		case Skill.M_COMET: {
 			targetAllOpponents(fightData, fighter, skill);
 			break;
 		}
