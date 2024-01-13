@@ -323,11 +323,7 @@ const registerHit = (
 			const random = Math.random();
 
 			if (random < 0.05) {
-				if (actualDamage[opponent.id] <= 5) {
-					actualDamage[opponent.id] = 0;
-				} else {
-					actualDamage[opponent.id] -= 5;
-				}
+				actualDamage[opponent.id] = Math.max(actualDamage[opponent.id] - 5, 0);
 
 				// Add resist step
 				fightData.steps.push({

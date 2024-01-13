@@ -533,7 +533,7 @@ const handleSkills = (
 
 	// RACE
 	if (fighterHas[Skill.CHARGE_CORNUE]) {
-		fighter.nextAssaultMultiplier *= 0.2;
+		fighter.nextAssaultMultiplier *= 1.2;
 	}
 
 	if (fighterHas[Skill.PIETINEMENT]) {
