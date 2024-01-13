@@ -610,20 +610,6 @@ const registerHit = (
 			}
 		}
 	});
-
-	if (!skill) {
-		// Expire Skill.COLERE if present
-		if (fighter.activeSkills.includes(Skill.COLERE)) {
-			fighter.activeSkills = fighter.activeSkills.filter((skill) => skill !== Skill.COLERE);
-
-			// Add skillExpire step
-			fightData.steps.push({
-				action: 'skillExpire',
-				dinoz: stepFighter(fighter),
-				skill: Skill.COLERE,
-			});
-		}
-	}
 };
 
 const evadedSkill = (opponent: DetailedFighter, skill: SkillDetails) => {
