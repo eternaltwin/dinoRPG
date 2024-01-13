@@ -57,6 +57,7 @@ export enum Monster {
 	DARK_LEECH = 'DARK_LEECH',
 	LONG_LEGGED_LEECH = 'LONG_LEGGED_LEECH',
 	EARTHWORM_MATRIARCH = 'EARTHWORM_MATRIARCH',
+	EARTHWORM_BABY = 'EARTHWORM_BABY',
 	GROULEM = 'GROULEM',
 	TW_BIGBEASTLY_1 = 'TW_BIGBEASTLY_1',
 	STINGOZ = 'STINGOZ',
@@ -455,6 +456,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 30,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
+		skills: [Skill.M_WORM],
+		noMove: true,
 	},
 	[Monster.SCORP]: {
 		id: Monster.SCORP,
@@ -1056,9 +1059,39 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 160,
 		odds: 100,
-		skills: [Skill.M_ELECTROCUTION, Skill.M_WORM],
+		skills: [
+			Skill.COQUE,
+			Skill.M_ELECTROCUTION,
+			Skill.M_WORM,
+			Skill.EMBUCHE,
+			// TODO: Skill.WORM_CALL
+		],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: true,
+		noMove: true,
+	},
+	[Monster.EARTHWORM_BABY]: {
+		id: Monster.EARTHWORM_BABY,
+		name: 'wormy',
+		level: 15,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 5,
+			lightning: 10,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 30,
+		odds: 100,
+		skills: [
+			Skill.FOUDRE,
+			Skill.M_WORM,
+		],
+		zones: [],
+		canBeCaptured: true,
+		noMove: true,
 	},
 	[Monster.GROULEM]: {
 		id: Monster.GROULEM,
