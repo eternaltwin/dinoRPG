@@ -440,6 +440,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 20,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
+		skills: [Skill.M_WORM_2],
 	},
 	[Monster.WORM]: {
 		id: Monster.WORM,

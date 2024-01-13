@@ -111,4 +111,8 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 		[ElementType.FIRE]: 50,
 		[ElementType.AIR]: 50,
 	},
+	// MONSTER
+	[Skill.M_WORM_2]: {
+		[ElementType.VOID]: 5,
+	},
 };

@@ -6,6 +6,12 @@ import { Monster } from "@drpg/core/models/fight/MonsterList";
 import { TIME_FACTOR } from "./fightConstants.js";
 import randomBetween from "./randomBetween.js";
 
+const worm = (monster: DetailedFighter) => {
+	monster.stats.special.armor += 1;
+	monster.canHitFlying = true;
+	monster.hp = monster.startingHp / 2;
+};
+
 const sentinel = (monster: DetailedFighter) => {
 	monster.stats.special.counter += 90;
 	monster.status.push(FighterStatus.NO_ASSAULT);
@@ -49,10 +55,17 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 			renforts.probability = (renforts.probability ?? 0) * 2;
 		}
 	},
+	[Monster.WORM]: (monster) => {
+		worm(monster);
+	},
+	[Monster.WORM2]: (monster) => {
+		monster.stats.speed.global *= 0.6;
+	},
 	[Monster.EARTHWORM_MATRIARCH]: (monster) => {
-		monster.stats.special.armor += 1;
-		monster.canHitFlying = true;
-		monster.hp = monster.startingHp / 2;
+		worm(monster);
+	},
+	[Monster.EARTHWORM_BABY]: (monster) => {
+		worm(monster);
 	},
 	[Monster.COQ]: (monster) => {
 		monster.stats.speed.global *= 0.4;

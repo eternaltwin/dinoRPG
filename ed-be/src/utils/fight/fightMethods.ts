@@ -1652,11 +1652,11 @@ const activateSkill = (
 
 	switch (skill.id) {
 		// Simple multi-target skills
-		// AIR
 		// FIRE
 		case Skill.SOUFFLE_ARDENT:
 		case Skill.METEORES:
 		case Skill.CREPUSCULE_FLAMBOYANT:
+			//MONSTER
 		case Skill.M_COMET:
 		case Skill.M_VENERABLE: {
 			targetAllOpponents(fightData, fighter, skill);
@@ -1664,7 +1664,6 @@ const activateSkill = (
 		}
 
 		// Simple single-target skills
-		// AIR
 		// FIRE
 		case Skill.BOULE_DE_FEU:
 		case Skill.COULEE_DE_LAVE:
@@ -1674,7 +1673,9 @@ const activateSkill = (
 		case Skill.CANON_A_EAU:
 		// WOOD
 		case Skill.LANCER_DE_ROCHE:
-		case Skill.LANCEUR_DE_GLAND: {
+		case Skill.LANCEUR_DE_GLAND:
+		// MONSTER
+		case Skill.M_WORM_2: {
 			targetSingleOpponent(fightData, fighter, skill);
 			break;
 		}

@@ -316,6 +316,7 @@ export enum Skill {
 	M_DISABLE = 99916,
 	M_STINGER = 99917,
 	M_WORM = 99918,
+	M_WORM_2 = 99919,
 	M_INVISIBILITY = 99927,
 	M_FEBREZ = 99947,
 }
@@ -4641,6 +4642,19 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [],
 		isBaseSkill: true,
 		isSphereSkill: false,
+	},
+	[Skill.M_WORM_2]: {
+		id: Skill.M_WORM_2,
+		name: 'Sand',
+		type: SkillType.A,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 1,
+		probability: 100,
 	},
 	[Skill.M_INVISIBILITY]: {
 		id: Skill.M_INVISIBILITY,
