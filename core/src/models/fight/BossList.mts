@@ -3,7 +3,9 @@ import { MapZone } from '../enums/MapZone.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
 
 export enum Boss {
-	GARDIEN_TOUR = 'GARDIEN_TOUR',
+	TOWER_GUARDIAN = 'TOWER_GUARDIAN',
+	SUMMIT_GUARDIAN = 'SUMMIT_GUARDIAN',
+	LOWER_GUARDIAN = 'LOWER_GUARDIAN',
 	ELEMENTAIRE_FEU = 'ELEMENTAIRE_FEU',
 	ELEMENTAIRE_EAU = 'ELEMENTAIRE_EAU',
 	RASCAPHANDRE = 'RASCAPHANDRE',
@@ -19,11 +21,12 @@ export enum Boss {
 	VENERABLE_2 = 'VENERABLE_2',
 	VENERABLE_3 = 'VENERABLE_3',
 	VENERABLE_4 = 'VENERABLE_4',
+	SCORPIOUS = 'SCORPIOUS',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
-	[Boss.GARDIEN_TOUR]: {
-		id: Boss.GARDIEN_TOUR,
+	[Boss.TOWER_GUARDIAN]: {
+		id: Boss.TOWER_GUARDIAN,
 		name: 'towgrd',
 		hp: 300,
 		elements: {
@@ -35,10 +38,49 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		},
 		gold: 0,
 		xp: 40,
-		odds: 1,
+		odds: 100,
 		level: 30,
-		zones: [MapZone.DARKWORLD],
+		zones: [],
 		canBeCaptured: false,
+		skills: [Skill.M_ELEMENTAL]
+	},
+	[Boss.SUMMIT_GUARDIAN]: {
+		id: Boss.SUMMIT_GUARDIAN,
+		name: 'upgrd',
+		level: 40,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		groups: [1, 0, 0],
+		hp: 500,
+		xp: 40,
+		odds: 100,
+		zones: [],
+		canBeCaptured: false,
+		skills: [Skill.M_ELEMENTAL]
+	},
+	[Boss.LOWER_GUARDIAN]: {
+		id: Boss.LOWER_GUARDIAN,
+		name: 'updwn',
+		level: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		groups: [1, 0, 0],
+		hp: 600,
+		xp: 60,
+		odds: 100,
+		zones: [],
+		canBeCaptured: false,
+		skills: [Skill.M_ELEMENTAL]
 	},
 	[Boss.ELEMENTAIRE_FEU]: {
 		id: Boss.ELEMENTAIRE_FEU,
@@ -362,5 +404,36 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		noMove: true,
+	},
+	[Boss.SCORPIOUS]: {
+		id: Boss.SCORPIOUS,
+		name: 'scorpu',
+		level: 90,
+		elements: {
+			fire: 40,
+			wood: 30,
+			water: 20,
+			lightning: 0,
+			air: 30
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 1200,
+		odds: 100,
+		xp: 800,
+		skills: [
+			Skill.PERCEPTION,
+			Skill.M_ELEMENTAL,
+			Skill.CELERITE,
+			Skill.COUP_DOUBLE,
+			Skill.FOCUS,
+			Skill.CARAPACE,
+			Skill.BRAVE,
+			Skill.ZERO_ABSOLU,
+			Skill.CLONE_AQUEUX,
+			Skill.SOUFFLE_DE_VIE,
+		],
+		zones: [],
+		canBeCaptured: false,
 	},
 };

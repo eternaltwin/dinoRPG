@@ -320,6 +320,7 @@ export const initializeMonster = (
 			ElementType.WATER,
 			ElementType.LIGHTNING,
 			ElementType.AIR,
+			ElementType.VOID,
 		],
 		element: ElementType.FIRE,
 		minDamage: 1,
@@ -346,6 +347,34 @@ export const initializeMonster = (
 
 	// Skills
 	handleSkills(team, fighter, place);
+
+	// Handle elements (from highest to lowest)
+	const elements = [
+		{ element: ElementType.FIRE, value: fighter.stats.base[ElementType.FIRE] },
+		{ element: ElementType.WOOD, value: fighter.stats.base[ElementType.WOOD] },
+		{ element: ElementType.WATER, value: fighter.stats.base[ElementType.WATER] },
+		{ element: ElementType.LIGHTNING, value: fighter.stats.base[ElementType.LIGHTNING] },
+		{ element: ElementType.AIR, value: fighter.stats.base[ElementType.AIR] },
+		{ element: ElementType.VOID, value: fighter.stats.base[ElementType.VOID] },
+	];
+
+	// Order the elements from highest to lowest, random if equal
+	elements.sort((a, b) => {
+		if (b.value !== a.value) {
+			return b.value - a.value
+		}
+		return Math.random() > 0.5 ? 1 : -1;
+		}
+	);
+
+	// Filter out elements with 0 value
+	fighter.elements = elements.filter((element) => element.value > 0).map((element) => element.element);
+
+	if (fighter.elements.length === 0) {
+		fighter.elements = [ElementType.VOID];
+	}
+
+	fighter.element = fighter.elements[0];
 
 	return fighter;
 };

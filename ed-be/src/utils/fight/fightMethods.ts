@@ -359,6 +359,19 @@ const registerHit = (
 			}
 		}
 
+		// M_ELEMENTAL
+		if (opponent.skills.find((s) => s.id === Skill.M_ELEMENTAL)) {
+			if (damageElements.includes(opponent.element)) {
+				// Negate damage
+				actualDamage[opponent.id] = 0;
+			} else {
+				// Take 29 + 0-3 damage
+				const random = randomBetween(0, 3);
+
+				actualDamage[opponent.id] = 29 + random;
+			}
+		}
+
 		opponent.hp -= actualDamage[opponent.id];
 
 		// Danger detector (prevent hit if damage > 25)
@@ -1151,6 +1164,18 @@ const activateEvent = (
 				}
 
 				addStatus(fightData, fighter, FighterStatus.INTANGIBLE);
+				break;
+			}
+			case Skill.M_ELEMENTAL: {
+				// Lock into a random element
+				let randomElement = fighter.element;
+
+				while (fighter.element === randomElement) {
+					randomElement = randomBetween(1, 6) as ElementType;
+				}
+
+				fighter.element = randomElement;
+				fighter.elements = [randomElement];
 				break;
 			}
 			default:

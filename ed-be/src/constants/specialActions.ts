@@ -14,7 +14,7 @@ export const specialActions: Record<string, SpecialActions> = {
 				{ [ConditionEnum.PLACE_IS]: PlaceEnum.TOUR_SOMBRE }
 			]
 		},
-		opponents: [bossList.GARDIEN_TOUR],
+		opponents: [bossList.TOWER_GUARDIAN],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
