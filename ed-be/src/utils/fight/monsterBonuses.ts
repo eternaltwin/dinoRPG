@@ -96,6 +96,11 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.SCORPWINK_THIEF_2]: (monster) => {
 		stinger(monster);
 	},
+	[Monster.CACTUS]: (monster) => {
+		monster.stats.special.evasion += 30;
+		monster.stats.speed.global *= 1.3;
+		monster.spikes = 2;
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		// x3 CELERITE probability
 		const celerite = monster.skills.find((skill) => skill.id === Skill.CELERITE);

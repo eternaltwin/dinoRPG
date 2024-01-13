@@ -492,8 +492,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 130,
 		odds: 50,
 		level: 38,
+		xp: 12,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
+		skills: [Skill.M_POISONED_PICKS],
 	},
 	[Monster.BRIG1_ALL]: {
 		id: Monster.BRIG1_ALL,

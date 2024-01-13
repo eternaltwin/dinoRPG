@@ -580,6 +580,14 @@ const registerHit = (
 
 			opponent.absorbed = undefined;
 		}
+		// Spikes
+		if (actualDamage[opponent.id] && opponent.spikes) {
+			// Take spike damage on assaults
+			if (!skill) {
+				registerHit(fightData, opponent, [fighter], opponent.spikes, undefined, Skill.M_POISONED_PICKS);
+				opponent.spikes += 1;
+			}
+		}
 	});
 
 	if (!skill) {

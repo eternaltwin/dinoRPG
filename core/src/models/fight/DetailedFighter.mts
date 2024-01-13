@@ -145,6 +145,8 @@ export interface DetailedFighter {
 	protecting?: number,
 	// Absorb damage
 	absorbed?: number,
+	// Spikes
+	spikes?: number,
 }
 
 // This structure needs to be exactly the same as FighterResult in native/src/fight/fighter.rs
