@@ -58,6 +58,7 @@ export enum Monster {
 	LONG_LEGGED_LEECH = 'LONG_LEGGED_LEECH',
 	EARTHWORM_MATRIARCH = 'EARTHWORM_MATRIARCH',
 	GROULEM = 'GROULEM',
+	TW_BIGBEASTLY_1 = 'TW_BIGBEASTLY_1',
 	ANY = 'ANY'
 }
 
@@ -1075,6 +1076,26 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		xp: 30,
 		skills: [Skill.M_ELECTROCUTION],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Monster.TW_BIGBEASTLY_1]: {
+		id: Monster.TW_BIGBEASTLY_1,
+		name: 'wbour1',
+		level: 35,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 300,
+		odds: 100,
+		xp: 0,
+		skills: [Skill.M_DISABLE],
 		zones: [],
 		canBeCaptured: false,
 	},

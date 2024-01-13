@@ -289,6 +289,10 @@ const registerHit = (
 	}), {});
 
 	opponents.forEach((opponent) => {
+		/**
+		 * PRE-DAMAGE
+		 */
+
 		// Reduce damage by bulle percentage
 		if (opponent.stats.special.bubbleRate) {
 			actualDamage[opponent.id] = Math.round(damage * opponent.stats.special.bubbleRate / 100);
@@ -372,7 +376,19 @@ const registerHit = (
 			}
 		}
 
+		// M_DISABLE
+		if (actualDamage[opponent.id] && opponent.skills.find((s) => s.id === Skill.M_DISABLE)) {
+			actualDamage[opponent.id] = 1;
+		}
+
+		/**
+		 * DAMAGE
+		 */
 		opponent.hp -= actualDamage[opponent.id];
+
+		/**
+		 * POST-DAMAGE
+		 */
 
 		// Danger detector (prevent hit if damage > 25)
 		if (opponent.items.some((item) => item.itemId === Item.DANGER_DETECTOR) && actualDamage[opponent.id] > 25) {
@@ -1557,6 +1573,11 @@ const removeStatus = (
 	statusList.forEach((status) => {
 		// Check if fighter has the status
 		if (!fighter.status.includes(status)) return;
+
+		// Dont' wake up if M_DISABLE
+		if (status === FighterStatus.ASLEEP && fighter.skills.some((skill) => skill.id === Skill.M_DISABLE)) {
+			return;
+		}
 
 		// Add status step
 		fightData.steps.push({

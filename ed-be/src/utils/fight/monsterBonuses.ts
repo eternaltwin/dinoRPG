@@ -61,6 +61,10 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.speed.global *= 1.5;
 		monster.stats.base[ElementType.WOOD] = 15;
 	},
+	[Monster.TW_BIGBEASTLY_1]: (monster) => {
+		monster.time += 100000 * TIME_FACTOR;
+		monster.status.push(FighterStatus.ASLEEP);
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		// x3 CELERITE probability
 		const celerite = monster.skills.find((skill) => skill.id === Skill.CELERITE);
