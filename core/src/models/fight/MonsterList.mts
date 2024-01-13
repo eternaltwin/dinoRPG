@@ -303,6 +303,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 8,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
+		skills: [Skill.M_IMMATERIAL],
 	},
 	[Monster.ANGUIL]: {
 		id: Monster.ANGUIL,

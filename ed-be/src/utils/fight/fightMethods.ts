@@ -1137,6 +1137,14 @@ const activateEvent = (
 				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1));
 				break;
 			}
+			case Skill.M_IMMATERIAL: {
+				if (fighter.status.includes(FighterStatus.INTANGIBLE)) {
+					return cancel();
+				}
+
+				addStatus(fightData, fighter, FighterStatus.INTANGIBLE);
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();
