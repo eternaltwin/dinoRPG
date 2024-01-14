@@ -1,7 +1,7 @@
 import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
-import { DetailedFighter, FighterResultFiche, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
+import { DetailedFighter, FighterResultFiche, Status } from "@drpg/core/models/fight/DetailedFighter";
 import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/FightConfiguration";
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
@@ -91,7 +91,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				// Lock opponent for 3 turns
 				opponent.element = weakestElement;
 				opponent.locked = 4;
-				addStatus(fightData, opponent, FighterStatus.LOCKED);
+				addStatus(fightData, opponent, Status.LOCKED);
 			}
 		}
 

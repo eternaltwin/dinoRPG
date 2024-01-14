@@ -1,7 +1,7 @@
 import { Skill } from "../dinoz/SkillList.mjs";
 import { ElementType } from "../enums/ElementType.mjs";
 import { Item } from "../item/ItemList.mjs";
-import { FighterStatus, FighterType } from "./DetailedFighter.mjs";
+import { Status, FighterType } from "./DetailedFighter.mjs";
 
 export interface StepFighter {
 	id: number;
@@ -93,12 +93,12 @@ export interface HealStep {
 export interface AddStatusStep {
 	action: 'addStatus';
 	fighter: StepFighter;
-	status: FighterStatus;
+	status: Status;
 }
 export interface RemoveStatusStep {
 	action: 'removeStatus';
 	fighter: StepFighter;
-	status: FighterStatus;
+	status: Status;
 }
 export interface ItemUseStep {
 	action: 'itemUse';

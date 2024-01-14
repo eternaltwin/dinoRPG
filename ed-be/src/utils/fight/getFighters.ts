@@ -1,6 +1,6 @@
 import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
 import { Stat } from "@drpg/core/models/enums/SkillStat";
-import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
+import { DetailedFighter, FighterStatus, Status } from "@drpg/core/models/fight/DetailedFighter";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { Item, itemList } from "@drpg/core/models/item/ItemList";
 import { AssaultElement, getAssaultStat } from "@drpg/core/utils/getAssaultStat";
@@ -15,6 +15,7 @@ import { PlacesByMap } from "@drpg/core/models/place/PlaceList";
 import { MapZone } from "@drpg/core/models/enums/MapZone";
 import { MonsterBonus } from "./monsterBonuses.js";
 import { statusList } from "@drpg/core/models/dinoz/StatusList";
+import { createStatus } from "./fightMethods.js";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -245,10 +246,10 @@ export const initializeMonster = (
 	}) ?? [];
 
 	// Statuses
-	const status = [];
+	const status: FighterStatus[] = [];
 
 	if (monster.noMove) {
-		status.push(FighterStatus.NO_ASSAULT);
+		status.push(createStatus(Status.NO_ASSAULT));
 	}
 
 	const fighter: DetailedFighter = {
@@ -428,7 +429,8 @@ const handleSkills = (
 	}
 
 	if (fighterHas[Skill.TORCHE]) {
-		fighter.status.push(FighterStatus.TORCHED);
+		fighter.status.push(createStatus(Status.TORCHED));
+		fighter.stats.defense[ElementType.FIRE] += 10;
 	}
 
 	// WOOD
@@ -456,7 +458,7 @@ const handleSkills = (
 	}
 
 	if (fighterHas[Skill.ACUPUNCTURE]) {
-		fighter.status.push(FighterStatus.HEALING);
+		fighter.status.push(createStatus(Status.HEALING));
 	}
 
 	if (fighterHas[Skill.SAPEUR]) {
@@ -594,7 +596,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 			fighter.stats.assault[ElementType.FIRE] *= 1.3;
 		}
 		if (team1[Item.BEER] || team2[Item.BEER]) {
-			fighter.status.push(FighterStatus.BEER);
+			fighter.status.push(createStatus(Status.BEER));
 		}
 	});
 

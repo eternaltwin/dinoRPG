@@ -782,9 +782,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [11311],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
-			[Stat.FIRE_DEFENSE]: 10
-		}
 	},
 	[Skill.SELF_CONTROL]: {
 		id: Skill.SELF_CONTROL,

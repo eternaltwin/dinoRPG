@@ -1,7 +1,7 @@
 import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { Boss } from "@drpg/core/models/fight/BossList";
-import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
+import { DetailedFighter, Status } from "@drpg/core/models/fight/DetailedFighter";
 import { Monster } from "@drpg/core/models/fight/MonsterList";
 import { TIME_FACTOR } from "./fightConstants.js";
 import randomBetween from "./randomBetween.js";
@@ -14,7 +14,7 @@ const worm = (monster: DetailedFighter) => {
 
 const sentinel = (monster: DetailedFighter) => {
 	monster.stats.special.counter *= 1.9;
-	monster.status.push(FighterStatus.NO_ASSAULT);
+	monster.status.push(Status.NO_ASSAULT);
 };
 
 const elemental = (monster: DetailedFighter) => {
@@ -39,7 +39,7 @@ const elemental = (monster: DetailedFighter) => {
 const stinger = (monster: DetailedFighter) => {
 	monster.stats.special.evasion += 60;
 	monster.stats.speed.global *= 1.5;
-	monster.status.push(FighterStatus.NO_POISON);
+	monster.status.push(Status.NO_POISON);
 };
 
 const brig1 = (monster: DetailedFighter) => {
@@ -59,7 +59,7 @@ const brig3 = (monster: DetailedFighter) => {
 };
 
 const ggoupi = (monster: DetailedFighter) => {
-	monster.status.push(FighterStatus.NO_POISON);
+	monster.status.push(Status.NO_POISON);
 };
 
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
@@ -118,7 +118,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.TW_BIGBEASTLY_1]: (monster) => {
 		monster.time += 100000 * TIME_FACTOR;
-		monster.status.push(FighterStatus.ASLEEP);
+		monster.status.push(Status.ASLEEP);
 	},
 	[Monster.SCORP]: (monster) => {
 		stinger(monster);

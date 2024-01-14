@@ -6,7 +6,7 @@ import { ItemFiche } from "../item/ItemFiche.mjs";
 import { Item } from "../item/ItemList.mjs";
 import { MonsterFiche } from "./MonsterFiche.mjs";
 
-export enum FighterStatus {
+export enum Status {
 	// Bad
   ASLEEP,
   SLOWED,
@@ -44,26 +44,40 @@ export enum FighterStatus {
 	AIR_SLOWED,
 };
 
-export const GoodFighterStatus = [
-  FighterStatus.TORCHED,
-  FighterStatus.INTANGIBLE,
-  FighterStatus.FLYING,
-  FighterStatus.QUICKENED,
-  FighterStatus.SHIELDED,
-  FighterStatus.BLESSED,
-  FighterStatus.HEALING,
+export const GoodStatus = [
+  Status.TORCHED,
+  Status.INTANGIBLE,
+  Status.FLYING,
+  Status.QUICKENED,
+  Status.SHIELDED,
+  Status.BLESSED,
+  Status.HEALING,
 ];
 
-export const BadFighterStatus = [
-  FighterStatus.ASLEEP,
-  FighterStatus.SLOWED,
-  FighterStatus.PETRIFIED,
-  FighterStatus.POISONED,
-  FighterStatus.BURNED,
-  FighterStatus.LOCKED,
-  FighterStatus.DAZZLED,
-  FighterStatus.STUNNED,
+export const BadStatus = [
+  Status.ASLEEP,
+  Status.SLOWED,
+  Status.PETRIFIED,
+  Status.POISONED,
+  Status.BURNED,
+  Status.LOCKED,
+  Status.DAZZLED,
+  Status.STUNNED,
 ];
+
+export enum StatusLength {
+	SHORT = 15,
+	MEDIUM = 30,
+	LONG = 80,
+	INFINITE = 1000000,
+}
+
+export type FighterStatus = {
+	type: Status,
+	time: number,
+	remaining: number,
+	cycle: boolean,
+}
 
 export type FighterType = 'dinoz' | 'monster' | 'boss' | 'clone';
 

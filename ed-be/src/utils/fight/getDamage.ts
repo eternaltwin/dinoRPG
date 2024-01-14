@@ -1,9 +1,10 @@
 import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
-import { DetailedFighter, FighterStatus } from "@drpg/core/models/fight/DetailedFighter";
+import { DetailedFighter, Status } from "@drpg/core/models/fight/DetailedFighter";
 import { Item } from "@drpg/core/models/item/ItemList";
 import { ATTACK_GLOBAL_FACTOR } from "./fightConstants.js";
 import { SkillAttacks } from "./skillAttacks.js";
+import { hasStatus } from "./fightMethods.js";
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -23,7 +24,7 @@ const getDamage = (
 	// Calculate the attacker's attack score
 	if (skill && !power) {
 		// Cancel if intangible
-		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
+		if (hasStatus(opponent, Status.INTANGIBLE)) {
 			return {
 				damage: 0,
 				elements: [],
@@ -89,7 +90,7 @@ const getDamage = (
 		}
 
 		// Intangible
-		if (opponent.status.includes(FighterStatus.INTANGIBLE)) {
+		if (hasStatus(opponent, Status.INTANGIBLE)) {
 			// Can hit intangible or is air element
 			if (attacker.canHitIntangible || attackElements.includes(ElementType.AIR)) {
 				return {
@@ -116,7 +117,7 @@ const getDamage = (
 		attacker.nextAssaultMultiplier = 1;
 
 		// -25% damage if WEAKENED
-		if (attacker.status.includes(FighterStatus.WEAKENED)) {
+		if (hasStatus(attacker, Status.WEAKENED)) {
 			attack *= 0.75;
 		}
 	}
