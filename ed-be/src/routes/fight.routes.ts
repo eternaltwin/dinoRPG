@@ -42,7 +42,7 @@ routes.put(`${commonPath}`, [body('dinozId').exists().toInt().isNumeric()], asyn
 	} catch (err) {
 		const e = err as ErrorFormator;
 		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		res.status(e.errorCode || 500).send(e.message);
 	}
 });
 

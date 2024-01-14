@@ -11,7 +11,7 @@ import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
 import { Item, itemList } from "@drpg/core/models/item/ItemList";
-import { ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
+import { CYCLE, ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 import { DetailedFight } from "./generateFight.js";
 import getDamage from "./getDamage.js";
 import { initializeDinoz, initializeMonster } from "./getFighters.js";
@@ -1602,7 +1602,7 @@ export const createStatus = (
 	return {
 		type,
 		time: (length ?? StatusLength.INFINITE) * TIME_FACTOR,
-		remaining: 0,
+		timeSinceLastCycle: 0,
 		cycle,
 	};
 };
@@ -1896,7 +1896,7 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			const damageAndElements = getDamage(fighter, opponent, skill.id);
+			const damageAndElements = getDamage(fighter, opponent);
 			let { damage } = damageAndElements;
 			const { elements } = damageAndElements;
 
@@ -1929,7 +1929,7 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			const damageAndElements = getDamage(fighter, opponent, skill.id);
+			const damageAndElements = getDamage(fighter, opponent);
 			let { damage } = damageAndElements;
 			const { elements } = damageAndElements;
 
@@ -3258,83 +3258,6 @@ const endTurnChecks = (
 		});
 	}
 
-	if (!fightData.loser && attacker.hp > 0) {
-		// Check if fighter is poisoned
-		const poisonedBy = attacker.poisonedBy;
-
-		if (poisonedBy) {
-			// TODO: Temporary code to avoid endless fights
-			// Forced poison to end the fight
-			if (poisonedBy.id === -666) {
-				const poisoner = {
-					id: -666,
-					name: 'God',
-					type: 'boss' as const,
-				} as DetailedFighter;
-
-				// Register the hit
-				registerHit(fightData, poisoner, [attacker], 100, [], Skill.SANG_ACIDE);
-			} else {
-				// Get poisoner
-				const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
-
-				if (!poisoner) {
-					throw new Error('Poisoner not found');
-				}
-
-				// Get poison damage
-				let poisonDamage = 0;
-				switch (poisonedBy.skill) {
-					case Skill.SANG_ACIDE: {
-						poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
-						break;
-					}
-					case Skill.AURA_PUANTE: {
-						poisonDamage = 10;
-						break;
-					}
-					case Skill.GRIFFES_EMPOISONNEES: {
-						poisonDamage = 14;
-						break;
-					}
-					case Skill.HADES: {
-						poisonDamage = 14;
-						break;
-					}
-					case Skill.M_STINGER: {
-						poisonDamage = 5;
-						break;
-					}
-					case Skill.M_CONTAMINATION: {
-						poisonDamage = 3;
-						break;
-					}
-					default:
-						console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
-						break;
-				}
-
-				// Register the hit
-				registerHit(fightData, poisoner, [attacker], poisonDamage, [], poisonedBy.skill);
-			}
-		}
-
-		// Check if fighter is burned
-		const burnedBy = attacker.burnedBy;
-
-		if (burnedBy) {
-			// Get burner
-			const burner = fightData.fighters.find((f) => f.id === burnedBy.id && f.type === burnedBy.type);
-
-			if (!burner) {
-				throw new Error('Burner not found');
-			}
-
-			// Register the hit
-			registerHit(fightData, burner, [attacker], burnedBy.damage, [], burnedBy.skill);
-		}
-	}
-
 	// Calculate new attacker's time
 	let time = TIME_BASE * TIME_FACTOR
 		* attacker.stats.speed.global
@@ -3485,19 +3408,127 @@ export const playFighterTurn = (
 	});
 
 	if (deltaTime > 0) {
-		// Torch damage
-		if (hasStatus(attacker, Status.TORCHED)) {
-			registerHit(fightData, attacker, [attacker], 1, [ElementType.FIRE], Skill.TORCHE);
-		}
+		// Handle statuses
+		getFighters(fightData).forEach((fighter) => {
+			fighter.status.forEach((status) => {
+				status.time -= deltaTime;
 
-		// ACUPUNCTURE heal
-		if (hasStatus(attacker, Status.HEALING)) {
-			// Heal 1 HP
-			heal(fightData, attacker, 1);
-		}
+				if (status.cycle) {
+					status.timeSinceLastCycle += deltaTime;
+
+					if (status.timeSinceLastCycle >= CYCLE) {
+						switch (status.type) {
+							case Status.POISONED: {
+								const poisonedBy = fighter.poisonedBy;
+
+								if (!poisonedBy) {
+									throw new Error('Missing poison data');
+								}
+
+								// TODO: Temporary code to avoid endless fights
+								// Forced poison to end the fight
+								if (poisonedBy.id === -666) {
+									const poisoner = {
+										id: -666,
+										name: 'God',
+										type: 'boss' as const,
+									} as DetailedFighter;
+
+									// Register the hit
+									registerHit(fightData, poisoner, [fighter], 100, [], Skill.SANG_ACIDE);
+								} else {
+									// Get poisoner
+									const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
+
+									if (!poisoner) {
+										throw new Error('Poisoner not found');
+									}
+
+									// Get poison damage
+									let poisonDamage = 0;
+									switch (poisonedBy.skill) {
+										case Skill.SANG_ACIDE: {
+											poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
+											break;
+										}
+										case Skill.AURA_PUANTE: {
+											poisonDamage = 10;
+											break;
+										}
+										case Skill.GRIFFES_EMPOISONNEES: {
+											poisonDamage = 14;
+											break;
+										}
+										case Skill.HADES: {
+											poisonDamage = 14;
+											break;
+										}
+										case Skill.M_STINGER: {
+											poisonDamage = 5;
+											break;
+										}
+										case Skill.M_CONTAMINATION: {
+											poisonDamage = 3;
+											break;
+										}
+										default:
+											console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
+											break;
+									}
+
+									// Register the hit
+									registerHit(fightData, poisoner, [fighter], poisonDamage, [], poisonedBy.skill);
+								}
+								break;
+							}
+							case Status.BURNED: {
+								// Check if fighter is burned
+								const burnedBy = fighter.burnedBy;
+
+								if (!burnedBy) {
+									throw new Error('Missing burn data');
+								}
+
+								// Get burner
+								const burner = fightData.fighters.find((f) => f.id === burnedBy.id && f.type === burnedBy.type);
+
+								if (!burner) {
+									throw new Error('Burner not found');
+								}
+
+								// Register the hit
+								registerHit(fightData, burner, [fighter], burnedBy.damage, [], burnedBy.skill);
+								break;
+							}
+							case Status.HEALING: {
+								// Heal 1 HP
+								heal(fightData, fighter, 1);
+								break;
+							}
+							case Status.TORCHED: {
+								registerHit(fightData, fighter, [fighter], 1, [ElementType.FIRE], Skill.TORCHE);
+								break;
+							}
+							default: {
+								break;
+							}
+						}
+						status.timeSinceLastCycle = 0;
+					}
+				}
+
+				if (status.time <= 0) {
+					removeStatus(fightData, fighter, status.type);
+				}
+			});
+		});
 	}
 
 	checkDeaths(fightData);
+
+	if (fightData.loser) {
+		return;
+	}
 
 	// Event activation
 	const possibleEvent = randomlyGetEvent(fightData, attacker);

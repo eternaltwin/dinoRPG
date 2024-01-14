@@ -156,6 +156,8 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		// Poison fighters if turn > 1000
 		if (turn > 1000) {
 			fightData.fighters.forEach((fighter) => {
+				addStatus(fightData, fighter, Status.POISONED);
+
 				// eslint-disable-next-line no-param-reassign
 				fighter.poisonedBy = {
 					id: -666,
@@ -199,7 +201,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
 		dinozId: dinoz.id,
-		hpLost: dinoz.maxHp - dinoz.hp,
+		hpLost: dinoz.maxHp - Math.max(dinoz.hp, 0),
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: fightData.fighters.filter((fighter) => !fighter.attacker && fighter.goldStolen?.[dinoz.id]).reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
 		cursed: !dinoz.initiallyCursed && !!dinoz.cursed,
@@ -207,7 +209,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => !fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
 		dinozId: dinoz.id,
-		hpLost: dinoz.maxHp - dinoz.hp,
+		hpLost: dinoz.maxHp - Math.max(dinoz.hp, 0),
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: 0,
 		cursed: false,

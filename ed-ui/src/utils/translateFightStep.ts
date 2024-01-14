@@ -1,5 +1,6 @@
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { FightStep, StepFighter } from '@drpg/core/models/fight/FightStep';
+import { formatText } from './formatText.js';
 
 type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
@@ -8,7 +9,9 @@ const IGNORE_STEPS = ['moveTo', 'moveBack'];
 const getFighterName = (fighter: StepFighter, t: TFunction) =>
 	fighter.type === 'dinoz' ? fighter.name : t(`fight.monster.${fighter.name}`);
 
-const translateFightStep = (fightStep: FightStep, t: TFunction) => {
+const getStatusName = (status: string, t: TFunction) => t(`fight.status.${status}`);
+
+const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 	if (IGNORE_STEPS.includes(fightStep.action)) {
 		return '';
 	}
@@ -85,9 +88,18 @@ const translateFightStep = (fightStep: FightStep, t: TFunction) => {
 				fighter: getFighterName(fightStep.fighter, t),
 				hp: fightStep.hp
 			});
+		case 'addStatus':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t),
+				status: getStatusName(fightStep.status, t)
+			});
 		default:
 			return JSON.stringify(fightStep);
 	}
+};
+
+const translateFightStep = (fightStep: FightStep, t: TFunction) => {
+	return formatText(getTranslatedString(fightStep, t));
 };
 
 export default translateFightStep;

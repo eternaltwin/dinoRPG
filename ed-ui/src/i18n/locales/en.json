@@ -2985,8 +2985,25 @@
 			"greeng": "Green Giant",
 			"coq": "Giant Chicken"
 		},
+		"status": {
+			"asleep": "Asleep",
+			"slowed": "Slowed",
+			"petrified": "Petrified",
+			"poisoned": "Poisoned",
+			"burned": "Burned",
+			"locked": "Locked",
+			"dazzled": "Dazzled",
+			"stunned": "Stunned",
+			"torched": "Torched",
+			"intangible": "Intangible",
+			"flying": "Flying",
+			"quickened": "Quickened",
+			"shielded": "Shielded",
+			"blessed": "Blessed",
+			"healing": "Healing"
+		},
 		"step": {
-			"arrive": "{name} has arrived !",
+			"arrive": "**{name}** has arrived !",
 			"resist": "{dinoz} resisted and reduced the damage.",
 			"hit": "{fighter} dealt {damage} damage to {target}.",
 			"hit-skill": "{fighter} dealt {damage} damage to {target} with {skill}.",
