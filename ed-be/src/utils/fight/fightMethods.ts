@@ -1960,7 +1960,7 @@ const activateSkill = (
 		}
 		case Skill.MOIGNONS_LIQUIDES: {
 			const opponent = getRandomOpponent(fightData, fighter);
-			opponent.time += 15 * TIME_FACTOR;
+			opponent.time += 25 * TIME_FACTOR;
 			break;
 		}
 		case Skill.PETRIFICATION: {
