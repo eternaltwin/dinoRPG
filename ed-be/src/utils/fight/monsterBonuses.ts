@@ -13,7 +13,7 @@ const worm = (monster: DetailedFighter) => {
 };
 
 const sentinel = (monster: DetailedFighter) => {
-	monster.stats.special.counter += 90;
+	monster.stats.special.counter *= 1.9;
 	monster.status.push(FighterStatus.NO_ASSAULT);
 };
 
@@ -84,7 +84,7 @@ const setSkillProbability = (monster: DetailedFighter, skillId: Skill, value: nu
 
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
 	[Monster.GOBLIN]: (monster) => {
-		monster.stats.special.counter += 50;
+		monster.stats.special.counter *= 1.5;
 		monster.stats.special.multihit += 30;
 	},
 	[Monster.DARK_SMASHROOM]: (monster) => {
