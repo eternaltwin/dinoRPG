@@ -959,7 +959,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: 0.3
+			[Stat.ENERGY]: ['x', 1.3]
 		}
 	},
 	[Skill.EXTENUATION]: {
@@ -1032,7 +1032,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MULTIHIT]: 0.3
+			[Stat.MULTIHIT]: ['x', 1.3]
 		}
 	},
 	[Skill.BENEDICTION_DARTEMIS]: {
@@ -1643,7 +1643,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: 0.2
+			[Stat.ENERGY]: ['x', 1.2]
 		}
 	},
 	[Skill.VERT]: {
@@ -1708,7 +1708,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: -0.15
+			[Stat.ENERGY]: ['x', 0.85]
 		}
 	},
 	[Skill.LANCER_DE_ROCHE]: {
@@ -2251,7 +2251,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: 0.1,
+			[Stat.EVASION]: ['x', 1.1],
 			[Stat.WATER_SPEED]: 1.15
 		}
 	},
@@ -2746,7 +2746,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MULTIHIT]: 0.2
+			[Stat.MULTIHIT]: ['x', 1.2]
 		}
 	},
 	[Skill.REGENERESCENCE]: {
@@ -3066,7 +3066,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MULTIHIT]: 0.15
+			[Stat.MULTIHIT]: ['x', 1.15]
 		}
 	},
 	[Skill.ELECTROLYSE]: {
@@ -3197,7 +3197,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: 0.1
+			[Stat.ENERGY]: ['x', 1.1]
 		}
 	},
 	[Skill.STIMULATION_CARDIAQUE]: {
@@ -3365,7 +3365,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: 0.2
+			[Stat.EVASION]: ['x', 1.2],
 		}
 	},
 	[Skill.AGILITE]: {
@@ -3452,7 +3452,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: 0.1
+			[Stat.EVASION]: ['x', 1.1],
 		}
 	},
 	[Skill.SAUT]: {
@@ -3933,7 +3933,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: -0.25
+			[Stat.ENERGY]: ['x', 0.75]
 		}
 	},
 	[Skill.DOUBLE_FACE]: {
@@ -4019,7 +4019,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: 0.5
+			[Stat.ENERGY]: ['x', 1.5]
 		}
 	},
 	[Skill.LONDUHAUT]: {
@@ -4246,7 +4246,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.EVASION]: 0.1
+			[Stat.EVASION]: ['x', 1.1],
 		}
 	},
 	[Skill.DEPLACEMENT_INSTANTANE]: {
@@ -4352,7 +4352,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY]: 0.25,
+			[Stat.ENERGY]: ['x', 1.25],
 			[Stat.ENERGY_RECOVERY]: 0.25
 		}
 	},

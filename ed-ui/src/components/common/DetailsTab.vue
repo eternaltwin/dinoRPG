@@ -213,7 +213,9 @@
 			<ul class="stat-values">
 				<Tippy v-for="stat in specialStats" :key="stat.name" tag="li" theme="normal">
 					<img :src="getImgURL('specialStats', stat.name)" :alt="stat.name" />
-					<span>{{ stat.value }}{{ stat.percent ? '%' : '' }}</span>
+					<span>
+						{{ stat.percent ? Math.round((stat.value - 1) * 100) : stat.value }}{{ stat.percent ? '%' : '' }}
+					</span>
 					<template #content>
 						<h1 v-html="formatContent($t(`details.${stat.name}`))" />
 						<ul class="stat-details">

@@ -307,7 +307,7 @@ const registerHit = (
 
 		// Reduce damage by bulle percentage
 		if (opponent.stats.special.bubbleRate) {
-			actualDamage[opponent.id] = Math.round(damage * opponent.stats.special.bubbleRate / 100);
+			actualDamage[opponent.id] = Math.round(damage * (opponent.stats.special.bubbleRate - 1));
 
 			if (actualDamage[opponent.id] < damage) {
 				// Add resist step
@@ -2876,7 +2876,7 @@ const counterAttack = (fighter: DetailedFighter, opponent: DetailedFighter) => {
 
 	const random = Math.random();
 
-	return random < (opponent.stats.special.counter / 100);
+	return random < (opponent.stats.special.counter - 1);
 };
 
 const evade = (opponent: DetailedFighter) => {
@@ -2885,7 +2885,7 @@ const evade = (opponent: DetailedFighter) => {
 
 	const random = Math.random();
 
-	return random < (opponent.stats.special.evasion / 100);
+	return random < (opponent.stats.special.evasion - 1);
 };
 
 const miss = (fighter: DetailedFighter) => {
@@ -3223,7 +3223,7 @@ const startAttack = (
 	attack(fightData, fighter, opponent, skill, power);
 
 	// Get combo chances
-	const combo = fighter.stats.special.multihit / 100;
+	const combo = fighter.stats.special.multihit - 1;
 
 	// Repeat attack only if not countering
 	if (!isCounter) {

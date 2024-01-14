@@ -5,6 +5,7 @@ import { DetailedFighter, Status } from "@drpg/core/models/fight/DetailedFighter
 import { Monster } from "@drpg/core/models/fight/MonsterList";
 import { TIME_FACTOR } from "./fightConstants.js";
 import randomBetween from "./randomBetween.js";
+import { createStatus } from "./fightMethods.js";
 
 const worm = (monster: DetailedFighter) => {
 	monster.stats.special.armor += 1;
@@ -14,7 +15,7 @@ const worm = (monster: DetailedFighter) => {
 
 const sentinel = (monster: DetailedFighter) => {
 	monster.stats.special.counter *= 1.9;
-	monster.status.push(Status.NO_ASSAULT);
+	monster.status.push(createStatus(Status.NO_ASSAULT));
 };
 
 const elemental = (monster: DetailedFighter) => {
@@ -37,9 +38,9 @@ const elemental = (monster: DetailedFighter) => {
 };
 
 const stinger = (monster: DetailedFighter) => {
-	monster.stats.special.evasion += 60;
+	monster.stats.special.evasion *= 1.6;
 	monster.stats.speed.global *= 1.5;
-	monster.status.push(Status.NO_POISON);
+	monster.status.push(createStatus(Status.NO_POISON));
 };
 
 const brig1 = (monster: DetailedFighter) => {
@@ -50,7 +51,7 @@ const brig1 = (monster: DetailedFighter) => {
 const brig2 = (monster: DetailedFighter) => {
 	monster.stats.speed.global *= 0.7;
 	monster.time -= 15 * TIME_FACTOR;
-	monster.stats.special.multihit += 30;
+	monster.stats.special.multihit *= 1.3;
 	setSkillProbability(monster, Skill.M_STEAL, 5);
 };
 
@@ -59,7 +60,7 @@ const brig3 = (monster: DetailedFighter) => {
 };
 
 const ggoupi = (monster: DetailedFighter) => {
-	monster.status.push(Status.NO_POISON);
+	monster.status.push(createStatus(Status.NO_POISON));
 };
 
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
@@ -85,7 +86,7 @@ const setSkillProbability = (monster: DetailedFighter, skillId: Skill, value: nu
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
 	[Monster.GOBLIN]: (monster) => {
 		monster.stats.special.counter *= 1.5;
-		monster.stats.special.multihit += 30;
+		monster.stats.special.multihit *= 1.3;
 	},
 	[Monster.DARK_SMASHROOM]: (monster) => {
 		multiplySkillProbability(monster, Skill.M_RENFORTS, 2);
@@ -118,7 +119,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.TW_BIGBEASTLY_1]: (monster) => {
 		monster.time += 100000 * TIME_FACTOR;
-		monster.status.push(Status.ASLEEP);
+		monster.status.push(createStatus(Status.ASLEEP));
 	},
 	[Monster.SCORP]: (monster) => {
 		stinger(monster);
@@ -135,7 +136,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		setSkillProbability(monster, Skill.M_STEAL, 10);
 	},
 	[Monster.CACTUS]: (monster) => {
-		monster.stats.special.evasion += 30;
+		monster.stats.special.evasion *= 1.3;
 		monster.stats.speed.global *= 1.3;
 		monster.spikes = 2;
 	},
@@ -176,14 +177,14 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
 	[Boss.PR_IGOR]: (monster) => {
-		monster.stats.special.evasion += 25;
+		monster.stats.special.evasion *= 1.25;
 		monster.stats.speed.global *= 3;
 	},
 	[Boss.TOWER_GUARDIAN]: (monster) => {
 		elemental(monster);
 	},
 	[Boss.YAKUZI]: (monster) => {
-		monster.stats.special.multihit += 25;
+		monster.stats.special.multihit *= 1.25;
 	},
 	[Boss.DARK_MEGASHROOM]: (monster) => {
 		ggoupi(monster);

@@ -68,14 +68,15 @@ export const getSpecialStat = (
 			name: 'bubbleRate',
 			percent: true,
 			// Clamp value between 30% and 100%
-			value: Math.ceil((value < 0.3 ? 0.3 : value) * 100)
+			value: (value < 0.3 ? 0.3 : value) + 1,
 		};
 	}
 
 	// Special case for TORCH_DAMAGE (value not influenced by skills)
 	if (stat === SpecialStat.TORCH_DAMAGE) {
-		// Return null if no lighter in inventory
-		if (!dinoz.items?.some(item => item === itemList.ZIPPO.itemId)) {
+		// Return null if no lighter in inventory and no torch skill
+		if (!dinoz.items?.some(item => item === itemList.ZIPPO.itemId)
+			&& !skills.some(skill => skill.id === Skill.TORCHE)) {
 			return null;
 		}
 
@@ -126,10 +127,10 @@ export const getSpecialStat = (
 		value: number | ['x', number];
 	}[] = [];
 
+	const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat);
+
 	// Add base details if not 0
 	if (value !== 0) {
-		const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
-
 		details.push({
 			type: 'base',
 			percent,
@@ -138,8 +139,9 @@ export const getSpecialStat = (
 		});
 	}
 
-	if (stat === SpecialStat.COUNTER) {
-		value = 1;
+	// Start as 1 for percent stats to allow multiplication
+	if (percent) {
+		value += 1;
 	}
 
 	// Apply bonuses from skills
@@ -187,18 +189,10 @@ export const getSpecialStat = (
 		return a.type === 'base' ? -1 : 1;
 	});
 
-	const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat);
-
-	let finalValue = percent ? Math.round(value * multiplier * 100) : Math.ceil(value * multiplier)
-
-	if (stat === SpecialStat.COUNTER) {
-		finalValue -= 100;
-	}
-
 	return {
 		name: stat,
 		percent,
-		value: finalValue,
+		value: +(value * multiplier).toFixed(2),
 		details
 	};
 };

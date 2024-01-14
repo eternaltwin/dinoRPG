@@ -16,10 +16,10 @@ export type SkillEffects = {
 	[Stat.COUNTER]?: ['x', number];
 	[Stat.INITIATIVE]?: number;
 	[Stat.ARMOR]?: number;
-	[Stat.EVASION]?: number;
-	[Stat.MULTIHIT]?: number;
+	[Stat.EVASION]?: ['x', number];
+	[Stat.MULTIHIT]?: ['x', number];
 	[Stat.MAX_FOLLOWERS]?: number;
-	[Stat.ENERGY]?: number;
+	[Stat.ENERGY]?: ['x', number];
 	[Stat.ENERGY_RECOVERY]?: number;
 	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
 	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
