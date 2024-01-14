@@ -244,7 +244,7 @@
 										{{ stat.name === SpecialStat.ACID_BLOOD_DAMAGE ? '/ 2' : '' }} ({{ $t('details.baseValue') }})
 									</span>
 								</span>
-								<span v-else>+{{ detail.value }}{{ detail.percent ? '%' : '' }}</span>
+								<span v-else>{{ detail.percent ? '' : '+' }}{{ detail.value }}{{ detail.percent ? '%' : '' }}</span>
 								<span v-if="detail.type !== 'base'" class="detail-name">
 									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
 									<img

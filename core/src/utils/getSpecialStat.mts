@@ -20,6 +20,7 @@ export enum SpecialStat {
 }
 
 export enum SpecialStatAsPercent {
+	HP_REGEN = 'hpRegen',
 	ENERGY = 'energy',
 	MULTIHIT = 'multihit',
 	EVASION = 'evasion',
@@ -137,6 +138,10 @@ export const getSpecialStat = (
 		});
 	}
 
+	if (stat === SpecialStat.COUNTER) {
+		value = 1;
+	}
+
 	// Apply bonuses from skills
 	skills.forEach(skill => {
 		if (!skill.effects) return;
@@ -152,8 +157,8 @@ export const getSpecialStat = (
 				value += effect;
 			} else {
 				// Multiplier
-				effectValue = effect[1];
-				multiplier += effect[1];
+				effectValue = effect[1] - 1;
+				multiplier *= effect[1];
 			}
 
 			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
@@ -168,7 +173,7 @@ export const getSpecialStat = (
 							.find(([, value]) => value === el)?.[0]
 							.toLocaleLowerCase() || ''
 				),
-				value: percent ? effectValue * 100 : effectValue
+				value: percent ? Math.round(effectValue * 100) : effectValue
 			});
 		}
 	});
@@ -182,12 +187,18 @@ export const getSpecialStat = (
 		return a.type === 'base' ? -1 : 1;
 	});
 
-	const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
+	const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat);
+
+	let finalValue = percent ? Math.round(value * multiplier * 100) : Math.ceil(value * multiplier)
+
+	if (stat === SpecialStat.COUNTER) {
+		finalValue -= 100;
+	}
 
 	return {
 		name: stat,
 		percent,
-		value: percent ? Math.ceil(value * multiplier * 100) : Math.ceil(value * multiplier),
+		value: finalValue,
 		details
 	};
 };

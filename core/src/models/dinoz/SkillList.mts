@@ -641,7 +641,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.COUNTER]: 0.1,
+			[Stat.COUNTER]: ['x', 1.1],
 			[Stat.MAX_HP]: 20,
 			[Stat.INITIATIVE]: -5
 		}
@@ -673,7 +673,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.COUNTER]: 0.05
+			[Stat.COUNTER]: ['x', 1.05]
 		}
 	},
 	[Skill.COMBUSTION]: {
@@ -716,7 +716,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		effects: {
-			[Stat.HP_REGEN]: ['x', 0.15]
+			[Stat.HP_REGEN]: ['x', 1.15]
 		}
 	},
 	[Skill.BOUDDHA]: {
@@ -828,7 +828,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.COUNTER]: 0.2
+			[Stat.COUNTER]: ['x', 1.2]
 		}
 	},
 	[Skill.METEORES]: {

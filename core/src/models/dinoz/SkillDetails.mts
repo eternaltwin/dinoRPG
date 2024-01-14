@@ -13,7 +13,7 @@ type OtherAssaults<T> = Exclude<
 export type SkillEffects = {
 	[Stat.MAX_HP]?: number;
 	[Stat.HP_REGEN]?: number | ['x', number];
-	[Stat.COUNTER]?: number;
+	[Stat.COUNTER]?: ['x', number];
 	[Stat.INITIATIVE]?: number;
 	[Stat.ARMOR]?: number;
 	[Stat.EVASION]?: number;
