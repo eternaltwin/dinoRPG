@@ -1999,7 +1999,7 @@ const activateSkill = (
 			// Increase time of all opponents by 5
 			const opponents = getOpponents(fightData, fighter);
 			opponents.forEach((opponent) => {
-				opponent.time += 5 * TIME_FACTOR;
+				opponent.time += 8 * TIME_FACTOR;
 			});
 		}
 		// WOOD
