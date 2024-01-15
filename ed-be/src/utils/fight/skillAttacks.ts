@@ -2,7 +2,10 @@ import { Skill } from "@drpg/core/models/dinoz/SkillList";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 
 export const FixedSkillDamage: Skill[] = [
+	Skill.M_BITE,
+	Skill.M_ABSORPTION,
 	Skill.M_COMET,
+	Skill.M_VENERABLE,
 ];
 
 export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, number>>>> = {
