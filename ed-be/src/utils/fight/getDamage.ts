@@ -3,7 +3,7 @@ import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { DetailedFighter, Status } from "@drpg/core/models/fight/DetailedFighter";
 import { Item } from "@drpg/core/models/item/ItemList";
 import { ATTACK_GLOBAL_FACTOR } from "./fightConstants.js";
-import { SkillAttacks } from "./skillAttacks.js";
+import { FixedSkillDamage, SkillAttacks } from "./skillAttacks.js";
 import { hasStatus } from "./fightMethods.js";
 
 const BASE_ATTACK_VALUE = 2;
@@ -65,11 +65,21 @@ export const getDamage = (
 				}
 
 				attackElements = Object.keys(skillAttack).map((element) => +element as ElementType);
-				attack += attackElements.reduce((acc, element) => {
-					const elementPower = skillAttack[element] || 0;
-					const elementValue = attacker.stats.base[element];
-					return acc + elementPower * elementValue;
-				}, 0);
+
+				// Don't use elements for fixed attacks
+				if (FixedSkillDamage.includes(skill)) {
+					attack += attackElements.reduce((acc, element) => {
+						const elementPower = skillAttack[element] || 0;
+						return acc + elementPower;
+					}, 0);
+				} else {
+					attack += attackElements.reduce((acc, element) => {
+						const elementPower = skillAttack[element] || 0;
+						const elementValue = attacker.stats.base[element];
+						return acc + elementPower * elementValue;
+					}, 0);
+				}
+
 
 				break;
 			}
