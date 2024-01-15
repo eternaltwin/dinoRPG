@@ -619,7 +619,7 @@ const registerHit = (
 		if (actualDamage[opponent.id] && opponent.skills.some((skill) => skill.id === Skill.M_CONTAMINATION)) {
 			// 1/6 Chance to poison on assaults
 			if (!skill && randomBetween(0, 5) === 0) {
-				poison(fightData, opponent, fighter, Skill.M_CONTAMINATION);
+				poison(fightData, opponent, fighter, Skill.M_CONTAMINATION, StatusLength.SHORT);
 			}
 		}
 	});
@@ -1372,7 +1372,7 @@ const activateEvent = (
 				break;
 			}
 			case Item.ZIPPO: {
-				addStatus(fightData, fighter, Status.TORCHED);
+				addStatus(fightData, fighter, Status.TORCHED, StatusLength.LONG);
 				break;
 			}
 			case Item.SOS_FLAME: {
@@ -1871,7 +1871,7 @@ const activateSkill = (
 			heal(fightData, fighter, randomBetween(1, 20));
 
 			// Fall asleep
-			addStatus(fightData, fighter, Status.ASLEEP);
+			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
 			break;
 		}
 		case Skill.DETONATION: {
@@ -1975,7 +1975,7 @@ const activateSkill = (
 
 			if (opponent) {
 				// Slow opponent
-				addStatus(fightData, opponent, Status.SLOWED);
+				addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
 			}
 			break;
 		}
@@ -2006,7 +2006,7 @@ const activateSkill = (
 
 			// Slow opponents
 			opponents.forEach((opponent) => {
-				addStatus(fightData, opponent, Status.SLOWED);
+				addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
 			});
 			break;
 		}
@@ -2028,7 +2028,7 @@ const activateSkill = (
 
 			// Petrify opponent
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
-			addStatus(fightData, opponent, Status.PETRIFIED);
+			addStatus(fightData, opponent, Status.PETRIFIED, StatusLength.MEDIUM);
 
 			// Instantly cancel if boss
 			if (opponent.type === 'boss') {
@@ -2406,7 +2406,7 @@ const activateSkill = (
 
 			getOpponents(fightData, fighter).forEach((opponent) => {
 				// Poison
-				poison(fightData, opponent, fighter, Skill.HADES);
+				poison(fightData, opponent, fighter, Skill.HADES, StatusLength.MEDIUM);
 
 				// Slow
 				opponent.stats.speed.global *= 1.5;
@@ -2657,7 +2657,7 @@ const activateSkill = (
 				// Alter opponents statuses
 				if (f.attacker !== fighter.attacker) {
 					removeStatus(fightData, f, Status.FLYING, Status.INTANGIBLE);
-					addStatus(fightData, f, Status.STUNNED);
+					addStatus(fightData, f, Status.STUNNED, StatusLength.MEDIUM);
 				}
 			});
 			break;
@@ -2684,7 +2684,7 @@ const activateSkill = (
 
 			// Add STUNNED if not boss
 			if (opponent.type !== 'boss') {
-				addStatus(fightData, opponent, Status.STUNNED);
+				addStatus(fightData, opponent, Status.STUNNED, StatusLength.MEDIUM);
 			}
 
 			// Check if fighter is not dead
@@ -2769,7 +2769,7 @@ const activateSkill = (
 		case Skill.M_INVISIBILITY: {
 			getAllies(fightData, fighter).forEach((ally) => {
 				// Add INTANGIBLE
-				addStatus(fightData, ally, Status.INTANGIBLE);
+				addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.SHORT);
 			});
 			break;
 		}
@@ -2987,7 +2987,8 @@ const poison = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	poisoner: DetailedFighter,
-	skill: Skill
+	skill: Skill,
+	duration = StatusLength.INFINITE,
 ) => {
 	// No poison if fighter is dead
 	if (fighter.hp <= 0) return;
@@ -3042,7 +3043,7 @@ const poison = (
 		skill,
 	};
 
-	addStatus(fightData, fighter, Status.POISONED);
+	addStatus(fightData, fighter, Status.POISONED, duration);
 };
 
 // Helper method to heal a fighter
@@ -3158,12 +3159,12 @@ const attack = (
 
 			// Poison fighter if opponent has Skill.AURA_PUANTE
 			if (realOpponent.skills.find((skill) => skill.id === Skill.AURA_PUANTE)) {
-				poison(fightData, attacker, realOpponent, Skill.AURA_PUANTE);
+				poison(fightData, attacker, realOpponent, Skill.AURA_PUANTE, StatusLength.MEDIUM);
 			}
 
 			// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
 			if (attacker.skills.find((skill) => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
-				poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES);
+				poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
 			}
 
 			// Torch damage
