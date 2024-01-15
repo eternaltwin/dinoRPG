@@ -109,6 +109,7 @@ export default defineComponent({
 			this.fight = this.sessionStore.getFightResult;
 			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
 		}
+		EventBus.emit('isLoading', false);
 	},
 	unmounted(): void {
 		this.sessionStore.setFightResult(undefined);

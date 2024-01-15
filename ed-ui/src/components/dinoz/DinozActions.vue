@@ -201,7 +201,6 @@ export default defineComponent({
 						name: 'Fight',
 						params: { dinozId: this.$route.params.id.toString() }
 					});
-					EventBus.emit('isLoading', false);
 					break;
 				}
 				case Action.RESURRECT:

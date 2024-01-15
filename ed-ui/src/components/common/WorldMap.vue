@@ -176,7 +176,6 @@ export default defineComponent({
 						})
 					);
 				}
-				EventBus.emit('isLoading', false);
 				this.$router.push({
 					name: 'Fight',
 					params: { dinozId: this.dinozData?.id?.toString() }
