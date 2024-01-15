@@ -104,7 +104,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.EARTHWORM_BABY]: (monster) => {
 		worm(monster);
 	},
-	[Monster.COQ]: (monster) => {
+	[Monster.COQDUR]: (monster) => {
 		monster.stats.speed.global *= 0.4;
 	},
 	[Monster.RONCIV]: (monster) => {

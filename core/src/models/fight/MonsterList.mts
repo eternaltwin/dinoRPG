@@ -11,7 +11,7 @@ export enum Monster {
 	WOLF = 'WOLF',
 	GLUON = 'GLUON',
 	GREEN_GIANT = 'GREEN_GIANT',
-	COQ = 'COQ',
+	COQDUR = 'COQDUR',
 	PIRASK = 'PIRASK',
 	FLAM = 'FLAM',
 	GOBLIN = 'GOBLIN',
@@ -168,8 +168,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		skills: [Skill.M_REGENERATION],
 	},
-	[Monster.COQ]: {
-		id: Monster.COQ,
+	[Monster.COQDUR]: {
+		id: Monster.COQDUR,
 		name: 'coq',
 		hp: 80,
 		elements: {

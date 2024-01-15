@@ -499,7 +499,7 @@ export const M_PAPY_JOE: Mission[] = [
 				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.COQ.name],
+					target: [monsterList.COQDUR.name],
 					value: 20
 				},
 				displayedAction: 'killCoq',

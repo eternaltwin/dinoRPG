@@ -1817,7 +1817,7 @@ const activateSkill = (
 		case Skill.SOUFFLE_ARDENT:
 		case Skill.METEORES:
 		case Skill.CREPUSCULE_FLAMBOYANT:
-			//MONSTER
+		//MONSTER
 		case Skill.M_COMET:
 		case Skill.M_VENERABLE: {
 			targetAllOpponents(fightData, fighter, skill, step);
@@ -3318,6 +3318,7 @@ const startAttack = (
 	// Get combo chances
 	const combo = fighter.stats.special.multihit - 1;
 
+	// TODO change this logic, a counter does not interrupt a combo
 	// Repeat attack only if not countering
 	if (!isCounter) {
 		let random = Math.random();

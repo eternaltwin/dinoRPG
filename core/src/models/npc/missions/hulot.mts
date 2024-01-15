@@ -442,7 +442,7 @@ export const M_HULOT: Mission[] = [
 				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [monsterList.COQ.name],
+					target: [monsterList.COQDUR.name],
 					value: 2
 				},
 				displayedAction: 'killCoqAcharne',
