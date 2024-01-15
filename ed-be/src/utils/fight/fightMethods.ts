@@ -583,8 +583,6 @@ const registerHit = (
 
 		// Status.M_ABSORB
 		if (actualDamage[opponent.id] && hasStatus(fighter, Status.M_ABSORB)) {
-			console.log('M_ABSORB', actualDamage[opponent.id]);
-
 			// Heal damage done
 			heal(fightData, fighter, actualDamage[opponent.id]);
 		}
@@ -3145,7 +3143,7 @@ const attack = (
 
 	// Change fighter element
 	if (!skill && !hasStatus(fighter, Status.LOCKED)) {
-		fighter.element = fighter.elements[fighter.elements.indexOf(fighter.element) + 1 % fighter.elements.length];
+		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
 	}
 };
 
