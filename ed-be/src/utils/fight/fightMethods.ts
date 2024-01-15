@@ -1057,6 +1057,9 @@ const activateEvent = (
 				// Get random opponent
 				const opponent = getRandomOpponent(fightData, fighter);
 
+				// Add target
+				step.targets.push(stepFighter(opponent));
+
 				if (!hasStatus(opponent, Status.FLYING)) {
 					// Increase the opponent's time
 					opponent.time += 15 * TIME_FACTOR;
@@ -1139,6 +1142,9 @@ const activateEvent = (
 			case Skill.COURBATURES: {
 				const opponent = getRandomOpponent(fightData, fighter);
 
+				// Add target
+				step.targets.push(stepFighter(opponent));
+
 				// Reduce max energy by 30%
 				let newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
 
@@ -1186,6 +1192,9 @@ const activateEvent = (
 				// Get random opponent
 				const opponent = getRandomOpponent(fightData, fighter);
 
+				// Add target
+				step.targets.push(stepFighter(opponent));
+
 				// Disable invocations
 				addStatus(fightData, opponent, Status.NO_INVOCATION);
 				break;
@@ -1197,6 +1206,9 @@ const activateEvent = (
 			case Skill.MORSURE_DU_SOLEIL: {
 				// Get random opponent
 				const opponent = getRandomOpponent(fightData, fighter);
+
+				// Add target
+				step.targets.push(stepFighter(opponent));
 
 				addStatus(fightData, opponent, Status.DAZZLED);
 				break;
@@ -1215,6 +1227,9 @@ const activateEvent = (
 			case Skill.MAINS_COLLANTES: {
 				// Get random opponent
 				const opponent = getRandomOpponent(fightData, fighter);
+
+				// Add target
+				step.targets.push(stepFighter(opponent));
 
 				// Check if NO_DODGE
 				if (hasStatus(opponent, Status.NO_DODGE)) {
@@ -1887,6 +1902,9 @@ const activateSkill = (
 			// Get opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
@@ -1934,23 +1952,21 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			const damageAndElements = getDamage(fighter, opponent);
-			let { damage } = damageAndElements;
-			const { elements } = damageAndElements;
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
-			// Cancel if no damage
-			if (!damage) {
-				return cancel();
-			}
+			const hit = attack(fightData, fighter, opponent);
 
-			// 0 damage if boss or Skill.PERCEPTION
-			if (opponent.skills.find((s) => s.id === Skill.PERCEPTION) || opponent.type === 'boss') {
-				damage = 0;
-			} else {
-				// 50% HP otherwise
-				damage = Math.round(opponent.hp / 2);
+			if (hit) {
+				let damage = 0;
 
-				registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
+				// 0 damage if boss or Skill.PERCEPTION
+				if (!opponent.skills.find((s) => s.id === Skill.PERCEPTION) && opponent.type !== 'boss') {
+					// 50% HP otherwise
+					damage = Math.round(opponent.hp / 2);
+				}
+
+				registerHit(fightData, fighter, [opponent], damage, [], skill.id);
 			}
 			break;
 		}
@@ -1967,23 +1983,21 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			const damageAndElements = getDamage(fighter, opponent);
-			let { damage } = damageAndElements;
-			const { elements } = damageAndElements;
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
-			// Cancel if no damage
-			if (!damage) {
-				return cancel();
-			}
+			const hit = attack(fightData, fighter, opponent);
 
-			// 0 damage if boss or Skill.PERCEPTION
-			if (opponent.skills.find((s) => s.id === Skill.PERCEPTION) || opponent.type === 'boss') {
-				damage = 0;
-			} else {
-				// 100% HP otherwise
-				damage = opponent.hp;
+			if (hit) {
+				let damage = 0;
 
-				registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
+				// 0 damage if boss or Skill.PERCEPTION
+				if (!opponent.skills.find((s) => s.id === Skill.PERCEPTION) && opponent.type !== 'boss') {
+					// 100% HP otherwise
+					damage = opponent.hp;
+				}
+
+				registerHit(fightData, fighter, [opponent], damage, [], skill.id);
 			}
 			break;
 		}
@@ -1998,12 +2012,19 @@ const activateSkill = (
 		}
 		case Skill.MOIGNONS_LIQUIDES: {
 			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
 			opponent.time += 25 * TIME_FACTOR;
 			break;
 		}
 		case Skill.PETRIFICATION: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
 			// Petrify opponent
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
@@ -2064,6 +2085,9 @@ const activateSkill = (
 			}
 
 			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
 			// Instantly cancel if boss
 			if (opponent.type === 'boss') {
@@ -2445,6 +2469,9 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
 			// Remove wood sphere skills
 			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.WOOD));
 
@@ -2473,6 +2500,9 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
 			// Reduce energy recovery by 25%
 			opponent.stats.special.energyRecovery *= 0.75;
 
@@ -2495,6 +2525,9 @@ const activateSkill = (
 		case Skill.RECEPTACLE_AQUEUX: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
 			// Remove water sphere skills
 			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.WATER));
@@ -2520,6 +2553,9 @@ const activateSkill = (
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
 			// Remove lightning sphere skills
 			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.LIGHTNING));
 
@@ -2534,6 +2570,9 @@ const activateSkill = (
 		case Skill.RECEPTACLE_AERIEN: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
 			// Remove air sphere skills
 			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.AIR));
@@ -2567,6 +2606,9 @@ const activateSkill = (
 		case Skill.RECEPTABLE_THERMIQUE: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
 			// Remove fire sphere skills
 			opponent.skills = opponent.skills.filter((skill) => !skill.isSphereSkill || !skill.element.includes(ElementType.FIRE));
@@ -2623,6 +2665,9 @@ const activateSkill = (
 		case Skill.BIGMAGNON: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
 
 			// Add moveTo step
 			fightData.steps.push({
@@ -3069,6 +3114,8 @@ const attack = (
 		});
 	}
 
+	let hitsCount = 0;
+
 	for (const attacker of attackers) {
 		// Get damage
 		const damageAndElements = getDamage(attacker, realOpponent, skill, undefined, power);
@@ -3105,6 +3152,8 @@ const attack = (
 
 		// Register hit if damage was done
 		if (damage) {
+			hitsCount++;
+
 			registerHit(fightData, attacker, [realOpponent], damage, elements, skill);
 
 			// Poison fighter if opponent has Skill.AURA_PUANTE
@@ -3162,6 +3211,8 @@ const attack = (
 	if (!skill && !hasStatus(fighter, Status.LOCKED)) {
 		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
 	}
+
+	return !!hitsCount;
 };
 
 export const checkDeaths = (
