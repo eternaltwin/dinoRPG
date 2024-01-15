@@ -133,14 +133,23 @@ const router = createRouter({
 });
 
 router.beforeEach(to => {
-	const displayAuth = localStore().getJwt === undefined;
+	const jwt = localStore().getJwt;
+	const displayAuth = jwt === undefined;
 	// route to AuthPage if not logged and going to any page
 	if (displayAuth && to.name !== 'AuthenticationPage') {
 		return { name: 'AuthenticationPage' };
 	}
-	// route to MainPage if looged and trying to go to AuthPage (it's the case when user just login)
-	if (!displayAuth && to.name == 'AuthenticationPage') {
-		return { name: 'MainPage' };
+	if (!displayAuth) {
+		const expiry = JSON.parse(atob(jwt.split('.')[1])).exp;
+		if (Math.floor(new Date().getTime() / 1000) >= expiry) {
+			localStore().setJwt(undefined);
+			return { name: 'AuthenticationPage' };
+		}
+		// route to MainPage if looged and trying to go to AuthPage (it's the case when user just login)
+		if (to.name == 'AuthenticationPage') {
+			return { name: 'MainPage' };
+		}
 	}
 });
+
 export default router;
