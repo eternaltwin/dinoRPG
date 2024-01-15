@@ -3183,7 +3183,7 @@ const attack = (
 			if (attacker.skills.find((skill) => skill.id === Skill.GRIFFES_INFERNALES)) {
 				const damage = attacker.stats.base[ElementType.FIRE];
 
-				opponent.burnedBy = {
+				realOpponent.burnedBy = {
 					id: attacker.id,
 					type: attacker.type,
 					skill: Skill.GRIFFES_INFERNALES,
@@ -3193,9 +3193,23 @@ const attack = (
 			}
 
 			// M_FEBREZ
-			if (opponent.type === 'dinoz' && attacker.skills.find((skill) => skill.id === Skill.M_FEBREZ)) {
+			if (realOpponent.type === 'dinoz' && attacker.skills.find((skill) => skill.id === Skill.M_FEBREZ)) {
 				// Regen 5% HP
-				heal(fightData, opponent, Math.round(opponent.maxHp * 0.05 + 0.5));
+				heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
+			}
+
+			// SANG_ACIDE damage
+			if (
+				// Opponent has SANG_ACIDE
+				realOpponent.skills.find((skill) => skill.id === Skill.SANG_ACIDE) &&
+				// Not a skill
+				!skill &&
+				// 1/3 chance
+				randomBetween(0, 2) === 0
+			) {
+				const damage = attacker.stats.special.acidBloodDamage;
+
+				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.FIRE], Skill.SANG_ACIDE);
 			}
 		}
 	}
