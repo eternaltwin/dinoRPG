@@ -6,7 +6,7 @@ import { SkillLevel } from "@drpg/core/models/dinoz/SkillLevel";
 import { ElementType } from "@drpg/core/models/enums/ElementType";
 import { SkillType } from "@drpg/core/models/enums/SkillType";
 import { BadStatus, DetailedFighter, Status, FighterType, GoodStatus, FighterStatus, StatusLength } from "@drpg/core/models/fight/DetailedFighter";
-import { LeaveAnimation, StepFighter } from "@drpg/core/models/fight/FightStep";
+import { LeaveAnimation, SkillActivateStep, StepFighter } from "@drpg/core/models/fight/FightStep";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
@@ -306,10 +306,11 @@ const registerHit = (
 		 */
 
 		// Reduce damage by bulle percentage
-		if (opponent.stats.special.bubbleRate) {
+		if (opponent.stats.special.bubbleRate > 1) {
 			actualDamage[opponent.id] = Math.round(damage * (opponent.stats.special.bubbleRate - 1));
 
 			if (actualDamage[opponent.id] < damage) {
+				if (opponent.type !== 'dinoz') console.log('wtf bulle resist');
 				// Add resist step
 				fightData.steps.push({
 					action: 'resist',
@@ -323,6 +324,7 @@ const registerHit = (
 			const random = Math.random();
 
 			if (random < 0.05) {
+				console.log('CUIRASSE resist');
 				actualDamage[opponent.id] = Math.max(actualDamage[opponent.id] - 5, 0);
 
 				// Add resist step
@@ -363,6 +365,7 @@ const registerHit = (
 					fighter: stepFighter(opponent),
 					skill,
 					energy: 0,
+					targets: [],
 				});
 			}
 		}
@@ -581,6 +584,8 @@ const registerHit = (
 
 		// Status.M_ABSORB
 		if (actualDamage[opponent.id] && hasStatus(fighter, Status.M_ABSORB)) {
+			console.log('M_ABSORB', actualDamage[opponent.id]);
+
 			// Heal damage done
 			heal(fightData, fighter, actualDamage[opponent.id]);
 		}
@@ -641,7 +646,8 @@ const evadedSkill = (opponent: DetailedFighter, skill: SkillDetails) => {
 const targetSingleOpponent = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	skillOrItem: SkillDetails | ItemFiche
+	skillOrItem: SkillDetails | ItemFiche,
+	step: SkillActivateStep | null,
 ) => {
 	// Get random opponent
 	const opponent = getRandomOpponent(fightData, fighter);
@@ -666,6 +672,11 @@ const targetSingleOpponent = (
 
 		// Register the hit
 		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
+
+		// Add target
+		if (step) {
+			step.targets.push(stepFighter(opponent));
+		}
 
 		return opponent;
 	}
@@ -709,6 +720,7 @@ const targetAllOpponents = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	skill: SkillDetails,
+	step: SkillActivateStep,
 	count?: number,
 ) => {
 	// Attack each opponent
@@ -739,6 +751,9 @@ const targetAllOpponents = (
 
 		// Register the hit
 		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
+
+		// Add target
+		step.targets.push(stepFighter(opponent));
 	});
 };
 
@@ -894,25 +909,28 @@ const activateEvent = (
 
 	// If event is a skill
 	if ('id' in event) {
-		// Add skillActivate step
-		fightData.steps.push({
+		const step: SkillActivateStep = {
 			action: 'skillActivate',
 			fighter: stepFighter(fighter),
 			skill: event.id,
 			energy: event.energy,
-		});
+			targets: [],
+		};
+
+		// Add skillActivate step
+		fightData.steps.push(step);
 
 		switch (event.id) {
 			// AIR
 			// FIRE
 			case Skill.COMBUSTION:
 			case Skill.BRASERO: {
-				targetAllOpponents(fightData, fighter, event);
+				targetAllOpponents(fightData, fighter, event, step);
 				break;
 			}
 			case Skill.DOUCHE_ECOSSAISE:
 			case Skill.AIGUILLON: {
-				targetSingleOpponent(fightData, fighter, event);
+				targetSingleOpponent(fightData, fighter, event, step);
 				break;
 			}
 			case Skill.COLERE: {
@@ -944,6 +962,8 @@ const activateEvent = (
 			}
 			// WATER
 			case Skill.CLONE_AQUEUX: {
+				console.log('clone');
+				console.log(fightData.initialDinozList.map((d) => d.name));
 				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
 
 				if (!initialDinoz) {
@@ -1569,6 +1589,7 @@ const activateEvent = (
 					fighter: stepFighter(opponent),
 					skill: Skill.SHARIGNAN,
 					energy: 0,
+					targets: [],
 				});
 
 				// Add skill to opponent
@@ -1742,13 +1763,16 @@ const activateSkill = (
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
-	// Add skillActivate step
-	fightData.steps.push({
+	const step: SkillActivateStep = {
 		action: 'skillActivate',
 		fighter: stepFighter(fighter),
 		skill: skill.id,
 		energy: skill.energy,
-	});
+		targets: [],
+	};
+
+	// Add skillActivate step
+	fightData.steps.push(step);
 
 	// Cancel method to use if the skil ends up not being triggered
 	const cancel = () => {
@@ -1767,7 +1791,7 @@ const activateSkill = (
 			//MONSTER
 		case Skill.M_COMET:
 		case Skill.M_VENERABLE: {
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 
@@ -1784,7 +1808,7 @@ const activateSkill = (
 		case Skill.LANCEUR_DE_GLAND:
 		// MONSTER
 		case Skill.M_WORM_2: {
-			targetSingleOpponent(fightData, fighter, skill);
+			targetSingleOpponent(fightData, fighter, skill, step);
 			break;
 		}
 
@@ -1792,14 +1816,14 @@ const activateSkill = (
 		// AIR
 		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
-			targetSingleOpponent(fightData, fighter, skill);
+			targetSingleOpponent(fightData, fighter, skill, step);
 
 			// Increase time
 			fighter.time += 15 * TIME_FACTOR;
 			break;
 		}
 		case Skill.KAMIKAZE: {
-			targetSingleOpponent(fightData, fighter, skill);
+			targetSingleOpponent(fightData, fighter, skill, step);
 
 			// Loose 50% HP
 			const hpLost = Math.round(fighter.hp / 2);
@@ -1888,7 +1912,7 @@ const activateSkill = (
 			break;
 		}
 		case Skill.ECLAIR_SINUEUX: {
-			targetAllOpponents(fightData, fighter, skill, 3);
+			targetAllOpponents(fightData, fighter, skill, step, 3);
 			break;
 		}
 		// WATER
@@ -1917,7 +1941,7 @@ const activateSkill = (
 			break;
 		}
 		case Skill.GEL: {
-			const opponent = targetSingleOpponent(fightData, fighter, skill);
+			const opponent = targetSingleOpponent(fightData, fighter, skill, step);
 
 			if (opponent) {
 				// Slow opponent
@@ -1978,11 +2002,12 @@ const activateSkill = (
 			break;
 		}
 		case Skill.RAYON_KAAR_SHER: {
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 
 			// Remove mud wall of all opponents
-			const opponents = getOpponents(fightData, fighter);
-			opponents.forEach((opponent) => {
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				if (!opponent.mudWall) return;
+
 				opponent.mudWall = undefined;
 
 				// Add skillExpire step
@@ -1995,7 +2020,7 @@ const activateSkill = (
 			break;
 		}
 		case Skill.DELUGE: {
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			// Increase time of all opponents by 5
 			const opponents = getOpponents(fightData, fighter);
 			opponents.forEach((opponent) => {
@@ -2116,7 +2141,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.VULCAIN: {
@@ -2127,7 +2152,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.ARMURE_DIFRIT: {
@@ -2152,7 +2177,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetSingleOpponent(fightData, fighter, skill);
+			targetSingleOpponent(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.BALEINE_BLANCHE: {
@@ -2177,7 +2202,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.ONDINE: {
@@ -2188,7 +2213,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetSingleOpponent(fightData, fighter, skill);
+			targetSingleOpponent(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.LOUP_GAROU: {
@@ -2199,7 +2224,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.BENEDICTION_DES_FEES: {
@@ -2238,7 +2263,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.GOLEM: {
@@ -2277,7 +2302,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetSingleOpponent(fightData, fighter, skill);
+			targetSingleOpponent(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.FUJIN: {
@@ -2311,7 +2336,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetSingleOpponent(fightData, fighter, skill);
+			targetSingleOpponent(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.BOUDDHA: {
@@ -2378,7 +2403,7 @@ const activateSkill = (
 
 			fighter.invocations -= 1;
 
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 		case Skill.CRI_DE_GUERRE: {
@@ -2816,7 +2841,7 @@ const activateSkill = (
 			break;
 		}
 		case Skill.M_ELEMENTAL_DISCIPLE: {
-			targetAllOpponents(fightData, fighter, skill);
+			targetAllOpponents(fightData, fighter, skill, step);
 
 			fighter.escaped = true;
 
@@ -2854,6 +2879,7 @@ const activateSkill = (
 					fighter: stepFighter(opponent),
 					skill: Skill.SHARIGNAN,
 					energy: 0,
+					targets: [],
 				});
 
 				// Add skill to opponent
@@ -3173,6 +3199,7 @@ export const checkDeaths = (
 					fighter: stepFighter(fighter),
 					skill: Skill.PLUMES_DE_PHOENIX,
 					energy: 0,
+					targets: [],
 				});
 
 				// Heal to 12 HP
@@ -3548,7 +3575,7 @@ export const playFighterTurn = (
 
 	// Sorceror's Wand replaces attacks
 	if (attacker.items.some((item) => item.itemId === Item.SORCERERS_STICK)) {
-		targetSingleOpponent(fightData, attacker, itemList.SORCERERS_STICK);
+		targetSingleOpponent(fightData, attacker, itemList.SORCERERS_STICK, null);
 		endTurnChecks(fightData, attacker);
 		return;
 	}

@@ -74,6 +74,7 @@ export interface SkillActivateStep {
   fighter: StepFighter;
   skill: Skill;
 	energy: number;
+	targets: StepFighter[];
 }
 export interface SkillExpireStep {
   action: 'skillExpire';

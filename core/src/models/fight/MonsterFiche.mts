@@ -1,13 +1,10 @@
 import { Skill } from '../dinoz/SkillList.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
+import { GameEvent } from '../event/Events.mjs';
 import { Boss } from './BossList.mjs';
 import { Monster } from './MonsterList.mjs';
 
-export enum GameEvent {
-	CHRISTMAS = 'CHRISTMAS',
-	VALENTINE = 'VALENTINE',
-}
 
 export type MonsterFiche = {
 	id: Monster | Boss;

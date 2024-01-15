@@ -5,7 +5,7 @@
 	</div>
 	<PixiFight v-if="dinoz" :dinoz="dinoz" :placeName="placeName"></PixiFight>
 	<br />{{ fightText }}<br />
-	<p v-html="fightHistory"></p>
+	<p class="fight-history" v-html="fightHistory"></p>
 	<FightRecap :fight="fight" @displayFight="displayFight()" @fightAgain="processFight"></FightRecap>
 </template>
 
@@ -95,4 +95,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fight-history :deep(strong) {
+	color: inherit;
+}
+</style>

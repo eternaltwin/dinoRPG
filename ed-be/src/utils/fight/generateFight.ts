@@ -43,7 +43,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	const fightData: DetailedFight = {
 		loser: null,
 		steps: [] as FightStep[],
-		initialDinozList: config.initialDinozList,
+		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		time: 0,
 		place: config.place,
@@ -111,6 +111,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 					fighter: stepFighter(fighter),
 					skill: Skill.CLEPTOMANE,
 					energy: skillList[Skill.CLEPTOMANE].energy,
+					targets: [stepFighter(opponent)],
 				});
 
 				// Add disabled items step
@@ -133,6 +134,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				fighter: stepFighter(fighter),
 				skill: Skill.JOKER,
 				energy: 0,
+				targets: [],
 			});
 		}
 	});
@@ -142,6 +144,8 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	// Zero the time origin to start from clean origin
 	const first_fighter_time = fightData.fighters[0].time;
 	fightData.fighters.map(fighter => fighter.time -= first_fighter_time);
+
+	let deadlyPoisonApplied = false;
 
 	// Fight loop
 	while (!fightData.loser) {
@@ -154,7 +158,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		orderFighters(fightData);
 
 		// Poison fighters if turn > 1000
-		if (turn > 1000) {
+		if (turn > 1000 && !deadlyPoisonApplied) {
 			fightData.fighters.forEach((fighter) => {
 				addStatus(fightData, fighter, Status.POISONED);
 
@@ -165,6 +169,14 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 					skill: 0 as Skill,
 				};
 			});
+
+			deadlyPoisonApplied = true;
+		}
+
+		if (turn > 1200) {
+			// Too many turns
+			console.warn('Too many turns, this should never happen');
+			break;
 		}
 
 		// Play fighter turn
@@ -201,7 +213,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
 		dinozId: dinoz.id,
-		hpLost: dinoz.maxHp - Math.max(dinoz.hp, 0),
+		hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: fightData.fighters.filter((fighter) => !fighter.attacker && fighter.goldStolen?.[dinoz.id]).reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
 		cursed: !dinoz.initiallyCursed && !!dinoz.cursed,
@@ -209,7 +221,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => !fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
 		dinozId: dinoz.id,
-		hpLost: dinoz.maxHp - Math.max(dinoz.hp, 0),
+		hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: 0,
 		cursed: false,

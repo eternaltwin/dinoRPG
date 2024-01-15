@@ -5,7 +5,7 @@
 	</div>
 	{{ fightText }}<br />
 	<FightAnimation />
-	<p v-html="fightHistory" />
+	<p class="fight-history" v-html="fightHistory" />
 	<div class="wrapper">
 		<div class="debrief" :class="lang">
 			<img
@@ -183,5 +183,9 @@ export default defineComponent({
 	justify-content: space-around;
 	gap: 10px;
 	flex-wrap: wrap;
+}
+
+.fight-history :deep(strong) {
+	color: inherit;
 }
 </style>

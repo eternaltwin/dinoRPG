@@ -1,13 +1,24 @@
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { FightStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 import { formatText } from './formatText.js';
+import { BadStatus, GoodStatus } from '@drpg/core/models/fight/DetailedFighter';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
-const IGNORE_STEPS = ['moveTo', 'moveBack'];
+const IGNORE_STEPS = ['moveTo', 'moveBack', 'resist'];
+const DISPLAYED_STATUSES = [...GoodStatus, ...BadStatus];
 
-const getFighterName = (fighter: StepFighter, t: TFunction) =>
-	fighter.type === 'dinoz' ? fighter.name : t(`fight.monster.${fighter.name}`);
+const getFighterName = (fighter: StepFighter, t: TFunction) => {
+	switch (fighter.type) {
+		case 'dinoz':
+			return fighter.name;
+		case 'clone':
+			return `${fighter.name} (${t('fight.clone')})`;
+		default:
+			return t(`fight.monster.${fighter.name}`);
+	}
+};
 
 const getStatusName = (status: string, t: TFunction) => t(`fight.status.${status}`);
 
@@ -27,11 +38,11 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			});
 		case 'hit': {
 			if (fightStep.skill) {
-				return t(`fight.step.skillHit`, {
+				return t(`fight.step.hit-skill`, {
 					fighter: getFighterName(fightStep.fighter, t),
 					damage: fightStep.damage,
 					target: getFighterName(fightStep.target, t),
-					skill: t(`skill.${fightStep.skill}`)
+					skill: t(`skill.name.${skillList[fightStep.skill].name}`)
 				});
 			}
 			return t('fight.step.hit', {
@@ -73,6 +84,14 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 				dinoz: getFighterName(fightStep.dinoz, t)
 			});
 		case 'skillActivate':
+			if (fightStep.targets.length) {
+				return t(`fight.step.skillActivate-targets`, {
+					dinoz: getFighterName(fightStep.fighter, t),
+					skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+					energy: fightStep.energy,
+					targets: fightStep.targets.map(target => getFighterName(target, t)).join(', ')
+				});
+			}
 			return t(`fight.step.${fightStep.action}`, {
 				dinoz: getFighterName(fightStep.fighter, t),
 				skill: t(`skill.name.${skillList[fightStep.skill].name}`),
@@ -89,9 +108,30 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 				hp: fightStep.hp
 			});
 		case 'addStatus':
+			if (!DISPLAYED_STATUSES.includes(fightStep.status)) {
+				return '';
+			}
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t),
 				status: getStatusName(fightStep.status, t)
+			});
+		case 'removeStatus':
+			if (!DISPLAYED_STATUSES.includes(fightStep.status)) {
+				return '';
+			}
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t),
+				status: getStatusName(fightStep.status, t)
+			});
+		case 'heal':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t),
+				hp: fightStep.hp
+			});
+		case 'itemUse':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t),
+				item: t(`item.name.${itemNameList[fightStep.itemId]}`)
 			});
 		default:
 			return JSON.stringify(fightStep);

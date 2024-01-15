@@ -1,5 +1,6 @@
 import { statusList } from '@drpg/core/models/dinoz/StatusList';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
@@ -9,6 +10,7 @@ import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
+import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
 import { addMoney, removeMoney } from '../dao/playerDao.js';
 import { sendDiscord } from '../utils/discord.js';
@@ -17,8 +19,7 @@ import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
+import { currentEvents } from '@drpg/core/models/event/Events';
 
 /**
  * @summary Process a fight
@@ -332,10 +333,17 @@ function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[]) {
 
 	const specialProb = getRandomNumber(0, 100);
 	const place = actualPlace(fighters[0]);
+	const events = currentEvents();
 	const monsters = Object.values(monsterList)
 		.filter(m => {
 			// Limit to defined places if any
 			if (m.places && !m.places.includes(place.placeId)) return false;
+
+			// Filter event monsters
+			if (m.events && m.events.length > 0) {
+				if (events.length === 0) return false;
+				if (!m.events.some(event => events.includes(event))) return false;
+			}
 
 			return m.zones.includes(place.map) || m.zones.includes(MapZone.ALL);
 		})

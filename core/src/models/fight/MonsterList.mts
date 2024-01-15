@@ -1,7 +1,8 @@
 import { Skill } from '../dinoz/SkillList.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
-import { GameEvent, MonsterFiche } from './MonsterFiche.mjs';
+import { GameEvent } from '../event/Events.mjs';
+import { MonsterFiche } from './MonsterFiche.mjs';
 
 
 export enum Monster {
