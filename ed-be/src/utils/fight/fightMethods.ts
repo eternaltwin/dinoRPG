@@ -306,7 +306,18 @@ const registerHit = (
 		 */
 
 		// Reduce damage by bulle percentage
-		if (opponent.stats.special.bubbleRate > 1) {
+		if (
+			// Opponent has BULLE
+			opponent.stats.special.bubbleRate > 1 &&
+			// Don't trigger on assaults and invocations
+			(skill && skillList[skill].type !== SkillType.I) &&
+			// Don't trigger for bosses
+			fighter.type !== 'boss' &&
+			// Don't trigger for WOOD
+			!damageElements.includes(ElementType.WOOD) &&
+			// Don't trigger for VOID
+			!damageElements.includes(ElementType.VOID)
+		) {
 			actualDamage[opponent.id] = Math.round(damage * (opponent.stats.special.bubbleRate - 1));
 
 			if (actualDamage[opponent.id] < damage) {
