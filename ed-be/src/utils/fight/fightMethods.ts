@@ -2283,7 +2283,7 @@ const activateSkill = (
 
 			getOpponents(fightData, fighter).forEach((opponent) => {
 				// Increase time
-				opponent.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
+				opponent.time += 10 * TIME_FACTOR;
 			});
 			break;
 		}

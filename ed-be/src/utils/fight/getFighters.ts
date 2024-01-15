@@ -452,8 +452,8 @@ const handleSkills = (
 	}
 
 	if (fighterHas[Skill.FORCE_CONTROL]) {
-		if (fighter.minDamage < 10) {
-			fighter.minDamage = 10;
+		if (fighter.minAssaultDamage < 10) {
+			fighter.minAssaultDamage = 10;
 		}
 	}
 
