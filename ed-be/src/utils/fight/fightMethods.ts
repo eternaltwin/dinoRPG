@@ -3197,7 +3197,7 @@ const attack = (
 					skill: Skill.GRIFFES_INFERNALES,
 					damage,
 				};
-				addStatus(fightData, realOpponent, Status.BURNED);
+				addStatus(fightData, realOpponent, Status.BURNED, StatusLength.MEDIUM);
 			}
 
 			// M_FEBREZ
