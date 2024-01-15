@@ -144,17 +144,7 @@ const getDamage = (
 	// Calculate the opponent's defense score
 	// TODO for multi-element skills, there's a different calculation to use
 	const assaultElement = attackElements[0] || attacker.element;
-	let defenseValue = opponent.stats.defense[assaultElement];
-
-	if (assaultElement === ElementType.VOID) {
-		// VOID = all elements
-		defenseValue = opponent.stats.defense[ElementType.AIR]
-			+ opponent.stats.defense[ElementType.FIRE]
-			+ opponent.stats.defense[ElementType.WATER]
-			+ opponent.stats.defense[ElementType.WOOD]
-			+ opponent.stats.defense[ElementType.LIGHTNING];
-	}
-	defense += defenseValue;
+	defense += opponent.stats.defense[assaultElement];
 
 	// Add armor to the defense unless the attacker cancels it
 	if (!attacker.cancelArmor) {

@@ -295,7 +295,7 @@ export const initializeMonster = (
 				[ElementType.LIGHTNING]: getDefenseStat(similiDinoz, skills, DefenseElement.LIGHTNING).value + (monster.bonus_defense ?? 0),
 				[ElementType.WATER]: getDefenseStat(similiDinoz, skills, DefenseElement.WATER).value + (monster.bonus_defense ?? 0),
 				[ElementType.WOOD]: getDefenseStat(similiDinoz, skills, DefenseElement.WOOD).value + (monster.bonus_defense ?? 0),
-				[ElementType.VOID]: 0,
+				[ElementType.VOID]: getDefenseStat(similiDinoz, skills, DefenseElement.NEUTRAL).value + (monster.bonus_defense ?? 0)
 			},
 			special: {
 				[SpecialStat.INITIATIVE]: getSpecialStat(similiDinoz, skills, SpecialStat.INITIATIVE)?.value ?? 0,
