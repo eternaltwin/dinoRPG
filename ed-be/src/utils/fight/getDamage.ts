@@ -118,13 +118,9 @@ export const getDamage = (
 		const assaultElement = attackElements[0] || attacker.element;
 		let assaultValue = getBasicElementDamage(attacker, assaultElement, power);
 
-		// VOID = all elements
+		// No extra damage if VOID
 		if (assaultElement === ElementType.VOID) {
-			assaultValue = getBasicElementDamage(attacker, ElementType.AIR, power)
-				+ getBasicElementDamage(attacker, ElementType.FIRE, power)
-				+ getBasicElementDamage(attacker, ElementType.WATER, power)
-				+ getBasicElementDamage(attacker, ElementType.WOOD, power)
-				+ getBasicElementDamage(attacker, ElementType.LIGHTNING, power);
+			assaultValue = 1;
 		}
 
 		// Damage from a normal hit

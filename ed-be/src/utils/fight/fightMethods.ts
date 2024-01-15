@@ -877,7 +877,7 @@ const activateEnvironment = (
 			break;
 		}
 		case Skill.FEU_DE_ST_ELME: {
-			// Add LIGHTNING_WEAKENED to all fighters with LIGHTNING < 10
+			// Add LIGHTNING_STRUCK to all fighters with LIGHTNING < 10
 			getFighters(fightData).forEach((f) => {
 				if (f.stats.base[ElementType.LIGHTNING] < 10) {
 					addStatus(fightData, f, Status.LIGHTNING_STRUCK);
@@ -954,7 +954,7 @@ const activateEvent = (
 				break;
 			}
 			case Skill.BENEDICTION: {
-				addStatus(fightData, fighter, Status.BLESSED);
+				addStatus(fightData, fighter, Status.BLESSED, StatusLength.MEDIUM);
 				break;
 			}
 			case Skill.FOCUS: {
@@ -1017,7 +1017,7 @@ const activateEvent = (
 
 				// Lock that opponent to a random element
 				opponent.element = opponent.elements[Math.round(Math.random() * opponent.elements.length)]
-				addStatus(fightData, opponent, Status.LOCKED);
+				addStatus(fightData, opponent, Status.LOCKED, StatusLength.MEDIUM);
 				break;
 			}
 			case Skill.HYPERVENTILATION: {
@@ -1210,7 +1210,7 @@ const activateEvent = (
 				// Add target
 				step.targets.push(stepFighter(opponent));
 
-				addStatus(fightData, opponent, Status.DAZZLED);
+				addStatus(fightData, opponent, Status.DAZZLED, StatusLength.MEDIUM);
 				break;
 			}
 			case Skill.CRAMPE_CHRONIQUE: {
@@ -1269,7 +1269,7 @@ const activateEvent = (
 					return cancel();
 				}
 
-				addStatus(fightData, fighter, Status.INTANGIBLE);
+				addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.SHORT);
 				break;
 			}
 			case Skill.M_ELEMENTAL: {
