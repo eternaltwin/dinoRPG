@@ -6,3 +6,5 @@ export const ENERGY_RECOVERY_BASE_FACTOR = 0.5;
 export const ATTACK_GLOBAL_FACTOR = 0.9;
 
 export const CYCLE = 6 * TIME_FACTOR;
+
+export const BASE_ENERGY_COST = 2;

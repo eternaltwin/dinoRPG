@@ -11,7 +11,7 @@ import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
 import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
 import { Item, itemList } from "@drpg/core/models/item/ItemList";
-import { CYCLE, ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
+import { BASE_ENERGY_COST, CYCLE, ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 import { DetailedFight } from "./generateFight.js";
 import { getBasicElementDamage, getDamage } from "./getDamage.js";
 import { initializeDinoz, initializeMonster } from "./getFighters.js";
@@ -3208,11 +3208,6 @@ const attack = (
 		});
 	}
 
-	// Change fighter element
-	if (!skill && !hasStatus(fighter, Status.LOCKED)) {
-		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
-	}
-
 	return !!hitsCount;
 };
 
@@ -3309,30 +3304,35 @@ const startAttack = (
 	skill?: Skill,
 	power?: number,
 ) => {
-	// Keep track of initial fighter HP
-	const initialFighterHp = fighter.hp;
-
 	// Trigger fighter attack
 	attack(fightData, fighter, opponent, skill, power);
+
+	// Consume energy
+	fighter.energy -= BASE_ENERGY_COST;
 
 	// Get combo chances
 	const combo = fighter.stats.special.multihit - 1;
 
-	// TODO change this logic, a counter does not interrupt a combo
+	let comboCount = 1;
+
 	// Repeat attack only if not countering
 	if (!isCounter) {
 		let random = Math.random();
-		while (random < combo) {
-			// Stop the combo if the fighter took a hit
-			if (fighter.hp < initialFighterHp) {
-				break;
-			}
-
+		while (random < combo && comboCount <= 10) {
 			// Trigger fighter attack
 			attack(fightData, fighter, opponent, skill, power);
 
+			// Consume energy
+			fighter.energy -= BASE_ENERGY_COST + comboCount;
+
 			random = Math.random();
+			comboCount++;
 		}
+	}
+
+	// Change fighter element
+	if (!skill && !hasStatus(fighter, Status.LOCKED)) {
+		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
 	}
 
 	// Check if a fighter is dead
@@ -3529,7 +3529,7 @@ export const playFighterTurn = (
 									} as DetailedFighter;
 
 									// Register the hit
-									registerHit(fightData, poisoner, [fighter], 100, [], Skill.SANG_ACIDE);
+									registerHit(fightData, poisoner, [fighter], 100, []);
 								} else {
 									// Get poisoner
 									const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
@@ -3541,10 +3541,6 @@ export const playFighterTurn = (
 									// Get poison damage
 									let poisonDamage = 0;
 									switch (poisonedBy.skill) {
-										case Skill.SANG_ACIDE: {
-											poisonDamage = poisoner.stats.special.acidBloodDamage ?? 1;
-											break;
-										}
 										case Skill.AURA_PUANTE: {
 											poisonDamage = 10;
 											break;
@@ -3668,9 +3664,6 @@ export const playFighterTurn = (
 
 	// Fighter attacks opponent
 	startAttack(fightData, attacker, opponent);
-
-	// Consume energy
-	attacker.energy -= 4;
 
 	const countered = counterAttack(attacker, opponent);
 
