@@ -38,4 +38,5 @@ export type Condition = {
 	[ConditionEnum.HIDE_PLACE]?: string;
 	[ConditionEnum.PLACE_IS]?: string;
 	[ConditionEnum.OVERWRITE]?: string;
+	[ConditionEnum.LAUNCH_FIGHT]?: string;
 };

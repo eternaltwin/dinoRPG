@@ -32,6 +32,7 @@ import { M_RODEUR } from './missions/rodeur.mjs';
 import { MissionID } from '../missions/missionList.mjs';
 import { Npc } from './npc.mjs';
 import { itemList } from '../item/ItemList.mjs';
+import { M_MMEX } from './missions/mmex.mjs';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -81,7 +82,7 @@ export const npcList: Record<string, Npc> = {
 		placeId: placeList.FORCEBRUT.placeId,
 		data: MMEX,
 		condition: undefined,
-		missions: undefined,
+		missions: M_MMEX,
 		flashvars: undefined
 	},
 	MINEUR: {
