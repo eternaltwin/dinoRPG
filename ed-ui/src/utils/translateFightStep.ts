@@ -3,6 +3,7 @@ import { FightStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 import { formatText } from './formatText.js';
 import { BadStatus, GoodStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { ElementNames } from '@drpg/core/models/enums/ElementType';
 
 type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
@@ -42,13 +43,15 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					fighter: getFighterName(fightStep.fighter, t),
 					damage: fightStep.damage,
 					target: getFighterName(fightStep.target, t),
-					skill: t(`skill.name.${skillList[fightStep.skill].name}`)
+					skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+					elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
 				});
 			}
 			return t('fight.step.hit', {
 				fighter: getFighterName(fightStep.fighter, t),
 				damage: fightStep.damage,
-				target: getFighterName(fightStep.target, t)
+				target: getFighterName(fightStep.target, t),
+				elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
 			});
 		}
 		case 'moveTo':

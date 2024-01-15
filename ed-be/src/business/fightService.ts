@@ -20,6 +20,7 @@ import getFighters from '../utils/fight/getFighters.js';
 import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
 import { currentEvents } from '@drpg/core/models/event/Events';
+import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 
 /**
  * @summary Process a fight
@@ -258,6 +259,13 @@ export async function rewardFight(
 		await addMoney(playerId, gold);
 	} else if (goldLost) {
 		await removeMoney(playerId, goldLost);
+	}
+
+	// Items used
+	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
+		for (const itemUsed of fighter.itemsUsed) {
+			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+		}
 	}
 
 	await createLog(

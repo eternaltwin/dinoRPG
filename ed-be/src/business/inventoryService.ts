@@ -285,7 +285,7 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		dinoz.items.push(await addItemToDinoz(dinoz.id, item.itemId));
 	} else {
 		if (!dinozItem) throw new ErrorFormator(500, `This dinoz doesn't have this item equiped`);
-		await removeItemFromDinoz(dinozItem.id);
+		await removeItemFromDinoz(dinoz.id, dinozItem.itemId);
 		await increaseItemQuantity(dinoz.player.id, item.itemId, 1);
 		const itemIndex = dinoz.items.findIndex(item => item.id === dinozItem.id);
 		dinoz.items.splice(itemIndex, 1);

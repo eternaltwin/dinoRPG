@@ -310,7 +310,6 @@ const registerHit = (
 			actualDamage[opponent.id] = Math.round(damage * (opponent.stats.special.bubbleRate - 1));
 
 			if (actualDamage[opponent.id] < damage) {
-				if (opponent.type !== 'dinoz') console.log('wtf bulle resist');
 				// Add resist step
 				fightData.steps.push({
 					action: 'resist',
@@ -324,7 +323,6 @@ const registerHit = (
 			const random = Math.random();
 
 			if (random < 0.05) {
-				console.log('CUIRASSE resist');
 				actualDamage[opponent.id] = Math.max(actualDamage[opponent.id] - 5, 0);
 
 				// Add resist step
@@ -435,6 +433,7 @@ const registerHit = (
 			fighter: stepFighter(fighter),
 			target: stepFighter(opponent),
 			damage: actualDamage[opponent.id],
+			elements: damageElements,
 			skill,
 		});
 
@@ -2998,7 +2997,7 @@ const heal = (
 	// No heal if BEER
 	if (hasStatus(fighter, Status.BEER)) return;
 
-	const healAmount = Math.min(hp, fighter.maxHp - fighter.hp);
+	const healAmount = Math.min(hp, fighter.startingHp - fighter.hp);
 	fighter.hp += healAmount;
 
 	// Add heal step

@@ -34,6 +34,7 @@ export interface HitStep {
   fighter: StepFighter;
 	target: StepFighter;
 	damage: number;
+	elements: ElementType[];
 	skill?: Skill;
 }
 export interface AttemptHitStep {

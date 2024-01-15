@@ -9,8 +9,22 @@ export function addItemToDinoz(dinozId: number, itemId: number) {
 	});
 }
 
-export async function removeItemFromDinoz(id: number) {
+export async function removeItemFromDinoz(dinozId: number, itemId: number) {
+	const item = await prisma.dinozItem.findFirst({
+		where: {
+			itemId,
+			dinozId
+		},
+		select: {
+			id: true
+		}
+	});
+
+	if (!item) {
+		return;
+	}
+
 	await prisma.dinozItem.delete({
-		where: { id }
+		where: { id: item.id }
 	});
 }

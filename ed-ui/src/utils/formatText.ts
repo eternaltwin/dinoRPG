@@ -4,16 +4,21 @@ export const helpers = {
 	computeImageHtml(key: string): string {
 		switch (key) {
 			case 'feu':
+			case 'fire':
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_fire')}" alt="feu">`;
 			case 'bois':
+			case 'wood':
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_wood')}" alt="bois">`;
 			case 'eau':
+			case 'water':
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_water')}" alt="eau">`;
 			case 'foudre':
+			case 'lightning':
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_lightning')}" alt="foudre">`;
 			case 'air':
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_air')}" alt="air">`;
 			case 'neutre':
+			case 'void':
 				return `<img src="${mixin.methods.getImgURL('elements', 'elem_void')}" alt="pmo">`;
 			case 'right':
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_right')}" alt="pmo">`;
@@ -35,11 +40,16 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(/\/\/(.[^*]*)\/\//g, '<em>$1</em>');
 	formattedText = formattedText.replace(/&&/g, '<br>');
 	formattedText = formattedText.replace(/:feu:/g, helpers.computeImageHtml('feu'));
+	formattedText = formattedText.replace(/:fire:/g, helpers.computeImageHtml('fire'));
 	formattedText = formattedText.replace(/:bois:/g, helpers.computeImageHtml('bois'));
+	formattedText = formattedText.replace(/:wood:/g, helpers.computeImageHtml('wood'));
 	formattedText = formattedText.replace(/:eau:/g, helpers.computeImageHtml('eau'));
+	formattedText = formattedText.replace(/:water:/g, helpers.computeImageHtml('water'));
 	formattedText = formattedText.replace(/:foudre:/g, helpers.computeImageHtml('foudre'));
+	formattedText = formattedText.replace(/:lightning:/g, helpers.computeImageHtml('lightning'));
 	formattedText = formattedText.replace(/:air:/g, helpers.computeImageHtml('air'));
 	formattedText = formattedText.replace(/:neutre:/g, helpers.computeImageHtml('neutre'));
+	formattedText = formattedText.replace(/:void:/g, helpers.computeImageHtml('void'));
 	formattedText = formattedText.replace(/:right:/g, helpers.computeImageHtml('right'));
 	formattedText = formattedText.replace(/:gold:/g, helpers.computeImageHtml('gold'));
 	formattedText = formattedText.replace(/:ticket:/g, helpers.computeImageHtml('ticket'));

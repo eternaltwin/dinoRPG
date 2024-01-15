@@ -96,7 +96,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.fight-history :deep(strong) {
-	color: inherit;
+.fight-history {
+	:deep(strong) {
+		color: inherit;
+	}
+	:deep(img) {
+		width: 15px;
+	}
 }
 </style>

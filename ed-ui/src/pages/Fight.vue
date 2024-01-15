@@ -185,7 +185,12 @@ export default defineComponent({
 	flex-wrap: wrap;
 }
 
-.fight-history :deep(strong) {
-	color: inherit;
+.fight-history {
+	:deep(strong) {
+		color: inherit;
+	}
+	:deep(img) {
+		width: 15px;
+	}
 }
 </style>

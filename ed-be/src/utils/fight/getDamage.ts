@@ -105,8 +105,20 @@ const getDamage = (
 			}
 		}
 
+		const assaultElement = attackElements[0] || attacker.element;
+		let assaultValue = attacker.stats.assault[assaultElement];
+
+		// VOID = all elements
+		if (assaultElement === ElementType.VOID) {
+			assaultValue = attacker.stats.assault[ElementType.AIR]
+				+ attacker.stats.assault[ElementType.FIRE]
+				+ attacker.stats.assault[ElementType.WATER]
+				+ attacker.stats.assault[ElementType.WOOD]
+				+ attacker.stats.assault[ElementType.LIGHTNING];
+		}
+
 		// Damage from a normal hit
-		attack += attacker.stats.assault[attacker.element] * (power || DEFAULT_ATTACK_POWER);
+		attack += assaultValue * (power || 1);
 
 		// Add next assault bonus
 		attack += attacker.nextAssaultBonus;
@@ -131,7 +143,18 @@ const getDamage = (
 
 	// Calculate the opponent's defense score
 	// TODO for multi-element skills, there's a different calculation to use
-	defense += opponent.stats.defense[attacker.element];
+	const assaultElement = attackElements[0] || attacker.element;
+	let defenseValue = opponent.stats.defense[assaultElement];
+
+	if (assaultElement === ElementType.VOID) {
+		// VOID = all elements
+		defenseValue = opponent.stats.defense[ElementType.AIR]
+			+ opponent.stats.defense[ElementType.FIRE]
+			+ opponent.stats.defense[ElementType.WATER]
+			+ opponent.stats.defense[ElementType.WOOD]
+			+ opponent.stats.defense[ElementType.LIGHTNING];
+	}
+	defense += defenseValue;
 
 	// Add armor to the defense unless the attacker cancels it
 	if (!attacker.cancelArmor) {
