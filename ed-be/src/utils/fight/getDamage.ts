@@ -30,6 +30,7 @@ export const getDamage = (
 	let attackElements: ElementType[] = [];
 
 	// Calculate the attacker's attack score
+	// From a skill
 	if (skill && !power) {
 		// Cancel if intangible
 		if (hasStatus(opponent, Status.INTANGIBLE)) {
@@ -64,9 +65,9 @@ export const getDamage = (
 				}
 
 				attackElements = Object.keys(skillAttack).map((element) => +element as ElementType);
-				attack = attackElements.reduce((acc, element) => {
+				attack += attackElements.reduce((acc, element) => {
 					const elementPower = skillAttack[element] || 0;
-					const elementValue = opponent.stats.base[element];
+					const elementValue = attacker.stats.base[element];
 					return acc + elementPower * elementValue;
 				}, 0);
 
@@ -78,7 +79,7 @@ export const getDamage = (
 		for (const element of attackElements) {
 			attack += attacker.skillElementalBonus[element];
 		}
-
+	// From an item
 	} else if (item) {
 		switch (item) {
 			case Item.SORCERERS_STICK: {
@@ -90,6 +91,7 @@ export const getDamage = (
 				break;
 			}
 		}
+	// From an assault (the assault can be triggered by a skill)
 	} else {
 		if (power && skill) {
 			attackElements = [...skillList[skill].element];

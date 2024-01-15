@@ -177,7 +177,7 @@ export const initializeDinoz = (
 	// Time
 	let initiative = fighter.stats.special.initiative;
 
-	// Temportal reduction
+	// Temporal reduction
 	if (fighter.items.some((item) => item.itemId === Item.TEMPORAL_REDUCTION)) {
 		// Reduce by 50%
 		initiative *= 0.5;
@@ -401,7 +401,6 @@ const handleSkills = (
 	const fighterHas = fighter.skills.reduce((acc, skill) => {
 		acc[skill.id as Skill] = true;
 
-		// TODO this is multiplicative not additive
 		// Process speed changes
 		if (skill.effects?.[Stat.SPEED]) {
 			fighter.stats.speed.global *= skill.effects[Stat.SPEED];
