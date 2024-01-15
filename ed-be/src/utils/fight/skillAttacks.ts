@@ -6,6 +6,7 @@ export const FixedSkillDamage: Skill[] = [
 	Skill.M_ABSORPTION,
 	Skill.M_COMET,
 	Skill.M_VENERABLE,
+	Skill.M_ELEMENTAL_DISCIPLE,
 ];
 
 export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, number>>>> = {

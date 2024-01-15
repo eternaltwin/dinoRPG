@@ -1679,6 +1679,10 @@ export const addStatus = (
 
 	// Handle the immediate effect of the status
 	switch (status) {
+		case Status.AIR_SLOWED: {
+			fighter.stats.speed.global *= 2;
+			break;
+		}
 		case Status.TORCHED: {
 			fighter.stats.defense[ElementType.FIRE] += 10;
 			break;
@@ -1746,6 +1750,10 @@ const removeStatus = (
 
 		// Reverse the effect of the status
 		switch (status) {
+			case Status.AIR_SLOWED: {
+				fighter.stats.speed.global /= 2;
+				break;
+			}
 			case Status.TORCHED: {
 				fighter.stats.defense[ElementType.FIRE] -= 10;
 				break;
@@ -3370,11 +3378,6 @@ const endTurnChecks = (
 	let time = TIME_BASE * TIME_FACTOR
 		* attacker.stats.speed.global
 		* attacker.stats.speed[attacker.element];
-
-	// Increase time lost if AIR_SLOWED
-	if (hasStatus(attacker, Status.AIR_SLOWED)) {
-		time *= 1.5;
-	}
 
 	// Round up time
 	time = Math.round(time);
