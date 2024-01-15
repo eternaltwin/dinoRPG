@@ -660,6 +660,11 @@ const targetSingleOpponent = (
 	// Get random opponent
 	const opponent = getRandomOpponent(fightData, fighter);
 
+	// Add target
+	if (step) {
+		step.targets.push(stepFighter(opponent));
+	}
+
 	// Skill
 	if ('id' in skillOrItem) {
 		const skill = skillOrItem;
@@ -680,11 +685,6 @@ const targetSingleOpponent = (
 
 		// Register the hit
 		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
-
-		// Add target
-		if (step) {
-			step.targets.push(stepFighter(opponent));
-		}
 
 		return opponent;
 	}
@@ -2724,7 +2724,7 @@ const activateSkill = (
 			});
 
 			// Attack opponent
-			startAttack(fightData, fighter, opponent);
+			startAttack(fightData, fighter, opponent, false, Skill.M_ABSORPTION, 10);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
