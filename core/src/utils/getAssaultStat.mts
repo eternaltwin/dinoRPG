@@ -117,6 +117,8 @@ export const getAssaultStat = (
 	return {
 		name: elementName,
 		value: result,
+		base: element,
+		bonus,
 		details
 	};
 };

@@ -1,21 +1,22 @@
 import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
+import { statusList } from "@drpg/core/models/dinoz/StatusList";
+import { ElementType } from "@drpg/core/models/enums/ElementType";
+import { MapZone } from "@drpg/core/models/enums/MapZone";
+import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
 import { Stat } from "@drpg/core/models/enums/SkillStat";
 import { DetailedFighter, FighterStatus, Status } from "@drpg/core/models/fight/DetailedFighter";
 import { MonsterFiche } from "@drpg/core/models/fight/MonsterFiche";
+import { monsterList } from "@drpg/core/models/fight/MonsterList";
 import { Item, itemList } from "@drpg/core/models/item/ItemList";
+import { PlacesByMap } from "@drpg/core/models/place/PlaceList";
 import { AssaultElement, getAssaultStat } from "@drpg/core/utils/getAssaultStat";
 import { DefenseElement, getDefenseStat } from "@drpg/core/utils/getDefenseStat";
 import { SpecialStat, getSpecialStat } from "@drpg/core/utils/getSpecialStat";
 import { DinozToCalculateFight } from "../../business/fightService.js";
 import { TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
-import { monsterList } from "@drpg/core/models/fight/MonsterList";
-import { ElementType } from "@drpg/core/models/enums/ElementType";
-import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
-import { PlacesByMap } from "@drpg/core/models/place/PlaceList";
-import { MapZone } from "@drpg/core/models/enums/MapZone";
-import { MonsterBonus } from "./monsterBonuses.js";
-import { statusList } from "@drpg/core/models/dinoz/StatusList";
 import { createStatus } from "./fightMethods.js";
+import { getBasicElementDamage } from "./getDamage.js";
+import { MonsterBonus } from "./monsterBonuses.js";
 
 interface Team {
   dinozList: DinozToCalculateFight[];
@@ -96,12 +97,12 @@ export const initializeDinoz = (
 				[ElementType.WOOD]: dinoz.nbrUpWood,
 				[ElementType.VOID]: 0,
 			},
-			assault: {
-				[ElementType.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR, 1).value,
-				[ElementType.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE, 1).value,
-				[ElementType.LIGHTNING]: getAssaultStat(dinoz, skills, AssaultElement.LIGHTNING, 1).value,
-				[ElementType.WATER]: getAssaultStat(dinoz, skills, AssaultElement.WATER, 1).value,
-				[ElementType.WOOD]: getAssaultStat(dinoz, skills, AssaultElement.WOOD, 1).value,
+			assaultBonus: {
+				[ElementType.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR).bonus,
+				[ElementType.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE).bonus,
+				[ElementType.LIGHTNING]: getAssaultStat(dinoz, skills, AssaultElement.LIGHTNING).bonus,
+				[ElementType.WATER]: getAssaultStat(dinoz, skills, AssaultElement.WATER).bonus,
+				[ElementType.WOOD]: getAssaultStat(dinoz, skills, AssaultElement.WOOD).bonus,
 				[ElementType.VOID]: 0,
 			},
 			defense: {
@@ -281,12 +282,12 @@ export const initializeMonster = (
 				[ElementType.WOOD]: monster.elements.wood,
 				[ElementType.VOID]: 0,
 			},
-			assault: {
-				[ElementType.AIR]: getAssaultStat(similiDinoz, skills, AssaultElement.AIR).value + (monster.bonus_attack ?? 0),
-				[ElementType.FIRE]: getAssaultStat(similiDinoz, skills, AssaultElement.FIRE).value + (monster.bonus_attack ?? 0),
-				[ElementType.LIGHTNING]: getAssaultStat(similiDinoz, skills, AssaultElement.LIGHTNING).value + (monster.bonus_attack ?? 0),
-				[ElementType.WATER]: getAssaultStat(similiDinoz, skills, AssaultElement.WATER).value + (monster.bonus_attack ?? 0),
-				[ElementType.WOOD]: getAssaultStat(similiDinoz, skills, AssaultElement.WOOD).value + (monster.bonus_attack ?? 0),
+			assaultBonus: {
+				[ElementType.AIR]: getAssaultStat(similiDinoz, skills, AssaultElement.AIR).bonus + (monster.bonus_attack ?? 0),
+				[ElementType.FIRE]: getAssaultStat(similiDinoz, skills, AssaultElement.FIRE).bonus + (monster.bonus_attack ?? 0),
+				[ElementType.LIGHTNING]: getAssaultStat(similiDinoz, skills, AssaultElement.LIGHTNING).bonus + (monster.bonus_attack ?? 0),
+				[ElementType.WATER]: getAssaultStat(similiDinoz, skills, AssaultElement.WATER).bonus + (monster.bonus_attack ?? 0),
+				[ElementType.WOOD]: getAssaultStat(similiDinoz, skills, AssaultElement.WOOD).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.VOID]: 0,
 			},
 			defense: {
@@ -490,55 +491,55 @@ const handleSkills = (
 	if (fighterHas[Skill.ROUGE]) {
 		// +20 assault damage if on GTOUTCHAUD
 		if (PlacesByMap[MapZone.GTOUTCHAUD]?.includes(place)) {
-			fighter.stats.assault[ElementType.AIR] += 20;
-			fighter.stats.assault[ElementType.FIRE] += 20;
-			fighter.stats.assault[ElementType.WOOD] += 20;
-			fighter.stats.assault[ElementType.WATER] += 20;
-			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+			fighter.stats.assaultBonus[ElementType.AIR] += 20;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 20;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 20;
+			fighter.stats.assaultBonus[ElementType.WATER] += 20;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
 		}
 	}
 
 	if (fighterHas[Skill.VERT]) {
 		// +20 assault damage if on JUNGLE
 		if (PlacesByMap[MapZone.JUNGLE]?.includes(place)) {
-			fighter.stats.assault[ElementType.AIR] += 20;
-			fighter.stats.assault[ElementType.FIRE] += 20;
-			fighter.stats.assault[ElementType.WOOD] += 20;
-			fighter.stats.assault[ElementType.WATER] += 20;
-			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+			fighter.stats.assaultBonus[ElementType.AIR] += 20;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 20;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 20;
+			fighter.stats.assaultBonus[ElementType.WATER] += 20;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
 		}
 	}
 
 	if (fighterHas[Skill.BLEU]) {
 		// +20 assault damage if on ILES
 		if (PlacesByMap[MapZone.ILES]?.includes(place)) {
-			fighter.stats.assault[ElementType.AIR] += 20;
-			fighter.stats.assault[ElementType.FIRE] += 20;
-			fighter.stats.assault[ElementType.WOOD] += 20;
-			fighter.stats.assault[ElementType.WATER] += 20;
-			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+			fighter.stats.assaultBonus[ElementType.AIR] += 20;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 20;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 20;
+			fighter.stats.assaultBonus[ElementType.WATER] += 20;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
 		}
 	}
 
 	if (fighterHas[Skill.JAUNE]) {
 		// +20 assault damage if on STEPPE
 		if (PlacesByMap[MapZone.STEPPE]?.includes(place)) {
-			fighter.stats.assault[ElementType.AIR] += 20;
-			fighter.stats.assault[ElementType.FIRE] += 20;
-			fighter.stats.assault[ElementType.WOOD] += 20;
-			fighter.stats.assault[ElementType.WATER] += 20;
-			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+			fighter.stats.assaultBonus[ElementType.AIR] += 20;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 20;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 20;
+			fighter.stats.assaultBonus[ElementType.WATER] += 20;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
 		}
 	}
 
 	if (fighterHas[Skill.BLANC]) {
 		// +20 assault damage if on NIMBAO
 		if (PlacesByMap[MapZone.NIMBAO]?.includes(place)) {
-			fighter.stats.assault[ElementType.AIR] += 20;
-			fighter.stats.assault[ElementType.FIRE] += 20;
-			fighter.stats.assault[ElementType.WOOD] += 20;
-			fighter.stats.assault[ElementType.WATER] += 20;
-			fighter.stats.assault[ElementType.LIGHTNING] += 20;
+			fighter.stats.assaultBonus[ElementType.AIR] += 20;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 20;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 20;
+			fighter.stats.assaultBonus[ElementType.WATER] += 20;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
 		}
 	}
 
@@ -585,11 +586,11 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 
 		// FIRE
 		if (team[Skill.CHEF_DE_GUERRE]) {
-			fighter.stats.assault[ElementType.AIR] += 2;
-			fighter.stats.assault[ElementType.FIRE] += 2;
-			fighter.stats.assault[ElementType.WOOD] += 2;
-			fighter.stats.assault[ElementType.WATER] += 2;
-			fighter.stats.assault[ElementType.LIGHTNING] += 2;
+			fighter.stats.assaultBonus[ElementType.AIR] += 2;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 2;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 2;
+			fighter.stats.assaultBonus[ElementType.WATER] += 2;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 2;
 		}
 		// WOOD
 		if (team[Skill.GARDE_FORESTIER]) {
@@ -602,7 +603,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 
 		// ITEMS
 		if (team1[Item.EMBER] || team2[Item.EMBER]) {
-			fighter.stats.assault[ElementType.FIRE] *= 1.3;
+			fighter.stats.assaultBonus[ElementType.FIRE] += getBasicElementDamage(fighter, ElementType.FIRE) * 0.3;
 		}
 		if (team1[Item.BEER] || team2[Item.BEER]) {
 			fighter.status.push(createStatus(Status.BEER));

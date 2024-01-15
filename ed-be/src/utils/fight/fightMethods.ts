@@ -13,7 +13,7 @@ import { ItemFiche } from "@drpg/core/models/item/ItemFiche";
 import { Item, itemList } from "@drpg/core/models/item/ItemList";
 import { CYCLE, ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from "./fightConstants.js";
 import { DetailedFight } from "./generateFight.js";
-import getDamage from "./getDamage.js";
+import { getBasicElementDamage, getDamage } from "./getDamage.js";
 import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import randomBetween from "./randomBetween.js";
 import weightedRandom from "./weightedRandom.js";
@@ -1156,12 +1156,18 @@ const activateEvent = (
 				fighter.skills = [];
 				fighter.items = [];
 
+				const fire = getBasicElementDamage(fighter, ElementType.FIRE);
+				const water = getBasicElementDamage(fighter, ElementType.WATER);
+				const wood = getBasicElementDamage(fighter, ElementType.WOOD);
+				const lightning = getBasicElementDamage(fighter, ElementType.LIGHTNING);
+				const air = getBasicElementDamage(fighter, ElementType.AIR);
+
 				// x2 to assault damages
-				fighter.stats.assault[ElementType.FIRE] *= 2;
-				fighter.stats.assault[ElementType.WATER] *= 2;
-				fighter.stats.assault[ElementType.WOOD] *= 2;
-				fighter.stats.assault[ElementType.LIGHTNING] *= 2;
-				fighter.stats.assault[ElementType.AIR] *= 2;
+				fighter.stats.assaultBonus[ElementType.FIRE] += fire;
+				fighter.stats.assaultBonus[ElementType.WATER] += water;
+				fighter.stats.assaultBonus[ElementType.WOOD] += wood;
+				fighter.stats.assaultBonus[ElementType.LIGHTNING] += lightning;
+				fighter.stats.assaultBonus[ElementType.AIR] += air;
 
 				break;
 			}
@@ -1668,11 +1674,11 @@ export const addStatus = (
 			}
 		}
 		case Status.BLESSED: {
-			fighter.stats.assault[ElementType.AIR] += 3;
-			fighter.stats.assault[ElementType.FIRE] += 3;
-			fighter.stats.assault[ElementType.LIGHTNING] += 3;
-			fighter.stats.assault[ElementType.WATER] += 3;
-			fighter.stats.assault[ElementType.WOOD] += 3;
+			fighter.stats.assaultBonus[ElementType.AIR] += 3;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 3;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 3;
+			fighter.stats.assaultBonus[ElementType.WATER] += 3;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 3;
 			break;
 		}
 		default: {
@@ -1735,11 +1741,11 @@ const removeStatus = (
 				}
 			}
 			case Status.BLESSED: {
-				fighter.stats.assault[ElementType.AIR] -= 3;
-				fighter.stats.assault[ElementType.FIRE] -= 3;
-				fighter.stats.assault[ElementType.LIGHTNING] -= 3;
-				fighter.stats.assault[ElementType.WATER] -= 3;
-				fighter.stats.assault[ElementType.WOOD] -= 3;
+				fighter.stats.assaultBonus[ElementType.AIR] -= 3;
+				fighter.stats.assaultBonus[ElementType.FIRE] -= 3;
+				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 3;
+				fighter.stats.assaultBonus[ElementType.WATER] -= 3;
+				fighter.stats.assaultBonus[ElementType.WOOD] -= 3;
 				break;
 			}
 			default: {

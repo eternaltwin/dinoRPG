@@ -7,6 +7,7 @@ import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { Item } from "@drpg/core/models/item/ItemList";
 import { addStatus, checkDeaths, getLimitedRandomOpponent, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { getBasicElementDamage } from "./getDamage.js";
 
 export type DetailedFight = {
 	place: PlaceEnum,
@@ -86,7 +87,13 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				});
 
 				// Find weakest assault element
-				const weakestElement = +Object.entries(fighter.stats.assault).sort(([, a], [, b]) => a - b)[0][0] as ElementType;
+				const weakestElement = +[
+					ElementType.FIRE,
+					ElementType.WOOD,
+					ElementType.WATER,
+					ElementType.LIGHTNING,
+					ElementType.AIR,
+				].sort((a, b) => getBasicElementDamage(opponent, a) - getBasicElementDamage(opponent, b))[0] as ElementType;
 
 				// Lock opponent for 3 turns
 				opponent.element = weakestElement;

@@ -10,7 +10,15 @@ const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
 export const DEFAULT_ATTACK_POWER = 5;
 
-const getDamage = (
+export const getBasicElementDamage = (
+	fighter: DetailedFighter,
+	element: ElementType,
+	power?: number
+) => {
+	return fighter.stats.base[element] * (power || DEFAULT_ATTACK_POWER) + fighter.stats.assaultBonus[element];
+};
+
+export const getDamage = (
 	attacker: DetailedFighter,
 	opponent: DetailedFighter,
 	skill?: Skill,
@@ -106,15 +114,15 @@ const getDamage = (
 		}
 
 		const assaultElement = attackElements[0] || attacker.element;
-		let assaultValue = attacker.stats.assault[assaultElement];
+		let assaultValue = getBasicElementDamage(attacker, assaultElement, power);
 
 		// VOID = all elements
 		if (assaultElement === ElementType.VOID) {
-			assaultValue = attacker.stats.assault[ElementType.AIR]
-				+ attacker.stats.assault[ElementType.FIRE]
-				+ attacker.stats.assault[ElementType.WATER]
-				+ attacker.stats.assault[ElementType.WOOD]
-				+ attacker.stats.assault[ElementType.LIGHTNING];
+			assaultValue = getBasicElementDamage(attacker, ElementType.AIR, power)
+				+ getBasicElementDamage(attacker, ElementType.FIRE, power)
+				+ getBasicElementDamage(attacker, ElementType.WATER, power)
+				+ getBasicElementDamage(attacker, ElementType.WOOD, power)
+				+ getBasicElementDamage(attacker, ElementType.LIGHTNING, power);
 		}
 
 		// Damage from a normal hit
@@ -177,5 +185,3 @@ const getDamage = (
 		elements: attackElements,
 	};
 };
-
-export default getDamage;
