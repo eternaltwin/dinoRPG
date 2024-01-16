@@ -1420,6 +1420,16 @@ const activateEvent = (
 				addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.MEDIUM);
 				break;
 			}
+			case Skill.M_FASTER: {
+				getAllies(fightData, fighter).forEach((ally) => {
+					// Add to targets
+					step.targets.push(stepFighter(ally));
+
+					ally.time -= 5 * TIME_FACTOR;
+					fighter.time += 3 * TIME_FACTOR;
+				});
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();

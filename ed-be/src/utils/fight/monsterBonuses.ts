@@ -177,6 +177,9 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.speed.global *= 0.6;
 		monster.stats.special.evasion *= 1.2;
 	},
+	[Monster.FRUTOX_DEFENDER]: (monster) => {
+		monster.time -= 20 * TIME_FACTOR;
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},

@@ -41,6 +41,7 @@ export enum Monster {
 	KORGON_REINFORCEMENT = 'KORGON_REINFORCEMENT',
 	VEGETOX_GUARD = 'VEGETOX_GUARD',
 	VEGETOX_GUARD_2 = 'VEGETOX_GUARD_2',
+	FRUTOX_DEFENDER = 'FRUTOX_DEFENDER',
 	GORILLOZ_SPIRIT = 'GORILLOZ_SPIRIT',
 	BAMBOOZ_SPROUTING = 'BAMBOOZ_SPROUTING',
 	PIGLOUNOU = 'PIGLOUNOU',
@@ -755,6 +756,33 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [
 			Skill.M_VEGETOX_DEFENDER,
 			Skill.M_INFINITE_REINFORCEMENTS,
+		],
+		canBeCaptured: true,
+	},
+	[Monster.FRUTOX_DEFENDER]: {
+		id: Monster.FRUTOX_DEFENDER,
+		name: 'frutox',
+		hp: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 30,
+		bonus_defense: 20,
+		odds: 100,
+		level: 22,
+		zones: [],
+		places: [
+			PlaceEnum.PORT_MONSTRUEUX,
+			PlaceEnum.AVANT_POSTE_FRUTOX,
+			PlaceEnum.PALAIS_DU_GROTOX,
+			PlaceEnum.FORET_KAZE_KAMI,
+		],
+		skills: [
+			Skill.M_FASTER,
 		],
 		canBeCaptured: true,
 	},

@@ -334,6 +334,7 @@ export enum Skill {
 	M_UNTOUCHABLE = 99936,
 	M_VEGETOX_DEFENDER = 99937,
 	M_INFINITE_REINFORCEMENTS = 99938,
+	M_FASTER = 99939,
 	M_FEBREZ = 99947,
 }
 
@@ -4901,6 +4902,19 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [],
 		isBaseSkill: true,
 		isSphereSkill: false,
+	},
+	[Skill.M_FASTER]: {
+		id: Skill.M_FASTER,
+		name: 'Faster',
+		type: SkillType.E,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 10,
+		probability: 60,
 	},
 	[Skill.M_FEBREZ]: {
 		id: Skill.M_FEBREZ,
