@@ -1850,6 +1850,8 @@ const activateSkill = (
 		case Skill.SOUFFLE_ARDENT:
 		case Skill.METEORES:
 		case Skill.CREPUSCULE_FLAMBOYANT:
+		// AIR
+		case Skill.MISTRAL:
 		//MONSTER
 		case Skill.M_COMET:
 		case Skill.M_VENERABLE: {

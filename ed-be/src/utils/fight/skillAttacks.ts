@@ -23,6 +23,9 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 	[Skill.TOTEM_ANCESTRAL_AEROPORTE]: {
 		[ElementType.AIR]: 30,
 	},
+	[Skill.MISTRAL]: {
+		[ElementType.AIR]: 3,
+	},
 	// FIRE
 	[Skill.SOUFFLE_ARDENT]: {
 		[ElementType.FIRE]: 5,
