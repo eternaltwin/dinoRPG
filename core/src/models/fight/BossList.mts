@@ -28,6 +28,7 @@ export enum Boss {
 	MASKED_KORGON = 'MASKED_KORGON',
 	SOUTHERN_KORGON = 'SOUTHERN_KORGON',
 	BIO_METALIC_LEECH = 'BIO_METALIC_LEECH',
+	DEMYOM_DEFENDER = 'DEMYOM_DEFENDER',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -570,6 +571,29 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [
 			Skill.PERCEPTION,
 			Skill.M_INITIATIVE_RESET,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.DEMYOM_DEFENDER]: {
+		id: Boss.DEMYOM_DEFENDER,
+		name: 'cuzbos',
+		level: 30,
+		elements: {
+			fire: 10,
+			wood: 20,
+			water: 10,
+			lightning: 10,
+			air: 10
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 300,
+		odds: 100,
+		xp: 50,
+		skills: [
+			Skill.M_DEMYOM_ATTACK,
+			Skill.M_DEMYOM_HEAL,
 		],
 		zones: [],
 		canBeCaptured: false,

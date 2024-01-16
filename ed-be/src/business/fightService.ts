@@ -232,9 +232,11 @@ export async function rewardFight(
 			await createLog(LogType.Death, playerId, d.id);
 		}
 
-		// Add CURSED status if dinoz is cursed
-		if (attacker.cursed) {
-			await addStatusToDinoz(d.id, statusList.CURSED);
+		// Add statuses
+		for (const status of attacker.statusGained) {
+			if (d.status.some(s => s.statusId === status)) continue;
+
+			await addStatusToDinoz(d.id, status);
 		}
 	}
 

@@ -18,6 +18,7 @@ import { initializeDinoz, initializeMonster } from "./getFighters.js";
 import randomBetween from "./randomBetween.js";
 import weightedRandom from "./weightedRandom.js";
 import { bossList } from "@drpg/core/models/fight/BossList";
+import { statusList } from "@drpg/core/models/dinoz/StatusList";
 
 export const getFighters = (
 	fightData: DetailedFight,
@@ -3185,6 +3186,17 @@ const activateSkill = (
 			});
 			break;
 		}
+		case Skill.M_DEMYOM_ATTACK: {
+			targetAllOpponents(fightData, fighter, skill, step);
+
+			// Change element
+			fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
+			break;
+		}
+		case Skill.M_DEMYOM_HEAL: {
+			heal(fightData, fighter, 50);
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();
@@ -3703,6 +3715,27 @@ export const checkDeaths = (
 					} else {
 						defendersAlive++;
 					}
+				}
+			}
+
+			// DEMYOM
+			if (fighter.skills.some((skill) => skill.id === Skill.M_DEMYOM_ATTACK)) {
+				const opponentDinoz = getOpponents(fightData, fighter, ['dinoz']);
+
+				// Curse dinoz
+				if (opponentDinoz.length) {
+					opponentDinoz.forEach((opponent) => {
+						// Add curse step
+						fightData.steps.push({
+							action: 'cursed',
+							fighter: stepFighter(opponent),
+						});
+
+						opponent.permanentStatusGained.push(statusList.CUSCOUZ_MALEDICTION);
+					});
+				} else {
+					// Heal boss
+					heal(fightData, fighter, 50);
 				}
 			}
 		}

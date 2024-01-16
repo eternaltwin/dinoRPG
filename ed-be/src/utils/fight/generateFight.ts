@@ -9,6 +9,7 @@ import { Item } from "@drpg/core/models/item/ItemList";
 import { addStatus, applyStrategy, checkDeaths, getLimitedRandomOpponent, hasStatus, heal, playFighterTurn, stepFighter } from "./fightMethods.js";
 import { getBasicElementDamage } from "./getDamage.js";
 import randomBetween from "./randomBetween.js";
+import { statusList } from "@drpg/core/models/dinoz/StatusList";
 
 export type DetailedFight = {
 	place: PlaceEnum,
@@ -256,7 +257,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				if (!f.attacker || f.initiallyCursed) return;
 				if (hasStatus(f, Status.NO_CURSE)) return;
 
-				f.cursed = true;
+				f.permanentStatusGained.push(statusList.CURSED);
 
 				// Add cursed step
 				fightData.steps.push({
@@ -273,7 +274,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: fightData.fighters.filter((fighter) => !fighter.attacker && fighter.goldStolen?.[dinoz.id]).reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
-		cursed: !dinoz.initiallyCursed && !!dinoz.cursed,
+		statusGained: dinoz.permanentStatusGained,
 	}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters.filter((fighter) => !fighter.attacker && fighter.type === 'dinoz').map((dinoz) => ({
@@ -281,7 +282,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 		itemsUsed: dinoz.itemsUsed,
 		goldLost: 0,
-		cursed: false,
+		statusGained: dinoz.permanentStatusGained,
 	}));
 
 	return {

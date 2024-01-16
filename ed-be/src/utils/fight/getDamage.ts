@@ -73,6 +73,14 @@ export const getDamage = (
 
 				break;
 			}
+			// M_DEMYOM_ATTACK
+			case Skill.M_DEMYOM_ATTACK: {
+				const power = attacker.stats.base[attacker.element] * 8;
+
+				attack += Math.max(power, 40);
+
+				break;
+			}
 			// Handle by default skills as an offensive skill with a list of element powers
 			default: {
 				const skillAttack = SkillAttacks[skill];

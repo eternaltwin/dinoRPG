@@ -335,7 +335,9 @@ export enum Skill {
 	M_VEGETOX_DEFENDER = 99937,
 	M_INFINITE_REINFORCEMENTS = 99938,
 	M_FASTER = 99939,
-	M_FEBREZ = 99947,
+	M_DEMYOM_ATTACK = 99940,
+	M_DEMYOM_HEAL = 99941,
+	M_FEBREZ = 99948,
 }
 
 // skillId are counted like this : ABCDE
@@ -4915,6 +4917,32 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 10,
 		probability: 60,
+	},
+	[Skill.M_DEMYOM_ATTACK]: {
+		id: Skill.M_DEMYOM_ATTACK,
+		name: 'DemyomAttack',
+		type: SkillType.A,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 1,
+		probability: 20,
+	},
+	[Skill.M_DEMYOM_HEAL]: {
+		id: Skill.M_DEMYOM_HEAL,
+		name: 'DemyomHeal',
+		type: SkillType.A,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 2,
+		probability: 10,
 	},
 	[Skill.M_FEBREZ]: {
 		id: Skill.M_FEBREZ,

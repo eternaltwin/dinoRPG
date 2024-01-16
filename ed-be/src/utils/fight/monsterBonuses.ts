@@ -205,4 +205,14 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Boss.SOUTHERN_KORGON]: (monster) => {
 		multiplySkillProbability(monster, Skill.LANCEUR_DE_GLAND, 2);
 	},
+	[Boss.DEMYOM_DEFENDER]: (monster) => {
+		monster.stats.speed.global *= 1.5;
+		monster.stats.assaultBonus[ElementType.FIRE] += 25;
+		monster.stats.assaultBonus[ElementType.WOOD] += 25;
+		monster.stats.assaultBonus[ElementType.WATER] += 25;
+		monster.stats.assaultBonus[ElementType.LIGHTNING] += 25;
+		monster.stats.assaultBonus[ElementType.AIR] += 25;
+		monster.time -= 100 * TIME_FACTOR;
+		monster.status.push(createStatus(Status.NO_POISON));
+	},
 };

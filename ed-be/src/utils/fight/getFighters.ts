@@ -159,6 +159,7 @@ export const initializeDinoz = (
 		costume,
 		invocations: 1,
 		initiallyCursed: dinoz.status.some((status) => status.statusId === statusList.CURSED),
+		permanentStatusGained: [],
 	};
 
 	handleSkills(team, fighter, place);
@@ -371,6 +372,7 @@ export const initializeMonster = (
 		nextAssaultMultiplier: 1,
 		invocations: 0,
 		initiallyCursed: false,
+		permanentStatusGained: [],
 	};
 
 	// Handle bonuses
