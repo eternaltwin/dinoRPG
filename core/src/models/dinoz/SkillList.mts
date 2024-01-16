@@ -4356,7 +4356,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.PIGMOU_DEMON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 2,
+		probability: 20,
 	},
 	[Skill.FORCE_DES_TENEBRES]: {
 		id: Skill.FORCE_DES_TENEBRES,

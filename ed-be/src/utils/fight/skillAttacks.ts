@@ -129,6 +129,11 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 		[ElementType.FIRE]: 50,
 		[ElementType.AIR]: 50,
 	},
+	// RACE
+	[Skill.CHARGE_PIGMOU]: {
+		[ElementType.FIRE]: 5,
+		[ElementType.WOOD]: 3,
+	},
 	// MONSTER
 	[Skill.M_WORM_2]: {
 		[ElementType.VOID]: 5,
