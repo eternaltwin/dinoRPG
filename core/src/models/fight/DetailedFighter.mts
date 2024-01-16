@@ -166,7 +166,7 @@ export interface DetailedFighter {
 	initiallyCursed: boolean,
 	cursed?: boolean,
 	// Previous target
-	previousTarget?: DetailedFighter,
+	previousTarget?: number,
 }
 
 export interface FighterResultFiche {

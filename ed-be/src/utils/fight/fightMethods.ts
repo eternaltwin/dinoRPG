@@ -73,6 +73,17 @@ const chooseRandomOpponent = (
 	fighter: DetailedFighter,
 	opponents: DetailedFighter[],
 ) => {
+	// Same target if CONCENTRATION
+	if (fighter.skills.find((skill) => skill.id === Skill.CONCENTRATION)) {
+		if (fighter.previousTarget) {
+			const target = opponents.find((opponent) => opponent.id === fighter.previousTarget);
+
+			if (target) {
+				return target;
+			}
+		}
+	}
+
 	// Target lowest HP opponent if Skill.SANS_PITIE
 	if (fighter.skills.find((skill) => skill.id === Skill.SANS_PITIE)) {
 		let lowestHp = Infinity;
@@ -3106,6 +3117,9 @@ const attack = (
 ) => {
 	// Abort if fighter is dead
 	if (fighter.hp <= 0) return;
+
+	// Store as previous target
+	fighter.previousTarget = opponent.id;
 
 	const attackers = [fighter];
 
