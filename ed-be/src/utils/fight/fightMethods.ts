@@ -3408,6 +3408,17 @@ const attack = (
 
 				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.FIRE], Skill.SANG_ACIDE);
 			}
+
+			// FORME_VAPOREUSE
+			if (
+				// Opponent has FORME_VAPOREUSE
+				realOpponent.skills.find((skill) => skill.id === Skill.FORME_VAPOREUSE) &&
+				// 5% chance
+				randomBetween(0, 19) === 0
+			) {
+				// Add INTANGIBLE
+				addStatus(fightData, realOpponent, Status.INTANGIBLE, StatusLength.SHORT);
+			}
 		}
 	}
 

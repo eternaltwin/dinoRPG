@@ -3700,7 +3700,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.FORME_VAPOREUSE,
 		name: 'FormeVaporeuse',
 		type: SkillType.S,
-		energy: Energy.E25,
+		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA,
