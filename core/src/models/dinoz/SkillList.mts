@@ -3579,7 +3579,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51202],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 5,
+		probability: 20
 	},
 	[Skill.FURTIVITE]: {
 		id: Skill.FURTIVITE,

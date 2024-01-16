@@ -1939,6 +1939,28 @@ const activateSkill = (
 			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
+		case Skill.ATTAQUE_PLONGEANTE: {
+			fighter.nextAssaultBonus += 2 * fighter.stats.base[ElementType.AIR];
+
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
+			// Attack opponent
+			startAttack(fightData, fighter, opponent, true);
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
+			break;
+		}
 		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill, step);
@@ -3447,7 +3469,7 @@ const startAttack = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	opponent: DetailedFighter,
-	isCounter?: boolean,
+	disallowCombo?: boolean,
 	skill?: Skill,
 	power?: number,
 ) => {
@@ -3463,7 +3485,7 @@ const startAttack = (
 	let comboCount = 1;
 
 	// Repeat attack only if not countering
-	if (!isCounter) {
+	if (!disallowCombo) {
 		let random = Math.random();
 		while (random < combo && comboCount <= 10) {
 			// Trigger fighter attack
