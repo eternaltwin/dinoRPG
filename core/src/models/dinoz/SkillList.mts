@@ -332,6 +332,7 @@ export enum Skill {
 	M_HEAL_GROUP = 99934,
 	M_LAST_BREATH = 99935,
 	M_UNTOUCHABLE = 99936,
+	M_VEGETOX_DEFENDER = 99937,
 	M_FEBREZ = 99947,
 }
 
@@ -4877,6 +4878,17 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 10,
 		probability: 50,
+	},
+	[Skill.M_VEGETOX_DEFENDER]: {
+		id: Skill.M_VEGETOX_DEFENDER,
+		name: 'VegetoxDefender',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
 	},
 	[Skill.M_FEBREZ]: {
 		id: Skill.M_FEBREZ,

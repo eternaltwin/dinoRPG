@@ -40,6 +40,7 @@ export enum Monster {
 	EARTH2 = 'EARTH2',
 	KORGON_REINFORCEMENT = 'KORGON_REINFORCEMENT',
 	VEGETOX_GUARD = 'VEGETOX_GUARD',
+	VEGETOX_GUARD_2 = 'VEGETOX_GUARD_2',
 	GORILLOZ_SPIRIT = 'GORILLOZ_SPIRIT',
 	BAMBOOZ_SPROUTING = 'BAMBOOZ_SPROUTING',
 	PIGLOUNOU = 'PIGLOUNOU',
@@ -723,6 +724,31 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 22,
 		zones: [MapZone.ILEMONSTRE],
+		skills: [
+			Skill.VIGNES,
+			Skill.M_VEGETOX_DEFENDER,
+		],
+		canBeCaptured: true,
+	},
+	[Monster.VEGETOX_GUARD_2]: {
+		id: Monster.VEGETOX_GUARD_2,
+		name: 'veginf',
+		hp: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 30,
+		bonus_defense: 15,
+		odds: 0,
+		level: 22,
+		zones: [MapZone.ILEMONSTRE],
+		skills: [
+			Skill.M_VEGETOX_DEFENDER,
+		],
 		canBeCaptured: true,
 	},
 	[Monster.GORILLOZ_SPIRIT]: {
