@@ -3075,7 +3075,7 @@ const poison = (
 };
 
 // Helper method to heal a fighter
-const heal = (
+export const heal = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	hp: number,

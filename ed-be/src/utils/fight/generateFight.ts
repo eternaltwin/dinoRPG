@@ -6,7 +6,7 @@ import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/F
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { Item } from "@drpg/core/models/item/ItemList";
-import { addStatus, checkDeaths, getLimitedRandomOpponent, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { addStatus, checkDeaths, getLimitedRandomOpponent, heal, playFighterTurn, stepFighter } from "./fightMethods.js";
 import { getBasicElementDamage } from "./getDamage.js";
 
 export type DetailedFight = {
@@ -195,6 +195,19 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	}
 
 	const winner = fightData.loser === 'defenders';
+
+	// PREMIERS_SOINS
+	fightData.fighters.forEach((fighter) => {
+		// No heal if dead
+		if (fighter.hp <= 0) return;
+		// No heal if doesn't have the skill
+		if (!fighter.skills.some((skill) => skill.id === Skill.PREMIERS_SOINS)) return;
+		// No heal if no HP lost
+		if (fighter.hp >= fighter.startingHp) return;
+
+		// Heal 1HP
+		heal(fightData, fighter, 1);
+	});
 
 	if (winner) {
 		// Curse if any M_CURSED_WAND
