@@ -26,6 +26,9 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 	[Skill.MISTRAL]: {
 		[ElementType.AIR]: 3,
 	},
+	[Skill.TORNADE]: {
+		[ElementType.AIR]: 10,
+	},
 	// FIRE
 	[Skill.SOUFFLE_ARDENT]: {
 		[ElementType.FIRE]: 5,

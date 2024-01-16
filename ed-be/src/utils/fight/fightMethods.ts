@@ -1928,6 +1928,15 @@ const activateSkill = (
 			}
 			break;
 		}
+		case Skill.TORNADE: {
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				// Cancel FLYING
+				removeStatus(fightData, opponent, Status.FLYING);
+			});
+
+			targetAllOpponents(fightData, fighter, skill, step);
+			break;
+		}
 		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill, step);

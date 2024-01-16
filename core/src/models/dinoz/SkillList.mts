@@ -3515,13 +3515,15 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.TORNADE,
 		name: 'Tornade',
 		type: SkillType.A,
-		energy: Energy.E25,
+		energy: Energy.E30,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51103],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 5,
+		probability: 3
 	},
 	[Skill.AURA_PUANTE]: {
 		id: Skill.AURA_PUANTE,
