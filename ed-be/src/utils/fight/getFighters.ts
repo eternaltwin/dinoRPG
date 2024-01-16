@@ -217,13 +217,16 @@ export const initializeDinoz = (
 };
 
 export const initializeMonster = (
-	existingMonsters: Record<string, number>,
+	memory: {
+		existingMonsters: number,
+		renfortApplied: number,
+	},
 	team: Team | null,
 	teamIndex: number,
 	monster: MonsterFiche,
 	place: PlaceEnum,
 ): DetailedFighter => {
-	existingMonsters[monster.name] = (existingMonsters[monster.name] ?? 0) + 1;
+	memory.existingMonsters++;
 
 	// Find skills
 	const skills = monster.skills?.map((skill) => {
@@ -237,7 +240,8 @@ export const initializeMonster = (
 		let probability = skillDetails.probability ?? 0;
 
 		if (skill === Skill.M_RENFORTS) {
-			probability -= 3.5 * (existingMonsters[monster.name] - 1);
+			probability -= 3.5 * (memory.renfortApplied);
+			memory.renfortApplied++;
 		}
 
 		return {
@@ -263,7 +267,7 @@ export const initializeMonster = (
 	};
 
 	const fighter: DetailedFighter = {
-		id: existingMonsters[monster.name],
+		id: -memory.existingMonsters,
 		name: monster.name,
 		level: monster.level,
 		type: 'monster' as const,
@@ -567,7 +571,10 @@ const handleSkills = (
 const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighter[] => {
   const fighters: DetailedFighter[] = [];
 
-	const existingMonsters: Record<string, number> = {};
+	const memory = {
+		existingMonsters: 0,
+		renfortApplied: 0,
+	};
 
   [team1, team2].forEach((team, index) => {
 	const { dinozList, monsterList } = team;
@@ -576,7 +583,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		fighters.push(...dinozList.map((dinoz) => initializeDinoz(team, index, dinoz, place)));
 
 		// Monsters
-		fighters.push(...monsterList.map((monster) => initializeMonster(existingMonsters, team, index, monster, place)));
+		fighters.push(...monsterList.map((monster) => initializeMonster(memory, team, index, monster, place)));
 	});
 
 	// Handle team wide modifiers

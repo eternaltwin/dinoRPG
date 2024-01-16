@@ -172,7 +172,6 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				// eslint-disable-next-line no-param-reassign
 				fighter.poisonedBy = {
 					id: -666,
-					type: 'monster',
 					skill: 0 as Skill,
 				};
 			});

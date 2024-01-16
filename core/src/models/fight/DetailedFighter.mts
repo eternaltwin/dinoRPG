@@ -117,13 +117,11 @@ export interface DetailedFighter {
   // Poisoned
   poisonedBy?: {
     id: number,
-    type: FighterType,
     skill: Skill,
   },
   // Burned
   burnedBy?: {
     id: number,
-    type: FighterType,
 		skill: Skill,
 		damage: number,
   },
@@ -167,6 +165,8 @@ export interface DetailedFighter {
 	// Cursed
 	initiallyCursed: boolean,
 	cursed?: boolean,
+	// Previous target
+	previousTarget?: DetailedFighter,
 }
 
 export interface FighterResultFiche {

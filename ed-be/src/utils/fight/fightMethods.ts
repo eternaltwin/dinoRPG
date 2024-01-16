@@ -770,12 +770,15 @@ const createMonster = (
 	fighter: DetailedFighter,
 	monsterData: MonsterFiche,
 ) => {
-	// Count monsters of this type
-	const count = fightData.fighters.filter((f) => f.type === 'monster' && f.name === monsterData.name).length;
+	// Count monsters
+	const monsterCount = fightData.fighters.filter((f) => f.type !== 'dinoz').length;
+
+	// Count monsters with M_RENFORT
+	const renfortApplied = fightData.fighters.filter((f) => f.skills.some((skill) => skill.id === Skill.M_RENFORTS)).length;
 
 	// Initialize monster
 	const monster = initializeMonster(
-		{ [monsterData.name]: count + 1 },
+		{ existingMonsters: monsterCount, renfortApplied },
 		null,
 		fighter.attacker ? 0 : 1,
 		monsterData,
@@ -970,9 +973,7 @@ const activateEvent = (
 			}
 			// WATER
 			case Skill.CLONE_AQUEUX: {
-				console.log('clone');
-				console.log(fightData.initialDinozList.map((d) => d.name));
-				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id && fighter.type === 'dinoz');
+				const initialDinoz = fightData.initialDinozList.find((d) => d.id === fighter.id);
 
 				if (!initialDinoz) {
 					throw new Error('No initial dinoz found');
@@ -985,10 +986,14 @@ const activateEvent = (
 					fightData.place,
 				);
 
+				// Count monsters
+				const monsterCount = fightData.fighters.filter((f) => f.type !== 'dinoz').length;
+
 				clone.level = 1;
 				clone.hp = 1;
 				clone.type = 'clone';
 				clone.master = fighter.id;
+				clone.id = -monsterCount - 1;
 
 				// Set the clone's time to the fighter's time
 				clone.time = fighter.time;
@@ -1091,7 +1096,7 @@ const activateEvent = (
 				// Heal all allies
 				getAllies(fightData, fighter).forEach((f) => {
 					// Skip self
-					if (f.id === fighter.id && f.type === fighter.type) return;
+					if (f.id === fighter.id) return;
 
 					// Heal 1-wood HP
 					heal(fightData, f, randomBetween(1, fighter.stats.base[ElementType.WOOD]));
@@ -1291,10 +1296,15 @@ const activateEvent = (
 					bossList.YAKUZI,
 				);
 
+				// Count monsters
+				const monsterCount = fightData.fighters.filter((f) => f.type !== 'dinoz').length;
+
+
 				clone.level = 1;
 				clone.hp = 1;
 				clone.type = 'clone';
 				clone.master = fighter.id;
+				clone.id = -monsterCount - 1;
 
 				// Set the clone's time to the fighter's time
 				clone.time = fighter.time;
@@ -3047,7 +3057,6 @@ const poison = (
 
 	fighter.poisonedBy = {
 		id: poisoner.id,
-		type: poisoner.type,
 		skill,
 	};
 
@@ -3103,7 +3112,7 @@ const attack = (
 	// Add teammates if Item.FRIENDLY_WHISTLE
 	if (fighter.items.some((item) => item.itemId === Item.FRIENDLY_WHISTLE)) {
 		const allies = getAllies(fightData, fighter)
-			.filter((ally) => (ally.id !== fighter.id && ally.type === fighter.type) && !ally.items.some((item) => item.itemId === Item.FRIENDLY_WHISTLE));
+			.filter((ally) => (ally.id !== fighter.id) && !ally.items.some((item) => item.itemId === Item.FRIENDLY_WHISTLE));
 		attackers.push(...allies);
 	}
 
@@ -3193,7 +3202,6 @@ const attack = (
 
 				realOpponent.burnedBy = {
 					id: attacker.id,
-					type: attacker.type,
 					skill: Skill.GRIFFES_INFERNALES,
 					damage,
 				};
@@ -3247,9 +3255,7 @@ export const checkDeaths = (
 
 		// Only add death step if fighter is dead and hasn't died yet
 		if (fighter.hp <= 0 && fightData.steps.filter((step) => step.action === 'death'
-			&& step.fighter.id === fighter.id
-			&& step.fighter.name === fighter.name
-			&& step.fighter.type === fighter.type).length === 0) {
+			&& step.fighter.id === fighter.id).length === 0) {
 			// Check if dinoz has SCALE
 			if (fighter.items.some((item) => item.itemId === Item.SCALE)) {
 				// Get random opponent
@@ -3397,9 +3403,7 @@ export const playFighterTurn = (
 	const attacker = fightData.fighters[0];
 
 	// Environment
-	if (fightData.environment
-		&& attacker.id === fightData.environment.caster.id
-		&& attacker.type === fightData.environment.caster.type) {
+	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
 		// Decrease turns left
 		fightData.environment.turnsLeft--;
 
@@ -3549,7 +3553,7 @@ export const playFighterTurn = (
 									registerHit(fightData, poisoner, [fighter], 100, []);
 								} else {
 									// Get poisoner
-									const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id && f.type === poisonedBy.type);
+									const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id);
 
 									if (!poisoner) {
 										throw new Error('Poisoner not found');
@@ -3597,7 +3601,7 @@ export const playFighterTurn = (
 								}
 
 								// Get burner
-								const burner = fightData.fighters.find((f) => f.id === burnedBy.id && f.type === burnedBy.type);
+								const burner = fightData.fighters.find((f) => f.id === burnedBy.id);
 
 								if (!burner) {
 									throw new Error('Burner not found');
