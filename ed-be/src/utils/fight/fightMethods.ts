@@ -965,6 +965,10 @@ const activateEvent = (
 
 		switch (event.id) {
 			// AIR
+			case Skill.VENT_VIF: {
+				addStatus(fightData, fighter, Status.QUICKENED, StatusLength.SHORT);
+				break;
+			}
 			// FIRE
 			case Skill.COMBUSTION:
 			case Skill.BRASERO: {
