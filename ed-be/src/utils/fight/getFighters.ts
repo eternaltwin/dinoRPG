@@ -590,6 +590,17 @@ const handleSkills = (
 		}
 	}
 
+	if (fighterHas[Skill.ORIGINE_CAUSHEMESHENNE]) {
+		// +30 assault damage if on CAUSHEMESH
+		if (PlacesByMap[MapZone.CAUSHEMESH]?.includes(place)) {
+			fighter.stats.assaultBonus[ElementType.AIR] += 30;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 30;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 30;
+			fighter.stats.assaultBonus[ElementType.WATER] += 30;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 30;
+		}
+	}
+
 	// DOUBLE
 	if (team && fighterHas[Skill.ELECTROLYSE]) {
 		team[Skill.ELECTROLYSE] = true;
