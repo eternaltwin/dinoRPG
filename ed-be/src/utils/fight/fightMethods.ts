@@ -84,6 +84,27 @@ const chooseRandomOpponent = (
 		}
 	}
 
+	// Find best target based on defense if ANALYSE
+	if (fighter.skills.find((skill) => skill.id === Skill.ANALYSE)) {
+		let worstDefense = Infinity;
+		let opponentWithWorstDefense: DetailedFighter | null = null;
+
+		opponents.forEach((opponent) => {
+			const defense = opponent.stats.defense[fighter.element];
+
+			if (defense < worstDefense) {
+				worstDefense = defense;
+				opponentWithWorstDefense = opponent;
+			}
+		});
+
+		if (!opponentWithWorstDefense) {
+			throw new Error('No best defense opponent found');
+		}
+
+		return opponentWithWorstDefense;
+	}
+
 	// Target lowest HP opponent if Skill.SANS_PITIE
 	if (fighter.skills.find((skill) => skill.id === Skill.SANS_PITIE)) {
 		let lowestHp = Infinity;
