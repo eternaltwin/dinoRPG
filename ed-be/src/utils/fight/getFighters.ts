@@ -251,6 +251,10 @@ export const initializeMonster = (
 			memory.renfortApplied++;
 		}
 
+		if (probability < 0) {
+			probability = 0;
+		}
+
 		return {
 			...skillDetails,
 			probability,
