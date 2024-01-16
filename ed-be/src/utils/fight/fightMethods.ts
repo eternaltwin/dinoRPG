@@ -3099,6 +3099,36 @@ const activateSkill = (
 			});
 			break;
 		}
+		case Skill.M_ALL_FOR_ONE: {
+			// Get all allies from the same race
+			const sameRace = getAllies(fightData, fighter, ['monster'])
+				.filter((ally) => ally.name === fighter.name);
+
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			sameRace.forEach((ally) => {
+				// Add moveTo step
+				fightData.steps.push({
+					action: 'moveTo',
+					fighter: stepFighter(ally),
+					target: stepFighter(opponent)
+				});
+
+				// Ally attacks opponent
+				startAttack(fightData, ally, opponent);
+
+				// Check if fighter is not dead
+				if (ally.hp > 0) {
+					// Add moveBack step
+					fightData.steps.push({
+						action: 'moveBack',
+						fighter: stepFighter(ally),
+					});
+				}
+			});
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();

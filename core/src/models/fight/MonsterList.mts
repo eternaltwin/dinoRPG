@@ -69,6 +69,8 @@ export enum Monster {
 	BARATRIBOR = 'BARATRIBOR',
 	MERGUEZ_THIEF = 'MERGUEZ_THIEF',
 	ELEMENTAL_DISCIPLE = 'ELEMENTAL_DISCIPLE',
+	MINIMOUK = 'MINIMOUK',
+	MINIMOUK_2 = 'MINIMOUK_2',
 	ANY = 'ANY'
 }
 
@@ -1330,6 +1332,51 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [
 			Skill.M_ELEMENTAL_DISCIPLE,
 		],
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.MINIMOUK]: {
+		id: Monster.MINIMOUK,
+		name: 'minimo',
+		level: 6,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 20,
+		hp: 10,
+		groups: [0, 1, 6, 2, 1],
+		odds: 100,
+		skills: [
+			Skill.M_ALL_FOR_ONE,
+		],
+		zones: [MapZone.ILEMONSTRE],
+		canBeCaptured: true,
+	},
+	[Monster.MINIMOUK_2]: {
+		id: Monster.MINIMOUK_2,
+		name: 'minim2',
+		level: 6,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 20,
+		hp: 10,
+		groups: [0, 1, 6, 2, 1],
+		odds: 0,
+		skills: [
+			Skill.M_ALL_FOR_ONE,
+		],
+		xp: 3,
 		zones: [],
 		canBeCaptured: true,
 	},
