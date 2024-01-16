@@ -1891,6 +1891,8 @@ const activateSkill = (
 		// WOOD
 		case Skill.LANCER_DE_ROCHE:
 		case Skill.LANCEUR_DE_GLAND:
+		// AIR
+		case Skill.DISQUE_VACUUM:
 		// MONSTER
 		case Skill.M_WORM_2: {
 			targetSingleOpponent(fightData, fighter, skill, step);

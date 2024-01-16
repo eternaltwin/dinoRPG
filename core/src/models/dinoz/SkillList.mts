@@ -3541,13 +3541,15 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.DISQUE_VACUUM,
 		name: 'DisqueVacuum',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E35,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51201],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 8,
+		probability: 7
 	},
 	[Skill.ELASTICITE]: {
 		id: Skill.ELASTICITE,
