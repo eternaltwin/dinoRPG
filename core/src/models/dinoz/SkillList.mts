@@ -333,6 +333,7 @@ export enum Skill {
 	M_LAST_BREATH = 99935,
 	M_UNTOUCHABLE = 99936,
 	M_VEGETOX_DEFENDER = 99937,
+	M_INFINITE_REINFORCEMENTS = 99938,
 	M_FEBREZ = 99947,
 }
 
@@ -4882,6 +4883,17 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_VEGETOX_DEFENDER]: {
 		id: Skill.M_VEGETOX_DEFENDER,
 		name: 'VegetoxDefender',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+	},
+	[Skill.M_INFINITE_REINFORCEMENTS]: {
+		id: Skill.M_INFINITE_REINFORCEMENTS,
+		name: 'InfiniteReinforcements',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],

@@ -3655,6 +3655,46 @@ export const checkDeaths = (
 
 			// Reset stolen gold
 			fighter.goldStolen = undefined;
+
+			// M_INFINITE_REINFORCEMENTS
+			if (fighter.skills.some((skill) => skill.id === Skill.M_INFINITE_REINFORCEMENTS)) {
+				// Add skillActivate step
+				fightData.steps.push({
+					action: 'skillActivate',
+					fighter: stepFighter(fighter),
+					skill: Skill.M_INFINITE_REINFORCEMENTS,
+					energy: 0,
+					targets: [],
+				});
+
+				// Create a new monster
+				const monsterDetails = Object.values(monsterList).find((monster) => monster.name === fighter.name);
+
+				if (!monsterDetails) {
+					throw new Error(`Monster ${fighter.name} not found`);
+				}
+
+				const alliesCount = getAllies(fightData, fighter).length;
+
+				if (alliesCount < 6) {
+					createMonster(fightData, fighter, monsterDetails);
+
+					if (fighter.attacker) {
+						attackersAlive++;
+					} else {
+						defendersAlive++;
+					}
+				}
+				if (alliesCount < 5) {
+					createMonster(fightData, fighter, monsterDetails);
+
+					if (fighter.attacker) {
+						attackersAlive++;
+					} else {
+						defendersAlive++;
+					}
+				}
+			}
 		}
 
 		// Count alive fighters
