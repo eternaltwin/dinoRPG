@@ -3635,13 +3635,15 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.NUAGE_TOXIQUE,
 		name: 'NuageToxique',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E45,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51204],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 10
 	},
 	[Skill.OEIL_DE_LYNX]: {
 		id: Skill.OEIL_DE_LYNX,

@@ -1961,6 +1961,13 @@ const activateSkill = (
 			}
 			break;
 		}
+		case Skill.NUAGE_TOXIQUE: {
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				// Poison
+				poison(fightData, opponent, fighter, Skill.NUAGE_TOXIQUE, StatusLength.MEDIUM);
+			});
+			break;
+		}
 		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill, step);
@@ -3155,9 +3162,42 @@ const poison = (
 		return;
 	}
 
+	// Get poison damage
+	let poisonDamage = 0;
+	switch (skill) {
+		case Skill.AURA_PUANTE: {
+			poisonDamage = 10;
+			break;
+		}
+		case Skill.GRIFFES_EMPOISONNEES: {
+			poisonDamage = 14;
+			break;
+		}
+		case Skill.HADES: {
+			poisonDamage = 14;
+			break;
+		}
+		case Skill.NUAGE_TOXIQUE: {
+			poisonDamage = poisoner.stats.base[ElementType.AIR];
+			break;
+		}
+		case Skill.M_STINGER: {
+			poisonDamage = 5;
+			break;
+		}
+		case Skill.M_CONTAMINATION: {
+			poisonDamage = 3;
+			break;
+		}
+		default:
+			console.warn(`Poison skill ${skill} not implemented`);
+			break;
+	}
+
 	fighter.poisonedBy = {
 		id: poisoner.id,
 		skill,
+		damage: poisonDamage,
 	};
 
 	addStatus(fightData, fighter, Status.POISONED, duration);
@@ -3700,36 +3740,8 @@ export const playFighterTurn = (
 										throw new Error('Poisoner not found');
 									}
 
-									// Get poison damage
-									let poisonDamage = 0;
-									switch (poisonedBy.skill) {
-										case Skill.AURA_PUANTE: {
-											poisonDamage = 10;
-											break;
-										}
-										case Skill.GRIFFES_EMPOISONNEES: {
-											poisonDamage = 14;
-											break;
-										}
-										case Skill.HADES: {
-											poisonDamage = 14;
-											break;
-										}
-										case Skill.M_STINGER: {
-											poisonDamage = 5;
-											break;
-										}
-										case Skill.M_CONTAMINATION: {
-											poisonDamage = 3;
-											break;
-										}
-										default:
-											console.warn(`Poison skill ${poisonedBy.skill} not implemented`);
-											break;
-									}
-
 									// Register the hit
-									registerHit(fightData, poisoner, [fighter], poisonDamage, [], poisonedBy.skill);
+									registerHit(fightData, poisoner, [fighter], poisonedBy.damage, [], poisonedBy.skill);
 								}
 								break;
 							}

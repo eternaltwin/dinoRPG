@@ -118,6 +118,7 @@ export interface DetailedFighter {
   poisonedBy?: {
     id: number,
     skill: Skill,
+		damage: number,
   },
   // Burned
   burnedBy?: {
