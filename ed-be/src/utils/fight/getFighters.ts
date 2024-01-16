@@ -24,6 +24,7 @@ interface Team {
 	[Skill.ELECTROLYSE]?: boolean;
 	[Skill.CHEF_DE_GUERRE]?: boolean;
 	[Skill.GARDE_FORESTIER]?: boolean;
+	[Skill.MAITRE_LEVITATEUR]?: boolean;
 	[Item.EMBER]?: boolean;
 	[Item.BEER]?: boolean;
 }
@@ -500,6 +501,10 @@ const handleSkills = (
 		fighter.canHitFlying = true;
 	}
 
+	if (team && fighterHas[Skill.MAITRE_LEVITATEUR]) {
+		team[Skill.MAITRE_LEVITATEUR] = true;
+	}
+
 	// 50% chance to get positive / negative time
 	if (fighterHas[Skill.DOUBLE_FACE]) {
 		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
@@ -619,6 +624,10 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		// LIGHTNING
 		if (team[Skill.ELECTROLYSE]) {
 			fighter.stats.speed.global *= 0.95;
+		}
+		// AIR
+		if (team[Skill.MAITRE_LEVITATEUR]) {
+			fighter.canHitFlying = true;
 		}
 
 		// ITEMS
