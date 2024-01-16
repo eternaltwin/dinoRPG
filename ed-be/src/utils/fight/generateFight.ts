@@ -6,7 +6,7 @@ import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/F
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { Item } from "@drpg/core/models/item/ItemList";
-import { addStatus, checkDeaths, getLimitedRandomOpponent, heal, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { addStatus, applyStrategy, checkDeaths, getLimitedRandomOpponent, heal, playFighterTurn, stepFighter } from "./fightMethods.js";
 import { getBasicElementDamage } from "./getDamage.js";
 import randomBetween from "./randomBetween.js";
 
@@ -150,10 +150,17 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 	let turn = 0;
 
 	// Zero the time origin to start from clean origin
-	const first_fighter_time = fightData.fighters[0].time;
-	fightData.fighters.map(fighter => fighter.time -= first_fighter_time);
+	const firstFighterTime = fightData.fighters[0].time;
+	fightData.fighters.map(fighter => fighter.time -= firstFighterTime);
 
 	let deadlyPoisonApplied = false;
+
+	// STRATEGIE
+	fightData.fighters.forEach((fighter) => {
+		if (!fighter.skills.some(skill => skill.id === Skill.STRATEGIE)) return;
+
+		applyStrategy(fightData, fighter);
+	});
 
 	// Fight loop
 	while (!fightData.loser) {

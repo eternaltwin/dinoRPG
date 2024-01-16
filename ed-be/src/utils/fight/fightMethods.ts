@@ -1014,6 +1014,8 @@ const activateEvent = (
 					clone.hp = Math.round(clone.startingHp * 0.1);
 				}
 
+				applyStrategy(fightData, clone);
+
 				// Add clone to fighters
 				fightData.fighters.push(clone);
 
@@ -1316,6 +1318,8 @@ const activateEvent = (
 				clone.type = 'clone';
 				clone.master = fighter.id;
 				clone.id = -monsterCount - 1;
+
+				applyStrategy(fightData, clone);
 
 				// Set the clone's time to the fighter's time
 				clone.time = fighter.time;
@@ -3116,6 +3120,35 @@ export const heal = (
 		removeStatus(fightData, opponent, Status.COPY_HEAL);
 	});
 }
+
+export const applyStrategy = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+) => {
+	// Sort elements based on medium ennemies defense
+
+	// Subtract the fighter assault for each element
+	const defenses = [
+		{ element: ElementType.FIRE, defense: -fighter.stats.base[ElementType.FIRE] * 5 },
+		{ element: ElementType.WATER, defense: -fighter.stats.base[ElementType.WATER] * 5 },
+		{ element: ElementType.WOOD, defense: -fighter.stats.base[ElementType.WOOD] * 5 },
+		{ element: ElementType.LIGHTNING, defense: -fighter.stats.base[ElementType.LIGHTNING] * 5 },
+		{ element: ElementType.AIR, defense: -fighter.stats.base[ElementType.AIR] * 5 },
+	];
+
+	// Add all opponents defense
+	getOpponents(fightData, fighter).forEach((opponent) => {
+		defenses.forEach((defense) => {
+			defense.defense += opponent.stats.defense[defense.element];
+		});
+	});
+
+	// Sort elements by defense
+	defenses.sort((a, b) => a.defense - b.defense);
+
+	// Apply order to fighter elements
+	fighter.elements = defenses.map((defense) => defense.element);
+};
 
 const attack = (
 	fightData: DetailedFight,
