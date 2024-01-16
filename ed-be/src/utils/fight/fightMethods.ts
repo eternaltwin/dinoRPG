@@ -1878,6 +1878,35 @@ const activateSkill = (
 
 		// Other skills
 		// AIR
+		case Skill.ENVOL: {
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent),
+			});
+
+			// Attack opponent
+			startAttack(fightData, fighter, opponent);
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				addStatus(fightData, fighter, Status.FLYING);
+
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
+			break;
+		}
 		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill, step);

@@ -3440,7 +3440,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			raceList.SOUFFLET.raceId
 		],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 1,
+		probability: 30
 	},
 	[Skill.ESQUIVE]: {
 		id: Skill.ESQUIVE,
