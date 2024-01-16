@@ -505,6 +505,11 @@ const handleSkills = (
 		team[Skill.MAITRE_LEVITATEUR] = true;
 	}
 
+	if (fighterHas[Skill.SOUFFLE_DE_VIE]) {
+		fighter.status.push(createStatus(Status.NO_POISON));
+		fighter.status.push(createStatus(Status.NO_CURSE));
+	}
+
 	// 50% chance to get positive / negative time
 	if (fighterHas[Skill.DOUBLE_FACE]) {
 		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;

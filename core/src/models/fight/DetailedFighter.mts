@@ -32,6 +32,7 @@ export enum Status {
 	M_ABSORB = 'mAbsorb',
 	NO_ASSAULT = 'noAssault',
 	NO_POISON = 'noPoison',
+	NO_CURSE = 'noCurse',
 	// Items
 	CURED = 'cured',
 	BEER = 'beer',

@@ -6,7 +6,7 @@ import { DinozToGetFighter, FightConfiguration } from "@drpg/core/models/fight/F
 import { FightProcessResult } from "@drpg/core/models/fight/FightResult";
 import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { Item } from "@drpg/core/models/item/ItemList";
-import { addStatus, applyStrategy, checkDeaths, getLimitedRandomOpponent, heal, playFighterTurn, stepFighter } from "./fightMethods.js";
+import { addStatus, applyStrategy, checkDeaths, getLimitedRandomOpponent, hasStatus, heal, playFighterTurn, stepFighter } from "./fightMethods.js";
 import { getBasicElementDamage } from "./getDamage.js";
 import randomBetween from "./randomBetween.js";
 
@@ -181,6 +181,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				fighter.poisonedBy = {
 					id: -666,
 					skill: 0 as Skill,
+					damage: 100,
 				};
 			});
 
@@ -238,9 +239,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		if (fightData.fighters.some((fighter) => fighter.skills.some((skill) => skill.id === Skill.M_CURSED_WAND))) {
 			fightData.fighters.forEach((f) => {
 				if (!f.attacker || f.initiallyCursed) return;
-
-				// No curse if SOUFFLE_DE_VIE
-				if (f.skills.some((skill) => skill.id === Skill.SOUFFLE_DE_VIE)) return;
+				if (hasStatus(f, Status.NO_CURSE)) return;
 
 				f.cursed = true;
 

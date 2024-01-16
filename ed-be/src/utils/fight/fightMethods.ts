@@ -3796,7 +3796,7 @@ export const playFighterTurn = (
 									} as DetailedFighter;
 
 									// Register the hit
-									registerHit(fightData, poisoner, [fighter], 100, []);
+									registerHit(fightData, poisoner, [fighter], poisonedBy.damage, []);
 								} else {
 									// Get poisoner
 									const poisoner = fightData.fighters.find((f) => f.id === poisonedBy.id);
