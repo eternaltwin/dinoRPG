@@ -29,6 +29,7 @@ export enum Boss {
 	SOUTHERN_KORGON = 'SOUTHERN_KORGON',
 	BIO_METALIC_LEECH = 'BIO_METALIC_LEECH',
 	DEMYOM_DEFENDER = 'DEMYOM_DEFENDER',
+	GROTOX = 'GROTOX',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -594,6 +595,27 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [
 			Skill.M_DEMYOM_ATTACK,
 			Skill.M_DEMYOM_HEAL,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.GROTOX]: {
+		id: Boss.GROTOX,
+		name: 'frking',
+		level: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 30,
+		hp: 50,
+		odds: 100,
+		skills: [
+			Skill.M_BOOM,
 		],
 		zones: [],
 		canBeCaptured: false,

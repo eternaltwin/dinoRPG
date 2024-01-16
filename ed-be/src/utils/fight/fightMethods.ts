@@ -3197,6 +3197,14 @@ const activateSkill = (
 			heal(fightData, fighter, 50);
 			break;
 		}
+		case Skill.M_BOOM: {
+			// Get non flying opponents
+			const opponents = getOpponents(fightData, fighter)
+				.filter((opponent) => !hasStatus(opponent, Status.FLYING));
+
+			targetMultipleOpponents(fightData, fighter, opponents, skill, step);
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();
@@ -3732,6 +3740,17 @@ export const checkDeaths = (
 						});
 
 						opponent.permanentStatusGained.push(statusList.CUSCOUZ_MALEDICTION);
+
+						// Add costume step
+						fightData.steps.push({
+							action: 'setCostume',
+							fighter: stepFighter(opponent),
+							costume: monsterList.FRUTOX_DEFENDER.name,
+						});
+
+						opponent.costume = monsterList.FRUTOX_DEFENDER;
+
+						opponent.stats.special.armor -= 3;
 					});
 				} else {
 					// Heal boss

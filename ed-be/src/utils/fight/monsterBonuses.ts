@@ -215,4 +215,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.time -= 100 * TIME_FACTOR;
 		monster.status.push(createStatus(Status.NO_POISON));
 	},
+	[Boss.GROTOX]: (monster) => {
+		monster.stats.speed.global *= 0.4;
+	},
 };
