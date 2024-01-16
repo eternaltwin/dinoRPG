@@ -3153,6 +3153,13 @@ const activateSkill = (
 			});
 			break;
 		}
+		case Skill.M_LAST_BREATH: {
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				// Poison
+				poison(fightData, opponent, fighter, Skill.M_LAST_BREATH, StatusLength.MEDIUM);
+			});
+			break;
+		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();
@@ -3307,6 +3314,10 @@ const poison = (
 			break;
 		}
 		case Skill.M_CONTAMINATION: {
+			poisonDamage = 3;
+			break;
+		}
+		case Skill.M_LAST_BREATH: {
 			poisonDamage = 3;
 			break;
 		}

@@ -1419,6 +1419,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 50,
 		odds: 100,
 		skills: [
+			Skill.M_LAST_BREATH,
 			Skill.M_HEAL_GROUP,
 		],
 		zones: [MapZone.ILEMONSTRE],
