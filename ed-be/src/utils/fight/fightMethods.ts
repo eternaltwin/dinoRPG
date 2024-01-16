@@ -3488,6 +3488,13 @@ const attack = (
 			if (attacker.skills.find((skill) => skill.id === Skill.HALEINE_FETIVE)) {
 				poison(fightData, realOpponent, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
 			}
+
+			// M_ELECTROCUTION damage
+			if (!skill && realOpponent.skills.find((skill) => skill.id === Skill.M_ELECTROCUTION)) {
+				const damage = randomBetween(1, 4);
+
+				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
+			}
 		}
 	}
 
