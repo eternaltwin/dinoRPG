@@ -51,7 +51,6 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		place: config.place,
 	};
 
-	// Add arrive step for all fighters
 	fightData.fighters.forEach((fighter) => {
 		// Handle costumes
 		if (fighter.costume) {
@@ -62,6 +61,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 			});
 		}
 
+		// Add arrive step for all fighters
 		fightData.steps.push({
 			action: 'arrive',
 			fighter: stepFighter(fighter),
@@ -144,6 +144,11 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				energy: 0,
 				targets: [],
 			});
+		}
+
+		// FORME_ETHERALE
+		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
+			addStatus(fightData, fighter, Status.INTANGIBLE);
 		}
 	});
 
