@@ -211,6 +211,19 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 			// Heal 1-4HP
 			heal(fightData, fighter, randomBetween(1, 4));
 		}
+
+		if (fighter.skills.some((skill) => skill.id === Skill.BRANCARDIER))  {
+			// Get allies that lost HP
+			const allies = fightData.fighters.filter((f) => f.id !== fighter.id && f.attacker === fighter.attacker && f.hp < f.startingHp);
+
+			if (allies.length) {
+				// Get random ally
+				const ally = allies[Math.floor(Math.random() * allies.length)];
+
+				// Heal 2-6HP
+				heal(fightData, ally, randomBetween(2, 6));
+			}
+		}
 	});
 
 	if (winner) {
