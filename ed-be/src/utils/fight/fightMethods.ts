@@ -1381,6 +1381,30 @@ const activateEvent = (
 				targetMultipleOpponents(fightData, fighter, opponents, event, step);
 				break;
 			}
+			case Skill.M_HEAL_GROUP: {
+				getAllies(fightData, fighter).forEach((ally) => {
+					// Heal 1 HP
+					heal(fightData, ally, 1);
+				});
+
+				// Get dead allies
+				const deadAllies = fightData.fighters.filter((f) => f.attacker === fighter.attacker && f.hp <= 0);
+
+				// Revive all dead allies
+				deadAllies.forEach((ally) => {
+					// Reset HP to 0 in case it was negative
+					ally.hp = 0;
+
+					heal(fightData, ally, 1);
+
+					// Add revive step
+					fightData.steps.push({
+						action: 'revive',
+						fighter: stepFighter(ally),
+					});
+				});
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();

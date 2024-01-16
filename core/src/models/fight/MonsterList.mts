@@ -72,6 +72,7 @@ export enum Monster {
 	MINIMOUK = 'MINIMOUK',
 	MINIMOUK_2 = 'MINIMOUK_2',
 	MOUKTIZ = 'MOUKTIZ',
+	MANTOOZE = 'MANTOOZE',
 	ANY = 'ANY'
 }
 
@@ -1398,6 +1399,27 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		skills: [
 			Skill.M_INITIATIVE_RESET,
+		],
+		zones: [MapZone.ILEMONSTRE],
+		canBeCaptured: true,
+	},
+	[Monster.MANTOOZE]: {
+		id: Monster.MANTOOZE,
+		name: 'mantoo',
+		level: 25,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 10,
+		hp: 50,
+		odds: 100,
+		skills: [
+			Skill.M_HEAL_GROUP,
 		],
 		zones: [MapZone.ILEMONSTRE],
 		canBeCaptured: true,

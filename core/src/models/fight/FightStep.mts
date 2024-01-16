@@ -164,6 +164,10 @@ export interface CursedStep {
 	action: 'cursed';
 	fighter: StepFighter;
 }
+export interface ReviveStep {
+	action: 'revive';
+	fighter: StepFighter;
+}
 
 export type FightStep = ArriveStep | LeaveStep | ResistStep
 | HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
@@ -173,4 +177,4 @@ export type FightStep = ArriveStep | LeaveStep | ResistStep
 | ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
 | RemoveCostumeStep | HypnotizeStep | EndHypnosisStep
 | GainEnergyStep | ReduceEnergyStep | LoseSphereStep | MissStep
-| DisabledItemsStep | StealGoldStep | CursedStep;
+| DisabledItemsStep | StealGoldStep | CursedStep | ReviveStep;
