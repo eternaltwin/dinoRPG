@@ -210,6 +210,12 @@ export const initializeDinoz = (
 		}
 	);
 
+	// SPECIALISTE
+	if (fighter.skills.some((skill) => skill.id === Skill.SPECIALISTE)) {
+		// Remove the lowest element
+		elements.pop();
+	}
+
 	fighter.elements = elements.map((element) => element.element);
 	fighter.element = fighter.elements[0];
 
@@ -390,6 +396,14 @@ export const initializeMonster = (
 
 	if (fighter.elements.length === 0) {
 		fighter.elements = [ElementType.VOID];
+	}
+
+	// SPECIALISTE
+	if (fighter.skills.some((skill) => skill.id === Skill.SPECIALISTE)) {
+		// Remove the lowest element
+		if (fighter.elements.length > 1) {
+			elements.pop();
+		}
 	}
 
 	fighter.element = fighter.elements[0];
