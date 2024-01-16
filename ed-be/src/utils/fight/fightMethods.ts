@@ -812,9 +812,12 @@ const createMonster = (
 	// Count monsters with M_RENFORT
 	const renfortApplied = fightData.fighters.filter((f) => f.skills.some((skill) => skill.id === Skill.M_RENFORTS)).length;
 
+	// Count monsters with M_WORM_CALL
+	const wormCalls = fightData.fighters.filter((f) => f.skills.some((skill) => skill.id === Skill.M_WORM_CALL)).length;
+
 	// Initialize monster
 	const monster = initializeMonster(
-		{ existingMonsters: monsterCount, renfortApplied },
+		{ existingMonsters: monsterCount, renfortApplied, wormCalls },
 		null,
 		fighter.attacker ? 0 : 1,
 		monsterData,

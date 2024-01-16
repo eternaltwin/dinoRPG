@@ -227,6 +227,7 @@ export const initializeMonster = (
 	memory: {
 		existingMonsters: number,
 		renfortApplied: number,
+		wormCalls: number,
 	},
 	team: Team | null,
 	teamIndex: number,
@@ -249,6 +250,11 @@ export const initializeMonster = (
 		if (skill === Skill.M_RENFORTS) {
 			probability -= 3.5 * (memory.renfortApplied);
 			memory.renfortApplied++;
+		}
+
+		if (skill === Skill.M_WORM_CALL) {
+			probability -= 3.5 * (memory.renfortApplied);
+			memory.wormCalls++;
 		}
 
 		if (probability < 0) {
@@ -624,6 +630,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 	const memory = {
 		existingMonsters: 0,
 		renfortApplied: 0,
+		wormCalls: 0,
 	};
 
   [team1, team2].forEach((team, index) => {
