@@ -1972,6 +1972,43 @@ const activateSkill = (
 			});
 			break;
 		}
+		case Skill.PAUME_EJECTABLE: {
+			// x2 damage
+			fighter.nextAssaultMultiplier *= 2;
+
+			// Get random opponent
+			const opponent = getRandomOpponent(fightData, fighter);
+
+			// Add target
+			step.targets.push(stepFighter(opponent));
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fighter: stepFighter(fighter),
+				target: stepFighter(opponent),
+			});
+
+			// Attack opponent
+			const hit = startAttack(fightData, fighter, opponent);
+
+			// Check if fighter is not dead
+			if (fighter.hp > 0) {
+				addStatus(fightData, fighter, Status.FLYING);
+
+				// Add moveBack step
+				fightData.steps.push({
+					action: 'moveBack',
+					fighter: stepFighter(fighter),
+				});
+			}
+
+			if (hit) {
+				// Increase time
+				fighter.time += 15 * TIME_FACTOR;
+			}
+			break;
+		}
 		// FIRE
 		case Skill.PAUME_CHALUMEAU: {
 			targetSingleOpponent(fightData, fighter, skill, step);
@@ -3529,7 +3566,7 @@ const startAttack = (
 	power?: number,
 ) => {
 	// Trigger fighter attack
-	attack(fightData, fighter, opponent, skill, power);
+	let hitAtLeastOnce = attack(fightData, fighter, opponent, skill, power);
 
 	// Consume energy
 	fighter.energy -= BASE_ENERGY_COST;
@@ -3544,7 +3581,9 @@ const startAttack = (
 		let random = Math.random();
 		while (random < combo && comboCount <= 10) {
 			// Trigger fighter attack
-			attack(fightData, fighter, opponent, skill, power);
+			const hit = attack(fightData, fighter, opponent, skill, power);
+
+			hitAtLeastOnce = hitAtLeastOnce || hit;
 
 			// Consume energy
 			fighter.energy -= BASE_ENERGY_COST + comboCount;
@@ -3561,6 +3600,8 @@ const startAttack = (
 
 	// Check if a fighter is dead
 	checkDeaths(fightData);
+
+	return !!hitAtLeastOnce;
 };
 
 const endTurnChecks = (

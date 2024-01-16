@@ -3682,7 +3682,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [51205],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 2,
+		probability: 15
 	},
 	[Skill.VENT_VIF]: {
 		id: Skill.VENT_VIF,
