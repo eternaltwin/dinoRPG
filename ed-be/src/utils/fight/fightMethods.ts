@@ -3222,6 +3222,10 @@ const poison = (
 			poisonDamage = poisoner.stats.base[ElementType.AIR];
 			break;
 		}
+		case Skill.HALEINE_FETIVE: {
+			poisonDamage = poisoner.stats.base[ElementType.AIR];
+			break;
+		}
 		case Skill.M_STINGER: {
 			poisonDamage = 5;
 			break;
@@ -3459,6 +3463,11 @@ const attack = (
 			) {
 				// Add INTANGIBLE
 				addStatus(fightData, realOpponent, Status.INTANGIBLE, StatusLength.SHORT);
+			}
+
+			// Poison opponent if fighter has Skill.HALEINE_FETIVE
+			if (attacker.skills.find((skill) => skill.id === Skill.HALEINE_FETIVE)) {
+				poison(fightData, realOpponent, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
 			}
 		}
 	}
