@@ -331,6 +331,7 @@ export enum Skill {
 	M_INITIATIVE_RESET = 99933,
 	M_HEAL_GROUP = 99934,
 	M_LAST_BREATH = 99935,
+	M_UNTOUCHABLE = 99936,
 	M_FEBREZ = 99947,
 }
 
@@ -4863,6 +4864,19 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
+	},
+	[Skill.M_UNTOUCHABLE]: {
+		id: Skill.M_UNTOUCHABLE,
+		name: 'Untouchable',
+		type: SkillType.E,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 10,
+		probability: 50,
 	},
 	[Skill.M_FEBREZ]: {
 		id: Skill.M_FEBREZ,

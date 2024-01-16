@@ -1405,6 +1405,21 @@ const activateEvent = (
 				});
 				break;
 			}
+			case Skill.M_UNTOUCHABLE: {
+				const tangibleAllies = getAllies(fightData, fighter)
+					.filter((f) => !hasStatus(f, Status.INTANGIBLE));
+
+				if (!tangibleAllies.length) {
+					return cancel();
+				}
+
+				// Get random ally
+				const ally = tangibleAllies[randomBetween(0, tangibleAllies.length - 1)];
+
+				// Add status
+				addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.MEDIUM);
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();

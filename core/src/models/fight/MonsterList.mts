@@ -1398,6 +1398,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 30,
 		odds: 100,
 		skills: [
+			Skill.M_UNTOUCHABLE,
 			Skill.M_INITIATIVE_RESET,
 		],
 		zones: [MapZone.ILEMONSTRE],

@@ -173,6 +173,10 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.ELEMENTAL_DISCIPLE]: (monster) => {
 		monster.time -= 100 * TIME_FACTOR;
 	},
+	[Monster.MOUKTIZ]: (monster) => {
+		monster.stats.speed.global *= 0.6;
+		monster.stats.special.evasion *= 1.2;
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
