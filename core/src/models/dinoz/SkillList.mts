@@ -328,6 +328,7 @@ export enum Skill {
 	M_ELEMENTAL_DISCIPLE = 99930,
 	M_CURSED_WAND = 99931,
 	M_ALL_FOR_ONE = 99932,
+	M_INITIATIVE_RESET = 99933,
 	M_FEBREZ = 99947,
 }
 
@@ -4823,6 +4824,17 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
+	},
+	[Skill.M_INITIATIVE_RESET]: {
+		id: Skill.M_INITIATIVE_RESET,
+		name: 'InitiativeReset',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
 	},
 	[Skill.M_FEBREZ]: {
 		id: Skill.M_FEBREZ,

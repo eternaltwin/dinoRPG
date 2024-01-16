@@ -150,6 +150,16 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
 			addStatus(fightData, fighter, Status.INTANGIBLE);
 		}
+
+		// M_INITIATIVE_RESET
+		const initiativeResetInTeam = fightData.fighters.some(f => f.attacker === fighter.attacker && f.skills.some(skill => skill.id === Skill.M_INITIATIVE_RESET));
+		if (initiativeResetInTeam) {
+			fighter.time = 1;
+		}
+		const initiativeResetInOpponents = fightData.fighters.some(f => f.attacker !== fighter.attacker && f.skills.some(skill => skill.id === Skill.M_INITIATIVE_RESET));
+		if (initiativeResetInOpponents) {
+			fighter.time = 0;
+		}
 	});
 
 	let turn = 0;

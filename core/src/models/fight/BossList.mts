@@ -27,6 +27,7 @@ export enum Boss {
 	DARK_MEGASHROOM_2 = 'DARK_MEGASHROOM_2',
 	MASKED_KORGON = 'MASKED_KORGON',
 	SOUTHERN_KORGON = 'SOUTHERN_KORGON',
+	BIO_METALIC_LEECH = 'BIO_METALIC_LEECH',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -546,6 +547,29 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [
 			Skill.M_CURSED_WAND,
 			Skill.LANCEUR_DE_GLAND,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.BIO_METALIC_LEECH]: {
+		id: Boss.BIO_METALIC_LEECH,
+		name: 'saboss',
+		level: 80,
+		elements: {
+			fire: 20,
+			wood: 5,
+			water: 30,
+			lightning: 20,
+			air: 30
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 500,
+		odds: 100,
+		xp: 150,
+		skills: [
+			Skill.PERCEPTION,
+			Skill.M_INITIATIVE_RESET,
 		],
 		zones: [],
 		canBeCaptured: false,
