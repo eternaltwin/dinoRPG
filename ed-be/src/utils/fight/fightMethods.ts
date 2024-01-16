@@ -3086,8 +3086,17 @@ export const heal = (
 	// No heal if BEER
 	if (hasStatus(fighter, Status.BEER)) return;
 
-	const healAmount = Math.min(hp, fighter.startingHp - fighter.hp);
-	fighter.hp += healAmount;
+	const hpBeforeHeal = fighter.hp;
+
+	fighter.hp += hp;
+
+	if (fighter.hp > fighter.startingHp) {
+		fighter.hp = fighter.startingHp;
+	}
+
+	const healAmount = fighter.hp - hpBeforeHeal;
+
+	if (healAmount <= 0) return;
 
 	// Add heal step
 	fightData.steps.push({

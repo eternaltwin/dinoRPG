@@ -8,6 +8,7 @@ import { FightStep } from "@drpg/core/models/fight/FightStep";
 import { Item } from "@drpg/core/models/item/ItemList";
 import { addStatus, checkDeaths, getLimitedRandomOpponent, heal, playFighterTurn, stepFighter } from "./fightMethods.js";
 import { getBasicElementDamage } from "./getDamage.js";
+import randomBetween from "./randomBetween.js";
 
 export type DetailedFight = {
 	place: PlaceEnum,
@@ -196,17 +197,20 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
 	const winner = fightData.loser === 'defenders';
 
-	// PREMIERS_SOINS
+	// After fight regeneration
 	fightData.fighters.forEach((fighter) => {
 		// No heal if dead
 		if (fighter.hp <= 0) return;
-		// No heal if doesn't have the skill
-		if (!fighter.skills.some((skill) => skill.id === Skill.PREMIERS_SOINS)) return;
-		// No heal if no HP lost
-		if (fighter.hp >= fighter.startingHp) return;
 
-		// Heal 1HP
-		heal(fightData, fighter, 1);
+		if (fighter.skills.some((skill) => skill.id === Skill.PREMIERS_SOINS))  {
+			// Heal 1HP
+			heal(fightData, fighter, 1);
+		}
+
+		if (fighter.skills.some((skill) => skill.id === Skill.MEDECINE))  {
+			// Heal 1-4HP
+			heal(fightData, fighter, randomBetween(1, 4));
+		}
 	});
 
 	if (winner) {
