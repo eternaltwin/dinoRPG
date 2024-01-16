@@ -579,6 +579,17 @@ const handleSkills = (
 		fighter.cancelArmor = true;
 	}
 
+	if (fighterHas[Skill.FORCE_DE_LUMIERE]) {
+		// +30 assault damage if on DARKWORLD
+		if (PlacesByMap[MapZone.DARKWORLD]?.includes(place)) {
+			fighter.stats.assaultBonus[ElementType.AIR] += 30;
+			fighter.stats.assaultBonus[ElementType.FIRE] += 30;
+			fighter.stats.assaultBonus[ElementType.WOOD] += 30;
+			fighter.stats.assaultBonus[ElementType.WATER] += 30;
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 30;
+		}
+	}
+
 	// DOUBLE
 	if (team && fighterHas[Skill.ELECTROLYSE]) {
 		team[Skill.ELECTROLYSE] = true;
