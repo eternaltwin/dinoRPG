@@ -1302,6 +1302,12 @@ const activateEvent = (
 				});
 				break;
 			}
+			case Skill.FRENESIE_COLLECTIVE: {
+				getAllies(fightData, fighter).forEach((ally) => {
+					addStatus(fightData, ally, Status.QUICKENED, StatusLength.MEDIUM);
+				});
+				break;
+			}
 			// MONSTER
 			case Skill.M_REGENERATION: {
 				if (fighter.hp >= fighter.startingHp) {

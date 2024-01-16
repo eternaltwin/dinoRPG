@@ -4185,7 +4185,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.WANWAN_DEMON.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 5,
+		probability: 5,
 	},
 	[Skill.COQUE]: {
 		id: Skill.COQUE,
