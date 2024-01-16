@@ -56,6 +56,23 @@ export const getDamage = (
 					elements: [ElementType.VOID],
 				};
 			}
+			// ECRASEMENT
+			case Skill.ECRASEMENT: {
+				// Get strongest element
+				const strongestElement = [
+					attacker.stats.base[ElementType.FIRE],
+					attacker.stats.base[ElementType.WATER],
+					attacker.stats.base[ElementType.WOOD],
+					attacker.stats.base[ElementType.LIGHTNING],
+					attacker.stats.base[ElementType.AIR],
+				].sort((a, b) => b - a)[0];
+
+				const power = strongestElement * 5;
+
+				attack += Math.max(power, 40);
+
+				break;
+			}
 			// Handle by default skills as an offensive skill with a list of element powers
 			default: {
 				const skillAttack = SkillAttacks[skill];

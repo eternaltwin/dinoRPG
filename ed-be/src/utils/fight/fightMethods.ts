@@ -735,8 +735,12 @@ const targetMultipleOpponents = (
 	fighter: DetailedFighter,
 	opponents: DetailedFighter[],
 	skill: SkillDetails,
+	step: SkillActivateStep,
 ) => {
 	opponents.forEach((opponent) => {
+		// Add target
+		step.targets.push(stepFighter(opponent));
+
 		// Check if opponent evaded
 		if (evadedSkill(opponent, skill)) {
 			// Add evade step
@@ -775,6 +779,9 @@ const targetAllOpponents = (
 	}
 
 	opponents.forEach((opponent) => {
+		// Add target
+		step.targets.push(stepFighter(opponent));
+
 		// Check if opponent evaded
 		if (evadedSkill(opponent, skill)) {
 			// Add evade step
@@ -791,9 +798,6 @@ const targetAllOpponents = (
 
 		// Register the hit
 		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
-
-		// Add target
-		step.targets.push(stepFighter(opponent));
 	});
 };
 
@@ -1365,7 +1369,7 @@ const activateEvent = (
 				// Get all opponent dinoz
 				const opponents = getOpponents(fightData, fighter, ['dinoz']);
 
-				targetMultipleOpponents(fightData, fighter, opponents, event);
+				targetMultipleOpponents(fightData, fighter, opponents, event, step);
 				break;
 			}
 			default:
@@ -2861,6 +2865,13 @@ const activateSkill = (
 					fighter: stepFighter(fighter),
 				});
 			}
+			break;
+		}
+		case Skill.ECRASEMENT: {
+			const opponents = getOpponents(fightData, fighter)
+				.filter((opponent) => !hasStatus(opponent, Status.FLYING));
+
+			targetMultipleOpponents(fightData, fighter, opponents, skill, step);
 			break;
 		}
 		// Monster skills

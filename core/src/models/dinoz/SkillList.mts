@@ -4330,7 +4330,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.MAHAMUTI.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 2,
+		probability: 25
 	},
 	[Skill.FORCE_DE_LUMIERE]: {
 		id: Skill.FORCE_DE_LUMIERE,
