@@ -89,6 +89,7 @@ export enum Monster {
 	PINK_GROMSTER = 'PINK_GROMSTER',
 	SNOW_GROMSTER = 'SNOW_GROMSTER',
 	CHIMCHEREE = 'CHIMCHEREE',
+	LAPOUF = 'LAPOUF',
 	ANY = 'ANY'
 }
 
@@ -1876,6 +1877,42 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			// TODO: Add caushemesh places
 		],
 		canBeCaptured: false,
+	},
+	[Monster.LAPOUF]: {
+		id: Monster.LAPOUF,
+		name: 'lapouf',
+		level: 42,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 65,
+		bonus_defense: 40,
+		hp: 50,
+		xpBonus: 4,
+		odds: 100,
+		groups: [0, 5, 3],
+		skills: [
+			Skill.PERCEPTION
+		],
+		zones: [],
+		places: [
+			PlaceEnum.TETE_DE_L_ILE,
+			PlaceEnum.PONT,
+			PlaceEnum.CHUTES_DE_NIRVANA,
+			PlaceEnum.LAC_CELESTE,
+			PlaceEnum.AILE_OUEST_DU_DRAGON,
+			PlaceEnum.MONT_SACRE_D_EVEROUEST,
+			PlaceEnum.PLAINES_ENNEIGEES,
+			PlaceEnum.BOIS_GIVRES,
+			PlaceEnum.SOMMET_DU_MONT_SACRE,
+			PlaceEnum.CHEMIN_OBSERVATOIRE,
+			PlaceEnum.OBSERVATOIRE,
+		],
+		canBeCaptured: true,
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,

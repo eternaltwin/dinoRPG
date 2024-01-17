@@ -230,6 +230,12 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.CHIMCHEREE]: (monster) => {
 		gromst(monster);
 	},
+	[Monster.LAPOUF]: (monster) => {
+		monster.stats.special.evasion *= 1.05;
+		monster.stats.special.multihit *= 1.05;
+		monster.stats.special.counter *= 1.1;
+		monster.stats.speed.global *= 0.5;
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
