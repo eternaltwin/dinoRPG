@@ -9,4 +9,5 @@ export interface PlayerInfo {
 	dinoz: DinozFiche[];
 	epicRewards: number[];
 	customText: string | null;
+	completion: number;
 }

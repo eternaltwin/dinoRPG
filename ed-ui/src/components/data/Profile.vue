@@ -32,9 +32,9 @@
 				{{ accountData.clan }}
 			</dd>
 			<dt>
-				{{ $t(`myAccount.dojo`) }}
+				{{ $t(`myAccount.completion`) }}
 			</dt>
-			<dd>PlaceHolder</dd>
+			<dd>{{ accountData.completion.toFixed(2) }} %</dd>
 		</dl>
 		<div class="profilContent" v-if="!isEditOn">
 			<div v-html="customText" class="contentTexte" />
@@ -48,7 +48,7 @@
 			<!--			<p v-if="hasImport()" class="smallbutton" @click="getCode()">
 				{{ $t(`myAccount.import`) }}
 			</p>-->
-			<ImportAccount v-if="openPopinImport" @closePopin="closePopin" />
+			<!--			<ImportAccount v-if="openPopinImport" @closePopin="closePopin" />-->
 		</div>
 	</div>
 </template>
@@ -58,7 +58,6 @@ import { defineComponent, PropType } from 'vue';
 import { epicList } from '../../constants/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import EventBus from '../../events/index.js';
-import ImportAccount from '../../components/data/ImportAccount.vue';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { playerStore } from '../../store/index.js';
@@ -66,9 +65,6 @@ import { goTo } from '../../utils/goTo.js';
 
 export default defineComponent({
 	name: 'Profile',
-	components: {
-		ImportAccount
-	},
 	data() {
 		return {
 			playerStore: playerStore(),

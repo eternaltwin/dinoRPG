@@ -15,6 +15,7 @@ import {
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { calculatePlayerPower } from '../utils/boxesLogic.js';
 
 /**
  * @summary Get data from player on login
@@ -121,7 +122,8 @@ export async function getAccountData(req: Request) {
 				}
 			});
 		}),
-		customText: playerInfo.customText
+		customText: playerInfo.customText,
+		completion: await calculatePlayerPower(playerId)
 		// twinoid: playerInfo.twinosite.map(i => {return {siteId: i.siteId, points: i.points, npoints: i.npoints}})
 	};
 
