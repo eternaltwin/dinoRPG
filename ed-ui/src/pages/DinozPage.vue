@@ -122,6 +122,9 @@ export default defineComponent({
 			if (to !== undefined && this.$route.name === 'DinozPage') {
 				await this.getFiche();
 			}
+		},
+		'dinozData.name': function () {
+			this.nameChoosen = this.dinozData.name !== '?';
 		}
 	}
 });

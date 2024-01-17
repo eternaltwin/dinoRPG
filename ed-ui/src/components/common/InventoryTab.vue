@@ -120,10 +120,9 @@ export default defineComponent({
 
 			const newDinozList = commonData.dinoz.map(d => d.id);
 			const oldDinozList = dinozList.map(d => d.id);
+			this.dinozStore.setDinozList(commonData.dinoz);
 
 			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
-
-			this.dinozStore.setDinozList(dinozList);
 		},
 		async useItem(item: ItemFiche): Promise<void> {
 			if (item.quantity! > 0) {
@@ -155,15 +154,17 @@ export default defineComponent({
 						);
 					}
 
-					EventBus.emit('refreshDinoz', true);
 					EventBus.emit('refreshMoney', true);
 					EventBus.emit('isLoading', false);
+					if (item.effect && item.effect.category === ItemEffect.EGG) {
+						await this.refreshDinozList();
+					}
+					if (item.effect && item.effect.category === ItemEffect.SPECIAL && item.effect.value === 'rice') {
+						EventBus.emit('refreshDinoz', true);
+					}
 				} catch (error) {
 					errorHandler.handle(error);
 					return;
-				}
-				if (item.effect && item.effect.category === ItemEffect.EGG) {
-					await this.refreshDinozList();
 				}
 			}
 		},
