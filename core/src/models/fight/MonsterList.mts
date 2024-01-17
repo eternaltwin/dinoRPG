@@ -79,6 +79,8 @@ export enum Monster {
 	DEMYOM = 'DEMYOM',
 	DEMYOM_RUINS = 'DEMYOM_RUINS',
 	DEMYOM_2 = 'DEMYOM_2',
+	RAPACARAPACE = 'RAPACARAPACE',
+	RAPACARAPACE_2 = 'RAPACARAPACE_2',
 	ANY = 'ANY'
 }
 
@@ -1580,6 +1582,50 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		places: [
 			PlaceEnum.RUINES_DE_CUSCOUZ,
 		],
+		canBeCaptured: true,
+	},
+	[Monster.RAPACARAPACE]: {
+		id: Monster.RAPACARAPACE,
+		name: 'rapaca',
+		level: 40,
+		elements: {
+			fire: 4,
+			wood: 3,
+			water: 5,
+			lightning: 3,
+			air: 23
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 150,
+		odds: 0,
+		skills: [
+			Skill.M_TORNADO,
+			Skill.M_AIR_BLADE,
+		],
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.RAPACARAPACE_2]: {
+		id: Monster.RAPACARAPACE_2,
+		name: 'rapac2',
+		level: 25,
+		elements: {
+			fire: 5,
+			wood: 2,
+			water: 4,
+			lightning: 3,
+			air: 10
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 115,
+		odds: 0,
+		skills: [
+			Skill.M_TORNADO,
+			Skill.M_AIR_BLADE,
+		],
+		zones: [],
 		canBeCaptured: true,
 	},
 	[Monster.ANY]: {

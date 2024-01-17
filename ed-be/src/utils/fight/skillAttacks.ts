@@ -144,4 +144,10 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 	[Skill.M_BOOM]: {
 		[ElementType.VOID]: 60,
 	},
+	[Skill.M_TORNADO]: {
+		[ElementType.AIR]: 40,
+	},
+	[Skill.M_AIR_BLADE]: {
+		[ElementType.AIR]: 25,
+	},
 };

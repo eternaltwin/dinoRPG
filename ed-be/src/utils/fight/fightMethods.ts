@@ -1979,7 +1979,8 @@ const activateSkill = (
 		// RACE
 		case Skill.CHARGE_PIGMOU:
 		// MONSTER
-		case Skill.M_WORM_2: {
+		case Skill.M_WORM_2:
+		case Skill.M_AIR_BLADE: {
 			targetSingleOpponent(fightData, fighter, skill, step);
 			break;
 		}
@@ -3219,6 +3220,15 @@ const activateSkill = (
 				.filter((opponent) => !hasStatus(opponent, Status.FLYING));
 
 			targetMultipleOpponents(fightData, fighter, opponents, skill, step);
+			break;
+		}
+		case Skill.M_TORNADO: {
+			getOpponents(fightData, fighter).forEach((opponent) => {
+				// Remove FLYING
+				removeStatus(fightData, opponent, Status.FLYING);
+			});
+
+			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}
 		default:
