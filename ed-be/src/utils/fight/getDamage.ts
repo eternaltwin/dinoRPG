@@ -1,20 +1,16 @@
-import { Skill, skillList } from "@drpg/core/models/dinoz/SkillList";
-import { ElementType } from "@drpg/core/models/enums/ElementType";
-import { DetailedFighter, Status } from "@drpg/core/models/fight/DetailedFighter";
-import { Item } from "@drpg/core/models/item/ItemList";
-import { ATTACK_GLOBAL_FACTOR } from "./fightConstants.js";
-import { FixedSkillDamage, SkillAttacks } from "./skillAttacks.js";
-import { hasStatus } from "./fightMethods.js";
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
+import { Item } from '@drpg/core/models/item/ItemList';
+import { ATTACK_GLOBAL_FACTOR } from './fightConstants.js';
+import { FixedSkillDamage, SkillAttacks } from './skillAttacks.js';
+import { hasStatus } from './fightMethods.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
 export const DEFAULT_ATTACK_POWER = 5;
 
-export const getBasicElementDamage = (
-	fighter: DetailedFighter,
-	element: ElementType,
-	power?: number
-) => {
+export const getBasicElementDamage = (fighter: DetailedFighter, element: ElementType, power?: number) => {
 	return fighter.stats.base[element] * (power || DEFAULT_ATTACK_POWER) + fighter.stats.assaultBonus[element];
 };
 
@@ -23,7 +19,7 @@ export const getDamage = (
 	opponent: DetailedFighter,
 	skill?: Skill,
 	item?: Item,
-	power?: number,
+	power?: number
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
@@ -36,7 +32,7 @@ export const getDamage = (
 		if (hasStatus(opponent, Status.INTANGIBLE)) {
 			return {
 				damage: 0,
-				elements: [],
+				elements: []
 			};
 		}
 
@@ -46,14 +42,14 @@ export const getDamage = (
 			case Skill.COMBUSTION: {
 				return {
 					damage: opponent.stats.base[ElementType.WOOD],
-					elements: [ElementType.WOOD],
+					elements: [ElementType.WOOD]
 				};
 			}
 			// 50% of the opponent's HP
 			case Skill.M_CURSED_WAND: {
 				return {
 					damage: Math.round(opponent.hp * 0.5),
-					elements: [ElementType.VOID],
+					elements: [ElementType.VOID]
 				};
 			}
 			// ECRASEMENT
@@ -64,7 +60,7 @@ export const getDamage = (
 					attacker.stats.base[ElementType.WATER],
 					attacker.stats.base[ElementType.WOOD],
 					attacker.stats.base[ElementType.LIGHTNING],
-					attacker.stats.base[ElementType.AIR],
+					attacker.stats.base[ElementType.AIR]
 				].sort((a, b) => b - a)[0];
 
 				const power = strongestElement * 5;
@@ -97,7 +93,7 @@ export const getDamage = (
 					throw new Error(`Skill attack ${skill} not found`);
 				}
 
-				attackElements = Object.keys(skillAttack).map((element) => +element as ElementType);
+				attackElements = Object.keys(skillAttack).map(element => +element as ElementType);
 
 				// Don't use elements for fixed attacks
 				if (FixedSkillDamage.includes(skill)) {
@@ -113,7 +109,6 @@ export const getDamage = (
 					}, 0);
 				}
 
-
 				break;
 			}
 		}
@@ -122,7 +117,7 @@ export const getDamage = (
 		for (const element of attackElements) {
 			attack += attacker.skillElementalBonus[element];
 		}
-	// From an item
+		// From an item
 	} else if (item) {
 		switch (item) {
 			case Item.SORCERERS_STICK: {
@@ -134,7 +129,7 @@ export const getDamage = (
 				break;
 			}
 		}
-	// From an assault (the assault can be triggered by a skill)
+		// From an assault (the assault can be triggered by a skill)
 	} else {
 		if (power && skill) {
 			attackElements = [...skillList[skill].element];
@@ -148,12 +143,12 @@ export const getDamage = (
 			if (attacker.canHitIntangible || attackElements.includes(ElementType.AIR)) {
 				return {
 					damage: 1,
-					elements: attackElements,
+					elements: attackElements
 				};
 			} else {
 				return {
 					damage: 0,
-					elements: attackElements,
+					elements: attackElements
 				};
 			}
 		}
@@ -184,7 +179,7 @@ export const getDamage = (
 	}
 
 	// Add random attack bonus: up to 33%
-	const random_attack_bonus = Math.random() * attack / 3;
+	const random_attack_bonus = (Math.random() * attack) / 3;
 	attack += random_attack_bonus;
 
 	// Apply global attack factor
@@ -214,7 +209,7 @@ export const getDamage = (
 	}
 
 	// Absorb water damage if M_WORM
-	if (opponent.skills.some((skill) => skill.id === Skill.M_WORM)) {
+	if (opponent.skills.some(skill => skill.id === Skill.M_WORM)) {
 		if (attackElements.includes(ElementType.WATER)) {
 			opponent.absorbed = damage;
 			damage = 0;
@@ -222,7 +217,7 @@ export const getDamage = (
 	}
 
 	// Cancel lightning damage if M_VEGETOX_DEFENDER
-	if (opponent.skills.some((skill) => skill.id === Skill.M_VEGETOX_DEFENDER)) {
+	if (opponent.skills.some(skill => skill.id === Skill.M_VEGETOX_DEFENDER)) {
 		if (attackElements.includes(ElementType.LIGHTNING)) {
 			damage = 0;
 		}
@@ -230,6 +225,6 @@ export const getDamage = (
 
 	return {
 		damage,
-		elements: attackElements,
+		elements: attackElements
 	};
 };

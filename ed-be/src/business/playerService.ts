@@ -39,7 +39,9 @@ export async function getCommonData(req: Request) {
 		await setPlayer(req.auth.playerId, { lastLogin: new Date() });
 
 		// Tik bracelet regen
-		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz => dinoz.items.some(item => item.itemId === Item.TIK_BRACELET));
+		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz =>
+			dinoz.items.some(item => item.itemId === Item.TIK_BRACELET)
+		);
 
 		for (const dinoz of dinozWithTikBracelet) {
 			// Regen 10 HP

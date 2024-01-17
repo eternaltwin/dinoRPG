@@ -355,6 +355,36 @@ export async function getPlayerRewardsRequest(playerId: number) {
 	return player;
 }
 
+export async function getBoxHandlerInformations(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			_count: {
+				select: {
+					dinoz: { where: { isFrozen: false, isSacrificed: false } }
+				}
+			},
+			dinoz: {
+				select: {
+					level: true,
+					_count: {
+						select: {
+							missions: { where: { isFinished: true } }
+						}
+					}
+				},
+				where: { isFrozen: false, isSacrificed: false }
+			},
+			rewards: true
+		}
+	});
+
+	return player;
+}
+
 /**
  * Get all the necessary data from the player for dinozService buyDinoz function
  * That includes:  platerId and the dinoz from the shop that it is trying to buy

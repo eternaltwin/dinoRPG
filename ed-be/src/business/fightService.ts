@@ -102,15 +102,19 @@ export type DinozToCalculateFight = Parameters<typeof calculateFight>[0][number]
 export function calculateFight(
 	team: DinozToGetFighter[],
 	monsters: MonsterFiche[],
-	place: PlaceEnum,
+	place: PlaceEnum
 ): FightProcessResult {
-	const fighters = getFighters({
-		dinozList: team,
-		monsterList: [],
-	}, {
-		dinozList: [],
-		monsterList: monsters,
-	}, place);
+	const fighters = getFighters(
+		{
+			dinozList: team,
+			monsterList: []
+		},
+		{
+			dinozList: [],
+			monsterList: monsters
+		},
+		place
+	);
 
 	const fightConfiguration: FightConfiguration = {
 		// Flags
@@ -126,7 +130,7 @@ export function calculateFight(
 		fighters,
 
 		// Place
-		place,
+		place
 	};
 
 	return generateFight(fightConfiguration);

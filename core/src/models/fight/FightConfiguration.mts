@@ -4,12 +4,21 @@ import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 
 export type DinozToGetFighter = Pick<
 	Dinoz,
-	'id' | 'level' | 'name' | 'life' | 'maxLife' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpWater' | 'nbrUpLightning' | 'nbrUpAir'
+	| 'id'
+	| 'level'
+	| 'name'
+	| 'life'
+	| 'maxLife'
+	| 'nbrUpFire'
+	| 'nbrUpWood'
+	| 'nbrUpWater'
+	| 'nbrUpLightning'
+	| 'nbrUpAir'
 > & {
 	items: Pick<DinozItem, 'itemId'>[];
 	skills: Pick<DinozSkill, 'skillId'>[];
 	status: Pick<DinozStatus, 'statusId'>[];
-}
+};
 
 export interface FightConfiguration {
 	// Seed (optional, only to replay a fight)

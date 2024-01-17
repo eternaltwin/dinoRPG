@@ -5,7 +5,6 @@ import { GameEvent } from '../event/Events.mjs';
 import { Boss } from './BossList.mjs';
 import { Monster } from './MonsterList.mjs';
 
-
 export type MonsterFiche = {
 	id: Monster | Boss;
 	name: string;

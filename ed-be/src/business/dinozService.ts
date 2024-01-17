@@ -74,6 +74,7 @@ import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
+import { calculatePlayerPower, selectBox } from '../utils/boxesLogic.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 /**
@@ -775,25 +776,37 @@ export async function gatherWithDinoz(req: Request) {
 	const returnGrid = discoverBox(myGrid, dinozData, gatherPlace, ...boxToOpen);
 	await updateGrid(dinozData.player.id, dinozId, myGrid.id, saveGrid(myGrid, ...boxToOpen));
 
-	for (const i of returnGrid.rewards.item) {
+	for (const [index, i] of returnGrid.rewards.item.entries()) {
 		const itemToReward = dinozData.player.items.find(items => items.itemId === i.itemId);
-		const goldItems = [
-			itemList.GOLD100.itemId,
-			itemList.GOLD500.itemId,
-			itemList.GOLD1000.itemId,
-			itemList.GOLD2000.itemId,
-			itemList.GOLD2500.itemId,
-			itemList.GOLD3000.itemId,
-			itemList.GOLD5000.itemId,
-			itemList.GOLD10000.itemId,
-			itemList.GOLD20000.itemId
-		];
-		if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
-			await increaseItemQuantity(dinozData.player.id, i.itemId, 1);
-		} else if (itemToReward && goldItems.includes(i.itemId)) {
-			await addMoney(dinozData.player.id, i.price);
+		if (i.itemId === itemList.BOX_HANDLER.itemId) {
+			const completion = await calculatePlayerPower(dinozData.player.id);
+			const box = selectBox(completion);
+			const boxToReward = dinozData.player.items.find(items => items.itemId === box.itemId);
+			if (boxToReward) {
+				await increaseItemQuantity(dinozData.player.id, boxToReward.itemId, 1);
+			} else {
+				dinozData.player.items.push(await insertItem(dinozData.player.id, { itemId: box.itemId, quantity: 1 }));
+			}
+			returnGrid.rewards.item[index] = box;
 		} else {
-			dinozData.player.items.push(await insertItem(dinozData.player.id, { itemId: i.itemId, quantity: 1 }));
+			const goldItems = [
+				itemList.GOLD100.itemId,
+				itemList.GOLD500.itemId,
+				itemList.GOLD1000.itemId,
+				itemList.GOLD2000.itemId,
+				itemList.GOLD2500.itemId,
+				itemList.GOLD3000.itemId,
+				itemList.GOLD5000.itemId,
+				itemList.GOLD10000.itemId,
+				itemList.GOLD20000.itemId
+			];
+			if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
+				await increaseItemQuantity(dinozData.player.id, i.itemId, 1);
+			} else if (goldItems.includes(i.itemId)) {
+				await addMoney(dinozData.player.id, i.price);
+			} else {
+				dinozData.player.items.push(await insertItem(dinozData.player.id, { itemId: i.itemId, quantity: 1 }));
+			}
 		}
 	}
 

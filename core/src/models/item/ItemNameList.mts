@@ -120,6 +120,11 @@ export const itemNameList: Record<number, string | undefined> = {
 	118: 'easter_egg', // x
 	119: 'fire_cracker', // x
 	120: 'special_potion_irma', // x
+	143: 'void_sphere',
+	993: 'box_common',
+	994: 'box_rare',
+	995: 'box_epic',
+	996: 'box_legendary',
 	997: 'daily_ticket', // x
 	998: 'empty', // x
 	999: 'undefined' // x

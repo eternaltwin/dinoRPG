@@ -62,7 +62,7 @@ export const M_MMEX: Mission[] = [
 		missionId: MissionID.MMEX_MMEX4,
 		missionName: 'mmex4',
 		condition: {
-				[ConditionEnum.FINISHED_MISSION]: MissionID.MMEX_MMEX3
+			[ConditionEnum.FINISHED_MISSION]: MissionID.MMEX_MMEX3
 		},
 		rewards: [
 			{

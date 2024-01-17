@@ -117,7 +117,8 @@
 			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !",
 			"concentrate": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
 			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
-			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz."
+			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz.",
+			"daily": "Vous pouvez utilisez ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -138,7 +139,8 @@
 			"party": "Feu d'artifice",
 			"concentrate": "Arrêter de se concentrer",
 			"market": "Marché aux éleveurs",
-			"disband": "Dissoudre le groupe"
+			"disband": "Dissoudre le groupe",
+			"daily": "Ticket quotidien"
 		}
 	},
 	"button": {
@@ -296,6 +298,7 @@
 			"water_sphere": "Sphère d'Eau",
 			"lightning_sphere": "Sphère de Foudre",
 			"air_sphere": "Sphère d'Air",
+			"void_sphere": "Sphère de Vide",
 			"demon_ticket": "Ticket-Démon",
 			"treasure_coupon": "Bon du Trésor",
 			"moueffe_egg": "Oeuf de Moueffe",
@@ -358,6 +361,10 @@
 			"special_potion_irma": "Potion de Madame Irma spéciale",
 			"daily_ticket": "Ticket Quotidien",
 			"empty": "Vide",
+			"box_common": "Boîte commune",
+			"box_rare": "Boîte rare",
+			"box_epic": "Boîte épique",
+			"box_legendary": "Boîte légendaire",
 			"undefined": "Inconnu"
 		},
 		"description": {
@@ -422,6 +429,7 @@
 			"water_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
 			"lightning_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
 			"air_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
+			"void_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
 			"demon_ticket": "Les Tickets Démons sont obtenus en sacrifiant des Dinoz à la Boutique Démoniaque. Vous pouvez les échanger contre des Dinoz-Démons une fois que vous en aurez suffisamment.",
 			"treasure_coupon": "Un Bon du Trésor vaut 1.000 Pièces d'Or plus les taxes et permet d'enchérir sur des Offres de la Place du Marché. Il suffit de l'utiliser pour le convertir en pièces.",
 			"moueffe_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
@@ -482,7 +490,11 @@
 			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
 			"fire_cracker": "Ce pétard vous permet de déclencher un feu d'artice à Dinoville pour gagner des trésors !",
 			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
-			"daily_ticket": "Ce ticket vous permet de débloquer une case quotidienne.",
+			"daily_ticket": "Ce ticket vous permet d'ouvrir une case quotidienne à l'université.",
+			"box_common": "Cette boîte semble contenir des objets assez communs.",
+			"box_rare": "Cette boîte brillante semble contenir des objets rares.",
+			"box_epic": "Cette magnifique boîte semble contenir quelque chose d'extraordinaire.",
+			"box_legendary": "Cette boîte légendaire contiendrait-elle une légende ?",
 			"empty": "Il n'y a aucun objet dans cette case",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
@@ -1712,7 +1724,10 @@
 			"Invocateur": "Invocateur",
 			"Envol": "Envol",
 			"PoingDeBraise": "Poing de braise",
-			"Leader": "Leader"
+			"Leader": "Leader",
+			"GrosDormeur": "Gros Dormeur",
+			"Veilleuse": "Veilleuse",
+			"Matelasseur": "Matelasseur"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les assauts feu de 7",
@@ -2008,7 +2023,10 @@
 			"Invocateur": "Permet au dinoz d'apprendre les compétences d'invocation",
 			"Envol": "Le dinoz effectue un assaut puis s'envole. Réservé aux dinozs volants.",
 			"PoingDeBraise": "Augmente la puissance des assauts feu de 20",
-			"Leader": "Augmente le nombre maximum de dinoz de 3"
+			"Leader": "Augmente le nombre maximum de dinoz de 3",
+			"GrosDormeur": "Permet à votre dinoz de récupérer une action supplémentaire chaque jours.",
+			"Veilleuse": "Permet au dinoz suivant votre dinoz de récupérer également une action supplémentaire chaque jours.",
+			"Matelasseur": "Tout vos dinoz récupère une action supplémentaire chaque jours."
 		}
 	},
 	"status": {
@@ -3473,7 +3491,60 @@
 		"lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
 		"continue": "Continuer",
 		"display": "Afficher le combat",
-		"resume": "Vous avez combattu un {enemy}"
+		"resume": "Vous avez combattu un {enemy}",
+		"clone": "Clone",
+		"monster": {
+			"goupignon": "Goupignon",
+			"wolf": "Loup",
+			"gluon": "Gluon",
+			"greeng": "Géant Vert",
+			"coq": "Coqdur",
+			"piglou": "Piglounou",
+			"piglo2": "Pigloubi",
+			"piglo3": "Piglouglou",
+			"piglo4": "Super Piglou",
+			"piglo5": "Ultra Piglou",
+			"febrez": "Febrez"
+		},
+		"status": {
+			"asleep": "endormi",
+			"slowed": "ralenti",
+			"petrified": "pétrifié",
+			"poisoned": "empoisonné",
+			"burned": "brulé",
+			"locked": "Locked",
+			"dazzled": "éblouis",
+			"stunned": "étourndis",
+			"torched": "torche",
+			"intangible": "intangible",
+			"flying": "vol",
+			"quickened": "rapidité",
+			"shielded": "bouclier",
+			"blessed": "bénis",
+			"healing": "soigné"
+		},
+		"step": {
+			"arrive": "**{name}** est arrivé !",
+			"resist": "**{dinoz}** a résisté et réduis les dégats.",
+			"hit": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}**.",
+			"hit-skill": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}** avec **{skill}**.",
+			"poison": "**{dinoz}** a infligé **{damage} poison** dégats à **{target}**.",
+			"moveTo": "**{fighter}** déplacé à **{target}**.",
+			"moveBack": "**{fighter}** est retourné à sa position.",
+			"attemptHit": "**{fighter}** a essayé d'attaquer **{target}**.",
+			"evade": "**{fighter}** a esquivé le coup.",
+			"death": "**{fighter}** a succombé à ses blessures!",
+			"counter": "**{fighter}** a contré **{opponent}**.",
+			"survive": "**{dinoz}** a survécu à l'attaque.",
+			"skillActivate": "**{dinoz}** a utilisé **{skill}** (-{energy} energy).",
+			"skillActivate-targets": "**{dinoz}** a utlisé **{skill}** sur **{targets}** (-{energy} energy).",
+			"skillExpire": "**{dinoz}**'s **{skill}** a expiré.",
+			"looseHp": "**{fighter}** a perdu **{hp} HP**.",
+			"heal": "**{fighter}** s'est soigné de **{hp} HP**.",
+			"addStatus": "**{fighter}** est devenu **{status}**.",
+			"removeStatus": "**{fighter}** n'est plus **{status}**.",
+			"itemUse": "**{fighter}** a utilisé **{item}**."
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",

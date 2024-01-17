@@ -13,8 +13,8 @@ export enum DefenseElement {
 
 export const getDefenseStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
-	skills: (Pick<SkillDetails, 'effects' | 'name' | 'element' | 'globalEffects'>)[],
-	elementName: DefenseElement,
+	skills: Pick<SkillDetails, 'effects' | 'name' | 'element' | 'globalEffects'>[],
+	elementName: DefenseElement
 ) => {
 	const elementWheel = [
 		DefenseElement.FIRE,

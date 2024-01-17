@@ -45,8 +45,8 @@ export const BaseStats = {
 
 export const getSpecialStat = (
 	dinoz: Pick<DinozFiche, 'items' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
-	skills: (Pick<SkillDetails, 'id' | 'effects' | 'name' | 'element'>)[],
-	stat: SpecialStat,
+	skills: Pick<SkillDetails, 'id' | 'effects' | 'name' | 'element'>[],
+	stat: SpecialStat
 ) => {
 	// Special case for BUBBLE_RATE (value not influenced by skills)
 	if (stat === SpecialStat.BUBBLE_RATE) {
@@ -68,15 +68,17 @@ export const getSpecialStat = (
 			name: 'bubbleRate',
 			percent: true,
 			// Clamp value between 30% and 100%
-			value: (value < 0.3 ? 0.3 : value) + 1,
+			value: (value < 0.3 ? 0.3 : value) + 1
 		};
 	}
 
 	// Special case for TORCH_DAMAGE (value not influenced by skills)
 	if (stat === SpecialStat.TORCH_DAMAGE) {
 		// Return null if no lighter in inventory and no torch skill
-		if (!dinoz.items?.some(item => item === itemList.ZIPPO.itemId)
-			&& !skills.some(skill => skill.id === Skill.TORCHE)) {
+		if (
+			!dinoz.items?.some(item => item === itemList.ZIPPO.itemId) &&
+			!skills.some(skill => skill.id === Skill.TORCHE)
+		) {
 			return null;
 		}
 

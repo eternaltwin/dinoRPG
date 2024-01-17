@@ -69,4 +69,4 @@ export const statusList = {
 	SPHERE: 68
 } as const;
 
-export type Status = typeof statusList[keyof typeof statusList];
+export type Status = (typeof statusList)[keyof typeof statusList];

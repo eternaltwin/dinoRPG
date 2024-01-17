@@ -13,9 +13,9 @@ export enum AssaultElement {
 
 export const getAssaultStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
-	skills: (Pick<SkillDetails, 'effects' | 'name' | 'element'>)[],
+	skills: Pick<SkillDetails, 'effects' | 'name' | 'element'>[],
 	elementName: AssaultElement,
-	power = 5,
+	power = 5
 ) => {
 	let element = 0;
 	switch (elementName) {

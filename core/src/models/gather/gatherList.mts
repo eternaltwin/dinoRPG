@@ -577,15 +577,8 @@ export const gatherList: Record<GatherType, GatherData> = {
 			]
 		},
 		cost: {
-			name: itemList.CANDLE_CARD.name,
-			itemId: itemList.CANDLE_CARD.itemId,
-			quantity: 1,
-			maxQuantity: itemList.CANDLE_CARD.maxQuantity,
-			canBeEquipped: itemList.CANDLE_CARD.canBeEquipped,
-			canBeUsedNow: itemList.CANDLE_CARD.canBeUsedNow,
-			itemType: itemList.CANDLE_CARD.itemType,
-			isRare: itemList.CANDLE_CARD.isRare,
-			price: itemList.CANDLE_CARD.price
+			...itemList.CANDLE_CARD,
+			quantity: 1
 		},
 		apparence: 'ANNIV',
 		items: [
@@ -749,15 +742,61 @@ export const gatherList: Record<GatherType, GatherData> = {
 	[GatherType.PARTY]: {
 		action: Action.DIG,
 		special: true,
-		type: GatherType.PARTY,
+		type: GatherType.LABO,
 		size: 10,
 		minimumClick: 3,
 		// Unachievable condition to prevent the gather from being displayed
 		condition: { [ConditionEnum.MINLEVEL]: 999 },
-		apparence: 'PARTY',
+		apparence: 'LABO',
 		items: [],
 		cost: {
 			...itemList.TICTAC_TICKET,
+			quantity: 1
+		}
+	},
+	// Daily ticket grid
+	[GatherType.DAILY]: {
+		action: Action.DAILY,
+		special: true,
+		type: GatherType.DAILY,
+		size: 6,
+		minimumClick: 1,
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.POSSESS_OBJECT]: itemList.DAILY_TICKET.itemId },
+				{ [ConditionEnum.PLACE_IS]: PlaceEnum.UNIVERSITE }
+			]
+		},
+		apparence: 'DAILY',
+		items: [
+			{
+				type: 'item',
+				ingredientId: itemList.GOLD2500.itemId,
+				startQuantity: 12
+			},
+			{
+				type: 'item',
+				ingredientId: itemList.GOLD5000.itemId,
+				startQuantity: 8
+			},
+			{
+				type: 'item',
+				ingredientId: itemList.GOLD10000.itemId,
+				startQuantity: 4
+			},
+			{
+				type: 'item',
+				ingredientId: itemList.GOLD20000.itemId,
+				startQuantity: 2
+			},
+			{
+				type: 'item',
+				ingredientId: itemList.BOX_HANDLER.itemId,
+				startQuantity: 10
+			}
+		],
+		cost: {
+			...itemList.DAILY_TICKET,
 			quantity: 1
 		}
 	}

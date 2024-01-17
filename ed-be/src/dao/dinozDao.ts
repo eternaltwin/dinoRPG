@@ -292,7 +292,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			items: { select: { itemId: true } },
 			skills: {
 				select: { skillId: true },
-				where: { state: { equals: true } },
+				where: { state: { equals: true } }
 			},
 			status: { select: { statusId: true } },
 			followers: {

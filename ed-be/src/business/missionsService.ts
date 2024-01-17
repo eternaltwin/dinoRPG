@@ -210,10 +210,7 @@ async function checkMission(req: Request) {
 	if (!actualStep) {
 		throw new ErrorFormator(500, 'No step found');
 	}
-	if (
-		dinoz.placeId !== actualStep.place &&
-		actualStep.place !== PlaceEnum.ANYWHERE
-	) {
+	if (dinoz.placeId !== actualStep.place && actualStep.place !== PlaceEnum.ANYWHERE) {
 		throw new ErrorFormator(500, 'The dinoz is not at the expected place.');
 	}
 	return {
@@ -236,8 +233,7 @@ export function getMissionAction(
 	}
 
 	if (
-		(dinoz.placeId === actualStep.place ||
-			actualStep.place === PlaceEnum.ANYWHERE) &&
+		(dinoz.placeId === actualStep.place || actualStep.place === PlaceEnum.ANYWHERE) &&
 		!actualStep.displayedAction.includes('kill')
 	) {
 		return actualStep.displayedAction;
@@ -289,8 +285,7 @@ export async function checkMissionFight(
 
 	//Increment the progress of killing mobs
 	if (
-		(dinoz.placeId === actualStep.place ||
-			actualStep.place === PlaceEnum.ANYWHERE) &&
+		(dinoz.placeId === actualStep.place || actualStep.place === PlaceEnum.ANYWHERE) &&
 		fight.result &&
 		actualStep.requirement.actionType === ConditionEnum.KILL &&
 		(actualStep.requirement.target.includes(monsterList.ANY.name) ||

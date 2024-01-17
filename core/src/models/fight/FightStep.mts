@@ -1,86 +1,86 @@
-import { Skill } from "../dinoz/SkillList.mjs";
-import { ElementType } from "../enums/ElementType.mjs";
-import { Item } from "../item/ItemList.mjs";
-import { Status, FighterType } from "./DetailedFighter.mjs";
+import { Skill } from '../dinoz/SkillList.mjs';
+import { ElementType } from '../enums/ElementType.mjs';
+import { Item } from '../item/ItemList.mjs';
+import { Status, FighterType } from './DetailedFighter.mjs';
 
 export interface StepFighter {
 	id: number;
-  name: string;
-  type: FighterType;
-  attacker: boolean;
+	name: string;
+	type: FighterType;
+	attacker: boolean;
 }
 
 export enum LeaveAnimation {
 	RUN,
 	BLACKHOLE,
-	FLYING,
+	FLYING
 }
 
 export interface ArriveStep {
-  action: 'arrive';
-  fighter: StepFighter;
+	action: 'arrive';
+	fighter: StepFighter;
 }
 export interface LeaveStep {
-  action: 'leave';
-  fighter: StepFighter;
+	action: 'leave';
+	fighter: StepFighter;
 	animation?: LeaveAnimation;
 }
 export interface ResistStep {
-  action: 'resist';
-  dinoz: StepFighter;
+	action: 'resist';
+	dinoz: StepFighter;
 }
 export interface HitStep {
-  action: 'hit';
-  fighter: StepFighter;
+	action: 'hit';
+	fighter: StepFighter;
 	target: StepFighter;
 	damage: number;
 	elements: ElementType[];
 	skill?: Skill;
 }
 export interface AttemptHitStep {
-  action: 'attemptHit';
-  fighter: StepFighter;
-  target: StepFighter;
+	action: 'attemptHit';
+	fighter: StepFighter;
+	target: StepFighter;
 }
 export interface EvadeStep {
-  action: 'evade';
-  fighter: StepFighter;
+	action: 'evade';
+	fighter: StepFighter;
 }
 export interface DeathStep {
-  action: 'death';
-  fighter: StepFighter;
+	action: 'death';
+	fighter: StepFighter;
 }
 export interface MoveStep {
-  action: 'moveTo';
-  fighter: StepFighter;
-  target: StepFighter;
-  sameSpace?: boolean;
-  countered?: boolean;
+	action: 'moveTo';
+	fighter: StepFighter;
+	target: StepFighter;
+	sameSpace?: boolean;
+	countered?: boolean;
 }
 export interface CounterStep {
-  action: 'counter';
-  fighter: StepFighter;
-  opponent: StepFighter;
+	action: 'counter';
+	fighter: StepFighter;
+	opponent: StepFighter;
 }
 export interface MoveBackStep {
-  action: 'moveBack';
-  fighter: StepFighter;
+	action: 'moveBack';
+	fighter: StepFighter;
 }
 export interface SurviveStep {
-  action: 'survive';
-  dinoz: StepFighter;
+	action: 'survive';
+	dinoz: StepFighter;
 }
 export interface SkillActivateStep {
-  action: 'skillActivate';
-  fighter: StepFighter;
-  skill: Skill;
+	action: 'skillActivate';
+	fighter: StepFighter;
+	skill: Skill;
 	energy: number;
 	targets: StepFighter[];
 }
 export interface SkillExpireStep {
-  action: 'skillExpire';
-  dinoz: StepFighter;
-  skill: Skill;
+	action: 'skillExpire';
+	dinoz: StepFighter;
+	skill: Skill;
 }
 export interface LooseHpStep {
 	action: 'looseHp';
@@ -146,12 +146,12 @@ export interface LoseSphereStep {
 	element: ElementType;
 }
 export interface MissStep {
-  action: 'miss';
-  fighter: StepFighter;
+	action: 'miss';
+	fighter: StepFighter;
 }
 export interface DisabledItemsStep {
-  action: 'disabledItems';
-  fighter: StepFighter;
+	action: 'disabledItems';
+	fighter: StepFighter;
 	items: Item[];
 }
 export interface StealGoldStep {
@@ -169,12 +169,36 @@ export interface ReviveStep {
 	fighter: StepFighter;
 }
 
-export type FightStep = ArriveStep | LeaveStep | ResistStep
-| HitStep | AttemptHitStep | EvadeStep | DeathStep | MoveStep
-| CounterStep | MoveBackStep | SurviveStep
-| SkillActivateStep | SkillExpireStep | LooseHpStep
-| HealStep | AddStatusStep | RemoveStatusStep | ItemUseStep
-| ActivateEnvironmentStep | ExpireEnvironmentStep | SetCostumeStep
-| RemoveCostumeStep | HypnotizeStep | EndHypnosisStep
-| GainEnergyStep | ReduceEnergyStep | LoseSphereStep | MissStep
-| DisabledItemsStep | StealGoldStep | CursedStep | ReviveStep;
+export type FightStep =
+	| ArriveStep
+	| LeaveStep
+	| ResistStep
+	| HitStep
+	| AttemptHitStep
+	| EvadeStep
+	| DeathStep
+	| MoveStep
+	| CounterStep
+	| MoveBackStep
+	| SurviveStep
+	| SkillActivateStep
+	| SkillExpireStep
+	| LooseHpStep
+	| HealStep
+	| AddStatusStep
+	| RemoveStatusStep
+	| ItemUseStep
+	| ActivateEnvironmentStep
+	| ExpireEnvironmentStep
+	| SetCostumeStep
+	| RemoveCostumeStep
+	| HypnotizeStep
+	| EndHypnosisStep
+	| GainEnergyStep
+	| ReduceEnergyStep
+	| LoseSphereStep
+	| MissStep
+	| DisabledItemsStep
+	| StealGoldStep
+	| CursedStep
+	| ReviveStep;

@@ -12,5 +12,6 @@ export enum GatherType {
 	TICTAC,
 	LABO,
 	ANNIV,
-	PARTY
+	PARTY,
+	DAILY
 }

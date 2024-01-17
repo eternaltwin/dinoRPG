@@ -41,7 +41,7 @@ export enum Boss {
 	MUTATED_GRIZORG = 'MUTATED_GRIZORG',
 	ULTIMATE_GRIZORG = 'ULTIMATE_GRIZORG',
 	CHIEF_DOROGON = 'CHIEF_DOROGON',
-	SOFIA = 'SOFIA',
+	SOFIA = 'SOFIA'
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -118,7 +118,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 5,
 		zones: [MapZone.DARKWORLD],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.ELEMENTAIRE_EAU]: {
 		id: Boss.ELEMENTAIRE_EAU,
@@ -136,7 +136,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 5,
 		zones: [MapZone.DARKWORLD],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.RASCAPHANDRE]: {
 		id: Boss.RASCAPHANDRE,
@@ -154,7 +154,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 10,
 		zones: [MapZone.ILES],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.ELEMENTAIRE_TERRE]: {
 		id: Boss.ELEMENTAIRE_TERRE,
@@ -172,7 +172,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 10,
 		zones: [MapZone.ILES],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.PTEROZ]: {
 		id: Boss.PTEROZ,
@@ -191,7 +191,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.ALL],
 		skills: [11102, 11103, 41102, 11101, 51105],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.HIPPOCLAMP]: {
 		id: Boss.HIPPOCLAMP,
@@ -210,7 +210,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.ALL],
 		skills: [21101, 21102, 31101, 21103],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.ROCKY]: {
 		id: Boss.ROCKY,
@@ -229,7 +229,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 12,
 		zones: [MapZone.ALL],
 		skills: [21101, 41102, 41301, 41103, 41204],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.MASTER_CHA]: {
 		id: Boss.MASTER_CHA,
@@ -260,7 +260,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			Skill.M_ELECTROCUTION
 		],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.PIRHANOS_3]: {
 		id: Boss.PIRHANOS_3,
@@ -281,7 +281,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		groups: [0, 0, 1],
 		xp: 50,
 		skills: [Skill.M_FLIGHT],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.TW_BIGBEASTLY]: {
 		id: Boss.TW_BIGBEASTLY,
@@ -308,7 +308,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			Skill.M_RESISTANCE
 		],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.PR_IGOR]: {
 		id: Boss.PR_IGOR,
@@ -325,12 +325,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 20,
 		hp: 200,
 		odds: 100,
-		skills: [
-			Skill.M_RESISTANCE,
-			Skill.M_INVISIBILITY,
-		],
+		skills: [Skill.M_RESISTANCE, Skill.M_INVISIBILITY],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.VENERABLE]: {
 		id: Boss.VENERABLE,
@@ -347,13 +344,11 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 60,
 		hp: 1000,
 		odds: 100,
-		skills: [
-			Skill.M_VENERABLE,
-		],
+		skills: [Skill.M_VENERABLE],
 		xp: 1000,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true,
+		noMove: true
 	},
 	[Boss.VENERABLE_2]: {
 		id: Boss.VENERABLE_2,
@@ -370,13 +365,11 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 60,
 		hp: 1000,
 		odds: 100,
-		skills: [
-			Skill.M_VENERABLE,
-		],
+		skills: [Skill.M_VENERABLE],
 		xp: 0,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true,
+		noMove: true
 	},
 	[Boss.VENERABLE_3]: {
 		id: Boss.VENERABLE_3,
@@ -393,14 +386,12 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 5,
 		hp: 500,
 		odds: 100,
-		skills: [
-			Skill.M_VENERABLE,
-		],
+		skills: [Skill.M_VENERABLE],
 		xp: 0,
 		gold: 0,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true,
+		noMove: true
 	},
 	[Boss.VENERABLE_4]: {
 		id: Boss.VENERABLE_4,
@@ -417,13 +408,11 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 40,
 		hp: 700,
 		odds: 100,
-		skills: [
-			Skill.M_VENERABLE,
-		],
+		skills: [Skill.M_VENERABLE],
 		xp: 100,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true,
+		noMove: true
 	},
 	[Boss.SCORPIOUS]: {
 		id: Boss.SCORPIOUS,
@@ -451,10 +440,10 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			Skill.BRAVE,
 			Skill.ZERO_ABSOLU,
 			Skill.CLONE_AQUEUX,
-			Skill.SOUFFLE_DE_VIE,
+			Skill.SOUFFLE_DE_VIE
 		],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.YAKUZI]: {
 		id: Boss.YAKUZI,
@@ -471,12 +460,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 22,
 		hp: 50,
 		odds: 100,
-		skills: [
-			Skill.M_YAKUZI,
-			Skill.PERCEPTION,
-		],
+		skills: [Skill.M_YAKUZI, Skill.PERCEPTION],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.DARK_MEGASHROOM]: {
 		id: Boss.DARK_MEGASHROOM,
@@ -493,11 +479,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 12,
 		hp: 50,
 		odds: 100,
-		skills: [
-			Skill.M_CONTAMINATION,
-		],
+		skills: [Skill.M_CONTAMINATION],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.DARK_MEGASHROOM_2]: {
 		id: Boss.DARK_MEGASHROOM_2,
@@ -515,11 +499,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 50,
 		odds: 100,
 		xp: 60,
-		skills: [
-			Skill.M_CONTAMINATION,
-		],
+		skills: [Skill.M_CONTAMINATION],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.MASKED_KORGON]: {
 		id: Boss.MASKED_KORGON,
@@ -536,12 +518,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 60,
 		odds: 100,
-		skills: [
-			Skill.M_CURSED_WAND,
-			Skill.LANCEUR_DE_GLAND,
-		],
+		skills: [Skill.M_CURSED_WAND, Skill.LANCEUR_DE_GLAND],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.SOUTHERN_KORGON]: {
 		id: Boss.SOUTHERN_KORGON,
@@ -558,12 +537,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 30,
 		hp: 150,
 		odds: 100,
-		skills: [
-			Skill.M_CURSED_WAND,
-			Skill.LANCEUR_DE_GLAND,
-		],
+		skills: [Skill.M_CURSED_WAND, Skill.LANCEUR_DE_GLAND],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.BIO_METALIC_LEECH]: {
 		id: Boss.BIO_METALIC_LEECH,
@@ -581,12 +557,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 500,
 		odds: 100,
 		xp: 150,
-		skills: [
-			Skill.PERCEPTION,
-			Skill.M_INITIATIVE_RESET,
-		],
+		skills: [Skill.PERCEPTION, Skill.M_INITIATIVE_RESET],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.DEMYOM_DEFENDER]: {
 		id: Boss.DEMYOM_DEFENDER,
@@ -604,12 +577,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 300,
 		odds: 100,
 		xp: 50,
-		skills: [
-			Skill.M_DEMYOM_ATTACK,
-			Skill.M_DEMYOM_HEAL,
-		],
+		skills: [Skill.M_DEMYOM_ATTACK, Skill.M_DEMYOM_HEAL],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.GROTOX]: {
 		// This boss has a weird patch in the source code
@@ -628,11 +598,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 30,
 		hp: 50,
 		odds: 100,
-		skills: [
-			Skill.M_BOOM,
-		],
+		skills: [Skill.M_BOOM],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.BEHEMOUNT]: {
 		id: Boss.BEHEMOUNT,
@@ -649,10 +617,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		bonus_defense: 120,
 		hp: 500,
 		odds: 100,
-		skills: [
-		],
+		skills: [],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.SERPETHER]: {
 		id: Boss.SERPETHER,
@@ -671,14 +638,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 500,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU,
-			Skill.CELERITE,
-			Skill.COUP_DOUBLE,
-			Skill.SOURCE_DE_VIE
-		],
+		skills: [Skill.M_GRIZOU, Skill.CELERITE, Skill.COUP_DOUBLE, Skill.SOURCE_DE_VIE],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.SERPETHER_2]: {
 		id: Boss.SERPETHER_2,
@@ -696,11 +658,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 1000,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU,
-		],
+		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.MORG]: {
 		id: Boss.MORG,
@@ -718,13 +678,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 500,
 		xp: 400,
 		odds: 100,
-		skills: [
-			Skill.FEU_DE_ST_ELME,
-			Skill.FOCUS,
-			Skill.CELERITE,
-		],
+		skills: [Skill.FEU_DE_ST_ELME, Skill.FOCUS, Skill.CELERITE],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.MORG_2]: {
 		id: Boss.MORG_2,
@@ -742,13 +698,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 500,
 		xpBonus: 10,
 		odds: 100,
-		skills: [
-			Skill.FEU_DE_ST_ELME,
-			Skill.FOCUS,
-			Skill.CELERITE,
-		],
+		skills: [Skill.FEU_DE_ST_ELME, Skill.FOCUS, Skill.CELERITE],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.MUTATED_MORG]: {
 		id: Boss.MUTATED_MORG,
@@ -767,11 +719,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 500,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU
-		],
+		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.GRIZORG]: {
 		id: Boss.GRIZORG,
@@ -791,11 +741,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU
-		],
+		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.GRIZOU]: {
 		id: Boss.GRIZOU,
@@ -815,11 +763,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU
-		],
+		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.MUTATED_GRIZORG]: {
 		id: Boss.MUTATED_GRIZORG,
@@ -839,11 +785,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU
-		],
+		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.ULTIMATE_GRIZORG]: {
 		id: Boss.ULTIMATE_GRIZORG,
@@ -863,11 +807,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU
-		],
+		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.SOFIA]: {
 		id: Boss.SOFIA,
@@ -885,11 +827,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 5000,
 		odds: 100,
 		noMove: true,
-		skills: [
-			Skill.M_GRIZOU
-		],
+		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Boss.CHIEF_DOROGON]: {
 		id: Boss.CHIEF_DOROGON,
@@ -907,12 +847,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		hp: 450,
 		xpBonus: 10,
 		odds: 100,
-		skills: [
-			Skill.FEU_DE_ST_ELME,
-			Skill.FOCUS,
-			Skill.CELERITE,
-		],
+		skills: [Skill.FEU_DE_ST_ELME, Skill.FOCUS, Skill.CELERITE],
 		zones: [],
-		canBeCaptured: false,
-	},
+		canBeCaptured: false
+	}
 };

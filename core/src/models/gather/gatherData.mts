@@ -27,7 +27,13 @@ export type GatherData =
 	| {
 			action: Action;
 			special: true;
-			type: GatherType.ANNIV | GatherType.LABO | GatherType.PARTY | GatherType.TICTAC | GatherType.XMAS;
+			type:
+				| GatherType.ANNIV
+				| GatherType.LABO
+				| GatherType.PARTY
+				| GatherType.TICTAC
+				| GatherType.XMAS
+				| GatherType.DAILY;
 			size: number;
 			minimumClick: number;
 			condition: Condition; //Skill needed

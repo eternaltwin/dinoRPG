@@ -265,6 +265,11 @@ export default defineComponent({
 	background-size: 340px;
 }
 
+.daily::after {
+	background-image: url('../assets/gather/overlay/daily.webp');
+	background-size: 199px;
+}
+
 // TILES BG POSITION - INDEXED TO TILE SIZE: 34px (will break if tiles are not exactly this size)
 // BG Y OFFSET
 @for $i from 1 through 12 {

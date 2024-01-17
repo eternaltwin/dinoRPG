@@ -36,6 +36,7 @@ import {
 import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import { createLog } from '../dao/logDao.js';
 import { updateDinozCount } from '../dao/rankingDao.js';
+import { boxOpening } from '../utils/boxesLogic.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -228,6 +229,15 @@ async function useSpecialItem(
 			const pamp = dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId);
 			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList.PAMPLEBOUM_PIT.itemId, quantity: 1 });
 			else await increaseItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM_PIT.itemId, 1);
+			break;
+		case 'box':
+			if (!item.name) {
+				throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);
+			}
+			const boxOpened = boxOpening(item);
+			const newItem = dinoz.player.items.find(item => item.itemId === boxOpened.itemId);
+			if (!newItem) await insertItem(dinoz.player.id, { itemId: boxOpened.itemId, quantity: 1 });
+			else await increaseItemQuantity(dinoz.player.id, boxOpened.itemId, 1);
 			break;
 		default:
 			throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);

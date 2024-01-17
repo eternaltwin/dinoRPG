@@ -66,7 +66,8 @@ export const placeList: Record<
 		name: 'universite',
 		borderPlace: [3, 5, 8],
 		map: MapZone.DINOLAND,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.CUEILLE1,
+		specialGather: GatherType.DAILY
 	},
 	[PlaceEnum.FOUTAINE_DE_JOUVENCE]: {
 		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
@@ -863,14 +864,17 @@ export const placeList: Record<
 	}
 };
 
-export const PlacesByMap = Object.values(placeList).reduce((acc, place) => {
-	const currentMap = acc[place.map];
+export const PlacesByMap = Object.values(placeList).reduce(
+	(acc, place) => {
+		const currentMap = acc[place.map];
 
-	if (currentMap) {
-		currentMap.push(place.placeId);
-	} else {
-		acc[place.map] = [place.placeId];
-	}
+		if (currentMap) {
+			currentMap.push(place.placeId);
+		} else {
+			acc[place.map] = [place.placeId];
+		}
 
-	return acc;
-}, {} as Partial<Record<MapZone, PlaceEnum[]>>);
+		return acc;
+	},
+	{} as Partial<Record<MapZone, PlaceEnum[]>>
+);

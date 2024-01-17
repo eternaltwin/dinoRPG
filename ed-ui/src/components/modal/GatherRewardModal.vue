@@ -10,8 +10,8 @@
 				:alt="ingredient.name"
 			>
 				<template #content>
-					<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
-					<p v-html="formatContent($t(`ingredients.description.${ingredient.name}`))" />
+					<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name?.toLowerCase()}`))" />
+					<p v-html="formatContent($t(`ingredients.description.${ingredient.name?.toLowerCase()}`))" />
 				</template>
 			</Tippy>
 
@@ -20,12 +20,12 @@
 				tag="img"
 				v-for="item in rewardList.item"
 				:key="item.itemId"
-				:src="getImgURL('item', `item_${item.name}`)"
-				:alt="item.name"
+				:src="getImgURL('item', `item_${item.name?.toLowerCase()}`)"
+				:alt="item.name?.toLowerCase()"
 			>
 				<template #content>
-					<h1 v-html="formatContent($t(`item.name.${item.name}`))" />
-					<p v-html="formatContent($t(`item.description.${item.name}`, { quantity: item.price }))" />
+					<h1 v-html="formatContent($t(`item.name.${item.name?.toLowerCase()}`))" />
+					<p v-html="formatContent($t(`item.description.${item.name?.toLowerCase()}`, { quantity: item.price }))" />
 				</template>
 			</Tippy>
 			<a class="button" @click="$emit('close')">
@@ -62,6 +62,7 @@ export default defineComponent({
 			}
 			index++;
 		}
+		this.rewardList.item.map(i => i.name?.toLowerCase());
 	}
 });
 </script>

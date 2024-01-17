@@ -253,6 +253,7 @@ export default defineComponent({
 				case GatherType.LABO:
 				case GatherType.ANNIV:
 				case GatherType.PARTY:
+				case Action.DAILY:
 					this.$router.push({
 						name: 'Gather',
 						params: { dinozId: this.$route.params.id.toString(), type: action.name }

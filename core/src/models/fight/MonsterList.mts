@@ -4,7 +4,6 @@ import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { GameEvent } from '../event/Events.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
 
-
 export enum Monster {
 	JOKERPIGNON = 'JOKERPIGNON',
 	GOUPIGNON = 'GOUPIGNON',
@@ -111,7 +110,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 1,
 		level: 1,
 		zones: [MapZone.ALL],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.GOUPIGNON]: {
 		id: Monster.GOUPIGNON,
@@ -129,7 +128,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 1,
 		zones: [MapZone.DINOLAND],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.WOLF]: {
 		id: Monster.WOLF,
@@ -149,7 +148,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOLAND],
 		groups: [5, 3, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_BITE],
+		skills: [Skill.M_BITE]
 	},
 	[Monster.GLUON]: {
 		id: Monster.GLUON,
@@ -168,7 +167,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
-		skills: [Skill.M_ABSORPTION],
+		skills: [Skill.M_ABSORPTION]
 	},
 	[Monster.GREEN_GIANT]: {
 		id: Monster.GREEN_GIANT,
@@ -187,7 +186,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 14,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
-		skills: [Skill.M_REGENERATION],
+		skills: [Skill.M_REGENERATION]
 	},
 	[Monster.COQDUR]: {
 		id: Monster.COQDUR,
@@ -205,7 +204,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 50,
 		level: 21,
 		zones: [MapZone.DINOLAND],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.PIRASK]: {
 		id: Monster.PIRASK,
@@ -226,7 +225,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		places: [PlaceEnum.CIMETIERE],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_FLIGHT],
+		skills: [Skill.M_FLIGHT]
 	},
 	[Monster.FLAM]: {
 		id: Monster.FLAM,
@@ -247,7 +246,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.GTOUTCHAUD],
 		groups: [0, 3, 1],
 		skills: [Skill.M_RENFORTS],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.GOBLIN]: {
 		id: Monster.GOBLIN,
@@ -265,7 +264,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 5,
 		zones: [MapZone.GTOUTCHAUD],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.BARCHE]: {
 		id: Monster.BARCHE,
@@ -283,7 +282,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 20,
 		level: 10,
 		zones: [MapZone.GTOUTCHAUD],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.COBRA]: {
 		id: Monster.COBRA,
@@ -299,7 +298,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 50,
 		level: 20,
 		zones: [MapZone.GTOUTCHAUD],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.PIRA]: {
 		id: Monster.PIRA,
@@ -317,7 +316,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.ILES],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_FLIGHT],
+		skills: [Skill.M_FLIGHT]
 	},
 	[Monster.KAZKA]: {
 		id: Monster.KAZKA,
@@ -336,7 +335,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 8,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
-		skills: [Skill.M_IMMATERIAL],
+		skills: [Skill.M_IMMATERIAL]
 	},
 	[Monster.ANGUIL]: {
 		id: Monster.ANGUIL,
@@ -353,7 +352,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 18,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
-		skills: [Skill.M_ELECTROCUTION],
+		skills: [Skill.M_ELECTROCUTION]
 	},
 	[Monster.BORG]: {
 		id: Monster.BORG,
@@ -372,7 +371,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 28,
 		zones: [MapZone.ILES],
 		skills: [Skill.M_RESISTANCE],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.KORGON]: {
 		id: Monster.KORGON,
@@ -389,7 +388,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.JUNGLE],
 		groups: [0, 2, 1],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.RONCIV]: {
 		id: Monster.RONCIV,
@@ -409,7 +408,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
 		skills: [Skill.M_PROTECTION],
-		noMove: true,
+		noMove: true
 	},
 	[Monster.BAT]: {
 		id: Monster.BAT,
@@ -428,7 +427,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 20,
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
-		skills: [Skill.M_FLIGHT],
+		skills: [Skill.M_FLIGHT]
 	},
 	[Monster.GRDIEN]: {
 		id: Monster.GRDIEN,
@@ -448,7 +447,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
 		skills: [Skill.M_COMET],
-		noMove: true,
+		noMove: true
 	},
 	[Monster.WORM2]: {
 		id: Monster.WORM2,
@@ -467,7 +466,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 20,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
-		skills: [Skill.M_WORM_2],
+		skills: [Skill.M_WORM_2]
 	},
 	[Monster.WORM]: {
 		id: Monster.WORM,
@@ -485,7 +484,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
 		skills: [Skill.M_WORM],
-		noMove: true,
+		noMove: true
 	},
 	[Monster.SCORP]: {
 		id: Monster.SCORP,
@@ -502,7 +501,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 30,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
-		skills: [Skill.M_STINGER],
+		skills: [Skill.M_STINGER]
 	},
 	[Monster.CACTUS]: {
 		id: Monster.CACTUS,
@@ -522,7 +521,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 12,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
-		skills: [Skill.M_POISONED_PICKS],
+		skills: [Skill.M_POISONED_PICKS]
 	},
 	[Monster.BRIG1_ALL]: {
 		id: Monster.BRIG1_ALL,
@@ -542,7 +541,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.STEPPE],
 		groups: [0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL],
+		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG1_HOME]: {
 		id: Monster.BRIG1_HOME,
@@ -563,7 +562,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		places: [PlaceEnum.TAUDIS_DES_ZAXA],
 		groups: [0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL],
+		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG2_ALL]: {
 		id: Monster.BRIG2_ALL,
@@ -584,7 +583,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.STEPPE],
 		groups: [0, 0, 0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL],
+		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG2_HOME]: {
 		id: Monster.BRIG2_HOME,
@@ -606,7 +605,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		places: [PlaceEnum.CAMP_DES_EMMEMMA],
 		groups: [0, 0, 0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL],
+		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG3_ALL]: {
 		id: Monster.BRIG3_ALL,
@@ -627,7 +626,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.STEPPE],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL],
+		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG3_HOME]: {
 		id: Monster.BRIG3_HOME,
@@ -649,7 +648,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		places: [PlaceEnum.CAMPEMENT_DES_MATTMUT],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL],
+		skills: [Skill.M_STEAL]
 	},
 	[Monster.GROPI]: {
 		id: Monster.GROPI,
@@ -668,7 +667,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.DINOWEST],
 		canBeCaptured: true,
-		skills: [Skill.M_CONTAMINATION],
+		skills: [Skill.M_CONTAMINATION]
 	},
 	[Monster.MIMIC]: {
 		id: Monster.MIMIC,
@@ -686,7 +685,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 35,
 		zones: [MapZone.DINOWEST],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.EARTH2]: {
 		id: Monster.EARTH2,
@@ -704,7 +703,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 15,
 		zones: [MapZone.DINOWEST],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.KORGON_REINFORCEMENT]: {
 		id: Monster.KORGON_REINFORCEMENT,
@@ -722,7 +721,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 0,
 		zones: [MapZone.ALL],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.VEGETOX_GUARD]: {
 		id: Monster.VEGETOX_GUARD,
@@ -744,13 +743,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.PORT_MONSTRUEUX,
 			PlaceEnum.AVANT_POSTE_VEGETOX,
 			PlaceEnum.PALAIX_D_ANTRAXOV,
-			PlaceEnum.CAMP_D_ELITE,
+			PlaceEnum.CAMP_D_ELITE
 		],
-		skills: [
-			Skill.VIGNES,
-			Skill.M_VEGETOX_DEFENDER,
-		],
-		canBeCaptured: true,
+		skills: [Skill.VIGNES, Skill.M_VEGETOX_DEFENDER],
+		canBeCaptured: true
 	},
 	[Monster.VEGETOX_GUARD_2]: {
 		id: Monster.VEGETOX_GUARD_2,
@@ -768,11 +764,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 22,
 		zones: [],
-		skills: [
-			Skill.M_VEGETOX_DEFENDER,
-			Skill.M_INFINITE_REINFORCEMENTS,
-		],
-		canBeCaptured: true,
+		skills: [Skill.M_VEGETOX_DEFENDER, Skill.M_INFINITE_REINFORCEMENTS],
+		canBeCaptured: true
 	},
 	[Monster.FRUTOX_DEFENDER]: {
 		id: Monster.FRUTOX_DEFENDER,
@@ -794,12 +787,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.PORT_MONSTRUEUX,
 			PlaceEnum.AVANT_POSTE_FRUTOX,
 			PlaceEnum.PALAIS_DU_GROTOX,
-			PlaceEnum.FORET_KAZE_KAMI,
+			PlaceEnum.FORET_KAZE_KAMI
 		],
-		skills: [
-			Skill.M_FASTER,
-		],
-		canBeCaptured: true,
+		skills: [Skill.M_FASTER],
+		canBeCaptured: true
 	},
 	[Monster.GORILLOZ_SPIRIT]: {
 		id: Monster.GORILLOZ_SPIRIT,
@@ -817,7 +808,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 0,
 		zones: [MapZone.ALL],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.BAMBOOZ_SPROUTING]: {
 		id: Monster.BAMBOOZ_SPROUTING,
@@ -835,7 +826,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 0,
 		zones: [MapZone.ALL],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.PIGLOUNOU]: {
 		id: Monster.PIGLOUNOU,
@@ -856,7 +847,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
+		events: [GameEvent.CHRISTMAS]
 	},
 	[Monster.PIGLOUBI]: {
 		id: Monster.PIGLOUBI,
@@ -877,7 +868,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
+		events: [GameEvent.CHRISTMAS]
 	},
 	[Monster.PIGLOUGLOU]: {
 		id: Monster.PIGLOUGLOU,
@@ -898,7 +889,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
+		events: [GameEvent.CHRISTMAS]
 	},
 	[Monster.SUPER_PIGLOU]: {
 		id: Monster.SUPER_PIGLOU,
@@ -919,7 +910,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
+		events: [GameEvent.CHRISTMAS]
 	},
 	[Monster.ULTRA_PIGLOU]: {
 		id: Monster.ULTRA_PIGLOU,
@@ -940,7 +931,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
+		events: [GameEvent.CHRISTMAS]
 	},
 	[Monster.FEBREZA]: {
 		id: Monster.FEBREZA,
@@ -961,7 +952,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 100,
 		skills: [Skill.M_FEBREZ],
 		canBeCaptured: false,
-		events: [GameEvent.VALENTINE],
+		events: [GameEvent.VALENTINE]
 	},
 	[Monster.PIRHANOS]: {
 		id: Monster.PIRHANOS,
@@ -981,7 +972,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 15,
 		groups: [0, 0, 1],
 		skills: [Skill.M_FLIGHT],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.PIRHANOS_2]: {
 		id: Monster.PIRHANOS_2,
@@ -1000,7 +991,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 10,
 		skills: [Skill.M_FLIGHT],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.WEREZORE]: {
 		id: Monster.WEREZORE,
@@ -1018,7 +1009,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 30,
 		odds: 100,
 		hp: 30,
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.AMENCIAO]: {
 		id: Monster.AMENCIAO,
@@ -1039,7 +1030,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 30,
 		xpBonus: 5,
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.AMENPENNE]: {
 		id: Monster.AMENPENNE,
@@ -1059,7 +1050,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 30,
 		xpBonus: 5,
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.WILL_O]: {
 		id: Monster.WILL_O,
@@ -1080,7 +1071,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 80,
 		xpBonus: 10,
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.DARK_SMASHROOM]: {
 		id: Monster.DARK_SMASHROOM,
@@ -1098,7 +1089,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 30,
 		zones: [MapZone.ALL],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.DARK_LEECH]: {
 		id: Monster.DARK_LEECH,
@@ -1120,7 +1111,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 15,
 		skills: [Skill.PERCEPTION, Skill.M_RENFORTS],
 		zones: [MapZone.DINOLAND, MapZone.ILES],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.LONG_LEGGED_LEECH]: {
 		id: Monster.LONG_LEGGED_LEECH,
@@ -1142,7 +1133,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 15,
 		skills: [Skill.PERCEPTION, Skill.M_RENFORTS],
 		zones: [MapZone.DINOLAND, MapZone.ILES],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.EARTHWORM_MATRIARCH]: {
 		id: Monster.EARTHWORM_MATRIARCH,
@@ -1159,16 +1150,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 160,
 		odds: 100,
-		skills: [
-			Skill.COQUE,
-			Skill.M_ELECTROCUTION,
-			Skill.M_WORM,
-			Skill.EMBUCHE,
-			Skill.M_WORM_CALL,
-		],
+		skills: [Skill.COQUE, Skill.M_ELECTROCUTION, Skill.M_WORM, Skill.EMBUCHE, Skill.M_WORM_CALL],
 		zones: [],
 		canBeCaptured: true,
-		noMove: true,
+		noMove: true
 	},
 	[Monster.EARTHWORM_BABY]: {
 		id: Monster.EARTHWORM_BABY,
@@ -1185,13 +1170,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 30,
 		odds: 100,
-		skills: [
-			Skill.FOUDRE,
-			Skill.M_WORM,
-		],
+		skills: [Skill.FOUDRE, Skill.M_WORM],
 		zones: [],
 		canBeCaptured: true,
-		noMove: true,
+		noMove: true
 	},
 	[Monster.GROULEM]: {
 		id: Monster.GROULEM,
@@ -1214,7 +1196,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 30,
 		skills: [Skill.M_ELECTROCUTION],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.TW_BIGBEASTLY_1]: {
 		id: Monster.TW_BIGBEASTLY_1,
@@ -1234,7 +1216,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 0,
 		skills: [Skill.M_DISABLE],
 		zones: [],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.STINGOZ]: {
 		id: Monster.STINGOZ,
@@ -1253,7 +1235,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_STINGER],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.SCORPWINK_THIEF]: {
 		id: Monster.SCORPWINK_THIEF,
@@ -1270,15 +1252,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 1000,
 		odds: 100,
-		skills: [
-			Skill.M_STEAL,
-			Skill.ATTAQUE_ECLAIR,
-			Skill.CELERITE,
-			Skill.M_STINGER,
-			Skill.M_FLEE,
-		],
+		skills: [Skill.M_STEAL, Skill.ATTAQUE_ECLAIR, Skill.CELERITE, Skill.M_STINGER, Skill.M_FLEE],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.SCORPWINK_THIEF_2]: {
 		id: Monster.SCORPWINK_THIEF_2,
@@ -1295,13 +1271,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 50,
 		odds: 100,
-		skills: [
-			Skill.M_STEAL,
-			Skill.ATTAQUE_ECLAIR,
-			Skill.M_STINGER,
-		],
+		skills: [Skill.M_STEAL, Skill.ATTAQUE_ECLAIR, Skill.M_STINGER],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.TRIPOU_THE_SOFTY]: {
 		id: Monster.TRIPOU_THE_SOFTY,
@@ -1318,13 +1290,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 9999,
 		odds: 100,
-		skills: [
-			Skill.M_INSTANT_FLEE,
-			Skill.EMBUCHE,
-		],
+		skills: [Skill.M_INSTANT_FLEE, Skill.EMBUCHE],
 		xp: 1,
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.EMMEMA_BANDIT]: {
 		id: Monster.EMMEMA_BANDIT,
@@ -1341,13 +1310,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 9999,
 		odds: 100,
-		skills: [
-			Skill.M_INSTANT_FLEE,
-			Skill.EMBUCHE,
-		],
+		skills: [Skill.M_INSTANT_FLEE, Skill.EMBUCHE],
 		xp: 1,
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.MERGUEZ_THIEF]: {
 		id: Monster.MERGUEZ_THIEF,
@@ -1364,12 +1330,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 50,
 		odds: 100,
-		skills: [
-			Skill.M_STEAL
-		],
+		skills: [Skill.M_STEAL],
 		xp: 10,
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.BARATRIBOR]: {
 		id: Monster.BARATRIBOR,
@@ -1386,11 +1350,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 70,
 		odds: 100,
-		skills: [
-			Skill.COUP_DOUBLE,
-		],
+		skills: [Skill.COUP_DOUBLE],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.ELEMENTAL_DISCIPLE]: {
 		id: Monster.ELEMENTAL_DISCIPLE,
@@ -1407,11 +1369,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 20,
 		hp: 200,
 		odds: 100,
-		skills: [
-			Skill.M_ELEMENTAL_DISCIPLE,
-		],
+		skills: [Skill.M_ELEMENTAL_DISCIPLE],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.MINIMOUK]: {
 		id: Monster.MINIMOUK,
@@ -1429,11 +1389,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 10,
 		groups: [0, 1, 6, 2, 1],
 		odds: 100,
-		skills: [
-			Skill.M_ALL_FOR_ONE,
-		],
+		skills: [Skill.M_ALL_FOR_ONE],
 		zones: [MapZone.ILEMONSTRE],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.MINIMOUK_2]: {
 		id: Monster.MINIMOUK_2,
@@ -1451,12 +1409,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 10,
 		groups: [0, 1, 6, 2, 1],
 		odds: 0,
-		skills: [
-			Skill.M_ALL_FOR_ONE,
-		],
+		skills: [Skill.M_ALL_FOR_ONE],
 		xp: 3,
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.MOUKTIZ]: {
 		id: Monster.MOUKTIZ,
@@ -1473,12 +1429,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 60,
 		hp: 30,
 		odds: 100,
-		skills: [
-			Skill.M_UNTOUCHABLE,
-			Skill.M_INITIATIVE_RESET,
-		],
+		skills: [Skill.M_UNTOUCHABLE, Skill.M_INITIATIVE_RESET],
 		zones: [MapZone.ILEMONSTRE],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.MANTOOZE]: {
 		id: Monster.MANTOOZE,
@@ -1495,12 +1448,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 10,
 		hp: 50,
 		odds: 100,
-		skills: [
-			Skill.M_LAST_BREATH,
-			Skill.M_HEAL_GROUP,
-		],
+		skills: [Skill.M_LAST_BREATH, Skill.M_HEAL_GROUP],
 		zones: [MapZone.ILEMONSTRE],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.FRUKOPTER]: {
 		id: Monster.FRUKOPTER,
@@ -1517,11 +1467,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 15,
 		hp: 70,
 		odds: 100,
-		skills: [
-			Skill.M_FRUKOPTER_FLIGHT,
-		],
+		skills: [Skill.M_FRUKOPTER_FLIGHT],
 		zones: [MapZone.ILEMONSTRE],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.DEMYOM]: {
 		id: Monster.DEMYOM,
@@ -1538,14 +1486,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 15,
 		hp: 100,
 		odds: 5,
-		skills: [
-		],
+		skills: [],
 		zones: [],
-		places: [
-			PlaceEnum.FORET_KAZE_KAMI,
-			PlaceEnum.CAMP_D_ELITE,
-		],
-		canBeCaptured: true,
+		places: [PlaceEnum.FORET_KAZE_KAMI, PlaceEnum.CAMP_D_ELITE],
+		canBeCaptured: true
 	},
 	[Monster.DEMYOM_RUINS]: {
 		id: Monster.DEMYOM_RUINS,
@@ -1562,13 +1506,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 15,
 		hp: 100,
 		odds: 10,
-		skills: [
-		],
+		skills: [],
 		zones: [],
-		places: [
-			PlaceEnum.RUINES_DE_CUSCOUZ,
-		],
-		canBeCaptured: true,
+		places: [PlaceEnum.RUINES_DE_CUSCOUZ],
+		canBeCaptured: true
 	},
 	[Monster.DEMYOM_2]: {
 		id: Monster.DEMYOM_2,
@@ -1585,13 +1526,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 15,
 		hp: 30,
 		odds: 10,
-		skills: [
-		],
+		skills: [],
 		zones: [],
-		places: [
-			PlaceEnum.RUINES_DE_CUSCOUZ,
-		],
-		canBeCaptured: true,
+		places: [PlaceEnum.RUINES_DE_CUSCOUZ],
+		canBeCaptured: true
 	},
 	[Monster.RAPACARAPACE]: {
 		id: Monster.RAPACARAPACE,
@@ -1608,12 +1546,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 150,
 		odds: 0,
-		skills: [
-			Skill.M_TORNADO,
-			Skill.M_AIR_BLADE,
-		],
+		skills: [Skill.M_TORNADO, Skill.M_AIR_BLADE],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.RAPACARAPACE_2]: {
 		id: Monster.RAPACARAPACE_2,
@@ -1630,12 +1565,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 0,
 		hp: 115,
 		odds: 0,
-		skills: [
-			Skill.M_TORNADO,
-			Skill.M_AIR_BLADE,
-		],
+		skills: [Skill.M_TORNADO, Skill.M_AIR_BLADE],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.BAOBOB]: {
 		id: Monster.BAOBOB,
@@ -1661,10 +1593,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.SOUFFLE_ARDENT,
 			Skill.SALAMANDRE,
 			Skill.DELUGE,
-			Skill.BULLE,
+			Skill.BULLE
 		],
 		zones: [],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.SOLDIER]: {
 		id: Monster.SOLDIER,
@@ -1683,9 +1615,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 4,
 		odds: 100,
 		groups: [1, 2],
-		skills: [
-			Skill.PERCEPTION,
-		],
+		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
 			PlaceEnum.TETE_DE_L_ILE,
@@ -1693,9 +1623,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.CITE_ARBORIS,
 			PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR,
 			PlaceEnum.CHUTES_DE_NIRVANA,
-			PlaceEnum.LAC_CELESTE,
+			PlaceEnum.LAC_CELESTE
 		],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.CAPITAIN]: {
 		id: Monster.CAPITAIN,
@@ -1714,16 +1644,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 5,
 		odds: 100,
 		groups: [0, 4, 2],
-		skills: [
-			Skill.SANS_PITIE,
-		],
+		skills: [Skill.SANS_PITIE],
 		zones: [],
-		places: [
-			PlaceEnum.CITE_ARBORIS,
-			PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR,
-			PlaceEnum.PRIRANESE,
-		],
-		canBeCaptured: false,
+		places: [PlaceEnum.CITE_ARBORIS, PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR, PlaceEnum.PRIRANESE],
+		canBeCaptured: false
 	},
 	[Monster.ECURENNE]: {
 		id: Monster.ECURENNE,
@@ -1742,9 +1666,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 3,
 		odds: 100,
 		groups: [0, 1, 1],
-		skills: [
-			Skill.PERCEPTION,
-		],
+		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
 			PlaceEnum.TETE_DE_L_ILE,
@@ -1756,9 +1678,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.PLAINES_ENNEIGEES,
 			PlaceEnum.BOIS_GIVRES,
 			PlaceEnum.CHEMIN_OBSERVATOIRE,
-			PlaceEnum.OBSERVATOIRE,
+			PlaceEnum.OBSERVATOIRE
 		],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.GROMSTER]: {
 		id: Monster.GROMSTER,
@@ -1777,9 +1699,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 3,
 		odds: 100,
 		groups: [0, 3, 5],
-		skills: [
-			Skill.PERCEPTION,
-		],
+		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
 			PlaceEnum.TETE_DE_L_ILE,
@@ -1790,9 +1710,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.LAC_CELESTE,
 			PlaceEnum.GO_TO_CELESTIAL_ISLAND,
 			PlaceEnum.CHEMIN_OBSERVATOIRE,
-			PlaceEnum.OBSERVATOIRE,
+			PlaceEnum.OBSERVATOIRE
 		],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.PINK_GROMSTER]: {
 		id: Monster.PINK_GROMSTER,
@@ -1811,18 +1731,16 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 6,
 		odds: 100,
 		groups: [2, 5],
-		skills: [
-			Skill.PERCEPTION,
-		],
+		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
 			PlaceEnum.PONT,
 			PlaceEnum.CHUTES_DE_NIRVANA,
 			PlaceEnum.LAC_CELESTE,
 			PlaceEnum.AILE_OUEST_DU_DRAGON,
-			PlaceEnum.SOMMET_DU_MONT_SACRE,
+			PlaceEnum.SOMMET_DU_MONT_SACRE
 		],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.SNOW_GROMSTER]: {
 		id: Monster.SNOW_GROMSTER,
@@ -1841,17 +1759,15 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 5,
 		xp: 18,
 		odds: 40,
-		skills: [
-			Skill.COUP_DOUBLE,
-		],
+		skills: [Skill.COUP_DOUBLE],
 		zones: [],
 		places: [
 			PlaceEnum.MONT_SACRE_D_EVEROUEST,
 			PlaceEnum.SOMMET_DU_MONT_SACRE,
 			PlaceEnum.BOIS_GIVRES,
-			PlaceEnum.PLAINES_ENNEIGEES,
+			PlaceEnum.PLAINES_ENNEIGEES
 		],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.CHIMCHEREE]: {
 		id: Monster.CHIMCHEREE,
@@ -1869,14 +1785,13 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 140,
 		xp: 40,
 		odds: 100,
-		skills: [
-		],
+		skills: [],
 		zones: [],
 		places: [
-			PlaceEnum.PORTES_DE_CAUSHEMESH,
+			PlaceEnum.PORTES_DE_CAUSHEMESH
 			// TODO: Add caushemesh places
 		],
-		canBeCaptured: false,
+		canBeCaptured: false
 	},
 	[Monster.LAPOUF]: {
 		id: Monster.LAPOUF,
@@ -1895,9 +1810,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xpBonus: 4,
 		odds: 100,
 		groups: [0, 5, 3],
-		skills: [
-			Skill.PERCEPTION
-		],
+		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
 			PlaceEnum.TETE_DE_L_ILE,
@@ -1910,9 +1823,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.BOIS_GIVRES,
 			PlaceEnum.SOMMET_DU_MONT_SACRE,
 			PlaceEnum.CHEMIN_OBSERVATOIRE,
-			PlaceEnum.OBSERVATOIRE,
+			PlaceEnum.OBSERVATOIRE
 		],
-		canBeCaptured: true,
+		canBeCaptured: true
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,
@@ -1930,6 +1843,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 1,
 		level: 100,
 		zones: [MapZone.NOWHERE],
-		canBeCaptured: true,
+		canBeCaptured: true
 	}
 };

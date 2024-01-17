@@ -1,4 +1,4 @@
-import { Skill, skillList } from "./SkillList.mjs";
+import { Skill, skillList } from './SkillList.mjs';
 
 const getSkillLevel = (skill: Skill) => {
 	let level = skill === Skill.LIMITE_BRISEE ? 10 : 1;
@@ -13,7 +13,10 @@ const getSkillLevel = (skill: Skill) => {
 	return level;
 };
 
-export const SkillLevel = Object.values(skillList).reduce((acc, skill) => {
-	acc[skill.id] = getSkillLevel(skill.id);
-	return acc;
-}, {} as Record<Skill, number>);
+export const SkillLevel = Object.values(skillList).reduce(
+	(acc, skill) => {
+		acc[skill.id] = getSkillLevel(skill.id);
+		return acc;
+	},
+	{} as Record<Skill, number>
+);
