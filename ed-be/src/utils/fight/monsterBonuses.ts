@@ -209,6 +209,10 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.CAPITAIN]: (monster) => {
 		cyclo(monster);
 	},
+	[Monster.ECURENNE]: (monster) => {
+		monster.stats.special.evasion *= 1.15;
+		monster.stats.special.multihit *= 1.3;
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},

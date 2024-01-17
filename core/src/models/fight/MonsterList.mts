@@ -84,6 +84,7 @@ export enum Monster {
 	BAOBOB = 'BAOBOB',
 	SOLDIER = 'SOLDIER',
 	CAPITAIN = 'CAPITAIN',
+	ECURENNE = 'ECURENNE',
 	ANY = 'ANY'
 }
 
@@ -1718,6 +1719,41 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.PRIRANESE,
 		],
 		canBeCaptured: false,
+	},
+	[Monster.ECURENNE]: {
+		id: Monster.ECURENNE,
+		name: 'ecu',
+		level: 37,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 40,
+		hp: 65,
+		xpBonus: 3,
+		odds: 100,
+		groups: [0, 1, 1],
+		skills: [
+			Skill.PERCEPTION,
+		],
+		zones: [],
+		places: [
+			PlaceEnum.TETE_DE_L_ILE,
+			PlaceEnum.PONT,
+			PlaceEnum.CHUTES_DE_NIRVANA,
+			PlaceEnum.LAC_CELESTE,
+			PlaceEnum.AILE_OUEST_DU_DRAGON,
+			PlaceEnum.MONT_SACRE_D_EVEROUEST,
+			PlaceEnum.PLAINES_ENNEIGEES,
+			PlaceEnum.BOIS_GIVRES,
+			PlaceEnum.CHEMIN_OBSERVATOIRE,
+			PlaceEnum.OBSERVATOIRE,
+		],
+		canBeCaptured: true,
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,
