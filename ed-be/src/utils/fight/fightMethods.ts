@@ -1958,7 +1958,8 @@ const activateSkill = (
 		case Skill.MISTRAL:
 		//MONSTER
 		case Skill.M_COMET:
-		case Skill.M_VENERABLE: {
+		case Skill.M_VENERABLE:
+		case Skill.M_GRIZOU: {
 			targetAllOpponents(fightData, fighter, skill, step);
 			break;
 		}

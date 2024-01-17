@@ -81,6 +81,14 @@ export const getDamage = (
 
 				break;
 			}
+			// M_GRIZOU
+			case Skill.M_GRIZOU: {
+				const power = attacker.stats.base[ElementType.VOID];
+
+				attack += power;
+
+				break;
+			}
 			// Handle by default skills as an offensive skill with a list of element powers
 			default: {
 				const skillAttack = SkillAttacks[skill];

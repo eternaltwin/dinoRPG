@@ -277,7 +277,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Boss.BEHEMOUNT]: (monster) => {
 		monster.status.push(createStatus(Status.NO_DEATH));
 	},
-	[Boss.SERPETHER]: (monster) => {
+	[Boss.SERPETHER_2]: (monster) => {
 		monster.status.push(createStatus(Status.NO_DEATH));
 	},
 };

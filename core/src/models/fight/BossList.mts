@@ -32,6 +32,13 @@ export enum Boss {
 	GROTOX = 'GROTOX',
 	BEHEMOUNT = 'BEHEMOUNT',
 	SERPETHER = 'SERPETHER',
+	SERPETHER_2 = 'SERPETHER_2',
+	MUTATED_MORG = 'MUTATED_MORG',
+	GRIZORG = 'GRIZORG',
+	GRIZOU = 'GRIZOU',
+	MUTATED_GRIZORG = 'MUTATED_GRIZORG',
+	ULTIMATE_GRIZORG = 'ULTIMATE_GRIZORG',
+	SOFIA = 'SOFIA',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -646,6 +653,32 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.SERPETHER]: {
 		id: Boss.SERPETHER,
+		name: 'serpe',
+		level: 75,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 110,
+		hp: 1000,
+		xp: 500,
+		odds: 100,
+		noMove: true,
+		skills: [
+			Skill.M_GRIZOU,
+			Skill.CELERITE,
+			Skill.COUP_DOUBLE,
+			Skill.SOURCE_DE_VIE
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.SERPETHER_2]: {
+		id: Boss.SERPETHER_2,
 		name: 'serpe2',
 		level: 75,
 		elements: {
@@ -661,6 +694,148 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		noMove: true,
 		skills: [
+			Skill.M_GRIZOU,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.MUTATED_MORG]: {
+		id: Boss.MUTATED_MORG,
+		name: 'morg2',
+		level: 60,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 55,
+		bonus_defense: 100,
+		hp: 800,
+		xp: 500,
+		odds: 100,
+		noMove: true,
+		skills: [
+			Skill.M_GRIZOU
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.GRIZORG]: {
+		id: Boss.GRIZORG,
+		name: 'grizor',
+		level: 80,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 65,
+		bonus_defense: 90,
+		hp: 700,
+		xp: 0,
+		gold: 0,
+		odds: 100,
+		noMove: true,
+		skills: [
+			Skill.M_GRIZOU
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.GRIZOU]: {
+		id: Boss.GRIZOU,
+		name: 'grizou',
+		level: 80,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 200,
+		bonus_defense: 400,
+		hp: 1000,
+		xp: 0,
+		gold: 0,
+		odds: 100,
+		noMove: true,
+		skills: [
+			Skill.M_GRIZOU
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.MUTATED_GRIZORG]: {
+		id: Boss.MUTATED_GRIZORG,
+		name: 'grizo2',
+		level: 90,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 120,
+		bonus_defense: 150,
+		hp: 1200,
+		xp: 0,
+		gold: 0,
+		odds: 100,
+		noMove: true,
+		skills: [
+			Skill.M_GRIZOU
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.ULTIMATE_GRIZORG]: {
+		id: Boss.ULTIMATE_GRIZORG,
+		name: 'grizo3',
+		level: 99,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 150,
+		bonus_defense: 150,
+		hp: 1800,
+		xp: 0,
+		gold: 0,
+		odds: 100,
+		noMove: true,
+		skills: [
+			Skill.M_GRIZOU
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.SOFIA]: {
+		id: Boss.SOFIA,
+		name: 'sofia',
+		level: 85,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 250,
+		bonus_defense: 100,
+		hp: 5000,
+		odds: 100,
+		noMove: true,
+		skills: [
+			Skill.M_GRIZOU
 		],
 		zones: [],
 		canBeCaptured: false,
