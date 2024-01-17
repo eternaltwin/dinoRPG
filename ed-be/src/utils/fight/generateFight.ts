@@ -10,6 +10,7 @@ import { addStatus, applyStrategy, checkDeaths, getLimitedRandomOpponent, hasSta
 import { getBasicElementDamage } from "./getDamage.js";
 import randomBetween from "./randomBetween.js";
 import { statusList } from "@drpg/core/models/dinoz/StatusList";
+import { Monster, monsterList } from "@drpg/core/models/fight/MonsterList";
 
 export type DetailedFight = {
 	place: PlaceEnum,
@@ -221,6 +222,8 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 
 	const winner = fightData.loser === 'defenders';
 
+	const baoExists = fightData.fighters.some((fighter) => fighter.type === 'monster' && fighter.name === monsterList[Monster.BAOBOB].name);
+
 	// After fight regeneration
 	fightData.fighters.forEach((fighter) => {
 		// No heal if dead
@@ -247,6 +250,11 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				// Heal 2-6HP
 				heal(fightData, ally, randomBetween(2, 6));
 			}
+		}
+
+		if (baoExists && fighter.attacker) {
+			// Regen to starting HP
+			heal(fightData, fighter, fighter.startingHp - fighter.hp);
 		}
 	});
 

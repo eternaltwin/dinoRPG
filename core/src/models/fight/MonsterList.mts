@@ -81,6 +81,7 @@ export enum Monster {
 	DEMYOM_2 = 'DEMYOM_2',
 	RAPACARAPACE = 'RAPACARAPACE',
 	RAPACARAPACE_2 = 'RAPACARAPACE_2',
+	BAOBOB = 'BAOBOB',
 	ANY = 'ANY'
 }
 
@@ -1624,6 +1625,35 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [
 			Skill.M_TORNADO,
 			Skill.M_AIR_BLADE,
+		],
+		zones: [],
+		canBeCaptured: true,
+	},
+	[Monster.BAOBOB]: {
+		id: Monster.BAOBOB,
+		name: 'bao',
+		level: 70,
+		elements: {
+			fire: 50,
+			wood: 50,
+			water: 50,
+			lightning: 50,
+			air: 50
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		hp: 6500,
+		xp: 0,
+		gold: 0,
+		odds: 0,
+		skills: [
+			Skill.CELERITE,
+			Skill.ATTAQUE_ECLAIR,
+			Skill.FOUDRE,
+			Skill.SOUFFLE_ARDENT,
+			Skill.SALAMANDRE,
+			Skill.DELUGE,
+			Skill.BULLE,
 		],
 		zones: [],
 		canBeCaptured: true,
