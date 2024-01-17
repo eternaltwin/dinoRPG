@@ -143,7 +143,7 @@ export async function buyItem(req: Request) {
 		playerShopData.merchant && theShop.shopId === shopList.FLYING_SHOP.shopId
 			? Math.round(itemSold.price * 0.9)
 			: itemSold.price;
-	itemReference.quantity = playerItemData ? quantityBought + playerItemData.quantity : quantityBought;
+	itemReference.quantity = playerItemData ? playerItemData.quantity : quantityBought;
 	// ShopKeeper does not work for magical items
 	itemReference.maxQuantity =
 		playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
@@ -175,7 +175,7 @@ export async function buyItem(req: Request) {
 	// Update entry if it already exists
 	// Note: itemToBuy can be re-used here regardless of the type of shop and item
 	if (playerItemData) {
-		await increaseItemQuantity(playerId, itemReference.itemId, itemReference.quantity);
+		await increaseItemQuantity(playerId, itemReference.itemId, itemReference.quantity + quantityBought <= itemReference.maxQuantity ? quantityBought : itemReference.maxQuantity - itemReference.quantity);
 	}
 	// Else create it
 	else {
