@@ -33,11 +33,14 @@ export enum Boss {
 	BEHEMOUNT = 'BEHEMOUNT',
 	SERPETHER = 'SERPETHER',
 	SERPETHER_2 = 'SERPETHER_2',
+	MORG = 'MORG',
+	MORG_2 = 'MORG_2',
 	MUTATED_MORG = 'MUTATED_MORG',
 	GRIZORG = 'GRIZORG',
 	GRIZOU = 'GRIZOU',
 	MUTATED_GRIZORG = 'MUTATED_GRIZORG',
 	ULTIMATE_GRIZORG = 'ULTIMATE_GRIZORG',
+	CHIEF_DOROGON = 'CHIEF_DOROGON',
 	SOFIA = 'SOFIA',
 }
 
@@ -699,6 +702,54 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 	},
+	[Boss.MORG]: {
+		id: Boss.MORG,
+		name: 'morg',
+		level: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 90,
+		hp: 500,
+		xp: 400,
+		odds: 100,
+		skills: [
+			Skill.FEU_DE_ST_ELME,
+			Skill.FOCUS,
+			Skill.CELERITE,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.MORG_2]: {
+		id: Boss.MORG_2,
+		name: 'morgu',
+		level: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 90,
+		hp: 500,
+		xpBonus: 10,
+		odds: 100,
+		skills: [
+			Skill.FEU_DE_ST_ELME,
+			Skill.FOCUS,
+			Skill.CELERITE,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
 	[Boss.MUTATED_MORG]: {
 		id: Boss.MUTATED_MORG,
 		name: 'morg2',
@@ -836,6 +887,30 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		noMove: true,
 		skills: [
 			Skill.M_GRIZOU
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.CHIEF_DOROGON]: {
+		id: Boss.CHIEF_DOROGON,
+		name: 'dorou',
+		level: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 55,
+		bonus_defense: 85,
+		hp: 450,
+		xpBonus: 10,
+		odds: 100,
+		skills: [
+			Skill.FEU_DE_ST_ELME,
+			Skill.FOCUS,
+			Skill.CELERITE,
 		],
 		zones: [],
 		canBeCaptured: false,
