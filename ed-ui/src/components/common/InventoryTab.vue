@@ -162,6 +162,9 @@ export default defineComponent({
 					if (item.effect && item.effect.category === ItemEffect.SPECIAL && item.effect.value === 'rice') {
 						EventBus.emit('refreshDinoz', true);
 					}
+					if (item.effect && item.effect.category === ItemEffect.RESURRECT) {
+						EventBus.emit('refreshDinoz', true);
+					}
 				} catch (error) {
 					errorHandler.handle(error);
 					return;
