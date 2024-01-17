@@ -938,6 +938,10 @@ export async function followDinoz(req: Request) {
 		throw new ErrorFormator(500, 'Player does not own this dinoz');
 	}
 
+	if (dinoz.placeId !== leader.placeId) {
+		throw new ErrorFormator(500, 'Dinoz should be at the same place.');
+	}
+
 	// Update dinoz
 	await updateDinoz(dinozId, { leader: { connect: { id: dinozToFollowId } } });
 }
