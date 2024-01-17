@@ -76,6 +76,9 @@ export enum Monster {
 	MOUKTIZ = 'MOUKTIZ',
 	MANTOOZE = 'MANTOOZE',
 	FRUKOPTER = 'FRUKOPTER',
+	DEMYOM = 'DEMYOM',
+	DEMYOM_RUINS = 'DEMYOM_RUINS',
+	DEMYOM_2 = 'DEMYOM_2',
 	ANY = 'ANY'
 }
 
@@ -1507,6 +1510,76 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.M_FRUKOPTER_FLIGHT,
 		],
 		zones: [MapZone.ILEMONSTRE],
+		canBeCaptured: true,
+	},
+	[Monster.DEMYOM]: {
+		id: Monster.DEMYOM,
+		name: 'singmu',
+		level: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 15,
+		hp: 100,
+		odds: 5,
+		skills: [
+		],
+		zones: [],
+		places: [
+			PlaceEnum.FORET_KAZE_KAMI,
+			PlaceEnum.CAMP_D_ELITE,
+		],
+		canBeCaptured: true,
+	},
+	[Monster.DEMYOM_RUINS]: {
+		id: Monster.DEMYOM_RUINS,
+		name: 'singmu',
+		level: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 15,
+		hp: 100,
+		odds: 10,
+		skills: [
+		],
+		zones: [],
+		places: [
+			PlaceEnum.RUINES_DE_CUSCOUZ,
+		],
+		canBeCaptured: true,
+	},
+	[Monster.DEMYOM_2]: {
+		id: Monster.DEMYOM_2,
+		name: 'singm2',
+		level: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 15,
+		hp: 30,
+		odds: 10,
+		skills: [
+		],
+		zones: [],
+		places: [
+			PlaceEnum.RUINES_DE_CUSCOUZ,
+		],
 		canBeCaptured: true,
 	},
 	[Monster.ANY]: {

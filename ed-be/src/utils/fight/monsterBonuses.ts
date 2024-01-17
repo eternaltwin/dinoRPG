@@ -63,6 +63,11 @@ const ggoupi = (monster: DetailedFighter) => {
 	monster.status.push(createStatus(Status.NO_POISON));
 };
 
+const singmu = (monster: DetailedFighter) => {
+	monster.stats.special.multihit *= 1.5;
+	monster.stats.speed.global *= 0.3;
+};
+
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
 	const skill = monster.skills.find((skill) => skill.id === skillId);
 
@@ -183,6 +188,15 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.FRUKOPTER]: (monster) => {
 		monster.time -= 15 * TIME_FACTOR;
 		monster.status.push(createStatus(Status.KEEP_FLYING));
+	},
+	[Monster.DEMYOM]: (monster) => {
+		singmu(monster);
+	},
+	[Monster.DEMYOM_RUINS]: (monster) => {
+		singmu(monster);
+	},
+	[Monster.DEMYOM_2]: (monster) => {
+		singmu(monster);
 	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
