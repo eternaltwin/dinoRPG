@@ -35,6 +35,7 @@ export enum Status {
 	NO_POISON = 'noPoison',
 	NO_CURSE = 'noCurse',
 	KEEP_FLYING = 'keepFlying',
+	NO_DEATH = 'noDeath',
 	// Items
 	CURED = 'cured',
 	BEER = 'beer',

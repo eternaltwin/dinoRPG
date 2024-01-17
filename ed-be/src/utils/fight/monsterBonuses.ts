@@ -236,4 +236,10 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Boss.GROTOX]: (monster) => {
 		monster.stats.speed.global *= 0.4;
 	},
+	[Boss.BEHEMOUNT]: (monster) => {
+		monster.status.push(createStatus(Status.NO_DEATH));
+	},
+	[Boss.SERPETHER]: (monster) => {
+		monster.status.push(createStatus(Status.NO_DEATH));
+	},
 };

@@ -3686,6 +3686,19 @@ export const checkDeaths = (
 				};
 			}
 
+			// NO_DEATH
+			if (hasStatus(fighter, Status.NO_DEATH)) {
+				// Add leave step
+				fightData.steps.push({
+					action: 'leave',
+					fighter: stepFighter(fighter),
+				});
+
+				fighter.escaped = true;
+
+				continue;
+			}
+
 			// Add death step
 			fightData.steps.push({
 				action: 'death',

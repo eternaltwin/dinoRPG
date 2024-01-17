@@ -30,6 +30,8 @@ export enum Boss {
 	BIO_METALIC_LEECH = 'BIO_METALIC_LEECH',
 	DEMYOM_DEFENDER = 'DEMYOM_DEFENDER',
 	GROTOX = 'GROTOX',
+	BEHEMOUNT = 'BEHEMOUNT',
+	SERPETHER = 'SERPETHER',
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -618,6 +620,47 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		skills: [
 			Skill.M_BOOM,
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.BEHEMOUNT]: {
+		id: Boss.BEHEMOUNT,
+		name: 'behem2',
+		level: 75,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 80,
+		bonus_defense: 120,
+		hp: 500,
+		odds: 100,
+		skills: [
+		],
+		zones: [],
+		canBeCaptured: false,
+	},
+	[Boss.SERPETHER]: {
+		id: Boss.SERPETHER,
+		name: 'serpe2',
+		level: 75,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 70,
+		bonus_defense: 120,
+		hp: 1000,
+		odds: 100,
+		noMove: true,
+		skills: [
 		],
 		zones: [],
 		canBeCaptured: false,
