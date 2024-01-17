@@ -49,13 +49,13 @@ export async function processFight(req: Request) {
 		player: dinozData.player
 	}));
 
-	const deadFollowers = followers.filter(d => d.life <= 0)
+	const deadFollowers = followers.filter(d => d.life <= 0);
 
 	if (deadFollowers.length > 0) {
 		for (const d of deadFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
-		followers = followers.filter(d => d.life > 0)
+		followers = followers.filter(d => d.life > 0);
 	}
 
 	const team = [dinozData, ...followers];

@@ -3,7 +3,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { addBid, deleteOffer, getOffer, getOffers, insertOffer, updateOfferStatus } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { updateDinoz } from '../dao/dinozDao.js';
+import { getDinozPlace, updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
 import {
 	decreaseIngredientQuantity,
@@ -16,6 +16,7 @@ import { scheduleJob } from 'node-schedule';
 import { sendDiscord } from '../utils/discord.js';
 import { ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 /**
  * Get the list of current offers
@@ -65,6 +66,10 @@ export async function createOffer(req: Request) {
 
 		if (!owns) {
 			throw new ErrorFormator(500, 'invalidDinoz');
+		}
+		const dinozPlace = await getDinozPlace(dinozId);
+		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
+			throw new ErrorFormator(500, 'Dinoz is not at the right place to do this.');
 		}
 	}
 

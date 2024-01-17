@@ -88,6 +88,17 @@ export async function getCanDinozChangeName(dinozId: number) {
 	return dinoz;
 }
 
+export async function getDinozPlace(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			placeId: true
+		}
+	});
+	return dinoz;
+}
+
 export async function getDinozFicheRequest(dinozId: number) {
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
