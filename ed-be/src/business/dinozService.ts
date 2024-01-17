@@ -929,6 +929,10 @@ export async function followDinoz(req: Request) {
 		throw new ErrorFormator(500, 'Dinoz cannot be followed by any dinoz');
 	}
 
+	if (dinoz.leaderId || dinoz.followers.length > 0) {
+		throw new ErrorFormator(500, 'Dinoz is already following another dinoz.');
+	}
+
 	if (dinoz.skills.some(s => s.skillId === Skill.BRAVE) || leader.skills.some(s => s.skillId === Skill.BRAVE)) {
 		throw new ErrorFormator(500, 'Dinoz cannot follow any dinoz');
 	}
