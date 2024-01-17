@@ -180,6 +180,10 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.FRUTOX_DEFENDER]: (monster) => {
 		monster.time -= 20 * TIME_FACTOR;
 	},
+	[Monster.FRUKOPTER]: (monster) => {
+		monster.time -= 15 * TIME_FACTOR;
+		monster.status.push(createStatus(Status.KEEP_FLYING));
+	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},

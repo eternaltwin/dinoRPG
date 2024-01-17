@@ -1431,6 +1431,22 @@ const activateEvent = (
 				});
 				break;
 			}
+			case Skill.M_FRUKOPTER_FLIGHT: {
+				// Get non flying allies
+				const nonFlyingAllies = getAllies(fightData, fighter)
+					.filter((f) => !hasStatus(f, Status.FLYING));
+
+				if (!nonFlyingAllies.length) {
+					return cancel();
+				}
+
+				// Get random ally
+				const ally = nonFlyingAllies[randomBetween(0, nonFlyingAllies.length - 1)];
+
+				// Add status
+				addStatus(fightData, ally, Status.FLYING);
+				break;
+			}
 			default:
 				// Remove last step
 				fightData.steps.pop();
@@ -3608,6 +3624,11 @@ const attack = (
 
 				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
 			}
+		}
+
+		// Cancel FLYING
+		if (!hasStatus(attacker, Status.KEEP_FLYING)) {
+			removeStatus(fightData, attacker, Status.FLYING);
 		}
 	}
 

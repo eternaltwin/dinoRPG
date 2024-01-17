@@ -338,6 +338,7 @@ export enum Skill {
 	M_DEMYOM_ATTACK = 99940,
 	M_DEMYOM_HEAL = 99941,
 	M_BOOM = 99942,
+	M_FRUKOPTER_FLIGHT = 99943,
 	M_FEBREZ = 99948,
 }
 
@@ -4957,6 +4958,19 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 2,
 		probability: 30,
+	},
+	[Skill.M_FRUKOPTER_FLIGHT]: {
+		id: Skill.M_FRUKOPTER_FLIGHT,
+		name: 'FrukopterFlight',
+		type: SkillType.E,
+		energy: Energy.E20,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 10,
+		probability: 60,
 	},
 	[Skill.M_FEBREZ]: {
 		id: Skill.M_FEBREZ,

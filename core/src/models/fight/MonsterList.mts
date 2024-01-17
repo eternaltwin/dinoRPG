@@ -75,6 +75,7 @@ export enum Monster {
 	MINIMOUK_2 = 'MINIMOUK_2',
 	MOUKTIZ = 'MOUKTIZ',
 	MANTOOZE = 'MANTOOZE',
+	FRUKOPTER = 'FRUKOPTER',
 	ANY = 'ANY'
 }
 
@@ -1483,6 +1484,27 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [
 			Skill.M_LAST_BREATH,
 			Skill.M_HEAL_GROUP,
+		],
+		zones: [MapZone.ILEMONSTRE],
+		canBeCaptured: true,
+	},
+	[Monster.FRUKOPTER]: {
+		id: Monster.FRUKOPTER,
+		name: 'ffrutx',
+		level: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 15,
+		hp: 70,
+		odds: 100,
+		skills: [
+			Skill.M_FRUKOPTER_FLIGHT,
 		],
 		zones: [MapZone.ILEMONSTRE],
 		canBeCaptured: true,

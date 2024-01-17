@@ -600,6 +600,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 	},
 	[Boss.GROTOX]: {
+		// This boss has a weird patch in the source code
+		// It's not implemented as it's unclear if we need it
 		id: Boss.GROTOX,
 		name: 'frking',
 		level: 30,
