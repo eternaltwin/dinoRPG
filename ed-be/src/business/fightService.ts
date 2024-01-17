@@ -44,10 +44,20 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
 
-	const followers = dinozData.followers.map(follower => ({
+	let followers = dinozData.followers.map(follower => ({
 		...follower,
 		player: dinozData.player
 	}));
+
+	const deadFollowers = followers.filter(d => d.life <= 0)
+
+	if (deadFollowers.length > 0) {
+		for (const d of deadFollowers) {
+			await updateDinoz(d.id, { leader: { disconnect: true } });
+		}
+		followers = followers.filter(d => d.life > 0)
+	}
+
 	const team = [dinozData, ...followers];
 
 	if (dinozData.concentration) {
