@@ -82,6 +82,8 @@ export enum Monster {
 	RAPACARAPACE = 'RAPACARAPACE',
 	RAPACARAPACE_2 = 'RAPACARAPACE_2',
 	BAOBOB = 'BAOBOB',
+	SOLDIER = 'SOLDIER',
+	CAPITAIN = 'CAPITAIN',
 	ANY = 'ANY'
 }
 
@@ -1657,6 +1659,65 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		],
 		zones: [],
 		canBeCaptured: true,
+	},
+	[Monster.SOLDIER]: {
+		id: Monster.SOLDIER,
+		name: 'cyclo',
+		level: 35,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 55,
+		bonus_defense: 30,
+		hp: 50,
+		xpBonus: 4,
+		odds: 100,
+		groups: [1, 2],
+		skills: [
+			Skill.PERCEPTION,
+		],
+		zones: [],
+		places: [
+			PlaceEnum.TETE_DE_L_ILE,
+			PlaceEnum.PONT,
+			PlaceEnum.CITE_ARBORIS,
+			PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR,
+			PlaceEnum.CHUTES_DE_NIRVANA,
+			PlaceEnum.LAC_CELESTE,
+		],
+		canBeCaptured: false,
+	},
+	[Monster.CAPITAIN]: {
+		id: Monster.CAPITAIN,
+		name: 'cyclo2',
+		level: 45,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 85,
+		bonus_defense: 45,
+		hp: 70,
+		xpBonus: 5,
+		odds: 100,
+		groups: [0, 4, 2],
+		skills: [
+			Skill.SANS_PITIE,
+		],
+		zones: [],
+		places: [
+			PlaceEnum.CITE_ARBORIS,
+			PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR,
+			PlaceEnum.PRIRANESE,
+		],
+		canBeCaptured: false,
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,

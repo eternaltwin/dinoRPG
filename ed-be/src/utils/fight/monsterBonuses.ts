@@ -68,6 +68,11 @@ const singmu = (monster: DetailedFighter) => {
 	monster.stats.speed.global *= 0.3;
 };
 
+const cyclo = (monster: DetailedFighter) => {
+	monster.stats.special.evasion *= 1.15;
+	monster.stats.special.multihit *= 1.3;
+};
+
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
 	const skill = monster.skills.find((skill) => skill.id === skillId);
 
@@ -197,6 +202,12 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.DEMYOM_2]: (monster) => {
 		singmu(monster);
+	},
+	[Monster.SOLDIER]: (monster) => {
+		cyclo(monster);
+	},
+	[Monster.CAPITAIN]: (monster) => {
+		cyclo(monster);
 	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
