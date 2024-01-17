@@ -73,6 +73,11 @@ const cyclo = (monster: DetailedFighter) => {
 	monster.stats.special.multihit *= 1.3;
 };
 
+const gromst = (monster: DetailedFighter) => {
+	monster.stats.special.evasion *= 1.15;
+	monster.stats.special.multihit *= 1.3;
+};
+
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
 	const skill = monster.skills.find((skill) => skill.id === skillId);
 
@@ -212,6 +217,18 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.ECURENNE]: (monster) => {
 		monster.stats.special.evasion *= 1.15;
 		monster.stats.special.multihit *= 1.3;
+	},
+	[Monster.GROMSTER]: (monster) => {
+		gromst(monster);
+	},
+	[Monster.PINK_GROMSTER]: (monster) => {
+		gromst(monster);
+	},
+	[Monster.SNOW_GROMSTER]: (monster) => {
+		gromst(monster);
+	},
+	[Monster.CHIMCHEREE]: (monster) => {
+		gromst(monster);
 	},
 	[Boss.TW_BIGBEASTLY]: (monster) => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);

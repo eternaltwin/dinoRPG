@@ -85,6 +85,10 @@ export enum Monster {
 	SOLDIER = 'SOLDIER',
 	CAPITAIN = 'CAPITAIN',
 	ECURENNE = 'ECURENNE',
+	GROMSTER = 'GROMSTER',
+	PINK_GROMSTER = 'PINK_GROMSTER',
+	SNOW_GROMSTER = 'SNOW_GROMSTER',
+	CHIMCHEREE = 'CHIMCHEREE',
 	ANY = 'ANY'
 }
 
@@ -1754,6 +1758,124 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.OBSERVATOIRE,
 		],
 		canBeCaptured: true,
+	},
+	[Monster.GROMSTER]: {
+		id: Monster.GROMSTER,
+		name: 'groms',
+		level: 32,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 55,
+		bonus_defense: 45,
+		hp: 40,
+		xpBonus: 3,
+		odds: 100,
+		groups: [0, 3, 5],
+		skills: [
+			Skill.PERCEPTION,
+		],
+		zones: [],
+		places: [
+			PlaceEnum.TETE_DE_L_ILE,
+			PlaceEnum.PONT,
+			PlaceEnum.CITE_ARBORIS,
+			PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR,
+			PlaceEnum.CHUTES_DE_NIRVANA,
+			PlaceEnum.LAC_CELESTE,
+			PlaceEnum.GO_TO_CELESTIAL_ISLAND,
+			PlaceEnum.CHEMIN_OBSERVATOIRE,
+			PlaceEnum.OBSERVATOIRE,
+		],
+		canBeCaptured: true,
+	},
+	[Monster.PINK_GROMSTER]: {
+		id: Monster.PINK_GROMSTER,
+		name: 'grom2',
+		level: 39,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 60,
+		bonus_defense: 55,
+		hp: 50,
+		xpBonus: 6,
+		odds: 100,
+		groups: [2, 5],
+		skills: [
+			Skill.PERCEPTION,
+		],
+		zones: [],
+		places: [
+			PlaceEnum.PONT,
+			PlaceEnum.CHUTES_DE_NIRVANA,
+			PlaceEnum.LAC_CELESTE,
+			PlaceEnum.AILE_OUEST_DU_DRAGON,
+			PlaceEnum.SOMMET_DU_MONT_SACRE,
+		],
+		canBeCaptured: true,
+	},
+	[Monster.SNOW_GROMSTER]: {
+		id: Monster.SNOW_GROMSTER,
+		name: 'grom3',
+		level: 45,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 75,
+		bonus_defense: 55,
+		hp: 120,
+		xpBonus: 5,
+		xp: 18,
+		odds: 40,
+		skills: [
+			Skill.COUP_DOUBLE,
+		],
+		zones: [],
+		places: [
+			PlaceEnum.MONT_SACRE_D_EVEROUEST,
+			PlaceEnum.SOMMET_DU_MONT_SACRE,
+			PlaceEnum.BOIS_GIVRES,
+			PlaceEnum.PLAINES_ENNEIGEES,
+		],
+		canBeCaptured: false,
+	},
+	[Monster.CHIMCHEREE]: {
+		id: Monster.CHIMCHEREE,
+		name: 'chima',
+		level: 55,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 75,
+		bonus_defense: 55,
+		hp: 140,
+		xp: 40,
+		odds: 100,
+		skills: [
+		],
+		zones: [],
+		places: [
+			PlaceEnum.PORTES_DE_CAUSHEMESH,
+			// TODO: Add caushemesh places
+		],
+		canBeCaptured: false,
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,
