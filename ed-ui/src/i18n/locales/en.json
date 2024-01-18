@@ -1460,7 +1460,8 @@
 			"Absorption": "Absorption",
 			"Bite": "Bite",
 			"Regeneration": "Regeneration",
-			"Electrocution": "Electrocution"
+			"Electrocution": "Electrocution",
+			"Immaterial": "Immaterial"
 		},
 		"description": {
 			"GriffesEnflammees": "Increases the strength of all fire assaults by 7",
@@ -3000,7 +3001,9 @@
 			"piglo5": "Ultra Piglou",
 			"febrez": "Febrez",
 			"flam": "Flamelet",
-			"anguil": "Eeloz"
+			"anguil": "Eeloz",
+			"kazka": "Kazkadine",
+			"pira": "Pirhanoz"
 		},
 		"status": {
 			"asleep": "Asleep",
