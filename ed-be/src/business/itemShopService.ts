@@ -161,7 +161,7 @@ export async function buyItem(req: Request) {
 
 		// Throws an exception if the player does not have enough storage space left
 		if (itemReference.quantity > itemReference.maxQuantity) {
-			throw new ErrorFormator(400, 'notEnoughMoney');
+			throw new ErrorFormator(400, 'notEnoughStorage');
 		}
 
 		// All checks passed related to gold, let's update the stuff
