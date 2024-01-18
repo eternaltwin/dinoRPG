@@ -1,6 +1,8 @@
 import { MissionsStatus } from '@drpg/core/models/enums/MissionsStatus';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Mission } from '@drpg/core/models/missions/mission';
 import { MissionID } from '@drpg/core/models/missions/missionList';
 import { MissionStep } from '@drpg/core/models/missions/missionSteps';
@@ -8,6 +10,7 @@ import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
+import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, DinozMission } from '@drpg/prisma';
 import { Request } from 'express';
 import { DinozWithMissionData, getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
@@ -21,10 +24,6 @@ import {
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
-import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
-import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;

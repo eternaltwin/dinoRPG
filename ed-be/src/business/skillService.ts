@@ -15,7 +15,7 @@ import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
-import { getRandomUpElement } from '@drpg/core/utils/DinozUtils';
+import { getMaxXp, getRandomUpElement } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 
@@ -233,6 +233,7 @@ function getNewDinozDataFromLevelUp(
 		| 'nbrUpLightning'
 		| 'nbrUpAir'
 		| 'display'
+		| 'experience'
 	> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -240,6 +241,7 @@ function getNewDinozDataFromLevelUp(
 	},
 	dinozRace: DinozRace
 ) {
+	const maxXp = getMaxXp(dinozSkills);
 	const allLearnableSkills = getLearnableSkills(dinozSkills);
 
 	const allUnlockableSkills = getUnlockableSkills(dinozSkills);
@@ -259,7 +261,7 @@ function getNewDinozDataFromLevelUp(
 
 	const dinoz = {
 		id: dinozId,
-		experience: 0,
+		experience: dinozSkills.experience - maxXp,
 		level: dinozSkills.level + 1,
 		nextUpElementId: getRandomUpElement(upChance),
 		nextUpAltElementId: getRandomUpElement(upChance),
