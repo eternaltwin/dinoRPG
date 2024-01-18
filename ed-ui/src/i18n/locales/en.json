@@ -1459,7 +1459,8 @@
 			"Leader": "Leader",
 			"Absorption": "Absorption",
 			"Bite": "Bite",
-			"Regeneration": "Regeneration"
+			"Regeneration": "Regeneration",
+			"Electrocution": "Electrocution"
 		},
 		"description": {
 			"GriffesEnflammees": "Increases the strength of all fire assaults by 7",
@@ -2998,7 +2999,8 @@
 			"piglo4": "Super Piglou",
 			"piglo5": "Ultra Piglou",
 			"febrez": "Febrez",
-			"flam": "Flamelet"
+			"flam": "Flamelet",
+			"anguil": "Eeloz"
 		},
 		"status": {
 			"asleep": "Asleep",

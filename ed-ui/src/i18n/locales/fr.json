@@ -1737,7 +1737,8 @@
 			"Matelasseur": "Matelasseur",
 			"Absorption": "Absorption",
 			"Bite": "Morsure",
-			"Regeneration": "Régénération"
+			"Regeneration": "Régénération",
+			"Electrocution": "Electrocution"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les assauts feu de 7",
