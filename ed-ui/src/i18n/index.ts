@@ -49,7 +49,10 @@ export const initI18n = async () => {
 		messages: { fr: {}, en: {}, es: {}, de: {} }
 	});
 
-	await loadLanguage(defaultLocale);
+	// load default language
+	const messages = await import(`./locales/${defaultLocale}.json`);
+	i18n.global.setLocaleMessage(defaultLocale, messages.default);
+
 	await loadLanguage(i18n.global.locale as string);
 
 	return i18n;
