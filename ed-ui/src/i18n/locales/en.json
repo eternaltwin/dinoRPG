@@ -2511,25 +2511,25 @@
 		"import": "Import an account"
 	},
 	"levelup": {
-		"disclaimer": "Vous pouvez à présent lancer l'animation afin de savoir avec quel élément votre dinoz évolue.",
-		"title": "Niveau supplémentaire pour ",
-		"helper": "Choisissez une compétence à apprendre :",
-		"fire": "Gagne +1 en :feu: Feu",
-		"wood": "Gagne +1 en :bois: Bois",
-		"water": "Gagne +1 en :eau: Eau",
-		"lightning": "Gagne +1 en :foudre: Foudre",
-		"air": "Gagne +1 en :air: Air",
-		"void": "Gagne +1 en :neutre: Vide",
+		"disclaimer": "You can now start the animation to find out which element your dinoz is evolving with.",
+		"title": "New level for ",
+		"helper": "Choose a skill to learn:",
+		"fire": "Gains +1 :feu: Fire",
+		"wood": "Gains +1 :bois: Wood",
+		"water": "Gains +1 :eau: Water",
+		"lightning": "Gains +1 :foudre: Lightning",
+		"air": "Gains +1 :air: Air",
+		"void": "Gains +1 :neutre: Void",
 		"level": "Lvl.",
-		"learn": "Apprendre",
-		"unlock1": "Débloquer ",
-		"unlock2": " compétences supplémentaires",
-		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
-		"small": "Ce dinoz a gagné un niveau !",
-		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre possibilité de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
+		"learn": "Learn",
+		"unlock1": "Unlock ",
+		"unlock2": " additional skills",
+		"unlock": "Once unlocked, this skill can be chosen from the next level",
+		"small": "This dinoz has gained a level!",
+		"pdc": "Thanks to the Career Plan skill, you can freely choose between two level gain possibilities.&& //Please note, it is possible that these two possibilities are identical.//",
 		"helperUnlock": {
-			"title": "Débloquer",
-			"description": "Vous pouvez choisir entre apprendre une nouvelle compétence à votre Dinoz ou en débloquer plusieurs nouvelles que votre Dinoz **pourra apprendre dès son prochain gain de niveau**."
+			"title": "Unlock",
+			"description": "You can choose between teaching your Dinoz a new skill or unlocking several new ones that your Dinoz **can learn from the next level up**."
 		}
 	},
 	"rewards": {

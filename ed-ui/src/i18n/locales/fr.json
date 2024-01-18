@@ -3037,7 +3037,7 @@
 		"unlock2": " compétences supplémentaires",
 		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
 		"small": "Ce dinoz a gagné un niveau !",
-		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre possibilité de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
+		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
 		"helperUnlock": {
 			"title": "Débloquer",
 			"description": "Vous pouvez choisir entre apprendre une nouvelle compétence à votre Dinoz ou en débloquer plusieurs nouvelles que votre Dinoz **pourra apprendre dès son prochain gain de niveau**."
