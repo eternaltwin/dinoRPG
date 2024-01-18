@@ -1433,7 +1433,7 @@
 		"energy": {
 			"0": "**Consommation d'énergie :** aucune.",
 			"10": "**Consommation d'énergie :** faible.",
-			"25": "**Consommation d'énergie :** normale.",
+			"20": "**Consommation d'énergie :** normale.",
 			"50": "**Consommation d'énergie :** forte.",
 			"75": "**Consommation d'énergie :** très forte."
 		},

@@ -1158,7 +1158,7 @@
 		"energy": {
 			"0": "**Energy Cost:** none.",
 			"10": "**Energy Cost:** weak.",
-			"25": "**Energy Cost:** normal.",
+			"20": "**Energy Cost:** normal.",
 			"50": "**Energy Cost:** high.",
 			"75": "**Energy Cost:** very high."
 		},
