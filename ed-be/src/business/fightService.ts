@@ -64,6 +64,10 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(400, 'concentration');
 	}
 
+	if (team.some(d => !d.fight)) {
+		throw new ErrorFormator(400, 'missingIrma');
+	}
+
 	if (!isAlive(dinozData)) {
 		throw new ErrorFormator(400, 'dead');
 	}
@@ -78,6 +82,9 @@ export async function processFight(req: Request) {
 
 	//If any dinoz is on a mission, check if the fight result progress the mission
 	for (const dinoz of team) {
+		await updateDinoz(dinoz.id, {
+			fight: false
+		});
 		if (dinoz.missions.some(mission => !mission.isFinished)) {
 			await checkMissionFight(dinoz, result);
 		}

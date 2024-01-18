@@ -20,7 +20,7 @@ export default defineComponent({
 	methods: {
 		async getWsTicket(): Promise<void> {
 			const ticket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
-			this.webSocket = new WebSocket(`ws://localhost:8081?ticket=${ticket}`);
+			this.webSocket = new WebSocket(`ws://${document.location.host}?ticket=${ticket}`);
 		},
 		sendMessage(): void {
 			this.webSocket.send(this.message);

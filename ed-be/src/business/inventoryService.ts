@@ -115,6 +115,12 @@ export async function useItem(req: Request) {
 	}
 
 	switch (item.effect?.category) {
+		case ItemEffect.ACTION:
+			await updateDinoz(dinoz.id, {
+				fight: true,
+				gather: true
+			});
+			break;
 		case ItemEffect.HEAL:
 			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value));
 			break;

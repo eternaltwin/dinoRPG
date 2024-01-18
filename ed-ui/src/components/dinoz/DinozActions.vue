@@ -153,6 +153,17 @@ export default defineComponent({
 	methods: {
 		async launch(action: ActionFiche) {
 			switch (action.name) {
+				case Action.IRMA:
+				case Action.IRMAS:
+					EventBus.emit('isLoading', true);
+					try {
+						await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
+					} catch (e) {
+						errorHandler.handle(e);
+					}
+					EventBus.emit('isLoading', false);
+					EventBus.emit('refreshDinoz', true);
+					break;
 				case Action.LEVEL_UP:
 					this.$router.push({
 						name: 'Leveling',
@@ -176,31 +187,34 @@ export default defineComponent({
 
 					EventBus.emit('isLoading', true);
 					// eslint-disable-next-line
-					const fight = await FightService.processFight(+this.$route.params.id);
-					this.sessionStore.setFightResult(fight);
+					try {
+						const fight = await FightService.processFight(+this.$route.params.id);
+						this.sessionStore.setFightResult(fight);
+						const dinozList = this.dinozStore.getDinozList;
 
-					const dinozList = this.dinozStore.getDinozList;
+						if (!dinozList) {
+							EventBus.emit('toast', { type: 'error', message: 'missingData' });
+							EventBus.emit('isLoading', false);
+							return;
+						}
 
-					if (!dinozList) {
-						EventBus.emit('toast', { type: 'error', message: 'missingData' });
-						EventBus.emit('isLoading', false);
-						return;
+						this.dinozStore.setDinozList(
+							dinozList.map(dinoz => {
+								if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
+									// Update dinoz HP
+									dinoz.life -= fight.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+								}
+								return dinoz;
+							})
+						);
+
+						this.$router.push({
+							name: 'Fight',
+							params: { dinozId: this.$route.params.id.toString() }
+						});
+					} catch (e) {
+						errorHandler.handle(e);
 					}
-
-					this.dinozStore.setDinozList(
-						dinozList.map(dinoz => {
-							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
-								// Update dinoz HP
-								dinoz.life -= fight.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
-							}
-							return dinoz;
-						})
-					);
-
-					this.$router.push({
-						name: 'Fight',
-						params: { dinozId: this.$route.params.id.toString() }
-					});
 					break;
 				}
 				case Action.RESURRECT:

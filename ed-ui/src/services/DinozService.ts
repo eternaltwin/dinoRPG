@@ -134,5 +134,11 @@ export const DinozService = {
 			.post(`/dinoz/${dinozId}/disband`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	useIrma(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/irma`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

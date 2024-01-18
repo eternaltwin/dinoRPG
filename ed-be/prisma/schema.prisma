@@ -40,8 +40,11 @@ model Dinoz {
   nbrUpWater         Int
   nbrUpLightning     Int
   nbrUpAir           Int
+  fight              Boolean                @default(true)
+  gather             Boolean                @default(true)
+  remaining          Int                    @default(2)
   createdDate        DateTime               @default(now()) @db.Timestamp(6)
-  updatedDate        DateTime               @default(now()) @db.Timestamp(6) @updatedAt
+  updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)
   playerId           Int?
   order              Int?
   concentrationId    Int?
@@ -142,7 +145,7 @@ model ImportedDinoz {
   nbrUpLightning        Int
   nbrUpAir              Int
   createdDate           DateTime              @default(now()) @db.Timestamp(6)
-  updatedDate           DateTime              @default(now()) @db.Timestamp(6) @updatedAt
+  updatedDate           DateTime              @default(now()) @updatedAt @db.Timestamp(6)
   playerId              Int?
   isFrozen              Boolean
   imported_player       ImportedPlayer?       @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_b52fe496437841d0af36c9377c8")
@@ -176,7 +179,7 @@ model ImportedPlayer {
   twinId                      Int
   money                       Int
   createdDate                 DateTime                   @default(now()) @db.Timestamp(6)
-  updatedDate                 DateTime                   @default(now()) @db.Timestamp(6) @updatedAt
+  updatedDate                 DateTime                   @default(now()) @updatedAt @db.Timestamp(6)
   playerId                    Int?                       @unique(map: "REL_97b48349be6078fa1d0f0eb877")
   imported_dinoz              ImportedDinoz[]
   player                      Player?                    @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_97b48349be6078fa1d0f0eb8778")
@@ -233,7 +236,7 @@ model ImportedTwinoidAchievement {
   date        String   @db.VarChar
   nameId      String   @db.VarChar
   createdDate DateTime @default(now()) @db.Timestamp(6)
-  updatedDate DateTime @default(now()) @db.Timestamp(6) @updatedAt
+  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
   playerId    Int?
   requirement String   @db.VarChar
   quantity    Int
@@ -248,7 +251,7 @@ model ImportedTwinoidSite {
   npoints     Int
   points      Int
   createdDate DateTime @default(now()) @db.Timestamp(6)
-  updatedDate DateTime @default(now()) @db.Timestamp(6) @updatedAt
+  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
   playerId    Int?
   player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_8035669ec1e7b5a0b09d4c76db7")
 
@@ -261,7 +264,7 @@ model ImportedTwinoidStat {
   score       Int
   nameId      String   @db.VarChar
   createdDate DateTime @default(now()) @db.Timestamp(6)
-  updatedDate DateTime @default(now()) @db.Timestamp(6) @updatedAt
+  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
   playerId    Int?
   player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_bcfa9706d0fd62569a7e9aeaf27")
 
@@ -287,7 +290,7 @@ model News {
   germanTitle  String?  @db.VarChar
   germanText   String?  @db.VarChar
   createdDate  DateTime @default(now()) @db.Timestamp(6)
-  updatedDate  DateTime @default(now()) @db.Timestamp(6) @updatedAt
+  updatedDate  DateTime @default(now()) @updatedAt @db.Timestamp(6)
 
   @@map("news")
 }
@@ -319,9 +322,9 @@ model Player {
   priest                      Boolean
   teacher                     Boolean
   createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
-  updatedDate                 DateTime                     @default(now()) @db.Timestamp(6) @updatedAt
-  lastLogin                   DateTime 									 	 @default(now()) @db.Timestamp(6)
-	dinoz                       Dinoz[]
+  updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
+  lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
+  dinoz                       Dinoz[]
   importedPlayer              ImportedPlayer?
   importedTwinoidAchievements ImportedTwinoidAchievement[]
   importedTwinoidSite         ImportedTwinoidSite[]

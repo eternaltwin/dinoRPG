@@ -5164,6 +5164,7 @@ export namespace Prisma {
     nbrUpWater: number | null
     nbrUpLightning: number | null
     nbrUpAir: number | null
+    remaining: number | null
     playerId: number | null
     order: number | null
     concentrationId: number | null
@@ -5185,6 +5186,7 @@ export namespace Prisma {
     nbrUpWater: number | null
     nbrUpLightning: number | null
     nbrUpAir: number | null
+    remaining: number | null
     playerId: number | null
     order: number | null
     concentrationId: number | null
@@ -5212,6 +5214,9 @@ export namespace Prisma {
     nbrUpWater: number | null
     nbrUpLightning: number | null
     nbrUpAir: number | null
+    fight: boolean | null
+    gather: boolean | null
+    remaining: number | null
     createdDate: Date | null
     updatedDate: Date | null
     playerId: number | null
@@ -5241,6 +5246,9 @@ export namespace Prisma {
     nbrUpWater: number | null
     nbrUpLightning: number | null
     nbrUpAir: number | null
+    fight: boolean | null
+    gather: boolean | null
+    remaining: number | null
     createdDate: Date | null
     updatedDate: Date | null
     playerId: number | null
@@ -5270,6 +5278,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight: number
+    gather: number
+    remaining: number
     createdDate: number
     updatedDate: number
     playerId: number
@@ -5295,6 +5306,7 @@ export namespace Prisma {
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
+    remaining?: true
     playerId?: true
     order?: true
     concentrationId?: true
@@ -5316,6 +5328,7 @@ export namespace Prisma {
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
+    remaining?: true
     playerId?: true
     order?: true
     concentrationId?: true
@@ -5343,6 +5356,9 @@ export namespace Prisma {
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
+    fight?: true
+    gather?: true
+    remaining?: true
     createdDate?: true
     updatedDate?: true
     playerId?: true
@@ -5372,6 +5388,9 @@ export namespace Prisma {
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
+    fight?: true
+    gather?: true
+    remaining?: true
     createdDate?: true
     updatedDate?: true
     playerId?: true
@@ -5401,6 +5420,9 @@ export namespace Prisma {
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
+    fight?: true
+    gather?: true
+    remaining?: true
     createdDate?: true
     updatedDate?: true
     playerId?: true
@@ -5517,6 +5539,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight: boolean
+    gather: boolean
+    remaining: number
     createdDate: Date
     updatedDate: Date
     playerId: number | null
@@ -5565,6 +5590,9 @@ export namespace Prisma {
     nbrUpWater?: boolean
     nbrUpLightning?: boolean
     nbrUpAir?: boolean
+    fight?: boolean
+    gather?: boolean
+    remaining?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     playerId?: boolean
@@ -5608,6 +5636,9 @@ export namespace Prisma {
     nbrUpWater?: boolean
     nbrUpLightning?: boolean
     nbrUpAir?: boolean
+    fight?: boolean
+    gather?: boolean
+    remaining?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     playerId?: boolean
@@ -5672,6 +5703,9 @@ export namespace Prisma {
       nbrUpWater: number
       nbrUpLightning: number
       nbrUpAir: number
+      fight: boolean
+      gather: boolean
+      remaining: number
       createdDate: Date
       updatedDate: Date
       playerId: number | null
@@ -6117,6 +6151,9 @@ export namespace Prisma {
     readonly nbrUpWater: FieldRef<"Dinoz", 'Int'>
     readonly nbrUpLightning: FieldRef<"Dinoz", 'Int'>
     readonly nbrUpAir: FieldRef<"Dinoz", 'Int'>
+    readonly fight: FieldRef<"Dinoz", 'Boolean'>
+    readonly gather: FieldRef<"Dinoz", 'Boolean'>
+    readonly remaining: FieldRef<"Dinoz", 'Int'>
     readonly createdDate: FieldRef<"Dinoz", 'DateTime'>
     readonly updatedDate: FieldRef<"Dinoz", 'DateTime'>
     readonly playerId: FieldRef<"Dinoz", 'Int'>
@@ -39567,6 +39604,9 @@ export namespace Prisma {
     nbrUpWater: 'nbrUpWater',
     nbrUpLightning: 'nbrUpLightning',
     nbrUpAir: 'nbrUpAir',
+    fight: 'fight',
+    gather: 'gather',
+    remaining: 'remaining',
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     playerId: 'playerId',
@@ -40167,6 +40207,9 @@ export namespace Prisma {
     nbrUpWater?: IntFilter<"Dinoz"> | number
     nbrUpLightning?: IntFilter<"Dinoz"> | number
     nbrUpAir?: IntFilter<"Dinoz"> | number
+    fight?: BoolFilter<"Dinoz"> | boolean
+    gather?: BoolFilter<"Dinoz"> | boolean
+    remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     playerId?: IntNullableFilter<"Dinoz"> | number | null
@@ -40209,6 +40252,9 @@ export namespace Prisma {
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
+    fight?: SortOrder
+    gather?: SortOrder
+    remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrderInput | SortOrder
@@ -40254,6 +40300,9 @@ export namespace Prisma {
     nbrUpWater?: IntFilter<"Dinoz"> | number
     nbrUpLightning?: IntFilter<"Dinoz"> | number
     nbrUpAir?: IntFilter<"Dinoz"> | number
+    fight?: BoolFilter<"Dinoz"> | boolean
+    gather?: BoolFilter<"Dinoz"> | boolean
+    remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     playerId?: IntNullableFilter<"Dinoz"> | number | null
@@ -40296,6 +40345,9 @@ export namespace Prisma {
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
+    fight?: SortOrder
+    gather?: SortOrder
+    remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrderInput | SortOrder
@@ -40333,6 +40385,9 @@ export namespace Prisma {
     nbrUpWater?: IntWithAggregatesFilter<"Dinoz"> | number
     nbrUpLightning?: IntWithAggregatesFilter<"Dinoz"> | number
     nbrUpAir?: IntWithAggregatesFilter<"Dinoz"> | number
+    fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
+    gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
+    remaining?: IntWithAggregatesFilter<"Dinoz"> | number
     createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     playerId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
@@ -42423,6 +42478,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -42463,6 +42521,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -42500,6 +42561,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -42540,6 +42604,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -42579,6 +42646,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -42606,6 +42676,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -42633,6 +42706,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -44792,6 +44868,9 @@ export namespace Prisma {
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
+    fight?: SortOrder
+    gather?: SortOrder
+    remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrder
@@ -44815,6 +44894,7 @@ export namespace Prisma {
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
+    remaining?: SortOrder
     playerId?: SortOrder
     order?: SortOrder
     concentrationId?: SortOrder
@@ -44842,6 +44922,9 @@ export namespace Prisma {
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
+    fight?: SortOrder
+    gather?: SortOrder
+    remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrder
@@ -44871,6 +44954,9 @@ export namespace Prisma {
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
+    fight?: SortOrder
+    gather?: SortOrder
+    remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrder
@@ -44894,6 +44980,7 @@ export namespace Prisma {
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
+    remaining?: SortOrder
     playerId?: SortOrder
     order?: SortOrder
     concentrationId?: SortOrder
@@ -49032,6 +49119,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -49071,6 +49161,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -49138,6 +49231,9 @@ export namespace Prisma {
     nbrUpWater?: IntFilter<"Dinoz"> | number
     nbrUpLightning?: IntFilter<"Dinoz"> | number
     nbrUpAir?: IntFilter<"Dinoz"> | number
+    fight?: BoolFilter<"Dinoz"> | boolean
+    gather?: BoolFilter<"Dinoz"> | boolean
+    remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     playerId?: IntNullableFilter<"Dinoz"> | number | null
@@ -49165,6 +49261,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -49204,6 +49303,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -49503,6 +49605,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -49541,6 +49646,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -49624,6 +49732,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49663,6 +49774,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50047,6 +50161,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -50086,6 +50203,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -50156,6 +50276,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50195,6 +50318,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50247,6 +50373,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -50286,6 +50415,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -50354,6 +50486,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50393,6 +50528,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50451,6 +50589,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -50490,6 +50631,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -50542,6 +50686,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50581,6 +50728,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50617,6 +50767,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -50656,6 +50809,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -50708,6 +50864,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50747,6 +50906,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50783,6 +50945,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -50822,6 +50987,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -50874,6 +51042,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50913,6 +51084,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50949,6 +51123,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -50988,6 +51165,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -51040,6 +51220,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51079,6 +51262,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -52635,6 +52821,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -52674,6 +52863,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -52726,6 +52918,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -52765,6 +52960,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -52801,6 +52999,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -52840,6 +53041,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -54983,6 +55187,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -55022,6 +55229,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -55196,6 +55406,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55235,6 +55448,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55386,6 +55602,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -55425,6 +55644,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -55555,6 +55777,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55594,6 +55819,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55632,6 +55860,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -55658,6 +55889,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55697,6 +55931,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55735,6 +55972,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -55809,6 +56049,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
@@ -55984,6 +56227,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -56022,6 +56268,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -56060,6 +56309,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -56337,6 +56589,9 @@ export namespace Prisma {
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
@@ -56450,6 +56705,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -56489,6 +56747,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
@@ -56527,6 +56788,9 @@ export namespace Prisma {
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null

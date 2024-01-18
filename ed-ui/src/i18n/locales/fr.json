@@ -35,6 +35,8 @@
 		"missingData": "Données manquantes",
 		"bidIsLower": "Votre enchère est inférieure à la précédente.",
 		"missingStatus": "L'un de vos dinoz ne remplis pas les conditions pour faire cette action",
+		"notEnoughIrma": "Vous n'avez pas assez de potion d'irma",
+		"missingIrma": "Vous avez besoin de potion d'irma pour faire cette action",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
@@ -119,7 +121,9 @@
 			"concentrate": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
 			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
 			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz.",
-			"daily": "Vous pouvez utilisez ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !"
+			"daily": "Vous pouvez utilisez ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !",
+			"irma": "Votre Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma* pour faire une action supplémentaire immédiatement.",
+			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -141,7 +145,9 @@
 			"concentrate": "Arrêter de se concentrer",
 			"market": "Marché aux éleveurs",
 			"disband": "Dissoudre le groupe",
-			"daily": "Ticket quotidien"
+			"daily": "Ticket quotidien",
+			"irma": "Potion d'Irma",
+			"irmas": "Potions d'Irma : Groupe"
 		}
 	},
 	"button": {

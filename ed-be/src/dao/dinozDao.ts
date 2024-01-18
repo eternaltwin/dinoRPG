@@ -120,6 +120,9 @@ export async function getDinozFicheRequest(dinozId: number) {
 			leaderId: true,
 			isFrozen: true,
 			isSelling: true,
+			fight: true,
+			gather: true,
+			remaining: true,
 			order: true,
 			canChangeName: true,
 			player: {
@@ -291,6 +294,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			placeId: true,
 			leaderId: true,
 			canChangeName: true,
+			fight: true,
 			player: {
 				select: {
 					id: true,
@@ -324,6 +328,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					missions: true,
+					fight: true,
 					skills: { select: { skillId: true } }
 				}
 			},
@@ -444,6 +449,7 @@ export async function getDinozGatherData(dinozId: number) {
 			placeId: true,
 			level: true,
 			life: true,
+			gather: true,
 			player: {
 				select: {
 					id: true,
@@ -616,6 +622,25 @@ export async function getFollowingDinoz(dinozId: number) {
 		select: {
 			id: true,
 			followers: { select: { id: true } }
+		}
+	});
+}
+
+export async function getIrmaUsageInfo(dinozId: number) {
+	return await prisma.dinoz.findUnique({
+		where: {
+			id: dinozId
+		},
+		select: {
+			id: true,
+			remaining: true,
+			followers: { select: { id: true, remaining: true } },
+			player: {
+				select: {
+					id: true,
+					items: true
+				}
+			}
 		}
 	});
 }

@@ -53,6 +53,7 @@ import {
 	getDinozSkillAndStatusRequest,
 	getDinozSkillRequest,
 	getFollowingDinoz,
+	getIrmaUsageInfo,
 	getManageData,
 	updateDinoz,
 	updateMultipleDinoz,
@@ -82,7 +83,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
  */
 export async function getAvailableActions(
 	dinoz: DinozForConditionCheck &
-		Pick<Dinoz, 'id' | 'experience' | 'isSelling' | 'leaderId'> & {
+		Pick<Dinoz, 'id' | 'experience' | 'isSelling' | 'leaderId' | 'fight' | 'gather'> & {
 			missions: DinozMission[];
 			concentration: Concentration | null;
 			player: (DinozForConditionCheck['player'] & Pick<Player, 'id'>) | null;
@@ -134,12 +135,25 @@ export async function getAvailableActions(
 		return availableActions;
 	}
 
-	if (!dinoz.leaderId) {
+	if (!dinoz.leaderId && (!dinoz.fight || !dinoz.gather)) {
+		availableActions.push(actionList[Action.IRMA]);
+	}
+
+	if (dinoz.followers.length > 0 && (!dinoz.fight || !dinoz.gather)) {
+		const index = availableActions.indexOf(actionList[Action.IRMA]);
+		if (index >= 0) {
+			availableActions.splice(index, 1);
+		}
+		availableActions.push(actionList[Action.IRMAS]);
+	}
+
+	if (!dinoz.leaderId && dinoz.fight) {
 		availableActions.push(actionList[Action.FIGHT]);
 	}
 
 	//Gather
 	if (
+		dinoz.gather &&
 		dinozPlace.gather !== undefined &&
 		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition, [dinoz])
 	) {
@@ -515,6 +529,10 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(400, 'concentration');
 	}
 
+	if (team.some(d => !d.fight)) {
+		throw new ErrorFormator(400, 'missingIrma');
+	}
+
 	if (!isAlive(dinoz)) {
 		throw new ErrorFormator(400, 'dead');
 	}
@@ -546,6 +564,13 @@ export async function betaMove(req: Request) {
 
 	// If dinoz leave the map, replace by the good place
 	const finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
+
+	//Consume fight action
+	for (const dino of team) {
+		await updateDinoz(dino.id, {
+			fight: false
+		});
+	}
 
 	let fight = await mouvementListener(team, finalPlace);
 	if (!fight) {
@@ -738,6 +763,10 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ErrorFormator(500, `Dinoz cannot gather at this place`);
 	}
 
+	if (!dinozData.gather && !gatherPlace.special) {
+		throw new ErrorFormator(500, `Dinoz don't have action to gather`);
+	}
+
 	if (!myGrid) {
 		throw new ErrorFormator(500, `You don't have generated any grid.`);
 	}
@@ -829,6 +858,12 @@ export async function gatherWithDinoz(req: Request) {
 				})
 			);
 		}
+	}
+
+	if (!gatherPlace.special) {
+		await updateDinoz(dinozId, {
+			gather: false
+		});
 	}
 
 	return returnGrid;
@@ -991,4 +1026,50 @@ export async function disband(req: Request) {
 	for (const d of dinoz.followers) {
 		await updateDinoz(d.id, { leader: { disconnect: true } });
 	}
+}
+
+export async function useIrma(req: Request) {
+	const dinozId = +req.params.id;
+
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	}
+	const dinoz = await getIrmaUsageInfo(dinozId);
+
+	if (!dinoz || !dinoz.player) {
+		throw new ErrorFormator(500, 'No dinoz found');
+	}
+
+	const team = [dinoz, ...dinoz.followers];
+
+	const irmaQuantity = dinoz.player.items.find(i => i.itemId === itemList.POTION_IRMA.itemId);
+
+	const neededIrma = team.filter(d => d.remaining === 0).length;
+
+	if (!irmaQuantity || (irmaQuantity && irmaQuantity.quantity < neededIrma)) {
+		throw new ErrorFormator(400, 'notEnoughIrma');
+	}
+
+	for (const dino of team) {
+		if (dino.remaining > 0) {
+			await updateDinoz(dino.id, {
+				fight: true,
+				gather: true,
+				remaining: { decrement: 1 }
+			});
+		} else {
+			await updateDinoz(dino.id, {
+				fight: true,
+				gather: true
+			});
+		}
+	}
+
+	await decreaseItemQuantity(dinoz.player.id, itemList.POTION_IRMA.itemId, neededIrma);
 }

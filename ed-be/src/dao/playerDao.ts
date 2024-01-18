@@ -121,7 +121,7 @@ export async function getCommonDataRequest(playerId: number) {
 					skills: { select: { skillId: true } },
 					followers: { select: { id: true } }
 				},
-				where: { isFrozen: false },
+				where: { isFrozen: false, isSacrificed: false },
 				orderBy: [{ order: 'asc' }, { name: 'asc' }]
 			},
 			rewards: true,

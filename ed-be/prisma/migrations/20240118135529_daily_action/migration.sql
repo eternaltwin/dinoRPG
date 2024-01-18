@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "dinoz" ADD COLUMN     "fight" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "gather" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "remaining" INTEGER NOT NULL DEFAULT 2;

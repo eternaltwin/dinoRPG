@@ -49,6 +49,11 @@ export async function getCommonData(req: Request) {
 			const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
 			await updateDinoz(dinoz.id, { life: newHp });
 		}
+
+		// Give 2 action for active dinoz
+		for (const dinoz of playerCommonData.dinoz) {
+			await updateDinoz(dinoz.id, { remaining: 2 });
+		}
 	}
 
 	const commonData: PlayerCommonData = {

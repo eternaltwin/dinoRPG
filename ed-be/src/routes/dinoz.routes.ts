@@ -18,7 +18,8 @@ import {
 	setDinozName,
 	setSkillState,
 	unfollowDinoz,
-	updateOrders
+	updateOrders,
+	useIrma
 } from '../business/dinozService.js';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
 import { apiRoutes, regex } from '../constants/index.js';
@@ -599,6 +600,25 @@ routes.post(
 			const e = err as ErrorFormator;
 			await postError(e, res);
 			res.status(500).send(e.message);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/:id/irma`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await useIrma(req);
+			return res.status(200).send();
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
 		}
 	}
 );
