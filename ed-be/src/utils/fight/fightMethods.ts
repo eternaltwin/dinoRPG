@@ -3517,6 +3517,26 @@ const attack = (
 					fighter: stepFighter(realOpponent)
 				});
 			}
+
+			// FLYING
+			if (
+				// Assault
+				!skill &&
+				// Opponent has FLYING
+				hasStatus(realOpponent, Status.FLYING) &&
+				// Attacker doesn't have FLYING
+				!hasStatus(attacker, Status.FLYING) &&
+				// Attacker can't hit flying opponent
+				!attacker.canHitFlying
+			) {
+				damage = 0;
+
+				// Add miss step
+				fightData.steps.push({
+					action: 'miss',
+					fighter: stepFighter(attacker)
+				});
+			}
 		}
 
 		// Register hit if damage was done

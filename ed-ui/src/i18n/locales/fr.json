@@ -1739,7 +1739,8 @@
 			"Bite": "Morsure",
 			"Regeneration": "Régénération",
 			"Electrocution": "Electrocution",
-			"Immaterial": "Immateriel"
+			"Immaterial": "Immateriel",
+			"Flight": "Envol"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les assauts feu de 7",

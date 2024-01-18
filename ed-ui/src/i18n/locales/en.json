@@ -1461,7 +1461,8 @@
 			"Bite": "Bite",
 			"Regeneration": "Regeneration",
 			"Electrocution": "Electrocution",
-			"Immaterial": "Immaterial"
+			"Immaterial": "Immaterial",
+			"Flight": "Flight"
 		},
 		"description": {
 			"GriffesEnflammees": "Increases the strength of all fire assaults by 7",
