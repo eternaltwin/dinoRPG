@@ -2193,7 +2193,8 @@
 			"wahhh": "Crier waaah...",
 			"rock": "Jeter un caillou dans le cratère",
 			"hieroglyphes": "Copier les hiéroglyphes",
-			"foundArcheo": "Trouver l'archéologue"
+			"foundArcheo": "Trouver l'archéologue",
+			"pickCoral": "Piece of coral"
 		},
 		"place": {
 			"port": "to Frish Port",
@@ -3014,7 +3015,10 @@
 			"ronciv": "Bramble Eater",
 			"grdien": "Arboreal Guardian",
 			"bat": "Tawny-Bat",
-			"korgon": "Facetious Korgon"
+			"korgon": "Facetious Korgon",
+			"pteroz": "Pteroz",
+			"hippo": "Hippoclamp",
+			"rocky": "Rocky"
 		},
 		"status": {
 			"asleep": "Asleep",

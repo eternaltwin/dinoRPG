@@ -3520,7 +3520,10 @@
 			"piglo3": "Piglouglou",
 			"piglo4": "Super Piglou",
 			"piglo5": "Ultra Piglou",
-			"febrez": "Febrez"
+			"febrez": "Febrez",
+			"pteroz": "Pteroz",
+			"hippo": "Hippoclamp",
+			"rocky": "Rocky"
 		},
 		"status": {
 			"asleep": "endormi",

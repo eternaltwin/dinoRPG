@@ -190,7 +190,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 7,
 		zones: [MapZone.ALL],
-		skills: [11102, 11103, 41102, 11101, 51105],
+		skills: [Skill.COLERE, Skill.FORCE, Skill.FOCUS, Skill.GRIFFES_ENFLAMMEES, Skill.ENVOL],
 		canBeCaptured: false
 	},
 	[Boss.HIPPOCLAMP]: {
@@ -209,7 +209,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 7,
 		zones: [MapZone.ALL],
-		skills: [21101, 21102, 31101, 21103],
+		skills: [Skill.CARAPACE, Skill.SAUVAGERIE, Skill.CANON_A_EAU, Skill.ENDURANCE],
 		canBeCaptured: false
 	},
 	[Boss.ROCKY]: {
@@ -228,7 +228,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 12,
 		zones: [MapZone.ALL],
-		skills: [21101, 41102, 41301, 41103, 41204],
+		skills: [Skill.FOUDRE, Skill.FOCUS, Skill.CARAPACE, Skill.CELERITE, Skill.COUP_DOUBLE],
 		canBeCaptured: false
 	},
 	[Boss.MASTER_CHA]: {
