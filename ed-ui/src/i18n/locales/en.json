@@ -744,7 +744,9 @@
 			"merguez": "Merchant",
 			"shaman": "Soft Shaman",
 			"garde_atlante": "Atlantean Guard",
-			"hydargol": "Master Hydargol"
+			"hydargol": "Master Hydargol",
+			"padamoine": "Apprentice padamonk",
+			"joveboze": "Joveboze"
 		},
 		"professor": {
 			"speech": {
