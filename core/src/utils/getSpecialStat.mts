@@ -85,13 +85,13 @@ export const getSpecialStat = (
 		return {
 			name: 'torchDamage',
 			// Fire
-			value: dinoz.nbrUpFire || 0,
+			value: dinoz.nbrUpFire || 1,
 			details: [
 				{
 					type: 'base',
 					percent: false,
 					elements: ['fire'],
-					value: dinoz.nbrUpFire || 0
+					value: dinoz.nbrUpFire || 1
 				}
 			]
 		};
