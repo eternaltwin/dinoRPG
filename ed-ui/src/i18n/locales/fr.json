@@ -34,6 +34,7 @@
 		"invalidOffer": "Offre invalide",
 		"missingData": "Données manquantes",
 		"bidIsLower": "Votre enchère est inférieure à la précédente.",
+		"missingStatus": "L'un de vos dinoz ne remplis pas les conditions pour faire cette action",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",

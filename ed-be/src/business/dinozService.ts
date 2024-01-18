@@ -539,7 +539,7 @@ export async function betaMove(req: Request) {
 	if (desiredPlace.conditions) {
 		for (const member of team) {
 			if (!canGoToThisPlace(member, desiredPlace.conditions)) {
-				throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't fulfill requirement to go this place`);
+				throw new ErrorFormator(400, `missingStatus`);
 			}
 		}
 	}
