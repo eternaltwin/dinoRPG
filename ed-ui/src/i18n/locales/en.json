@@ -96,7 +96,6 @@
 			"fight": "Search for a monster to fight at this location. You can perform **one move or fight per day** and by Dinoz.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
 			"unfollow": "Your Dinoz is currently following another Dinoz. Click this action to stop following.",
-			"disband": "Your DInoz is currently followed by other Dinoz. Click this action to disband the group.",
 			"levelup": "Your Dinoz earned enough experience to reach the next level. Click this action to increase the power of your Dinoz.",
 			"resurrect": "Your Dinoz is dead, thus you need to resurrect it before you can have it fight again.",
 			"dig": "Your Dinoz can **dig up** this place with the shovel to find a treasure maybe.",
@@ -110,7 +109,9 @@
 			"tictac": "Use your Ticket Taque to try to find a rare treasure !",
 			"labo": "Search for the antidote in the Archidorogon lab to heal the Venerable.",
 			"party": "Use magical rockets to create an astonishing firework and win plenty of treasures !",
-			"market": "Welcome to the Tamer Market! Here you can buy and sell Dinoz, ingredients, and some rare items coming from all over Dinoland !"
+			"market": "Welcome to the Tamer Market! Here you can buy and sell Dinoz, ingredients, and some rare items coming from all over Dinoland !",
+			"disband": "Order your other dinoz to stop following this dinoz.",
+			"daily": "You can use your daily login ticket here to get special rewards!"
 		},
 		"name": {
 			"fight": "Fight",
@@ -130,7 +131,8 @@
 			"tictac": "Grandpa Joe's treasure",
 			"labo": "Archidorogon Lab",
 			"party": "Firework",
-			"market": "Tamer Market"
+			"market": "Tamer Market",
+			"daily": "Daily ticket"
 		}
 	},
 	"button": {
@@ -1937,7 +1939,8 @@
 			"xmas": "Chasse-Neige",
 			"tictac": "Trésor de Papy Joe",
 			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feu d'artifice"
+			"party": "Feu d'artifice",
+			"daily": "Daily Grid"
 		},
 		"type": {
 			"cueille": "plantes",
@@ -1949,9 +1952,10 @@
 			"xmas": "Cadeaux de Noël",
 			"tictac": "trésors dans le jardin de Papy Joe",
 			"labo": "ressources dans le laboratoire de l'Archidorogon",
-			"party": "trésors fabuleux"
+			"party": "trésors fabuleux",
+			"daily": "daily rewards"
 		},
-		"disclaimer": "Cliquez sur {number} cases de la grille pour trouver des {search}"
+		"disclaimer": "Click on {number} grid box(es) to find {search}"
 	},
 	"missions": {
 		"header": "Missions list",

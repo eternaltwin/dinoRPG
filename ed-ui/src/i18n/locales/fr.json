@@ -2211,7 +2211,8 @@
 			"xmas": "Chasse-Neige",
 			"tictac": "Trésor de Papy Joe",
 			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feu d'artifice"
+			"party": "Feu d'artifice",
+			"daily": "Grille Quotidienne"
 		},
 		"type": {
 			"cueille": "plantes",
@@ -2223,9 +2224,10 @@
 			"xmas": "Cadeaux de Noël",
 			"tictac": "trésors dans le jardin de Papy Joe",
 			"labo": "ressources dans le laboratoire de l'Archidorogon",
-			"party": "trésors fabuleux"
+			"party": "trésors fabuleux",
+			"daily": "récompenses quotidiennes"
 		},
-		"disclaimer": "Cliquez sur {number} cases de la grille pour trouver des {search}"
+		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}"
 	},
 	"missions": {
 		"header": "Liste des Missions",
