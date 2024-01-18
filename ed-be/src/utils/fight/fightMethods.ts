@@ -3851,9 +3851,6 @@ const startAttack = (
 		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
 	}
 
-	// Check if a fighter is dead
-	checkDeaths(fightData);
-
 	return !!hitAtLeastOnce;
 };
 
