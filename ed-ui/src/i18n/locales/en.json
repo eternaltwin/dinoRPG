@@ -742,7 +742,9 @@
 			"forgeron": "Blacksmith",
 			"dian": "Dian Korgsey",
 			"merguez": "Merchant",
-			"shaman": "Soft Shaman"
+			"shaman": "Soft Shaman",
+			"garde_atlante": "Atlantean Guard",
+			"hydargol": "Master Hydargol"
 		},
 		"professor": {
 			"speech": {
