@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -11,16 +11,16 @@ export const FORGERON: Readonly<Record<string, NpcData>> = {
 	repair: {
 		stepName: 'repair',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.BROKEN_SHOVEL
+			[ConditionEnum.STATUS]: DinozStatusId.BROKEN_SHOVEL
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.SHOVEL
+				value: DinozStatusId.SHOVEL
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BROKEN_SHOVEL,
+				value: DinozStatusId.BROKEN_SHOVEL,
 				reverse: true
 			},
 			{
@@ -33,16 +33,16 @@ export const FORGERON: Readonly<Record<string, NpcData>> = {
 	repair2: {
 		stepName: 'repair2',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.BROKEN_ENHANCED_SHOVEL
+			[ConditionEnum.STATUS]: DinozStatusId.BROKEN_ENHANCED_SHOVEL
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ENHANCED_SHOVEL
+				value: DinozStatusId.ENHANCED_SHOVEL
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BROKEN_ENHANCED_SHOVEL,
+				value: DinozStatusId.BROKEN_ENHANCED_SHOVEL,
 				reverse: true
 			},
 			{

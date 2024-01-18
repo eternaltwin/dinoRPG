@@ -18,7 +18,7 @@ import {
 } from './fightMethods.js';
 import { getBasicElementDamage } from './getDamage.js';
 import randomBetween from './randomBetween.js';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 
 export type DetailedFight = {
@@ -282,7 +282,7 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 				if (!f.attacker || f.initiallyCursed) return;
 				if (hasStatus(f, Status.NO_CURSE)) return;
 
-				f.permanentStatusGained.push(statusList.CURSED);
+				f.permanentStatusGained.push(DinozStatusId.CURSED);
 
 				// Add cursed step
 				fightData.steps.push({

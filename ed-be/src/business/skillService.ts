@@ -3,7 +3,7 @@ import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillTree } from '@drpg/core/models/enums/SkillTree';
 import { itemList } from '@drpg/core/models/item/ItemList';
@@ -388,7 +388,7 @@ function getUnlockableSkills(
 }
 
 function getTreeType(status: Pick<DinozStatus, 'statusId'>[]) {
-	return status.some(status => status.statusId === statusList.ETHER_DROP) ? SkillTree.ETHER : SkillTree.VANILLA;
+	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP) ? SkillTree.ETHER : SkillTree.VANILLA;
 }
 
 // Get up chance for one element

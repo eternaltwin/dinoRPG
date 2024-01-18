@@ -1,4 +1,4 @@
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum, Operator, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -10,7 +10,7 @@ export const specialActions: Record<string, SpecialActions> = {
 		place: PlaceEnum.TOUR_SOMBRE_1,
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SYLVENOIRE_KEY } },
 				{ [ConditionEnum.PLACE_IS]: PlaceEnum.TOUR_SOMBRE }
 			]
 		},
@@ -18,7 +18,7 @@ export const specialActions: Record<string, SpecialActions> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.SYLVENOIRE_KEY
+				value: DinozStatusId.SYLVENOIRE_KEY
 			},
 			{
 				rewardType: RewardEnum.TELEPORT,

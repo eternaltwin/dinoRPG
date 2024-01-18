@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum, TriggerEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
@@ -34,30 +34,30 @@ export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 		},
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: statusList.BASALT_SHARD },
-				{ [ConditionEnum.STATUS]: statusList.PURE_WATER },
-				{ [ConditionEnum.STATUS]: statusList.SWAMP_MUD }
+				{ [ConditionEnum.STATUS]: DinozStatusId.BASALT_SHARD },
+				{ [ConditionEnum.STATUS]: DinozStatusId.PURE_WATER },
+				{ [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MUD }
 			]
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BASALT_SHARD,
+				value: DinozStatusId.BASALT_SHARD,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.PURE_WATER,
+				value: DinozStatusId.PURE_WATER,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.SWAMP_MUD,
+				value: DinozStatusId.SWAMP_MUD,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ZORS_GLOVE
+				value: DinozStatusId.ZORS_GLOVE
 			}
 		]
 	},

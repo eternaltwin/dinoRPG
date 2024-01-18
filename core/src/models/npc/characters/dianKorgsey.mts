@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -18,7 +18,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.QWHY
+				value: DinozStatusId.QWHY
 			}
 		]
 	},
@@ -28,7 +28,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.QWOOD
+				value: DinozStatusId.QWOOD
 			}
 		]
 	},
@@ -38,7 +38,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.QTAME
+				value: DinozStatusId.QTAME
 			}
 		]
 	},
@@ -47,10 +47,10 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		nextStep: ['service'],
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: statusList.QTAME },
-				{ [ConditionEnum.STATUS]: statusList.QWOOD },
-				{ [ConditionEnum.STATUS]: statusList.QWHY },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.DIAN } }
+				{ [ConditionEnum.STATUS]: DinozStatusId.QTAME },
+				{ [ConditionEnum.STATUS]: DinozStatusId.QWOOD },
+				{ [ConditionEnum.STATUS]: DinozStatusId.QWHY },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.DIAN } }
 			]
 		}
 	},
@@ -60,7 +60,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.DIAN
+				value: DinozStatusId.DIAN
 			}
 		]
 	},
@@ -68,7 +68,7 @@ export const DIANKORGSEY: Readonly<Record<string, NpcData>> = {
 		stepName: 'missions',
 		nextStep: [],
 		condition: {
-			[ConditionEnum.STATUS]: statusList.DIAN
+			[ConditionEnum.STATUS]: DinozStatusId.DIAN
 		}
 	},
 	nothing: {

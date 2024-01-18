@@ -111,7 +111,7 @@
 								<span v-if="detail.type === 'element'" class="detail-name"
 									>x 5 ({{ $t('details.baseElementContribution') }})</span
 								>
-								<span v-if="detail.type === 'skill'">+{{ detail.value }}</span>
+								<span v-if="detail.type !== 'element'">+{{ detail.value }}</span>
 								<span v-if="detail.type === 'skill'" class="detail-name">
 									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
 									<img
@@ -120,6 +120,13 @@
 										:src="getImgURL('elements', `elem_${element}`)"
 										alt="info_button"
 									/>
+								</span>
+								<span v-if="detail.type === 'status'" class="detail-name">
+									<img
+										:src="getImgURL('status', `fx_${statusList.imgName[+(detail.name || '0')]}`)"
+										:alt="$t(`status.name.${detail.name}`)"
+									/>
+									<span>{{ $t(`status.name.${detail.name}`) }}</span>
 								</span>
 							</li>
 						</ul>
@@ -183,8 +190,8 @@
 									alt="info_button"
 									class="ml-4"
 								/>
-								<span v-if="detail.type === 'skill'">+{{ detail.value }}</span>
-								<span v-if="detail.type === 'skill' && detail.global" class="detail-name">
+								<span v-if="detail.type === 'skill' || detail.type === 'status'">+{{ detail.value }}</span>
+								<span v-if="detail.type !== 'element' && detail.global" class="detail-name">
 									{{ 'x ' }}
 									<span v-if="detail.element === stat.weak1?.name || detail.element === stat.weak2?.name"> 0.5</span>
 									<span v-else-if="detail.element === stat.element?.name">1</span>
@@ -199,6 +206,13 @@
 										:src="getImgURL('elements', `elem_${element}`)"
 										alt="info_button"
 									/>
+								</span>
+								<span v-if="detail.type === 'status'" class="detail-name">
+									<img
+										:src="getImgURL('status', `fx_${statusList.imgName[+(detail.name || '0')]}`)"
+										:alt="$t(`status.name.${detail.name}`)"
+									/>
+									<span>{{ $t(`status.name.${detail.name}`) }}</span>
 								</span>
 							</li>
 						</ul>
@@ -246,8 +260,12 @@
 										{{ stat.name === SpecialStat.ACID_BLOOD_DAMAGE ? '/ 2' : '' }} ({{ $t('details.baseValue') }})
 									</span>
 								</span>
-								<span v-else>{{ detail.percent ? '' : '+' }}{{ detail.value }}{{ detail.percent ? '%' : '' }}</span>
-								<span v-if="detail.type !== 'base'" class="detail-name">
+								<span v-else>
+									{{ detail.percent ? '' : detail.value < 0 ? '-' : '+' }}
+									{{ Math.abs(detail.value) }}
+									{{ detail.percent ? '%' : '' }}
+								</span>
+								<span v-if="detail.type === 'skill'" class="detail-name">
 									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
 									<img
 										v-for="element in detail.elements"
@@ -255,6 +273,13 @@
 										:src="getImgURL('elements', `elem_${element}`)"
 										alt="info_button"
 									/>
+								</span>
+								<span v-if="detail.type === 'status'" class="detail-name">
+									<img
+										:src="getImgURL('status', `fx_${statusList.imgName[+(detail.name || '0')]}`)"
+										:alt="$t(`status.name.${detail.name}`)"
+									/>
+									<span>{{ $t(`status.name.${detail.name}`) }}</span>
 								</span>
 							</li>
 						</ul>
@@ -289,6 +314,7 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			dinozSkill: [] as Array<SkillDetails>,
 			skillList,
+			statusList,
 			selectedSort: 'Default' as string,
 			picked: 'Ascendant' as string,
 			hidden: true as boolean,
@@ -373,15 +399,15 @@ export default defineComponent({
 
 			// Get stats
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
-				getAssaultStat(data, this.dinozSkill, stat as AssaultElement)
+				getAssaultStat(data, data.status, this.dinozSkill, stat as AssaultElement)
 			);
 
 			this.defenseStats = Object.values(DefenseElement).map(stat =>
-				getDefenseStat(data, this.dinozSkill, stat as DefenseElement)
+				getDefenseStat(data, data.status, this.dinozSkill, stat as DefenseElement)
 			);
 
 			this.specialStats = Object.values(SpecialStat)
-				.map(stat => getSpecialStat(data, this.dinozSkill, stat as SpecialStat))
+				.map(stat => getSpecialStat(data, data.status, this.dinozSkill, stat as SpecialStat))
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 
 			// Refresh special stats on EventBus `refreshInventory`
@@ -399,7 +425,12 @@ export default defineComponent({
 				} else if (event === 'equip' && item === itemList.ZIPPO.itemId) {
 					// Add torchDamage stat if lighter was equipped and no other lighter was equipped
 					if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
-						const torchDamage = getSpecialStat(this.dinozData, this.dinozSkill, SpecialStat.TORCH_DAMAGE);
+						const torchDamage = getSpecialStat(
+							this.dinozData,
+							this.dinozData.status,
+							this.dinozSkill,
+							SpecialStat.TORCH_DAMAGE
+						);
 
 						if (torchDamage) {
 							this.specialStats.push(torchDamage);
@@ -653,7 +684,7 @@ export default defineComponent({
 		display: flex;
 		align-items: center;
 
-		img {
+		& > img {
 			margin-right: 4px;
 
 			&:first-child {

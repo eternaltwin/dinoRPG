@@ -5,7 +5,7 @@ import { ElementType } from '../enums/ElementType.mjs';
 import { ItemFiche } from '../item/ItemFiche.mjs';
 import { Item } from '../item/ItemList.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
-import { Status as DinozStatus } from '../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../dinoz/StatusList.mjs';
 
 export enum Status {
 	// Bad
@@ -169,7 +169,7 @@ export interface DetailedFighter {
 	goldStolen?: Record<number, number>;
 	// Cursed
 	initiallyCursed: boolean;
-	permanentStatusGained: DinozStatus[];
+	permanentStatusGained: DinozStatusId[];
 	// Previous target
 	previousTarget?: number;
 }
@@ -179,5 +179,5 @@ export interface FighterResultFiche {
 	hpLost: number;
 	itemsUsed: Item[];
 	goldLost: number;
-	statusGained: DinozStatus[];
+	statusGained: DinozStatusId[];
 }

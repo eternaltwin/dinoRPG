@@ -1,4 +1,4 @@
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
@@ -10,7 +10,7 @@ import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
-import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
+import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
 import { addMoney, removeMoney } from '../dao/playerDao.js';
 import { sendDiscord } from '../utils/discord.js';
@@ -21,6 +21,7 @@ import { getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
+import randomBetween from '../utils/fight/randomBetween.js';
 
 /**
  * @summary Process a fight
@@ -197,7 +198,7 @@ export async function rewardFight(
 		let gfact = 1.0;
 		if (d.experience >= getMaxXp(d) && d.level <= 5) gfact = 0.1;
 		/** HACK to make dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === statusList.CURSED)) {
+		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
 			gfact = 0.0;
 		}
 
@@ -258,6 +259,16 @@ export async function rewardFight(
 			if (d.status.some(s => s.statusId === status)) continue;
 
 			await addStatusToDinoz(d.id, status);
+		}
+
+		// Handle dinoz statuses
+		for (const dinozStatus of d.status) {
+			if (dinozStatus.statusId === DinozStatusId.FIRE_CHARM || dinozStatus.statusId === DinozStatusId.WATER_CHARM) {
+				// 1/11 chance to remove charm
+				if (randomBetween(0, 10) === 0) {
+					await removeStatusFromDinoz(d.id, dinozStatus.statusId);
+				}
+			}
 		}
 	}
 

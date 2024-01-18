@@ -46,6 +46,8 @@ export const initI18n = async () => {
 	i18n = createI18n({
 		locale: localStore().getLanguage || LocalesEnum.FR,
 		fallbackLocale: defaultLocale,
+		silentFallbackWarn: true,
+		silentTranslationWarn: true,
 		messages: { fr: {}, en: {}, es: {}, de: {} }
 	});
 

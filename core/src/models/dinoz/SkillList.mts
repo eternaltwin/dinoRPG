@@ -345,7 +345,9 @@ export enum Skill {
 	M_TORNADO = 99944,
 	M_AIR_BLADE = 99945,
 	M_FEBREZ = 99948,
-	M_GRIZOU = 99949
+	M_GRIZOU = 99949,
+	// SPECIAL SKILLS
+	CATCH = 999999,
 }
 
 // skillId are counted like this : ABCDE
@@ -5062,5 +5064,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
+	},
+	[Skill.CATCH]: {
+		id: Skill.CATCH,
+		name: 'Capture',
+		type: SkillType.A,
+		energy: Energy.E10,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: true,
+		isSphereSkill: false,
+		priority: 1,
+		probability: 5
 	}
 };

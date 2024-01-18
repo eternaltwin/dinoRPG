@@ -1,4 +1,4 @@
-import { statusList } from '../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { GatherType } from '../enums/GatherType.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
@@ -89,7 +89,7 @@ export const placeList: Record<
 		borderPlace: [8],
 		alias: 43,
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.CLIMBING_GEAR
+			[ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR
 		},
 		map: MapZone.GTOUTCHAUD
 	},
@@ -99,7 +99,7 @@ export const placeList: Record<
 		borderPlace: [1],
 		alias: 31,
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.BUOY
+			[ConditionEnum.STATUS]: DinozStatusId.BUOY
 		},
 		map: MapZone.ILES
 	},
@@ -109,7 +109,7 @@ export const placeList: Record<
 		borderPlace: [1],
 		conditions: {
 			[Operator.OR]: [
-				{ [ConditionEnum.STATUS]: statusList.SKULLY_MEMORY },
+				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
 				{ [ConditionEnum.DINOZ_LIFE]: [Comparator.LESSER_EQUAL, 10] }
 			]
 		},
@@ -121,7 +121,7 @@ export const placeList: Record<
 		borderPlace: [5],
 		alias: 35,
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.DINOPLAZA
+			[ConditionEnum.STATUS]: DinozStatusId.DINOPLAZA
 		},
 		map: MapZone.DINOWEST
 	},
@@ -129,7 +129,7 @@ export const placeList: Record<
 		placeId: PlaceEnum.GO_TO_MONSTER_ISLAND,
 		name: 'gomisl',
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.JOVEBOZE,
+			[ConditionEnum.STATUS]: DinozStatusId.JOVEBOZE,
 			[ConditionEnum.ACTIVE]: false
 		},
 		borderPlace: [1],
@@ -169,7 +169,7 @@ export const placeList: Record<
 		name: 'fleuve',
 		borderPlace: [18],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.FLIPPERS
+			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},
 		alias: 17,
 		map: MapZone.JUNGLE
@@ -179,7 +179,7 @@ export const placeList: Record<
 		name: 'camp',
 		borderPlace: [22, 102],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.FLIPPERS
+			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT
@@ -189,7 +189,7 @@ export const placeList: Record<
 		name: 'jungle',
 		borderPlace: [17, 20],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.FLIPPERS
+			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT
@@ -206,7 +206,7 @@ export const placeList: Record<
 		name: 'gostep',
 		borderPlace: [20],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY,
+			[ConditionEnum.STATUS]: DinozStatusId.SYLVENOIRE_KEY,
 			[ConditionEnum.ACTIVE]: false
 		},
 		alias: 55,
@@ -231,7 +231,7 @@ export const placeList: Record<
 		name: 'gogrum',
 		borderPlace: [25],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF
+			[ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF
 		},
 		alias: 14,
 		map: MapZone.JUNGLE
@@ -249,7 +249,7 @@ export const placeList: Record<
 		borderPlace: [25],
 		alias: 28,
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.RASCAPHANDRE_DECOY
+			[ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY
 		},
 		map: MapZone.ILES
 	},
@@ -265,7 +265,7 @@ export const placeList: Record<
 		name: 'dome',
 		borderPlace: [25],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.RASCAPHANDRE_DECOY
+			[ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY
 		},
 		map: MapZone.ILES,
 		gather: GatherType.ENERGY1
@@ -412,7 +412,7 @@ export const placeList: Record<
 		name: 'stunel',
 		borderPlace: [48],
 		conditions: {
-			[ConditionEnum.STATUS]: statusList.LANTERN
+			[ConditionEnum.STATUS]: DinozStatusId.LANTERN
 		},
 		alias: 49,
 		map: MapZone.GTOUTCHAUD
@@ -812,7 +812,7 @@ export const placeList: Record<
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'ouestu' },
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'lumi' },
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'truci2' },
-				{ [ConditionEnum.STATUS]: statusList.DARK_ORB }
+				{ [ConditionEnum.STATUS]: DinozStatusId.DARK_ORB }
 			]
 		},
 		map: MapZone.DARKWORLD

@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
@@ -74,7 +74,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.STRATEGY_IN_130_LESSONS
+				value: DinozStatusId.STRATEGY_IN_130_LESSONS
 			}
 		],
 		steps: [

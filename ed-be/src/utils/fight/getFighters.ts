@@ -1,5 +1,5 @@
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -73,6 +73,9 @@ export const initializeDinoz = (
 		return { ...skillDetails };
 	});
 
+	// Statuses
+	const dinozStatus = dinoz.status.map(status => status.statusId as DinozStatusId);
+
 	const dinozWithItems = {
 		...dinoz,
 		items: dinoz.items.map(item => item.itemId)
@@ -99,33 +102,33 @@ export const initializeDinoz = (
 				[ElementType.VOID]: 0
 			},
 			assaultBonus: {
-				[ElementType.AIR]: getAssaultStat(dinoz, skills, AssaultElement.AIR).bonus,
-				[ElementType.FIRE]: getAssaultStat(dinoz, skills, AssaultElement.FIRE).bonus,
-				[ElementType.LIGHTNING]: getAssaultStat(dinoz, skills, AssaultElement.LIGHTNING).bonus,
-				[ElementType.WATER]: getAssaultStat(dinoz, skills, AssaultElement.WATER).bonus,
-				[ElementType.WOOD]: getAssaultStat(dinoz, skills, AssaultElement.WOOD).bonus,
+				[ElementType.AIR]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.AIR).bonus,
+				[ElementType.FIRE]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.FIRE).bonus,
+				[ElementType.LIGHTNING]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.LIGHTNING).bonus,
+				[ElementType.WATER]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.WATER).bonus,
+				[ElementType.WOOD]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.WOOD).bonus,
 				[ElementType.VOID]: 0
 			},
 			defense: {
-				[ElementType.AIR]: getDefenseStat(dinoz, skills, DefenseElement.AIR).value,
-				[ElementType.FIRE]: getDefenseStat(dinoz, skills, DefenseElement.FIRE).value,
-				[ElementType.LIGHTNING]: getDefenseStat(dinoz, skills, DefenseElement.LIGHTNING).value,
-				[ElementType.WATER]: getDefenseStat(dinoz, skills, DefenseElement.WATER).value,
-				[ElementType.WOOD]: getDefenseStat(dinoz, skills, DefenseElement.WOOD).value,
-				[ElementType.VOID]: getDefenseStat(dinoz, skills, DefenseElement.NEUTRAL).value
+				[ElementType.AIR]: getDefenseStat(dinoz, dinozStatus, skills, DefenseElement.AIR).value,
+				[ElementType.FIRE]: getDefenseStat(dinoz, dinozStatus, skills, DefenseElement.FIRE).value,
+				[ElementType.LIGHTNING]: getDefenseStat(dinoz, dinozStatus, skills, DefenseElement.LIGHTNING).value,
+				[ElementType.WATER]: getDefenseStat(dinoz, dinozStatus, skills, DefenseElement.WATER).value,
+				[ElementType.WOOD]: getDefenseStat(dinoz, dinozStatus, skills, DefenseElement.WOOD).value,
+				[ElementType.VOID]: getDefenseStat(dinoz, dinozStatus, skills, DefenseElement.NEUTRAL).value
 			},
 			special: {
-				[SpecialStat.INITIATIVE]: getSpecialStat(dinozWithItems, skills, SpecialStat.INITIATIVE)?.value ?? 0,
-				[SpecialStat.ENERGY]: getSpecialStat(dinozWithItems, skills, SpecialStat.ENERGY)?.value ?? 0,
-				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(dinozWithItems, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
-				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, skills, SpecialStat.ARMOR)?.value ?? 0,
-				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, skills, SpecialStat.MULTIHIT)?.value ?? 0,
-				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, skills, SpecialStat.EVASION)?.value ?? 0,
-				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, skills, SpecialStat.COUNTER)?.value ?? 0,
-				[SpecialStat.BUBBLE_RATE]: getSpecialStat(dinozWithItems, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
-				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(dinozWithItems, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
+				[SpecialStat.INITIATIVE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.INITIATIVE)?.value ?? 0,
+				[SpecialStat.ENERGY]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY)?.value ?? 0,
+				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
+				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
+				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
+				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
+				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? 0,
+				[SpecialStat.BUBBLE_RATE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
+				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
-					getSpecialStat(dinozWithItems, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -159,11 +162,12 @@ export const initializeDinoz = (
 		nextAssaultMultiplier: 1,
 		costume,
 		invocations: 1,
-		initiallyCursed: dinoz.status.some(status => status.statusId === statusList.CURSED),
+		initiallyCursed: dinoz.status.some(status => status.statusId === DinozStatusId.CURSED),
 		permanentStatusGained: []
 	};
 
 	handleSkills(team, fighter, place);
+	handleDinozStatuses(fighter, dinozStatus);
 
 	// Order skills by priority, random if equal
 	fighter.skills.sort((a, b) => {
@@ -282,7 +286,7 @@ export const initializeMonster = (
 		nbrUpLightning: monster.elements.lightning,
 		nbrUpAir: monster.elements.air,
 		nbrUpWater: monster.elements.water,
-		items: []
+		items: [],
 	};
 
 	const fighter: DetailedFighter = {
@@ -306,41 +310,41 @@ export const initializeMonster = (
 				[ElementType.VOID]: 0
 			},
 			assaultBonus: {
-				[ElementType.AIR]: getAssaultStat(similiDinoz, skills, AssaultElement.AIR).bonus + (monster.bonus_attack ?? 0),
+				[ElementType.AIR]: getAssaultStat(similiDinoz, [], skills, AssaultElement.AIR).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.FIRE]:
-					getAssaultStat(similiDinoz, skills, AssaultElement.FIRE).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.FIRE).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.LIGHTNING]:
-					getAssaultStat(similiDinoz, skills, AssaultElement.LIGHTNING).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.LIGHTNING).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.WATER]:
-					getAssaultStat(similiDinoz, skills, AssaultElement.WATER).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.WATER).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.WOOD]:
-					getAssaultStat(similiDinoz, skills, AssaultElement.WOOD).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.WOOD).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.VOID]: 0
 			},
 			defense: {
-				[ElementType.AIR]: getDefenseStat(similiDinoz, skills, DefenseElement.AIR).value + (monster.bonus_defense ?? 0),
+				[ElementType.AIR]: getDefenseStat(similiDinoz, [], skills, DefenseElement.AIR).value + (monster.bonus_defense ?? 0),
 				[ElementType.FIRE]:
-					getDefenseStat(similiDinoz, skills, DefenseElement.FIRE).value + (monster.bonus_defense ?? 0),
+					getDefenseStat(similiDinoz, [], skills, DefenseElement.FIRE).value + (monster.bonus_defense ?? 0),
 				[ElementType.LIGHTNING]:
-					getDefenseStat(similiDinoz, skills, DefenseElement.LIGHTNING).value + (monster.bonus_defense ?? 0),
+					getDefenseStat(similiDinoz, [], skills, DefenseElement.LIGHTNING).value + (monster.bonus_defense ?? 0),
 				[ElementType.WATER]:
-					getDefenseStat(similiDinoz, skills, DefenseElement.WATER).value + (monster.bonus_defense ?? 0),
+					getDefenseStat(similiDinoz, [], skills, DefenseElement.WATER).value + (monster.bonus_defense ?? 0),
 				[ElementType.WOOD]:
-					getDefenseStat(similiDinoz, skills, DefenseElement.WOOD).value + (monster.bonus_defense ?? 0),
+					getDefenseStat(similiDinoz, [], skills, DefenseElement.WOOD).value + (monster.bonus_defense ?? 0),
 				[ElementType.VOID]:
-					getDefenseStat(similiDinoz, skills, DefenseElement.NEUTRAL).value + (monster.bonus_defense ?? 0)
+					getDefenseStat(similiDinoz, [], skills, DefenseElement.NEUTRAL).value + (monster.bonus_defense ?? 0)
 			},
 			special: {
-				[SpecialStat.INITIATIVE]: getSpecialStat(similiDinoz, skills, SpecialStat.INITIATIVE)?.value ?? 0,
-				[SpecialStat.ENERGY]: getSpecialStat(similiDinoz, skills, SpecialStat.ENERGY)?.value ?? 0,
-				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(similiDinoz, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
-				[SpecialStat.ARMOR]: getSpecialStat(similiDinoz, skills, SpecialStat.ARMOR)?.value ?? 0,
-				[SpecialStat.MULTIHIT]: getSpecialStat(similiDinoz, skills, SpecialStat.MULTIHIT)?.value ?? 0,
-				[SpecialStat.EVASION]: getSpecialStat(similiDinoz, skills, SpecialStat.EVASION)?.value ?? 0,
-				[SpecialStat.COUNTER]: getSpecialStat(similiDinoz, skills, SpecialStat.COUNTER)?.value ?? 0,
-				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
-				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
-				[SpecialStat.ACID_BLOOD_DAMAGE]: getSpecialStat(similiDinoz, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
+				[SpecialStat.INITIATIVE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.INITIATIVE)?.value ?? 0,
+				[SpecialStat.ENERGY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY)?.value ?? 0,
+				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
+				[SpecialStat.ARMOR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? 0,
+				[SpecialStat.MULTIHIT]: getSpecialStat(similiDinoz, [], skills, SpecialStat.MULTIHIT)?.value ?? 0,
+				[SpecialStat.EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? 0,
+				[SpecialStat.COUNTER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? 0,
+				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
+				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
+				[SpecialStat.ACID_BLOOD_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -431,6 +435,24 @@ export const initializeMonster = (
 	fighter.element = fighter.elements[0];
 
 	return fighter;
+};
+
+const handleDinozStatuses = (fighter: DetailedFighter, statuses: DinozStatusId[]) => {
+	const fighterHas = statuses.reduce(
+		(acc, status) => {
+			acc[status] = true;
+			return acc;
+		},
+		{} as Record<DinozStatusId, boolean>
+	);
+
+	if (fighterHas[DinozStatusId.CUSCOUZ_MALEDICTION]) {
+		fighter.costume = monsterList.FRUTOX_DEFENDER;
+	}
+
+	if (fighterHas[DinozStatusId.CATCHING_GLOVE]) {
+		fighter.skills.push({ ...skillList[Skill.CATCH] });
+	}
 };
 
 const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceEnum) => {

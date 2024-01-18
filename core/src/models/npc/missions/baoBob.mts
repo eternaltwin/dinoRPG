@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
@@ -474,7 +474,7 @@ export const M_BAO_BOB: Mission[] = [
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.BAO_BOB_RALLY4 },
-				{ [ConditionEnum.STATUS]: statusList.FLIPPERS }
+				{ [ConditionEnum.STATUS]: DinozStatusId.FLIPPERS }
 			]
 		},
 		rewards: [

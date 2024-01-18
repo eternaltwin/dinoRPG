@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -17,11 +17,11 @@ export const PADAMOINE: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.NENUPHAR_LEAF
+				value: DinozStatusId.NENUPHAR_LEAF
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ZENBRO,
+				value: DinozStatusId.ZENBRO,
 				reverse: true
 			}
 		],

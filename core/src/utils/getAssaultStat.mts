@@ -1,5 +1,6 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
+import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 
@@ -13,6 +14,7 @@ export enum AssaultElement {
 
 export const getAssaultStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
+	statuses: DinozStatusId[],
 	skills: Pick<SkillDetails, 'effects' | 'name' | 'element'>[],
 	elementName: AssaultElement,
 	power = 5
@@ -40,7 +42,7 @@ export const getAssaultStat = (
 
 	let bonus = 0;
 	const details: {
-		type: 'skill' | 'element';
+		type: 'skill' | 'status' | 'element';
 		name?: string;
 		elements: string[];
 		value: number;
@@ -50,6 +52,27 @@ export const getAssaultStat = (
 		type: 'element',
 		elements: [elementName],
 		value: element
+	});
+
+	// Apply bonuses from statuses
+	statuses.forEach(status => {
+		switch (status) {
+			case DinozStatusId.FIRE_CHARM: {
+				if (elementName === AssaultElement.FIRE) {
+					bonus += 3;
+
+					details.push({
+						type: 'status',
+						name: DinozStatusId.FIRE_CHARM.toString(),
+						elements: [],
+						value: 3
+					});
+				}
+				break;
+			}
+			default:
+				break;
+		}
 	});
 
 	// Get bonuses from skills

@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
@@ -36,11 +36,11 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.RASCAPHANDRE_DECOY
+				value: DinozStatusId.RASCAPHANDRE_DECOY
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.JVBZ,
+				value: DinozStatusId.JVBZ,
 				reverse: true
 			}
 		]

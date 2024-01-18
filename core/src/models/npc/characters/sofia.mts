@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -38,7 +38,7 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.MINLEVEL]: 50 },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_LIMIT_1 } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BROKEN_LIMIT_1 } }
 			]
 		}
 	},
@@ -48,7 +48,7 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BROKEN_LIMIT_1
+				value: DinozStatusId.BROKEN_LIMIT_1
 			}
 		]
 	},
@@ -62,8 +62,8 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.MINLEVEL]: 50 },
-				{ [ConditionEnum.STATUS]: statusList.BROKEN_LIMIT_1 },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ETHER_DROP } }
+				{ [ConditionEnum.STATUS]: DinozStatusId.BROKEN_LIMIT_1 },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ETHER_DROP } }
 			]
 		}
 	},
@@ -73,7 +73,7 @@ export const SOFIA: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ETHER_DROP
+				value: DinozStatusId.ETHER_DROP
 			}
 		]
 	},

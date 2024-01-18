@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
 import { NpcData } from '../NpcData.mjs';
@@ -51,7 +51,7 @@ export const FOU: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.LANTERN
+				value: DinozStatusId.LANTERN
 			}
 		]
 	},

@@ -22,7 +22,7 @@ import { applySkillEffect } from './skillService.js';
 import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import {
@@ -222,10 +222,10 @@ async function useSpecialItem(
 	if (item.effect?.category !== ItemEffect.SPECIAL) return;
 	switch (item.effect.value) {
 		case 'ointment':
-			if (!dinoz.status.some(status => status.statusId === statusList.CURSED)) {
+			if (!dinoz.status.some(status => status.statusId === DinozStatusId.CURSED)) {
 				throw new ErrorFormator(400, `NotCursed`);
 			}
-			await removeStatusFromDinoz(dinoz.id, statusList.CURSED);
+			await removeStatusFromDinoz(dinoz.id, DinozStatusId.CURSED);
 			break;
 		case 'rice':
 			await updateDinoz(dinoz.id, useRice(dinoz));

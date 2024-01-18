@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { NpcData } from '../NpcData.mjs';
@@ -75,7 +75,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		stepName: 'fear',
 		nextStep: ['explore', 'other'],
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.HUMISS }
+			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.HUMISS }
 		}
 	},
 	explore: {
@@ -84,7 +84,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.HUMISS
+				value: DinozStatusId.HUMISS
 			}
 		]
 	},
@@ -105,7 +105,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	missions: {
 		stepName: 'missions',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.HUMISS
+			[ConditionEnum.STATUS]: DinozStatusId.HUMISS
 		},
 		nextStep: []
 	},

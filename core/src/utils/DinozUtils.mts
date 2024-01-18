@@ -13,7 +13,6 @@ import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
 import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
-import { statusList } from '../models/dinoz/StatusList.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { getHUDObjective } from './MissionUtils.mjs';
 import { checkCondition } from './checkCondition.mjs';
@@ -29,6 +28,7 @@ import { Stat } from '../models/enums/SkillStat.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { ErrorFormator } from './errorFormator.mjs';
 import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
+import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 
 type Config = {
 	dinoz: {
@@ -59,9 +59,9 @@ export const getMaxXp = (
 		throw new Error(`Level ${dinoz.level} doesn't exist.`);
 	}
 
-	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_3) && dinoz.level === 70) return 0;
-	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_2) && dinoz.level === 60) return 0;
-	if (dinoz.status.some(s => s.statusId !== statusList.BROKEN_LIMIT_1) && dinoz.level === 50) return 0;
+	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_3) && dinoz.level === 70) return 0;
+	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_2) && dinoz.level === 60) return 0;
+	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_1) && dinoz.level === 50) return 0;
 
 	return level.experience;
 };
@@ -109,7 +109,7 @@ export const backpackSlot = (
 	let total = 2;
 	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.POCHE_VENTRALE].id)) total++;
 	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.SURPLIS_DHADES].id)) total++;
-	if (dinoz.status.find(status => status.statusId === statusList.BACKPACK)) total++;
+	if (dinoz.status.find(status => status.statusId === DinozStatusId.BACKPACK)) total++;
 	if (dinoz.player.engineer) total++;
 
 	// TODO: Check for other dinoz storekeeper here
@@ -240,7 +240,7 @@ export const toSkillDetails = (dinoz: { skills: Pick<DinozSkill, 'skillId' | 'st
 	});
 
 export const canChangeSkillState = (dinoz: { status: Pick<DinozStatus, 'statusId'>[] }) => {
-	return dinoz.status.some(status => status.statusId === statusList.STRATEGY_IN_130_LESSONS);
+	return dinoz.status.some(status => status.statusId === DinozStatusId.STRATEGY_IN_130_LESSONS);
 };
 
 export const knowSkillId = (
@@ -498,10 +498,10 @@ export const canWinXP = (
 		status: Pick<DinozStatus, 'statusId'>[];
 	}
 ) => {
-	if (dinoz.status.some(s => s.statusId === statusList.CURSED)) return false;
-	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_3)) return true;
-	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_2) && dinoz.level < 70) return true;
-	if (dinoz.status.some(s => s.statusId === statusList.BROKEN_LIMIT_1) && dinoz.level < 60) return true;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.CURSED)) return false;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_3)) return true;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_2) && dinoz.level < 70) return true;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.BROKEN_LIMIT_1) && dinoz.level < 60) return true;
 	if (dinoz.level < 50) return true;
 	else return false;
 };

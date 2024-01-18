@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
@@ -363,7 +363,7 @@ export const M_HULOT: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BACKPACK
+				value: DinozStatusId.BACKPACK
 			}
 		],
 		steps: [

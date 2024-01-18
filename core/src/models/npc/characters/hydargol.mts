@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { rewardList } from '../../reward/RewardList.mjs';
 import { NpcData } from '../NpcData.mjs';
@@ -23,7 +23,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		stepName: 'help',
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF } },
 				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
 			]
 		},
@@ -33,14 +33,14 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		stepName: 'give',
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF },
+				{ [ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF },
 				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
 			]
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.NENUPHAR_LEAF,
+				value: DinozStatusId.NENUPHAR_LEAF,
 				reverse: true
 			},
 			{
@@ -67,7 +67,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ZENBRO
+				value: DinozStatusId.ZENBRO
 			}
 		]
 	},
@@ -76,8 +76,8 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		nextStep: ['why'],
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: statusList.ZORS_GLOVE },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.NENUPHAR_LEAF } }
+				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF } }
 			]
 		}
 	},
@@ -87,7 +87,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.NENUPHAR_LEAF
+				value: DinozStatusId.NENUPHAR_LEAF
 			}
 		]
 	},

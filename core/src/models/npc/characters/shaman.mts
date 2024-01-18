@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -15,33 +15,33 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 	souvenir: {
 		stepName: 'souvenir',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SHFLAG }
+			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SHFLAG }
 		},
 		nextStep: ['more', 'merci']
 	},
 	missions: {
 		stepName: 'missions',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.SHFLAG
+			[ConditionEnum.STATUS]: DinozStatusId.SHFLAG
 		},
 		nextStep: []
 	},
 	charm: {
 		stepName: 'charm',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.FFLAG
+			[ConditionEnum.STATUS]: DinozStatusId.FFLAG
 		},
 		nextStep: ['boost', 'nothing']
 	},
 	boost: {
 		stepName: 'boost',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FIRE_CHARM }
+			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FIRE_CHARM }
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.FIRE_CHARM
+				value: DinozStatusId.FIRE_CHARM
 			}
 		],
 		nextStep: []
@@ -67,7 +67,7 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.SHFLAG
+				value: DinozStatusId.SHFLAG
 			}
 		],
 		nextStep: ['missions']

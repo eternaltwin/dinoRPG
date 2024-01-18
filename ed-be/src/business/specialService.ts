@@ -1,5 +1,5 @@
 import { DinozForConditionCheck } from '@drpg/core/constants';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
@@ -43,7 +43,7 @@ export async function concentrate(req: Request) {
 	}
 
 	//Check if dinoz doesn't already possess the key
-	if (possessStatus(dinoz, statusList.SYLVENOIRE_KEY)) {
+	if (possessStatus(dinoz, DinozStatusId.SYLVENOIRE_KEY)) {
 		throw new ErrorFormator(500, `${dinoz.name} cannot concentrate`);
 	}
 

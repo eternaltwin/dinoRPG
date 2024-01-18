@@ -1,7 +1,7 @@
 import { DinozForConditionCheck } from '@drpg/core/constants';
 import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
@@ -184,7 +184,7 @@ export async function getAvailableActions(
 
 	// Dig with the shovel
 	if (
-		dinoz.status.some(status => status.statusId === statusList.SHOVEL || status.statusId === statusList.ENHANCED_SHOVEL)
+		dinoz.status.some(status => status.statusId === DinozStatusId.SHOVEL || status.statusId === DinozStatusId.ENHANCED_SHOVEL)
 	) {
 		availableActions.push(actionList[Action.DIG]);
 	}
@@ -193,7 +193,7 @@ export async function getAvailableActions(
 	const shopAvailable = Object.values(shopList).find(shop => shop.placeId == dinoz.placeId);
 	if (shopAvailable) {
 		if (shopAvailable.type == ShopType.CURSED) {
-			const dinozIsCursed = dinoz.status.some(status => status.statusId === statusList.CURSED);
+			const dinozIsCursed = dinoz.status.some(status => status.statusId === DinozStatusId.CURSED);
 			if (dinozIsCursed) {
 				// Add the shop id to the action
 				const shopAction = {
@@ -634,7 +634,7 @@ export async function digWithDinoz(req: Request) {
 
 	if (
 		!dinozData.status.some(
-			status => status.statusId === statusList.SHOVEL || status.statusId === statusList.ENHANCED_SHOVEL
+			status => status.statusId === DinozStatusId.SHOVEL || status.statusId === DinozStatusId.ENHANCED_SHOVEL
 		)
 	) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot dig.`);
@@ -650,15 +650,15 @@ export async function digWithDinoz(req: Request) {
 	await rewarder(reward, [dinozData]);
 
 	//Broke shovel
-	if (dinozData.status.some(status => status.statusId === statusList.SHOVEL)) {
-		await removeStatusFromDinoz(dinozId, statusList.SHOVEL);
-		await addStatusToDinoz(dinozData.id, statusList.BROKEN_SHOVEL);
+	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {
+		await removeStatusFromDinoz(dinozId, DinozStatusId.SHOVEL);
+		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_SHOVEL);
 	}
 
 	//Try to broke enhanced shovel (75% of keeping it)
-	if (getRandomNumber(0, 100) > 75 && dinozData.status.some(status => status.statusId === statusList.ENHANCED_SHOVEL)) {
-		await removeStatusFromDinoz(dinozId, statusList.ENHANCED_SHOVEL);
-		await addStatusToDinoz(dinozData.id, statusList.BROKEN_ENHANCED_SHOVEL);
+	if (getRandomNumber(0, 100) > 75 && dinozData.status.some(status => status.statusId === DinozStatusId.ENHANCED_SHOVEL)) {
+		await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);
+		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_ENHANCED_SHOVEL);
 	}
 
 	return reward[0];

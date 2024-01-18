@@ -11,6 +11,7 @@ export enum Energy {
 	E30 = 30,
 	E25 = 25,
 	E20 = 20,
+	E10 = 10,
 	E5 = 5,
 	NONE = 0
 }

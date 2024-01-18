@@ -26,7 +26,7 @@ import { initializeDinoz, initializeMonster } from './getFighters.js';
 import randomBetween from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -1947,6 +1947,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 
 		// Other skills
+		case Skill.CATCH: {
+			// TODO: Code the catch skill
+			// Need to add a table in DB (DinozCatch)
+			// Store dinozId + monsterId + current HP
+			break;
+		}
 		// AIR
 		case Skill.ENVOL: {
 			// Get random opponent
@@ -3770,7 +3776,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 							fighter: stepFighter(opponent)
 						});
 
-						opponent.permanentStatusGained.push(statusList.CUSCOUZ_MALEDICTION);
+						opponent.permanentStatusGained.push(DinozStatusId.CUSCOUZ_MALEDICTION);
 
 						// Add costume step
 						fightData.steps.push({
@@ -3778,10 +3784,6 @@ export const checkDeaths = (fightData: DetailedFight) => {
 							fighter: stepFighter(opponent),
 							costume: monsterList.FRUTOX_DEFENDER.name
 						});
-
-						opponent.costume = monsterList.FRUTOX_DEFENDER;
-
-						opponent.stats.special.armor -= 3;
 					});
 				} else {
 					// Heal boss

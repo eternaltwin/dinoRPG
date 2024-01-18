@@ -1,5 +1,6 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
+import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 
 export enum DefenseElement {
@@ -13,6 +14,7 @@ export enum DefenseElement {
 
 export const getDefenseStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
+	statuses: DinozStatusId[],
 	skills: Pick<SkillDetails, 'effects' | 'name' | 'element' | 'globalEffects'>[],
 	elementName: DefenseElement
 ) => {
@@ -50,7 +52,7 @@ export const getDefenseStat = (
 	}
 
 	const details: {
-		type: 'skill' | 'element';
+		type: 'skill' | 'element' | 'status';
 		name?: string;
 		element: string;
 		elements: string[];
@@ -101,7 +103,30 @@ export const getDefenseStat = (
 	};
 
 	// Get global bonuses from skills for the 5 elements
-	[secondWeakElement, firstWeakElement, element, firstStrongElement, secondStrongElement].forEach(elem => {
+	[secondWeakElement, firstWeakElement, element, firstStrongElement, secondStrongElement].forEach((elem, index) => {
+		// Status
+		statuses.forEach(status => {
+			switch (status) {
+				case DinozStatusId.WATER_CHARM: {
+					if (elem.name !== DefenseElement.WATER) return;
+
+					const multiplicator = index < 2 ? 0.5 : index === 2 ? 1 : 1.5;
+					element.bonus += 3 * multiplicator;
+
+					details.push({
+						type: 'status',
+						name: DinozStatusId.WATER_CHARM.toString(),
+						element: DefenseElement.WATER,
+						elements: [],
+						value: 3,
+						global: true,
+					});
+				}
+					break;
+				default:
+					break;
+			}
+		});
 		skills.forEach(skill => {
 			if (!skill.globalEffects) return;
 

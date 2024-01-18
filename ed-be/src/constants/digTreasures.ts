@@ -1,5 +1,5 @@
 import { DigData } from '@drpg/core/models/dinoz/DigData';
-import { statusList } from '@drpg/core/models/dinoz/StatusList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum, Operator, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 
@@ -10,13 +10,13 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BASALT_SHARD
+				value: DinozStatusId.BASALT_SHARD
 			}
 		],
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BASALT_SHARD } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BASALT_SHARD } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE } }
 			]
 		}
 	},
@@ -26,13 +26,13 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.PURE_WATER
+				value: DinozStatusId.PURE_WATER
 			}
 		],
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.PURE_WATER } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.PURE_WATER } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE } }
 			]
 		}
 	},
@@ -42,13 +42,13 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.SWAMP_MUD
+				value: DinozStatusId.SWAMP_MUD
 			}
 		],
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SWAMP_MUD } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ZORS_GLOVE } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SWAMP_MUD } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE } }
 			]
 		}
 	},
@@ -58,13 +58,13 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.OLD_STONE
+				value: DinozStatusId.OLD_STONE
 			}
 		],
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.OLD_STONE } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ASHPOUK_TOTEM } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.OLD_STONE } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ASHPOUK_TOTEM } }
 			]
 		}
 	}

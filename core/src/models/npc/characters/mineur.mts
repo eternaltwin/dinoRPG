@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -16,16 +16,16 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 		stepName: 'yes',
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SHOVEL } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ENHANCED_SHOVEL } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_SHOVEL } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BROKEN_ENHANCED_SHOVEL } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SHOVEL } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ENHANCED_SHOVEL } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BROKEN_SHOVEL } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BROKEN_ENHANCED_SHOVEL } }
 			]
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.SHOVEL
+				value: DinozStatusId.SHOVEL
 			}
 		],
 		nextStep: ['thanks']
@@ -33,23 +33,23 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 	nothing: {
 		stepName: 'nothing',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.SHOVEL
+			[ConditionEnum.STATUS]: DinozStatusId.SHOVEL
 		},
 		nextStep: ['thanks']
 	},
 	repair: {
 		stepName: 'repair',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.BROKEN_SHOVEL
+			[ConditionEnum.STATUS]: DinozStatusId.BROKEN_SHOVEL
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.SHOVEL
+				value: DinozStatusId.SHOVEL
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BROKEN_SHOVEL,
+				value: DinozStatusId.BROKEN_SHOVEL,
 				reverse: true
 			}
 		],
@@ -58,23 +58,23 @@ export const MINEUR: Readonly<Record<string, NpcData>> = {
 	nothing2: {
 		stepName: 'nothing2',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.ENHANCED_SHOVEL
+			[ConditionEnum.STATUS]: DinozStatusId.ENHANCED_SHOVEL
 		},
 		nextStep: ['thanks']
 	},
 	repair2: {
 		stepName: 'repair2',
 		condition: {
-			[ConditionEnum.STATUS]: statusList.BROKEN_ENHANCED_SHOVEL
+			[ConditionEnum.STATUS]: DinozStatusId.BROKEN_ENHANCED_SHOVEL
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ENHANCED_SHOVEL
+				value: DinozStatusId.ENHANCED_SHOVEL
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BROKEN_ENHANCED_SHOVEL,
+				value: DinozStatusId.BROKEN_ENHANCED_SHOVEL,
 				reverse: true
 			}
 		],

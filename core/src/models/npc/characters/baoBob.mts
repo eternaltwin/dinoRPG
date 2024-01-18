@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 import { NpcData } from '../NpcData.mjs';
@@ -30,7 +30,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	quest2: {
 		stepName: 'quest2',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FLIPPERS }
+			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FLIPPERS }
 		},
 		nextStep: []
 	},
@@ -38,8 +38,8 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'quest3',
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.SYLVENOIRE_KEY } },
-				{ [ConditionEnum.STATUS]: statusList.FLIPPERS },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SYLVENOIRE_KEY } },
+				{ [ConditionEnum.STATUS]: DinozStatusId.FLIPPERS },
 				{ [ConditionEnum.ACTIVE]: false } //Disable concentration and darkworld
 			]
 		},
@@ -83,9 +83,9 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		nextStep: [],
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: statusList.FLOWERING_BRANCH },
-				{ [ConditionEnum.STATUS]: statusList.ICE_PIECE },
-				{ [ConditionEnum.STATUS]: statusList.CORAIL }
+				{ [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH },
+				{ [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE },
+				{ [ConditionEnum.STATUS]: DinozStatusId.CORAIL }
 			]
 		}
 	},
@@ -94,30 +94,30 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		nextStep: ['potion'],
 		condition: {
 			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.FLOWERING_BRANCH } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.ICE_PIECE } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CORAIL } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ICE_PIECE } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CORAIL } }
 			]
 		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.FLOWERING_BRANCH,
+				value: DinozStatusId.FLOWERING_BRANCH,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ICE_PIECE,
+				value: DinozStatusId.ICE_PIECE,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.CORAIL,
+				value: DinozStatusId.CORAIL,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ANTI_SEDH_POTION
+				value: DinozStatusId.ANTI_SEDH_POTION
 			},
 			{
 				rewardType: RewardEnum.SCENARIO,

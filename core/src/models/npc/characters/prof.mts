@@ -1,4 +1,4 @@
-import { statusList } from '../../dinoz/StatusList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
@@ -27,8 +27,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 			[Operator.AND]: [
 				{
 					[Operator.OR]: [
-						{ [ConditionEnum.STATUS]: statusList.BUOY },
-						{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
+						{ [ConditionEnum.STATUS]: DinozStatusId.BUOY },
+						{ [ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR }
 					]
 				},
 				{ [ConditionEnum.MAXLEVEL]: 6 }
@@ -42,8 +42,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.MINLEVEL]: 5 },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BUOY } },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR } }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BUOY } },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR } }
 			]
 		}
 	},
@@ -53,8 +53,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.MINLEVEL]: 7 },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.BUOY } },
-				{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.BUOY } },
+				{ [ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR }
 			]
 		}
 	},
@@ -64,8 +64,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.MINLEVEL]: 7 },
-				{ [ConditionEnum.STATUS]: statusList.BUOY },
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR } }
+				{ [ConditionEnum.STATUS]: DinozStatusId.BUOY },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR } }
 			]
 		}
 	},
@@ -74,8 +74,8 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		nextStep: [],
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.STATUS]: statusList.BUOY },
-				{ [ConditionEnum.STATUS]: statusList.CLIMBING_GEAR }
+				{ [ConditionEnum.STATUS]: DinozStatusId.BUOY },
+				{ [ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR }
 			]
 		}
 	},
@@ -97,7 +97,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.BUOY
+				value: DinozStatusId.BUOY
 			}
 		]
 	},
@@ -111,7 +111,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.CLIMBING_GEAR
+				value: DinozStatusId.CLIMBING_GEAR
 			}
 		]
 	},
@@ -142,14 +142,14 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		stepName: 'stone',
 		nextStep: ['stone_yes', 'stone_no'],
 		condition: {
-			[ConditionEnum.STATUS]: statusList.OLD_STONE
+			[ConditionEnum.STATUS]: DinozStatusId.OLD_STONE
 		}
 	},
 	gant: {
 		stepName: 'gant',
 		nextStep: ['menu'],
 		condition: {
-			[ConditionEnum.STATUS]: statusList.ZORS_GLOVE
+			[ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE
 		}
 	},
 	stone_yes: {
@@ -158,12 +158,12 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.OLD_STONE,
+				value: DinozStatusId.OLD_STONE,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.STATUS,
-				value: statusList.ASHPOUK_TOTEM
+				value: DinozStatusId.ASHPOUK_TOTEM
 			}
 		]
 	},

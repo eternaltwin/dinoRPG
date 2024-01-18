@@ -1,6 +1,7 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { Skill } from '../models/dinoz/SkillList.mjs';
+import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { itemList } from '../models/item/ItemList.mjs';
 
@@ -45,6 +46,7 @@ export const BaseStats = {
 
 export const getSpecialStat = (
 	dinoz: Pick<DinozFiche, 'items' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
+	statuses: DinozStatusId[],
 	skills: Pick<SkillDetails, 'id' | 'effects' | 'name' | 'element'>[],
 	stat: SpecialStat
 ) => {
@@ -89,6 +91,7 @@ export const getSpecialStat = (
 			details: [
 				{
 					type: 'base',
+					name: 'base',
 					percent: false,
 					elements: ['fire'],
 					value: dinoz.nbrUpFire || 1
@@ -111,6 +114,7 @@ export const getSpecialStat = (
 			details: [
 				{
 					type: 'base',
+					name: 'base',
 					percent: false,
 					elements: ['water'],
 					value: dinoz.nbrUpWater || 0
@@ -122,11 +126,11 @@ export const getSpecialStat = (
 	let value = BaseStats[stat];
 	let multiplier = 1;
 	let details: {
-		type: 'skill' | 'base';
-		name?: string;
+		type: 'skill' | 'status' | 'base';
+		name: string;
 		percent: boolean;
 		elements: string[];
-		value: number | ['x', number];
+		value: number;
 	}[] = [];
 
 	const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat);
@@ -135,6 +139,7 @@ export const getSpecialStat = (
 	if (value !== 0) {
 		details.push({
 			type: 'base',
+			name: 'base',
 			percent,
 			elements: [],
 			value: percent ? value * 100 : value
@@ -145,6 +150,28 @@ export const getSpecialStat = (
 	if (percent) {
 		value += 1;
 	}
+
+	// Apply bonuses from statuses
+	statuses.forEach(status => {
+		switch (status) {
+			case DinozStatusId.CUSCOUZ_MALEDICTION: {
+				if (stat === SpecialStat.ARMOR) {
+					value -= 3;
+
+					details.push({
+						type: 'status',
+						name: DinozStatusId.CUSCOUZ_MALEDICTION.toString(),
+						percent: false,
+						elements: [],
+						value: -3
+					});
+				}
+				break;
+			}
+			default:
+				break;
+		}
+	});
 
 	// Apply bonuses from skills
 	skills.forEach(skill => {
