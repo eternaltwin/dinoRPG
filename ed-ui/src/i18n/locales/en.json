@@ -3050,7 +3050,7 @@
 			"skillExpire": "**{dinoz}**'s **{skill}** expired.",
 			"looseHp": "**{fighter}** lost **{hp} HP**.",
 			"heal": "**{fighter}** healed **{hp} HP**.",
-			"addStatus": "**{fighter}** became **{status}**.",
+			"addStatus": "**{fighter}** is now **{status}**.",
 			"removeStatus": "**{fighter}** is no longer **{status}**.",
 			"itemUse": "**{fighter}** used **{item}**."
 		}
