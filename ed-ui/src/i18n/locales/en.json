@@ -1458,7 +1458,8 @@
 			"PoingDeBraise": "Brazier Fist",
 			"Leader": "Leader",
 			"Absorption": "Absorption",
-			"Bite": "Bite"
+			"Bite": "Bite",
+			"Regeneration": "Regeneration"
 		},
 		"description": {
 			"GriffesEnflammees": "Increases the strength of all fire assaults by 7",

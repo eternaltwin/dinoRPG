@@ -1727,7 +1727,10 @@
 			"Leader": "Leader",
 			"GrosDormeur": "Gros Dormeur",
 			"Veilleuse": "Veilleuse",
-			"Matelasseur": "Matelasseur"
+			"Matelasseur": "Matelasseur",
+			"Absorption": "Absorption",
+			"Bite": "Morsure",
+			"Regeneration": "Régénération"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les assauts feu de 7",
