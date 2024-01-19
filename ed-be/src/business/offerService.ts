@@ -89,13 +89,25 @@ export async function createOffer(req: Request) {
 				quantity: ingredient.count,
 				isIngredient: true
 			};
+		}),
+		...items.map(item => {
+			const itemData = Object.entries(itemList).find(i => i[0] === item.name.toLocaleUpperCase());
+
+			if (!itemData) {
+				throw new Error('Ingredient not found');
+			}
+
+			return {
+				itemId: itemData[1].itemId,
+				quantity: item.count,
+				isIngredient: false
+			};
 		})
 	);
 
 	// Get available items and ingredients
 	const availableItems = await getPlayerItems(playerId);
 	const availableIngredients = await getAllIngredientsDataRequest(playerId);
-
 	// Check if user has enough items and ingredients
 	for (const item of itemsAndIngredients) {
 		if (item.isIngredient) {
