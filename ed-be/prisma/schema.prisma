@@ -505,7 +505,7 @@ model Log {
 
 model DinozCatch {
   id        Int    @id @default(autoincrement())
-  dinoz     Dinoz? @relation(fields: [dinozId], references: [id])
+  dinoz     Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade)
   dinozId   Int?
   monsterId String
   hp        Int
