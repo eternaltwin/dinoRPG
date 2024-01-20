@@ -150,7 +150,7 @@
 		"chose": "Comprar",
 		"generator": "Generador de Dinos",
 		"sortDinoz": "Administrar dinoz",
-		"dinozMissions": "Missions de mes Dinoz"
+		"dinozMissions": "Misiones de mis Dinos"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -201,12 +201,12 @@
 			"state": "Estado",
 			"title": "Ordenar las competencias"
 		},
-		"statistics": "Caractéristiques",
-		"assaults": "Assauts",
-		"defenses": "Défenses",
-		"specials": "Spéciales",
+		"statistics": "Características",
+		"assaults": "Asaltos",
+		"defenses": "Defensa",
+		"specials": "Especiales",
 		"base": "Base",
-		"skill": "Skill",
+		"skill": "Habilidad",
 		"fireAssault": "Assaut de Feu",
 		"woodAssault": "Assaut de Bois",
 		"waterAssault": "Assaut d'Eau",
@@ -231,11 +231,11 @@
 		"bubbleRate": "Taux de bulle",
 		"torchDamage": "Dégâts du briquet",
 		"acidBloodDamage": "Dégâts de sang acide",
-		"baseValue": "Valeur de base"
+		"baseValue": "Valor base"
 	},
 	"item": {
 		"name": {
-			"gold": "Pièces d'or",
+			"gold": "Monedas de oro",
 			"potion_irma": "Poción de la Bruja Lola",
 			"potion_angel": "Poción de Ángel",
 			"cloud_burger": "Nube-Hamburguesa",
@@ -356,12 +356,12 @@
 			"easter_egg": "Huevo de la Bruja Lula",
 			"fire_cracker": "Petardo mágico",
 			"special_potion_irma": "Poción especial de la Bruja Lola",
-			"daily_ticket": "Ticket Quotidien",
+			"daily_ticket": "Ticket Diario",
 			"empty": "Vacio",
 			"undefined": "Desconocido"
 		},
 		"description": {
-			"gold": "{quantity} pièces d'or.",
+			"gold": "{quantity} monedas de oro.",
 			"potion_irma": "La famosa Poción de la Bruja Lola permite al Dino que la beba **realizar inmediatamente una nueva acción** sin tener que esperar al día siguiente.",
 			"potion_angel": "Si tu Dino muere, usa una Poción de Ángel para **resucitarlo sin ninguna penalización en la experiencia**.",
 			"cloud_burger": "Una buena hamburguesa recupera **10 puntos de vida** a tu Dino. ¡Presta atención a su estómago!",
@@ -481,12 +481,12 @@
 			"anniversary_ticket": "TODO",
 			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
 			"fire_cracker": "TODO",
-			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
-			"daily_ticket": "Ce ticket vous permet de débloquer une case quotidienne.",
+			"special_potion_irma": "La famosa Poción de la Bruja Lola permite al Dino que la beba **realizar inmediatamente una nueva acción** sin tener que esperar al día siguiente. Mais vous ne pouvez en porter que 3.",
+			"daily_ticket": "Este ticket te permite desbloquear una casilla diaria.",
 			"empty": "No hay objetos en esta casilla",
 			"undefined": "Este objeto es desconocido, es muy raro y será de gran interés para los promotores conocer su existencia."
 		},
-		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre dinoz en combat.//"
+		"empty": "Este espacio está vacío, escoge un objeto del inventario para tu equipamiento. &&//Los objetos puestos aquí podrán ser utlizados por tu Dino durante el combate.//"
 	},
 	"news": {
 		"actualites": "La actualidad en Dinoland",
@@ -3553,15 +3553,15 @@
 	"manageDinoz": {
 		"title": "Gestion de mes Dinoz",
 		"disclaimer": "Ce module de gestion est accessible grâce à votre **Pierre en Diamantite Agglomérée** : un véritable concentré de technologie !",
-		"dinoz": "Dinoz",
-		"elements": "Eléments"
+		"dinoz": "Dinos",
+		"elements": "Elementos"
 	},
 	"dinozMissions": {
-		"title": "Missions de mes Dinoz",
-		"disclaimer": "Ce module de gestion est accessible grâce à votre **Petit Missionnaire Illustré** : très pratique pour suivre les missions de vos Dinoz !",
-		"dinoz": "Dinoz",
-		"missions": "Missions",
-		"see": "Voir",
+		"title": "Misiones de mis Dinos",
+		"disclaimer": "Acceder a esta sección a través de tu **Pequeño Misionero Ilustrado**: ¡una forma muy práctica de llevar el control de las misiones de tus Dinos!",
+		"dinoz": "Dinos",
+		"missions": "Misiones",
+		"see": "Ver",
 		"total": "Total",
 		"missionsFrom": "Missions de \"{npc}\""
 	},
@@ -3570,29 +3570,29 @@
 		"disclaimer": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
 		"allOffers": "Toutes les offres",
 		"myTransactions": "Mes transactions",
-		"sell": "Vendre",
-		"history": "Historique",
-		"dinoz": "Dinoz",
-		"items": "Objets",
-		"makeAnOffer": "Faire une offre",
-		"filter": "Filtrer",
-		"all": "Tout",
-		"seller": "Vendeur",
-		"timeLeft": "Temps restant",
+		"sell": "Vender",
+		"history": "Historial",
+		"dinoz": "Dinos",
+		"items": "Objetos",
+		"makeAnOffer": "Hacer oferta",
+		"filter": "Filtro",
+		"all": "Todos",
+		"seller": "Vendedor",
+		"timeLeft": "Tiempo restante",
 		"auctionExpired": "Enchère expirée",
-		"minimumPrice": "Prix mini",
+		"minimumPrice": "Precio mínimo",
 		"highestBid": "Enchère actuelle",
-		"by": "par",
-		"details": "Détails",
+		"by": "por",
+		"details": "Detalles",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Eleveurs peuvent être obtenus pour l'équivalent de **1** :ticket: **= 1000** :gold: à partir de la **Banque de Dinoland**",
-		"back": "Retour",
+		"back": "Volver",
 		"bid": "Enchérir",
-		"detail": "Voir détails",
+		"detail": "Ver detalles",
 		"sellView": {
 			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
 			"prepareYourOffer": "Préparez votre offre",
-			"sellYourDinoz": "Vendre votre Dinoz",
+			"sellYourDinoz": "Vender Dino",
 			"itemsAndIngredients": "Objets et Ingrédients",
 			"offerMinimalValue": "Valeur MINIMALE de votre offre",
 			"minimalValueDisclaimer": "Votre offre doit avoir, au MINIMUM, une valeur de **{minValue}** :gold: pour être validée.",
@@ -3605,7 +3605,7 @@
 			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
 			"bid": "Mise",
 			"noBidYet": "Aucune mise pour l'instant.",
-			"cancel": "Annuler",
+			"cancel": "Cancelar",
 			"yourActiveBids": "Vos mises en cours",
 			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
 		},
