@@ -60,6 +60,7 @@ model Dinoz {
   offers             Offer[]
   followers          Dinoz[]                @relation("DinozFollowers")
   logs               Log[]
+  catches            DinozCatch[]
 
   @@map("dinoz")
 }
@@ -500,4 +501,12 @@ model Log {
   type      LogType
   values    String[] @default([])
   createdAt DateTime @default(now()) @db.Timestamp(6)
+}
+
+model DinozCatch {
+  id        Int    @id @default(autoincrement())
+  dinoz     Dinoz? @relation(fields: [dinozId], references: [id])
+  dinozId   Int?
+  monsterId String
+  hp        Int
 }

@@ -188,6 +188,11 @@ export type Offer = $Result.DefaultSelection<Prisma.$OfferPayload>
  * 
  */
 export type Log = $Result.DefaultSelection<Prisma.$LogPayload>
+/**
+ * Model DinozCatch
+ * 
+ */
+export type DinozCatch = $Result.DefaultSelection<Prisma.$DinozCatchPayload>
 
 /**
  * Enums
@@ -714,6 +719,16 @@ export class PrismaClient<
     * ```
     */
   get log(): Prisma.LogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.dinozCatch`: Exposes CRUD operations for the **DinozCatch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DinozCatches
+    * const dinozCatches = await prisma.dinozCatch.findMany()
+    * ```
+    */
+  get dinozCatch(): Prisma.DinozCatchDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -771,8 +786,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.7.1
-   * Query Engine version: 0ca5ccbcfa6bdc81c003cf549abe4269f59c41e5
+   * Prisma Client JS version: 5.8.1
+   * Query Engine version: 78caf6feeaed953168c64e15a249c3e9a033ebe2
    */
   export type PrismaVersion = {
     client: string
@@ -1218,7 +1233,8 @@ export namespace Prisma {
     OfferItem: 'OfferItem',
     OfferBid: 'OfferBid',
     Offer: 'Offer',
-    Log: 'Log'
+    Log: 'Log',
+    DinozCatch: 'DinozCatch'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1235,7 +1251,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer' | 'log'
+      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer' | 'log' | 'dinozCatch'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -3549,6 +3565,72 @@ export namespace Prisma {
           }
         }
       }
+      DinozCatch: {
+        payload: Prisma.$DinozCatchPayload<ExtArgs>
+        fields: Prisma.DinozCatchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DinozCatchFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DinozCatchFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          findFirst: {
+            args: Prisma.DinozCatchFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DinozCatchFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          findMany: {
+            args: Prisma.DinozCatchFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>[]
+          }
+          create: {
+            args: Prisma.DinozCatchCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          createMany: {
+            args: Prisma.DinozCatchCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.DinozCatchDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          update: {
+            args: Prisma.DinozCatchUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          deleteMany: {
+            args: Prisma.DinozCatchDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DinozCatchUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.DinozCatchUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          aggregate: {
+            args: Prisma.DinozCatchAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateDinozCatch>
+          }
+          groupBy: {
+            args: Prisma.DinozCatchGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<DinozCatchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DinozCatchCountArgs<ExtArgs>,
+            result: $Utils.Optional<DinozCatchCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3742,6 +3824,7 @@ export namespace Prisma {
     offers: number
     followers: number
     logs: number
+    catches: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3755,6 +3838,7 @@ export namespace Prisma {
     offers?: boolean | DinozCountOutputTypeCountOffersArgs
     followers?: boolean | DinozCountOutputTypeCountFollowersArgs
     logs?: boolean | DinozCountOutputTypeCountLogsArgs
+    catches?: boolean | DinozCountOutputTypeCountCatchesArgs
   }
 
   // Custom InputTypes
@@ -3847,6 +3931,14 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LogWhereInput
+  }
+
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountCatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozCatchWhereInput
   }
 
 
@@ -4400,7 +4492,7 @@ export namespace Prisma {
   type ConcentrationGetPayload<S extends boolean | null | undefined | ConcentrationDefaultArgs> = $Result.GetResult<Prisma.$ConcentrationPayload, S>
 
   type ConcentrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ConcentrationFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ConcentrationFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ConcentrationCountAggregateInputType | true
     }
 
@@ -4809,6 +4901,7 @@ export namespace Prisma {
      * Filter, which Concentration to fetch.
      */
     where: ConcentrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -4828,6 +4921,7 @@ export namespace Prisma {
      * Filter, which Concentration to fetch.
      */
     where: ConcentrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -4877,6 +4971,7 @@ export namespace Prisma {
      * Filter by unique combinations of Concentrations.
      */
     distinct?: ConcentrationScalarFieldEnum | ConcentrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -4926,6 +5021,7 @@ export namespace Prisma {
      * Filter by unique combinations of Concentrations.
      */
     distinct?: ConcentrationScalarFieldEnum | ConcentrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -4970,6 +5066,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ConcentrationScalarFieldEnum | ConcentrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -4989,6 +5086,7 @@ export namespace Prisma {
      * The data needed to create a Concentration.
      */
     data?: XOR<ConcentrationCreateInput, ConcentrationUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -5024,6 +5122,7 @@ export namespace Prisma {
      * Choose, which Concentration to update.
      */
     where: ConcentrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -5066,6 +5165,7 @@ export namespace Prisma {
      * In case the Concentration was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ConcentrationUpdateInput, ConcentrationUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -5085,6 +5185,7 @@ export namespace Prisma {
      * Filter which Concentration to delete.
      */
     where: ConcentrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -5611,6 +5712,7 @@ export namespace Prisma {
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
+    catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -5660,6 +5762,7 @@ export namespace Prisma {
     offers?: boolean | Dinoz$offersArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
+    catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -5680,6 +5783,7 @@ export namespace Prisma {
       offers: Prisma.$OfferPayload<ExtArgs>[]
       followers: Prisma.$DinozPayload<ExtArgs>[]
       logs: Prisma.$LogPayload<ExtArgs>[]
+      catches: Prisma.$DinozCatchPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5719,7 +5823,7 @@ export namespace Prisma {
   type DinozGetPayload<S extends boolean | null | undefined | DinozDefaultArgs> = $Result.GetResult<Prisma.$DinozPayload, S>
 
   type DinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<DinozFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<DinozFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: DinozCountAggregateInputType | true
     }
 
@@ -6102,6 +6206,8 @@ export namespace Prisma {
 
     logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    catches<T extends Dinoz$catchesArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$catchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6180,6 +6286,7 @@ export namespace Prisma {
      * Filter, which Dinoz to fetch.
      */
     where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6199,6 +6306,7 @@ export namespace Prisma {
      * Filter, which Dinoz to fetch.
      */
     where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6248,6 +6356,7 @@ export namespace Prisma {
      * Filter by unique combinations of Dinozs.
      */
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6297,6 +6406,7 @@ export namespace Prisma {
      * Filter by unique combinations of Dinozs.
      */
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6341,6 +6451,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6360,6 +6471,7 @@ export namespace Prisma {
      * The data needed to create a Dinoz.
      */
     data: XOR<DinozCreateInput, DinozUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6395,6 +6507,7 @@ export namespace Prisma {
      * Choose, which Dinoz to update.
      */
     where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6437,6 +6550,7 @@ export namespace Prisma {
      * In case the Dinoz was found with the provided `where` argument, update it with this data.
      */
     update: XOR<DinozUpdateInput, DinozUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6456,6 +6570,7 @@ export namespace Prisma {
      * Filter which Dinoz to delete.
      */
     where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -6729,6 +6844,27 @@ export namespace Prisma {
 
 
   /**
+   * Dinoz.catches
+   */
+  export type Dinoz$catchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    where?: DinozCatchWhereInput
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    cursor?: DinozCatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+  }
+
+
+  /**
    * Dinoz without action
    */
   export type DinozDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6970,7 +7106,7 @@ export namespace Prisma {
   type DinozItemGetPayload<S extends boolean | null | undefined | DinozItemDefaultArgs> = $Result.GetResult<Prisma.$DinozItemPayload, S>
 
   type DinozItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<DinozItemFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<DinozItemFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: DinozItemCountAggregateInputType | true
     }
 
@@ -7383,6 +7519,7 @@ export namespace Prisma {
      * Filter, which DinozItem to fetch.
      */
     where: DinozItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7402,6 +7539,7 @@ export namespace Prisma {
      * Filter, which DinozItem to fetch.
      */
     where: DinozItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7451,6 +7589,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozItems.
      */
     distinct?: DinozItemScalarFieldEnum | DinozItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7500,6 +7639,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozItems.
      */
     distinct?: DinozItemScalarFieldEnum | DinozItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7544,6 +7684,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: DinozItemScalarFieldEnum | DinozItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7563,6 +7704,7 @@ export namespace Prisma {
      * The data needed to create a DinozItem.
      */
     data: XOR<DinozItemCreateInput, DinozItemUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7598,6 +7740,7 @@ export namespace Prisma {
      * Choose, which DinozItem to update.
      */
     where: DinozItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7640,6 +7783,7 @@ export namespace Prisma {
      * In case the DinozItem was found with the provided `where` argument, update it with this data.
      */
     update: XOR<DinozItemUpdateInput, DinozItemUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7659,6 +7803,7 @@ export namespace Prisma {
      * Filter which DinozItem to delete.
      */
     where: DinozItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -7936,7 +8081,7 @@ export namespace Prisma {
   type DinozItemToDinozGetPayload<S extends boolean | null | undefined | DinozItemToDinozDefaultArgs> = $Result.GetResult<Prisma.$DinozItemToDinozPayload, S>
 
   type DinozItemToDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<DinozItemToDinozFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<DinozItemToDinozFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: DinozItemToDinozCountAggregateInputType | true
     }
 
@@ -8348,6 +8493,7 @@ export namespace Prisma {
      * Filter, which DinozItemToDinoz to fetch.
      */
     where: DinozItemToDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8367,6 +8513,7 @@ export namespace Prisma {
      * Filter, which DinozItemToDinoz to fetch.
      */
     where: DinozItemToDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8416,6 +8563,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozItemToDinozs.
      */
     distinct?: DinozItemToDinozScalarFieldEnum | DinozItemToDinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8465,6 +8613,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozItemToDinozs.
      */
     distinct?: DinozItemToDinozScalarFieldEnum | DinozItemToDinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8509,6 +8658,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: DinozItemToDinozScalarFieldEnum | DinozItemToDinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8528,6 +8678,7 @@ export namespace Prisma {
      * The data needed to create a DinozItemToDinoz.
      */
     data: XOR<DinozItemToDinozCreateInput, DinozItemToDinozUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8563,6 +8714,7 @@ export namespace Prisma {
      * Choose, which DinozItemToDinoz to update.
      */
     where: DinozItemToDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8605,6 +8757,7 @@ export namespace Prisma {
      * In case the DinozItemToDinoz was found with the provided `where` argument, update it with this data.
      */
     update: XOR<DinozItemToDinozUpdateInput, DinozItemToDinozUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8624,6 +8777,7 @@ export namespace Prisma {
      * Filter which DinozItemToDinoz to delete.
      */
     where: DinozItemToDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -8913,7 +9067,7 @@ export namespace Prisma {
   type DinozMissionGetPayload<S extends boolean | null | undefined | DinozMissionDefaultArgs> = $Result.GetResult<Prisma.$DinozMissionPayload, S>
 
   type DinozMissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<DinozMissionFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<DinozMissionFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: DinozMissionCountAggregateInputType | true
     }
 
@@ -9327,6 +9481,7 @@ export namespace Prisma {
      * Filter, which DinozMission to fetch.
      */
     where: DinozMissionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9346,6 +9501,7 @@ export namespace Prisma {
      * Filter, which DinozMission to fetch.
      */
     where: DinozMissionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9395,6 +9551,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozMissions.
      */
     distinct?: DinozMissionScalarFieldEnum | DinozMissionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9444,6 +9601,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozMissions.
      */
     distinct?: DinozMissionScalarFieldEnum | DinozMissionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9488,6 +9646,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: DinozMissionScalarFieldEnum | DinozMissionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9507,6 +9666,7 @@ export namespace Prisma {
      * The data needed to create a DinozMission.
      */
     data: XOR<DinozMissionCreateInput, DinozMissionUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9542,6 +9702,7 @@ export namespace Prisma {
      * Choose, which DinozMission to update.
      */
     where: DinozMissionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9584,6 +9745,7 @@ export namespace Prisma {
      * In case the DinozMission was found with the provided `where` argument, update it with this data.
      */
     update: XOR<DinozMissionUpdateInput, DinozMissionUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9603,6 +9765,7 @@ export namespace Prisma {
      * Filter which DinozMission to delete.
      */
     where: DinozMissionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -9880,7 +10043,7 @@ export namespace Prisma {
   type DinozSkillGetPayload<S extends boolean | null | undefined | DinozSkillDefaultArgs> = $Result.GetResult<Prisma.$DinozSkillPayload, S>
 
   type DinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<DinozSkillFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<DinozSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: DinozSkillCountAggregateInputType | true
     }
 
@@ -10292,6 +10455,7 @@ export namespace Prisma {
      * Filter, which DinozSkill to fetch.
      */
     where: DinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10311,6 +10475,7 @@ export namespace Prisma {
      * Filter, which DinozSkill to fetch.
      */
     where: DinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10360,6 +10525,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozSkills.
      */
     distinct?: DinozSkillScalarFieldEnum | DinozSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10409,6 +10575,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozSkills.
      */
     distinct?: DinozSkillScalarFieldEnum | DinozSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10453,6 +10620,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: DinozSkillScalarFieldEnum | DinozSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10472,6 +10640,7 @@ export namespace Prisma {
      * The data needed to create a DinozSkill.
      */
     data: XOR<DinozSkillCreateInput, DinozSkillUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10507,6 +10676,7 @@ export namespace Prisma {
      * Choose, which DinozSkill to update.
      */
     where: DinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10549,6 +10719,7 @@ export namespace Prisma {
      * In case the DinozSkill was found with the provided `where` argument, update it with this data.
      */
     update: XOR<DinozSkillUpdateInput, DinozSkillUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10568,6 +10739,7 @@ export namespace Prisma {
      * Filter which DinozSkill to delete.
      */
     where: DinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -10835,7 +11007,7 @@ export namespace Prisma {
   type DinozSkillUnlockableGetPayload<S extends boolean | null | undefined | DinozSkillUnlockableDefaultArgs> = $Result.GetResult<Prisma.$DinozSkillUnlockablePayload, S>
 
   type DinozSkillUnlockableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<DinozSkillUnlockableFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<DinozSkillUnlockableFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: DinozSkillUnlockableCountAggregateInputType | true
     }
 
@@ -11246,6 +11418,7 @@ export namespace Prisma {
      * Filter, which DinozSkillUnlockable to fetch.
      */
     where: DinozSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11265,6 +11438,7 @@ export namespace Prisma {
      * Filter, which DinozSkillUnlockable to fetch.
      */
     where: DinozSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11314,6 +11488,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozSkillUnlockables.
      */
     distinct?: DinozSkillUnlockableScalarFieldEnum | DinozSkillUnlockableScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11363,6 +11538,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozSkillUnlockables.
      */
     distinct?: DinozSkillUnlockableScalarFieldEnum | DinozSkillUnlockableScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11407,6 +11583,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: DinozSkillUnlockableScalarFieldEnum | DinozSkillUnlockableScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11426,6 +11603,7 @@ export namespace Prisma {
      * The data needed to create a DinozSkillUnlockable.
      */
     data: XOR<DinozSkillUnlockableCreateInput, DinozSkillUnlockableUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11461,6 +11639,7 @@ export namespace Prisma {
      * Choose, which DinozSkillUnlockable to update.
      */
     where: DinozSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11503,6 +11682,7 @@ export namespace Prisma {
      * In case the DinozSkillUnlockable was found with the provided `where` argument, update it with this data.
      */
     update: XOR<DinozSkillUnlockableUpdateInput, DinozSkillUnlockableUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11522,6 +11702,7 @@ export namespace Prisma {
      * Filter which DinozSkillUnlockable to delete.
      */
     where: DinozSkillUnlockableWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -11789,7 +11970,7 @@ export namespace Prisma {
   type DinozStatusGetPayload<S extends boolean | null | undefined | DinozStatusDefaultArgs> = $Result.GetResult<Prisma.$DinozStatusPayload, S>
 
   type DinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<DinozStatusFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<DinozStatusFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: DinozStatusCountAggregateInputType | true
     }
 
@@ -12200,6 +12381,7 @@ export namespace Prisma {
      * Filter, which DinozStatus to fetch.
      */
     where: DinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12219,6 +12401,7 @@ export namespace Prisma {
      * Filter, which DinozStatus to fetch.
      */
     where: DinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12268,6 +12451,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozStatuses.
      */
     distinct?: DinozStatusScalarFieldEnum | DinozStatusScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12317,6 +12501,7 @@ export namespace Prisma {
      * Filter by unique combinations of DinozStatuses.
      */
     distinct?: DinozStatusScalarFieldEnum | DinozStatusScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12361,6 +12546,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: DinozStatusScalarFieldEnum | DinozStatusScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12380,6 +12566,7 @@ export namespace Prisma {
      * The data needed to create a DinozStatus.
      */
     data: XOR<DinozStatusCreateInput, DinozStatusUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12415,6 +12602,7 @@ export namespace Prisma {
      * Choose, which DinozStatus to update.
      */
     where: DinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12457,6 +12645,7 @@ export namespace Prisma {
      * In case the DinozStatus was found with the provided `where` argument, update it with this data.
      */
     update: XOR<DinozStatusUpdateInput, DinozStatusUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12476,6 +12665,7 @@ export namespace Prisma {
      * Filter which DinozStatus to delete.
      */
     where: DinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -12937,7 +13127,7 @@ export namespace Prisma {
   type ImportedDinozGetPayload<S extends boolean | null | undefined | ImportedDinozDefaultArgs> = $Result.GetResult<Prisma.$ImportedDinozPayload, S>
 
   type ImportedDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedDinozFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedDinozFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedDinozCountAggregateInputType | true
     }
 
@@ -13367,6 +13557,7 @@ export namespace Prisma {
      * Filter, which ImportedDinoz to fetch.
      */
     where: ImportedDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13386,6 +13577,7 @@ export namespace Prisma {
      * Filter, which ImportedDinoz to fetch.
      */
     where: ImportedDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13435,6 +13627,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedDinozs.
      */
     distinct?: ImportedDinozScalarFieldEnum | ImportedDinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13484,6 +13677,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedDinozs.
      */
     distinct?: ImportedDinozScalarFieldEnum | ImportedDinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13528,6 +13722,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedDinozScalarFieldEnum | ImportedDinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13547,6 +13742,7 @@ export namespace Prisma {
      * The data needed to create a ImportedDinoz.
      */
     data: XOR<ImportedDinozCreateInput, ImportedDinozUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13582,6 +13778,7 @@ export namespace Prisma {
      * Choose, which ImportedDinoz to update.
      */
     where: ImportedDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13624,6 +13821,7 @@ export namespace Prisma {
      * In case the ImportedDinoz was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedDinozUpdateInput, ImportedDinozUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13643,6 +13841,7 @@ export namespace Prisma {
      * Filter which ImportedDinoz to delete.
      */
     where: ImportedDinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -13952,7 +14151,7 @@ export namespace Prisma {
   type ImportedDinozSkillGetPayload<S extends boolean | null | undefined | ImportedDinozSkillDefaultArgs> = $Result.GetResult<Prisma.$ImportedDinozSkillPayload, S>
 
   type ImportedDinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedDinozSkillFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedDinozSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedDinozSkillCountAggregateInputType | true
     }
 
@@ -14363,6 +14562,7 @@ export namespace Prisma {
      * Filter, which ImportedDinozSkill to fetch.
      */
     where: ImportedDinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14382,6 +14582,7 @@ export namespace Prisma {
      * Filter, which ImportedDinozSkill to fetch.
      */
     where: ImportedDinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14431,6 +14632,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedDinozSkills.
      */
     distinct?: ImportedDinozSkillScalarFieldEnum | ImportedDinozSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14480,6 +14682,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedDinozSkills.
      */
     distinct?: ImportedDinozSkillScalarFieldEnum | ImportedDinozSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14524,6 +14727,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedDinozSkillScalarFieldEnum | ImportedDinozSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14543,6 +14747,7 @@ export namespace Prisma {
      * The data needed to create a ImportedDinozSkill.
      */
     data: XOR<ImportedDinozSkillCreateInput, ImportedDinozSkillUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14578,6 +14783,7 @@ export namespace Prisma {
      * Choose, which ImportedDinozSkill to update.
      */
     where: ImportedDinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14620,6 +14826,7 @@ export namespace Prisma {
      * In case the ImportedDinozSkill was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedDinozSkillUpdateInput, ImportedDinozSkillUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14639,6 +14846,7 @@ export namespace Prisma {
      * Filter which ImportedDinozSkill to delete.
      */
     where: ImportedDinozSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -14906,7 +15114,7 @@ export namespace Prisma {
   type ImportedDinozStatusGetPayload<S extends boolean | null | undefined | ImportedDinozStatusDefaultArgs> = $Result.GetResult<Prisma.$ImportedDinozStatusPayload, S>
 
   type ImportedDinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedDinozStatusFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedDinozStatusFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedDinozStatusCountAggregateInputType | true
     }
 
@@ -15317,6 +15525,7 @@ export namespace Prisma {
      * Filter, which ImportedDinozStatus to fetch.
      */
     where: ImportedDinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15336,6 +15545,7 @@ export namespace Prisma {
      * Filter, which ImportedDinozStatus to fetch.
      */
     where: ImportedDinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15385,6 +15595,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedDinozStatuses.
      */
     distinct?: ImportedDinozStatusScalarFieldEnum | ImportedDinozStatusScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15434,6 +15645,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedDinozStatuses.
      */
     distinct?: ImportedDinozStatusScalarFieldEnum | ImportedDinozStatusScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15478,6 +15690,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedDinozStatusScalarFieldEnum | ImportedDinozStatusScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15497,6 +15710,7 @@ export namespace Prisma {
      * The data needed to create a ImportedDinozStatus.
      */
     data: XOR<ImportedDinozStatusCreateInput, ImportedDinozStatusUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15532,6 +15746,7 @@ export namespace Prisma {
      * Choose, which ImportedDinozStatus to update.
      */
     where: ImportedDinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15574,6 +15789,7 @@ export namespace Prisma {
      * In case the ImportedDinozStatus was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedDinozStatusUpdateInput, ImportedDinozStatusUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15593,6 +15809,7 @@ export namespace Prisma {
      * Filter which ImportedDinozStatus to delete.
      */
     where: ImportedDinozStatusWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -15921,7 +16138,7 @@ export namespace Prisma {
   type ImportedPlayerGetPayload<S extends boolean | null | undefined | ImportedPlayerDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerPayload, S>
 
   type ImportedPlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedPlayerFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedPlayerFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerCountAggregateInputType | true
     }
 
@@ -16346,6 +16563,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayer to fetch.
      */
     where: ImportedPlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16365,6 +16583,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayer to fetch.
      */
     where: ImportedPlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16414,6 +16633,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayers.
      */
     distinct?: ImportedPlayerScalarFieldEnum | ImportedPlayerScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16463,6 +16683,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayers.
      */
     distinct?: ImportedPlayerScalarFieldEnum | ImportedPlayerScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16507,6 +16728,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedPlayerScalarFieldEnum | ImportedPlayerScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16526,6 +16748,7 @@ export namespace Prisma {
      * The data needed to create a ImportedPlayer.
      */
     data: XOR<ImportedPlayerCreateInput, ImportedPlayerUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16561,6 +16784,7 @@ export namespace Prisma {
      * Choose, which ImportedPlayer to update.
      */
     where: ImportedPlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16603,6 +16827,7 @@ export namespace Prisma {
      * In case the ImportedPlayer was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedPlayerUpdateInput, ImportedPlayerUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -16622,6 +16847,7 @@ export namespace Prisma {
      * Filter which ImportedPlayer to delete.
      */
     where: ImportedPlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17008,7 +17234,7 @@ export namespace Prisma {
   type ImportedPlayerIngredientGetPayload<S extends boolean | null | undefined | ImportedPlayerIngredientDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerIngredientPayload, S>
 
   type ImportedPlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedPlayerIngredientFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedPlayerIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerIngredientCountAggregateInputType | true
     }
 
@@ -17420,6 +17646,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerIngredient to fetch.
      */
     where: ImportedPlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17439,6 +17666,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerIngredient to fetch.
      */
     where: ImportedPlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17488,6 +17716,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerIngredients.
      */
     distinct?: ImportedPlayerIngredientScalarFieldEnum | ImportedPlayerIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17537,6 +17766,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerIngredients.
      */
     distinct?: ImportedPlayerIngredientScalarFieldEnum | ImportedPlayerIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17581,6 +17811,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedPlayerIngredientScalarFieldEnum | ImportedPlayerIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17600,6 +17831,7 @@ export namespace Prisma {
      * The data needed to create a ImportedPlayerIngredient.
      */
     data: XOR<ImportedPlayerIngredientCreateInput, ImportedPlayerIngredientUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17635,6 +17867,7 @@ export namespace Prisma {
      * Choose, which ImportedPlayerIngredient to update.
      */
     where: ImportedPlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17677,6 +17910,7 @@ export namespace Prisma {
      * In case the ImportedPlayerIngredient was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedPlayerIngredientUpdateInput, ImportedPlayerIngredientUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17696,6 +17930,7 @@ export namespace Prisma {
      * Filter which ImportedPlayerIngredient to delete.
      */
     where: ImportedPlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -17977,7 +18212,7 @@ export namespace Prisma {
   type ImportedPlayerItemGetPayload<S extends boolean | null | undefined | ImportedPlayerItemDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerItemPayload, S>
 
   type ImportedPlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedPlayerItemFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedPlayerItemFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerItemCountAggregateInputType | true
     }
 
@@ -18389,6 +18624,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerItem to fetch.
      */
     where: ImportedPlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18408,6 +18644,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerItem to fetch.
      */
     where: ImportedPlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18457,6 +18694,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerItems.
      */
     distinct?: ImportedPlayerItemScalarFieldEnum | ImportedPlayerItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18506,6 +18744,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerItems.
      */
     distinct?: ImportedPlayerItemScalarFieldEnum | ImportedPlayerItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18550,6 +18789,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedPlayerItemScalarFieldEnum | ImportedPlayerItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18569,6 +18809,7 @@ export namespace Prisma {
      * The data needed to create a ImportedPlayerItem.
      */
     data: XOR<ImportedPlayerItemCreateInput, ImportedPlayerItemUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18604,6 +18845,7 @@ export namespace Prisma {
      * Choose, which ImportedPlayerItem to update.
      */
     where: ImportedPlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18646,6 +18888,7 @@ export namespace Prisma {
      * In case the ImportedPlayerItem was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedPlayerItemUpdateInput, ImportedPlayerItemUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18665,6 +18908,7 @@ export namespace Prisma {
      * Filter which ImportedPlayerItem to delete.
      */
     where: ImportedPlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -18932,7 +19176,7 @@ export namespace Prisma {
   type ImportedPlayerRewardGetPayload<S extends boolean | null | undefined | ImportedPlayerRewardDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerRewardPayload, S>
 
   type ImportedPlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedPlayerRewardFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedPlayerRewardFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerRewardCountAggregateInputType | true
     }
 
@@ -19343,6 +19587,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerReward to fetch.
      */
     where: ImportedPlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19362,6 +19607,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerReward to fetch.
      */
     where: ImportedPlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19411,6 +19657,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerRewards.
      */
     distinct?: ImportedPlayerRewardScalarFieldEnum | ImportedPlayerRewardScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19460,6 +19707,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerRewards.
      */
     distinct?: ImportedPlayerRewardScalarFieldEnum | ImportedPlayerRewardScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19504,6 +19752,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedPlayerRewardScalarFieldEnum | ImportedPlayerRewardScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19523,6 +19772,7 @@ export namespace Prisma {
      * The data needed to create a ImportedPlayerReward.
      */
     data: XOR<ImportedPlayerRewardCreateInput, ImportedPlayerRewardUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19558,6 +19808,7 @@ export namespace Prisma {
      * Choose, which ImportedPlayerReward to update.
      */
     where: ImportedPlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19600,6 +19851,7 @@ export namespace Prisma {
      * In case the ImportedPlayerReward was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedPlayerRewardUpdateInput, ImportedPlayerRewardUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19619,6 +19871,7 @@ export namespace Prisma {
      * Filter which ImportedPlayerReward to delete.
      */
     where: ImportedPlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -19896,7 +20149,7 @@ export namespace Prisma {
   type ImportedPlayerScenarioGetPayload<S extends boolean | null | undefined | ImportedPlayerScenarioDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerScenarioPayload, S>
 
   type ImportedPlayerScenarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedPlayerScenarioFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedPlayerScenarioFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerScenarioCountAggregateInputType | true
     }
 
@@ -20308,6 +20561,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerScenario to fetch.
      */
     where: ImportedPlayerScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20327,6 +20581,7 @@ export namespace Prisma {
      * Filter, which ImportedPlayerScenario to fetch.
      */
     where: ImportedPlayerScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20376,6 +20631,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerScenarios.
      */
     distinct?: ImportedPlayerScenarioScalarFieldEnum | ImportedPlayerScenarioScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20425,6 +20681,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedPlayerScenarios.
      */
     distinct?: ImportedPlayerScenarioScalarFieldEnum | ImportedPlayerScenarioScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20469,6 +20726,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedPlayerScenarioScalarFieldEnum | ImportedPlayerScenarioScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20488,6 +20746,7 @@ export namespace Prisma {
      * The data needed to create a ImportedPlayerScenario.
      */
     data: XOR<ImportedPlayerScenarioCreateInput, ImportedPlayerScenarioUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20523,6 +20782,7 @@ export namespace Prisma {
      * Choose, which ImportedPlayerScenario to update.
      */
     where: ImportedPlayerScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20565,6 +20825,7 @@ export namespace Prisma {
      * In case the ImportedPlayerScenario was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedPlayerScenarioUpdateInput, ImportedPlayerScenarioUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20584,6 +20845,7 @@ export namespace Prisma {
      * Filter which ImportedPlayerScenario to delete.
      */
     where: ImportedPlayerScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -20915,7 +21177,7 @@ export namespace Prisma {
   type ImportedTwinoidAchievementGetPayload<S extends boolean | null | undefined | ImportedTwinoidAchievementDefaultArgs> = $Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload, S>
 
   type ImportedTwinoidAchievementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedTwinoidAchievementFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedTwinoidAchievementFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedTwinoidAchievementCountAggregateInputType | true
     }
 
@@ -21332,6 +21594,7 @@ export namespace Prisma {
      * Filter, which ImportedTwinoidAchievement to fetch.
      */
     where: ImportedTwinoidAchievementWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21351,6 +21614,7 @@ export namespace Prisma {
      * Filter, which ImportedTwinoidAchievement to fetch.
      */
     where: ImportedTwinoidAchievementWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21400,6 +21664,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedTwinoidAchievements.
      */
     distinct?: ImportedTwinoidAchievementScalarFieldEnum | ImportedTwinoidAchievementScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21449,6 +21714,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedTwinoidAchievements.
      */
     distinct?: ImportedTwinoidAchievementScalarFieldEnum | ImportedTwinoidAchievementScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21493,6 +21759,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedTwinoidAchievementScalarFieldEnum | ImportedTwinoidAchievementScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21512,6 +21779,7 @@ export namespace Prisma {
      * The data needed to create a ImportedTwinoidAchievement.
      */
     data: XOR<ImportedTwinoidAchievementCreateInput, ImportedTwinoidAchievementUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21547,6 +21815,7 @@ export namespace Prisma {
      * Choose, which ImportedTwinoidAchievement to update.
      */
     where: ImportedTwinoidAchievementWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21589,6 +21858,7 @@ export namespace Prisma {
      * In case the ImportedTwinoidAchievement was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedTwinoidAchievementUpdateInput, ImportedTwinoidAchievementUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21608,6 +21878,7 @@ export namespace Prisma {
      * Filter which ImportedTwinoidAchievement to delete.
      */
     where: ImportedTwinoidAchievementWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -21923,7 +22194,7 @@ export namespace Prisma {
   type ImportedTwinoidSiteGetPayload<S extends boolean | null | undefined | ImportedTwinoidSiteDefaultArgs> = $Result.GetResult<Prisma.$ImportedTwinoidSitePayload, S>
 
   type ImportedTwinoidSiteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedTwinoidSiteFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedTwinoidSiteFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedTwinoidSiteCountAggregateInputType | true
     }
 
@@ -22338,6 +22609,7 @@ export namespace Prisma {
      * Filter, which ImportedTwinoidSite to fetch.
      */
     where: ImportedTwinoidSiteWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22357,6 +22629,7 @@ export namespace Prisma {
      * Filter, which ImportedTwinoidSite to fetch.
      */
     where: ImportedTwinoidSiteWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22406,6 +22679,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedTwinoidSites.
      */
     distinct?: ImportedTwinoidSiteScalarFieldEnum | ImportedTwinoidSiteScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22455,6 +22729,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedTwinoidSites.
      */
     distinct?: ImportedTwinoidSiteScalarFieldEnum | ImportedTwinoidSiteScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22499,6 +22774,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedTwinoidSiteScalarFieldEnum | ImportedTwinoidSiteScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22518,6 +22794,7 @@ export namespace Prisma {
      * The data needed to create a ImportedTwinoidSite.
      */
     data: XOR<ImportedTwinoidSiteCreateInput, ImportedTwinoidSiteUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22553,6 +22830,7 @@ export namespace Prisma {
      * Choose, which ImportedTwinoidSite to update.
      */
     where: ImportedTwinoidSiteWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22595,6 +22873,7 @@ export namespace Prisma {
      * In case the ImportedTwinoidSite was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedTwinoidSiteUpdateInput, ImportedTwinoidSiteUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22614,6 +22893,7 @@ export namespace Prisma {
      * Filter which ImportedTwinoidSite to delete.
      */
     where: ImportedTwinoidSiteWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -22925,7 +23205,7 @@ export namespace Prisma {
   type ImportedTwinoidStatGetPayload<S extends boolean | null | undefined | ImportedTwinoidStatDefaultArgs> = $Result.GetResult<Prisma.$ImportedTwinoidStatPayload, S>
 
   type ImportedTwinoidStatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<ImportedTwinoidStatFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<ImportedTwinoidStatFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: ImportedTwinoidStatCountAggregateInputType | true
     }
 
@@ -23340,6 +23620,7 @@ export namespace Prisma {
      * Filter, which ImportedTwinoidStat to fetch.
      */
     where: ImportedTwinoidStatWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23359,6 +23640,7 @@ export namespace Prisma {
      * Filter, which ImportedTwinoidStat to fetch.
      */
     where: ImportedTwinoidStatWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23408,6 +23690,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedTwinoidStats.
      */
     distinct?: ImportedTwinoidStatScalarFieldEnum | ImportedTwinoidStatScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23457,6 +23740,7 @@ export namespace Prisma {
      * Filter by unique combinations of ImportedTwinoidStats.
      */
     distinct?: ImportedTwinoidStatScalarFieldEnum | ImportedTwinoidStatScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23501,6 +23785,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: ImportedTwinoidStatScalarFieldEnum | ImportedTwinoidStatScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23520,6 +23805,7 @@ export namespace Prisma {
      * The data needed to create a ImportedTwinoidStat.
      */
     data: XOR<ImportedTwinoidStatCreateInput, ImportedTwinoidStatUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23555,6 +23841,7 @@ export namespace Prisma {
      * Choose, which ImportedTwinoidStat to update.
      */
     where: ImportedTwinoidStatWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23597,6 +23884,7 @@ export namespace Prisma {
      * In case the ImportedTwinoidStat was found with the provided `where` argument, update it with this data.
      */
     update: XOR<ImportedTwinoidStatUpdateInput, ImportedTwinoidStatUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23616,6 +23904,7 @@ export namespace Prisma {
      * Filter which ImportedTwinoidStat to delete.
      */
     where: ImportedTwinoidStatWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -23872,7 +24161,7 @@ export namespace Prisma {
   type migrationsGetPayload<S extends boolean | null | undefined | migrationsDefaultArgs> = $Result.GetResult<Prisma.$migrationsPayload, S>
 
   type migrationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<migrationsFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<migrationsFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: MigrationsCountAggregateInputType | true
     }
 
@@ -24278,6 +24567,7 @@ export namespace Prisma {
      * Filter, which migrations to fetch.
      */
     where: migrationsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24293,6 +24583,7 @@ export namespace Prisma {
      * Filter, which migrations to fetch.
      */
     where: migrationsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24338,6 +24629,7 @@ export namespace Prisma {
      * Filter by unique combinations of migrations.
      */
     distinct?: MigrationsScalarFieldEnum | MigrationsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24383,6 +24675,7 @@ export namespace Prisma {
      * Filter by unique combinations of migrations.
      */
     distinct?: MigrationsScalarFieldEnum | MigrationsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24423,6 +24716,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: MigrationsScalarFieldEnum | MigrationsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24438,6 +24732,7 @@ export namespace Prisma {
      * The data needed to create a migrations.
      */
     data: XOR<migrationsCreateInput, migrationsUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24469,6 +24764,7 @@ export namespace Prisma {
      * Choose, which migrations to update.
      */
     where: migrationsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24507,6 +24803,7 @@ export namespace Prisma {
      * In case the migrations was found with the provided `where` argument, update it with this data.
      */
     update: XOR<migrationsUpdateInput, migrationsUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24522,6 +24819,7 @@ export namespace Prisma {
      * Filter which migrations to delete.
      */
     where: migrationsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -24854,7 +25152,7 @@ export namespace Prisma {
   type NewsGetPayload<S extends boolean | null | undefined | NewsDefaultArgs> = $Result.GetResult<Prisma.$NewsPayload, S>
 
   type NewsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<NewsFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<NewsFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: NewsCountAggregateInputType | true
     }
 
@@ -25270,6 +25568,7 @@ export namespace Prisma {
      * Filter, which News to fetch.
      */
     where: NewsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25285,6 +25584,7 @@ export namespace Prisma {
      * Filter, which News to fetch.
      */
     where: NewsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25330,6 +25630,7 @@ export namespace Prisma {
      * Filter by unique combinations of News.
      */
     distinct?: NewsScalarFieldEnum | NewsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25375,6 +25676,7 @@ export namespace Prisma {
      * Filter by unique combinations of News.
      */
     distinct?: NewsScalarFieldEnum | NewsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25415,6 +25717,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: NewsScalarFieldEnum | NewsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25430,6 +25733,7 @@ export namespace Prisma {
      * The data needed to create a News.
      */
     data?: XOR<NewsCreateInput, NewsUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25461,6 +25765,7 @@ export namespace Prisma {
      * Choose, which News to update.
      */
     where: NewsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25499,6 +25804,7 @@ export namespace Prisma {
      * In case the News was found with the provided `where` argument, update it with this data.
      */
     update: XOR<NewsUpdateInput, NewsUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25514,6 +25820,7 @@ export namespace Prisma {
      * Filter which News to delete.
      */
     where: NewsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -25771,7 +26078,7 @@ export namespace Prisma {
   type NPCGetPayload<S extends boolean | null | undefined | NPCDefaultArgs> = $Result.GetResult<Prisma.$NPCPayload, S>
 
   type NPCCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<NPCFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<NPCFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: NPCCountAggregateInputType | true
     }
 
@@ -26183,6 +26490,7 @@ export namespace Prisma {
      * Filter, which NPC to fetch.
      */
     where: NPCWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26202,6 +26510,7 @@ export namespace Prisma {
      * Filter, which NPC to fetch.
      */
     where: NPCWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26251,6 +26560,7 @@ export namespace Prisma {
      * Filter by unique combinations of NPCS.
      */
     distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26300,6 +26610,7 @@ export namespace Prisma {
      * Filter by unique combinations of NPCS.
      */
     distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26344,6 +26655,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26363,6 +26675,7 @@ export namespace Prisma {
      * The data needed to create a NPC.
      */
     data: XOR<NPCCreateInput, NPCUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26398,6 +26711,7 @@ export namespace Prisma {
      * Choose, which NPC to update.
      */
     where: NPCWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26440,6 +26754,7 @@ export namespace Prisma {
      * In case the NPC was found with the provided `where` argument, update it with this data.
      */
     update: XOR<NPCUpdateInput, NPCUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26459,6 +26774,7 @@ export namespace Prisma {
      * Filter which NPC to delete.
      */
     where: NPCWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -26910,7 +27226,7 @@ export namespace Prisma {
   type PlayerGetPayload<S extends boolean | null | undefined | PlayerDefaultArgs> = $Result.GetResult<Prisma.$PlayerPayload, S>
 
   type PlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PlayerFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PlayerFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: PlayerCountAggregateInputType | true
     }
 
@@ -27363,6 +27679,7 @@ export namespace Prisma {
      * Filter, which Player to fetch.
      */
     where: PlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27382,6 +27699,7 @@ export namespace Prisma {
      * Filter, which Player to fetch.
      */
     where: PlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27431,6 +27749,7 @@ export namespace Prisma {
      * Filter by unique combinations of Players.
      */
     distinct?: PlayerScalarFieldEnum | PlayerScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27480,6 +27799,7 @@ export namespace Prisma {
      * Filter by unique combinations of Players.
      */
     distinct?: PlayerScalarFieldEnum | PlayerScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27524,6 +27844,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: PlayerScalarFieldEnum | PlayerScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27543,6 +27864,7 @@ export namespace Prisma {
      * The data needed to create a Player.
      */
     data: XOR<PlayerCreateInput, PlayerUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27578,6 +27900,7 @@ export namespace Prisma {
      * Choose, which Player to update.
      */
     where: PlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27620,6 +27943,7 @@ export namespace Prisma {
      * In case the Player was found with the provided `where` argument, update it with this data.
      */
     update: XOR<PlayerUpdateInput, PlayerUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -27639,6 +27963,7 @@ export namespace Prisma {
      * Filter which Player to delete.
      */
     where: PlayerWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28205,7 +28530,7 @@ export namespace Prisma {
   type PlayerDinozShopGetPayload<S extends boolean | null | undefined | PlayerDinozShopDefaultArgs> = $Result.GetResult<Prisma.$PlayerDinozShopPayload, S>
 
   type PlayerDinozShopCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PlayerDinozShopFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PlayerDinozShopFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: PlayerDinozShopCountAggregateInputType | true
     }
 
@@ -28617,6 +28942,7 @@ export namespace Prisma {
      * Filter, which PlayerDinozShop to fetch.
      */
     where: PlayerDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28636,6 +28962,7 @@ export namespace Prisma {
      * Filter, which PlayerDinozShop to fetch.
      */
     where: PlayerDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28685,6 +29012,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerDinozShops.
      */
     distinct?: PlayerDinozShopScalarFieldEnum | PlayerDinozShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28734,6 +29062,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerDinozShops.
      */
     distinct?: PlayerDinozShopScalarFieldEnum | PlayerDinozShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28778,6 +29107,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: PlayerDinozShopScalarFieldEnum | PlayerDinozShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28797,6 +29127,7 @@ export namespace Prisma {
      * The data needed to create a PlayerDinozShop.
      */
     data: XOR<PlayerDinozShopCreateInput, PlayerDinozShopUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28832,6 +29163,7 @@ export namespace Prisma {
      * Choose, which PlayerDinozShop to update.
      */
     where: PlayerDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28874,6 +29206,7 @@ export namespace Prisma {
      * In case the PlayerDinozShop was found with the provided `where` argument, update it with this data.
      */
     update: XOR<PlayerDinozShopUpdateInput, PlayerDinozShopUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -28893,6 +29226,7 @@ export namespace Prisma {
      * Filter which PlayerDinozShop to delete.
      */
     where: PlayerDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29184,7 +29518,7 @@ export namespace Prisma {
   type PlayerGatherGetPayload<S extends boolean | null | undefined | PlayerGatherDefaultArgs> = $Result.GetResult<Prisma.$PlayerGatherPayload, S>
 
   type PlayerGatherCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PlayerGatherFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PlayerGatherFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: PlayerGatherCountAggregateInputType | true
     }
 
@@ -29597,6 +29931,7 @@ export namespace Prisma {
      * Filter, which PlayerGather to fetch.
      */
     where: PlayerGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29616,6 +29951,7 @@ export namespace Prisma {
      * Filter, which PlayerGather to fetch.
      */
     where: PlayerGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29665,6 +30001,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerGathers.
      */
     distinct?: PlayerGatherScalarFieldEnum | PlayerGatherScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29714,6 +30051,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerGathers.
      */
     distinct?: PlayerGatherScalarFieldEnum | PlayerGatherScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29758,6 +30096,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: PlayerGatherScalarFieldEnum | PlayerGatherScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29777,6 +30116,7 @@ export namespace Prisma {
      * The data needed to create a PlayerGather.
      */
     data: XOR<PlayerGatherCreateInput, PlayerGatherUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29812,6 +30152,7 @@ export namespace Prisma {
      * Choose, which PlayerGather to update.
      */
     where: PlayerGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29854,6 +30195,7 @@ export namespace Prisma {
      * In case the PlayerGather was found with the provided `where` argument, update it with this data.
      */
     update: XOR<PlayerGatherUpdateInput, PlayerGatherUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -29873,6 +30215,7 @@ export namespace Prisma {
      * Filter which PlayerGather to delete.
      */
     where: PlayerGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30154,7 +30497,7 @@ export namespace Prisma {
   type PlayerIngredientGetPayload<S extends boolean | null | undefined | PlayerIngredientDefaultArgs> = $Result.GetResult<Prisma.$PlayerIngredientPayload, S>
 
   type PlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PlayerIngredientFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PlayerIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: PlayerIngredientCountAggregateInputType | true
     }
 
@@ -30566,6 +30909,7 @@ export namespace Prisma {
      * Filter, which PlayerIngredient to fetch.
      */
     where: PlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30585,6 +30929,7 @@ export namespace Prisma {
      * Filter, which PlayerIngredient to fetch.
      */
     where: PlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30634,6 +30979,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerIngredients.
      */
     distinct?: PlayerIngredientScalarFieldEnum | PlayerIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30683,6 +31029,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerIngredients.
      */
     distinct?: PlayerIngredientScalarFieldEnum | PlayerIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30727,6 +31074,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: PlayerIngredientScalarFieldEnum | PlayerIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30746,6 +31094,7 @@ export namespace Prisma {
      * The data needed to create a PlayerIngredient.
      */
     data: XOR<PlayerIngredientCreateInput, PlayerIngredientUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30781,6 +31130,7 @@ export namespace Prisma {
      * Choose, which PlayerIngredient to update.
      */
     where: PlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30823,6 +31173,7 @@ export namespace Prisma {
      * In case the PlayerIngredient was found with the provided `where` argument, update it with this data.
      */
     update: XOR<PlayerIngredientUpdateInput, PlayerIngredientUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -30842,6 +31193,7 @@ export namespace Prisma {
      * Filter which PlayerIngredient to delete.
      */
     where: PlayerIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31123,7 +31475,7 @@ export namespace Prisma {
   type PlayerItemGetPayload<S extends boolean | null | undefined | PlayerItemDefaultArgs> = $Result.GetResult<Prisma.$PlayerItemPayload, S>
 
   type PlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PlayerItemFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PlayerItemFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: PlayerItemCountAggregateInputType | true
     }
 
@@ -31535,6 +31887,7 @@ export namespace Prisma {
      * Filter, which PlayerItem to fetch.
      */
     where: PlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31554,6 +31907,7 @@ export namespace Prisma {
      * Filter, which PlayerItem to fetch.
      */
     where: PlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31603,6 +31957,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerItems.
      */
     distinct?: PlayerItemScalarFieldEnum | PlayerItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31652,6 +32007,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerItems.
      */
     distinct?: PlayerItemScalarFieldEnum | PlayerItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31696,6 +32052,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: PlayerItemScalarFieldEnum | PlayerItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31715,6 +32072,7 @@ export namespace Prisma {
      * The data needed to create a PlayerItem.
      */
     data: XOR<PlayerItemCreateInput, PlayerItemUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31750,6 +32108,7 @@ export namespace Prisma {
      * Choose, which PlayerItem to update.
      */
     where: PlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31792,6 +32151,7 @@ export namespace Prisma {
      * In case the PlayerItem was found with the provided `where` argument, update it with this data.
      */
     update: XOR<PlayerItemUpdateInput, PlayerItemUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -31811,6 +32171,7 @@ export namespace Prisma {
      * Filter which PlayerItem to delete.
      */
     where: PlayerItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32092,7 +32453,7 @@ export namespace Prisma {
   type PlayerQuestGetPayload<S extends boolean | null | undefined | PlayerQuestDefaultArgs> = $Result.GetResult<Prisma.$PlayerQuestPayload, S>
 
   type PlayerQuestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PlayerQuestFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PlayerQuestFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: PlayerQuestCountAggregateInputType | true
     }
 
@@ -32504,6 +32865,7 @@ export namespace Prisma {
      * Filter, which PlayerQuest to fetch.
      */
     where: PlayerQuestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32523,6 +32885,7 @@ export namespace Prisma {
      * Filter, which PlayerQuest to fetch.
      */
     where: PlayerQuestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32572,6 +32935,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerQuests.
      */
     distinct?: PlayerQuestScalarFieldEnum | PlayerQuestScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32621,6 +32985,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerQuests.
      */
     distinct?: PlayerQuestScalarFieldEnum | PlayerQuestScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32665,6 +33030,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: PlayerQuestScalarFieldEnum | PlayerQuestScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32684,6 +33050,7 @@ export namespace Prisma {
      * The data needed to create a PlayerQuest.
      */
     data: XOR<PlayerQuestCreateInput, PlayerQuestUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32719,6 +33086,7 @@ export namespace Prisma {
      * Choose, which PlayerQuest to update.
      */
     where: PlayerQuestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32761,6 +33129,7 @@ export namespace Prisma {
      * In case the PlayerQuest was found with the provided `where` argument, update it with this data.
      */
     update: XOR<PlayerQuestUpdateInput, PlayerQuestUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -32780,6 +33149,7 @@ export namespace Prisma {
      * Filter which PlayerQuest to delete.
      */
     where: PlayerQuestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33047,7 +33417,7 @@ export namespace Prisma {
   type PlayerRewardGetPayload<S extends boolean | null | undefined | PlayerRewardDefaultArgs> = $Result.GetResult<Prisma.$PlayerRewardPayload, S>
 
   type PlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<PlayerRewardFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<PlayerRewardFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: PlayerRewardCountAggregateInputType | true
     }
 
@@ -33458,6 +33828,7 @@ export namespace Prisma {
      * Filter, which PlayerReward to fetch.
      */
     where: PlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33477,6 +33848,7 @@ export namespace Prisma {
      * Filter, which PlayerReward to fetch.
      */
     where: PlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33526,6 +33898,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerRewards.
      */
     distinct?: PlayerRewardScalarFieldEnum | PlayerRewardScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33575,6 +33948,7 @@ export namespace Prisma {
      * Filter by unique combinations of PlayerRewards.
      */
     distinct?: PlayerRewardScalarFieldEnum | PlayerRewardScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33619,6 +33993,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: PlayerRewardScalarFieldEnum | PlayerRewardScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33638,6 +34013,7 @@ export namespace Prisma {
      * The data needed to create a PlayerReward.
      */
     data: XOR<PlayerRewardCreateInput, PlayerRewardUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33673,6 +34049,7 @@ export namespace Prisma {
      * Choose, which PlayerReward to update.
      */
     where: PlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33715,6 +34092,7 @@ export namespace Prisma {
      * In case the PlayerReward was found with the provided `where` argument, update it with this data.
      */
     update: XOR<PlayerRewardUpdateInput, PlayerRewardUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -33734,6 +34112,7 @@ export namespace Prisma {
      * Filter which PlayerReward to delete.
      */
     where: PlayerRewardWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34029,7 +34408,7 @@ export namespace Prisma {
   type RankingGetPayload<S extends boolean | null | undefined | RankingDefaultArgs> = $Result.GetResult<Prisma.$RankingPayload, S>
 
   type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<RankingFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<RankingFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: RankingCountAggregateInputType | true
     }
 
@@ -34442,6 +34821,7 @@ export namespace Prisma {
      * Filter, which Ranking to fetch.
      */
     where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34461,6 +34841,7 @@ export namespace Prisma {
      * Filter, which Ranking to fetch.
      */
     where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34510,6 +34891,7 @@ export namespace Prisma {
      * Filter by unique combinations of Rankings.
      */
     distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34559,6 +34941,7 @@ export namespace Prisma {
      * Filter by unique combinations of Rankings.
      */
     distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34603,6 +34986,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34622,6 +35006,7 @@ export namespace Prisma {
      * The data needed to create a Ranking.
      */
     data?: XOR<RankingCreateInput, RankingUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34657,6 +35042,7 @@ export namespace Prisma {
      * Choose, which Ranking to update.
      */
     where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34699,6 +35085,7 @@ export namespace Prisma {
      * In case the Ranking was found with the provided `where` argument, update it with this data.
      */
     update: XOR<RankingUpdateInput, RankingUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34718,6 +35105,7 @@ export namespace Prisma {
      * Filter which Ranking to delete.
      */
     where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -34926,7 +35314,7 @@ export namespace Prisma {
   type SecretGetPayload<S extends boolean | null | undefined | SecretDefaultArgs> = $Result.GetResult<Prisma.$SecretPayload, S>
 
   type SecretCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<SecretFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<SecretFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: SecretCountAggregateInputType | true
     }
 
@@ -35331,6 +35719,7 @@ export namespace Prisma {
      * Filter, which Secret to fetch.
      */
     where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35346,6 +35735,7 @@ export namespace Prisma {
      * Filter, which Secret to fetch.
      */
     where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35391,6 +35781,7 @@ export namespace Prisma {
      * Filter by unique combinations of Secrets.
      */
     distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35436,6 +35827,7 @@ export namespace Prisma {
      * Filter by unique combinations of Secrets.
      */
     distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35476,6 +35868,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35491,6 +35884,7 @@ export namespace Prisma {
      * The data needed to create a Secret.
      */
     data: XOR<SecretCreateInput, SecretUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35522,6 +35916,7 @@ export namespace Prisma {
      * Choose, which Secret to update.
      */
     where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35560,6 +35955,7 @@ export namespace Prisma {
      * In case the Secret was found with the provided `where` argument, update it with this data.
      */
     update: XOR<SecretUpdateInput, SecretUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35575,6 +35971,7 @@ export namespace Prisma {
      * Filter which Secret to delete.
      */
     where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -35846,7 +36243,7 @@ export namespace Prisma {
   type OfferItemGetPayload<S extends boolean | null | undefined | OfferItemDefaultArgs> = $Result.GetResult<Prisma.$OfferItemPayload, S>
 
   type OfferItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<OfferItemFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<OfferItemFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: OfferItemCountAggregateInputType | true
     }
 
@@ -36259,6 +36656,7 @@ export namespace Prisma {
      * Filter, which OfferItem to fetch.
      */
     where: OfferItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36278,6 +36676,7 @@ export namespace Prisma {
      * Filter, which OfferItem to fetch.
      */
     where: OfferItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36327,6 +36726,7 @@ export namespace Prisma {
      * Filter by unique combinations of OfferItems.
      */
     distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36376,6 +36776,7 @@ export namespace Prisma {
      * Filter by unique combinations of OfferItems.
      */
     distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36420,6 +36821,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36439,6 +36841,7 @@ export namespace Prisma {
      * The data needed to create a OfferItem.
      */
     data: XOR<OfferItemCreateInput, OfferItemUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36474,6 +36877,7 @@ export namespace Prisma {
      * Choose, which OfferItem to update.
      */
     where: OfferItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36516,6 +36920,7 @@ export namespace Prisma {
      * In case the OfferItem was found with the provided `where` argument, update it with this data.
      */
     update: XOR<OfferItemUpdateInput, OfferItemUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36535,6 +36940,7 @@ export namespace Prisma {
      * Filter which OfferItem to delete.
      */
     where: OfferItemWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -36803,7 +37209,7 @@ export namespace Prisma {
   type OfferBidGetPayload<S extends boolean | null | undefined | OfferBidDefaultArgs> = $Result.GetResult<Prisma.$OfferBidPayload, S>
 
   type OfferBidCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<OfferBidFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<OfferBidFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: OfferBidCountAggregateInputType | true
     }
 
@@ -37217,6 +37623,7 @@ export namespace Prisma {
      * Filter, which OfferBid to fetch.
      */
     where: OfferBidWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37236,6 +37643,7 @@ export namespace Prisma {
      * Filter, which OfferBid to fetch.
      */
     where: OfferBidWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37285,6 +37693,7 @@ export namespace Prisma {
      * Filter by unique combinations of OfferBids.
      */
     distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37334,6 +37743,7 @@ export namespace Prisma {
      * Filter by unique combinations of OfferBids.
      */
     distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37378,6 +37788,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37397,6 +37808,7 @@ export namespace Prisma {
      * The data needed to create a OfferBid.
      */
     data: XOR<OfferBidCreateInput, OfferBidUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37432,6 +37844,7 @@ export namespace Prisma {
      * Choose, which OfferBid to update.
      */
     where: OfferBidWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37474,6 +37887,7 @@ export namespace Prisma {
      * In case the OfferBid was found with the provided `where` argument, update it with this data.
      */
     update: XOR<OfferBidUpdateInput, OfferBidUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37493,6 +37907,7 @@ export namespace Prisma {
      * Filter which OfferBid to delete.
      */
     where: OfferBidWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -37789,7 +38204,7 @@ export namespace Prisma {
   type OfferGetPayload<S extends boolean | null | undefined | OfferDefaultArgs> = $Result.GetResult<Prisma.$OfferPayload, S>
 
   type OfferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<OfferFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<OfferFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: OfferCountAggregateInputType | true
     }
 
@@ -38209,6 +38624,7 @@ export namespace Prisma {
      * Filter, which Offer to fetch.
      */
     where: OfferWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38228,6 +38644,7 @@ export namespace Prisma {
      * Filter, which Offer to fetch.
      */
     where: OfferWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38277,6 +38694,7 @@ export namespace Prisma {
      * Filter by unique combinations of Offers.
      */
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38326,6 +38744,7 @@ export namespace Prisma {
      * Filter by unique combinations of Offers.
      */
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38370,6 +38789,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38389,6 +38809,7 @@ export namespace Prisma {
      * The data needed to create a Offer.
      */
     data: XOR<OfferCreateInput, OfferUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38424,6 +38845,7 @@ export namespace Prisma {
      * Choose, which Offer to update.
      */
     where: OfferWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38466,6 +38888,7 @@ export namespace Prisma {
      * In case the Offer was found with the provided `where` argument, update it with this data.
      */
     update: XOR<OfferUpdateInput, OfferUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38485,6 +38908,7 @@ export namespace Prisma {
      * Filter which Offer to delete.
      */
     where: OfferWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -38823,7 +39247,7 @@ export namespace Prisma {
   type LogGetPayload<S extends boolean | null | undefined | LogDefaultArgs> = $Result.GetResult<Prisma.$LogPayload, S>
 
   type LogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<LogFindManyArgs, 'select' | 'include' | 'distinct' > & {
+    Omit<LogFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
       select?: LogCountAggregateInputType | true
     }
 
@@ -39239,6 +39663,7 @@ export namespace Prisma {
      * Filter, which Log to fetch.
      */
     where: LogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39258,6 +39683,7 @@ export namespace Prisma {
      * Filter, which Log to fetch.
      */
     where: LogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39307,6 +39733,7 @@ export namespace Prisma {
      * Filter by unique combinations of Logs.
      */
     distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39356,6 +39783,7 @@ export namespace Prisma {
      * Filter by unique combinations of Logs.
      */
     distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39400,6 +39828,7 @@ export namespace Prisma {
      */
     skip?: number
     distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39419,6 +39848,7 @@ export namespace Prisma {
      * The data needed to create a Log.
      */
     data: XOR<LogCreateInput, LogUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39454,6 +39884,7 @@ export namespace Prisma {
      * Choose, which Log to update.
      */
     where: LogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39496,6 +39927,7 @@ export namespace Prisma {
      * In case the Log was found with the provided `where` argument, update it with this data.
      */
     update: XOR<LogUpdateInput, LogUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39515,6 +39947,7 @@ export namespace Prisma {
      * Filter which Log to delete.
      */
     where: LogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
   }
 
 
@@ -39562,6 +39995,980 @@ export namespace Prisma {
 
 
   /**
+   * Model DinozCatch
+   */
+
+  export type AggregateDinozCatch = {
+    _count: DinozCatchCountAggregateOutputType | null
+    _avg: DinozCatchAvgAggregateOutputType | null
+    _sum: DinozCatchSumAggregateOutputType | null
+    _min: DinozCatchMinAggregateOutputType | null
+    _max: DinozCatchMaxAggregateOutputType | null
+  }
+
+  export type DinozCatchAvgAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    hp: number | null
+  }
+
+  export type DinozCatchSumAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    hp: number | null
+  }
+
+  export type DinozCatchMinAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    monsterId: string | null
+    hp: number | null
+  }
+
+  export type DinozCatchMaxAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    monsterId: string | null
+    hp: number | null
+  }
+
+  export type DinozCatchCountAggregateOutputType = {
+    id: number
+    dinozId: number
+    monsterId: number
+    hp: number
+    _all: number
+  }
+
+
+  export type DinozCatchAvgAggregateInputType = {
+    id?: true
+    dinozId?: true
+    hp?: true
+  }
+
+  export type DinozCatchSumAggregateInputType = {
+    id?: true
+    dinozId?: true
+    hp?: true
+  }
+
+  export type DinozCatchMinAggregateInputType = {
+    id?: true
+    dinozId?: true
+    monsterId?: true
+    hp?: true
+  }
+
+  export type DinozCatchMaxAggregateInputType = {
+    id?: true
+    dinozId?: true
+    monsterId?: true
+    hp?: true
+  }
+
+  export type DinozCatchCountAggregateInputType = {
+    id?: true
+    dinozId?: true
+    monsterId?: true
+    hp?: true
+    _all?: true
+  }
+
+  export type DinozCatchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DinozCatch to aggregate.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DinozCatches
+    **/
+    _count?: true | DinozCatchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DinozCatchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DinozCatchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DinozCatchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DinozCatchMaxAggregateInputType
+  }
+
+  export type GetDinozCatchAggregateType<T extends DinozCatchAggregateArgs> = {
+        [P in keyof T & keyof AggregateDinozCatch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDinozCatch[P]>
+      : GetScalarType<T[P], AggregateDinozCatch[P]>
+  }
+
+
+
+
+  export type DinozCatchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozCatchWhereInput
+    orderBy?: DinozCatchOrderByWithAggregationInput | DinozCatchOrderByWithAggregationInput[]
+    by: DinozCatchScalarFieldEnum[] | DinozCatchScalarFieldEnum
+    having?: DinozCatchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DinozCatchCountAggregateInputType | true
+    _avg?: DinozCatchAvgAggregateInputType
+    _sum?: DinozCatchSumAggregateInputType
+    _min?: DinozCatchMinAggregateInputType
+    _max?: DinozCatchMaxAggregateInputType
+  }
+
+  export type DinozCatchGroupByOutputType = {
+    id: number
+    dinozId: number | null
+    monsterId: string
+    hp: number
+    _count: DinozCatchCountAggregateOutputType | null
+    _avg: DinozCatchAvgAggregateOutputType | null
+    _sum: DinozCatchSumAggregateOutputType | null
+    _min: DinozCatchMinAggregateOutputType | null
+    _max: DinozCatchMaxAggregateOutputType | null
+  }
+
+  type GetDinozCatchGroupByPayload<T extends DinozCatchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DinozCatchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DinozCatchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DinozCatchGroupByOutputType[P]>
+            : GetScalarType<T[P], DinozCatchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DinozCatchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozId?: boolean
+    monsterId?: boolean
+    hp?: boolean
+    dinoz?: boolean | DinozCatch$dinozArgs<ExtArgs>
+  }, ExtArgs["result"]["dinozCatch"]>
+
+  export type DinozCatchSelectScalar = {
+    id?: boolean
+    dinozId?: boolean
+    monsterId?: boolean
+    hp?: boolean
+  }
+
+  export type DinozCatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | DinozCatch$dinozArgs<ExtArgs>
+  }
+
+
+  export type $DinozCatchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DinozCatch"
+    objects: {
+      dinoz: Prisma.$DinozPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      dinozId: number | null
+      monsterId: string
+      hp: number
+    }, ExtArgs["result"]["dinozCatch"]>
+    composites: {}
+  }
+
+
+  type DinozCatchGetPayload<S extends boolean | null | undefined | DinozCatchDefaultArgs> = $Result.GetResult<Prisma.$DinozCatchPayload, S>
+
+  type DinozCatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DinozCatchFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
+      select?: DinozCatchCountAggregateInputType | true
+    }
+
+  export interface DinozCatchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DinozCatch'], meta: { name: 'DinozCatch' } }
+    /**
+     * Find zero or one DinozCatch that matches the filter.
+     * @param {DinozCatchFindUniqueArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends DinozCatchFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, DinozCatchFindUniqueArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one DinozCatch that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {DinozCatchFindUniqueOrThrowArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends DinozCatchFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, DinozCatchFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first DinozCatch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchFindFirstArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends DinozCatchFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, DinozCatchFindFirstArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first DinozCatch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchFindFirstOrThrowArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends DinozCatchFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, DinozCatchFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more DinozCatches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DinozCatches
+     * const dinozCatches = await prisma.dinozCatch.findMany()
+     * 
+     * // Get first 10 DinozCatches
+     * const dinozCatches = await prisma.dinozCatch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dinozCatchWithIdOnly = await prisma.dinozCatch.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends DinozCatchFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DinozCatchFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a DinozCatch.
+     * @param {DinozCatchCreateArgs} args - Arguments to create a DinozCatch.
+     * @example
+     * // Create one DinozCatch
+     * const DinozCatch = await prisma.dinozCatch.create({
+     *   data: {
+     *     // ... data to create a DinozCatch
+     *   }
+     * })
+     * 
+    **/
+    create<T extends DinozCatchCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, DinozCatchCreateArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many DinozCatches.
+     *     @param {DinozCatchCreateManyArgs} args - Arguments to create many DinozCatches.
+     *     @example
+     *     // Create many DinozCatches
+     *     const dinozCatch = await prisma.dinozCatch.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends DinozCatchCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DinozCatchCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a DinozCatch.
+     * @param {DinozCatchDeleteArgs} args - Arguments to delete one DinozCatch.
+     * @example
+     * // Delete one DinozCatch
+     * const DinozCatch = await prisma.dinozCatch.delete({
+     *   where: {
+     *     // ... filter to delete one DinozCatch
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends DinozCatchDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, DinozCatchDeleteArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one DinozCatch.
+     * @param {DinozCatchUpdateArgs} args - Arguments to update one DinozCatch.
+     * @example
+     * // Update one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends DinozCatchUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, DinozCatchUpdateArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more DinozCatches.
+     * @param {DinozCatchDeleteManyArgs} args - Arguments to filter DinozCatches to delete.
+     * @example
+     * // Delete a few DinozCatches
+     * const { count } = await prisma.dinozCatch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends DinozCatchDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DinozCatchDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DinozCatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DinozCatches
+     * const dinozCatch = await prisma.dinozCatch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends DinozCatchUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, DinozCatchUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DinozCatch.
+     * @param {DinozCatchUpsertArgs} args - Arguments to update or create a DinozCatch.
+     * @example
+     * // Update or create a DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.upsert({
+     *   create: {
+     *     // ... data to create a DinozCatch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DinozCatch we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends DinozCatchUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, DinozCatchUpsertArgs<ExtArgs>>
+    ): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of DinozCatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchCountArgs} args - Arguments to filter DinozCatches to count.
+     * @example
+     * // Count the number of DinozCatches
+     * const count = await prisma.dinozCatch.count({
+     *   where: {
+     *     // ... the filter for the DinozCatches we want to count
+     *   }
+     * })
+    **/
+    count<T extends DinozCatchCountArgs>(
+      args?: Subset<T, DinozCatchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DinozCatchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DinozCatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DinozCatchAggregateArgs>(args: Subset<T, DinozCatchAggregateArgs>): Prisma.PrismaPromise<GetDinozCatchAggregateType<T>>
+
+    /**
+     * Group by DinozCatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DinozCatchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DinozCatchGroupByArgs['orderBy'] }
+        : { orderBy?: DinozCatchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DinozCatchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDinozCatchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DinozCatch model
+   */
+  readonly fields: DinozCatchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DinozCatch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DinozCatchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    dinoz<T extends DinozCatch$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozCatch$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the DinozCatch model
+   */ 
+  interface DinozCatchFieldRefs {
+    readonly id: FieldRef<"DinozCatch", 'Int'>
+    readonly dinozId: FieldRef<"DinozCatch", 'Int'>
+    readonly monsterId: FieldRef<"DinozCatch", 'String'>
+    readonly hp: FieldRef<"DinozCatch", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * DinozCatch findUnique
+   */
+  export type DinozCatchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch findUniqueOrThrow
+   */
+  export type DinozCatchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch findFirst
+   */
+  export type DinozCatchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DinozCatches.
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozCatches.
+     */
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch findFirstOrThrow
+   */
+  export type DinozCatchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DinozCatches.
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozCatches.
+     */
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch findMany
+   */
+  export type DinozCatchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatches to fetch.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DinozCatches.
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch create
+   */
+  export type DinozCatchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DinozCatch.
+     */
+    data: XOR<DinozCatchCreateInput, DinozCatchUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch createMany
+   */
+  export type DinozCatchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DinozCatches.
+     */
+    data: DinozCatchCreateManyInput | DinozCatchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * DinozCatch update
+   */
+  export type DinozCatchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DinozCatch.
+     */
+    data: XOR<DinozCatchUpdateInput, DinozCatchUncheckedUpdateInput>
+    /**
+     * Choose, which DinozCatch to update.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch updateMany
+   */
+  export type DinozCatchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DinozCatches.
+     */
+    data: XOR<DinozCatchUpdateManyMutationInput, DinozCatchUncheckedUpdateManyInput>
+    /**
+     * Filter which DinozCatches to update
+     */
+    where?: DinozCatchWhereInput
+  }
+
+
+  /**
+   * DinozCatch upsert
+   */
+  export type DinozCatchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DinozCatch to update in case it exists.
+     */
+    where: DinozCatchWhereUniqueInput
+    /**
+     * In case the DinozCatch found by the `where` argument doesn't exist, create a new DinozCatch with this data.
+     */
+    create: XOR<DinozCatchCreateInput, DinozCatchUncheckedCreateInput>
+    /**
+     * In case the DinozCatch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DinozCatchUpdateInput, DinozCatchUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch delete
+   */
+  export type DinozCatchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter which DinozCatch to delete.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * DinozCatch deleteMany
+   */
+  export type DinozCatchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DinozCatches to delete
+     */
+    where?: DinozCatchWhereInput
+  }
+
+
+  /**
+   * DinozCatch.dinoz
+   */
+  export type DinozCatch$dinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+
+  /**
+   * DinozCatch without action
+   */
+  export type DinozCatchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -39580,6 +40987,14 @@ export namespace Prisma {
   };
 
   export type ConcentrationScalarFieldEnum = (typeof ConcentrationScalarFieldEnum)[keyof typeof ConcentrationScalarFieldEnum]
+
+
+  export const RelationLoadStrategy: {
+    query: 'query',
+    join: 'join'
+  };
+
+  export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
 
 
   export const DinozScalarFieldEnum: {
@@ -39994,6 +41409,16 @@ export namespace Prisma {
   export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]
 
 
+  export const DinozCatchScalarFieldEnum: {
+    id: 'id',
+    dinozId: 'dinozId',
+    monsterId: 'monsterId',
+    hp: 'hp'
+  };
+
+  export type DinozCatchScalarFieldEnum = (typeof DinozCatchScalarFieldEnum)[keyof typeof DinozCatchScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -40228,6 +41653,7 @@ export namespace Prisma {
     offers?: OfferListRelationFilter
     followers?: DinozListRelationFilter
     logs?: LogListRelationFilter
+    catches?: DinozCatchListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
@@ -40273,6 +41699,7 @@ export namespace Prisma {
     offers?: OfferOrderByRelationAggregateInput
     followers?: DinozOrderByRelationAggregateInput
     logs?: LogOrderByRelationAggregateInput
+    catches?: DinozCatchOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -40321,6 +41748,7 @@ export namespace Prisma {
     offers?: OfferListRelationFilter
     followers?: DinozListRelationFilter
     logs?: LogListRelationFilter
+    catches?: DinozCatchListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
@@ -42428,6 +43856,58 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Log"> | Date | string
   }
 
+  export type DinozCatchWhereInput = {
+    AND?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    OR?: DinozCatchWhereInput[]
+    NOT?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    id?: IntFilter<"DinozCatch"> | number
+    dinozId?: IntNullableFilter<"DinozCatch"> | number | null
+    monsterId?: StringFilter<"DinozCatch"> | string
+    hp?: IntFilter<"DinozCatch"> | number
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }
+
+  export type DinozCatchOrderByWithRelationInput = {
+    id?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    monsterId?: SortOrder
+    hp?: SortOrder
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type DinozCatchWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    OR?: DinozCatchWhereInput[]
+    NOT?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    dinozId?: IntNullableFilter<"DinozCatch"> | number | null
+    monsterId?: StringFilter<"DinozCatch"> | string
+    hp?: IntFilter<"DinozCatch"> | number
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }, "id">
+
+  export type DinozCatchOrderByWithAggregationInput = {
+    id?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    monsterId?: SortOrder
+    hp?: SortOrder
+    _count?: DinozCatchCountOrderByAggregateInput
+    _avg?: DinozCatchAvgOrderByAggregateInput
+    _max?: DinozCatchMaxOrderByAggregateInput
+    _min?: DinozCatchMinOrderByAggregateInput
+    _sum?: DinozCatchSumOrderByAggregateInput
+  }
+
+  export type DinozCatchScalarWhereWithAggregatesInput = {
+    AND?: DinozCatchScalarWhereWithAggregatesInput | DinozCatchScalarWhereWithAggregatesInput[]
+    OR?: DinozCatchScalarWhereWithAggregatesInput[]
+    NOT?: DinozCatchScalarWhereWithAggregatesInput | DinozCatchScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DinozCatch"> | number
+    dinozId?: IntNullableWithAggregatesFilter<"DinozCatch"> | number | null
+    monsterId?: StringWithAggregatesFilter<"DinozCatch"> | string
+    hp?: IntWithAggregatesFilter<"DinozCatch"> | number
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -42497,6 +43977,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateInput = {
@@ -42539,6 +44020,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUpdateInput = {
@@ -42580,6 +44062,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
@@ -42622,6 +44105,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyInput = {
@@ -44637,6 +46121,51 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DinozCatchCreateInput = {
+    monsterId: string
+    hp: number
+    dinoz?: DinozCreateNestedOneWithoutCatchesInput
+  }
+
+  export type DinozCatchUncheckedCreateInput = {
+    id?: number
+    dinozId?: number | null
+    monsterId: string
+    hp: number
+  }
+
+  export type DinozCatchUpdateInput = {
+    monsterId?: StringFieldUpdateOperationsInput | string
+    hp?: IntFieldUpdateOperationsInput | number
+    dinoz?: DinozUpdateOneWithoutCatchesNestedInput
+  }
+
+  export type DinozCatchUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    monsterId?: StringFieldUpdateOperationsInput | string
+    hp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozCatchCreateManyInput = {
+    id?: number
+    dinozId?: number | null
+    monsterId: string
+    hp: number
+  }
+
+  export type DinozCatchUpdateManyMutationInput = {
+    monsterId?: StringFieldUpdateOperationsInput | string
+    hp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozCatchUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    monsterId?: StringFieldUpdateOperationsInput | string
+    hp?: IntFieldUpdateOperationsInput | number
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -44805,6 +46334,12 @@ export namespace Prisma {
     none?: LogWhereInput
   }
 
+  export type DinozCatchListRelationFilter = {
+    every?: DinozCatchWhereInput
+    some?: DinozCatchWhereInput
+    none?: DinozCatchWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -44843,6 +46378,10 @@ export namespace Prisma {
   }
 
   export type LogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DinozCatchOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -46704,6 +48243,39 @@ export namespace Prisma {
     _max?: NestedEnumLogTypeFilter<$PrismaModel>
   }
 
+  export type DinozCatchCountOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    monsterId?: SortOrder
+    hp?: SortOrder
+  }
+
+  export type DinozCatchAvgOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+  }
+
+  export type DinozCatchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    monsterId?: SortOrder
+    hp?: SortOrder
+  }
+
+  export type DinozCatchMinOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    monsterId?: SortOrder
+    hp?: SortOrder
+  }
+
+  export type DinozCatchSumOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+  }
+
   export type DinozCreateNestedManyWithoutConcentrationInput = {
     create?: XOR<DinozCreateWithoutConcentrationInput, DinozUncheckedCreateWithoutConcentrationInput> | DinozCreateWithoutConcentrationInput[] | DinozUncheckedCreateWithoutConcentrationInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutConcentrationInput | DinozCreateOrConnectWithoutConcentrationInput[]
@@ -46842,6 +48414,13 @@ export namespace Prisma {
     connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
   }
 
+  export type DinozCatchCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+  }
+
   export type DinozItemUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -46910,6 +48489,13 @@ export namespace Prisma {
     connectOrCreate?: LogCreateOrConnectWithoutDinozInput | LogCreateOrConnectWithoutDinozInput[]
     createMany?: LogCreateManyDinozInputEnvelope
     connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
+  export type DinozCatchUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -47102,6 +48688,20 @@ export namespace Prisma {
     deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
   }
 
+  export type DinozCatchUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    upsert?: DinozCatchUpsertWithWhereUniqueWithoutDinozInput | DinozCatchUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    set?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    disconnect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    delete?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+  }
+
   export type DinozItemUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -47240,6 +48840,20 @@ export namespace Prisma {
     update?: LogUpdateWithWhereUniqueWithoutDinozInput | LogUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: LogUpdateManyWithWhereWithoutDinozInput | LogUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
+  }
+
+  export type DinozCatchUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    upsert?: DinozCatchUpsertWithWhereUniqueWithoutDinozInput | DinozCatchUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    set?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    disconnect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    delete?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -48832,6 +50446,22 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutLogsInput, DinozUpdateWithoutLogsInput>, DinozUncheckedUpdateWithoutLogsInput>
   }
 
+  export type DinozCreateNestedOneWithoutCatchesInput = {
+    create?: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutCatchesInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type DinozUpdateOneWithoutCatchesNestedInput = {
+    create?: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutCatchesInput
+    upsert?: DinozUpsertWithoutCatchesInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutCatchesInput, DinozUpdateWithoutCatchesInput>, DinozUncheckedUpdateWithoutCatchesInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -49137,6 +50767,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutConcentrationInput = {
@@ -49178,6 +50809,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutConcentrationInput = {
@@ -49279,6 +50911,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutFollowersInput = {
@@ -49320,6 +50953,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutFollowersInput = {
@@ -49623,6 +51257,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLeaderInput = {
@@ -49664,6 +51299,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLeaderInput = {
@@ -49698,6 +51334,27 @@ export namespace Prisma {
 
   export type LogCreateManyDinozInputEnvelope = {
     data: LogCreateManyDinozInput | LogCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozCatchCreateWithoutDinozInput = {
+    monsterId: string
+    hp: number
+  }
+
+  export type DinozCatchUncheckedCreateWithoutDinozInput = {
+    id?: number
+    monsterId: string
+    hp: number
+  }
+
+  export type DinozCatchCreateOrConnectWithoutDinozInput = {
+    where: DinozCatchWhereUniqueInput
+    create: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DinozCatchCreateManyDinozInputEnvelope = {
+    data: DinozCatchCreateManyDinozInput | DinozCatchCreateManyDinozInput[]
     skipDuplicates?: boolean
   }
 
@@ -49750,6 +51407,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutFollowersInput = {
@@ -49791,6 +51449,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutDinozInput = {
@@ -50141,6 +51800,32 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Log"> | Date | string
   }
 
+  export type DinozCatchUpsertWithWhereUniqueWithoutDinozInput = {
+    where: DinozCatchWhereUniqueInput
+    update: XOR<DinozCatchUpdateWithoutDinozInput, DinozCatchUncheckedUpdateWithoutDinozInput>
+    create: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DinozCatchUpdateWithWhereUniqueWithoutDinozInput = {
+    where: DinozCatchWhereUniqueInput
+    data: XOR<DinozCatchUpdateWithoutDinozInput, DinozCatchUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type DinozCatchUpdateManyWithWhereWithoutDinozInput = {
+    where: DinozCatchScalarWhereInput
+    data: XOR<DinozCatchUpdateManyMutationInput, DinozCatchUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type DinozCatchScalarWhereInput = {
+    AND?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+    OR?: DinozCatchScalarWhereInput[]
+    NOT?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+    id?: IntFilter<"DinozCatch"> | number
+    dinozId?: IntNullableFilter<"DinozCatch"> | number | null
+    monsterId?: StringFilter<"DinozCatch"> | string
+    hp?: IntFilter<"DinozCatch"> | number
+  }
+
   export type DinozCreateWithoutItemsInput = {
     name: string
     isFrozen?: boolean
@@ -50179,6 +51864,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
@@ -50220,6 +51906,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -50294,6 +51981,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
@@ -50335,6 +52023,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinoz_itemInput = {
@@ -50391,6 +52080,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutDinozItemsToDinozInput = {
@@ -50432,6 +52122,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -50504,6 +52195,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
@@ -50545,6 +52237,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemUpsertWithoutDinozItemToDinozInput = {
@@ -50607,6 +52300,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
@@ -50648,6 +52342,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -50704,6 +52399,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
@@ -50745,6 +52441,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
@@ -50785,6 +52482,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
@@ -50826,6 +52524,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -50882,6 +52581,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
@@ -50923,6 +52623,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -50963,6 +52664,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -51004,6 +52706,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -51060,6 +52763,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -51101,6 +52805,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -51141,6 +52846,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
@@ -51182,6 +52888,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -51238,6 +52945,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
@@ -51279,6 +52987,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type ImportedPlayerCreateWithoutImported_dinozInput = {
@@ -52839,6 +54548,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutNpcsInput = {
@@ -52880,6 +54590,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutNpcsInput = {
@@ -52936,6 +54647,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutNpcsInput = {
@@ -52977,6 +54689,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutPlayerInput = {
@@ -53017,6 +54730,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutPlayerInput = {
@@ -53058,6 +54772,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutPlayerInput = {
@@ -55205,6 +56920,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutOffersInput = {
@@ -55246,6 +56962,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutOffersInput = {
@@ -55424,6 +57141,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutOffersInput = {
@@ -55465,6 +57183,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type OfferItemUpsertWithWhereUniqueWithoutOfferInput = {
@@ -55620,6 +57339,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLogsInput = {
@@ -55661,6 +57381,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLogsInput = {
@@ -55795,6 +57516,7 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLogsInput = {
@@ -55836,6 +57558,189 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozCreateWithoutCatchesInput = {
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    player?: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutCatchesInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    isFrozen?: boolean
+    isSacrificed?: boolean
+    isSelling?: boolean
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId?: number | null
+    order?: number | null
+    concentrationId?: number | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutCatchesInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+  }
+
+  export type DinozUpsertWithoutCatchesInput = {
+    update: XOR<DinozUpdateWithoutCatchesInput, DinozUncheckedUpdateWithoutCatchesInput>
+    create: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutCatchesInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutCatchesInput, DinozUncheckedUpdateWithoutCatchesInput>
+  }
+
+  export type DinozUpdateWithoutCatchesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    player?: PlayerUpdateOneWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutCatchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    isFrozen?: BoolFieldUpdateOperationsInput | boolean
+    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
+    isSelling?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -55907,6 +57812,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutConcentrationInput = {
@@ -55948,6 +57854,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutConcentrationInput = {
@@ -56065,6 +57972,12 @@ export namespace Prisma {
     type: $Enums.LogType
     values?: LogCreatevaluesInput | string[]
     createdAt?: Date | string
+  }
+
+  export type DinozCatchCreateManyDinozInput = {
+    id?: number
+    monsterId: string
+    hp: number
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -56245,6 +58158,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLeaderInput = {
@@ -56286,6 +58200,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutLeaderInput = {
@@ -56340,6 +58255,23 @@ export namespace Prisma {
     type?: EnumLogTypeFieldUpdateOperationsInput | $Enums.LogType
     values?: LogUpdatevaluesInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DinozCatchUpdateWithoutDinozInput = {
+    monsterId?: StringFieldUpdateOperationsInput | string
+    hp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozCatchUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+    hp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozCatchUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+    hp?: IntFieldUpdateOperationsInput | number
   }
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
@@ -56723,6 +58655,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPlayerInput = {
@@ -56764,6 +58697,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutPlayerInput = {
@@ -57273,6 +59207,10 @@ export namespace Prisma {
      * @deprecated Use LogDefaultArgs instead
      */
     export type LogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DinozCatchDefaultArgs instead
+     */
+    export type DinozCatchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozCatchDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

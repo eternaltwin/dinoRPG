@@ -20,7 +20,8 @@ import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { prepareConcentration } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
-import { DinozToCalculateFight, DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
+import { DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
+import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 
 export async function concentrate(req: Request) {
 	if (!req.auth || !req.auth.playerId) {
@@ -100,7 +101,7 @@ async function goDarkWorld(playerId: number, dinozList: Pick<Dinoz, 'id'>[]) {
 }
 
 export async function mouvementListener(
-	team: (DinozToCalculateFight & DinozToRewardFight & DinozForConditionCheck & DinozToGetActualStep)[],
+	team: (DinozToGetFighter & DinozToRewardFight & DinozForConditionCheck & DinozToGetActualStep)[],
 	finalPlace: PlaceEnum
 ) {
 	//Specials actions

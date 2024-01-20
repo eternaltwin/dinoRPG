@@ -6,20 +6,20 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { DetailedFighter, FighterStatus, Status } from '@drpg/core/models/fight/DetailedFighter';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
-import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { DinozToCalculateFight } from '../../business/fightService.js';
 import { TIME_BASE, TIME_FACTOR } from './fightConstants.js';
 import { createStatus } from './fightMethods.js';
 import { getBasicElementDamage } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
+import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 
 interface Team {
-	dinozList: DinozToCalculateFight[];
+	dinozList: DinozToGetFighter[];
 	monsterList: MonsterFiche[];
 	[Skill.ELECTROLYSE]?: boolean;
 	[Skill.CHEF_DE_GUERRE]?: boolean;
@@ -32,8 +32,9 @@ interface Team {
 export const initializeDinoz = (
 	team: Team | null,
 	teamIndex: number,
-	dinoz: DinozToCalculateFight,
-	place: PlaceEnum
+	dinoz: DinozToGetFighter,
+	place: PlaceEnum,
+	bossFight: boolean
 ) => {
 	// Costume
 	let costume: MonsterFiche | undefined = undefined;
@@ -48,7 +49,7 @@ export const initializeDinoz = (
 
 		// Add bamboo monster
 		if (team && itemFiche.itemId === Item.BAMBOO_FRIEND) {
-			team.monsterList.push(monsterList.BAMBOOZ_SPROUTING);
+			team.monsterList.push({ ...monsterList.BAMBOOZ_SPROUTING });
 		}
 
 		// Set costume
@@ -75,6 +76,11 @@ export const initializeDinoz = (
 
 	// Statuses
 	const dinozStatus = dinoz.status.map(status => status.statusId as DinozStatusId);
+
+	// Ignore CATCHING_GLOVE if this is a boss fight
+	if (bossFight && dinozStatus.includes(DinozStatusId.CATCHING_GLOVE)) {
+		dinozStatus.splice(dinozStatus.indexOf(DinozStatusId.CATCHING_GLOVE), 1);
+	}
 
 	const dinozWithItems = {
 		...dinoz,
@@ -665,14 +671,46 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		wormCalls: 0
 	};
 
+	const bossFight = team2.monsterList.some(monster => monster.boss);
+
 	[team1, team2].forEach((team, index) => {
-		const { dinozList, monsterList } = team;
+		const { dinozList, monsterList: monsters } = team;
 
 		// Dinoz
-		fighters.push(...dinozList.map(dinoz => initializeDinoz(team, index, dinoz, place)));
+		fighters.push(...dinozList.map(dinoz => {
+			const fighter = initializeDinoz(team, index, dinoz, place, bossFight);
+
+			// Catches
+			for (let i = 0; i < dinoz.catches.length; i++) {
+				// Limit to 3 catches
+				if (i > 2) break;
+
+				const dinozCatch = dinoz.catches[i];
+				const probabilities = [3, 1, 1, 1];
+				const catchSkill = fighter.skills.find(skill => skill.id === Skill.CATCH);
+
+				if (!catchSkill) {
+					throw new Error(`Dinoz ${dinoz.id} has no catch skill`);
+				}
+
+				// Adjust catch probability
+				catchSkill.probability = probabilities[i];
+
+				const monster = initializeMonster(memory, team, index, { ...monsterList[dinozCatch.monsterId as Monster] }, place);
+				monster.startingHp = dinozCatch.hp;
+				monster.hp = dinozCatch.hp;
+				monster.catcher = dinoz.id;
+				monster.catchId = dinozCatch.id;
+
+				// Add monster
+				fighters.push(monster);
+			}
+
+			return fighter;
+		}));
 
 		// Monsters
-		fighters.push(...monsterList.map(monster => initializeMonster(memory, team, index, monster, place)));
+		fighters.push(...monsters.map(monster => initializeMonster(memory, team, index, monster, place)));
 	});
 
 	// Handle team wide modifiers

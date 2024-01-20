@@ -316,10 +316,21 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 			statusGained: dinoz.permanentStatusGained
 		}));
 
+	// Get catches data
+	const catches = fightData.fighters
+		.filter(fighter => fighter.catcher)
+		.map(fighter => ({
+			dinozId: fighter.catcher ?? 0,
+			monsterId: (Object.values(monsterList).find((monster) => monster.name === fighter.name)?.id ?? 0) as Monster,
+			hp: fighter.hp,
+			id: fighter.catchId
+		}));
+
 	return {
 		winner,
 		attackers: attackersResults,
 		defenders: defendersResults,
+		catches,
 		steps: fightData.steps
 	};
 };

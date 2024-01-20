@@ -1740,7 +1740,8 @@
 			"Regeneration": "Régénération",
 			"Electrocution": "Electrocution",
 			"Immaterial": "Immateriel",
-			"Flight": "Envol"
+			"Flight": "Envol",
+			"Capture": "Capture"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les assauts feu de 7",
@@ -3562,7 +3563,8 @@
 			"heal": "**{fighter}** s'est soigné de **{hp} HP**.",
 			"addStatus": "**{fighter}** est devenu **{status}**.",
 			"removeStatus": "**{fighter}** n'est plus **{status}**.",
-			"itemUse": "**{fighter}** a utilisé **{item}**."
+			"itemUse": "**{fighter}** a utilisé **{item}**.",
+			"hypnotize": "**{fighter}** a changé de camp."
 		}
 	},
 	"ingredients": {

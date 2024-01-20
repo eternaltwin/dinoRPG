@@ -1,4 +1,4 @@
-import { Dinoz, DinozItem, DinozSkill, DinozStatus } from '@drpg/prisma';
+import { Dinoz, DinozCatch, DinozItem, DinozSkill, DinozStatus } from '@drpg/prisma';
 import { DetailedFighter } from './DetailedFighter.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 
@@ -18,6 +18,7 @@ export type DinozToGetFighter = Pick<
 	items: Pick<DinozItem, 'itemId'>[];
 	skills: Pick<DinozSkill, 'skillId'>[];
 	status: Pick<DinozStatus, 'statusId'>[];
+	catches: Pick<DinozCatch, 'id' | 'hp' | 'monsterId'>[];
 };
 
 export interface FightConfiguration {

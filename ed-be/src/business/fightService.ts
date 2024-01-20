@@ -22,6 +22,7 @@ import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.j
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import randomBetween from '../utils/fight/randomBetween.js';
+import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 
 /**
  * @summary Process a fight
@@ -97,7 +98,7 @@ export async function processFight(req: Request) {
 }
 
 export async function moveFight(
-	team: (DinozToCalculateFight & DinozToRewardFight & DinozToCheckMissionFight)[],
+	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum
 ) {
 	const monsters = generateMonster(team); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
@@ -116,7 +117,6 @@ export async function moveFight(
 	return result;
 }
 
-export type DinozToCalculateFight = Parameters<typeof calculateFight>[0][number];
 export function calculateFight(
 	team: DinozToGetFighter[],
 	monsters: MonsterFiche[],
@@ -299,6 +299,30 @@ export async function rewardFight(
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+		}
+	}
+
+	// Catches
+	for (const dinozCatch of fightResult.catches) {
+		if (!dinozCatch.id) {
+			// New catch
+
+			// Ignore dead catch
+			if (dinozCatch.hp <= 0) continue;
+
+			// Create catch
+			await createCatch(dinozCatch.dinozId, dinozCatch.monsterId, dinozCatch.hp);
+		} else {
+			// Existing catch
+
+			// Delete catch if dead
+			if (dinozCatch.hp <= 0) {
+				await removeCatch(dinozCatch.id);
+				continue;
+			}
+
+			// Update catch
+			await updateCatch(dinozCatch.id, dinozCatch.hp);
 		}
 	}
 

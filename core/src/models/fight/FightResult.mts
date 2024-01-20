@@ -1,5 +1,6 @@
 import { FightStep } from './FightStep.mjs';
 import { FighterResultFiche } from './DetailedFighter.mjs';
+import { Monster } from './MonsterList.mjs';
 
 export interface FightResult {
 	opponent: string[];
@@ -18,6 +19,13 @@ export interface FightResult {
 	}[];
 }
 
+export interface CatchResult {
+	dinozId: number;
+	monsterId: Monster;
+	hp: number;
+	id?: number;
+}
+
 export interface FightProcessResult {
 	// true: attackers won, false: defenders won
 	winner: boolean;
@@ -25,6 +33,8 @@ export interface FightProcessResult {
 	attackers: FighterResultFiche[];
 	// List of defenders
 	defenders: FighterResultFiche[];
+	// List of catches to update
+	catches: CatchResult[];
 	// History of the fight
 	steps: FightStep[];
 }

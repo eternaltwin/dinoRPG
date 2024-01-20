@@ -1468,7 +1468,8 @@
 			"Regeneration": "Regeneration",
 			"Electrocution": "Electrocution",
 			"Immaterial": "Immaterial",
-			"Flight": "Flight"
+			"Flight": "Flight",
+			"Capture": "Catch"
 		},
 		"description": {
 			"GriffesEnflammees": "Increases the strength of all fire assaults by 7",
@@ -3061,7 +3062,8 @@
 			"heal": "**{fighter}** healed **{hp} HP**.",
 			"addStatus": "**{fighter}** is now **{status}**.",
 			"removeStatus": "**{fighter}** is no longer **{status}**.",
-			"itemUse": "**{fighter}** used **{item}**."
+			"itemUse": "**{fighter}** used **{item}**.",
+			"hypnotize": "**{fighter}** switched sides."
 		}
 	},
 	"ingredients": {

@@ -47,6 +47,7 @@ export enum Boss {
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	[Boss.TOWER_GUARDIAN]: {
 		id: Boss.TOWER_GUARDIAN,
+		boss: true,
 		name: 'towgrd',
 		hp: 300,
 		elements: {
@@ -66,6 +67,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.SUMMIT_GUARDIAN]: {
 		id: Boss.SUMMIT_GUARDIAN,
+		boss: true,
 		name: 'upgrd',
 		level: 40,
 		elements: {
@@ -85,6 +87,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.LOWER_GUARDIAN]: {
 		id: Boss.LOWER_GUARDIAN,
+		boss: true,
 		name: 'updwn',
 		level: 50,
 		elements: {
@@ -104,6 +107,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.ELEMENTAIRE_FEU]: {
 		id: Boss.ELEMENTAIRE_FEU,
+		boss: true,
 		name: 'efire',
 		hp: 60,
 		elements: {
@@ -122,6 +126,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.ELEMENTAIRE_EAU]: {
 		id: Boss.ELEMENTAIRE_EAU,
+		boss: true,
 		name: 'ewater',
 		hp: 50,
 		elements: {
@@ -140,6 +145,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.RASCAPHANDRE]: {
 		id: Boss.RASCAPHANDRE,
+		boss: true,
 		name: 'rasca',
 		hp: 60,
 		elements: {
@@ -158,6 +164,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.ELEMENTAIRE_TERRE]: {
 		id: Boss.ELEMENTAIRE_TERRE,
+		boss: true,
 		name: 'eearth',
 		hp: 100,
 		elements: {
@@ -176,6 +183,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.PTEROZ]: {
 		id: Boss.PTEROZ,
+		boss: true,
 		name: 'pteroz',
 		hp: 70,
 		elements: {
@@ -195,6 +203,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.HIPPOCLAMP]: {
 		id: Boss.HIPPOCLAMP,
+		boss: true,
 		name: 'hippo',
 		hp: 70,
 		elements: {
@@ -214,6 +223,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.ROCKY]: {
 		id: Boss.ROCKY,
+		boss: true,
 		name: 'rocky',
 		hp: 100,
 		elements: {
@@ -233,6 +243,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.MASTER_CHA]: {
 		id: Boss.MASTER_CHA,
+		boss: true,
 		name: 'mcha',
 		level: 80,
 		elements: {
@@ -264,6 +275,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.PIRHANOS_3]: {
 		id: Boss.PIRHANOS_3,
+		boss: true,
 		name: 'pirao3',
 		zones: [],
 		level: 15,
@@ -285,6 +297,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.TW_BIGBEASTLY]: {
 		id: Boss.TW_BIGBEASTLY,
+		boss: true,
 		name: 'wbour2',
 		level: 35,
 		elements: {
@@ -312,6 +325,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.PR_IGOR]: {
 		id: Boss.PR_IGOR,
+		boss: true,
 		name: 'igor',
 		level: 20,
 		elements: {
@@ -331,6 +345,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.VENERABLE]: {
 		id: Boss.VENERABLE,
+		boss: true,
 		name: 'vener',
 		level: 50,
 		elements: {
@@ -352,6 +367,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.VENERABLE_2]: {
 		id: Boss.VENERABLE_2,
+		boss: true,
 		name: 'vener2',
 		level: 50,
 		elements: {
@@ -373,6 +389,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.VENERABLE_3]: {
 		id: Boss.VENERABLE_3,
+		boss: true,
 		name: 'vener3',
 		level: 20,
 		elements: {
@@ -395,6 +412,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.VENERABLE_4]: {
 		id: Boss.VENERABLE_4,
+		boss: true,
 		name: 'vener4',
 		level: 50,
 		elements: {
@@ -416,6 +434,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.SCORPIOUS]: {
 		id: Boss.SCORPIOUS,
+		boss: true,
 		name: 'scorpu',
 		level: 90,
 		elements: {
@@ -447,6 +466,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.YAKUZI]: {
 		id: Boss.YAKUZI,
+		boss: true,
 		name: 'yakuzi',
 		level: 15,
 		elements: {
@@ -466,6 +486,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.DARK_MEGASHROOM]: {
 		id: Boss.DARK_MEGASHROOM,
+		boss: true,
 		name: 'megoup',
 		level: 7,
 		elements: {
@@ -485,6 +506,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.DARK_MEGASHROOM_2]: {
 		id: Boss.DARK_MEGASHROOM_2,
+		boss: true,
 		name: 'megou2',
 		level: 7,
 		elements: {
@@ -505,6 +527,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.MASKED_KORGON]: {
 		id: Boss.MASKED_KORGON,
+		boss: true,
 		name: 'kvenbs',
 		level: 15,
 		elements: {
@@ -524,6 +547,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.SOUTHERN_KORGON]: {
 		id: Boss.SOUTHERN_KORGON,
+		boss: true,
 		name: 'ksudbs',
 		level: 35,
 		elements: {
@@ -543,6 +567,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.BIO_METALIC_LEECH]: {
 		id: Boss.BIO_METALIC_LEECH,
+		boss: true,
 		name: 'saboss',
 		level: 80,
 		elements: {
@@ -563,6 +588,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.DEMYOM_DEFENDER]: {
 		id: Boss.DEMYOM_DEFENDER,
+		boss: true,
 		name: 'cuzbos',
 		level: 30,
 		elements: {
@@ -585,6 +611,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		// This boss has a weird patch in the source code
 		// It's not implemented as it's unclear if we need it
 		id: Boss.GROTOX,
+		boss: true,
 		name: 'frking',
 		level: 30,
 		elements: {
@@ -604,6 +631,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.BEHEMOUNT]: {
 		id: Boss.BEHEMOUNT,
+		boss: true,
 		name: 'behem2',
 		level: 75,
 		elements: {
@@ -623,6 +651,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.SERPETHER]: {
 		id: Boss.SERPETHER,
+		boss: true,
 		name: 'serpe',
 		level: 75,
 		elements: {
@@ -644,6 +673,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.SERPETHER_2]: {
 		id: Boss.SERPETHER_2,
+		boss: true,
 		name: 'serpe2',
 		level: 75,
 		elements: {
@@ -664,6 +694,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.MORG]: {
 		id: Boss.MORG,
+		boss: true,
 		name: 'morg',
 		level: 50,
 		elements: {
@@ -684,6 +715,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.MORG_2]: {
 		id: Boss.MORG_2,
+		boss: true,
 		name: 'morgu',
 		level: 50,
 		elements: {
@@ -704,6 +736,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.MUTATED_MORG]: {
 		id: Boss.MUTATED_MORG,
+		boss: true,
 		name: 'morg2',
 		level: 60,
 		elements: {
@@ -725,6 +758,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.GRIZORG]: {
 		id: Boss.GRIZORG,
+		boss: true,
 		name: 'grizor',
 		level: 80,
 		elements: {
@@ -747,6 +781,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.GRIZOU]: {
 		id: Boss.GRIZOU,
+		boss: true,
 		name: 'grizou',
 		level: 80,
 		elements: {
@@ -769,6 +804,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.MUTATED_GRIZORG]: {
 		id: Boss.MUTATED_GRIZORG,
+		boss: true,
 		name: 'grizo2',
 		level: 90,
 		elements: {
@@ -791,6 +827,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.ULTIMATE_GRIZORG]: {
 		id: Boss.ULTIMATE_GRIZORG,
+		boss: true,
 		name: 'grizo3',
 		level: 99,
 		elements: {
@@ -813,6 +850,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.SOFIA]: {
 		id: Boss.SOFIA,
+		boss: true,
 		name: 'sofia',
 		level: 85,
 		elements: {
@@ -833,6 +871,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	},
 	[Boss.CHIEF_DOROGON]: {
 		id: Boss.CHIEF_DOROGON,
+		boss: true,
 		name: 'dorou',
 		level: 50,
 		elements: {

@@ -172,6 +172,9 @@ export interface DetailedFighter {
 	permanentStatusGained: DinozStatusId[];
 	// Previous target
 	previousTarget?: number;
+	// Caught by
+	catcher?: number;
+	catchId?: number;
 }
 
 export interface FighterResultFiche {

@@ -310,6 +310,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 				where: { state: { equals: true } }
 			},
 			status: { select: { statusId: true } },
+			catches: { select: { id: true, hp: true, monsterId: true } },
 			followers: {
 				select: {
 					id: true,
@@ -329,7 +330,8 @@ export async function getDinozFightDataRequest(dinozId: number) {
 					status: { select: { statusId: true } },
 					missions: true,
 					fight: true,
-					skills: { select: { skillId: true } }
+					skills: { select: { skillId: true } },
+					catches: { select: { id: true, hp: true, monsterId: true } }
 				}
 			},
 			missions: true,

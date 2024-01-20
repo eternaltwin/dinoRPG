@@ -11,14 +11,20 @@ const IGNORE_STEPS = ['moveTo', 'moveBack', 'resist'];
 const DISPLAYED_STATUSES = [...GoodStatus, ...BadStatus];
 
 const getFighterName = (fighter: StepFighter, t: TFunction) => {
+	let name = '';
 	switch (fighter.type) {
 		case 'dinoz':
-			return fighter.name;
+			name = fighter.name;
+			break;
 		case 'clone':
-			return `${fighter.name} (${t('fight.clone')})`;
+			name = `${fighter.name} (${t('fight.clone')})`;
+			break;
 		default:
-			return t(`fight.monster.${fighter.name}`);
+			name = t(`fight.monster.${fighter.name}`);
+			break;
 	}
+
+	return `${fighter.attacker ? ':attack:' : ':defense:'} ${name}`;
 };
 
 const getStatusName = (status: string, t: TFunction) => t(`fight.status.${status}`);
@@ -135,6 +141,10 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t),
 				item: t(`item.name.${itemNameList[fightStep.itemId]}`)
+			});
+		case 'hypnotize':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t)
 			});
 		default:
 			return JSON.stringify(fightStep);

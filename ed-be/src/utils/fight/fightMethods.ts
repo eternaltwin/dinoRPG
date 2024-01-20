@@ -1006,7 +1006,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					throw new Error('No initial dinoz found');
 				}
 
-				const clone = initializeDinoz(null, fighter.attacker ? 0 : 1, initialDinoz, fightData.place);
+				const isBossFight = fightData.fighters.some(f => f.type === 'boss');
+
+				const clone = initializeDinoz(null, fighter.attacker ? 0 : 1, initialDinoz, fightData.place, isBossFight);
 
 				// Count monsters
 				const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
@@ -1948,9 +1950,32 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 		// Other skills
 		case Skill.CATCH: {
-			// TODO: Code the catch skill
-			// Need to add a table in DB (DinozCatch)
-			// Store dinozId + monsterId + current HP
+			// Get monster opponents
+			const opponents = getOpponents(fightData, fighter, ['monster']);
+
+			// Cancel if no monster opponents
+			if (!opponents.length) {
+				return cancel();
+			}
+
+			// Get random opponent
+			const monster = opponents[randomBetween(0, opponents.length - 1)];
+
+			// Attack opponent
+			const hit = startAttack(fightData, fighter, monster);
+
+			// Only continue if not already caught and hit and not dead
+			if (!monster.catcher && hit && monster.hp > 0) {
+				// Change team
+				monster.attacker = !monster.attacker;
+				monster.catcher = fighter.id;
+
+				// Add hypnotize step
+				fightData.steps.push({
+					action: 'hypnotize',
+					fighter: stepFighter(monster)
+				});
+			}
 			break;
 		}
 		// AIR
@@ -3790,6 +3815,17 @@ export const checkDeaths = (fightData: DetailedFight) => {
 					heal(fightData, fighter, 50);
 				}
 			}
+
+			// Remove catches from combat
+			getAllies(fightData, fighter).filter(ally => ally.catcher === fighter.id).forEach((monster) => {
+				// Add leave step
+				fightData.steps.push({
+					action: 'leave',
+					fighter: stepFighter(monster)
+				});
+
+				monster.escaped = true;
+			});
 		}
 
 		// Count alive fighters

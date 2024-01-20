@@ -8,6 +8,7 @@ import { Monster } from './MonsterList.mjs';
 export type MonsterFiche = {
 	id: Monster | Boss;
 	name: string;
+	boss?: boolean;
 	hp: number;
 	elements: { air: number; fire: number; lightning: number; water: number; wood: number };
 	// bonus attack for monster
