@@ -1,6 +1,7 @@
 import { FightStep } from './FightStep.mjs';
 import { FighterResultFiche } from './DetailedFighter.mjs';
 import { Monster } from './MonsterList.mjs';
+import { ElementType } from '../enums/ElementType.mjs';
 
 export interface FightResult {
 	opponent: string[];
@@ -26,6 +27,36 @@ export interface CatchResult {
 	id?: number;
 }
 
+export type FightStats = {
+	assault: {
+		count: number;
+		damage: Record<ElementType, number>;
+	}
+	skill: {
+		damage: Record<ElementType, number>;
+	}
+	damage: {
+		taken: number;
+		torch: {
+			taken: number;
+			done: number;
+		}
+		poison: {
+			taken: number;
+			done: number;
+		}
+	}
+	evasions: {
+		done: number;
+		suffered: number;
+	}
+	counters: {
+		done: number;
+		suffered: number;
+	}
+	healing: number;
+};
+
 export interface FightProcessResult {
 	// true: attackers won, false: defenders won
 	winner: boolean;
@@ -37,4 +68,6 @@ export interface FightProcessResult {
 	catches: CatchResult[];
 	// History of the fight
 	steps: FightStep[];
+	// Stats
+	stats: FightStats;
 }

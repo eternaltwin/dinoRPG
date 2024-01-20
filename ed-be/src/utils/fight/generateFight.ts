@@ -3,7 +3,7 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
-import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
 import {
@@ -35,6 +35,7 @@ export type DetailedFight = {
 	};
 	timeManipulatorUsed?: boolean;
 	temporalStabilityUsed?: boolean;
+	stats: FightStats;
 };
 
 const orderFighters = (fightData: DetailedFight) => {
@@ -59,7 +60,50 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		time: 0,
-		place: config.place
+		place: config.place,
+		stats: {
+			assault: {
+				count: 0,
+				damage: {
+					[ElementType.FIRE]: 0,
+					[ElementType.WOOD]: 0,
+					[ElementType.WATER]: 0,
+					[ElementType.LIGHTNING]: 0,
+					[ElementType.AIR]: 0,
+					[ElementType.VOID]: 0
+				}
+			},
+			skill: {
+				damage: {
+					[ElementType.FIRE]: 0,
+					[ElementType.WOOD]: 0,
+					[ElementType.WATER]: 0,
+					[ElementType.LIGHTNING]: 0,
+					[ElementType.AIR]: 0,
+					[ElementType.VOID]: 0
+				}
+			},
+			damage: {
+				taken: 0,
+				torch: {
+					taken: 0,
+					done: 0
+				},
+				poison: {
+					taken: 0,
+					done: 0
+				}
+			},
+			evasions: {
+				done: 0,
+				suffered: 0
+			},
+			counters: {
+				done: 0,
+				suffered: 0
+			},
+			healing: 0
+		}
 	};
 
 	fightData.fighters.forEach(fighter => {
@@ -331,7 +375,8 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		attackers: attackersResults,
 		defenders: defendersResults,
 		catches,
-		steps: fightData.steps
+		steps: fightData.steps,
+		stats: fightData.stats
 	};
 };
 

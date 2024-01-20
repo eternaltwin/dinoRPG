@@ -441,6 +441,30 @@ const registerHit = (
 		 */
 		opponent.hp -= actualDamage[opponent.id];
 
+		// Add hit step
+		fightData.steps.push({
+			action: 'hit',
+			fighter: stepFighter(fighter),
+			target: stepFighter(opponent),
+			damage: actualDamage[opponent.id],
+			elements: damageElements,
+			skill
+		});
+
+		// Damage stats
+		if (fighter.attacker) {
+			damageElements.forEach(element => {
+				if (skill) {
+					fightData.stats.skill.damage[element] += actualDamage[opponent.id];
+				} else {
+					fightData.stats.assault.damage[element] += actualDamage[opponent.id];
+				}
+			});
+		}
+		if (opponent.attacker) {
+			fightData.stats.damage.taken += actualDamage[opponent.id];
+		}
+
 		/**
 		 * POST-DAMAGE
 		 */
@@ -468,16 +492,6 @@ const registerHit = (
 
 			actualDamage[opponent.id] = 0;
 		}
-
-		// Add hit step
-		fightData.steps.push({
-			action: 'hit',
-			fighter: stepFighter(fighter),
-			target: stepFighter(opponent),
-			damage: actualDamage[opponent.id],
-			elements: damageElements,
-			skill
-		});
 
 		// Wake up
 		if (fightData.environment?.type !== Skill.AMAZONIE || actualDamage[opponent.id] >= 10) {
@@ -2167,6 +2181,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 						opponent: stepFighter(fighter)
 					});
 
+					// Counter stats
+					if (fighter.attacker) {
+						fightData.stats.counters.suffered += 1;
+					}
+					if (opponent.attacker) {
+						fightData.stats.counters.done += 1;
+					}
+
 					// Opponent attacks fighter
 					startAttack(fightData, opponent, fighter, true);
 				}
@@ -3436,6 +3458,11 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 		hp: healAmount
 	});
 
+	// Heal stats
+	if (fighter.attacker) {
+		fightData.stats.healing += healAmount;
+	}
+
 	// Group therapy
 	const opponentsWhoCanCopyHeal = getOpponents(fightData, fighter).filter(opponent =>
 		hasStatus(opponent, Status.COPY_HEAL)
@@ -3529,6 +3556,11 @@ const attack = (
 			target: stepFighter(realOpponent)
 		});
 
+		// Assault count stat
+		if(attacker.attacker) {
+			fightData.stats.assault.count += 1;
+		}
+
 		if (miss(attacker)) {
 			damage = 0;
 
@@ -3547,6 +3579,14 @@ const attack = (
 					action: 'evade',
 					fighter: stepFighter(realOpponent)
 				});
+
+				// Evasion stat
+				if(attacker.attacker) {
+					fightData.stats.evasions.suffered += 1;
+				}
+				if (realOpponent.attacker) {
+					fightData.stats.evasions.done += 1;
+				}
 			}
 
 			// FLYING
@@ -3591,6 +3631,14 @@ const attack = (
 				const damage = attacker.stats.special.torchDamage;
 
 				registerHit(fightData, attacker, [realOpponent], damage, [ElementType.FIRE], Skill.TORCHE);
+
+				// Torch stats
+				if (attacker.attacker) {
+					fightData.stats.damage.torch.done += damage;
+				}
+				if (realOpponent.attacker) {
+					fightData.stats.damage.torch.taken += damage;
+				}
 			}
 
 			// ACUPUNCTURE damage
@@ -4077,6 +4125,14 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 									// Register the hit
 									registerHit(fightData, poisoner, [fighter], poisonedBy.damage, [], poisonedBy.skill);
+
+									// Poison stats
+									if (poisoner.attacker) {
+										fightData.stats.damage.poison.done += poisonedBy.damage;
+									}
+									if (fighter.attacker) {
+										fightData.stats.damage.poison.taken += poisonedBy.damage;
+									}
 								}
 								break;
 							}
@@ -4183,6 +4239,14 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			fighter: stepFighter(opponent),
 			opponent: stepFighter(attacker)
 		});
+
+		// Counter stats
+		if (attacker.attacker) {
+			fightData.stats.counters.suffered += 1;
+		}
+		if (opponent.attacker) {
+			fightData.stats.counters.done += 1;
+		}
 
 		// Opponent attacks fighter
 		startAttack(fightData, opponent, attacker, true);
