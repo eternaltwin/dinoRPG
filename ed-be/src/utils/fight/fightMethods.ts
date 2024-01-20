@@ -1842,13 +1842,14 @@ export const addStatus = (
 			fighter.stats.speed.global /= 1.5;
 			break;
 		}
-		case Status.PETRIFIED:
+		case Status.PETRIFIED: {
+			fighter.stats.special.armor += 5;
+			fighter.time += Infinity;
+			break;
+		}
 		case Status.SHIELDED: {
-			if (!fighter.stats.special.armor) {
-				fighter.stats.special.armor = 5;
-			} else {
-				fighter.stats.special.armor += 5;
-			}
+			fighter.stats.special.armor += 5;
+			break;
 		}
 		case Status.BLESSED: {
 			fighter.stats.assaultBonus[ElementType.AIR] += 3;
@@ -1914,13 +1915,14 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				fighter.stats.speed.global *= 1.5;
 				break;
 			}
-			case Status.PETRIFIED:
+			case Status.PETRIFIED: {
+				fighter.stats.special.armor -= 5;
+				fighter.time = fightData.time;
+				break;
+			}
 			case Status.SHIELDED: {
-				if (!fighter.stats.special.armor || fighter.stats.special.armor <= 5) {
-					fighter.stats.special.armor = 0;
-				} else {
-					fighter.stats.special.armor -= 5;
-				}
+				fighter.stats.special.armor -= 5;
+				break;
 			}
 			case Status.BLESSED: {
 				fighter.stats.assaultBonus[ElementType.AIR] -= 3;
