@@ -14,7 +14,8 @@ import {
 	hasStatus,
 	heal,
 	playFighterTurn,
-	stepFighter
+	stepFighter,
+	updateStat
 } from './fightMethods.js';
 import { getBasicElementDamage } from './getDamage.js';
 import randomBetween from './randomBetween.js';
@@ -35,7 +36,10 @@ export type DetailedFight = {
 	};
 	timeManipulatorUsed?: boolean;
 	temporalStabilityUsed?: boolean;
-	stats: FightStats;
+	stats: {
+		attack: FightStats;
+		defense: FightStats;
+	};
 };
 
 const orderFighters = (fightData: DetailedFight) => {
@@ -62,51 +66,93 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		time: 0,
 		place: config.place,
 		stats: {
-			assault: {
-				count: 0,
-				damage: {
-					[ElementType.FIRE]: 0,
-					[ElementType.WOOD]: 0,
-					[ElementType.WATER]: 0,
-					[ElementType.LIGHTNING]: 0,
-					[ElementType.AIR]: 0,
-					[ElementType.VOID]: 0
+			attack: {
+				startingHp: 0,
+				hpLeft: 0,
+				damageReceived: 0,
+				hpHealed: 0,
+				attacks: 0,
+				groupAttacks: 0,
+				multiHits: 0,
+				assaults: 0,
+				evasions: 0,
+				counters: 0,
+				poisoned: 0,
+				petrified: 0,
+				elements: {
+					[ElementType.FIRE]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.WOOD]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.WATER]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.LIGHTNING]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.AIR]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.VOID]: {
+						damage: 0,
+						attacks: 0
+					}
 				}
 			},
-			skill: {
-				damage: {
-					[ElementType.FIRE]: 0,
-					[ElementType.WOOD]: 0,
-					[ElementType.WATER]: 0,
-					[ElementType.LIGHTNING]: 0,
-					[ElementType.AIR]: 0,
-					[ElementType.VOID]: 0
+			defense: {
+				startingHp: 0,
+				hpLeft: 0,
+				damageReceived: 0,
+				hpHealed: 0,
+				attacks: 0,
+				groupAttacks: 0,
+				multiHits: 0,
+				assaults: 0,
+				evasions: 0,
+				counters: 0,
+				poisoned: 0,
+				petrified: 0,
+				elements: {
+					[ElementType.FIRE]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.WOOD]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.WATER]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.LIGHTNING]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.AIR]: {
+						damage: 0,
+						attacks: 0
+					},
+					[ElementType.VOID]: {
+						damage: 0,
+						attacks: 0
+					}
 				}
-			},
-			damage: {
-				taken: 0,
-				torch: {
-					taken: 0,
-					done: 0
-				},
-				poison: {
-					taken: 0,
-					done: 0
-				}
-			},
-			evasions: {
-				done: 0,
-				suffered: 0
-			},
-			counters: {
-				done: 0,
-				suffered: 0
-			},
-			healing: 0
+			}
 		}
 	};
 
 	fightData.fighters.forEach(fighter => {
+		// HP stats
+		updateStat(fightData, fighter, 'startingHp', fighter.startingHp);
+
 		// Handle costumes
 		if (fighter.costume) {
 			fightData.steps.push({
@@ -317,6 +363,9 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 			// Regen to starting HP
 			heal(fightData, fighter, fighter.startingHp - fighter.hp);
 		}
+
+		// HP left stat
+		updateStat(fightData, fighter, 'hpLeft', Math.max(fighter.hp, 0));
 	});
 
 	if (winner) {

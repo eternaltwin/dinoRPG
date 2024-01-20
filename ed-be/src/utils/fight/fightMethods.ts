@@ -27,6 +27,7 @@ import randomBetween from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { FightStats } from '@drpg/core/models/fight/FightResult';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -161,6 +162,36 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 	}
 
 	return randomOpponent;
+};
+
+export const updateStat = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	stat: keyof Omit<FightStats, 'elements'> | 'el.damage' | 'el.attacks',
+	value: number,
+	element?: ElementType
+) => {
+	const stats = fighter.attacker ? fightData.stats.attack : fightData.stats.defense;
+
+	if (stat === 'el.damage') {
+		if (!element) {
+			throw new Error('Element is required for damage stat');
+		}
+
+		stats.elements[element].damage += value;
+		return;
+	}
+
+	if (stat === 'el.attacks') {
+		if (!element) {
+			throw new Error('Element is required for attacks stat');
+		}
+
+		stats.elements[element].attacks += value;
+		return;
+	}
+
+	stats[stat] += value;
 };
 
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
@@ -452,18 +483,11 @@ const registerHit = (
 		});
 
 		// Damage stats
-		if (fighter.attacker) {
-			damageElements.forEach(element => {
-				if (skill) {
-					fightData.stats.skill.damage[element] += actualDamage[opponent.id];
-				} else {
-					fightData.stats.assault.damage[element] += actualDamage[opponent.id];
-				}
-			});
-		}
-		if (opponent.attacker) {
-			fightData.stats.damage.taken += actualDamage[opponent.id];
-		}
+		damageElements.forEach(element => {
+			updateStat(fightData, fighter, 'el.damage', actualDamage[opponent.id], element);
+			updateStat(fightData, fighter, 'el.attacks', 1, element);
+		});
+		updateStat(fightData, opponent, 'damageReceived', actualDamage[opponent.id]);
 
 		/**
 		 * POST-DAMAGE
@@ -674,7 +698,11 @@ const registerHit = (
 	});
 };
 
-const evadedSkill = (opponent: DetailedFighter, skill: SkillDetails) => {
+const evadedSkill = (
+	fightData: DetailedFight,
+	opponent: DetailedFighter,
+	skill: SkillDetails
+) => {
 	if (opponent.hp <= 0) return false;
 
 	// Some statues prevent skill evasion
@@ -691,8 +719,14 @@ const evadedSkill = (opponent: DetailedFighter, skill: SkillDetails) => {
 	}
 
 	const random = Math.random();
+	const evaded = random < evasion;
 
-	return random < evasion;
+	// Evasion stat
+	if (evaded) {
+		updateStat(fightData, opponent, 'evasions', 1);
+	}
+
+	return evaded;
 };
 
 const targetSingleOpponent = (
@@ -714,7 +748,7 @@ const targetSingleOpponent = (
 		const skill = skillOrItem;
 
 		// Check if opponent evaded
-		if (evadedSkill(opponent, skill)) {
+		if (evadedSkill(fightData, opponent, skill)) {
 			// Add evade step
 			fightData.steps.push({
 				action: 'evade',
@@ -754,7 +788,7 @@ const targetMultipleOpponents = (
 		step.targets.push(stepFighter(opponent));
 
 		// Check if opponent evaded
-		if (evadedSkill(opponent, skill)) {
+		if (evadedSkill(fightData, opponent, skill)) {
 			// Add evade step
 			fightData.steps.push({
 				action: 'evade',
@@ -795,7 +829,7 @@ const targetAllOpponents = (
 		step.targets.push(stepFighter(opponent));
 
 		// Check if opponent evaded
-		if (evadedSkill(opponent, skill)) {
+		if (evadedSkill(fightData, opponent, skill)) {
 			// Add evade step
 			fightData.steps.push({
 				action: 'evade',
@@ -1838,6 +1872,11 @@ export const addStatus = (
 		fighter: stepFighter(fighter),
 		status
 	});
+
+	// Petrified stat
+	if (status === Status.PETRIFIED) {
+		updateStat(fightData, fighter, 'petrified', 1);
+	}
 };
 
 const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...statusList: Status[]) => {
@@ -2170,7 +2209,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Fighter attacks opponent
 				startAttack(fightData, fighter, opponent, false, Skill.DANSE_FOUDROYANTE, 3);
 
-				const countered = counterAttack(fighter, opponent);
+				const countered = counterAttack(fightData, opponent);
 
 				// If the opponent succeeds at countering, execute the counter
 				if (countered) {
@@ -2180,14 +2219,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 						fighter: stepFighter(opponent),
 						opponent: stepFighter(fighter)
 					});
-
-					// Counter stats
-					if (fighter.attacker) {
-						fightData.stats.counters.suffered += 1;
-					}
-					if (opponent.attacker) {
-						fightData.stats.counters.done += 1;
-					}
 
 					// Opponent attacks fighter
 					startAttack(fightData, opponent, fighter, true);
@@ -2417,7 +2448,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			opponents.forEach(opponent => {
 				// Check if opponent evaded
-				if (evadedSkill(opponent, skill)) {
+				if (evadedSkill(fightData, opponent, skill)) {
 					// Add evade step
 					fightData.steps.push({
 						action: 'evade',
@@ -3300,22 +3331,34 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	return true;
 };
 
-const counterAttack = (fighter: DetailedFighter, opponent: DetailedFighter) => {
+const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	// No counter attack if opponent is dead
 	if (opponent.hp <= 0) return false;
 
 	const random = Math.random();
+	const countered = random < opponent.stats.special.counter - 1;
 
-	return random < opponent.stats.special.counter - 1;
+	// Counter stat
+	if (countered) {
+		updateStat(fightData, opponent, 'counters', 1);
+	}
+
+	return countered;
 };
 
-const evade = (opponent: DetailedFighter) => {
+const evade = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	// No evasion if opponent is dead
 	if (opponent.hp <= 0) return false;
 
 	const random = Math.random();
+	const evaded = random < opponent.stats.special.evasion - 1;
 
-	return random < opponent.stats.special.evasion - 1;
+	// Evasion stat
+	if (evaded) {
+		updateStat(fightData, opponent, 'evasions', 1);
+	}
+
+	return evaded;
 };
 
 const miss = (fighter: DetailedFighter) => {
@@ -3429,6 +3472,9 @@ const poison = (
 	};
 
 	addStatus(fightData, fighter, Status.POISONED, duration);
+
+	// Poison stats
+	updateStat(fightData, fighter, 'poisoned', 1);
 };
 
 // Helper method to heal a fighter
@@ -3459,9 +3505,7 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 	});
 
 	// Heal stats
-	if (fighter.attacker) {
-		fightData.stats.healing += healAmount;
-	}
+	updateStat(fightData, fighter, 'hpHealed', healAmount);
 
 	// Group therapy
 	const opponentsWhoCanCopyHeal = getOpponents(fightData, fighter).filter(opponent =>
@@ -3525,6 +3569,11 @@ const attack = (
 		attackers.push(...allies);
 	}
 
+	// Group attacks stat
+	if (attackers.length > 1) {
+		updateStat(fightData, fighter, 'groupAttacks', 1);
+	}
+
 	let realOpponent = opponent;
 
 	// Check if a dinoz is protecting the opponent
@@ -3556,9 +3605,10 @@ const attack = (
 			target: stepFighter(realOpponent)
 		});
 
-		// Assault count stat
-		if(attacker.attacker) {
-			fightData.stats.assault.count += 1;
+		// Assault stat
+		updateStat(fightData, attacker, 'attacks', 1);
+		if (!skill) {
+			updateStat(fightData, attacker, 'assaults', 1);
 		}
 
 		if (miss(attacker)) {
@@ -3571,7 +3621,7 @@ const attack = (
 			});
 		} else {
 			// Check if opponent evaded
-			if (evade(realOpponent)) {
+			if (evade(fightData, realOpponent)) {
 				damage = 0;
 
 				// Add evade step
@@ -3579,14 +3629,6 @@ const attack = (
 					action: 'evade',
 					fighter: stepFighter(realOpponent)
 				});
-
-				// Evasion stat
-				if(attacker.attacker) {
-					fightData.stats.evasions.suffered += 1;
-				}
-				if (realOpponent.attacker) {
-					fightData.stats.evasions.done += 1;
-				}
 			}
 
 			// FLYING
@@ -3631,14 +3673,6 @@ const attack = (
 				const damage = attacker.stats.special.torchDamage;
 
 				registerHit(fightData, attacker, [realOpponent], damage, [ElementType.FIRE], Skill.TORCHE);
-
-				// Torch stats
-				if (attacker.attacker) {
-					fightData.stats.damage.torch.done += damage;
-				}
-				if (realOpponent.attacker) {
-					fightData.stats.damage.torch.taken += damage;
-				}
 			}
 
 			// ACUPUNCTURE damage
@@ -3925,6 +3959,9 @@ const startAttack = (
 			// Consume energy
 			fighter.energy -= BASE_ENERGY_COST + comboCount;
 
+			// Multihit stat
+			updateStat(fightData, fighter, 'multiHits', 1);
+
 			random = Math.random();
 			comboCount++;
 		}
@@ -4125,14 +4162,6 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 									// Register the hit
 									registerHit(fightData, poisoner, [fighter], poisonedBy.damage, [], poisonedBy.skill);
-
-									// Poison stats
-									if (poisoner.attacker) {
-										fightData.stats.damage.poison.done += poisonedBy.damage;
-									}
-									if (fighter.attacker) {
-										fightData.stats.damage.poison.taken += poisonedBy.damage;
-									}
 								}
 								break;
 							}
@@ -4229,7 +4258,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Fighter attacks opponent
 	startAttack(fightData, attacker, opponent);
 
-	const countered = counterAttack(attacker, opponent);
+	const countered = counterAttack(fightData, opponent);
 
 	// If the opponent succeeds at countering, execute the counter
 	if (countered) {
@@ -4239,14 +4268,6 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			fighter: stepFighter(opponent),
 			opponent: stepFighter(attacker)
 		});
-
-		// Counter stats
-		if (attacker.attacker) {
-			fightData.stats.counters.suffered += 1;
-		}
-		if (opponent.attacker) {
-			fightData.stats.counters.done += 1;
-		}
 
 		// Opponent attacks fighter
 		startAttack(fightData, opponent, attacker, true);

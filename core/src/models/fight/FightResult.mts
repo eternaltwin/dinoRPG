@@ -28,33 +28,22 @@ export interface CatchResult {
 }
 
 export type FightStats = {
-	assault: {
-		count: number;
-		damage: Record<ElementType, number>;
-	}
-	skill: {
-		damage: Record<ElementType, number>;
-	}
-	damage: {
-		taken: number;
-		torch: {
-			taken: number;
-			done: number;
-		}
-		poison: {
-			taken: number;
-			done: number;
-		}
-	}
-	evasions: {
-		done: number;
-		suffered: number;
-	}
-	counters: {
-		done: number;
-		suffered: number;
-	}
-	healing: number;
+	startingHp: number;
+	hpLeft: number;
+	damageReceived: number;
+	hpHealed: number;
+	attacks: number;
+	groupAttacks: number;
+	multiHits: number;
+	assaults: number;
+	evasions: number;
+	counters: number;
+	poisoned: number;
+	petrified: number;
+	elements: Record<ElementType, {
+		damage: number;
+		attacks: number;
+	}>;
 };
 
 export interface FightProcessResult {
@@ -69,5 +58,8 @@ export interface FightProcessResult {
 	// History of the fight
 	steps: FightStep[];
 	// Stats
-	stats: FightStats;
+	stats: {
+		attack: FightStats;
+		defense: FightStats;
+	};
 }
