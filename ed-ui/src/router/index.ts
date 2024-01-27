@@ -102,6 +102,11 @@ const router = createRouter({
 					component: () => import('../pages/MarketPage.vue')
 				},
 				{
+					path: '/dojo/qual/select-dinoz',
+					name: 'SelectDinoz',
+					component: () => import('../pages/dojo/SelectDinoz.vue')
+				},
+				{
 					path: '/fight/pixi',
 					name: 'PixiFight',
 					component: () => import('../components/fight/PixiFight.vue'),

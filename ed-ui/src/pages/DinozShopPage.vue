@@ -4,9 +4,7 @@
 		<div class="section">
 			<div class="titlePage">Enclos des dinoz</div>
 		</div>
-		<div class="help">
-			<p v-html="$t('shop.dinoz.help')"></p>
-		</div>
+		<DZDisclaimer help :content="$t('shop.dinoz.help')" />
 		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
 			<div class="dinoz_display">
 				<DinozWithoutFlash
@@ -76,6 +74,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -92,7 +91,8 @@ export default defineComponent({
 	components: {
 		TitleHeader,
 		Elements,
-		DinozWithoutFlash
+		DinozWithoutFlash,
+		DZDisclaimer
 	},
 	methods: {
 		async openPopinConfirmChoice(dinoz: DinozShopFiche): Promise<void> {

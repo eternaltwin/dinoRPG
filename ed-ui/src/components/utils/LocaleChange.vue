@@ -44,7 +44,7 @@ ol {
 .flag {
 	width: 12px;
 	height: 7px;
-	margin: 0.6em auto 0.1em;
+	margin: 0.1em auto;
 	padding: 2px;
 	cursor: pointer;
 

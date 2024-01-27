@@ -3,7 +3,7 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`manageDinoz.title`) }}</div>
 	</div>
-	<div class="disclaimer" v-html="formatContent($t('manageDinoz.disclaimer'))" />
+	<DZDisclaimer :content="$t('manageDinoz.disclaimer')" />
 	<table>
 		<tbody>
 			<tr>
@@ -69,13 +69,15 @@ import { errorHandler } from '../utils/index.js';
 import { getMaxXp } from '@drpg/core/utils/DinozUtils';
 import Elements from '../components/data/Elements.vue';
 import DinozMini from '../components/dinoz/DinozMini.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'ManageDinoz',
 	components: {
 		DinozMini,
 		TitleHeader,
-		Elements
+		Elements,
+		DZDisclaimer
 	},
 	data() {
 		return {
@@ -162,17 +164,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
-
 table {
 	width: 100%;
 	margin-top: 10px;

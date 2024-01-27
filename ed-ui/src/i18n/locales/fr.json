@@ -10,7 +10,8 @@
 		"account": "Mon Compte",
 		"forum": "Forum",
 		"api": "API",
-		"logout": "Déconnexion"
+		"logout": "Déconnexion",
+		"guide": "Guide du Jeu"
 	},
 	"toast": {
 		"DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
@@ -3725,5 +3726,10 @@
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+	},
+	"selectDinoz": {
+		"selectChampions": "Choisis tes champions",
+		"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
+		"disclaimer": "Tu peux sélectionner jusqu'à **10** dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain."
 	}
 }

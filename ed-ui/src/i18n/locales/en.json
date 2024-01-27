@@ -10,7 +10,8 @@
 		"account": "My account",
 		"forum": "Forum",
 		"api": "API",
-		"logout": "Log out"
+		"logout": "Log out",
+		"guide": "Game guide"
 	},
 	"toast": {
 		"DinozIsDead": "Your dinoz is dead and cannot be healed.",
@@ -1937,7 +1938,8 @@
 		"gather": "Dino-RPG [ ",
 		"dinozMissions": "Dino-RPG [ My Dinoz Missions ]",
 		"manageDinoz": "Dino-RPG [ Manage my Dinoz ]",
-		"market": "Dino-RPG [ Tamer Market ]"
+		"market": "Dino-RPG [ Tamer Market ]",
+		"selectDinoz": "Dino-RPG [ Dojo : Select your dinoz ]"
 	},
 	"gather": {
 		"action": {
@@ -3234,5 +3236,10 @@
 		"AdminRemoveReward": "**Admin {player} ({playerId})** removed reward **{reward}** from player with ID **{targetId}**.",
 		"AdminUpdatePlayer": "**Admin {player} ({playerId})** set player **{targetId} {stat}** to **{value}**.",
 		"AdminUpdateSecret": "**Admin {player} ({playerId})** set secret **{key}** to **{value}**."
+	},
+	"selectDinoz": {
+		"selectChampions": "Select your champions",
+		"selectTeam": "Select your team of dinoz for today's challenges",
+		"disclaimer": "You can select up to **10** dinoz for your team. Choose carefully, you won't be able to change your selection until tomorrow."
 	}
 }

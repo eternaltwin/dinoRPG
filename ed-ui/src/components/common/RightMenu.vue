@@ -49,6 +49,9 @@
 		<li>
 			<a @click="logOff()">{{ $t('rightMenu.logout') }}</a>
 		</li>
+		<li class="guide">
+			{{ $t('rightMenu.guide') }}
+		</li>
 	</ul>
 </template>
 
@@ -124,6 +127,7 @@ export default defineComponent({
 	top: -25px;
 	padding-left: 15px;
 	padding-top: 15px;
+	padding-bottom: 20px;
 	background:
 		url('../../assets/design/sideMenu_header.webp') no-repeat,
 		url('../../assets/design/sideMenu_footer.webp') no-repeat,
@@ -132,11 +136,6 @@ export default defineComponent({
 	display: block;
 	list-style: none;
 
-	// margin-block-start: 1em;
-	// margin-block-end: 1em;
-	// margin-inline-start: 0px;
-	// margin-inline-end: 0px;
-	// padding-inline-start: 4px;
 	li {
 		width: 100px;
 	}
@@ -213,6 +212,26 @@ export default defineComponent({
 		background-repeat: no-repeat;
 		margin-left: 3px;
 		line-height: 12px;
+	}
+}
+
+.guide {
+	background-image: url('../../assets/design/button_help.gif');
+	color: #fff1ad;
+	font-variant: small-caps;
+	font-weight: bold;
+	text-align: center;
+	height: 23px;
+	width: 95px !important;
+	margin-left: 2.5px;
+	padding-top: 27px;
+	background-repeat: no-repeat;
+	font-size: 10pt;
+	cursor: pointer;
+
+	&:hover {
+		color: white;
+		background-image: url('../../assets/design/button_help_hover.gif');
 	}
 }
 </style>
