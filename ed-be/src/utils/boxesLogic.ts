@@ -8,10 +8,10 @@ import { itemProbability } from '@drpg/core/models/item/itemProbability';
 export async function calculatePlayerPower(playerId: number) {
 	const boxInfo = await getBoxHandlerInformations(playerId);
 	if (!boxInfo) throw new ErrorFormator(500, `Player doesn't exist`);
-	const dinozCount = boxInfo._count.dinoz / gameConfig.dinoz.maxQuantity;
+	const dinozCount = boxInfo._count.dinoz;
 	const missionAverage = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a._count.missions, 0) / dinozCount;
 	const averageDinoz = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a.level, 0) / dinozCount;
-	const totalRewards = boxInfo.rewards.map(r => r.rewardId).filter(r => r < 24).length;
+	const totalRewards = boxInfo.rewards.filter(r => r.rewardId <= 24).length;
 
 	const coefficients = {
 		dinoz: 1,
@@ -20,10 +20,10 @@ export async function calculatePlayerPower(playerId: number) {
 		rewards: 10
 	};
 	const completion =
-		(((dinozCount * coefficients.dinoz) / 21 +
-			(missionAverage * coefficients.missions) / 55 +
-			(averageDinoz * coefficients.level) / gameConfig.dinoz.maxLevel +
-			(totalRewards * coefficients.rewards) / 23) /
+		(((dinozCount / gameConfig.dinoz.maxQuantity) * coefficients.dinoz +
+			(missionAverage / 55) * coefficients.missions +
+			(averageDinoz / gameConfig.dinoz.maxLevel) * coefficients.level +
+			(totalRewards / 23) * coefficients.rewards) /
 			(coefficients.dinoz + coefficients.missions + coefficients.level + coefficients.rewards)) *
 		100;
 
