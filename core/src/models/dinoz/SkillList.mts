@@ -347,7 +347,7 @@ export enum Skill {
 	M_FEBREZ = 99948,
 	M_GRIZOU = 99949,
 	// SPECIAL SKILLS
-	CATCH = 999999,
+	CATCH = 999999
 }
 
 // skillId are counted like this : ABCDE

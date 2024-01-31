@@ -184,7 +184,9 @@ export async function getAvailableActions(
 
 	// Dig with the shovel
 	if (
-		dinoz.status.some(status => status.statusId === DinozStatusId.SHOVEL || status.statusId === DinozStatusId.ENHANCED_SHOVEL)
+		dinoz.status.some(
+			status => status.statusId === DinozStatusId.SHOVEL || status.statusId === DinozStatusId.ENHANCED_SHOVEL
+		)
 	) {
 		availableActions.push(actionList[Action.DIG]);
 	}
@@ -640,6 +642,10 @@ export async function digWithDinoz(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot dig.`);
 	}
 
+	if (dinozData.placeId === PlaceEnum.MINES_DE_CORAIL) {
+		throw new ErrorFormator(400, `shovelMine`);
+	}
+
 	const digPlace = Object.values(digTreasures).find(dig => dig.place === dinozData.placeId);
 	let reward: Rewarder[];
 	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, [dinozData])) {
@@ -656,7 +662,10 @@ export async function digWithDinoz(req: Request) {
 	}
 
 	//Try to broke enhanced shovel (75% of keeping it)
-	if (getRandomNumber(0, 100) > 75 && dinozData.status.some(status => status.statusId === DinozStatusId.ENHANCED_SHOVEL)) {
+	if (
+		getRandomNumber(0, 100) > 75 &&
+		dinozData.status.some(status => status.statusId === DinozStatusId.ENHANCED_SHOVEL)
+	) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);
 		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_ENHANCED_SHOVEL);
 	}

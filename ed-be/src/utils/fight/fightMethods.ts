@@ -698,11 +698,7 @@ const registerHit = (
 	});
 };
 
-const evadedSkill = (
-	fightData: DetailedFight,
-	opponent: DetailedFighter,
-	skill: SkillDetails
-) => {
+const evadedSkill = (fightData: DetailedFight, opponent: DetailedFighter, skill: SkillDetails) => {
 	if (opponent.hp <= 0) return false;
 
 	// Some statues prevent skill evasion
@@ -3901,15 +3897,17 @@ export const checkDeaths = (fightData: DetailedFight) => {
 			}
 
 			// Remove catches from combat
-			getAllies(fightData, fighter).filter(ally => ally.catcher === fighter.id).forEach((monster) => {
-				// Add leave step
-				fightData.steps.push({
-					action: 'leave',
-					fighter: stepFighter(monster)
-				});
+			getAllies(fightData, fighter)
+				.filter(ally => ally.catcher === fighter.id)
+				.forEach(monster => {
+					// Add leave step
+					fightData.steps.push({
+						action: 'leave',
+						fighter: stepFighter(monster)
+					});
 
-				monster.escaped = true;
-			});
+					monster.escaped = true;
+				});
 		}
 
 		// Count alive fighters

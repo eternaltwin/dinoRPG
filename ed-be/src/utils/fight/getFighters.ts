@@ -124,15 +124,19 @@ export const initializeDinoz = (
 				[ElementType.VOID]: getDefenseStat(dinoz, dinozStatus, skills, DefenseElement.NEUTRAL).value
 			},
 			special: {
-				[SpecialStat.INITIATIVE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.INITIATIVE)?.value ?? 0,
+				[SpecialStat.INITIATIVE]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.INITIATIVE)?.value ?? 0,
 				[SpecialStat.ENERGY]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY)?.value ?? 0,
-				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
+				[SpecialStat.ENERGY_RECOVERY]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
 				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
 				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
 				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
 				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? 0,
-				[SpecialStat.BUBBLE_RATE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
-				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
+				[SpecialStat.BUBBLE_RATE]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
+				[SpecialStat.TORCH_DAMAGE]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
 			},
@@ -292,7 +296,7 @@ export const initializeMonster = (
 		nbrUpLightning: monster.elements.lightning,
 		nbrUpAir: monster.elements.air,
 		nbrUpWater: monster.elements.water,
-		items: [],
+		items: []
 	};
 
 	const fighter: DetailedFighter = {
@@ -316,7 +320,8 @@ export const initializeMonster = (
 				[ElementType.VOID]: 0
 			},
 			assaultBonus: {
-				[ElementType.AIR]: getAssaultStat(similiDinoz, [], skills, AssaultElement.AIR).bonus + (monster.bonus_attack ?? 0),
+				[ElementType.AIR]:
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.AIR).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.FIRE]:
 					getAssaultStat(similiDinoz, [], skills, AssaultElement.FIRE).bonus + (monster.bonus_attack ?? 0),
 				[ElementType.LIGHTNING]:
@@ -328,7 +333,8 @@ export const initializeMonster = (
 				[ElementType.VOID]: 0
 			},
 			defense: {
-				[ElementType.AIR]: getDefenseStat(similiDinoz, [], skills, DefenseElement.AIR).value + (monster.bonus_defense ?? 0),
+				[ElementType.AIR]:
+					getDefenseStat(similiDinoz, [], skills, DefenseElement.AIR).value + (monster.bonus_defense ?? 0),
 				[ElementType.FIRE]:
 					getDefenseStat(similiDinoz, [], skills, DefenseElement.FIRE).value + (monster.bonus_defense ?? 0),
 				[ElementType.LIGHTNING]:
@@ -350,7 +356,8 @@ export const initializeMonster = (
 				[SpecialStat.COUNTER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? 0,
 				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
 				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
-				[SpecialStat.ACID_BLOOD_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
+				[SpecialStat.ACID_BLOOD_DAMAGE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -677,37 +684,45 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		const { dinozList, monsterList: monsters } = team;
 
 		// Dinoz
-		fighters.push(...dinozList.map(dinoz => {
-			const fighter = initializeDinoz(team, index, dinoz, place, bossFight);
+		fighters.push(
+			...dinozList.map(dinoz => {
+				const fighter = initializeDinoz(team, index, dinoz, place, bossFight);
 
-			// Catches
-			for (let i = 0; i < dinoz.catches.length; i++) {
-				// Limit to 3 catches
-				if (i > 2) break;
+				// Catches
+				for (let i = 0; i < dinoz.catches.length; i++) {
+					// Limit to 3 catches
+					if (i > 2) break;
 
-				const dinozCatch = dinoz.catches[i];
-				const probabilities = [3, 1, 1, 1];
-				const catchSkill = fighter.skills.find(skill => skill.id === Skill.CATCH);
+					const dinozCatch = dinoz.catches[i];
+					const probabilities = [3, 1, 1, 1];
+					const catchSkill = fighter.skills.find(skill => skill.id === Skill.CATCH);
 
-				if (!catchSkill) {
-					throw new Error(`Dinoz ${dinoz.id} has no catch skill`);
+					if (!catchSkill) {
+						throw new Error(`Dinoz ${dinoz.id} has no catch skill`);
+					}
+
+					// Adjust catch probability
+					catchSkill.probability = probabilities[i];
+
+					const monster = initializeMonster(
+						memory,
+						team,
+						index,
+						{ ...monsterList[dinozCatch.monsterId as Monster] },
+						place
+					);
+					monster.startingHp = dinozCatch.hp;
+					monster.hp = dinozCatch.hp;
+					monster.catcher = dinoz.id;
+					monster.catchId = dinozCatch.id;
+
+					// Add monster
+					fighters.push(monster);
 				}
 
-				// Adjust catch probability
-				catchSkill.probability = probabilities[i];
-
-				const monster = initializeMonster(memory, team, index, { ...monsterList[dinozCatch.monsterId as Monster] }, place);
-				monster.startingHp = dinozCatch.hp;
-				monster.hp = dinozCatch.hp;
-				monster.catcher = dinoz.id;
-				monster.catchId = dinozCatch.id;
-
-				// Add monster
-				fighters.push(monster);
-			}
-
-			return fighter;
-		}));
+				return fighter;
+			})
+		);
 
 		// Monsters
 		fighters.push(...monsters.map(monster => initializeMonster(memory, team, index, monster, place)));

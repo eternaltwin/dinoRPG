@@ -38,6 +38,7 @@
 		"missingStatus": "L'un de vos dinoz ne remplis pas les conditions pour faire cette action",
 		"notEnoughIrma": "Vous n'avez pas assez de potion d'irma",
 		"missingIrma": "Vous avez besoin de potion d'irma pour faire cette action",
+		"shovelMine": "Vous n'allez quand même creuser à côté du mineur !?!",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",

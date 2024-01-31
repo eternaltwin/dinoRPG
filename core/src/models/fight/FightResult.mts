@@ -40,10 +40,13 @@ export type FightStats = {
 	counters: number;
 	poisoned: number;
 	petrified: number;
-	elements: Record<ElementType, {
-		damage: number;
-		attacks: number;
-	}>;
+	elements: Record<
+		ElementType,
+		{
+			damage: number;
+			attacks: number;
+		}
+	>;
 };
 
 export interface FightProcessResult {

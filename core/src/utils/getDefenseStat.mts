@@ -107,21 +107,22 @@ export const getDefenseStat = (
 		// Status
 		statuses.forEach(status => {
 			switch (status) {
-				case DinozStatusId.WATER_CHARM: {
-					if (elem.name !== DefenseElement.WATER) return;
+				case DinozStatusId.WATER_CHARM:
+					{
+						if (elem.name !== DefenseElement.WATER) return;
 
-					const multiplicator = index < 2 ? 0.5 : index === 2 ? 1 : 1.5;
-					element.bonus += 3 * multiplicator;
+						const multiplicator = index < 2 ? 0.5 : index === 2 ? 1 : 1.5;
+						element.bonus += 3 * multiplicator;
 
-					details.push({
-						type: 'status',
-						name: DinozStatusId.WATER_CHARM.toString(),
-						element: DefenseElement.WATER,
-						elements: [],
-						value: 3,
-						global: true,
-					});
-				}
+						details.push({
+							type: 'status',
+							name: DinozStatusId.WATER_CHARM.toString(),
+							element: DefenseElement.WATER,
+							elements: [],
+							value: 3,
+							global: true
+						});
+					}
 					break;
 				default:
 					break;

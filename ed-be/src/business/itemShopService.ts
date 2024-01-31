@@ -250,7 +250,8 @@ function checkDinozPlace(
 		// For cursed shops, the player needs a non frozen, non sacrificed dinoz with the curse status at the location of the shop
 		if (theShop.type == ShopType.CURSED) {
 			const hasCursedDinozAtShop = player.dinoz.some(
-				dinoz => dinoz.status.some(status => status.statusId === DinozStatusId.CURSED) && dinoz.placeId === theShop.placeId
+				dinoz =>
+					dinoz.status.some(status => status.statusId === DinozStatusId.CURSED) && dinoz.placeId === theShop.placeId
 			);
 			if (!hasCursedDinozAtShop) {
 				throw new ErrorFormator(500, `You need a cursed dinoz at the location of the shop to access it`);
