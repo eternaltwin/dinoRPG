@@ -3,7 +3,7 @@
 		<div v-if="enabled" class="modal-background">
 			<div class="modal-box">
 				<button class="modal-close" @click="$emit('close')">X</button>
-				<p>{{ $t(`missions.description.${missionName}`) }}</p>
+				<p v-html="formatContent($t(`missions.description.${missionName}`))" />
 				<div class="option">
 					<a v-if="mission?.status === 'ongoing'" class="button" @click="updateMission('stop')">
 						{{ $t('missions.giveUp') }}

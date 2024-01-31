@@ -42,6 +42,7 @@ export function formatText(text: string): string {
 	let formattedText = text;
 	formattedText = formattedText.replace(/\*\*(.[^*]*)\*\*/g, '<strong>$1</strong>');
 	formattedText = formattedText.replace(/\/\/(.[^*]*)\/\//g, '<em>$1</em>');
+	formattedText = formattedText.replace(/_(.*)_/g, '<i>$1</i>');
 	formattedText = formattedText.replace(/&&/g, '<br>');
 	formattedText = formattedText.replace(/:feu:/g, helpers.computeImageHtml('feu'));
 	formattedText = formattedText.replace(/:fire:/g, helpers.computeImageHtml('fire'));
@@ -60,5 +61,6 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(/:chrono:/g, helpers.computeImageHtml('chrono'));
 	formattedText = formattedText.replace(/:attack:/g, helpers.computeImageHtml('attack'));
 	formattedText = formattedText.replace(/:defense:/g, helpers.computeImageHtml('defense'));
+	console.log(formattedText);
 	return formattedText;
 }
