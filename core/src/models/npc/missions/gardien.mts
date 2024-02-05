@@ -134,8 +134,8 @@ export const M_GARDIEN: Mission[] = [
 					actionType: ConditionEnum.TALKTO,
 					target: 'talkingorchide'
 				},
-				displayedAction: 'orchid',
-				displayedText: 'orchid'
+				displayedAction: 'talkingorchide',
+				displayedText: 'talkingorchide'
 			},
 			{
 				stepId: 3,
@@ -456,7 +456,7 @@ export const M_GARDIEN: Mission[] = [
 	},
 	{
 		missionId: MissionID.GARDIEN_GSHOP,
-		missionName: 'shop',
+		missionName: 'gshop',
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.GARDIEN_UNMUTE },
