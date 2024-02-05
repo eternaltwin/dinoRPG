@@ -323,10 +323,6 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		throw new ErrorFormator(500, `This dinoz don't have this item equiped`);
 	}
 
-	if (!item) {
-		throw new ErrorFormator(500, `You never had this item`);
-	}
-
 	if (equip) {
 		await decreaseItemQuantity(dinoz.player.id, item.itemId, 1);
 		dinoz.items.push(await addItemToDinoz(dinoz.id, item.itemId));
