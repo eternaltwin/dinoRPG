@@ -37,6 +37,7 @@ import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import { createLog } from '../dao/logDao.js';
 import { updateDinozCount } from '../dao/rankingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
+import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -114,21 +115,36 @@ export async function useItem(req: Request) {
 		throw new ErrorFormator(400, `notEnoughItem`);
 	}
 
+	let feedback: ItemFeedBack;
 	switch (item.effect?.category) {
 		case ItemEffect.ACTION:
 			await updateDinoz(dinoz.id, {
 				fight: true,
 				gather: true
 			});
+			feedback = {
+				category: ItemEffect.ACTION
+			};
 			break;
 		case ItemEffect.HEAL:
 			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value));
+			feedback = {
+				category: ItemEffect.HEAL,
+				value: dinoz.maxLife - dinoz.life > item.effect.value ? item.effect.value : dinoz.maxLife - dinoz.life
+			};
 			break;
 		case ItemEffect.RESURRECT:
 			await updateDinoz(dinoz.id, resurrect(dinoz));
+			feedback = {
+				category: ItemEffect.RESURRECT
+			};
 			break;
 		case ItemEffect.EGG:
 			await hatchEgg(item.effect.race, item.effect.rare, req.auth.playerId);
+			feedback = {
+				category: ItemEffect.EGG,
+				value: item.effect.race.name
+			};
 			break;
 		case ItemEffect.SPHERE:
 			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value);
@@ -140,12 +156,26 @@ export async function useItem(req: Request) {
 
 			await applySkillEffect(dinoz, skill);
 			await addSkillToDinoz(dinozId, skillToLearn);
+			feedback = {
+				category: ItemEffect.SPHERE,
+				value: skill.name
+			};
 			break;
 		case ItemEffect.GOLD:
 			await addMoney(dinoz.player.id, item.effect.value);
+			feedback = {
+				category: ItemEffect.GOLD,
+				value: item.effect.value
+			};
 			break;
 		case ItemEffect.SPECIAL:
-			await useSpecialItem(dinoz, item);
+			const itemWon = await useSpecialItem(dinoz, item);
+			const itemName = Object.entries(itemList).find(itema => itema[1].itemId === item.itemId);
+			feedback = {
+				category: ItemEffect.SPECIAL,
+				value: itemName ? itemName[0].toLowerCase() : '',
+				effect: itemWon ?? ''
+			};
 			break;
 		default:
 			throw new ErrorFormator(500, 'WTF');
@@ -154,6 +184,7 @@ export async function useItem(req: Request) {
 	await decreaseItemQuantity(dinoz.player.id, itemData.itemId, 1);
 
 	await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
+	return feedback;
 }
 
 async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
@@ -226,16 +257,16 @@ async function useSpecialItem(
 				throw new ErrorFormator(400, `NotCursed`);
 			}
 			await removeStatusFromDinoz(dinoz.id, DinozStatusId.CURSED);
-			break;
+			return 'ointment';
 		case 'rice':
 			await updateDinoz(dinoz.id, useRice(dinoz));
-			break;
+			return 'rice';
 		case 'pampleboum':
 			await updateDinoz(dinoz.id, heal(dinoz, 15));
 			const pamp = dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId);
 			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList.PAMPLEBOUM_PIT.itemId, quantity: 1 });
 			else await increaseItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM_PIT.itemId, 1);
-			break;
+			return 'pampleboum';
 		case 'box':
 			if (!item.name) {
 				throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);
@@ -244,11 +275,11 @@ async function useSpecialItem(
 			const newItem = dinoz.player.items.find(item => item.itemId === boxOpened.itemId);
 			if (!newItem) await insertItem(dinoz.player.id, { itemId: boxOpened.itemId, quantity: 1 });
 			else await increaseItemQuantity(dinoz.player.id, boxOpened.itemId, 1);
-			break;
+			const wonItem = Object.entries(itemList).find(item => item[1].itemId === boxOpened.itemId);
+			return wonItem ? wonItem[0].toLowerCase() : '';
 		default:
 			throw new ErrorFormator(500, `Special item with ${item.effect.value} value is not implemented`);
 	}
-	return;
 }
 
 export async function equipItem(req: Request): Promise<DinozItems[]> {

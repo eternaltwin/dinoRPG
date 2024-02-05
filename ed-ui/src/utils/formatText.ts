@@ -32,6 +32,10 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('specialStats', 'counter')}" alt="attack">`;
 			case 'defense':
 				return `<img src="${mixin.methods.getImgURL('specialStats', 'armor')}" alt="defense">`;
+			case 'hp':
+				return `<img src="${mixin.methods.getImgURL('specialStats', 'hpRegen')}" alt="hp">`;
+			case 'xp':
+				return `<img src="${mixin.methods.getImgURL('icons', 'small_xp')}" alt="xp">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}
@@ -61,6 +65,7 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(/:chrono:/g, helpers.computeImageHtml('chrono'));
 	formattedText = formattedText.replace(/:attack:/g, helpers.computeImageHtml('attack'));
 	formattedText = formattedText.replace(/:defense:/g, helpers.computeImageHtml('defense'));
-	console.log(formattedText);
+	formattedText = formattedText.replace(/:hp:/g, helpers.computeImageHtml('hp'));
+	formattedText = formattedText.replace(/:xp:/g, helpers.computeImageHtml('xp'));
 	return formattedText;
 }
