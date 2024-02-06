@@ -7,6 +7,7 @@ import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOw
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
+import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {
@@ -135,7 +136,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	useIrma(dinozId: number): Promise<void> {
+	useIrma(dinozId: number): Promise<ItemFeedBack> {
 		return http()
 			.post(`/dinoz/${dinozId}/irma`)
 			.then(res => Promise.resolve(res.data))

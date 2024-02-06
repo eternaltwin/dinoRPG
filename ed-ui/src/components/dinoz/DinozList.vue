@@ -15,36 +15,48 @@
 					<span class="tinyBar">
 						<span :style="getLifeBarWidth(dinoz.life, dinoz.maxLife)"></span>
 					</span>
+					<div class="icons">
+						<template v-for="i in dinoz.remainingActions" :key="i">
+							<img
+								:src="getImgURL('icons', `small_hourglass`)"
+								v-tippy="{
+									content: formatContent($t('remaingActions')),
+									theme: 'small'
+								}"
+								alt="actions"
+							/>
+						</template>
+						<img
+							v-if="dinoz.experience >= dinoz.maxExperience && dinoz.maxExperience !== 0"
+							:src="getImgURL('icons', 'small_lup')"
+							v-tippy="{
+								content: formatContent($t('levelup.small')),
+								theme: 'small'
+							}"
+							alt="lvlup"
+						/>
+						<img
+							v-if="dinoz.leaderId"
+							:src="getImgURL('icons', 'small_follow')"
+							v-tippy="{
+								content: formatContent($t('following')),
+								theme: 'small'
+							}"
+							alt="lvlup"
+						/>
+						<img
+							v-if="dinoz.followers.length > 0"
+							:src="getImgURL('icons', 'crown', true)"
+							v-tippy="{
+								content: formatContent($t('followed')),
+								theme: 'small'
+							}"
+							alt="lvlup"
+						/>
+					</div>
 				</span>
 				<span class="name">
 					<span>{{ dinoz.name }}</span>
-					<img
-						v-if="dinoz.experience >= dinoz.maxExperience && dinoz.maxExperience !== 0"
-						:src="getImgURL('icons', 'small_lup')"
-						v-tippy="{
-							content: formatContent($t('levelup.small')),
-							theme: 'small'
-						}"
-						alt="lvlup"
-					/>
-					<img
-						v-if="dinoz.leaderId"
-						:src="getImgURL('icons', 'small_follow')"
-						v-tippy="{
-							content: formatContent($t('following')),
-							theme: 'small'
-						}"
-						alt="lvlup"
-					/>
-					<img
-						v-if="dinoz.followers.length > 0"
-						:src="getImgURL('icons', 'crown', true)"
-						v-tippy="{
-							content: formatContent($t('followed')),
-							theme: 'small'
-						}"
-						alt="lvlup"
-					/>
 				</span>
 				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
 			</a>
@@ -178,6 +190,14 @@ ul {
 				height: 10px;
 				font-size: 0pt;
 				line-height: 0pt;
+				.icons {
+					height: 20px;
+					overflow: hidden;
+					img {
+						margin-right: 2px;
+						margin-top: 4px;
+					}
+				}
 			}
 		}
 
@@ -189,7 +209,7 @@ ul {
 					float: right;
 
 					.tinyBar {
-						margin-top: 6px;
+						margin-top: 4px;
 					}
 				}
 			}
@@ -221,7 +241,7 @@ ul {
 			}
 
 			em {
-				width: 150px;
+				width: 90px;
 				font-size: 7.5pt;
 			}
 		}

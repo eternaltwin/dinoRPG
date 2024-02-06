@@ -2,11 +2,8 @@ import { ItemEffect } from '../enums/ItemEffect.mjs';
 
 export type ItemFeedBack =
 	| {
-			category: ItemEffect.HEAL | ItemEffect.GOLD;
+			category: ItemEffect.HEAL | ItemEffect.GOLD | ItemEffect.ACTION;
 			value: number;
-	  }
-	| {
-			category: ItemEffect.ACTION;
 	  }
 	| {
 			category: ItemEffect.RESURRECT;

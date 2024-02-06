@@ -138,6 +138,7 @@ export const toDinozFiche = (
 		| 'nbrUpLightning'
 		| 'nbrUpAir'
 		| 'order'
+		| 'remaining'
 	> & {
 		missions: DinozMission[];
 		items: Pick<DinozItem, 'itemId'>[];
@@ -189,7 +190,8 @@ export const toDinozFiche = (
 		missionHUD: getHUDObjective(dinoz),
 		actions: [],
 		skills: dinoz.skills.map(skill => skill.skillId),
-		order: dinoz.order
+		order: dinoz.order,
+		remainingActions: dinoz.remaining
 	};
 };
 

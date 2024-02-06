@@ -123,7 +123,8 @@ export async function useItem(req: Request) {
 				gather: true
 			});
 			feedback = {
-				category: ItemEffect.ACTION
+				category: ItemEffect.ACTION,
+				value: 1
 			};
 			break;
 		case ItemEffect.HEAL:

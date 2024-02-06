@@ -77,13 +77,14 @@ import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { calculatePlayerPower, selectBox } from '../utils/boxesLogic.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
 /**
  * @summary Get available action from dinoz
  */
 export async function getAvailableActions(
 	dinoz: DinozForConditionCheck &
-		Pick<Dinoz, 'id' | 'experience' | 'isSelling' | 'leaderId' | 'fight' | 'gather'> & {
+		Pick<Dinoz, 'id' | 'experience' | 'isSelling' | 'leaderId' | 'fight' | 'gather' | 'remaining'> & {
 			missions: DinozMission[];
 			concentration: Concentration | null;
 			player: (DinozForConditionCheck['player'] & Pick<Player, 'id'>) | null;
@@ -136,11 +137,19 @@ export async function getAvailableActions(
 	}
 
 	if (!dinoz.leaderId && (!dinoz.fight || !dinoz.gather)) {
-		availableActions.push(actionList[Action.IRMA]);
+		if (dinoz.remaining > 0) {
+			availableActions.push(actionList[Action.ACTION]);
+		} else {
+			availableActions.push(actionList[Action.IRMA]);
+		}
 	}
 
 	if (dinoz.followers.length > 0 && (!dinoz.fight || !dinoz.gather)) {
-		const index = availableActions.indexOf(actionList[Action.IRMA]);
+		let index = availableActions.indexOf(actionList[Action.IRMA]);
+		if (index >= 0) {
+			availableActions.splice(index, 1);
+		}
+		index = availableActions.indexOf(actionList[Action.ACTION]);
 		if (index >= 0) {
 			availableActions.splice(index, 1);
 		}
@@ -1081,4 +1090,8 @@ export async function useIrma(req: Request) {
 	}
 
 	await decreaseItemQuantity(dinoz.player.id, itemList.POTION_IRMA.itemId, neededIrma);
+	return {
+		category: ItemEffect.ACTION,
+		value: neededIrma
+	};
 }

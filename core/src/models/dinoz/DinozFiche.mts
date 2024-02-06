@@ -32,4 +32,5 @@ export interface DinozFiche {
 	nbrUpLightning: number;
 	nbrUpAir: number;
 	order: number | null;
+	remainingActions: number;
 }

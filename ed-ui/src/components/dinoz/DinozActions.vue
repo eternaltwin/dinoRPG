@@ -155,9 +155,15 @@ export default defineComponent({
 			switch (action.name) {
 				case Action.IRMA:
 				case Action.IRMAS:
+				case Action.ACTION:
 					EventBus.emit('isLoading', true);
 					try {
-						await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
+						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
+						EventBus.emit('toast', {
+							type: 'notification',
+							message: toast.category,
+							value: toast.value
+						});
 					} catch (e) {
 						errorHandler.handle(e);
 					}

@@ -51,7 +51,7 @@
 		"heal": "Votre dinoz s'est soigné de {value} :hp:",
 		"gold": "Vous avez obtenu {value} :gold:",
 		"sphere": "Votre dinoz a appris la compétence {value}.",
-		"action": "Votre dinoz peut faire une nouvelle action immédiatement.",
+		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
 		"resurrect": "Votre dinoz est ressucité.",
 		"egg": "Vous avez ouvert un oeuf de {value}.",
 		"special": {
@@ -140,7 +140,8 @@
 			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz.",
 			"daily": "Vous pouvez utilisez ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !",
 			"irma": "Votre Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma* pour faire une action supplémentaire immédiatement.",
-			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement."
+			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement.&&Si des actions gratuites sont disponibles pour un des dinoz, elles seront consommées en priorités.",
+			"action": "Votre dinoz a encore des actions gratuites à effectuer."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -164,7 +165,8 @@
 			"disband": "Dissoudre le groupe",
 			"daily": "Ticket quotidien",
 			"irma": "Potion d'Irma",
-			"irmas": "Potions d'Irma : Groupe"
+			"irmas": "Potions d'Irma : Groupe",
+			"action": "Nouvelle action"
 		}
 	},
 	"button": {
@@ -3724,6 +3726,7 @@
 		}
 	},
 	"following": "Ce Dinoz suit son chef de groupe.",
+	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
 	"follow": "Le chef de groupe est {leader}.",
 	"followed": "Ce Dinoz est chef de groupe.",
 	"logs": {

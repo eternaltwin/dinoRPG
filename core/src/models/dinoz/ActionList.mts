@@ -21,7 +21,8 @@ export enum Action {
 	DAILY = 'daily',
 	DISBAND = 'disband',
 	IRMA = 'irma',
-	IRMAS = 'irmas'
+	IRMAS = 'irmas',
+	ACTION = 'action'
 }
 
 export interface ActionFiche {
@@ -116,5 +117,9 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.IRMAS]: {
 		name: Action.IRMAS,
 		imgName: 'act_irma'
+	},
+	[Action.ACTION]: {
+		name: Action.ACTION,
+		imgName: 'act_default'
 	}
 };
