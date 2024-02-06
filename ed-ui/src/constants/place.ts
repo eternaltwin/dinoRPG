@@ -225,7 +225,7 @@ export const placeList: Array<PlaceDisplayed> = [
 		map: MapZone.JUNGLE,
 		hidden: true,
 		xFactor: 2,
-		yFactor: 10
+		yFactor: 14
 	},
 	{
 		placeId: 20,
