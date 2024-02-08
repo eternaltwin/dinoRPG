@@ -81,7 +81,7 @@ export async function createOffer(req: Request) {
 			const ingredientData = ingredientList[ingredient.name.toLocaleUpperCase()];
 
 			if (!ingredientData) {
-				throw new Error('Ingredient not found');
+				throw new ErrorFormator(500, 'Ingredient not found');
 			}
 
 			return {
@@ -94,7 +94,7 @@ export async function createOffer(req: Request) {
 			const itemData = Object.entries(itemList).find(i => i[0] === item.name.toLocaleUpperCase());
 
 			if (!itemData) {
-				throw new Error('Ingredient not found');
+				throw new ErrorFormator(500, 'Ingredient not found');
 			}
 
 			return {
@@ -132,7 +132,7 @@ export async function createOffer(req: Request) {
 			const itemId = Object.entries(itemNameList).find(([, value]) => value === item.name)?.[0];
 
 			if (!itemId) {
-				throw new Error('Item not found');
+				throw new ErrorFormator(500, 'Item not found');
 			}
 
 			return {
@@ -311,7 +311,7 @@ export const expireOffer = async (offerId: number) => {
 	const offer = await getOffer(offerId);
 
 	if (!offer) {
-		throw new Error('Offer not found');
+		throw new ErrorFormator(500, 'Offer not found');
 	}
 
 	// Separate items and ingredients

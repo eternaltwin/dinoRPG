@@ -1,4 +1,5 @@
 import { prisma } from '../prisma.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 export async function addPlayerInRanking(playerId: number) {
 	return prisma.ranking.create({
@@ -66,7 +67,7 @@ export async function updatePoints(playerId: number, points: number) {
 	});
 
 	if (!ranking) {
-		throw new Error('Player ranking not found');
+		throw new ErrorFormator(500, 'Player ranking not found');
 	}
 
 	const newPoints = ranking.points + points;
@@ -94,7 +95,7 @@ export async function updateDinozCount(playerId: number, dinozCount: number) {
 	});
 
 	if (!ranking) {
-		throw new Error('Player ranking not found');
+		throw new ErrorFormator(500, 'Player ranking not found');
 	}
 
 	await prisma.ranking.update({
@@ -124,7 +125,7 @@ export async function getPlayerPositionDAO(playerId: number) {
 	});
 
 	if (playerRanking === null) {
-		throw new Error('Player ranking not found');
+		throw new ErrorFormator(500, 'Player ranking not found');
 	}
 
 	const above = await prisma.ranking.count({

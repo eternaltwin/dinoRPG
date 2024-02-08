@@ -2,6 +2,7 @@ import { EmbedBuilder, WebhookClient } from 'discord.js';
 import { Response } from 'express';
 import { getAllSecretsRequest } from '../dao/secretDao.js';
 import { ErrorFormator } from './errorFormator.js';
+import fs from 'fs';
 
 export async function postError(e: ErrorFormator, res: Response) {
 	const secrets = await getAllSecretsRequest();
@@ -98,7 +99,7 @@ export async function sendDiscord(props: string) {
 	}
 }
 
-export async function sendJSONToDiscord(functionName: string, description: string, json: object, json2?: object) {
+export async function sendJSONToDiscord(description: string, json: object) {
 	const secrets = await getAllSecretsRequest();
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');
@@ -109,36 +110,10 @@ export async function sendJSONToDiscord(functionName: string, description: strin
 			token: discordToken.value
 		});
 
-		const embed = new EmbedBuilder()
-			.setColor(0xff0000)
-			.setTitle(functionName)
-			.setAuthor({
-				name: 'Mandragore'
-			})
-			.setDescription(
-				`\`\`\`
-${description}
-\`\`\``
-			)
-			.setTimestamp();
-
-		embed.addFields({
-			name: 'JSON',
-			value: `\`\`\`json
-  ${JSON.stringify(json)}
-  \`\`\``
-		});
-
-		if (json2) {
-			embed.addFields({
-				name: 'JSON',
-				value: `\`\`\`json
-  ${JSON.stringify(json2)}
-  \`\`\``
-			});
-		}
-
-		await webhookClient.send({ embeds: [embed] });
+		const _msgs = JSON.stringify(json, null, 2);
+		fs.writeFileSync('./error.json', _msgs);
+		await webhookClient.send({ content: description, files: ['./error.json'] });
+		fs.unlinkSync('./error.json');
 	} catch (error) {
 		console.error('Error trying to send a message: ', error);
 	}

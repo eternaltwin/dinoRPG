@@ -28,6 +28,7 @@ import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { FightStats } from '@drpg/core/models/fight/FightResult';
+import { sendJSONToDiscord } from '../discord.js';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -95,6 +96,10 @@ const chooseRandomOpponent = (fighter: DetailedFighter, opponents: DetailedFight
 		});
 
 		if (!opponentWithWorstDefense) {
+			sendJSONToDiscord('Error `No best defense opponent found` in `chooseRandomOpponent`.', {
+				fighter: fighter,
+				opponents: opponents
+			});
 			throw new Error('No best defense opponent found');
 		}
 
@@ -114,6 +119,10 @@ const chooseRandomOpponent = (fighter: DetailedFighter, opponents: DetailedFight
 		});
 
 		if (!lowestHpOpponent) {
+			sendJSONToDiscord('Error `No lowest HP opponent found` in `chooseRandomOpponent`.', {
+				fighter: fighter,
+				opponents: opponents
+			});
 			throw new Error('No lowest HP opponent found');
 		}
 
@@ -150,15 +159,26 @@ export const getLimitedRandomOpponent = (
 
 export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const opponents = getOpponents(fightData, fighter);
-
+	sendJSONToDiscord('Error `No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
+		fightData: fightData,
+		fighter: fighter
+	});
 	if (!opponents.length) {
+		sendJSONToDiscord('Error `No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
+			fightData: fightData,
+			fighter: fighter
+		});
 		throw new Error('No opponent found');
 	}
 
 	const randomOpponent = chooseRandomOpponent(fighter, opponents);
 
 	if (!randomOpponent) {
-		throw new Error('No opponent found');
+		sendJSONToDiscord(
+			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.',
+			{ fightData: fightData, fighter: fighter }
+		);
+		throw new Error('No random opponent found');
 	}
 
 	return randomOpponent;
@@ -175,6 +195,13 @@ export const updateStat = (
 
 	if (stat === 'el.damage') {
 		if (!element) {
+			sendJSONToDiscord('Error `Element is required for damage stat` in `updateStat`.', {
+				fightData: fightData,
+				fighter: fighter,
+				stat: stat,
+				value: value,
+				element: value
+			});
 			throw new Error('Element is required for damage stat');
 		}
 
@@ -184,6 +211,13 @@ export const updateStat = (
 
 	if (stat === 'el.attacks') {
 		if (!element) {
+			sendJSONToDiscord('Error `Element is required for attacks stat` in `updateStat`.', {
+				fightData: fightData,
+				fighter: fighter,
+				stat: stat,
+				value: value,
+				element: value
+			});
 			throw new Error('Element is required for attacks stat');
 		}
 
@@ -968,6 +1002,11 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			break;
 		}
 		default: {
+			sendJSONToDiscord('Error `Environment ${environment} not implemented` in `activateEnvironment`.', {
+				fightData: fightData,
+				caster: caster,
+				environment: environment
+			});
 			throw new Error(`Environment ${environment} not implemented`);
 		}
 	}
@@ -1047,6 +1086,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
 
 				if (!initialDinoz) {
+					sendJSONToDiscord('Error `No initial dinoz found` in `activateEvent`.', {
+						fightData: fightData,
+						event: event
+					});
 					throw new Error('No initial dinoz found');
 				}
 
@@ -1210,6 +1253,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				);
 
 				if (!lowestHpAlly) {
+					sendJSONToDiscord('Error `No lowest HP ally found` in `activateEvent`.', {
+						fightData: fightData,
+						event: event
+					});
 					throw new Error('No lowest HP ally found');
 				}
 
@@ -3013,6 +3060,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				Object.values(bossList).find(boss => boss.name === fighter.name);
 
 			if (!monsterDetails) {
+				sendJSONToDiscord('Error `Monster not found` in `activateSkill`.', { fightData: fightData, skill: skill });
 				throw new Error(`Monster ${fighter.name} not found`);
 			}
 
@@ -3843,6 +3891,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				const monsterDetails = Object.values(monsterList).find(monster => monster.name === fighter.name);
 
 				if (!monsterDetails) {
+					sendJSONToDiscord('Error `Monster not found` in `checkDeath`.', { fightData: fightData });
 					throw new Error(`Monster ${fighter.name} not found`);
 				}
 
@@ -4138,6 +4187,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								const poisonedBy = fighter.poisonedBy;
 
 								if (!poisonedBy) {
+									sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
 									throw new Error('Missing poison data');
 								}
 
@@ -4157,6 +4207,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 									const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
 
 									if (!poisoner) {
+										sendJSONToDiscord('Error `Poisoner not found` in `playFighterTurn`.', { fightData: fightData });
 										throw new Error('Poisoner not found');
 									}
 
@@ -4170,6 +4221,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								const burnedBy = fighter.burnedBy;
 
 								if (!burnedBy) {
+									sendJSONToDiscord('Error `Missing burn data` in `playFighterTurn`.', { fightData: fightData });
 									throw new Error('Missing burn data');
 								}
 
@@ -4177,6 +4229,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								const burner = fightData.fighters.find(f => f.id === burnedBy.id);
 
 								if (!burner) {
+									sendJSONToDiscord('Error `Burner not found` in `playFighterTurn`.', { fightData: fightData });
 									throw new Error('Burner not found');
 								}
 

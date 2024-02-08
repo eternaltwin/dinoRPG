@@ -1,5 +1,6 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
 
 export const createNews = async (allText: Prisma.NewsCreateInput) => {
 	await prisma.news.create({
@@ -45,7 +46,7 @@ export const getNewsIllus = async (id: number) => {
 		select: { image: true }
 	});
 
-	if (!news) throw new Error('News not found');
+	if (!news) throw new ErrorFormator(500, 'News not found');
 
 	return news;
 };
