@@ -225,7 +225,7 @@ export default defineComponent({
 		waitForImageToLoad(): void {
 			setTimeout(() => {
 				const mapImage: DOMRect = (this.$refs.carte as Element).getBoundingClientRect();
-				if (mapImage.width === 0) {
+				if (mapImage.width < 300) {
 					this.waitForImageToLoad();
 				} else {
 					this.centerPos(mapImage);
