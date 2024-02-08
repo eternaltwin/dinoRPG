@@ -93,25 +93,6 @@ export enum Monster {
 }
 
 export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
-	// This monster is here to always have an enemy to fight
-	[Monster.JOKERPIGNON]: {
-		id: Monster.JOKERPIGNON,
-		name: 'goupignon',
-		hp: 10,
-		elements: {
-			fire: 0,
-			wood: 0,
-			water: 0,
-			lightning: 0,
-			air: 0
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		odds: 1,
-		level: 1,
-		zones: [MapZone.ALL],
-		canBeCaptured: true
-	},
 	[Monster.GOUPIGNON]: {
 		id: Monster.GOUPIGNON,
 		name: 'goupignon',
