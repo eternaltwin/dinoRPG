@@ -17,7 +17,8 @@ export const apiRoutes = {
 	rankingRoutes: '/api/v1/ranking',
 	shopRoutes: '/api/v1/shop',
 	offerRoutes: '/api/v1/offer',
-	webSocketRoute: '/api/v1/websockets'
+	webSocketRoute: '/api/v1/websockets',
+	testingRoute: '/api/v1/testing'
 };
 
 export const regex = {

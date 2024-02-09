@@ -5,7 +5,6 @@ import { GameEvent } from '../event/Events.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
 
 export enum Monster {
-	JOKERPIGNON = 'JOKERPIGNON',
 	GOUPIGNON = 'GOUPIGNON',
 	WOLF = 'WOLF',
 	GLUON = 'GLUON',

@@ -23,6 +23,7 @@ import { currentEvents } from '@drpg/core/models/event/Events';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import randomBetween from '../utils/fight/randomBetween.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 
 /**
  * @summary Process a fight
@@ -74,7 +75,7 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(400, 'dead');
 	}
 
-	const monster = generateMonster(team); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
+	const monster = generateMonster(team, dinozData.placeId); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
 
 	const fightResult = calculateFight(team, monster, dinozData.placeId);
 
@@ -101,7 +102,7 @@ export async function moveFight(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum
 ) {
-	const monsters = generateMonster(team); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
+	const monsters = generateMonster(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
 	const fightResult = calculateFight(team, monsters, placeId);
 	const result = await rewardFight(team, monsters, fightResult);
 
@@ -355,6 +356,117 @@ export async function rewardFight(
 	};
 }
 
+export async function rewardFightCalculate(
+	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
+		player: Pick<Player, 'id' | 'teacher'> | null;
+		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[];
+	})[],
+	monsters: MonsterFiche[],
+	fightResult: FightProcessResult
+) {
+	if (!team.length || !team[0].player) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	const XP_NEWB_BONUS = [15, 10, 6.6, 4.3, 2.5];
+
+	// let teamLevel = 0;
+	// teamLevel += dinozData.level;
+
+	const goldFactor = 1.0;
+	const xpFactor = 1.0;
+	let totalWinXP = 0;
+
+	//TODO use Array<MonsterFiche> input rather than MonsterFiche
+
+	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
+
+	let fgold = 0;
+
+	for (const d of team) {
+		//TODO escape
+		/*//if escaped, no XP !
+		if( Lambda.has( escaped, r.f) )
+			continue;*/
+
+		let xp = 0;
+		const cur = d.level / teamLevel;
+
+		/** HACK to restrict the use of low level dinoz in order to make easy money **/
+		let gfact = 1.0;
+		if (d.experience >= getMaxXp(d) && d.level <= 5) gfact = 0.1;
+		/** HACK to make dinoz with malediction not generating gold **/
+		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
+			gfact = 0.0;
+		}
+
+		for (const f of monsters) {
+			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
+			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
+			xp += Math.round(f.xp ?? 10 * factor * cur);
+			// newbie bonus
+			if (d.level <= 5) xp += XP_NEWB_BONUS[d.level - 1] * cur;
+			// bonus for fighters of same level of the monster
+			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) xp += f.xpBonus;
+		}
+		//TODO ??
+		/*if( !disableTrophies && d.life <= 0 ) {
+			if( d.owner != null )
+				d.owner.incrVar(Data.USERVARS.list.deaths, 1);
+			continue;
+		}*/
+
+		//previous xp coef computation
+		const lvlDiff = gameConfig.dinoz.maxLevel - d.level;
+		let xpf = 1.2 + 0.8 * (lvlDiff / gameConfig.dinoz.maxLevel);
+		if (xpf < 1.0) xpf = 1.0;
+
+		//new one, applied if better
+		if (gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel > xpf)
+			xpf = gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel;
+
+		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf));
+		const max = getMaxXp(d);
+		if (d.experience + xp > max) {
+			xp = max - d.experience;
+			if (xp < 0) xp = 0;
+		}
+		totalWinXP += xp;
+	}
+
+	const fprob = getRandomNumber(0, 100);
+	let goldMultiplier = 1;
+	if (fprob < 1) goldMultiplier = 10;
+	else if (fprob < 11) goldMultiplier = 3;
+
+	let gold = (getRandomNumber(0, 10) + 20) * 10;
+
+	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
+
+	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
+	gold -= goldLost;
+
+	return {
+		opponent: monsters.map(m => {
+			return m.name;
+		}),
+		goldEarned: fightResult.winner ? gold : -goldLost,
+		xpEarned: fightResult.winner ? totalWinXP : 0,
+		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
+		result: fightResult.winner,
+		history: fightResult.steps,
+		hpLost: fightResult.attackers.map(a => ({
+			id: a.dinozId,
+			hpLost: a.hpLost
+		})),
+		itemsUsed: fightResult.attackers.map(a => ({
+			id: a.dinozId,
+			itemsUsed: a.itemsUsed
+		}))
+	};
+}
+
 /*export function getFightResult(dinozData: Dinoz, monster: MonsterFiche, fightResult: FightProcessResult): FightResult {
   //TODO use Array<MonsterFiche> input rather than MonsterFiche
 	const maxExp = levelList.find(level => level.id === dinozData.level)!.experience;
@@ -380,7 +492,7 @@ function monsterLevelProba(level: number, p: number, monsterLvl: number) {
 	return Math.round((p * 1000) / (3 + delta));
 }
 
-function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[]) {
+export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], placeOfFight: PlaceEnum) {
 	const pow = 1;
 	let teamLevel = 0;
 	let maxLevel = 0;
@@ -398,7 +510,10 @@ function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[]) {
 	if (mdelta < 2) mdelta = 2;
 
 	const specialProb = getRandomNumber(0, 100);
-	const place = actualPlace(fighters[0]);
+	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);
+	if (!place) {
+		throw new ErrorFormator(500, `This place doesn't exist.`);
+	}
 	const events = currentEvents();
 	const monsters = Object.values(monsterList)
 		.filter(m => {
@@ -411,7 +526,7 @@ function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[]) {
 				if (!m.events.some(event => events.includes(event))) return false;
 			}
 
-			return m.zones.includes(place.map) || m.zones.includes(MapZone.ALL);
+			return m.zones.includes(place.map);
 		})
 		.map(m => {
 			if (m.special) {

@@ -21,7 +21,7 @@ import playerRoutes from './routes/player.routes.js';
 import rankingRoutes from './routes/ranking.routes.js';
 import shopRoutes from './routes/shop.routes.js';
 import webSocketRoutes from './routes/websockets.routes.js';
-import { loadConfigFile } from './utils/context.js';
+import { getEnvironnement, loadConfigFile } from './utils/context.js';
 import { swaggerOptions } from './utils/index.js';
 import { jwtConfig } from './utils/jwt.js';
 import { scheduleOffersExpiration } from './business/offerService.js';
@@ -36,6 +36,7 @@ import {
 import { RawData, WebSocketServer } from 'ws';
 import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
+import testingRoutes from './routes/testing.routes.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -84,6 +85,9 @@ app.use(rankingRoutes);
 app.use(offerRoutes);
 app.use(logRoutes);
 app.use(webSocketRoutes);
+if (getEnvironnement() === 'development') {
+	app.use(testingRoutes);
+}
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOptions)));
 

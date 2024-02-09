@@ -159,10 +159,6 @@ export const getLimitedRandomOpponent = (
 
 export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const opponents = getOpponents(fightData, fighter);
-	sendJSONToDiscord('Error `No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
-		fightData: fightData,
-		fighter: fighter
-	});
 	if (!opponents.length) {
 		sendJSONToDiscord('Error `No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
 			fightData: fightData,
