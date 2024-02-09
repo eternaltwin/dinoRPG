@@ -10,7 +10,8 @@
 		"account": "Mein Konto",
 		"forum": "Forum",
 		"api": "API",
-		"logout": "Log out"
+		"logout": "Log out",
+		"guide": "Guide du Jeu"
 	},
 	"toast": {
 		"DinozIsDead": "Dein Dinoz ist tot und kann nicht geheilt werden.",
@@ -34,6 +35,10 @@
 		"invalidOffer": "Offre invalide",
 		"missingData": "Données manquantes",
 		"bidIsLower": "Votre enchère est inférieure à la précédente.",
+		"missingStatus": "L'un de vos dinoz ne remplis pas les conditions pour faire cette action",
+		"notEnoughIrma": "Vous n'avez pas assez de potion d'irma",
+		"missingIrma": "Vous avez besoin de potion d'irma pour faire cette action",
+		"shovelMine": "Vous n'allez quand même creuser à côté du mineur !?!",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
@@ -42,7 +47,22 @@
 			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
 			"notEnoughTickets": "Vous n'avez pas assez de bons."
 		},
-		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Eleveurs."
+		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Eleveurs.",
+		"heal": "Votre dinoz s'est soigné de {value} :hp:",
+		"gold": "Vous avez obtenu {value} :gold:",
+		"sphere": "Votre dinoz a appris la compétence {value}.",
+		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
+		"resurrect": "Votre dinoz est ressucité.",
+		"egg": "Vous avez ouvert un oeuf de {value}.",
+		"special": {
+			"box_common": "La boîte commune contenait un {value} !",
+			"box_rare": "La boîte commune contenait un {value} !",
+			"box_epic": "La boîte commune contenait un {value} !",
+			"box_legendary": "La boîte commune contenait un {value} !",
+			"devil_ointment": "Vous avez retiré le statut maudit de votre dinoz.",
+			"amnesic_rice": "Votre dinoz ne sait plus comment il se prénomme, il a également perdu tout son :xp: !",
+			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
+		}
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -117,7 +137,11 @@
 			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !",
 			"concentrate": "Dein Dinoz hat sein volles Potenzial entfaltet.",
 			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
-			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz."
+			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz.",
+			"daily": "Vous pouvez utilisez ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !",
+			"irma": "Votre Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma* pour faire une action supplémentaire immédiatement.",
+			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement.&&Si des actions gratuites sont disponibles pour un des dinoz, elles seront consommées en priorités.",
+			"action": "Votre dinoz a encore des actions gratuites à effectuer."
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -138,7 +162,11 @@
 			"party": "Event",
 			"concentrate": "Arrêter de se concentrer",
 			"market": "Marché aux éleveurs",
-			"disband": "Dissoudre le groupe"
+			"disband": "Dissoudre le groupe",
+			"daily": "Ticket quotidien",
+			"irma": "Potion d'Irma",
+			"irmas": "Potions d'Irma : Groupe",
+			"action": "Nouvelle action"
 		}
 	},
 	"button": {
@@ -296,6 +324,7 @@
 			"water_sphere": "Wasserkugel",
 			"lightning_sphere": "Blitzkugel",
 			"air_sphere": "Luftkugel",
+			"void_sphere": "Sphère de Vide",
 			"demon_ticket": "Dämonenticket",
 			"treasure_coupon": "Schatzbrief",
 			"moueffe_egg": "Moueffe-Ei",
@@ -358,6 +387,10 @@
 			"special_potion_irma": "Potion d'Irma Spéciale",
 			"daily_ticket": "Ticket Quotidien",
 			"empty": "Vide",
+			"box_common": "Boîte commune",
+			"box_rare": "Boîte rare",
+			"box_epic": "Boîte épique",
+			"box_legendary": "Boîte légendaire",
 			"undefined": "Unbekannt"
 		},
 		"description": {
@@ -422,6 +455,7 @@
 			"water_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
 			"lightning_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
 			"air_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
+			"void_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
 			"demon_ticket": "Les Tickets Démons sont obtenus en sacrifiant des Dinoz à la Boutique Démoniaque. Vous pouvez les échanger contre des Dinoz-Démons une fois que vous en aurez suffisamment.",
 			"treasure_coupon": "Un Bon du Trésor vaut 1.000 Pièces d'Or plus les taxes et permet d'enchérir sur des Offres de la Place du Marché. Il suffit de l'utiliser pour le convertir en pièces.",
 			"moueffe_egg": "Cet oeuf étrange semble tout près de se transformer en un joli Dinoz.",
@@ -482,7 +516,11 @@
 			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
 			"fire_cracker": "TODO",
 			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
-			"daily_ticket": "Ce ticket vous permet de débloquer une case quotidienne.",
+			"daily_ticket": "Ce ticket vous permet d'ouvrir une case quotidienne à l'université.",
+			"box_common": "Cette boîte semble contenir des objets assez communs.",
+			"box_rare": "Cette boîte brillante semble contenir des objets rares.",
+			"box_epic": "Cette magnifique boîte semble contenir quelque chose d'extraordinaire.",
+			"box_legendary": "Cette boîte légendaire contiendrait-elle une légende ?",
 			"empty": "Il n'y a aucun objet dans cette case",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
@@ -1414,7 +1452,7 @@
 		"energy": {
 			"0": "**Energieverbrauch:** keine.",
 			"10": "**Energieverbrauch:** gering.",
-			"25": "**Energieverbrauch:** normal.",
+			"20": "**Consommation d'énergie :** normale.",
 			"50": "**Energieverbrauch:** hoch.",
 			"75": "**Energieverbrauch:** sehr hoch."
 		},
@@ -1712,7 +1750,17 @@
 			"Invocateur": "Beschwörer",
 			"Envol": "Flug",
 			"PoingDeBraise": "Glühende Faust",
-			"Leader": "Anführer"
+			"Leader": "Anführer",
+			"GrosDormeur": "Gros Dormeur",
+			"Veilleuse": "Veilleuse",
+			"Matelasseur": "Matelasseur",
+			"Absorption": "Absorption",
+			"Bite": "Morsure",
+			"Regeneration": "Régénération",
+			"Electrocution": "Electrocution",
+			"Immaterial": "Immateriel",
+			"Flight": "Envol",
+			"Capture": "Capture"
 		},
 		"description": {
 			"GriffesEnflammees": "Erhöht die Stärke aller Feuerangriffe um 7.",
@@ -2008,7 +2056,10 @@
 			"Invocateur": "Ermöglicht dem Dinoz, die Beschwörungsfertigkeiten zu erlernen.",
 			"Envol": "Der Dinoz führt einen Angriff aus und fliegt dann weg. Nur für fliegende Dinozs.",
 			"PoingDeBraise": "Erhöht die Stärke von Feuerangriffen um 20.",
-			"Leader": "Erhöht die maximale Anzahl von Dinoz um 3."
+			"Leader": "Erhöht die maximale Anzahl von Dinoz um 3.",
+			"GrosDormeur": "Permet à votre dinoz de récupérer une action supplémentaire chaque jours.",
+			"Veilleuse": "Permet au dinoz suivant votre dinoz de récupérer également une action supplémentaire chaque jours.",
+			"Matelasseur": "Tout vos dinoz récupère une action supplémentaire chaque jours."
 		}
 	},
 	"status": {
@@ -2193,7 +2244,8 @@
 			"xmas": "Chasse-Neige",
 			"tictac": "Schatzbrief",
 			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feuerzeug"
+			"party": "Feuerzeug",
+			"daily": "Grille Quotidienne"
 		},
 		"type": {
 			"cueille": "plantes",
@@ -2205,9 +2257,10 @@
 			"xmas": "Giftstich",
 			"tictac": "Bei Papy Joe",
 			"labo": "ressources dans le laboratoire de l'Archidorogon",
-			"party": "trésors fabuleux"
+			"party": "trésors fabuleux",
+			"daily": "récompenses quotidiennes"
 		},
-		"disclaimer": "Cliquez sur {number} cases de la grille pour trouver des {search}"
+		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}"
 	},
 	"missions": {
 		"header": "Liste des Missions",
@@ -2323,13 +2376,13 @@
 			"ritual": "La congrégation shamanique au sein de laquelle j'ai fait mes études me réclame chaque année un rituel en gage de cette formation. Evidemment, j'ai autre chose à faire que m'occuper de ces âneries ! Pourrais-tu t'en charger à ma place ? Les instructions sont arrivées dans ma boîte aux lettres, fais comme chez toi.",
 			"hiero": "J'ai entendu dire qu'il y avait dans les cavernes à l'ouest, celles qui mènent dans la Jungle de Grumhel, des hiéroglyphes de la plus haute importance pour mes recherches mystiques ! Vas-y et recopie-les pour moi. Attention, pour pénétrer dans ces cavernes, il te faudra un moyen de retrouver ton chemin dans l'obscurité !",
 			"pigeon": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !",
-			"unmute": "Le parchemin qui vous est tombé dessus comporte ce message : |« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. » |A peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
-			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : |« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle ».| Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
-			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : |« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
-			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : |« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
-			"wishes": "Vous pouvez lire, gravé sur une branche : |« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »| Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
-			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: |« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »| Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
-			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :|« Déposez de l'or dans le seau pour votre ration quotidienne. »",
+			"unmute": "Le parchemin qui vous est tombé dessus comporte ce message : _« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. » _A peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
+			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : _« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle »._ Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
+			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : _« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
+			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : _« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
+			"wishes": "Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: _« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »_ Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
+			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :_« Déposez de l'or dans le seau pour votre ration quotidienne. »_",
 			"seqact": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
 			"toxic": "Je suis victime d'allergies à certaines plantes de la Jungle... Mais j'ignore pour le moment lesquelles ! Pourriez-vous me trouver quelques plantes à l'air suspect, afin que je fasse quelques tests ?",
 			"map": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
@@ -2956,6 +3009,7 @@
 		"inscription": "Inscrit le",
 		"clan": "Clan",
 		"dojo": "Dojo",
+		"completion": "Complétion",
 		"rewards": "Récompenses Epiques",
 		"level": "Niveau",
 		"edit": "Modifier",
@@ -3016,7 +3070,7 @@
 		"unlock2": " compétences supplémentaires",
 		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
 		"small": "Ce dinoz a gagné un niveau !",
-		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre possibilité de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
+		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
 		"helperUnlock": {
 			"title": "Débloquer",
 			"description": "Vous pouvez choisir entre apprendre une nouvelle compétence à votre Dinoz ou en débloquer plusieurs nouvelles que votre Dinoz **pourra apprendre dès son prochain gain de niveau**."
@@ -3473,7 +3527,64 @@
 		"lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
 		"continue": "Continuer",
 		"display": "Afficher le combat",
-		"resume": "Vous avez combattu un {enemy}"
+		"resume": "Vous avez combattu un {enemy}",
+		"clone": "Clone",
+		"monster": {
+			"goupignon": "Goupignon",
+			"wolf": "Loup",
+			"gluon": "Gluon",
+			"greeng": "Géant Vert",
+			"coq": "Coqdur",
+			"piglou": "Piglounou",
+			"piglo2": "Pigloubi",
+			"piglo3": "Piglouglou",
+			"piglo4": "Super Piglou",
+			"piglo5": "Ultra Piglou",
+			"febrez": "Febrez",
+			"pteroz": "Pteroz",
+			"hippo": "Hippoclamp",
+			"rocky": "Rocky"
+		},
+		"status": {
+			"asleep": "endormi",
+			"slowed": "ralenti",
+			"petrified": "pétrifié",
+			"poisoned": "empoisonné",
+			"burned": "brulé",
+			"locked": "Locked",
+			"dazzled": "éblouis",
+			"stunned": "étourndis",
+			"torched": "torche",
+			"intangible": "intangible",
+			"flying": "vol",
+			"quickened": "rapidité",
+			"shielded": "bouclier",
+			"blessed": "bénis",
+			"healing": "soigné"
+		},
+		"step": {
+			"arrive": "**{name}** est arrivé !",
+			"resist": "**{dinoz}** a résisté et réduis les dégats.",
+			"hit": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}**.",
+			"hit-skill": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}** avec **{skill}**.",
+			"poison": "**{dinoz}** a infligé **{damage} poison** dégats à **{target}**.",
+			"moveTo": "**{fighter}** déplacé à **{target}**.",
+			"moveBack": "**{fighter}** est retourné à sa position.",
+			"attemptHit": "**{fighter}** a essayé d'attaquer **{target}**.",
+			"evade": "**{fighter}** a esquivé le coup.",
+			"death": "**{fighter}** a succombé à ses blessures!",
+			"counter": "**{fighter}** a contré **{opponent}**.",
+			"survive": "**{dinoz}** a survécu à l'attaque.",
+			"skillActivate": "**{dinoz}** a utilisé **{skill}** (-{energy} energy).",
+			"skillActivate-targets": "**{dinoz}** a utlisé **{skill}** sur **{targets}** (-{energy} energy).",
+			"skillExpire": "**{dinoz}**'s **{skill}** a expiré.",
+			"looseHp": "**{fighter}** a perdu **{hp} HP**.",
+			"heal": "**{fighter}** s'est soigné de **{hp} HP**.",
+			"addStatus": "**{fighter}** est devenu **{status}**.",
+			"removeStatus": "**{fighter}** n'est plus **{status}**.",
+			"itemUse": "**{fighter}** a utilisé **{item}**.",
+			"hypnotize": "**{fighter}** a changé de camp."
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
@@ -3615,6 +3726,7 @@
 		}
 	},
 	"following": "Ce Dinoz suit son chef de groupe.",
+	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
 	"follow": "Le chef de groupe est {leader}.",
 	"followed": "Ce Dinoz est chef de groupe.",
 	"logs": {
@@ -3633,5 +3745,10 @@
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+	},
+	"selectDinoz": {
+		"selectChampions": "Choisis tes champions",
+		"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
+		"disclaimer": "Tu peux sélectionner jusqu'à **10** dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain."
 	}
 }
