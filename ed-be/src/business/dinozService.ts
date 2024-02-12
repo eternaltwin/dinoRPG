@@ -201,7 +201,7 @@ export async function getAvailableActions(
 	}
 
 	// Shop action: check if a shop is available where the dinoz is
-	const shopAvailable = Object.values(shopList).find(shop => shop.placeId == dinoz.placeId);
+	const shopAvailable = Object.values(shopList).find(shop => shop.placeId == dinoz.placeId && checkCondition(shop.condition, [dinoz]));
 	if (shopAvailable) {
 		if (shopAvailable.type == ShopType.CURSED) {
 			const dinozIsCursed = dinoz.status.some(status => status.statusId === DinozStatusId.CURSED);

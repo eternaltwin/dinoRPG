@@ -2,6 +2,8 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 
 // Prices are as they were before the abandon of Twinoid (they were lowered to half the price after the game became free)
 // listItemSold is filled with a copy of each item from itemList with the price changed.
@@ -175,7 +177,10 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				itemId: itemList.PIRHANOZ_IN_BAG.itemId,
 				price: 1200
 			}
-		]
+		],
+		condition: {
+			[ConditionEnum.STATUS]: DinozStatusId.CURSED
+		}
 	},
 	// Fruity Shop
 	FRUITY_SHOP: {
@@ -187,7 +192,10 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				itemId: itemList.PAMPLEBOUM.itemId,
 				price: 1800
 			}
-		]
+		],
+		condition: {
+			[ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH
+		}
 	},
 	// Razad's Shop
 	RAZADS_SHOP: {
