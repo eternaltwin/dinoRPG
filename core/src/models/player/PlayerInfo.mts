@@ -1,4 +1,4 @@
-import { DinozFiche } from '../dinoz/DinozFiche.mjs';
+import { DinozPublicFiche } from '../dinoz/DinozFiche.mjs';
 
 export interface PlayerInfo {
 	dinozCount: number;
@@ -6,7 +6,7 @@ export interface PlayerInfo {
 	subscribeAt: string;
 	clan?: string;
 	playerName: string;
-	dinoz: DinozFiche[];
+	dinoz: DinozPublicFiche[];
 	epicRewards: number[];
 	customText: string | null;
 	completion: number;

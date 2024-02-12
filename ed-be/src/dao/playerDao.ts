@@ -225,11 +225,7 @@ export async function getPlayerDataRequest(playerId: number) {
 					nbrUpAir: true,
 					order: true,
 					remaining: true,
-					status: { select: { statusId: true } },
-					missions: true,
-					items: { select: { itemId: true } },
-					skills: { select: { skillId: true } },
-					followers: { select: { id: true } }
+					status: { select: { statusId: true } }
 				}
 			},
 			ranking: {

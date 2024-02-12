@@ -9,7 +9,7 @@ import {
 	type Dinoz,
 	Prisma
 } from '@drpg/prisma';
-import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
+import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
 import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
@@ -225,6 +225,22 @@ export const toDinozFicheLite = (
 		placeId: dinoz.placeId,
 		order: dinoz.order,
 		isFrozen: dinoz.isFrozen
+	};
+};
+
+export const toDinozPublicFiche = (
+	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' | 'isFrozen' | 'level' | 'raceId'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	}
+): DinozPublicFiche => {
+	return {
+		id: dinoz.id,
+		name: dinoz.name,
+		display: dinoz.display,
+		isFrozen: dinoz.isFrozen,
+		level: dinoz.level,
+		race: getRace(dinoz),
+		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b)
 	};
 };
 

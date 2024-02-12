@@ -34,3 +34,13 @@ export interface DinozFiche {
 	order: number | null;
 	remainingActions: number;
 }
+
+export interface DinozPublicFiche {
+	id: number;
+	name: string;
+	display: string;
+	isFrozen: boolean;
+	level: number;
+	race: DinozRace;
+	status: number[];
+}

@@ -2,7 +2,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
-import { orderDinozList, toDinozFiche, toDinozFicheLite } from '@drpg/core/utils/DinozUtils';
+import { orderDinozList, toDinozFiche, toDinozFicheLite, toDinozPublicFiche } from '@drpg/core/utils/DinozUtils';
 import dayjs from 'dayjs';
 import { Request } from 'express';
 import { getAllDinozFicheLite, getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
@@ -118,13 +118,8 @@ export async function getAccountData(req: Request) {
 		playerName: playerInfo.name,
 		epicRewards: playerInfo.rewards.map(reward => reward.rewardId).sort((a, b) => a - b),
 		dinoz: playerInfo.dinoz.map(dinoz => {
-			return toDinozFiche({
-				...dinoz,
-				player: {
-					engineer: playerInfo.engineer,
-					rewards: playerInfo.rewards,
-					items: playerInfo.items
-				}
+			return toDinozPublicFiche({
+				...dinoz
 			});
 		}),
 		customText: playerInfo.customText,
