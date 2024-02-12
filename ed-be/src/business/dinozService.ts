@@ -1070,7 +1070,7 @@ export async function useIrma(req: Request) {
 
 	const neededIrma = team.filter(d => d.remaining === 0).length;
 
-	if (!irmaQuantity || (irmaQuantity && irmaQuantity.quantity < neededIrma)) {
+	if ((!irmaQuantity || (irmaQuantity && irmaQuantity.quantity < neededIrma)) && neededIrma > 0) {
 		throw new ErrorFormator(400, 'notEnoughIrma');
 	}
 
