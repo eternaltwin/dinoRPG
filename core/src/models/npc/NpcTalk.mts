@@ -1,4 +1,5 @@
 import { ServiceEnum } from '../enums/ServiceEnum.mjs';
+import { FightResult } from '../fight/FightResult.mjs';
 
 export interface NpcTalk {
 	name: string;
@@ -6,4 +7,5 @@ export interface NpcTalk {
 	playerChoice: string[]; //Correspond au <a id="speech"> du code MT
 	flashvars?: string;
 	service?: ServiceEnum[];
+	fight?: FightResult;
 }

@@ -1,6 +1,6 @@
 import { Rewarder } from '../reward/Rewarder.mjs';
 import { Condition } from './NpcConditions.mjs';
-import { NpcAction } from './NpcAction.mjs';
+import { MonsterFiche } from '../fight/MonsterFiche.mjs';
 
 export interface NpcData {
 	stepName: string; //Correspond au <phase id="speech"> du code MT
@@ -8,7 +8,7 @@ export interface NpcData {
 	nextStep: string[]; //Correspond au <a id="speech"> du code MT
 	initialStep?: boolean;
 	condition?: Condition;
-	action?: NpcAction;
+	fight?: MonsterFiche[];
 	reward?: Rewarder[];
 	target?: string;
 }

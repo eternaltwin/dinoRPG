@@ -54,7 +54,7 @@ import { localStore, playerStore, dinozStore, sessionStore } from '../store/inde
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import FightAnimation from '../components/fight/FightAnimation.vue';
 import translateFightStep from '../utils/translateFightStep.js';
 
@@ -73,12 +73,25 @@ export default defineComponent({
 			dinozId: undefined as number | undefined,
 			lang: localStore().getLanguage ?? 'fr',
 			fightText: undefined as string | undefined,
-			fightHistory: undefined as string | undefined
+			fightHistory: undefined as string | undefined,
+			npcSpeech: undefined as string | undefined,
+			npcName: undefined as string | undefined
 		};
+	},
+	props: {
+		display: { type: Object as PropType<FightResult>, required: false }
 	},
 	methods: {
 		returnToDinoz() {
-			this.$router.go(-1);
+			if (this.npcSpeech && this.fight.result) {
+				this.$router.push({
+					name: 'NPC',
+					params: { id: this.$route.params.dinozId.toString(), npc: this.npcName }
+				});
+			} else {
+				this.dinozStore.setNpc(undefined, undefined);
+				this.$router.push({ name: 'DinozPage', params: { id: this.$route.params.dinozId } });
+			}
 		},
 		async processFight() {
 			EventBus.emit('isLoading', true);
@@ -111,6 +124,8 @@ export default defineComponent({
 		this.dinozId = parseInt(this.$router.currentRoute.value.query.dinozId as string);
 		if (this.sessionStore.getFightResult) {
 			this.fight = this.sessionStore.getFightResult;
+			this.npcSpeech = this.dinozStore.getNpcSpeech;
+			this.npcName = this.dinozStore.getNpcName;
 			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
 		}
 		EventBus.emit('isLoading', false);

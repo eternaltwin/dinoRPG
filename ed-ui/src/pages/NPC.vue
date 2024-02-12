@@ -35,7 +35,7 @@ import { DinozService, NPCService, PlayerService } from '../services/index.js';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { NavigationFailure } from 'vue-router';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
-import { dinozStore } from '../store/index.js';
+import { dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 
@@ -47,7 +47,8 @@ export default defineComponent({
 			dinozId: undefined as number | undefined,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
-			dinozStore: dinozStore()
+			dinozStore: dinozStore(),
+			sessionStore: sessionStore()
 		};
 	},
 	components: {
@@ -67,16 +68,51 @@ export default defineComponent({
 			}
 			EventBus.emit('isLoading', false);
 			if (this.npcSpeech.service) {
+				const dinozId = +this.$route.params.id;
+				EventBus.emit('isLoading', true);
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
 						case ServiceEnum.CONCENTRATION:
 							await DinozService.concentration(this.dinozId!);
+							EventBus.emit('isLoading', false);
 							break;
 						case ServiceEnum.DINOZ:
 							this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
+							EventBus.emit('isLoading', false);
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
 							this.dinozStore.setDinozList(await PlayerService.getDinozList());
+							EventBus.emit('isLoading', false);
+							break;
+						case ServiceEnum.FIGHT:
+							try {
+								this.sessionStore.setFightResult(this.npcSpeech.fight);
+								this.dinozStore.setNpc(this.npcSpeech.speech, this.npcSpeech.name);
+								const dinozList = this.dinozStore.getDinozList;
+
+								if (!dinozList) {
+									EventBus.emit('toast', { type: 'error', message: 'missingData' });
+									EventBus.emit('isLoading', false);
+									return;
+								}
+
+								this.dinozStore.setDinozList(
+									dinozList.map(dinoz => {
+										if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
+											// Update dinoz HP
+											dinoz.life -= this.npcSpeech.fight!.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+										}
+										return dinoz;
+									})
+								);
+
+								this.$router.push({
+									name: 'Fight',
+									params: { dinozId: this.$route.params.id.toString() }
+								});
+							} catch (e) {
+								errorHandler.handle(e);
+							}
 							break;
 						default:
 							break;
@@ -95,10 +131,16 @@ export default defineComponent({
 		// // const ruffle = new URL(`/public/ruffle/ruffle.js`, import.meta.url) as string;
 		// externalScript.setAttribute('src', '/public/ruffle/ruffle.js');
 		// document.head.appendChild(externalScript);
+		let step = this.dinozStore.getNpcSpeech;
+		if (!step) {
+			step = 'begin';
+		} else {
+			this.dinozStore.setNpc(undefined, undefined);
+		}
 		try {
 			this.npcName = this.$route.params.npc as string;
 			this.dinozId = parseInt(this.$route.params.id as string);
-			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, 'begin');
+			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
 			this.loaded = true;
 			EventBus.emit('isLoading', false);
 		} catch (err) {

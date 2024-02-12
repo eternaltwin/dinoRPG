@@ -28,11 +28,8 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 	},
 	attack: {
 		stepName: 'attack',
-		nextStep: [],
-		action: {
-			enemies: [bossList.RASCAPHANDRE],
-			actionType: TriggerEnum.FIGHT
-		},
+		nextStep: ['attack_win'],
+		fight: [bossList.RASCAPHANDRE],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -44,6 +41,10 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 				reverse: true
 			}
 		]
+	},
+	attack_win: {
+		stepName: 'attack_win',
+		nextStep: []
 	},
 	stop: {
 		stepName: 'stop',

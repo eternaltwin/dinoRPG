@@ -27,11 +27,8 @@ export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 	},
 	show: {
 		stepName: 'show',
-		nextStep: [],
-		action: {
-			enemies: [bossList.ELEMENTAIRE_TERRE],
-			actionType: TriggerEnum.FIGHT
-		},
+		nextStep: ['show_win'],
+		fight: [bossList.ELEMENTAIRE_TERRE],
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.BASALT_SHARD },
@@ -60,6 +57,10 @@ export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 				value: DinozStatusId.ZORS_GLOVE
 			}
 		]
+	},
+	show_win: {
+		stepName: 'show_win',
+		nextStep: []
 	},
 	stop: {
 		stepName: 'stop',

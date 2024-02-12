@@ -43,17 +43,18 @@ export const FOU: Readonly<Record<string, NpcData>> = {
 	},
 	fight: {
 		stepName: 'fight',
-		nextStep: [],
-		action: {
-			enemies: [monsterList.KORGON],
-			actionType: TriggerEnum.FIGHT
-		},
+		nextStep: ['fight_win'],
+		fight: [monsterList.KORGON],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.LANTERN
 			}
 		]
+	},
+	fight_win: {
+		stepName: 'fight_win',
+		nextStep: []
 	},
 	stop: {
 		stepName: 'stop',

@@ -2,6 +2,7 @@ import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 
 export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -89,29 +90,31 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	water_fight: {
 		stepName: 'water_fight',
-		nextStep: [],
-		action: {
-			actionType: TriggerEnum.FIGHT,
-			enemies: [bossList.ELEMENTAIRE_EAU]
-		},
+		nextStep: ['water_win'],
+		fight: [bossList.ELEMENTAIRE_EAU],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.BUOY
+			},
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.FIGHT]
 			}
 		]
 	},
 	fire_fight: {
 		stepName: 'fire_fight',
-		nextStep: [],
-		action: {
-			actionType: TriggerEnum.FIGHT,
-			enemies: [bossList.ELEMENTAIRE_FEU]
-		},
+		nextStep: ['fire_win'],
+		fight: [bossList.ELEMENTAIRE_FEU],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.CLIMBING_GEAR
+			},
+			{
+				rewardType: RewardEnum.REDIRECT,
+				service: [ServiceEnum.FIGHT]
 			}
 		]
 	},
@@ -173,6 +176,14 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	noquestion: {
 		stepName: 'noquestion',
+		nextStep: []
+	},
+	fire_win: {
+		stepName: 'fire_win',
+		nextStep: []
+	},
+	water_win: {
+		stepName: 'water_win',
 		nextStep: []
 	},
 	stop: {

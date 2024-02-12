@@ -7,5 +7,5 @@ export interface ShopFiche {
 	placeId: number;
 	type: ShopType;
 	listItemsSold: Partial<ItemFiche>[];
-	condition?: Condition
+	condition?: Condition;
 }

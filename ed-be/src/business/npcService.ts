@@ -1,16 +1,18 @@
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Request } from 'express';
-import { getDinozNPCRequest } from '../dao/dinozDao.js';
+import { getDinozFightDataRequest, getDinozNPCRequest, updateDinoz } from '../dao/dinozDao.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { getAllInformationFromPlayer } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
-import { triggerAction } from '../utils/triggerAction.js';
+import { calculateFight, rewardFight } from './fightService.js';
+import { isAlive } from '@drpg/core/utils/DinozUtils';
+import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
@@ -119,36 +121,55 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			nextStepWanted = nonNullNextStepWantedData.stepName;
 		}
 
-		let action: boolean | undefined;
-		if (nextStepWantedData?.action !== undefined) {
-			action = await triggerAction(nextStepWantedData.action, dinoz);
+		// Action
+		if (nextStepWantedData && nextStepWantedData.fight) {
+			const dinozData = await getDinozFightDataRequest(dinozId);
+			if (!dinozData) {
+				throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+			}
+			let followers = dinozData.followers.map(follower => ({
+				...follower,
+				player: dinozData.player
+			}));
+			const deadFollowers = followers.filter(d => d.life <= 0);
+
+			if (deadFollowers.length > 0) {
+				for (const d of deadFollowers) {
+					await updateDinoz(d.id, { leader: { disconnect: true } });
+				}
+				followers = followers.filter(d => d.life > 0);
+			}
+
+			const team = [dinozData, ...followers];
+			if (!isAlive(dinozData)) {
+				throw new ErrorFormator(400, 'dead');
+			}
+			const fightResult = calculateFight(team, nextStepWantedData.fight, dinoz.placeId);
+
+			const result = await rewardFight(team, nextStepWantedData.fight, fightResult);
+			// Reward statement
+			if (result.result) {
+				await updateDinozStep(dinozId, pnj.id, nextStepWanted);
+				if (nextStepWantedData.reward !== undefined) {
+					await rewarder(nextStepWantedData.reward, [dinoz]);
+				}
+			}
+			return {
+				name: npcName,
+				speech: nextStepWantedData.nextStep[0],
+				playerChoice: [],
+				service: [ServiceEnum.FIGHT],
+				fight: result
+			};
 		}
 
 		if (!nextStepWantedData) {
 			throw new ErrorFormator(500, `The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
 		}
 
-		if (action === false) {
-			return {
-				name: npcName,
-				speech: nextStepWantedData.stepName,
-				playerChoice: [],
-				service: [ServiceEnum.DINOZ]
-			};
-		}
-
-		if ((action && nextStepWantedData.reward) || nextStepWantedData.reward !== undefined) {
-			if (nextStepWantedData.reward.find(r => r.rewardType === RewardEnum.REDIRECT)) {
-				const dataReturn = nextStepWantedData.reward.find(r => r.rewardType === RewardEnum.REDIRECT);
-				if (dataReturn?.rewardType === RewardEnum.REDIRECT) {
-					return {
-						name: npcName,
-						speech: nextStepWantedData.stepName,
-						playerChoice: [],
-						service: dataReturn.service
-					};
-				}
-			}
+		// Reward statement
+		if (nextStepWantedData.reward !== undefined) {
+			checkRedirect(nextStepWantedData.reward, npcName, nextStepWantedData.stepName);
 			await rewarder(nextStepWantedData.reward, [dinoz]);
 
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
@@ -182,4 +203,19 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		playerChoice: playerChoices,
 		flashvars: pnj.flashvars
 	};
+}
+
+function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {
+	// Send redirection request if there is one as a rewards
+	if (reward.find(r => r.rewardType === RewardEnum.REDIRECT)) {
+		const dataReturn = reward.find(r => r.rewardType === RewardEnum.REDIRECT);
+		if (dataReturn?.rewardType === RewardEnum.REDIRECT) {
+			return {
+				name: npcName,
+				speech: stepName,
+				playerChoice: [],
+				service: dataReturn.service
+			};
+		}
+	}
 }
