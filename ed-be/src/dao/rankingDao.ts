@@ -36,6 +36,25 @@ export async function getPlayersAverageRanking(page: number) {
 	});
 }
 
+export async function getPlayersCompletionRanking(page: number) {
+	return prisma.ranking.findMany({
+		select: {
+			points: true,
+			completion: true,
+			dinozCount: true,
+			player: {
+				select: {
+					id: true,
+					name: true
+				}
+			}
+		},
+		orderBy: [{ completion: 'desc' }, { player: { name: 'asc' } }],
+		take: 20,
+		skip: (page - 1) * 20
+	});
+}
+
 export async function getPlayersSumRanking(page: number) {
 	return prisma.ranking.findMany({
 		select: {

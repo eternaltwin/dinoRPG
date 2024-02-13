@@ -2174,7 +2174,8 @@
 		"details": "Détails",
 		"players": "Joueurs",
 		"average": "Moyenne",
-		"clans": "Clans"
+		"clans": "Clans",
+		"completion": "Completion"
 	},
 	"layout": {
 		"fx": "Statuts",
@@ -3513,7 +3514,8 @@
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
-			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur."
+			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
+			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu."
 		},
 		"page": {
 			"previous": "Page précedente",

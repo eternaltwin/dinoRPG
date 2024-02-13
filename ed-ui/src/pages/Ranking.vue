@@ -15,6 +15,9 @@
 			<a href="#" @click="setTab(2)">{{ $t('tabs.average') }}</a>
 		</li>
 		<li :class="tabSelected === 3 ? 'active' : ''">
+			<a href="#" @click="setTab(3)">{{ $t('tabs.completion') }}</a>
+		</li>
+		<li :class="tabSelected === 4 ? 'active' : ''">
 			<a href="#" @click="setTab(3)">{{ $t('tabs.clans') }}</a>
 		</li>
 	</ul>
@@ -24,18 +27,24 @@
 	<div class="disclaimer" v-if="tabSelected === 2">
 		{{ $t('ranking.disclaimer.average') }}
 	</div>
+	<div class="disclaimer" v-if="tabSelected === 3">
+		{{ $t('ranking.disclaimer.completion') }}
+	</div>
 	<PlayerRanking sort="classic" v-if="tabSelected === 1" />
 	<PlayerRanking sort="average" v-if="tabSelected === 2" />
+	<CompletionRanking v-if="tabSelected === 3" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import PlayerRanking from '../components/rankings/PlayerRanking.vue';
+import CompletionRanking from '../components/rankings/CompletionRanking.vue';
 
 export default defineComponent({
 	name: 'Ranking',
 	components: {
+		CompletionRanking,
 		TitleHeader,
 		PlayerRanking
 	},

@@ -1,5 +1,10 @@
 import { Request } from 'express';
-import { getPlayerPositionDAO, getPlayersAverageRanking, getPlayersSumRanking } from '../dao/rankingDao.js';
+import {
+	getPlayerPositionDAO,
+	getPlayersAverageRanking,
+	getPlayersCompletionRanking,
+	getPlayersSumRanking
+} from '../dao/rankingDao.js';
 
 /**
  * @summary Get all the players from a specified page to display their ranking
@@ -17,6 +22,9 @@ export async function getRanking(req: Request) {
 			break;
 		case 'average':
 			playersRanking = await getPlayersAverageRanking(page);
+			break;
+		case 'completion':
+			playersRanking = await getPlayersCompletionRanking(page);
 			break;
 		default:
 			playersRanking = await getPlayersSumRanking(page);
