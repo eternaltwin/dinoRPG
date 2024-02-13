@@ -192,6 +192,20 @@ export async function getPlayerMoney(playerId: number) {
 	return player;
 }
 
+export async function getPlayerCompletion(playerId: number) {
+	return await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			ranking: {
+				select: {
+					completion: true
+				}
+			}
+		}
+	})
+}
 export async function getPlayerDataRequest(playerId: number) {
 	const player = await prisma.player.findUnique({
 		where: {
@@ -201,9 +215,7 @@ export async function getPlayerDataRequest(playerId: number) {
 			createdDate: true,
 			name: true,
 			customText: true,
-			engineer: true,
 			rewards: { select: { rewardId: true } },
-			items: { select: { itemId: true, quantity: true } },
 			dinoz: {
 				select: {
 					id: true,
@@ -213,25 +225,14 @@ export async function getPlayerDataRequest(playerId: number) {
 					raceId: true,
 					life: true,
 					isFrozen: true,
-					isSelling: true,
-					leaderId: true,
-					placeId: true,
-					maxLife: true,
-					experience: true,
-					nbrUpFire: true,
-					nbrUpWood: true,
-					nbrUpWater: true,
-					nbrUpLightning: true,
-					nbrUpAir: true,
-					order: true,
-					remaining: true,
 					status: { select: { statusId: true } }
 				}
 			},
 			ranking: {
 				select: {
 					points: true,
-					dinozCount: true
+					dinozCount: true,
+					completion: true
 				}
 			}
 		}

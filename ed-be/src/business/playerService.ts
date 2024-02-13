@@ -16,6 +16,7 @@ import {
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
+import { updateCompletion } from '../dao/rankingDao.js';
 
 /**
  * @summary Get data from player on login
@@ -36,6 +37,10 @@ export async function getCommonData(req: Request) {
 		// Add 1 daily ticket
 		await increaseItemQuantity(req.auth.playerId, Item.DAILY_TICKET, 1);
 
+		// Update completion
+		const completion = await calculatePlayerPower(playerCommonData.id)
+		await updateCompletion(req.auth.playerId, completion)
+
 		// Update last login
 		await setPlayer(req.auth.playerId, { lastLogin: new Date() });
 
@@ -54,6 +59,8 @@ export async function getCommonData(req: Request) {
 		for (const dinoz of playerCommonData.dinoz) {
 			await updateDinoz(dinoz.id, { remaining: 2 });
 		}
+
+
 	}
 
 	const commonData: PlayerCommonData = {
@@ -123,7 +130,7 @@ export async function getAccountData(req: Request) {
 			});
 		}),
 		customText: playerInfo.customText,
-		completion: await calculatePlayerPower(playerId)
+		completion: playerInfo.ranking.completion
 		// twinoid: playerInfo.twinosite.map(i => {return {siteId: i.siteId, points: i.points, npoints: i.npoints}})
 	};
 

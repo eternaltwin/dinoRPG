@@ -34176,6 +34176,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     dinozCount: number | null
+    completion: number | null
     playerId: number | null
   }
 
@@ -34184,6 +34185,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     dinozCount: number | null
+    completion: number | null
     playerId: number | null
   }
 
@@ -34192,6 +34194,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     dinozCount: number | null
+    completion: number | null
     playerId: number | null
   }
 
@@ -34200,6 +34203,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     dinozCount: number | null
+    completion: number | null
     playerId: number | null
   }
 
@@ -34208,6 +34212,7 @@ export namespace Prisma {
     points: number
     average: number
     dinozCount: number
+    completion: number
     playerId: number
     _all: number
   }
@@ -34218,6 +34223,7 @@ export namespace Prisma {
     points?: true
     average?: true
     dinozCount?: true
+    completion?: true
     playerId?: true
   }
 
@@ -34226,6 +34232,7 @@ export namespace Prisma {
     points?: true
     average?: true
     dinozCount?: true
+    completion?: true
     playerId?: true
   }
 
@@ -34234,6 +34241,7 @@ export namespace Prisma {
     points?: true
     average?: true
     dinozCount?: true
+    completion?: true
     playerId?: true
   }
 
@@ -34242,6 +34250,7 @@ export namespace Prisma {
     points?: true
     average?: true
     dinozCount?: true
+    completion?: true
     playerId?: true
   }
 
@@ -34250,6 +34259,7 @@ export namespace Prisma {
     points?: true
     average?: true
     dinozCount?: true
+    completion?: true
     playerId?: true
     _all?: true
   }
@@ -34345,6 +34355,7 @@ export namespace Prisma {
     points: number
     average: number
     dinozCount: number
+    completion: number
     playerId: number | null
     _count: RankingCountAggregateOutputType | null
     _avg: RankingAvgAggregateOutputType | null
@@ -34372,6 +34383,7 @@ export namespace Prisma {
     points?: boolean
     average?: boolean
     dinozCount?: boolean
+    completion?: boolean
     playerId?: boolean
     player?: boolean | Ranking$playerArgs<ExtArgs>
   }, ExtArgs["result"]["ranking"]>
@@ -34381,6 +34393,7 @@ export namespace Prisma {
     points?: boolean
     average?: boolean
     dinozCount?: boolean
+    completion?: boolean
     playerId?: boolean
   }
 
@@ -34399,6 +34412,7 @@ export namespace Prisma {
       points: number
       average: number
       dinozCount: number
+      completion: number
       playerId: number | null
     }, ExtArgs["result"]["ranking"]>
     composites: {}
@@ -34799,6 +34813,7 @@ export namespace Prisma {
     readonly points: FieldRef<"Ranking", 'Int'>
     readonly average: FieldRef<"Ranking", 'Int'>
     readonly dinozCount: FieldRef<"Ranking", 'Int'>
+    readonly completion: FieldRef<"Ranking", 'Int'>
     readonly playerId: FieldRef<"Ranking", 'Int'>
   }
     
@@ -41350,6 +41365,7 @@ export namespace Prisma {
     points: 'points',
     average: 'average',
     dinozCount: 'dinozCount',
+    completion: 'completion',
     playerId: 'playerId'
   };
 
@@ -43522,6 +43538,7 @@ export namespace Prisma {
     points?: IntFilter<"Ranking"> | number
     average?: IntFilter<"Ranking"> | number
     dinozCount?: IntFilter<"Ranking"> | number
+    completion?: IntFilter<"Ranking"> | number
     playerId?: IntNullableFilter<"Ranking"> | number | null
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
   }
@@ -43531,6 +43548,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     dinozCount?: SortOrder
+    completion?: SortOrder
     playerId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
   }
@@ -43544,6 +43562,7 @@ export namespace Prisma {
     points?: IntFilter<"Ranking"> | number
     average?: IntFilter<"Ranking"> | number
     dinozCount?: IntFilter<"Ranking"> | number
+    completion?: IntFilter<"Ranking"> | number
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
   }, "id" | "playerId">
 
@@ -43552,6 +43571,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     dinozCount?: SortOrder
+    completion?: SortOrder
     playerId?: SortOrderInput | SortOrder
     _count?: RankingCountOrderByAggregateInput
     _avg?: RankingAvgOrderByAggregateInput
@@ -43568,6 +43588,7 @@ export namespace Prisma {
     points?: IntWithAggregatesFilter<"Ranking"> | number
     average?: IntWithAggregatesFilter<"Ranking"> | number
     dinozCount?: IntWithAggregatesFilter<"Ranking"> | number
+    completion?: IntWithAggregatesFilter<"Ranking"> | number
     playerId?: IntNullableWithAggregatesFilter<"Ranking"> | number | null
   }
 
@@ -45818,6 +45839,7 @@ export namespace Prisma {
     points?: number
     average?: number
     dinozCount?: number
+    completion?: number
     player?: PlayerCreateNestedOneWithoutRankingInput
   }
 
@@ -45826,6 +45848,7 @@ export namespace Prisma {
     points?: number
     average?: number
     dinozCount?: number
+    completion?: number
     playerId?: number | null
   }
 
@@ -45833,6 +45856,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneWithoutRankingNestedInput
   }
 
@@ -45841,6 +45865,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -45849,6 +45874,7 @@ export namespace Prisma {
     points?: number
     average?: number
     dinozCount?: number
+    completion?: number
     playerId?: number | null
   }
 
@@ -45856,6 +45882,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
   }
 
   export type RankingUncheckedUpdateManyInput = {
@@ -45863,6 +45890,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -47980,6 +48008,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     dinozCount?: SortOrder
+    completion?: SortOrder
     playerId?: SortOrder
   }
 
@@ -47988,6 +48017,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     dinozCount?: SortOrder
+    completion?: SortOrder
     playerId?: SortOrder
   }
 
@@ -47996,6 +48026,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     dinozCount?: SortOrder
+    completion?: SortOrder
     playerId?: SortOrder
   }
 
@@ -48004,6 +48035,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     dinozCount?: SortOrder
+    completion?: SortOrder
     playerId?: SortOrder
   }
 
@@ -48012,6 +48044,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     dinozCount?: SortOrder
+    completion?: SortOrder
     playerId?: SortOrder
   }
 
@@ -55032,6 +55065,7 @@ export namespace Prisma {
     points?: number
     average?: number
     dinozCount?: number
+    completion?: number
   }
 
   export type RankingUncheckedCreateWithoutPlayerInput = {
@@ -55039,6 +55073,7 @@ export namespace Prisma {
     points?: number
     average?: number
     dinozCount?: number
+    completion?: number
   }
 
   export type RankingCreateOrConnectWithoutPlayerInput = {
@@ -55435,6 +55470,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
   }
 
   export type RankingUncheckedUpdateWithoutPlayerInput = {
@@ -55442,6 +55478,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     dinozCount?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
   }
 
   export type OfferUpsertWithWhereUniqueWithoutSellerInput = {

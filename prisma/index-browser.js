@@ -385,6 +385,7 @@ exports.Prisma.RankingScalarFieldEnum = {
   points: 'points',
   average: 'average',
   dinozCount: 'dinozCount',
+  completion: 'completion',
   playerId: 'playerId'
 };
 

@@ -40,6 +40,7 @@ export interface DinozPublicFiche {
 	name: string;
 	display: string;
 	isFrozen: boolean;
+	life: number;
 	level: number;
 	race: DinozRace;
 	status: number[];

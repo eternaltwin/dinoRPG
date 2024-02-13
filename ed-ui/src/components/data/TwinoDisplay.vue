@@ -87,10 +87,10 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		const playerId = this.$route.params.id as string;
-		this.site = await PlayerService.getTwinoGeneralStat(parseInt(playerId));
-		this.site.sort((a, b) => b.npoints - a.npoints);
-		this.site = this.site.filter(site => site.siteId !== 10);
+		// const playerId = this.$route.params.id as string;
+		// this.site = await PlayerService.getTwinoGeneralStat(parseInt(playerId));
+		// this.site.sort((a, b) => b.npoints - a.npoints);
+		// this.site = this.site.filter(site => site.siteId !== 10);
 	}
 });
 </script>

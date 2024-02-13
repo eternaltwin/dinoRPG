@@ -61,7 +61,7 @@ import {
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import { addMoney, ownsDinoz, removeMoney } from '../dao/playerDao.js';
+import { addMoney, getPlayerCompletion, ownsDinoz, removeMoney } from '../dao/playerDao.js';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGatherDao.js';
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
@@ -75,7 +75,7 @@ import { getMissionAction } from './missionsService.js';
 import { mouvementListener } from './specialService.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
-import { calculatePlayerPower, selectBox } from '../utils/boxesLogic.js';
+import { selectBox } from '../utils/boxesLogic.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
@@ -828,8 +828,11 @@ export async function gatherWithDinoz(req: Request) {
 	for (const [index, i] of returnGrid.rewards.item.entries()) {
 		const itemToReward = dinozData.player.items.find(items => items.itemId === i.itemId);
 		if (i.itemId === itemList.BOX_HANDLER.itemId) {
-			const completion = await calculatePlayerPower(dinozData.player.id);
-			const box = selectBox(completion);
+			const completion = await getPlayerCompletion(dinozData.player.id);
+			if (!completion?.ranking?.completion) {
+				throw new ErrorFormator(500, `Failed to find completion.`)
+			}
+			const box = selectBox(completion.ranking.completion);
 			const boxToReward = dinozData.player.items.find(items => items.itemId === box.itemId);
 			if (boxToReward) {
 				await increaseItemQuantity(dinozData.player.id, boxToReward.itemId, 1);

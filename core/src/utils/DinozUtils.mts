@@ -229,7 +229,7 @@ export const toDinozFicheLite = (
 };
 
 export const toDinozPublicFiche = (
-	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' | 'isFrozen' | 'level' | 'raceId'> & {
+	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' | 'isFrozen' | 'level' | 'raceId' | 'life'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	}
 ): DinozPublicFiche => {
@@ -239,6 +239,7 @@ export const toDinozPublicFiche = (
 		display: dinoz.display,
 		isFrozen: dinoz.isFrozen,
 		level: dinoz.level,
+		life: dinoz.life,
 		race: getRace(dinoz),
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b)
 	};
