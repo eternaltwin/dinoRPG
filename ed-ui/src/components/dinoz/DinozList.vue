@@ -203,7 +203,7 @@ ul {
 
 		&.light {
 			a {
-				height: 25px;
+				height: 35px;
 
 				.icon {
 					float: right;
