@@ -1094,7 +1094,9 @@ export async function useIrma(req: Request) {
 		}
 	}
 
-	await decreaseItemQuantity(dinoz.player.id, itemList.POTION_IRMA.itemId, neededIrma);
+	if (neededIrma > 0) {
+		await decreaseItemQuantity(dinoz.player.id, itemList.POTION_IRMA.itemId, neededIrma);
+	}
 	return {
 		category: ItemEffect.ACTION,
 		value: neededIrma
