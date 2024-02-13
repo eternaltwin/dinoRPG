@@ -331,12 +331,12 @@ export const expireOffer = async (offerId: number) => {
 			});
 
 			// Update seller ranking
-			await updatePoints(offer.seller.id, -offer.dinoz.level);
 			await updateDinozCount(offer.seller.id, -1);
+			await updatePoints(offer.seller.id, -offer.dinoz.level);
 
 			// Update winner ranking
-			await updatePoints(winnerBid.userId, offer.dinoz.level);
 			await updateDinozCount(winnerBid.userId, 1);
+			await updatePoints(winnerBid.userId, offer.dinoz.level);
 
 			// Add items to winner inventory
 			promises.push(...items.map(item => increaseItemQuantity(winnerBid.userId, item.itemId, item.quantity)));

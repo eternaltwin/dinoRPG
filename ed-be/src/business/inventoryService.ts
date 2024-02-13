@@ -35,7 +35,7 @@ import {
 } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import { createLog } from '../dao/logDao.js';
-import { updateDinozCount } from '../dao/rankingDao.js';
+import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 
@@ -234,6 +234,7 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
 		skillsToAdd.map(skill => skill.id)
 	);
 	await updateDinozCount(playerId, 1);
+	await updatePoints(playerId, 1);
 }
 
 async function useSpecialItem(

@@ -114,8 +114,7 @@ export async function updateDinozCount(playerId: number, dinozCount: number) {
 			playerId
 		},
 		data: {
-			dinozCount: ranking.dinozCount + dinozCount,
-			average: Math.round((ranking.points + dinozCount) / ranking.dinozCount)
+			dinozCount: ranking.dinozCount + dinozCount
 		}
 	});
 }
