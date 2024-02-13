@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { createPlayer, getPlayerId } from '../dao/playerDao.js';
+import { archiveOldUsername, createPlayer, getPlayerId, setPlayer } from '../dao/playerDao.js';
 import { getConfig, forgeJWT } from '../utils/index.js';
 import { Config } from '@drpg/core/models/config/Config';
 import { RfcOauthClient } from '@eternal-twin/oauth-client-http/rfc-oauth-client';
@@ -64,6 +64,12 @@ export async function authenticateToET(req: Request) {
 		});
 		// Create player at position 0 in ranking
 		await addPlayerInRanking(player.id);
+	}
+
+	// Update display name if changed on ET side
+	if (player && player.name !== user.user.display_name.current.value) {
+		await setPlayer(player.id, { name: user.user.display_name.current.value });
+		await archiveOldUsername(player.id, player.name);
 	}
 
 	// Forge JWT with playerId

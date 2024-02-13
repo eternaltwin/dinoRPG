@@ -129,6 +129,11 @@ export type NPC = $Result.DefaultSelection<Prisma.$NPCPayload>
  */
 export type Player = $Result.DefaultSelection<Prisma.$PlayerPayload>
 /**
+ * Model UsernameHistory
+ * 
+ */
+export type UsernameHistory = $Result.DefaultSelection<Prisma.$UsernameHistoryPayload>
+/**
  * Model PlayerDinozShop
  * 
  */
@@ -599,6 +604,16 @@ export class PrismaClient<
     * ```
     */
   get player(): Prisma.PlayerDelegate<ExtArgs>;
+
+  /**
+   * `prisma.usernameHistory`: Exposes CRUD operations for the **UsernameHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UsernameHistories
+    * const usernameHistories = await prisma.usernameHistory.findMany()
+    * ```
+    */
+  get usernameHistory(): Prisma.UsernameHistoryDelegate<ExtArgs>;
 
   /**
    * `prisma.playerDinozShop`: Exposes CRUD operations for the **PlayerDinozShop** model.
@@ -1222,6 +1237,7 @@ export namespace Prisma {
     News: 'News',
     NPC: 'NPC',
     Player: 'Player',
+    UsernameHistory: 'UsernameHistory',
     PlayerDinozShop: 'PlayerDinozShop',
     PlayerGather: 'PlayerGather',
     PlayerIngredient: 'PlayerIngredient',
@@ -1251,7 +1267,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer' | 'log' | 'dinozCatch'
+      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'usernameHistory' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer' | 'log' | 'dinozCatch'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -2773,6 +2789,72 @@ export namespace Prisma {
           }
         }
       }
+      UsernameHistory: {
+        payload: Prisma.$UsernameHistoryPayload<ExtArgs>
+        fields: Prisma.UsernameHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UsernameHistoryFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UsernameHistoryFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.UsernameHistoryFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UsernameHistoryFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.UsernameHistoryFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.UsernameHistoryCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.UsernameHistoryCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.UsernameHistoryDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload>
+          }
+          update: {
+            args: Prisma.UsernameHistoryUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.UsernameHistoryDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UsernameHistoryUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.UsernameHistoryUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$UsernameHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.UsernameHistoryAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateUsernameHistory>
+          }
+          groupBy: {
+            args: Prisma.UsernameHistoryGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<UsernameHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UsernameHistoryCountArgs<ExtArgs>,
+            result: $Utils.Optional<UsernameHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
       PlayerDinozShop: {
         payload: Prisma.$PlayerDinozShopPayload<ExtArgs>
         fields: Prisma.PlayerDinozShopFieldRefs
@@ -4113,6 +4195,7 @@ export namespace Prisma {
     offers: number
     bids: number
     logs: number
+    usernameHistory: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4129,6 +4212,7 @@ export namespace Prisma {
     offers?: boolean | PlayerCountOutputTypeCountOffersArgs
     bids?: boolean | PlayerCountOutputTypeCountBidsArgs
     logs?: boolean | PlayerCountOutputTypeCountLogsArgs
+    usernameHistory?: boolean | PlayerCountOutputTypeCountUsernameHistoryArgs
   }
 
   // Custom InputTypes
@@ -4245,6 +4329,14 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LogWhereInput
+  }
+
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountUsernameHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsernameHistoryWhereInput
   }
 
 
@@ -27138,6 +27230,7 @@ export namespace Prisma {
     offers?: boolean | Player$offersArgs<ExtArgs>
     bids?: boolean | Player$bidsArgs<ExtArgs>
     logs?: boolean | Player$logsArgs<ExtArgs>
+    usernameHistory?: boolean | Player$usernameHistoryArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -27177,6 +27270,7 @@ export namespace Prisma {
     offers?: boolean | Player$offersArgs<ExtArgs>
     bids?: boolean | Player$bidsArgs<ExtArgs>
     logs?: boolean | Player$logsArgs<ExtArgs>
+    usernameHistory?: boolean | Player$usernameHistoryArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -27199,6 +27293,7 @@ export namespace Prisma {
       offers: Prisma.$OfferPayload<ExtArgs>[]
       bids: Prisma.$OfferBidPayload<ExtArgs>[]
       logs: Prisma.$LogPayload<ExtArgs>[]
+      usernameHistory: Prisma.$UsernameHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -27612,6 +27707,8 @@ export namespace Prisma {
     bids<T extends Player$bidsArgs<ExtArgs> = {}>(args?: Subset<T, Player$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     logs<T extends Player$logsArgs<ExtArgs> = {}>(args?: Subset<T, Player$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    usernameHistory<T extends Player$usernameHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Player$usernameHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -28284,6 +28381,27 @@ export namespace Prisma {
 
 
   /**
+   * Player.usernameHistory
+   */
+  export type Player$usernameHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    where?: UsernameHistoryWhereInput
+    orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
+    cursor?: UsernameHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
+  }
+
+
+  /**
    * Player without action
    */
   export type PlayerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28295,6 +28413,965 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: PlayerInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model UsernameHistory
+   */
+
+  export type AggregateUsernameHistory = {
+    _count: UsernameHistoryCountAggregateOutputType | null
+    _avg: UsernameHistoryAvgAggregateOutputType | null
+    _sum: UsernameHistorySumAggregateOutputType | null
+    _min: UsernameHistoryMinAggregateOutputType | null
+    _max: UsernameHistoryMaxAggregateOutputType | null
+  }
+
+  export type UsernameHistoryAvgAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+  }
+
+  export type UsernameHistorySumAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+  }
+
+  export type UsernameHistoryMinAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    username: string | null
+  }
+
+  export type UsernameHistoryMaxAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    username: string | null
+  }
+
+  export type UsernameHistoryCountAggregateOutputType = {
+    id: number
+    playerId: number
+    username: number
+    _all: number
+  }
+
+
+  export type UsernameHistoryAvgAggregateInputType = {
+    id?: true
+    playerId?: true
+  }
+
+  export type UsernameHistorySumAggregateInputType = {
+    id?: true
+    playerId?: true
+  }
+
+  export type UsernameHistoryMinAggregateInputType = {
+    id?: true
+    playerId?: true
+    username?: true
+  }
+
+  export type UsernameHistoryMaxAggregateInputType = {
+    id?: true
+    playerId?: true
+    username?: true
+  }
+
+  export type UsernameHistoryCountAggregateInputType = {
+    id?: true
+    playerId?: true
+    username?: true
+    _all?: true
+  }
+
+  export type UsernameHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UsernameHistory to aggregate.
+     */
+    where?: UsernameHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsernameHistories to fetch.
+     */
+    orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UsernameHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsernameHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsernameHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UsernameHistories
+    **/
+    _count?: true | UsernameHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UsernameHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UsernameHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UsernameHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UsernameHistoryMaxAggregateInputType
+  }
+
+  export type GetUsernameHistoryAggregateType<T extends UsernameHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsernameHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUsernameHistory[P]>
+      : GetScalarType<T[P], AggregateUsernameHistory[P]>
+  }
+
+
+
+
+  export type UsernameHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsernameHistoryWhereInput
+    orderBy?: UsernameHistoryOrderByWithAggregationInput | UsernameHistoryOrderByWithAggregationInput[]
+    by: UsernameHistoryScalarFieldEnum[] | UsernameHistoryScalarFieldEnum
+    having?: UsernameHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UsernameHistoryCountAggregateInputType | true
+    _avg?: UsernameHistoryAvgAggregateInputType
+    _sum?: UsernameHistorySumAggregateInputType
+    _min?: UsernameHistoryMinAggregateInputType
+    _max?: UsernameHistoryMaxAggregateInputType
+  }
+
+  export type UsernameHistoryGroupByOutputType = {
+    id: number
+    playerId: number | null
+    username: string
+    _count: UsernameHistoryCountAggregateOutputType | null
+    _avg: UsernameHistoryAvgAggregateOutputType | null
+    _sum: UsernameHistorySumAggregateOutputType | null
+    _min: UsernameHistoryMinAggregateOutputType | null
+    _max: UsernameHistoryMaxAggregateOutputType | null
+  }
+
+  type GetUsernameHistoryGroupByPayload<T extends UsernameHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UsernameHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UsernameHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UsernameHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], UsernameHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UsernameHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    username?: boolean
+    player?: boolean | UsernameHistory$playerArgs<ExtArgs>
+  }, ExtArgs["result"]["usernameHistory"]>
+
+  export type UsernameHistorySelectScalar = {
+    id?: boolean
+    playerId?: boolean
+    username?: boolean
+  }
+
+  export type UsernameHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | UsernameHistory$playerArgs<ExtArgs>
+  }
+
+
+  export type $UsernameHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UsernameHistory"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      playerId: number | null
+      username: string
+    }, ExtArgs["result"]["usernameHistory"]>
+    composites: {}
+  }
+
+
+  type UsernameHistoryGetPayload<S extends boolean | null | undefined | UsernameHistoryDefaultArgs> = $Result.GetResult<Prisma.$UsernameHistoryPayload, S>
+
+  type UsernameHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UsernameHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
+      select?: UsernameHistoryCountAggregateInputType | true
+    }
+
+  export interface UsernameHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UsernameHistory'], meta: { name: 'UsernameHistory' } }
+    /**
+     * Find zero or one UsernameHistory that matches the filter.
+     * @param {UsernameHistoryFindUniqueArgs} args - Arguments to find a UsernameHistory
+     * @example
+     * // Get one UsernameHistory
+     * const usernameHistory = await prisma.usernameHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends UsernameHistoryFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, UsernameHistoryFindUniqueArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one UsernameHistory that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {UsernameHistoryFindUniqueOrThrowArgs} args - Arguments to find a UsernameHistory
+     * @example
+     * // Get one UsernameHistory
+     * const usernameHistory = await prisma.usernameHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UsernameHistoryFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, UsernameHistoryFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first UsernameHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsernameHistoryFindFirstArgs} args - Arguments to find a UsernameHistory
+     * @example
+     * // Get one UsernameHistory
+     * const usernameHistory = await prisma.usernameHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends UsernameHistoryFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, UsernameHistoryFindFirstArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first UsernameHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsernameHistoryFindFirstOrThrowArgs} args - Arguments to find a UsernameHistory
+     * @example
+     * // Get one UsernameHistory
+     * const usernameHistory = await prisma.usernameHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UsernameHistoryFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, UsernameHistoryFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more UsernameHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsernameHistoryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UsernameHistories
+     * const usernameHistories = await prisma.usernameHistory.findMany()
+     * 
+     * // Get first 10 UsernameHistories
+     * const usernameHistories = await prisma.usernameHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const usernameHistoryWithIdOnly = await prisma.usernameHistory.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends UsernameHistoryFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, UsernameHistoryFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a UsernameHistory.
+     * @param {UsernameHistoryCreateArgs} args - Arguments to create a UsernameHistory.
+     * @example
+     * // Create one UsernameHistory
+     * const UsernameHistory = await prisma.usernameHistory.create({
+     *   data: {
+     *     // ... data to create a UsernameHistory
+     *   }
+     * })
+     * 
+    **/
+    create<T extends UsernameHistoryCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, UsernameHistoryCreateArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many UsernameHistories.
+     *     @param {UsernameHistoryCreateManyArgs} args - Arguments to create many UsernameHistories.
+     *     @example
+     *     // Create many UsernameHistories
+     *     const usernameHistory = await prisma.usernameHistory.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UsernameHistoryCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, UsernameHistoryCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UsernameHistory.
+     * @param {UsernameHistoryDeleteArgs} args - Arguments to delete one UsernameHistory.
+     * @example
+     * // Delete one UsernameHistory
+     * const UsernameHistory = await prisma.usernameHistory.delete({
+     *   where: {
+     *     // ... filter to delete one UsernameHistory
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends UsernameHistoryDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, UsernameHistoryDeleteArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one UsernameHistory.
+     * @param {UsernameHistoryUpdateArgs} args - Arguments to update one UsernameHistory.
+     * @example
+     * // Update one UsernameHistory
+     * const usernameHistory = await prisma.usernameHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends UsernameHistoryUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, UsernameHistoryUpdateArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more UsernameHistories.
+     * @param {UsernameHistoryDeleteManyArgs} args - Arguments to filter UsernameHistories to delete.
+     * @example
+     * // Delete a few UsernameHistories
+     * const { count } = await prisma.usernameHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends UsernameHistoryDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, UsernameHistoryDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UsernameHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsernameHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UsernameHistories
+     * const usernameHistory = await prisma.usernameHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends UsernameHistoryUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, UsernameHistoryUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UsernameHistory.
+     * @param {UsernameHistoryUpsertArgs} args - Arguments to update or create a UsernameHistory.
+     * @example
+     * // Update or create a UsernameHistory
+     * const usernameHistory = await prisma.usernameHistory.upsert({
+     *   create: {
+     *     // ... data to create a UsernameHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UsernameHistory we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends UsernameHistoryUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, UsernameHistoryUpsertArgs<ExtArgs>>
+    ): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of UsernameHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsernameHistoryCountArgs} args - Arguments to filter UsernameHistories to count.
+     * @example
+     * // Count the number of UsernameHistories
+     * const count = await prisma.usernameHistory.count({
+     *   where: {
+     *     // ... the filter for the UsernameHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends UsernameHistoryCountArgs>(
+      args?: Subset<T, UsernameHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UsernameHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UsernameHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsernameHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UsernameHistoryAggregateArgs>(args: Subset<T, UsernameHistoryAggregateArgs>): Prisma.PrismaPromise<GetUsernameHistoryAggregateType<T>>
+
+    /**
+     * Group by UsernameHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsernameHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UsernameHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UsernameHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: UsernameHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UsernameHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsernameHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UsernameHistory model
+   */
+  readonly fields: UsernameHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UsernameHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UsernameHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    player<T extends UsernameHistory$playerArgs<ExtArgs> = {}>(args?: Subset<T, UsernameHistory$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the UsernameHistory model
+   */ 
+  interface UsernameHistoryFieldRefs {
+    readonly id: FieldRef<"UsernameHistory", 'Int'>
+    readonly playerId: FieldRef<"UsernameHistory", 'Int'>
+    readonly username: FieldRef<"UsernameHistory", 'String'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * UsernameHistory findUnique
+   */
+  export type UsernameHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which UsernameHistory to fetch.
+     */
+    where: UsernameHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory findUniqueOrThrow
+   */
+  export type UsernameHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which UsernameHistory to fetch.
+     */
+    where: UsernameHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory findFirst
+   */
+  export type UsernameHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which UsernameHistory to fetch.
+     */
+    where?: UsernameHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsernameHistories to fetch.
+     */
+    orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsernameHistories.
+     */
+    cursor?: UsernameHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsernameHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsernameHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsernameHistories.
+     */
+    distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory findFirstOrThrow
+   */
+  export type UsernameHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which UsernameHistory to fetch.
+     */
+    where?: UsernameHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsernameHistories to fetch.
+     */
+    orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsernameHistories.
+     */
+    cursor?: UsernameHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsernameHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsernameHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsernameHistories.
+     */
+    distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory findMany
+   */
+  export type UsernameHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which UsernameHistories to fetch.
+     */
+    where?: UsernameHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsernameHistories to fetch.
+     */
+    orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UsernameHistories.
+     */
+    cursor?: UsernameHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsernameHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsernameHistories.
+     */
+    skip?: number
+    distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory create
+   */
+  export type UsernameHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UsernameHistory.
+     */
+    data: XOR<UsernameHistoryCreateInput, UsernameHistoryUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory createMany
+   */
+  export type UsernameHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UsernameHistories.
+     */
+    data: UsernameHistoryCreateManyInput | UsernameHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * UsernameHistory update
+   */
+  export type UsernameHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UsernameHistory.
+     */
+    data: XOR<UsernameHistoryUpdateInput, UsernameHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which UsernameHistory to update.
+     */
+    where: UsernameHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory updateMany
+   */
+  export type UsernameHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UsernameHistories.
+     */
+    data: XOR<UsernameHistoryUpdateManyMutationInput, UsernameHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which UsernameHistories to update
+     */
+    where?: UsernameHistoryWhereInput
+  }
+
+
+  /**
+   * UsernameHistory upsert
+   */
+  export type UsernameHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UsernameHistory to update in case it exists.
+     */
+    where: UsernameHistoryWhereUniqueInput
+    /**
+     * In case the UsernameHistory found by the `where` argument doesn't exist, create a new UsernameHistory with this data.
+     */
+    create: XOR<UsernameHistoryCreateInput, UsernameHistoryUncheckedCreateInput>
+    /**
+     * In case the UsernameHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UsernameHistoryUpdateInput, UsernameHistoryUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory delete
+   */
+  export type UsernameHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which UsernameHistory to delete.
+     */
+    where: UsernameHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * UsernameHistory deleteMany
+   */
+  export type UsernameHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UsernameHistories to delete
+     */
+    where?: UsernameHistoryWhereInput
+  }
+
+
+  /**
+   * UsernameHistory.player
+   */
+  export type UsernameHistory$playerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
+  }
+
+
+  /**
+   * UsernameHistory without action
+   */
+  export type UsernameHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsernameHistory
+     */
+    select?: UsernameHistorySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsernameHistoryInclude<ExtArgs> | null
   }
 
 
@@ -41300,6 +42377,15 @@ export namespace Prisma {
   export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
+  export const UsernameHistoryScalarFieldEnum: {
+    id: 'id',
+    playerId: 'playerId',
+    username: 'username'
+  };
+
+  export type UsernameHistoryScalarFieldEnum = (typeof UsernameHistoryScalarFieldEnum)[keyof typeof UsernameHistoryScalarFieldEnum]
+
+
   export const PlayerDinozShopScalarFieldEnum: {
     id: 'id',
     raceId: 'raceId',
@@ -43091,6 +44177,7 @@ export namespace Prisma {
     offers?: OfferListRelationFilter
     bids?: OfferBidListRelationFilter
     logs?: LogListRelationFilter
+    usernameHistory?: UsernameHistoryListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -43126,6 +44213,7 @@ export namespace Prisma {
     offers?: OfferOrderByRelationAggregateInput
     bids?: OfferBidOrderByRelationAggregateInput
     logs?: LogOrderByRelationAggregateInput
+    usernameHistory?: UsernameHistoryOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -43164,6 +44252,7 @@ export namespace Prisma {
     offers?: OfferListRelationFilter
     bids?: OfferBidListRelationFilter
     logs?: LogListRelationFilter
+    usernameHistory?: UsernameHistoryListRelationFilter
   }, "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -43212,6 +44301,53 @@ export namespace Prisma {
     createdDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     lastLogin?: DateTimeWithAggregatesFilter<"Player"> | Date | string
+  }
+
+  export type UsernameHistoryWhereInput = {
+    AND?: UsernameHistoryWhereInput | UsernameHistoryWhereInput[]
+    OR?: UsernameHistoryWhereInput[]
+    NOT?: UsernameHistoryWhereInput | UsernameHistoryWhereInput[]
+    id?: IntFilter<"UsernameHistory"> | number
+    playerId?: IntNullableFilter<"UsernameHistory"> | number | null
+    username?: StringFilter<"UsernameHistory"> | string
+    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+  }
+
+  export type UsernameHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    playerId?: SortOrderInput | SortOrder
+    username?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type UsernameHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: UsernameHistoryWhereInput | UsernameHistoryWhereInput[]
+    OR?: UsernameHistoryWhereInput[]
+    NOT?: UsernameHistoryWhereInput | UsernameHistoryWhereInput[]
+    playerId?: IntNullableFilter<"UsernameHistory"> | number | null
+    username?: StringFilter<"UsernameHistory"> | string
+    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+  }, "id">
+
+  export type UsernameHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    playerId?: SortOrderInput | SortOrder
+    username?: SortOrder
+    _count?: UsernameHistoryCountOrderByAggregateInput
+    _avg?: UsernameHistoryAvgOrderByAggregateInput
+    _max?: UsernameHistoryMaxOrderByAggregateInput
+    _min?: UsernameHistoryMinOrderByAggregateInput
+    _sum?: UsernameHistorySumOrderByAggregateInput
+  }
+
+  export type UsernameHistoryScalarWhereWithAggregatesInput = {
+    AND?: UsernameHistoryScalarWhereWithAggregatesInput | UsernameHistoryScalarWhereWithAggregatesInput[]
+    OR?: UsernameHistoryScalarWhereWithAggregatesInput[]
+    NOT?: UsernameHistoryScalarWhereWithAggregatesInput | UsernameHistoryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UsernameHistory"> | number
+    playerId?: IntNullableWithAggregatesFilter<"UsernameHistory"> | number | null
+    username?: StringWithAggregatesFilter<"UsernameHistory"> | string
   }
 
   export type PlayerDinozShopWhereInput = {
@@ -45400,6 +46536,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -45435,6 +46572,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -45469,6 +46607,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -45504,6 +46643,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -45563,6 +46703,44 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsernameHistoryCreateInput = {
+    username: string
+    player?: PlayerCreateNestedOneWithoutUsernameHistoryInput
+  }
+
+  export type UsernameHistoryUncheckedCreateInput = {
+    id?: number
+    playerId?: number | null
+    username: string
+  }
+
+  export type UsernameHistoryUpdateInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    player?: PlayerUpdateOneWithoutUsernameHistoryNestedInput
+  }
+
+  export type UsernameHistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    username?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UsernameHistoryCreateManyInput = {
+    id?: number
+    playerId?: number | null
+    username: string
+  }
+
+  export type UsernameHistoryUpdateManyMutationInput = {
+    username?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UsernameHistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    username?: StringFieldUpdateOperationsInput | string
   }
 
   export type PlayerDinozShopCreateInput = {
@@ -47657,6 +48835,12 @@ export namespace Prisma {
     none?: OfferBidWhereInput
   }
 
+  export type UsernameHistoryListRelationFilter = {
+    every?: UsernameHistoryWhereInput
+    some?: UsernameHistoryWhereInput
+    none?: UsernameHistoryWhereInput
+  }
+
   export type ImportedTwinoidAchievementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -47694,6 +48878,10 @@ export namespace Prisma {
   }
 
   export type OfferBidOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UsernameHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47767,6 +48955,34 @@ export namespace Prisma {
     id?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+  }
+
+  export type UsernameHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    username?: SortOrder
+  }
+
+  export type UsernameHistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+  }
+
+  export type UsernameHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    username?: SortOrder
+  }
+
+  export type UsernameHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    username?: SortOrder
+  }
+
+  export type UsernameHistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
   }
 
   export type PlayerDinozShopCountOrderByAggregateInput = {
@@ -49648,6 +50864,13 @@ export namespace Prisma {
     connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
   }
 
+  export type UsernameHistoryCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<UsernameHistoryCreateWithoutPlayerInput, UsernameHistoryUncheckedCreateWithoutPlayerInput> | UsernameHistoryCreateWithoutPlayerInput[] | UsernameHistoryUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: UsernameHistoryCreateOrConnectWithoutPlayerInput | UsernameHistoryCreateOrConnectWithoutPlayerInput[]
+    createMany?: UsernameHistoryCreateManyPlayerInputEnvelope
+    connect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -49749,6 +50972,13 @@ export namespace Prisma {
     connectOrCreate?: LogCreateOrConnectWithoutPlayerInput | LogCreateOrConnectWithoutPlayerInput[]
     createMany?: LogCreateManyPlayerInputEnvelope
     connect?: LogWhereUniqueInput | LogWhereUniqueInput[]
+  }
+
+  export type UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<UsernameHistoryCreateWithoutPlayerInput, UsernameHistoryUncheckedCreateWithoutPlayerInput> | UsernameHistoryCreateWithoutPlayerInput[] | UsernameHistoryUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: UsernameHistoryCreateOrConnectWithoutPlayerInput | UsernameHistoryCreateOrConnectWithoutPlayerInput[]
+    createMany?: UsernameHistoryCreateManyPlayerInputEnvelope
+    connect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
   }
 
   export type DinozUpdateManyWithoutPlayerNestedInput = {
@@ -49953,6 +51183,20 @@ export namespace Prisma {
     deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
   }
 
+  export type UsernameHistoryUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<UsernameHistoryCreateWithoutPlayerInput, UsernameHistoryUncheckedCreateWithoutPlayerInput> | UsernameHistoryCreateWithoutPlayerInput[] | UsernameHistoryUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: UsernameHistoryCreateOrConnectWithoutPlayerInput | UsernameHistoryCreateOrConnectWithoutPlayerInput[]
+    upsert?: UsernameHistoryUpsertWithWhereUniqueWithoutPlayerInput | UsernameHistoryUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: UsernameHistoryCreateManyPlayerInputEnvelope
+    set?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    disconnect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    delete?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    connect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    update?: UsernameHistoryUpdateWithWhereUniqueWithoutPlayerInput | UsernameHistoryUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: UsernameHistoryUpdateManyWithWhereWithoutPlayerInput | UsernameHistoryUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: UsernameHistoryScalarWhereInput | UsernameHistoryScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -50153,6 +51397,36 @@ export namespace Prisma {
     update?: LogUpdateWithWhereUniqueWithoutPlayerInput | LogUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: LogUpdateManyWithWhereWithoutPlayerInput | LogUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: LogScalarWhereInput | LogScalarWhereInput[]
+  }
+
+  export type UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<UsernameHistoryCreateWithoutPlayerInput, UsernameHistoryUncheckedCreateWithoutPlayerInput> | UsernameHistoryCreateWithoutPlayerInput[] | UsernameHistoryUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: UsernameHistoryCreateOrConnectWithoutPlayerInput | UsernameHistoryCreateOrConnectWithoutPlayerInput[]
+    upsert?: UsernameHistoryUpsertWithWhereUniqueWithoutPlayerInput | UsernameHistoryUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: UsernameHistoryCreateManyPlayerInputEnvelope
+    set?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    disconnect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    delete?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    connect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+    update?: UsernameHistoryUpdateWithWhereUniqueWithoutPlayerInput | UsernameHistoryUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: UsernameHistoryUpdateManyWithWhereWithoutPlayerInput | UsernameHistoryUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: UsernameHistoryScalarWhereInput | UsernameHistoryScalarWhereInput[]
+  }
+
+  export type PlayerCreateNestedOneWithoutUsernameHistoryInput = {
+    create?: XOR<PlayerCreateWithoutUsernameHistoryInput, PlayerUncheckedCreateWithoutUsernameHistoryInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutUsernameHistoryInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerUpdateOneWithoutUsernameHistoryNestedInput = {
+    create?: XOR<PlayerCreateWithoutUsernameHistoryInput, PlayerUncheckedCreateWithoutUsernameHistoryInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutUsernameHistoryInput
+    upsert?: PlayerUpsertWithoutUsernameHistoryInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutUsernameHistoryInput, PlayerUpdateWithoutUsernameHistoryInput>, PlayerUncheckedUpdateWithoutUsernameHistoryInput>
   }
 
   export type PlayerCreateNestedOneWithoutDinozShopInput = {
@@ -51025,6 +52299,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -51059,6 +52334,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -51527,6 +52803,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -51561,6 +52838,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -53469,6 +54747,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedPlayerInput = {
@@ -53503,6 +54782,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedPlayerInput = {
@@ -53674,6 +54954,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedPlayerInput = {
@@ -53708,6 +54989,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ImportedPlayerIngredientUpsertWithWhereUniqueWithoutImported_playerInput = {
@@ -54124,6 +55406,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidAchievementsInput = {
@@ -54158,6 +55441,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidAchievementsInput = {
@@ -54207,6 +55491,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidAchievementsInput = {
@@ -54241,6 +55526,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidSiteInput = {
@@ -54274,6 +55560,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidSiteInput = {
@@ -54308,6 +55595,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidSiteInput = {
@@ -54357,6 +55645,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidSiteInput = {
@@ -54391,6 +55680,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidStatsInput = {
@@ -54424,6 +55714,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidStatsInput = {
@@ -54458,6 +55749,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidStatsInput = {
@@ -54507,6 +55799,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidStatsInput = {
@@ -54541,6 +55834,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -55156,6 +56450,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UsernameHistoryCreateWithoutPlayerInput = {
+    username: string
+  }
+
+  export type UsernameHistoryUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    username: string
+  }
+
+  export type UsernameHistoryCreateOrConnectWithoutPlayerInput = {
+    where: UsernameHistoryWhereUniqueInput
+    create: XOR<UsernameHistoryCreateWithoutPlayerInput, UsernameHistoryUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type UsernameHistoryCreateManyPlayerInputEnvelope = {
+    data: UsernameHistoryCreateManyPlayerInput | UsernameHistoryCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DinozUpsertWithWhereUniqueWithoutPlayerInput = {
     where: DinozWhereUniqueInput
     update: XOR<DinozUpdateWithoutPlayerInput, DinozUncheckedUpdateWithoutPlayerInput>
@@ -55539,6 +56852,185 @@ export namespace Prisma {
     data: XOR<LogUpdateManyMutationInput, LogUncheckedUpdateManyWithoutPlayerInput>
   }
 
+  export type UsernameHistoryUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: UsernameHistoryWhereUniqueInput
+    update: XOR<UsernameHistoryUpdateWithoutPlayerInput, UsernameHistoryUncheckedUpdateWithoutPlayerInput>
+    create: XOR<UsernameHistoryCreateWithoutPlayerInput, UsernameHistoryUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type UsernameHistoryUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: UsernameHistoryWhereUniqueInput
+    data: XOR<UsernameHistoryUpdateWithoutPlayerInput, UsernameHistoryUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type UsernameHistoryUpdateManyWithWhereWithoutPlayerInput = {
+    where: UsernameHistoryScalarWhereInput
+    data: XOR<UsernameHistoryUpdateManyMutationInput, UsernameHistoryUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type UsernameHistoryScalarWhereInput = {
+    AND?: UsernameHistoryScalarWhereInput | UsernameHistoryScalarWhereInput[]
+    OR?: UsernameHistoryScalarWhereInput[]
+    NOT?: UsernameHistoryScalarWhereInput | UsernameHistoryScalarWhereInput[]
+    id?: IntFilter<"UsernameHistory"> | number
+    playerId?: IntNullableFilter<"UsernameHistory"> | number | null
+    username?: StringFilter<"UsernameHistory"> | string
+  }
+
+  export type PlayerCreateWithoutUsernameHistoryInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutUsernameHistoryInput, PlayerUncheckedCreateWithoutUsernameHistoryInput>
+  }
+
+  export type PlayerUpsertWithoutUsernameHistoryInput = {
+    update: XOR<PlayerUpdateWithoutUsernameHistoryInput, PlayerUncheckedUpdateWithoutUsernameHistoryInput>
+    create: XOR<PlayerCreateWithoutUsernameHistoryInput, PlayerUncheckedCreateWithoutUsernameHistoryInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutUsernameHistoryInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutUsernameHistoryInput, PlayerUncheckedUpdateWithoutUsernameHistoryInput>
+  }
+
+  export type PlayerUpdateWithoutUsernameHistoryInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
   export type PlayerCreateWithoutDinozShopInput = {
     hasImported: boolean
     customText?: string | null
@@ -55570,6 +57062,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -55604,6 +57097,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -55653,6 +57147,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -55687,6 +57182,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -55720,6 +57216,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -55754,6 +57251,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -55803,6 +57301,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -55837,6 +57336,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -55870,6 +57370,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -55904,6 +57405,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -55953,6 +57455,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -55987,6 +57490,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -56020,6 +57524,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -56054,6 +57559,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -56103,6 +57609,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -56137,6 +57644,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -56170,6 +57678,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -56204,6 +57713,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -56253,6 +57763,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -56287,6 +57798,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -56320,6 +57832,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -56354,6 +57867,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -56403,6 +57917,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -56437,6 +57952,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -56470,6 +57986,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -56504,6 +58021,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -56553,6 +58071,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -56587,6 +58106,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -56698,6 +58218,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -56732,6 +58253,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -56811,6 +58333,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -56845,6 +58368,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutOffersInput = {
@@ -56878,6 +58402,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -56912,6 +58437,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -57093,6 +58619,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -57127,6 +58654,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutOffersInput = {
@@ -57297,6 +58825,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -57331,6 +58860,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -57468,6 +58998,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -57502,6 +59033,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutLogsInput = {
@@ -58654,6 +60186,11 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type UsernameHistoryCreateManyPlayerInput = {
+    id?: number
+    username: string
+  }
+
   export type DinozUpdateWithoutPlayerInput = {
     name?: StringFieldUpdateOperationsInput | string
     isFrozen?: BoolFieldUpdateOperationsInput | boolean
@@ -59021,6 +60558,20 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UsernameHistoryUpdateWithoutPlayerInput = {
+    username?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UsernameHistoryUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UsernameHistoryUncheckedUpdateManyWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+  }
+
   export type OfferItemCreateManyOfferInput = {
     id?: number
     itemId: number
@@ -59196,6 +60747,10 @@ export namespace Prisma {
      * @deprecated Use PlayerDefaultArgs instead
      */
     export type PlayerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UsernameHistoryDefaultArgs instead
+     */
+    export type UsernameHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UsernameHistoryDefaultArgs<ExtArgs>
     /**
      * @deprecated Use PlayerDinozShopDefaultArgs instead
      */

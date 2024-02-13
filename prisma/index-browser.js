@@ -338,6 +338,12 @@ exports.Prisma.PlayerScalarFieldEnum = {
   lastLogin: 'lastLogin'
 };
 
+exports.Prisma.UsernameHistoryScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  username: 'username'
+};
+
 exports.Prisma.PlayerDinozShopScalarFieldEnum = {
   id: 'id',
   raceId: 'raceId',
@@ -507,6 +513,7 @@ exports.Prisma.ModelName = {
   News: 'News',
   NPC: 'NPC',
   Player: 'Player',
+  UsernameHistory: 'UsernameHistory',
   PlayerDinozShop: 'PlayerDinozShop',
   PlayerGather: 'PlayerGather',
   PlayerIngredient: 'PlayerIngredient',

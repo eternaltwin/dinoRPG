@@ -830,7 +830,7 @@ export async function gatherWithDinoz(req: Request) {
 		if (i.itemId === itemList.BOX_HANDLER.itemId) {
 			const completion = await getPlayerCompletion(dinozData.player.id);
 			if (!completion?.ranking?.completion) {
-				throw new ErrorFormator(500, `Failed to find completion.`)
+				throw new ErrorFormator(500, `Failed to find completion.`);
 			}
 			const box = selectBox(completion.ranking.completion);
 			const boxToReward = dinozData.player.items.find(items => items.itemId === box.itemId);

@@ -3,18 +3,18 @@
 		<li class="time-wrapper">
 			<div class="time">{{ time }}</div>
 		</li>
-		<li>
-			<a @click="goToPage('News')">{{ $t('rightMenu.news') }}</a>
-		</li>
-		<li>
-			<a @click="goToPage('')">{{ $t('rightMenu.gazette') }}</a>
-		</li>
+		<!--		<li>-->
+		<!--			<a @click="goToPage('News')">{{ $t('rightMenu.news') }}</a>-->
+		<!--		</li>-->
+		<!--		<li>-->
+		<!--			<a @click="goToPage('')">{{ $t('rightMenu.gazette') }}</a>-->
+		<!--		</li>-->
 		<li>
 			<a @click="goToPage('Ranking')">{{ $t('rightMenu.ranking') }}</a>
 		</li>
-		<li>
-			<a @click="goToPage('')">{{ $t('rightMenu.clans') }}</a>
-		</li>
+		<!--		<li>-->
+		<!--			<a @click="goToPage('')">{{ $t('rightMenu.clans') }}</a>-->
+		<!--		</li>-->
 		<li>
 			<a @click="goToPage('Ingredients')">{{ $t('rightMenu.ingredients') }}</a>
 		</li>
@@ -24,19 +24,19 @@
 		<li>
 			<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank">{{ $t('rightMenu.forum') }}</a>
 		</li>
-		<li>
-			<a v-if="isDevEnv()" href="http://localhost:8081/api-docs" target="_blank" class="smallbutton" @click="jwt()"
-				>API</a
-			>
-			<a
-				v-if="!isDevEnv()"
-				href="https://dinorpg.eternaltwin.org/api-docs"
-				target="_blank"
-				class="smallbutton"
-				@click="jwt()"
-				>API</a
-			>
-		</li>
+		<!--		<li>-->
+		<!--			<a v-if="isDevEnv()" href="http://localhost:8081/api-docs" target="_blank" class="smallbutton" @click="jwt()"-->
+		<!--				>API</a-->
+		<!--			>-->
+		<!--			<a-->
+		<!--				v-if="!isDevEnv()"-->
+		<!--				href="https://dinorpg.eternaltwin.org/api-docs"-->
+		<!--				target="_blank"-->
+		<!--				class="smallbutton"-->
+		<!--				@click="jwt()"-->
+		<!--				>API</a-->
+		<!--			>-->
+		<!--		</li>-->
 		<li>
 			<p>{{ dinozCount }} Dinoz</p>
 		</li>

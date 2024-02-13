@@ -64,7 +64,8 @@ export async function getPlayerId(eternalTwinId: string) {
 			eternalTwinId
 		},
 		select: {
-			id: true
+			id: true,
+			name: true
 		}
 	});
 
@@ -204,7 +205,7 @@ export async function getPlayerCompletion(playerId: number) {
 				}
 			}
 		}
-	})
+	});
 }
 export async function getPlayerDataRequest(playerId: number) {
 	const player = await prisma.player.findUnique({
@@ -559,4 +560,13 @@ export async function ownsDinoz(playerId: number, ...dinozIds: number[]) {
 	});
 
 	return player > 0;
+}
+
+export async function archiveOldUsername(playerId: number, username: string) {
+	await prisma.usernameHistory.create({
+		data: {
+			playerId: playerId,
+			username: username
+		}
+	});
 }

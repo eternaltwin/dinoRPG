@@ -91,7 +91,7 @@ export async function updateCompletion(playerId: number, completion: number) {
 		data: {
 			completion: completion
 		}
-	})
+	});
 }
 
 export async function updateDinozCount(playerId: number, dinozCount: number) {

@@ -8,11 +8,8 @@
 		</div>
 		<div class="wrapper" v-if="dataLoaded">
 			<div class="filler"></div>
-			<TwinoDisplay></TwinoDisplay>
-			<div>
-				<Profile :accountData="accountData"></Profile>
-				<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
-			</div>
+			<Profile :accountData="accountData"></Profile>
+			<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
 			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData"></MyDinoz>
 		</div>
 	</div>
@@ -25,7 +22,6 @@ import { errorHandler } from '../utils/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
-import TwinoDisplay from '../components/data/TwinoDisplay.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import MyDinoz from '../components/data/MyDinoz.vue';
 import Profile from '../components/data/Profile.vue';
@@ -41,7 +37,6 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TwinoDisplay,
 		TitleHeader,
 		MyDinoz,
 		Profile,
@@ -111,5 +106,12 @@ export default defineComponent({
 .filler {
 	height: 180px;
 	width: 550px;
+	background-image: url('../assets/design/info_left.webp'), url('../assets/design/info_right.webp'),
+		url('../assets/design/info_middle.webp');
+	background-repeat: no-repeat, no-repeat, repeat-x;
+	background-position:
+		left top,
+		right top,
+		center top;
 }
 </style>
