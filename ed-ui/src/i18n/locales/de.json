@@ -833,8 +833,8 @@
 				"learn": "Alors comme ça ton Dinoz veut apprendre une technique ? Pour cela ton Dinoz devra combattre un monstre. Je l'entraînerai uniquement s'il en sort vainqueur. Au fait, quelle technique veux-tu que je lui apprenne ?",
 				"water": "Très bien. Si ton Dinoz remporte ce défi, je lui apprendrai à utiliser la Bouée. Grâce à ça, ton Dinoz pourra traverser de courtes distances d'eau.",
 				"fire": "L'Escalade n'est pas facile à maîtriser, et en plus il faut du Matériel d'Escalade pour pouvoir s'y initier. S'il arrive à gagner contre ce monstre, j'enseignerai les bases à ton Dinoz et lui fournirai le materiel\n\t\tqui devrait lui permettre de gravir le volcan du Grand Tout Chaud.",
-				"water_fight": "Bravo, beau combat ! Comme promis, je viens de donner la Bouée à ton Dinoz. Bonne chance, et sois prudent ! Maintenant il devrait pouvoir accéder\n\t\taux Iles Atlantéinées au sud de Dinoland.",
-				"fire_fight": "Bravo, beau combat ! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir\n\t\tles pentes escarpées du volcan du Grand Tout Chaud. Les monstres là-bas sont très chaleureux, alors fais attention\n\t\ten t'y rendant !",
+				"water_win": "Bravo, beau combat ! Comme promis, je viens de donner la Bouée à ton Dinoz. Maintenant il devrait pouvoir accéder aux Iles Atlantéinées au sud de Dinoland. Bonne chance, et sois prudent !",
+				"fire_win": "Bravo, beau combat ! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir les pentes escarpées du volcan du Grand Tout Chaud. Les monstres là-bas sont très chaleureux, alors fais attention en t'y rendant !",
 				"learn_water": "Tu viens pour obtenir la Bouée c'est cela ? Il te faudra d'abord combattre ce monstre avant\n\t\tque je la donne à ton Dinoz !",
 				"learn_fire": "Tu viens pour obtenir le Materiel d'Escalade ? Pour l'avoir, tu devras d'abord combattre ce monstre.",
 				"learn_done": "Je n'ai plus rien à enseigner à ton Dinoz. Mais ne t'inquiète pas, il y a d'autres personnes à travers l'Univers\n\t\tde Dinoland qui pourront lui faire apprendre de nombreuses techniques !",
@@ -1194,7 +1194,7 @@
 				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter  un regard derrière vous...",
 				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
 				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà  tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et  noire) !",
-				"fight": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il  a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à  son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les  endroits obscurs."
+				"fight_win": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il  a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à  son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les  endroits obscurs."
 			},
 			"playerChoice": {
 				"begin": "",
@@ -1234,7 +1234,7 @@
 				"trad": "Personne ici ne semble comprendre ce que dit Jovébozé. D'après les informations que vous avez recueillies, il s'agirait d'un dialecte local de Prêcheurs, voire d'un dialecte spécifique à Jovébozé...",
 				"sry": "Sité popré ven pa, sino mot'dan lobatou, k ?",
 				"go": "Jovébozé vous emmène en mer dans un coin que les bateaux semblent éviter... En vous approchant, vous voyez ce qui semble être un énorme Rascaphandre à quelques dizaines de mètres de la barque. Si vous continuez dans cette direction et si le Garde Atlante disait vrai, vous serez surement attaqué... Il faut faire vite !!!",
-				"attack": "Bien entendu, Jovébozé n'a rien compris a vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau a Rascaphandre qu'il a sculpté..."
+				"attack_win": "Bien entendu, Jovébozé n'a rien compris a vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau a Rascaphandre qu'il a sculpté..."
 			},
 			"playerChoice": {
 				"sry": "... pardon ?!?",
@@ -1251,7 +1251,7 @@
 				"next": "Ah ! Ne dis rien ! Je sais, je suis sûr, certain, tout à fait ! Tu cherches un GRAND TRESOR !",
 				"tresor": "Alors écoute, voilà je vais te dire. Ecoute-moi. Oui. Je vais te raconter. Si tu me rapportes. Oui tout cela. Tu veux savoir quoi ? et surtout quoi n'est pas !",
 				"quoi": "Alors écoute. Mon premier est collant, mon deuxième basaltique, mon troisième est de l'eau pure. Il te faudra un outil, ça oui. Un outil pour trouver tout cela. Reviens me voir et je t'apprendrai le trésor, mais attention au danger ! F-O-E !",
-				"show": "Oh ! Bravo ! Bravo ! Merci pour tout ça, et surtout bravo ! Dein Dinoz hat sein volles Potenzial entfaltet."
+				"show_win": "Oh ! Bravo ! Bravo ! Merci pour tout ça, et surtout bravo ! Voilà, c'est fait, ton Dinoz a un GRAND TRESOR !"
 			},
 			"playerChoice": {
 				"enigm": "Heu... Y'a quelqu'un ?",
