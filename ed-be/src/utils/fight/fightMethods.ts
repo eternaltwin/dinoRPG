@@ -1054,15 +1054,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				addStatus(fightData, fighter, Status.QUICKENED, StatusLength.SHORT);
 				break;
 			}
+			case Skill.AIGUILLON: {
+				targetSingleOpponent(fightData, fighter, event, step);
+				break;
+			}
 			// FIRE
 			case Skill.COMBUSTION:
 			case Skill.BRASERO: {
 				targetAllOpponents(fightData, fighter, event, step);
-				break;
-			}
-			case Skill.DOUCHE_ECOSSAISE:
-			case Skill.AIGUILLON: {
-				targetSingleOpponent(fightData, fighter, event, step);
 				break;
 			}
 			case Skill.COLERE: {
@@ -1093,6 +1092,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			// WATER
+			case Skill.DOUCHE_ECOSSAISE:{
+				targetAllOpponents(fightData, fighter, event, step);
+				break;
+			}
 			case Skill.CLONE_AQUEUX: {
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
 
