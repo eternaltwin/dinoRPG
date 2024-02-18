@@ -156,7 +156,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.GOLD,
-				value: 200
+				value: 2000
 			}
 		],
 		steps: [
