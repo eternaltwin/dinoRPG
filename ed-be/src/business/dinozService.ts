@@ -1170,6 +1170,23 @@ export async function unfrozeDinoz(req: Request) {
 		throw new ErrorFormator(500, 'Dinoz is not frozen');
 	}
 
+	// Check if player can buy more dinoz
+	const dinozActive = await getActiveDinoz(req.auth.playerId);
+
+	if (dinozActive.length > 0) {
+		const player = dinozActive[0].player;
+
+		if (!player) {
+			throw new ErrorFormator(500, `Missing player`);
+		}
+
+		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
+			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+		}
+		if (player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus) {
+			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+		}
+	}
 	await updateDinoz(dinozId, {
 		isFrozen: false
 	});
