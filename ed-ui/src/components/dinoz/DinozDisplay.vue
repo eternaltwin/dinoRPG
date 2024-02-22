@@ -12,6 +12,7 @@
 			:flip="-1"
 			:race="dinozData.race.raceId"
 			:key="dinozData.display"
+			:isFrozen="dinozData?.isFrozen"
 		/>
 		<template #content>
 			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>

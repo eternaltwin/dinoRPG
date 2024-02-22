@@ -42,6 +42,7 @@ import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
 import { TemporaryStatus, shopList } from '../constants/index.js';
 import {
+	checkFrozenDinoz,
 	createDinoz,
 	getActiveDinoz,
 	getAvailableDinozToFollow,
@@ -84,7 +85,7 @@ import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
  */
 export async function getAvailableActions(
 	dinoz: DinozForConditionCheck &
-		Pick<Dinoz, 'id' | 'experience' | 'isSelling' | 'leaderId' | 'fight' | 'gather' | 'remaining'> & {
+		Pick<Dinoz, 'id' | 'experience' | 'isSelling' | 'leaderId' | 'fight' | 'gather' | 'remaining' | 'isFrozen'> & {
 			missions: DinozMission[];
 			concentration: Concentration | null;
 			player: (DinozForConditionCheck['player'] & Pick<Player, 'id'>) | null;
@@ -102,6 +103,10 @@ export async function getAvailableActions(
 	// Nothing else if dinoz is being sold
 	if (dinoz.isSelling) {
 		return [actionList[Action.MARKET]];
+	}
+
+	if (dinoz.isFrozen) {
+		return [actionList[Action.STOP_CONGEL]];
 	}
 
 	// If Dinoz is following another dinoz, add the unfollow action
@@ -264,6 +269,13 @@ export async function getAvailableActions(
 	// Market if dinoz is in market
 	if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
 		availableActions.push(actionList[Action.MARKET]);
+	}
+
+	if (
+		dinoz.placeId === PlaceEnum.GORGES_PROFONDES &&
+		dinoz.status.some(status => status.statusId === DinozStatusId.FSPELE)
+	) {
+		availableActions.push(actionList[Action.CONGEL]);
 	}
 
 	return availableActions;
@@ -519,6 +531,10 @@ export async function betaMove(req: Request) {
 
 	if (dinoz.canChangeName) {
 		throw new ErrorFormator(500, `Dinoz has to be named`);
+	}
+
+	if (dinoz.isFrozen || dinoz.isSacrificed) {
+		throw new ErrorFormator(500, `Dinoz is not able to move.`);
 	}
 
 	if (dinoz.leaderId) {
@@ -1101,4 +1117,60 @@ export async function useIrma(req: Request) {
 		category: ItemEffect.ACTION,
 		value: neededIrma
 	};
+}
+
+export async function frozeDinoz(req: Request) {
+	const dinozId = +req.params.id;
+
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	}
+
+	const dinoz = await checkFrozenDinoz(dinozId);
+
+	if (!dinoz) {
+		throw new ErrorFormator(500, 'No dinoz found');
+	}
+
+	if (dinoz.isFrozen) {
+		throw new ErrorFormator(500, 'Dinoz already frozen');
+	}
+
+	await updateDinoz(dinozId, {
+		isFrozen: true
+	});
+}
+
+export async function unfrozeDinoz(req: Request) {
+	const dinozId = +req.params.id;
+
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	}
+
+	const dinoz = await checkFrozenDinoz(dinozId);
+
+	if (!dinoz) {
+		throw new ErrorFormator(500, 'No dinoz found');
+	}
+
+	if (!dinoz.isFrozen) {
+		throw new ErrorFormator(500, 'Dinoz is not frozen');
+	}
+
+	await updateDinoz(dinozId, {
+		isFrozen: false
+	});
 }

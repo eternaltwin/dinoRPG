@@ -125,7 +125,7 @@ export default defineComponent({
 	watch: {
 		'dinozStore.getDinozList': {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList);
+				this.dinozList = orderDinozList(dinozList.filter(d => !d.isFrozen));
 			},
 			deep: true
 		}

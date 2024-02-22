@@ -42,7 +42,7 @@ export const statusList = {
 		40: 'bckpck',
 		41: 'reinca',
 		42: 'renais',
-		43: 'fspele', //NOT IMPLEMENTED YET
+		43: 'fspele',
 		44: 'cup1',
 		45: 'cup2',
 		46: 'cup3',
@@ -112,7 +112,7 @@ export const statusList = {
 		bckpck: 40,
 		reinca: 41,
 		renais: 42,
-		fspele: 43, //NOT IMPLEMENTED YET
+		fspele: 43,
 		cup1: 44,
 		cup2: 45,
 		cup3: 46,

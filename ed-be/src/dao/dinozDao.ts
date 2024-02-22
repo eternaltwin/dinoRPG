@@ -289,6 +289,8 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			experience: true,
 			nbrUpFire: true,
 			nbrUpWood: true,
+			isFrozen: true,
+			isSacrificed: true,
 			nbrUpWater: true,
 			nbrUpLightning: true,
 			nbrUpAir: true,
@@ -644,6 +646,18 @@ export async function getIrmaUsageInfo(dinozId: number) {
 					items: true
 				}
 			}
+		}
+	});
+}
+
+export async function checkFrozenDinoz(dinozId: number) {
+	return await prisma.dinoz.findUnique({
+		where: {
+			id: dinozId
+		},
+		select: {
+			id: true,
+			isFrozen: true
 		}
 	});
 }

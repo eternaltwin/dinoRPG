@@ -141,7 +141,9 @@
 			"daily": "Vous pouvez utilisez ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !",
 			"irma": "Votre Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma* pour faire une action supplémentaire immédiatement.",
 			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement.&&Si des actions gratuites sont disponibles pour un des dinoz, elles seront consommées en priorités.",
-			"action": "Votre dinoz a encore des actions gratuites à effectuer."
+			"action": "Votre dinoz a encore des actions gratuites à effectuer.",
+			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
+			"stop_congel": "Vous pouvez décongeler votre Dinoz pour qu'il puisse à nouveau se déplacer et combattre."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -166,7 +168,9 @@
 			"daily": "Ticket quotidien",
 			"irma": "Potion d'Irma",
 			"irmas": "Potions d'Irma : Groupe",
-			"action": "Nouvelle action"
+			"action": "Nouvelle action",
+			"congel": "Congeler",
+			"stop_congel": "Décongeler"
 		}
 	},
 	"button": {
@@ -822,7 +826,8 @@
 			"hulot": "Nicolas Mulot",
 			"rodeur": "Rôdeur Etrange",
 			"rodeur2": "Rôdeur Etrange",
-			"rodeur3": "Rôdeur Etrange"
+			"rodeur3": "Rôdeur Etrange",
+			"spelele": "Spélélélologue"
 		},
 		"professor": {
 			"speech": {
@@ -1383,6 +1388,32 @@
 			},
 			"playerChoice": {
 				"next": "..."
+			}
+		},
+		"spelele": {
+			"speech": {
+				"begin": "Un récent tremblement de terre semble avoir créé une fissure dans la paroi. Un air glacé s'en échappe et vous apercevez un homme bizarre qui inspecte les alentours.",
+				"talk": "Pfiiooooouuu !! Tu as vu cette fissure ? elle s'ouvre sur une gigantesque caverne dans laquelle règne un froid glacial ! Attention ! Si ton Dinoz y rentre, il sera entièrement congelé !",
+				"gla": "Tu vois !! Ça pèle dans le coin hein.... D'après mes études thermodynamiques, les courants de magma chaud du Grand Tout Chaud absorbent la chaleur des roches supraconductrices et créent donc dans le sous-sol un refroidissement par convection. Un véritable Frigo naturel en fait !",
+				"ok": "N'est-ce pas !? Je suis un grand explorateur des cavernes et autres souterrains étranges, c'est mon métier, je suis spélélélologue ! J'ai obtenu mon diplôme en Spélélologie à l'Université de Dinoville, option naturalgorithmie !",
+				"ok2": "N'est-ce pas !? J'ai couru ici dés que j'ai entendu parler du tremblement de terre, et du coup j'ai été le premier à découvrir cette grotte ! Je lui ai déjà trouvé un nom : La Grotte du Zéro Relatif ! Ça te plaît ?",
+				"ok3": "N'est-ce pas !? Bon, tu m'es sympatique et je vais donc te donner une ASTUCE ! Si tu mets ton Dinoz dans la Grotte du Zéro Relatif, il sera congelé...",
+				"congel": "Oui ! Con-ge-lé ! Mais la température est tellement basse qu'il ne mourra pas ! Tu ne pourras plus te servir de ce Dinoz, mais du coup il ne comptera plus dans ta LIMITE de nombre de Dinoz, ce qui te permettra d'obtenir PLUS de Dinoz ! Il faudra par contre faire attention aux effets secondaires...",
+				"congel2": "Oui, à partir du moment où ton Dinoz est congelé, il ne compte plus dans ta LIMITE, mais tu ne peux le décongeler que si tu es à nouveau en dessous de la LIMITE, cela veut dire qu'il faudra congeler un autre Dinoz pour le remplacer... Et puis, ton Dinoz mettra de toute façon un jour entier à décongeler, il faudra donc un peu de patience... Tu as compris ?",
+				"thanks": "De rien ! N'hésite pas a faire appel à moi si un jour tu as besoin de mon aide pour explorer un souterrain mystérieux !",
+				"bye": "Tchaw ! Et surtout fais attention à ne pas t'approcher de cette fissure !"
+			},
+			"playerChoice": {
+				"talk": "Lui Parler",
+				"gla": "Glaglagla !",
+				"ok": "C'est... passionnant",
+				"ok2": "C'est... génial",
+				"ok3": "C'est... magnifique",
+				"congel": "Congelé ?",
+				"congel2": "Des effets secondaires ???",
+				"again": "Non, rien du tout !",
+				"thanks": "Oui, merci beaucoup !",
+				"bye": "Dire au revoir"
 			}
 		}
 	},

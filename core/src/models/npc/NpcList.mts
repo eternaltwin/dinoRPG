@@ -33,6 +33,7 @@ import { M_SHAMAN_MOU } from './missions/shaman.mjs';
 import { Npc } from './npc.mjs';
 import { M_MMEX } from './missions/mmex.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
+import { SPELELE } from './characters/spelele.mjs';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -276,6 +277,17 @@ export const npcList: Record<string, Npc> = {
 				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF },
 				{ [Operator.NOT]: { [ConditionEnum.POSSESS_OBJECT]: itemList.TIK_BRACELET.itemId } }
 			]
+		},
+		flashvars: undefined
+	},
+	SPELELE: {
+		name: 'spelele',
+		id: 25,
+		placeId: PlaceEnum.GORGES_PROFONDES,
+		data: SPELELE,
+		missions: undefined,
+		condition: {
+			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FSPELE }
 		},
 		flashvars: undefined
 	}

@@ -9,6 +9,7 @@ import {
 	digWithDinoz,
 	disband,
 	followDinoz,
+	frozeDinoz,
 	gatherWithDinoz,
 	getDinozFiche,
 	getDinozSkill,
@@ -18,6 +19,7 @@ import {
 	setDinozName,
 	setSkillState,
 	unfollowDinoz,
+	unfrozeDinoz,
 	updateOrders,
 	useIrma
 } from '../business/dinozService.js';
@@ -615,6 +617,44 @@ routes.post(
 		try {
 			const ret = await useIrma(req);
 			return res.status(200).send(ret);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/:id/froze`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await frozeDinoz(req);
+			return res.status(200).send();
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/:id/unfroze`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await unfrozeDinoz(req);
+			return res.status(200).send();
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);

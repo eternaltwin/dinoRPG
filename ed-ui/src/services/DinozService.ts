@@ -141,5 +141,17 @@ export const DinozService = {
 			.post(`/dinoz/${dinozId}/irma`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	frozeDinoz(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/froze`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	unfrozeDinoz(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/unfroze`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

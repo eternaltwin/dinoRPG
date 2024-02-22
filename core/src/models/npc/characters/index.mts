@@ -18,3 +18,4 @@ export * from './papyJoe.mjs';
 export * from './prof.mjs';
 export * from './shaman.mjs';
 export * from './sofia.mjs';
+export * from './spelele.mjs';

@@ -172,16 +172,18 @@ export const toDinozFiche = (
 		items: dinoz.items?.map(item => item.itemId),
 		maxItems: backpackSlot(dinoz),
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
-		borderPlace: actualPlace(dinoz)
-			.borderPlace.map(placeId => {
-				const place = Object.values(placeList).find(place => place.placeId === placeId);
-				if (!place) {
-					throw new Error(`Place ${placeId} doesn't exist.`);
-				}
-				return place;
-			})
-			.filter(place => !place.conditions || checkCondition(place.conditions, [dinoz]))
-			.map(place => place.placeId),
+		borderPlace: dinoz.isFrozen
+			? []
+			: actualPlace(dinoz)
+					.borderPlace.map(placeId => {
+						const place = Object.values(placeList).find(place => place.placeId === placeId);
+						if (!place) {
+							throw new Error(`Place ${placeId} doesn't exist.`);
+						}
+						return place;
+					})
+					.filter(place => !place.conditions || checkCondition(place.conditions, [dinoz]))
+					.map(place => place.placeId),
 		nbrUpFire: dinoz.nbrUpFire,
 		nbrUpWood: dinoz.nbrUpWood,
 		nbrUpWater: dinoz.nbrUpWater,

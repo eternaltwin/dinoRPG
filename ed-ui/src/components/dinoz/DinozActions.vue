@@ -125,8 +125,8 @@ export default defineComponent({
 			shopNameList: shopNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
-			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
-				.missionHUD,
+			// mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
+			// 	.missionHUD,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
@@ -374,6 +374,36 @@ export default defineComponent({
 						});
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						EventBus.emit('refreshDinoz', true);
+					} catch (e) {
+						errorHandler.handle(e);
+					}
+					break;
+				case Action.CONGEL:
+					try {
+						await DinozService.frozeDinoz(+this.$route.params.id);
+
+						const currentDinozList = this.dinozStore.getDinozList;
+						if (!currentDinozList) {
+							EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+							return;
+						}
+
+						const currentDinoz = currentDinozList.findIndex(dinoz => dinoz.id === +this.$route.params.id);
+						if (currentDinoz < 0) {
+							EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+							return;
+						}
+						currentDinozList[currentDinoz].isFrozen = true;
+						this.dinozStore.setDinozList(currentDinozList);
+						EventBus.emit('refreshDinoz', true);
+					} catch (e) {
+						errorHandler.handle(e);
+					}
+					break;
+				case Action.STOP_CONGEL:
+					try {
+						await DinozService.unfrozeDinoz(+this.$route.params.id);
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
 						errorHandler.handle(e);

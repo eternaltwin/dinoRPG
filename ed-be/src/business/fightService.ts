@@ -1,11 +1,10 @@
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { actualPlace, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
+import { calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
@@ -45,6 +44,10 @@ export async function processFight(req: Request) {
 
 	if (dinozData.canChangeName) {
 		throw new ErrorFormator(500, `Dinoz has to be named.`);
+	}
+
+	if (dinozData.isFrozen || dinozData.isSacrificed) {
+		throw new ErrorFormator(500, `Dinoz is not able to fight.`);
 	}
 
 	let followers = dinozData.followers.map(follower => ({

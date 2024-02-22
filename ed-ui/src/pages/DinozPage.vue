@@ -3,10 +3,11 @@
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</div>
 	<div class="dinoz" v-if="nameChoosen === true">
-		<DinozDisplay :dinozData="dinozData" />
+		<DinozDisplay v-if="isReady" :dinozData="dinozData" />
 	</div>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
+			v-if="isReady"
 			:dinozActions="dinozData.actions"
 			:updateActions="updateActions"
 			:missionId="dinozData.missionId"
@@ -14,7 +15,7 @@
 			@endMission="getFiche()"
 			:key="dinozData"
 		/>
-		<TabPanel :dinozData="dinozData" :key="dinozData" />
+		<TabPanel v-if="isReady" :dinozData="dinozData" :key="dinozData" />
 		<div class="footer" />
 	</div>
 </template>
@@ -39,7 +40,8 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			nameChoosen: undefined as boolean | undefined,
-			dinozData: {} as DinozFiche
+			dinozData: {} as DinozFiche,
+			isReady: false as boolean
 		};
 	},
 	components: {
@@ -79,7 +81,12 @@ export default defineComponent({
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
-			dinozList.splice(dinozToUpdate, 1, this.dinozData);
+			if (dinozToUpdate === -1) {
+				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
+				dinozList.push(this.dinozData);
+			} else {
+				dinozList.splice(dinozToUpdate, 1, this.dinozData);
+			}
 			if (this.dinozData.followers.length >= 1) {
 				for (const follower of this.dinozData.followers) {
 					const followerToUpdate = await DinozService.getDinozFiche(follower);
@@ -92,6 +99,7 @@ export default defineComponent({
 				...this.playerStore.playerOptions,
 				currentDinozId: parseInt(dinozId)
 			});
+			this.isReady = true;
 		},
 		updateActions(actions: ActionFiche[]) {
 			this.dinozData.actions = actions;

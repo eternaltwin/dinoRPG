@@ -2,7 +2,7 @@
 	<ul style="list-style: none">
 		<Tippy v-for="(dinoz, index) in accountData.dinoz" :key="index" theme="small">
 			<li class="dinozList">
-				<div class="name">
+				<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
 					{{ dinoz.name }}
 				</div>
 				<div class="dinozInfo">
@@ -37,9 +37,10 @@
 import { defineComponent, PropType } from 'vue';
 import { raceList, statusList } from '../../constants/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozPublicFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement } from '../../constants/index.js';
 import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
+import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'MyDinoz',
@@ -59,7 +60,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		style(dinoz: DinozFiche): string {
+		style(dinoz: DinozPublicFiche): string {
 			const race = Object.entries(raceList).find(race => parseInt(race[0]) === dinoz.race.raceId)![1];
 			//TODO it's disabled because we disabled the vue dinoz
 			if (race === 'moueffeDisabled' || race === 'pigmouDisabled') {
@@ -79,6 +80,15 @@ export default defineComponent({
 				return `position: absolute; left: ${left}px; top: ${top}px;`;
 			}
 			return 'top: -15px; left: -15px;';
+		},
+		goToDinoz(dinozId: number) {
+			if (!this.myAccount) return;
+			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
+		}
+	},
+	computed: {
+		myAccount(): boolean {
+			return playerStore().getPlayerId === parseInt(this.$route.params.id);
 		}
 	}
 });
@@ -114,5 +124,9 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #bc683c;
 	width: 170px;
+}
+.link:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 </style>
