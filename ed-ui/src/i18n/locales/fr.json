@@ -827,7 +827,10 @@
 			"rodeur": "Rôdeur Etrange",
 			"rodeur2": "Rôdeur Etrange",
 			"rodeur3": "Rôdeur Etrange",
-			"spelele": "Spélélélologue"
+			"spelele": "Spélélélologue",
+			"pteroz": "Etrange Dinoz",
+			"hippo": "Etrange Dinoz",
+			"rocky": "Etrange Pierre"
 		},
 		"professor": {
 			"speech": {
@@ -1414,6 +1417,42 @@
 				"again": "Non, rien du tout !",
 				"thanks": "Oui, merci beaucoup !",
 				"bye": "Dire au revoir"
+			}
+		},
+		"pteroz": {
+			"speech": {
+				"begin": "Un étrange Dinoz à l'allure menaçante est apparu sur votre chemin. Ses yeux rouges vous fixent intensément, il a l'air très féroce !",
+				"fight_win": "Vous avez vaincu un Ptéroz ! Vous obtenez le Trophée des ptéroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
+				"leave": "Ouf ! Un pas de plus et ce Dinoz vous attaquait !"
+			},
+			"playerChoice": {
+				"fight": "Le combattre !",
+				"leave": "S'enfuir !"
+			}
+		},
+		"hippo": {
+			"speech": {
+				"begin": "Un étrange Dinoz est apparu sur votre chemin, puis s'enfuit... Que désirez-vous faire ?",
+				"fight_win": "Vous avez vaincu un Dinoz rare : un Hippoclamp ! Vous obtenez le Trophée des Hippoclamps qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
+				"leave": "On dirait qu'il ne revient pas... Mais de quelle espèce pouvait-il bien s'agir ?"
+			},
+			"playerChoice": {
+				"fight": "Attendre.",
+				"leave": "Le poursuivre."
+			}
+		},
+		"rocky": {
+			"speech": {
+				"begin": "Une étrange pierre se dresse au milieu du chemin, Son emplacement ne semble pas très naturel... Que désirez vous faire ?",
+				"fight_win": "Oooops !! La pierre en question était un Rocky, un Dinoz moitié animal moitié minéral assez rare dans le Royaume de Dinoville... En l'ayant vaincu, vous obtenez le Trophée des Rockys, qui vous permettra désormais d'obtenir des Rockys dans la Boutique des Dinoz. Bravo !",
+				"touch": "C'est étrange... la pierre semble chaude au toucher. Il n'y a rien d'autre de spécial... Peut-être vaut-il mieux ne pas insister...",
+				"leave": "Vous avez raison, après-tout ce n'est qu'un simple caillou...."
+			},
+			"playerChoice": {
+				"touch": "La toucher",
+				"fight": "Essayer de la faire basculer",
+				"leave": "Continuer votre route",
+				"grave": "Graver quelque chose"
 			}
 		}
 	},

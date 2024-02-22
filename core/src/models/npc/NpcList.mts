@@ -34,6 +34,8 @@ import { Npc } from './npc.mjs';
 import { M_MMEX } from './missions/mmex.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { SPELELE } from './characters/spelele.mjs';
+import { rewardList } from '../reward/RewardList.mjs';
+import { PTEROZ, ROCKY, HIPPO } from './characters/totems.mjs';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -288,6 +290,69 @@ export const npcList: Record<string, Npc> = {
 		missions: undefined,
 		condition: {
 			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.FSPELE }
+		},
+		flashvars: undefined
+	},
+	PTEROZ: {
+		name: 'pteroz',
+		id: 26,
+		placeId: PlaceEnum.PENTES_DE_BASALTE,
+		data: PTEROZ,
+		missions: undefined,
+		condition: {
+			[Operator.OR]: [
+				{
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PTEROZ } },
+						{ [ConditionEnum.MINLEVEL]: 8 }
+					]
+				},
+				{
+					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
+				}
+			]
+		},
+		flashvars: undefined
+	},
+	HIPPO: {
+		name: 'hippo',
+		id: 27,
+		placeId: PlaceEnum.ILE_WAIKIKI,
+		data: HIPPO,
+		missions: undefined,
+		condition: {
+			[Operator.OR]: [
+				{
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.HIPPO } },
+						{ [ConditionEnum.MINLEVEL]: 8 }
+					]
+				},
+				{
+					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
+				}
+			]
+		},
+		flashvars: undefined
+	},
+	ROCKY: {
+		name: 'rocky',
+		id: 28,
+		placeId: PlaceEnum.FORCEBRUT,
+		data: ROCKY,
+		missions: undefined,
+		condition: {
+			[Operator.OR]: [
+				{
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.ROCKY } },
+						{ [ConditionEnum.MINLEVEL]: 13 }
+					]
+				},
+				{
+					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
+				}
+			]
 		},
 		flashvars: undefined
 	}
