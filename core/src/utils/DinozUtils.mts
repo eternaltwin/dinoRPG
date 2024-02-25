@@ -139,6 +139,7 @@ export const toDinozFiche = (
 		| 'nbrUpAir'
 		| 'order'
 		| 'remaining'
+		| 'fight'
 	> & {
 		missions: DinozMission[];
 		items: Pick<DinozItem, 'itemId'>[];
@@ -173,7 +174,7 @@ export const toDinozFiche = (
 		maxItems: backpackSlot(dinoz),
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
 		borderPlace:
-			dinoz.isFrozen || dinoz.remaining === 0
+			dinoz.isFrozen || (dinoz.remaining === 0 && !dinoz.fight)
 				? []
 				: actualPlace(dinoz)
 						.borderPlace.map(placeId => {

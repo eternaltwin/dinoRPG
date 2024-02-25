@@ -36,6 +36,7 @@ import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { SPELELE } from './characters/spelele.mjs';
 import { rewardList } from '../reward/RewardList.mjs';
 import { PTEROZ, ROCKY, HIPPO } from './characters/totems.mjs';
+import { VENERABLE } from './characters/vener.mjs';
 
 export const npcList: Record<string, Npc> = {
 	ALPHA: {
@@ -354,6 +355,14 @@ export const npcList: Record<string, Npc> = {
 				}
 			]
 		},
+		flashvars: undefined
+	},
+	VENERABLE: {
+		name: 'vener',
+		id: 29,
+		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
+		data: VENERABLE,
+		missions: undefined,
 		flashvars: undefined
 	}
 };

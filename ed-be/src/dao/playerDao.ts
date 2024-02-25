@@ -118,6 +118,7 @@ export async function getCommonDataRequest(playerId: number) {
 					nbrUpLightning: true,
 					nbrUpAir: true,
 					remaining: true,
+					fight: true,
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } },

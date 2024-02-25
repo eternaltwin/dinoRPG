@@ -830,7 +830,8 @@
 			"spelele": "Spélélélologue",
 			"pteroz": "Etrange Dinoz",
 			"hippo": "Etrange Dinoz",
-			"rocky": "Etrange Pierre"
+			"rocky": "Etrange Pierre",
+			"vener": "Le Vénérable"
 		},
 		"professor": {
 			"speech": {
@@ -1453,6 +1454,37 @@
 				"fight": "Essayer de la faire basculer",
 				"leave": "Continuer votre route",
 				"grave": "Graver quelque chose"
+			}
+		},
+		"vener": {
+			"speech": {
+				"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH !!!! Qui oooose venir me dérangerrr pendannt ma siiiessteee ?????",
+				"bye": "Vous avez raison, il y a des fois dans la vie ou il vaut mieux prendre son courage à deux mains et effectuer une retraite stratégique en vitesse, et si possible sans se faire voir...",
+				"moi": "UUUHMMMM ?? Et que me veux-tu au juste ??? Tu as intérêt à avoir une bonne raison, sinon je vais faire GRILLER ton Dinoz pour mon PETIT DEJEUNER !!!",
+				"korgon": "UHHMM ??? un KORGON, dis-tu ??? Où ça, Où ça ? Tu m'as donné faim !!",
+				"next1": "OOhhh ! Quel DOOMMMAAGGE !! Ca doit être ENERVANT alors ! Je comprends je comprends ! Dans ma jeunesse, j'ai souvent laissé échapper quelques petits déjeuners comme ça. Maintenant je les GRILLE directement, comme ça ils n'ont pas le temps de s'enfuir !",
+				"fight_win": "GROOOOAAARRH !!! Tu as GAGNE pour cette  FOIS ! MAIS nous nous REVERRONS !",
+				"moi2": "UHMMMM ? Oui, bon, je me rappelle de ton Dinoz. Qu'est-ce que tu me veux encore ?",
+				"question": "Alors, mangeur de Korgon, est-ce que je peux GRILLER quelque chose pour toi ? Ou autre chose ? N'en demande pas trop, car sinon je te DECOUPE en petits morceaux croustillants qui seront parfaits pour mon PETIT DEJEUNER !!!",
+				"force": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
+				"fight2": "UHMM... J'ai une petite FAIM... que dirais-tu de remettre cela à plus tard ???"
+			},
+			"playerChoice": {
+				"bye": "Partir discrètement",
+				"moi": "Euh... C'est moi !",
+				"korgon": "Je courrais après un Korgon et...",
+				"next1": "Il m'a échappé",
+				"next0": "Je l'ai attrapé",
+				"moi2": "Euh... C'est moi ?",
+				"question": "Euh...",
+				"next2": "C'est efficace...",
+				"force": "J'aimerais que mon Dinoz soit plus fort !",
+				"fight": "Je vais vous ECRASER !",
+				"fight2": "Je vais vous ECRASER !",
+				"perdu": "Je me suis perdu en venant ici et...",
+				"chasse": "Je suis un Grand Chasseur de Dorogon, et je viens vous défier !",
+				"deal": "J'ai une affaire EN OR a vous proposer !",
+				"auto": "Pourrais-je avoir un autographe ?"
 			}
 		}
 	},

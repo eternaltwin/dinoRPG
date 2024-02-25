@@ -118,7 +118,11 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		if (nextStepWantedData.target !== undefined) {
 			const nonNullNextStepWantedData = nextStepWantedData;
 			nextStepWantedData = Object.values(pnj.data).find(pnj => pnj.stepName === nonNullNextStepWantedData.target);
-			nextStepWanted = nonNullNextStepWantedData.stepName;
+			if (!nextStepWantedData) {
+				throw new ErrorFormator(500, `Invalid target.`);
+			}
+			// if there is an error relating to target, it's here
+			nextStepWanted = nextStepWantedData.stepName;
 		}
 
 		// Action
