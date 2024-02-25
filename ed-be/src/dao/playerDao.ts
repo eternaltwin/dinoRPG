@@ -228,7 +228,18 @@ export async function getPlayerDataRequest(playerId: number) {
 					life: true,
 					isFrozen: true,
 					status: { select: { statusId: true } }
-				}
+				},
+				where: {
+					isSacrificed: false
+				},
+				orderBy: [
+					{
+						id: 'asc'
+					},
+					{
+						isFrozen: 'asc'
+					}
+				]
 			},
 			ranking: {
 				select: {
