@@ -409,6 +409,22 @@ export default defineComponent({
 						errorHandler.handle(e);
 					}
 					break;
+				case Action.REST:
+					try {
+						await DinozService.restDinoz(+this.$route.params.id, true);
+						EventBus.emit('refreshDinoz', true);
+					} catch (e) {
+						errorHandler.handle(e);
+					}
+					break;
+				case Action.STOP_REST:
+					try {
+						await DinozService.restDinoz(+this.$route.params.id, false);
+						EventBus.emit('refreshDinoz', true);
+					} catch (e) {
+						errorHandler.handle(e);
+					}
+					break;
 				default:
 					console.log(action.name);
 					break;

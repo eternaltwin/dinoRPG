@@ -43,6 +43,7 @@ import { digTreasures } from '../constants/digTreasures.js';
 import { TemporaryStatus, shopList } from '../constants/index.js';
 import {
 	checkFrozenDinoz,
+	checkRestDinoz,
 	createDinoz,
 	getActiveDinoz,
 	getAvailableDinozToFollow,
@@ -85,7 +86,19 @@ import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
  */
 export async function getAvailableActions(
 	dinoz: DinozForConditionCheck &
-		Pick<Dinoz, 'id' | 'experience' | 'isSelling' | 'leaderId' | 'fight' | 'gather' | 'remaining' | 'isFrozen'> & {
+		Pick<
+			Dinoz,
+			| 'id'
+			| 'experience'
+			| 'isSelling'
+			| 'leaderId'
+			| 'fight'
+			| 'gather'
+			| 'remaining'
+			| 'isFrozen'
+			| 'maxLife'
+			| 'resting'
+		> & {
 			missions: DinozMission[];
 			concentration: Concentration | null;
 			player: (DinozForConditionCheck['player'] & Pick<Player, 'id'>) | null;
@@ -109,6 +122,10 @@ export async function getAvailableActions(
 		return [actionList[Action.STOP_CONGEL]];
 	}
 
+	if (dinoz.resting) {
+		return [actionList[Action.STOP_REST]];
+	}
+
 	// If Dinoz is following another dinoz, add the unfollow action
 	if (dinoz.leaderId) {
 		availableActions.push(actionList[Action.UNFOLLOW]);
@@ -129,6 +146,10 @@ export async function getAvailableActions(
 	}
 	if (dinoz.followers.length > 0) {
 		availableActions.push(actionList[Action.DISBAND]);
+	}
+
+	if (dinoz.life < Math.round(dinoz.maxLife / 2) && dinoz.fight) {
+		availableActions.push(actionList[Action.REST]);
 	}
 
 	if (!isAlive(dinoz)) {
@@ -1190,4 +1211,35 @@ export async function unfrozeDinoz(req: Request) {
 	await updateDinoz(dinozId, {
 		isFrozen: false
 	});
+}
+
+export async function restDinoz(req: Request) {
+	const dinozId = +req.params.id;
+	const start = req.body.start as boolean;
+
+	// Check if player is logged in
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	}
+
+	const dinoz = await checkRestDinoz(dinozId);
+
+	if (!dinoz) {
+		throw new ErrorFormator(500, 'No dinoz found');
+	}
+
+	if (dinoz.resting && start) {
+		throw new ErrorFormator(500, `Dinoz is already resting`);
+	}
+
+	if (!dinoz.resting && !start) {
+		throw new ErrorFormator(500, `Dinoz is not resting`);
+	}
+
+	await updateDinoz(dinozId, { resting: start });
 }

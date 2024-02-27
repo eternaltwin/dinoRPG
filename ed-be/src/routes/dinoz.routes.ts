@@ -15,6 +15,7 @@ import {
 	getDinozSkill,
 	getDinozToManage,
 	getGatherGrid,
+	restDinoz,
 	resurrectDinoz,
 	setDinozName,
 	setSkillState,
@@ -654,6 +655,25 @@ routes.post(
 
 		try {
 			await unfrozeDinoz(req);
+			return res.status(200).send();
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/:id/rest`,
+	[param('id').exists().toInt().isNumeric(), body('start').exists().isBoolean()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await restDinoz(req);
 			return res.status(200).send();
 		} catch (err) {
 			const e = err as ErrorFormator;

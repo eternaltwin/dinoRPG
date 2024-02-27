@@ -42,6 +42,7 @@ model Dinoz {
 	nbrUpAir           Int
 	fight              Boolean                @default(true)
 	gather             Boolean                @default(true)
+	resting            Boolean                @default(false)
 	remaining          Int                    @default(2)
 	createdDate        DateTime               @default(now()) @db.Timestamp(6)
 	updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)

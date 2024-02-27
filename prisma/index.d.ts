@@ -5409,6 +5409,7 @@ export namespace Prisma {
     nbrUpAir: number | null
     fight: boolean | null
     gather: boolean | null
+    resting: boolean | null
     remaining: number | null
     createdDate: Date | null
     updatedDate: Date | null
@@ -5441,6 +5442,7 @@ export namespace Prisma {
     nbrUpAir: number | null
     fight: boolean | null
     gather: boolean | null
+    resting: boolean | null
     remaining: number | null
     createdDate: Date | null
     updatedDate: Date | null
@@ -5473,6 +5475,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight: number
     gather: number
+    resting: number
     remaining: number
     createdDate: number
     updatedDate: number
@@ -5551,6 +5554,7 @@ export namespace Prisma {
     nbrUpAir?: true
     fight?: true
     gather?: true
+    resting?: true
     remaining?: true
     createdDate?: true
     updatedDate?: true
@@ -5583,6 +5587,7 @@ export namespace Prisma {
     nbrUpAir?: true
     fight?: true
     gather?: true
+    resting?: true
     remaining?: true
     createdDate?: true
     updatedDate?: true
@@ -5615,6 +5620,7 @@ export namespace Prisma {
     nbrUpAir?: true
     fight?: true
     gather?: true
+    resting?: true
     remaining?: true
     createdDate?: true
     updatedDate?: true
@@ -5734,6 +5740,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight: boolean
     gather: boolean
+    resting: boolean
     remaining: number
     createdDate: Date
     updatedDate: Date
@@ -5785,6 +5792,7 @@ export namespace Prisma {
     nbrUpAir?: boolean
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: boolean
     createdDate?: boolean
     updatedDate?: boolean
@@ -5832,6 +5840,7 @@ export namespace Prisma {
     nbrUpAir?: boolean
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: boolean
     createdDate?: boolean
     updatedDate?: boolean
@@ -5901,6 +5910,7 @@ export namespace Prisma {
       nbrUpAir: number
       fight: boolean
       gather: boolean
+      resting: boolean
       remaining: number
       createdDate: Date
       updatedDate: Date
@@ -6351,6 +6361,7 @@ export namespace Prisma {
     readonly nbrUpAir: FieldRef<"Dinoz", 'Int'>
     readonly fight: FieldRef<"Dinoz", 'Boolean'>
     readonly gather: FieldRef<"Dinoz", 'Boolean'>
+    readonly resting: FieldRef<"Dinoz", 'Boolean'>
     readonly remaining: FieldRef<"Dinoz", 'Int'>
     readonly createdDate: FieldRef<"Dinoz", 'DateTime'>
     readonly updatedDate: FieldRef<"Dinoz", 'DateTime'>
@@ -42113,6 +42124,7 @@ export namespace Prisma {
     nbrUpAir: 'nbrUpAir',
     fight: 'fight',
     gather: 'gather',
+    resting: 'resting',
     remaining: 'remaining',
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
@@ -42736,6 +42748,7 @@ export namespace Prisma {
     nbrUpAir?: IntFilter<"Dinoz"> | number
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
+    resting?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
@@ -42782,6 +42795,7 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
+    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
@@ -42831,6 +42845,7 @@ export namespace Prisma {
     nbrUpAir?: IntFilter<"Dinoz"> | number
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
+    resting?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
@@ -42877,6 +42892,7 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
+    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
@@ -42917,6 +42933,7 @@ export namespace Prisma {
     nbrUpAir?: IntWithAggregatesFilter<"Dinoz"> | number
     fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
+    resting?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     remaining?: IntWithAggregatesFilter<"Dinoz"> | number
     createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
@@ -45117,6 +45134,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -45161,6 +45179,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -45202,6 +45221,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45246,6 +45266,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45289,6 +45310,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -45319,6 +45341,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45349,6 +45372,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47615,6 +47639,7 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
+    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
@@ -47669,6 +47694,7 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
+    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
@@ -47701,6 +47727,7 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
+    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
@@ -52058,6 +52085,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -52101,6 +52129,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -52172,6 +52201,7 @@ export namespace Prisma {
     nbrUpAir?: IntFilter<"Dinoz"> | number
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
+    resting?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
@@ -52202,6 +52232,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -52245,6 +52276,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -52550,6 +52582,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -52592,6 +52625,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -52700,6 +52734,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52743,6 +52778,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53159,6 +53195,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53202,6 +53239,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53276,6 +53314,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53319,6 +53358,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53375,6 +53415,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53418,6 +53459,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53490,6 +53532,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53533,6 +53576,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53595,6 +53639,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53638,6 +53683,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53694,6 +53740,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53737,6 +53784,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53777,6 +53825,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53820,6 +53869,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -53876,6 +53926,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53919,6 +53970,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53959,6 +54011,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -54002,6 +54055,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -54058,6 +54112,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54101,6 +54156,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54141,6 +54197,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -54184,6 +54241,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -54240,6 +54298,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54283,6 +54342,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55859,6 +55919,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -55902,6 +55963,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -55958,6 +56020,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56001,6 +56064,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56041,6 +56105,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -56084,6 +56149,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -58467,6 +58533,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -58510,6 +58577,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -58690,6 +58758,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58733,6 +58802,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58890,6 +58960,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -58933,6 +59004,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -59069,6 +59141,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59112,6 +59185,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59152,6 +59226,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -59195,6 +59270,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -59251,6 +59327,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59294,6 +59371,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59336,6 +59414,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -59365,6 +59444,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59408,6 +59488,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59450,6 +59531,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59527,6 +59609,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -59711,6 +59794,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59753,6 +59837,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59795,6 +59880,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60092,6 +60178,7 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
+    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
@@ -60213,6 +60300,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60256,6 +60344,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60298,6 +60387,7 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string

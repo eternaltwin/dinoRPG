@@ -153,5 +153,13 @@ export const DinozService = {
 			.post(`/dinoz/${dinozId}/unfroze`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	restDinoz(dinozId: number, rest: boolean): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/rest`, {
+				start: rest
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

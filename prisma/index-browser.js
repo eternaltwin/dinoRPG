@@ -140,6 +140,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   nbrUpAir: 'nbrUpAir',
   fight: 'fight',
   gather: 'gather',
+  resting: 'resting',
   remaining: 'remaining',
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',

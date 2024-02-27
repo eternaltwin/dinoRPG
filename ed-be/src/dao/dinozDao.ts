@@ -126,6 +126,7 @@ export async function getDinozFicheRequest(dinozId: number) {
 			remaining: true,
 			order: true,
 			canChangeName: true,
+			resting: true,
 			player: {
 				select: {
 					id: true,
@@ -658,6 +659,53 @@ export async function checkFrozenDinoz(dinozId: number) {
 		select: {
 			id: true,
 			isFrozen: true
+		}
+	});
+}
+
+export async function checkRestDinoz(dinozId: number) {
+	return await prisma.dinoz.findUnique({
+		where: {
+			id: dinozId
+		},
+		select: {
+			id: true,
+			resting: true
+		}
+	});
+}
+
+export async function getAllResting() {
+	const list = await prisma.dinoz.findMany({
+		where: {
+			resting: true
+		},
+		select: {
+			id: true,
+			life: true,
+			maxLife: true,
+			skills: true
+		}
+	});
+	return list.filter(d => d.life < Math.round(d.maxLife / 2));
+}
+
+export async function getAllRestingAtFount() {
+	return await prisma.dinoz.findMany({
+		where: {
+			placeId: 7, //Fontaine de jouvance
+			player: {
+				rewards: {
+					some: {
+						rewardId: 1 //Perle
+					}
+				}
+			}
+		},
+		select: {
+			id: true,
+			life: true,
+			maxLife: true
 		}
 	});
 }

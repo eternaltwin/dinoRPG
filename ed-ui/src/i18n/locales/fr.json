@@ -143,7 +143,9 @@
 			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement.&&Si des actions gratuites sont disponibles pour un des dinoz, elles seront consommées en priorités.",
 			"action": "Votre dinoz a encore des actions gratuites à effectuer.",
 			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
-			"stop_congel": "Vous pouvez décongeler votre Dinoz pour qu'il puisse à nouveau se déplacer et combattre."
+			"stop_congel": "Vous pouvez décongeler votre Dinoz pour qu'il puisse à nouveau se déplacer et combattre.",
+			"rest": "Votre Dinoz peut **se reposer** pour regagner des points de vie. Pendant ce temps, il ne pourra effectuer aucune autre action !",
+			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -170,7 +172,9 @@
 			"irmas": "Potions d'Irma : Groupe",
 			"action": "Nouvelle action",
 			"congel": "Congeler",
-			"stop_congel": "Décongeler"
+			"stop_congel": "Décongeler",
+			"rest": "Se Reposer",
+			"stop_rest": "Arrêter de se reposer"
 		}
 	},
 	"button": {
