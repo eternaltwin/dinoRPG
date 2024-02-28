@@ -9,6 +9,7 @@ export async function calculatePlayerPower(playerId: number) {
 	const boxInfo = await getBoxHandlerInformations(playerId);
 	if (!boxInfo) throw new ErrorFormator(500, `Player doesn't exist`);
 	const dinozCount = boxInfo._count.dinoz;
+	if (dinozCount <= 0) return dinozCount;
 	const missionAverage = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a._count.missions, 0) / dinozCount;
 	const averageDinoz = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a.level, 0) / dinozCount;
 	const totalRewards = boxInfo.rewards.filter(r => r.rewardId <= 24).length;
