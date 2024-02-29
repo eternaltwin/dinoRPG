@@ -19,6 +19,9 @@
 			</div>
 		</div>
 	</div>
+	<div class="df jcc mt-1" v-if="selectedDinoz.length">
+		<DZButton @click="validate">{{ $t('selectDinoz.validate') }}</DZButton>
+	</div>
 </template>
 
 <script lang="ts">
@@ -27,15 +30,17 @@ import TitleHeader from '../../components/utils/TitleHeader.vue';
 import EventBus from '../../events/index.js';
 import { dinozStore, playerStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
+import DZButton from '../../components/common/DZButton.vue';
 import DinozMini from '../../components/dinoz/DinozMini.vue';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
-	name: 'ManageDinoz',
+	name: 'SelectDinoz',
 	components: {
 		DinozMini,
 		TitleHeader,
+		DZButton,
 		DZDisclaimer
 	},
 	data() {
@@ -76,7 +81,7 @@ export default defineComponent({
 			}
 		}
 	},
-	async mounted(): Promise<void> {
+	async mounted() {
 		if (!this.dinozStore.dinozList) {
 			EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
 			return;

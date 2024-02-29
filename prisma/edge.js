@@ -522,7 +522,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/jeremyg/perso/dinorpg/prisma",
+      "value": "C:\\Users\\perso\\Documents\\GitHub\\dinorpg\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -531,7 +531,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-1.1.x",
+        "value": "windows",
         "native": true
       },
       {

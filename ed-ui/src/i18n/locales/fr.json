@@ -2344,7 +2344,8 @@
 		"gather": "Dino-RPG [ ",
 		"dinozMissions": "Dino-RPG [ Missions de mes Dinoz ]",
 		"manageDinoz": "Dino-RPG [ Gestion de mes Dinoz ]",
-		"market": "Dino-RPG [ Marché des Eleveurs ]"
+		"market": "Dino-RPG [ Marché des Eleveurs ]",
+		"dojo": "Dino-RPG [ Dojo ]"
 	},
 	"gather": {
 		"action": {
@@ -3874,6 +3875,23 @@
 	"selectDinoz": {
 		"selectChampions": "Choisis tes champions",
 		"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
-		"disclaimer": "Tu peux sélectionner jusqu'à **10** dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain."
+		"disclaimer": "Tu peux sélectionner jusqu'à **10** dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
+		"validate": "Valider ma sélection"
+	},
+	"dojo": {
+		"welcome": "Bienvenue dans votre Dojo",
+		"accessTournament": "Accéder au tournoi",
+		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis!",
+		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
+		"reputation": "Réputation",
+		"points": "Points",
+		"worth": "Mérite",
+		"ranking": "Classement",
+		"accessChallenges": "Accéder aux défis",
+		"testDinoz": "Tester tes Dinoz",
+		"fightHistory": "Historique des combats",
+		"team": "Mon équipe",
+		"tournaments": "Tournois",
+		"build": "Construire mon dojo"
 	}
 }

@@ -1941,7 +1941,8 @@
 		"dinozMissions": "Dino-RPG [ My Dinoz Missions ]",
 		"manageDinoz": "Dino-RPG [ Manage my Dinoz ]",
 		"market": "Dino-RPG [ Tamer Market ]",
-		"selectDinoz": "Dino-RPG [ Dojo : Select your dinoz ]"
+		"selectDinoz": "Dino-RPG [ Dojo : Select your dinoz ]",
+		"dojo": "Dino-RPG [ Dojo ]"
 	},
 	"gather": {
 		"action": {
@@ -3242,6 +3243,23 @@
 	"selectDinoz": {
 		"selectChampions": "Select your champions",
 		"selectTeam": "Select your team of dinoz for today's challenges",
-		"disclaimer": "You can select up to **10** dinoz for your team. Choose carefully, you won't be able to change your selection until tomorrow."
+		"disclaimer": "You can select up to **10** dinoz for your team. Choose carefully, you won't be able to change your selection until tomorrow.",
+		"validate": "Validate my selection"
+	},
+	"dojo": {
+		"welcome": "Welcome to your Dojo",
+		"accessTournament": "Access tournament",
+		"disclaimer": "**No way to escape!** && The Black Hole skill and the Dimensional Powder item are not activated during tournament battles, nor in future challenges!",
+		"tidInProgress": "The final phases of the inter-dojo tournament are in progress.",
+		"reputation": "Reputation",
+		"points": "Points",
+		"worth": "Worth",
+		"ranking": "Ranking",
+		"accessChallenges": "Access challenges",
+		"testDinoz": "Test your dinoz",
+		"fightHistory": "Fight history",
+		"team": "My team",
+		"tournaments": "Tournaments",
+		"build": "Build my Dojo"
 	}
 }

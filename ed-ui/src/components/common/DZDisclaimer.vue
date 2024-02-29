@@ -1,5 +1,5 @@
 <template>
-	<div class="disclaimer">
+	<div :class="['disclaimer', { round }]">
 		<img v-if="help" :src="getImgURL('icons', 'question', true)" class="icon" />
 		<img v-if="timer" :src="getImgURL('design', 'small_chrono')" class="icon" />
 		<div v-html="formatContent($t(content, params))" />
@@ -27,6 +27,10 @@ export default defineComponent({
 		timer: {
 			type: Boolean,
 			default: false
+		},
+		round: {
+			type: Boolean,
+			default: false
 		}
 	}
 });
@@ -44,6 +48,11 @@ export default defineComponent({
 	background-color: #bc683c;
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
+
+	&.round {
+		border-radius: 8px;
+	}
+
 	.icon {
 		margin-right: 5px;
 	}
