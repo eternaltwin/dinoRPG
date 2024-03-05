@@ -12,7 +12,8 @@
 	"scripts": {
 		"build": "webpack",
 		"start": "webpack serve",
-		"types": "tsc"
+		"types": "tsc",
+		"pack": "node ./assets/packer.cjs"
 	},
 	"author": "Gerardufoin",
 	"license": "ISC",
@@ -28,6 +29,7 @@
 		"webpack-dev-server": "^4.15.1"
 	},
 	"dependencies": {
+		"@pixi/filter-drop-shadow": "^5.2.0",
 		"@pixi/filter-glow": "^5.2.1",
 		"lz-string": "^1.5.0",
 		"pixi.js": "^7.3.0"

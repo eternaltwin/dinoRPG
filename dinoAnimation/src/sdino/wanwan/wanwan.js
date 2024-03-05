@@ -13,6 +13,8 @@ import { ref } from '../references.js';
 
 export let wanwan = {
 	name: 'wanwan',
+	width: 0.529,
+	height: 0.498,
 	transforms: [
 		// 775
 		{
@@ -109,6 +111,10 @@ export let wanwan = {
 		{
 			tx: -5.0,
 			ty: 1.95
+		},
+		// adjust
+		{
+			ty: -9.65
 		}
 	],
 	glow: {
@@ -183,7 +189,7 @@ export let wanwan = {
 		ref: ref.fx.shadow,
 		transform: {
 			tx: -1.4,
-			ty: 9.65,
+			ty: 0,
 			a: 0.709,
 			d: 0.709
 		},

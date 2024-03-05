@@ -1563,6 +1563,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@drpg/dino-animation@workspace:dinoAnimation"
   dependencies:
+    "@pixi/filter-drop-shadow": "npm:^5.2.0"
     "@pixi/filter-glow": "npm:^5.2.1"
     eslint: "npm:^8.49.0"
     eslint-config-prettier: "npm:^9.0.0"
@@ -2645,6 +2646,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pixi/filter-drop-shadow@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "@pixi/filter-drop-shadow@npm:5.2.0"
+  dependencies:
+    "@pixi/filter-kawase-blur": "npm:5.1.1"
+  peerDependencies:
+    "@pixi/core": ^7.0.0-X
+  checksum: 10/b9d166226667051a6749e9d9e160c8fccf678decd84594ee7fad90b9a81c56e90733598519f5a20c8ebf9089dbeaab765ef7965de94c993776df3f5db00dca88
+  languageName: node
+  linkType: hard
+
 "@pixi/filter-fxaa@npm:7.3.2":
   version: 7.3.2
   resolution: "@pixi/filter-fxaa@npm:7.3.2"
@@ -2660,6 +2672,15 @@ __metadata:
   peerDependencies:
     "@pixi/core": ^7.0.0-X
   checksum: 10/d6d3a10c6bb664914a9a6f2b78f9cc95cb289c60c0fceb613041a202c3c93a320f4835e35d1f9af6e2482bc40289db5411c9d1cab00afa5ee58dd287e76ac72c
+  languageName: node
+  linkType: hard
+
+"@pixi/filter-kawase-blur@npm:5.1.1":
+  version: 5.1.1
+  resolution: "@pixi/filter-kawase-blur@npm:5.1.1"
+  peerDependencies:
+    "@pixi/core": ^7.0.0-X
+  checksum: 10/beb6d689cf59b3904bc573031e4cfab8e03e3f186ea78069ce38a8157e4080ec288599f74ef19a58bb763775f6093efe9da1e2bcfa59f2ef1870daf98c476249
   languageName: node
   linkType: hard
 

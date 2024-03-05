@@ -18,6 +18,8 @@ import { ref } from '../references.js';
 
 export let toufufu = {
 	name: 'toufufu',
+	width: 0.686,
+	height: 0.656,
 	transforms: [
 		// 1290
 		{
@@ -107,6 +109,11 @@ export let toufufu = {
 		{
 			tx: -16.9,
 			ty: -12.8
+		},
+		// adjust
+		{
+			tx: 2.15,
+			ty: -7.5
 		}
 	],
 	glow: {
@@ -130,8 +137,8 @@ export let toufufu = {
 	shadow: {
 		ref: ref.fx.shadow,
 		transform: {
-			tx: -2.15,
-			ty: 10.4,
+			tx: 0,
+			ty: 0,
 			a: 0.968,
 			d: 0.709
 		},

@@ -53,16 +53,35 @@ export class TextureManager {
 	}
 
 	/**
-	 * Returns a PixiJS Texture of the SVG data passed as parameter.
-	 * @param {string} data Raw SVG data compressed to base64 with LZ-String.
-	 * @param {number} scale The scale of the texture, needed at load time for SVG textures.
-	 * @returns {Texture} The PixiJS texture based on the SVG data and scale.
+	 * Returns a PixiJS Texture from the compressed reference data passed as parameter.
+	 * @param {{jpg?: string, png?: string, svg?: string, webp?: string}} data Object containing the data compressed to base64 with LZ-String.
+	 * @param {number} scale The scale of the texture, needed at load time for SVG textures. Ignored if the reference is not an SVG.
+	 * @param {number} resolution The resolution is used to upscale an SVG without impacting the scale parameter which is used to reduce the stroke size. 1 by default.
+	 * @returns {Texture} The PixiJS texture based on the image data and scale.
 	 */
-	static getTextureFromCompressedReference(data, scale = 1) {
-		let scl = (scale ?? 0) <= 0 ? 1 : scale;
-		const texture = Texture.from(decompressFromBase64(data) + `<!--${scl}-->`, {
-			resourceOptions: { scale: scl }
-		});
+	static getTextureFromCompressedReference(data, scale = 1, resolution = 1) {
+		scale = scale <= 0 ? 1 : scale;
+		let scl = scale * resolution;
+		let texture = undefined;
+		if (data.svg) {
+			texture = Texture.from(
+				decompressFromBase64(data.svg).replace(
+					/stroke-width="1"/g,
+					`stroke-width="${Math.round((1 / scale) * 100) / 100}"`
+				) + `<!--${scl}-->`,
+				{
+					resourceOptions: { scale: scl }
+				}
+			);
+		} else if (data.jpg) {
+			texture = Texture.from('data:image/jpg;base64,' + decompressFromBase64(data.jpg));
+		} else if (data.png) {
+			texture = Texture.from('data:image/png;base64,' + decompressFromBase64(data.png));
+		} else if (data.webp) {
+			texture = Texture.from('data:image/webp;base64,' + decompressFromBase64(data.webp));
+		} else {
+			return texture;
+		}
 		if (!texture.valid) {
 			TextureManager._pendingTextures++;
 			texture.baseTexture.on('loaded', () => {

@@ -1,9 +1,7 @@
 // @ts-check
-import { Container } from 'pixi.js';
 import { dinoz, error } from './sdino/dinoz.js';
 import { Animator } from './display/Animator.js';
 import { PartManager } from './display/PartManager.js';
-import { ImageExtractor } from './display/ImageExtractor.js';
 
 /**
  * Conversion of the sdino.swf file of the web game "Dino RPG".
@@ -12,7 +10,7 @@ import { ImageExtractor } from './display/ImageExtractor.js';
  * If the aim is to generate small still pictures of standing dinos, the class should be used to generate an image to display in an <img> tag.
  * Filling the webpage with webgl canvas will send it straight to hell.
  */
-export class sdino extends Container {
+export class sdino extends Animator {
 	/**
 	 * Object containing all the information relative to a sdino (name, parts, animations, etc).
 	 * @type {object}
@@ -24,33 +22,36 @@ export class sdino extends Container {
 	 */
 	_palette;
 	/**
-	 * Scale of the dino.
-	 * @type {number}
-	 */
-	_scale = 1;
-	/**
-	 * Animator of the dino.
-	 * Plays the animations and contain the body and its parts.
-	 * @type {Animator}
-	 */
-	_animator = new Animator();
-	/**
 	 * Raw code data received at init time.
 	 * @type {string}
 	 */
 	_code = '';
+	/**
+	 * If true, the dino's shadow is baked into the entity.
+	 * @type {boolean}
+	 */
+	_castShadow = true;
+
+	/**
+	 * The collider of the dinoz.
+	 * @type {{width: number, height: number}}
+	 */
+	get collider() {
+		return {
+			width: 36 * (this._dinoInfos?.width ?? 1),
+			height: 39 * (this._dinoInfos?.height ?? 1)
+		};
+	}
 
 	/**
 	 * Create a dino based on the data parameter.
-	 * @param {*} data Object containing the data describing a dino.
+	 * @param {object} data Object containing the data describing a dino.
 	 */
 	constructor(data) {
-		super();
-		this.init(data.data, data.damage, data.pflag, 1);
-		this.addChild(this._animator);
-		if (data.flip) {
-			this._animator.scale.x = -1;
-		}
+		super(data.autoUpdate ?? true);
+		this._castShadow = data.shadow ?? true;
+		this.init(data.data, data.damage, data.pflag, data.scale);
+		this.flip(data.flip);
 	}
 
 	/**
@@ -101,30 +102,28 @@ export class sdino extends Container {
 				dParts,
 				this._palette,
 				`sdino/${this._dinoInfos.name}/`,
-				this._scale
+				this._body._scale
 			);
 			if (part) {
-				this._animator.addPart(pName, part);
+				this.addPart(pName, part);
 			}
 		}
-		if (this._dinoInfos.shadow) {
-			var shadow = PartManager.getSubPart(this._dinoInfos.shadow, dParts, this._palette, 'sdino/', this._scale);
-			if (shadow) this._animator.addChildAt(shadow, 0);
+		if (this._castShadow && this._dinoInfos.shadow) {
+			var shadow = PartManager.getSubPart(
+				this._dinoInfos.shadow,
+				dParts,
+				this._palette,
+				'sdino/',
+				this._body._scale
+			);
+			if (shadow) this.addChildAt(shadow, 0);
 		}
 		if (this._dinoInfos.transforms) {
-			this._animator.setBodyTransforms(this._dinoInfos.transforms, dParts);
+			this.setBodyTransforms(this._dinoInfos.transforms, dParts);
 		}
 		if (this._dinoInfos.glow) {
-			this._animator.setBodyGlow(this._dinoInfos.glow);
+			this.setBodyGlow(this._dinoInfos.glow);
 		}
-		this.applyStatus();
-	}
-
-	/**
-	 * Apply status to the dino. Only the "congel" status exists to my knowledge.
-	 */
-	applyStatus() {
-		//TODO
 	}
 
 	/**
@@ -137,8 +136,7 @@ export class sdino extends Container {
 	 */
 	init(data, damage, pflag = false, scale = 1) {
 		//_p0._box._visible = false;
-		this._animator._body._scale = scale;
-		this._scale = scale;
+		this._body._scale = scale;
 		let dParts = [];
 		this._code = data;
 		for (let i = 0; i < data?.length ?? 0; ++i) {
@@ -156,72 +154,12 @@ export class sdino extends Container {
 			return false;
 		}
 		dParts.splice(2, 0, damage ?? 0);
-		//Test special
-		//dParts[15] = 1;
 		this.initPalette(dParts);
 		this.apply(dParts);
-		this._animator.playAnim(this._dinoInfos.animations.stand);
-		this._animator.playing = pflag;
+		this.setAnimations(this._dinoInfos.animations);
+		this.playAnim('stand');
+		this.playing = pflag;
 		return true;
-	}
-
-	/**
-	 * Will play the given animation if the animation name represent a valid animation for the dino.
-	 * @param {string} anim Name of the animation to play.
-	 */
-	playAnim(anim) {
-		if (this._dinoInfos && this._dinoInfos.animations && this._dinoInfos.animations[anim]) {
-			this._animator.playAnim(this._dinoInfos.animations[anim]);
-		} else if (this._dinoInfos && this._dinoInfos.animations && this._dinoInfos.animations['stand']) {
-			this._animator.playAnim(this._dinoInfos.animations['stand']);
-		}
-	}
-
-	/**
-	 * Extract the visual data from the container into an image.
-	 * Useful to display the dino without having to instanciate a WebGL context every time.
-	 * @param {any} callback A callback receiving the resulting image as parameter.
-	 * @param {number | undefined} width The width of the image. Needs both width and height to be taken into account.
-	 * @param {number | undefined} height The height of the image. Needs width to be defined.
-	 */
-	toImage(callback, width = undefined, height = undefined) {
-		ImageExtractor.convertToImage(this._animator, callback, width, height, true);
-	}
-
-	/**
-	 * Extract the visual data from the container into raw image data.
-	 * Useful to display the dino without having to instanciate a WebGL context every time.
-	 * @param {any} callback A callback receiving the resulting image as parameter.
-	 * @param {number | undefined} width The width of the image. Needs both width and height to be taken into account.
-	 * @param {number | undefined} height The height of the image. Needs width to be defined.
-	 * @param {string} format Format of the output. 'image/png' by default.
-	 */
-	toRawImage(callback, width = undefined, height = undefined, format = 'image/png') {
-		ImageExtractor.convertToImage(this._animator, callback, width, height, false, format);
-	}
-
-	/**
-	 * Extract the visual data from the container into an animation.
-	 * The animation is a div tag of class 'DinoRPG-Animation' comprised of multiple img tags.
-	 * A timeout then goes through the classes DinoRPG-Animation and set the appropriate image.
-	 * @param {any} callback A callback receiving the resulting image as parameter.
-	 * @param {number | undefined} width The width of the image. Needs both width and height to be taken into account.
-	 * @param {number | undefined} height The height of the image. Needs width to be defined.
-	 */
-	toAnimation(callback, width = undefined, height = undefined) {
-		ImageExtractor.convertToAnimation(this._animator, callback, width, height, true);
-	}
-
-	/**
-	 * Extract the visual data from the container into an animation.
-	 * The animation is an array comprised of multiple raw image data (one per frame, in order).
-	 * @param {any} callback A callback receiving the resulting image as parameter.
-	 * @param {number | undefined} width The width of the image. Needs both width and height to be taken into account.
-	 * @param {number | undefined} height The height of the image. Needs width to be defined.
-	 * @param {string} format Format of the output. 'image/png' by default.
-	 */
-	toRawAnimation(callback, width = undefined, height = undefined, format = 'image/png') {
-		ImageExtractor.convertToAnimation(this._animator, callback, width, height, false, format);
 	}
 
 	/**

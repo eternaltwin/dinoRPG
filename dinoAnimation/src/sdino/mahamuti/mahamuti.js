@@ -14,6 +14,8 @@ import { ref } from '../references.js';
 
 export let mahamuti = {
 	name: 'mahamuti',
+	width: 0.78,
+	height: 0.719,
 	transforms: [
 		// 1044
 		{
@@ -102,6 +104,11 @@ export let mahamuti = {
 		{
 			tx: 3.1,
 			ty: -1.75
+		},
+		// adjust
+		{
+			tx: -4.5,
+			ty: -7.5
 		}
 	],
 	glow: {
@@ -180,7 +187,7 @@ export let mahamuti = {
 		ref: ref.fx.shadow,
 		transform: {
 			tx: -1.4,
-			ty: 9.65,
+			ty: 0,
 			a: 0.709,
 			d: 0.709
 		},

@@ -13,6 +13,8 @@ import { dead } from './animations/dead.js';
 
 export let winks = {
 	name: 'winks',
+	width: 0.673,
+	height: 0.45,
 	transforms: [
 		// 285
 		{
@@ -109,6 +111,10 @@ export let winks = {
 			ty: 2.1,
 			a: 0.771,
 			d: 0.771
+		},
+		// adjust
+		{
+			ty: -10
 		}
 	],
 	glow: {
@@ -188,7 +194,7 @@ export let winks = {
 		ref: ref.fx.shadow,
 		transform: {
 			tx: 0.3,
-			ty: 8.55,
+			ty: 0,
 			a: 0.917,
 			d: 0.917
 		},

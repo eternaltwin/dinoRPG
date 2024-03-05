@@ -14,6 +14,8 @@ import { ref } from '../references.js';
 
 export let feross = {
 	name: 'feross',
+	width: 0.599,
+	height: 0.53,
 	transforms: [
 		// 913
 		{
@@ -110,6 +112,10 @@ export let feross = {
 		{
 			tx: 0.6,
 			ty: -0.75
+		},
+		// adjust
+		{
+			ty: -8
 		}
 	],
 	glow: {
@@ -230,7 +236,7 @@ export let feross = {
 		ref: ref.fx.shadow,
 		transform: {
 			tx: -1.4,
-			ty: 9.65,
+			ty: 0,
 			a: 0.709,
 			d: 0.709
 		},

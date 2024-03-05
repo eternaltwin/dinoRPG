@@ -23,7 +23,7 @@ export class Animation extends Container {
 	/**
 	 * Current animation loaded.
 	 * Contains all the keyframes.
-	 * @type {any}
+	 * @type {{id: string, callbacks?: object, frames: object[]}}
 	 */
 	_animation = null;
 	/**
@@ -35,9 +35,25 @@ export class Animation extends Container {
 	/**
 	 * Controls if the animation is running or not.
 	 * Setting it to false will freeze the animation on its current frame but the sub animation will still run.
+	 * If you want to pause everything at once, use the playing in the Animator instead.
 	 * @type {boolean}
 	 */
 	_playing = true;
+	/**
+	 * Determine if the current animation has reached its last frame at least once.
+	 * Reset once the animation is changed.
+	 * @type {boolean}
+	 */
+	_ended = true;
+
+	/**
+	 * True if the current animation has reached its last frame at least once.
+	 * Reset once the animation changes.
+	 * @type {boolean}
+	 */
+	get hasEnded() {
+		return this._ended;
+	}
 
 	/**
 	 * Current index of the animation being played.
@@ -49,6 +65,11 @@ export class Animation extends Container {
 	 * @type {number}
 	 */
 	_offsetIdx = 0;
+	/**
+	 * Next animation offset. Will be applied as soon as the animation loops.
+	 * @type {number}
+	 */
+	_nextOffsetIdx;
 
 	/**
 	 * Color transformation of the animation.
@@ -60,6 +81,15 @@ export class Animation extends Container {
 	 * @type {BlurFilter}
 	 */
 	_blurFilter;
+
+	/**
+	 * Create a new Animation and specify the scale.
+	 * @param {number} scale The Scale of the animation.
+	 */
+	constructor(scale = 1) {
+		super();
+		this._scale = scale;
+	}
 
 	/**
 	 * Add a child animation to the object.
@@ -169,7 +199,20 @@ export class Animation extends Container {
 	 */
 	setOffsetIdx(idx) {
 		const length = this.getAnimationLength();
-		this._offsetIdx = length > 0 ? (idx ?? 0) % this.getAnimationLength() : 0;
+		this._offsetIdx = length > 0 ? (idx ?? 0) % length : 0;
+		this._nextOffsetIdx = undefined;
+	}
+
+	/**
+	 * Set the next offset index, which will be updated once the animation finishes looping.
+	 * @param {number | undefined} idx The new offset index of the animation.
+	 */
+	setNextOffsetIdx(idx) {
+		const length = this.getAnimationLength();
+		const offsetIdx = length > 0 ? (idx ?? 0) % length : 0;
+		if (offsetIdx !== this._offsetIdx) {
+			this._nextOffsetIdx = offsetIdx;
+		}
 	}
 
 	/**
@@ -179,7 +222,9 @@ export class Animation extends Container {
 	 * @param {number} idx The new animation index.
 	 */
 	increaseCurrentIdx(idx) {
-		this.setCurrentIdx(this._currentIdx + idx);
+		if (this._playing) {
+			this.setCurrentIdx(this._currentIdx + idx);
+		}
 		for (const a of this._childAnimations) {
 			a.increaseCurrentIdx(idx);
 		}
@@ -192,7 +237,16 @@ export class Animation extends Container {
 	 * @param {number} idx The desired current index.
 	 */
 	setCurrentIdx(idx) {
-		const length = this.getAnimationLength() - this._offsetIdx;
+		let length = this.getAnimationLength() - this._offsetIdx;
+		if (idx >= length - 1) {
+			this._ended = true;
+			if (this._nextOffsetIdx !== undefined) {
+				this.setOffsetIdx(this._nextOffsetIdx);
+				this._nextOffsetIdx = undefined;
+				idx -= length - 1;
+				length = this.getAnimationLength() - this._offsetIdx;
+			}
+		}
 		this._currentIdx = length > 0 ? idx % length : 0;
 	}
 
@@ -206,9 +260,10 @@ export class Animation extends Container {
 
 	/**
 	 * Replace the current animation by the one passed as parameter.
-	 * @param {Array} animation The animation to set as the current animation.
+	 * @param {{id: string, callbacks?: object, frames: object[]}} animation The animation to set as the current animation.
 	 */
 	setAnimation(animation) {
+		this._ended = false;
 		this._animation = animation;
 	}
 
@@ -240,6 +295,13 @@ export class Animation extends Container {
 	 */
 	play() {
 		this._playing = true;
+	}
+
+	/**
+	 * Force the animation to be marked as ended.
+	 */
+	markAsEnded() {
+		this._ended = true;
 	}
 
 	/**

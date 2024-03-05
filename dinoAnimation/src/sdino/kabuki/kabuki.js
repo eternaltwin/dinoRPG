@@ -15,6 +15,8 @@ import { ref } from '../references.js';
 
 export let kabuki = {
 	name: 'kabuki',
+	width: 0.574,
+	height: 0.626,
 	transforms: [
 		// 965
 		{
@@ -111,6 +113,10 @@ export let kabuki = {
 		{
 			tx: -2.4,
 			ty: 1.25
+		},
+		// adjust
+		{
+			ty: -7.5
 		}
 	],
 	glow: {
@@ -201,7 +207,7 @@ export let kabuki = {
 		ref: ref.fx.shadow,
 		transform: {
 			tx: -1.4,
-			ty: 9.65,
+			ty: 0,
 			a: 0.709,
 			d: 0.709
 		},
