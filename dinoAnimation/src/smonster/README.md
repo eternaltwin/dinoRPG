@@ -65,7 +65,7 @@ Checked monsters are the ones recreated in the project as of yet.
 -   [ ] grom3
 -   [ ] doro
 -   [ ] dorou
--   [ ] lucet
+-   [x] lucet
 -   [ ] lapouf
 -   [ ] ecu
 -   [ ] piglou
