@@ -302,7 +302,7 @@ export const initializeMonster = (
 
 	const fighter: DetailedFighter = {
 		id: -memory.existingMonsters,
-		display: '', //TODO
+		display: monster.display ?? '',
 		name: monster.name,
 		level: monster.level,
 		type: 'monster' as const,

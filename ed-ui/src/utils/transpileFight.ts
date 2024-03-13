@@ -1,6 +1,6 @@
-import { FightStep } from '../models/fight/FightStep.mjs';
-import { placeList } from '../models/place/PlaceList.mjs';
-import { GroundEnum } from '../models/enums/GroundEnum.mjs';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -77,12 +77,11 @@ export function transpileFight(fight: Array<FightStep>) {
 						life: 100,
 						name: step.fighter.name,
 						side: step.fighter.attacker,
-						scale: 1,
+						scale: step.fighter.id > 0 ? (step.fighter.maxLife ?? 100) / 100 : 1,
 						fid: step.fighter.id,
 						gfx: step.fighter.display
 					}
 				};
-				break;
 			case 'activateEnvironment':
 				break;
 			case 'addStatus':
@@ -163,7 +162,6 @@ export function transpileFight(fight: Array<FightStep>) {
 				break;
 			case 'survive':
 				break;
-				return;
 		}
 		return;
 	});

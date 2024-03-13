@@ -107,6 +107,7 @@ export async function moveFight(
 ) {
 	const monsters = generateMonster(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
 	const fightResult = calculateFight(team, monsters, placeId);
+	// console.log(fightResult.steps[0])
 	const result = await rewardFight(team, monsters, fightResult, placeId);
 
 	// const result = getFightResult(dinoz, monsters[0], fightResult);

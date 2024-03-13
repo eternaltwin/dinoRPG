@@ -29,4 +29,5 @@ export type MonsterFiche = {
 	canBeCaptured: boolean;
 	events?: GameEvent[];
 	noMove?: boolean;
+	display?: string;
 };

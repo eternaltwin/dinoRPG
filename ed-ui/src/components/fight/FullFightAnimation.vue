@@ -8,7 +8,7 @@ import { Fight } from '@drpg/dino-animation';
 import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
-import { resolveFightingPlace, transpileFight } from '@drpg/core/utils/transpileFight';
+import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 
 export default defineComponent({
 	name: 'Fight',

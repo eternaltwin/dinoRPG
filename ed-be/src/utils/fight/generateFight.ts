@@ -13,6 +13,7 @@ import {
 	getLimitedRandomOpponent,
 	hasStatus,
 	heal,
+	initStepFighter,
 	playFighterTurn,
 	stepFighter,
 	updateStat
@@ -157,7 +158,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		if (fighter.costume) {
 			fightData.steps.push({
 				action: 'setCostume',
-				fighter: stepFighter(fighter),
+				fighter: initStepFighter(fighter),
 				costume: fighter.costume.name
 			});
 		}
@@ -165,7 +166,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		// Add arrive step for all fighters
 		fightData.steps.push({
 			action: 'arrive',
-			fighter: stepFighter(fighter)
+			fighter: initStepFighter(fighter)
 		});
 
 		// Temportal reduction

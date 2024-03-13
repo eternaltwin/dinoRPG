@@ -364,13 +364,27 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 	return null;
 };
 
-export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'display'>) => {
+export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker'>) => {
+	const data: StepFighter = {
+		id: fighter.id,
+		name: fighter.name,
+		type: fighter.type,
+		attacker: fighter.attacker
+	};
+
+	return data;
+};
+
+export const initStepFighter = (
+	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'display' | 'maxHp'>
+) => {
 	const data: StepFighter = {
 		id: fighter.id,
 		display: fighter.display,
 		name: fighter.name,
 		type: fighter.type,
-		attacker: fighter.attacker
+		attacker: fighter.attacker,
+		maxLife: fighter.maxHp
 	};
 
 	return data;

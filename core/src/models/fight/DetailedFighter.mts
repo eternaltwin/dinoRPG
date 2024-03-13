@@ -90,7 +90,7 @@ export interface DetailedFighter {
 	id: number;
 	name: string;
 	level: number;
-	display: string;
+	display?: string;
 	type: FighterType;
 	master?: number;
 	attacker: boolean;

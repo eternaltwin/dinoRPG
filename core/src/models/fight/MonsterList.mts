@@ -108,7 +108,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 1,
 		zones: [MapZone.DINOLAND],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'goupi'
 	},
 	[Monster.WOLF]: {
 		id: Monster.WOLF,
@@ -128,7 +129,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOLAND],
 		groups: [5, 3, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_BITE]
+		skills: [Skill.M_BITE],
+		display: 'wolf'
 	},
 	[Monster.GLUON]: {
 		id: Monster.GLUON,
@@ -147,7 +149,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
-		skills: [Skill.M_ABSORPTION]
+		skills: [Skill.M_ABSORPTION],
+		display: 'gluon'
 	},
 	[Monster.GREEN_GIANT]: {
 		id: Monster.GREEN_GIANT,
@@ -166,7 +169,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 14,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
-		skills: [Skill.M_REGENERATION]
+		skills: [Skill.M_REGENERATION],
+		display: 'gvert'
 	},
 	[Monster.COQDUR]: {
 		id: Monster.COQDUR,
@@ -427,7 +431,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
 		skills: [Skill.M_COMET],
-		noMove: true
+		noMove: true,
+		display: 'grdien'
 	},
 	[Monster.WORM2]: {
 		id: Monster.WORM2,
