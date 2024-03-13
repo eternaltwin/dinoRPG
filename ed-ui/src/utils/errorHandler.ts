@@ -12,6 +12,9 @@ export const errorHandler = {
 			} else if (err.response.status === 401) {
 				sessionStorage.clear();
 				router.go(0);
+			} else if (err.response.status === 405) {
+				sessionStorage.clear();
+				router.go(0);
 			} else {
 				// For pop up display if it's a servor error
 				EventBus.emit('isLoading', false);
