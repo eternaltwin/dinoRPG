@@ -243,21 +243,25 @@ export default defineComponent({
 					}
 					break;
 				case Action.DIG:
-					this.digReward = await DinozService.dig(parseInt(this.$route.params.id.toString()));
-					if (this.digReward.rewardType === RewardEnum.GOLD) {
-						EventBus.emit('toast', {
-							type: 'reward',
-							message: formatText(this.$t(`dig.gold`, { gold: this.digReward.value }))
-						});
-					} else if (this.digReward.rewardType === RewardEnum.STATUS) {
-						EventBus.emit('toast', {
-							type: 'reward',
-							message: formatText(
-								this.$t(`dig.status`, {
-									item: mixin.methods.formatContent(this.$t(`status.name.${this.digReward.value}`))
-								})
-							)
-						});
+					try {
+						this.digReward = await DinozService.dig(parseInt(this.$route.params.id.toString()));
+						if (this.digReward.rewardType === RewardEnum.GOLD) {
+							EventBus.emit('toast', {
+								type: 'reward',
+								message: formatText(this.$t(`dig.gold`, { gold: this.digReward.value }))
+							});
+						} else if (this.digReward.rewardType === RewardEnum.STATUS) {
+							EventBus.emit('toast', {
+								type: 'reward',
+								message: formatText(
+									this.$t(`dig.status`, {
+										item: mixin.methods.formatContent(this.$t(`status.name.${this.digReward.value}`))
+									})
+								)
+							});
+						}
+					} catch (e) {
+						errorHandler.handle(e);
 					}
 					EventBus.emit('refreshDinoz', true);
 					break;
