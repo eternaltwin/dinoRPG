@@ -102,7 +102,7 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.PTEROZ
+				value: rewardList.ROCKY
 			},
 			{
 				rewardType: RewardEnum.STATUS,
