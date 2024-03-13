@@ -24,11 +24,11 @@
 		<ul>
 			<table class="action_button">
 				<tbody>
-					<DZFollow v-if="dinozActions.some(a => a.name === Action.FOLLOW)"></DZFollow>
+					<DZFollow v-if="dinozActions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
 					<Tippy
 						tag="tr"
 						theme="normal"
-						v-for="action in dinozActions.filter(a => a.name !== Action.FOLLOW)"
+						v-for="action in dinozActions?.filter(a => a.name !== Action.FOLLOW)"
 						:key="action"
 						:id="action.imgName"
 						@click="launch(action)"
@@ -125,8 +125,8 @@ export default defineComponent({
 			shopNameList: shopNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
-			// mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
-			// 	.missionHUD,
+			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
+				.missionHUD,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
