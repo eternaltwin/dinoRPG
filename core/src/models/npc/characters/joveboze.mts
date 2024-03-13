@@ -34,17 +34,19 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.RASCAPHANDRE_DECOY
-			},
+			}
+		]
+	},
+	attack_win: {
+		stepName: 'attack_win',
+		nextStep: [],
+		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.JVBZ,
 				reverse: true
 			}
 		]
-	},
-	attack_win: {
-		stepName: 'attack_win',
-		nextStep: []
 	},
 	stop: {
 		stepName: 'stop',
