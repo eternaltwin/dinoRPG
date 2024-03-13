@@ -417,7 +417,8 @@ export const useRice = (dinoz: Pick<Dinoz, 'id'>) => {
 };
 
 export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: number) => {
-	const lifeHealed = dinoz.maxLife - dinoz.life > lifeToAdd ? lifeToAdd : dinoz.maxLife - dinoz.life;
+	const lifeMissing = dinoz.maxLife - dinoz.life; // Calculer la quantité de points de vie manquants
+    	const lifeHealed = Math.min(lifeToAdd, lifeMissing); // Utiliser le plus petit des deux nombres
 	if (lifeHealed === 0) throw new ErrorFormator(400, 'AlreadyAtMaxHealth');
 	if (dinoz.life === 0) throw new ErrorFormator(400, 'DinozIsDead');
 	dinoz.life += lifeHealed;
