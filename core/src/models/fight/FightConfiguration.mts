@@ -14,6 +14,7 @@ export type DinozToGetFighter = Pick<
 	| 'nbrUpWater'
 	| 'nbrUpLightning'
 	| 'nbrUpAir'
+	| 'display'
 > & {
 	items: Pick<DinozItem, 'itemId'>[];
 	skills: Pick<DinozSkill, 'skillId'>[];

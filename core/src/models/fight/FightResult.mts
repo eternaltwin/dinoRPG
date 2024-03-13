@@ -2,6 +2,7 @@ import { FightStep } from './FightStep.mjs';
 import { FighterResultFiche } from './DetailedFighter.mjs';
 import { Monster } from './MonsterList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
+import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 
 export interface FightResult {
 	opponent: string[];
@@ -18,6 +19,7 @@ export interface FightResult {
 		id: number;
 		itemsUsed: number[];
 	}[];
+	place: PlaceEnum;
 }
 
 export interface CatchResult {
@@ -65,4 +67,5 @@ export interface FightProcessResult {
 		attack: FightStats;
 		defense: FightStats;
 	};
+	place: PlaceEnum;
 }

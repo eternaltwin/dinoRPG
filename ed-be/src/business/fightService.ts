@@ -82,7 +82,7 @@ export async function processFight(req: Request) {
 
 	const fightResult = calculateFight(team, monster, dinozData.placeId);
 
-	const result = await rewardFight(team, monster, fightResult);
+	const result = await rewardFight(team, monster, fightResult, dinozData.placeId);
 
 	// const result = getFightResult(dinozData, monster[0], fightResult);
 
@@ -107,7 +107,7 @@ export async function moveFight(
 ) {
 	const monsters = generateMonster(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
 	const fightResult = calculateFight(team, monsters, placeId);
-	const result = await rewardFight(team, monsters, fightResult);
+	const result = await rewardFight(team, monsters, fightResult, placeId);
 
 	// const result = getFightResult(dinoz, monsters[0], fightResult);
 	//If any dinoz is on a mission, check if the fight result progress the mission
@@ -155,7 +155,7 @@ export function calculateFight(
 		place
 	};
 
-	return generateFight(fightConfiguration);
+	return generateFight(fightConfiguration, place);
 }
 
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
@@ -166,7 +166,8 @@ export async function rewardFight(
 		skills: Pick<DinozSkill, 'skillId'>[];
 	})[],
 	monsters: MonsterFiche[],
-	fightResult: FightProcessResult
+	fightResult: FightProcessResult,
+	place: PlaceEnum
 ) {
 	if (!team.length || !team[0].player) {
 		throw new ErrorFormator(500, 'No player found');
@@ -355,7 +356,8 @@ export async function rewardFight(
 		itemsUsed: fightResult.attackers.map(a => ({
 			id: a.dinozId,
 			itemsUsed: a.itemsUsed
-		}))
+		})),
+		place: place
 	};
 }
 

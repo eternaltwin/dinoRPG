@@ -364,9 +364,10 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 	return null;
 };
 
-export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker'>) => {
+export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'display'>) => {
 	const data: StepFighter = {
 		id: fighter.id,
+		display: fighter.display,
 		name: fighter.name,
 		type: fighter.type,
 		attacker: fighter.attacker

@@ -110,7 +110,7 @@ export async function mouvementListener(
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, team)) {
 		if (potentialSpecialActions.opponents) {
 			const fightResult = calculateFight(team, potentialSpecialActions.opponents, finalPlace);
-			const result = await rewardFight(team, potentialSpecialActions.opponents, fightResult);
+			const result = await rewardFight(team, potentialSpecialActions.opponents, fightResult, finalPlace);
 			if (fightResult.winner) {
 				await rewarder(potentialSpecialActions.reward, team);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
@@ -135,7 +135,7 @@ export async function mouvementListener(
 		if (actualStep && team.every(dinoz => getActualStep(dinoz)?.stepId === actualStep.stepId)) {
 			if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
 				const fightResult = calculateFight(team, actualStep.requirement.target, finalPlace);
-				const result = await rewardFight(team, actualStep.requirement.target, fightResult);
+				const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace);
 				if (fightResult.winner) {
 					const teamIds = team.map(dinoz => dinoz.id);
 

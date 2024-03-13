@@ -57,7 +57,7 @@ const orderFighters = (fightData: DetailedFight) => {
 	});
 };
 
-const generateFight = (config: FightConfiguration): FightProcessResult => {
+const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProcessResult => {
 	const fightData: DetailedFight = {
 		loser: null,
 		steps: [] as FightStep[],
@@ -425,7 +425,8 @@ const generateFight = (config: FightConfiguration): FightProcessResult => {
 		defenders: defendersResults,
 		catches,
 		steps: fightData.steps,
-		stats: fightData.stats
+		stats: fightData.stats,
+		place: place
 	};
 };
 

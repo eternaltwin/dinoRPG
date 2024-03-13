@@ -4,7 +4,8 @@
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
 	{{ fightText }}<br />
-	<FightAnimation />
+	<!--	<FightAnimation />-->
+	<FullFightAnimation :history="fight.history" :place="fight.place" />
 	<p class="fight-history" v-html="fightHistory" />
 	<div class="wrapper">
 		<div class="debrief" :class="lang">
@@ -55,14 +56,14 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
 import { defineComponent, PropType } from 'vue';
-import FightAnimation from '../components/fight/FightAnimation.vue';
+import FullFightAnimation from '../components/fight/FullFightAnimation.vue';
 import translateFightStep from '../utils/translateFightStep.js';
 
 export default defineComponent({
 	name: 'Fight',
 	components: {
 		TitleHeader,
-		FightAnimation
+		FullFightAnimation
 	},
 	data() {
 		return {

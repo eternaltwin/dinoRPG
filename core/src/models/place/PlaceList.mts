@@ -5,6 +5,7 @@ import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { Condition } from '../npc/NpcConditions.mjs';
 import { MissionID } from '../missions/missionList.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
+import { GroundEnum } from '../enums/GroundEnum.mjs';
 
 export const placeList: Record<
 	PlaceEnum,
@@ -17,6 +18,10 @@ export const placeList: Record<
 		alias?: number;
 		gather?: GatherType;
 		specialGather?: GatherType;
+		ground?: GroundEnum;
+		background?: string;
+		top?: number;
+		bottom?: number;
 	}
 > = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -32,34 +37,49 @@ export const placeList: Record<
 		borderPlace: [7, 10, 11, 13],
 		map: MapZone.DINOLAND,
 		gather: GatherType.FISH,
-		specialGather: GatherType.ANNIV
+		specialGather: GatherType.ANNIV,
+		ground: GroundEnum.DIRT,
+		background: 's_port',
+		top: 140
 	},
 	[PlaceEnum.PLACE_DU_MARCHE]: {
 		placeId: PlaceEnum.PLACE_DU_MARCHE,
 		name: 'market',
 		borderPlace: [4],
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		ground: GroundEnum.DIRT,
+		background: 'city2',
+		top: 155
 	},
 	[PlaceEnum.PAPY_JOE]: {
 		placeId: PlaceEnum.PAPY_JOE,
 		name: 'papy',
 		borderPlace: [4, 6, 7],
 		map: MapZone.DINOLAND,
-		gather: GatherType.HUNT
+		gather: GatherType.HUNT,
+		ground: GroundEnum.DIRT,
+		background: 's_papy',
+		top: 165
 	},
 	[PlaceEnum.FORCEBRUT]: {
 		placeId: PlaceEnum.FORCEBRUT,
 		name: 'forcebrut',
 		borderPlace: [2, 3, 7],
 		map: MapZone.DINOLAND,
-		gather: GatherType.ENERGY1
+		gather: GatherType.ENERGY1,
+		ground: GroundEnum.DIRT,
+		background: 's_frcbrt',
+		top: 120
 	},
 	[PlaceEnum.DINOVILLE]: {
 		placeId: PlaceEnum.DINOVILLE,
 		name: 'dnv',
 		borderPlace: [6, 7, 12],
 		map: MapZone.DINOLAND,
-		gather: GatherType.SEEK
+		gather: GatherType.SEEK,
+		ground: GroundEnum.NONE,
+		background: 's_dnv',
+		top: 155
 	},
 	[PlaceEnum.UNIVERSITE]: {
 		placeId: PlaceEnum.UNIVERSITE,
@@ -67,21 +87,29 @@ export const placeList: Record<
 		borderPlace: [3, 5, 8],
 		map: MapZone.DINOLAND,
 		gather: GatherType.CUEILLE1,
-		specialGather: GatherType.DAILY
+		specialGather: GatherType.DAILY,
+		ground: GroundEnum.NONE,
+		background: 's_univ'
 	},
 	[PlaceEnum.FOUTAINE_DE_JOUVENCE]: {
 		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 		name: 'fountj',
 		borderPlace: [1, 3, 4, 5],
 		map: MapZone.DINOLAND,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.CUEILLE1,
+		ground: GroundEnum.NONE,
+		background: 's_fountj',
+		top: 170
 	},
 	[PlaceEnum.COLLINES_ESCARPEES]: {
 		placeId: PlaceEnum.COLLINES_ESCARPEES,
 		name: 'colesc',
 		borderPlace: [6, 9],
 		map: MapZone.DINOLAND,
-		gather: GatherType.HUNT
+		gather: GatherType.HUNT,
+		ground: GroundEnum.DIRT,
+		background: 's_colesc',
+		top: 130
 	},
 	[PlaceEnum.GO_TO_GRAND_TOUT_CHAUD]: {
 		placeId: PlaceEnum.GO_TO_GRAND_TOUT_CHAUD,
@@ -113,7 +141,10 @@ export const placeList: Record<
 				{ [ConditionEnum.DINOZ_LIFE]: [Comparator.LESSER_EQUAL, 10] }
 			]
 		},
-		map: MapZone.DINOLAND
+		map: MapZone.DINOLAND,
+		ground: GroundEnum.DIRT,
+		background: 's_graveyard',
+		top: 110
 	},
 	[PlaceEnum.GO_TO_DINOPLAZA]: {
 		placeId: PlaceEnum.GO_TO_DINOPLAZA,
@@ -141,28 +172,40 @@ export const placeList: Record<
 		name: 'auree',
 		borderPlace: [15, 23],
 		map: MapZone.JUNGLE,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.CUEILLE1,
+		ground: GroundEnum.DIRT,
+		background: 's_auree',
+		top: 120
 	},
 	[PlaceEnum.CHEMIN_GLAUQUE]: {
 		placeId: PlaceEnum.CHEMIN_GLAUQUE,
 		name: 'chemin',
 		borderPlace: [14, 16, 17],
 		map: MapZone.JUNGLE,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.CUEILLE1,
+		ground: GroundEnum.DIRT,
+		background: 's_chemin',
+		top: 175
 	},
 	[PlaceEnum.COLLINES_HANTEES]: {
 		placeId: PlaceEnum.COLLINES_HANTEES,
 		name: 'collin',
 		borderPlace: [15, 17],
 		map: MapZone.JUNGLE,
-		gather: GatherType.SEEK
+		gather: GatherType.SEEK,
+		ground: GroundEnum.DIRT,
+		background: 's_collin',
+		top: 175
 	},
 	[PlaceEnum.FLEUVE_JUMIN]: {
 		placeId: PlaceEnum.FLEUVE_JUMIN,
 		name: 'fleuve',
 		borderPlace: [15, 16, 19, 18],
 		map: MapZone.JUNGLE,
-		gather: GatherType.FISH
+		gather: GatherType.FISH,
+		ground: GroundEnum.NONE,
+		background: 's_fleuve',
+		top: 140
 	},
 	[PlaceEnum.FLEUVE_JUMIN_BIS]: {
 		placeId: PlaceEnum.FLEUVE_JUMIN_BIS,
@@ -172,7 +215,10 @@ export const placeList: Record<
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},
 		alias: 17,
-		map: MapZone.JUNGLE
+		map: MapZone.JUNGLE,
+		ground: GroundEnum.NONE,
+		background: 's_fleuve',
+		top: 140
 	},
 	[PlaceEnum.CAMP_KORGON]: {
 		placeId: PlaceEnum.CAMP_KORGON,
@@ -182,7 +228,10 @@ export const placeList: Record<
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},
 		map: MapZone.JUNGLE,
-		gather: GatherType.HUNT
+		gather: GatherType.HUNT,
+		ground: GroundEnum.ROCK,
+		background: 's_camp',
+		top: 150
 	},
 	[PlaceEnum.JUNGLE_SAUVAGE]: {
 		placeId: PlaceEnum.JUNGLE_SAUVAGE,
@@ -192,14 +241,20 @@ export const placeList: Record<
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},
 		map: MapZone.JUNGLE,
-		gather: GatherType.HUNT
+		gather: GatherType.HUNT,
+		ground: GroundEnum.NONE,
+		background: 's_jungle',
+		top: 120
 	},
 	[PlaceEnum.PORTE_DE_SYLVENOIRE]: {
 		placeId: PlaceEnum.PORTE_DE_SYLVENOIRE,
 		name: 'garde',
 		borderPlace: [19, 21],
 		map: MapZone.JUNGLE,
-		gather: GatherType.ENERGY1
+		gather: GatherType.ENERGY1,
+		ground: GroundEnum.DIRT,
+		background: 's_garde',
+		top: 120
 	},
 	[PlaceEnum.GO_TO_STEPPES]: {
 		placeId: PlaceEnum.GO_TO_STEPPES,
@@ -241,7 +296,10 @@ export const placeList: Record<
 		name: 'chutes',
 		borderPlace: [24, 26, 27, 29],
 		map: MapZone.ILES,
-		gather: GatherType.FISH
+		gather: GatherType.FISH,
+		ground: GroundEnum.DIRT,
+		background: 's_chutes',
+		top: 110
 	},
 	[PlaceEnum.GO_TO_DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.GO_TO_DOME_SOULAFLOTTE,
@@ -258,7 +316,10 @@ export const placeList: Record<
 		name: 'baobob',
 		borderPlace: [25],
 		map: MapZone.ILES,
-		gather: GatherType.HUNT
+		gather: GatherType.HUNT,
+		ground: GroundEnum.DIRT,
+		background: 's_baobob',
+		top: 130
 	},
 	[PlaceEnum.DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.DOME_SOULAFLOTTE,
@@ -268,28 +329,40 @@ export const placeList: Record<
 			[ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY
 		},
 		map: MapZone.ILES,
-		gather: GatherType.ENERGY1
+		gather: GatherType.ENERGY1,
+		ground: GroundEnum.NONE,
+		background: 's_dome',
+		top: 110
 	},
 	[PlaceEnum.MARAIS_COLLANT]: {
 		placeId: PlaceEnum.MARAIS_COLLANT,
 		name: 'marais',
 		borderPlace: [25, 30, 31, 33],
 		map: MapZone.ILES,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.CUEILLE1,
+		ground: GroundEnum.WATER,
+		background: 'swp_clear',
+		top: 160
 	},
 	[PlaceEnum.MINES_DE_CORAIL]: {
 		placeId: PlaceEnum.MINES_DE_CORAIL,
 		name: 'corail',
 		borderPlace: [29, 31],
 		map: MapZone.ILES,
-		gather: GatherType.SEEK
+		gather: GatherType.SEEK,
+		ground: GroundEnum.DIRT,
+		background: 's_corail',
+		top: 150
 	},
 	[PlaceEnum.ILE_WAIKIKI]: {
 		placeId: PlaceEnum.ILE_WAIKIKI,
 		name: 'ilewkk',
 		borderPlace: [29, 30, 32],
 		map: MapZone.ILES,
-		gather: GatherType.FISH
+		gather: GatherType.FISH,
+		ground: GroundEnum.DIRT,
+		background: 's_ilewkk',
+		top: 110
 	},
 	[PlaceEnum.GO_TO_PORT_DE_PRECHE]: {
 		placeId: PlaceEnum.GO_TO_PORT_DE_PRECHE,
@@ -302,7 +375,10 @@ export const placeList: Record<
 		placeId: PlaceEnum.ATELIER_BROC,
 		name: 'chbroc',
 		borderPlace: [29],
-		map: MapZone.ILES
+		map: MapZone.ILES,
+		ground: GroundEnum.DIRT,
+		background: 'broc',
+		top: 110
 	},
 	[PlaceEnum.GO_TO_DINOVILLE]: {
 		placeId: PlaceEnum.GO_TO_DINOVILLE,
@@ -315,37 +391,55 @@ export const placeList: Record<
 		placeId: PlaceEnum.DINOPLAZA,
 		name: 'dplaza',
 		borderPlace: [36, 37, 38, 34],
-		map: MapZone.DINOWEST
+		map: MapZone.DINOWEST,
+		ground: GroundEnum.DIRT,
+		background: 's_plaza',
+		top: 110
 	},
 	[PlaceEnum.VILLA]: {
 		placeId: PlaceEnum.VILLA,
 		name: 'villa',
 		borderPlace: [35, 37],
-		map: MapZone.DINOWEST
+		map: MapZone.DINOWEST,
+		ground: GroundEnum.NONE,
+		background: 'villa',
+		top: 110
 	},
 	[PlaceEnum.CINEMA_PARADINO]: {
 		placeId: PlaceEnum.CINEMA_PARADINO,
 		name: 'dcine',
 		borderPlace: [36, 35, 38, 40],
-		map: MapZone.DINOWEST
+		map: MapZone.DINOWEST,
+		ground: GroundEnum.NONE,
+		background: 's_cinema',
+		top: 110
 	},
 	[PlaceEnum.CLINIQUE]: {
 		placeId: PlaceEnum.CLINIQUE,
 		name: 'clinik',
 		borderPlace: [35, 37],
-		map: MapZone.DINOWEST
+		map: MapZone.DINOWEST,
+		ground: GroundEnum.NONE,
+		background: 'clinique1',
+		top: 110
 	},
 	[PlaceEnum.CHATEAU_DE_DINOVILLE]: {
 		placeId: PlaceEnum.CHATEAU_DE_DINOVILLE,
 		name: 'chato',
 		borderPlace: [40],
-		map: MapZone.DINOWEST
+		map: MapZone.DINOWEST,
+		ground: GroundEnum.DIRT,
+		background: 'dnv_throne',
+		top: 140
 	},
 	[PlaceEnum.POSTE_DE_GARDE]: {
 		placeId: PlaceEnum.POSTE_DE_GARDE,
 		name: 'poste',
 		borderPlace: [39, 41, 37],
-		map: MapZone.DINOWEST
+		map: MapZone.DINOWEST,
+		ground: GroundEnum.DIRT,
+		background: 'dnv_chato',
+		top: 130
 	},
 	[PlaceEnum.GO_TO_VOIE_TEMPLE_CELESTE]: {
 		placeId: PlaceEnum.GO_TO_VOIE_TEMPLE_CELESTE,
@@ -365,47 +459,68 @@ export const placeList: Record<
 		name: 'bslt',
 		borderPlace: [42, 44],
 		map: MapZone.GTOUTCHAUD,
-		gather: GatherType.ENERGY1
+		gather: GatherType.ENERGY1,
+		ground: GroundEnum.NONE,
+		background: 's_pentes',
+		top: 130
 	},
 	[PlaceEnum.FORGES_DU_GTC]: {
 		placeId: PlaceEnum.FORGES_DU_GTC,
 		name: 'forges',
 		borderPlace: [43, 45, 46, 47],
 		map: MapZone.GTOUTCHAUD,
-		gather: GatherType.CUEILLE1
+		gather: GatherType.CUEILLE1,
+		ground: GroundEnum.NONE,
+		background: 's_forges',
+		top: 110
 	},
 	[PlaceEnum.RUINES_ASHPOUK]: {
 		placeId: PlaceEnum.RUINES_ASHPOUK,
 		name: 'rashpk',
 		borderPlace: [44],
 		map: MapZone.GTOUTCHAUD,
-		gather: GatherType.SEEK
+		gather: GatherType.SEEK,
+		ground: GroundEnum.DIRT,
+		background: 's_rashpk',
+		top: 160
 	},
 	[PlaceEnum.FOSSELAVE]: {
 		placeId: PlaceEnum.FOSSELAVE,
 		name: 'fosslv',
 		borderPlace: [44, 48],
 		map: MapZone.GTOUTCHAUD,
-		gather: GatherType.SEEK
+		gather: GatherType.SEEK,
+		ground: GroundEnum.NONE,
+		background: 's_fosslv',
+		top: 110
 	},
 	[PlaceEnum.REPAIRE_DU_VENERABLE]: {
 		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
 		name: 'vener',
 		borderPlace: [44, 52],
 		map: MapZone.GTOUTCHAUD,
-		gather: GatherType.HUNT
+		gather: GatherType.HUNT,
+		ground: GroundEnum.NONE,
+		background: 's_vener',
+		top: 130
 	},
 	[PlaceEnum.TUNNEL_SOUS_LA_BRANCHE]: {
 		placeId: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 		name: 'tunel',
 		borderPlace: [46, 50],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		ground: GroundEnum.DIRT,
+		background: 's_tunel',
+		top: 130
 	},
 	[PlaceEnum.GORGES_PROFONDES]: {
 		placeId: PlaceEnum.GORGES_PROFONDES,
 		name: 'gorges',
 		borderPlace: [48, 51],
-		map: MapZone.GTOUTCHAUD
+		map: MapZone.GTOUTCHAUD,
+		ground: GroundEnum.WATER,
+		background: 'cavern2',
+		top: 110
 	},
 	[PlaceEnum.GO_TO_TUNNEL]: {
 		placeId: PlaceEnum.GO_TO_TUNNEL,

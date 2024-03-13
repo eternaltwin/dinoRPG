@@ -89,6 +89,7 @@ export const initializeDinoz = (
 
 	const fighter: DetailedFighter = {
 		id: dinoz.id,
+		display: dinoz.display,
 		name: dinoz.name,
 		level: dinoz.level,
 		type: 'dinoz' as const,
@@ -301,6 +302,7 @@ export const initializeMonster = (
 
 	const fighter: DetailedFighter = {
 		id: -memory.existingMonsters,
+		display: '', //TODO
 		name: monster.name,
 		level: monster.level,
 		type: 'monster' as const,

@@ -127,3 +127,26 @@ import { Container } from 'pixi.js';
 import { Animator } from './display/Animator.js';
 
 //# sourceMappingURL=sdino.d.ts.map
+
+export type dataDisplayFight = {
+	legacy_data?: string;
+	bg?: string;
+	history?: [];
+	debug?: boolean;
+};
+
+export class Fight {
+	constructor(data: any);
+
+	get paused(): boolean;
+
+	update(): void;
+
+	getDisplay(): HTMLCanvasElement;
+
+	pause(frames: number): void;
+
+	getMTFormat(forceDAData?: boolean): string;
+
+	destroy(): void;
+}

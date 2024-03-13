@@ -150,7 +150,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			}
 			const fightResult = calculateFight(team, nextStepWantedData.fight, dinoz.placeId);
 
-			const result = await rewardFight(team, nextStepWantedData.fight, fightResult);
+			const result = await rewardFight(team, nextStepWantedData.fight, fightResult, dinoz.placeId);
 			// Reward statement
 			if (result.result) {
 				await updateDinozStep(dinozId, pnj.id, nextStepWanted);

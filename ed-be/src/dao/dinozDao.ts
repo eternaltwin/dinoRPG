@@ -282,6 +282,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 		where: { id: dinozId },
 		select: {
 			id: true,
+			display: true,
 			playerId: true,
 			name: true,
 			level: true,
@@ -318,6 +319,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			followers: {
 				select: {
 					id: true,
+					display: true,
 					playerId: true,
 					name: true,
 					level: true,
