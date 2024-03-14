@@ -5,11 +5,21 @@ import { Status, FighterType } from './DetailedFighter.mjs';
 
 export interface StepFighter {
 	id: number;
-	display?: string;
 	name: string;
 	type: FighterType;
 	attacker: boolean;
-	maxLife?: number;
+}
+
+export interface InitStepFighter {
+	id: number;
+	display: string;
+	name: string;
+	type: FighterType;
+	attacker: boolean;
+	maxLife: number;
+	maxEnergy: number;
+	energy: number;
+	startingHp: number;
 }
 
 export enum LeaveAnimation {
@@ -20,7 +30,7 @@ export enum LeaveAnimation {
 
 export interface ArriveStep {
 	action: 'arrive';
-	fighter: StepFighter;
+	fighter: InitStepFighter;
 }
 export interface LeaveStep {
 	action: 'leave';

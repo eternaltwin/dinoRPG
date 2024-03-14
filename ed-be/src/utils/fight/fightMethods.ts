@@ -14,7 +14,7 @@ import {
 	FighterStatus,
 	StatusLength
 } from '@drpg/core/models/fight/DetailedFighter';
-import { LeaveAnimation, SkillActivateStep, StepFighter } from '@drpg/core/models/fight/FightStep';
+import { InitStepFighter, LeaveAnimation, SkillActivateStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -376,15 +376,21 @@ export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type
 };
 
 export const initStepFighter = (
-	fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker' | 'display' | 'maxHp'>
+	fighter: Pick<
+		DetailedFighter,
+		'id' | 'name' | 'type' | 'attacker' | 'display' | 'maxHp' | 'maxEnergy' | 'energy' | 'startingHp'
+	>
 ) => {
-	const data: StepFighter = {
+	const data: InitStepFighter = {
 		id: fighter.id,
-		display: fighter.display,
+		display: fighter.display ?? '',
 		name: fighter.name,
 		type: fighter.type,
 		attacker: fighter.attacker,
-		maxLife: fighter.maxHp
+		maxLife: fighter.maxHp,
+		maxEnergy: fighter.maxEnergy,
+		energy: fighter.energy,
+		startingHp: fighter.startingHp
 	};
 
 	return data;
@@ -659,7 +665,7 @@ const registerHit = (
 			// Add arrive step
 			fightData.steps.push({
 				action: 'arrive',
-				fighter: stepFighter(opponent)
+				fighter: initStepFighter(opponent)
 			});
 		}
 
@@ -918,7 +924,7 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	// Add arrive step
 	fightData.steps.push({
 		action: 'arrive',
-		fighter: stepFighter(monster)
+		fighter: initStepFighter(monster)
 	});
 
 	checkInvocationBan(fightData, monster);
@@ -1092,7 +1098,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			// WATER
-			case Skill.DOUCHE_ECOSSAISE:{
+			case Skill.DOUCHE_ECOSSAISE: {
 				targetAllOpponents(fightData, fighter, event, step);
 				break;
 			}
@@ -1136,7 +1142,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add arrive step
 				fightData.steps.push({
 					action: 'arrive',
-					fighter: stepFighter(clone)
+					fighter: initStepFighter(clone)
 				});
 
 				checkInvocationBan(fightData, clone);
@@ -1452,7 +1458,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add arrive step
 				fightData.steps.push({
 					action: 'arrive',
-					fighter: stepFighter(clone)
+					fighter: initStepFighter(clone)
 				});
 
 				checkInvocationBan(fightData, clone);
