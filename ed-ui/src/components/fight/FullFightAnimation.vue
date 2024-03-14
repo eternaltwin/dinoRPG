@@ -66,9 +66,12 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.impact {
-	font-family: 'Impact';
+#pixiCanvas {
+	margin-left: 21px;
 }
+.impact {
+	 font-family: 'Impact';
+ }
 .verdana {
 	font-family: 'Verdana';
 }
