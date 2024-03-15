@@ -4,6 +4,7 @@ import { Stat } from '../enums/SkillStat.mjs';
 import { SkillTree } from '../enums/SkillTree.mjs';
 import { SkillType } from '../enums/SkillType.mjs';
 import { Skill } from './SkillList.mjs';
+import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
 
 type OtherAssaults<T> = Exclude<
 	Stat.FIRE_ASSAULT | Stat.WATER_ASSAULT | Stat.AIR_ASSAULT | Stat.LIGHTNING_ASSAULT | Stat.WOOD_ASSAULT,
@@ -61,4 +62,5 @@ export interface SkillDetails {
 	globalEffects?: SkillEffects;
 	priority?: number;
 	probability?: number;
+	visualEffect?: number;
 }

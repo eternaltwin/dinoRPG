@@ -31,6 +31,13 @@ export enum DinoAction {
 	MAXENERGY
 }
 
+export enum FinishState {
+	STAND,
+	RUN,
+	ESCAPE,
+	GUARD
+}
+
 export type transpiled =
 	| {
 			action: DinoAction.ADD;
@@ -78,6 +85,10 @@ export type transpiled =
 			skill: number;
 			details: {
 				fid: number;
+				targets?: {
+					id: number;
+					life?: number;
+				}[];
 			};
 	  }
 	| {
@@ -108,4 +119,17 @@ export type transpiled =
 			action: DinoAction.NOSTATUS;
 			fid: number;
 			status: number;
+	  }
+	| {
+			action: DinoAction.LOST;
+			fid: number;
+			amount: number;
+			lifeFx: {
+				fx: number;
+			};
+	  }
+	| {
+			action: DinoAction.FINISH;
+			left: FinishState;
+			right: FinishState;
 	  };

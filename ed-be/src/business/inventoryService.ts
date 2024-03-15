@@ -128,9 +128,9 @@ export async function useItem(req: Request) {
 			};
 			break;
 		case ItemEffect.HEAL:
-			const initialLife = dinoz.life
+			const initialLife = dinoz.life;
 			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value));
-			const lifeHealed = Math.max(0, dinoz.life - initialLife) 
+			const lifeHealed = Math.max(0, dinoz.life - initialLife);
 			feedback = {
 				category: ItemEffect.HEAL,
 				value: lifeHealed

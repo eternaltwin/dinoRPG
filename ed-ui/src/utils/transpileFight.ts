@@ -1,7 +1,7 @@
 import { FightStep, InitStepFighter } from '@drpg/core/models/fight/FightStep';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
-import { DinoAction, transpiled } from '@drpg/core/models/fight/transpiler';
+import { DinoAction, FinishState, transpiled } from '@drpg/core/models/fight/transpiler';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
 
@@ -17,29 +17,46 @@ export function resolveFightingPlace(placeId: number) {
 	};
 }
 
-export function resolveLifeEffect(elements: number[]) {
-	const element = elements[0];
-	switch (element) {
-		case 0:
-			return 0;
-		case 1:
-			return 8;
-		case 2:
-			return 9;
-		case 3:
-			return 10;
-		case 4:
-			return 11;
-		case 5:
-			return 12;
-		default:
-			return 0;
+export function resolveLifeEffect(step: FightStep) {
+	if (step.action === 'hit') {
+		if (step.elements.length > 0) {
+			const element = step.elements[0];
+			switch (element) {
+				case 6:
+					return 0;
+				case 1:
+					return 8;
+				case 2:
+					return 9;
+				case 3:
+					return 10;
+				case 4:
+					return 11;
+				case 5:
+					return 12;
+				default:
+					return 0;
+			}
+		}
+		if (step.skill && step.skill === 51403) {
+			// POISON
+			return 4;
+		}
+		if (step.skill && step.skill === 31406) {
+			// SANG ACIDE
+			return 3;
+		}
 	}
+	return 0;
 }
 
 export function resolveSkillName(skillId: number) {
 	//TODO translate skill with i18n
 	return Object.values(skillList).find(skill => skill.id === skillId)?.name ?? 'inconnu';
+}
+
+export function resolveSkillEffect(skillId: number) {
+	return Object.values(skillList).find(skill => skill.id === skillId)?.visualEffect ?? 0;
 }
 
 export function resolveStatus(status: Status) {
@@ -74,6 +91,8 @@ export function resolveStatus(status: Status) {
 			return 8;
 		case Status.HEALING:
 			return 11;
+		default:
+			return;
 	}
 }
 
@@ -81,7 +100,24 @@ export function transpileFight(fight: Array<FightStep>) {
 	const history: transpiled[] = [];
 	const fighters: InitStepFighter[] = [];
 	let myFighter: InitStepFighter | undefined;
-	fight.forEach(step => {
+	let startOfFight = true;
+	for (let i = 0; i < fight.length; i++) {
+		const step = fight[i];
+		if (i > 0 && fight[i - 1].action === 'arrive' && step.action !== 'arrive' && startOfFight) {
+			startOfFight = false;
+			history.push({
+				action: DinoAction.MAXENERGY,
+				fighters: fighters.map(f => {
+					return { fid: f.id, energy: f.maxEnergy - 100 };
+				})
+			});
+			history.push({
+				action: DinoAction.ENERGY,
+				fighters: fighters.map(f => {
+					return { fid: f.id, energy: f.energy - 100 };
+				})
+			});
+		}
 		switch (step.action) {
 			case 'arrive':
 				history.push({
@@ -99,34 +135,40 @@ export function transpileFight(fight: Array<FightStep>) {
 						gfx: step.fighter.display
 					}
 				});
-				history.push({
-					action: DinoAction.MAXENERGY,
-					fighters: [
-						{
-							fid: step.fighter.id,
-							energy: step.fighter.maxEnergy - 100
-						}
-					]
-				});
-				history.push({
-					action: DinoAction.ENERGY,
-					fighters: [
-						{
-							fid: step.fighter.id,
-							energy: step.fighter.energy - 100
-						}
-					]
-				});
+				if (!startOfFight) {
+					history.push({
+						action: DinoAction.MAXENERGY,
+						fighters: [
+							{
+								fid: step.fighter.id,
+								energy: step.fighter.maxEnergy - 100
+							}
+						]
+					});
+					history.push({
+						action: DinoAction.ENERGY,
+						fighters: [
+							{
+								fid: step.fighter.id,
+								energy: step.fighter.energy - 100
+							}
+						]
+					});
+				}
 				fighters.push(step.fighter);
 				break;
 			case 'activateEnvironment':
 				break;
 			case 'addStatus':
-				history.push({
-					action: DinoAction.STATUS,
-					fid: step.fighter.id,
-					status: resolveStatus(step.status)
-				});
+				// eslint-disable-next-line no-case-declarations
+				const status = resolveStatus(step.status);
+				if (status) {
+					history.push({
+						action: DinoAction.STATUS,
+						fid: step.fighter.id,
+						status: status
+					});
+				}
 				break;
 			case 'attemptHit':
 				break;
@@ -166,7 +208,7 @@ export function transpileFight(fight: Array<FightStep>) {
 					tid: step.target.id,
 					damages: step.damage,
 					lifeFx: {
-						fx: resolveLifeEffect(step.elements)
+						fx: resolveLifeEffect(step)
 					}
 				});
 				break;
@@ -181,10 +223,11 @@ export function transpileFight(fight: Array<FightStep>) {
 			case 'miss':
 				break;
 			case 'moveBack':
-				return {
+				history.push({
 					action: DinoAction.RETURN,
 					fid: step.fighter.id
-				};
+				});
+				break;
 			case 'moveTo':
 				history.push({
 					action: DinoAction.GOTO,
@@ -197,11 +240,15 @@ export function transpileFight(fight: Array<FightStep>) {
 			case 'removeCostume':
 				break;
 			case 'removeStatus':
-				history.push({
-					action: DinoAction.NOSTATUS,
-					fid: step.fighter.id,
-					status: resolveStatus(step.status)
-				});
+				// eslint-disable-next-line no-case-declarations
+				const statusRemoved = resolveStatus(step.status);
+				if (statusRemoved) {
+					history.push({
+						action: DinoAction.NOSTATUS,
+						fid: step.fighter.id,
+						status: statusRemoved
+					});
+				}
 				break;
 			case 'resist':
 				break;
@@ -218,13 +265,40 @@ export function transpileFight(fight: Array<FightStep>) {
 					fid: step.fighter.id,
 					message: resolveSkillName(step.skill)
 				});
-				history.push({
-					action: DinoAction.SKILL,
-					skill: step.skill,
-					details: {
-						fid: step.fighter.id
+				if (step.targets.length > 0) {
+					let searchTarget = true;
+					let j = 1;
+					const targets: {
+						id: number;
+						life?: number;
+					}[] = [];
+					while (searchTarget) {
+						const nextAction = fight[i + j];
+						if (nextAction.action === 'hit') {
+							targets.push({ id: nextAction.target.id, life: nextAction.damage });
+							j++;
+						} else {
+							searchTarget = false;
+						}
 					}
-				});
+					history.push({
+						action: DinoAction.SKILL,
+						skill: resolveSkillEffect(step.skill),
+						details: {
+							fid: step.fighter.id,
+							targets: targets
+						}
+					});
+					i += j - 1;
+				} else {
+					history.push({
+						action: DinoAction.SKILL,
+						skill: resolveSkillEffect(step.skill),
+						details: {
+							fid: step.fighter.id
+						}
+					});
+				}
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [
@@ -242,7 +316,11 @@ export function transpileFight(fight: Array<FightStep>) {
 			case 'survive':
 				break;
 		}
-		return;
+	}
+	history.push({
+		action: DinoAction.FINISH,
+		right: FinishState.GUARD,
+		left: FinishState.RUN
 	});
 	return history;
 }

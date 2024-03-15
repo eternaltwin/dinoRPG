@@ -5,6 +5,7 @@ import { SkillTree } from '../enums/SkillTree.mjs';
 import { SkillType } from '../enums/SkillType.mjs';
 import { SkillDetails } from './SkillDetails.mjs';
 import { raceList } from './RaceList.mjs';
+import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
 
 export enum Skill {
 	GRIFFES_ENFLAMMEES = 11101,
@@ -384,7 +385,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 20
+		probability: 20,
+		visualEffect: SkillVisualEffect.AURA
 	},
 	[Skill.FORCE]: {
 		id: Skill.FORCE,
@@ -431,7 +433,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.BLOW
 	},
 	[Skill.CHARGE]: {
 		id: Skill.CHARGE,
@@ -593,7 +596,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
-		probability: 5
+		probability: 5,
+		visualEffect: SkillVisualEffect.LAVA
 	},
 	[Skill.SIESTE]: {
 		id: Skill.SIESTE,
@@ -607,7 +611,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 5
+		probability: 5,
+		visualEffect: SkillVisualEffect.HEAL
 	},
 	[Skill.KAMIKAZE]: {
 		id: Skill.KAMIKAZE,
@@ -647,7 +652,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 15
+		probability: 15,
+		visualEffect: SkillVisualEffect.FIREBALL
 	},
 	[Skill.WAIKIKIDO]: {
 		id: Skill.WAIKIKIDO,
@@ -860,7 +866,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 7
+		probability: 7,
+		visualEffect: SkillVisualEffect.METEOR
 	},
 	[Skill.CHEF_DE_GUERRE]: {
 		id: Skill.CHEF_DE_GUERRE,
@@ -1219,7 +1226,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		visualEffect: SkillVisualEffect.PROJECTILE
 	},
 	[Skill.VIGNES]: {
 		id: Skill.VIGNES,
@@ -1233,7 +1241,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 20
+		probability: 20,
+		visualEffect: SkillVisualEffect.VIGNE
 	},
 	[Skill.RENFORTS_KORGON]: {
 		id: Skill.RENFORTS_KORGON,
@@ -1330,7 +1339,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [21201],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		visualEffect: SkillVisualEffect.AURA
 	},
 	[Skill.DETECTIVE]: {
 		id: Skill.DETECTIVE,
@@ -1416,7 +1426,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.HEAL
 	},
 	[Skill.CHARISME]: {
 		id: Skill.CHARISME,
@@ -1445,7 +1456,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 50
+		probability: 50,
+		visualEffect: SkillVisualEffect.AURA
 	},
 	[Skill.PLANIFICATEUR]: {
 		id: Skill.PLANIFICATEUR,
@@ -1925,7 +1937,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 25
+		probability: 25,
+		visualEffect: SkillVisualEffect.WATERCANON
 	},
 	[Skill.PERCEPTION]: {
 		id: Skill.PERCEPTION,
@@ -1984,7 +1997,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.ICE
 	},
 	[Skill.DOUCHE_ECOSSAISE]: {
 		id: Skill.DOUCHE_ECOSSAISE,
@@ -1998,7 +2012,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 40
+		probability: 40,
+		visualEffect: SkillVisualEffect.SHOWER
 	},
 	[Skill.COUP_SOURNOIS]: {
 		id: Skill.COUP_SOURNOIS,
@@ -2256,7 +2271,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 5,
-		probability: 5
+		probability: 5,
+		visualEffect: SkillVisualEffect.DELUGE
 	},
 	[Skill.PEAU_DE_SERPENT]: {
 		id: Skill.PEAU_DE_SERPENT,
@@ -2287,7 +2303,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 20
+		probability: 20,
+		visualEffect: SkillVisualEffect.LEVITRAY
 	},
 	[Skill.MAGASINIER]: {
 		id: Skill.MAGASINIER,
@@ -2615,7 +2632,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
-		probability: 15
+		probability: 15,
+		visualEffect: SkillVisualEffect.RAFALE
 	},
 	[Skill.THERAPIE_DE_GROUPE]: {
 		id: Skill.THERAPIE_DE_GROUPE,
@@ -2808,7 +2826,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 3,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.CHAINLIGHTNING
 	},
 	[Skill.FOUDRE]: {
 		id: Skill.FOUDRE,
@@ -2822,7 +2841,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.LIGHTNING
 	},
 	[Skill.FISSION_ELEMENTAIRE]: {
 		id: Skill.FISSION_ELEMENTAIRE,
@@ -3007,7 +3027,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.HEAL
 	},
 	[Skill.BRANCARDIER]: {
 		id: Skill.BRANCARDIER,
@@ -3047,7 +3068,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 5
+		probability: 5,
+		visualEffect: SkillVisualEffect.CREPUSCULE
 	},
 	[Skill.MARCHAND]: {
 		id: Skill.MARCHAND,
@@ -3426,7 +3448,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 15
+		probability: 15,
+		visualEffect: SkillVisualEffect.MISTRAL
 	},
 	[Skill.AIGUILLON]: {
 		id: Skill.AIGUILLON,
@@ -3440,7 +3463,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 1,
-		probability: 15
+		probability: 15,
+		visualEffect: SkillVisualEffect.PROJECTILE
 	},
 	[Skill.ENVOL]: {
 		id: Skill.ENVOL,
@@ -3542,7 +3566,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
-		probability: 3
+		probability: 3,
+		visualEffect: SkillVisualEffect.TORNADE
 	},
 	[Skill.AURA_PUANTE]: {
 		id: Skill.AURA_PUANTE,
@@ -3568,7 +3593,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
-		probability: 7
+		probability: 7,
+		visualEffect: SkillVisualEffect.DISC
 	},
 	[Skill.ELASTICITE]: {
 		id: Skill.ELASTICITE,
@@ -3757,7 +3783,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 20
+		probability: 20,
+		visualEffect: SkillVisualEffect.TREMOR
 	},
 	[Skill.TROU_NOIR]: {
 		id: Skill.TROU_NOIR,
@@ -3771,7 +3798,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 3
+		probability: 3,
+		visualEffect: SkillVisualEffect.HOLE
 	},
 	[Skill.MAITRE_LEVITATEUR]: {
 		id: Skill.MAITRE_LEVITATEUR,
@@ -4119,7 +4147,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.SYLFIDE
 	},
 	[Skill.MESSIE]: {
 		id: Skill.MESSIE,
@@ -4353,7 +4382,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 25
+		probability: 25,
+		visualEffect: SkillVisualEffect.JUMPATTACK
 	},
 	[Skill.FORCE_DE_LUMIERE]: {
 		id: Skill.FORCE_DE_LUMIERE,
@@ -4379,7 +4409,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 20
+		probability: 20,
+		visualEffect: SkillVisualEffect.CHARGE
 	},
 	[Skill.FORCE_DES_TENEBRES]: {
 		id: Skill.FORCE_DES_TENEBRES,
@@ -4650,7 +4681,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 30
+		probability: 30,
+		visualEffect: SkillVisualEffect.METEOR
 	},
 	[Skill.M_VENERABLE]: {
 		id: Skill.M_VENERABLE,
@@ -4663,7 +4695,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 100
+		probability: 100,
+		visualEffect: SkillVisualEffect.METEOR
 	},
 	[Skill.M_BITE]: {
 		id: Skill.M_BITE,
@@ -4737,7 +4770,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 100
+		probability: 100,
+		visualEffect: SkillVisualEffect.PROJECTILE
 	},
 	[Skill.M_POISONED_PICKS]: {
 		id: Skill.M_POISONED_PICKS,
@@ -5063,7 +5097,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 100
+		probability: 100,
+		visualEffect: SkillVisualEffect.ANIM
 	},
 	[Skill.CATCH]: {
 		id: Skill.CATCH,

@@ -1,5 +1,6 @@
 <template>
 	<div id="pixiCanvas"></div>
+	<div v-if="!hidden" class="impact verdana"></div>
 </template>
 
 <script lang="ts">
@@ -14,7 +15,8 @@ export default defineComponent({
 	name: 'Fight',
 	data() {
 		return {
-			dinoz: dinozStore().getDinoz(parseInt(this.$route.params.dinozId as string)) as DinozFiche
+			dinoz: dinozStore().getDinoz(parseInt(this.$route.params.dinozId as string)) as DinozFiche,
+			hidden: true
 		};
 	},
 	props: {
@@ -63,4 +65,11 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.impact {
+	font-family: 'Impact';
+}
+.verdana {
+	font-family: 'Verdana';
+}
+</style>
