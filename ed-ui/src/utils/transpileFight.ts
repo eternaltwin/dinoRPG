@@ -4,6 +4,7 @@ import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
 import { DinoAction, FinishState, transpiled } from '@drpg/core/models/fight/transpiler';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
+import { TFunction } from './translateFightStep.js';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -50,9 +51,14 @@ export function resolveLifeEffect(step: FightStep) {
 	return 0;
 }
 
-export function resolveSkillName(skillId: number) {
-	//TODO translate skill with i18n
-	return Object.values(skillList).find(skill => skill.id === skillId)?.name ?? 'inconnu';
+export function resolveSkillName(skillId: number, t: TFunction) {
+	const skill = Object.values(skillList).find(skill => skill.id === skillId);
+	if (!skill) return 'inconnu';
+	return t(`skill.name.${skill.name}`);
+}
+
+export function resolveMonsterName(monster: string, t: TFunction) {
+	return t(`fight.monster.${monster}`);
 }
 
 export function resolveSkillEffect(skillId: number) {
@@ -96,7 +102,7 @@ export function resolveStatus(status: Status) {
 	}
 }
 
-export function transpileFight(fight: Array<FightStep>) {
+export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 	const history: transpiled[] = [];
 	const fighters: InitStepFighter[] = [];
 	let myFighter: InitStepFighter | undefined;
@@ -124,13 +130,12 @@ export function transpileFight(fight: Array<FightStep>) {
 					action: DinoAction.ADD,
 					fighter: {
 						props: [],
-						dino: step.fighter.id > 0,
+						dino: step.fighter.type === 'dinoz',
 						life: step.fighter.startingHp,
 						maxLife: step.fighter.maxLife,
-						//TODO translate monstername with i18n
-						name: step.fighter.name,
+						name: step.fighter.type !== 'dinoz' ? resolveMonsterName(step.fighter.name, t) : step.fighter.name,
 						side: step.fighter.attacker,
-						scale: step.fighter.id > 0 ? step.fighter.maxLife / 100 : 1,
+						scale: step.fighter.type === 'dinoz' ? step.fighter.maxLife / 100 : 1,
 						fid: step.fighter.id,
 						gfx: step.fighter.display
 					}
@@ -263,7 +268,7 @@ export function transpileFight(fight: Array<FightStep>) {
 				history.push({
 					action: DinoAction.ANNOUNCE,
 					fid: step.fighter.id,
-					message: resolveSkillName(step.skill)
+					message: resolveSkillName(step.skill, t)
 				});
 				if (step.targets.length > 0) {
 					let searchTarget = true;

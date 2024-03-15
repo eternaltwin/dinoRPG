@@ -5,7 +5,7 @@ import { BadStatus, GoodStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
 
-type TFunction = (key: string, data?: Record<string, string | number>) => string;
+export type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
 const IGNORE_STEPS = ['moveTo', 'moveBack', 'resist'];
 const DISPLAYED_STATUSES = [...GoodStatus, ...BadStatus];

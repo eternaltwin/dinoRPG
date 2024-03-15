@@ -3651,7 +3651,18 @@
 			"febrez": "Febrez",
 			"pteroz": "Pteroz",
 			"hippo": "Hippoclamp",
-			"rocky": "Rocky"
+			"rocky": "Rocky",
+			"pira": "Pirhanoz",
+			"kazka": "Kazkadine",
+			"anguil": "Anguilloz",
+			"korgon": "Korgons",
+			"barche": "Bébé Archélion",
+			"flam": "Flammèche",
+			"cobra": "Cobrasero",
+			"goblin": "Gobelin",
+			"bat": "Fauve Souris",
+			"ronciv": "Roncivore",
+			"gardien": "Gardien Arboricole"
 		},
 		"status": {
 			"asleep": "endormi",

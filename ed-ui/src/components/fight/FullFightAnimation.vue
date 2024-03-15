@@ -51,7 +51,7 @@ export default defineComponent({
 			};
 		});*/
 
-		const nexFight = transpileFight(this.history!);
+		const nexFight = transpileFight(this.history!, this.$t);
 		const initPlace = resolveFightingPlace(this.place);
 		const fight2 = new Fight({
 			...initPlace,
@@ -70,8 +70,8 @@ export default defineComponent({
 	margin-left: 21px;
 }
 .impact {
-	 font-family: 'Impact';
- }
+	font-family: 'Impact';
+}
 .verdana {
 	font-family: 'Verdana';
 }
