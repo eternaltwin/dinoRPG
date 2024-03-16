@@ -29,6 +29,8 @@
 		"invalidOffer": "Invalid offer",
 		"missingData": "Missing data",
 		"bidIsLower": "Your bid is lower than the previous bid.",
+		"noMovement": "Today, the swamp is completely flooded! You can't move here. You have to wait until tomorrow to get out of this quagmire.",
+		"noFight": "Today, the swamp is lost in haze ... You will not find any monster to fight.",
 		"market": {
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",

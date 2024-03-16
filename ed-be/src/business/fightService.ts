@@ -23,6 +23,7 @@ import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import randomBetween from '../utils/fight/randomBetween.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
+import dayjs from 'dayjs';
 
 /**
  * @summary Process a fight
@@ -30,9 +31,18 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
  * @return FightResult
  */
 export async function processFight(req: Request) {
+	// Date
+	const currentDate = dayjs();
+	const dayOfWeek = currentDate.day();
+
 	const dinozId: number = +req.body.dinozId;
 	// Get Dinoz info
 	const dinozData = await getDinozFightDataRequest(dinozId);
+
+	// Marais Collant - No fights on Sunday and Wednesday
+    if ((dayOfWeek === 0 || dayOfWeek === 3) && dinozData?.id === dinozId && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
+        throw new ErrorFormator(400, `noFight`);
+    }
 
 	if (!dinozData) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
