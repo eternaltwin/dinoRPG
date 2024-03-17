@@ -249,58 +249,61 @@ TODO
 
 ##### SkillDetails
 
-| Property | Type                          | Description                                                |
-| -------- | ----------------------------- | ---------------------------------------------------------- |
-| fid?     | number                        | The ID of the Fighter using the skill, if any.             |
-| targets? | { id: number, life?: number } | The targets of the skill and the life gained/losed, if any |
-| TODO     |                               |                                                            |
+| Property | Type                          | Description                                                                                                                                |
+| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| fid?     | Number                        | The ID of the Fighter using the skill, if any.                                                                                             |
+| targets? | { id: Number, life?: Number } | The targets of the skill and the life gained/losed, if any. If life is undefined, the target dodge the skill with the 'special' animation. |
+| fx?      | String                        | The fx played by the skill. Used by 'Tremor', 'JumpAttack'.                                                                                |
+| anim?    | String                        | The animation used by the skill. Used by 'Anim'.                                                                                           |
 
-| Skill               | Description                                                                                                                                                                                           |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Todo (0)            | Placeholder skill in case a new skill is developped.                                                                                                                                                  |
-| Fireball (1)        |                                                                                                                                                                                                       |
-| Blow (2)            |                                                                                                                                                                                                       |
-| Lava (3)            |                                                                                                                                                                                                       |
-| Meteor (4)          |                                                                                                                                                                                                       |
-| Vigne (5)           |                                                                                                                                                                                                       |
-| WaterCanon (6)      |                                                                                                                                                                                                       |
-| Shower (7)          |                                                                                                                                                                                                       |
-| LevitRay (8)        |                                                                                                                                                                                                       |
-| Lightning (9)       |                                                                                                                                                                                                       |
-| Crepuscule (10)     |                                                                                                                                                                                                       |
-| Mistral (11)        |                                                                                                                                                                                                       |
-| Tornade (12)        |                                                                                                                                                                                                       |
-| Disc (13)           |                                                                                                                                                                                                       |
-| Hole (14)           |                                                                                                                                                                                                       |
-| Ice (15)            |                                                                                                                                                                                                       |
-| Projectile (16)     |                                                                                                                                                                                                       |
-| Tremor (17)         | Same as JumpAttack with default fx.                                                                                                                                                                   |
-| JumpAttack (18)     | The fighter (fid) jumps and damages the targets for the given amount of life. An fx is played at landing, defined by the "fx" parameter. 'shake' by default (other possible types unknown as of yet). |
-| ChainLightning (19) |                                                                                                                                                                                                       |
-| Heal (20)           |                                                                                                                                                                                                       |
-| Charge (21)         |                                                                                                                                                                                                       |
-| Anim (22)           |                                                                                                                                                                                                       |
-| Invoc (23)          |                                                                                                                                                                                                       |
-| Sylfide (24)        |                                                                                                                                                                                                       |
-| Rafale (25)         |                                                                                                                                                                                                       |
-| Deluge (26)         |                                                                                                                                                                                                       |
-| Env7 (27)           |                                                                                                                                                                                                       |
-| Aura (28)           |                                                                                                                                                                                                       |
-| Snow (29)           |                                                                                                                                                                                                       |
-| Swamp (30)          |                                                                                                                                                                                                       |
-| Cloud (31)          |                                                                                                                                                                                                       |
-| Focus (32)          |                                                                                                                                                                                                       |
-| Default (33)        |                                                                                                                                                                                                       |
-| Attach (34)         |                                                                                                                                                                                                       |
-| AttachAnim (35)     |                                                                                                                                                                                                       |
-| Hypnose (36)        |                                                                                                                                                                                                       |
-| Ray (37)            |                                                                                                                                                                                                       |
-| Speed (38)          |                                                                                                                                                                                                       |
-| HeadOrTail (39)     |                                                                                                                                                                                                       |
-| Leaf (40)           |                                                                                                                                                                                                       |
-| MudWall (41)        |                                                                                                                                                                                                       |
-| Blink (42)          |                                                                                                                                                                                                       |
-| Generate (43)       |                                                                                                                                                                                                       |
+| Skill                  | Description                                                                                                                                                                                           |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Todo (0)               | Placeholder skill in case a new skill is developped.                                                                                                                                                  |
+| Fireball (1)           |                                                                                                                                                                                                       |
+| Blow (2)               |                                                                                                                                                                                                       |
+| Lava (3)               |                                                                                                                                                                                                       |
+| Meteor (4)             |                                                                                                                                                                                                       |
+| Vigne (5)              |                                                                                                                                                                                                       |
+| WaterCanon (6)         |                                                                                                                                                                                                       |
+| Shower (7)             |                                                                                                                                                                                                       |
+| LevitRay (8)           |                                                                                                                                                                                                       |
+| Lightning (9)          |                                                                                                                                                                                                       |
+| Crepuscule (10)        |                                                                                                                                                                                                       |
+| Mistral (11)           |                                                                                                                                                                                                       |
+| Tornade (12)           |                                                                                                                                                                                                       |
+| Disc (13)              |                                                                                                                                                                                                       |
+| Hole (14)              |                                                                                                                                                                                                       |
+| Ice (15)               |                                                                                                                                                                                                       |
+| Projectile (16)        |                                                                                                                                                                                                       |
+| Tremor (17)            | Same as JumpAttack with default fx.                                                                                                                                                                   |
+| JumpAttack (18)        | The fighter (fid) jumps and damages the targets for the given amount of life. An fx is played at landing, defined by the "fx" parameter. 'shake' by default (other possible types unknown as of yet). |
+| ChainLightning (19)    |                                                                                                                                                                                                       |
+| Heal (20)              |                                                                                                                                                                                                       |
+| Charge (21)            |                                                                                                                                                                                                       |
+| Anim (22)              | The fighter (fid) plays the given animation (anim).                                                                                                                                                   |
+| Invoc (23)             |                                                                                                                                                                                                       |
+| Sylfide (24)           |                                                                                                                                                                                                       |
+| Rafale (25)            |                                                                                                                                                                                                       |
+| Deluge (26)            |                                                                                                                                                                                                       |
+| Env7 (27)              |                                                                                                                                                                                                       |
+| Aura (28)              |                                                                                                                                                                                                       |
+| Snow (29)              |                                                                                                                                                                                                       |
+| Swamp (30)             |                                                                                                                                                                                                       |
+| Cloud (31)             |                                                                                                                                                                                                       |
+| Focus (32)             |                                                                                                                                                                                                       |
+| Default (33)           |                                                                                                                                                                                                       |
+| Attach (34)            |                                                                                                                                                                                                       |
+| AttachAnim (35)        |                                                                                                                                                                                                       |
+| Hypnose (36)           |                                                                                                                                                                                                       |
+| Ray (37)               |                                                                                                                                                                                                       |
+| Speed (38)             |                                                                                                                                                                                                       |
+| HeadOrTail (39)        |                                                                                                                                                                                                       |
+| Leaf (40)              |                                                                                                                                                                                                       |
+| MudWall (41)           |                                                                                                                                                                                                       |
+| Blink (42)             |                                                                                                                                                                                                       |
+| Generate (43)          |                                                                                                                                                                                                       |
+| Corruption (44 - New)  | The scene becomes dark, then the targets take the given amount of damages.                                                                                                                            |
+| DivineLight (45 - New) | Beams of light fall upon the targets, damaging them by the given amount of damages.                                                                                                                   |
 
 ### Dead (9)
 
@@ -578,3 +581,45 @@ Set the maximum energy of a group of fighters.
 | Property | Type                              | Description                                                    |
 | -------- | --------------------------------- | -------------------------------------------------------------- |
 | fighters | { fid: Number, energy: Number }[] | An array of fighter and their desired maximum level of energy. |
+
+## New Actions
+
+The following are actions created for this project only.
+They are not compatible with the fight.swf version from Motion-Twin.
+
+### Emote (30)
+
+The given figthers show the given emote above them.
+The emote appears and behaves based on the given behaviour.
+
+#### Properties
+
+| Property  | Type           | Description                                       |
+| --------- | -------------- | ------------------------------------------------- |
+| fids      | number[]       | An array of fighters which will display an emote. |
+| emote     | EmoteList      | The kind of emote to display.                     |
+| behaviour | EmoteBehaviour | The expected behaviour of the emote.              |
+
+| EmoteList    | Description                               |
+| ------------ | ----------------------------------------- |
+| Surprise (0) | A speech bubble with an exclamation mark. |
+| Question (1) | A speech bubble with a question mark.     |
+| Angry (2)    | An angry speech bubble.                   |
+
+| EmoteBehaviour | Description                                      |
+| -------------- | ------------------------------------------------ |
+| Float (0)      | The emote floats up, slowing over time.          |
+| Bounce (1)     | The emote spawns and bounce up and down.         |
+| Grow (2)       | The emote grows and shrink over time, wobbeling. |
+
+### Shake (31)
+
+The scene starts shaking temporarily.
+
+#### Properties
+
+| Property | Type   | Description                                                                                                             |
+| -------- | ------ | ----------------------------------------------------------------------------------------------------------------------- |
+| force?   | number | The strength of the shaking. Default to 8.                                                                              |
+| frict?   | number | The friction between 0 and 0.95. Slows the shaking over time. Lower values reduce the shaking faster. Defaults to 0.75. |
+| speed?   | number | The speed of the shaking. Defaults to 1.                                                                                |

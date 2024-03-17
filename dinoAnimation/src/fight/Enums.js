@@ -33,7 +33,9 @@ export const Action = {
 	Log: 26,
 	Notify: 27,
 	Energy: 28,
-	MaxEnergy: 29
+	MaxEnergy: 29,
+	Emote: 30,
+	Shake: 31
 };
 
 /**
@@ -182,7 +184,10 @@ export const SkillList = {
 	Leaf: 40,
 	MudWall: 41,
 	Blink: 42,
-	Generate: 43
+	Generate: 43,
+	// New
+	Corruption: 44,
+	DivineLight: 45
 };
 
 /**
@@ -246,4 +251,22 @@ export const NotificationList = {
 	Shield: 16,
 	MonoElt: 17,
 	Todo: 18
+};
+
+/**
+ * Types of emote available.
+ */
+export const EmoteList = {
+	Surprise: 0,
+	Question: 1,
+	Angry: 2
+};
+
+/**
+ * Types of behaviour for the emotes.
+ */
+export const EmoteBehaviour = {
+	Float: 0,
+	Bounce: 1,
+	Grow: 2
 };
