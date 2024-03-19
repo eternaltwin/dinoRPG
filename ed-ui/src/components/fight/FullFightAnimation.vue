@@ -1,6 +1,5 @@
 <template>
 	<div id="pixiCanvas"></div>
-	<div v-if="!hidden" class="impact verdana"></div>
 </template>
 
 <script lang="ts">
@@ -68,11 +67,5 @@ export default defineComponent({
 <style scoped lang="scss">
 #pixiCanvas {
 	margin-left: 21px;
-}
-.impact {
-	font-family: 'Impact';
-}
-.verdana {
-	font-family: 'Verdana';
 }
 </style>

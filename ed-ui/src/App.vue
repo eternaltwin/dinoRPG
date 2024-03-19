@@ -5,6 +5,7 @@
 	<FooterComp />
 	<ErrorMessage />
 	<Toast />
+	<div class="impact verdana"></div>
 </template>
 
 <script lang="ts">
@@ -27,4 +28,13 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.impact {
+	font-family: 'Impact';
+	display: none;
+}
+.verdana {
+	font-family: 'Verdana';
+	display: none;
+}
+</style>
