@@ -28,7 +28,9 @@ export enum DinoAction {
 	LOG,
 	NOTIFY,
 	ENERGY,
-	MAXENERGY
+	MAXENERGY,
+	EMOTE,
+	SHAKE
 }
 
 export enum FinishState {
@@ -36,6 +38,28 @@ export enum FinishState {
 	RUN,
 	ESCAPE,
 	GUARD
+}
+
+export enum EntranceEffect {
+	STAND,
+	JUMP,
+	RUN,
+	GROW,
+	FALL,
+	GROUND,
+	ANIM
+}
+
+export enum EmoteList {
+	Surprise,
+	Question,
+	Angry
+}
+
+export enum EmoteBehaviour {
+	Float,
+	Bounce,
+	Grow
 }
 
 export type transpiled =
@@ -51,6 +75,7 @@ export type transpiled =
 				scale: number;
 				fid: number;
 				gfx: string | undefined;
+				entrance: EntranceEffect;
 			};
 	  }
 	| {
@@ -132,4 +157,24 @@ export type transpiled =
 			action: DinoAction.FINISH;
 			left: FinishState;
 			right: FinishState;
+	  }
+	| {
+			action: DinoAction.EMOTE;
+			fids: number[];
+			emote: EmoteList;
+			behaviour: EmoteBehaviour;
+	  }
+	| {
+			action: DinoAction.SHAKE;
+			force?: number;
+			frict?: number;
+			speed?: number;
+	  }
+	| {
+			action: DinoAction.FLIP;
+			fid: number;
+	  }
+	| {
+			action: DinoAction.WAIT;
+			time: number;
 	  };

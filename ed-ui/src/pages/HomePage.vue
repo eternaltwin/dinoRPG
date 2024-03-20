@@ -18,6 +18,7 @@
 									<a href="https://discord.gg/ERc3svy">Discord</a>.
 								</p>
 							</div>
+							<div id="pixiCanvas"></div>
 						</div>
 					</td>
 					<td class="right" valign="top" />
@@ -30,12 +31,145 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { Fight } from '@drpg/dino-animation';
 import AuthenticationPage from '../pages/AuthenticationPage.vue';
+import { DinoAction, EmoteBehaviour, EmoteList, EntranceEffect, FinishState } from '@drpg/core/models/fight/transpiler';
 
 export default defineComponent({
 	name: 'HomePage',
 	components: {
 		AuthenticationPage
+	},
+	mounted() {
+		const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
+		const fight = new Fight({
+			bg: 's_dnv',
+			top: 70,
+			bottom: 0,
+			ground: 0,
+			history: [
+				{
+					action: DinoAction.ADD,
+					fighter: {
+						props: [],
+						dino: true,
+						life: 100,
+						name: 'Gerardufoin',
+						side: true,
+						scale: 1,
+						fid: 0,
+						gfx: '09T1Yt9wqq4Rx000',
+						entrance: EntranceEffect.GROW,
+						x: 50,
+						y: 60
+					}
+				},
+				{
+					action: DinoAction.ADD,
+					fighter: {
+						props: [],
+						dino: true,
+						life: 100,
+						name: 'Biosha',
+						side: true,
+						scale: 1,
+						fid: 1,
+						gfx: '19CfWPseFa5gJ000',
+						entrance: EntranceEffect.JUMP,
+						x: 150,
+						y: 85
+					}
+				},
+				{
+					action: DinoAction.ADD,
+					fighter: {
+						props: [],
+						dino: true,
+						life: 100,
+						name: 'Planaile',
+						side: true,
+						scale: 1,
+						fid: 2,
+						gfx: '39N9HVcY4gLiQ000',
+						entrance: EntranceEffect.GROUND,
+						x: 85,
+						y: 380
+					}
+				},
+				{
+					action: DinoAction.WAIT,
+					time: 1000
+				},
+				{
+					action: DinoAction.TEXT,
+					message: 'Aaah, Dinoville, le joyaux de Dinoland, le point de départ de toute aventure qui se respecte.'
+				},
+				{
+					action: DinoAction.TEXT,
+					message:
+						"Après un long périple, vous êtes enfin arrivé à votre destination, attiré par des rumeurs d'aventures palpitantes, de richesses, et de gloire."
+				},
+				{
+					action: DinoAction.TEXT,
+					message: "C'est ici que vous pourrez recruter votre premier compagnon et..."
+				},
+				{
+					action: DinoAction.SHAKE,
+					force: 20,
+					frict: 0.9
+				},
+				{
+					action: DinoAction.WAIT,
+					time: 500
+				},
+				{
+					action: DinoAction.EMOTE,
+					fids: [0, 1, 2],
+					emote: EmoteList.Question,
+					behaviour: EmoteBehaviour.Float
+				},
+				{
+					action: DinoAction.WAIT,
+					time: 1000
+				},
+				{
+					action: DinoAction.ADD,
+					fighter: {
+						props: [],
+						dino: false,
+						life: 100,
+						name: 'Mandragore',
+						side: false,
+						scale: 1,
+						fid: -1,
+						gfx: 'mandragore',
+						entrance: 1,
+						x: 325,
+						y: 260
+					}
+				},
+				{
+					action: DinoAction.TALK,
+					fid: -1,
+					message: 'Enfin !'
+				},
+				{
+					action: DinoAction.TALK,
+					fid: -1,
+					message: "Salut toi ! Prêt à rejoindre l'aventure ?"
+				},
+				{
+					action: DinoAction.WAIT,
+					time: 300
+				},
+				{
+					action: DinoAction.FINISH,
+					left: FinishState.RUN,
+					right: FinishState.ESCAPE
+				}
+			]
+		});
+		canvas.appendChild(fight.getDisplay());
 	}
 });
 </script>
@@ -53,7 +187,7 @@ export default defineComponent({
 		.box {
 			position: relative;
 			max-width: calc(640px - 2em);
-			margin: 3em 1em;
+			margin: 1em 1em 1em;
 			padding: 1em 1.5em;
 
 			@include corner-bezel(18.5px);

@@ -1,7 +1,7 @@
 import { FightStep, InitStepFighter } from '@drpg/core/models/fight/FightStep';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
-import { DinoAction, FinishState, transpiled } from '@drpg/core/models/fight/transpiler';
+import { DinoAction, EntranceEffect, FinishState, transpiled } from '@drpg/core/models/fight/transpiler';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
@@ -137,7 +137,8 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 						side: step.fighter.attacker,
 						scale: step.fighter.type === 'dinoz' ? step.fighter.maxLife / 100 : 1,
 						fid: step.fighter.id,
-						gfx: step.fighter.display
+						gfx: step.fighter.display,
+						entrance: EntranceEffect.JUMP
 					}
 				});
 				if (!startOfFight) {
