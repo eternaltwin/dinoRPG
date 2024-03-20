@@ -14,7 +14,7 @@ import { WaterRain } from '../../../parts/skills/shower/WaterRain.js';
 /**
  * Creates shower of a specific element which damages the targets.
  */
-export class Shower extends GroupEffect {
+export class GrShower extends GroupEffect {
 	/**
 	 * Type of shower. Value from the SkillType enum.
 	 * @type {number}

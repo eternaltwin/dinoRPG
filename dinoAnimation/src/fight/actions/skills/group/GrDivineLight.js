@@ -12,7 +12,7 @@ import { GroupEffect } from '../GroupEffect.js';
 /**
  * Beams of light comes from above the caster and blast the targets.
  */
-export class DivineLight extends GroupEffect {
+export class GrDivineLight extends GroupEffect {
 	/**
 	 * The beams instantiated.
 	 * @type {LightBeam[]}

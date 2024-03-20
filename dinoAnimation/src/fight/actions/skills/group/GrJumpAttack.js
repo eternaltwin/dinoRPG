@@ -12,7 +12,7 @@ import { GroupEffect } from '../GroupEffect.js';
 /**
  * The Fighter jumps and create an effect on landing which damages the targets.
  */
-export class JumpAttack extends GroupEffect {
+export class GrJumpAttack extends GroupEffect {
 	/**
 	 * Type of effect to play at landing.
 	 */

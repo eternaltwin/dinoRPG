@@ -14,7 +14,7 @@ import { DarkSmoke } from '../../../parts/smoke/DarkSmoke.js';
 /**
  * Darkness fall upon the scene and clouds of dark dust rise from the ground.
  */
-export class Corruption extends GroupEffect {
+export class GrCorruption extends GroupEffect {
 	/**
 	 * Max opacity of the darkness screen. Defines how see-through the darkness effect will be.
 	 * @type {number}
@@ -66,11 +66,11 @@ export class Corruption extends GroupEffect {
 			// Darkness falls upon the scene and clouds of darkness are spawned in.
 			// Once done, the damages are applied and the caster goes back to stand.
 			case 0:
-				this._darkness.alpha = Corruption.DARKNESS_MAX_OPACITY * this._coef;
+				this._darkness.alpha = GrCorruption.DARKNESS_MAX_OPACITY * this._coef;
 				this._spawnTimer += timer.tmod;
-				while (this._spawnTimer > Corruption.DARKNESS_CLOUD_FREQUENCY) {
+				while (this._spawnTimer > GrCorruption.DARKNESS_CLOUD_FREQUENCY) {
 					DarkSmoke.spawn(this._scene, Math.random() * SCENE_WIDTH, this._scene.getRandomPYPos());
-					this._spawnTimer -= Corruption.DARKNESS_CLOUD_FREQUENCY;
+					this._spawnTimer -= GrCorruption.DARKNESS_CLOUD_FREQUENCY;
 				}
 				if (this._coef == 1) {
 					this._caster.playAnim('stand');
@@ -81,7 +81,8 @@ export class Corruption extends GroupEffect {
 				break;
 			// Darkness is quickly lifted. Once done, it is removed from the scene and the skill is done.
 			case 1:
-				this._darkness.alpha = Corruption.DARKNESS_MAX_OPACITY - this._coef * Corruption.DARKNESS_MAX_OPACITY;
+				this._darkness.alpha =
+					GrCorruption.DARKNESS_MAX_OPACITY - this._coef * GrCorruption.DARKNESS_MAX_OPACITY;
 				if (this._coef == 1) {
 					this._scene.dm.removeContainer(this._darkness, Layers.Scene.INTER);
 					this.end();
