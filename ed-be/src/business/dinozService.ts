@@ -617,14 +617,14 @@ export async function betaMove(req: Request) {
 	const finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
 
 	// Current date
-    const currentDate = dayjs();
-    // Retrieve the day of the week (0 pour dimanche, 1 pour lundi, ..., 6 pour samedi)
-    const dayOfWeek = currentDate.day();
+	const currentDate = dayjs();
+	// Retrieve the day of the week (0 pour dimanche, 1 pour lundi, ..., 6 pour samedi)
+	const dayOfWeek = currentDate.day();
 
-    // Marais Collant - No movement on Thursday and Saturday.
-    if ((dayOfWeek === 4 || dayOfWeek === 6) && dinozPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
-        throw new ErrorFormator(400, `noMovement`);
-    }
+	// Marais Collant - No movement on Thursday and Saturday.
+	if ((dayOfWeek === 4 || dayOfWeek === 6) && dinozPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
+		throw new ErrorFormator(400, `noMovement`);
+	}
 
 	//Consume fight action
 	for (const dino of team) {

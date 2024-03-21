@@ -103,7 +103,6 @@ export default defineComponent({
 		},
 		getPlaceImage(place: string | null) {
 			if (!place) return;
-			console.log(dayjs().day());
 			if (place === 'marais' && !(dayjs().day() === 1 || dayjs().day() === 2 || dayjs().day() === 5)) {
 				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url);
 			}

@@ -39,7 +39,6 @@ export async function processFight(req: Request) {
 	// Get Dinoz info
 	const dinozData = await getDinozFightDataRequest(dinozId);
 
-
 	if (!dinozData) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
@@ -91,11 +90,9 @@ export async function processFight(req: Request) {
 
 	const monster = generateMonster(team, dinozData.placeId); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
 
-	const fightResult = calculateFight(team, monster, dinozData.placeId);
+	const fightResult = calculateFight(team, dinozData.placeId, monster);
 
 	const result = await rewardFight(team, monster, fightResult, dinozData.placeId);
-
-	// const result = getFightResult(dinozData, monster[0], fightResult);
 
 	//If any dinoz is on a mission, check if the fight result progress the mission
 	for (const dinoz of team) {
@@ -107,8 +104,6 @@ export async function processFight(req: Request) {
 		}
 	}
 
-	// if (getEnvironnement() === 'development') console.log(`Result sent to front: ${JSON.stringify(result)}`);
-
 	return result;
 }
 
@@ -116,8 +111,13 @@ export async function moveFight(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum
 ) {
-	const monsters = generateMonster(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
-	const fightResult = calculateFight(team, monsters, placeId);
+	const dayOfWeek = dayjs().day();
+	let monsters = generateMonster(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
+
+	if ((dayOfWeek === 4 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
+		monsters = [];
+	}
+	const fightResult = calculateFight(team, placeId, monsters);
 	// console.log(fightResult.steps[0])
 	const result = await rewardFight(team, monsters, fightResult, placeId);
 
@@ -135,8 +135,8 @@ export async function moveFight(
 
 export function calculateFight(
 	team: DinozToGetFighter[],
-	monsters: MonsterFiche[],
-	place: PlaceEnum
+	place: PlaceEnum,
+	monsters?: MonsterFiche[]
 ): FightProcessResult {
 	const fighters = getFighters(
 		{
@@ -145,7 +145,7 @@ export function calculateFight(
 		},
 		{
 			dinozList: [],
-			monsterList: monsters
+			monsterList: monsters ?? []
 		},
 		place
 	);

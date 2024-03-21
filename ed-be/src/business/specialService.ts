@@ -109,7 +109,7 @@ export async function mouvementListener(
 
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, team)) {
 		if (potentialSpecialActions.opponents) {
-			const fightResult = calculateFight(team, potentialSpecialActions.opponents, finalPlace);
+			const fightResult = calculateFight(team, finalPlace, potentialSpecialActions.opponents);
 			const result = await rewardFight(team, potentialSpecialActions.opponents, fightResult, finalPlace);
 			if (fightResult.winner) {
 				await rewarder(potentialSpecialActions.reward, team);
@@ -134,7 +134,7 @@ export async function mouvementListener(
 
 		if (actualStep && team.every(dinoz => getActualStep(dinoz)?.stepId === actualStep.stepId)) {
 			if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
-				const fightResult = calculateFight(team, actualStep.requirement.target, finalPlace);
+				const fightResult = calculateFight(team, finalPlace, actualStep.requirement.target);
 				const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace);
 				if (fightResult.winner) {
 					const teamIds = team.map(dinoz => dinoz.id);

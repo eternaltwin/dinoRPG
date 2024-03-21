@@ -43,7 +43,7 @@ routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Reques
 		const results = [];
 		for (let i = 0; i < 600; i++) {
 			const monstersGenerated = generateMonster(team, dinozData.placeId);
-			const fightResult = calculateFight(team, monstersGenerated, dinozData.placeId);
+			const fightResult = calculateFight(team, dinozData.placeId, monstersGenerated);
 			const result = await rewardFightCalculate(team, monstersGenerated, fightResult);
 
 			const flattedMonsters = monstersGenerated.map(a => a.name);
