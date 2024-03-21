@@ -39,13 +39,14 @@ export async function processFight(req: Request) {
 	// Get Dinoz info
 	const dinozData = await getDinozFightDataRequest(dinozId);
 
-	// Marais Collant - No fights on Sunday and Wednesday
-    if ((dayOfWeek === 0 || dayOfWeek === 3) && dinozData?.id === dinozId && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
-        throw new ErrorFormator(400, `noFight`);
-    }
 
 	if (!dinozData) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
+
+	// Marais Collant - No fights on Sunday and Wednesday
+	if ((dayOfWeek === 0 || dayOfWeek === 3) && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
+		throw new ErrorFormator(400, `noFight`);
 	}
 
 	if (!dinozData.player || !req.auth || dinozData.player.id !== req.auth.playerId) {

@@ -5,7 +5,7 @@
 			{{ $t(`place.name.${getPlaceName(dinozData!.placeId)}`) }}
 		</p>
 	</div>
-	<p class="placeDesc" @click="test()">
+	<p class="placeDesc">
 		{{ $t(`place.description.${getPlaceName(dinozData!.placeId)}`) }}
 	</p>
 </template>
@@ -15,6 +15,7 @@ import { defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { placeList } from '../../constants/index.js';
 import WorldMap from '../../components/common/WorldMap.vue';
+import dayjs from 'dayjs';
 
 export default defineComponent({
 	name: 'MapTab',
@@ -24,7 +25,26 @@ export default defineComponent({
 	},
 	methods: {
 		getPlaceName(placeId: number): string {
-			return placeList.find(place => place.placeId === placeId)!.name;
+			const place = placeList.find(place => place.placeId === placeId);
+			if (!place) return '';
+			if (place.placeId === 29) {
+				const day = dayjs().day();
+				switch (day) {
+					case 1:
+					case 2:
+					case 5:
+						return 'marais';
+					case 4:
+					case 6:
+						return 'marais_flood';
+					case 0:
+					case 3:
+						return 'marais_fog';
+					default:
+						return 'marais';
+				}
+			}
+			return place.name;
 		}
 	}
 });

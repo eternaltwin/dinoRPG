@@ -622,7 +622,7 @@ export async function betaMove(req: Request) {
     const dayOfWeek = currentDate.day();
 
     // Marais Collant - No movement on Thursday and Saturday.
-    if (dayOfWeek === 4 || dayOfWeek === 6 && dinozPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
+    if ((dayOfWeek === 4 || dayOfWeek === 6) && dinozPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
         throw new ErrorFormator(400, `noMovement`);
     }
 

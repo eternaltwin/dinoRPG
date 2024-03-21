@@ -41,7 +41,7 @@
 		</div>
 		<div class="place" v-if="place">
 			<div class="img-wrapper">
-				<img :src="getImgURL('place', place)" :alt="$t(`place.name.${place}`)" />
+				<img :src="getPlaceImage(place)" :alt="$t(`place.name.${place}`)" />
 			</div>
 			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
@@ -71,6 +71,7 @@ import { utils } from '../../utils/index.js';
 import DinozList from '../../components/dinoz/DinozList.vue';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import dayjs from 'dayjs';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -99,6 +100,14 @@ export default defineComponent({
 		},
 		currentDinozId(): number | undefined {
 			return this.playerStore.playerOptions.currentDinozId;
+		},
+		getPlaceImage(place: string | null) {
+			if (!place) return;
+			console.log(dayjs().day());
+			if (place === 'marais' && !(dayjs().day() === 1 || dayjs().day() === 2 || dayjs().day() === 5)) {
+				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url);
+			}
+			return new URL(`/src/assets/place/${place}.webp`, import.meta.url);
 		}
 	},
 	computed: {
