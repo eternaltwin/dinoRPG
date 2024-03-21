@@ -378,7 +378,10 @@ export const placeList: Record<
 		map: MapZone.ILES,
 		ground: GroundEnum.DIRT,
 		background: 'broc',
-		top: 110
+		top: 110,
+		conditions: {
+			[ConditionEnum.ACTIVE]: false //'roid'
+		}
 	},
 	[PlaceEnum.GO_TO_DINOVILLE]: {
 		placeId: PlaceEnum.GO_TO_DINOVILLE,
