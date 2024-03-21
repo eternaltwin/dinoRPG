@@ -59,9 +59,7 @@ export default defineComponent({
 						scale: 1,
 						fid: 0,
 						gfx: '09T1Yt9wqq4Rx000',
-						entrance: EntranceEffect.GROW,
-						x: 50,
-						y: 60
+						entrance: EntranceEffect.GROW
 					}
 				},
 				{
@@ -75,9 +73,7 @@ export default defineComponent({
 						scale: 1,
 						fid: 1,
 						gfx: '19CfWPseFa5gJ000',
-						entrance: EntranceEffect.JUMP,
-						x: 150,
-						y: 85
+						entrance: EntranceEffect.JUMP
 					}
 				},
 				{
@@ -86,14 +82,40 @@ export default defineComponent({
 						props: [],
 						dino: true,
 						life: 100,
-						name: 'Planaile',
+						name: 'Zenoo',
 						side: true,
 						scale: 1,
 						fid: 2,
-						gfx: '39N9HVcY4gLiQ000',
-						entrance: EntranceEffect.GROUND,
-						x: 85,
-						y: 380
+						gfx: '894ur5tfqXgmd010',
+						entrance: EntranceEffect.GROUND
+					}
+				},
+				{
+					action: DinoAction.ADD,
+					fighter: {
+						props: [],
+						dino: true,
+						life: 100,
+						name: 'Jahaa',
+						side: true,
+						scale: 1,
+						fid: 3,
+						gfx: '29v1YPSSlNVjT000',
+						entrance: EntranceEffect.GROUND
+					}
+				},
+				{
+					action: DinoAction.ADD,
+					fighter: {
+						props: [],
+						dino: true,
+						life: 100,
+						name: 'Jolu',
+						side: true,
+						scale: 1,
+						fid: 4,
+						gfx: '89XIW5r5kNoJF000',
+						entrance: EntranceEffect.GROUND
 					}
 				},
 				{
