@@ -7,10 +7,15 @@
 			</div>
 		</div>
 		<div class="wrapper" v-if="dataLoaded">
-			<div class="filler"></div>
+			<div class="filler">
+				<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" class="dinoz" />
+				<img :src="getImgURL('design', 'pigmou_01')" alt="pigmou" class="dinoz" />
+				<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
+			</div>
 			<Profile :accountData="accountData"></Profile>
 			<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
 			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData"></MyDinoz>
+			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />
 		</div>
 	</div>
 </template>
@@ -102,16 +107,16 @@ export default defineComponent({
 	justify-content: space-between;
 	gap: 10px;
 	flex-wrap: wrap;
+	.mandragore {
+		position: absolute;
+		right: -180px;
+		bottom: 0;
+	}
 }
 .filler {
+	display: flex;
+	gap: 20px;
 	height: 180px;
 	width: 550px;
-	background-image: url('../assets/design/info_left.webp'), url('../assets/design/info_right.webp'),
-		url('../assets/design/info_middle.webp');
-	background-repeat: no-repeat, no-repeat, repeat-x;
-	background-position:
-		left top,
-		right top,
-		center top;
 }
 </style>
