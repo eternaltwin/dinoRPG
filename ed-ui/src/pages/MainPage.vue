@@ -6,7 +6,7 @@
 					<td id="left"><div></div></td>
 					<td id="center">
 						<a href="/" class="linkHome"></a>
-						<div id="centerHeader">
+						<div id="centerHeader" v-if="loaded">
 							<div id="menu"></div>
 							<LeftPanel />
 							<div id="centerContent">
@@ -51,7 +51,8 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			dinozStore: dinozStore()
+			dinozStore: dinozStore(),
+			loaded: false as boolean
 		};
 	},
 	methods: {
@@ -70,7 +71,7 @@ export default defineComponent({
 				this.playerStore.setPlayerOptions(commonData.playerOptions);
 				this.playerStore.setAdmin(commonData.admin);
 			}
-
+			this.loaded = true;
 			EventBus.emit('isLoading', false);
 		}
 	},
