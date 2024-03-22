@@ -1,11 +1,8 @@
 import cron from 'cron';
-import { getAllResting, updateDinoz } from '../dao/dinozDao.js';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { BaseStats } from '@drpg/core/utils/getSpecialStat';
-import { SpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { Stat } from '@drpg/core/models/enums/SkillStat';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { sendDiscord } from '../utils/discord.js';
 import dayjs from 'dayjs';
+import { prisma } from '../prisma.js';
 
 // Truncate table 'player_dinoz_shop' at midnight
 const healRestingDinoz = () => {
@@ -15,31 +12,55 @@ const healRestingDinoz = () => {
 		sendDiscord(`Start healing resting dinoz.`);
 		const startTime = dayjs();
 		try {
-			const dinozList = await getAllResting();
-			for (const dinoz of dinozList) {
-				const skills = dinoz.skills.map(skill => Object.values(skillList).find(s => s.id === skill.skillId));
-				let value = BaseStats[SpecialStat.HP_REGEN];
-				let multiplier = 1;
-				skills.forEach(skill => {
-					if (!skill || !skill.effects) return;
-					if (Object.keys(skill.effects).some(e => e === Stat.HP_REGEN)) {
-						const effect = skill.effects[SpecialStat.HP_REGEN];
-						if (!effect) return;
-
-						// Flat value
-						if (typeof effect === 'number') {
-							value += effect;
-						} else {
-							// Multiplier
-							multiplier *= effect[1];
-						}
-					}
-				});
-				await updateDinoz(dinoz.id, { life: Math.round(dinoz.life + value * multiplier) });
-			}
+			await prisma.$queryRaw`
+				UPDATE
+					dinoz du
+				SET
+					life = least(d.life + COALESCE(sg.life, 1) +
+											 CASE
+												 WHEN
+													 p.id IS NULL
+													 THEN
+													 0
+												 ELSE
+													 1
+												 END
+						, d."maxLife" / 2)
+					FROM
+   dinoz d
+   LEFT JOIN
+      (
+         SELECT
+            ds."dinozId",
+            COUNT(*) * 2 life
+         FROM
+            "dinoz_skill" ds
+         WHERE
+            ds."skillId" IN
+            (
+               ${Skill.COCON},
+               ${Skill.REGENERESCENCE}
+            )
+         GROUP BY
+            ds."dinozId"
+      )
+      sg
+				ON sg."dinozId" = d.id
+					LEFT JOIN
+					player p
+					ON p.id = d."playerId"
+					AND p.priest = TRUE
+				WHERE
+					d.id = du.id
+					AND d.resting = TRUE
+					AND
+						(
+					d.life < (d."maxLife" / 2)
+					)
+				;
+`;
 			const endTime = dayjs();
-			sendDiscord(`Healed ${dinozList.length} resting dinoz. Operation ended in ${endTime.diff(startTime)}ms.`);
-			// await heal
+			sendDiscord(`Operation ended in ${endTime.diff(startTime)}ms.`);
 		} catch (err) {
 			console.error(`Cannot heal resting dinoz: ${err}`);
 		}
