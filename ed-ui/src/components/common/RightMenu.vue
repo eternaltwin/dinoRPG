@@ -49,7 +49,7 @@
 		<li>
 			<a @click="logOff()">{{ $t('rightMenu.logout') }}</a>
 		</li>
-		<li class="guide">
+		<li @click="goToPage('Help')" class="guide">
 			{{ $t('rightMenu.guide') }}
 		</li>
 	</ul>
