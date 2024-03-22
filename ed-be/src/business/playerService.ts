@@ -17,6 +17,7 @@ import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
 import { updateCompletion } from '../dao/rankingDao.js';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 
 /**
  * @summary Get data from player on login
@@ -56,8 +57,13 @@ export async function getCommonData(req: Request) {
 		}
 
 		// Give 2 action for active dinoz
+		const leaderWithVeilleuse = playerCommonData.dinoz.filter(d => d.skills.some(s => s.skillId === Skill.VEILLEUSE));
 		for (const dinoz of playerCommonData.dinoz) {
-			await updateDinoz(dinoz.id, { remaining: 2 });
+			let remaning = 2;
+			if (playerCommonData.matelasseur) remaning++;
+			if (dinoz.skills.some(s => s.skillId === Skill.GROS_DORMEUR)) remaning++;
+			if (leaderWithVeilleuse.some(d => d.followers.some(di => di.id === dinoz.id))) remaning++;
+			await updateDinoz(dinoz.id, { remaining: remaning });
 		}
 	}
 

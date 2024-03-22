@@ -18,6 +18,8 @@ import { effectParser, fromBase62 } from '../utils/index.js';
 import { getMaxXp, getRandomUpElement } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
+import { getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -107,6 +109,9 @@ export async function learnSkill(req: Request) {
 		}
 		await applySkillEffect(dinozSkills, skill);
 		await addSkillToDinoz(dinozId, skillIdList[0]);
+		if (skill.type === SkillType.U) {
+			await applyUSkillEffect(dinozSkills.player.id, skill);
+		}
 
 		// Get all new unlockables skills
 		// First filter : get skills that required skill send in body to be learn
@@ -439,4 +444,43 @@ export async function applySkillEffect(
 	if (skill.effects) {
 		await effectParser(skill.effects, dinoz);
 	}
+}
+
+async function applyUSkillEffect(playerId: number, skill: SkillDetails) {
+	const player = await getPlayerUSkills(playerId);
+	if (!player) {
+		throw new ErrorFormator(500, `This player doesn't exist.`);
+	}
+	switch (skill.id) {
+		case Skill.LEADER:
+			if (!player.leader) player.leader = true;
+			break;
+		case Skill.INGENIEUR:
+			if (!player.engineer) player.engineer = true;
+			break;
+		case Skill.MAGASINIER:
+			if (!player.shopKeeper) player.shopKeeper = true;
+			break;
+		case Skill.CUISINIER:
+			if (!player.cooker) player.cooker = true;
+			break;
+		case Skill.MARCHAND:
+			if (!player.merchant) player.merchant = true;
+			break;
+		case Skill.PRETRE:
+			if (!player.priest) player.priest = true;
+			break;
+		case Skill.PROFESSEUR:
+			if (!player.teacher) player.teacher = true;
+			break;
+		case Skill.MESSIE:
+			if (!player.messie) player.messie = true;
+			break;
+		case Skill.MATELASSEUR:
+			if (!player.matelasseur) player.matelasseur = true;
+			break;
+		default:
+			break;
+	}
+	await setPlayer(playerId, player);
 }

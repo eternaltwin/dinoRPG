@@ -385,10 +385,8 @@ export async function buyDinoz(req: Request) {
 			throw new ErrorFormator(500, `Missing player`);
 		}
 
-		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
-			throw new ErrorFormator(400, 'tooManyActiveDinoz');
-		}
-		if (player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus) {
+		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
+		if (dinozActive.length >= maxDinoz) {
 			throw new ErrorFormator(400, 'tooManyActiveDinoz');
 		}
 	}

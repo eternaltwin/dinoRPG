@@ -26963,6 +26963,8 @@ export namespace Prisma {
     merchant: boolean | null
     priest: boolean | null
     teacher: boolean | null
+    messie: boolean | null
+    matelasseur: boolean | null
     createdDate: Date | null
     updatedDate: Date | null
     lastLogin: Date | null
@@ -26983,6 +26985,8 @@ export namespace Prisma {
     merchant: boolean | null
     priest: boolean | null
     teacher: boolean | null
+    messie: boolean | null
+    matelasseur: boolean | null
     createdDate: Date | null
     updatedDate: Date | null
     lastLogin: Date | null
@@ -27003,6 +27007,8 @@ export namespace Prisma {
     merchant: number
     priest: number
     teacher: number
+    messie: number
+    matelasseur: number
     createdDate: number
     updatedDate: number
     lastLogin: number
@@ -27037,6 +27043,8 @@ export namespace Prisma {
     merchant?: true
     priest?: true
     teacher?: true
+    messie?: true
+    matelasseur?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -27057,6 +27065,8 @@ export namespace Prisma {
     merchant?: true
     priest?: true
     teacher?: true
+    messie?: true
+    matelasseur?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -27077,6 +27087,8 @@ export namespace Prisma {
     merchant?: true
     priest?: true
     teacher?: true
+    messie?: true
+    matelasseur?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -27184,6 +27196,8 @@ export namespace Prisma {
     merchant: boolean
     priest: boolean
     teacher: boolean
+    messie: boolean
+    matelasseur: boolean
     createdDate: Date
     updatedDate: Date
     lastLogin: Date
@@ -27223,6 +27237,8 @@ export namespace Prisma {
     merchant?: boolean
     priest?: boolean
     teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     lastLogin?: boolean
@@ -27260,6 +27276,8 @@ export namespace Prisma {
     merchant?: boolean
     priest?: boolean
     teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     lastLogin?: boolean
@@ -27321,6 +27339,8 @@ export namespace Prisma {
       merchant: boolean
       priest: boolean
       teacher: boolean
+      messie: boolean
+      matelasseur: boolean
       createdDate: Date
       updatedDate: Date
       lastLogin: Date
@@ -27763,6 +27783,8 @@ export namespace Prisma {
     readonly merchant: FieldRef<"Player", 'Boolean'>
     readonly priest: FieldRef<"Player", 'Boolean'>
     readonly teacher: FieldRef<"Player", 'Boolean'>
+    readonly messie: FieldRef<"Player", 'Boolean'>
+    readonly matelasseur: FieldRef<"Player", 'Boolean'>
     readonly createdDate: FieldRef<"Player", 'DateTime'>
     readonly updatedDate: FieldRef<"Player", 'DateTime'>
     readonly lastLogin: FieldRef<"Player", 'DateTime'>
@@ -42381,6 +42403,8 @@ export namespace Prisma {
     merchant: 'merchant',
     priest: 'priest',
     teacher: 'teacher',
+    messie: 'messie',
+    matelasseur: 'matelasseur',
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     lastLogin: 'lastLogin'
@@ -44176,6 +44200,8 @@ export namespace Prisma {
     merchant?: BoolFilter<"Player"> | boolean
     priest?: BoolFilter<"Player"> | boolean
     teacher?: BoolFilter<"Player"> | boolean
+    messie?: BoolFilter<"Player"> | boolean
+    matelasseur?: BoolFilter<"Player"> | boolean
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
@@ -44212,6 +44238,8 @@ export namespace Prisma {
     merchant?: SortOrder
     priest?: SortOrder
     teacher?: SortOrder
+    messie?: SortOrder
+    matelasseur?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -44251,6 +44279,8 @@ export namespace Prisma {
     merchant?: BoolFilter<"Player"> | boolean
     priest?: BoolFilter<"Player"> | boolean
     teacher?: BoolFilter<"Player"> | boolean
+    messie?: BoolFilter<"Player"> | boolean
+    matelasseur?: BoolFilter<"Player"> | boolean
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
@@ -44287,6 +44317,8 @@ export namespace Prisma {
     merchant?: SortOrder
     priest?: SortOrder
     teacher?: SortOrder
+    messie?: SortOrder
+    matelasseur?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -44315,6 +44347,8 @@ export namespace Prisma {
     merchant?: BoolWithAggregatesFilter<"Player"> | boolean
     priest?: BoolWithAggregatesFilter<"Player"> | boolean
     teacher?: BoolWithAggregatesFilter<"Player"> | boolean
+    messie?: BoolWithAggregatesFilter<"Player"> | boolean
+    matelasseur?: BoolWithAggregatesFilter<"Player"> | boolean
     createdDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     lastLogin?: DateTimeWithAggregatesFilter<"Player"> | Date | string
@@ -46535,13 +46569,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -46571,13 +46607,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -46613,6 +46651,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46649,6 +46689,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46678,13 +46720,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -46704,6 +46748,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -46724,6 +46770,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48927,6 +48975,8 @@ export namespace Prisma {
     merchant?: SortOrder
     priest?: SortOrder
     teacher?: SortOrder
+    messie?: SortOrder
+    matelasseur?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -48953,6 +49003,8 @@ export namespace Prisma {
     merchant?: SortOrder
     priest?: SortOrder
     teacher?: SortOrder
+    messie?: SortOrder
+    matelasseur?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -48973,6 +49025,8 @@ export namespace Prisma {
     merchant?: SortOrder
     priest?: SortOrder
     teacher?: SortOrder
+    messie?: SortOrder
+    matelasseur?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -52307,13 +52361,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -52342,13 +52398,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -52822,6 +52880,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52857,6 +52917,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54783,13 +54845,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -54818,13 +54882,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -54997,6 +55063,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55032,6 +55100,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55442,13 +55512,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -55477,13 +55549,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -55534,6 +55608,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55569,6 +55645,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55596,13 +55674,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -55631,13 +55711,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -55688,6 +55770,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55723,6 +55807,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55750,13 +55836,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -55785,13 +55873,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -55842,6 +55932,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55877,6 +55969,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56950,13 +57044,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -56985,13 +57081,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57042,6 +57140,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57077,6 +57177,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57104,13 +57206,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57139,13 +57243,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57196,6 +57302,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57231,6 +57339,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57258,13 +57368,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57293,13 +57405,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57350,6 +57464,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57385,6 +57501,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57412,13 +57530,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57447,13 +57567,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57504,6 +57626,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57539,6 +57663,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57566,13 +57692,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57601,13 +57729,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57658,6 +57788,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57693,6 +57825,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57720,13 +57854,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57755,13 +57891,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57812,6 +57950,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57847,6 +57987,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57874,13 +58016,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57909,13 +58053,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57966,6 +58112,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58001,6 +58149,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58028,13 +58178,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58063,13 +58215,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58120,6 +58274,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58155,6 +58311,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58260,13 +58418,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58295,13 +58455,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58382,6 +58544,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58417,6 +58581,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58444,13 +58610,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58479,13 +58647,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58670,6 +58840,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58705,6 +58877,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58871,13 +59045,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58906,13 +59082,15 @@ export namespace Prisma {
     eternalTwinId: string
     money: number
     quetzuBought: number
-    leader: boolean
-    engineer: boolean
-    cooker: boolean
-    shopKeeper: boolean
-    merchant: boolean
-    priest: boolean
-    teacher: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59053,6 +59231,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59088,6 +59268,8 @@ export namespace Prisma {
     merchant?: BoolFieldUpdateOperationsInput | boolean
     priest?: BoolFieldUpdateOperationsInput | boolean
     teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string

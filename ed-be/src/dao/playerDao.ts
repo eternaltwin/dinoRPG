@@ -72,6 +72,28 @@ export async function getPlayerId(eternalTwinId: string) {
 	return player;
 }
 
+export async function getPlayerUSkills(playerId: number) {
+	const player = await prisma.player.findFirst({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			leader: true,
+			engineer: true,
+			cooker: true,
+			shopKeeper: true,
+			merchant: true,
+			priest: true,
+			teacher: true,
+			messie: true,
+			matelasseur: true
+		}
+	});
+
+	return player;
+}
+
 export async function getEternalTwinId(playerId: number) {
 	const player = await prisma.player.findFirst({
 		where: {
@@ -128,6 +150,7 @@ export async function getCommonDataRequest(playerId: number) {
 				orderBy: [{ order: 'asc' }, { name: 'asc' }]
 			},
 			rewards: true,
+			matelasseur: true,
 			items: { select: { itemId: true, quantity: true } }
 		}
 	});

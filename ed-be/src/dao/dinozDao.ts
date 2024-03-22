@@ -18,7 +18,8 @@ export async function getActiveDinoz(playerId: number) {
 			player: {
 				select: {
 					id: true,
-					leader: true
+					leader: true,
+					messie: true
 				}
 			}
 		}

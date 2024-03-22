@@ -316,13 +316,15 @@ model Player {
 	eternalTwinId               String                       @db.VarChar
 	money                       Int
 	quetzuBought                Int
-	leader                      Boolean
-	engineer                    Boolean
-	cooker                      Boolean
-	shopKeeper                  Boolean
-	merchant                    Boolean
-	priest                      Boolean
-	teacher                     Boolean
+	leader                      Boolean                      @default(false)
+	engineer                    Boolean                      @default(false)
+	cooker                      Boolean                      @default(false)
+	shopKeeper                  Boolean                      @default(false)
+	merchant                    Boolean                      @default(false)
+	priest                      Boolean                      @default(false)
+	teacher                     Boolean                      @default(false)
+	messie                      Boolean                      @default(false)
+	matelasseur                 Boolean                      @default(false)
 	createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
 	updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
 	lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
