@@ -1,14 +1,14 @@
 // @ts-check
 // https://github.com/motion-twin/WebGamesArchives/blob/main/DinoRPG/gfx/fight/src/fx/Anim.hx
 
-import { Fighter } from '../../Fighter.js';
-import { Scene } from '../../Scene.js';
-import { State } from '../../State.js';
+import { Fighter } from '../../../Fighter.js';
+import { Scene } from '../../../Scene.js';
+import { State } from '../../../State.js';
 
 /**
  * The given Fighter plays a specific animation.
  */
-export class Anim extends State {
+export class FxAnim extends State {
 	/**
 	 * A Fighter plays an animation.
 	 * @param {Scene} scene The Scene where the effect takes place.
