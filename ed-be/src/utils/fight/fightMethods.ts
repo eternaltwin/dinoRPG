@@ -4017,8 +4017,7 @@ const startAttack = (
 	}
 
 	// Change fighter element
-	// TODO rotate element even if a skill was played
-	if (!skill && !hasStatus(fighter, Status.LOCKED)) {
+	if (hasStatus(fighter, Status.LOCKED)) {
 		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
 	}
 
