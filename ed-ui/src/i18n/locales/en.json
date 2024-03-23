@@ -3260,6 +3260,11 @@
 		"fightHistory": "Fight history",
 		"team": "My team",
 		"tournaments": "Tournaments",
-		"build": "Build my Dojo"
+		"build": "Build my Dojo",
+		"group": "Group {group}",
+		"seeFinal": "See the final",
+		"seeFight": "See the fight",
+		"nextTournament": "The next tournament will start on **{next}**, be ready! The qualifying phases end on **{qualif}**.",
+		"tournamentInfo": "**ATTENTION:**&&Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**"
 	}
 }

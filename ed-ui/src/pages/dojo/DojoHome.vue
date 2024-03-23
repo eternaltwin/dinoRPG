@@ -44,7 +44,7 @@
 				}"
 			/>
 			<img
-				@click="goToPage('DojoTournaments')"
+				@click="goToPage('DojoTournament')"
 				:src="getImgURL('icons', 'act_dojo')"
 				v-tippy="{
 					content: formatContent($t('dojo.tournaments')),
@@ -62,7 +62,7 @@
 		</div>
 	</div>
 	<p class="subtitle">{{ $t('dojo.tidInProgress') }}</p>
-	<DZButton @click="accessTournament">{{ $t('dojo.accessTournament') }}</DZButton>
+	<DZButton @click="goToPage('DojoTournament')">{{ $t('dojo.accessTournament') }}</DZButton>
 	<DZDisclaimer round help :content="$t('dojo.disclaimer')" />
 </template>
 
@@ -87,11 +87,7 @@ export default defineComponent({
 	},
 	methods: {
 		goToPage(pageName: string) {
-			// Do nothing for now
-			// this.$router.push({ name: pageName });
-		},
-		async accessTournament() {
-			// Do nothing for now
+			this.$router.push({ name: pageName });
 		}
 	},
 	async mounted() {}

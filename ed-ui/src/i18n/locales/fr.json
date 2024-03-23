@@ -3892,6 +3892,11 @@
 		"fightHistory": "Historique des combats",
 		"team": "Mon équipe",
 		"tournaments": "Tournois",
-		"build": "Construire mon dojo"
+		"build": "Construire mon dojo",
+		"group": "Groupe {group}",
+		"seeFinal": "Voir la finale",
+		"seeFight": "Voir le combat",
+		"nextTournament": "Le prochain tournoi commencera le **{next}**, soyez prêt ! Les phases de qualifications se terminent le **{qualif}**.",
+		"tournamentInfo": "**ATTENTION :**&&Votre position est indiqué en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**"
 	}
 }

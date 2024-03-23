@@ -32,6 +32,7 @@
 			></a>
 			<a
 				id="menu_dojo"
+				@click="goToPage('DojoHome')"
 				class="icondojo"
 				v-tippy="{
 					content: formatContent($t('layout.dojoButton')),

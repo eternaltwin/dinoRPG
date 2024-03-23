@@ -112,6 +112,11 @@ const router = createRouter({
 					component: () => import('../pages/dojo/DojoHome.vue')
 				},
 				{
+					path: '/dojo/tournament/:id?',
+					name: 'DojoTournament',
+					component: () => import('../pages/dojo/DojoTournament.vue')
+				},
+				{
 					path: '/fight/pixi',
 					name: 'PixiFight',
 					component: () => import('../components/fight/PixiFight.vue'),

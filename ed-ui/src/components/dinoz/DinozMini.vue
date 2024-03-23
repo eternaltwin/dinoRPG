@@ -9,35 +9,70 @@ import { sdino } from '@drpg/dino-animation';
 export default defineComponent({
 	name: 'DinozMini',
 	props: {
-		display: { type: String, required: true }
+		display: { type: String, required: true },
+		width: { type: Number, default: 45 },
+		height: { type: Number, default: 45 },
+		flip: { type: Boolean, default: false }
+	},
+	data() {
+		return {
+			imageCount: 0
+		};
+	},
+	computed: {
+		styleVars() {
+			return {
+				width: `${this.width}px`,
+				height: `${this.height}px`,
+				animationLength: `${(this.imageCount * 1000) / 24}ms`,
+				maxMargin: `-${this.width * this.imageCount}px`
+			};
+		}
 	},
 	mounted() {
-		const dinoAnimDiv = this.$refs.dino;
+		const dinoAnimDiv = this.$refs.dino as HTMLDivElement | null;
 		if (!dinoAnimDiv) return;
 		new sdino({
 			data: this.display,
-			flip: 1,
+			flip: this.flip ? 0 : 1,
 			pflag: true
 		}).toAnimation(
 			div => {
+				div.querySelectorAll('img').forEach(img => {
+					img.removeAttribute('hidden');
+				});
 				dinoAnimDiv.appendChild(div);
+				this.imageCount = +(div.getAttribute('data-length') ?? '0');
 			},
-			45,
-			45
+			this.width,
+			this.height
 		);
-
-		setInterval(() => {
-			const e = dinoAnimDiv.firstChild as Element;
-			if (!e) return;
-			const length = parseInt(e.getAttribute('data-length') ?? '0');
-			let idx = parseInt(e.getAttribute('data-idx') ?? '0');
-			if (length > 1) {
-				e.children.item(idx)!.hidden = true;
-				idx = (idx + 1) % length;
-				e.children.item(idx)!.hidden = false;
-				e.setAttribute('data-idx', idx.toString());
-			}
-		}, 1000 / 24.0);
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+@keyframes play {
+	from {
+		margin-left: 0;
+	}
+	to {
+		margin-left: v-bind('styleVars.maxMargin');
+	}
+}
+
+div {
+	width: v-bind('styleVars.width');
+	height: v-bind('styleVars.height');
+	overflow: hidden;
+
+	:deep(.DinoRPG-Animation) {
+		display: flex;
+		margin-left: 0;
+		animation-name: play;
+		animation-duration: v-bind('styleVars.animationLength');
+		animation-timing-function: steps(v-bind('imageCount'));
+		animation-iteration-count: infinite;
+	}
+}
+</style>
