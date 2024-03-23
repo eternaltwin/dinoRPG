@@ -4291,6 +4291,10 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	const possibleEvent = randomlyGetEvent(fightData, attacker);
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
+		checkDeaths(fightData);
+		if (fightData.loser) {
+			return;
+		}
 	}
 
 	// Skill activation
