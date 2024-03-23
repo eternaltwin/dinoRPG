@@ -22,7 +22,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { BASE_ENERGY_COST, CYCLE, ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
 import { getBasicElementDamage, getDamage } from './getDamage.js';
-import { initializeDinoz, initializeMonster } from './getFighters.js';
+import { cloneDinoz, initializeMonster } from './getFighters.js';
 import randomBetween from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -1113,28 +1113,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					throw new Error('No initial dinoz found');
 				}
 
-				const isBossFight = fightData.fighters.some(f => f.type === 'boss');
-
-				const clone = initializeDinoz(null, fighter.attacker ? 0 : 1, initialDinoz, fightData.place, isBossFight);
-
 				// Count monsters
-				const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
-
-				clone.level = 1;
-				clone.hp = 1;
-				clone.type = 'clone';
-				clone.master = fighter.id;
-				clone.id = -monsterCount - 1;
-
-				// Set the clone's time to the fighter's time
-				clone.time = fighter.time;
-
-				// Set HP to 10% if Item.TEAR_OF_LIFE
-				if (fighter.items.some(item => item.itemId === Item.TEAR_OF_LIFE)) {
-					clone.hp = Math.round(clone.startingHp * 0.1);
-				}
-
-				applyStrategy(fightData, clone);
+				const clone = cloneDinoz(fighter, fightData);
 
 				// Add clone to fighters
 				fightData.fighters.push(clone);
@@ -4037,6 +4017,7 @@ const startAttack = (
 	}
 
 	// Change fighter element
+	// TODO rotate element even if a skill was played
 	if (!skill && !hasStatus(fighter, Status.LOCKED)) {
 		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
 	}

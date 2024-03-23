@@ -17,6 +17,7 @@ import { createStatus } from './fightMethods.js';
 import { getBasicElementDamage } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { DetailedFight } from './generateFight.js';
 
 interface Team {
 	dinozList: DinozToGetFighter[];
@@ -39,7 +40,7 @@ export const initializeDinoz = (
 	// Costume
 	let costume: MonsterFiche | undefined = undefined;
 
-	// Find items
+	// Find items for non clone figther
 	const items = dinoz.items.map(item => {
 		const itemFiche = Object.values(itemList).find(i => i.itemId === item.itemId);
 
@@ -63,7 +64,7 @@ export const initializeDinoz = (
 		return { ...itemFiche };
 	});
 
-	// Find skills
+	// Find skills for non clone fighter
 	const skills = dinoz.skills.map(skill => {
 		const skillDetails = skillList[skill.skillId as Skill];
 
@@ -237,6 +238,79 @@ export const initializeDinoz = (
 	fighter.element = fighter.elements[0];
 
 	return fighter;
+};
+
+export const cloneDinoz = (
+	dinoz: DetailedFighter,
+	fightData: DetailedFight,
+) => {
+	const has_tear = dinoz.items.some(item => item.itemId === Item.TEAR_OF_LIFE);
+	const clone_id = -1 - fightData.fighters.filter(f => f.type !== 'dinoz').length;
+
+	let clone: DetailedFighter = {
+		id: clone_id,
+		display: dinoz.display,
+		name: dinoz.name,
+		level: dinoz.level,
+		type: 'clone' as const, // TODO: this may not work well, in case a monster calls a clone, it's still a monster
+		attacker: dinoz.attacker,
+		maxHp: dinoz.maxHp,
+		startingHp: has_tear ? dinoz.maxHp * 0.1 : 1,
+		hp: has_tear ? dinoz.maxHp * 0.1 : 1,
+		energy: 100, // Default for clone
+		maxEnergy: 100, // Default for clone
+		stats: {
+			base: dinoz.stats.base,
+			assaultBonus: dinoz.stats.assaultBonus,
+			defense: dinoz.stats.defense,
+			special: {
+				[SpecialStat.INITIATIVE]: 0, // No initative for clones
+				[SpecialStat.ENERGY]: 0, // No energy recovery bonus for clones
+				[SpecialStat.ENERGY_RECOVERY]: 0, // No energy recovery bonus for clones
+				[SpecialStat.ARMOR]: dinoz.stats.special[SpecialStat.ARMOR],
+				[SpecialStat.MULTIHIT]: dinoz.stats.special[SpecialStat.MULTIHIT],
+				[SpecialStat.EVASION]: dinoz.stats.special[SpecialStat.EVASION],
+				[SpecialStat.COUNTER]: dinoz.stats.special[SpecialStat.COUNTER],
+				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
+				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
+				[SpecialStat.ACID_BLOOD_DAMAGE]: 0, // No acid blood for clones
+			},
+			speed: dinoz.stats.speed,
+		},
+		items: [], // No items for clones
+		itemsUsed: [],
+		time: dinoz.time, // Clone start with their summoner's time
+		skills: [], // No skills for clones
+		status: [], // No statuses for clones
+		activeSkills: [],
+		elements: dinoz.elements, // Copy exactly the elements of the original dinoz
+		element: ElementType.AIR, // Temporary, is changed below
+		minDamage: dinoz.minDamage,
+		minAssaultDamage: dinoz.minAssaultDamage,
+		skillElementalBonus: dinoz.skillElementalBonus,
+		nextAssaultBonus: 0, // Not carried over to clone from original dinoz
+		nextAssaultMultiplier: 1, // Not carried over to clone from original dinoz
+		costume: undefined,
+		invocations: 0,
+		initiallyCursed: false,
+		permanentStatusGained: [],
+		// Copy also special passives from original dinoz
+		canHitFlying: dinoz.canHitFlying,
+		canHitIntangible: dinoz.canHitIntangible,
+		cancelArmor: dinoz.cancelArmor,
+	};
+
+	// Make sure the clone starts with the highest element
+	const bestElement = clone.elements.reduce((acc, element) => {
+		if (clone.stats.base[element] > clone.stats.base[acc]) {
+			return element;
+		}
+
+		return acc;
+	}, ElementType.FIRE);
+	clone.element = bestElement;
+
+	return clone;
 };
 
 export const initializeMonster = (
