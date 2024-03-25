@@ -278,8 +278,13 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 						id: number;
 						life?: number;
 					}[] = [];
+					const nextAction = fight[i + j];
+					if (nextAction.action !== 'hit') {
+						step.targets.forEach(t => {
+							targets.push({ id: t.id, life: 0 });
+						});
+					}
 					while (searchTarget) {
-						const nextAction = fight[i + j];
 						if (nextAction.action === 'hit') {
 							targets.push({ id: nextAction.target.id, life: nextAction.damage });
 							j++;
