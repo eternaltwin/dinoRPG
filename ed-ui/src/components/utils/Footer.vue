@@ -269,6 +269,9 @@ footer {
 	&.small {
 		flex: 1 1 40%;
 	}
+	& ul {
+		font-size: 0.65rem;
+	}
 }
 
 .box.description {
