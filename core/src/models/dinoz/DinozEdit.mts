@@ -1,4 +1,4 @@
-import { UnavailableReasonFront } from "./UnavailableReasonFront.mjs";
+import { UnavailableReasonFront } from './UnavailableReasonFront.mjs';
 
 export interface DinozEdit {
 	dinozId?: string;

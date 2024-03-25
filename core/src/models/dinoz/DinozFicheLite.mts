@@ -1,4 +1,4 @@
-import { UnavailableReason } from "@drpg/prisma";
+import { UnavailableReason } from '@drpg/prisma';
 
 export interface DinozFicheLite {
 	id: number;

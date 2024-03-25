@@ -10,8 +10,8 @@ export async function getActiveDinoz(playerId: number) {
 		where: {
 			playerId,
 			OR: [
-				{ unavailableReason: null }, 
-				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+				{ unavailableReason: null },
+				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 			]
 		},
 		select: {
@@ -57,11 +57,7 @@ export async function getAllDinozFicheLite(playerId: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId,
-			OR: [
-				{ unavailableReason: null }, 
-				{ unavailableReason: { not: UnavailableReason.frozen }}
-			]
-
+			OR: [{ unavailableReason: null }, { unavailableReason: { not: UnavailableReason.frozen } }]
 		},
 		select: {
 			id: true,
@@ -533,10 +529,7 @@ export async function getGlobalMissionsData(playerId: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId,
-			OR: [
-				{ unavailableReason: null },
-				{ unavailableReason: { not: UnavailableReason.sacrificed } }
-			]
+			OR: [{ unavailableReason: null }, { unavailableReason: { not: UnavailableReason.sacrificed } }]
 		},
 		select: {
 			id: true,
@@ -559,8 +552,8 @@ export async function getManageData(userID: number) {
 		where: {
 			playerId: userID,
 			OR: [
-				{ unavailableReason: null }, 
-				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+				{ unavailableReason: null },
+				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 			]
 		},
 		select: {

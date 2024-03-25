@@ -6,7 +6,11 @@
 		</p>
 		<div class="detail" v-if="missionDetail">
 			<template v-if="missionDetail.actionType === MissionEnum.TALKTO">
-				{{ $t(`missions.actions.${missionDetail.actionType}`, { npc: $t(`missions.npc.${missionDetail.target}`) }) }}
+				{{
+					$t(`missions.actions.${missionDetail.action ?? missionDetail.actionType}`, {
+						npc: $t(`missions.npc.${missionDetail.target}`)
+					})
+				}}
 			</template>
 			<template v-else-if="missionDetail.actionType === MissionEnum.GOTO">
 				{{

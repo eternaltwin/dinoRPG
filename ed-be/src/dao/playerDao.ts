@@ -145,10 +145,10 @@ export async function getCommonDataRequest(playerId: number) {
 					skills: { select: { skillId: true } },
 					followers: { select: { id: true } }
 				},
-				where: { 
+				where: {
 					OR: [
-						{ unavailableReason: null }, 
-						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 					]
 				},
 				orderBy: [{ order: 'asc' }, { name: 'asc' }]
@@ -257,10 +257,7 @@ export async function getPlayerDataRequest(playerId: number) {
 					status: { select: { statusId: true } }
 				},
 				where: {
-					OR: [
-						{ unavailableReason: null },
-						{ unavailableReason: { not: UnavailableReason.sacrificed } }
-					]
+					OR: [{ unavailableReason: null }, { unavailableReason: { not: UnavailableReason.sacrificed } }]
 				},
 				orderBy: [
 					{
@@ -406,13 +403,13 @@ export async function getBoxHandlerInformations(playerId: number) {
 			id: true,
 			_count: {
 				select: {
-					dinoz: { 
-						where: { 
+					dinoz: {
+						where: {
 							OR: [
-								{ unavailableReason: null }, 
-								{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+								{ unavailableReason: null },
+								{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 							]
-						} 
+						}
 					}
 				}
 			},
@@ -425,11 +422,11 @@ export async function getBoxHandlerInformations(playerId: number) {
 						}
 					}
 				},
-				where: { 
+				where: {
 					OR: [
-						{ unavailableReason: null }, 
-						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
-					] 
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+					]
 				}
 			},
 			rewards: true
@@ -498,8 +495,8 @@ export async function getPlayerShopItemsDataRequest(playerId: number) {
 				},
 				where: {
 					OR: [
-						{ unavailableReason: null }, 
-						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 					]
 				}
 			}
@@ -543,8 +540,8 @@ export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: 
 				},
 				where: {
 					OR: [
-						{ unavailableReason: null }, 
-						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 					]
 				}
 			}

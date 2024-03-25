@@ -51,7 +51,7 @@ export async function editDinoz(req: Request) {
 			unavailableReason = null;
 			break;
 		case '':
-			// Do nothing
+		// Do nothing
 	}
 
 	const dinoz = {
@@ -74,7 +74,13 @@ export async function editDinoz(req: Request) {
 		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'canChangeName', dinoz.canChangeName);
 	}
 	if (typeof dinoz.unavailableReason !== 'undefined' && dinoz.unavailableReason !== null) {
-		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'unavailableReason', dinoz.unavailableReason);
+		await createLog(
+			LogType.AdminUpdateDinoz,
+			req.auth.playerId,
+			+req.params.id,
+			'unavailableReason',
+			dinoz.unavailableReason
+		);
 	}
 	if (typeof dinoz.level !== 'undefined') {
 		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'level', dinoz.level);

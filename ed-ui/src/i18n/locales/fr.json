@@ -2507,6 +2507,7 @@
 			"rodlif": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !"
 		},
 		"actions": {
+			"nothing": "{npc}",
 			"talkTo": "Discuter avec {npc} ...",
 			"goto": "Se rendre {place} ...",
 			"validate": "Retourner valider la mission {place} ...",

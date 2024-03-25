@@ -89,14 +89,7 @@ export async function getAvailableActions(
 	dinoz: DinozForConditionCheck &
 		Pick<
 			Dinoz,
-			| 'id'
-			| 'experience'
-			| 'leaderId'
-			| 'fight'
-			| 'gather'
-			| 'remaining'
-			| 'maxLife'
-			| 'unavailableReason'
+			'id' | 'experience' | 'leaderId' | 'fight' | 'gather' | 'remaining' | 'maxLife' | 'unavailableReason'
 		> & {
 			missions: DinozMission[];
 			concentration: Concentration | null;

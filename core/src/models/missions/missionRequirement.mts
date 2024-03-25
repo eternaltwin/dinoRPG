@@ -12,6 +12,11 @@ export type missionRequirement =
 			target: MonsterFiche[];
 	  }
 	| {
-			actionType: Exclude<ConditionEnum, ConditionEnum.KILL | ConditionEnum.KILL_BOSS>;
+			actionType: ConditionEnum.TALKTO;
+			target: string;
+			action?: string;
+	  }
+	| {
+			actionType: Exclude<ConditionEnum, ConditionEnum.KILL | ConditionEnum.KILL_BOSS | ConditionEnum.TALKTO>;
 			target: string;
 	  };

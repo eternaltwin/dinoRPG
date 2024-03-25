@@ -240,10 +240,7 @@ export const initializeDinoz = (
 	return fighter;
 };
 
-export const cloneDinoz = (
-	dinoz: DetailedFighter,
-	fightData: DetailedFight,
-) => {
+export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => {
 	const has_tear = dinoz.items.some(item => item.itemId === Item.TEAR_OF_LIFE);
 	const clone_id = -1 - fightData.fighters.filter(f => f.type !== 'dinoz').length;
 
@@ -273,9 +270,9 @@ export const cloneDinoz = (
 				[SpecialStat.COUNTER]: dinoz.stats.special[SpecialStat.COUNTER],
 				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
-				[SpecialStat.ACID_BLOOD_DAMAGE]: 0, // No acid blood for clones
+				[SpecialStat.ACID_BLOOD_DAMAGE]: 0 // No acid blood for clones
 			},
-			speed: dinoz.stats.speed,
+			speed: dinoz.stats.speed
 		},
 		items: [], // No items for clones
 		itemsUsed: [],
@@ -297,7 +294,7 @@ export const cloneDinoz = (
 		// Copy also special passives from original dinoz
 		canHitFlying: dinoz.canHitFlying,
 		canHitIntangible: dinoz.canHitIntangible,
-		cancelArmor: dinoz.cancelArmor,
+		cancelArmor: dinoz.cancelArmor
 	};
 
 	// Make sure the clone starts with the highest element

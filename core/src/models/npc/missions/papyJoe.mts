@@ -77,7 +77,8 @@ export const M_PAPY_JOE: Mission[] = [
 				hidePlace: true,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'nioufniouf'
+					target: 'nioufniouf',
+					action: 'nothing'
 				},
 				displayedAction: 'nioufniouf',
 				displayedText: 'nioufniouf'
@@ -234,7 +235,8 @@ export const M_PAPY_JOE: Mission[] = [
 				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'pureWater'
+					target: 'pureWater',
+					action: 'nothing'
 				},
 				displayedAction: 'pureWater',
 				displayedText: 'pureWater'
@@ -279,7 +281,8 @@ export const M_PAPY_JOE: Mission[] = [
 				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'kbook'
+					target: 'kbook',
+					action: 'nothing'
 				},
 				displayedAction: 'kbook',
 				displayedText: 'kbook'
