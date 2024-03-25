@@ -203,7 +203,18 @@ export type DinozCatch = $Result.DefaultSelection<Prisma.$DinozCatchPayload>
  * Enums
  */
 export namespace $Enums {
-  export const OfferStatus: {
+  export const UnavailableReason: {
+  frozen: 'frozen',
+  sacrificed: 'sacrificed',
+  selling: 'selling',
+  superdom: 'superdom',
+  resting: 'resting'
+};
+
+export type UnavailableReason = (typeof UnavailableReason)[keyof typeof UnavailableReason]
+
+
+export const OfferStatus: {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
   CANCELLED: 'CANCELLED'
@@ -244,6 +255,10 @@ export const LogType: {
 export type LogType = (typeof LogType)[keyof typeof LogType]
 
 }
+
+export type UnavailableReason = $Enums.UnavailableReason
+
+export const UnavailableReason: typeof $Enums.UnavailableReason
 
 export type OfferStatus = $Enums.OfferStatus
 
@@ -5389,9 +5404,6 @@ export namespace Prisma {
     id: number | null
     leaderId: number | null
     name: string | null
-    isFrozen: boolean | null
-    isSacrificed: boolean | null
-    isSelling: boolean | null
     raceId: number | null
     level: number | null
     nextUpElementId: number | null
@@ -5409,22 +5421,19 @@ export namespace Prisma {
     nbrUpAir: number | null
     fight: boolean | null
     gather: boolean | null
-    resting: boolean | null
     remaining: number | null
     createdDate: Date | null
     updatedDate: Date | null
     playerId: number | null
     order: number | null
     concentrationId: number | null
+    unavailableReason: $Enums.UnavailableReason | null
   }
 
   export type DinozMaxAggregateOutputType = {
     id: number | null
     leaderId: number | null
     name: string | null
-    isFrozen: boolean | null
-    isSacrificed: boolean | null
-    isSelling: boolean | null
     raceId: number | null
     level: number | null
     nextUpElementId: number | null
@@ -5442,22 +5451,19 @@ export namespace Prisma {
     nbrUpAir: number | null
     fight: boolean | null
     gather: boolean | null
-    resting: boolean | null
     remaining: number | null
     createdDate: Date | null
     updatedDate: Date | null
     playerId: number | null
     order: number | null
     concentrationId: number | null
+    unavailableReason: $Enums.UnavailableReason | null
   }
 
   export type DinozCountAggregateOutputType = {
     id: number
     leaderId: number
     name: number
-    isFrozen: number
-    isSacrificed: number
-    isSelling: number
     raceId: number
     level: number
     nextUpElementId: number
@@ -5475,13 +5481,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight: number
     gather: number
-    resting: number
     remaining: number
     createdDate: number
     updatedDate: number
     playerId: number
     order: number
     concentrationId: number
+    unavailableReason: number
     _all: number
   }
 
@@ -5534,9 +5540,6 @@ export namespace Prisma {
     id?: true
     leaderId?: true
     name?: true
-    isFrozen?: true
-    isSacrificed?: true
-    isSelling?: true
     raceId?: true
     level?: true
     nextUpElementId?: true
@@ -5554,22 +5557,19 @@ export namespace Prisma {
     nbrUpAir?: true
     fight?: true
     gather?: true
-    resting?: true
     remaining?: true
     createdDate?: true
     updatedDate?: true
     playerId?: true
     order?: true
     concentrationId?: true
+    unavailableReason?: true
   }
 
   export type DinozMaxAggregateInputType = {
     id?: true
     leaderId?: true
     name?: true
-    isFrozen?: true
-    isSacrificed?: true
-    isSelling?: true
     raceId?: true
     level?: true
     nextUpElementId?: true
@@ -5587,22 +5587,19 @@ export namespace Prisma {
     nbrUpAir?: true
     fight?: true
     gather?: true
-    resting?: true
     remaining?: true
     createdDate?: true
     updatedDate?: true
     playerId?: true
     order?: true
     concentrationId?: true
+    unavailableReason?: true
   }
 
   export type DinozCountAggregateInputType = {
     id?: true
     leaderId?: true
     name?: true
-    isFrozen?: true
-    isSacrificed?: true
-    isSelling?: true
     raceId?: true
     level?: true
     nextUpElementId?: true
@@ -5620,13 +5617,13 @@ export namespace Prisma {
     nbrUpAir?: true
     fight?: true
     gather?: true
-    resting?: true
     remaining?: true
     createdDate?: true
     updatedDate?: true
     playerId?: true
     order?: true
     concentrationId?: true
+    unavailableReason?: true
     _all?: true
   }
 
@@ -5720,9 +5717,6 @@ export namespace Prisma {
     id: number
     leaderId: number | null
     name: string
-    isFrozen: boolean
-    isSacrificed: boolean
-    isSelling: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -5740,13 +5734,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight: boolean
     gather: boolean
-    resting: boolean
     remaining: number
     createdDate: Date
     updatedDate: Date
     playerId: number | null
     order: number | null
     concentrationId: number | null
+    unavailableReason: $Enums.UnavailableReason | null
     _count: DinozCountAggregateOutputType | null
     _avg: DinozAvgAggregateOutputType | null
     _sum: DinozSumAggregateOutputType | null
@@ -5772,9 +5766,6 @@ export namespace Prisma {
     id?: boolean
     leaderId?: boolean
     name?: boolean
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId?: boolean
     level?: boolean
     nextUpElementId?: boolean
@@ -5792,13 +5783,13 @@ export namespace Prisma {
     nbrUpAir?: boolean
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     playerId?: boolean
     order?: boolean
     concentrationId?: boolean
+    unavailableReason?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     player?: boolean | Dinoz$playerArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
@@ -5820,9 +5811,6 @@ export namespace Prisma {
     id?: boolean
     leaderId?: boolean
     name?: boolean
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId?: boolean
     level?: boolean
     nextUpElementId?: boolean
@@ -5840,13 +5828,13 @@ export namespace Prisma {
     nbrUpAir?: boolean
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     playerId?: boolean
     order?: boolean
     concentrationId?: boolean
+    unavailableReason?: boolean
   }
 
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5890,9 +5878,6 @@ export namespace Prisma {
       id: number
       leaderId: number | null
       name: string
-      isFrozen: boolean
-      isSacrificed: boolean
-      isSelling: boolean
       raceId: number
       level: number
       nextUpElementId: number
@@ -5910,13 +5895,13 @@ export namespace Prisma {
       nbrUpAir: number
       fight: boolean
       gather: boolean
-      resting: boolean
       remaining: number
       createdDate: Date
       updatedDate: Date
       playerId: number | null
       order: number | null
       concentrationId: number | null
+      unavailableReason: $Enums.UnavailableReason | null
     }, ExtArgs["result"]["dinoz"]>
     composites: {}
   }
@@ -6341,9 +6326,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Dinoz", 'Int'>
     readonly leaderId: FieldRef<"Dinoz", 'Int'>
     readonly name: FieldRef<"Dinoz", 'String'>
-    readonly isFrozen: FieldRef<"Dinoz", 'Boolean'>
-    readonly isSacrificed: FieldRef<"Dinoz", 'Boolean'>
-    readonly isSelling: FieldRef<"Dinoz", 'Boolean'>
     readonly raceId: FieldRef<"Dinoz", 'Int'>
     readonly level: FieldRef<"Dinoz", 'Int'>
     readonly nextUpElementId: FieldRef<"Dinoz", 'Int'>
@@ -6361,13 +6343,13 @@ export namespace Prisma {
     readonly nbrUpAir: FieldRef<"Dinoz", 'Int'>
     readonly fight: FieldRef<"Dinoz", 'Boolean'>
     readonly gather: FieldRef<"Dinoz", 'Boolean'>
-    readonly resting: FieldRef<"Dinoz", 'Boolean'>
     readonly remaining: FieldRef<"Dinoz", 'Int'>
     readonly createdDate: FieldRef<"Dinoz", 'DateTime'>
     readonly updatedDate: FieldRef<"Dinoz", 'DateTime'>
     readonly playerId: FieldRef<"Dinoz", 'Int'>
     readonly order: FieldRef<"Dinoz", 'Int'>
     readonly concentrationId: FieldRef<"Dinoz", 'Int'>
+    readonly unavailableReason: FieldRef<"Dinoz", 'UnavailableReason'>
   }
     
 
@@ -42126,9 +42108,6 @@ export namespace Prisma {
     id: 'id',
     leaderId: 'leaderId',
     name: 'name',
-    isFrozen: 'isFrozen',
-    isSacrificed: 'isSacrificed',
-    isSelling: 'isSelling',
     raceId: 'raceId',
     level: 'level',
     nextUpElementId: 'nextUpElementId',
@@ -42146,13 +42125,13 @@ export namespace Prisma {
     nbrUpAir: 'nbrUpAir',
     fight: 'fight',
     gather: 'gather',
-    resting: 'resting',
     remaining: 'remaining',
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     playerId: 'playerId',
     order: 'order',
-    concentrationId: 'concentrationId'
+    concentrationId: 'concentrationId',
+    unavailableReason: 'unavailableReason'
   };
 
   export type DinozScalarFieldEnum = (typeof DinozScalarFieldEnum)[keyof typeof DinozScalarFieldEnum]
@@ -42636,6 +42615,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'UnavailableReason'
+   */
+  export type EnumUnavailableReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnavailableReason'>
+    
+
+
+  /**
+   * Reference to a field of type 'UnavailableReason[]'
+   */
+  export type ListEnumUnavailableReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnavailableReason[]'>
+    
+
+
+  /**
    * Reference to a field of type 'BigInt'
    */
   export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
@@ -42752,9 +42745,6 @@ export namespace Prisma {
     id?: IntFilter<"Dinoz"> | number
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     name?: StringFilter<"Dinoz"> | string
-    isFrozen?: BoolFilter<"Dinoz"> | boolean
-    isSacrificed?: BoolFilter<"Dinoz"> | boolean
-    isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
     nextUpElementId?: IntFilter<"Dinoz"> | number
@@ -42772,13 +42762,13 @@ export namespace Prisma {
     nbrUpAir?: IntFilter<"Dinoz"> | number
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
-    resting?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     playerId?: IntNullableFilter<"Dinoz"> | number | null
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
+    unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
     concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
@@ -42799,9 +42789,6 @@ export namespace Prisma {
     id?: SortOrder
     leaderId?: SortOrderInput | SortOrder
     name?: SortOrder
-    isFrozen?: SortOrder
-    isSacrificed?: SortOrder
-    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     nextUpElementId?: SortOrder
@@ -42819,13 +42806,13 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
-    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrderInput | SortOrder
     order?: SortOrderInput | SortOrder
     concentrationId?: SortOrderInput | SortOrder
+    unavailableReason?: SortOrderInput | SortOrder
     leader?: DinozOrderByWithRelationInput
     player?: PlayerOrderByWithRelationInput
     concentration?: ConcentrationOrderByWithRelationInput
@@ -42849,9 +42836,6 @@ export namespace Prisma {
     NOT?: DinozWhereInput | DinozWhereInput[]
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     name?: StringFilter<"Dinoz"> | string
-    isFrozen?: BoolFilter<"Dinoz"> | boolean
-    isSacrificed?: BoolFilter<"Dinoz"> | boolean
-    isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
     nextUpElementId?: IntFilter<"Dinoz"> | number
@@ -42869,13 +42853,13 @@ export namespace Prisma {
     nbrUpAir?: IntFilter<"Dinoz"> | number
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
-    resting?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     playerId?: IntNullableFilter<"Dinoz"> | number | null
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
+    unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
     concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
@@ -42896,9 +42880,6 @@ export namespace Prisma {
     id?: SortOrder
     leaderId?: SortOrderInput | SortOrder
     name?: SortOrder
-    isFrozen?: SortOrder
-    isSacrificed?: SortOrder
-    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     nextUpElementId?: SortOrder
@@ -42916,13 +42897,13 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
-    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrderInput | SortOrder
     order?: SortOrderInput | SortOrder
     concentrationId?: SortOrderInput | SortOrder
+    unavailableReason?: SortOrderInput | SortOrder
     _count?: DinozCountOrderByAggregateInput
     _avg?: DinozAvgOrderByAggregateInput
     _max?: DinozMaxOrderByAggregateInput
@@ -42937,9 +42918,6 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Dinoz"> | number
     leaderId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     name?: StringWithAggregatesFilter<"Dinoz"> | string
-    isFrozen?: BoolWithAggregatesFilter<"Dinoz"> | boolean
-    isSacrificed?: BoolWithAggregatesFilter<"Dinoz"> | boolean
-    isSelling?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     raceId?: IntWithAggregatesFilter<"Dinoz"> | number
     level?: IntWithAggregatesFilter<"Dinoz"> | number
     nextUpElementId?: IntWithAggregatesFilter<"Dinoz"> | number
@@ -42957,13 +42935,13 @@ export namespace Prisma {
     nbrUpAir?: IntWithAggregatesFilter<"Dinoz"> | number
     fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
-    resting?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     remaining?: IntWithAggregatesFilter<"Dinoz"> | number
     createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     playerId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     order?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
+    unavailableReason?: EnumUnavailableReasonNullableWithAggregatesFilter<"Dinoz"> | $Enums.UnavailableReason | null
   }
 
   export type DinozItemWhereInput = {
@@ -45148,9 +45126,6 @@ export namespace Prisma {
 
   export type DinozCreateInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -45168,11 +45143,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -45193,9 +45168,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -45213,13 +45185,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -45235,9 +45207,6 @@ export namespace Prisma {
 
   export type DinozUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -45255,11 +45224,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -45280,9 +45249,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -45300,13 +45266,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -45324,9 +45290,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -45344,20 +45307,17 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
   }
 
   export type DinozUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -45375,20 +45335,17 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
   }
 
   export type DinozUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -45406,13 +45363,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
   }
 
   export type DinozItemCreateInput = {
@@ -47543,6 +47500,13 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type EnumUnavailableReasonNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.UnavailableReason | EnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    in?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel> | $Enums.UnavailableReason | null
+  }
+
   export type DinozNullableRelationFilter = {
     is?: DinozWhereInput | null
     isNot?: DinozWhereInput | null
@@ -47667,9 +47631,6 @@ export namespace Prisma {
     id?: SortOrder
     leaderId?: SortOrder
     name?: SortOrder
-    isFrozen?: SortOrder
-    isSacrificed?: SortOrder
-    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     nextUpElementId?: SortOrder
@@ -47687,13 +47648,13 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
-    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrder
     order?: SortOrder
     concentrationId?: SortOrder
+    unavailableReason?: SortOrder
   }
 
   export type DinozAvgOrderByAggregateInput = {
@@ -47722,9 +47683,6 @@ export namespace Prisma {
     id?: SortOrder
     leaderId?: SortOrder
     name?: SortOrder
-    isFrozen?: SortOrder
-    isSacrificed?: SortOrder
-    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     nextUpElementId?: SortOrder
@@ -47742,22 +47700,19 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
-    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrder
     order?: SortOrder
     concentrationId?: SortOrder
+    unavailableReason?: SortOrder
   }
 
   export type DinozMinOrderByAggregateInput = {
     id?: SortOrder
     leaderId?: SortOrder
     name?: SortOrder
-    isFrozen?: SortOrder
-    isSacrificed?: SortOrder
-    isSelling?: SortOrder
     raceId?: SortOrder
     level?: SortOrder
     nextUpElementId?: SortOrder
@@ -47775,13 +47730,13 @@ export namespace Prisma {
     nbrUpAir?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
-    resting?: SortOrder
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     playerId?: SortOrder
     order?: SortOrder
     concentrationId?: SortOrder
+    unavailableReason?: SortOrder
   }
 
   export type DinozSumOrderByAggregateInput = {
@@ -47860,6 +47815,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type EnumUnavailableReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UnavailableReason | EnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    in?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumUnavailableReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.UnavailableReason | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
+    _max?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
   }
 
   export type DinozItemCountOrderByAggregateInput = {
@@ -49846,6 +49811,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableEnumUnavailableReasonFieldUpdateOperationsInput = {
+    set?: $Enums.UnavailableReason | null
   }
 
   export type DinozUpdateOneWithoutFollowersNestedInput = {
@@ -51929,6 +51898,13 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedEnumUnavailableReasonNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.UnavailableReason | EnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    in?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel> | $Enums.UnavailableReason | null
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -51993,6 +51969,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumUnavailableReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UnavailableReason | EnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    in?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.UnavailableReason[] | ListEnumUnavailableReasonFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumUnavailableReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.UnavailableReason | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
+    _max?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
@@ -52119,9 +52105,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutConcentrationInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -52139,11 +52122,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -52163,9 +52146,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -52183,12 +52163,12 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -52235,9 +52215,6 @@ export namespace Prisma {
     id?: IntFilter<"Dinoz"> | number
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     name?: StringFilter<"Dinoz"> | string
-    isFrozen?: BoolFilter<"Dinoz"> | boolean
-    isSacrificed?: BoolFilter<"Dinoz"> | boolean
-    isSelling?: BoolFilter<"Dinoz"> | boolean
     raceId?: IntFilter<"Dinoz"> | number
     level?: IntFilter<"Dinoz"> | number
     nextUpElementId?: IntFilter<"Dinoz"> | number
@@ -52255,20 +52232,17 @@ export namespace Prisma {
     nbrUpAir?: IntFilter<"Dinoz"> | number
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
-    resting?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     playerId?: IntNullableFilter<"Dinoz"> | number | null
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
+    unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
   }
 
   export type DinozCreateWithoutFollowersInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -52286,11 +52260,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -52310,9 +52284,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -52330,13 +52301,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -52620,9 +52591,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutLeaderInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -52640,11 +52608,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -52663,9 +52631,6 @@ export namespace Prisma {
   export type DinozUncheckedCreateWithoutLeaderInput = {
     id?: number
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -52683,13 +52648,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -52772,9 +52737,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutFollowersInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -52792,11 +52754,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -52816,9 +52778,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -52836,13 +52795,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -53237,9 +53196,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutItemsInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53257,11 +53213,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -53281,9 +53237,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53301,13 +53254,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -53356,9 +53309,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutItemsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -53376,11 +53326,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -53400,9 +53350,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -53420,13 +53367,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -53457,9 +53404,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutDinozItemsToDinozInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53477,11 +53421,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -53501,9 +53445,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53521,13 +53462,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -53574,9 +53515,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutDinozItemsToDinozInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -53594,11 +53532,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -53618,9 +53556,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -53638,13 +53573,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -53681,9 +53616,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutMissionsInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53701,11 +53633,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -53725,9 +53657,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53745,13 +53674,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -53782,9 +53711,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutMissionsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -53802,11 +53728,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -53826,9 +53752,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -53846,13 +53769,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -53867,9 +53790,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutSkillsInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53887,11 +53807,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -53911,9 +53831,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -53931,13 +53848,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -53968,9 +53885,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutSkillsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -53988,11 +53902,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -54012,9 +53926,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -54032,13 +53943,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -54053,9 +53964,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -54073,11 +53981,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -54097,9 +54005,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -54117,13 +54022,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -54154,9 +54059,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutUnlockableSkillsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -54174,11 +54076,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -54198,9 +54100,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -54218,13 +54117,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -54239,9 +54138,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutStatusInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -54259,11 +54155,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -54283,9 +54179,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -54303,13 +54196,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -54340,9 +54233,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutStatusInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -54360,11 +54250,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -54384,9 +54274,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -54404,13 +54291,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -55993,9 +55880,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutNpcsInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -56013,11 +55897,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -56037,9 +55921,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -56057,13 +55938,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -56094,9 +55975,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutNpcsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -56114,11 +55992,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -56138,9 +56016,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -56158,13 +56033,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -56179,9 +56054,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutPlayerInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -56199,11 +56071,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
@@ -56223,9 +56095,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -56243,12 +56112,12 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -58683,9 +58552,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutOffersInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -58703,11 +58569,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -58727,9 +58593,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -58747,13 +58610,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -58912,9 +58775,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutOffersInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -58932,11 +58792,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -58956,9 +58816,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -58976,13 +58833,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -59118,9 +58975,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutLogsInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -59138,11 +58992,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -59162,9 +59016,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -59182,13 +59033,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -59303,9 +59154,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutLogsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59323,11 +59171,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -59347,9 +59195,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59367,13 +59212,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -59388,9 +59233,6 @@ export namespace Prisma {
 
   export type DinozCreateWithoutCatchesInput = {
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -59408,11 +59250,11 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
     player?: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
@@ -59432,9 +59274,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -59452,13 +59291,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
@@ -59489,9 +59328,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutCatchesInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59509,11 +59345,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
@@ -59533,9 +59369,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59553,13 +59386,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -59576,9 +59409,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -59596,19 +59426,16 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
   }
 
   export type DinozUpdateWithoutConcentrationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59626,11 +59453,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     player?: PlayerUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -59650,9 +59477,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59670,12 +59494,12 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -59693,9 +59517,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59713,12 +59534,12 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
   }
 
   export type DinozItemCreateManyDinozInput = {
@@ -59771,9 +59592,6 @@ export namespace Prisma {
   export type DinozCreateManyLeaderInput = {
     id?: number
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -59791,13 +59609,13 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     playerId?: number | null
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
   }
 
   export type LogCreateManyDinozInput = {
@@ -59956,9 +59774,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutLeaderInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -59976,11 +59791,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     player?: PlayerUpdateOneWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -59999,9 +59814,6 @@ export namespace Prisma {
   export type DinozUncheckedUpdateWithoutLeaderInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -60019,13 +59831,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -60042,9 +59854,6 @@ export namespace Prisma {
   export type DinozUncheckedUpdateManyWithoutLeaderInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -60062,13 +59871,13 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
   }
 
   export type LogUpdateWithoutDinozInput = {
@@ -60340,9 +60149,6 @@ export namespace Prisma {
     id?: number
     leaderId?: number | null
     name: string
-    isFrozen?: boolean
-    isSacrificed?: boolean
-    isSelling?: boolean
     raceId: number
     level: number
     nextUpElementId: number
@@ -60360,12 +60166,12 @@ export namespace Prisma {
     nbrUpAir: number
     fight?: boolean
     gather?: boolean
-    resting?: boolean
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     order?: number | null
     concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
   }
 
   export type ImportedTwinoidAchievementCreateManyPlayerInput = {
@@ -60462,9 +60268,6 @@ export namespace Prisma {
 
   export type DinozUpdateWithoutPlayerInput = {
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -60482,11 +60285,11 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
@@ -60506,9 +60309,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -60526,12 +60326,12 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
@@ -60549,9 +60349,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     name?: StringFieldUpdateOperationsInput | string
-    isFrozen?: BoolFieldUpdateOperationsInput | boolean
-    isSacrificed?: BoolFieldUpdateOperationsInput | boolean
-    isSelling?: BoolFieldUpdateOperationsInput | boolean
     raceId?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
     nextUpElementId?: IntFieldUpdateOperationsInput | number
@@ -60569,12 +60366,12 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
-    resting?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
   }
 
   export type ImportedTwinoidAchievementUpdateWithoutPlayerInput = {

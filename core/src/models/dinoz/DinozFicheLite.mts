@@ -1,3 +1,5 @@
+import { UnavailableReason } from "@drpg/prisma";
+
 export interface DinozFicheLite {
 	id: number;
 	name: string;
@@ -9,5 +11,5 @@ export interface DinozFicheLite {
 	maxExperience: number;
 	placeId: number;
 	order: number | null;
-	isFrozen: boolean;
+	unavailableReason: UnavailableReason | null;
 }

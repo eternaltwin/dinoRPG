@@ -36,7 +36,7 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Concentration, Dinoz, DinozMission, LogType, Player } from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, LogType, Player, UnavailableReason } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -91,14 +91,12 @@ export async function getAvailableActions(
 			Dinoz,
 			| 'id'
 			| 'experience'
-			| 'isSelling'
 			| 'leaderId'
 			| 'fight'
 			| 'gather'
 			| 'remaining'
-			| 'isFrozen'
 			| 'maxLife'
-			| 'resting'
+			| 'unavailableReason'
 		> & {
 			missions: DinozMission[];
 			concentration: Concentration | null;
@@ -115,15 +113,15 @@ export async function getAvailableActions(
 	const dinozPlace = actualPlace(dinoz);
 
 	// Nothing else if dinoz is being sold
-	if (dinoz.isSelling) {
+	if (dinoz.unavailableReason === UnavailableReason.selling) {
 		return [actionList[Action.MARKET]];
 	}
 
-	if (dinoz.isFrozen) {
+	if (dinoz.unavailableReason === UnavailableReason.frozen) {
 		return [actionList[Action.STOP_CONGEL]];
 	}
 
-	if (dinoz.resting) {
+	if (dinoz.unavailableReason === UnavailableReason.resting) {
 		return [actionList[Action.STOP_REST]];
 	}
 
@@ -553,7 +551,7 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(500, `Dinoz has to be named`);
 	}
 
-	if (dinoz.isFrozen || dinoz.isSacrificed) {
+	if (dinoz.unavailableReason !== null) {
 		throw new ErrorFormator(500, `Dinoz is not able to move.`);
 	}
 
@@ -1168,12 +1166,12 @@ export async function frozeDinoz(req: Request) {
 		throw new ErrorFormator(500, 'No dinoz found');
 	}
 
-	if (dinoz.isFrozen) {
+	if (dinoz.unavailableReason === UnavailableReason.frozen) {
 		throw new ErrorFormator(500, 'Dinoz already frozen');
 	}
 
 	await updateDinoz(dinozId, {
-		isFrozen: true
+		unavailableReason: UnavailableReason.frozen
 	});
 }
 
@@ -1196,7 +1194,7 @@ export async function unfrozeDinoz(req: Request) {
 		throw new ErrorFormator(500, 'No dinoz found');
 	}
 
-	if (!dinoz.isFrozen) {
+	if (dinoz.unavailableReason !== UnavailableReason.frozen) {
 		throw new ErrorFormator(500, 'Dinoz is not frozen');
 	}
 
@@ -1218,7 +1216,7 @@ export async function unfrozeDinoz(req: Request) {
 		}
 	}
 	await updateDinoz(dinozId, {
-		isFrozen: false
+		unavailableReason: null
 	});
 }
 
@@ -1242,13 +1240,13 @@ export async function restDinoz(req: Request) {
 		throw new ErrorFormator(500, 'No dinoz found');
 	}
 
-	if (dinoz.resting && start) {
+	if (dinoz.unavailableReason === UnavailableReason.resting && start) {
 		throw new ErrorFormator(500, `Dinoz is already resting`);
 	}
 
-	if (!dinoz.resting && !start) {
+	if (dinoz.unavailableReason !== UnavailableReason.resting && !start) {
 		throw new ErrorFormator(500, `Dinoz is not resting`);
 	}
 
-	await updateDinoz(dinozId, { resting: start });
+	await updateDinoz(dinozId, { unavailableReason: start ? UnavailableReason.resting : null });
 }

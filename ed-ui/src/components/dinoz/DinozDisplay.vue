@@ -12,7 +12,7 @@
 			:flip="-1"
 			:race="dinozData.race.raceId"
 			:key="dinozData.display"
-			:isFrozen="dinozData?.isFrozen"
+			:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
 		/>
 		<template #content>
 			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
@@ -38,6 +38,7 @@ import DinozBars from '../../components/dinoz/DinozBars.vue';
 import DinozEquip from '../../components/dinoz/DinozEquip.vue';
 import DinozStatus from '../../components/dinoz/DinozStatus.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -51,6 +52,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			UnavailableReasonFront,
 			dinozStore: dinozStore(),
 			nameChoosen: undefined as boolean | undefined,
 			position: dinozPlacement

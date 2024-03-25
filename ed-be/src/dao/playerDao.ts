@@ -1,5 +1,5 @@
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { LogType, Prisma } from '@drpg/prisma';
+import { LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
 
@@ -131,8 +131,7 @@ export async function getCommonDataRequest(playerId: number) {
 					level: true,
 					order: true,
 					raceId: true,
-					isFrozen: true,
-					isSelling: true,
+					unavailableReason: true,
 					missions: true,
 					nbrUpFire: true,
 					nbrUpWood: true,
@@ -146,7 +145,12 @@ export async function getCommonDataRequest(playerId: number) {
 					skills: { select: { skillId: true } },
 					followers: { select: { id: true } }
 				},
-				where: { isFrozen: false, isSacrificed: false },
+				where: { 
+					OR: [
+						{ unavailableReason: null }, 
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+					]
+				},
 				orderBy: [{ order: 'asc' }, { name: 'asc' }]
 			},
 			rewards: true,
@@ -249,18 +253,21 @@ export async function getPlayerDataRequest(playerId: number) {
 					level: true,
 					raceId: true,
 					life: true,
-					isFrozen: true,
+					unavailableReason: true,
 					status: { select: { statusId: true } }
 				},
 				where: {
-					isSacrificed: false
+					OR: [
+						{ unavailableReason: null },
+						{ unavailableReason: { not: UnavailableReason.sacrificed } }
+					]
 				},
 				orderBy: [
 					{
 						id: 'asc'
 					},
 					{
-						isFrozen: 'asc'
+						unavailableReason: 'asc'
 					}
 				]
 			},
@@ -399,7 +406,14 @@ export async function getBoxHandlerInformations(playerId: number) {
 			id: true,
 			_count: {
 				select: {
-					dinoz: { where: { isFrozen: false, isSacrificed: false } }
+					dinoz: { 
+						where: { 
+							OR: [
+								{ unavailableReason: null }, 
+								{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+							]
+						} 
+					}
 				}
 			},
 			dinoz: {
@@ -411,7 +425,12 @@ export async function getBoxHandlerInformations(playerId: number) {
 						}
 					}
 				},
-				where: { isFrozen: false, isSacrificed: false }
+				where: { 
+					OR: [
+						{ unavailableReason: null }, 
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+					] 
+				}
 			},
 			rewards: true
 		}
@@ -478,8 +497,10 @@ export async function getPlayerShopItemsDataRequest(playerId: number) {
 					status: { select: { statusId: true } }
 				},
 				where: {
-					isFrozen: false,
-					isSacrificed: false
+					OR: [
+						{ unavailableReason: null }, 
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+					]
 				}
 			}
 		}
@@ -521,8 +542,10 @@ export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: 
 					status: { select: { statusId: true } }
 				},
 				where: {
-					isFrozen: false,
-					isSacrificed: false
+					OR: [
+						{ unavailableReason: null }, 
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+					]
 				}
 			}
 		}

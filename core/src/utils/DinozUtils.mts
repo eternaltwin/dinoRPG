@@ -29,6 +29,7 @@ import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { ErrorFormator } from './errorFormator.mjs';
 import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
+import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
 
 type Config = {
 	dinoz: {
@@ -123,8 +124,7 @@ export const toDinozFiche = (
 		| 'id'
 		| 'name'
 		| 'display'
-		| 'isFrozen'
-		| 'isSelling'
+		| 'unavailableReason'
 		| 'level'
 		| 'leaderId'
 		| 'life'
@@ -158,8 +158,7 @@ export const toDinozFiche = (
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		isFrozen: dinoz.isFrozen,
-		isSelling: dinoz.isSelling,
+		unavailableReason: dinoz.unavailableReason,
 		level: dinoz.level,
 		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId,
 		leaderId: dinoz.leaderId,
@@ -174,7 +173,7 @@ export const toDinozFiche = (
 		maxItems: backpackSlot(dinoz),
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
 		borderPlace:
-			dinoz.isFrozen || (dinoz.remaining === 0 && !dinoz.fight)
+			dinoz.unavailableReason === UnavailableReasonFront.frozen || (dinoz.remaining === 0 && !dinoz.fight)
 				? []
 				: actualPlace(dinoz)
 						.borderPlace.map(placeId => {
@@ -211,7 +210,7 @@ export const toDinozFicheLite = (
 		| 'experience'
 		| 'placeId'
 		| 'order'
-		| 'isFrozen'
+		| 'unavailableReason'
 		| 'level'
 	> & {
 		status: Pick<DinozStatus, 'statusId'>[];
@@ -228,12 +227,12 @@ export const toDinozFicheLite = (
 		maxExperience: getMaxXp(dinoz),
 		placeId: dinoz.placeId,
 		order: dinoz.order,
-		isFrozen: dinoz.isFrozen
+		unavailableReason: dinoz.unavailableReason
 	};
 };
 
 export const toDinozPublicFiche = (
-	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' | 'isFrozen' | 'level' | 'raceId' | 'life'> & {
+	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' | 'unavailableReason' | 'level' | 'raceId' | 'life'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	}
 ): DinozPublicFiche => {
@@ -241,7 +240,7 @@ export const toDinozPublicFiche = (
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		isFrozen: dinoz.isFrozen,
+		isFrozen: dinoz.unavailableReason === UnavailableReasonFront.frozen,
 		level: dinoz.level,
 		life: dinoz.life,
 		race: getRace(dinoz),
@@ -357,8 +356,7 @@ export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
 export const initializeDinoz = (race: DinozRace, playerId: number, display: string): Prisma.DinozCreateInput => {
 	return {
 		name: '?',
-		isFrozen: false,
-		isSacrificed: false,
+		unavailableReason: null,
 		raceId: race.raceId,
 		level: 1,
 		placeId: PlaceEnum.DINOVILLE,
@@ -443,7 +441,7 @@ export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
 };
 
 export const getFollowableDinoz = <
-	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'isSelling' | 'followers' | 'skills' | 'life'>
+	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'unavailableReason' | 'followers' | 'skills' | 'life'>
 >(
 	dinozList: T[],
 	potentialFollower: Pick<DinozFiche, 'id' | 'placeId'>
@@ -453,8 +451,8 @@ export const getFollowableDinoz = <
 		if (dinoz.id === potentialFollower.id) {
 			return false;
 		}
-		// Filter out Dinoz being sold
-		if (dinoz.isSelling) {
+		// Filter out unavaible Dinoz (selling, resting...)
+		if (dinoz.unavailableReason !== null) {
 			return false;
 		}
 		// Filter out Dinoz that already have a leader

@@ -120,9 +120,6 @@ exports.Prisma.DinozScalarFieldEnum = {
   id: 'id',
   leaderId: 'leaderId',
   name: 'name',
-  isFrozen: 'isFrozen',
-  isSacrificed: 'isSacrificed',
-  isSelling: 'isSelling',
   raceId: 'raceId',
   level: 'level',
   nextUpElementId: 'nextUpElementId',
@@ -140,13 +137,13 @@ exports.Prisma.DinozScalarFieldEnum = {
   nbrUpAir: 'nbrUpAir',
   fight: 'fight',
   gather: 'gather',
-  resting: 'resting',
   remaining: 'remaining',
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   playerId: 'playerId',
   order: 'order',
-  concentrationId: 'concentrationId'
+  concentrationId: 'concentrationId',
+  unavailableReason: 'unavailableReason'
 };
 
 exports.Prisma.DinozItemScalarFieldEnum = {
@@ -457,6 +454,14 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.UnavailableReason = exports.$Enums.UnavailableReason = {
+  frozen: 'frozen',
+  sacrificed: 'sacrificed',
+  selling: 'selling',
+  superdom: 'superdom',
+  resting: 'resting'
+};
+
 exports.OfferStatus = exports.$Enums.OfferStatus = {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',

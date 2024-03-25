@@ -23,8 +23,8 @@ export async function getAdminDashBoard(): Promise<boolean> {
  * @param req
  * @param req.params.id {string} DinozId
  * @param req.body.name {string} New Dinoz name
- * @param req.body.isFrozen {boolean} Frozen or not
- * @param req.body.isSacrificed {boolean} Sacrificied or not
+ * @param req.body.unavailableReason {string} Dinoz is unavailable or not
+ * @param req.body.unavailableReasonOperation {string} Operation done to unavailableReason (add or remove)
  * @param req.body.level {number} New Dinoz level
  * @param req.body.placeId {number} New Dinoz placeId
  * @param req.body.canChangeName {boolean} Can change its name or not
@@ -41,11 +41,23 @@ export async function editDinoz(req: Request) {
 		throw new ErrorFormator(500, `You need to be logged in.`);
 	}
 
+	let unavailableReason;
+
+	switch (req.body.unavailableReasonOperation) {
+		case 'add':
+			unavailableReason = req.body.unavailableReason;
+			break;
+		case 'remove':
+			unavailableReason = null;
+			break;
+		case '':
+			// Do nothing
+	}
+
 	const dinoz = {
 		name: req.body.name,
 		canChangeName: req.body.canChangeName,
-		isFrozen: req.body.isFrozen,
-		isSacrificed: req.body.isSacrificed,
+		unavailableReason: unavailableReason,
 		level: req.body.level,
 		placeId: req.body.placeId,
 		life: req.body.life,
@@ -61,11 +73,8 @@ export async function editDinoz(req: Request) {
 	if (typeof dinoz.canChangeName !== 'undefined') {
 		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'canChangeName', dinoz.canChangeName);
 	}
-	if (typeof dinoz.isFrozen !== 'undefined') {
-		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'isFrozen', dinoz.isFrozen);
-	}
-	if (typeof dinoz.isSacrificed !== 'undefined') {
-		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'isSacrificed', dinoz.isSacrificed);
+	if (typeof dinoz.unavailableReason !== 'undefined' && dinoz.unavailableReason !== null) {
+		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'unavailableReason', dinoz.unavailableReason);
 	}
 	if (typeof dinoz.level !== 'undefined') {
 		await createLog(LogType.AdminUpdateDinoz, req.auth.playerId, +req.params.id, 'level', dinoz.level);
@@ -215,8 +224,7 @@ export async function listAllDinozFromPlayer(req: Request) {
 		return {
 			id: dinoz.id,
 			name: dinoz.name,
-			isFrozen: dinoz.isFrozen,
-			isSacrificed: dinoz.isSacrificed,
+			unavailableReason: dinoz.unavailableReason,
 			level: dinoz.level,
 			canChangeName: dinoz.canChangeName,
 			leaderId: dinoz.leaderId,

@@ -56,7 +56,7 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
 
-	if (dinozData.isFrozen || dinozData.isSacrificed) {
+	if (dinozData.unavailableReason !== null) {
 		throw new ErrorFormator(500, `Dinoz is not able to fight.`);
 	}
 

@@ -41,6 +41,7 @@ import { DinozPublicFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement } from '../../constants/index.js';
 import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
 import { playerStore } from '../../store/index.js';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'MyDinoz',
@@ -54,6 +55,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			UnavailableReasonFront,
 			raceList: raceList,
 			statusList: statusList,
 			position: dinozPlacement

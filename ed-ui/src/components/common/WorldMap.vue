@@ -57,6 +57,7 @@ import EventBus from '../../events/index.js';
 import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'WorldMap',
@@ -138,7 +139,7 @@ export default defineComponent({
 			}
 
 			// Check if dinoz is being sold
-			if (this.dinozData?.isSelling) {
+			if (this.dinozData?.unavailableReason === UnavailableReasonFront.selling) {
 				EventBus.emit('toast', { type: 'error', message: 'isSelling' });
 				return;
 			}

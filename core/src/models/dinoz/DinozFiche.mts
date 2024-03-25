@@ -1,3 +1,4 @@
+import { UnavailableReason } from '@drpg/prisma';
 import { MissionHUD } from '../missions/missionHUD.mjs';
 import { ActionFiche } from './ActionList.mjs';
 import { DinozRace } from './DinozRace.mjs';
@@ -7,8 +8,7 @@ export interface DinozFiche {
 	id: number;
 	name: string;
 	display: string;
-	isFrozen: boolean;
-	isSelling: boolean;
+	unavailableReason: UnavailableReason | null;
 	level: number;
 	missionId: number | undefined;
 	missionHUD: MissionHUD | null;

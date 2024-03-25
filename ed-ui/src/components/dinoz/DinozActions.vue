@@ -117,6 +117,7 @@ import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import DZFollow from '../../components/dinoz/DZFollow.vue';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -398,7 +399,7 @@ export default defineComponent({
 							EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
 							return;
 						}
-						currentDinozList[currentDinoz].isFrozen = true;
+						currentDinozList[currentDinoz].unavailableReason = UnavailableReasonFront.frozen;
 						this.dinozStore.setDinozList(currentDinozList);
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
@@ -456,7 +457,7 @@ export default defineComponent({
 		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 
-			return !!dinoz?.isSelling;
+			return dinoz.unavailableReason === UnavailableReasonFront.selling;
 		},
 		goToLeader() {
 			if (!this.leaderDinoz) return;

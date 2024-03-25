@@ -15,23 +15,35 @@
 					</td>
 				</tr>
 				<tr>
-					<td>isFrozen</td>
-					<td>{{ dinoz.isFrozen }}</td>
+					<td>unavailableReason</td>
+					<td>{{ dinoz.unavailableReason }}</td>
 					<td>
-						<input class="radio" type="radio" value="true" name="isFrozen" v-model="dinozField.isFrozen" />
-						<label class="radio">true</label><br />
-						<input class="radio" type="radio" value="false" name="isFrozen" v-model="dinozField.isFrozen" />
-						<label class="radio">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>isSacrificed</td>
-					<td>{{ dinoz.isSacrificed }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="isSacrificed" v-model="dinozField.isSacrificed" />
-						<label class="radio">true</label><br />
-						<input class="radio" type="radio" value="false" name="isSacrificed" v-model="dinozField.isSacrificed" />
-						<label class="radio">false</label>
+						<select v-model="dinozField.unavailableReason" size="5">
+							<template v-for="unavailableReason in unavailableReasonListFiltered" :key="unavailableReason">
+								<option :value="unavailableReason">
+									{{ unavailableReason }}
+								</option>
+							</template>
+						</select>
+						<br />
+						<input
+							v-if="dinoz.unavailableReason === null"
+							class="radio"
+							type="radio"
+							value="add"
+							name="addUnavailableReason"
+							v-model="unavailableReasonOperation"
+						/>
+						<label class="radio" v-if="dinoz.unavailableReason === null">add</label>
+						<input
+							v-if="dinoz.unavailableReason"
+							class="radio"
+							type="radio"
+							value="remove"
+							name="removeUnavailableReason"
+							v-model="unavailableReasonOperation"
+						/>
+						<label class="radio" v-if="dinoz.unavailableReason">remove</label>
 					</td>
 				</tr>
 				<tr>
@@ -173,11 +185,13 @@ import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'DinozEdit',
 	data() {
 		return {
+			UnavailableReasonFront,
 			dinozField: {
 				skillList: [],
 				statusList: []
@@ -188,7 +202,9 @@ export default defineComponent({
 			statusListFiltered: [] as Array<string>,
 			skillList,
 			skillListFiltered: [] as SkillDetails[],
-			skillOperation: '' as string
+			skillOperation: '' as string,
+			unavailableReasonOperation: '' as '' | 'add' | 'remove',
+			unavailableReasonListFiltered: [] as Array<UnavailableReasonFront>
 		};
 	},
 	props: {
@@ -205,8 +221,7 @@ export default defineComponent({
 			try {
 				if (
 					this.dinozField.name ||
-					this.dinozField.isFrozen !== undefined ||
-					this.dinozField.isSacrificed !== undefined ||
+					this.dinozField.unavailableReason ||
 					this.dinozField.level ||
 					this.dinozField.placeId ||
 					this.dinozField.canChangeName !== undefined ||
@@ -219,8 +234,8 @@ export default defineComponent({
 					await AdminService.updateDinoz(
 						this.dinoz.id!,
 						this.dinozField.name,
-						this.dinozField.isFrozen,
-						this.dinozField.isSacrificed,
+						this.dinozField.unavailableReason,
+						this.unavailableReasonOperation,
 						this.dinozField.level,
 						this.dinozField.placeId,
 						this.dinozField.canChangeName,
@@ -246,6 +261,8 @@ export default defineComponent({
 			this.filterSkillList(this.skillOperation);
 			this.dinozField.statusList = [];
 			this.filterStatusList(this.statusOperation);
+			this.unavailableReasonOperation = '';
+			this.filterUnavailableReason();
 
 			EventBus.emit('isLoading', false);
 		},
@@ -266,6 +283,15 @@ export default defineComponent({
 					statusId => this.dinoz.status?.includes(parseInt(statusId))
 				);
 			}
+		},
+		filterUnavailableReason(): void {
+			if (this.dinoz.unavailableReason === null) {
+				this.unavailableReasonListFiltered = Object.values(UnavailableReasonFront);
+			} else {
+				this.unavailableReasonListFiltered = Object.values(UnavailableReasonFront).filter(
+					reason => reason === this.dinoz.unavailableReason
+				);
+			}
 		}
 	},
 	mounted(): void {
@@ -276,6 +302,8 @@ export default defineComponent({
 
 		this.statusOperation = 'add';
 		this.filterStatusList(this.statusOperation);
+
+		this.filterUnavailableReason();
 	},
 	watch: {
 		dinozProp(): void {

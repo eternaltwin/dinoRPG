@@ -1,4 +1,4 @@
-import { Dinoz, LogType, Prisma } from '@drpg/prisma';
+import { Dinoz, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
@@ -9,12 +9,13 @@ export async function getActiveDinoz(playerId: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId,
-			isFrozen: false,
-			isSacrificed: false
+			OR: [
+				{ unavailableReason: null }, 
+				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+			]
 		},
 		select: {
-			isFrozen: true,
-			isSacrificed: true,
+			unavailableReason: true,
 			player: {
 				select: {
 					id: true,
@@ -37,8 +38,7 @@ export async function getAllDinozFromAccount(playerId: number) {
 			id: true,
 			leaderId: true,
 			name: true,
-			isFrozen: true,
-			isSacrificed: true,
+			unavailableReason: true,
 			level: true,
 			placeId: true,
 			canChangeName: true,
@@ -56,7 +56,12 @@ export async function getAllDinozFromAccount(playerId: number) {
 export async function getAllDinozFicheLite(playerId: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
-			playerId
+			playerId,
+			OR: [
+				{ unavailableReason: null }, 
+				{ unavailableReason: { not: UnavailableReason.frozen }}
+			]
+
 		},
 		select: {
 			id: true,
@@ -68,7 +73,7 @@ export async function getAllDinozFicheLite(playerId: number) {
 			experience: true,
 			placeId: true,
 			order: true,
-			isFrozen: true,
+			unavailableReason: true,
 			level: true,
 			status: true
 		}
@@ -120,14 +125,12 @@ export async function getDinozFicheRequest(dinozId: number) {
 			placeId: true,
 			raceId: true,
 			leaderId: true,
-			isFrozen: true,
-			isSelling: true,
+			unavailableReason: true,
 			fight: true,
 			gather: true,
 			remaining: true,
 			order: true,
 			canChangeName: true,
-			resting: true,
 			player: {
 				select: {
 					id: true,
@@ -292,8 +295,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			experience: true,
 			nbrUpFire: true,
 			nbrUpWood: true,
-			isFrozen: true,
-			isSacrificed: true,
+			unavailableReason: true,
 			nbrUpWater: true,
 			nbrUpLightning: true,
 			nbrUpAir: true,
@@ -531,7 +533,10 @@ export async function getGlobalMissionsData(playerId: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId,
-			isSacrificed: false
+			OR: [
+				{ unavailableReason: null },
+				{ unavailableReason: { not: UnavailableReason.sacrificed } }
+			]
 		},
 		select: {
 			id: true,
@@ -553,8 +558,10 @@ export async function getManageData(userID: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId: userID,
-			isSacrificed: false,
-			isFrozen: false
+			OR: [
+				{ unavailableReason: null }, 
+				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } }}
+			]
 		},
 		select: {
 			id: true,
@@ -605,15 +612,13 @@ export async function getAvailableDinozToFollow(playerId: number, dinozId: numbe
 		where: {
 			id: { not: dinozId },
 			playerId: playerId,
-			isFrozen: false,
-			isSacrificed: false,
-			isSelling: false
+			unavailableReason: null
 		},
 		select: {
 			id: true,
 			placeId: true,
 			leaderId: true,
-			isSelling: true,
+			unavailableReason: true,
 			life: true,
 			followers: { select: { id: true } },
 			skills: { select: { skillId: true } }
@@ -661,7 +666,7 @@ export async function checkFrozenDinoz(dinozId: number) {
 		},
 		select: {
 			id: true,
-			isFrozen: true
+			unavailableReason: true
 		}
 	});
 }
@@ -673,7 +678,7 @@ export async function checkRestDinoz(dinozId: number) {
 		},
 		select: {
 			id: true,
-			resting: true
+			unavailableReason: true
 		}
 	});
 }
@@ -681,7 +686,7 @@ export async function checkRestDinoz(dinozId: number) {
 export async function getAllResting() {
 	const list = await prisma.dinoz.findMany({
 		where: {
-			resting: true
+			unavailableReason: UnavailableReason.resting
 		},
 		select: {
 			id: true,

@@ -1,8 +1,9 @@
+import { UnavailableReasonFront } from "./UnavailableReasonFront.mjs";
+
 export interface DinozEdit {
 	dinozId?: string;
 	name?: string;
-	isFrozen?: boolean;
-	isSacrificed?: boolean;
+	unavailableReason?: UnavailableReasonFront;
 	level?: number;
 	canChangeName?: boolean;
 	life?: number;

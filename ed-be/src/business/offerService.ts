@@ -11,7 +11,7 @@ import {
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { OfferStatus } from '@drpg/prisma';
+import { OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
 import { sendDiscord } from '../utils/discord.js';
 import { ownsDinoz } from '../dao/playerDao.js';
@@ -148,7 +148,7 @@ export async function createOffer(req: Request) {
 
 	// Set Dinoz as selling
 	if (dinozId) {
-		updateDinoz(dinozId, { isSelling: true });
+		updateDinoz(dinozId, { unavailableReason: UnavailableReason.selling });
 	}
 
 	const promises = [];
@@ -196,7 +196,7 @@ export async function cancelOffer(req: Request) {
 
 	// Set Dinoz as not selling
 	if (dinoz) {
-		updateDinoz(dinoz.id, { isSelling: false });
+		updateDinoz(dinoz.id, { unavailableReason: null });
 	}
 
 	// Separate items and ingredients
@@ -327,7 +327,7 @@ export const expireOffer = async (offerId: number) => {
 			// Change Dinoz owner and set as not selling
 			updateDinoz(offer.dinoz.id, {
 				player: { connect: { id: winnerBid.userId } },
-				isSelling: false
+				unavailableReason: null
 			});
 
 			// Update seller ranking
@@ -354,7 +354,7 @@ export const expireOffer = async (offerId: number) => {
 
 		// Set Dinoz as not selling
 		if (offer.dinoz) {
-			updateDinoz(offer.dinoz.id, { isSelling: false });
+			updateDinoz(offer.dinoz.id, { unavailableReason: null });
 		}
 
 		// Add items to inventory

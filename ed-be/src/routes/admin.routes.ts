@@ -42,8 +42,7 @@ routes.put(
 	[
 		param('id').exists().toInt().isNumeric(),
 		body('name').default(undefined).optional({ nullable: true }).exists().isString(),
-		body('isFrozen').default(undefined).optional({ nullable: true }).exists().toBoolean(),
-		body('isSacrificed').default(undefined).optional({ nullable: true }).exists().toBoolean(),
+		body('unavailableReason').default(undefined).optional({ nullable: true }).exists().isString(),
 		body('level').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
 		body('placeId').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
 		body('canChangeName').default(undefined).optional({ nullable: true }).exists().toBoolean(),

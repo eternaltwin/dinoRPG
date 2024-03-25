@@ -70,6 +70,7 @@ import { dinozStore, playerStore } from '../../store/index.js';
 import { placeList } from '../../constants/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'DinozList',
@@ -125,7 +126,7 @@ export default defineComponent({
 	watch: {
 		'dinozStore.getDinozList': {
 			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => !d.isFrozen));
+				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen));
 			},
 			deep: true
 		}

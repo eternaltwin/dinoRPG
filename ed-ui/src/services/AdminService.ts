@@ -2,6 +2,7 @@ import { http } from '../utils/index.js';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -72,8 +73,8 @@ export const AdminService = {
 	updateDinoz(
 		id: number,
 		name?: string,
-		isFrozen?: boolean,
-		isSacrificed?: boolean,
+		unavailableReason?: UnavailableReasonFront,
+		unavailableReasonOperation?: string,
 		level?: number,
 		placeId?: number,
 		canChangeName?: boolean,
@@ -88,8 +89,8 @@ export const AdminService = {
 		return http()
 			.put(`/admin/dinoz/${id}`, {
 				name: name,
-				isFrozen: isFrozen,
-				isSacrificed: isSacrificed,
+				unavailableReason: unavailableReason,
+				unavailableReasonOperation: unavailableReasonOperation,
 				level: level,
 				placeId: placeId,
 				canChangeName: canChangeName,

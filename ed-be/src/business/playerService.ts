@@ -188,5 +188,5 @@ export async function getDinozList(req: Request) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
 
-	return dinozActive.map(dinoz => toDinozFicheLite(dinoz)).filter(dinoz => !dinoz.isFrozen);
+	return dinozActive.map(dinoz => toDinozFicheLite(dinoz))
 }
