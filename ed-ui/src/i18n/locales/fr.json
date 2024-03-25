@@ -3708,8 +3708,8 @@
 			"skillExpire": "**{dinoz}**'s **{skill}** a expiré.",
 			"looseHp": "**{fighter}** a perdu **{hp} HP**.",
 			"heal": "**{fighter}** s'est soigné de **{hp} HP**.",
-			"addStatus": "**{fighter}** est devenu **{status}**.",
-			"removeStatus": "**{fighter}** n'est plus **{status}**.",
+			"addStatus": "**{fighter}** a obtenu le status **{status}**.",
+			"removeStatus": "**{fighter}** n'a plus le status **{status}**.",
 			"itemUse": "**{fighter}** a utilisé **{item}**.",
 			"hypnotize": "**{fighter}** a changé de camp."
 		}
