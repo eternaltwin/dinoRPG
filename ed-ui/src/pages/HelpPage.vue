@@ -402,26 +402,137 @@ export default defineComponent({
 					prevItem: 14
 				},
 				{
-					// TODO : À mettre en place dès que la partie Dojo est créé
 					name: this.$t('guide.sections.dojo'),
 					nameImageUrl: { path: 'icons', name: 'small_dojo' },
-					contentSections: [{ texts: [this.$t('guide.text.dojos')] }],
+					contentSections: [
+						{
+							texts: [this.$t('guide.text.dojos')],
+							listItems: [{ imageUrl: { path: 'icons', name: 'act_train' }, text: this.$t('guide.text.dojos-1') }]
+						},
+						{ texts: [this.$t('guide.text.dojos-2'), this.$t('guide.text.dojos-3')] },
+						{ name: this.$t('guide.text.dojos1'), texts: [this.$t('guide.text.dojos1-1')] },
+						{
+							name: this.$t('guide.text.dojos2'),
+							texts: [this.$t('guide.text.dojos2-1')],
+							listItems: [{ imageUrl: { path: 'icons', name: 'act_defi' }, text: this.$t('guide.text.dojos2-2') }]
+						},
+						{
+							name: this.$t('guide.text.dojos3'),
+							texts: [this.$t('guide.text.dojos3-1')],
+							listItems: [{ imageUrl: { path: 'icons', name: 'act_tournoi' }, text: this.$t('guide.text.dojos3-2') }]
+						},
+						{ texts: [this.$t('guide.text.dojos3-3'), this.$t('guide.text.dojos3-4')] },
+						{
+							name: this.$t('guide.text.dojos4'),
+							listItems: [{ imageUrl: { path: 'icons', name: 'act_historique' }, text: this.$t('guide.text.dojos4-1') }]
+						},
+						{
+							name: this.$t('guide.text.dojos5'),
+							listItems: [
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-1') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-2') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-3') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-4') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-5') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.dojos5-6') }
+							]
+						}
+					],
 					nextItem: 17,
 					prevItem: 15
 				},
 				{
-					// TODO : À mettre en place dès que l'événement GDC est créé
 					name: this.$t('guide.sections.gdc'),
 					nameImageUrl: { path: 'icons', name: 'small_attack' },
-					contentSections: [{ texts: [this.$t('guide.text.gdc')] }],
+					contentSections: [
+						{ texts: [this.$t('guide.text.gdc')] },
+						{
+							name: this.$t('guide.text.gdc1'),
+							texts: [this.$t('guide.text.gdc1-1'), this.$t('guide.text.gdc1-2'), this.$t('guide.text.gdc1-3')],
+							listItems: [
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-4') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-5') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-6') }
+							]
+						},
+						{
+							name: this.$t('guide.text.gdc2'),
+							texts: [
+								this.$t('guide.text.gdc2-1'),
+								this.$t('guide.text.gdc2-2'),
+								this.$t('guide.text.gdc2-3'),
+								this.$t('guide.text.gdc2-4')
+							],
+							ImageUrl: { path: 'guide', name: 'castle' }
+						},
+						{
+							texts: [this.$t('guide.text.gdc2-5')],
+							listItems: [
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-5-1') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-5-2') }
+							]
+						},
+						{
+							name: this.$t('guide.text.gdc3'),
+							texts: [this.$t('guide.text.gdc3-1'), this.$t('guide.text.gdc3-2')]
+						},
+						{
+							name: this.$t('guide.text.gdc4'),
+							texts: [
+								this.$t('guide.text.gdc4-1'),
+								this.$t('guide.text.gdc4-2'),
+								this.$t('guide.text.gdc4-3'),
+								this.$t('guide.text.gdc4-4')
+							],
+							ImageUrl: { path: 'guide', name: 'attack_castle' }
+						},
+						{
+							name: this.$t('guide.text.gdc5'),
+							texts: [this.$t('guide.text.gdc5-1'), this.$t('guide.text.gdc5-2'), this.$t('guide.text.gdc5-3')],
+							ImageUrl: { path: 'guide', name: 'def_castle' }
+						},
+						{ name: this.$t('guide.text.gdc6'), texts: [this.$t('guide.text.gdc6-1')] }
+					],
 					nextItem: 18,
 					prevItem: 16
 				},
 				{
-					// TODO : À mettre en place dès que l'événement CDC est créé
 					name: this.$t('guide.sections.cdc'),
 					nameImageUrl: { path: 'icons', name: 'small_attack' },
-					contentSections: [{ texts: [this.$t('guide.text.cdc')] }],
+					contentSections: [
+						{ texts: [this.$t('guide.text.cdc')] },
+						{ name: this.$t('guide.text.cdc1'), texts: [this.$t('guide.text.cdc1-1'), this.$t('guide.text.cdc1-2')] },
+						{
+							name: this.$t('guide.text.cdc2'),
+							texts: [this.$t('guide.text.cdc2-1'), this.$t('guide.text.cdc2-2'), this.$t('guide.text.cdc2-3')],
+							ImageUrl: { path: 'guide', name: 'battle_cdc' }
+						},
+						{
+							texts: [
+								this.$t('guide.text.cdc2-4'),
+								this.$t('guide.text.cdc2-5'),
+								this.$t('guide.text.cdc2-6'),
+								this.$t('guide.text.cdc2-7'),
+								this.$t('guide.text.cdc2-8')
+							]
+						},
+						{
+							name: this.$t('guide.text.cdc3'),
+							texts: [
+								this.$t('guide.text.cdc3-1'),
+								this.$t('guide.text.cdc3-2'),
+								this.$t('guide.text.cdc3-3'),
+								this.$t('guide.text.cdc3-4'),
+								this.$t('guide.text.cdc3-5')
+							]
+						},
+						{
+							name: this.$t('guide.text.cdc4'),
+							texts: [this.$t('guide.text.cdc4-1')],
+							ImageUrl: { path: 'guide', name: 'position_cdc' }
+						},
+						{ texts: [this.$t('guide.text.cdc4-2'), this.$t('guide.text.cdc4-3'), this.$t('guide.text.cdc4-4')] }
+					],
 					nextItem: 19,
 					prevItem: 17
 				},
