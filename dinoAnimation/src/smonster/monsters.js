@@ -9,10 +9,12 @@ import { goblin } from './goblin/goblin.js';
 import { goupi, goupi2, goupi3 } from './goupi/goupi.js';
 import { grdien } from './grdien/grdien.js';
 import { gvert } from './gvert/gvert.js';
+import { kazka } from './kazka/kazka.js';
 import { kmask, korgon, rkrgns } from './korgon/korgon.js';
 import { lucet } from './lucet/lucet.js';
 import { mandragore } from './mandragore/mandragore.js';
 import { pira } from './pira/pira.js';
+import { ronciv } from './ronciv/ronciv.js';
 import { taurus } from './taurus/taurus.js';
 import { wolf } from './wolf/wolf.js';
 
@@ -32,6 +34,8 @@ export const monsters = {
 	borg: borg,
 	pira: pira,
 	anguil: anguil,
+	kazka: kazka,
+	ronciv: ronciv,
 	grdien: grdien,
 	mandragore: mandragore,
 	lucet: lucet,

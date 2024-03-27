@@ -48,7 +48,7 @@ const version = 1;
 const fightVersion = [
 	{ legacy_data: fightData[5], debug: false },
 	{
-		bg: 's_dnv',
+		bg: 's_fleuve',
 		top: 120,
 		bottom: 20,
 		ground: 0,
@@ -79,7 +79,7 @@ const fightVersion = [
 					gfx: '09T1Yt9wqq4Rx000'
 				}
 			},
-			{
+			/*{
 				action: DinoAnim.Action.Add,
 				fighter: {
 					props: [],
@@ -91,18 +91,19 @@ const fightVersion = [
 					fid: 0,
 					gfx: 'rkrgns'
 				}
-			},
+			},*/
 			{
 				action: DinoAnim.Action.Add,
 				fighter: {
 					props: [],
 					dino: false,
 					life: 100,
-					name: 'Korgon Masqué',
+					name: 'Gardien Arboricole',
 					side: false,
 					scale: 1,
 					fid: 2,
-					gfx: 'kmask'
+					gfx: 'grdien',
+					entrance: DinoAnim.EntranceEffect.Ground
 				}
 			},
 			{
@@ -111,58 +112,19 @@ const fightVersion = [
 					props: [],
 					dino: false,
 					life: 100,
-					name: 'Korgon',
+					name: 'Roncivore',
 					side: false,
 					scale: 1,
 					fid: 3,
-					gfx: 'korgon'
+					gfx: 'ronciv'
 				}
-			},
-			{
-				action: DinoAnim.Action.Add,
-				fighter: {
-					props: [],
-					dino: false,
-					life: 100,
-					name: 'Borg',
-					side: false,
-					scale: 1,
-					fid: 4,
-					gfx: 'borg'
-				}
-			},
-			{
-				action: DinoAnim.Action.Add,
-				fighter: {
-					props: [],
-					dino: false,
-					life: 100,
-					name: 'Piranoz',
-					side: false,
-					scale: 1,
-					fid: 5,
-					gfx: 'pira'
-				}
-			},
-			{
-				action: DinoAnim.Action.Add,
-				fighter: {
-					props: [],
-					dino: false,
-					life: 100,
-					name: 'Anguilloz',
-					side: false,
-					scale: 1,
-					fid: 6,
-					gfx: 'anguil'
-				}
-			},
+			}
 			/*{
 				action: DinoAnim.Action.Status,
 				fid: 1,
 				status: DinoAnim.FighterStatus.Fly
 			},*/
-			{
+			/*{
 				action: DinoAnim.Action.Skill,
 				skill: DinoAnim.SkillList.Lightning,
 				details: {
@@ -172,7 +134,7 @@ const fightVersion = [
 						{ id: 2, life: 10 }
 					]
 				}
-			},
+			},*/
 			/*{
 				action: DinoAnim.Action.Skill,
 				skill: DinoAnim.SkillList.Shower,
@@ -185,12 +147,12 @@ const fightVersion = [
 					type: DinoAnim.SkillType.Water
 				}
 			}*/
-			{
+			/*{
 				action: DinoAnim.Action.Damages,
-				fid: 6,
+				fid: 0,
 				tid: 1,
 				damages: 10
-			}
+			}*/
 			/*{
 				action: DinoAnim.Action.AttackCastle,
 				fid: 0,
