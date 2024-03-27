@@ -12,29 +12,50 @@ const healRestingDinoz = () => {
 		sendDiscord(`Start healing resting dinoz.`);
 		const startTime = dayjs();
 		try {
-			await prisma.$queryRaw`
+			const healed = await prisma.$executeRaw`
 				UPDATE
 					dinoz du
-				SET
-					life = least(d.life + COALESCE(sg.life, 1) +
-											 CASE
-												 WHEN
-													 p.id IS NULL
-													 THEN
-													 0
-												 ELSE
-													 1
-												 END
-						, d."maxLife" / 2)
-					FROM
-   dinoz d
+				SET life = least(d.life + ( -- Repos
+																		1 -- Cocon + régen (+2*x)
+																			+ COALESCE(sg.life, 0) -- Prêtre (+1)
+																			+
+																		CASE
+																			WHEN
+																				p.id IS NULL
+																				THEN
+																				0
+																			ELSE
+																				1
+																			END
+																		-- Eau divine (x2)
+																		) *
+																	CASE
+																		WHEN
+																			divine.id IS NULL
+																			THEN
+																			1
+																		ELSE
+																			2
+																		END
+					, -- Coeur de phénix (max vie 65% au lieu de 50%)
+												 ROUND(d."maxLife" *
+															 CASE
+																 WHEN
+																	 heart.id IS NULL
+																	 THEN
+																	 0.5
+																 ELSE
+																	 0.65
+																 END
+												 )) FROM
+   dinoz d -- Cocon + Régen
    LEFT JOIN
       (
          SELECT
             ds."dinozId",
             COUNT(*) * 2 life
          FROM
-            "dinoz_skill" ds
+            dinoz_skill ds
          WHERE
             ds."skillId" IN
             (
@@ -49,18 +70,37 @@ const healRestingDinoz = () => {
 					LEFT JOIN
 					player p
 					ON p.id = d."playerId"
-					AND p.priest = TRUE
+					AND p.priest = TRUE   -- Prêtre
+					LEFT JOIN
+					dinoz_skill heart
+					ON heart."dinozId" = d.id
+					AND heart."skillId" = ${Skill.COEUR_DU_PHOENIX} -- Coeur de phénix
+					LEFT JOIN
+					dinoz_skill divine
+					ON divine."dinozId" = d.id
+					AND divine."skillId" = ${Skill.EAU_DIVINE}  -- Eau divine
 				WHERE
 					d.id = du.id
-					AND d.resting = TRUE
+					AND d."unavailableReason" = 'resting'
 					AND
 						(
-					d.life < (d."maxLife" / 2)
+					d.life
+						< ROUND(d."maxLife" *
+					CASE
+					WHEN
+					heart.id IS NULL
+					THEN
+					0.5
+					ELSE
+					0.65
+					END
+					)
 					)
 				;
-`;
+
+			`;
 			const endTime = dayjs();
-			sendDiscord(`Operation ended in ${endTime.diff(startTime)}ms.`);
+			sendDiscord(`Operation healed ${healed} dinoz and ended in ${endTime.diff(startTime)}ms.`);
 		} catch (err) {
 			console.error(`Cannot heal resting dinoz: ${err}`);
 		}
