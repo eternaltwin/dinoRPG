@@ -34,6 +34,8 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('specialStats', 'armor')}" alt="defense">`;
 			case 'hp':
 				return `<img src="${mixin.methods.getImgURL('specialStats', 'hpRegen')}" alt="hp">`;
+			case 'pv':
+				return `<img src="${mixin.methods.getImgURL('icons', 'small_pv')}" alt="pv">`;
 			case 'xp':
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_xp')}" alt="xp">`;
 			default:
@@ -66,6 +68,7 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(/:attack:/g, helpers.computeImageHtml('attack'));
 	formattedText = formattedText.replace(/:defense:/g, helpers.computeImageHtml('defense'));
 	formattedText = formattedText.replace(/:hp:/g, helpers.computeImageHtml('hp'));
+	formattedText = formattedText.replace(/:pv:/g, helpers.computeImageHtml('pv'));
 	formattedText = formattedText.replace(/:xp:/g, helpers.computeImageHtml('xp'));
 	return formattedText;
 }

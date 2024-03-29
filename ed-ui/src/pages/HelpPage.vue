@@ -26,7 +26,7 @@
 				<h3 class="titleSection">{{ section.name }}</h3>
 				<ul v-if="section.texts" class="textContent">
 					<li v-for="(text, i) in section.texts" :key="i">
-						<p>{{ text }}</p>
+						<p v-html="formatContent(text)"></p>
 					</li>
 				</ul>
 				<img
@@ -38,7 +38,7 @@
 				<ul v-if="section.listItems" class="listItemsContent">
 					<li v-for="(item, i) in section.listItems" :key="i">
 						<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
-						<span>{{ item.text }}</span>
+						<span v-html="formatContent(item.text)"></span>
 					</li>
 				</ul>
 			</div>
@@ -73,16 +73,7 @@ export default defineComponent({
 				{
 					name: this.$t('guide.sections.intro'),
 					nameImageUrl: { path: 'icons', name: 'small_home' },
-					contentSections: [
-						{
-							texts: [
-								this.$t('guide.text.intro'),
-								this.$t('guide.text.intro2'),
-								this.$t('guide.text.intro3'),
-								this.$t('guide.text.intro4')
-							]
-						}
-					],
+					contentSections: [{ texts: [this.$t('guide.text.intro')] }],
 					nextItem: 1
 				},
 				{
@@ -90,12 +81,10 @@ export default defineComponent({
 					nameImageUrl: { path: 'design', name: 'small_member' },
 					contentSections: [
 						{
-							texts: [this.$t('guide.text.adopt'), this.$t('guide.text.adopt2'), this.$t('guide.text.adopt3')],
+							texts: [this.$t('guide.text.adopt')],
 							ImageUrl: { path: 'guide', name: 'adopt' }
 						},
-						{
-							texts: [this.$t('guide.text.adopt4'), this.$t('guide.text.adopt5')]
-						}
+						{ texts: [this.$t('guide.text.adopt2')] }
 					],
 					nextItem: 2,
 					prevItem: 0
@@ -133,12 +122,11 @@ export default defineComponent({
 					nameImageUrl: { path: 'icons', name: 'small_follow' },
 					contentSections: [
 						{ texts: [this.$t('guide.text.move')], ImageUrl: { path: 'guide', name: 'move' } },
-						{ texts: [this.$t('guide.text.move2')] },
 						{
-							texts: [this.$t('guide.text.move3')],
-							listItems: [{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.move3-1') }]
+							texts: [this.$t('guide.text.move2')],
+							listItems: [{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.move2-1') }]
 						},
-						{ texts: [this.$t('guide.text.move4'), this.$t('guide.text.move5')] }
+						{ texts: [this.$t('guide.text.move3')] }
 					],
 					nextItem: 5,
 					prevItem: 3
@@ -148,101 +136,93 @@ export default defineComponent({
 					nameImageUrl: { path: 'icons', name: 'small_fire' },
 					contentSections: [
 						{ texts: [this.$t('guide.text.fight')], ImageUrl: { path: 'guide', name: 'fight' } },
-						{ texts: [this.$t('guide.text.fight2')] },
 						{
-							texts: [this.$t('guide.text.fight3')],
+							texts: [this.$t('guide.text.fight2')],
 							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight3-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight3-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight3-3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight3-4') }
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-1') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-2') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-3') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight2-4') }
 							]
 						},
+						{
+							name: this.$t('guide.text.fight3'),
+							texts: [this.$t('guide.text.fight3-1')],
+							listItems: [
+								{ imageUrl: { path: 'elements', name: 'elem_fire' }, text: this.$t('guide.text.fight3-1-1') },
+								{ imageUrl: { path: 'elements', name: 'elem_wood' }, text: this.$t('guide.text.fight3-1-2') },
+								{ imageUrl: { path: 'elements', name: 'elem_water' }, text: this.$t('guide.text.fight3-1-3') },
+								{ imageUrl: { path: 'elements', name: 'elem_lightning' }, text: this.$t('guide.text.fight3-1-4') },
+								{ imageUrl: { path: 'elements', name: 'elem_air' }, text: this.$t('guide.text.fight3-1-5') }
+							]
+						},
+						{
+							texts: [this.$t('guide.text.fight3-2')],
+							ImageUrl: { path: 'guide', name: 'elements' }
+						},
+						{ texts: [this.$t('guide.text.fight3-3')] },
 						{
 							name: this.$t('guide.text.fight4'),
 							texts: [this.$t('guide.text.fight4-1')],
-							listItems: [
-								{ imageUrl: { path: 'elements', name: 'elem_fire' }, text: this.$t('guide.text.fight4-1-1') },
-								{ imageUrl: { path: 'elements', name: 'elem_wood' }, text: this.$t('guide.text.fight4-1-2') },
-								{ imageUrl: { path: 'elements', name: 'elem_water' }, text: this.$t('guide.text.fight4-1-3') },
-								{ imageUrl: { path: 'elements', name: 'elem_lightning' }, text: this.$t('guide.text.fight4-1-4') },
-								{ imageUrl: { path: 'elements', name: 'elem_air' }, text: this.$t('guide.text.fight4-1-5') }
-							]
-						},
-						{
-							texts: [this.$t('guide.text.fight4-2')],
-							ImageUrl: { path: 'guide', name: 'elements' }
-						},
-						{ texts: [this.$t('guide.text.fight4-3')] },
-						{
-							name: this.$t('guide.text.fight5'),
-							texts: [this.$t('guide.text.fight5-1')],
 							ImageUrl: { path: 'guide', name: 'assault' }
 						},
 						{
-							texts: [this.$t('guide.text.fight5-2')],
+							texts: [this.$t('guide.text.fight4-2')],
 							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight5-2-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight5-2-2') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight5-2-3') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight5-2-4') }
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-1') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-2') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-3') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.fight4-2-4') }
 							]
 						},
-						{ texts: [this.$t('guide.text.fight5-3'), this.$t('guide.text.fight5-4'), this.$t('guide.text.fight5-5')] },
+						{ texts: [this.$t('guide.text.fight4-3')] },
+						{ name: this.$t('guide.text.fight5'), texts: [this.$t('guide.text.fight5-1')] },
 						{ name: this.$t('guide.text.fight6'), texts: [this.$t('guide.text.fight6-1')] },
-						{ name: this.$t('guide.text.fight7'), texts: [this.$t('guide.text.fight7-1')] },
-						{ name: this.$t('guide.text.fight8'), ImageUrl: { path: 'guide', name: 'energy' } },
+						{ name: this.$t('guide.text.fight7'), ImageUrl: { path: 'guide', name: 'energy' } },
+						{ texts: [this.$t('guide.text.fight7-1')] },
 						{
-							texts: [
-								this.$t('guide.text.fight8-1'),
-								this.$t('guide.text.fight8-2'),
-								this.$t('guide.text.fight8-3'),
-								this.$t('guide.text.fight8-4')
-							]
-						},
-						{
-							name: this.$t('guide.text.fight9'),
-							texts: [this.$t('guide.text.fight9-1')],
+							name: this.$t('guide.text.fight8'),
+							texts: [this.$t('guide.text.fight8-1')],
 							listItems: [
-								{ imageUrl: { path: 'guide', name: 'status_sleep' }, text: this.$t('guide.text.fight9-1-1') },
-								{ imageUrl: { path: 'guide', name: 'status_untouchable' }, text: this.$t('guide.text.fight9-1-2') },
-								{ imageUrl: { path: 'guide', name: 'status_slow_down' }, text: this.$t('guide.text.fight9-1-3') },
-								{ imageUrl: { path: 'guide', name: 'status_faster' }, text: this.$t('guide.text.fight9-1-4') },
-								{ imageUrl: { path: 'guide', name: 'status_petrified' }, text: this.$t('guide.text.fight9-1-5') },
-								{ imageUrl: { path: 'guide', name: 'status_assault_bonus' }, text: this.$t('guide.text.fight9-1-6') },
-								{ imageUrl: { path: 'guide', name: 'status_poisoned' }, text: this.$t('guide.text.fight9-1-7') },
-								{ imageUrl: { path: 'guide', name: 'status_locked' }, text: this.$t('guide.text.fight9-1-8') },
-								{ imageUrl: { path: 'guide', name: 'status_dazzled' }, text: this.$t('guide.text.fight9-1-9') },
-								{ imageUrl: { path: 'guide', name: 'status_protected' }, text: this.$t('guide.text.fight9-1-10') },
-								{ imageUrl: { path: 'guide', name: 'status_mute' }, text: this.$t('guide.text.fight9-1-11') },
-								{ imageUrl: { path: 'guide', name: 'status_sharingan' }, text: this.$t('guide.text.fight9-1-12') },
+								{ imageUrl: { path: 'guide', name: 'status_sleep' }, text: this.$t('guide.text.fight8-1-1') },
+								{ imageUrl: { path: 'guide', name: 'status_untouchable' }, text: this.$t('guide.text.fight8-1-2') },
+								{ imageUrl: { path: 'guide', name: 'status_slow_down' }, text: this.$t('guide.text.fight8-1-3') },
+								{ imageUrl: { path: 'guide', name: 'status_faster' }, text: this.$t('guide.text.fight8-1-4') },
+								{ imageUrl: { path: 'guide', name: 'status_petrified' }, text: this.$t('guide.text.fight8-1-5') },
+								{ imageUrl: { path: 'guide', name: 'status_assault_bonus' }, text: this.$t('guide.text.fight8-1-6') },
+								{ imageUrl: { path: 'guide', name: 'status_poisoned' }, text: this.$t('guide.text.fight8-1-7') },
+								{ imageUrl: { path: 'guide', name: 'status_locked' }, text: this.$t('guide.text.fight8-1-8') },
+								{ imageUrl: { path: 'guide', name: 'status_dazzled' }, text: this.$t('guide.text.fight8-1-9') },
+								{ imageUrl: { path: 'guide', name: 'status_protected' }, text: this.$t('guide.text.fight8-1-10') },
+								{ imageUrl: { path: 'guide', name: 'status_mute' }, text: this.$t('guide.text.fight8-1-11') },
+								{ imageUrl: { path: 'guide', name: 'status_sharingan' }, text: this.$t('guide.text.fight8-1-12') },
 								{
 									imageUrl: { path: 'guide', name: 'status_blocked_inventory' },
-									text: this.$t('guide.text.fight9-1-13')
+									text: this.$t('guide.text.fight8-1-13')
 								},
-								{ imageUrl: { path: 'guide', name: 'status_energy_penalty' }, text: this.$t('guide.text.fight9-1-14') },
-								{ imageUrl: { path: 'guide', name: 'status_energy_bonus' }, text: this.$t('guide.text.fight9-1-15') },
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_fire' }, text: this.$t('guide.text.fight9-1-16') },
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_wood' }, text: this.$t('guide.text.fight9-1-17') },
+								{ imageUrl: { path: 'guide', name: 'status_energy_penalty' }, text: this.$t('guide.text.fight8-1-14') },
+								{ imageUrl: { path: 'guide', name: 'status_energy_bonus' }, text: this.$t('guide.text.fight8-1-15') },
+								{ imageUrl: { path: 'guide', name: 'status_bonus_def_fire' }, text: this.$t('guide.text.fight8-1-16') },
+								{ imageUrl: { path: 'guide', name: 'status_bonus_def_wood' }, text: this.$t('guide.text.fight8-1-17') },
 								{
 									imageUrl: { path: 'guide', name: 'status_bonus_def_water' },
-									text: this.$t('guide.text.fight9-1-18')
+									text: this.$t('guide.text.fight8-1-18')
 								},
 								{
 									imageUrl: { path: 'guide', name: 'status_bonus_def_lightning' },
-									text: this.$t('guide.text.fight9-1-19')
+									text: this.$t('guide.text.fight8-1-19')
 								},
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_air' }, text: this.$t('guide.text.fight9-1-20') },
+								{ imageUrl: { path: 'guide', name: 'status_bonus_def_air' }, text: this.$t('guide.text.fight8-1-20') },
 								{
 									imageUrl: { path: 'guide', name: 'status_initiative_bonus' },
-									text: this.$t('guide.text.fight9-1-21')
+									text: this.$t('guide.text.fight8-1-21')
 								},
 								{
 									imageUrl: { path: 'guide', name: 'status_initiative_penalty' },
-									text: this.$t('guide.text.fight9-1-22')
+									text: this.$t('guide.text.fight8-1-22')
 								},
-								{ imageUrl: { path: 'guide', name: 'status_dodge_bonus' }, text: this.$t('guide.text.fight9-1-23') },
-								{ imageUrl: { path: 'guide', name: 'status_def_bonus' }, text: this.$t('guide.text.fight9-1-24') }
+								{ imageUrl: { path: 'guide', name: 'status_dodge_bonus' }, text: this.$t('guide.text.fight8-1-23') },
+								{ imageUrl: { path: 'guide', name: 'status_def_bonus' }, text: this.$t('guide.text.fight8-1-24') }
 							]
 						}
 					],
@@ -254,13 +234,10 @@ export default defineComponent({
 					nameImageUrl: { path: 'icons', name: 'small_use' },
 					contentSections: [
 						{
-							texts: [this.$t('guide.text.heal'), this.$t('guide.text.heal1')],
+							texts: [this.$t('guide.text.heal')],
 							ImageUrl: { path: 'guide', name: 'heal' }
 						},
-						{
-							name: this.$t('guide.text.heal2'),
-							texts: [this.$t('guide.text.heal2-1'), this.$t('guide.text.heal2-2'), this.$t('guide.text.heal2-3')]
-						}
+						{ name: this.$t('guide.text.heal2'), texts: [this.$t('guide.text.heal2-1')] }
 					],
 					nextItem: 7,
 					prevItem: 5
@@ -270,10 +247,10 @@ export default defineComponent({
 					nameImageUrl: { path: 'icons', name: 'small_delete' },
 					contentSections: [
 						{
-							texts: [this.$t('guide.text.death'), this.$t('guide.text.death1')],
+							texts: [this.$t('guide.text.death')],
 							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.death1-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.death1-2') }
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.death-1') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.death-2') }
 							]
 						},
 						{ texts: [this.$t('guide.text.death2')] }
@@ -285,18 +262,9 @@ export default defineComponent({
 					name: this.$t('guide.sections.exp'),
 					nameImageUrl: { path: 'icons', name: 'small_xp' },
 					contentSections: [
-						{
-							texts: [this.$t('guide.text.exp'), this.$t('guide.text.exp1')],
-							ImageUrl: { path: 'guide', name: 'exp' }
-						},
-						{
-							name: this.$t('guide.text.exp2'),
-							texts: [this.$t('guide.text.exp2-1'), this.$t('guide.text.exp2-2'), this.$t('guide.text.exp2-3')]
-						},
-						{
-							name: this.$t('guide.text.exp3'),
-							texts: [this.$t('guide.text.exp3-1'), this.$t('guide.text.exp3-2')]
-						}
+						{ texts: [this.$t('guide.text.exp')], ImageUrl: { path: 'guide', name: 'exp' } },
+						{ name: this.$t('guide.text.exp2'), texts: [this.$t('guide.text.exp2-1')] },
+						{ name: this.$t('guide.text.exp3'), texts: [this.$t('guide.text.exp3-1')] }
 					],
 					nextItem: 9,
 					prevItem: 7
@@ -305,13 +273,8 @@ export default defineComponent({
 					name: this.$t('guide.sections.missions'),
 					nameImageUrl: { path: 'icons', name: 'small_gold' },
 					contentSections: [
-						{
-							texts: [this.$t('guide.text.missions'), this.$t('guide.text.missions1')],
-							ImageUrl: { path: 'guide', name: 'missions' }
-						},
-						{
-							texts: [this.$t('guide.text.missions2'), this.$t('guide.text.missions3'), this.$t('guide.text.missions4')]
-						}
+						{ texts: [this.$t('guide.text.missions')], ImageUrl: { path: 'guide', name: 'missions' } },
+						{ texts: [this.$t('guide.text.missions2')] }
 					],
 					nextItem: 10,
 					prevItem: 8
@@ -319,11 +282,7 @@ export default defineComponent({
 				{
 					name: this.$t('guide.sections.status'),
 					nameImageUrl: { path: 'icons', name: 'small_edit' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.status'), this.$t('guide.text.status1'), this.$t('guide.text.status2')]
-						}
-					],
+					contentSections: [{ texts: [this.$t('guide.text.status')] }],
 					nextItem: 11,
 					prevItem: 9
 				},
@@ -331,11 +290,8 @@ export default defineComponent({
 					name: this.$t('guide.sections.equipment'),
 					nameImageUrl: { path: 'status', name: 'fx_bckpck' },
 					contentSections: [
-						{
-							texts: [this.$t('guide.text.equipment'), this.$t('guide.text.equipment1')],
-							ImageUrl: { path: 'guide', name: 'equipment' }
-						},
-						{ texts: [this.$t('guide.text.equipment2'), this.$t('guide.text.equipment3')] }
+						{ texts: [this.$t('guide.text.equipment')], ImageUrl: { path: 'guide', name: 'equipment' } },
+						{ texts: [this.$t('guide.text.equipment2')] }
 					],
 					nextItem: 12,
 					prevItem: 10
@@ -343,7 +299,7 @@ export default defineComponent({
 				{
 					name: this.$t('guide.sections.epic'),
 					nameImageUrl: { path: 'icons', name: 'small_mode' },
-					contentSections: [{ texts: [this.$t('guide.text.epic'), this.$t('guide.text.epic1')] }],
+					contentSections: [{ texts: [this.$t('guide.text.epic')] }],
 					nextItem: 13,
 					prevItem: 11
 				},
@@ -351,11 +307,8 @@ export default defineComponent({
 					name: this.$t('guide.sections.group'),
 					nameImageUrl: { path: 'icons', name: 'small_leader' },
 					contentSections: [
-						{
-							texts: [this.$t('guide.text.group'), this.$t('guide.text.group1')],
-							ImageUrl: { path: 'guide', name: 'group' }
-						},
-						{ texts: [this.$t('guide.text.group2'), this.$t('guide.text.group3'), this.$t('guide.text.group4')] }
+						{ texts: [this.$t('guide.text.group')], ImageUrl: { path: 'guide', name: 'group' } },
+						{ texts: [this.$t('guide.text.group2')] }
 					],
 					nextItem: 14,
 					prevItem: 12
@@ -364,17 +317,8 @@ export default defineComponent({
 					name: this.$t('guide.sections.ingredient'),
 					nameImageUrl: { path: 'status', name: 'fx_pelle' },
 					contentSections: [
-						{
-							texts: [this.$t('guide.text.ingredient'), this.$t('guide.text.ingredient1')],
-							ImageUrl: { path: 'guide', name: 'gather' }
-						},
-						{
-							texts: [
-								this.$t('guide.text.ingredient2'),
-								this.$t('guide.text.ingredient3'),
-								this.$t('guide.text.ingredient4')
-							]
-						}
+						{ texts: [this.$t('guide.text.ingredient')], ImageUrl: { path: 'guide', name: 'gather' } },
+						{ texts: [this.$t('guide.text.ingredient2')] }
 					],
 					nextItem: 15,
 					prevItem: 13
@@ -384,19 +328,8 @@ export default defineComponent({
 					nameImageUrl: { path: 'icons', name: 'small_leader' },
 					contentSections: [
 						{ texts: [this.$t('guide.text.clans')] },
-						{
-							name: this.$t('guide.text.clans1'),
-							texts: [
-								this.$t('guide.text.clans1-1'),
-								this.$t('guide.text.clans1-2'),
-								this.$t('guide.text.clans1-3'),
-								this.$t('guide.text.clans1-4')
-							]
-						},
-						{
-							name: this.$t('guide.text.clans2'),
-							texts: [this.$t('guide.text.clans2-1'), this.$t('guide.text.clans2-2')]
-						}
+						{ name: this.$t('guide.text.clans1'), texts: [this.$t('guide.text.clans1-1')] },
+						{ name: this.$t('guide.text.clans2'), texts: [this.$t('guide.text.clans2-1')] }
 					],
 					nextItem: 16,
 					prevItem: 14
@@ -409,7 +342,7 @@ export default defineComponent({
 							texts: [this.$t('guide.text.dojos')],
 							listItems: [{ imageUrl: { path: 'icons', name: 'act_train' }, text: this.$t('guide.text.dojos-1') }]
 						},
-						{ texts: [this.$t('guide.text.dojos-2'), this.$t('guide.text.dojos-3')] },
+						{ texts: [this.$t('guide.text.dojos-2')] },
 						{ name: this.$t('guide.text.dojos1'), texts: [this.$t('guide.text.dojos1-1')] },
 						{
 							name: this.$t('guide.text.dojos2'),
@@ -421,7 +354,7 @@ export default defineComponent({
 							texts: [this.$t('guide.text.dojos3-1')],
 							listItems: [{ imageUrl: { path: 'icons', name: 'act_tournoi' }, text: this.$t('guide.text.dojos3-2') }]
 						},
-						{ texts: [this.$t('guide.text.dojos3-3'), this.$t('guide.text.dojos3-4')] },
+						{ texts: [this.$t('guide.text.dojos3-3')] },
 						{
 							name: this.$t('guide.text.dojos4'),
 							listItems: [{ imageUrl: { path: 'icons', name: 'act_historique' }, text: this.$t('guide.text.dojos4-1') }]
@@ -448,47 +381,34 @@ export default defineComponent({
 						{ texts: [this.$t('guide.text.gdc')] },
 						{
 							name: this.$t('guide.text.gdc1'),
-							texts: [this.$t('guide.text.gdc1-1'), this.$t('guide.text.gdc1-2'), this.$t('guide.text.gdc1-3')],
+							texts: [this.$t('guide.text.gdc1-1')],
 							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-4') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-5') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-6') }
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-2') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-3') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc1-4') }
 							]
 						},
 						{
 							name: this.$t('guide.text.gdc2'),
-							texts: [
-								this.$t('guide.text.gdc2-1'),
-								this.$t('guide.text.gdc2-2'),
-								this.$t('guide.text.gdc2-3'),
-								this.$t('guide.text.gdc2-4')
-							],
+							texts: [this.$t('guide.text.gdc2-1')],
 							ImageUrl: { path: 'guide', name: 'castle' }
 						},
 						{
-							texts: [this.$t('guide.text.gdc2-5')],
+							texts: [this.$t('guide.text.gdc2-2')],
 							listItems: [
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-5-1') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-5-2') }
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-2-1') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.gdc2-2-2') }
 							]
 						},
-						{
-							name: this.$t('guide.text.gdc3'),
-							texts: [this.$t('guide.text.gdc3-1'), this.$t('guide.text.gdc3-2')]
-						},
+						{ name: this.$t('guide.text.gdc3'), texts: [this.$t('guide.text.gdc3-1')] },
 						{
 							name: this.$t('guide.text.gdc4'),
-							texts: [
-								this.$t('guide.text.gdc4-1'),
-								this.$t('guide.text.gdc4-2'),
-								this.$t('guide.text.gdc4-3'),
-								this.$t('guide.text.gdc4-4')
-							],
+							texts: [this.$t('guide.text.gdc4-1')],
 							ImageUrl: { path: 'guide', name: 'attack_castle' }
 						},
 						{
 							name: this.$t('guide.text.gdc5'),
-							texts: [this.$t('guide.text.gdc5-1'), this.$t('guide.text.gdc5-2'), this.$t('guide.text.gdc5-3')],
+							texts: [this.$t('guide.text.gdc5-1')],
 							ImageUrl: { path: 'guide', name: 'def_castle' }
 						},
 						{ name: this.$t('guide.text.gdc6'), texts: [this.$t('guide.text.gdc6-1')] }
@@ -501,37 +421,20 @@ export default defineComponent({
 					nameImageUrl: { path: 'icons', name: 'small_attack' },
 					contentSections: [
 						{ texts: [this.$t('guide.text.cdc')] },
-						{ name: this.$t('guide.text.cdc1'), texts: [this.$t('guide.text.cdc1-1'), this.$t('guide.text.cdc1-2')] },
+						{ name: this.$t('guide.text.cdc1'), texts: [this.$t('guide.text.cdc1-1')] },
 						{
 							name: this.$t('guide.text.cdc2'),
-							texts: [this.$t('guide.text.cdc2-1'), this.$t('guide.text.cdc2-2'), this.$t('guide.text.cdc2-3')],
+							texts: [this.$t('guide.text.cdc2-1')],
 							ImageUrl: { path: 'guide', name: 'battle_cdc' }
 						},
-						{
-							texts: [
-								this.$t('guide.text.cdc2-4'),
-								this.$t('guide.text.cdc2-5'),
-								this.$t('guide.text.cdc2-6'),
-								this.$t('guide.text.cdc2-7'),
-								this.$t('guide.text.cdc2-8')
-							]
-						},
-						{
-							name: this.$t('guide.text.cdc3'),
-							texts: [
-								this.$t('guide.text.cdc3-1'),
-								this.$t('guide.text.cdc3-2'),
-								this.$t('guide.text.cdc3-3'),
-								this.$t('guide.text.cdc3-4'),
-								this.$t('guide.text.cdc3-5')
-							]
-						},
+						{ texts: [this.$t('guide.text.cdc2-2')] },
+						{ name: this.$t('guide.text.cdc3'), texts: [this.$t('guide.text.cdc3-1')] },
 						{
 							name: this.$t('guide.text.cdc4'),
 							texts: [this.$t('guide.text.cdc4-1')],
 							ImageUrl: { path: 'guide', name: 'position_cdc' }
 						},
-						{ texts: [this.$t('guide.text.cdc4-2'), this.$t('guide.text.cdc4-3'), this.$t('guide.text.cdc4-4')] }
+						{ texts: [this.$t('guide.text.cdc4-2')] }
 					],
 					nextItem: 19,
 					prevItem: 17
@@ -584,10 +487,7 @@ export default defineComponent({
 								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.support3-2') }
 							]
 						},
-						{
-							name: this.$t('guide.text.support4'),
-							texts: [this.$t('guide.text.support4-1'), this.$t('guide.text.support4-2')]
-						}
+						{ name: this.$t('guide.text.support4'), texts: [this.$t('guide.text.support4-1')] }
 					],
 					nextItem: 21,
 					prevItem: 19
@@ -595,12 +495,7 @@ export default defineComponent({
 				{
 					name: this.$t('guide.sections.security'),
 					nameImageUrl: { path: 'icons', name: 'small_lock' },
-					contentSections: [
-						{
-							name: this.$t('guide.text.security'),
-							texts: [this.$t('guide.text.security-1'), this.$t('guide.text.security-2')]
-						}
-					],
+					contentSections: [{ name: this.$t('guide.text.security'), texts: [this.$t('guide.text.security-1')] }],
 					prevItem: 20
 				}
 			],
