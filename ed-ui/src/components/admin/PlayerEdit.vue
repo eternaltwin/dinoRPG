@@ -173,6 +173,26 @@
 						<label class="radio" for="false">false</label>
 					</td>
 				</tr>
+				<tr>
+					<td>messie</td>
+					<td>{{ player.messie }}</td>
+					<td>
+						<input class="radio" type="radio" value="true" name="messie" v-model="playerFields.messie" />
+						<label class="radio" for="true">true</label><br />
+						<input class="radio" type="radio" value="false" name="messie" v-model="playerFields.messie" />
+						<label class="radio" for="false">false</label>
+					</td>
+				</tr>
+				<tr>
+					<td>matelasseur</td>
+					<td>{{ player.matelasseur }}</td>
+					<td>
+						<input class="radio" type="radio" value="true" name="matelasseur" v-model="playerFields.matelasseur" />
+						<label class="radio" for="true">true</label><br />
+						<input class="radio" type="radio" value="false" name="matelasseur" v-model="playerFields.matelasseur" />
+						<label class="radio" for="false">false</label>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<input type="submit" />
@@ -213,7 +233,9 @@ export default defineComponent({
 				this.playerFields.shopKeeper !== undefined ||
 				this.playerFields.merchant !== undefined ||
 				this.playerFields.priest !== undefined ||
-				this.playerFields.teacher !== undefined
+				this.playerFields.teacher !== undefined ||
+				this.playerFields.messie !== undefined ||
+				this.playerFields.matelasseur !== undefined
 			) {
 				await AdminService.updatePlayer(
 					this.player.id,
@@ -226,7 +248,9 @@ export default defineComponent({
 					this.playerFields.shopKeeper,
 					this.playerFields.merchant,
 					this.playerFields.priest,
-					this.playerFields.teacher
+					this.playerFields.teacher,
+					this.playerFields.messie,
+					this.playerFields.matelasseur
 				);
 			}
 

@@ -46,7 +46,9 @@ export const AdminService = {
 		shopKeeper?: boolean | null,
 		merchant?: boolean | null,
 		priest?: boolean | null,
-		teacher?: boolean | null
+		teacher?: boolean | null,
+		messie?: boolean | null,
+		matelasseur?: boolean | null
 	): Promise<void> {
 		return http()
 			.put(`/admin/player/${id}`, {
@@ -59,7 +61,9 @@ export const AdminService = {
 				shopKeeper: shopKeeper,
 				merchant: merchant,
 				priest: priest,
-				teacher: teacher
+				teacher: teacher,
+				messie: messie,
+				matelasseur: matelasseur
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));

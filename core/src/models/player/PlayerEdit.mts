@@ -13,4 +13,6 @@ export interface PlayerEdit {
 	merchant?: boolean;
 	priest?: boolean;
 	teacher?: boolean;
+	messie?: boolean;
+	matelasseur?: boolean;
 }

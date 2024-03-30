@@ -152,7 +152,9 @@ routes.put(
 		body('shopKeeper').default(undefined).optional().exists().toBoolean(),
 		body('merchant').default(undefined).optional().exists().toBoolean(),
 		body('priest').default(undefined).optional().exists().toBoolean(),
-		body('teacher').default(undefined).optional().exists().toBoolean()
+		body('teacher').default(undefined).optional().exists().toBoolean(),
+		body('messie').default(undefined).optional().exists().toBoolean(),
+		body('matelasseur').default(undefined).optional().exists().toBoolean()
 	],
 	checkIsAdmin,
 	async (req: Request, res: Response) => {

@@ -259,6 +259,8 @@ export async function listAllDinozFromPlayer(req: Request) {
  * @param req.body.merchant {boolean}
  * @param req.body.priest {boolean}
  * @param req.body.teacher {boolean}
+ * @param req.body.messie {boolean}
+ * @param req.body.matelasseur {boolean}
  */
 export async function editPlayer(req: Request) {
 	if (!req.auth?.playerId) {
@@ -275,7 +277,9 @@ export async function editPlayer(req: Request) {
 		shopKeeper: req.body.shopKeeper,
 		merchant: req.body.merchant,
 		priest: req.body.priest,
-		teacher: req.body.teacher
+		teacher: req.body.teacher,
+		messie: req.body.messie,
+		matelasseur: req.body.matelasseur
 	};
 
 	await setPlayer(+req.params.id, player);
@@ -352,6 +356,13 @@ export async function editPlayer(req: Request) {
 	if (typeof player.teacher !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'teacher', player.teacher);
 	}
+	if (typeof player.messie !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'messie', player.messie);
+		console.log(player.messie)
+	}
+	if (typeof player.matelasseur !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'matelasseur', player.matelasseur);
+	}
 }
 
 /**
@@ -380,6 +391,8 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		merchant: player.merchant,
 		priest: player.priest,
 		teacher: player.teacher,
+		messie: player.messie,
+		matelasseur: player.matelasseur,
 		createdDate: player.createdDate,
 		rewards: player.rewards.map(reward => reward.rewardId)
 	};
