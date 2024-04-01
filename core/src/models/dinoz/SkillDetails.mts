@@ -63,4 +63,6 @@ export interface SkillDetails {
 	priority?: number;
 	probability?: number;
 	visualEffect?: number;
+	color?: string;
+	auraType?: number;
 }

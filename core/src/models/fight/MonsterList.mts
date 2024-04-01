@@ -6,6 +6,8 @@ import { MonsterFiche } from './MonsterFiche.mjs';
 
 export enum Monster {
 	GOUPIGNON = 'GOUPIGNON',
+	GOUPIGNON2 = 'GOUPIGNON2',
+	GOUPIGNON3 = 'GOUPIGNON3',
 	WOLF = 'WOLF',
 	GLUON = 'GLUON',
 	GREEN_GIANT = 'GREEN_GIANT',
@@ -111,6 +113,44 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		display: 'goupi'
 	},
+	[Monster.GOUPIGNON2]: {
+		id: Monster.GOUPIGNON3,
+		name: 'goupignon',
+		hp: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		odds: 100,
+		level: 1,
+		zones: [MapZone.DINOLAND],
+		canBeCaptured: true,
+		display: 'goupi2'
+	},
+	[Monster.GOUPIGNON3]: {
+		id: Monster.GOUPIGNON3,
+		name: 'goupignon',
+		hp: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		odds: 100,
+		level: 1,
+		zones: [MapZone.DINOLAND],
+		canBeCaptured: true,
+		display: 'goupi3'
+	},
 	[Monster.WOLF]: {
 		id: Monster.WOLF,
 		name: 'wolf',
@@ -188,7 +228,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 50,
 		level: 21,
 		zones: [MapZone.DINOLAND],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'coq'
 	},
 	[Monster.PIRASK]: {
 		id: Monster.PIRASK,
@@ -230,7 +271,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.GTOUTCHAUD],
 		groups: [0, 3, 1],
 		skills: [Skill.M_RENFORTS],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'flam'
 	},
 	[Monster.GOBLIN]: {
 		id: Monster.GOBLIN,
@@ -248,7 +290,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 5,
 		zones: [MapZone.GTOUTCHAUD],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'goblin'
 	},
 	[Monster.BARCHE]: {
 		id: Monster.BARCHE,
@@ -300,7 +343,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.ILES],
 		groups: [0, 0, 1],
 		canBeCaptured: true,
-		skills: [Skill.M_FLIGHT]
+		skills: [Skill.M_FLIGHT],
+		display: 'pira'
 	},
 	[Monster.KAZKA]: {
 		id: Monster.KAZKA,
@@ -319,7 +363,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 8,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
-		skills: [Skill.M_IMMATERIAL]
+		skills: [Skill.M_IMMATERIAL],
+		display: 'kazka'
 	},
 	[Monster.ANGUIL]: {
 		id: Monster.ANGUIL,
@@ -336,7 +381,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 18,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
-		skills: [Skill.M_ELECTROCUTION]
+		skills: [Skill.M_ELECTROCUTION],
+		display: 'anguil'
 	},
 	[Monster.BORG]: {
 		id: Monster.BORG,
@@ -355,7 +401,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 28,
 		zones: [MapZone.ILES],
 		skills: [Skill.M_RESISTANCE],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'borg'
 	},
 	[Monster.KORGON]: {
 		id: Monster.KORGON,
@@ -372,7 +419,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.JUNGLE],
 		groups: [0, 2, 1],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'korgon'
 	},
 	[Monster.RONCIV]: {
 		id: Monster.RONCIV,
@@ -392,7 +440,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
 		skills: [Skill.M_PROTECTION],
-		noMove: true
+		noMove: true,
+		display: 'ronciv'
 	},
 	[Monster.BAT]: {
 		id: Monster.BAT,
@@ -411,7 +460,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 20,
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
-		skills: [Skill.M_FLIGHT]
+		skills: [Skill.M_FLIGHT],
+		display: 'bat'
 	},
 	[Monster.GRDIEN]: {
 		id: Monster.GRDIEN,

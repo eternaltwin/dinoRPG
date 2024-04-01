@@ -1873,7 +1873,9 @@
 			"Electrocution": "Electrocution",
 			"Immaterial": "Immateriel",
 			"Flight": "Envol",
-			"Capture": "Capture"
+			"Capture": "Capture",
+			"Venerable": "Vénérable",
+			"Renforts": "Renforts"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les assauts feu de 7",
@@ -3674,7 +3676,12 @@
 			"ronciv": "Roncivore",
 			"gardien": "Gardien Arboricole",
 			"rkrgns": "Renfort Korgon",
-			"borg": "Borg"
+			"borg": "Borg",
+			"ewater": "Elémental d'eau",
+			"efire": "Elémental de feu",
+			"vener": "Le Vénérable",
+			"rasca": "Vieux Rascaphandre",
+			"eearth": "Elémental de Terre"
 		},
 		"status": {
 			"asleep": "endormi",

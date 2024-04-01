@@ -386,7 +386,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 20,
-		visualEffect: SkillVisualEffect.AURA
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xFF0000',
+		auraType: 0
 	},
 	[Skill.FORCE]: {
 		id: Skill.FORCE,
@@ -419,7 +421,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 1,
-		probability: 25
+		probability: 25,
+		visualEffect: SkillVisualEffect.SHOWER,
+		auraType: 0
 	},
 	[Skill.SOUFFLE_ARDENT]: {
 		id: Skill.SOUFFLE_ARDENT,
@@ -530,7 +534,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 1,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xFF0000',
+		auraType: 3
 	},
 	[Skill.PROPULSION_DIVINE]: {
 		id: Skill.PROPULSION_DIVINE,
@@ -1340,7 +1347,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [21201],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		visualEffect: SkillVisualEffect.AURA
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xAAFF00',
+		auraType: 1
 	},
 	[Skill.DETECTIVE]: {
 		id: Skill.DETECTIVE,
@@ -1457,7 +1466,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 50,
-		visualEffect: SkillVisualEffect.AURA
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xAAFF00',
+		auraType: 1
 	},
 	[Skill.PLANIFICATEUR]: {
 		id: Skill.PLANIFICATEUR,
@@ -1511,7 +1522,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0x00FF00',
+		auraType: 2
 	},
 	[Skill.ESPRIT_GORILLOZ]: {
 		id: Skill.ESPRIT_GORILLOZ,
@@ -2013,7 +2027,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 40,
-		visualEffect: SkillVisualEffect.SHOWER
+		visualEffect: SkillVisualEffect.SHOWER,
+		auraType: 2
 	},
 	[Skill.COUP_SOURNOIS]: {
 		id: Skill.COUP_SOURNOIS,
@@ -2968,7 +2983,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 15
+		probability: 15,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xFFFF00',
+		auraType: 1
 	},
 	[Skill.AURA_HERMETIQUE]: {
 		id: Skill.AURA_HERMETIQUE,
@@ -3769,7 +3787,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 7,
-		probability: 5
+		probability: 5,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0x0000FF',
+		auraType: 4
 	},
 	[Skill.SECOUSSE]: {
 		id: Skill.SECOUSSE,
@@ -4235,7 +4256,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 5,
-		probability: 5
+		probability: 5,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xFFFF00',
+		auraType: 1
 	},
 	[Skill.COQUE]: {
 		id: Skill.COQUE,

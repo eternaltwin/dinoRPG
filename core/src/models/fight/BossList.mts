@@ -122,7 +122,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 5,
 		zones: [MapZone.DARKWORLD],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'efire'
 	},
 	[Boss.ELEMENTAIRE_EAU]: {
 		id: Boss.ELEMENTAIRE_EAU,
@@ -141,7 +142,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 5,
 		zones: [MapZone.DARKWORLD],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'ewater'
 	},
 	[Boss.RASCAPHANDRE]: {
 		id: Boss.RASCAPHANDRE,
@@ -160,7 +162,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 10,
 		zones: [MapZone.ILES],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'rasca'
 	},
 	[Boss.ELEMENTAIRE_TERRE]: {
 		id: Boss.ELEMENTAIRE_TERRE,
@@ -199,7 +202,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.ALL],
 		skills: [Skill.COLERE, Skill.FORCE, Skill.FOCUS, Skill.GRIFFES_ENFLAMMEES, Skill.ENVOL],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'pteroz'
 	},
 	[Boss.HIPPOCLAMP]: {
 		id: Boss.HIPPOCLAMP,
@@ -219,7 +223,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.ALL],
 		skills: [Skill.CARAPACE, Skill.SAUVAGERIE, Skill.CANON_A_EAU, Skill.ENDURANCE],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'hippo'
 	},
 	[Boss.ROCKY]: {
 		id: Boss.ROCKY,
@@ -239,7 +244,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 12,
 		zones: [MapZone.ALL],
 		skills: [Skill.FOUDRE, Skill.FOCUS, Skill.CARAPACE, Skill.CELERITE, Skill.COUP_DOUBLE],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'rocky'
 	},
 	[Boss.MASTER_CHA]: {
 		id: Boss.MASTER_CHA,
@@ -363,7 +369,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 1000,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true
+		noMove: true,
+		display: 'vener'
 	},
 	[Boss.VENERABLE_2]: {
 		id: Boss.VENERABLE_2,
@@ -385,7 +392,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 0,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true
+		noMove: true,
+		display: 'vener'
 	},
 	[Boss.VENERABLE_3]: {
 		id: Boss.VENERABLE_3,
@@ -408,7 +416,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true
+		noMove: true,
+		display: 'vener'
 	},
 	[Boss.VENERABLE_4]: {
 		id: Boss.VENERABLE_4,
@@ -430,7 +439,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 100,
 		zones: [],
 		canBeCaptured: false,
-		noMove: true
+		noMove: true,
+		display: 'vener'
 	},
 	[Boss.SCORPIOUS]: {
 		id: Boss.SCORPIOUS,
@@ -543,7 +553,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_CURSED_WAND, Skill.LANCEUR_DE_GLAND],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'kmask'
 	},
 	[Boss.SOUTHERN_KORGON]: {
 		id: Boss.SOUTHERN_KORGON,

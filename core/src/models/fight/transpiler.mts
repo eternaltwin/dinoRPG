@@ -62,6 +62,22 @@ export enum EmoteBehaviour {
 	Grow
 }
 
+export enum AuraType {
+	Spiral,
+	Line,
+	Burst,
+	Detonate,
+	Light
+}
+
+export enum SkillType {
+	Fire,
+	Wood,
+	Water,
+	Lightning,
+	Air
+}
+
 export type transpiled =
 	| {
 			action: DinoAction.ADD;
@@ -114,6 +130,8 @@ export type transpiled =
 					id: number;
 					life?: number;
 				}[];
+				color?: string;
+				type?: SkillType | AuraType;
 			};
 	  }
 	| {

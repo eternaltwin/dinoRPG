@@ -308,11 +308,14 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 					});
 					i += j - 1;
 				} else {
+					const skillEffect = resolveSkillEffect(step.skill);
 					history.push({
 						action: DinoAction.SKILL,
-						skill: resolveSkillEffect(step.skill),
+						skill: skillEffect,
 						details: {
-							fid: step.fighter.id
+							fid: step.fighter.id,
+							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
+							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType
 						}
 					});
 				}
