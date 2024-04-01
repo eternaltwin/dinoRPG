@@ -21,8 +21,6 @@ export enum SpecialStat {
 }
 
 export enum SpecialStatAsPercent {
-	HP_REGEN = 'hpRegen',
-	ENERGY = 'energy',
 	MULTIHIT = 'multihit',
 	EVASION = 'evasion',
 	COUNTER = 'counter',
@@ -40,7 +38,8 @@ export const BaseStats = {
 		{} as Record<SpecialStat, number>
 	),
 	[SpecialStat.HP_REGEN]: 1,
-	[SpecialStat.ENERGY]: 1,
+	[SpecialStat.ENERGY]: 100,
+	[SpecialStat.ENERGY_RECOVERY]: 1,
 	[SpecialStat.MAX_FOLLOWERS]: 2
 };
 
@@ -221,7 +220,8 @@ export const getSpecialStat = (
 	return {
 		name: stat,
 		percent,
-		value: +(value * multiplier).toFixed(2),
+		// Use full value for floats (percent) and rounded value for integers
+		value: percent ? +(value * multiplier) : Math.round(+(value * multiplier)),
 		details
 	};
 };

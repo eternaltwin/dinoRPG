@@ -12,8 +12,8 @@ import { PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { TIME_BASE, TIME_FACTOR } from './fightConstants.js';
-import { createStatus } from './fightMethods.js';
+import { MAXIMUM_MAX_ENERGY, TIME_BASE, TIME_FACTOR } from './fightConstants.js';
+import { createStatus, setEnergy, setMaxEnergy } from './fightMethods.js';
 import { getBasicElementDamage } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
@@ -208,8 +208,8 @@ export const initializeDinoz = (
 	fighter.time += Math.round(Math.random() * TIME_BASE) * TIME_FACTOR;
 
 	// Energy
-	fighter.energy = (fighter.stats.special.energy ?? 1) * 100;
-	fighter.maxEnergy = fighter.energy;
+	setMaxEnergy(fighter, fighter.stats.special.energy ?? 100);
+	fighter.energy = fighter.maxEnergy;
 
 	// Handle elements (from highest to lowest)
 	const elements = [

@@ -15,7 +15,7 @@ import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import gameConfig from '../config/game.config.js';
-import { getRandomLetter } from '../utils/index.js';
+import { getRandomNumber, getLetter, getRandomLetter } from '../utils/index.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { applySkillEffect } from './skillService.js';
@@ -143,7 +143,93 @@ export async function useItem(req: Request) {
 			};
 			break;
 		case ItemEffect.EGG:
-			await hatchEgg(item.effect.race, item.effect.rare, req.auth.playerId);
+			// Each rare egg has a different hatching
+			switch (item.itemId) {
+				case itemList.MOUEFFE_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.PIGMOU_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, getRandomNumber(0,5)===0 ? '1':'0', '1', '0', req.auth.playerId);
+					break;
+				case itemList.WINKS_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.PLANAILLE_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.CASTIVORE_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1', getLetter(1+getRandomNumber(0,2)), '0', req.auth.playerId);
+					break;
+				case itemList.ROCKY_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','0', '0', req.auth.playerId);
+					break;
+				case itemList.PTEROZ_EGG_RARE.itemId:
+					// TODO: does not exist in MT's code: invent or remove
+					break;
+				case itemList.NUAGOZ_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','0', '0', req.auth.playerId);
+					break;
+				case itemList.SIRAIN_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, getRandomNumber(0,5)===0 ? '1':'0', '1', '0', req.auth.playerId);
+					break;
+				case itemList.HIPPOCLAMP_EGG_RARE.itemId:
+					// TODO: does not exist in MT's code: invent or remove check with swf and MT code
+					break;
+				case itemList.GORILLOZ_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.WANWAN_EGG_RARE.itemId:
+					// TODO does not exist in MT's code: invent or remove for only the "baby" check with swf and MT code
+					break;
+				case itemList.WANWAN_BABY_RARE.itemId:
+					await hatchEgg(item.effect.race, '2','1', '0', req.auth.playerId);
+					break;
+				case itemList.SANTAZ_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.FEROSS_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.FEROSS_EGG_CHRISTMAS.itemId:
+					await hatchEgg(item.effect.race, '2','2', '0', req.auth.playerId);
+					break;
+				case itemList.RARE_KABUKI_EGG.itemId:
+					await hatchEgg(item.effect.race, getRandomNumber(0,5)===0 ? '1':'0', '1', '0', req.auth.playerId);
+					break;
+				case itemList.RARE_MAHAMUTI_EGG.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.SOUFFLET_EGG_RARE.itemId:
+					// TODO: does not exist in MT's code: invent or remove check with swf and MT code
+					break;
+				case itemList.TOUFUFU_BABY_RARE.itemId:
+					await hatchEgg(item.effect.race, '0','1', '0', req.auth.playerId);
+					break;
+				case itemList.QUETZU_EGG_RARE.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				// TODO: normal rare smog check with swf and MT code
+				// case itemList.FEROSS_EGG_CHRISTMAS.itemId:
+				// 	break;
+				case itemList.SMOG_EGG_ANNIVERSARY.itemId:
+					await hatchEgg(item.effect.race, '1','1', '0', req.auth.playerId);
+					break;
+				case itemList.SMOG_EGG_CHRISTMAS_BLUE.itemId:
+					// TODO check with swf and MT code
+					break;
+				case itemList.SMOG_EGG_CHRISTMAS_GREEN.itemId:
+					// TODO check with swf and MT code
+					break;
+				case itemList.TRICERAGNON_EGG_BABY.itemId:
+					// TODO: there's no rare triceragnon egg, check with swf and MT code
+					break;
+				case itemList.CHRISTMAS_EGG.itemId:
+					break;
+				default:
+					// Same hatching for non rare eggs
+					await hatchEgg(item.effect.race, '0','0', '0', req.auth.playerId);
+					break;
+			}
 			feedback = {
 				category: ItemEffect.EGG,
 				value: item.effect.race.name
@@ -190,7 +276,7 @@ export async function useItem(req: Request) {
 	return feedback;
 }
 
-async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
+async function hatchEgg(race: DinozRace, palette: string, rare_1: string, rare_2: string, playerId: number) {
 	if (!race.display) {
 		throw new ErrorFormator(500, 'Missing race display');
 	}
@@ -210,16 +296,18 @@ async function hatchEgg(race: DinozRace, rare: boolean, playerId: number) {
 		}
 	}
 
-	//generate display
+	// Generate display:
+	// - the 2 first 2 chars are the race's chars
+	// - the next 11 chars are random between '0' and 'z'
+	// - the next (14th) is the color palette
+	// - the next (15th) is the 1st rare visual attribute
+	// - the last one (16h) is the 2nd rare visual attribute
 	let randomDisplay = race.swfLetter;
-	for (let i = 0; i < 14; i++) {
-		randomDisplay += getRandomLetter(race.display[i]);
+	for (let i = 0; i < 11; i++) {
+		randomDisplay += getRandomLetter('z');
 	}
 
-	if (rare) {
-		randomDisplay =
-			randomDisplay.substring(0, 13) + getRandomLetter('9') + getRandomLetter('9') + randomDisplay.substring(15);
-	}
+	randomDisplay += getRandomLetter(palette) + getRandomLetter(rare_1) + getRandomLetter(rare_2)
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated = await createDinoz(initializeDinoz(race, playerId, randomDisplay));

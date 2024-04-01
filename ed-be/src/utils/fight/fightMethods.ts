@@ -19,7 +19,7 @@ import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { BASE_ENERGY_COST, CYCLE, ENERGY_RECOVERY_BASE_FACTOR, TIME_BASE, TIME_FACTOR } from './fightConstants.js';
+import { BASE_ENERGY_COST, CYCLE, DEFAULT_MAX_ENERGY, ENERGY_RECOVERY_BASE_FACTOR, MAXIMUM_MAX_ENERGY, TIME_BASE, TIME_FACTOR } from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
 import { getBasicElementDamage, getDamage } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
@@ -223,6 +223,36 @@ export const updateStat = (
 
 	stats[stat] += value;
 };
+
+export const setEnergy = (fighter: DetailedFighter, new_energy: number) => {
+	if (new_energy > fighter.maxEnergy) {
+		fighter.energy = fighter.maxEnergy;
+	} else if (new_energy < 0) {
+		fighter.energy = 0; 
+	} else {
+		fighter.energy = new_energy;
+	}
+}
+
+export const setMaxEnergy = (fighter: DetailedFighter, new_max: number) => {
+	if (new_max > MAXIMUM_MAX_ENERGY) {
+		fighter.maxEnergy = MAXIMUM_MAX_ENERGY;
+	} else if (new_max < 0) {
+		fighter.maxEnergy = 1; 
+	} else {
+		fighter.maxEnergy = new_max;
+	}
+
+	// Don't go below DEFAULT_MAX_ENERGY if fighter has Item.ENCHANTED_STEROID
+	if (fighter.maxEnergy < DEFAULT_MAX_ENERGY && fighter.items.some(item => item.itemId === Item.ENCHANTED_STEROID)) {
+		fighter.maxEnergy = DEFAULT_MAX_ENERGY;
+	}
+
+	// Set fighter's current energy to minimum between energy and max energy
+	// Note: This is not done in the original fight algo
+	fighter.energy = Math.min(fighter.energy, fighter.maxEnergy);
+}
+
 
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No event if NO_EVENT
@@ -675,7 +705,7 @@ const registerHit = (
 			if (Math.random() < 0.3) {
 				const energyTransferred = Math.max(fighter.maxEnergy - fighter.energy, opponent.energy);
 				opponent.energy = 0;
-				fighter.energy += energyTransferred;
+				setEnergy(fighter, fighter.energy + energyTransferred);
 
 				// Add reduce energy step
 				fightData.steps.push({
@@ -1145,18 +1175,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					// Reduce max energy by 20%
 					let newMaxEnergy = Math.round(opponent.maxEnergy * 0.8);
 
-					// Don't go below 100 if Item.ENCHANTED_STEROID
-					if (opponent.items.some(item => item.itemId === Item.ENCHANTED_STEROID)) {
-						newMaxEnergy = Math.max(newMaxEnergy, 100);
-					}
-
 					// Cancel if no change
 					if (newMaxEnergy === opponent.maxEnergy) {
 						return cancel();
 					}
 
-					opponent.maxEnergy = newMaxEnergy;
-					opponent.energy = Math.min(opponent.energy, opponent.maxEnergy);
+					setMaxEnergy(opponent, newMaxEnergy);
 
 					// Add reduce energy step
 					fightData.steps.push({
@@ -1273,18 +1297,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Reduce max energy by 30%
 				let newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
 
-				// Don't go below 100 if Item.ENCHANTED_STEROID
-				if (opponent.items.some(item => item.itemId === Item.ENCHANTED_STEROID)) {
-					newMaxEnergy = Math.max(newMaxEnergy, 100);
-				}
-
 				// Cancel if no change
 				if (newMaxEnergy === opponent.maxEnergy) {
 					return cancel();
 				}
 
-				opponent.maxEnergy = newMaxEnergy;
-				opponent.energy = Math.min(opponent.energy, opponent.maxEnergy);
+				setMaxEnergy(opponent, newMaxEnergy);
 
 				// Add reduce energy step
 				fightData.steps.push({
@@ -1339,7 +1357,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.CRAMPE_CHRONIQUE: {
-				fighter.energy -= 10;
+				setEnergy(fighter, fighter.energy - 10);
 				fighter.stats.special.energyRecovery *= 0.85;
 
 				// Add reduce energy step
@@ -1522,7 +1540,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 		}
 
 		// Consume energy
-		fighter.energy -= event.energy;
+		setEnergy(fighter, fighter.energy - event.energy);
 	} else {
 		// Event is an item
 
@@ -3338,7 +3356,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	}
 
 	// Consume energy
-	fighter.energy -= skill.energy;
+	setEnergy(fighter, fighter.energy - skill.energy);
 
 	if (fighter.type !== 'boss') {
 		// Get opponents with SHARIGNAN
@@ -3989,7 +4007,7 @@ const startAttack = (
 	let hitAtLeastOnce = attack(fightData, fighter, opponent, skill, power);
 
 	// Consume energy
-	fighter.energy -= BASE_ENERGY_COST;
+	setEnergy(fighter, fighter.energy - BASE_ENERGY_COST);
 
 	// Get combo chances
 	const combo = fighter.stats.special.multihit - 1;
@@ -4006,7 +4024,7 @@ const startAttack = (
 			hitAtLeastOnce = hitAtLeastOnce || hit;
 
 			// Consume energy
-			fighter.energy -= BASE_ENERGY_COST + comboCount;
+			setEnergy(fighter, fighter.energy - (BASE_ENERGY_COST + comboCount));
 
 			// Multihit stat
 			updateStat(fightData, fighter, 'multiHits', 1);
@@ -4164,12 +4182,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Recover energy for all fighters except the current one
 	getFighters(fightData).forEach(f => {
 		if (f.id === attacker.id) return;
-		f.energy += (f.stats.special.energyRecovery ?? 1) * deltaTime * ENERGY_RECOVERY_BASE_FACTOR;
-
-		// Limit to maxEnergy
-		if (f.energy > f.maxEnergy) {
-			f.energy = f.maxEnergy;
-		}
+		setEnergy(f, f.energy + (f.stats.special.energyRecovery ?? 1) * deltaTime * ENERGY_RECOVERY_BASE_FACTOR);
 	});
 
 	if (deltaTime > 0) {
