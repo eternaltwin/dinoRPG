@@ -315,7 +315,8 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 						details: {
 							fid: step.fighter.id,
 							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
-							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType
+							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
+							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
 						}
 					});
 				}

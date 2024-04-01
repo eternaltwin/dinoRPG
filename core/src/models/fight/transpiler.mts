@@ -132,6 +132,7 @@ export type transpiled =
 				}[];
 				color?: string;
 				type?: SkillType | AuraType;
+				fx?: string;
 			};
 	  }
 	| {

@@ -2111,7 +2111,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 4,
-		probability: 8
+		probability: 8,
+		visualEffect: SkillVisualEffect.ATTACH,
+		fx: 'fxOndeFocus'
 	},
 	[Skill.ZERO_ABSOLU]: {
 		id: Skill.ZERO_ABSOLU,
@@ -2394,7 +2396,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [31304, 51312, 61119],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		visualEffect: SkillVisualEffect.ATTACH,
+		fx: 'fxBubble'
 	},
 	[Skill.INCREVABLE]: {
 		id: Skill.INCREVABLE,
@@ -3031,7 +3035,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [41207],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		visualEffect: SkillVisualEffect.ATTACH,
+		fx: 'fxSurvivor'
 	},
 	[Skill.AUBE_FEUILLUE]: {
 		id: Skill.AUBE_FEUILLUE,

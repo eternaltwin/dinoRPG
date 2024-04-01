@@ -65,4 +65,5 @@ export interface SkillDetails {
 	visualEffect?: number;
 	color?: string;
 	auraType?: number;
+	fx?: string;
 }
