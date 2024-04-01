@@ -39,15 +39,15 @@ import { PTEROZ, ROCKY, HIPPO } from './characters/totems.mjs';
 import { VENERABLE } from './characters/vener.mjs';
 
 export const npcList: Record<string, Npc> = {
-	ALPHA: {
-		name: 'alpha_test',
-		id: 0,
-		placeId: PlaceEnum.DINOVILLE,
-		data: ALPHA,
-		condition: undefined,
-		missions: undefined,
-		flashvars: undefined
-	},
+	// ALPHA: {
+	// 	name: 'alpha_test',
+	// 	id: 0,
+	// 	placeId: PlaceEnum.DINOVILLE,
+	// 	data: ALPHA,
+	// 	condition: undefined,
+	// 	missions: undefined,
+	// 	flashvars: undefined
+	// },
 	// CRIEUR: {
 	// 	name: 'street_shouter',
 	// 	id: 1,
