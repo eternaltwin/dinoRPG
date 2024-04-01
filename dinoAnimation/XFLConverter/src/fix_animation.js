@@ -1,5 +1,9 @@
 import fs from 'fs';
 
+function round(v) {
+	return Math.round(v * 1000) / 1000;
+}
+
 // Shift an animation to the rigth, duplicationg the given key.
 function offsetRight(anim, idx) {
 	for (let i = anim.length - 1; i > idx; --i) {
@@ -63,8 +67,8 @@ function followProperty(t, t_prev, obj_cur, obj_prev, prop) {
 }
 
 // Make an animation part follow the movement of another part.
-function followKey(anim, target, key) {
-	for (let i = 1; i < anim.length; ++i) {
+function followKey(anim, target, key, start = 0, end = undefined) {
+	for (let i = start; i <= (end ?? anim.length - 1); ++i) {
 		followProperty(anim[i][target], anim[i - 1][target], anim[i][key], anim[i - 1][key], 'tx');
 		followProperty(anim[i][target], anim[i - 1][target], anim[i][key], anim[i - 1][key], 'ty');
 		followProperty(anim[i][target], anim[i - 1][target], anim[i][key], anim[i - 1][key], 'a');
@@ -75,9 +79,37 @@ function followKey(anim, target, key) {
 	return anim;
 }
 
+// Creates a linear movement between two indexes.
+function linearMovement(anim, elem, start, end) {
+	const keys = [];
+	for (const k in anim[start][elem]) {
+		if (k != 'l' && typeof anim[start][elem][k] == 'number') {
+			keys.push(k);
+		}
+	}
+	for (const k of Object.keys(anim[end][elem])) {
+		if (k != 'l' && !keys.includes(k) && typeof anim[end][elem][k] == 'number') {
+			keys.push(k);
+		}
+	}
+	const diff = end - start;
+	for (let i = 1; start + i < end; ++i) {
+		const idx = start + i;
+		if (anim[idx][elem].l !== anim[start][elem].l) {
+			console.error(`${elem}: Layers of index ${idx} is different from start. Stopping.`);
+			return undefined;
+		}
+		for (const k of keys) {
+			anim[idx][elem][k] = round(anim[start][elem][k] + ((anim[end][elem][k] - anim[start][elem][k]) / diff) * i);
+		}
+	}
+	return anim;
+}
+
 const animation = [];
 
 //const result = mirrorTo(animation, 12, 'r_f_lower_leg');
-let result = freezeFrame(freezeFrame(freezeFrame(animation, 78, 'l_b_arm', 78), 78, 'r_b_arm', 78), 78, 'r_scythe', 78);
+//let result = freezeFrame(freezeFrame(animation, 43, 'sp_10', 43), 43, 'sp_4', 43);
+let result = linearMovement(linearMovement(animation, 'sp_4', 0, 9), 'sp_10', 0, 9);
 
 fs.writeFileSync('./results/animation_fix.txt', JSON.stringify(result, undefined, '\t'));
