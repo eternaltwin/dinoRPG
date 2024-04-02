@@ -4078,13 +4078,13 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	// Round up time
 	time = Math.round(time);
 
-	// Minimum time
+	// Minimum time increment of 1
 	if (time <= 0) {
 		time = 1;
 	}
 
 	// Add the new time to the attacker
-	attacker.time += Math.round(time);
+	attacker.time += time;
 };
 
 export const playFighterTurn = (fightData: DetailedFight) => {

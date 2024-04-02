@@ -361,7 +361,7 @@ async function hatchEgg(item: ItemFiche, playerId: number) {
 
 function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
 	// Generate display:
-	// - the 2 first 2 chars are the race's chars
+	// - the first 2 chars are the race's chars
 	// - the next 11 chars are random between '0' and 'z'
 	// - the next (14th) is the provided color palette
 	// - the next (15th) is the provided 1st rare visual attribute
