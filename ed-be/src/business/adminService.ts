@@ -358,10 +358,17 @@ export async function editPlayer(req: Request) {
 	}
 	if (typeof player.messie !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'messie', player.messie);
-		console.log(player.messie)
+		console.log(player.messie);
 	}
 	if (typeof player.matelasseur !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'matelasseur', player.matelasseur);
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'matelasseur',
+			player.matelasseur
+		);
 	}
 }
 

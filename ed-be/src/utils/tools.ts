@@ -1,4 +1,4 @@
-import { DinozRace } from "@drpg/core/models/dinoz/DinozRace";
+import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 
 /**
  * @summary Return a random number between min and max - 1
@@ -13,7 +13,7 @@ function getRandomNumber(min: number, max: number) {
 }
 
 /**
- * @summary Return a random letter between '0' and the maximum letter provided 
+ * @summary Return a random letter between '0' and the maximum letter provided
  * 			it must be part of '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
  * @param maxLetter {string}
  * @return string

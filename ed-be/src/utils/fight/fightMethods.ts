@@ -19,7 +19,15 @@ import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { BASE_ENERGY_COST, CYCLE, DEFAULT_MAX_ENERGY, ENERGY_RECOVERY_BASE_FACTOR, MAXIMUM_MAX_ENERGY, TIME_BASE, TIME_FACTOR } from './fightConstants.js';
+import {
+	BASE_ENERGY_COST,
+	CYCLE,
+	DEFAULT_MAX_ENERGY,
+	ENERGY_RECOVERY_BASE_FACTOR,
+	MAXIMUM_MAX_ENERGY,
+	TIME_BASE,
+	TIME_FACTOR
+} from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
 import { getBasicElementDamage, getDamage } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
@@ -242,7 +250,7 @@ export const setEnergy = (fighter: DetailedFighter, new_energy: number, fightDat
 			energy: fighter.energy
 		});
 	}
-}
+};
 
 export const setMaxEnergy = (fighter: DetailedFighter, new_max: number) => {
 	if (new_max > MAXIMUM_MAX_ENERGY) {
@@ -261,8 +269,7 @@ export const setMaxEnergy = (fighter: DetailedFighter, new_max: number) => {
 	// Set fighter's current energy to minimum between energy and max energy
 	// Note: This is not done in the original fight algo
 	fighter.energy = Math.min(fighter.energy, fighter.maxEnergy);
-}
-
+};
 
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No event if NO_EVENT
