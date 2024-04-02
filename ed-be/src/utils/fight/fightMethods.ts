@@ -1551,7 +1551,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 		}
 
 		// Consume energy
-		console.log(`Event ${event.name}, old energy is ${fighter.energy}, remove ${event.energy}.`)
 		setEnergy(fighter, fighter.energy - event.energy, fightData);
 	} else {
 		// Event is an item
@@ -3370,7 +3369,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	}
 
 	// Consume energy
-	console.log(`Skill ${skill.name}, old energy is ${fighter.energy}, remove ${skill.energy}.`)
 	setEnergy(fighter, fighter.energy - skill.energy, fightData);
 
 	if (fighter.type !== 'boss') {
@@ -4022,7 +4020,6 @@ const startAttack = (
 	let hitAtLeastOnce = attack(fightData, fighter, opponent, skill, power);
 
 	// Consume energy
-	console.log(`Start attack, old energy is ${fighter.energy}, remove ${BASE_ENERGY_COST}.`)
 	setEnergy(fighter, fighter.energy - BASE_ENERGY_COST, fightData);
 
 	// Get combo chances
@@ -4040,7 +4037,6 @@ const startAttack = (
 			hitAtLeastOnce = hitAtLeastOnce || hit;
 
 			// Consume energy
-			console.log(`Combo, old energy is ${fighter.energy}, remove ${BASE_ENERGY_COST}.`)
 			setEnergy(fighter, fighter.energy - (BASE_ENERGY_COST + comboCount), fightData);
 
 			// Multihit stat
@@ -4199,7 +4195,6 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Recover energy for all fighters except the current one
 	getFighters(fightData).forEach(f => {
 		if (f.id === attacker.id) return;
-		console.log(`Recover, for fighter ${f.id}.`)
 		setEnergy(f, f.energy + (f.stats.special.energyRecovery ?? 1) * deltaTime * ENERGY_RECOVERY_BASE_FACTOR, fightData);
 	});
 

@@ -236,7 +236,6 @@ export const initializeDinoz = (
 
 	fighter.elements = elements.map(element => element.element);
 	fighter.element = fighter.elements[0];
-	console.log(fighter.energy)
 
 	return fighter;
 };
