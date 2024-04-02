@@ -77,7 +77,6 @@ export async function getDinozFromDinozShop(req: Request) {
 			// First 2 digits are the race specific letters
 			randomDisplay = randomRace.swfLetter;
 
-			if (!randomRace.display) throw new ErrorFormator(500, `Race ${randomRace.raceId} doesn't have a display.`);
 			// For the next 11 digits, randomly generate them between '0' and 'z'
 			for (let i = 0; i < 11; i++) {
 				randomDisplay += getRandomLetter('z');

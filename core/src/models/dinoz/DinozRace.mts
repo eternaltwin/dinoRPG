@@ -12,8 +12,6 @@ export interface DinozRace {
 	upChance: UpChance;
 	price: number;
 	swfLetter: string;
-	// List of maximum letter for the display
-	display?: Record<number, string>;
 	skillId?: number[];
 }
 

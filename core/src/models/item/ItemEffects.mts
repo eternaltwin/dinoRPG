@@ -10,7 +10,6 @@ export type ItemEffects =
 	| {
 			category: ItemEffect.EGG;
 			race: DinozRace;
-			rare: boolean;
 	  }
 	| {
 			category: ItemEffect.SPHERE;
