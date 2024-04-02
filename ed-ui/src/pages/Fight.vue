@@ -5,7 +5,7 @@
 	</div>
 	{{ fightText }}<br />
 	<!--	<FightAnimation />-->
-	<FullFightAnimation :history="fight.history" :place="fight.place" />
+	<FullFightAnimation :place="fight.place" />
 	<p class="fight-history" v-html="fightHistory" />
 	<div class="wrapper">
 		<div class="debrief" :class="lang">

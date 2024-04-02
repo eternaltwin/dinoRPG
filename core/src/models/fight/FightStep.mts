@@ -147,6 +147,7 @@ export interface EndHypnosisStep {
 export interface GainEnergyStep {
 	action: 'gainEnergy';
 	fighter: StepFighter;
+	energy: number;
 }
 export interface ReduceEnergyStep {
 	action: 'reduceEnergy';

@@ -3,11 +3,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, toRaw } from 'vue';
 import { Fight } from '@drpg/dino-animation';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, sessionStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 
 export default defineComponent({
@@ -15,13 +14,11 @@ export default defineComponent({
 	data() {
 		return {
 			dinoz: dinozStore().getDinoz(parseInt(this.$route.params.dinozId as string)) as DinozFiche,
-			hidden: true
+			hidden: true,
+			fight: sessionStore().getFightResult
 		};
 	},
 	props: {
-		history: {
-			type: Array as PropType<Array<FightStep>>
-		},
 		place: {
 			type: Number,
 			required: true
@@ -33,31 +30,19 @@ export default defineComponent({
 		if (this.dinoz.followers.length > 0) {
 			this.dinoz.followers.forEach(d => allDinoz.push(dinozStore().getDinoz(d)));
 		}
-		/*
-		const fighters = allDinoz.map(dino => {
-			return {
-				action: DinoAnim.Action.Add,
-				fighter: {
-					props: [],
-					dino: true,
-					life: dino.life,
-					name: dino.name,
-					side: true,
-					scale: 1,
-					fid: 0,
-					gfx: dino.display
-				}
-			};
-		});*/
+		if (!this.fight) return;
+		const history = this.fight.history;
+		console.log(history);
 
-		const nexFight = transpileFight(this.history!, this.$t);
+		const objStructuredCopy = structuredClone(toRaw(history));
+
+		const nexFight = transpileFight(objStructuredCopy, this.$t);
 		const initPlace = resolveFightingPlace(this.place);
 		const fight2 = new Fight({
 			...initPlace,
 			history: nexFight.filter(n => n != undefined)
 		});
 
-		console.log(this.history);
 		console.log(nexFight.filter(n => n != undefined));
 		canvas.appendChild(fight2.getDisplay());
 	}

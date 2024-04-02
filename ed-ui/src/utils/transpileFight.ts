@@ -69,34 +69,34 @@ export function resolveStatus(status: Status) {
 	switch (status) {
 		case Status.ASLEEP:
 			return 0;
+		case Status.TORCHED:
+			return 1;
+		case Status.INTANGIBLE:
+			return 2;
+		case Status.FLYING:
+			return 3;
 		case Status.SLOWED:
+			return 4;
+		case Status.QUICKENED:
 			return 5;
 		case Status.PETRIFIED:
+			return 6;
+		case Status.SHIELDED:
 			return 7;
+		case Status.BLESSED:
+			return 8;
 		case Status.POISONED:
 			return 9;
+		case Status.HEALING:
+			return 10;
 		case Status.BURNED:
-			return 2;
+			return 11;
 		case Status.LOCKED:
 			return 12;
 		case Status.DAZZLED:
 			return 13;
 		case Status.STUNNED:
 			return 14;
-		case Status.TORCHED:
-			return 1;
-		case Status.INTANGIBLE:
-			return 3;
-		case Status.FLYING:
-			return 4;
-		case Status.QUICKENED:
-			return 6;
-		case Status.SHIELDED:
-			return 10;
-		case Status.BLESSED:
-			return 8;
-		case Status.HEALING:
-			return 11;
 		default:
 			return;
 	}
@@ -114,13 +114,13 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 			history.push({
 				action: DinoAction.MAXENERGY,
 				fighters: fighters.map(f => {
-					return { fid: f.id, energy: f.maxEnergy - 100 };
+					return { fid: f.id, energy: f.maxEnergy };
 				})
 			});
 			history.push({
 				action: DinoAction.ENERGY,
 				fighters: fighters.map(f => {
-					return { fid: f.id, energy: f.energy - 100 };
+					return { fid: f.id, energy: f.energy };
 				})
 			});
 		}
@@ -147,7 +147,7 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 						fighters: [
 							{
 								fid: step.fighter.id,
-								energy: step.fighter.maxEnergy - 100
+								energy: step.fighter.maxEnergy
 							}
 						]
 					});
@@ -156,7 +156,7 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 						fighters: [
 							{
 								fid: step.fighter.id,
-								energy: step.fighter.energy - 100
+								energy: step.fighter.energy
 							}
 						]
 					});
@@ -197,6 +197,10 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 			case 'expireEnvironment':
 				break;
 			case 'gainEnergy':
+				history.push({
+					action: DinoAction.ENERGY,
+					fighters: [{ fid: step.fighter.id, energy: step.energy }]
+				});
 				break;
 			case 'hypnotize':
 				break;

@@ -236,6 +236,7 @@ export const initializeDinoz = (
 
 	fighter.elements = elements.map(element => element.element);
 	fighter.element = fighter.elements[0];
+	console.log(fighter.energy)
 
 	return fighter;
 };
@@ -244,7 +245,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 	const has_tear = dinoz.items.some(item => item.itemId === Item.TEAR_OF_LIFE);
 	const clone_id = -1 - fightData.fighters.filter(f => f.type !== 'dinoz').length;
 
-	let clone: DetailedFighter = {
+	const clone: DetailedFighter = {
 		id: clone_id,
 		display: dinoz.display,
 		name: dinoz.name,

@@ -224,13 +224,23 @@ export const updateStat = (
 	stats[stat] += value;
 };
 
-export const setEnergy = (fighter: DetailedFighter, new_energy: number) => {
+export const setEnergy = (fighter: DetailedFighter, new_energy: number, fightData: DetailedFight) => {
+	let delta = 0;
 	if (new_energy > fighter.maxEnergy) {
+		delta = fighter.maxEnergy - fighter.energy;
 		fighter.energy = fighter.maxEnergy;
 	} else if (new_energy < 0) {
-		fighter.energy = 0; 
+		fighter.energy = 0;
 	} else {
+		delta = new_energy - fighter.energy;
 		fighter.energy = new_energy;
+	}
+	if (delta > 0) {
+		fightData.steps.push({
+			action: 'gainEnergy',
+			fighter: stepFighter(fighter),
+			energy: fighter.energy
+		});
 	}
 }
 
@@ -238,7 +248,7 @@ export const setMaxEnergy = (fighter: DetailedFighter, new_max: number) => {
 	if (new_max > MAXIMUM_MAX_ENERGY) {
 		fighter.maxEnergy = MAXIMUM_MAX_ENERGY;
 	} else if (new_max < 0) {
-		fighter.maxEnergy = 1; 
+		fighter.maxEnergy = 1;
 	} else {
 		fighter.maxEnergy = new_max;
 	}
@@ -705,7 +715,7 @@ const registerHit = (
 			if (Math.random() < 0.3) {
 				const energyTransferred = Math.max(fighter.maxEnergy - fighter.energy, opponent.energy);
 				opponent.energy = 0;
-				setEnergy(fighter, fighter.energy + energyTransferred);
+				setEnergy(fighter, fighter.energy + energyTransferred, fightData);
 
 				// Add reduce energy step
 				fightData.steps.push({
@@ -716,7 +726,8 @@ const registerHit = (
 				// Add gain energy step
 				fightData.steps.push({
 					action: 'gainEnergy',
-					fighter: stepFighter(fighter)
+					fighter: stepFighter(fighter),
+					energy: energyTransferred
 				});
 			}
 		}
@@ -1173,7 +1184,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				opponents.forEach(opponent => {
 					// Reduce max energy by 20%
-					let newMaxEnergy = Math.round(opponent.maxEnergy * 0.8);
+					const newMaxEnergy = Math.round(opponent.maxEnergy * 0.8);
 
 					// Cancel if no change
 					if (newMaxEnergy === opponent.maxEnergy) {
@@ -1295,7 +1306,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				step.targets.push(stepFighter(opponent));
 
 				// Reduce max energy by 30%
-				let newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
+				const newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
 
 				// Cancel if no change
 				if (newMaxEnergy === opponent.maxEnergy) {
@@ -1357,7 +1368,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.CRAMPE_CHRONIQUE: {
-				setEnergy(fighter, fighter.energy - 10);
+				setEnergy(fighter, fighter.energy - 10, fightData);
 				fighter.stats.special.energyRecovery *= 0.85;
 
 				// Add reduce energy step
@@ -1540,7 +1551,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 		}
 
 		// Consume energy
-		setEnergy(fighter, fighter.energy - event.energy);
+		console.log(`Event ${event.name}, old energy is ${fighter.energy}, remove ${event.energy}.`)
+		setEnergy(fighter, fighter.energy - event.energy, fightData);
 	} else {
 		// Event is an item
 
@@ -2851,7 +2863,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add gain energy step
 				fightData.steps.push({
 					action: 'gainEnergy',
-					fighter: stepFighter(ally)
+					fighter: stepFighter(ally),
+					//TODO
+					energy: 0
 				});
 			});
 			break;
@@ -3356,7 +3370,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	}
 
 	// Consume energy
-	setEnergy(fighter, fighter.energy - skill.energy);
+	console.log(`Skill ${skill.name}, old energy is ${fighter.energy}, remove ${skill.energy}.`)
+	setEnergy(fighter, fighter.energy - skill.energy, fightData);
 
 	if (fighter.type !== 'boss') {
 		// Get opponents with SHARIGNAN
@@ -4007,7 +4022,8 @@ const startAttack = (
 	let hitAtLeastOnce = attack(fightData, fighter, opponent, skill, power);
 
 	// Consume energy
-	setEnergy(fighter, fighter.energy - BASE_ENERGY_COST);
+	console.log(`Start attack, old energy is ${fighter.energy}, remove ${BASE_ENERGY_COST}.`)
+	setEnergy(fighter, fighter.energy - BASE_ENERGY_COST, fightData);
 
 	// Get combo chances
 	const combo = fighter.stats.special.multihit - 1;
@@ -4024,7 +4040,8 @@ const startAttack = (
 			hitAtLeastOnce = hitAtLeastOnce || hit;
 
 			// Consume energy
-			setEnergy(fighter, fighter.energy - (BASE_ENERGY_COST + comboCount));
+			console.log(`Combo, old energy is ${fighter.energy}, remove ${BASE_ENERGY_COST}.`)
+			setEnergy(fighter, fighter.energy - (BASE_ENERGY_COST + comboCount), fightData);
 
 			// Multihit stat
 			updateStat(fightData, fighter, 'multiHits', 1);
@@ -4182,7 +4199,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Recover energy for all fighters except the current one
 	getFighters(fightData).forEach(f => {
 		if (f.id === attacker.id) return;
-		setEnergy(f, f.energy + (f.stats.special.energyRecovery ?? 1) * deltaTime * ENERGY_RECOVERY_BASE_FACTOR);
+		console.log(`Recover, for fighter ${f.id}.`)
+		setEnergy(f, f.energy + (f.stats.special.energyRecovery ?? 1) * deltaTime * ENERGY_RECOVERY_BASE_FACTOR, fightData);
 	});
 
 	if (deltaTime > 0) {

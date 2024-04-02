@@ -3721,7 +3721,8 @@
 			"addStatus": "**{fighter}** a obtenu le status **{status}**.",
 			"removeStatus": "**{fighter}** n'a plus le status **{status}**.",
 			"itemUse": "**{fighter}** a utilisé **{item}**.",
-			"hypnotize": "**{fighter}** a changé de camp."
+			"hypnotize": "**{fighter}** a changé de camp.",
+			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie."
 		}
 	},
 	"ingredients": {
