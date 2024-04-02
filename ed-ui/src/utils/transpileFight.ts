@@ -114,7 +114,7 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 			history.push({
 				action: DinoAction.MAXENERGY,
 				fighters: fighters.map(f => {
-					return { fid: f.id, energy: f.maxEnergy };
+					return { fid: f.id, maxEnergy: f.maxEnergy };
 				})
 			});
 			history.push({
@@ -147,7 +147,7 @@ export function transpileFight(fight: Array<FightStep>, t: TFunction) {
 						fighters: [
 							{
 								fid: step.fighter.id,
-								energy: step.fighter.maxEnergy
+								maxEnergy: step.fighter.maxEnergy
 							}
 						]
 					});

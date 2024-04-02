@@ -146,7 +146,7 @@ export type transpiled =
 			action: DinoAction.MAXENERGY;
 			fighters: {
 				fid: number;
-				energy: number;
+				maxEnergy: number;
 			}[];
 	  }
 	| {
