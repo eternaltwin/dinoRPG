@@ -78,10 +78,12 @@ export async function getDinozFromDinozShop(req: Request) {
 			randomDisplay = randomRace.swfLetter;
 
 			if (!randomRace.display) throw new ErrorFormator(500, `Race ${randomRace.raceId} doesn't have a display.`);
-			// For the next 14 digits, randomly generate them between '0' and 'z'
-			for (let i = 0; i < 14; i++) {
+			// For the next 11 digits, randomly generate them between '0' and 'z'
+			for (let i = 0; i < 11; i++) {
 				randomDisplay += getRandomLetter('z');
 			}
+			// Set the last 3 digits (for rare color palette, rare trait 1 & 2) to '0'
+			randomDisplay += '000';
 
 			const dinoz: Prisma.PlayerDinozShopCreateManyInput = {
 				playerId: playerData.id,
