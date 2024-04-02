@@ -335,7 +335,10 @@ export async function getDinozFightDataRequest(dinozId: number) {
 					status: { select: { statusId: true } },
 					missions: true,
 					fight: true,
-					skills: { select: { skillId: true } },
+					skills: {
+						select: { skillId: true },
+						where: { state: { equals: true } }
+					},
 					catches: { select: { id: true, hp: true, monsterId: true } }
 				}
 			},

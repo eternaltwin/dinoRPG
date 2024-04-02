@@ -325,7 +325,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	}
 
 	const events: (SkillDetails | ItemFiche)[] = fighter.skills.filter(
-		skill => skill.probability && skill.type === SkillType.E && skill.activatable
+		skill => skill.probability && skill.type === SkillType.E
 	);
 
 	events.push(...fighter.items.filter(item => item.probability));
