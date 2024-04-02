@@ -78,6 +78,18 @@ export enum SkillType {
 	Air
 }
 
+export enum DamagesEffect {
+	Normal,
+	Back,
+	Counter,
+	Drop,
+	Eject,
+	FlyCancel,
+	IntangCancel,
+	IntangBreak,
+	Missed
+}
+
 export type transpiled =
 	| {
 			action: DinoAction.ADD;
@@ -103,9 +115,10 @@ export type transpiled =
 			fid: number;
 			tid: number;
 			damages: number;
-			lifeFx: {
+			lifeFx?: {
 				fx: number;
 			};
+			effect?: DamagesEffect
 	  }
 	| {
 			action: DinoAction.RETURN;
