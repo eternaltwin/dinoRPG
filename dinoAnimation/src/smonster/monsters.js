@@ -15,12 +15,15 @@ import { goblin } from './goblin/goblin.js';
 import { goupi, goupi2, goupi3 } from './goupi/goupi.js';
 import { grdien } from './grdien/grdien.js';
 import { gvert } from './gvert/gvert.js';
+import { hippo } from './hippo/hippo.js';
 import { kazka } from './kazka/kazka.js';
 import { kmask, korgon, rkrgns } from './korgon/korgon.js';
 import { lucet } from './lucet/lucet.js';
 import { mandragore } from './mandragore/mandragore.js';
 import { pira } from './pira/pira.js';
+import { pteroz } from './pteroz/pteroz.js';
 import { rasca } from './rasca/rasca.js';
+import { rocky } from './rocky/rocky.js';
 import { ronciv } from './ronciv/ronciv.js';
 import { taurus } from './taurus/taurus.js';
 import { vener } from './vener/vener.js';
@@ -52,8 +55,11 @@ export const monsters = {
 	rasca: rasca,
 	vener: vener,
 	barche: barche,
-	mandragore: mandragore,
 	cobra: cobra,
+	hippo: hippo,
+	rocky: rocky,
+	pteroz: pteroz,
+	mandragore: mandragore,
 	lucet: lucet,
 	taurus: taurus
 };
