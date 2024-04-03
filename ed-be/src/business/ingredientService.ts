@@ -21,8 +21,8 @@ export async function getAllIngredientsData(req: Request) {
 		if (!ingredientFound) throw new ErrorFormator(500, 'Ingredient not found');
 
 		return {
+			ingredientId: ingr.ingredientId,
 			name: ingredientFound[0].toLowerCase() as Lowercase<string>,
-			price: ingredientFound[1].price,
 			quantity: ingr.quantity,
 			maxQuantity: ingredientFound[1].maxQuantity
 		};
