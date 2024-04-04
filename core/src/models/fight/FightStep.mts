@@ -64,8 +64,8 @@ export interface DeathStep {
 }
 export interface MoveStep {
 	action: 'moveTo';
-	fighter: StepFighter;
-	target: StepFighter;
+	fid: number;
+	tid: number;
 	sameSpace?: boolean;
 	countered?: boolean;
 }
@@ -76,7 +76,7 @@ export interface CounterStep {
 }
 export interface MoveBackStep {
 	action: 'moveBack';
-	fighter: StepFighter;
+	fid: number;
 }
 export interface SurviveStep {
 	action: 'survive';

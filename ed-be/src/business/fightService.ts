@@ -301,7 +301,7 @@ export async function rewardFight(
 	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
 	gold -= goldLost;
 	if (monsters.length === 0) {
-		gold = 0
+		gold = 0;
 	}
 
 	// If attackers won

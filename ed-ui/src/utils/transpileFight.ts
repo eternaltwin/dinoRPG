@@ -220,14 +220,14 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 			case 'moveBack':
 				history.push({
 					action: DinoAction.RETURN,
-					fid: step.fighter.id
+					fid: step.fid
 				});
 				break;
 			case 'moveTo':
 				history.push({
 					action: DinoAction.GOTO,
-					fid: step.fighter.id,
-					tid: step.target.id
+					fid: step.fid,
+					tid: step.tid
 				});
 				break;
 			case 'reduceEnergy':

@@ -1718,8 +1718,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add moveTo step
 				fightData.steps.push({
 					action: 'moveTo',
-					fighter: stepFighter(opponentAttacker),
-					target: stepFighter(opponentDefender)
+					fid: opponentAttacker.id,
+					tid: opponentDefender.id
 				});
 
 				// Attack defender
@@ -1730,7 +1730,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					// Add moveBack step
 					fightData.steps.push({
 						action: 'moveBack',
-						fighter: stepFighter(opponentAttacker)
+						fid: opponentAttacker.id
 					});
 				}
 				break;
@@ -2129,8 +2129,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			// Attack opponent
@@ -2143,7 +2143,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 			break;
@@ -2174,7 +2174,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 			break;
@@ -2199,8 +2199,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			// Attack opponent
@@ -2213,7 +2213,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 
@@ -2288,8 +2288,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			for (let i = 0; i < 5; i++) {
@@ -2317,7 +2317,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 			break;
@@ -3107,8 +3107,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			// Attack opponent
@@ -3119,7 +3119,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 
@@ -3134,8 +3134,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			// Attack opponent
@@ -3149,7 +3149,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 			break;
@@ -3168,8 +3168,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			// Fighter attacks opponent
@@ -3180,7 +3180,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 			break;
@@ -3192,8 +3192,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			// Fighter attacks opponent
@@ -3210,7 +3210,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 
@@ -3247,8 +3247,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
+				fid: fighter.id,
+				tid: opponent.id
 			});
 
 			// Fighter attacks opponent
@@ -3282,7 +3282,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveBack step
 				fightData.steps.push({
 					action: 'moveBack',
-					fighter: stepFighter(fighter)
+					fid: fighter.id
 				});
 			}
 			break;
@@ -3311,8 +3311,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add moveTo step
 				fightData.steps.push({
 					action: 'moveTo',
-					fighter: stepFighter(ally),
-					target: stepFighter(opponent)
+					fid: ally.id,
+					tid: opponent.id
 				});
 
 				// Ally attacks opponent
@@ -3323,7 +3323,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					// Add moveBack step
 					fightData.steps.push({
 						action: 'moveBack',
-						fighter: stepFighter(ally)
+						fid: ally.id
 					});
 				}
 			});
@@ -3662,8 +3662,8 @@ const attack = (
 		// Add moveTo step
 		fightData.steps.push({
 			action: 'moveTo',
-			fighter: stepFighter(protector),
-			target: stepFighter(opponent)
+			fid: protector.id,
+			tid: opponent.id
 		});
 	}
 
@@ -3823,7 +3823,7 @@ const attack = (
 		// Add moveBack step
 		fightData.steps.push({
 			action: 'moveBack',
-			fighter: stepFighter(protector)
+			fid: protector.id
 		});
 	}
 
@@ -4060,7 +4060,7 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 		// Add moveBack step
 		fightData.steps.push({
 			action: 'moveBack',
-			fighter: stepFighter(attacker)
+			fid: attacker.id
 		});
 	}
 
@@ -4333,8 +4333,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Add moveTo step
 	fightData.steps.push({
 		action: 'moveTo',
-		fighter: stepFighter(attacker),
-		target: stepFighter(opponent)
+		fid: attacker.id,
+		tid: opponent.id
 	});
 
 	// Fighter attacks opponent
