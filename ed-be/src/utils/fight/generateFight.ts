@@ -1,4 +1,4 @@
-import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
@@ -218,10 +218,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 				// Add skill step
 				fightData.steps.push({
 					action: 'skillActivate',
-					fighter: stepFighter(fighter),
+					fid: fighter.id,
 					skill: Skill.CLEPTOMANE,
-					energy: skillList[Skill.CLEPTOMANE].energy,
-					targets: [stepFighter(opponent)]
+					tid: [opponent.id]
 				});
 
 				// Add disabled items step
@@ -241,10 +240,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 			// Add skill step
 			fightData.steps.push({
 				action: 'skillActivate',
-				fighter: stepFighter(fighter),
+				fid: fighter.id,
 				skill: Skill.JOKER,
-				energy: 0,
-				targets: []
+				tid: []
 			});
 		}
 

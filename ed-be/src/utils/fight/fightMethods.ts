@@ -531,10 +531,9 @@ const registerHit = (
 				// Add skill step
 				fightData.steps.push({
 					action: 'skillActivate',
-					fighter: stepFighter(opponent),
+					fid: opponent.id,
 					skill,
-					energy: 0,
-					targets: []
+					tid: []
 				});
 			}
 		}
@@ -837,7 +836,7 @@ const targetSingleOpponent = (
 
 	// Add target
 	if (step) {
-		step.targets.push(stepFighter(opponent));
+		step.tid.push(opponent.id);
 	}
 
 	// Skill
@@ -882,7 +881,7 @@ const targetMultipleOpponents = (
 ) => {
 	opponents.forEach(opponent => {
 		// Add target
-		step.targets.push(stepFighter(opponent));
+		step.tid.push(opponent.id);
 
 		// Check if opponent evaded
 		if (evadedSkill(fightData, opponent, skill)) {
@@ -923,7 +922,7 @@ const targetAllOpponents = (
 
 	opponents.forEach(opponent => {
 		// Add target
-		step.targets.push(stepFighter(opponent));
+		step.tid.push(opponent.id);
 
 		// Check if opponent evaded
 		if (evadedSkill(fightData, opponent, skill)) {
@@ -1095,10 +1094,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 	if ('id' in event) {
 		const step: SkillActivateStep = {
 			action: 'skillActivate',
-			fighter: stepFighter(fighter),
+			fid: fighter.id,
 			skill: event.id,
-			energy: event.energy,
-			targets: []
+			tid: []
 		};
 
 		// Add skillActivate step
@@ -1220,7 +1218,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push(stepFighter(opponent));
+				step.tid.push(opponent.id);
 
 				if (!hasStatus(opponent, Status.FLYING)) {
 					// Increase the opponent's time
@@ -1312,7 +1310,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push(stepFighter(opponent));
+				step.tid.push(opponent.id);
 
 				// Reduce max energy by 30%
 				const newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
@@ -1356,7 +1354,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push(stepFighter(opponent));
+				step.tid.push(opponent.id);
 
 				// Disable invocations
 				addStatus(fightData, opponent, Status.NO_INVOCATION);
@@ -1371,7 +1369,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push(stepFighter(opponent));
+				step.tid.push(opponent.id);
 
 				addStatus(fightData, opponent, Status.DAZZLED, StatusLength.MEDIUM);
 				break;
@@ -1392,7 +1390,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push(stepFighter(opponent));
+				step.tid.push(opponent.id);
 
 				// Check if NO_DODGE
 				if (hasStatus(opponent, Status.NO_DODGE)) {
@@ -1530,7 +1528,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.M_FASTER: {
 				getAllies(fightData, fighter).forEach(ally => {
 					// Add to targets
-					step.targets.push(stepFighter(ally));
+					step.tid.push(ally.id);
 
 					ally.time -= 5 * TIME_FACTOR;
 					fighter.time += 3 * TIME_FACTOR;
@@ -1849,10 +1847,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add skillActivate step
 				fightData.steps.push({
 					action: 'skillActivate',
-					fighter: stepFighter(opponent),
+					fid: opponent.id,
 					skill: Skill.SHARIGNAN,
-					energy: 0,
-					targets: []
+					tid: []
 				});
 
 				// Add skill to opponent
@@ -2037,10 +2034,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 	const step: SkillActivateStep = {
 		action: 'skillActivate',
-		fighter: stepFighter(fighter),
+		fid: fighter.id,
 		skill: skill.id,
-		energy: skill.energy,
-		targets: []
+		tid: []
 	};
 
 	// Add skillActivate step
@@ -2128,7 +2124,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Add moveTo step
 			fightData.steps.push({
@@ -2168,7 +2164,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Attack opponent
 			startAttack(fightData, fighter, opponent, true);
@@ -2198,7 +2194,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Add moveTo step
 			fightData.steps.push({
@@ -2287,7 +2283,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Add moveTo step
 			fightData.steps.push({
@@ -2336,7 +2332,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			const hit = attack(fightData, fighter, opponent, true);
 
@@ -2367,7 +2363,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			const hit = attack(fightData, fighter, opponent, true);
 
@@ -2397,7 +2393,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			opponent.time += 25 * TIME_FACTOR;
 			break;
@@ -2407,7 +2403,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Petrify opponent
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
@@ -2472,7 +2468,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Instantly cancel if boss
 			if (opponent.type === 'boss') {
@@ -2856,7 +2852,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Remove wood sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -2891,7 +2887,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Reduce energy recovery by 25%
 			opponent.stats.special.energyRecovery *= 0.75;
@@ -2917,7 +2913,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Remove water sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -2946,7 +2942,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Remove lightning sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -2966,7 +2962,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Remove air sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -3004,7 +3000,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 			// Remove fire sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -3065,7 +3061,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push(stepFighter(opponent));
+			step.tid.push(opponent.id);
 
 
 			// Attack opponent
@@ -3392,10 +3388,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add skillActivate step
 				fightData.steps.push({
 					action: 'skillActivate',
-					fighter: stepFighter(opponent),
+					fid: opponent.id,
 					skill: Skill.SHARIGNAN,
-					energy: 0,
-					targets: []
+					tid: []
 				});
 
 				// Add skill to opponent
@@ -3892,10 +3887,9 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				// Add skillActivate step
 				fightData.steps.push({
 					action: 'skillActivate',
-					fighter: stepFighter(fighter),
+					fid: fighter.id,
 					skill: Skill.PLUMES_DE_PHOENIX,
-					energy: 0,
-					targets: []
+					tid: []
 				});
 
 				// Heal to 12 HP
@@ -3917,10 +3911,9 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				// Add skillActivate step
 				fightData.steps.push({
 					action: 'skillActivate',
-					fighter: stepFighter(fighter),
+					fid: fighter.id,
 					skill: Skill.M_INFINITE_REINFORCEMENTS,
-					energy: 0,
-					targets: []
+					tid: []
 				});
 
 				// Create a new monster

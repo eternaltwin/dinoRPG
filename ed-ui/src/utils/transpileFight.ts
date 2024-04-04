@@ -58,6 +58,12 @@ export function resolveSkillName(skillId: number, t: TFunction) {
 	return t(`skill.name.${skill.name}`);
 }
 
+export function getSkillEnergy(skillId: number) {
+	const skill = Object.values(skillList).find(skill => skill.id === skillId);
+	if (!skill) return 0;
+	return skill.energy;
+}
+
 export function resolveMonsterName(monster: string, t: TFunction) {
 	return t(`fight.monster.${monster}`);
 }
@@ -246,15 +252,18 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 			case 'setCostume':
 				break;
 			case 'skillActivate':
-				myFighter = fighters.find(f => f.id === step.fighter.id);
-				if (!myFighter) break;
-				myFighter.energy -= step.energy;
+				myFighter = fighters.find(f => f.id === step.fid);
+				if (!myFighter) {
+					console.warn(`Cannot find fighter ${step.fid}`);
+					return;
+				}
+				myFighter.energy -= getSkillEnergy(step.skill);
 				history.push({
 					action: DinoAction.ANNOUNCE,
-					fid: step.fighter.id,
+					fid: step.fid,
 					message: resolveSkillName(step.skill, t)
 				});
-				if (step.targets.length > 0) {
+				if (step.tid.length > 0) {
 					let searchTarget = true;
 					let j = 1;
 					const targets: {
@@ -267,8 +276,8 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 							targets.push({ id: nextAction.target.id, life: nextAction.damage });
 							j++;
 						} else {
-							step.targets.forEach(t => {
-								targets.push({ id: t.id, life: 0 });
+							step.tid.forEach(t => {
+								targets.push({ id: t, life: 0 });
 							});
 							searchTarget = false;
 						}
@@ -285,7 +294,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 						action: DinoAction.SKILL,
 						skill: resolveSkillEffect(step.skill),
 						details: {
-							fid: step.fighter.id,
+							fid: step.fid,
 							targets: arrUniq
 						}
 					});
@@ -296,7 +305,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 						action: DinoAction.SKILL,
 						skill: skillEffect,
 						details: {
-							fid: step.fighter.id,
+							fid: step.fid,
 							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
 							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
 							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
@@ -307,11 +316,12 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					action: DinoAction.ENERGY,
 					fighters: [
 						{
-							fid: step.fighter.id,
+							fid: step.fid,
 							energy: myFighter.energy
 						}
 					]
 				});
+				myFighter = undefined;
 				break;
 			case 'skillExpire':
 				break;

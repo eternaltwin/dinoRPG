@@ -84,10 +84,9 @@ export interface SurviveStep {
 }
 export interface SkillActivateStep {
 	action: 'skillActivate';
-	fighter: StepFighter;
+	fid: number;
 	skill: Skill;
-	energy: number;
-	targets: StepFighter[];
+	tid: number[];
 }
 export interface SkillExpireStep {
 	action: 'skillExpire';
