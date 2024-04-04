@@ -288,14 +288,14 @@ export async function checkMissionFight(
 		fight.result &&
 		actualStep.requirement.actionType === ConditionEnum.KILL &&
 		(actualStep.requirement.target.includes(monsterList.ANY.name) ||
-			actualStep.requirement.target.filter(value => fight.opponent.includes(value)).length > 0)
+			actualStep.requirement.target.filter(value => fight.fighters.map(a => a.name).includes(value)).length > 0)
 	) {
 		const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
 		// const presentOpponents = actualStep.requirement.target.filter(value => monsters.includes(value));
 		let count = 0;
-		for (const opponent of fight.opponent) {
+		for (const opponent of fight.fighters) {
 			if (actualStep.requirement.target.includes(monsterList.ANY.name)) count++;
-			else if (actualStep.requirement.target.includes(opponent)) count++;
+			else if (actualStep.requirement.target.includes(opponent.name)) count++;
 		}
 		if (!dinozMission) {
 			throw new ErrorFormator(500, 'No mission found');

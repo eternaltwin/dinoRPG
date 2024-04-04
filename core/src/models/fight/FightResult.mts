@@ -5,7 +5,7 @@ import { ElementType } from '../enums/ElementType.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 
 export interface FightResult {
-	opponent: string[];
+	fighters: FighterRecap[];
 	goldEarned: number;
 	xpEarned: number;
 	totalHpLost: number;
@@ -20,6 +20,17 @@ export interface FightResult {
 		itemsUsed: number[];
 	}[];
 	place: PlaceEnum;
+}
+
+export interface FighterRecap {
+	id: number;
+	name: string;
+	display: string | undefined;
+	attacker: boolean;
+	maxHp?: number;
+	startingHp?: number;
+	energy?: number;
+	maxEnergy?: number;
 }
 
 export interface CatchResult {
@@ -68,4 +79,5 @@ export interface FightProcessResult {
 		defense: FightStats;
 	};
 	place: PlaceEnum;
+	fighters: FighterRecap[]
 }

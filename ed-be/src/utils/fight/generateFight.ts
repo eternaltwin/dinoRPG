@@ -427,7 +427,19 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		catches,
 		steps: fightData.steps,
 		stats: fightData.stats,
-		place: place
+		place: place,
+		fighters: config.fighters.map(f => {
+			return {
+				id: f.id,
+				name: f.name,
+				display: f.display,
+				attacker: f.attacker,
+				maxHp: f.maxHp,
+				startingHp: f.startingHp,
+				energy: f.energy,
+				maxEnergy: f.maxEnergy
+			}
+		})
 	};
 };
 

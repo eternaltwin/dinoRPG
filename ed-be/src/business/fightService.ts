@@ -353,9 +353,7 @@ export async function rewardFight(
 	);
 
 	return {
-		opponent: monsters.map(m => {
-			return m.name;
-		}),
+		fighters: fightResult.fighters,
 		goldEarned: fightResult.winner ? gold : -goldLost,
 		xpEarned: fightResult.winner ? totalWinXP : 0,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
