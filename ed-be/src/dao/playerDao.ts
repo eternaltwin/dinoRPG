@@ -654,3 +654,42 @@ export async function archiveOldUsername(playerId: number, username: string) {
 		}
 	});
 }
+
+/**
+ * Get all the necessary data from the player for ingredientsShopService getIngredientsFromShop function
+ * That includes: money, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
+ * all its ingredients and their quantity
+ * Throws an error if the player does not exist.
+ * @return Player
+ */
+export async function getPlayerShopIngredientsDataRequest(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			money: true,
+			ingredients: {
+				select: {
+					ingredientId: true,
+					quantity: true
+				}
+			},
+			dinoz: {
+				select: {
+					placeId: true,
+					status: { select: { statusId: true } }
+				},
+				where: {
+					OR: [
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+					]
+				}
+			}
+		}
+	});
+
+	return player;
+}

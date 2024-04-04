@@ -8,6 +8,7 @@ import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { gatherList } from '@drpg/core/models/gather/gatherList';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { shopList } from '@drpg/core/models/shop/ShopList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
@@ -40,7 +41,7 @@ import { Concentration, Dinoz, DinozMission, LogType, Player, UnavailableReason 
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
-import { TemporaryStatus, shopList } from '../constants/index.js';
+import { TemporaryStatus } from '../constants/index.js';
 import {
 	checkFrozenDinoz,
 	checkRestDinoz,

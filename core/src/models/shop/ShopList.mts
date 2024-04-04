@@ -1,13 +1,10 @@
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { ShopType } from '@drpg/core/models/enums/ShopType';
-import { itemList } from '@drpg/core/models/item/ItemList';
-import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
-import { ConditionEnum } from '@drpg/core/models/enums/Parser';
-import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { PlaceEnum } from "../enums/PlaceEnum.mjs";
+import { ShopType } from "../enums/ShopType.mjs";
+import { ShopFiche } from "./ShopFiche.mjs";
+import { itemList } from "../item/ItemList.mjs";
+import { ConditionEnum } from "../enums/Parser.mjs";
+import { DinozStatusId } from "../dinoz/StatusList.mjs";
 
-// Prices are as they were before the abandon of Twinoid (they were lowered to half the price after the game became free)
-// listItemSold is filled with a copy of each item from itemList with the price changed.
-// There is probably a better way to do that.
 export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Flying Shop
 	FLYING_SHOP: {
