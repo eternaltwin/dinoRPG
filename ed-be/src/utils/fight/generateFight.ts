@@ -220,7 +220,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 					action: 'skillActivate',
 					fid: fighter.id,
 					skill: Skill.CLEPTOMANE,
-					tid: [opponent.id]
+					targets: [{ tid: opponent.id }]
 				});
 
 				// Add disabled items step
@@ -242,7 +242,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 				action: 'skillActivate',
 				fid: fighter.id,
 				skill: Skill.JOKER,
-				tid: []
+				targets: []
 			});
 		}
 

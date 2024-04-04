@@ -263,55 +263,19 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					fid: step.fid,
 					message: resolveSkillName(step.skill, t)
 				});
-				if (step.tid.length > 0) {
-					let searchTarget = true;
-					let j = 1;
-					const targets: {
-						id: number;
-						life?: number;
-					}[] = [];
-					while (searchTarget) {
-						const nextAction = fight[i + j];
-						if (nextAction.action === 'hit') {
-							targets.push({ id: nextAction.target.id, life: nextAction.damage });
-							j++;
-						} else {
-							step.tid.forEach(t => {
-								targets.push({ id: t, life: 0 });
-							});
-							searchTarget = false;
-						}
+				history.push({
+					action: DinoAction.SKILL,
+					skill: resolveSkillEffect(step.skill),
+					details: {
+						fid: step.fid,
+						targets: step.targets.map(t => {
+							return { id: t.tid, life: t.damages };
+						}),
+						color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
+						type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
+						fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
 					}
-					const arrUniq = [
-						...new Map(
-							targets
-								.slice()
-								.reverse()
-								.map(v => [v.id, v])
-						).values()
-					].reverse();
-					history.push({
-						action: DinoAction.SKILL,
-						skill: resolveSkillEffect(step.skill),
-						details: {
-							fid: step.fid,
-							targets: arrUniq
-						}
-					});
-					i += j - 1;
-				} else {
-					const skillEffect = resolveSkillEffect(step.skill);
-					history.push({
-						action: DinoAction.SKILL,
-						skill: skillEffect,
-						details: {
-							fid: step.fid,
-							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
-							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
-							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
-						}
-					});
-				}
+				});
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [
