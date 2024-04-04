@@ -1,10 +1,11 @@
-import { FightStep, InitStepFighter } from '@drpg/core/models/fight/FightStep';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
 import { DamagesEffect, DinoAction, EntranceEffect, FinishState, transpiled } from '@drpg/core/models/fight/transpiler';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -102,66 +103,35 @@ export function resolveStatus(status: Status) {
 	}
 }
 
-export function transpileFight(fight: Array<FightStep>, t: TFunction) {
+export function transpileFight(fighters: Array<FighterRecap>, fight: Array<FightStep>, t: TFunction) {
 	const history: transpiled[] = [];
-	const fighters: InitStepFighter[] = [];
-	let myFighter: InitStepFighter | undefined;
-	let startOfFight = true;
+	let myFighter: FighterRecap | undefined;
 	for (let i = 0; i < fight.length; i++) {
 		const step = fight[i];
-		if (i > 0 && fight[i - 1].action === 'arrive' && step.action !== 'arrive' && startOfFight) {
-			startOfFight = false;
-			history.push({
-				action: DinoAction.MAXENERGY,
-				fighters: fighters.map(f => {
-					return { fid: f.id, maxEnergy: f.maxEnergy };
-				})
-			});
-			history.push({
-				action: DinoAction.ENERGY,
-				fighters: fighters.map(f => {
-					return { fid: f.id, energy: f.energy };
-				})
-			});
-		}
+
 		switch (step.action) {
 			case 'arrive':
+				myFighter = fighters.find(f => f.id === step.fid);
+				if (!myFighter) {
+					console.warn(`Cannot find fighter ${step.fid}`);
+					return;
+				}
 				history.push({
 					action: DinoAction.ADD,
 					fighter: {
 						props: [],
-						dino: step.fighter.type === 'dinoz',
-						life: step.fighter.startingHp,
-						maxLife: step.fighter.maxLife,
-						name: step.fighter.type !== 'dinoz' ? resolveMonsterName(step.fighter.name, t) : step.fighter.name,
-						side: step.fighter.attacker,
-						scale: step.fighter.type === 'dinoz' ? step.fighter.maxLife / 100 : 1,
-						fid: step.fighter.id,
-						gfx: step.fighter.display,
+						dino: myFighter.type === 'dinoz',
+						life: myFighter.startingHp,
+						maxLife: myFighter.maxHp,
+						name: myFighter.type !== 'dinoz' ? resolveMonsterName(myFighter.name, t) : myFighter.name,
+						side: myFighter.attacker,
+						scale: myFighter.type === 'dinoz' ? myFighter.maxHp / 100 : 1,
+						fid: myFighter.id,
+						gfx: myFighter.display,
 						entrance: EntranceEffect.JUMP
 					}
 				});
-				if (!startOfFight) {
-					history.push({
-						action: DinoAction.MAXENERGY,
-						fighters: [
-							{
-								fid: step.fighter.id,
-								maxEnergy: step.fighter.maxEnergy
-							}
-						]
-					});
-					history.push({
-						action: DinoAction.ENERGY,
-						fighters: [
-							{
-								fid: step.fighter.id,
-								energy: step.fighter.energy
-							}
-						]
-					});
-				}
-				fighters.push(step.fighter);
+				myFighter = undefined;
 				break;
 			case 'activateEnvironment':
 				break;

@@ -1,5 +1,5 @@
 import { FightStep } from './FightStep.mjs';
-import { FighterResultFiche } from './DetailedFighter.mjs';
+import { FighterResultFiche, FighterType } from './DetailedFighter.mjs';
 import { Monster } from './MonsterList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
@@ -24,13 +24,14 @@ export interface FightResult {
 
 export interface FighterRecap {
 	id: number;
+	type: FighterType;
 	name: string;
 	display: string | undefined;
 	attacker: boolean;
-	maxHp?: number;
-	startingHp?: number;
-	energy?: number;
-	maxEnergy?: number;
+	maxHp: number;
+	startingHp: number;
+	energy: number;
+	maxEnergy: number;
 }
 
 export interface CatchResult {

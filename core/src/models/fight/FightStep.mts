@@ -30,7 +30,7 @@ export enum LeaveAnimation {
 
 export interface ArriveStep {
 	action: 'arrive';
-	fighter: InitStepFighter;
+	fid: number;
 }
 export interface LeaveStep {
 	action: 'leave';

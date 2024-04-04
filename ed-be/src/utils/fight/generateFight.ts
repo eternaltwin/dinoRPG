@@ -166,7 +166,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		// Add arrive step for all fighters
 		fightData.steps.push({
 			action: 'arrive',
-			fighter: initStepFighter(fighter)
+			fid: fighter.id
 		});
 
 		// Temportal reduction
@@ -431,6 +431,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		fighters: config.fighters.map(f => {
 			return {
 				id: f.id,
+				type: f.type,
 				name: f.name,
 				display: f.display,
 				attacker: f.attacker,
@@ -438,7 +439,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 				startingHp: f.startingHp,
 				energy: f.energy,
 				maxEnergy: f.maxEnergy
-			}
+			};
 		})
 	};
 };

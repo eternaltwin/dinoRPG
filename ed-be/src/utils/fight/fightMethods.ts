@@ -714,7 +714,7 @@ const registerHit = (
 			// Add arrive step
 			fightData.steps.push({
 				action: 'arrive',
-				fighter: initStepFighter(opponent)
+				fid: opponent.id
 			});
 		}
 
@@ -974,7 +974,7 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	// Add arrive step
 	fightData.steps.push({
 		action: 'arrive',
-		fighter: initStepFighter(monster)
+		fid: monster.id
 	});
 
 	checkInvocationBan(fightData, monster);
@@ -1172,7 +1172,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add arrive step
 				fightData.steps.push({
 					action: 'arrive',
-					fighter: initStepFighter(clone)
+					fid: clone.id
 				});
 
 				checkInvocationBan(fightData, clone);
@@ -1476,7 +1476,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add arrive step
 				fightData.steps.push({
 					action: 'arrive',
-					fighter: initStepFighter(clone)
+					fid: clone.id
 				});
 
 				checkInvocationBan(fightData, clone);
