@@ -114,7 +114,7 @@ export async function moveFight(
 	const dayOfWeek = dayjs().day();
 	let monsters = generateMonster(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
 
-	if ((dayOfWeek === 4 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
+	if ((dayOfWeek === 0 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
 		monsters = [];
 	}
 	const fightResult = calculateFight(team, placeId, monsters);
@@ -300,6 +300,9 @@ export async function rewardFight(
 
 	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
 	gold -= goldLost;
+	if (monsters.length === 0) {
+		gold = 0
+	}
 
 	// If attackers won
 	if (fightResult.winner) {
