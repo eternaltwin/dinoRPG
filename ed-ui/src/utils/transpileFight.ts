@@ -126,12 +126,15 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					action: DinoAction.ADD,
 					fighter: {
 						props: [],
-						dino: myFighter.type === 'dinoz',
+						dino: myFighter.type === 'dinoz' || myFighter.type === 'clone',
 						life: myFighter.startingHp,
 						maxLife: myFighter.maxHp,
-						name: myFighter.type !== 'dinoz' ? resolveMonsterName(myFighter.name, t) : myFighter.name,
+						name:
+							myFighter.type === 'dinoz' || myFighter.type === 'clone'
+								? myFighter.name
+								: resolveMonsterName(myFighter.name, t),
 						side: myFighter.attacker,
-						scale: myFighter.type === 'dinoz' ? myFighter.maxHp / 100 : 1,
+						scale: myFighter.type === 'dinoz' || myFighter.type === 'clone' ? myFighter.maxHp / 100 : 1,
 						fid: myFighter.id,
 						gfx: myFighter.display,
 						entrance: EntranceEffect.JUMP

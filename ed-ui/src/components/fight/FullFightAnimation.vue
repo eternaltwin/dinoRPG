@@ -5,11 +5,10 @@
 <script lang="ts">
 import { defineComponent, toRaw } from 'vue';
 import { Fight } from '@drpg/dino-animation';
-import { dinozStore, sessionStore } from '../../store/index.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { sessionStore } from '../../store/index.js';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
-import { FightStep } from '@drpg/core/dist/models/fight/FightStep.mjs';
-import { FighterRecap } from '@drpg/core/dist/models/fight/FightResult.mjs';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 
 export default defineComponent({
 	name: 'Fight',
@@ -36,9 +35,8 @@ export default defineComponent({
 
 		console.log(fightSteps);
 
-		const objStructuredCopy = structuredClone(toRaw(fightSteps));
-
-		const nexFight = transpileFight(fighters, objStructuredCopy, this.$t);
+		console.log(fighters);
+		const nexFight = transpileFight(structuredClone(toRaw(fighters)), fightSteps, this.$t);
 		if (!nexFight) {
 			return;
 		}
