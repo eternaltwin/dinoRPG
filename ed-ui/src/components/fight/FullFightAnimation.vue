@@ -15,7 +15,8 @@ export default defineComponent({
 	data() {
 		return {
 			hidden: true,
-			sessionStore: sessionStore()
+			sessionStore: sessionStore(),
+			fight: undefined as Fight | undefined
 		};
 	},
 	props: {
@@ -41,13 +42,16 @@ export default defineComponent({
 			return;
 		}
 		const initPlace = resolveFightingPlace(this.place);
-		const fight2 = new Fight({
+		this.fight = new Fight({
 			...initPlace,
 			history: nexFight.filter(n => n != undefined)
 		});
 
 		console.log(nexFight.filter(n => n != undefined));
-		canvas.appendChild(fight2.getDisplay());
+		canvas.appendChild(this.fight.getDisplay());
+	},
+	unmounted() {
+		this.fight?.destroy();
 	}
 });
 </script>
