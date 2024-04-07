@@ -1725,7 +1725,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				});
 
 				// Attack defender
-				startAttack(fightData, opponentAttacker, opponentDefender);
+				startAttack(fightData, opponentAttacker, opponentDefender, true);
 
 				// Check if fighter is not dead
 				if (opponentAttacker.hp > 0) {
@@ -2106,7 +2106,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const monster = opponents[randomBetween(0, opponents.length - 1)];
 
 			// Attack opponent
-			const hit = startAttack(fightData, fighter, monster);
+			const hit = startAttack(fightData, fighter, monster, true);
 
 			// Only continue if not already caught and hit and not dead
 			if (!monster.catcher && hit && monster.hp > 0) {
@@ -2138,7 +2138,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Attack opponent
-			startAttack(fightData, fighter, opponent);
+			startAttack(fightData, fighter, opponent, true);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
@@ -2208,7 +2208,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Attack opponent
-			const hit = startAttack(fightData, fighter, opponent);
+			const hit = startAttack(fightData, fighter, opponent, true);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
@@ -2298,7 +2298,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			for (let i = 0; i < 5; i++) {
 				// Fighter attacks opponent
-				startAttack(fightData, fighter, opponent, false, Skill.DANSE_FOUDROYANTE, 3);
+				startAttack(fightData, fighter, opponent, true, false, Skill.DANSE_FOUDROYANTE, 3);
 
 				const countered = counterAttack(fightData, opponent);
 
@@ -2338,7 +2338,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push(stepFighter(opponent));
 
-			const hit = attack(fightData, fighter, opponent);
+			const hit = attack(fightData, fighter, opponent, true);
 
 			if (hit) {
 				let damage = 0;
@@ -2369,7 +2369,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push(stepFighter(opponent));
 
-			const hit = attack(fightData, fighter, opponent);
+			const hit = attack(fightData, fighter, opponent, true);
 
 			if (hit) {
 				let damage = 0;
@@ -3067,15 +3067,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push(stepFighter(opponent));
 
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent)
-			});
 
 			// Attack opponent
-			startAttack(fightData, fighter, opponent);
+			startAttack(fightData, fighter, opponent, false);
 
 			// Cancel FLYING and INTANGIBLE
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
@@ -3085,14 +3079,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				addStatus(fightData, opponent, Status.STUNNED, StatusLength.MEDIUM);
 			}
 
-			// Check if fighter is not dead
-			if (fighter.hp > 0) {
-				// Add moveBack step
-				fightData.steps.push({
-					action: 'moveBack',
-					fighter: stepFighter(fighter)
-				});
-			}
 			break;
 		}
 		case Skill.ECRASEMENT: {
@@ -3130,7 +3116,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Attack opponent
-			startAttack(fightData, fighter, opponent, false, Skill.M_ABSORPTION, 10);
+			startAttack(fightData, fighter, opponent, true, false, Skill.M_ABSORPTION, 10);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
@@ -3157,7 +3143,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Attack opponent
-			startAttack(fightData, fighter, opponent);
+			startAttack(fightData, fighter, opponent, true);
 
 			// If not dead
 			if (fighter.hp > 0) {
@@ -3191,7 +3177,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Fighter attacks opponent
-			startAttack(fightData, fighter, opponent, false, Skill.M_BITE, 7);
+			startAttack(fightData, fighter, opponent, true, false, Skill.M_BITE, 7);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
@@ -3215,7 +3201,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Fighter attacks opponent
-			startAttack(fightData, fighter, opponent, false, Skill.M_BITE, 7);
+			startAttack(fightData, fighter, opponent, true, false, Skill.M_BITE, 7);
 
 			// Check if opponent is not dead
 			if (opponent.hp > 0) {
@@ -3270,7 +3256,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Fighter attacks opponent
-			startAttack(fightData, fighter, opponent);
+			startAttack(fightData, fighter, opponent, true);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
@@ -3318,6 +3304,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_ALL_FOR_ONE: {
+			// TODO corner case missing, check MT code
 			// Get all allies from the same race
 			const sameRace = getAllies(fightData, fighter, ['monster']).filter(ally => ally.name === fighter.name);
 
@@ -3333,7 +3320,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				});
 
 				// Ally attacks opponent
-				startAttack(fightData, ally, opponent);
+				startAttack(fightData, ally, opponent, true);
 
 				// Check if fighter is not dead
 				if (ally.hp > 0) {
@@ -3644,8 +3631,9 @@ const attack = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	opponent: DetailedFighter,
+	is_close_combat: boolean,
 	skill?: Skill,
-	power?: number
+	power?: number,
 ) => {
 	// Abort if fighter is dead
 	if (fighter.hp <= 0) return;
@@ -3727,8 +3715,8 @@ const attack = (
 
 			// FLYING
 			if (
-				// Assault
-				!skill &&
+				// Close combat
+				is_close_combat &&
 				// Opponent has FLYING
 				hasStatus(realOpponent, Status.FLYING) &&
 				// Attacker doesn't have FLYING
@@ -3796,8 +3784,8 @@ const attack = (
 			if (
 				// Opponent has SANG_ACIDE
 				realOpponent.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
-				// Not a skill
-				!skill &&
+				// If close combat
+				is_close_combat &&
 				// 1/3 chance
 				randomBetween(0, 2) === 0
 			) {
@@ -3823,7 +3811,7 @@ const attack = (
 			}
 
 			// M_ELECTROCUTION damage
-			if (!skill && realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
+			if (is_close_combat && realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
 				const damage = randomBetween(1, 4);
 
 				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
@@ -4029,12 +4017,13 @@ const startAttack = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	opponent: DetailedFighter,
+	is_close_combat: boolean,
 	disallowCombo?: boolean,
 	skill?: Skill,
 	power?: number
 ) => {
 	// Trigger fighter attack
-	let hitAtLeastOnce = attack(fightData, fighter, opponent, skill, power);
+	let hitAtLeastOnce = attack(fightData, fighter, opponent, is_close_combat, skill, power);
 
 	// Consume energy
 	setEnergy(fighter, fighter.energy - BASE_ENERGY_COST, fightData);
@@ -4049,7 +4038,7 @@ const startAttack = (
 		let random = Math.random();
 		while (random < combo && comboCount <= 10) {
 			// Trigger fighter attack
-			const hit = attack(fightData, fighter, opponent, skill, power);
+			const hit = attack(fightData, fighter, opponent, true, skill, power);
 
 			hitAtLeastOnce = hitAtLeastOnce || hit;
 
@@ -4356,7 +4345,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	});
 
 	// Fighter attacks opponent
-	startAttack(fightData, attacker, opponent);
+	startAttack(fightData, attacker, opponent, true);
 
 	const countered = counterAttack(fightData, opponent);
 
