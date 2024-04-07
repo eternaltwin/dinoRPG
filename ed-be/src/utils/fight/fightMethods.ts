@@ -615,8 +615,10 @@ const registerHit = (
 			actualDamage[opponent.id] = 0;
 		}
 
-		// Wake up
-		if (fightData.environment?.type !== Skill.AMAZONIE || actualDamage[opponent.id] >= 10) {
+		// Wake up:
+		// Without Amazonie, wake up if the target lost at least 1 hp
+		// With Amazonie, wake up if the target lost at least 11 hp
+		if ( (fightData.environment?.type !== Skill.AMAZONIE && actualDamage[opponent.id] > 0) || (fightData.environment?.type === Skill.AMAZONIE && actualDamage[opponent.id] > 10)) {
 			removeStatus(fightData, opponent, Status.ASLEEP);
 		}
 
@@ -1909,6 +1911,10 @@ export const addStatus = (
 			fighter.stats.speed.global *= 2;
 			break;
 		}
+		case Status.ASLEEP: {
+			fighter.time += Infinity;
+			break;
+		}
 		case Status.TORCHED: {
 			fighter.stats.defense[ElementType.FIRE] += 10;
 			break;
@@ -1980,6 +1986,10 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 		switch (status) {
 			case Status.AIR_SLOWED: {
 				fighter.stats.speed.global /= 2;
+				break;
+			}
+			case Status.ASLEEP: {
+				fighter.time = fightData.time + randomBetween(0, TIME_BASE * TIME_FACTOR);
 				break;
 			}
 			case Status.TORCHED: {
