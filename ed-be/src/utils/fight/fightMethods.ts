@@ -3801,9 +3801,9 @@ const attack = (
 				// 1/3 chance
 				randomBetween(0, 2) === 0
 			) {
-				const damage = attacker.stats.special.acidBloodDamage;
+				const damage = realOpponent.stats.special.acidBloodDamage;
 
-				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.FIRE], Skill.SANG_ACIDE);
+				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.WATER], Skill.SANG_ACIDE);
 			}
 
 			// FORME_VAPOREUSE
