@@ -105,7 +105,7 @@ export function resolveStatus(status: Status) {
 		case Status.STUNNED:
 			return 14;
 		default:
-			return;
+			return -1;
 	}
 }
 
@@ -147,7 +147,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 			case 'addStatus':
 				// eslint-disable-next-line no-case-declarations
 				const status = resolveStatus(step.status);
-				if (status) {
+				if (status >= 0) {
 					history.push({
 						action: DinoAction.STATUS,
 						fid: step.fighter.id,
@@ -240,7 +240,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 			case 'removeStatus':
 				// eslint-disable-next-line no-case-declarations
 				const statusRemoved = resolveStatus(step.status);
-				if (statusRemoved) {
+				if (statusRemoved >= 0) {
 					history.push({
 						action: DinoAction.NOSTATUS,
 						fid: step.fighter.id,
