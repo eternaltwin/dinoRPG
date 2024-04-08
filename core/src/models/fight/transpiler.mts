@@ -118,7 +118,7 @@ export type transpiled =
 			lifeFx?: {
 				fx: number;
 			};
-			effect?: DamagesEffect
+			effect?: DamagesEffect;
 	  }
 	| {
 			action: DinoAction.RETURN;

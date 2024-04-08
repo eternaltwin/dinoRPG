@@ -88,7 +88,7 @@ export interface SkillActivateStep {
 	skill: Skill;
 	targets: {
 		tid: number;
-		damages?: number
+		damages?: number;
 	}[];
 }
 export interface SkillExpireStep {

@@ -272,7 +272,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					details: {
 						fid: step.fid,
 						targets: step.targets.map(t => {
-							return { id: t.tid, life: t.damages };
+							return { id: t.tid, life: t.damages ?? 0 };
 						}),
 						color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
 						type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,

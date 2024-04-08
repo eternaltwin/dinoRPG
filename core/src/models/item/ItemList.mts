@@ -1065,7 +1065,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.MOUEFFE,
+			race: raceList.MOUEFFE
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1079,7 +1079,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.MOUEFFE,
+			race: raceList.MOUEFFE
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1093,7 +1093,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.PIGMOU,
+			race: raceList.PIGMOU
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1107,7 +1107,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.PIGMOU,
+			race: raceList.PIGMOU
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1121,7 +1121,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.WINKS,
+			race: raceList.WINKS
 		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
@@ -1135,7 +1135,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.WINKS,
+			race: raceList.WINKS
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1149,7 +1149,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.PLANAILLE,
+			race: raceList.PLANAILLE
 		},
 		maxQuantity: 8, // TODO double check
 		price: 0 // TODO double check
@@ -1163,7 +1163,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.PLANAILLE,
+			race: raceList.PLANAILLE
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1177,7 +1177,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.CASTIVORE,
+			race: raceList.CASTIVORE
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1191,7 +1191,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.CASTIVORE,
+			race: raceList.CASTIVORE
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1205,7 +1205,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.ROCKY,
+			race: raceList.ROCKY
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1219,7 +1219,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.ROCKY,
+			race: raceList.ROCKY
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1233,7 +1233,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.PTEROZ,
+			race: raceList.PTEROZ
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1247,7 +1247,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.PTEROZ,
+			race: raceList.PTEROZ
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1261,7 +1261,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.NUAGOZ,
+			race: raceList.NUAGOZ
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1275,7 +1275,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.NUAGOZ,
+			race: raceList.NUAGOZ
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1289,7 +1289,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SIRAIN,
+			race: raceList.SIRAIN
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1303,7 +1303,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SIRAIN,
+			race: raceList.SIRAIN
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1317,7 +1317,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.HIPPOCLAMP,
+			race: raceList.HIPPOCLAMP
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1331,7 +1331,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.HIPPOCLAMP,
+			race: raceList.HIPPOCLAMP
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1345,7 +1345,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.GORILLOZ,
+			race: raceList.GORILLOZ
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1359,7 +1359,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.GORILLOZ,
+			race: raceList.GORILLOZ
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1373,7 +1373,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.WANWAN,
+			race: raceList.WANWAN
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1387,7 +1387,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.WANWAN,
+			race: raceList.WANWAN
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1401,7 +1401,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.WANWAN,
+			race: raceList.WANWAN
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1415,7 +1415,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SANTAZ,
+			race: raceList.SANTAZ
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1429,7 +1429,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SANTAZ,
+			race: raceList.SANTAZ
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1443,7 +1443,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.FEROSS,
+			race: raceList.FEROSS
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1457,7 +1457,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.FEROSS,
+			race: raceList.FEROSS
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1471,7 +1471,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.FEROSS,
+			race: raceList.FEROSS
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1485,7 +1485,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.KABUKI,
+			race: raceList.KABUKI
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1499,7 +1499,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.KABUKI,
+			race: raceList.KABUKI
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1513,7 +1513,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.MAHAMUTI,
+			race: raceList.MAHAMUTI
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1527,7 +1527,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.MAHAMUTI,
+			race: raceList.MAHAMUTI
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1541,7 +1541,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SOUFFLET,
+			race: raceList.SOUFFLET
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1555,7 +1555,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SOUFFLET,
+			race: raceList.SOUFFLET
 		},
 		maxQuantity: 10,
 		price: 0 // TODO double check
@@ -1569,7 +1569,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.TOUFUFU,
+			race: raceList.TOUFUFU
 		},
 		maxQuantity: 10, // yes it's 2 in game
 		price: 30000
@@ -1583,7 +1583,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.TOUFUFU,
+			race: raceList.TOUFUFU
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1597,7 +1597,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.QUETZU,
+			race: raceList.QUETZU
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1611,7 +1611,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.QUETZU,
+			race: raceList.QUETZU
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1625,7 +1625,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SMOG,
+			race: raceList.SMOG
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1639,7 +1639,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SMOG,
+			race: raceList.SMOG
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1653,7 +1653,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SMOG,
+			race: raceList.SMOG
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1667,7 +1667,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SMOG,
+			race: raceList.SMOG
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1681,7 +1681,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.SMOG,
+			race: raceList.SMOG
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1695,7 +1695,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.TRICERAGNON,
+			race: raceList.TRICERAGNON
 		},
 		maxQuantity: 10,
 		price: 30000
@@ -1709,7 +1709,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.TRICERAGNON,
+			race: raceList.TRICERAGNON
 		},
 		maxQuantity: 10, // TODO double check
 		price: 0 // TODO double check
@@ -1936,7 +1936,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		effect: {
 			category: ItemEffect.EGG,
-			race: raceList.Santaz,
+			race: raceList.Santaz
 		},
 		isRare: false,
 		maxQuantity: 999, // TODO double check

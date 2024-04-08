@@ -4,7 +4,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	MEROU_LUJIDANE: {
 		ingredientId: 1,
 		price: 100,
-		maxQuantity: 50 
+		maxQuantity: 50
 	},
 	POISSON_VENGEUR: {
 		ingredientId: 2,
@@ -14,7 +14,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	AN_GUILI_GUILILLE: {
 		ingredientId: 3,
 		price: 1500,
-		maxQuantity: 5 
+		maxQuantity: 5
 	},
 	GLOBULOS: {
 		ingredientId: 4,
@@ -29,7 +29,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	TOUFFE_DE_FOURRURE: {
 		ingredientId: 6,
 		price: 350,
-		maxQuantity: 50 
+		maxQuantity: 50
 	},
 	ROCHE_RADIO_ACTIVE: {
 		ingredientId: 7,
@@ -59,7 +59,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	ENERGIE_FOUDRE: {
 		ingredientId: 12,
 		price: 300,
-		maxQuantity: 50 
+		maxQuantity: 50
 	},
 	ENERGIE_AIR: {
 		ingredientId: 13,
@@ -69,7 +69,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	ENERGIE_EAU: {
 		ingredientId: 14,
 		price: 4000,
-		maxQuantity: 5 
+		maxQuantity: 5
 	},
 	ENERGIE_FEU: {
 		ingredientId: 15,
@@ -104,7 +104,7 @@ export const ingredientList: Readonly<Record<string, IngredientFiche>> = {
 	COLLIER_KARAT: {
 		ingredientId: 21,
 		price: 8000,
-		maxQuantity: 5 
+		maxQuantity: 5
 	},
 	BROCHE_EN_PARFAIT_ETAT: {
 		ingredientId: 22,

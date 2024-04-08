@@ -628,7 +628,10 @@ const registerHit = (
 		// Wake up:
 		// Without Amazonie, wake up if the target lost at least 1 hp
 		// With Amazonie, wake up if the target lost at least 11 hp
-		if ( (fightData.environment?.type !== Skill.AMAZONIE && actualDamage[opponent.id] > 0) || (fightData.environment?.type === Skill.AMAZONIE && actualDamage[opponent.id] > 10)) {
+		if (
+			(fightData.environment?.type !== Skill.AMAZONIE && actualDamage[opponent.id] > 0) ||
+			(fightData.environment?.type === Skill.AMAZONIE && actualDamage[opponent.id] > 10)
+		) {
 			removeStatus(fightData, opponent, Status.ASLEEP);
 		}
 
@@ -3074,7 +3077,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push({ tid: opponent.id });
 
-
 			// Attack opponent
 			startAttack(fightData, fighter, opponent, false);
 
@@ -3639,7 +3641,7 @@ const attack = (
 	opponent: DetailedFighter,
 	is_close_combat: boolean,
 	skill?: Skill,
-	power?: number,
+	power?: number
 ) => {
 	// Abort if fighter is dead
 	if (fighter.hp <= 0) return;

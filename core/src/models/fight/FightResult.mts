@@ -80,5 +80,5 @@ export interface FightProcessResult {
 		defense: FightStats;
 	};
 	place: PlaceEnum;
-	fighters: FighterRecap[]
+	fighters: FighterRecap[];
 }

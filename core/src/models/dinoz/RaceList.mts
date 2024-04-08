@@ -21,7 +21,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 3
 		},
 		price: 16000,
-		swfLetter: '00',
+		swfLetter: '00'
 	},
 	MOUEFFE_DEMON: {
 		raceId: 2,
@@ -59,7 +59,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 20000,
-		swfLetter: '10',
+		swfLetter: '10'
 	},
 	PIGMOU_DEMON: {
 		raceId: 4,
@@ -97,7 +97,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 20000,
-		swfLetter: '20',
+		swfLetter: '20'
 	},
 	WINKS_DEMON: {
 		raceId: 6,
@@ -116,7 +116,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 700,
-		swfLetter: '2A',
+		swfLetter: '2A'
 	},
 	PLANAILLE: {
 		raceId: 7,
@@ -135,7 +135,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 4
 		},
 		price: 16000,
-		swfLetter: '30',
+		swfLetter: '30'
 	},
 	PLANAILLE_DEMON: {
 		raceId: 8,
@@ -154,7 +154,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 4
 		},
 		price: 700,
-		swfLetter: '3A',
+		swfLetter: '3A'
 	},
 	CASTIVORE: {
 		raceId: 9,
@@ -173,7 +173,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 5
 		},
 		price: 16000,
-		swfLetter: '40',
+		swfLetter: '40'
 	},
 	ROCKY: {
 		raceId: 10,
@@ -192,7 +192,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 18000,
-		swfLetter: '50',
+		swfLetter: '50'
 	},
 	PTEROZ: {
 		raceId: 11,
@@ -211,7 +211,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 6
 		},
 		price: 22000,
-		swfLetter: '60',
+		swfLetter: '60'
 	},
 	NUAGOZ: {
 		raceId: 12,
@@ -230,7 +230,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 6
 		},
 		price: 16000,
-		swfLetter: '70',
+		swfLetter: '70'
 	},
 	SIRAIN: {
 		raceId: 13,
@@ -249,7 +249,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 16000,
-		swfLetter: '80',
+		swfLetter: '80'
 	},
 	HIPPOCLAMP: {
 		raceId: 14,
@@ -268,7 +268,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 4
 		},
 		price: 28000,
-		swfLetter: '90',
+		swfLetter: '90'
 	},
 	GORILLOZ: {
 		raceId: 15,
@@ -287,7 +287,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 16000,
-		swfLetter: 'A0',
+		swfLetter: 'A0'
 	},
 	GORILLOZ_DEMON: {
 		raceId: 16,
@@ -306,7 +306,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 700,
-		swfLetter: 'AA',
+		swfLetter: 'AA'
 	},
 	WANWAN: {
 		raceId: 17,
@@ -325,7 +325,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 19000,
-		swfLetter: 'B0',
+		swfLetter: 'B0'
 	},
 	WANWAN_DEMON: {
 		raceId: 18,
@@ -344,7 +344,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 900,
-		swfLetter: 'BA',
+		swfLetter: 'BA'
 	},
 	SANTAZ: {
 		raceId: 19,
@@ -363,7 +363,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 12
 		},
 		price: 0,
-		swfLetter: 'C0',
+		swfLetter: 'C0'
 	},
 	FEROSS: {
 		raceId: 20,
@@ -382,7 +382,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 0,
-		swfLetter: 'D0',
+		swfLetter: 'D0'
 	},
 	KABUKI: {
 		raceId: 21,
@@ -401,7 +401,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 0,
-		swfLetter: 'E0',
+		swfLetter: 'E0'
 	},
 	KABUKI_DEMON: {
 		raceId: 22,
@@ -420,7 +420,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 800,
-		swfLetter: 'EA',
+		swfLetter: 'EA'
 	},
 	MAHAMUTI: {
 		raceId: 23,
@@ -439,7 +439,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 0,
-		swfLetter: 'F0',
+		swfLetter: 'F0'
 	},
 	SOUFFLET: {
 		raceId: 24,
@@ -458,7 +458,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 0,
-		swfLetter: 'G0',
+		swfLetter: 'G0'
 	},
 	TOUFUFU: {
 		raceId: 25,
@@ -477,7 +477,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 5
 		},
 		price: 0,
-		swfLetter: 'H0',
+		swfLetter: 'H0'
 	},
 	QUETZU: {
 		raceId: 26,
@@ -496,7 +496,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 0
 		},
 		price: 35000,
-		swfLetter: 'I0',
+		swfLetter: 'I0'
 	},
 	SMOG: {
 		raceId: 27,
@@ -515,7 +515,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 6
 		},
 		price: 0,
-		swfLetter: 'J0',
+		swfLetter: 'J0'
 	},
 	TRICERAGNON: {
 		raceId: 28,
@@ -534,7 +534,7 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 0,
-		swfLetter: 'K0',
+		swfLetter: 'K0'
 	}
 };
 
