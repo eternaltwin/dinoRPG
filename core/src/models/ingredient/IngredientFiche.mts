@@ -1,7 +1,8 @@
+import { Ingredient } from "./ingredientList.mjs";
 export interface IngredientFiche {
-	ingredientId: number;
+	name?: string;
+	ingredientId: Ingredient;
 	maxQuantity: number;
 	price: number;
 	quantity?: number;
-	name?: Lowercase<string>;
 }

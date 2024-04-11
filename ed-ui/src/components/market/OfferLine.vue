@@ -17,7 +17,7 @@
 		<td v-else />
 		<td class="items-td">
 			<div class="items">
-				<div v-for="item in offer.items" :key="item.id">
+				<div v-for="item in offer.items" :key="item.itemId">
 					<Tippy
 						tag="img"
 						theme="normal"
@@ -138,13 +138,13 @@ import { EnhancedOffer } from '@drpg/core/returnTypes/Offer';
 import { OfferService } from '../../services/OfferService.js';
 import { playerStore } from '../../store/index.js';
 import DZInput from '../common/DZInput.vue';
-import { getIngredientName } from '@drpg/core/utils/IngredientUtils';
 import { getRace } from '@drpg/core/utils/DinozUtils';
 import { statusList } from '../../constants/index.js';
 import { AssaultElement } from '@drpg/core/utils/getAssaultStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
 import DinozMini from '../dinoz/DinozMini.vue';
+import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 
 export default defineComponent({
 	name: 'OfferLine',
@@ -168,7 +168,7 @@ export default defineComponent({
 			itemNameList,
 			secondsToDhms,
 			simplifyDisplay,
-			getIngredientName,
+			ingredientNameList,
 			getRace,
 			AssaultElement,
 			statusList,

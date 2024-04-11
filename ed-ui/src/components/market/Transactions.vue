@@ -57,8 +57,8 @@ import { goTo } from '../../utils/goTo.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
 import OfferLine from './OfferLine.vue';
-import { getIngredientName } from '@drpg/core/utils/IngredientUtils';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -81,7 +81,7 @@ export default defineComponent({
 				endDate: new Date(offer.endDate),
 				items: offer.items.map(item => ({
 					...item,
-					name: item.isIngredient ? getIngredientName(item.itemId) : itemNameList[item.itemId]
+					name: item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]
 				}))
 			}));
 		},

@@ -22,7 +22,7 @@ export async function getAllIngredientsData(req: Request) {
 
 		return {
 			ingredientId: ingr.ingredientId,
-			name: ingredientFound[0].toLowerCase() as Lowercase<string>,
+			name: ingredientFound[0].toLowerCase(),
 			quantity: ingr.quantity,
 			maxQuantity: ingredientFound[1].maxQuantity
 		};
