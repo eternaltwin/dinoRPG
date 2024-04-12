@@ -669,8 +669,15 @@ export async function resurrectDinoz(req: Request) {
 	await updateDinoz(dinozId, {
 		life: 1,
 		experience: Math.round(dinozData.experience / 2),
-		placeId: PlaceEnum.DINOVILLE
+		placeId: PlaceEnum.DINOVILLE,
+		leader: { disconnect: true }
 	});
+
+	if (dinozData.followers.length > 0) {
+		for (const d of dinozData.followers) {
+			await updateDinoz(d.id, { leader: { disconnect: true } });
+		}
+	}
 
 	await createLog(LogType.Revive, dinozData.player.id, dinozId);
 }

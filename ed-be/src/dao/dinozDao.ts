@@ -214,6 +214,7 @@ export async function getDinozFicheLiteRequest(dinozId: number) {
 			life: true,
 			experience: true,
 			name: true,
+			followers: true,
 			player: { select: { id: true } }
 		}
 	});
