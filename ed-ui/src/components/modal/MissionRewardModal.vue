@@ -53,7 +53,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { epicList, missionsList, statusList } from '../../constants/index.js';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
@@ -63,7 +63,8 @@ export default defineComponent({
 	name: 'MissionRewardModal',
 	data() {
 		return {
-			dinozStore: dinozStore()
+			dinozStore: dinozStore(),
+			playerStore: playerStore()
 		};
 	},
 	props: {
@@ -95,7 +96,8 @@ export default defineComponent({
 		},
 		gold(): number | undefined {
 			const isGold: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.GOLD);
-			if (isGold?.rewardType === RewardEnum.GOLD) {
+			if (isGold && isGold.rewardType === RewardEnum.GOLD) {
+				this.playerStore.addMoney(isGold.value);
 				return isGold.value;
 			} else {
 				return undefined;
