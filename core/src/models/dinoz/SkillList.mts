@@ -1881,7 +1881,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
-		probability: 5
+		probability: 5,
+		visualEffect: SkillVisualEffect.MUDWALL
 	},
 	[Skill.PEAU_DACIER]: {
 		id: Skill.PEAU_DACIER,
@@ -2720,7 +2721,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 30
+		probability: 30,
+		color: '0xffff00',
+		visualEffect: SkillVisualEffect.FOCUS
 	},
 	[Skill.CELERITE]: {
 		id: Skill.CELERITE,

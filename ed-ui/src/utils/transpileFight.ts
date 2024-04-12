@@ -313,6 +313,18 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
 						}
 					});
+				} else {
+					history.push({
+						action: DinoAction.SKILL,
+						skill: resolveSkillEffect(step.skill),
+						details: {
+							fid: step.fid,
+							targets: [{ id: step.fid }],
+							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
+							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
+							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
+						}
+					});
 				}
 				history.push({
 					action: DinoAction.ENERGY,
