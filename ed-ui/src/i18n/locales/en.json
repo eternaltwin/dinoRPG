@@ -17,7 +17,7 @@
 		"DinozIsDead": "Your dinoz is dead and cannot be healed.",
 		"AlreadyAtMaxHealth": "Your dinoz cannot be healed any more.",
 		"DinozNotDead": "Your dinoz is already alive.",
-		"OnlyLettersAndNumbers": "Invalid name! Only letters and numbers can be used.",
+		"OnlyLettersAndNumbers": "Invalid name! Only between 3 and 16 letters and numbers can be used.",
 		"tooManyActiveDinoz": "You already have too many active dinoz.",
 		"noPDA": "You need the Diamantite Pebble to access this page.",
 		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",

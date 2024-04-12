@@ -451,6 +451,8 @@ export async function buyDinoz(req: Request) {
 export async function setDinozName(req: Request) {
 	// Retrieve player from dinozId
 	const dinoz = await getCanDinozChangeName(+req.params.id);
+	const regexName = /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/;
+	const name = req.body.newName;
 
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist`);
@@ -465,11 +467,14 @@ export async function setDinozName(req: Request) {
 	if (!dinoz.canChangeName) {
 		throw new ErrorFormator(500, `Can't update dinoz name`);
 	}
-
-	await updateDinoz(+req.params.id, {
-		name: req.body.newName,
-		canChangeName: false
-	});
+	if (regexName.test(name)) {
+		await updateDinoz(+req.params.id, {
+			name: req.body.newName,
+			canChangeName: false
+		});
+	} else {
+		throw new ErrorFormator(400, 'OnlyLettersAndNumbers');
+	}
 }
 
 /**
