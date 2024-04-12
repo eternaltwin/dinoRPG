@@ -40,7 +40,7 @@
 				}"
 			></a>
 		</div>
-		<div class="place" v-if="place">
+		<div class="place" v-if="place" @click="goToDinozPage()">
 			<div class="img-wrapper">
 				<img :src="getPlaceImage(place)" :alt="$t(`place.name.${place}`)" />
 			</div>
@@ -94,6 +94,12 @@ export default defineComponent({
 			this.$router.push({
 				name: pageName,
 				params: { name: param }
+			});
+		},
+		goToDinozPage() {
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: this.currentDinozId() }
 			});
 		},
 		isDevEnv(): boolean {
@@ -285,6 +291,7 @@ export default defineComponent({
 	padding: 2px;
 	background-color: #fbdca5;
 	margin-bottom: 8px;
+	cursor: pointer;
 
 	.img-wrapper {
 		height: 109px;
