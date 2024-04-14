@@ -4077,11 +4077,6 @@ const startAttack = (
 		}
 	}
 
-	// Change fighter element
-	if (!hasStatus(fighter, Status.LOCKED)) {
-		fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
-	}
-
 	return !!hitAtLeastOnce;
 };
 
@@ -4108,6 +4103,13 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 
 	// Add the new time to the attacker
 	attacker.time += time;
+
+	// Change fighter element
+	if (!hasStatus(attacker, Status.LOCKED)) {
+		let old_element = attacker.element;
+		attacker.element = attacker.elements[(attacker.elements.indexOf(attacker.element) + 1) % attacker.elements.length];
+		console.log(`Changing ${attacker.name} element from ${old_element} to ${attacker.element}`);
+	}
 };
 
 export const playFighterTurn = (fightData: DetailedFight) => {
