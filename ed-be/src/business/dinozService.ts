@@ -903,6 +903,8 @@ export async function gatherWithDinoz(req: Request) {
 			];
 			if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
 				await increaseItemQuantity(dinozData.player.id, i.itemId, 1);
+				// Update quantity in case multiple were obtained and the max was reached
+				itemToReward.quantity += 1;
 			} else if (goldItems.includes(i.itemId)) {
 				await addMoney(dinozData.player.id, i.price);
 			} else {
@@ -919,6 +921,8 @@ export async function gatherWithDinoz(req: Request) {
 				throw new ErrorFormator(500, `Ingredient ${ingredientToReward.ingredientId} doesn't belong to any player.`);
 			}
 			await increaseIngredientQuantity(ingredientToReward.playerId, ingredientToReward.ingredientId, 1);
+			// Update quantity in case multiple were obtained and the max was reached
+			ingredientToReward.quantity += 1;
 		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
 			// Do nothing
 		} else {

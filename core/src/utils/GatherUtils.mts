@@ -31,10 +31,10 @@ export const initializeGatherGrid = (playerId: number, placeId: number, gridInfo
 		ingredientCount += ingredient.startQuantity;
 	});
 
-	//Fill the empty spot with 0
+	// Fill the empty spot with 0
 	grid = Array.from(grid, v => (v === undefined ? 0 : v));
 
-	//Shuffle the ingredient list
+	// Shuffle the ingredient list
 	for (let i = grid.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[grid[i], grid[j]] = [grid[j], grid[i]];
