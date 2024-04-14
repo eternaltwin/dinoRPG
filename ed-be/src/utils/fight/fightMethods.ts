@@ -3199,7 +3199,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// Fighter attacks opponent
-			startAttack(fightData, fighter, opponent, true, false, Skill.M_BITE, 7);
+			startAttack(fightData, fighter, opponent, true, false, Skill.M_BITE);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
@@ -4106,9 +4106,7 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 
 	// Change fighter element
 	if (!hasStatus(attacker, Status.LOCKED)) {
-		let old_element = attacker.element;
 		attacker.element = attacker.elements[(attacker.elements.indexOf(attacker.element) + 1) % attacker.elements.length];
-		console.log(`Changing ${attacker.name} element from ${old_element} to ${attacker.element}`);
 	}
 };
 

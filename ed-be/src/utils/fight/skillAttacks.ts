@@ -121,20 +121,15 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 		[ElementType.WATER]: 10,
 		[ElementType.AIR]: 10
 	},
-	[Skill.M_COMET]: {
-		[ElementType.FIRE]: 20,
-		[ElementType.VOID]: 30
-	},
-	[Skill.M_VENERABLE]: {
-		[ElementType.FIRE]: 50,
-		[ElementType.AIR]: 50
-	},
 	// RACE
 	[Skill.CHARGE_PIGMOU]: {
 		[ElementType.FIRE]: 5,
 		[ElementType.WOOD]: 3
 	},
 	// MONSTER
+	[Skill.M_BITE]: {
+		[ElementType.VOID]: 7
+	},
 	[Skill.M_WORM_2]: {
 		[ElementType.VOID]: 5
 	},
@@ -149,5 +144,13 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 	},
 	[Skill.M_AIR_BLADE]: {
 		[ElementType.AIR]: 25
-	}
+	},
+	[Skill.M_COMET]: {
+		[ElementType.FIRE]: 20,
+		[ElementType.VOID]: 30
+	},
+	[Skill.M_VENERABLE]: {
+		[ElementType.FIRE]: 50,
+		[ElementType.AIR]: 50
+	},
 };
