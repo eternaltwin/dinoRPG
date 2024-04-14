@@ -185,7 +185,6 @@ export const getDefenseStat = (
 			0.5 * (firstWeakElement.value + firstWeakElement.globalBonus) +
 			firstWeakElement.bonus +
 			(element.value + element.bonus) +
-			element.bonus +
 			1.5 * (firstStrongElement.value + firstStrongElement.globalBonus) +
 			firstStrongElement.bonus +
 			1.5 * (secondStrongElement.value + secondStrongElement.globalBonus) +
