@@ -60,8 +60,8 @@ routes.put(
 		}
 
 		try {
-			await buyItem(req);
-			res.status(200).send();
+			const ret = await buyItem(req);
+			res.status(200).send(ret);
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);

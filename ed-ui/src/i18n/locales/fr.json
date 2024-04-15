@@ -65,7 +65,8 @@
 			"devil_ointment": "Vous avez retiré le statut maudit de votre dinoz.",
 			"amnesic_rice": "Votre dinoz ne sait plus comment il se prénomme, il a également perdu tout son :xp: !",
 			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
-		}
+		},
+		"itemBought": "Vous avez acheté {quantity} {itemName}."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",

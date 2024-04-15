@@ -195,6 +195,12 @@ export async function buyItem(req: Request) {
 		itemReference.itemId.toString(),
 		itemReference.quantity.toString()
 	);
+
+	return {
+		itemId: itemReference.itemId,
+		quantity: quantityBought,
+		gold: theShop.type === ShopType.MAGICAL ? undefined : itemReference.price * quantityBought
+	};
 }
 
 /**

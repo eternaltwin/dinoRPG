@@ -212,8 +212,13 @@ export default defineComponent({
 		// Buy n of the selected item
 		async buyItems(itemId: number, quantity: number): Promise<void> {
 			try {
-				await ItemShopService.buyItem(this.shopId, itemId, quantity);
+				const bought = await ItemShopService.buyItem(this.shopId, itemId, quantity);
 				EventBus.emit('isLoading', false);
+				EventBus.emit('toast', {
+					type: 'notification',
+					message: 'itemBought',
+					value: bought
+				});
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string
 				this.selectedItem.quantity = Number(this.selectedItem.quantity!) + Number(quantity);

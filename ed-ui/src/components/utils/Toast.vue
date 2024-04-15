@@ -12,7 +12,18 @@
 				v-html="formatContent($t(`toast.${message}`, { value: $t(`skill.name.${value}`) }))"
 			/>
 			<p
-				v-if="type === 'notification' && message !== 'special' && message !== 'sphere'"
+				v-if="type === 'notification' && message === 'itemBought'"
+				v-html="
+					formatContent(
+						$t(`toast.${message}`, {
+							quantity: value.quantity,
+							itemName: $t(`item.name.${itemNameList[value.itemId]}`)
+						})
+					)
+				"
+			/>
+			<p
+				v-if="type === 'notification' && message !== 'special' && message !== 'sphere' && message !== 'itemBought'"
 				v-html="formatContent($t(`toast.${message}`, { value: value }))"
 			/>
 			<p v-if="type === 'reward'" v-html="message" />
@@ -23,6 +34,7 @@
 <script lang="ts">
 import EventBus from '../../events/index.js';
 import { defineComponent } from 'vue';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 
 export default defineComponent({
 	name: 'Toast',
@@ -33,7 +45,8 @@ export default defineComponent({
 			params: {} as Record<string, unknown>,
 			type: undefined as string | undefined,
 			value: undefined as undefined | string,
-			effect: undefined as undefined | string
+			effect: undefined as undefined | string,
+			itemNameList: itemNameList
 		};
 	},
 	mounted(): void {
