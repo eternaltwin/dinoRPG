@@ -4,7 +4,6 @@
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
 	{{ fightText }}<br />
-	<!--	<FightAnimation />-->
 	<FullFightAnimation :place="fight.place" />
 	<p class="fight-history" v-html="fightHistory" />
 	<div class="wrapper">
