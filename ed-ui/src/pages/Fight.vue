@@ -3,7 +3,6 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
-	{{ fightText }}<br />
 	<FullFightAnimation :place="fight.place" />
 	<p class="fight-history" v-html="fightHistory" />
 	<div class="wrapper">
@@ -72,7 +71,6 @@ export default defineComponent({
 			fight: {} as FightResult,
 			dinozId: undefined as number | undefined,
 			lang: localStore().getLanguage ?? 'fr',
-			fightText: undefined as string | undefined,
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
 			npcName: undefined as string | undefined
@@ -113,7 +111,6 @@ export default defineComponent({
 			return import.meta.env.MODE === 'development';
 		},
 		displayFight(): void {
-			this.fightText = this.$t(`fight.resume`, { enemy: this.$t(`missions.target.${this.fight.opponent}`) });
 			this.fightHistory = this.fight.history
 				.map(step => translateFightStep(step, this.$t))
 				.filter(Boolean)
