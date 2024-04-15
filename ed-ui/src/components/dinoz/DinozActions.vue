@@ -330,22 +330,10 @@ export default defineComponent({
 						});
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
-
-						// Remove unfollow action and add follow and fight actions
-						const dinozActions = this.dinozActions;
-						if (!dinozActions || !this.updateActions) {
-							EventBus.emit('toast', { type: 'error', message: 'missingData' });
-							return;
-						}
-
-						this.updateActions([
-							actionList[Action.FIGHT],
-							...dinozActions.filter(action => action.name !== Action.UNFOLLOW),
-							actionList[Action.FOLLOW]
-						]);
 					} catch (e) {
 						errorHandler.handle(e);
 					}
+					EventBus.emit('refreshDinoz', true);
 					break;
 				}
 				case Action.DISBAND:
