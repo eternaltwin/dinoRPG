@@ -98,7 +98,7 @@ export interface SkillExpireStep {
 }
 export interface LooseHpStep {
 	action: 'looseHp';
-	fighter: StepFighter;
+	fid: number;
 	hp: number;
 }
 export interface HealStep {

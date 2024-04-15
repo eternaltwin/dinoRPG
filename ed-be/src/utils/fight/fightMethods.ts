@@ -2255,7 +2255,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add looseHp step
 			fightData.steps.push({
 				action: 'looseHp',
-				fighter: stepFighter(fighter),
+				fid: fighter.id,
 				hp: hpLost
 			});
 			break;

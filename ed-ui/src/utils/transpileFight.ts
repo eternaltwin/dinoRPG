@@ -215,6 +215,15 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 			case 'leave':
 				break;
 			case 'looseHp':
+				history.push({
+					action: DinoAction.DAMAGES,
+					fid: step.fid,
+					tid: step.fid,
+					damages: step.hp,
+					lifeFx: {
+						fx: resolveLifeEffect(step)
+					}
+				});
 				break;
 			case 'loseSphere':
 				break;
