@@ -8,10 +8,10 @@ import { SkillType } from '@drpg/core/models/enums/SkillType';
 import {
 	BadStatus,
 	DetailedFighter,
-	Status,
+	FighterStatus,
 	FighterType,
 	GoodStatus,
-	FighterStatus,
+	Status,
 	StatusLength
 } from '@drpg/core/models/fight/DetailedFighter';
 import { InitStepFighter, LeaveAnimation, SkillActivateStep, StepFighter } from '@drpg/core/models/fight/FightStep';
@@ -577,6 +577,16 @@ const registerHit = (
 				const myTarget = lastSkill.targets.find(t => t.tid === opponent.id);
 				if (!myTarget) throw new ErrorFormator(500, `Target ${opponent.id} doesn't exist in ${lastSkill.targets}`);
 				myTarget.damages = actualDamage[opponent.id];
+			}
+			// KAMIKAZE
+			if (skill === Skill.KAMIKAZE) {
+				fightData.steps.push({
+					action: 'hit',
+					fighter: stepFighter(fighter),
+					target: stepFighter(opponent),
+					damage: actualDamage[opponent.id],
+					elements: damageElements
+				});
 			}
 		} else {
 			// Add hit step
@@ -2246,7 +2256,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.KAMIKAZE: {
-			targetSingleOpponent(fightData, fighter, skill, step);
+			// const skillTarget = targetSingleOpponent(fightData, fighter, skill, step);
+			const opponent = getRandomOpponent(fightData, fighter);
+			startAttack(fightData, fighter, opponent, true, true, Skill.KAMIKAZE);
 
 			// Loose 50% HP
 			const hpLost = Math.round(fighter.hp / 2);
@@ -2256,7 +2268,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fightData.steps.push({
 				action: 'looseHp',
 				fid: fighter.id,
-				hp: hpLost
+				hp: hpLost,
+				elements: [ElementType.FIRE]
 			});
 			break;
 		}
@@ -3821,7 +3834,12 @@ const attack = (
 			// M_ELECTROCUTION damage
 			if (is_close_combat && realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
 				const damage = randomBetween(1, 4);
-
+				fightData.steps.push({
+					action: 'looseHp',
+					fid: attacker.id,
+					hp: damage,
+					elements: [ElementType.LIGHTNING]
+				});
 				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
 			}
 		}

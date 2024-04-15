@@ -100,6 +100,7 @@ export interface LooseHpStep {
 	action: 'looseHp';
 	fid: number;
 	hp: number;
+	elements: ElementType[];
 }
 export interface HealStep {
 	action: 'heal';

@@ -6,6 +6,7 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -47,6 +48,29 @@ export function resolveLifeEffect(step: FightStep) {
 		if (step.skill && step.skill === 31406) {
 			// SANG ACIDE
 			return 3;
+		}
+	}
+	return 0;
+}
+
+export function resolveLifeEffectv2(elements: ElementType[]) {
+	if (elements.length > 0) {
+		const element = elements[0];
+		switch (element) {
+			case 6:
+				return 0;
+			case 1:
+				return 8;
+			case 2:
+				return 9;
+			case 3:
+				return 10;
+			case 4:
+				return 11;
+			case 5:
+				return 12;
+			default:
+				return 0;
 		}
 	}
 	return 0;
@@ -221,7 +245,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					tid: step.fid,
 					damages: step.hp,
 					lifeFx: {
-						fx: resolveLifeEffect(step)
+						fx: resolveLifeEffectv2(step.elements)
 					}
 				});
 				break;
@@ -275,19 +299,21 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					fid: step.fid,
 					message: resolveSkillName(step.skill, t)
 				});
-				history.push({
-					action: DinoAction.SKILL,
-					skill: resolveSkillEffect(step.skill),
-					details: {
-						fid: step.fid,
-						targets: step.targets.map(t => {
-							return { id: t.tid, life: t.damages ?? 0 };
-						}),
-						color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
-						type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
-						fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
-					}
-				});
+				if (step.targets.length > 0) {
+					history.push({
+						action: DinoAction.SKILL,
+						skill: resolveSkillEffect(step.skill),
+						details: {
+							fid: step.fid,
+							targets: step.targets.map(t => {
+								return { id: t.tid, life: t.damages ?? 0 };
+							}),
+							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
+							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
+							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
+						}
+					});
+				}
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [

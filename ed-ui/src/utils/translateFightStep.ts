@@ -128,7 +128,7 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			});
 		case 'looseHp':
 			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
+				fighter: getFighterName(fightStep.fid, t),
 				hp: fightStep.hp
 			});
 		case 'addStatus':
