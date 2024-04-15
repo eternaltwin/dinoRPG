@@ -499,6 +499,11 @@ export default defineComponent({
 		storeMission: function (mission: MissionHUD) {
 			this.mission = mission;
 		}
+	},
+	async mounted() {
+		if (this.dinozActions?.some(a => a.name === Action.STOP_REST)) {
+			await this.regenRate();
+		}
 	}
 });
 </script>
