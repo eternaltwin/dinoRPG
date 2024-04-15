@@ -21,6 +21,12 @@
 				{{ $t(`follow`, { leader: leaderDinoz.name }) }}
 			</template>
 		</Tippy>
+		<DZDisclaimer
+			v-if="dinozActions?.some(a => a.name === Action.STOP_REST)"
+			:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
+			class="resting"
+			timer
+		></DZDisclaimer>
 		<ul>
 			<table class="action_button">
 				<tbody>
@@ -118,6 +124,7 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import DZFollow from '../../components/dinoz/DZFollow.vue';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -135,7 +142,8 @@ export default defineComponent({
 			MissionEnum: ConditionEnum,
 			digReward: undefined as Rewarder | undefined,
 			dinozId: this.$route.params.id.toString(),
-			Action
+			Action,
+			hpRegen: 1
 		};
 	},
 	components: {
@@ -450,6 +458,15 @@ export default defineComponent({
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
+		},
+		async regenRate() {
+			const data = this.dinoz;
+			const dinozSkill = await DinozService.getDinozSkill(+this.dinozId);
+			const specialStats = Object.values(SpecialStat)
+				.map(stat => getSpecialStat(data, data.status, dinozSkill, stat as SpecialStat))
+				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
+			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
+			regen ? (this.hpRegen = regen.value) : 1;
 		}
 	},
 	computed: {
@@ -472,6 +489,10 @@ export default defineComponent({
 		},
 		leaderDinoz() {
 			return dinozStore().getDinoz(this.dinoz.leaderId);
+		},
+		minutesBeforeHour() {
+			const day: Date = new Date();
+			return 60 - day.getMinutes();
 		}
 	},
 	watch: {
@@ -596,5 +617,10 @@ export default defineComponent({
 
 .selling {
 	margin-right: 1px;
+}
+
+.resting {
+	margin-right: 1px;
+	margin-top: 0px;
 }
 </style>

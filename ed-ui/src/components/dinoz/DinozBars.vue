@@ -1,5 +1,5 @@
 <template>
-	<div class="dinozBars">
+	<div class="dinozBars" v-if="dinozData">
 		<div
 			class="level"
 			v-tippy="{
@@ -13,7 +13,7 @@
 			<div class="life">
 				<div class="bar">
 					<img
-						v-if="dinozData.life === 0"
+						v-if="dinozData.life <= Math.round(dinozData.maxLife * 0.1)"
 						:src="getImgURL('bar', 'bar_warning')"
 						alt="life"
 						style="width: 98px; height: 11px"
