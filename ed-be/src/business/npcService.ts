@@ -131,20 +131,8 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			if (!dinozData) {
 				throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 			}
-			let followers = dinozData.followers.map(follower => ({
-				...follower,
-				player: dinozData.player
-			}));
-			const deadFollowers = followers.filter(d => d.life <= 0);
 
-			if (deadFollowers.length > 0) {
-				for (const d of deadFollowers) {
-					await updateDinoz(d.id, { leader: { disconnect: true } });
-				}
-				followers = followers.filter(d => d.life > 0);
-			}
-
-			const team = [dinozData, ...followers];
+			const team = [dinozData];
 			if (!isAlive(dinozData)) {
 				throw new ErrorFormator(400, 'dead');
 			}
