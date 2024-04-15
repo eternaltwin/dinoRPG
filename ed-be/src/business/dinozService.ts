@@ -167,11 +167,13 @@ export async function getAvailableActions(
 		if (index >= 0) {
 			availableActions.splice(index, 1);
 		}
-		index = availableActions.indexOf(actionList[Action.ACTION]);
-		if (index >= 0) {
-			availableActions.splice(index, 1);
+		if (dinoz.remaining <= 0) {
+			index = availableActions.indexOf(actionList[Action.ACTION]);
+			if (index >= 0) {
+				availableActions.splice(index, 1);
+			}
+			availableActions.push(actionList[Action.IRMAS]);
 		}
-		availableActions.push(actionList[Action.IRMAS]);
 	}
 
 	if (!dinoz.leaderId && dinoz.fight) {

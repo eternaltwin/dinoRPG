@@ -111,7 +111,7 @@ import Resurect from '../../components/modal/ResurrectModal.vue';
 import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 import NPCModal from '../../components/modal/NPCModal.vue';
 import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
-import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionList';
+import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
