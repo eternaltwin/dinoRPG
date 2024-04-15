@@ -120,7 +120,7 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.IRMAS]: {
 		name: Action.IRMAS,
-		imgName: 'act_irma'
+		imgName: 'act_irmas'
 	},
 	[Action.ACTION]: {
 		name: Action.ACTION,
