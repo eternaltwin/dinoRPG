@@ -14,7 +14,7 @@ export default defineComponent({
 	name: 'Fight',
 	data() {
 		return {
-			hidden: true,
+			loaded: false,
 			sessionStore: sessionStore(),
 			fight: undefined as Fight | undefined
 		};
@@ -25,9 +25,15 @@ export default defineComponent({
 			required: true
 		}
 	},
+	methods: {
+		loadAnimation() {
+			const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
+			if (this.fight && this.loaded) {
+				canvas.appendChild(this.fight.getDisplay());
+			}
+		}
+	},
 	mounted() {
-		const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
-
 		const fightResult = this.sessionStore.getFightResult;
 		if (!fightResult) return;
 		const fightSteps = fightResult.history as FightStep[];
@@ -48,10 +54,15 @@ export default defineComponent({
 		});
 
 		console.log(nexFight.filter(n => n != undefined));
-		canvas.appendChild(this.fight.getDisplay());
+		this.loaded = true;
 	},
 	unmounted() {
 		this.fight?.destroy();
+	},
+	watch: {
+		loaded() {
+			this.loadAnimation();
+		}
 	}
 });
 </script>
