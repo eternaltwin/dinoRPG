@@ -144,7 +144,8 @@ export async function useItem(req: Request) {
 			};
 			break;
 		case ItemEffect.EGG:
-			hatchEgg(item, req.auth.playerId);
+			await hatchEgg(item, req.auth.playerId);
+			console.log('pouet');
 			feedback = {
 				category: ItemEffect.EGG,
 				value: item.effect.race.name
@@ -212,6 +213,7 @@ async function hatchEgg(item: ItemFiche, playerId: number) {
 			throw new ErrorFormator(400, 'tooManyActiveDinoz');
 		}
 	}
+	console.log('continue');
 
 	let randomDisplay = '0';
 

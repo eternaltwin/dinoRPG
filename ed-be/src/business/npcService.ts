@@ -4,7 +4,7 @@ import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Request } from 'express';
-import { getDinozFightDataRequest, getDinozNPCRequest, updateDinoz } from '../dao/dinozDao.js';
+import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { getAllInformationFromPlayer } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
