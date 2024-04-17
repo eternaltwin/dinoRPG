@@ -5,6 +5,7 @@ import { buyItem, getItemsFromShop } from '../business/itemShopService.js';
 import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { getIngredientsFromItinerantShop } from '../business/itinerantShopService.js';
 
 const routes: Router = Router();
 
@@ -38,6 +39,26 @@ routes.get(
 		try {
 			const listItems = await getItemsFromShop(req);
 			res.status(200).send(listItems);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+// Get the ingredients from a shop
+routes.get(
+	`${commonPath}/getItinerantShop/:itinerantId`,
+	[param('itinerantId').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const listIngredients = await getIngredientsFromItinerantShop(req);
+			res.status(200).send(listIngredients);
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);

@@ -82,6 +82,7 @@ import { selectBox } from '../utils/boxesLogic.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import dayjs from 'dayjs';
+import { itinerantShopList } from '@drpg/core/models/shop/ItinerantShopList';
 
 /**
  * @summary Get available action from dinoz
@@ -256,6 +257,19 @@ export async function getAvailableActions(
 			};
 			availableActions.push(shopAction);
 		}
+	}
+
+	// Itinerant Merchant Shop
+	const itinerantShopAvailable = Object.values(itinerantShopList).find(
+		itinerantShop => itinerantShop.placeId == dinoz.placeId
+	);
+	if (itinerantShopAvailable) {
+		const shopAction: ActionFiche = {
+			name: actionList[Action.ITINERANTSHOP].name,
+			imgName: actionList[Action.ITINERANTSHOP].imgName,
+			prop: itinerantShopAvailable.itinerantId
+		};
+		availableActions.push(shopAction);
 	}
 
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);

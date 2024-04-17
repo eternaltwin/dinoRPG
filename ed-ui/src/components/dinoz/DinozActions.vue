@@ -45,6 +45,9 @@
 						<td v-if="action.name === 'shop'" class="label">
 							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
 						</td>
+						<td v-if="action.name === 'itinerant_shop'" class="label">
+							{{ $t(`shop.ingredient.${itinerantShopNameList[action.prop]}.name`) }}
+						</td>
 						<td v-else-if="action.name === 'npc'" class="label">
 							{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}
 						</td>
@@ -64,6 +67,10 @@
 							<h1
 								v-if="action.name === 'shop'"
 								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))"
+							/>
+							<h1
+								v-if="action.name === 'itinerant_shop'"
+								v-html="formatContent($t(`shop.ingredient.${itinerantShopNameList[action.prop]}.name`))"
 							/>
 							<h1
 								v-else-if="action.name === 'npc'"
@@ -102,7 +109,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { missionsList, shopNameList } from '../../constants/index.js';
+import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 import { dinozStore, sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
@@ -125,12 +132,14 @@ import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import DZFollow from '../../components/dinoz/DZFollow.vue';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
+import dayjs from 'dayjs';
 
 export default defineComponent({
 	name: 'DinozActions',
 	data() {
 		return {
 			shopNameList: shopNameList,
+			itinerantShopNameList: itinerantShopNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
 			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
@@ -143,7 +152,9 @@ export default defineComponent({
 			digReward: undefined as Rewarder | undefined,
 			dinozId: this.$route.params.id.toString(),
 			Action,
-			hpRegen: 1
+			hpRegen: 1,
+			dayOfWeek: dayjs().day(),
+			itinerantName: '' as string
 		};
 	},
 	components: {
@@ -189,6 +200,13 @@ export default defineComponent({
 					this.$router.push({
 						name: 'ItemShopPage',
 						params: { name: shopNameList[action.prop as number] }
+					});
+					break;
+				case Action.ITINERANTSHOP:
+					this.itinerantName = itinerantShopNameList[this.dayOfWeek];
+					this.$router.push({
+						name: 'ItinerantMerchantPage',
+						params: { name: this.itinerantName }
 					});
 					break;
 				case Action.NPC:
