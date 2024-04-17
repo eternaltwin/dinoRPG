@@ -131,7 +131,7 @@ export default defineComponent({
 		},
 		isInputFilled(): boolean {
 			for (const key in this.inputValues) {
-				if (this.inputValues.hasOwnProperty(key) && this.inputValues[key] !== 0) {
+				if (Object.prototype.hasOwnProperty.call(this.inputValues, key) && this.inputValues[key] !== 0) {
 					console.log(this.inputValues);
 					return true;
 				}
@@ -142,7 +142,7 @@ export default defineComponent({
 	methods: {
 		checkInputValidity(): boolean {
 			for (const key in this.inputValues) {
-				if (this.inputValues.hasOwnProperty(key)) {
+				if (Object.prototype.hasOwnProperty.call(this.inputValues, key)) {
 					const quantity = parseInt(this.inputValues[key]);
 					if (isNaN(quantity) || quantity <= 0) {
 						return false;
@@ -180,7 +180,7 @@ export default defineComponent({
 				let ingredientId: number | undefined;
 				let quantity: number | undefined;
 				for (const key in this.inputValues) {
-					if (this.inputValues.hasOwnProperty(key) && this.inputValues[key] !== 0) {
+					if (Object.prototype.hasOwnProperty.call(this.inputValues, key) && this.inputValues[key] !== 0) {
 						ingredientId = parseInt(key);
 						quantity = parseInt(this.inputValues[key]);
 						break;
