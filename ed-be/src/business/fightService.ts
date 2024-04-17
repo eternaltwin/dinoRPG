@@ -24,6 +24,7 @@ import randomBetween from '../utils/fight/randomBetween.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import dayjs from 'dayjs';
+import weightedRandom from '../utils/fight/weightedRandom.js';
 
 /**
  * @summary Process a fight
@@ -511,7 +512,7 @@ function monsterLevelProba(level: number, p: number, monsterLvl: number) {
 }
 
 export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], placeOfFight: PlaceEnum) {
-	const pow = 1;
+	const POW = 1;
 	let teamLevel = 0;
 	let maxLevel = 0;
 	for (const fighter of fighters) {
@@ -522,9 +523,9 @@ export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], pl
 	const count = fighters.length;
 	const dif = (count + 2) / (count * 2 + 1);
 	teamLevel = Math.round(teamLevel * dif);
-	teamLevel += (pow - 1) * 3;
-	teamLevel += (pow - 1) * 0.3 * teamLevel;
-	let mdelta = teamLevel / 4;
+	teamLevel += (POW - 1) * 3;
+	teamLevel += (POW - 1) * 0.3 * teamLevel;
+	let mdelta = Math.round(teamLevel / 4);
 	if (mdelta < 2) mdelta = 2;
 
 	const specialProb = getRandomNumber(0, 100);
@@ -562,6 +563,10 @@ export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], pl
 		})
 		.filter(m => m.p > 0);
 
+	//TODO Recreate this function to boost p while dinoz are on mission
+	// for( r in dinoz )
+	// 	handler.Missions.updateMonstersProbas(r.d, pos, ml);
+
 	let monsterLevel = 0;
 	const monsterArray: MonsterFiche[] = [];
 	let total = 0;
@@ -582,8 +587,12 @@ export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], pl
 	}
 
 	while (monsterLevel < teamLevel) {
-		const randomIndex = getRandomNumber(0, monsters.length);
-		const m = monsters[randomIndex].monster;
+		// const randomIndex = getRandomNumber(0, monsters.length);
+		const ml = monsters.map(a => {
+			return { monster: a.monster, odds: a.p };
+		});
+		const total = ml.reduce((acc, item) => acc + item.odds, 0);
+		const m = weightedRandom(ml, total).monster;
 		let count = 0;
 		if (!m.groups) {
 			count = 1;
@@ -601,7 +610,8 @@ export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], pl
 		if (m.special) {
 			// TODO: Rework this part to avoid using delete
 			// eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-			delete monsters[randomIndex];
+			// delete monsters[randomIndex];
+			break;
 		}
 		monsterLevel += mdelta;
 	}

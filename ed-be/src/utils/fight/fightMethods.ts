@@ -1654,7 +1654,15 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fighter.stats.defense[ElementType.VOID] -= 10;
 
 				// Regen 1-4 HP (weighted)
-				heal(fightData, fighter, 1 + weightedRandom([10, 7, 5, 3]));
+				const data = [
+					{ hp: 0, odds: 10 },
+					{ hp: 1, odds: 7 },
+					{ hp: 2, odds: 5 },
+					{ hp: 3, odds: 3 }
+				];
+				const total = data.reduce((acc, item) => acc + item.odds, 0);
+				const item = weightedRandom(data, total); // { id: X, odds: Y }
+				heal(fightData, fighter, 1 + item.hp);
 				break;
 			}
 			case Item.PORTABLE_LOVE: {
