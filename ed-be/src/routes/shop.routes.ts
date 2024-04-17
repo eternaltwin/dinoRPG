@@ -5,7 +5,7 @@ import { buyItem, getItemsFromShop } from '../business/itemShopService.js';
 import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { getIngredientsFromItinerantShop } from '../business/itinerantShopService.js';
+import { getIngredientsFromItinerantShop, sellIngredient } from '../business/itinerantShopService.js';
 
 const routes: Router = Router();
 
@@ -82,6 +82,30 @@ routes.put(
 
 		try {
 			const ret = await buyItem(req);
+			res.status(200).send(ret);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+// Sell an ingredient from an itinerant shop
+routes.put(
+	`${commonPath}/sellIngredient/:itinerantId`,
+	[
+		param('itinerantId').exists().toInt().isNumeric(),
+		body('ingredientId').exists().toInt().isNumeric(),
+		body('quantity').exists().toInt().isNumeric()
+	],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const ret = await sellIngredient(req);
 			res.status(200).send(ret);
 		} catch (err) {
 			const e = err as ErrorFormator;

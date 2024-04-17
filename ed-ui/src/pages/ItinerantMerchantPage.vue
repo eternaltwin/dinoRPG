@@ -19,7 +19,6 @@
 					/>
 				</div>
 				<p v-html="formatContent($t(`shop.ingredient.${itinerantShopNameList[itinerantId]}.description`))" />
-				<div class="clear"></div>
 			</div>
 		</div>
 		<div class="list">
@@ -60,7 +59,12 @@
 						</td>
 						<td class="stock" v-else>--</td>
 						<td class="quantity">
-							<input class="input" type="number" />
+							<input
+								class="input"
+								type="number"
+								v-model="inputValues[ingredient.ingredientId]"
+								@input="checkInputValidity()"
+							/>
 						</td>
 
 						<template #content>
@@ -76,7 +80,18 @@
 			</table>
 		</div>
 		<div v-if="currentDay !== 0" class="sell">
-			<a class="button" v-html="formatContent($t('shop.item.sell'))" />
+			<Tippy theme="small" tag="a" class="button disabled" v-if="!isInputFilled">
+				<template #content>
+					<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
+				</template>
+				{{ $t(`shop.item.sell`) }}
+			</Tippy>
+			<a
+				class="button"
+				v-html="formatContent($t('shop.item.sell'))"
+				@click="sellIngredientPopinConfirmChoice(ingredient?.ingredientId, inputValues[ingredient?.ingredientId])"
+				v-else
+			/>
 		</div>
 	</div>
 </template>
@@ -104,7 +119,8 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			ingredientNameList: ingredientNameList,
 			ingredientList: [] as Array<IngredientFiche>,
-			currentDay: dayjs().day()
+			currentDay: dayjs().day(),
+			inputValues: {}
 		};
 	},
 	computed: {
@@ -112,6 +128,70 @@ export default defineComponent({
 			const itinerantName = this.itinerantShopNameList[this.currentDay];
 			const itinerantIndex = itinerantShopNameList.indexOf(itinerantName);
 			return itinerantIndex;
+		},
+		isInputFilled(): boolean {
+			for (const key in this.inputValues) {
+				if (this.inputValues.hasOwnProperty(key) && this.inputValues[key] !== 0) {
+					console.log(this.inputValues);
+					return true;
+				}
+			}
+			return false;
+		}
+	},
+	methods: {
+		checkInputValidity(): boolean {
+			for (const key in this.inputValues) {
+				if (this.inputValues.hasOwnProperty(key)) {
+					const quantity = parseInt(this.inputValues[key]);
+					if (isNaN(quantity) || quantity <= 0) {
+						return false;
+					}
+					const ingredient = this.ingredientList.find(ingredient => ingredient.ingredientId === parseInt(key));
+					if (!ingredient || quantity > ingredient.quantity) {
+						return false;
+					}
+				}
+			}
+			return true;
+		},
+		async sellIngredients(ingredientId: number, quantity: number): Promise<void> {
+			try {
+				await IngredientShopService.sellIngredient(this.itinerantId, ingredientId, quantity);
+				EventBus.emit('isLoading', false);
+				const updatedIngredient = this.ingredientList.find(ingredient => ingredient.ingredientId === ingredientId);
+				if (updatedIngredient) {
+					updatedIngredient.quantity -= quantity;
+				}
+			} catch (err) {
+				errorHandler.handle(err);
+				return;
+			}
+			const ingredient = this.ingredientList.find(ingredient => ingredient.ingredientId === ingredientId);
+			if (ingredient) {
+				const newMoney = this.playerStore.getMoney! + ingredient.price! * quantity;
+				this.playerStore.setMoney(newMoney);
+			}
+		},
+		async sellIngredientPopinConfirmChoice(): Promise<void> {
+			const res: boolean = confirm(this.$t('popup.confirm'));
+			if (res) {
+				EventBus.emit('isLoading', true);
+				let ingredientId: number | undefined;
+				let quantity: number | undefined;
+				for (const key in this.inputValues) {
+					if (this.inputValues.hasOwnProperty(key) && this.inputValues[key] !== 0) {
+						ingredientId = parseInt(key);
+						quantity = parseInt(this.inputValues[key]);
+						break;
+					}
+				}
+				if (ingredientId !== undefined && quantity !== undefined) {
+					await this.sellIngredients(ingredientId, quantity);
+				} else {
+					console.error("La quantité n'est pas définie pour l'ingrédient sélectionné.");
+				}
+			}
 		}
 	},
 	async mounted(): Promise<void> {
@@ -284,6 +364,9 @@ export default defineComponent({
 		display: flex;
 		justify-content: center;
 		margin-top: 20px;
+		.disabled {
+			opacity: 0.3;
+		}
 	}
 }
 </style>

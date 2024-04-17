@@ -1,14 +1,13 @@
-import { DinozStatusId } from "@drpg/core/models/dinoz/StatusList";
 import { IngredientFiche } from "@drpg/core/models/ingredient/IngredientFiche";
 import { ingredientList } from "@drpg/core/models/ingredient/ingredientList";
 import { ItinerantShopFiche } from "@drpg/core/models/shop/ItinerantShopFiche";
 import { itinerantShopList } from "@drpg/core/models/shop/ItinerantShopList";
-import { Dinoz, DinozStatus, LogType, PlayerIngredient } from "@drpg/prisma";
+import { Dinoz, LogType } from "@drpg/prisma";
 import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
 import { Request } from "express";
 import dayjs from "dayjs";
 import { createLog } from "../dao/logDao.js";
-import { getPlayerShopIngredientsDataRequest, addMoney } from "../dao/playerDao.js";
+import { getPlayerShopIngredientsDataRequest, addMoney, getPlayerShopOneIngredientsDataRequest } from "../dao/playerDao.js";
 import { decreaseIngredientQuantity } from "../dao/playerIngredientDao.js";
 import { ErrorFormator } from "../utils/errorFormator.js";
 
@@ -52,7 +51,7 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
         throw new ErrorFormator(500, `Player ${playerId} doesn't exist`)
     }
 
-    // TODO: Check Dinoz Place 
+    checkDinozPlace(itinerantTempShop, playerIngShopData, itinerantId);
 
     return itinerantTempShop.listIngredients.map(ingBuy => {
         // Get the ingredient data if the player has it
@@ -76,4 +75,99 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
             maxQuantity: ingredientReference.maxQuantity
         }
     });
+}
+
+/**
+ * @summary Sell an ingredient
+ * @param req
+ * @param req.params.itinerantId {string} ItinerantId
+ * @param req.body.ingredientId {string} Ingredient to sell
+ * @param req.body.quantity {string} Quantity to sell
+ * @return void
+ */
+export async function sellIngredient(req: Request) {
+    if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized.`);
+	}
+	const playerId = req.auth.playerId;
+    const itinerantId = +req.params.itinerantId;
+    const ingredientId = +req.body.ingredientId;
+    const quantitySelled = +req.body.quantity; 
+
+    const playerIngShopData = await getPlayerShopOneIngredientsDataRequest(playerId, ingredientId);
+
+    if (!playerIngShopData) {
+        throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`)
+    }
+
+    const playerIngData = playerIngShopData.ingredients.find(ing => ing.ingredientId === ingredientId);
+
+    if (quantitySelled <= 0) {
+        throw new ErrorFormator(400, `wrongQuantity`);
+    }
+
+    const theItinerantShop: ItinerantShopFiche | undefined = Object.values(itinerantShopList).find(itinerantShop => itinerantShop.itinerantId === itinerantId);
+
+    if (!theItinerantShop) {
+        throw new ErrorFormator(500, `The itinerant shop ${itinerantId} does not exist`);
+    }
+
+    checkDinozPlace(theItinerantShop, playerIngShopData, itinerantId);
+
+    const ingSell = theItinerantShop.listIngredients.find(ing => ing.ingredientId === ingredientId);
+    if (ingSell === undefined) {
+        throw new ErrorFormator(500, `The ingredient ${ingredientId} does not exist in this shop`)
+    }
+
+    const ingredientReference = Object.values(ingredientList).find(ing => ing.ingredientId === ingredientId);
+
+    if (!ingredientReference) {
+        throw new ErrorFormator(500, `Ingredient ${ingredientId} doesn't exist.`);
+    }
+
+    if (!ingSell.price) {
+        throw new ErrorFormator(500, `Ingredient ${ingredientId} doesn't have a price.`)
+    }
+
+    ingredientReference.price = ingSell.price;
+    ingredientReference.quantity = playerIngData ? playerIngData.quantity - quantitySelled : quantitySelled;
+
+    const maxQuantityAvailable = playerIngData ? playerIngData.quantity : 0;
+
+    if (quantitySelled > maxQuantityAvailable) {
+        throw new ErrorFormator(400, `enoughQuantity`);
+    }
+
+    await addMoney(playerId, ingredientReference.price * quantitySelled);
+
+    if (playerIngData) {
+        await decreaseIngredientQuantity(
+            playerId,
+            ingredientReference.ingredientId,
+            quantitySelled
+        )
+    }
+
+    await createLog(
+        LogType.GoldWon,
+        playerId,
+        undefined,
+        ingredientReference.ingredientId.toString(),
+        ingredientReference.quantity.toString()
+    );
+}
+
+// Check if player can access the shop
+// The check is done for the shops that are not accessible from anywhere (i.e does not apply to the flying shop)
+function checkDinozPlace(
+	theItinerantShop: ItinerantShopFiche,
+	player: {
+		dinoz: (Pick<Dinoz, 'placeId'>)[];
+	},
+	itinerantId: number
+) {
+    // Check at least one dinoz that is not frozen or sacrificed is at the location of the shop
+			if (!player.dinoz.some(dinoz => dinoz.placeId === theItinerantShop.placeId)) {
+				throw new ErrorFormator(500, `You don't have any dinoz at the shop's location ${itinerantId}`);
+			}
 }

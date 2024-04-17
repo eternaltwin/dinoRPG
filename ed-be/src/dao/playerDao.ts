@@ -581,7 +581,7 @@ export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: 
 }
 
 /**
- * Get all the necessary data from the player for ingredientsShopService getIngredientsFromShop function
+ * Get all the necessary data from the player for itinerantShopService getIngredientsFromShop function
  * That includes: money, merchant, all its dinoz that are not frozen or sacrificed and their placeId,
  * all its ingredients and their quantity
  * Throws an error if the player does not exist.
@@ -597,6 +597,39 @@ export async function getPlayerShopIngredientsDataRequest(playerId: number) {
 			money: true,
 			ingredients: {
 				select: {
+					ingredientId: true,
+					quantity: true
+				}
+			},
+			dinoz: {
+				select: {
+					placeId: true,
+					status: { select: { statusId: true } }
+				},
+				where: {
+					OR: [
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+					]
+				}
+			}
+		}
+	});
+
+	return player;
+};
+
+export async function getPlayerShopOneIngredientsDataRequest(playerId: number, ingredientId: number) {
+	const player = await prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			money: true,
+			ingredients: {
+				select: {
+					id: true,
 					ingredientId: true,
 					quantity: true
 				}
