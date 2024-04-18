@@ -14,6 +14,16 @@ export const getBasicElementDamage = (fighter: DetailedFighter, element: Element
 	return fighter.stats.base[element] * (power || DEFAULT_ATTACK_POWER) + fighter.stats.assaultBonus[element];
 };
 
+// Balance the damage if the fighter (supposedly the target of the damage) requires balanced damage
+export const applyBalanceDamage = (fighter: DetailedFighter, damage: number) => {
+	return fighter.balanced ? balanceDamage(damage) : damage;
+}
+
+// Applies x^0.6 to damage to smooth it and obtain balanced results
+export const balanceDamage = (damage: number) => {
+	return Math.pow(Math.max(damage, 0), 0.6);
+}
+
 export const getDamage = (
 	attacker: DetailedFighter,
 	opponent: DetailedFighter,
@@ -41,7 +51,7 @@ export const getDamage = (
 			// Combustion inflicts a fixed amount, so the value is directly returned
 			case Skill.COMBUSTION: {
 				return {
-					damage: opponent.stats.base[ElementType.WOOD],
+					damage: applyBalanceDamage(opponent, opponent.stats.base[ElementType.WOOD]),
 					elements: [ElementType.WOOD]
 				};
 			}
@@ -196,6 +206,11 @@ export const getDamage = (
 	}
 
 	let damage = attack - defense;
+
+	// Smooth damage to prevent crazy numbers if both fighters require it
+	if (attacker.balanced && opponent.balanced) {
+		damage = balanceDamage(damage);
+	}
 
 	damage = Math.round(damage);
 

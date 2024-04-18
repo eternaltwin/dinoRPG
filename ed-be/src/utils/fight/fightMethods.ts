@@ -29,7 +29,7 @@ import {
 	TIME_FACTOR
 } from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
-import { getBasicElementDamage, getDamage } from './getDamage.js';
+import { applyBalanceDamage, getBasicElementDamage, getDamage } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
 import randomBetween from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
@@ -2377,7 +2377,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// 0 damage if boss or Skill.PERCEPTION
 				if (!opponent.skills.find(s => s.id === Skill.PERCEPTION) && opponent.type !== 'boss') {
 					// 50% HP otherwise
-					damage = Math.round(opponent.hp / 2);
+					damage = applyBalanceDamage(opponent, Math.round(opponent.hp / 2));
 				}
 
 				registerHit(fightData, fighter, [opponent], damage, [], skill.id);
@@ -2408,7 +2408,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// 0 damage if boss or Skill.PERCEPTION
 				if (!opponent.skills.find(s => s.id === Skill.PERCEPTION) && opponent.type !== 'boss') {
 					// 100% HP otherwise
-					damage = opponent.hp;
+					damage = applyBalanceDamage(opponent, opponent.hp);
 				}
 
 				registerHit(fightData, fighter, [opponent], damage, [], skill.id);
@@ -3818,7 +3818,7 @@ const attack = (
 				// 1/3 chance
 				randomBetween(0, 2) === 0
 			) {
-				const damage = realOpponent.stats.special.acidBloodDamage;
+				const damage = applyBalanceDamage(realOpponent, realOpponent.stats.special.acidBloodDamage);
 
 				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.WATER], Skill.SANG_ACIDE);
 			}
@@ -4298,7 +4298,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								}
 
 								// Register the hit
-								registerHit(fightData, burner, [fighter], burnedBy.damage, [], burnedBy.skill);
+								registerHit(fightData, burner, [fighter], applyBalanceDamage(fighter, burnedBy.damage), [], burnedBy.skill);
 								break;
 							}
 							case Status.HEALING: {
@@ -4307,7 +4307,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								break;
 							}
 							case Status.TORCHED: {
-								registerHit(fightData, fighter, [fighter], 1, [ElementType.FIRE], Skill.TORCHE);
+								registerHit(fightData, fighter, [fighter], applyBalanceDamage(fighter, 1), [ElementType.FIRE], Skill.TORCHE);
 								break;
 							}
 							default: {

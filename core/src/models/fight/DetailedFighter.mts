@@ -93,8 +93,12 @@ export interface DetailedFighter {
 	display?: string;
 	type: FighterType;
 	master?: number;
+	// Team side
 	attacker: boolean;
+	// If the fighter needs to use smoothed calculations
+	balanced: boolean;
 	escaped?: boolean;
+
 	// Raw stats
 	maxHp: number;
 	startingHp: number;

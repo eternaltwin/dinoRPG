@@ -15,6 +15,8 @@ export type MonsterFiche = {
 	bonus_attack?: number | undefined;
 	// bonus defense for monster
 	bonus_defense?: number | undefined;
+	// If the monster needs to use smoothed calculations
+	balanced: boolean;
 	groups?: number[];
 	xp?: number;
 	xpBonus?: number;
