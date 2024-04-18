@@ -11,20 +11,6 @@ import { getPlayerShopIngredientsDataRequest, addMoney, getPlayerShopOneIngredie
 import { decreaseIngredientQuantity } from "../dao/playerIngredientDao.js";
 import { ErrorFormator } from "../utils/errorFormator.js";
 
-
-// Fonction pour calculer l'ID du marchand itinérant en fonction de la date actuelle
-function calculateItinerantId(): number {
-    // Obtenir le jour actuel en utilisant Day.js
-    const currentDay = dayjs().day(); // Day.js retourne un numéro de 0 (dimanche) à 6 (samedi)
-
-    // Si le jour est dimanche (0), retourne itinerantId 7 (dimanche)
-    if (currentDay === 0) {
-        return 7;
-    }
-
-    return currentDay;
-}
-
 /**
  * @summary Get all ingredients from itinerant shop
  * @param req
@@ -47,6 +33,7 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 
     const playerIngShopData = await getPlayerShopIngredientsDataRequest(playerId);
 
+    // Throw an exception if the player doesn't exist
     if (!playerIngShopData) {
         throw new ErrorFormator(500, `Player ${playerId} doesn't exist`)
     }
@@ -96,18 +83,21 @@ export async function sellIngredient(req: Request) {
 
     const playerIngShopData = await getPlayerShopOneIngredientsDataRequest(playerId, ingredientId);
 
+    // Throw an exception if the player doesn't exist
     if (!playerIngShopData) {
         throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`)
     }
 
     const playerIngData = playerIngShopData.ingredients.find(ing => ing.ingredientId === ingredientId);
 
+    // Lock negative quantities
     if (quantitySelled <= 0) {
         throw new ErrorFormator(400, `wrongQuantity`);
     }
 
     const theItinerantShop: ItinerantShopFiche | undefined = Object.values(itinerantShopList).find(itinerantShop => itinerantShop.itinerantId === itinerantId);
 
+    // Throw an exception if the shop doesn't exist
     if (!theItinerantShop) {
         throw new ErrorFormator(500, `The itinerant shop ${itinerantId} does not exist`);
     }
@@ -132,10 +122,10 @@ export async function sellIngredient(req: Request) {
     ingredientReference.price = ingSell.price;
     ingredientReference.quantity = playerIngData ? playerIngData.quantity - quantitySelled : quantitySelled;
 
+    // Lock quantities greater than the player owns
     const maxQuantityAvailable = playerIngData ? playerIngData.quantity : 0;
-
     if (quantitySelled > maxQuantityAvailable) {
-        throw new ErrorFormator(400, `enoughQuantity`);
+        throw new ErrorFormator(400, `notEnoughQuantity`);
     }
 
     await addMoney(playerId, ingredientReference.price * quantitySelled);
@@ -155,6 +145,12 @@ export async function sellIngredient(req: Request) {
         ingredientReference.ingredientId.toString(),
         ingredientReference.quantity.toString()
     );
+
+    return {
+        ingredientId: ingredientReference.ingredientId,
+        quantity: quantitySelled,
+        gold: ingredientReference.price * quantitySelled
+    }
 }
 
 // Check if player can access the shop
@@ -170,4 +166,16 @@ function checkDinozPlace(
 			if (!player.dinoz.some(dinoz => dinoz.placeId === theItinerantShop.placeId)) {
 				throw new ErrorFormator(500, `You don't have any dinoz at the shop's location ${itinerantId}`);
 			}
+}
+
+// Function to calculate the itinerant merchant's ID based on the current date.
+function calculateItinerantId(): number {
+    const currentDay = dayjs().day(); 
+
+    // If the day is Sunday (0), return itinerantId 7 (Sunday).
+    if (currentDay === 0) {
+        return 7;
+    }
+
+    return currentDay;
 }

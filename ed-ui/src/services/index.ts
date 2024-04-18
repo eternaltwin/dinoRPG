@@ -5,7 +5,6 @@ export * from './FightService.js';
 export * from './IngredientsService.js';
 export * from './InventoryService.js';
 export * from './ItemShopService.js';
-export * from './ItinerantShopService.js';
 export * from './LogsService.js';
 export * from './MissionService.js';
 export * from './NewsService.js';

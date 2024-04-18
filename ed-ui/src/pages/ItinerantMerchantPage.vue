@@ -105,7 +105,7 @@ import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
-import { IngredientShopService } from '../services/ItinerantShopService';
+import { IngredientShopService } from '../services/IngredientsService';
 import dayjs from 'dayjs';
 
 export default defineComponent({
@@ -132,7 +132,6 @@ export default defineComponent({
 		isInputFilled(): boolean {
 			for (const key in this.inputValues) {
 				if (Object.prototype.hasOwnProperty.call(this.inputValues, key) && this.inputValues[key] !== 0) {
-					console.log(this.inputValues);
 					return true;
 				}
 			}
@@ -155,7 +154,7 @@ export default defineComponent({
 			}
 			return true;
 		},
-		async sellIngredients(ingredientId: number, quantity: number): Promise<void> {
+		async sellIngredient(ingredientId: number, quantity: number): Promise<void> {
 			try {
 				await IngredientShopService.sellIngredient(this.itinerantId, ingredientId, quantity);
 				EventBus.emit('isLoading', false);
@@ -176,27 +175,29 @@ export default defineComponent({
 		async sellIngredientPopinConfirmChoice(): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
 			if (res) {
-				EventBus.emit('isLoading', true);
-				let ingredientId: number | undefined;
-				let quantity: number | undefined;
-				for (const key in this.inputValues) {
-					if (Object.prototype.hasOwnProperty.call(this.inputValues, key) && this.inputValues[key] !== 0) {
-						ingredientId = parseInt(key);
-						quantity = parseInt(this.inputValues[key]);
-						break;
+				try {
+					EventBus.emit('isLoading', true);
+					let ingredientId: number | undefined;
+					let quantity: number | undefined;
+					for (const key in this.inputValues) {
+						if (Object.prototype.hasOwnProperty.call(this.inputValues, key) && this.inputValues[key] !== 0) {
+							ingredientId = parseInt(key);
+							quantity = parseInt(this.inputValues[key]);
+							break;
+						}
 					}
-				}
-				if (ingredientId !== undefined && quantity !== undefined) {
-					await this.sellIngredients(ingredientId, quantity);
-				} else {
-					console.error("La quantité n'est pas définie pour l'ingrédient sélectionné.");
+					if (ingredientId !== undefined && quantity !== undefined) {
+						await this.sellIngredient(ingredientId, quantity);
+					}
+				} catch (err) {
+					errorHandler.handle(err);
+					return;
 				}
 			}
 		}
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
-		// Get shop and its items to display
 		try {
 			this.ingredientList = await IngredientShopService.getIngredientsFromIngredientsShop(this.itinerantId);
 			EventBus.emit('isLoading', false);
@@ -206,7 +207,6 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		// Reload the item list if the player go on another shop page
 		'$route.params.name': async function () {
 			if (this.itinerantId < 0) {
 				return;

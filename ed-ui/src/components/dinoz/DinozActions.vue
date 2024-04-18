@@ -153,7 +153,7 @@ export default defineComponent({
 			dinozId: this.$route.params.id.toString(),
 			Action,
 			hpRegen: 1,
-			dayOfWeek: dayjs().day(),
+			currentDay: dayjs().day(),
 			itinerantName: '' as string
 		};
 	},
@@ -203,7 +203,7 @@ export default defineComponent({
 					});
 					break;
 				case Action.ITINERANTSHOP:
-					this.itinerantName = itinerantShopNameList[this.dayOfWeek];
+					this.itinerantName = itinerantShopNameList[this.currentDay];
 					this.$router.push({
 						name: 'ItinerantMerchantPage',
 						params: { name: this.itinerantName }
