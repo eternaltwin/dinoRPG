@@ -72,6 +72,35 @@ export async function getPlayerId(eternalTwinId: string) {
 	return player;
 }
 
+export async function getLBPlayer(eternalTwinId: string) {
+	const player = await prisma.player.findFirst({
+		where: {
+			eternalTwinId
+		},
+		select: {
+			id: true,
+			name: true,
+			dinoz: {
+				select: {
+					remaining: true
+				},
+				where: {
+					OR: [
+						{ unavailableReason: null },
+						{
+							unavailableReason: {
+								not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed, UnavailableReason.selling] }
+							}
+						}
+					]
+				}
+			}
+		}
+	});
+
+	return player;
+}
+
 export async function getPlayerUSkills(playerId: number) {
 	const player = await prisma.player.findFirst({
 		where: {

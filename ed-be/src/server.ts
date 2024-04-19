@@ -21,6 +21,7 @@ import playerRoutes from './routes/player.routes.js';
 import rankingRoutes from './routes/ranking.routes.js';
 import shopRoutes from './routes/shop.routes.js';
 import webSocketRoutes from './routes/websockets.routes.js';
+import eternaltwinRoutes from './routes/eternaltwin.routes.js';
 import { getEnvironnement, loadConfigFile } from './utils/context.js';
 import { swaggerOptions } from './utils/index.js';
 import { jwtConfig } from './utils/jwt.js';
@@ -66,6 +67,8 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(eternaltwinRoutes);
 
 // Use JWT authentication to secure the API
 app.use(jwtConfig());
