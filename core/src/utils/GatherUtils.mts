@@ -91,7 +91,7 @@ export const discoverBox = (
 				const gridIngredient = gridInformation.items.find(ing => ing.ingredientId === ingredient[1].ingredientId);
 				if (!gridIngredient) throw new Error('Ingredient not found in gridInformation.items');
 				const condition = gridIngredient.condition;
-				ingredient[1].name = ingredient[0].toLowerCase() as Lowercase<string>;
+				ingredient[1].name = ingredient[0].toLowerCase();
 				ingredient[1] && checkCondition(condition, [dinoz]) ? rewards.ingredients.push(ingredient[1]) : 0;
 			}
 		}

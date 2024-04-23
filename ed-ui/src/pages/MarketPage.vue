@@ -32,6 +32,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { dinozStore, playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import DZButton from '../components/common/DZButton.vue';
 import { goTo } from '../utils/goTo.js';
 

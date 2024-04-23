@@ -29,6 +29,37 @@ export async function getActiveDinoz(playerId: number) {
 	return dinozList;
 }
 
+export async function getDinozItinerantShop(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: {
+			id: dinozId
+		},
+		select: {
+			placeId: true,
+			level: true,
+			life: true,
+			status: { select: { statusId: true } },
+			missions: { select: { missionId: true, isFinished: true } },
+			skills: { select: { skillId: true } },
+			player: {
+				select: {
+					id: true,
+					money: true,
+					ingredients: {
+						select: {
+							ingredientId: true,
+							quantity: true
+						}
+					},
+					items: { select: { itemId: true, quantity: true } },
+					rewards: { select: { rewardId: true } }
+				}
+			}
+		}
+	});
+	return dinoz;
+}
+
 export async function getAllDinozFromAccount(playerId: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {

@@ -28,11 +28,12 @@ export enum ConditionEnum {
 	DO = 'do',
 	HIDE_PLACE = 'hidePlace',
 	PLACE_IS = 'place_is',
-	NEXT_PLACE = 'next_place',
 	OVERWRITE = 'overwrite',
 	DINOZ_LIFE = 'dinoz_life',
 	KILL_BOSS = 'kill_boss',
-	LAUNCH_FIGHT = 'launch_fight'
+	LAUNCH_FIGHT = 'launch_fight',
+	DAY = 'day',
+	WEEK_PLACE = 'week_place'
 }
 
 export enum TriggerEnum {

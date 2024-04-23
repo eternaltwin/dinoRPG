@@ -5,6 +5,7 @@ import { buyItem, getItemsFromShop } from '../business/itemShopService.js';
 import { apiRoutes } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { getIngredientsFromItinerantShop, sellIngredient } from '../business/itinerantShopService.js';
 
 const routes: Router = Router();
 
@@ -46,6 +47,26 @@ routes.get(
 	}
 );
 
+// Get the ingredients from a shop
+routes.get(
+	`${commonPath}/getItinerantShop/:dinozId`,
+	[param('dinozId').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const listIngredients = await getIngredientsFromItinerantShop(req);
+			res.status(200).send(listIngredients);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
 // Buy an item from a shop
 routes.put(
 	`${commonPath}/buyItem/:shopId`,
@@ -61,6 +82,26 @@ routes.put(
 
 		try {
 			const ret = await buyItem(req);
+			res.status(200).send(ret);
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+// Sell an ingredient from an itinerant shop
+routes.put(
+	`${commonPath}/sellIngredient/:dinozId`,
+	[param('dinozId').exists().toInt().isNumeric(), body('ingredients').exists()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const ret = await sellIngredient(req);
 			res.status(200).send(ret);
 		} catch (err) {
 			const e = err as ErrorFormator;

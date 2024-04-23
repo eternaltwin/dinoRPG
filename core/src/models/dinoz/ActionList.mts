@@ -5,6 +5,7 @@ export enum Action {
 	FOLLOW = 'follow',
 	UNFOLLOW = 'unfollow',
 	SHOP = 'shop',
+	ITINERANTSHOP = 'itinerant_shop',
 	LEVEL_UP = 'levelup',
 	NPC = 'npc',
 	RESURRECT = 'resurrect',
@@ -51,6 +52,10 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.SHOP]: {
 		name: Action.SHOP,
+		imgName: 'act_shop'
+	},
+	[Action.ITINERANTSHOP]: {
+		name: Action.ITINERANTSHOP,
 		imgName: 'act_shop'
 	},
 	[Action.LEVEL_UP]: {

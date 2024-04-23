@@ -1,13 +1,14 @@
 import { ConditionEnum } from '../models/enums/Parser.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
-import { Place } from '../models/place/Place.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { DinozForConditionCheck } from '../constants.mjs';
+import dayjs from 'dayjs';
+import { ErrorFormator } from '../utils/errorFormator.mjs';
 
 export function conditionParser(
 	condition: Condition,
 	dinozList: DinozForConditionCheck[],
-	futurPlace?: Place
+	secret?: { key: string; value: string }
 ): boolean {
 	let result;
 	const GOTO = condition[ConditionEnum.GOTO];
@@ -21,10 +22,11 @@ export function conditionParser(
 	const SCENARIO = condition[ConditionEnum.SCENARIO];
 	const POSSESS_OBJECT = condition[ConditionEnum.POSSESS_OBJECT];
 	const RANDOM = condition[ConditionEnum.RANDOM];
-	const NEXT_PLACE = condition[ConditionEnum.NEXT_PLACE];
 	const COLLEC = condition[ConditionEnum.COLLEC];
 	const DINOZ_LIFE = condition[ConditionEnum.DINOZ_LIFE];
 	const ACTIVE = condition[ConditionEnum.ACTIVE];
+	const DAY = condition[ConditionEnum.DAY];
+	const WEEK_PLACE = condition[ConditionEnum.WEEK_PLACE];
 
 	if (MIN_LEVEL) {
 		result = dinozList.every(dinoz => dinoz.level >= MIN_LEVEL);
@@ -57,8 +59,6 @@ export function conditionParser(
 		const score = Math.floor(Math.random() * RANDOM);
 		const target = 0;
 		result = score == target;
-	} else if (NEXT_PLACE) {
-		result = futurPlace?.placeId === NEXT_PLACE.placeId;
 	} else if (COLLEC) {
 		result = dinozList.every(dinoz => dinoz.player?.rewards.some(reward => reward.rewardId === COLLEC));
 	} else if (DINOZ_LIFE) {
@@ -78,6 +78,13 @@ export function conditionParser(
 		}
 	} else if (ACTIVE) {
 		result = ACTIVE;
+	} else if (DAY) {
+		result = dayjs().day() === DAY;
+	} else if (WEEK_PLACE) {
+		if (secret?.key !== 'itinerant' || isNaN(parseInt(secret.value))) {
+			throw new ErrorFormator(500, `No secret found for itinerant`);
+		}
+		result = dinozList.every(dinoz => dinoz.placeId === parseInt(secret.value));
 	} else {
 		result = false;
 	}

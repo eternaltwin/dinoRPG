@@ -4,9 +4,9 @@ import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { shopList } from '@drpg/core/models/shop/ShopList';
 import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
 import { Request } from 'express';
-import { shopList } from '../constants/index.js';
 import { createLog } from '../dao/logDao.js';
 import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeMoney } from '../dao/playerDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
@@ -38,6 +38,10 @@ export async function getItemsFromShop(req: Request): Promise<ItemFiche[]> {
 
 	if (!playerShopData) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+
+	if (tempShop.type === ShopType.ITINERANT) {
+		throw new ErrorFormator(500, `Wrong shop returned`);
 	}
 
 	checkDinozPlace(tempShop, playerShopData, shopId);
@@ -115,6 +119,10 @@ export async function buyItem(req: Request) {
 	// Throw an exception if the shop does not exist
 	if (!theShop) {
 		throw new ErrorFormator(500, `The shop ${shopId} does not exist`);
+	}
+
+	if (theShop.type === ShopType.ITINERANT) {
+		throw new ErrorFormator(500, `Wrong shop returned.`);
 	}
 
 	checkDinozPlace(theShop, playerShopData, shopId);

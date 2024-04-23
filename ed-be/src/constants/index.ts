@@ -1,4 +1,3 @@
-export * from './shop.js';
 export * from './temporaryStatus.js';
 
 export const apiRoutes = {

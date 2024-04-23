@@ -35,6 +35,11 @@ const router = createRouter({
 					component: () => import('../pages/ItemShopPage.vue')
 				},
 				{
+					path: '/itinerantshop/:itinerantId',
+					name: 'ItinerantMerchantPage',
+					component: () => import('../pages/ItinerantMerchantPage.vue')
+				},
+				{
 					path: '/shop/dinoz',
 					name: 'DinozShopPage',
 					component: () => import('../pages/DinozShopPage.vue')

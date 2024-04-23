@@ -40,6 +40,7 @@ import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServ
 import testingRoutes from './routes/testing.routes.js';
 import { healRestingDinoz } from './cron/healRestingDinoz.js';
 import { healDinozFount } from './cron/healDinozFount.js';
+import { itinerantMerchant } from './cron/itinerantMerchant.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -100,6 +101,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc(swaggerOption
 resetDinozShopAtMidnight().start();
 healRestingDinoz().start();
 healDinozFount().start();
+itinerantMerchant().start();
 
 scheduleOffersExpiration();
 

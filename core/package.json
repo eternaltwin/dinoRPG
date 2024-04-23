@@ -25,5 +25,8 @@
   "files": [
     "./dist/**/*.(mjs|map|mts|js|ts)",
     "./src/"
-  ]
+  ],
+  "dependencies": {
+    "dayjs": "^1.11.10"
+  }
 }

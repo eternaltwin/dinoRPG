@@ -1549,6 +1549,7 @@ __metadata:
     "@types/eslint": "npm:^8"
     "@typescript-eslint/eslint-plugin": "npm:^6.4.0"
     "@typescript-eslint/parser": "npm:^6.11.0"
+    dayjs: "npm:^1.11.10"
     eslint: "npm:^8.0.1"
     eslint-config-standard-with-typescript: "npm:^40.0.0"
     eslint-plugin-import: "npm:^2.25.2"

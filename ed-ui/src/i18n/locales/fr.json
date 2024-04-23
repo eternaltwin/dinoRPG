@@ -66,8 +66,11 @@
 			"amnesic_rice": "Votre dinoz ne sait plus comment il se prénomme, il a également perdu tout son :xp: !",
 			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
 		},
+		"wrongQuantity": "Quantité invalide",
+		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
-		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes."
+		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
+		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -150,7 +153,8 @@
 			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
 			"stop_congel": "Vous pouvez décongeler votre Dinoz pour qu'il puisse à nouveau se déplacer et combattre.",
 			"rest": "Votre Dinoz peut **se reposer** pour regagner des points de vie. Pendant ce temps, il ne pourra effectuer aucune autre action !",
-			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre."
+			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
+			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -179,7 +183,8 @@
 			"congel": "Congeler",
 			"stop_congel": "Décongeler",
 			"rest": "Se Reposer",
-			"stop_rest": "Arrêter de se reposer"
+			"stop_rest": "Arrêter de se reposer",
+			"itinerant_shop": "Marchand Ambulant"
 		}
 	},
 	"button": {
@@ -1511,6 +1516,7 @@
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma: l'essayer, c'est l'adopter !",
 			"quantity": "Quantité",
 			"buy": "Acheter",
+			"sell": "Vendre pour {gold} :gold:",
 			"title": "Marchand : ",
 			"price": "Prix :",
 			"flying": {
@@ -1560,6 +1566,11 @@
 			"chens": {
 				"name": "Boutique de Chen",
 				"description": "Chen met à votre disposition des compétences consommables, elles sont tellement puissantes qu'elles se détruisent après utilisation. Elles sont à utiliser avec parcimonie."
+			},
+			"merchant": {
+				"name": "Marchand Ambulant",
+				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !",
+				"dimanche": "Le Marchand Ambulant a pris son jour de congé, il faudra patienter jusqu'à demain pour pouvoir vendre de nouveau vos ingrédients. Bien sûr, le Marchand Ambulant se sera déplacé à un lieu différent, il faudra donc le trouver avant de pouvoir vendre vos ingrédients."
 			}
 		}
 	},
@@ -2351,7 +2362,8 @@
 		"manageDinoz": "Dino-RPG [ Gestion de mes Dinoz ]",
 		"market": "Dino-RPG [ Marché des Eleveurs ]",
 		"dojo": "Dino-RPG [ Dojo ]",
-		"guide": "Dino-RPG [ Guide du Jeu ]"
+		"guide": "Dino-RPG [ Guide du Jeu ]",
+		"itinerant": "Dino-RPG [ Marchand Ambulant ]"
 	},
 	"gather": {
 		"action": {
@@ -3729,6 +3741,9 @@
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
+		"tname": "Ingrédients",
+		"tstock": "Stock",
+		"tquantity": "Quantité",
 		"name": {
 			"merou_lujidane": "Mérou Lujidané",
 			"poisson_vengeur": "Poisson-Vengeur",

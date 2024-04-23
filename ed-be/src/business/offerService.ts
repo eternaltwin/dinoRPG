@@ -78,14 +78,14 @@ export async function createOffer(req: Request) {
 
 	itemsAndIngredients.push(
 		...ingredients.map(ingredient => {
-			const ingredientData = ingredientList[ingredient.name.toLocaleUpperCase()];
+			const ingredientData = Object.entries(ingredientList).find(ing => ing[0] === ingredient.name.toLocaleUpperCase());
 
 			if (!ingredientData) {
 				throw new ErrorFormator(500, 'Ingredient not found');
 			}
 
 			return {
-				itemId: ingredientData.ingredientId,
+				itemId: ingredientData[1].ingredientId,
 				quantity: ingredient.count,
 				isIngredient: true
 			};

@@ -10,8 +10,8 @@
 		<tbody>
 			<tr>
 				<th class="icon"></th>
-				<th class="name">Ingrédient</th>
-				<th class="stock">Stock</th>
+				<th class="name">{{ $t('ingredients.tname') }}</th>
+				<th class="stock">{{ $t('ingredients.tstock') }}</th>
 			</tr>
 
 			<Tippy
@@ -61,11 +61,17 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
 		try {
-			this.ingredientList = await IngredientsService.getAllIngredients();
+			const unsortedIngredients = await IngredientsService.getAllIngredients();
+			this.ingredientList = this.sortIngredientsById(unsortedIngredients);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
 			return;
+		}
+	},
+	methods: {
+		sortIngredientsById(ingredients: Array<IngredientFiche>): Array<IngredientFiche> {
+			return ingredients.sort((a, b) => a.ingredientId - b.ingredientId);
 		}
 	}
 });

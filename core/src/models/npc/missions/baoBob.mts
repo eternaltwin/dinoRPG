@@ -323,7 +323,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape'
@@ -358,7 +359,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.PORT_DE_PRECHE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape1'
@@ -368,7 +370,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.UNIVERSITE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape2'
@@ -403,7 +406,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.MINES_DE_CORAIL,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape1'
@@ -413,7 +417,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.FORCEBRUT,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape2'
@@ -423,7 +428,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.PENTES_DE_BASALTE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape3'
@@ -458,7 +464,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape'
@@ -500,7 +507,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.ILE_WAIKIKI,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape1'
@@ -510,7 +518,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.FORCEBRUT,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape2'
@@ -520,7 +529,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.COLLINES_ESCARPEES,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape3'
@@ -530,7 +540,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.FOSSELAVE,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape4'
@@ -540,7 +551,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.CAMP_KORGON,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape5'
@@ -550,7 +562,8 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'etape'
+					target: 'etape',
+					action: 'nothing'
 				},
 				displayedAction: 'etape',
 				displayedText: 'etape6'
