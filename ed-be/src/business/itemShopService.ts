@@ -40,6 +40,10 @@ export async function getItemsFromShop(req: Request): Promise<ItemFiche[]> {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
 
+	if (tempShop.type === ShopType.ITINERANT) {
+		throw new ErrorFormator(500, `Wrong shop returned`);
+	}
+
 	checkDinozPlace(tempShop, playerShopData, shopId);
 
 	// All checks passed, let's create the list of items with the proper values
@@ -115,6 +119,10 @@ export async function buyItem(req: Request) {
 	// Throw an exception if the shop does not exist
 	if (!theShop) {
 		throw new ErrorFormator(500, `The shop ${shopId} does not exist`);
+	}
+
+	if (theShop.type === ShopType.ITINERANT) {
+		throw new ErrorFormator(500, `Wrong shop returned.`);
 	}
 
 	checkDinozPlace(theShop, playerShopData, shopId);

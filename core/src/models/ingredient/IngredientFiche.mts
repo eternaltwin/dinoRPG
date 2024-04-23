@@ -1,4 +1,4 @@
-import { Ingredient } from "./ingredientList.mjs";
+import { Ingredient } from './ingredientList.mjs';
 export interface IngredientFiche {
 	name?: string;
 	ingredientId: Ingredient;

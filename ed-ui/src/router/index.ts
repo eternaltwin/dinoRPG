@@ -35,7 +35,7 @@ const router = createRouter({
 					component: () => import('../pages/ItemShopPage.vue')
 				},
 				{
-					path: '/itinerantshop/:name',
+					path: '/itinerantshop/:itinerantId',
 					name: 'ItinerantMerchantPage',
 					component: () => import('../pages/ItinerantMerchantPage.vue')
 				},

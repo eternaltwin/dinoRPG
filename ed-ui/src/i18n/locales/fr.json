@@ -69,7 +69,8 @@
 		"wrongQuantity": "Quantité invalide",
 		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
-		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes."
+		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
+		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -1515,7 +1516,7 @@
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma: l'essayer, c'est l'adopter !",
 			"quantity": "Quantité",
 			"buy": "Acheter",
-			"sell": "Vendre",
+			"sell": "Vendre pour {gold} :gold:",
 			"title": "Marchand : ",
 			"price": "Prix :",
 			"flying": {
@@ -1565,38 +1566,12 @@
 			"chens": {
 				"name": "Boutique de Chen",
 				"description": "Chen met à votre disposition des compétences consommables, elles sont tellement puissantes qu'elles se détruisent après utilisation. Elles sont à utiliser avec parcimonie."
-			}
-		},
-		"ingredient": {
-			"merchant_monday": {
-				"name": "Marchand Ambulant",
-				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !"
 			},
-			"merchant_tuesday": {
-				"name": "Marchand Ambulant",
-				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !"
-			},
-			"merchant_wednesday": {
-				"name": "Marchand Ambulant",
-				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !"
-			},
-			"merchant_thursday": {
-				"name": "Marchand Ambulant",
-				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !"
-			},
-			"merchant_friday": {
-				"name": "Marchand Ambulant",
-				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !"
-			},
-			"merchant_saturday": {
-				"name": "Marchand Ambulant",
-				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !"
-			},
-			"merchant_sunday": {
+			"merchant": {
 				"name": "Marchand Ambulant",
 				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !",
 				"dimanche": "Le Marchand Ambulant a pris son jour de congé, il faudra patienter jusqu'à demain pour pouvoir vendre de nouveau vos ingrédients. Bien sûr, le Marchand Ambulant se sera déplacé à un lieu différent, il faudra donc le trouver avant de pouvoir vendre vos ingrédients."
-			}	
+			}
 		}
 	},
 	"skill": {

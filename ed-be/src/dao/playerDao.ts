@@ -617,40 +617,7 @@ export async function getPlayerShopIngredientsDataRequest(playerId: number) {
 	});
 
 	return player;
-};
-
-export async function getPlayerShopOneIngredientsDataRequest(playerId: number, ingredientId: number) {
-	const player = await prisma.player.findUniqueOrThrow({
-		where: {
-			id: playerId
-		},
-		select: {
-			id: true,
-			money: true,
-			ingredients: {
-				select: {
-					id: true,
-					ingredientId: true,
-					quantity: true
-				}
-			},
-			dinoz: {
-				select: {
-					placeId: true,
-					status: { select: { statusId: true } }
-				},
-				where: {
-					OR: [
-						{ unavailableReason: null },
-						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
-					]
-				}
-			}
-		}
-	});
-
-	return player;
-};
+}
 
 // Setters
 //TODO

@@ -4,28 +4,25 @@
 		<div class="section">
 			<div
 				class="titlePage"
-				style="undefined"
+				:style="undefined"
 				width="520"
 				height="27"
-				v-html="formatContent($t(`shop.ingredient.${itinerantShopNameList[itinerantId]}.name`))"
+				v-html="formatContent($t(`shop.item.merchant.name`))"
 			/>
 		</div>
 		<div class="shopDesc">
 			<div class="contain">
 				<div class="art art_shop">
-					<img
-						:src="getImgURL('shop', 'shop_itinerant')"
-						:alt="formatContent($t(`shop.ingredient.${itinerantShopNameList[itinerantId]}.name`))"
-					/>
+					<img :src="getImgURL('shop', 'shop_itinerant')" :alt="formatContent($t(`shop.item.merchant.name`))" />
 				</div>
-				<p v-html="formatContent($t(`shop.ingredient.${itinerantShopNameList[itinerantId]}.description`))" />
+				<p v-html="formatContent($t(`shop.item.merchant.description`))" />
 			</div>
 		</div>
 		<div class="list">
-			<div v-if="currentDay === 0" class="sundayMessage">
-				<p v-html="formatContent($t(`shop.ingredient.${itinerantShopNameList[itinerantId]}.dimanche`))" />
+			<div v-if="ingredientList.length === 0" class="sundayMessage">
+				<p v-html="formatContent($t(`shop.item.merchant.dimanche`))" />
 			</div>
-			<table v-if="currentDay !== 0">
+			<table v-if="ingredientList.length !== 0">
 				<tbody>
 					<tr>
 						<th class="icon"></th>
@@ -62,8 +59,10 @@
 							<input
 								class="input"
 								type="number"
-								v-model="inputValues[ingredient.ingredientId]"
-								@input="checkInputValidity()"
+								min="0"
+								:max="ingredient.quantity"
+								v-model="inputValues[index].quantity"
+								@input="liveGold()"
 							/>
 						</td>
 
@@ -79,18 +78,11 @@
 				</tbody>
 			</table>
 		</div>
-		<div v-if="currentDay !== 0" class="sell">
-			<Tippy theme="small" tag="a" class="button disabled" v-if="!isInputFilled">
-				<template #content>
-					<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
-				</template>
-				{{ $t(`shop.item.sell`) }}
-			</Tippy>
+		<div v-if="ingredientList.length !== 0 && totalSell > 0" class="sell">
 			<a
 				class="button"
-				v-html="formatContent($t('shop.item.sell'))"
+				v-html="formatContent($t('shop.item.sell', { gold: totalSell }))"
 				@click="sellIngredientPopinConfirmChoice(ingredient?.ingredientId, inputValues[ingredient?.ingredientId])"
-				v-else
 			/>
 		</div>
 	</div>
@@ -105,8 +97,8 @@ import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
-import { IngredientShopService } from '../services/IngredientsService';
-import dayjs from 'dayjs';
+import { IngredientsService } from '../services/IngredientsService';
+import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 
 export default defineComponent({
 	name: 'ItinerantMerchantPage',
@@ -119,94 +111,67 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			ingredientNameList: ingredientNameList,
 			ingredientList: [] as Array<IngredientFiche>,
-			currentDay: dayjs().day(),
-			inputValues: {}
+			inputValues: [] as ShopDTO[],
+			itinerantId: undefined as number | undefined,
+			totalSell: 0 as number
 		};
 	},
-	computed: {
-		itinerantId(): number {
-			const itinerantName = this.itinerantShopNameList[this.currentDay];
-			const itinerantIndex = itinerantShopNameList.indexOf(itinerantName);
-			return itinerantIndex;
-		},
-		isInputFilled(): boolean {
-			for (const key in this.inputValues) {
-				if (Object.prototype.hasOwnProperty.call(this.inputValues, key) && this.inputValues[key] !== 0) {
-					return true;
-				}
-			}
-			return false;
-		}
-	},
 	methods: {
-		checkInputValidity(): boolean {
-			for (const key in this.inputValues) {
-				if (Object.prototype.hasOwnProperty.call(this.inputValues, key)) {
-					const quantity = parseInt(this.inputValues[key]);
-					if (isNaN(quantity) || quantity <= 0) {
-						return false;
-					}
-					const ingredient = this.ingredientList.find(ingredient => ingredient.ingredientId === parseInt(key));
-					if (!ingredient || quantity > ingredient.quantity) {
-						return false;
-					}
-				}
-			}
-			return true;
-		},
-		async sellIngredient(ingredientId: number, quantity: number): Promise<void> {
-			try {
-				await IngredientShopService.sellIngredient(this.itinerantId, ingredientId, quantity);
-				EventBus.emit('isLoading', false);
-				const updatedIngredient = this.ingredientList.find(ingredient => ingredient.ingredientId === ingredientId);
-				if (updatedIngredient) {
-					updatedIngredient.quantity -= quantity;
-				}
-			} catch (err) {
-				errorHandler.handle(err);
-				return;
-			}
-			const ingredient = this.ingredientList.find(ingredient => ingredient.ingredientId === ingredientId);
-			if (ingredient) {
-				const newMoney = this.playerStore.getMoney! + ingredient.price! * quantity;
-				this.playerStore.setMoney(newMoney);
-			}
-		},
 		async sellIngredientPopinConfirmChoice(): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
+			const currentDinozId = this.playerStore.playerOptions.currentDinozId;
 			if (res) {
 				try {
 					EventBus.emit('isLoading', true);
-					let ingredientId: number | undefined;
-					let quantity: number | undefined;
-					for (const key in this.inputValues) {
-						if (Object.prototype.hasOwnProperty.call(this.inputValues, key) && this.inputValues[key] !== 0) {
-							ingredientId = parseInt(key);
-							quantity = parseInt(this.inputValues[key]);
-							break;
-						}
-					}
-					if (ingredientId !== undefined && quantity !== undefined) {
-						await this.sellIngredient(ingredientId, quantity);
-					}
+					const gold = await IngredientsService.sellIngredient(
+						currentDinozId,
+						this.inputValues.filter(i => i.quantity > 0)
+					);
+					this.ingredientList = await IngredientsService.getIngredientsFromIngredientsShop(currentDinozId);
+					// reset value
+					this.inputValues = this.inputValues.map(a => {
+						return { itemId: a.itemId, quantity: 0 };
+					});
+					this.totalSell = 0;
+					EventBus.emit('toast', {
+						type: 'notification',
+						message: 'ingredientSold',
+						value: gold.gold
+					});
+					this.playerStore.addMoney(gold.gold);
+					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err);
 					return;
 				}
 			}
+		},
+		liveGold() {
+			const toSold = this.inputValues.map(a => {
+				return (this.ingredientList.find(i => i.ingredientId === a.itemId)?.price ?? 0) * a.quantity;
+			});
+			this.totalSell = toSold.reduce((acc, items) => {
+				return acc + items;
+			});
 		}
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
+		this.itinerantId = parseInt(this.$route.params.itinerantId as string);
 		try {
-			this.ingredientList = await IngredientShopService.getIngredientsFromIngredientsShop(this.itinerantId);
+			const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+			this.ingredientList = await IngredientsService.getIngredientsFromIngredientsShop(currentDinozId);
+			const tempo: ShopDTO[] = this.ingredientList.map(i => {
+				return { itemId: i.ingredientId, quantity: 0 };
+			});
+			this.inputValues.push(...tempo);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err);
 			return;
 		}
-	},
-	watch: {
+	}
+	/*	watch: {
 		'$route.params.name': async function () {
 			if (this.itinerantId < 0) {
 				return;
@@ -220,7 +185,7 @@ export default defineComponent({
 				return;
 			}
 		}
-	}
+	}*/
 });
 </script>
 

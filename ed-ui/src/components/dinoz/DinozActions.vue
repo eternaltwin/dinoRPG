@@ -45,9 +45,6 @@
 						<td v-if="action.name === 'shop'" class="label">
 							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
 						</td>
-						<td v-if="action.name === 'itinerant_shop'" class="label">
-							{{ $t(`shop.ingredient.${itinerantShopNameList[action.prop]}.name`) }}
-						</td>
 						<td v-else-if="action.name === 'npc'" class="label">
 							{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}
 						</td>
@@ -67,10 +64,6 @@
 							<h1
 								v-if="action.name === 'shop'"
 								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))"
-							/>
-							<h1
-								v-if="action.name === 'itinerant_shop'"
-								v-html="formatContent($t(`shop.ingredient.${itinerantShopNameList[action.prop]}.name`))"
 							/>
 							<h1
 								v-else-if="action.name === 'npc'"
@@ -203,10 +196,9 @@ export default defineComponent({
 					});
 					break;
 				case Action.ITINERANTSHOP:
-					this.itinerantName = itinerantShopNameList[this.currentDay];
 					this.$router.push({
 						name: 'ItinerantMerchantPage',
-						params: { name: this.itinerantName }
+						params: { itinerantId: action.prop }
 					});
 					break;
 				case Action.NPC:

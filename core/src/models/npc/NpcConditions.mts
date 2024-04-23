@@ -1,6 +1,6 @@
 import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
-import { Place } from '../place/Place.mjs';
+import { DayEnum } from '../enums/dayEnum.mjs';
 
 // Choisit le type de value en fonction de l'enum utilisée
 export type Condition = {
@@ -17,7 +17,6 @@ export type Condition = {
 	[ConditionEnum.RANDOM]?: number;
 	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number];
 	[ConditionEnum.SCENARIO]?: [string, number];
-	[ConditionEnum.NEXT_PLACE]?: Place;
 	[ConditionEnum.CURRENT_MISSION]?: number;
 	[ConditionEnum.POSSESS_INGREDIENT]?: string;
 	[ConditionEnum.ACTIVE]?: boolean;
@@ -40,4 +39,6 @@ export type Condition = {
 	[ConditionEnum.PLACE_IS]?: PlaceEnum;
 	[ConditionEnum.OVERWRITE]?: string;
 	[ConditionEnum.LAUNCH_FIGHT]?: string;
+	[ConditionEnum.DAY]?: DayEnum;
+	[ConditionEnum.WEEK_PLACE]?: boolean;
 };

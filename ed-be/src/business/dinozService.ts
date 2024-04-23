@@ -4,7 +4,6 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
-import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { gatherList } from '@drpg/core/models/gather/gatherList';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { itemList } from '@drpg/core/models/item/ItemList';
@@ -14,20 +13,20 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import {
-	DinozForDinozFiche,
 	actualPlace,
 	canChangeSkillState,
 	canGoToThisPlace,
 	canLevelUp,
+	DinozForDinozFiche,
 	getFollowableDinoz,
+	getMaxFollowers,
 	getNumberOfGatheringTries,
 	getRace,
 	initializeDinoz,
 	isAlive,
 	knowSkillId,
 	toDinozFiche,
-	toSkillDetails,
-	getMaxFollowers
+	toSkillDetails
 } from '@drpg/core/utils/DinozUtils';
 import {
 	discoverBox,
@@ -82,7 +81,8 @@ import { selectBox } from '../utils/boxesLogic.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import dayjs from 'dayjs';
-import { itinerantShopList } from '@drpg/core/models/shop/ItinerantShopList';
+import { getSpecificSecret } from '../dao/secretDao.js';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 
 /**
  * @summary Get available action from dinoz
@@ -223,44 +223,37 @@ export async function getAvailableActions(
 	}
 
 	// Shop action: check if a shop is available where the dinoz is
-	const shopAvailable = Object.values(shopList).find(
-		shop => shop.placeId == dinoz.placeId && checkCondition(shop.condition, [dinoz])
+	const itinerant = await getSpecificSecret('itinerant');
+	if (!itinerant) throw new ErrorFormator(500, `No itinerant merchant place found.`);
+	const shopAvailable = Object.values(shopList).filter(
+		shop =>
+			(shop.placeId === dinoz.placeId || shop.placeId === PlaceEnum.NOWHERE) &&
+			checkCondition(shop.condition, [dinoz], itinerant)
 	);
-	if (shopAvailable) {
-		if (shopAvailable.type == ShopType.CURSED) {
-			const dinozIsCursed = dinoz.status.some(status => status.statusId === DinozStatusId.CURSED);
-			if (dinozIsCursed) {
-				// Add the shop id to the action
-				const shopAction = {
-					name: actionList[Action.SHOP].name,
-					imgName: actionList[Action.SHOP].imgName,
-					prop: shopAvailable.shopId
-				};
-				availableActions.push(shopAction);
-			}
-		} else if (shopAvailable.type == ShopType.MAGICAL) {
-			const playerNapodino = dinoz.player.items.find(napo => napo.itemId === itemList.GOLDEN_NAPODINO.itemId);
-			if (playerNapodino && playerNapodino.quantity > 0) {
-				const shopAction: ActionFiche = {
-					name: actionList[Action.SHOP].name,
-					imgName: actionList[Action.SHOP].imgName,
-					prop: shopAvailable.shopId
-				};
-				availableActions.push(shopAction);
-			}
-		} else {
-			// Add the shop id to the action
-			const shopAction: ActionFiche = {
-				name: actionList[Action.SHOP].name,
-				imgName: actionList[Action.SHOP].imgName,
-				prop: shopAvailable.shopId
-			};
-			availableActions.push(shopAction);
-		}
+	if (shopAvailable.length > 0) {
+		// Add all the shop id to the action
+		availableActions.push(
+			...shopAvailable.map(s => {
+				if (s.type === ShopType.ITINERANT) {
+					return {
+						name: actionList[Action.ITINERANTSHOP].name,
+						imgName: actionList[Action.ITINERANTSHOP].imgName,
+						prop: s.shopId
+					};
+				} else {
+					return {
+						name: actionList[Action.SHOP].name,
+						imgName: actionList[Action.SHOP].imgName,
+						prop: s.shopId
+					};
+				}
+			})
+		);
 	}
 
+	//TODO
 	// Itinerant Merchant Shop
-	const itinerantShopAvailable = Object.values(itinerantShopList).find(
+	/*	const itinerantShopAvailable = Object.values(itinerantShopList).find(
 		itinerantShop => itinerantShop.placeId == dinoz.placeId
 	);
 	if (itinerantShopAvailable) {
@@ -270,7 +263,7 @@ export async function getAvailableActions(
 			prop: itinerantShopAvailable.itinerantId
 		};
 		availableActions.push(shopAction);
-	}
+	}*/
 
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {

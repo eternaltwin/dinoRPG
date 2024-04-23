@@ -11,7 +11,14 @@ export const shopNameList: Array<string> = [
 	'barbarian',
 	'secret',
 	'elit', // original game has no picture
-	'chens' // picture missing
+	'chens',
+	'merchant',
+	'merchant',
+	'merchant',
+	'merchant',
+	'merchant',
+	'merchant',
+	'merchant'
 ];
 
 export const itinerantShopNameList: Array<string> = [

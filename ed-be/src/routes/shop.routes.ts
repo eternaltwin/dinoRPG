@@ -49,8 +49,8 @@ routes.get(
 
 // Get the ingredients from a shop
 routes.get(
-	`${commonPath}/getItinerantShop/:itinerantId`,
-	[param('itinerantId').exists().toInt().isNumeric()],
+	`${commonPath}/getItinerantShop/:dinozId`,
+	[param('dinozId').exists().toInt().isNumeric()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -93,12 +93,8 @@ routes.put(
 
 // Sell an ingredient from an itinerant shop
 routes.put(
-	`${commonPath}/sellIngredient/:itinerantId`,
-	[
-		param('itinerantId').exists().toInt().isNumeric(),
-		body('ingredientId').exists().toInt().isNumeric(),
-		body('quantity').exists().toInt().isNumeric()
-	],
+	`${commonPath}/sellIngredient/:dinozId`,
+	[param('dinozId').exists().toInt().isNumeric(), body('ingredients').exists()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

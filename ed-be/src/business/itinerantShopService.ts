@@ -1,15 +1,17 @@
-import { IngredientFiche } from "@drpg/core/models/ingredient/IngredientFiche";
-import { ingredientList } from "@drpg/core/models/ingredient/ingredientList";
-import { ItinerantShopFiche } from "@drpg/core/models/shop/ItinerantShopFiche";
-import { itinerantShopList } from "@drpg/core/models/shop/ItinerantShopList";
-import { Dinoz, LogType } from "@drpg/prisma";
-import { PlaceEnum } from "@drpg/core/models/enums/PlaceEnum";
-import { Request } from "express";
-import dayjs from "dayjs";
-import { createLog } from "../dao/logDao.js";
-import { getPlayerShopIngredientsDataRequest, addMoney, getPlayerShopOneIngredientsDataRequest } from "../dao/playerDao.js";
-import { decreaseIngredientQuantity } from "../dao/playerIngredientDao.js";
-import { ErrorFormator } from "../utils/errorFormator.js";
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { LogType } from '@drpg/prisma';
+import { Request } from 'express';
+import { createLog } from '../dao/logDao.js';
+import { addMoney } from '../dao/playerDao.js';
+import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
+import { ErrorFormator } from '../utils/errorFormator.js';
+import { shopList } from '@drpg/core/models/shop/ShopList';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
+import { checkCondition } from '@drpg/core/utils/checkCondition';
+import { getDinozItinerantShop } from '../dao/dinozDao.js';
+import { getSpecificSecret } from '../dao/secretDao.js';
+import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 
 /**
  * @summary Get all ingredients from itinerant shop
@@ -18,50 +20,63 @@ import { ErrorFormator } from "../utils/errorFormator.js";
  * @return Array<IngredientFiche>
  */
 export async function getIngredientsFromItinerantShop(req: Request): Promise<IngredientFiche[]> {
-    if (!req.auth?.playerId) {
-        throw new ErrorFormator(500, `Unauthorized.`)
-    }
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized.`);
+	}
 
-    const playerId = req.auth.playerId;
-    const itinerantId = calculateItinerantId();
-    const itinerantTempShop = Object.values(itinerantShopList).find(itinerantShop => itinerantShop.itinerantId === itinerantId);
+	const playerId = req.auth.playerId;
+	const dinozId = +req.params.dinozId;
 
-    // Throw an exception if the shop does not exist
-    if (itinerantTempShop === undefined) {
-        throw new ErrorFormator(500, `The itinerant shop ${itinerantId} does not exist`);
-    }
+	const playerIngShopData = await getDinozItinerantShop(dinozId);
 
-    const playerIngShopData = await getPlayerShopIngredientsDataRequest(playerId);
+	// Throw an exception if the player doesn't exists
+	if (!playerIngShopData) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist`);
+	}
 
-    // Throw an exception if the player doesn't exist
-    if (!playerIngShopData) {
-        throw new ErrorFormator(500, `Player ${playerId} doesn't exist`)
-    }
+	const itinerant = await getSpecificSecret('itinerant');
+	if (!itinerant) throw new ErrorFormator(500, `No itinerant merchant place found.`);
 
-    checkDinozPlace(itinerantTempShop, playerIngShopData, itinerantId);
+	const itinerantShop = Object.values(shopList)
+		.filter(shop => shop.type === ShopType.ITINERANT)
+		.find(s => checkCondition(s.condition, [playerIngShopData], itinerant));
 
-    return itinerantTempShop.listIngredients.map(ingBuy => {
-        // Get the ingredient data if the player has it
-        const ingredientPlayer = playerIngShopData.ingredients.find(playerIng => playerIng.ingredientId === ingBuy.ingredientId);
-        // Get the reference of the ingredients from the constants
-        const ingredientReference = Object.values(ingredientList).find(ing => ing.ingredientId === ingBuy.ingredientId);
+	// Throw an exception if the shop does not exist
+	if (!itinerantShop) {
+		throw new ErrorFormator(500, `This dinoz cannot access itinerant shop`);
+	}
 
-        if (!ingredientReference) {
-            throw new ErrorFormator(500, `Ingredient ${ingBuy.ingredientId} doesn't exist`);
-        }
+	if (itinerantShop.type !== ShopType.ITINERANT) {
+		throw new ErrorFormator(500, `Wrong shop returned`);
+	}
 
-        if (!ingBuy.price) {
-            throw new ErrorFormator(500, `Ingredient ${ingBuy.ingredientId} doesn't have a price`);
-        }
+	const player = playerIngShopData.player;
+	if (!player) {
+		throw new ErrorFormator(500, `Dinoz is without player`);
+	}
 
-        // Return a new ingredient object with its properties and data
-        return {
-            ingredientId: ingredientReference.ingredientId,
-            price: ingredientReference.price,
-            quantity: ingredientPlayer ? ingredientPlayer.quantity : 0,
-            maxQuantity: ingredientReference.maxQuantity
-        }
-    });
+	return itinerantShop.listItemsSold.map(ingBuy => {
+		// Get the ingredient data if the player has it
+		const ingredientPlayer = player.ingredients.find(playerIng => playerIng.ingredientId === ingBuy.ingredientId);
+		// Get the reference of the ingredients from the constants
+		const ingredientReference = Object.values(ingredientList).find(ing => ing.ingredientId === ingBuy.ingredientId);
+
+		if (!ingredientReference) {
+			throw new ErrorFormator(500, `Ingredient ${ingBuy.ingredientId} doesn't exist`);
+		}
+
+		if (!ingBuy.price) {
+			throw new ErrorFormator(500, `Ingredient ${ingBuy.ingredientId} doesn't have a price`);
+		}
+
+		// Return a new ingredient object with its properties and data
+		return {
+			ingredientId: ingredientReference.ingredientId,
+			price: ingredientReference.price,
+			quantity: ingredientPlayer ? ingredientPlayer.quantity : 0,
+			maxQuantity: ingredientReference.maxQuantity
+		};
+	});
 }
 
 /**
@@ -73,109 +88,75 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
  * @return void
  */
 export async function sellIngredient(req: Request) {
-    if (!req.auth?.playerId) {
+	if (!req.auth?.playerId) {
 		throw new ErrorFormator(500, `Unauthorized.`);
 	}
 	const playerId = req.auth.playerId;
-    const itinerantId = +req.params.itinerantId;
-    const ingredientId = +req.body.ingredientId;
-    const quantitySelled = +req.body.quantity; 
+	const dinozId = +req.params.dinozId;
+	const ingredients = req.body.ingredients as ShopDTO[];
 
-    const playerIngShopData = await getPlayerShopOneIngredientsDataRequest(playerId, ingredientId);
+	const playerIngredients = await getAllIngredientsDataRequest(playerId);
 
-    // Throw an exception if the player doesn't exist
-    if (!playerIngShopData) {
-        throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`)
-    }
+	// Throw an exception if the player doesn't exist
+	if (!playerIngredients) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
 
-    const playerIngData = playerIngShopData.ingredients.find(ing => ing.ingredientId === ingredientId);
+	// Lock negative quantities
+	if (ingredients.filter(i => i.quantity <= 0).length > 0) {
+		throw new ErrorFormator(400, `wrongQuantity`);
+	}
 
-    // Lock negative quantities
-    if (quantitySelled <= 0) {
-        throw new ErrorFormator(400, `wrongQuantity`);
-    }
+	const playerIngShopData = await getDinozItinerantShop(dinozId);
 
-    const theItinerantShop: ItinerantShopFiche | undefined = Object.values(itinerantShopList).find(itinerantShop => itinerantShop.itinerantId === itinerantId);
+	// Throw an exception if the player doesn't exists
+	if (!playerIngShopData) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist`);
+	}
 
-    // Throw an exception if the shop doesn't exist
-    if (!theItinerantShop) {
-        throw new ErrorFormator(500, `The itinerant shop ${itinerantId} does not exist`);
-    }
+	const itinerant = await getSpecificSecret('itinerant');
+	if (!itinerant) throw new ErrorFormator(500, `No itinerant merchant place found.`);
 
-    checkDinozPlace(theItinerantShop, playerIngShopData, itinerantId);
+	const itinerantShop = Object.values(shopList)
+		.filter(shop => shop.type === ShopType.ITINERANT)
+		.find(s => checkCondition(s.condition, [playerIngShopData], itinerant));
 
-    const ingSell = theItinerantShop.listIngredients.find(ing => ing.ingredientId === ingredientId);
-    if (ingSell === undefined) {
-        throw new ErrorFormator(500, `The ingredient ${ingredientId} does not exist in this shop`)
-    }
+	// Throw an exception if the shop doesn't exist
+	if (!itinerantShop) {
+		throw new ErrorFormator(500, `The itinerant shop does not exist`);
+	}
 
-    const ingredientReference = Object.values(ingredientList).find(ing => ing.ingredientId === ingredientId);
+	if (itinerantShop.type !== ShopType.ITINERANT) {
+		throw new ErrorFormator(500, `Wrong shop returned`);
+	}
+	const player = playerIngShopData.player;
 
-    if (!ingredientReference) {
-        throw new ErrorFormator(500, `Ingredient ${ingredientId} doesn't exist.`);
-    }
+	if (!player) {
+		throw new ErrorFormator(500, `Dinoz is without player`);
+	}
+	// Search if all ingredient are valids
+	const mappedIngredient = ingredients.map(i => {
+		const playerQuantity = player.ingredients.find(ing => ing.ingredientId === i.itemId);
+		if (!playerQuantity) throw new ErrorFormator(500, `Player doesn't have this item in stock.`);
+		return {
+			...itinerantShop?.listItemsSold.find(a => a.ingredientId === i.itemId),
+			quantity: i.quantity,
+			playerQuantity: playerQuantity.quantity
+		};
+	});
 
-    if (!ingSell.price) {
-        throw new ErrorFormator(500, `Ingredient ${ingredientId} doesn't have a price.`)
-    }
+	let gold = 0;
+	for (const ingre of mappedIngredient) {
+		if (!ingre.ingredientId || !ingre.price) throw new ErrorFormator(500, `Undefined ingredient`);
+		if (ingre.playerQuantity - ingre.quantity < 0)
+			throw new ErrorFormator(500, `You cannot have less than 0 of this item.`);
+		gold += ingre.price * ingre.quantity;
+		await decreaseIngredientQuantity(playerId, ingre.ingredientId, ingre.quantity);
+	}
 
-    ingredientReference.price = ingSell.price;
-    ingredientReference.quantity = playerIngData ? playerIngData.quantity - quantitySelled : quantitySelled;
+	await addMoney(playerId, gold);
 
-    // Lock quantities greater than the player owns
-    const maxQuantityAvailable = playerIngData ? playerIngData.quantity : 0;
-    if (quantitySelled > maxQuantityAvailable) {
-        throw new ErrorFormator(400, `notEnoughQuantity`);
-    }
+	await createLog(LogType.GoldWon, playerId, undefined, gold.toString());
 
-    await addMoney(playerId, ingredientReference.price * quantitySelled);
-
-    if (playerIngData) {
-        await decreaseIngredientQuantity(
-            playerId,
-            ingredientReference.ingredientId,
-            quantitySelled
-        )
-    }
-
-    await createLog(
-        LogType.GoldWon,
-        playerId,
-        undefined,
-        ingredientReference.ingredientId.toString(),
-        ingredientReference.quantity.toString()
-    );
-
-    return {
-        ingredientId: ingredientReference.ingredientId,
-        quantity: quantitySelled,
-        gold: ingredientReference.price * quantitySelled
-    }
-}
-
-// Check if player can access the shop
-// The check is done for the shops that are not accessible from anywhere (i.e does not apply to the flying shop)
-function checkDinozPlace(
-	theItinerantShop: ItinerantShopFiche,
-	player: {
-		dinoz: (Pick<Dinoz, 'placeId'>)[];
-	},
-	itinerantId: number
-) {
-    // Check at least one dinoz that is not frozen or sacrificed is at the location of the shop
-			if (!player.dinoz.some(dinoz => dinoz.placeId === theItinerantShop.placeId)) {
-				throw new ErrorFormator(500, `You don't have any dinoz at the shop's location ${itinerantId}`);
-			}
-}
-
-// Function to calculate the itinerant merchant's ID based on the current date.
-function calculateItinerantId(): number {
-    const currentDay = dayjs().day(); 
-
-    // If the day is Sunday (0), return itinerantId 7 (Sunday).
-    if (currentDay === 0) {
-        return 7;
-    }
-
-    return currentDay;
+	return { gold: gold };
 }
