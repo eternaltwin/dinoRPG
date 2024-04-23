@@ -14,6 +14,15 @@ export function getSpecificSecret(secret: string) {
 	});
 }
 
+export function setSpecificSecret(secret: string, value: string) {
+	return prisma.secret.update({
+		where: {
+			key: secret
+		},
+		data: { value: value }
+	});
+}
+
 export function addNewSecret(secret: Prisma.SecretCreateInput) {
 	return prisma.secret.create({
 		data: secret
