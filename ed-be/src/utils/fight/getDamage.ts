@@ -17,12 +17,12 @@ export const getBasicElementDamage = (fighter: DetailedFighter, element: Element
 // Balance the damage if the fighter (supposedly the target of the damage) requires balanced damage
 export const applyBalanceDamage = (fighter: DetailedFighter, damage: number) => {
 	return fighter.balanced ? balanceDamage(damage) : damage;
-}
+};
 
 // Applies x^0.6 to damage to smooth it and obtain balanced results
 export const balanceDamage = (damage: number) => {
 	return Math.pow(Math.max(damage, 0), 0.6);
-}
+};
 
 export const getDamage = (
 	attacker: DetailedFighter,

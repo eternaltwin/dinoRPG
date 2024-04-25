@@ -4298,7 +4298,14 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								}
 
 								// Register the hit
-								registerHit(fightData, burner, [fighter], applyBalanceDamage(fighter, burnedBy.damage), [], burnedBy.skill);
+								registerHit(
+									fightData,
+									burner,
+									[fighter],
+									applyBalanceDamage(fighter, burnedBy.damage),
+									[],
+									burnedBy.skill
+								);
 								break;
 							}
 							case Status.HEALING: {
@@ -4307,7 +4314,14 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								break;
 							}
 							case Status.TORCHED: {
-								registerHit(fightData, fighter, [fighter], applyBalanceDamage(fighter, 1), [ElementType.FIRE], Skill.TORCHE);
+								registerHit(
+									fightData,
+									fighter,
+									[fighter],
+									applyBalanceDamage(fighter, 1),
+									[ElementType.FIRE],
+									Skill.TORCHE
+								);
 								break;
 							}
 							default: {
