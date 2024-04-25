@@ -79,7 +79,11 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 0
 		},
 		balanced: false,
-		groups: [1, 0, 0],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 0 }
+		],
 		hp: 500,
 		xp: 40,
 		odds: 100,
@@ -100,7 +104,11 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 0
 		},
 		balanced: false,
-		groups: [1, 0, 0],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 0 }
+		],
 		hp: 600,
 		xp: 60,
 		odds: 100,
@@ -308,7 +316,11 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		balanced: true,
 		odds: 100,
 		hp: 30,
-		groups: [0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 1 }
+		],
 		xp: 50,
 		skills: [Skill.M_FLIGHT],
 		canBeCaptured: false
