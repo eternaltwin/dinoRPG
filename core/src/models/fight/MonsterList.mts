@@ -171,7 +171,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 80,
 		level: 5,
 		zones: [MapZone.DINOLAND],
-		groups: [5, 3, 1],
+		groups: [
+			{ quantity: 0, odds: 5 },
+			{ quantity: 1, odds: 3 },
+			{ quantity: 2, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_BITE],
 		display: 'wolf'
@@ -256,7 +260,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 15,
 		zones: [MapZone.DINOLAND],
 		places: [PlaceEnum.CIMETIERE],
-		groups: [0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_FLIGHT]
 	},
@@ -278,7 +286,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 3,
 		zones: [MapZone.GTOUTCHAUD],
-		groups: [0, 3, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 3 },
+			{ quantity: 2, odds: 1 }
+		],
 		skills: [Skill.M_RENFORTS],
 		canBeCaptured: true,
 		display: 'flam'
@@ -355,7 +367,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 6,
 		zones: [MapZone.ILES],
-		groups: [0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_FLIGHT],
 		display: 'pira'
@@ -436,7 +452,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 7,
 		zones: [MapZone.JUNGLE],
-		groups: [0, 2, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 2 },
+			{ quantity: 2, odds: 1 }
+		],
 		canBeCaptured: true,
 		display: 'korgon'
 	},
@@ -600,7 +620,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 10,
 		level: 25,
 		zones: [MapZone.STEPPE],
-		groups: [0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_STEAL]
 	},
@@ -622,7 +645,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 25,
 		zones: [MapZone.STEPPE],
 		places: [PlaceEnum.TAUDIS_DES_ZAXA],
-		groups: [0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_STEAL]
 	},
@@ -644,7 +670,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 25,
 		xp: 6,
 		zones: [MapZone.STEPPE],
-		groups: [0, 0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 0 },
+			{ quantity: 3, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_STEAL]
 	},
@@ -667,7 +698,12 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 6,
 		zones: [MapZone.STEPPE],
 		places: [PlaceEnum.CAMP_DES_EMMEMMA],
-		groups: [0, 0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 0 },
+			{ quantity: 3, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_STEAL]
 	},
@@ -689,7 +725,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 25,
 		xp: 7,
 		zones: [MapZone.STEPPE],
-		groups: [0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_STEAL]
 	},
@@ -712,7 +752,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 7,
 		zones: [MapZone.STEPPE],
 		places: [PlaceEnum.CAMPEMENT_DES_MATTMUT],
-		groups: [0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 1 }
+		],
 		canBeCaptured: true,
 		skills: [Skill.M_STEAL]
 	},
@@ -1052,7 +1096,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: true,
 		odds: 100,
 		hp: 15,
-		groups: [0, 0, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 1 }
+		],
 		skills: [Skill.M_FLIGHT],
 		canBeCaptured: false
 	},
@@ -1111,7 +1159,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 50,
 		bonus_defense: 20,
 		balanced: true,
-		groups: [1, 3, 2],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 3 },
+			{ quantity: 2, odds: 2 }
+		],
 		odds: 100,
 		hp: 30,
 		xpBonus: 5,
@@ -1132,7 +1184,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 50,
 		bonus_defense: 20,
 		balanced: true,
-		groups: [2, 1, 0],
+		groups: [
+			{ quantity: 0, odds: 2 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 0 }
+		],
 		odds: 100,
 		hp: 30,
 		xpBonus: 5,
@@ -1154,7 +1210,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 60,
 		bonus_defense: 30,
 		balanced: true,
-		groups: [2, 1, 0],
+		groups: [
+			{ quantity: 0, odds: 2 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 0 }
+		],
 		odds: 100,
 		hp: 80,
 		xpBonus: 10,
@@ -1195,7 +1255,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: false,
 		odds: 0,
 		level: 72,
-		groups: [1, 1, 0],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 0 }
+		],
 		xp: 50,
 		xpBonus: 15,
 		skills: [Skill.PERCEPTION, Skill.M_RENFORTS],
@@ -1218,7 +1282,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: false,
 		odds: 0,
 		level: 75,
-		groups: [1, 0, 0],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 0 }
+		],
 		xp: 70,
 		xpBonus: 15,
 		skills: [Skill.PERCEPTION, Skill.M_RENFORTS],
@@ -1490,7 +1558,13 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 20,
 		balanced: true,
 		hp: 10,
-		groups: [0, 1, 6, 2, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 6 },
+			{ quantity: 3, odds: 2 },
+			{ quantity: 4, odds: 1 }
+		],
 		odds: 100,
 		skills: [Skill.M_ALL_FOR_ONE],
 		zones: [MapZone.ILEMONSTRE],
@@ -1511,7 +1585,13 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_defense: 20,
 		balanced: true,
 		hp: 10,
-		groups: [0, 1, 6, 2, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 6 },
+			{ quantity: 3, odds: 2 },
+			{ quantity: 4, odds: 1 }
+		],
 		odds: 0,
 		skills: [Skill.M_ALL_FOR_ONE],
 		xp: 3,
@@ -1728,7 +1808,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 50,
 		xpBonus: 4,
 		odds: 100,
-		groups: [1, 2],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 2 }
+		],
 		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
@@ -1758,7 +1841,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 70,
 		xpBonus: 5,
 		odds: 100,
-		groups: [0, 4, 2],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 4 },
+			{ quantity: 2, odds: 2 }
+		],
 		skills: [Skill.SANS_PITIE],
 		zones: [],
 		places: [PlaceEnum.CITE_ARBORIS, PlaceEnum.PORTE_DE_NIVEAU_SUPERIEUR, PlaceEnum.PRIRANESE],
@@ -1781,7 +1868,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 65,
 		xpBonus: 3,
 		odds: 100,
-		groups: [0, 1, 1],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 1 }
+		],
 		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
@@ -1815,7 +1906,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 40,
 		xpBonus: 3,
 		odds: 100,
-		groups: [0, 3, 5],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 3 },
+			{ quantity: 2, odds: 5 }
+		],
 		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
@@ -1848,7 +1943,10 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 50,
 		xpBonus: 6,
 		odds: 100,
-		groups: [2, 5],
+		groups: [
+			{ quantity: 0, odds: 2 },
+			{ quantity: 1, odds: 5 }
+		],
 		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [
@@ -1930,7 +2028,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 50,
 		xpBonus: 4,
 		odds: 100,
-		groups: [0, 5, 3],
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 5 },
+			{ quantity: 2, odds: 3 }
+		],
 		skills: [Skill.PERCEPTION],
 		zones: [],
 		places: [

@@ -613,23 +613,21 @@ export function generateMonsterList(team: (Pick<Dinoz, 'level' | 'placeId'> & Di
 
 	const mdelta = Math.max(Math.round(teamPowerLevel / 4), 2);
 	while (monsterLevel < teamPowerLevel) {
-		// const randomIndex = getRandomNumber(0, monsters.length);
 		const ml = monsters.map(a => {
 			return { monster: a.monster, odds: a.p };
 		});
 		const total = ml.reduce((acc, item) => acc + item.odds, 0);
 		const m = weightedRandom(ml, total).monster;
-		let count = 0;
-		if (!m.groups) {
-			count = 1;
-		} else {
-			const rndGroup = getRandomNumber(0, m.groups.length);
-			count += 1 + m.groups[rndGroup];
+		let count = 1;
+		if (m.groups) {
+			const totalGroup = m.groups.reduce((acc, item) => acc + item.odds, 0);
+			const weightedGroup = weightedRandom(m.groups, totalGroup).quantity;
+			count += weightedGroup;
 		}
 		for (let i = 0; i < count; i++) {
 			monsterLevel += m.level;
 			monsterArray.push(m);
-			if (m.groups && count > 1 && monsterLevel >= teamPowerLevel && m.groups[i] != 0) {
+			if (m.groups && count > 1 && monsterLevel >= teamPowerLevel && m.groups[i].quantity != 0) {
 				break;
 			}
 		}

@@ -17,7 +17,7 @@ export type MonsterFiche = {
 	bonus_defense?: number | undefined;
 	// If the monster needs to use smoothed calculations
 	balanced: boolean;
-	groups?: number[];
+	groups?: groupMonster[];
 	xp?: number;
 	xpBonus?: number;
 	gold?: number;
@@ -32,4 +32,9 @@ export type MonsterFiche = {
 	events?: GameEvent[];
 	noMove?: boolean;
 	display?: string;
+};
+
+export type groupMonster = {
+	quantity: number;
+	odds: number;
 };
