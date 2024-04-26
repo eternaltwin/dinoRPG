@@ -15,13 +15,15 @@
 			1,
 			{
 				"require": {
-					"ArrowFunctionExpression": true,
+					"ArrowFunctionExpression": false,
 					"ClassDeclaration": true,
 					"ClassExpression": true,
 					"FunctionDeclaration": true,
 					"FunctionExpression": true,
 					"MethodDefinition": true
-				}
+				},
+				"checkGetter": false,
+				"checkSetter": false
 			}
 		],
 		"jsdoc/check-access": 1, // Recommended

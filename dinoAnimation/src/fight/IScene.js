@@ -10,6 +10,7 @@ import { PixiHelper } from '../display/PixiHelper.js';
 import { Timer } from './Timer.js';
 import { TimeBar } from './parts/scene/TimeBar.js';
 import { GroundType } from './Enums.js';
+import { Settings } from './settings/Settings.js';
 
 export const SCENE_MARGIN = 10;
 export const SCENE_WIDTH = 400;
@@ -24,9 +25,17 @@ export const FONT_SCALE = 3;
  */
 export class IScene extends Container {
 	/**
-	 * If true, displays the debug parameters when instantiating entities.
+	 * The Fight's settings, allowing to change the different fight's options (speed, text size, ...).
+	 * @type {Settings}
 	 */
-	debugMode = false;
+	_settings;
+	/**
+	 * Get the Fight's settings.
+	 * @type {Settings}
+	 */
+	get settings() {
+		return this._settings;
+	}
 
 	/**
 	 * The loading screen of the Scene.

@@ -17,6 +17,10 @@ import { PixiHelper } from '../display/PixiHelper.js';
 import { GroundWater } from './parts/scene/GroundWater.js';
 import { GroundType } from './Enums.js';
 import { Part } from './Part.js';
+import { SettingsButton } from './settings/SettingsButton.js';
+import { Settings } from './settings/Settings.js';
+import { SettingsPanel } from './settings/SettingsPanel.js';
+import { SpeedPanel } from './settings/SpeedPanel.js';
 
 /**
  * The fight scene containing all the different layers to display.
@@ -53,32 +57,49 @@ export class Scene extends IScene {
 	 * @param {{top: number, bottom: number, right: number}} margins Set the margins for the walkable area.
 	 * @param {number} ground The type of ground for the Scene.
 	 * @param {Renderer} renderer The renderer which will render the Scene. Used to get the Background colors.
-	 * @param {boolean} debug If true, the scene starts in debug mode. False by default.
+	 * @param {Settings} settings The Fight's settings.
 	 */
-	constructor(background, margins, ground, renderer, debug = false) {
+	constructor(background, margins, ground, renderer, settings) {
 		super();
-		this.debugMode = debug;
 		this.margins = margins;
+		this._settings = settings;
 		this._groundType = ground;
 		this._depthManager = new DepthManager(Object.keys(Layers.Scene).length);
 		this.addChild(this._depthManager);
+
+		// BACKGROUND + COLUMNS
 		this.setBackground(background, renderer);
 		this.createColumns();
 		// The zindex of the entities is managed by their computed z position.
 		this.dm.setSortableLayer(Layers.Scene.FIGHTERS);
 
+		// CONTINUE ARROW
 		this._continueArrow = new ContinueArrow(SCENE_WIDTH + 18, SCENE_HEIGHT - 15);
 		this.dm.addContainer(this._continueArrow, Layers.Scene.LOADING);
 		this._continueArrow.visible = false;
 
+		// LOADING SCREEN
 		this._loadingScreen = new LoadingScreen();
 		this.dm.addContainer(this._loadingScreen, Layers.Scene.LOADING);
 		this._slots.map((s) => (s.alpha = 0));
 
-		// DEBUG
-		if (this.debugMode) {
-			this.debugDrawMargins();
+		// SETTINGS
+		if (this._settings.display) {
+			const speedSettings = new SpeedPanel(this._settings);
+			this.dm.addContainer(speedSettings, Layers.Scene.INTER);
+			const settingsPanel = new SettingsPanel(this._settings, speedSettings);
+			this.dm.addContainer(
+				new SettingsButton(settingsPanel, () => {
+					// Reset y on settings opening to prevent shaking displacement
+					this.y = 0;
+				}),
+				Layers.Scene.SETTINGS
+			);
+			this.dm.addContainer(settingsPanel, Layers.Scene.SETTINGS);
 		}
+
+		// MARGINS
+		this.debugDrawMargins();
 	}
 
 	/**
@@ -177,7 +198,7 @@ export class Scene extends IScene {
 		// The x = 0 of the other scenes should be on the border of the left column.
 		colLeft.onLoad(() => {
 			for (const k in Layers.Scene) {
-				if (![Layers.Scene.BG, Layers.Scene.COLUMNS].includes(Layers.Scene[k])) {
+				if (![Layers.Scene.BG, Layers.Scene.COLUMNS, Layers.Scene.SETTINGS].includes(Layers.Scene[k])) {
 					this.dm.offsetLayer(colLeft.width, 0, Layers.Scene[k]);
 				}
 			}
@@ -328,8 +349,8 @@ export class Scene extends IScene {
 			 * If not unique, call the click callback and then remove the onclick from the container.
 			 */
 			clickCb = () => {
-				callback();
 				this.removeClick();
+				callback();
 			};
 		}
 		this.onclick = clickCb;
@@ -345,7 +366,7 @@ export class Scene extends IScene {
 	 * Remove the click callback from the Scene and reset the cursor when hovering.
 	 */
 	removeClick() {
-		this.eventMode = 'none';
+		this.eventMode = 'passive';
 		this.cursor = 'default';
 		this.onclick = undefined;
 		this.ontap = undefined;
@@ -384,25 +405,34 @@ export class Scene extends IScene {
 
 	/**
 	 * Debug function. Draws the scene's given margins.
+	 * The margins are hidden unless the settings ShowHitbox is switched on.
 	 */
 	debugDrawMargins() {
-		this.debugAddLine({ x: 0, y: this.margins.top }, { x: SCENE_WIDTH, y: this.margins.top });
-		this.debugAddLine(
-			{ x: 0, y: SCENE_HEIGHT - this.margins.bottom },
-			{ x: SCENE_WIDTH, y: SCENE_HEIGHT - this.margins.bottom }
+		const margins = new Container();
+		margins.visible = this._settings.showHitbox;
+		this.dm.addContainer(margins, Layers.Scene.DEBUG);
+
+		margins.addChild(this.debugAddLine({ x: 0, y: this.margins.top }, { x: SCENE_WIDTH, y: this.margins.top }));
+		margins.addChild(
+			this.debugAddLine(
+				{ x: 0, y: SCENE_HEIGHT - this.margins.bottom },
+				{ x: SCENE_WIDTH, y: SCENE_HEIGHT - this.margins.bottom }
+			)
 		);
-		this.debugAddLine({ x: this.width, y: 0 }, { x: this.width, y: SCENE_HEIGHT });
+		margins.addChild(this.debugAddLine({ x: this.width, y: 0 }, { x: this.width, y: SCENE_HEIGHT }));
+
+		this._settings.onShowHitbox = (show) => {
+			margins.visible = show;
+		};
 	}
 
 	/**
-	 * Add a line to the debug layer.
-	 * The line starts from "from" and ends to "to".
+	 * Creates a line starting from "from" and ending to "to".
 	 * @param {{x: number, y: number}} from Coordinates of the start of the line.
 	 * @param {{x: number, y: number}} to Coordinates of the end of the line.
+	 * @returns {Graphics} The resulting line.
 	 */
 	debugAddLine(from, to) {
-		const line = new Graphics();
-		this.dm.addContainer(line, Layers.Scene.DEBUG);
-		line.lineStyle(2, 0xff0000).moveTo(from.x, from.y).lineTo(to.x, to.y);
+		return new Graphics().lineStyle(2, 0xff0000).moveTo(from.x, from.y).lineTo(to.x, to.y);
 	}
 }

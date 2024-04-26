@@ -11,6 +11,8 @@ import { Scene } from './Scene.js';
 import { History } from './History.js';
 import { Timer } from './Timer.js';
 import { PreloadData } from '../display/PreloadData.js';
+import { Settings } from './settings/Settings.js';
+import { EnumConverter } from './data/EnumConverter.js';
 
 /**
  * Create a fight scene to render the history of a fight for DinoRPG.
@@ -20,6 +22,11 @@ import { PreloadData } from '../display/PreloadData.js';
 export class Fight {
 	static FRAME_RATE = 32;
 
+	/**
+	 * The fight settings, allowing to manage the different fight options.
+	 * @type {Settings}
+	 */
+	_settings;
 	/**
 	 * Timer managing the time elapsed between two frame to make it fit an expected framerate.
 	 * @type {Timer}
@@ -67,21 +74,27 @@ export class Fight {
 	_history;
 
 	/**
-	 * Create a fight based on the data parameter.
-	 * @param {{legacy_data?: string, bg?: string, history?: Array, debug?: boolean}} data Object containing the data describing a fight.
+	 * Creates a fight based on the data parameter.
+	 * @param {{legacy_data?: string, bg?: string, history?: Array, lang?: string, settings?: boolean}} data Object containing the data describing a fight.
 	 */
 	constructor(data) {
 		if (data.legacy_data) {
 			this._legacyData = new HaxeUnserializer(decodeURIComponent(data.legacy_data)).unserialize();
 			this._data = DAConverter.convert(this._legacyData);
 		} else {
-			this._data = data;
+			this._data = EnumConverter.convertData(data, false);
 		}
+
 		this._renderer = new Renderer({
 			backgroundColor: 0xfce3bb,
 			width: 488,
 			height: 300
 		});
+
+		this._settings = new Settings(data.lang ?? 'en', !(data.settings ?? true));
+		this._settings.copyFight = () => {
+			this.copyToClipboard();
+		};
 
 		this._scene = new Scene(
 			this._data.bg,
@@ -92,10 +105,10 @@ export class Fight {
 			},
 			this._data.ground ?? 0,
 			this._renderer,
-			data.debug
+			this._settings
 		);
 
-		this._timer = new Timer(Fight.FRAME_RATE);
+		this._timer = new Timer(Fight.FRAME_RATE, this._settings);
 		this._timer.add(() => {
 			this.update();
 			this._renderer.render(this._scene);
@@ -108,13 +121,14 @@ export class Fight {
 		PreloadData.preload(this._renderer).then(() => {
 			// "Fake" loading delay to leave the time for the player to understand what is happening and for some resources to load.
 			setTimeout(() => {
+				this._settings.onFightStart();
 				this._history.playNext();
 			}, 1000);
 		});
 	}
 
 	/**
-	 * Update the States and the Scene.
+	 * Updates the States and the Scene.
 	 * If waiting time is above 0, decrease it and play the next history action once finish.
 	 */
 	update() {
@@ -124,13 +138,13 @@ export class Fight {
 			this._waitingTime -= this._timer.tmod;
 			if (this._waitingTime <= 0) {
 				this._waitingTime = 0;
-				this._history.playNext();
+				this._history.nextAction();
 			}
 		}
 	}
 
 	/**
-	 * Get the fight canvas to add to a webpage.
+	 * Gets the fight canvas to add to a webpage.
 	 * @returns {import("pixi.js").ICanvas} The canvas instance to add to the webpage.
 	 */
 	getDisplay() {
@@ -138,7 +152,7 @@ export class Fight {
 	}
 
 	/**
-	 * Pause the action for the given number of frames.
+	 * Pauses the action for the given number of frames.
 	 * @param {number} frames The number of frames the pause has to last.
 	 */
 	pause(frames) {
@@ -146,7 +160,14 @@ export class Fight {
 	}
 
 	/**
-	 * Get the fight data under MT format.
+	 * Copies the fight to the user clipboard.
+	 */
+	copyToClipboard() {
+		navigator.clipboard.writeText(JSON.stringify(EnumConverter.convertData(this._data, true), undefined, '\t'));
+	}
+
+	/**
+	 * Gets the fight data under MT format.
 	 * @param {boolean} forceDAData Force the process to use the converted data as base, even if legacy data was passed at init.
 	 * @returns {string} The serialized data to feed fight.swf.
 	 */
@@ -158,7 +179,7 @@ export class Fight {
 	}
 
 	/**
-	 * Get the unserialized fight data under MT format.
+	 * Gets the unserialized fight data under MT format.
 	 * @returns {object} The fight data under MT format as an object.
 	 */
 	getMTObject() {
@@ -169,12 +190,99 @@ export class Fight {
 	}
 
 	/**
-	 * Destroy the fight display and clean the memory.
+	 * Destroys the fight display and clean the memory.
 	 * Call if you need to remove the Fight from the webpage without reloading.
 	 * The Fight object is rendered useless after this method is called and will have to be discarded.
 	 */
 	destroy() {
 		this._timer.destroy();
 		this._renderer.destroy();
+	}
+
+	/**
+	 * Registers a callback firing every time a new step is started in the fight history.
+	 * Will give the step index and object as argument. The object enums are sent as numbers.
+	 * @param {((idx: number, step: object) => {})} cb The callback to invoke on a new step.
+	 */
+	set onStepStart(cb) {
+		this._settings.onStepStart = cb;
+	}
+
+	/**
+	 * Registers a callback firing every time a step ends in the fight history.
+	 * Will give the step index and object as argument. The object enums are sent as numbers.
+	 * @param {((idx: number, step: object) => {})} cb The callback to invoke when a step ends.
+	 */
+	set onStepEnd(cb) {
+		this._settings.onStepEnd = cb;
+	}
+
+	/**
+	 * Registers a callback firing every time a new step is started in the fight history.
+	 * Will give the step index and object as argument. The object enums are sent as strings.
+	 * @param {((idx: number, step: object) => {})} cb The callback to invoke on a new step.
+	 */
+	set onStepStartStr(cb) {
+		this._settings.onStepStartStr = cb;
+	}
+
+	/**
+	 * Registers a callback firing every time a step ends in the fight history.
+	 * Will give the step index and object as argument. The object enums are sent as strings.
+	 * @param {((idx: number, step: object) => {})} cb The callback to invoke when a step ends.
+	 */
+	set onStepEndStr(cb) {
+		this._settings.onStepEndStr = cb;
+	}
+
+	/**
+	 * Registers a callback firing once the fight starts.
+	 * @param {(() => {})} cb The callback to invoke when the fight starts.
+	 */
+	set onFightStart(cb) {
+		this._settings.onFightStart = cb;
+	}
+
+	/**
+	 * Registers a callback firing once the fight ends.
+	 * @param {(() => {})} cb The callback to invoke when the fight ends.
+	 */
+	set onFightEnd(cb) {
+		this._settings.onFightEnd = cb;
+	}
+
+	/**
+	 * Registers a callback firing every time a fighter or its portrait is clicked.
+	 * Will give the fighter idx as parameter.
+	 * @param {((idx: number) => {})} cb The callback to invoke when a fighter is clicked.
+	 */
+	set onFighterClick(cb) {
+		this._settings.onFighterClick = cb;
+	}
+
+	/**
+	 * Registers a callback firing every time the status of a fighter changes.
+	 * Will give the fighter idx and the list of its status as parameters.
+	 * @param {((idx: number, status: string[]) => {})} cb The callback to invoke when there is a change of status on a fighter.
+	 */
+	set onStatusChange(cb) {
+		this._settings.onStatusChange = cb;
+	}
+
+	/**
+	 * Registers a callback firing every time the life of a fighter changes.
+	 * Will give the fighter and its current life as parameters.
+	 * @param {((idx: number, life: number[]) => {})} cb The callback to invoke when the life of a fighter changes.
+	 */
+	set onLifeChange(cb) {
+		this._settings.onLifeChange = cb;
+	}
+
+	/**
+	 * Registers a callback firing every time a fighter dies.
+	 * @param {((idx: number) => {})} cb The callback to invoke when a fighter dies.
+	 */
+	set onDeath(cb) {
+		this._settings.onDeath = cb;
 	}
 }

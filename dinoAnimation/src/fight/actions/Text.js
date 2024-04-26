@@ -53,8 +53,8 @@ export class Text extends State {
 	 * Creates the text box.
 	 */
 	init() {
-		this._textBox = new TextBox(this._message);
-		this._scene.dm.addContainer(this._textBox, Layers.Scene.PARTS);
+		this._textBox = new TextBox(this._scene, this._message);
+		this._scene.dm.addContainer(this._textBox, Layers.Scene.INTER);
 		this._scene.setClick(() => {
 			this._textBox.speedUp();
 		}, true);
@@ -73,19 +73,26 @@ export class Text extends State {
 				this._textBox.update(timer);
 				if (this._textBox.isDisplayed) {
 					this._step = 1;
-					this._scene.setClick(
-						() => {
+					if (this._scene.settings.autoSkip < 0) {
+						this._scene.setClick(
+							() => {
+								this.endTalk();
+							},
+							true,
+							true
+						);
+					} else {
+						this._scene.removeClick();
+						setTimeout(() => {
 							this.endTalk();
-						},
-						true,
-						true
-					);
+						}, this._scene.settings.autoSkip * 1000);
+					}
 				}
 				break;
 			case 2:
 				this._textBox.alpha = 1 - this._coef;
 				if (this._coef == 1) {
-					this._scene.dm.removeContainer(this._textBox, Layers.Scene.PARTS);
+					this._scene.dm.removeContainer(this._textBox, Layers.Scene.INTER);
 					this.end();
 				}
 				break;

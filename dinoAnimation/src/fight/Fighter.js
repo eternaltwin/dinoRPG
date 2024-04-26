@@ -45,6 +45,7 @@ import { IceBlock } from './parts/skills/ice/IceBlock.js';
 import { IceShard } from './parts/skills/ice/IceShard.js';
 import { MudWall } from './parts/skills/MudWall.js';
 import { TFx, Tween } from '../display/Tween.js';
+import { EnumConverter } from './data/EnumConverter.js';
 
 /**
  * A DinoRPG fighter. Can be either a dino or a monster.
@@ -442,7 +443,8 @@ export class Fighter extends Phys {
 		this._props = fInfos.props;
 		this._life = fInfos.life;
 		this._maxLife = fInfos.maxLife ?? fInfos.life;
-		this._size = Math.pow(fInfos.scale ?? 1, 0.65);
+		const scale = !this.isDino || this._scene.settings.scaleDinoz ? fInfos.scale ?? 1 : 1;
+		this._size = Math.pow(scale, 0.65);
 
 		this._depthManager = new DepthManager(Object.keys(Layers.Fighter).length);
 		this.body.addChild(this._depthManager);
@@ -547,9 +549,24 @@ export class Fighter extends Phys {
 			this._scene.addSlot(this._slot, this.side);
 		}
 
-		// Debug mode, show the colliders and origin.
-		if (this._scene.debugMode) {
-			this.debugShowOrigin();
+		this.createHitbox();
+
+		// On fighter click callback
+		if (this._scene.settings._onFighterClick) {
+			const cb = () => {
+				this._scene.settings.onFighterClick(this.id);
+			};
+			this._root.onclick = cb;
+			this._root.ontap = cb;
+			this._root.eventMode = 'dynamic';
+			this._root.cursor = 'pointer';
+
+			if (this._slot) {
+				this._slot.onclick = cb;
+				this._slot.ontap = cb;
+				this._slot.eventMode = 'static';
+				this._slot.cursor = 'pointer';
+			}
 		}
 	}
 
@@ -813,6 +830,10 @@ export class Fighter extends Phys {
 		if (!this.haveStatus(status)) {
 			this._status.push(status);
 			this.displayStatus();
+			this._scene.settings.onStatusChange(
+				this.id,
+				this._status.map((s) => EnumConverter.convert(s, FighterStatus, true))
+			);
 		}
 	}
 
@@ -836,6 +857,10 @@ export class Fighter extends Phys {
 			return true;
 		});
 		this.displayStatus();
+		this._scene.settings.onStatusChange(
+			this.id,
+			this._status.map((s) => EnumConverter.convert(s, FighterStatus, true))
+		);
 	}
 
 	/**
@@ -1094,6 +1119,7 @@ export class Fighter extends Phys {
 	damages(damages, stunDuration = 50, lifeFx = null) {
 		this.playAnim('hit');
 		this._life = Math.max(0, this._life - damages);
+		this._scene.settings.onLifeChange(this.id, this._life);
 		if (this._slot) {
 			this._slot.setLife(this._life / this._maxLife);
 			this._slot.fxDamage();
@@ -1116,6 +1142,7 @@ export class Fighter extends Phys {
 	 */
 	gainLife(amount, lifeFx = null) {
 		this._life += amount;
+		this._scene.settings.onLifeChange(this.id, this._life);
 		if (this._slot) {
 			this._slot.setLife(this._life / this._maxLife);
 		}
@@ -1786,6 +1813,7 @@ export class Fighter extends Phys {
 		this._mode = Fighter.Mode.Dead;
 		this.removeShadow();
 		this._force = null;
+		this._scene.settings.onDeath(this.id);
 	}
 
 	/**
@@ -1834,16 +1862,25 @@ export class Fighter extends Phys {
 	}
 
 	/**
-	 * Adds a red dot at the center of the Fighter.
-	 * Debug purposes only.
+	 * Create the hitbox of the Fighter. The hitbox is hidden unless the ShowHitbox setting is switched on.
 	 */
-	debugShowOrigin() {
-		const origin = new Graphics();
-		origin.beginFill(0xff0000).drawCircle(0, 0, 3).endFill();
-		this.body.addChild(origin);
-		// Collider
-		this.body.addChild(
+	createHitbox() {
+		const hitbox = new Container();
+		hitbox.visible = this._scene.settings.showHitbox;
+		this.body.addChild(hitbox);
+
+		// origin
+		hitbox.addChild(new Graphics().beginFill(0x0000ff).drawCircle(0, 0, 3).endFill());
+		// area
+		hitbox.addChild(new Graphics().lineStyle(2, 0x0000ff).drawCircle(0, 0, this.ray));
+
+		// collider
+		hitbox.addChild(
 			new Graphics().lineStyle(2, 0xff0000).drawRect(-this._width / 2, -this._height, this._width, this._height)
 		);
+
+		this._scene.settings.onShowHitbox = (show) => {
+			hitbox.visible = show;
+		};
 	}
 }

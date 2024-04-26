@@ -70,6 +70,7 @@ export class Talk extends State {
 	 */
 	init() {
 		this._bubble = new SpeechBubble(
+			this._scene,
 			this._fighter.getRootContainer().x,
 			this._fighter.getRootContainer().y - (this._fighter.height + 10),
 			this._message
@@ -93,13 +94,20 @@ export class Talk extends State {
 				this._bubble.update(timer);
 				if (this._bubble.isDisplayed) {
 					this._step = 1;
-					this._scene.setClick(
-						() => {
+					if (this._scene.settings.autoSkip < 0) {
+						this._scene.setClick(
+							() => {
+								this.endTalk();
+							},
+							true,
+							true
+						);
+					} else {
+						this._scene.removeClick();
+						setTimeout(() => {
 							this.endTalk();
-						},
-						true,
-						true
-					);
+						}, this._scene.settings.autoSkip * 1000);
+					}
 				}
 				break;
 			case 2:
