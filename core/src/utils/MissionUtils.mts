@@ -1,6 +1,7 @@
 import { Dinoz, DinozMission } from '@drpg/prisma';
 import { ConditionEnum } from '../models/enums/Parser.mjs';
 import { MissionHUD } from '../models/missions/missionHUD.mjs';
+import { MissionStep } from '../models/missions/missionSteps.mjs';
 import { npcList } from '../models/npc/NpcList.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
@@ -48,9 +49,16 @@ export function getHUDObjective(
 }
 
 export type DinozToGetActualStep = Parameters<typeof getActualStep>[0];
+
+/**
+ * @summary Retrieve mission step of the dinoz on its way
+ * @param dinoz Dinoz to get the actual step
+ * @returns The mission step or undefined if the dinoz has no mission
+ */
 export function getActualStep(dinoz: {
 	missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
-}) {
+}) : MissionStep | undefined
+{
 	const missionDinoz = dinoz.missions.find(mission => !mission.isFinished);
 	if (!missionDinoz) {
 		return;

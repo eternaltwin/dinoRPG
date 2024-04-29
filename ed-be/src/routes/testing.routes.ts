@@ -4,7 +4,7 @@ import { validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkIsAdmin } from '../utils/jwt.js';
-import { calculateFight, generateMonster, rewardFightCalculate } from '../business/fightService.js';
+import { calculateFight, generateMonsterList, rewardFightCalculate } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
 import { sendJSONToDiscord } from '../utils/discord.js';
 
@@ -42,7 +42,7 @@ routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Reques
 	try {
 		const results = [];
 		for (let i = 0; i < 600; i++) {
-			const monstersGenerated = generateMonster(team, dinozData.placeId);
+			const monstersGenerated = generateMonsterList(team, dinozData.placeId);
 			const fightResult = calculateFight(team, dinozData.placeId, monstersGenerated);
 			const result = await rewardFightCalculate(team, monstersGenerated, fightResult);
 

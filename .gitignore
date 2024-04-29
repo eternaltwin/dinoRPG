@@ -45,3 +45,6 @@ etwin.toml
 config_development.toml
 .env.development
 
+# Prisma
+prisma/*.js
+prisma/runtime/*

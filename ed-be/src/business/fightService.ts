@@ -25,6 +25,8 @@ import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import dayjs from 'dayjs';
 import weightedRandom from '../utils/fight/weightedRandom.js';
+import { getActualStep } from '@drpg/core/utils/MissionUtils';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 
 /**
  * @summary Process a fight
@@ -89,7 +91,7 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(400, 'dead');
 	}
 
-	const monster = generateMonster(team, dinozData.placeId); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
+	const monster = generateMonsterList(team, dinozData.placeId); //prepareFight(dinozData.level, localisation.map, localisation.placeId);
 
 	const fightResult = calculateFight(team, dinozData.placeId, monster);
 
@@ -113,7 +115,7 @@ export async function moveFight(
 	placeId: PlaceEnum
 ) {
 	const dayOfWeek = dayjs().day();
-	let monsters = generateMonster(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
+	let monsters = generateMonsterList(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
 
 	if ((dayOfWeek === 0 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
 		monsters = [];
@@ -501,9 +503,19 @@ export async function rewardFightCalculate(
 	};
 }*/
 
-function monsterLevelProba(level: number, p: number, monsterLvl: number) {
-	let delta = level - monsterLvl;
+/**
+ * Calculate the probability of a monster to appear
+ * @param dinozLevel Level of the dinoz
+ * @param p Probability of the monster to appear
+ * @param monsterLvl Level of the monster
+ * @returns The probability of the monster to appear
+ */
+function monsterLevelProba(dinozLevel: number, p: number, monsterLvl: number) : number
+{
+	let delta = dinozLevel - monsterLvl;
+	// If monster level is higher than dinoz level
 	if (delta < 0) {
+		// If monster is too high level p = 0
 		if (delta < -3) return 0;
 		delta = -delta * 3;
 	}
@@ -511,22 +523,22 @@ function monsterLevelProba(level: number, p: number, monsterLvl: number) {
 	return Math.round((p * 1000) / (3 + delta));
 }
 
-export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], placeOfFight: PlaceEnum) {
-	const POW = 1;
-	let teamLevel = 0;
-	let maxLevel = 0;
-	for (const fighter of fighters) {
-		teamLevel += fighter.level;
-		if (fighter.level > maxLevel) maxLevel = fighter.level;
+/**
+* @summary Return a list of monsters to fight
+* @param team List of dinoz
+* @param placeOfFight Place of the fight
+* @returns List of monsters to fight
+*/
+export function generateMonsterList(team: (Pick<Dinoz, 'level' | 'placeId'> & DinozToCheckMissionFight)[], placeOfFight: PlaceEnum) : MonsterFiche[]
+{
+	let teamPowerLevel = 0;
+	let greatestFighterLevel = 0;
+	for (const dinoz of team) {
+		teamPowerLevel += dinoz.level;
+		if (dinoz.level > greatestFighterLevel) greatestFighterLevel = dinoz.level;
 	}
-
-	const count = fighters.length;
-	const dif = (count + 2) / (count * 2 + 1);
-	teamLevel = Math.round(teamLevel * dif);
-	teamLevel += (POW - 1) * 3;
-	teamLevel += (POW - 1) * 0.3 * teamLevel;
-	let mdelta = Math.round(teamLevel / 4);
-	if (mdelta < 2) mdelta = 2;
+	const diff = (team.length + 2) / (team.length * 2 + 1);
+	teamPowerLevel = Math.round(teamPowerLevel * diff);
 
 	const specialProb = getRandomNumber(0, 100);
 	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);
@@ -535,37 +547,50 @@ export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], pl
 	}
 	const events = currentEvents();
 	const monsters = Object.values(monsterList)
+		// Filter the possible monsters to fight
 		.filter(m => {
-			// Limit to defined places if any
+			// Filter monsters by place if defined
 			if (m.places && !m.places.includes(place.placeId)) return false;
-
 			// Filter event monsters
 			if (m.events && m.events.length > 0) {
 				if (events.length === 0) return false;
 				if (!m.events.some(event => events.includes(event))) return false;
 			}
-
+			// Filter monsters by zones
 			return m.zones.includes(place.map);
 		})
+		// Calculate the probability of each monster to appear
 		.map(m => {
+			// 1 - If monster is a mission target, boost its probability
+			for (const dinoz of team) {
+				const actualStep = getActualStep(dinoz);
+				if (actualStep &&
+					actualStep.requirement.actionType === ConditionEnum.KILL &&
+					actualStep.requirement.target.includes(m.name)
+				) {
+					return {
+						monster: m,
+						p: monsterLevelProba(greatestFighterLevel, m.odds * 100, m.level)
+					};
+				}
+			}
+			// 2 - If monster is special, check if it appears
 			if (m.special) {
 				const display = m.odds >= specialProb;
 				return {
 					monster: m,
-					p: monsterLevelProba(maxLevel, display ? 100 : 0, m.level)
+					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, m.level)
 				};
+			// 3 - Default case
 			} else {
 				return {
 					monster: m,
-					p: monsterLevelProba(maxLevel, m.odds, m.level)
+					p: monsterLevelProba(greatestFighterLevel, m.odds, m.level)
 				};
 			}
 		})
+		// Keep only monsters with a probability greater than 0
 		.filter(m => m.p > 0);
-
-	//TODO Recreate this function to boost p while dinoz are on mission
-	// for( r in dinoz )
-	// 	handler.Missions.updateMonstersProbas(r.d, pos, ml);
 
 	let monsterLevel = 0;
 	const monsterArray: MonsterFiche[] = [];
@@ -586,7 +611,8 @@ export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], pl
 		}
 	}
 
-	while (monsterLevel < teamLevel) {
+	const mdelta = Math.max(Math.round(teamPowerLevel / 4), 2);
+	while (monsterLevel < teamPowerLevel) {
 		// const randomIndex = getRandomNumber(0, monsters.length);
 		const ml = monsters.map(a => {
 			return { monster: a.monster, odds: a.p };
@@ -603,7 +629,7 @@ export function generateMonster(fighters: Pick<Dinoz, 'level' | 'placeId'>[], pl
 		for (let i = 0; i < count; i++) {
 			monsterLevel += m.level;
 			monsterArray.push(m);
-			if (m.groups && count > 1 && monsterLevel >= teamLevel && m.groups[i] != 0) {
+			if (m.groups && count > 1 && monsterLevel >= teamPowerLevel && m.groups[i] != 0) {
 				break;
 			}
 		}

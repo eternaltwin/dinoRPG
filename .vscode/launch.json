@@ -1,0 +1,65 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "EternalTwin solo",
+			"cwd": "${workspaceFolder}",
+			"runtimeExecutable": "yarn",
+			"runtimeArgs": [
+				"etwin:run"
+			],
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"console": "integratedTerminal"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "DinoRPG Back",
+			"cwd": "${workspaceFolder}",
+			"runtimeExecutable": "yarn",
+			"runtimeArgs": [
+				"start:back"
+			],
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"console": "integratedTerminal"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "DinoRPG Front",
+			"cwd": "${workspaceFolder}",
+			"runtimeExecutable": "yarn",
+			"runtimeArgs": [
+				"start:front"
+			],
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"console": "integratedTerminal"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Run all",
+			"cwd": "${workspaceFolder}",
+			"runtimeExecutable": "yarn",
+			"runtimeArgs": [
+				"run",
+				"dev:windows"
+			],
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"console": "integratedTerminal"
+		}
+	]
+}

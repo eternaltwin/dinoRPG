@@ -1,16 +1,16 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "composite": true,
-    "rootDir": "src",
-    "outDir": "dist"
-  },
-  "include": ["./src/**/*.ts"],
-  "exclude": [],
-  "references": [
-    {
-      "path": "../core"
-    }
-  ]
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"composite": true,
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"include": ["./src/**/*.ts"],
+	"exclude": [],
+	"references": [
+		{
+			"path": "../core"
+		}
+	]
 }

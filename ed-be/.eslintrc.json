@@ -1,16 +1,17 @@
 {
-  "parserOptions": { "project": ["./tsconfig.json"] },
+	"parserOptions": { "project": ["./tsconfig.json"] },
 	"parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "@stylistic/ts"
-  ],
+	"plugins": [
+		"@typescript-eslint",
+		"@stylistic/ts"
+	],
 	"extends": ["plugin:@typescript-eslint/strict"],
-  "rules": {
+	"rules": {
 		"@typescript-eslint/no-inferrable-types": "error",
 		"@typescript-eslint/array-type": ["error", { "default": "array" }],
 		"@typescript-eslint/consistent-type-imports": "off",
 		"@typescript-eslint/no-unused-vars": "error",
 		"@typescript-eslint/no-namespace": "off"
-  }
+	},
+	"ignorePatterns": ["dist", "node_modules"]
 }

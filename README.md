@@ -71,7 +71,8 @@ $ yarn install
 ```
 DATABASE_URL="postgresql://<user>:<user-password>@localhost:5432/<database-name>?schema=public"
 ```
-- Aller dans le dossier `./Eternaltwin` et lancer la commande `yarn install`
+- Aller dans le dossier `./Eternaltwin` et lancer la commande `yarn install`  
+NB: Si la commande ne fonctionne pas à cause d'une erreur de certificat, supprimez le yarn.lock du dossier
 - Revenir à la racine du projet et lancer la commande `yarn dev:windows`
 
 Une fois le lancement terminé vous devriez pouvoir accéder à :
