@@ -78,7 +78,7 @@ export function conditionParser(
 		}
 	} else if (ACTIVE) {
 		result = ACTIVE;
-	} else if (DAY) {
+	} else if (DAY !== undefined) {
 		result = dayjs().day() === DAY;
 	} else if (WEEK_PLACE) {
 		if (secret?.key !== 'itinerant' || isNaN(parseInt(secret.value))) {
