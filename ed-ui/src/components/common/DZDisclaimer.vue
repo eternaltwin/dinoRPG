@@ -40,8 +40,7 @@ export default defineComponent({
 .disclaimer {
 	display: flex;
 	align-items: center;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin: 10px;
 	padding: 5px;
 	color: #fce3bc;
 	font-size: 10pt;

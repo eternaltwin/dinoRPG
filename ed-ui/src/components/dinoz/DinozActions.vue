@@ -24,7 +24,6 @@
 		<DZDisclaimer
 			v-if="dinozActions?.some(a => a.name === Action.STOP_REST)"
 			:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
-			class="resting"
 			timer
 		></DZDisclaimer>
 		<ul>
@@ -632,10 +631,5 @@ export default defineComponent({
 
 .selling {
 	margin-right: 1px;
-}
-
-.resting {
-	margin-right: 1px;
-	margin-top: 0px;
 }
 </style>
