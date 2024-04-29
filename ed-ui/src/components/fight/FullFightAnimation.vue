@@ -5,7 +5,7 @@
 <script lang="ts">
 import { defineComponent, toRaw } from 'vue';
 import { Fight } from '@drpg/dino-animation';
-import { sessionStore } from '../../store/index.js';
+import { localStore, sessionStore } from '../../store/index.js';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
@@ -16,9 +16,11 @@ export default defineComponent({
 		return {
 			loaded: false,
 			sessionStore: sessionStore(),
-			fight: undefined as Fight | undefined
+			fight: undefined as Fight | undefined,
+			localStore: localStore()
 		};
 	},
+	emits: ['fightEnded'],
 	props: {
 		place: {
 			type: Number,
@@ -50,11 +52,15 @@ export default defineComponent({
 		const initPlace = resolveFightingPlace(this.place);
 		this.fight = new Fight({
 			...initPlace,
-			history: nexFight.filter(n => n != undefined)
+			history: nexFight.filter(n => n != undefined),
+			lang: this.localStore.getLanguage ?? 'fr'
 		});
 
 		console.log(nexFight.filter(n => n != undefined));
 		this.loaded = true;
+		this.fight.onFightEnd = () => {
+			this.$emit('fightEnded');
+		};
 	},
 	unmounted() {
 		this.fight?.destroy();

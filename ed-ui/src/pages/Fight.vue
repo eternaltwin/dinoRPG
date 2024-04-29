@@ -3,47 +3,49 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
-	<FullFightAnimation :place="fight.place" />
+	<FullFightAnimation :place="fight.place" @fightEnded="fightEnded = true" />
 	<p class="fight-history" v-html="fightHistory" />
-	<div class="wrapper">
-		<div class="debrief" :class="lang">
-			<img
-				v-if="fight.result"
-				:src="getImgURL('design', `large_fight_win`)"
-				alt="win"
-				v-tippy="{
-					content: formatContent($t(`fight.win`)),
-					theme: 'small'
-				}"
-			/>
-			<img
-				v-else
-				:src="getImgURL('design', `large_fight_lose`)"
-				alt="lose"
-				v-tippy="{
-					content: formatContent($t(`fight.lose`)),
-					theme: 'small'
-				}"
-			/>
-			<div class="results life">{{ fight.totalHpLost }}</div>
-			<div class="results xp">
-				{{ fight.xpEarned }}
+	<Transition name="bounce">
+		<div v-if="fightEnded" class="wrapper">
+			<div class="debrief" :class="lang">
 				<img
-					v-if="fight.result && fight.xpEarned === 0"
-					:src="getImgURL('icons', `small_lup`)"
-					alt="lup"
+					v-if="fight.result"
+					:src="getImgURL('design', `large_fight_win`)"
+					alt="win"
 					v-tippy="{
-						content: formatContent($t(`fight.lvlup`)),
+						content: formatContent($t(`fight.win`)),
 						theme: 'small'
 					}"
 				/>
+				<img
+					v-else
+					:src="getImgURL('design', `large_fight_lose`)"
+					alt="lose"
+					v-tippy="{
+						content: formatContent($t(`fight.lose`)),
+						theme: 'small'
+					}"
+				/>
+				<div class="results life">{{ fight.totalHpLost }}</div>
+				<div class="results xp">
+					{{ fight.xpEarned }}
+					<img
+						v-if="fight.result && fight.xpEarned === 0"
+						:src="getImgURL('icons', `small_lup`)"
+						alt="lup"
+						v-tippy="{
+							content: formatContent($t(`fight.lvlup`)),
+							theme: 'small'
+						}"
+					/>
+				</div>
+				<div class="results money">{{ fight.goldEarned }}</div>
 			</div>
-			<div class="results money">{{ fight.goldEarned }}</div>
+			<a class="button" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</a>
+			<a class="button" v-if="isDevEnv()" @click="processFight()">[Dev] Fight again</a>
+			<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
 		</div>
-		<a class="button" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</a>
-		<a class="button" v-if="isDevEnv()" @click="processFight()">[Dev] Fight again</a>
-		<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
-	</div>
+	</Transition>
 </template>
 
 <script lang="ts">
@@ -73,7 +75,8 @@ export default defineComponent({
 			lang: localStore().getLanguage ?? 'fr',
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
-			npcName: undefined as string | undefined
+			npcName: undefined as string | undefined,
+			fightEnded: false as boolean
 		};
 	},
 	props: {
@@ -203,6 +206,33 @@ export default defineComponent({
 	}
 	:deep(img) {
 		width: 15px;
+	}
+}
+.bounce-enter-active {
+	animation: bounce2 1s;
+}
+@keyframes bounce2 {
+	0% {
+		transform: translateY(-30px);
+		opacity: 0;
+	}
+	20% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	40% {
+		transform: translateY(-15px);
+		opacity: 0.8;
+	}
+	60% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	80% {
+		transform: translateY(-5px);
+	}
+	100% {
+		transform: translateY(0px);
 	}
 }
 </style>
