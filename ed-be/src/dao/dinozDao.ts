@@ -273,6 +273,7 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 				select: {
 					id: true,
 					money: true,
+					cooker: true,
 					items: {
 						select: { id: true, itemId: true, quantity: true }
 					}

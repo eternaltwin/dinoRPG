@@ -130,7 +130,7 @@ export async function useItem(req: Request) {
 			break;
 		case ItemEffect.HEAL:
 			const initialLife = dinoz.life;
-			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value));
+			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value * (dinoz.player.cooker ? 1.1 : 1)));
 			const lifeHealed = Math.max(0, dinoz.life - initialLife);
 			feedback = {
 				category: ItemEffect.HEAL,
