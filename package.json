@@ -31,9 +31,9 @@
     "precommit": "yarn prettier",
     "clean": "rimraf -g ed-ui/ts-out ed-ui/.rollup.cache ed-be/dist core/dist ./node_modules '*/tsconfig.tsbuildinfo' ./.yarn/cache ./.yarn/install",
     "reset": "yarn clean && yarn install && cd Eternaltwin && yarn install",
-    "etwin:run": "cd Eternaltwin && yarn run etwin",
+    "etwin:run": "cd Eternaltwin && yarn run eternaltwin start",
     "dev:windows": "concurrently -k -n \"back,front,etwin\" -p \"[{name}]\" -c \"blue,green,orange\" \"yarn run start:back\" \"yarn run start:front\" \"yarn run etwin:run\"",
-    "db:sync:dev": "cd ed-be && yarn db:sync:dev",
+    "db:sync:dev": "cd ed-be && yarn db:sync:dev && yarn seed",
     "db:migrate:manual": "cd ed-be && yarn db:migrate:manual",
     "migration": "cd ed-be && yarn migration"
   },
@@ -48,7 +48,7 @@
       "dinoAnimation/"
     ]
   },
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@4.1.1",
   "devDependencies": {
     "concurrently": "^8.2.2",
     "husky": "^8.0.3",

@@ -12,15 +12,16 @@
     "start": "yarn run build && node dist/index.js",
     "db:sync:dev": "prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
     "db:migrate:manual": "prisma migrate dev --create-only",
-    "migration": "prisma migrate deploy"
-  },
+    "migration": "prisma migrate deploy",
+		"seed": "node --loader ts-node/esm prisma/seed.ts"
+
+	},
   "author": "Jolujolu",
   "license": "ISC",
   "dependencies": {
     "@drpg/core": "workspace:^",
-    "@eternal-twin/core": "^0.10.3",
-    "@eternal-twin/etwin-client-http": "^0.10.3",
-    "@eternal-twin/oauth-client-http": "^0.10.3",
+    "@eternaltwin/core": "^0.14.2",
+    "@eternaltwin/oauth-client-http": "^0.14.2",
     "@prisma/client": "^5.8.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
