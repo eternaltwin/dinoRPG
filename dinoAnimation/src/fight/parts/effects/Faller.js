@@ -1,8 +1,8 @@
 // @ts-check
 // https://github.com/motion-twin/WebGamesArchives/blob/main/DinoRPG/gfx/fight/src/part/Faller.hx
 
-import { Part } from '../Part.js';
-import { Timer } from '../Timer.js';
+import { Part } from '../../Part.js';
+import { Timer } from '../../Timer.js';
 
 /**
  * Creates a Part which will stop moving once making contact with the ground.
