@@ -27,7 +27,10 @@ export class Ashes extends Part {
 		this._vr = 0;
 		this.bounceFrict = 0;
 		this.groundFrict = 0;
+
 		this._sleep = Math.random() * 20;
+		this._animator.playing = false;
+		this._root.visible = false;
 
 		this.init();
 	}

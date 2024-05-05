@@ -1,6 +1,6 @@
 // @ts-check
 
-import { BLEND_MODES, Container, SpriteMaskFilter } from 'pixi.js';
+import { BLEND_MODES, Container, Filter, SpriteMaskFilter } from 'pixi.js';
 import { Sprite } from '../../../Sprite.js';
 import { Timer } from '../../../Timer.js';
 import { Animator } from '../../../../display/Animator.js';
@@ -16,20 +16,44 @@ export class Environment extends Sprite {
 	 * @type {Animator}
 	 */
 	static MaskAnimator;
+	// All the mask filters are created as a SpriteMaskFilter to allow for blending.
+	// All of them are static to be able to preload them to prevent WebGL from stuttering at creation.
 	/**
-	 * The filter of the environement.
-	 * Created as a SpriteMaskFilter to allow for blending.
-	 * Static because it makes WebGL stutters at creation.
+	 * The default mask filter of the environement.
 	 * @type {SpriteMaskFilter}
 	 */
 	static MaskFilter;
-
 	/**
-	 * The container masked by the masked animation.
-	 * Add your display element in there.
-	 * @type {Container}
+	 * The multiply mask filter of the environement.
+	 * @type {SpriteMaskFilter}
 	 */
-	_masked;
+	static MaskFilterMultiply;
+	/**
+	 * The multiply filter of the environment, to apply once the mask is removed.
+	 * @type {Filter}
+	 */
+	static FilterMultiply;
+	/**
+	 * The add mask filter of the environement.
+	 * @type {SpriteMaskFilter}
+	 */
+	static MaskFilterAdd;
+	/**
+	 * The add filter of the environment, to apply once the mask is removed.
+	 * @type {Filter}
+	 */
+	static FilterAdd;
+	/**
+	 * The substract mask filter of the environement.
+	 * @type {SpriteMaskFilter}
+	 */
+	static MaskFilterSubstract;
+	/**
+	 * The substract filter of the environment, to apply once the mask is removed.
+	 * @type {Filter}
+	 */
+	static FilterSubstract;
+
 	/**
 	 * Additionnal effects for the environment.
 	 * Stored here to be disposed once the environment is removed.
@@ -49,10 +73,6 @@ export class Environment extends Sprite {
 	constructor() {
 		super(new Container());
 		Environment.createMaskFilter();
-
-		this._masked = new Container();
-		this._masked.filters = [Environment.MaskFilter];
-		this._root.addChild(this._masked);
 		this._root.addChild(Environment.MaskAnimator);
 	}
 
@@ -80,10 +100,8 @@ export class Environment extends Sprite {
 		this._disposed = true;
 		this._parts.map((p) => p.kill());
 		this._parts = [];
-		this._masked.filters = [];
 	}
 
-	static i = 3;
 	/**
 	 * Create the mask filter.
 	 * Should be called in preload data, but will be called at creation to reset the mask filter parameters.
@@ -94,9 +112,27 @@ export class Environment extends Sprite {
 		}
 		Environment.MaskAnimator.play(0);
 		if (!Environment.MaskFilter) {
+			const mask = Environment.MaskAnimator.getPartSprite('mask');
 			Environment.MaskFilter = new SpriteMaskFilter();
-			Environment.MaskFilter.maskSprite = Environment.MaskAnimator.getPartSprite('mask');
+			Environment.MaskFilter.maskSprite = mask;
+
+			Environment.MaskFilterMultiply = new SpriteMaskFilter();
+			Environment.MaskFilterMultiply.maskSprite = mask;
+			Environment.MaskFilterMultiply.blendMode = BLEND_MODES.MULTIPLY;
+			Environment.FilterMultiply = new Filter();
+			Environment.FilterMultiply.blendMode = BLEND_MODES.MULTIPLY;
+
+			Environment.MaskFilterAdd = new SpriteMaskFilter();
+			Environment.MaskFilterAdd.maskSprite = mask;
+			Environment.MaskFilterAdd.blendMode = BLEND_MODES.ADD;
+			Environment.FilterAdd = new Filter();
+			Environment.FilterAdd.blendMode = BLEND_MODES.ADD;
+
+			Environment.MaskFilterSubstract = new SpriteMaskFilter();
+			Environment.MaskFilterSubstract.maskSprite = mask;
+			Environment.MaskFilterSubstract.blendMode = BLEND_MODES.SUBTRACT;
+			Environment.FilterSubstract = new Filter();
+			Environment.FilterSubstract.blendMode = BLEND_MODES.SUBTRACT;
 		}
-		Environment.MaskFilter.blendMode = BLEND_MODES.NORMAL;
 	}
 }

@@ -115,6 +115,11 @@ export class FireEnvironment extends Environment {
 	];
 
 	/**
+	 * The masked container applied multiplicatively to the Scene.
+	 * @type {Container}
+	 */
+	_envMultiply;
+	/**
 	 * Fires in the environment.
 	 * @type {Animator[]}
 	 */
@@ -127,11 +132,7 @@ export class FireEnvironment extends Environment {
 	constructor(scene) {
 		super();
 
-		// Adds MULTIPLY blend mode to mask
-		Environment.MaskFilter.blendMode = BLEND_MODES.MULTIPLY;
-
-		this._root.x = -0.25;
-		this._root.y = 38;
+		this._root.x = scene.dm.getLayer(Layers.Scene.PARTS).x;
 
 		// Spawns in the ash particles
 		for (let i = 0; i < 15; ++i) {
@@ -140,12 +141,16 @@ export class FireEnvironment extends Environment {
 			this._parts.push(ash);
 		}
 
+		this._envMultiply = new Container();
+		this._envMultiply.filters = [Environment.MaskFilterMultiply];
+		this._root.addChild(this._envMultiply);
+		this._envMultiply.y = 38;
+
 		// Background
 		const bg = new Asset(ref.fx.env.fire.background);
-		bg.x = 0.45;
-		bg.y = -38.85;
-		this._masked.addChild(bg);
-		this._masked.addChild(new Asset(ref.fx.env.fire.gradient));
+		bg.y = -38;
+		this._envMultiply.addChild(bg);
+		this._envMultiply.addChild(new Asset(ref.fx.env.fire.gradient));
 
 		// Creates the flames.
 		// As WebGL does not have the same blend modes than Flash,
@@ -162,7 +167,7 @@ export class FireEnvironment extends Environment {
 			flameContainer.addChild(flames);
 		}
 		flameContainer.filters = [ConstantShaderManager.getGlowFilter(FireEnvironment.GlowFilterParameters)];
-		this._masked.addChild(flameContainer);
+		this._envMultiply.addChild(flameContainer);
 	}
 
 	/**
@@ -176,12 +181,10 @@ export class FireEnvironment extends Environment {
 	}
 
 	/**
-	 * Replaces the blend mode filter on the masked element once the MaskFilter has been removed by the parent dispose.
+	 * Replaces the blend mode filter of the environment as the mask will be reset.
 	 */
 	dispose() {
 		super.dispose();
-		const fl = new Filter();
-		fl.blendMode = BLEND_MODES.MULTIPLY;
-		this._masked.filters = [fl];
+		this._envMultiply.filters = [Environment.FilterMultiply];
 	}
 }
