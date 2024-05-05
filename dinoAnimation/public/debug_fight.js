@@ -89,7 +89,7 @@ const fightVersion = [
 					side: false,
 					scale: 1,
 					fid: 1,
-					gfx: 'coq'
+					gfx: 'cobra'
 				}
 			},
 			{
@@ -102,7 +102,7 @@ const fightVersion = [
 					side: false,
 					scale: 1,
 					fid: 2,
-					gfx: 'barche'
+					gfx: 'gluon'
 				}
 			},
 			/*{
@@ -119,21 +119,14 @@ const fightVersion = [
 				status: 'Fly'
 			},*/
 			{
-				action: 'Skill',
-				skill: 'Focus',
-				details: {
-					fid: 0,
-					color: 0xff0000
-				}
+				action: 'Wait',
+				time: 2000
 			},
 			{
 				action: 'Skill',
-				skill: 'Generate',
+				skill: 'Env',
 				details: {
-					fid: 0,
-					color: 0xff0000,
-					power: 2,
-					radius: 1
+					type: 'Fire'
 				}
 			}
 			/*{

@@ -1,5 +1,5 @@
 // @ts-check
-import { Container, Rectangle, Ticker } from 'pixi.js';
+import { Container, Rectangle, Sprite, Ticker } from 'pixi.js';
 import { PixiHelper } from './PixiHelper.js';
 import { Animation } from './Animation.js';
 import { ImageExtractor } from './ImageExtractor.js';
@@ -193,6 +193,16 @@ export class Animator extends Container {
 	}
 
 	/**
+	 * Get the Sprite element of a part.
+	 * Useful if you wish to make a mask out of it.
+	 * @param {string} name The name of the part.
+	 * @returns {Sprite} The Sprite element of the Part.
+	 */
+	getPartSprite(name) {
+		return this._body.getPartSprite(name);
+	}
+
+	/**
 	 * Flip the container.
 	 * @param {boolean} side Direction the container has to face. True to face right, false to face left.
 	 */
@@ -276,6 +286,19 @@ export class Animator extends Container {
 	}
 
 	/**
+	 * Sets the animator and animation to playing.
+	 * If idx is defined, sets the frame to idx.
+	 * @param {number} idx The frame to set the animation at.
+	 */
+	play(idx = undefined) {
+		this.playing = true;
+		this._body.play();
+		if (idx !== undefined) {
+			this.setFrame(idx, true);
+		}
+	}
+
+	/**
 	 * Return the length of the current animation playing.
 	 * @returns {number} The number of frames of the current animation.
 	 */
@@ -293,8 +316,16 @@ export class Animator extends Container {
 	loadAnimation(details, scale = 1, customization = []) {
 		this._body._scale = scale;
 		this._body.setAnimation(details.animation);
+		const partsScaling = PartManager.getAnimationScaling(details.animation);
 		for (const pName in details.parts) {
-			const element = PartManager.createPart(details.parts[pName], customization, [], '', scale);
+			const element = PartManager.createPart(
+				details.parts[pName],
+				customization,
+				[],
+				'',
+				scale,
+				partsScaling[pName] ?? 1
+			);
 			if (element) {
 				this.addPart(pName, element);
 			}
