@@ -630,12 +630,7 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(400, `noMovement`);
 	}
 
-	//Consume fight action
-	for (const dino of team) {
-		await updateDinoz(dino.id, {
-			fight: false
-		});
-	}
+
 
 	let fight = await mouvementListener(team, finalPlace);
 	if (!fight) {
@@ -654,6 +649,14 @@ export async function betaMove(req: Request) {
 			);
 		}
 	}
+
+	//Consume fight action
+	for (const dino of team) {
+		await updateDinoz(dino.id, {
+			fight: false
+		});
+	}
+
 	return fight;
 }
 
