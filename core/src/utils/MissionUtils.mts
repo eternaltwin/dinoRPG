@@ -57,8 +57,7 @@ export type DinozToGetActualStep = Parameters<typeof getActualStep>[0];
  */
 export function getActualStep(dinoz: {
 	missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
-}) : MissionStep | undefined
-{
+}): MissionStep | undefined {
 	const missionDinoz = dinoz.missions.find(mission => !mission.isFinished);
 	if (!missionDinoz) {
 		return;

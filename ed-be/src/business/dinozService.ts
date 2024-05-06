@@ -630,8 +630,6 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(400, `noMovement`);
 	}
 
-
-
 	let fight = await mouvementListener(team, finalPlace);
 	if (!fight) {
 		fight = await moveFight(team, finalPlace);

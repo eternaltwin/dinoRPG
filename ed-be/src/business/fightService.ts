@@ -510,8 +510,7 @@ export async function rewardFightCalculate(
  * @param monsterLvl Level of the monster
  * @returns The probability of the monster to appear
  */
-function monsterLevelProba(dinozLevel: number, p: number, monsterLvl: number) : number
-{
+function monsterLevelProba(dinozLevel: number, p: number, monsterLvl: number): number {
 	let delta = dinozLevel - monsterLvl;
 	// If monster level is higher than dinoz level
 	if (delta < 0) {
@@ -524,13 +523,15 @@ function monsterLevelProba(dinozLevel: number, p: number, monsterLvl: number) : 
 }
 
 /**
-* @summary Return a list of monsters to fight
-* @param team List of dinoz
-* @param placeOfFight Place of the fight
-* @returns List of monsters to fight
-*/
-export function generateMonsterList(team: (Pick<Dinoz, 'level' | 'placeId'> & DinozToCheckMissionFight)[], placeOfFight: PlaceEnum) : MonsterFiche[]
-{
+ * @summary Return a list of monsters to fight
+ * @param team List of dinoz
+ * @param placeOfFight Place of the fight
+ * @returns List of monsters to fight
+ */
+export function generateMonsterList(
+	team: (Pick<Dinoz, 'level' | 'placeId'> & DinozToCheckMissionFight)[],
+	placeOfFight: PlaceEnum
+): MonsterFiche[] {
 	let teamPowerLevel = 0;
 	let greatestFighterLevel = 0;
 	for (const dinoz of team) {
@@ -564,7 +565,8 @@ export function generateMonsterList(team: (Pick<Dinoz, 'level' | 'placeId'> & Di
 			// 1 - If monster is a mission target, boost its probability
 			for (const dinoz of team) {
 				const actualStep = getActualStep(dinoz);
-				if (actualStep &&
+				if (
+					actualStep &&
 					actualStep.requirement.actionType === ConditionEnum.KILL &&
 					actualStep.requirement.target.includes(m.name)
 				) {
@@ -581,7 +583,7 @@ export function generateMonsterList(team: (Pick<Dinoz, 'level' | 'placeId'> & Di
 					monster: m,
 					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, m.level)
 				};
-			// 3 - Default case
+				// 3 - Default case
 			} else {
 				return {
 					monster: m,
