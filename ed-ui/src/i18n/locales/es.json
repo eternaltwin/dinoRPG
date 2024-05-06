@@ -11,18 +11,69 @@
 		"forum": "Foro",
 		"api": "API",
 		"logout": "Desconectarse",
-		"guide": "Guía del Juego",
-		"faq": "FAQ"
+		"guide": "Guía del Juego"
 	},
 	"toast": {
 		"DinozIsDead": "Tu dinoz está muerto y no puede ser curado.",
 		"AlreadyAtMaxHealth": "Tu dinoz ya no puede ser curado.",
 		"DinozNotDead": "Tu dinoz ya se encuentra vivo.",
 		"OnlyLettersAndNumbers": "¡Nombre inválido! Solo letras y números pueden ser utilizados.",
-		"tooManyActiveDinoz": "Ya tienes demasiados dinoz activos."
+		"tooManyActiveDinoz": "Ya tienes demasiados dinoz activos.",
+		"backpackFull": "Ya no tienes espacios de equipo libres en este Dino.",
+		"concentration": "Tu Dino se está concentrando y no puede hacer nada más en este momento.",
+		"nocookie": "La cookie ha caducado o no es válida; por favor reinicie la importación desde la página Mi cuenta.",
+		"wronglogins": "Los identificadores de Twinoid no son los correctos.",
+		"notEnoughItem": "No tienes suficiente de este artículo.",
+		"notEnoughMoney": "No tienes suficiente oro",
+		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
+		"noPMI": "Tu as besoin du Petit Missionaire Illustré pour accéder à cette page.",
+		"dinozListMissing": "Liste des Dinoz manquante",
+		"dinozDataMissing": "Données du Dinoz manquantes",
+		"selectADinozAtMarketFirst": "Vous devez d'abord sélectionner un Dinoz au marché.",
+		"unknownDinoz": "Dino desconocido",
+		"missingUser": "Usuario perdido",
+		"invalidOffer": "Oferta no válida",
+		"missingData": "Datos perdidos",
+		"bidIsLower": "Su oferta es menor que la anterior.",
+		"missingStatus": "L'un de vos dinoz ne remplis pas les conditions pour faire cette action",
+		"notEnoughIrma": "Vous n'avez pas assez de potion d'irma",
+		"missingIrma": "Vous avez besoin de potion d'irma pour faire cette action",
+		"shovelMine": "Vous n'allez quand même creuser à côté du mineur !?!",
+		"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
+		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
+		"AlreadySphere": "Votre dinoz a déjà acquis toutes les compétences sphériques de cette élément.",
+		"market": {
+			"minimalValueError": "El valor total de su oferta no alcanza el valor mínimo.",
+			"tooManyItems": "No puedes vender más de {items} diferentes a la vez.",
+			"offerCreated": "Tu oferta ha sido creada.",
+			"offerCancelled": "Su oferta ha sido cancelada.",
+			"notEnoughItems": "No tienes suficiente de este artículo.",
+			"notEnoughTickets": "No tienes suficientes bonos."
+		},
+		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Eleveurs.",
+		"heal": "Votre dinoz s'est soigné de {value} :hp:",
+		"gold": "Vous avez obtenu {value} :gold:",
+		"sphere": "Votre dinoz a appris la compétence {value}.",
+		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
+		"resurrect": "Votre dinoz est ressucité.",
+		"egg": "Vous avez ouvert un oeuf de {value}.",
+		"special": {
+			"box_common": "La boîte commune contenait un {value} !",
+			"box_rare": "La boîte commune contenait un {value} !",
+			"box_epic": "La boîte commune contenait un {value} !",
+			"box_legendary": "La boîte commune contenait un {value} !",
+			"devil_ointment": "Vous avez retiré le statut maudit de votre dinoz.",
+			"amnesic_rice": "Votre dinoz ne sait plus comment il se prénomme, il a également perdu tout son :xp: !",
+			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
+		},
+		"wrongQuantity": "Quantité invalide",
+		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
+		"itemBought": "Vous avez acheté {quantity} {itemName}.",
+		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
+		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:."
 	},
 	"dig": {
-		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
+		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
 		"status": "En creusant, votre dinoz a trouvé l'objet {item}. Il apparaîtra dans ses status. Félicitations !"
 	},
 	"api": "Puede consultar nuestra API para probarlo. No olvides tomar tu ficha de autenticación JWT:",
@@ -55,7 +106,8 @@
 		"water": "Elemento **Agua**",
 		"lightning": "Elemento **Rayo**",
 		"air": "Elemento **Aire**",
-		"neutral": "Elemento **Vacío** && //(este elemento se aplica en respuesta a los ataques normales de los monstruos)//"
+		"neutral": "Elemento **Vacío** && //(este elemento se aplica en respuesta a los ataques normales de los monstruos)//",
+		"void": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
 	},
 	"resurrection": {
 		"choice1": {
@@ -77,6 +129,7 @@
 		"description": {
 			"fight": "Busca un monstruo para combatir en este lugar. Cada Dino puede efectuar **un desplazamiento o un combate por día**.",
 			"follow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. De este modo, se desplazarán juntos y se ayudarán durante los combates.",
+			"unfollow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. Cliquez sur cette action pour qu'il arrête de le suivre.",
 			"levelup": "Tu Dino ha acumulado suficiente experiencia para alcanzar el siguiente nivel. Haz clic en esta acción para aumentar la potencia de tu Dino.",
 			"resurrect": "Tu dinoz está muerto, debes resucitarlo antes de volver a pelear.",
 			"dig": "Votre Dinoz peut **creuser** à cet endroit avec la pelle pour y trouver peut-être un trésor.",
@@ -89,11 +142,24 @@
 			"xmas": "Vous pouvez jouer au Chasse-Neige en utilisant vos Tickets de Noël, et gagner de nombreux cadeaux !",
 			"tictac": "Utilisez vos Tickets Taque pour trouver peut-être un trésor trés rare !",
 			"labo": "Chercher l'antidote dans le laboratoire de l'Archidorogon pour soigner le vénérable.",
-			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !"
+			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaine !",
+			"concentrate": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
+			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
+			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz.",
+			"daily": "Vous pouvez utilisez ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !",
+			"irma": "Votre Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma* pour faire une action supplémentaire immédiatement.",
+			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement.&&Si des actions gratuites sont disponibles pour un des dinoz, elles seront consommées en priorités.",
+			"action": "Votre dinoz a encore des actions gratuites à effectuer.",
+			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
+			"stop_congel": "El Dino puede escapar de la muerte una vez por combate",
+			"rest": "El Dino podrá regenerar un 15% de puntos de vida suplementarios mientras descansa Pendant ce temps, il ne pourra effectuer aucune autre action !",
+			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
+			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant."
 		},
 		"name": {
 			"fight": "Combatir",
 			"follow": "Seguir",
+			"unfollow": "Seguir",
 			"levelup": "¡Subir de Nivel!",
 			"resurrect": "Resucitar",
 			"dig": "Cólera",
@@ -106,7 +172,19 @@
 			"xmas": "Chasse-Neige",
 			"tictac": "Papi José",
 			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feu d'artifice"
+			"party": "Feu d'artifice",
+			"concentrate": "Arrêter de se concentrer",
+			"market": "Marché aux éleveurs",
+			"disband": "Dissoudre le groupe",
+			"daily": "Ticket quotidien",
+			"irma": "Potion d'Irma",
+			"irmas": "Potions d'Irma : Groupe",
+			"action": "Nouvelle action",
+			"congel": "Congeler",
+			"stop_congel": "Décongeler",
+			"rest": "Resplandor",
+			"stop_rest": "Arrêter de se reposer",
+			"itinerant_shop": "Marchand Ambulant"
 		}
 	},
 	"button": {
@@ -117,7 +195,8 @@
 		"confirm": "¿Confirmas esta acción?",
 		"chose": "Comprar",
 		"generator": "Generador de Dinos",
-		"sortDinoz": "Administrar dinoz"
+		"sortDinoz": "Administrar dinoz",
+		"dinozMissions": "Misiones de mis Dinos"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -134,7 +213,7 @@
 		"th": {
 			"comp": "Competencia",
 			"type": "Tipo",
-			"active": "Des."
+			"active": "Actif"
 		},
 		"type": {
 			"name": {
@@ -167,11 +246,42 @@
 			"type": "Tipo",
 			"state": "Estado",
 			"title": "Ordenar las competencias"
-		}
+		},
+		"statistics": "Características",
+		"assaults": "Talón de Aquiles",
+		"defenses": "Defensa",
+		"specials": "Especiales",
+		"base": "Base",
+		"skill": "Habilidad",
+		"fireAssault": "Fango del Pantano",
+		"woodAssault": "Amuleto Acuoso",
+		"waterAssault": "Elixir",
+		"lightningAssault": "Assaut de Foudre",
+		"airAssault": "Assaut d'Air",
+		"fireDefense": "Défense de Feu",
+		"woodDefense": "Défense de Bois",
+		"waterDefense": "Défense d'Eau",
+		"lightningDefense": "Défense de Foudre",
+		"airDefense": "Défense d'Air",
+		"voidDefense": "Défense Neutre",
+		"baseElementContribution": "Contribution de l'élément de base",
+		"hpRegen": "Régénération de PV",
+		"initiative": "Iniciativa",
+		"energy": "Adrenalina",
+		"energyRecovery": "Récupération d'énergie",
+		"maxFollowers": "Nombre maximum de suiveurs",
+		"armor": "Herrería",
+		"multihit": "Multi-coup",
+		"evasion": "Esquive",
+		"counter": "Contre",
+		"bubbleRate": "Traje de plomo",
+		"torchDamage": "Dégâts du briquet",
+		"acidBloodDamage": "Dégâts de sang acide",
+		"baseValue": "Valor base"
 	},
 	"item": {
 		"name": {
-			"gold": "Pièces d'or",
+			"gold": "Monedas de oro",
 			"potion_irma": "Poción de la Bruja Lola",
 			"potion_angel": "Poción de Ángel",
 			"cloud_burger": "Nube-Hamburguesa",
@@ -232,6 +342,7 @@
 			"water_sphere": "Esfera de Agua",
 			"lightning_sphere": "Esfera de Rayo",
 			"air_sphere": "Esfera de Aire",
+			"void_sphere": "Sphère de Vide",
 			"demon_ticket": "Ticket-Demonio",
 			"treasure_coupon": "Bono del Tesoro",
 			"moueffe_egg": "Huevo de Moueffe",
@@ -292,11 +403,16 @@
 			"easter_egg": "Huevo de la Bruja Lula",
 			"fire_cracker": "Petardo mágico",
 			"special_potion_irma": "Poción especial de la Bruja Lola",
+			"daily_ticket": "Ticket Diario",
 			"empty": "Vacio",
+			"box_common": "Boîte commune",
+			"box_rare": "Boîte rare",
+			"box_epic": "Boîte épique",
+			"box_legendary": "Boîte légendaire",
 			"undefined": "Desconocido"
 		},
 		"description": {
-			"gold": "{quantity} pièces d'or.",
+			"gold": "{quantity} monedas de oro.",
 			"potion_irma": "La famosa Poción de la Bruja Lola permite al Dino que la beba **realizar inmediatamente una nueva acción** sin tener que esperar al día siguiente.",
 			"potion_angel": "Si tu Dino muere, usa una Poción de Ángel para **resucitarlo sin ninguna penalización en la experiencia**.",
 			"cloud_burger": "Una buena hamburguesa recupera **10 puntos de vida** a tu Dino. ¡Presta atención a su estómago!",
@@ -357,6 +473,7 @@
 			"water_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"lightning_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"air_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
+			"void_sphere": "Une Sphère Élémentaire permet à votre Dinoz d'apprendre directement une des compétences sphériques !",
 			"demon_ticket": "Los Tickets-Demonio se obtienen al sacrificar Dinos en la Tienda Demoníaca. Una vez tengas suficientes, puedes intercambiarlos por Dinos-Demonio.",
 			"treasure_coupon": "Un Bono del Tesoro vale 1.000 Monedas. Te permite participar en la Plaza del Mercado. Para pasarlo a monedas, úsalo desde la sección Inventario. Il suffit de l'utiliser pour le convertir en pièces.",
 			"moueffe_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dinoz.",
@@ -416,10 +533,16 @@
 			"anniversary_ticket": "TODO",
 			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
 			"fire_cracker": "TODO",
-			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
+			"special_potion_irma": "La famosa Poción de la Bruja Lola permite al Dino que la beba **realizar inmediatamente una nueva acción** sin tener que esperar al día siguiente. Mais vous ne pouvez en porter que 3.",
+			"daily_ticket": "Ce ticket vous permet d'ouvrir une case quotidienne à l'université.",
+			"box_common": "Cette boîte semble contenir des objets assez communs.",
+			"box_rare": "Cette boîte brillante semble contenir des objets rares.",
+			"box_epic": "Cette magnifique boîte semble contenir quelque chose d'extraordinaire.",
+			"box_legendary": "Cette boîte légendaire contiendrait-elle une légende ?",
 			"empty": "No hay objetos en esta casilla",
 			"undefined": "Este objeto es desconocido, es muy raro y será de gran interés para los promotores conocer su existencia."
-		}
+		},
+		"empty": "Este espacio está vacío, escoge un objeto del inventario para tu equipamiento. &&//Los objetos puestos aquí podrán ser utlizados por tu Dino durante el combate.//"
 	},
 	"news": {
 		"actualites": "La actualidad en Dinoland",
@@ -456,6 +579,8 @@
 			"baobob": "Casa de Don Bao Bob",
 			"dome": "Sulaflota",
 			"marais": "Pantano Pegajoso",
+			"marais_flood": "Marais Collant",
+			"marais_fog": "Marais Collant",
 			"corail": "Minas de Coral",
 			"ilewkk": "Isla Waïkiki",
 			"goport": "¿Nadar hasta el Puerto de Santa Moría?",
@@ -526,7 +651,20 @@
 			"bkport": "¿Volver al Puerto de Santa Moría?",
 			"mcuzco": "Ruinas de Cuzcús",
 			"mcelit": "Campo de Élite",
-			"tourup": "Torre de Karinbao"
+			"tourup": "Torre de Karinbao",
+			"dkbao": "Portail",
+			"dkchut": "Le gouffre des âmes perdues",
+			"dktow": "La Tour Sombre",
+			"dktow2": "La Tour Sombre 1er étage",
+			"dktow3": "La Tour Sombre 2ème étage",
+			"dktow4": "1er donjon Sombre",
+			"dktowa": "2ème donjon Sombre",
+			"dktowb": "3ème donjon Sombre",
+			"dktows": "Dernier donjon sombre",
+			"fake": "???",
+			"fake2": "????",
+			"gotow": "Entrer dans la Tour Sombre",
+			"rechut": "Retourner vers la surface"
 		},
 		"description": {
 			"port": "Creado por monjes hace varias decenas de años, el Puerto de Santa Moría floreció rápidamente gracias al comercio con las Islas Atlanteidas. Al haber muchos pescados, nunca hay un barco disponible para llevar a los Dinos hasta la primera isla. Habrá que enseñar a nadar a tu Dino o buscarle un salvavidas para poder llegar allí.",
@@ -548,7 +686,9 @@
 			"chutes": "Las Caídas Mutantes forman uno de los lugares más misteriosos y grandes de Dinoland. Aquí el agua del océano cae de forma continua en este inmenso agujero sin que por ello el nivel del mar baje. Los científicos piensan que existe un lugar lejano donde el agua vuelve al océano, pero nadie les cree.",
 			"baobob": "Don Bao Bob es un personaje extraordinario. Afirma ser el último de un antiguo pueblo de gigantes que desapareció hace cientos de años. Seguro que conoce los secretos más escondidos de Dinoland. Las historias que cuenta son extraordinarias y divierten mucho a los niños.",
 			"dome": "Sulaflota es una auténtica ciudad submarina que alberga a los últimos supervivientes de la civilización de los Atlanteidos. Antiguamente dominaban las Islas Atlanteidas, pero una extraña enfermedad estuvo cerca de exterminarlos. Le Dôme reste néanmoins magnifique malgré les nombreux siècles qui se sont passés.",
-			"marais": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. ¡Hoy el pantano está totalmente inundado! No puedes desplazarte hoy. Tendrás que esperar a mañana para poder salir de este fangoso lugar.",
+			"marais_flood": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. ¡Hoy el pantano está totalmente inundado! No puedes desplazarte hoy. Tendrás que esperar a mañana para poder salir de este fangoso lugar.",
+			"marais_fog": "Ce marais qui occupe le milieu de l'archipel est un véritable problème pour les voyageurs ! Suivant les jours, il change d'état. On dit qu'il existe depuis plusieurs millénaires, et certains pensent même qu'il s'agit d'un gigantesque être vivant doué d'un très mauvais sens de l'humour. Aujourd'hui, le marais est perdu dans la brume... Vous n'y trouverez surement aucun monstre à combattre.",
+			"marais": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. Aujourd'hui, les eaux sont basses : vous pouvez vous déplacer normalement.",
 			"corail": "Hace mucho tiempo se encontraban bajo el agua, pero hoy estas grandes cantidades de coral se encuentran en la superficie. Su extraordinaria solidez hacen del Coral un material muy utilizado en Dinoland. Es por esta razón que este lugar es una inmensa mina en la que trabajan centenas de personas.",
 			"ilewkk": "La Isla Waïkiki es una pequeña isla del archipiélago de las Islas Atlanteidas. Se distingue por sus palmeras violetas, cuyas hojas son utilizadas para dar colores vivos a las telas en Dinoland. Los humanos locales practican también un Arte Marcial muy famoso, el Waïkidô.",
 			"chbroc": "En la cima de una roca de las Islas Atlanteidas hay un taller. Hay quien dice que el inventor eligió este lugar para aislarse de las burlas de los demás, pero en realidad no parece que sea realmente el motivo, sino más bien por algo muy distinto...",
@@ -609,7 +749,19 @@
 			"mvoutp": "El Puesto de Vanguardia Vegetox está escondido en el seno de un frondoso bosque. Está ocupado por las fuerzas especiales Vegetox, las cuales se forman en Campos de Élite especializados en estrategia militar.",
 			"mvpalc": "El palacio es una auténtica fortaleza que alberga al rey de los Vegetox. Es un lugar bien resguardado de los peligros gracias a los guardias que patrullan a su alrededor. Un intruso nunca podría conseguir infiltrarse. El Palacio es magnífico: se trata de un inmenso árbol esculpido con decoraciones que recuerdan a los símbolos Cuzcusianos.",
 			"mcuzco": "En este lugar aislado de la Isla de los Monstruos se levantan las ruinas de la antigua capital del Imperio de los Monstruos. La potente Cuzcús ya no es más que un montón de piedras invadidas por la vegetación, pero los edificios que quedan en pie dan testimonio de una gran civilización. Numerosos tesoros duermen bajo estas viejas piedras...",
-			"mcelit": "En el corazón del territorio Vegetox se encuentra el campo de entrenamiento secreto de las fuerzas especiales Vegetox: ¡el Campo de Élite! En este lugar rodeado de barricadas los mejores soldados Vegetox se entrenan para poder un día ganar la Guerra contra los Frutox. A pesar de los años en guerra, la moral de los soldados permanece intacta."
+			"mcelit": "En el corazón del territorio Vegetox se encuentra el campo de entrenamiento secreto de las fuerzas especiales Vegetox: ¡el Campo de Élite! En este lugar rodeado de barricadas los mejores soldados Vegetox se entrenan para poder un día ganar la Guerra contra los Frutox. A pesar de los años en guerra, la moral de los soldados permanece intacta.",
+			"dkbao": "De l'autre coté du portail se dresse un lieu inconnu et pourtant étrangement familier. Des hurlements se font entendre au loin. Si quieres, tu Dino puede **seguir** a otro de tus Dinos.",
+			"dkchut": "A travers l'épais brouillard, on entend comme un lointain grondement, de l'eau qui s'écoule violemment. Il vaut mieux ne pas aller nager très loin, le courant est très violent...",
+			"dktow": "Une grande Tour Noire se dresse dans ce lieu. A première vue elle semble inhabitée mais de nombreux ossements de Dinoz sont entassés à l'entrée. La grand porte sombre qui permet de rentrer dans la Tour semble entrouverte. Il vaut sûrement mieux ne pas s'aventurer plus loin pour l'instant, car entrer dans la Tour serait suicidaire !  ",
+			"dktow2": "Les murs assemblés grossièrement se ressemblent tous, il en faudrait peu pour que vous vous perdiez, heureusement, il n'existe qu'un seul chemin vers le sommet.",
+			"dktow3": "La longue ascension continue, cette Tour peu hospitalière héberge des habitants peu disposé à vous laisser tranquillement aller au sommet.",
+			"dktow4": "Premier donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"dktowa": "Deuxième donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"dktowb": "Troisième donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"dktows": "Dernier donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
+			"fake": "Une île déserte communément appelé l'île de la damnation, où quelques âmes en peine viennent s'échouer. Il fait particulièrement sombre par ici...",
+			"fake2": "Une île déserte communément appelé l'île des feu-folles, ces esprits errants sèment le désespoir et la mort. Il fait particulièrement sombre par ici...",
+			"rechut": "Grâce au morceau d'Orbe Sombre que votre dinoz possède, vous pouvez revenir à la surface. La lumière omniprésente vous aveugle quelques minutes, il vaut mieux ne pas rester trop longtemps dans le Monde Sombre."
 		}
 	},
 	"race": {
@@ -681,28 +833,44 @@
 			"forgeron": "Herrero",
 			"dian": "Dian Korgsey",
 			"merguez": "Vendeur de Merguez",
-			"shaman": "Shaman Mou"
+			"shaman": "Shaman Mou",
+			"gardien": "Puesto de Guardia",
+			"fou": "Homme bizarre",
+			"garde_atlante": "El trueque de las islas atlantes",
+			"joveboze": "Papi José",
+			"archis": "ArchiSage",
+			"hydargol": "Herrero",
+			"padamoine": "Apprenti padamoine",
+			"hulot": "Nicolas Mulot",
+			"rodeur": "Guarida del Venerable",
+			"rodeur2": "Aliento fétido",
+			"rodeur3": "Aliento Ardiente",
+			"spelele": "Spélélélologue",
+			"pteroz": "El Dino se vuelve objetivo principal de los enemigos",
+			"hippo": "Anula todos los estatus negativos del Dino",
+			"rocky": "Etrange Pierre",
+			"vener": "Le Vénérable"
 		},
 		"professor": {
 			"speech": {
 				"begin": "En la biblioteca de la Universidad te encuentras con el famoso profesor Eugenio. Ce dernier est\n\t\tréputé pour son grand intérêt envers les Maîtres Dinoz. Es un tipo muy curioso que no dudará en preguntarte muchas cosas pero a cambio te puede enseñar algunas técnicas muy útiles para tus Dinos y desvelarte información importante.",
-				"talk": "Bonjour le ptit jeunot, alors comment va la vie ? De aventuras y todo eso, ¿no? ¡Ja! Me recuerda a cuando yo tenía tu edad. Me he recorrido kilómetros alrededor de todo Dinoland. N'hésite pas à venir me\n\t\tposer des questions si tu veux des indices sur les grands mystères qui t'intriguent.\n\n\t\tAdemás, puedo enseñarle algunas cosas útiles a tu Dino. A condition bien sûr qu'il soit prêt, car mon enseignement n'est pas de tout repos et pourrait lui être fatal si ton Dinoz n'est pas assez entraîné.",
-				"nothing": "Bien. Siéntate ahí y pon a tu Dino aquí... Perfecto. (Saca una pequeña linterna de su bolsillo)... la pupila reacciona correctamente... Voyons la dentition, fais \"haaaa !\"...  Mmmm... tu Dino sigue siendo un poco joven... De momento no puedo enseñarle nada.\n\t\tVuelve a verme cuando haya alcanzado el nivel 5.",
+				"talk": "Bonjour le ptit jeunot, alors comment va la vie ? De aventuras y todo eso, ¿no? ¡Ja! Me recuerda a cuando yo tenía tu edad. Me he recorrido kilómetros alrededor de todo Dinoland. N'hésite pas à venir me\n\t\tposer des questions si tu veux des indices sur les grands mystères qui t'intriguent. Además, puedo enseñarle algunas cosas útiles a tu Dino. A condition bien sûr qu'il soit prêt, car mon enseignement n'est pas de tout repos et pourrait lui être fatal si ton Dinoz n'est pas assez entraîné.",
+				"nothing": "Bien. Siéntate ahí y pon a tu Dino aquí... Perfecto. (Saca una pequeña linterna de su bolsillo)... la pupila reacciona correctamente... Voyons la dentition, fais \"haaaa !\"...  Mmmm... tu Dino sigue siendo un poco joven... De momento no puedo enseñarle nada. Vuelve a verme cuando haya alcanzado el nivel 5.",
 				"nothing2": "Vamos a ver... (examina tu Dino...) Bien, yo diría que tu Dino ha mejorado mucho desde la última vez. Sin embargo, no es lo suficientemente fuerte para aprender la segunda técnica... su cuerpo no lo soportaría. Yo diría que hay que esperar al nivel 6... Mmmm no, el nivel 7 mejor. Es más seguro.",
 				"learn": "¿Entonces parece que tu Dino quiere aprender una nueva técnica? Para ello tu Dino tiene que combatir un monstruo. Lo entrenaré sólo si gana el combate. ¿Qué técnica quieres que le enseñe?",
 				"water": "Muy bien. Si tu Dino supera este desafío, le enseñaré a nadar con un salvavidas. Gracias a eso, tu Dino podrá atravesar cortas distancias por agua.",
-				"fire": "La Escalada no es fácil de dominar, y además necesitas Material de Escalada para poder iniciarse.\n\t\tSi consigue ganar a este monstruo, le enseñaré las bases a tu Dino y le daré el material que le permitirá escalar el volcán del Gran Señor-Todo-Quema.",
-				"water_fight": "Increíble, ¡qué belleza de combate! Como te prometí, le enseño a nadar con un salvavidas, y de paso os regalo el salvavidas. Ahora podrá acceder a las Islas Atlanteidas al sur de Dinoland. Buena suerte, ¡y sé prudente!",
-				"fire_fight": "Bien, ¡un combate muy bello! Tu Dino acaba de aprender la capacidad de escalar; os cedo el Material de Escalada también. Ya debe de poder escalar las Colinas Escarpadas del volcán del Gran Señor-Todo-Quema. Los monstruos allí son muy calurosos, ¡presta atención!",
+				"fire": "La Escalada no es fácil de dominar, y además necesitas Material de Escalada para poder iniciarse. Si consigue ganar a este monstruo, le enseñaré las bases a tu Dino y le daré el material que le permitirá escalar el volcán del Gran Señor-Todo-Quema.",
+				"water_win": "Increíble, ¡qué belleza de combate! Como te prometí, le enseño a nadar con un salvavidas, y de paso os regalo el salvavidas. Ahora podrá acceder a las Islas Atlanteidas al sur de Dinoland. Buena suerte, ¡y sé prudente!",
+				"fire_win": "Bien, ¡un combate muy bello! Tu Dino acaba de aprender la capacidad de escalar; os cedo el Material de Escalada también. Ya debe de poder escalar las Colinas Escarpadas del volcán del Gran Señor-Todo-Quema. Los monstruos allí son muy calurosos, ¡presta atención!",
 				"learn_water": "¿Has venido por el Material de Escalada? Para ello, tendrás que derrotar a este monstruo.",
 				"learn_fire": "¿Vienes para llevarte un flotador salvavidas? Tendrás que combatir este monstruo antes que nada...",
 				"learn_done": "No tengo nada que enseñar a tu Dino. Pero no te preocupes, hay otras personas en Dinoland que podrán enseñarle numerosas técnicas.",
 				"question": "Ah, ¡me encaaaaaaantan las preguntas! ¿Qué quieres saber, chavalín?",
-				"dinoville": "El Reino de Dinovilla ha sido destruido y reconstruido varias veces desde hace mucho tiempo.\n\t\tHoy en día es un lugar próspero y civilizado, especialmente comparado con los otros lugares que lo rodean.\n\t\t¡Es por ello que Dinovilla es un lugar perfecto para un pequeño Maestro de Dinos como tú!\n\n\t\tNo dudes en entrenar a tu Dino antes de llevarlo a otros lugares de Dinoland, ¡pues los monstruos de por allí son más peligrosos que aquí!",
-				"atlante": "Hace mucho tiempo, existió una isla al sur de Dinoland. Había sido propulsada a la cima del pico de una roca volcánica, a varias centenas de metros de altura por encima del océano. Se le llamó la Isla de Jazz...\n\n\t\tSin embargo, poco a poco, las olas del océano erosionaron el pilar de roca y finalmente la isla se hundió en el océano.\n\t\tPoco después, un gigantesco tsunami engulló una buena mitad de Dinoland, llevándose con él una gran parte de las antiguas civilizaciones humanas. Hoy en día, después de varios cientos de años, las cosas empiezan al fin a organizarse, pero una gran parte de Dinoland sigue siendo salvaje y peligrosa.\n\n\t\tLas Islas Atlanteidas son fragmentos de la Isla de Jazz. Se dice que sólo el Pantano Pegajoso no ha cambiado.",
-				"gtc": "Ey chavalín, ¿ves el pequeño triángulo negro allí, en el norte? Es un inmenso volcán que se llama el Gran Señor-Todo-Quema. Je te conseille d'aller y faire un tour, on y mange de très bonnes merguez, grillées\n\t\tà point.\n\n\t\tCuando era joven estudié mucho las ruinas de las antiguas civilizaciones. ¿Sabías que en la cima del Gran Señor-Todo-Quema existía una civilización llamada Ashpuk? Y un día, ¡bum! una erupción volcánica y, ¡todo desaparecido! ¿No te parece triste?\n\n\t\tEn todo caso, te aconsejo que vayas a rebuscar un poquito en las ruinas. Seguro que encuentras una antigua reliquia. Y no olvides probar las salchichas, ¡eh!",
+				"dinoville": "El Reino de Dinovilla ha sido destruido y reconstruido varias veces desde hace mucho tiempo. Hoy en día es un lugar próspero y civilizado, especialmente comparado con los otros lugares que lo rodean. ¡Es por ello que Dinovilla es un lugar perfecto para un pequeño Maestro de Dinos como tú! No dudes en entrenar a tu Dino antes de llevarlo a otros lugares de Dinoland, ¡pues los monstruos de por allí son más peligrosos que aquí!",
+				"atlante": "Hace mucho tiempo, existió una isla al sur de Dinoland. Había sido propulsada a la cima del pico de una roca volcánica, a varias centenas de metros de altura por encima del océano. Se le llamó la Isla de Jazz... Sin embargo, poco a poco, las olas del océano erosionaron el pilar de roca y finalmente la isla se hundió en el océano. Poco después, un gigantesco tsunami engulló una buena mitad de Dinoland, llevándose con él una gran parte de las antiguas civilizaciones humanas. Hoy en día, después de varios cientos de años, las cosas empiezan al fin a organizarse, pero una gran parte de Dinoland sigue siendo salvaje y peligrosa. Las Islas Atlanteidas son fragmentos de la Isla de Jazz. On dit que seul le Marais Collant n'a pas changé.",
+				"gtc": "Ey chavalín, ¿ves el pequeño triángulo negro allí, en el norte? Es un inmenso volcán que se llama el Gran Señor-Todo-Quema. Je te conseille d'aller y faire un tour, on y mange de très bonnes merguez, grillées\n\t\tà point. Cuando era joven estudié mucho las ruinas de las antiguas civilizaciones. ¿Sabías que en la cima del Gran Señor-Todo-Quema existía una civilización llamada Ashpuk? Y un día, ¡bum! una erupción volcánica y, ¡todo desaparecido! ¿No te parece triste? En todo caso, te aconsejo que vayas a rebuscar un poquito en las ruinas. Seguro que encuentras una antigua reliquia.",
 				"gant": "¡¡Oh!! ¡¡El Guante de Zors!! ¡Es un objeto muy raro lo que tu Dino tiene ahí! Se dice que el Guante de Zors tiene una relación con las Caídas Mutantes y que permite acceder a la Jungla de Grumhel, aunque no se sabe cómo usarlos...",
-				"stone": "¡¡¡Ohhhhhh!!! Pero mira qué cosa más interesante, me parece que se trata de .... uhmmuhu....\n\t\tno estoy seguro... (mira la piedra fijamente)... ¿Puedes enseñarme esta Piedra para examinarla?",
+				"stone": "¡¡¡Ohhhhhh!!! Pero mira qué cosa más interesante, me parece que se trata de .... uhmmuhu.... no estoy seguro... (mira la piedra fijamente)... ¿Puedes enseñarme esta Piedra para examinarla?",
 				"stone_yes": "¡¡Ooooooohhhhh!! Sí.... es lo que pensaba.... ¡Mira! (limpia la piedra con delicadeza)... ¡es un Tótem Ashpuk! Esto tiene mucho valor... ¡cuídalo bien!",
 				"noquestion": "Ah bueno, qué lástima, no dudes en volver de vez en cuando para aprender más sobre el universo de Dinoland."
 			},
@@ -783,19 +951,19 @@
 		},
 		"sofia": {
 			"speech": {
-				"begin": "Allongée sur le transat de Mandragore, Sofia sirote un cocktail.\n\t\tElle profite allégrement du soleil et se laisse bronzer sur la plage...",
+				"begin": "Allongée sur le transat de Mandragore, Sofia sirote un cocktail. Elle profite allégrement du soleil et se laisse bronzer sur la plage...",
 				"slurp": "Slurpp....",
-				"nouvelle": "Sluuuuuuuuurpp....\n\t\tCa va pas trop mal, j'étais plutôt tranquille avant que tu n'arrives.\n\t\tSi tu allais jouer ailleurs ?\n\t\tSlurpp....\n\t\tEt ne dérange pas mon mari, je ne voudrais pas que tu lui donnes des idées suspectes...",
+				"nouvelle": "Sluuuuuuuuurpp.... Ca va pas trop mal, j'étais plutôt tranquille avant que tu n'arrives. Si tu allais jouer ailleurs ? Slurpp.... Et ne dérange pas mon mari, je ne voudrais pas que tu lui donnes des idées suspectes...",
 				"bien": "Il vaut mieux la laisser tranquille, si même Mandragore n'ose pas la contrarier, alors qui serait assez fou pour le faire...?",
-				"troph": "Slurpp....\n\t\tCaushemesh ne craint rien...\n\t\tJ'ai chargé les filles de surveiller la brêche du monde sombre.\n\t\tEn cas de problème, j'enverrai mon mari faire mon boulot.",
-				"palais": "Il n'y a rien d'intéressant de toute façon là-bas... Hormis peut-être un objet.\n\t\tHumm... Je n'ai pas envie d'aller le chercher... Ecoute, je te le donne, je n'en ai plus besoin de toute façon, maintenant que j'ai le vrai, héhé...\n\t\tPrend le donc en guise de récompense pour avoir retrouvé mon mari.",
-				"retour": "Maintenant laisse moi, j'ai des affaires urgentes à traiter...\n\t\t...\n\t\tMandrachou !!!! Viens me masser...\n\t\tVITE !",
-				"niveau": "C'est bien vrai qu'avec ton niveau actuel, tu ne vas pas aller très loin...\n\t\tBon, je suis capable de briser la limite du niveau maximal de ton dinoz, mais prend garde, cette décision est IRREVOCABLE !\n\t\tUne fois la limite brisée, tu pourras évoluer jusqu'au niveau 60 !",
-				"yes": "Qu'il en soit ainsi !\n\t\t_(Sofia se lève d'un seul coup, concentre son énergie... et projette une décharge intense sur votre dinoz !)_\n\t\t_(Au travers de sa souffrance, son organisme réagit. Il développe une nouvelle force, capable de surmonter les dures épreuves qui lui feront face !)_\n\t\tBien, j'ai levé le seau qui empêchait ton dinoz d'évoluer. Cette sécurité avait été apposée il y a longtemps pour éviter une surpopulation de dinoz aussi puissant...\n\t\t_(Votre dinoz a changé, il peut dorénavant dépasser ses limites, comment va t'il évoluer ? )_",
-				"ether": "Oula, il en mourra sûrement... Cependant, s'il est exposé un temps très court à l'éther, il pourrait développer de nouvelles compétences qui le rendrait surement plus fort !\n\t\tMais attention, tu n'aurais plus accès à l'ancien arbre de compétences, tu ne pourrais donc pas apprendre les dernières compétences qu'il te manquait...\n\t\tAvant d'exposer ton dinoz à l'ether, sois sûr de bien avoir optimisé son choix de compétences...",
-				"newskill": "Qu'il en soit ainsi !\n\t\t_(Sofia fait amener une cuve remplie d'ether, et y plonge votre dinoz d'un coup !)_\n\t\t_(Peu content d'être malmené, votre dinoz en ressort très vite en boudant...)_\n\t\tVoilà, ton dinoz va petit à petit comprendre la portée de cet acte quand il gagnera des niveaux supplémentaires.\n\t\t_(Vous regardez votre dinoz avec interrogation, sa pupille est plus verte qu'avant. Que vous réserve-t'il ?)_",
-				"no": "Bien, si tu changes d'avis, tu peux revenir me voir.\n\t\tTu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant atteint le niveau 50.",
-				"no2": "Bien, si tu changes d'avis, tu peux revenir me voir.\n\t\tTu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant dépassé le niveau 50."
+				"troph": "Slurpp.... Caushemesh ne craint rien... J'ai chargé les filles de surveiller la brêche du monde sombre. En cas de problème, j'enverrai mon mari faire mon boulot.",
+				"palais": "Il n'y a rien d'intéressant de toute façon là-bas... Hormis peut-être un objet. Humm... Je n'ai pas envie d'aller le chercher... Ecoute, je te le donne, je n'en ai plus besoin de toute façon, maintenant que j'ai le vrai, héhé... Prend le donc en guise de récompense pour avoir retrouvé mon mari.",
+				"retour": "Maintenant laisse moi, j'ai des affaires urgentes à traiter... ... Mandrachou !!!! Viens me masser... VITE !",
+				"niveau": "C'est bien vrai qu'avec ton niveau actuel, tu ne vas pas aller très loin... Bon, je suis capable de briser la limite du niveau maximal de ton dinoz, mais prend garde, cette décision est IRREVOCABLE ! Une fois la limite brisée, tu pourras évoluer jusqu'au niveau 60 !",
+				"yes": "Qu'il en soit ainsi ! _(Sofia se lève d'un seul coup, concentre son énergie... et projette une décharge intense sur votre dinoz !)_\n\t\t_(Au travers de sa souffrance, son organisme réagit. Il développe une nouvelle force, capable de surmonter les dures épreuves qui lui feront face !)_\n\t\tBien, j'ai levé le seau qui empêchait ton dinoz d'évoluer. Cette sécurité avait été apposée il y a longtemps pour éviter une surpopulation de dinoz aussi puissant... _(Votre dinoz a changé, il peut dorénavant dépasser ses limites, comment va t'il évoluer ? )_",
+				"ether": "Oula, il en mourra sûrement... Cependant, s'il est exposé un temps très court à l'éther, il pourrait développer de nouvelles compétences qui le rendrait surement plus fort ! Mais attention, tu n'aurais plus accès à l'ancien arbre de compétences, tu ne pourrais donc pas apprendre les dernières compétences qu'il te manquait... Avant d'exposer ton dinoz à l'ether, sois sûr de bien avoir optimisé son choix de compétences...",
+				"newskill": "Qu'il en soit ainsi ! _(Sofia fait amener une cuve remplie d'ether, et y plonge votre dinoz d'un coup !)_\n\t\t_(Peu content d'être malmené, votre dinoz en ressort très vite en boudant...)_\n\t\tVoilà, ton dinoz va petit à petit comprendre la portée de cet acte quand il gagnera des niveaux supplémentaires. _(Vous regardez votre dinoz avec interrogation, sa pupille est plus verte qu'avant. Que vous réserve-t'il ?)_",
+				"no": "Bien, si tu changes d'avis, tu peux revenir me voir. Tu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant atteint le niveau 50.",
+				"no2": "Bien, si tu changes d'avis, tu peux revenir me voir. Tu peux aussi venir me voir avec n'importe lequel de tes dinoz ayant dépassé le niveau 50."
 			},
 			"playerChoice": {
 				"slurp": "¡Buenos días!",
@@ -865,7 +1033,7 @@
 			"speech": {
 				"begin": "¡Pinc! ¡Pinc! ¡Pinc! Pffff este coral es más duro que la piedra, ¿lo sabías?",
 				"thanks": "¡Eres muy agradable! Vuelve aquí cuando se te rompa la pala, yo la arreglaré.",
-				"yes": "Ah, ¿sabías? Toma, te prestaré una pala vieja para que también puedas cavar.\n\t\tEstá en muy mal estado por lo que a la primera se romperá, pero es mi pala de la suerte,\n¡con ella podrás encontrar los mayores tesoros de Dinoland! Entonces, ¿qué se dice?",
+				"yes": "Ah, ¿sabías? Toma, te prestaré una pala vieja para que también puedas cavar. Está en muy mal estado por lo que a la primera se romperá, pero es mi pala de la suerte,\n¡con ella podrás encontrar los mayores tesoros de Dinoland! Entonces, ¿qué se dice?",
 				"nothing": "Entonces, ¿te gusta mi pala? ¿Qué se dice?",
 				"repair": "Oh, ¿eres tú? Entonces, ¿cómo rompiste mi pala? No te muevas... ¡Ya la arreglé!... ¡Hey! ¿No estás olvidando algo?",
 				"nothing2": "Entonces, ¿te gusta mi pala con el mango ergonómico? ¿Qué se dice?",
@@ -875,7 +1043,7 @@
 				"next2": "¡Sí, ya lo digo! Voy a tener que trabajar mucho más si quiero parecerme a mi ídolo algún día...",
 				"next3": "Et alors ?!!? Tu me demandes même pô qui c'est mon idole ?",
 				"qui": "¡Pues vamos a ver! ¡Silverter Staline, por supuesto! Tres veces ganador de los Premios Coral, en las categorías \"Músculos definitivos\" y \"Réplica que mata\". 'Él es realmente genial, y siempre se las arreglaba para eliminar todos sus oponentes!",
-				"ok": "¡Sí, es el más fuerte! Adiós, los buenos viejos tiempos, podría hablar de ellos durante horas...\n\t\tPero bueno, los dejo, ¡tengo trabajo que hacer! ¡Pinc! ¡Pinc! ¡Pinc!"
+				"ok": "¡Sí, es el más fuerte! Adiós, los buenos viejos tiempos, podría hablar de ellos durante horas... Pero bueno, los dejo, ¡tengo trabajo que hacer! ¡Pinc! ¡Pinc! ¡Pinc!"
 			},
 			"playerChoice": {
 				"thanks": "¡Gracias!",
@@ -897,18 +1065,18 @@
 				"begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Eleveur ?",
 				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on\n\t\torganise des rallyes tout autour de Dinoland !",
 				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
-				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel.\n\t\tJe pourrais alors répondre à ton voeu le plus cher.",
-				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons.\n\t\tCela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
+				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. Je pourrais alors répondre à ton voeu le plus cher.",
+				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons. Cela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
 				"where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi\n\t\têtre des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
-				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Mais sâche que tu y trouvera une clé, oui,\n\t\tLA clé. Pour la porte de Sylvenoire. Elle te permettra de la continuer, ton aventure. Enfin, si tu survis\n\t\tbien entendu.",
-				"how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Les tiens ou ceux de membres de ton Clan.\n\t\tChaque Dinoz doit se concentrer. Quand vous serez sept, alors, à ce moment, vous pourrez aller là-bas.",
-				"danger": "Dangereux ? Mmm... pour faire simple, je dirais que tu n'as surement que peu de chance de survivre là-bas...\n\t\tMais qui ne tente rien n'a rien, n'est-ce pas ?",
-				"concen": "Mmm... Bien... je vais hypnotiser ton Dinoz. Il pourra mieux se concentrer de cette façon...\n\t\tNe t'inquiete pas, tu pourras à tout moment arrêter cela, si tu le désires.",
-				"quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide.\n\t\tEnfin, si je devine bien quelle question tu voulais me poser...",
-				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane.\n\t\tIl me semble qu'il te manque quelquechose, mon cher.",
+				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Elle te permettra de la continuer, ton aventure. Mais sâche que tu y trouvera une clé, oui,\n\t\tLA clé. Pour la porte de Sylvenoire. Enfin, si tu survis\n\t\tbien entendu.",
+				"how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Les tiens ou ceux de membres de ton Clan. Chaque Dinoz doit se concentrer. Quand vous serez sept, alors, à ce moment, vous pourrez aller là-bas.",
+				"danger": "Dangereux ? Mmm... pour faire simple, je dirais que tu n'as surement que peu de chance de survivre là-bas... Mais qui ne tente rien n'a rien, n'est-ce pas ?",
+				"concen": "Mmm... Bien... je vais hypnotiser ton Dinoz. Il pourra mieux se concentrer de cette façon... Ne t'inquiete pas, tu pourras à tout moment arrêter cela, si tu le désires.",
+				"quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide. Enfin, si je devine bien quelle question tu voulais me poser...",
+				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. Il me semble qu'il te manque quelquechose, mon cher.",
 				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
 				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
-				"ok": "Désolé les développeurs n'ont pas encore appris à se concentrer...",
+				"ok": "Et voila ton dinoz se concentre ! Lorsque vous serez suffisament, vous vous retrouverez dans un autre monde.",
 				"bye": "A la prochaine et amuse toi bien !"
 			},
 			"playerChoice": {
@@ -954,10 +1122,10 @@
 		},
 		"forgeron": {
 			"speech": {
-				"begin": "Vous entrez dans les forges de Fosselave. la chaleur qui règne ici n'a rien à envier à l'intérieur du cratère du Grand Tout Chaud.\n\t\tIci rien ne se crée, tout se transforme, à grand coup de marteau !\n\t\t\n\t\t100 pièces d'or pour réparer une pelle, c'est donné  non ?",
+				"begin": "Vous entrez dans les forges de Fosselave. la chaleur qui règne ici n'a rien à envier à l'intérieur du cratère du Grand Tout Chaud. Ici rien ne se crée, tout se transforme, à grand coup de marteau !  100 pièces d'or pour réparer une pelle, c'est donné  non ?",
 				"pelle": "Et une pelle dans la gueule ca te tente ?",
-				"repair": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
-				"repair2": "Et voilà, ta pelle est réparée mon ptit gars !\n\t\tCa fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
+				"repair": "Et voilà, ta pelle est réparée mon ptit gars ! Ca fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
+				"repair2": "Et voilà, ta pelle est réparée mon ptit gars ! Ca fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
 				"thanks": "Reviens si t'as encore besoin de nos services ptit gars !",
 				"no": "Reviens avec les poches pleines ptit gars, tu nous fais perdre notre temps !"
 			},
@@ -972,10 +1140,10 @@
 		"dian": {
 			"speech": {
 				"begin": "Salut, éleveur... Ne fais pas un bruit, il ne faut surtout pas déranger les Korgons !",
-				"korgons": "Oui, ce sont les petites créatures qui se sont installées ici. De vraies petites teignes si\n\t\ton n'y prête pas gare ! Déjà, ne les regarde surtout pas dans les yeux... Et si l'un d'eux\n\t\ts'approche trop, tu peux toujours essayer de lui donner un bout de bois à grignoter",
+				"korgons": "Oui, ce sont les petites créatures qui se sont installées ici. Déjà, ne les regarde surtout pas dans les yeux... De vraies petites teignes si\n\t\ton n'y prête pas gare ! Et si l'un d'eux\n\t\ts'approche trop, tu peux toujours essayer de lui donner un bout de bois à grignoter",
 				"why": "Ils pourraient prendre ça pour un défi ! Et là, je vous laisse imaginer ce qui se passerait si tous les Korgons\n\t\tdu campement se mettaient dans la tête que vous étiez un ennemi... Les derniers à avoir\n\t\tessayé ont été servis en souper le soir même.",
 				"wood": "Ils adorent ça ! C'est d'ailleurs la raison pour laquelle ils se sont installés dans\n\t\tla Jungle de Grumhel. Fascinant n'est-ce pas ? Mais malheureusement pour nous, ils sont capables de manger tout et\n\t\tn'importe quoi, y compris les voyageurs imprudents.",
-				"tame": "Il y a bien longtemps, je pense que les Korgons étaient domestiqués. Probablement bien avant\n\t\tla chute de l'île de Jazz... Mais aujourd'hui, ils sont revenus totalement à l'état sauvage !\n\t\tPas moyen de les approcher sans risquer d'y perdre un bras. Quelques éleveurs s'y sont aussi\n\t\tfrottés, mais personne n'a obtenu mieux de leur part qu'un grand coup de dents.",
+				"tame": "Il y a bien longtemps, je pense que les Korgons étaient domestiqués. Probablement bien avant\n\t\tla chute de l'île de Jazz... Mais aujourd'hui, ils sont revenus totalement à l'état sauvage ! Pas moyen de les approcher sans risquer d'y perdre un bras. Quelques éleveurs s'y sont aussi\n\t\tfrottés, mais personne n'a obtenu mieux de leur part qu'un grand coup de dents.",
 				"interest": "N'est-ce pas ! Je suis heureuse de voir que ces adorables Korgons vous plaisent autant ! Si cela\n\t\tvous intéresse, vous pourriez me rendre quelques petits services au Camp ?",
 				"service": "Parfait ! Voilà ce dont j'ai besoin...",
 				"nothing": "D'accord, bon voyage !"
@@ -1006,8 +1174,8 @@
 		},
 		"shaman": {
 			"speech": {
-				"begin": "B'jour jeune av'turier, bienv'nue à Fosselave... la capitale du Grand T'chaud...\n\t\tHésite pô à admirer nos super sculptures en basalte. Y'a aussi les bains de magma, là bas... Ca va te relaxer, tu verras c'est coooool...\n\t\tSi t'as faim, t'peux goûter not' spécialité : les merguez de Gobelin... Ca te ravigore, youuuhouuu, tu peux pas imaginer...",
-				"vener": "Uhmm... ? Le V'nérable ?... Quel bourrin celui là... hier il a failli me bouffer... tout ça parce qu'il me trouve trop agité, et que ça l'empêche de dormir... Tu veux vraiment y aller ? Boah... c'est toi qui voit... Tourne à droite aux Forges, et c'est tout droit.",
+				"begin": "B'jour jeune av'turier, bienv'nue à Fosselave... la capitale du Grand T'chaud... Hésite pô à admirer nos super sculptures en basalte. Y'a aussi les bains de magma, là bas... Ca va te relaxer, tu verras c'est coooool... Si t'as faim, t'peux goûter not' spécialité : les merguez de Gobelin... Ca te ravigore, youuuhouuu, tu peux pas imaginer...",
+				"vener": "Uhmm... ? Le V'nérable ?... Quel bourrin celui là... hier il a failli me bouffer... tout ça parce qu'il me trouve trop agité, et que ça l'empêche de dormir... Tu veux vraiment y aller ? Boah... Tourne à droite aux Forges, et c'est tout droit. c'est toi qui voit...",
 				"souvenir": "Des souv'nirs ?... Bah... j'ai bien ma pile de feuilles d'incantations en retard là, mais je sais pas si ça t'interesse... J'peux te filer un autographe aussi, signé de mon vrai nom, Baston Labaf... non ? Ok tant pis... Sinon y'a des trucs de combats aux Forges... des équipements de combat, et tout ça là... Y'aura p'têt un truc cool pour toi.",
 				"charm": "Ah ouais, c'est vrai... y parait que j'dois t'aider... Tiens, un Charme de Feu... ça aidera bien ton dinoz dans ses prochains combats.",
 				"boost": "Bouge pas, j'vais t'enchanter de la magie des Shamans... Oyééé, oyééé ! ZZZZzzzzzz... ... C'est bon, tu peux y'aller, t'es un balaise maintenant.",
@@ -1029,6 +1197,313 @@
 				"more": "Et c'est tout ?",
 				"accept": "Confirmar"
 			}
+		},
+		"gardien": {
+			"speech": {
+				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement agé et semble empreint d'une grande  sagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
+				"shake": "Tandis que vous le secouez (si tant est qu'on puisse secouer un arbre si grand), vous percevez un étrange  et long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage  sur votre tête : poc !",
+				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous  constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+			},
+			"playerChoice": {
+				"missions": "Consulter la liste des Missions",
+				"shake": "Secouer un peu cet arbre",
+				"item": "Aie ! Qu'est-ce que c'est ?"
+			}
+		},
+		"fou": {
+			"speech": {
+				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe  avec un regard inquiétant... Il brandit une lanterne dans votre direction.",
+				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
+				"approch": "A peine faites-vous un pas dans sa direction que l'homme bondit,  terrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard,  sa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
+				"run": "Vous prenez vos jambes à votre cou !",
+				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez  à nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se  dresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser  un cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle  bruyamment...",
+				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur !  Moi je les ai vus !",
+				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter  un regard derrière vous...",
+				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
+				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà  tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et  noire) !",
+				"fight_win": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grande surprise qu'il  a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à  son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les  endroits obscurs."
+			},
+			"playerChoice": {
+				"begin": "",
+				"hi": "Euh... Bonjour ?",
+				"approch": "Tenter de s'approcher...",
+				"run": "Partir en courant !",
+				"ignore": "L'ignorer",
+				"intro": "Argh ! Vous m'avez fait peur !",
+				"leave": "Euh je vais vous laisser...",
+				"seenWhat": "Vu quoi ",
+				"show": "Erk ! Il a l'air dangereux !",
+				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
+			}
+		},
+		"garde_atlante": {
+			"speech": {
+				"begin": "L'accès au Dôme Soulaflotte n'est possible qu'en utilisant un Rascaphandre.",
+				"rasca": "Un Rascaphandre est un gros poisson avec des arêtes creuses. Il est capable de stocker une grande quantité d'oxygène et ainsi d'emmener son maître jusqu'aux profondeurs où se situe le Dôme Soulaflotte, sans que celui-ci ne meure asphyxié.",
+				"where": "Les Rascaphandres sont nombreux dans les eaux des alentours, il faut juste savoir les appeler.",
+				"call": "(soupir)... En fait, il faut un objet particulier : un appeau à Rascaphandre. C'est une petite flûte que l'on plonge dans l'eau et qui imite les ondes du grand requin noir maléfique des abysses pestilentielles, le repas préféré des Rascaphandres. Ils se précipitent alors et vous pouvez en utiliser un pour vous rendre au Dôme.",
+				"appeau": "Oui. L'appeau à Rascaphandre est fabriqué avec des arêtes de vieux Rascaphandre. Mais plus ils sont vieux, plus ils ont mauvais caractère et ils deviennent alors très dangereux...",
+				"old": "J'ai un ami pêcheur au Port de Prêche, si vous n'avez pas peur du danger, je peux lui demander de vous emmener chasser le vieux Rascaphandre géant... Allez le voir de ma part, il s'appelle Jovébozé.",
+				"thanks": "Je vous souhaite un bon séjour sur les Iles Atlantéinées."
+			},
+			"playerChoice": {
+				"rasca": "Un quoi ?!?",
+				"where": "Vous savez où je peux en trouver un ?",
+				"call": "Super !... Heu... vous avez leur numéro ?",
+				"appeau": "Un Appeau...",
+				"old": "Uhm...",
+				"thanks": "Ok, merci !"
+			}
+		},
+		"joveboze": {
+			"speech": {
+				"begin": "Ol'a el chti ga ! Té vi laté du viou Rasca ?",
+				"trad": "Personne ici ne semble comprendre ce que dit Jovébozé. D'après les informations que vous avez recueillies, il s'agirait d'un dialecte local de Prêcheurs, voire d'un dialecte spécifique à Jovébozé...",
+				"sry": "Sité popré ven pa, sino mot'dan lobatou, k ?",
+				"go": "Jovébozé vous emmène en mer dans un coin que les bateaux semblent éviter... En vous approchant, vous voyez ce qui semble être un énorme Rascaphandre à quelques dizaines de mètres de la barque. Si vous continuez dans cette direction et si le Garde Atlante disait vrai, vous serez surement attaqué... Il faut faire vite !!!",
+				"attack_win": "Bien entendu, Jovébozé n'a rien compris a vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau a Rascaphandre qu'il a sculpté..."
+			},
+			"playerChoice": {
+				"sry": "... pardon ?!?",
+				"trad": "Aller chercher un traducteur",
+				"go": "Suivre Jovébozé",
+				"attack": "Periodino",
+				"back": "RECULER !!!"
+			}
+		},
+		"archis": {
+			"speech": {
+				"begin": "Au centre du Dôme se trouve la résidence de l'Archisage. Il s'agit d'un titre honorifique donné à un Archimage devenu trop vieux pour pouvoir utiliser ses pouvoirs magiques. Il n'en reste pas moins un personnage doué d'une très grande connaissance, même si ses propos peuvent parfois sembler confus.",
+				"enigm": "Bonjour bonjour bonjour ! Que viens-tu chercher ici ? Tu cherches quelque chose ? Puis-je t'aider ?",
+				"next": "Ah ! Ne dis rien ! Je sais, je suis sûr, certain, tout à fait ! Tu cherches un GRAND TRESOR !",
+				"tresor": "Alors écoute, voilà je vais te dire. Ecoute-moi. Oui. Je vais te raconter. Si tu me rapportes. Oui tout cela. Tu veux savoir quoi ? et surtout quoi n'est pas !",
+				"quoi": "Alors écoute. Mon premier est collant, mon deuxième basaltique, mon troisième est de l'eau pure. Il te faudra un outil, ça oui. Un outil pour trouver tout cela. Reviens me voir et je t'apprendrai le trésor, mais attention au danger ! F-O-E !",
+				"show_win": "Oh ! Bravo ! Bravo ! Merci pour tout ça, et surtout bravo ! Voilà, c'est fait, ton Dinoz a un GRAND TRESOR !"
+			},
+			"playerChoice": {
+				"enigm": "Heu... Y'a quelqu'un ?",
+				"next": "Je voudrais savoir...",
+				"tresor": "(Un trésor ?!?) Oui c'est ça !",
+				"quoi": "... Quoi ?",
+				"show": "Montrer les ingrédients"
+			}
+		},
+		"hydargol": {
+			"speech": {
+				"begin": "Les Chutes Mutantes sont l'un des Grands Lieux de méditation des moines Zenzen. C'est pour cette raison qu'on en trouve souvent dans le coin. En s'installant sur de grandes feuilles de nénuphars, ils essaient de méditer le plus longtemps... sans pour autant se faire entraîner par le courant ! De nombreux moines s'étant un peu assoupis se sont offert une descente des chutes : en tout cas, personne ne les a jamais revus.",
+				"talk": ".........bon.jour......",
+				"help": "....Ah ? Euh... oui... peux-tu... m'apporter...Zzzz... zzz...",
+				"get": "...Ah ? Euh... oui... m'apporter... une feuille... de nénuphar...",
+				"where": "...trouve... mon... apprenti padamoine... Zzz... zzz...",
+				"give": "...merci.... je vais pouvoir.... enfin... méditer sur... les Chutes !!!! Je t'offre cette Perle en récompense... elle rejoindra ta Collection d'objets !",
+				"act": "Youhouhhh !!! C'est génial ! Regarde... je flotte !",
+				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
+				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
+				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
+				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+			},
+			"playerChoice": {
+				"hello": "Bonjour !",
+				"talk": "Parler à Maître Hydargol",
+				"help": "Puis-je vous être utile ?",
+				"get": "Vous apporter... ?",
+				"where": "Et où je vais trouver cela ?",
+				"give": "Planicies Nevadas",
+				"act": "Alors quoi de neuf ?",
+				"gant": "Montrer le Gant des Zors",
+				"why": "Ah ? Pourquoi ?",
+				"super": "Super !",
+				"ok": "Ok",
+				"no": "Pas question"
+			}
+		},
+		"padamoine": {
+			"speech": {
+				"begin": "Bonjour, heu... je suis Bémol, le padamoine de Maître Hydargol. Et heu... je dois lui amener ces feuilles de nénuphar. Le problème c'est que, heu... je viens de me rendre compte que j'avais le mal de mer... pourtant je dois me rendre sur les Iles Altantéinées ! Qu'est-ce que je vais bien pouvoir faire ???",
+				"help": "C'est vrai, vous acceptez de m'aider ?? Merci beaucoup !",
+				"get": "Vous avez l'air digne de confiance. Tenez, je vous confie ces feuilles de nénuphar, et que la Sainte Force soit avec vous !"
+			},
+			"playerChoice": {
+				"help": "Je dois justement y aller aussi. Je peux lui app...",
+				"get": "Heu... De rien"
+			}
+		},
+		"hulot": {
+			"speech": {
+				"begin": "Un homme en tenue de safari se tient debout à l'Orée de la Jungle de Grumhel. Il a l'air d'attendre quelque chose...",
+				"welcome": "La Jungle de Grumhel ! Cet espace sauvage et encore vierge, protégé de toute agression extérieure par sa faune dangereuse, reste aujourd'hui une terre de mystère et de contraste qui séduit chaque année de nombreux explorateurs. Séquence frisson. \"A la découverte d'un Monde Sauvage\", c'est aujourd'hui, en ma compagnie !",
+				"who": "Nicolas Mulot, journaliste pour le magazine Ouïaïa et amoureux de Dinoland !",
+				"role": "Pas pour un journaliste de l'extrême comme moi. Il y a tout ce que je recherche ici: un monde inexploré, une faune et une flore riches, tant de choses fabuleuses à découvrir à chaque pas !",
+				"myst": "Je l'ignore encore... Mais... Mais je suis convaincu qu'il y a des choses fabuleuses qui se cachent dans cette jungle ! Il faut juste oser y entrer... Séquence peur bleue.",
+				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
+				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
+				"fauna": "Entre les roncivores, les korgons et les fauve-souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! A la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
+				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
+				"explore": "Ca serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
+				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
+				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
+				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amené étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut être m'aider à Drouver un remède ? ...",
+				"sickstatus": "Alors, vous avez trouvé un rebède ?",
+				"better": "Le remède que vous m'avez amené a été très efficace !"
+			},
+			"playerChoice": {
+				"welcome": "Lui parler",
+				"who": "Mais... Vous êtes qui ?",
+				"role": "Ca n'est pas un peu dangereux pour un journaliste ici ?",
+				"myst": "Quels genres de mystères existent ici ?",
+				"flora": "Il y a de belles plantes par ici ?",
+				"whynot": "Pourquoi n'entrez vous pas dans la jungle alors ?",
+				"fauna": "Parlez moi des animaux de la Jungle...",
+				"fear": "Ah... Vous voulez dire que vous n'osez pas voir ça par vous-même ?",
+				"explore": "Je peux vous aider si vous le voulez ?",
+				"other": "J'ai d'autres questions...",
+				"sick": "Lui parler",
+				"problem": "Ouh la ! Qu'est-ce qui vous arrive ?",
+				"sickstatus": "Lui parler",
+				"better": "Vous avez l'air d'aller bien mieux...",
+				"missions": "Consulter la liste des Missions",
+				"curesearch": "Voyons voir ça..."
+			}
+		},
+		"rodeur": {
+			"speech": {
+				"begin": ".........",
+				"go": "Ouf ! Il vaut mieux faire attention en rencontrant des étrangers...",
+				"talk": "Uh ?!??? Quoi ?? Vous pouvez me VOIR ?!? ..... Grrrrr....",
+				"yes": "Uhm... bien... je vois... on m'avait pourtant certifié que cette cape rendait invisible ! Est-ce que tu peux regarder l'indicateur dans le dos, il y a marqué quelque chose ?",
+				"read": "Quoi ?!? \"L'EAU BATTE-RIZ\" ? Uhm... le vendeur parlait effectivement de recharger quelque chose... il va donc falloir que j'utilise du... riz !?! Mais où vais-je pouvoir trouver cela ?!?",
+				"talk2": "Vite ! J'ai BESOIN de ce Riz !"
+			},
+			"playerChoice": {
+				"go": "Ce personnage a l'air dangereux... s'éloigner !",
+				"talk": "Lui parler",
+				"yes": "Euh... Oui",
+				"read": "Lire l'indicateur",
+				"missions": "Aider le Rôdeur",
+				"talk2": "Lui parler"
+			}
+		},
+		"rodeur2": {
+			"speech": {
+				"begin": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
+				"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
+				"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
+				"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
+				"ether": "Aprés des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Celà nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
+				"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
+				"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?"
+			},
+			"playerChoice": {
+				"qual2": "Surement de la mauvaise qualité...",
+				"qual": "Surement de la mauvaise qualité...",
+				"caush": "Caushemesh ?",
+				"ether": "L'Ether ?",
+				"next": "Et...",
+				"more": "...",
+				"missions": "Accepter une mission."
+			}
+		},
+		"rodeur3": {
+			"speech": {
+				"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
+				"next": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
+			},
+			"playerChoice": {
+				"next": "..."
+			}
+		},
+		"spelele": {
+			"speech": {
+				"begin": "Un récent tremblement de terre semble avoir créé une fissure dans la paroi. Un air glacé s'en échappe et vous apercevez un homme bizarre qui inspecte les alentours.",
+				"talk": "Pfiiooooouuu !! Tu as vu cette fissure ? elle s'ouvre sur une gigantesque caverne dans laquelle règne un froid glacial ! Attention ! Si ton Dinoz y rentre, il sera entièrement congelé !",
+				"gla": "Tu vois !! Ça pèle dans le coin hein.... D'après mes études thermodynamiques, les courants de magma chaud du Grand Tout Chaud absorbent la chaleur des roches supraconductrices et créent donc dans le sous-sol un refroidissement par convection. Un véritable Frigo naturel en fait !",
+				"ok": "N'est-ce pas !? Je suis un grand explorateur des cavernes et autres souterrains étranges, c'est mon métier, je suis spélélélologue ! J'ai obtenu mon diplôme en Spélélologie à l'Université de Dinoville, option naturalgorithmie !",
+				"ok2": "N'est-ce pas !? J'ai couru ici dés que j'ai entendu parler du tremblement de terre, et du coup j'ai été le premier à découvrir cette grotte ! Je lui ai déjà trouvé un nom : La Grotte du Zéro Relatif ! Ça te plaît ?",
+				"ok3": "N'est-ce pas !? Bon, tu m'es sympatique et je vais donc te donner une ASTUCE ! Si tu mets ton Dinoz dans la Grotte du Zéro Relatif, il sera congelé...",
+				"congel": "¡Ja! Con-ge-lé ! Mais la température est tellement basse qu'il ne mourra pas ! Tu ne pourras plus te servir de ce Dinoz, mais du coup il ne comptera plus dans ta LIMITE de nombre de Dinoz, ce qui te permettra d'obtenir PLUS de Dinoz ! Il faudra par contre faire attention aux effets secondaires...",
+				"congel2": "Oui, à partir du moment où ton Dinoz est congelé, il ne compte plus dans ta LIMITE, mais tu ne peux le décongeler que si tu es à nouveau en dessous de la LIMITE, cela veut dire qu'il faudra congeler un autre Dinoz pour le remplacer... Et puis, ton Dinoz mettra de toute façon un jour entier à décongeler, il faudra donc un peu de patience... Tu as compris ?",
+				"thanks": "De rien ! N'hésite pas a faire appel à moi si un jour tu as besoin de mon aide pour explorer un souterrain mystérieux !",
+				"bye": "Tchaw ! Et surtout fais attention à ne pas t'approcher de cette fissure !"
+			},
+			"playerChoice": {
+				"talk": "Lui Parler",
+				"gla": "Glaglagla !",
+				"ok": "C'est... passionnant",
+				"ok2": "C'est... génial",
+				"ok3": "C'est... magnifique",
+				"congel": "Congelé ?",
+				"congel2": "Des effets secondaires ???",
+				"again": "Non, rien du tout !",
+				"thanks": "Oui, merci beaucoup !",
+				"bye": "Dire au revoir"
+			}
+		},
+		"pteroz": {
+			"speech": {
+				"begin": "Un étrange Dinoz à l'allure menaçante est apparu sur votre chemin. Ses yeux rouges vous fixent intensément, il a l'air très féroce !",
+				"fight_win": "Vous avez vaincu un Ptéroz ! Vous obtenez le Trophée des ptéroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
+				"leave": "Ouf ! Un pas de plus et ce Dinoz vous attaquait !"
+			},
+			"playerChoice": {
+				"fight": "Le combattre !",
+				"leave": "S'enfuir !"
+			}
+		},
+		"hippo": {
+			"speech": {
+				"begin": "Un étrange Dinoz est apparu sur votre chemin, puis s'enfuit... Que désirez-vous faire ?",
+				"fight_win": "Vous avez vaincu un Dinoz rare : un Hippoclamp ! Vous obtenez le Trophée des Hippoclamps qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
+				"leave": "On dirait qu'il ne revient pas... Mais de quelle espèce pouvait-il bien s'agir ?"
+			},
+			"playerChoice": {
+				"fight": "Attendre.",
+				"leave": "Le poursuivre."
+			}
+		},
+		"rocky": {
+			"speech": {
+				"begin": "Une étrange pierre se dresse au milieu du chemin, Son emplacement ne semble pas très naturel... Que désirez vous faire ?",
+				"fight_win": "Oooops !! La pierre en question était un Rocky, un Dinoz moitié animal moitié minéral assez rare dans le Royaume de Dinoville... En l'ayant vaincu, vous obtenez le Trophée des Rockys, qui vous permettra désormais d'obtenir des Rockys dans la Boutique des Dinoz. Bravo !",
+				"touch": "C'est étrange... la pierre semble chaude au toucher. Il n'y a rien d'autre de spécial... Peut-être vaut-il mieux ne pas insister...",
+				"leave": "Vous avez raison, après-tout ce n'est qu'un simple caillou...."
+			},
+			"playerChoice": {
+				"touch": "La toucher",
+				"fight": "Essayer de la faire basculer",
+				"leave": "Continuer votre route",
+				"grave": "Graver quelque chose"
+			}
+		},
+		"vener": {
+			"speech": {
+				"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH !!!! Qui oooose venir me dérangerrr pendannt ma siiiessteee ?????",
+				"bye": "Vous avez raison, il y a des fois dans la vie ou il vaut mieux prendre son courage à deux mains et effectuer une retraite stratégique en vitesse, et si possible sans se faire voir...",
+				"moi": "UUUHMMMM ?? Et que me veux-tu au juste ??? Tu as intérêt à avoir une bonne raison, sinon je vais faire GRILLER ton Dinoz pour mon PETIT DEJEUNER !!!",
+				"korgon": "UHHMM ??? un KORGON, dis-tu ??? Où ça, Où ça ? Tu m'as donné faim !!",
+				"next1": "OOhhh ! Quel DOOMMMAAGGE !! Ca doit être ENERVANT alors ! Je comprends je comprends ! Dans ma jeunesse, j'ai souvent laissé échapper quelques petits déjeuners comme ça. Maintenant je les GRILLE directement, comme ça ils n'ont pas le temps de s'enfuir !",
+				"fight_win": "GROOOOAAARRH !!! Tu as GAGNE pour cette  FOIS ! MAIS nous nous REVERRONS !",
+				"moi2": "UHMMMM ? Oui, bon, je me rappelle de ton Dinoz. Qu'est-ce que tu me veux encore ?",
+				"question": "Alors, mangeur de Korgon, est-ce que je peux GRILLER quelque chose pour toi ? Ou autre chose ? N'en demande pas trop, car sinon je te DECOUPE en petits morceaux croustillants qui seront parfaits pour mon PETIT DEJEUNER !!!",
+				"force": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
+				"fight2": "UHMM... J'ai une petite FAIM... que dirais-tu de remettre cela à plus tard ???"
+			},
+			"playerChoice": {
+				"bye": "Partir discrètement",
+				"moi": "Euh... C'est moi !",
+				"korgon": "Je courrais après un Korgon et...",
+				"next1": "Il m'a échappé",
+				"next0": "Je l'ai attrapé",
+				"moi2": "Euh... C'est moi ?",
+				"question": "Euh...",
+				"next2": "C'est efficace...",
+				"force": "J'aimerais que mon Dinoz soit plus fort !",
+				"fight": "Je vais vous ECRASER !",
+				"fight2": "Je vais vous ECRASER !",
+				"perdu": "Je me suis perdu en venant ici et...",
+				"chasse": "Je suis un Grand Chasseur de Dorogon, et je viens vous défier !",
+				"deal": "J'ai une affaire EN OR a vous proposer !",
+				"auto": "Pourrais-je avoir un autographe ?"
+			}
 		}
 	},
 	"shop": {
@@ -1041,6 +1516,7 @@
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma: l'essayer, c'est l'adopter !",
 			"quantity": "Cantidad",
 			"buy": "Comprar",
+			"sell": "Vendre pour {gold} :gold:",
 			"title": "Mercader:",
 			"price": "Precio:",
 			"flying": {
@@ -1090,6 +1566,11 @@
 			"chens": {
 				"name": "Tienda de Chen",
 				"description": "Chen pone a tu disposición competencias consumibles. Son tan poderosas que se destruyen después de su utilización. Elles sont à utiliser avec parcimonie."
+			},
+			"merchant": {
+				"name": "Marchand Ambulant",
+				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !",
+				"dimanche": "Le Marchand Ambulant a pris son jour de congé, il faudra patienter jusqu'à demain pour pouvoir vendre de nouveau vos ingrédients. Bien sûr, le Marchand Ambulant se sera déplacé à un lieu différent, il faudra donc le trouver avant de pouvoir vendre vos ingrédients."
 			}
 		}
 	},
@@ -1097,7 +1578,7 @@
 		"energy": {
 			"0": "**Consumo de energía:** ninguna.",
 			"10": "**Consumo de energía:** débil.",
-			"25": "**Consumo de energía:** normal.",
+			"20": "**Consumo de energía:** normal.",
 			"50": "**Consumo de energía:** fuerte.",
 			"75": "**Consumo de energía:** muy fuerte."
 		},
@@ -1114,7 +1595,7 @@
 			"Sprint": "Sprint",
 			"ProteinesDinozienne": "Proteínas Ibéricas",
 			"Extenuation": "Fatigador",
-			"CatapaceDeMagma": "Caparazón de magma",
+			"CarapaceDeMagma": "Caparazón de magma",
 			"Carapace": "Caparazón",
 			"Sauvagerie": "Salvajería",
 			"Endurance": "Resistencia",
@@ -1137,7 +1618,7 @@
 			"Champollion": "Indino Jones",
 			"ReceptacleAqueux": "Amuleto Acuoso",
 			"MurDeBoue": "Muro de Lodo",
-			"PeauDacier": "Piel de Mamut",
+			"PeauDAcier": "Peau d'acier",
 			"Mutation": "Mutación",
 			"PocheVentrale": "Saco Ventral",
 			"Intelligence": "Inteligencia",
@@ -1210,7 +1691,7 @@
 			"RayonKaarSher": "Sección Kaar-Sher",
 			"Magasinier": "Tendero",
 			"Perception": "Percepción",
-			"CoupsSournois": "Golpe socarrón",
+			"CoupsSournois": "Coup Sournois",
 			"ApprentiPecheur": "Aprendiz de Pescador",
 			"CoupFatal": "Golpe Fatal",
 			"EntrainementSousMarin": "Entrenamiento Submarino",
@@ -1227,7 +1708,7 @@
 			"Cuisinier": "Cocinero",
 			"SangAcide": "Sangre-Acida",
 			"Regenerescence": "Regenerescencia",
-			"PremiersSoins": "Primeros auxilios",
+			"PremiersSoins": "Premiers Soins",
 			"PureeSalvatrice": "Puré Salvador",
 			"AuraHermetique": "Aura Hermética",
 			"CrepusculeFlambloyant": "Crepúsculo Flameante",
@@ -1256,7 +1737,7 @@
 			"TalonDAchille": "Talón de Aquiles",
 			"OeilDeLynx": "Ojo de Lince",
 			"NuageToxique": "Nube Tóxica",
-			"HalineFetive": "Aliento fétido",
+			"HaleineFetive": "Haleine fétide",
 			"Mistral": "Mistral",
 			"TaiChi": "Tai-chi",
 			"Tornade": "Tornado",
@@ -1395,7 +1876,19 @@
 			"Invocateur": "Invocador",
 			"Envol": "Vuelo",
 			"PoingDeBraise": "Puño de brasa",
-			"Leader": "Líder"
+			"Leader": "Líder",
+			"GrosDormeur": "Gros Dormeur",
+			"Veilleuse": "Sabroso",
+			"Matelasseur": "Matelasseur",
+			"Absorption": "Los sellos",
+			"Bite": "Acorazado",
+			"Regeneration": "Recolectar",
+			"Electrocution": "Ataque Directo",
+			"Immaterial": "Intagigle",
+			"Flight": "Enredadera",
+			"Capture": "Capture",
+			"Venerable": "Vénérable",
+			"Renforts": "Renforts"
 		},
 		"description": {
 			"GriffesEnflammees": "Aumenta la fuerza de todos los asaltos de fuego en 7",
@@ -1410,7 +1903,7 @@
 			"Sprint": "Aumenta la iniciativa del Dino en 6",
 			"ProteinesDinozienne": "Aumenta la resistencia del Dino en 30%",
 			"Extenuation": "Disminuye en 25% la capacidad de recuperación de un enemigo durante un ataque",
-			"CatapaceDeMagma": "Aumenta el máximo de puntos de vida en 30 y la potencia de los asaltos Fuego en 5",
+			"CarapaceDeMagma": "Aumenta el máximo de puntos de vida en 30 y la potencia de los asaltos Fuego en 5",
 			"Carapace": "Aumenta la armadura en 1",
 			"Sauvagerie": "Aumenta el poder de los asaltos de Madera en 5",
 			"Endurance": "Aumenta la defensa contra Madera en 2",
@@ -1519,7 +2012,7 @@
 			"Sumo": "Aumenta el máximo de puntos de vida en 100",
 			"SansPitie": "Elige el objetivo con menos puntos de vida en cada asalto",
 			"CloneAqueux": "Crea un clon del Dino con 1 punto de vida",
-			"GriffesEmpoisonnees": "Si uno de los ataques de Agua del Dino toca a un enemigo, éste es envenenado",
+			"GriffesEmpoisonnees": "Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
 			"Cuisinier": "Aumenta el beneficio de vida de los objetos en 10% para todos los Dinos",
 			"SangAcide": "Si uno de los ataques toca al Dino, éste puede quitarle vida al enemigo",
 			"Regenerescence": "Aumenta la velocidad de recuperación de puntos de vida durante el descanso",
@@ -1552,7 +2045,7 @@
 			"TalonDAchille": "Aumenta la potencia de todos los asaltos en 2",
 			"OeilDeLynx": "Permite al Dino recolectar plantas exóticas en ciertos lugares",
 			"NuageToxique": "Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
-			"HalineFetive": "Envenena a los enemigos tocados por un asalto",
+			"HaleineFetive": "Envenena a los enemigos tocados por un asalto",
 			"Mistral": "Ataca a todos los enemigos con un poder de Aire 3",
 			"TaiChi": "Aumenta la potencia de todos los asaltos de Aire en 15. Disminuye la velocidad de los ataques Aire en 20%",
 			"Tornade": "Ataca a todos los enemigos con un poder de Aire 5",
@@ -1691,28 +2184,31 @@
 			"Invocateur": "Permite al Dino aprender las competencias para la invocación",
 			"Envol": "El Dino efectúa un asalto y después vuela. Reservado a los Dinos voladores",
 			"PoingDeBraise": "Aumenta los ataques de Fuego en 20",
-			"Leader": "Aumenta el número máximo de Dinos en 3"
+			"Leader": "Aumenta el número máximo de Dinos en 3",
+			"GrosDormeur": "Permet à votre dinoz de récupérer une action supplémentaire chaque jours.",
+			"Veilleuse": "Permet au dinoz suivant votre dinoz de récupérer également une action supplémentaire chaque jours.",
+			"Matelasseur": "Tout vos dinoz récupère une action supplémentaire chaque jours."
 		}
 	},
 	"status": {
 		"name": {
 			"2": "Material de Escalada",
-			"1": "Salvavidas",
+			"1": "Bestia",
 			"65": "Maldición de Cuzcus",
 			"63": "Demonio",
 			"3": "Linterna",
 			"13": "Hojas de Nenúfar",
-			"4": "Pala de la Buena Suerte",
-			"5": "Pala mejorada",
-			"6": "Pala rota",
-			"22": "Flauta de Rascafondro",
+			"4": "Pelle Porte-Chance",
+			"5": "Piel",
+			"6": "Piel de Mamut",
+			"22": "Appeau à Rascaphandre",
 			"25": "Aletas de Korgones",
 			"34": "La estrategia en 130 lecciones",
-			"26": "Piedra Antigua",
+			"26": "Vieille Pierre",
 			"27": "Tótem Ashpuk",
 			"10": "Trozo de Basalto",
-			"9": "Agua pura",
-			"8": "Fango del Pantano",
+			"9": "Eau Pure",
+			"8": "Amague Maradoniano",
 			"11": "Guante de los Zors",
 			"40": "Mochila Práctica",
 			"32": "Tarjeta de Miembro",
@@ -1724,7 +2220,7 @@
 			"45": "Copa de Plata",
 			"46": "Copa de Oro",
 			"47": "Copa de Diamante",
-			"39": "Rama florida del Guardián",
+			"39": "Branche Fleurie du Gardien",
 			"55": "Cubo de hielo",
 			"50": "1er. Límite Quebrado",
 			"51": "2do. Límite Quebrado",
@@ -1737,27 +2233,27 @@
 			"38": "Medalla de Diamante",
 			"49": "Trozo de Orbe Oscuro",
 			"53": "Gota de éter",
-			"56": "Poción de Sedh",
+			"56": "Potion Anti-sedh",
 			"41": "Reencarnado",
 			"42": "Renacido",
-			"57": "Recuerdo de Calaveri",
-			"48": "Llave de Sylvanegra",
+			"57": "Souvenir de Skully",
+			"48": "Clé de Sylvenoire",
 			"30": "Venerable",
-			"23": "Talismán de Fuego",
-			"24": "Talismán Bao",
-			"7": "Pala rota"
+			"23": "Charme de Feu",
+			"24": "Charme Bao",
+			"7": "Pelle Améliorée Cassée"
 		},
 		"description": {
 			"2": "El Material de Escalada permite a tu Dino escalar las Colinas Escarpadas.",
 			"1": "El salvavidas permite atravesar algunas superficies de agua sin arriesgar la vida de tu Dino.",
 			"65": "Tu Dino ha sido maldecido por el Guardián de Cuzcus...",
-			"63": "Este Dino es un verdadero Demonio. ¿De dónde salen estos? ...",
+			"63": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
 			"3": "La linterna le permite a tu Dino explorar las más profundas cavernas sin el menor riesgo.",
 			"13": "Estas hojas de Nenúfar son muy apreciadas por los monjes Zenzen.",
 			"4": "Esta pala permite a los Dinos **excavar** y encontrar tesoros escondidos.",
-			"5": "Este mango de pala ofrece una **mayor resistencia**, su modelo ergonómico está cubierto de hule para evitar las ampollas.",
-			"6": "La pala de la Buena Suerte está rota. Tendrás que repararla para poder volver a usarla.",
-			"22": "Esta pequeña flauta permite atraer a los Rascafandros y acceder al Estadio Sulaflota.",
+			"5": "Cette Pelle offre une plus grande résistance, en plus son manche offre un meilleur grip donc vous aurez moins d'ampoules.",
+			"6": "La Pelle Porte-Chance est cassée, il faudra la faire réparer avant de l'utiliser à nouveau.",
+			"22": "Cette petite Flute permet d'attirer les Rascaphandres et ainsi d'accéder au Dôme Soulaflotte.",
 			"25": "Estas aletas, fabricadas por los Korgones, permiten a tu Dino atravesar grandes superficies de agua.",
 			"34": "Este libro, muy completo, permite al Dino desactivar libremente sus competencias de tipo 'ataque', 'evento', y algunas de tipo 'especial' (desde la pestaña Detalles). Es una guía indispensable para los grandes estrategas de Dinoland que deseen adaptarse a las condiciones de combate de cada lugar.",
 			"26": "Una vieja piedra que tu Dino ha encontrado en una excavación. ¿Para qué puede servir?",
@@ -1806,7 +2302,8 @@
 		"details": "Detalles",
 		"players": "Jugadores",
 		"average": "Promedio",
-		"clans": "Clanes"
+		"clans": "Clanes",
+		"completion": "Evento"
 	},
 	"layout": {
 		"fx": "Estatus",
@@ -1861,8 +2358,12 @@
 		"dinozNaming": "Dino-RPG [ Elegir nombre ]",
 		"fight": "Dino-RPG [ ¡Combate! ]",
 		"gather": "Dino-RPG [ ",
+		"dinozMissions": "Dino-RPG [ Missions de mes Dinoz ]",
+		"manageDinoz": "Dino-RPG [ Gestion de mes Dinoz ]",
+		"market": "Dino-RPG [ Marché des Eleveurs ]",
+		"dojo": "Dino-RPG [ Dojo ]",
 		"guide": "Dino-RPG [ Guía del Juego ]",
-		"faq": "Dino-RPG [ Preguntas y respuestas ]"
+		"itinerant": "Dino-RPG [ Marchand Ambulant ]"
 	},
 	"gather": {
 		"action": {
@@ -1875,7 +2376,8 @@
 			"xmas": "Chasse-Neige",
 			"tictac": "Casa de Papy Jose",
 			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feu d'artifice"
+			"party": "Feu d'artifice",
+			"daily": "Grille Quotidienne"
 		},
 		"type": {
 			"cueille": "plantes",
@@ -1887,12 +2389,17 @@
 			"xmas": "Cadeaux de Noël",
 			"tictac": "trésors dans le jardin de Papy Joe",
 			"labo": "ressources dans le laboratoire de l'Archidorogon",
-			"party": "trésors fabuleux"
+			"party": "trésors fabuleux",
+			"daily": "récompenses quotidiennes"
 		},
 		"disclaimer": "Cliquez sur {number} cases de la grille pour trouver des {search}"
 	},
 	"missions": {
 		"header": "Lista de misiones",
+		"headers": {
+			"title": "Titre",
+			"status": "Estatus"
+		},
 		"xp": "puntos de experiencia",
 		"gold": "oro",
 		"item": "Objetos:",
@@ -1947,7 +2454,21 @@
 			"sales": "Commerce (peu) équitable",
 			"ritual": "Rituel ridicule",
 			"hiero": "Hiéroglyphes",
-			"pigeon": "Pigeon voyageur"
+			"pigeon": "Pigeon voyageur",
+			"unmute": "Bosque de Escarcha",
+			"orchid": "Amuleto verde",
+			"licens": "Permis de couper",
+			"king": "Rey de los Simios",
+			"wishes": "Faites vos voeux",
+			"newplt": "La gran caza",
+			"gshop": "Monnaie de singe",
+			"seqact": "La route du grand péril",
+			"toxic": "Allergies",
+			"map": "Cartographie",
+			"hucure": "Remède",
+			"bckpck": "Kit de l'aventurier",
+			"rodriz": "Le Riz Amnésique",
+			"rodlif": "Les Dinoz Sombres"
 		},
 		"tooltip": "Misión: {mission}",
 		"description": {
@@ -1986,9 +2507,24 @@
 			"sales": "Pour me permettre de manger à ma faim, je vends de temps à autre des petites babioles sur le Marché de Dinoville. Comme je suis très pris en ce moment, pourrais-tu y aller à ma place ? Je te donnerai un généreux pourcentage des ventes ! Tu verras, ça se vend bien.",
 			"ritual": "La congrégation shamanique au sein de laquelle j'ai fait mes études me réclame chaque année un rituel en gage de cette formation. Evidemment, j'ai autre chose à faire que m'occuper de ces âneries ! Pourrais-tu t'en charger à ma place ? Les instructions sont arrivées dans ma boîte aux lettres, fais comme chez toi.",
 			"hiero": "J'ai entendu dire qu'il y avait dans les cavernes à l'ouest, celles qui mènent dans la Jungle de Grumhel, des hiéroglyphes de la plus haute importance pour mes recherches mystiques ! Vas-y et recopie-les pour moi. Attention, pour pénétrer dans ces cavernes, il te faudra un moyen de retrouver ton chemin dans l'obscurité !",
-			"pigeon": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !"
+			"pigeon": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !",
+			"unmute": "Le parchemin qui vous est tombé dessus comporte ce message : _« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. » _A peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
+			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : _« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle »._ Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
+			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : _« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
+			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : _« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
+			"wishes": "Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: _« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »_ Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
+			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :_« Déposez de l'or dans le seau pour votre ration quotidienne. »_",
+			"seqact": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
+			"toxic": "Je suis victime d'allergies à certaines plantes de la Jungle... Mais j'ignore pour le moment lesquelles ! Pourriez-vous me trouver quelques plantes à l'air suspect, afin que je fasse quelques tests ?",
+			"map": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
+			"hucure": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
+			"bckpck": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?",
+			"rodriz": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Iles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
+			"rodlif": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !"
 		},
 		"actions": {
+			"nothing": "{npc}",
 			"talkTo": "Hablar con {npc}...",
 			"goto": "Ir a {place} ...",
 			"validate": "Volver para validar la misión {place}...",
@@ -2037,7 +2573,48 @@
 			"wahhh": "Crier waaah...",
 			"rock": "Jeter un caillou dans le cratère",
 			"hieroglyphes": "Copier les hiéroglyphes",
-			"foundArcheo": "Trouver l'archéologue"
+			"foundArcheo": "Trouver l'archéologue",
+			"fwater": "Río Jumin",
+			"mwater": "Urano",
+			"pwater": "Torrente de Agua",
+			"bwater": "Aletas de Korgones",
+			"racine": "Verser la gourde sur les racines",
+			"pickwater": "Ir a la tienda",
+			"worchid": "Arroser l'Orchidée",
+			"yell": "Pousser le cri du Roi de la Jungle",
+			"pickorchid": "Cueillir l'Orchidée",
+			"plantorchid": "Planter l'Orchidée",
+			"tosscoin": "Jeter une pièce",
+			"liftrock": "Soulever les rochers",
+			"bucket": "Examiner le seau",
+			"pickfigo": "Dinoferomonas",
+			"pickpuru": "Purulente Noire",
+			"moinemedecinCoral": "Ramener le corail au moine",
+			"moineChutes": "Ramener les ingrédients aux Chutes",
+			"pickvisqueuse": "Lanzador de Bellotas",
+			"pickherbs": "Prendre les plantes",
+			"pickCoral": "Amuleto rocoso",
+			"pickTeeth": "Ramasser des crocs",
+			"pickWings": "Récupérer des ailes",
+			"pickMedecine": "Caisse de remèdes",
+			"returnColline": "Retourner aux Collines Hantées",
+			"findPickPoint": "Trouver un point élevé",
+			"drawMap": "Tracer une carte",
+			"findBat": "Retrouver la Fauve-Souris",
+			"catchBat": "Attraper la Fauve-Souris",
+			"bat": "Fauve-Souris",
+			"launchRock": "Lancer une pierre",
+			"pickNote": "Ramasser le carnet",
+			"redraw": "Tracer la carte",
+			"dnvReport": "Faire votre rapport à Dinoville",
+			"extremFisher": "Pêcheur de l'extrême",
+			"alguae": "Ramasseur d'algues",
+			"interogateMinors": "Interroger les mineurs",
+			"minorHalt": "Mineur qui prend sa pause",
+			"afraidFisher": "Pêcheur affairé",
+			"findBobine": "Trouver une bobine",
+			"couturiere": "Couturière",
+			"rice": "Chercher du Riz"
 		},
 		"npc": {
 			"fishVendor": "Mercader de pescado",
@@ -2113,7 +2690,47 @@
 			"wahhh": "Crier waaah...",
 			"rock": "Jeter un caillou dans le cratère",
 			"hieroglyphes": "Copier les hiéroglyphes",
-			"foundArcheo": "Trouver l'archéologue"
+			"foundArcheo": "Trouver l'archéologue",
+			"fwater": "Jeringuilla de Venenite",
+			"mwater": "Urano",
+			"pwater": "Barrera acuosa",
+			"bwater": "Aletas de Korgones",
+			"racine": "Verser la gourde sur les racines",
+			"pickwater": "Piranta en bolsita",
+			"worchid": "Arroser l'Orchidée",
+			"yell": "Pousser le cri du Roi de la Jungle",
+			"pickorchid": "Cueillir l'Orchidée",
+			"plantorchid": "Planter l'Orchidée",
+			"tosscoin": "Jeter une pièce",
+			"liftrock": "Soulever les rochers",
+			"bucket": "Examiner le seau",
+			"talkingorchide": "Orchidée Quidée parlante",
+			"benevole": "Bénévole «Paix Verte»",
+			"arbre": "Valider la Mission",
+			"pickfigo": "Disfraz de Globlin",
+			"pickpuru": "Purulente Noire",
+			"pickvisqueuse": "Zarpas punzantes",
+			"moinemedecin": "Moine médecin",
+			"pickherbs": "Prendre les plantes",
+			"pickCoral": "Carga cornuda",
+			"pickTeeth": "Ramasser des crocs",
+			"pickWings": "Récupérer des ailes",
+			"pickMedecine": "Caisse de remèdes",
+			"drawMap": "Tracer une carte",
+			"catchBat": "Attraper la Fauve-Souris",
+			"bat": "Fauve-Souris",
+			"launchRock": "Lancer une pierre",
+			"pickNote": "Ramasser le carnet",
+			"redraw": "Tracer la carte",
+			"extremFisher": "Pêcheur de l'extrême",
+			"alguae": "Ramasseur d'algues",
+			"interogateMinors": "Interroger les mineurs",
+			"minorHalt": "Mineur qui prend sa pause",
+			"afraidFisher": "Pêcheur affairé",
+			"findBobine": "Trouver une bobine",
+			"couturiere": "Couturière",
+			"seekrice": "Chercher du Riz",
+			"pickrice": "Ramasser le Riz"
 		},
 		"place": {
 			"port": "au Port de Prêche",
@@ -2403,6 +3020,95 @@
 				"foundArcheo": "L'archéologue Pelletée ne semble pas être ici. Vous apprenez rapidement qu'il travaille en ce moment sur un chantier dans les Gorges Profondes...",
 				"archeo": "Oh... C'est amusant, on dirait à s'y méprendre les notes que j'ai laissé sur les parois des cavernes. Comment ? Et ce Shaman a pris ça pour des textes anciens ? Oh, mais non ! Ce sont justes des notes personnelles ! Je les ai écrites moi-même...",
 				"shaman": "J'aurais parié un de mes grigris qu'on tenait là une découverte fondamentale ! Dommage... En tous cas, merci pour la course et désolé pour le dérangement !"
+			},
+			"unmute": {
+				"fwater": "Vous remplissez la gourde du vieil arbre avec un peu d'eau du Fleuve Jumin. Voila pour l'eau filante !",
+				"mwater": "Vous ajoutez dans la gourde du vieil arbre un peu d'eau du Marais Collant. Elle sent vraiment mauvais...",
+				"pwater": "Vous ajoutez dans la gourde du vieil arbre de l'eau claire de la Fontaine et vous en profitez pour vous y rafraîchir.",
+				"bwater": "Vous complétez le contenu de la gourde avec un peu de l'eau bouillonnante qui inonde les Gorges. C'est chaud !",
+				"racine": "Les feuillages du vieil arbre s'agitent brusquement dans tous les sens et une lumière apaisante emplit la jungle tout autour de vous...",
+				"arbre": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds."
+			},
+			"orchid": {
+				"pickwater": "Vous remplissez la gourde d'eau du Fleuve Jumin.",
+				"worchid": "Vous versez tout le contenu de la gourde sur une magnifique fleur qui doit être l'Orchidée Quidée. Aussitôt, celle-ci s'illumine de mille feux et de jolis gouttelettes de rosées perlent sur ses feuilles gracieuses.",
+				"orchid": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse moi, tu m'fais de l'ombre !!",
+				"arbre": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat."
+			},
+			"licens": {
+				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+			},
+			"king": {
+				"yell": "Vous poussez un cri particulièrement ridicule, qui n'effraierait probablement même pas un Korgon... Il va falloir trouver mieux !",
+				"talkingorchide": "Encore là l'empaffé de la jungle ?! Qu'est-ce qu'il a l'autre à m'regarder comme ça ?",
+				"pickorchid": "Sans ménagement, vous arrachez l'orchidée et vous l'emmenez avec vous. Celle-ci crie, vous insulte copieusement et se débat autant qu'elle peut...",
+				"plantorchid": "Vous replantez d'un coup sec l'Orchidée Quidée qui ne manque pas de vous hurler dessus. Tandis que vous vous éloignez, vous pouvez encore entendre celle-ci crier des atrocités à votre égard... Voilà qui fera bien l'affaire pour effrayer les touristes !",
+				"arbre": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !"
+			},
+			"wishes": {
+				"tosscoin": "Vous jetez une pièce au coeur des chutes et vous attendez quelques minutes... Evidemment rien ne se produit et vous décidez d'aller exaucer le voeu de réduire la population des monstres par vous même.",
+				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+			},
+			"newplt": {
+				"benevole1": "Bonjour ! Toi aussi tu viens pour aider à déblayer toute cette roche ? Pour le moment, j'ai un gros problème sur les bras... Des monstres en tous genres viennent régulièrement m'empêcher de travailler... Tu peux faire quelque chose ?",
+				"liftrock1": "Vous installez le cric puis commencez à soulever et pousser les rochers tombés sur la forêt... Mais tandis que vous pensiez être enfin au calme, un grognement inquiétant se fait entendre derrière vous...",
+				"benevole2": "Il ne faut plus perdre une seconde, continuons !",
+				"liftrock2": "L'opération vous occupe encore plusieurs heures, même avec le cric, mais vous parvenez tout de même à dégager de nombreux arbres et plantes ensevelies sous les rochers.",
+				"benevole3": "Je vais rester ici pour arroser les plantes survivantes. Vas faire un rapport pour moi auprès du Gardien de la Forêt !",
+				"arbre": "Deux gros fruits se décrochent et tombe dans un buisson près de vous..."
+			},
+			"gshop": {
+				"bucket": "Vous trouvez une petite branche fleurie dans le seau...",
+				"arbre": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
+			},
+			"seqact": {
+				"auree": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?"
+			},
+			"toxic": {
+				"pickfigo": "Vous cueillez une fleur boursouflée et toute poisseuse...",
+				"pickpuru": "La Purulente dégage un petit nuage pollen malodorant vraiment suspect.",
+				"pickvisqueuse": "Vous trouvez une sorte de gros nénuphar verdâtre étalé dans une large flaque d'eau croupie.",
+				"auree": "Ca m'a l'air d'aller... Je vais essayer de trouver laquelle de ces plantes provoque une allergie chez moi... Voilà pour le service."
+			},
+			"hucure": {
+				"pickherbs": "Vous récupérez les plantes toxiques de Nicolas Mulot. On dirait bien qu'il a essayé de s'en faire une infusion....",
+				"moinemedecin": "Vous lui avez donné des Figonicia Furonclées ? De la Purulente Noire ?! Une Visqueuse des Boues !! Ouh la la... Il vaut mieux ne pas tarder ! Apportez moi un peu de poudre de corail pour commencer.",
+				"pickCoral": "Vous ramassez un bout de corail brisé : ça devrait bien faire l'affaire !",
+				"moinemedecin2": "Ramenez moi quelques crocs de Korgons du Chemin Glauque et quelques paires d'ailes de Fauve-Souris du nord.",
+				"pickTeeth": "Vous récupérez quelques crocs de Korgons.",
+				"pickWings": "Vous récupérez une belle collection d'ailes de Fauve-Souris...",
+				"moinemedecin3": "Parfait ! Je vais pouvoir me préparer un délicieux pot-au-feu avec tout ça... Pardon ? Ah vous veniez pour le remède ? Oui c'est vrai. J'en avais déjà une pleine caisse à vrai dire, servez-vous. Je vous garde un peu de pot-au-feu ?",
+				"pickMedecine": "Vous emportez trois ou quatre flacons d'antidote pour Nicolas Mulot, sait-on jamais...",
+				"auree": "Glou glou ! Merfi bien... Efpérons que fa fasse effet... Fa devenait limite là... Tenez prenez fette pofion en gave de gratitude."
+			},
+			"map": {
+				"drawMap": "Vous vous installez en haut d'une vieille souche pour tracer la carte des environs... Soudain, une Fauve-Souris hideuse jailli de nulle part et s'empare de votre bloc-notes d'un coup de dents ! D'un battement d'aile, elle s'éloigne et se pose sur une branche haute...",
+				"catchBat": "Vous êtes presque certain de l'entendre ricaner du haut de son perchoir... Vous attrapez une branche que vous secouez pour tenter de la faire tomber, mais celle-ci s'envole et s'éloigne dans la jungle !",
+				"bat": "La vilaine bestiole s'est perchée au sommet d'un énorme arbre ! Elle vous fixe impassiblement.",
+				"launchRock": "Vous faites mouche ! La Fauve-Souris pousse un cri et laisse tomber votre bloc-notes au pied de son arbre. Agacée, elle se pose alors juste à côté et vous adresse un regard de défi...",
+				"pickNote": "Vous récupérez finalement votre bloc-notes !",
+				"redraw": "Vous finissez de tracer votre carte, en restant sur vos gardes cette fois-ci...",
+				"auree": "Ca m'a l'air pas mal du tout ! Je vais étudier un peu tout cela pour bien préparer mon expédition de l'extrême."
+			},
+			"bckpck": {
+				"extremFisher": "Un sac d'os qu'vous dites ? Nan j'crois pas avoir pêché ça ! Faudrait p'têt voir s'il aurait pas été emporté plutôt vers le marais avec les courants ? C'est qu'ça coule dans un sens pas banal ici...",
+				"alguae": "Ah si j'm'en rappelle !! Un bin beau sac à dos qu'c'était celui-là, tout collé dans le bourbier d'une fougasse des marais qu'il était ! J'l'ai refilé à mon cousin de la mine, pour porter ses caillasses qu'c'est bin pratique ! Diou !",
+				"interogateMinors": "Vous questionnez quelques mineurs, on vous indique l'un d'eux du doigt..",
+				"minorHalt": "Ouais. J'vois bien de quoi tu parles. Mais l'sac, je l'ai plus. [Il crache par terre] Ouais. Il a pas tenu deux jours le machin. Je l'ai envoyé à mon cousin du Port de Prêche. Ouais. Ca pouvait faire un bon filet, je me suis dis. [Il crache à nouveau]",
+				"afraidFisher": "Le sac ? Oui je l'ai toujours ! Mais il est en piteux état ! Tenez, si ça peut vous rendre service, je peux vous le réparer et vous le laisser, il ne me sert pas à grand chose ici... Mais pour ça il me faut une bobine de fil et des aiguilles. On en vend à Dinoville je pense.",
+				"findBobine": "Vous faites rapidement le tour des étalages du marché pour trouver du Matériel de Couture. Vous finissez par trouver la boutique d'une couturière...",
+				"couturiere": "Bien le bonjour Maître des Dinoz, bienvenue dans mon échope ! Du fil et des aiguilles ? Oui j'en vends mais ça n'est pas donné... Mais je veux bien vous en laisser gratuitement si vous me rendez un petit service ! Ma maison se trouve près de la fontaine et il ne se passe pas un soir sans qu'on y soit attaqué par ces monstrueux CoqDurs ! Aidez-moi et le matériel est à vous.",
+				"couturiere2": "Merci mille fois pour votre intervention ! Voici le matériel comme promis...",
+				"afraidFisher2": "Ah c'est tout ce qu'il me faut pour rafistoler votre sac. [Il s'en occupe pendant une petite heure...] Voila ! Il devrait tenir pendant un petit moment encore.",
+				"auree": "Euh vous allez rire... Figurez-vous que j'ai reçu justement un Sac à dos de rechange ! Je l'avais commandé en prévision de mon expédition... Bon écoutez, voilà ce qu'on va faire : je récupère mon vieux sac et je vous donne le nouveau ! Ca marche ?"
+			},
+			"rodriz": {
+				"seekrice": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !",
+				"pickrice": "Félicitations ! Vous obtenez du Riz Amnésique !",
+				"forges": "Ah ! Uhm euh... En fait, j'avais mal compris. Un petit peu d'énergie foudre était seulement nécessaire pour recharger ma cape... Tiens, voilà pour toi, et tu peux garder le riz, je n'en ai pas besoin."
+			},
+			"rodlif": {
+				"forges": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
 			}
 		},
 		"target": {
@@ -2422,6 +3128,9 @@
 			"flam": "Flauta de Rascafondro",
 			"cobra": "Cóndor",
 			"goblin": "Gobelin",
+			"bat": "Fauve Souris",
+			"ronciv": "Puesto Rokky",
+			"gardien": "Gardien Arboricole",
 			"any": "monstres"
 		}
 	},
@@ -2433,12 +3142,48 @@
 		"inscription": "Inscrito el",
 		"clan": "Clan",
 		"dojo": "Dojo",
+		"completion": "Excomunión",
 		"rewards": "Recompensas Épicas",
 		"level": "Nivel",
 		"edit": "Modificar",
 		"quest": "Mis misiones",
 		"editAccount": "Opciones de mi perfil",
-		"import": "Importar cuenta"
+		"import": "Importar cuenta",
+		"stat": {
+			"name": "Statistiques",
+			"2": "DinoRPG",
+			"3": "DinoRPG",
+			"5": "DinoRPG",
+			"6": "Hordes",
+			"7": "Die2Nite",
+			"9": "Kingdom",
+			"10": "Moverse",
+			"11": "Fever!",
+			"15": "Kingdom",
+			"18": "Kube",
+			"22": "Acupuntura",
+			"28": "Gran bruto",
+			"31": "La Brute",
+			"33": "Snake",
+			"38": "Odyssey",
+			"35": "CroqueMotel",
+			"36": "MotionBall 2",
+			"37": "Inconnu",
+			"41": "Zancadilla",
+			"42": "Studio Quiz",
+			"43": "Naturalchimie 2",
+			"45": "DinoRPG",
+			"57": "AlphaBounce",
+			"64": "KadoKado",
+			"66": "Galaxy55",
+			"71": "Teacher Story",
+			"75": "Arkadeo",
+			"77": "Pachamama",
+			"82": "Street Writer",
+			"84": "MTPass",
+			"92": "Rockfaller Journey",
+			"94": "Monster Hotel"
+		}
 	},
 	"levelup": {
 		"disclaimer": "Ahora puede iniciar la animación para saber en qué elemento sube de nivel tu Dino.",
@@ -2453,10 +3198,12 @@
 		"level": "Niv.",
 		"learn": "Aprender",
 		"unlock1": "Desbloquear ",
+		"confirmSkill": "Désirez-vous apprendre {skill} pour votre passage au niveau {level} ?",
+		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
 		"unlock2": " competencias suplementarias",
 		"unlock": "Una vez que se haya desbloqueado, esta habilidad se podrá aprender cuando el Dino gane otro Nivel",
 		"small": "¡El Dino ha subido de nivel!",
-		"pdc": "Tu Dino conoce Plan de Carrera, tiene la posibilidad de volver a tirar la rueda elemental. // Atención, es posible que caiga en el mismo elemento.//",
+		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
 		"helperUnlock": {
 			"title": "Desbloquear",
 			"description": "Puedes elegir entre enseñar una nueva competencia a tu Dino o desbloquear varias nuevas que **podrá aprender cuando gane otro Nivel**."
@@ -2899,7 +3646,8 @@
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
-			"average": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador."
+			"average": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
+			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu."
 		},
 		"page": {
 			"previous": "Página anterior",
@@ -2913,10 +3661,89 @@
 		"lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
 		"continue": "Continuar",
 		"display": "Afficher le combat",
-		"resume": "Vous avez combattu un {enemy}"
+		"resume": "Vous avez combattu un {enemy}",
+		"clone": "Clone",
+		"monster": {
+			"goupignon": "Goupignon",
+			"wolf": "Loup",
+			"gluon": "Gluon",
+			"greeng": "Géant Vert",
+			"coq": "Coqdur",
+			"piglou": "Piglounou",
+			"piglo2": "Polvorón",
+			"piglo3": "Pantano Pegajoso",
+			"piglo4": "Superbofetada",
+			"piglo5": "Superbofetada",
+			"febrez": "Febrez",
+			"pteroz": "Pantano",
+			"hippo": "Hippoclamp",
+			"rocky": "Rocky",
+			"pira": "Pirhanoz",
+			"kazka": "Kazkadine",
+			"anguil": "Anguilloz",
+			"korgon": "Camillero",
+			"barche": "Bébé Archélion",
+			"flam": "Flauta de Rascafondro",
+			"cobra": "Cóndor",
+			"goblin": "Gobelin",
+			"bat": "Fauve Souris",
+			"ronciv": "Lanzarroca",
+			"gardien": "Gardien Arboricole",
+			"rkrgns": "Renfort Korgon",
+			"borg": "Borg",
+			"ewater": "Agua pura",
+			"efire": "Talismán de Fuego",
+			"vener": "Le Vénérable",
+			"rasca": "Vieux Rascaphandre",
+			"eearth": "Elémental de Terre"
+		},
+		"status": {
+			"asleep": "endormi",
+			"slowed": "Desvelo",
+			"petrified": "pétrifié",
+			"poisoned": "Adolorido",
+			"burned": "brulé",
+			"locked": "Candado maldito",
+			"dazzled": "éblouis",
+			"stunned": "Espora Etérica",
+			"torched": "Tornado",
+			"intangible": "intangible",
+			"flying": "Vuelo",
+			"quickened": "rapidité",
+			"shielded": "bouclier",
+			"blessed": "bénis",
+			"healing": "soigné"
+		},
+		"step": {
+			"arrive": "**{name}** est arrivé !",
+			"resist": "**{dinoz}** a résisté et réduis les dégats.",
+			"hit": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}**.",
+			"hit-skill": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}** avec **{skill}**.",
+			"poison": "**{dinoz}** a infligé **{damage} poison** dégats à **{target}**.",
+			"moveTo": "**{fighter}** déplacé à **{target}**.",
+			"moveBack": "**{fighter}** est retourné à sa position.",
+			"attemptHit": "**{fighter}** a essayé d'attaquer **{target}**.",
+			"evade": "**{fighter}** a esquivé le coup.",
+			"death": "**{fighter}** a succombé à ses blessures!",
+			"counter": "**{fighter}** a contré **{opponent}**.",
+			"survive": "**{dinoz}** a survécu à l'attaque.",
+			"skillActivate": "**{dinoz}** a utilisé **{skill}** (-{energy} energy).",
+			"skillActivate-targets": "**{dinoz}** a utlisé **{skill}** sur **{targets}** (-{energy} energy).",
+			"skillExpire": "**{dinoz}**'s **{skill}** a expiré.",
+			"looseHp": "**{fighter}** a perdu **{hp} HP**.",
+			"heal": "**{fighter}** s'est soigné de **{hp} HP**.",
+			"addStatus": "**{fighter}** a obtenu le status **{status}**.",
+			"removeStatus": "**{fighter}** n'a plus le status **{status}**.",
+			"itemUse": "**{fighter}** a utilisé **{item}**.",
+			"hypnotize": "**{fighter}** a changé de camp.",
+			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie."
+		}
 	},
 	"ingredients": {
 		"disclaimer": "Esta página incluye los ingredientes que has obtenido hasta el momento.",
+		"tname": "Ingrédients",
+		"tstock": "Stock",
+		"tquantity": "Quantité",
 		"name": {
 			"merou_lujidane": "Mero Lujidané",
 			"poisson_vengeur": "Pescado Vengador",
@@ -2965,7 +3792,7 @@
 			"corne_en_chocolat": "Incluso tratándose de un fenómeno muy raro, a veces algunos animales nacen con un cuerno de chocolate (negro o con avellanas, depende). Generalmente, estos animales no sobreviven largo tiempo, ya que son el objeto de todas las codicias.",
 			"oeil_visqueux": "Este ojo hace un ruido asqueroso en tu mochila...",
 			"langue_monstrueuse": "Un trofeo de caza capaz de llenar de celos a la mayoría de Maestros de Dinoland. Esta lengua de monstruo en perfecto estado podría venderse a muy buen precio.",
-			"enegie_foudre": "Fácil de captar, la energía Rayo se encuentra en todas partes. Basta con saber invocarla al golpear una piedra o agitar una barra de hierro en una tormenta.",
+			"energie_foudre": "Fácil de captar, la energía Rayo se encuentra en todas partes. Basta con saber invocarla al golpear una piedra o agitar una barra de hierro en una tormenta.",
 			"energie_air": "Aunque el aire está presente en todo Dinoland, solo algunas brisas pueden ser transformadas en energía pura.",
 			"energie_eau": "La Energía Agua está presente en grandes cantidades en todas las superficies de agua, pero se deslizan tan rápido que nadie consigue capturarlas. De ahí viene su elevado precio.",
 			"energie_feu": "El fuego natural, difícil de encontrar en su estado puro, es una energía de gran valor.",
@@ -2990,19 +3817,131 @@
 			"bras_mecanique": "Este artefacto tiene la forma de una mano y parece ser producto de una tecnología olvidada. Incluso si ya no funciona, posee un gran valor..."
 		}
 	},
+	"manageDinoz": {
+		"title": "Gestion de mes Dinoz",
+		"disclaimer": "Ce module de gestion est accessible grâce à votre **Pierre en Diamantite Agglomérée** : un véritable concentré de technologie !",
+		"dinoz": "Dinos",
+		"elements": "Elementos"
+	},
+	"dinozMissions": {
+		"title": "Misiones de mis Dinos",
+		"disclaimer": "Acceder a esta sección a través de tu **Pequeño Misionero Ilustrado**: ¡una forma muy práctica de llevar el control de las misiones de tus Dinos!",
+		"dinoz": "Dinos",
+		"missions": "Misiones",
+		"see": "Ver",
+		"total": "Total",
+		"missionsFrom": "Missions de \"{npc}\""
+	},
+	"market": {
+		"title": "Marché des Eleveurs",
+		"disclaimer": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
+		"allOffers": "Toutes les offres",
+		"myTransactions": "Mes transactions",
+		"sell": "Comprar",
+		"history": "Historial",
+		"dinoz": "Dinos",
+		"items": "Objetos",
+		"makeAnOffer": "Hacer oferta",
+		"filter": "Filtro",
+		"all": "Todos",
+		"seller": "Proveedor de Tutumba",
+		"timeLeft": "Tiempo restante",
+		"auctionExpired": "Enchère expirée",
+		"minimumPrice": "Precio mínimo",
+		"highestBid": "Enchère actuelle",
+		"by": "por",
+		"details": "Detalles",
+		"time": "{days}j {hours}h {minutes}m {seconds}s",
+		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Eleveurs peuvent être obtenus pour l'équivalent de **1** :ticket: **= 1000** :gold: à partir de la **Banque de Dinoland**",
+		"back": "Recolector",
+		"bid": "Pala mejorada",
+		"detail": "Ver detalles",
+		"sellView": {
+			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
+			"prepareYourOffer": "Préparez votre offre",
+			"sellYourDinoz": "Vender Dino",
+			"itemsAndIngredients": "Objets et Ingrédients",
+			"offerMinimalValue": "Valeur MINIMALE de votre offre",
+			"minimalValueDisclaimer": "Votre offre doit avoir, au MINIMUM, une valeur de **{minValue}** :gold: pour être validée.",
+			"create": "Créer l'offre",
+			"add": "Ajouter",
+			"remove": "Destierro"
+		},
+		"transactionView": {
+			"yourOngoingOffer": "Votre offre en cours",
+			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
+			"bid": "Mechero",
+			"noBidYet": "Aucune mise pour l'instant.",
+			"cancel": "Confirmar",
+			"yourActiveBids": "Vos mises en cours",
+			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
+		},
+		"historyView": {
+			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
+			"yourBids": "Vos mises"
+		}
+	},
+	"following": "Ce Dinoz suit son chef de groupe.",
+	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
+	"follow": "Le chef de groupe est {leader}.",
+	"followed": "Este Dino es un verdadero Demonio.",
+	"logs": {
+		"ItemUsed": "**{player} ({playerId})** used **{quantity}x {item}** with dinoz **{dinoz} ({dinozId})**.",
+		"ItemBought": "**{player} ({playerId})** bought **{quantity}x {item}**.",
+		"GoldWon": "**{player} ({playerId})** won **{quantity} :gold:**.",
+		"GoldLost": "**{player} ({playerId})** lost **{quantity} :gold:**.",
+		"Move": "**{player} ({playerId})** moved dinoz **{dinoz} ({dinozId})** to **{location}**.",
+		"LevelUp": "**{player} ({playerId})** leveled up dinoz **{dinoz} ({dinozId})** to **level {level}**.",
+		"Fight": "**{player} ({playerId})** fought and lost **{hpLost}HP**, gained **{gold} :gold:** and **{xp}XP**.",
+		"Death": "**{player} ({playerId})**'s dinoz **{dinoz} ({dinozId})** died.",
+		"Revive": "**{player} ({playerId})** revived dinoz **{dinoz} ({dinozId})**.",
+		"MissionStep": "**{player} ({playerId})** advanced **{mission}** to **step {step}** with dinoz **{dinoz} ({dinozId})**.",
+		"MissionFinished": "**{player} ({playerId})** finished **{mission}** with dinoz **{dinoz} ({dinozId})**.",
+		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
+		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
+		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
+		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+	},
+	"selectDinoz": {
+		"selectChampions": "Choisis tes champions",
+		"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
+		"disclaimer": "Tu peux sélectionner jusqu'à **10** dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
+		"validate": "Valider ma sélection"
+	},
+	"dojo": {
+		"welcome": "Bienvenue dans votre Dojo",
+		"accessTournament": "Accéder au tournoi",
+		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis!",
+		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
+		"reputation": "Réputation",
+		"points": "Points",
+		"worth": "Carisma",
+		"ranking": "Classement",
+		"accessChallenges": "Accéder aux défis",
+		"testDinoz": "Tester tes Dinoz",
+		"fightHistory": "Ración de Combate",
+		"team": "Mon équipe",
+		"tournaments": "Tournois",
+		"build": "Construire mon dojo",
+		"group": "Groupe {group}",
+		"seeFinal": "Voir la finale",
+		"seeFight": "Artes Marciales",
+		"nextTournament": "Le prochain tournoi commencera le **{next}**, soyez prêt ! Les phases de qualifications se terminent le **{qualif}**.",
+		"tournamentInfo": "**ATTENTION :**&&Votre position est indiqué en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**"
+	},
 	"guide": {
 		"sections": {
 			"intro": "Introducción",
 			"adopt": "Adoptar un Dinoz",
 			"name": "Nombrar tu Dinoz",
 			"card": "Perfil del Dinoz",
-			"move": "Moverse",
+			"move": "Se Déplacer",
 			"fight": "Combate",
 			"heal": "Curación",
 			"death": "Muerte",
 			"exp": "Experiencia",
 			"missions": "Misiones",
-			"status": "Estados",
+			"status": "Les Statuts",
 			"equipment": "Equipamiento",
 			"epic": "Objetos Épicos",
 			"group": "Grupos",
@@ -3190,131 +4129,6 @@
 			"support4-1": "Vous trouverez souvent la réponse à vos questions directement sur le Discord d'Eternal-Twin. && && Si ce n'est pas le cas, posez vos questions et quelqu'un de la communauté vous aidera.",
 			"security": "...Sécurité de mon compte :",
 			"security-1": "Peu importe qui vous le demande... && && Ne communiquez jamais vos identifiants et mots de passe !"
-		}
-	},
-	"faq": {
-		"intro": "Aquí podrás encontrar todas las respuestas a tus preguntas sobre el juego. Recuerda que muchos secretos se encuentran aquí por lo que te animamos a buscar antes por ti mismo.",
-		"search": "Buscar",
-		"qa": "Preguntas / Respuestas :",
-		"faq1": {
-			"question": "Pourquoi les deux dernières missions de Papy Joe ne se débloquent pas ?",
-			"answer": "La mission 'Les Géants' se débloquera quand votre Dinoz aura atteint le niveau 11 et 'L'exploit du mois' quand il sera au niveau 18."
-		},
-		"faq2": {
-			"question": "Où se trouve le chien de Mme Ducraft ?",
-			"answer": "Le Chien de Mme Ducraft se trouve au Port de Prêche, accessible depuis la Fontaine de Jouvence. La fontaine de Jouvence est accessible depuis Dinoville, Forcebrut, ou Chez Papy Joe."
-		},
-		"faq3": {
-			"question": "Comment avoir plus de 18 Dinoz ?",
-			"answer": "La compétence U Leader :bois: permet d’avoir 3 dinoz de plus sur votre compte. && Il en va de même pour Messie :air: sur le nouvel arbre de compétences 50+. && && Les compétences U (unique) ne fonctionnent qu'une seule fois par compte. && Après, il est possible d’en avoir beaucoup plus en congelant certains de vos dinoz."
-		},
-		"faq4": {
-			"question": "Comment obtenir la Perle de la Fontaine ?",
-			"answer": "Il vous faudra la Bouée. && A partir du Port de Prêche, accédez à l'Îles Waïkiki (Îles Atantéinées), puis accédez aux chutes Mutantes (accessibles depuis le Dôme Soulaflotte, Chez Bao Bob, et depuis le Marais Collant). && && Discutez avec Maître Hydargol, et suivez ses instructions. Si vous menez à bien la mission qu'il vous donnera, vous obtiendrez la Perle de la Fontaine."
-		},
-		"faq5": {
-			"question": "Comment enlever une compétence à un Dinoz ?",
-			"answer": "Les compétences apprises ne peuvent être supprimées mais vous pouvez en désactiver certaines grâce au Guide de Stratégie en 130 leçons que vous obtiendrez en accomplissant la seconde mission du Shaman mou, 'L'épouvantarchélion'. && && En règle générale, il faut éviter de choisir des attaques (compétences A) dans les éléments mineurs de votre dinoz. && Ex : Canon à eau est déconseillé pour un pigmou."
-		},
-		"faq6": {
-			"question": "Comment obtenir la Lanterne ?",
-			"answer": "Tout d'abord, vous devez avoir le Gant des Zors afin d'accéder à la forêt de Grumhel par les Îles Atlateinnées. && && Allez sur les Collines Hantées et parlez à L'Homme Bizarre. Ignorez-le et combattez un monstre. && La Lanterne permet d'aller aux Gorges Profondes et faire la mission Hiéroglyphes du Shaman Mou."
-		},
-		"faq7": {
-			"question": "Comment obtenir le Gant des Zors ? Comment accéder à la forêt de Gruhmel ?",
-			"answer": "Il vous faudra tout d'abord la Bouée, le Matériel d'escalade, la Pelle et l'Appeau à Rascaphandre. && Avec la Pelle, creusez aux Pentes de Basalte (Mont Tout Chaud), au Marais Collant (Îles Atlantéinées) et à la Fontaine de Jouvence (Royaume de Dinoville). Vous devriez obtenir les statuts 'boue du Marais', 'éclat de Granit' et 'Eau Pure'. && && Allez ensuite au Dôme Soulaflotte parler à l'Archisage, et donnez-lui vos objets récoltés. Après avoir combattu l'Elemental de bois, vous obtiendrez le Gant des Zors. Rendez-vous maintenant aux Chutes Mutantes. && && J'ignore si vous devez déjà avoir la Perle de la Fontaine, mais c'est préférable. Parlez à Maître Hydargol et acceptez de lui prêter le Gant des Zors. Vous obtiendrez une Feuille de Nénuphar. A présent, vous pouvez accéder à la forêt de Grumhel à partir des Chutes Mutantes."
-		},
-		"faq8": {
-			"question": "Où se trouve le marché des îles Atlantéinées où je dois échanger une banane contre un porte-manteau (deuxième mission de Bao Bob, 'Le troc des îles Atlantéinées' ?",
-			"answer": "Cette mission se fait par étape. Vous devrez vous rendre au Mines de Corail, puis aux Iles Waikiki, puis au Chutes Mutantes, puis au Marais Collant, à nouveau aux Mines de Corail et enfin chez M. Bao Bob. && && Dans chacun de ces lieux, vous devez discuter avec un personnage et effectuer l'échange qu'il vous propose."
-		},
-		"faq9": {
-			"question": "Que choisir au jeu du Pile-ou-face face à Yakuzi ?",
-			"answer": "Peu importe le choix, le premier pari sera forcément perdu alors que le second sera forcément gagné."
-		},
-		"faq10": {
-			"question": "Comment fonctionne la Perle de Fontaine ?",
-			"answer": "Tout Dinoz qui se trouve à la Fontaine de Jouvence à minuit gagnera 5 :pv: par jour lors de votre connexion quotidienne. L’effet n’est pas cumulatif."
-		},
-		"faq11": {
-			"question": "Où se trouve le dictionnaire demandé dans la première mission du Shaman mou, 'La mise à l'épreuve' ?",
-			"answer": "Le dictionnaire est à l'Université."
-		},
-		"faq12": {
-			"question": "Est-ce que je peux faire combattre mes dinoz ensemble ?",
-			"answer": "Vous ne pouvez pas les faire s'affronter mais vous pouvez les faire se battre les uns aux cotés des autres. Pour grouper vos dinoz, ils doivent se trouver aux même endroit et posséder chacun une action disponible. && && Sélectionnez l'action 'Faire suivre' : vos dinoz sont désormais en équipe. Vous pouvez grouper jusqu'à trois dinoz, la limite peut passer à cinq si le dinoz chef de groupe a appris les compétences :bois: Sympathie et Charisme."
-		},
-		"faq13": {
-			"question": "J'ai fini les missions de Papy Joe, comment puis-je en avoir d'autres ?",
-			"answer": "Aux îles Atlantéinées, M. Bao Bob (Chez Bao Bob) vous proposera une nouvelle liste de missions. Aux Mont Tout Chaud, c'est le Shaman mou (Fosselave) qui a besoin de vos services."
-		},
-		"faq14": {
-			"question": "Comment accéder aux Steppes Magnétiques ?",
-			"answer": "Vous, ou les personnes de votre clan si vous en avez un, devez faire concentrer 7 dinoz chez Bao Bob (équipés des Palmes de korgon, c'est obligatoire). && && Une fois les 7 dinoz en concentration, vous aurez accès à un portail qui vous mènera vers un monde dans lequel, après un petit périple et un gros gardien à abattre, vous obtiendrez une clé. && && Cette clé, celle de la Porte de Sylvenoire, vous donnera accès aux Steppes Magnétiques... Accessible à partir de la forêt de Grumhel. && && Conseil : destiné avant tout aux dinoz de haut LVL, genre 30 et +... Les dinoz à Element Majeur d'Eau sont défavorisés."
-		},
-		"faq15": {
-			"question": "Où trouve-t-on Yakuzi ?",
-			"answer": "Yakuzi apparait de manière aléatoire au Port de Prêche."
-		},
-		"faq16": {
-			"question": "Quelles sont les conditions pour créer/adhérer à un clan ?",
-			"answer": "Pour créer un clan : avoir 20.000:gold: et 15 points minimum. && && Pour adhérer à un clan : avoir 1.000:gold: et 4 points minimum."
-		},
-		"faq17": {
-			"question": "Où utiliser la pelle pour creuser ?",
-			"answer": "Une fois la Pelle obtenue, et sachant qu'après chaque utilisation il faudra retourner la faire réparer aux Mines de Corail, il existe 4 endroits où creuser : && && 1) Au Marais Collant. && && 2) A la Fontaine de Jouvence. && && 3) Aux Pentes de Basaltes. && && 4) Aux Ruines Ashpouk."
-		},
-		"faq18": {
-			"question": "Où trouver le colis disparu ?",
-			"answer": "Parler au type qui a perdu le colis aux Forges du Grand Tout Chaud. Il faut pour cela descendre aux Pentes de Basalte. Il faut tuer 4 Gobelins. && && Ensuite, remonter au Tunnel sous la Branche. 6 Gobelins à tuer. && && Retourner valider la Mission à Fosselave."
-		},
-		"faq19": {
-			"question": "Comment accéder au Dome Soulaflotte ?",
-			"answer": "Avec l'Appeau à Rascaphandre à partir des Chutes Mutantes. && && Pour obtenir l'appeau, il vous faudra la Bouée et un dinoz assez fort. Rendez-vous aux Îles Atlantéinées à partir du Port de Prêche, et allez aux Chutes Mutantes. Parlez au Garde Atlante, il vous parlera d'un ami pêcheur se trouvant au Port de Prêche. Retournez donc au Port de Prêche et parlez à Jovébozé. && && Ce dernier vous emmènera combattre un Rascaphandre, et si vous réussissez à le tuer, il vous donnera un appeau à rascaphandre."
-		},
-		"faq20": {
-			"question": "Où trouver les Etoiles Magiques ?",
-			"answer": "Suivez bien les instructions données par l'Être Étrange que vous rencontrerez aléatoirement à la Fontaine de Jouvence. && && Indices supplémentaires && && Première étoile : la Capitale n'est autre que Dinoville. Il vous faudra une nouvelle action pour combattre le Megaloup. && Deuxième étoile : le Graisseux enthousiaste est le Vendeur de Merguez qui se trouve aux Ruines Ashpouk. && Troisième étoile : l'énigme parle d'elle-même. && Quatrième étoile : l'appel... la Pelle... && Cinquième étoile : le capsicum est un végétal connu plus fréquemment sous le nom de poivron. && Sixième étoile : l'Homme-dieu est Bao Bob. && Septième étoile : Saru veut dire 'singe'. Attention, vous devez déjà être dans la Jungle Sauvage avant d'y laisser mourir votre dinoz."
-		},
-		"faq21": {
-			"question": "Comment fait on pour avoir une relique ?",
-			"answer": "Pour avoir une relique, il faut creuser aux Ruines Ashpouk (Grand Tout Chaud) et se rendre ensuite à l'université pour authentifier la relique. && && Pour l'obtenir, il faut d'abord : la Bouée , le Matériel d'escalade et la Pelle. Niveaux minimum pour la Bouée et le Matériel d'Escalade : 5 et 6. && && La relique permet d'accéder au tournoi de Forcebrut."
-		},
-		"faq22": {
-			"question": "Comment accéder à la forêt de Grumhel à partir des Gorges Profondes ou comment accéder à la seconde partie de la forêt de Grumhel ?",
-			"answer": "Il vous faudra le Gant des Zors, une Feuille de Nénufar et la Bouée. Rendez-vous aux chutes Mutantes, et déplacez-vous à la forêt de Grumhel (Lieu 'Contourner les Chutes Mutantes'). A partir de là, rendez-vous aux Montagnes hantées. Parlez à l'homme Bizarre et ignorez-le. Il vous parlera alors d'un horrible monstre, et demandez à le combattre. Vous entrerez alors en combat avec un Korgon Farceur. Si vous réussissez à la vaincre (ce qui est fort possible), l'Homme Bizarre s'enfuira, vous laissant sa lanterne. A présent, quittez la Forêt de Grumhel, quittez les Îles Atlantéinées, quittez dinoLand et rendez vous au Mont Tout Chaud, au Tunnel sous la Branche. A partir de là, accédez aux Gorges Profondes (action Se déplacer). A partir des Gorges Profondes, accéder au Camp des Korgons (action Se Déplacer). Vous êtes maintenant au camp des Korgons, dans la seconde partie de la forêt de Grumehl. Pour rallier les deux parties, faites les missions de Dian Korgsey, et obtenez les Palmes de Korgon. A présent, vous avez la possibilité de vous déplacer du Camp des Korgons au Fleuve Jumin, et vice-versa."
-		},
-		"faq23": {
-			"question": "Comment obtenir la Pelle (Creuser) ?",
-			"answer": "Il vous faudra tout d'abord la Bouée. A partir du port de Prêche, accédez aux Îles Atlantéinées, puis déplacez-vous aux Mines de Corail. Parlez au Mineur Coralien, et répondez-lui oui. && Il vous donnera la pelle, mais à chaque fois que vous creuserez, elle se cassera, et vous devrez revenir le voir pour qu'il vous la répare."
-		},
-		"faq24": {
-			"question": "Dinoz sombres et Trophées Hippoclamp, Pteroz et Rocky",
-			"answer": "L'Hippoclamp Sombre se trouve sur l'île Waïkiki, accessible depuis le Port de Prêche grâce à la Bouée. Le vaincre vous rapportera le Trophée des Hippoclamps. Et il faut au minimum être au niveau 8 pour le voir. && && Le Ptéroz Sombre se trouve aux Pentes de Basalte, accessible depuis les Collines Zscarpées avec le Matériel d'Escalade. Vous obtiendrez le Trophée des Pteroz en le battant. && && Le Rocky se trouve à Forcebrut. Il n'est pas visible avant le niveau 13 et difficile à vaincre avant le niveau 15 mais vous rapportera le Trophée des Rocky. && && Les Trophées sont des objets épiques visibles sur votre compte. Ils vous permettent d'acheter dans l'Enclos le dinoz correspondant au Trophée : hippoclamp si vous avez le Trophée Hippoclamp, etc."
-		},
-		"faq25": {
-			"question": "Comment fait-on pour congeler un dinoz ?",
-			"answer": "Rendez vous aux Gorges Profondes puis parlez avec le Spéléléologue. Il vous proposera de congeler votre dinoz. && Ceci vous permettra d'élever un dinoz supplémentaire à la place. && && Il vous faudra bien évidemment la lanterne pour accéder aux gorges."
-		},
-		"faq26": {
-			"question": "Comment obtenir un Kabuki ?",
-			"answer": "Pour obtenir ce précieux dinoz, il vous faudra l'aura Kabuki, qui s'obtient grâce à la quête de Yakuzi ! && && Dans un premier temps, vous aurez besoin de rencontrer Yakuzi au Port de Prêche (rencontre aléatoire), et d'accepter ses deux paris. && Il disparaitra ensuite, et vous pourrez de nouveau le rencontrer, tout d'abord aux Forges, ensuite aux Gorges Profondes. && Lors de cette dernière rencontre, vous obtiendrez un parchemin, que vous devrez faire traduire à l'Université par un professeur. && Ce dernier vous apprendra qu'il faudra lui donner plusieurs ingrédients pour avancer dans votre quête. && Une fois ces ingrédients donnés, et après un délai d'attente de quelques jours, vous devrez vous rendre aux Mines de Corail (il se peut que vous deviez attendre un peu, le temps qu'un onglet apparaisse, comme pour une étape de mission). && Pour terminer cette quête, vous devrez poursuivre votre assaillant sur l'Ile du Totem, qui n'est pas accessible avant. && && Vous obtiendrez aisni un Oeuf de Kabuki, et l'aura kabuki, qui vous permettra de vous rendre sur ce lieu aussi souvent que vous le voudrez."
-		},
-		"faq27": {
-			"question": "Comment vendre son Dinoz ?",
-			"answer": "Pour pouvoir vendre son Dinoz, il faut déjà que vous en possédiez deux (vous ne pouvez pas rester sans Dinoz). Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre. && ATTENTION : cette opération est irréversible."
-		},
-		"faq28": {
-			"question": "Anguilloz au vinaigre",
-			"answer": "Trouver le bon lieu...c'est ça qui est difficile et qui nous fait tourner en rond hein ? && && Allez, un petit coup de main : && && -> Il faut aller à Dinoville."
-		},
-		"faq29": {
-			"question": "Comment récupérer la vie de mon Dinoz ?",
-			"answer": "Il y a 4 possibilités : && && En achetant et en utilisant les objets de santé disponibles dans le magasin. && En utilisant l'option de repos. && Lorsque le Dinoz est à la Fontaine de Jouvence avec la Perle de Jouvence à minuit. && En équipant l'un de vos Dinoz du Bracelet Tik et en attendant minuit."
-		},
-		"faq30": {
-			"question": "Où dois-je redémarrer lorsque mon Dinoz est mort ?",
-			"answer": "Si vous n'utilisez pas de Potion d'Ange, vous redémarrez à Dinoville avec 1 point de vie et vous perdez la moitié de votre Expérience. && && Si vous utilisez une Potion d'Ange, vous redémarrez là où vous êtes avec 1 point de vie."
 		}
 	}
 }
