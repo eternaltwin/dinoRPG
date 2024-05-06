@@ -38,6 +38,9 @@
 		<!--			>-->
 		<!--		</li>-->
 		<li>
+			<a @click="goToPage('FAQ')">{{ $t('rightMenu.faq') }}</a>
+		</li>
+		<li>
 			<p>{{ dinozCount }} Dinoz</p>
 		</li>
 		<li>

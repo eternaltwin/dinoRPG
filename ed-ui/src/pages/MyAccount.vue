@@ -107,6 +107,7 @@ export default defineComponent({
 	justify-content: space-between;
 	gap: 10px;
 	flex-wrap: wrap;
+	margin-top: 30px;
 	.mandragore {
 		position: absolute;
 		right: -180px;

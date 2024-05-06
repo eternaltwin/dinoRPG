@@ -1,0 +1,185 @@
+<template>
+	<TitleHeader :title="`${$t('pageTitle.faq')}`" />
+	<div class="section">
+		<div class="titlePage">
+			<h3>{{ $t(`rightMenu.faq`) }}</h3>
+		</div>
+	</div>
+	<div class="intro">
+		<span><img :src="getImgURL('icons', 'small_question')" /></span>
+		<p>{{ $t(`faq.intro`) }}</p>
+	</div>
+	<div class="search">
+		<form @submit.prevent="searchQuestion">
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<input class="field" name="search" v-model="searchQuery" />
+						</td>
+						<td>
+							<input type="submit" class="button" :value="$t(`faq.search`)" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<div class="faq">
+		<h3 class="titleSection">{{ $t('faq.qa') }}</h3>
+		<dl class="results">
+			<template v-for="(pair, index) in filteredPairs" :key="index">
+				<dt @click="toggleCollapse(index)">
+					<span><img :src="getImgURL('icons', 'small_follow')" /></span>
+					<p v-html="formatContent(pair.question)" />
+				</dt>
+				<dd v-show="!pair.collapsed" v-html="formatContent(pair.answer)" />
+			</template>
+		</dl>
+	</div>
+</template>
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+
+interface FaqPair {
+	question: string;
+	answer: string;
+	collapsed: boolean;
+}
+
+export default defineComponent({
+	name: 'FAQ',
+	components: {
+		TitleHeader
+	},
+	data() {
+		const faqPairs = ref<FaqPair[]>([
+			{ question: this.$t('faq.faq1.question'), answer: this.$t('faq.faq1.answer'), collapsed: true },
+			{ question: this.$t('faq.faq2.question'), answer: this.$t('faq.faq2.answer'), collapsed: true },
+			{ question: this.$t('faq.faq8.question'), answer: this.$t('faq.faq8.answer'), collapsed: true },
+			{ question: this.$t('faq.faq3.question'), answer: this.$t('faq.faq3.answer'), collapsed: true },
+			{ question: this.$t('faq.faq9.question'), answer: this.$t('faq.faq9.answer'), collapsed: true },
+			{ question: this.$t('faq.faq10.question'), answer: this.$t('faq.faq10.answer'), collapsed: true },
+			{ question: this.$t('faq.faq4.question'), answer: this.$t('faq.faq4.answer'), collapsed: true },
+			{ question: this.$t('faq.faq5.question'), answer: this.$t('faq.faq5.answer'), collapsed: true },
+			{ question: this.$t('faq.faq6.question'), answer: this.$t('faq.faq6.answer'), collapsed: true },
+			{ question: this.$t('faq.faq11.question'), answer: this.$t('faq.faq11.answer'), collapsed: true },
+			{ question: this.$t('faq.faq12.question'), answer: this.$t('faq.faq12.answer'), collapsed: true },
+			{ question: this.$t('faq.faq13.question'), answer: this.$t('faq.faq13.answer'), collapsed: true },
+			{ question: this.$t('faq.faq14.question'), answer: this.$t('faq.faq14.answer'), collapsed: true },
+			{ question: this.$t('faq.faq15.question'), answer: this.$t('faq.faq15.answer'), collapsed: true },
+			{ question: this.$t('faq.faq16.question'), answer: this.$t('faq.faq16.answer'), collapsed: true },
+			{ question: this.$t('faq.faq7.question'), answer: this.$t('faq.faq7.answer'), collapsed: true },
+			{ question: this.$t('faq.faq17.question'), answer: this.$t('faq.faq17.answer'), collapsed: true },
+			{ question: this.$t('faq.faq18.question'), answer: this.$t('faq.faq18.answer'), collapsed: true },
+			{ question: this.$t('faq.faq19.question'), answer: this.$t('faq.faq19.answer'), collapsed: true },
+			{ question: this.$t('faq.faq20.question'), answer: this.$t('faq.faq20.answer'), collapsed: true },
+			{ question: this.$t('faq.faq21.question'), answer: this.$t('faq.faq21.answer'), collapsed: true },
+			{ question: this.$t('faq.faq22.question'), answer: this.$t('faq.faq22.answer'), collapsed: true },
+			{ question: this.$t('faq.faq23.question'), answer: this.$t('faq.faq23.answer'), collapsed: true },
+			{ question: this.$t('faq.faq24.question'), answer: this.$t('faq.faq24.answer'), collapsed: true },
+			{ question: this.$t('faq.faq25.question'), answer: this.$t('faq.faq25.answer'), collapsed: true },
+			{ question: this.$t('faq.faq26.question'), answer: this.$t('faq.faq26.answer'), collapsed: true },
+			{ question: this.$t('faq.faq27.question'), answer: this.$t('faq.faq27.answer'), collapsed: true },
+			{ question: this.$t('faq.faq28.question'), answer: this.$t('faq.faq28.answer'), collapsed: true },
+			{ question: this.$t('faq.faq29.question'), answer: this.$t('faq.faq29.answer'), collapsed: true },
+			{ question: this.$t('faq.faq30.question'), answer: this.$t('faq.faq30.answer'), collapsed: true }
+		]);
+
+		const searchQuery = ref<string>('');
+
+		const toggleCollapse = (index: number) => {
+			faqPairs.value[index].collapsed = !faqPairs.value[index].collapsed;
+		};
+
+		const filteredPairs = ref<FaqPair[]>(faqPairs.value);
+
+		const searchQuestion = () => {
+			const searchTerm = searchQuery.value.toLowerCase();
+			filteredPairs.value = faqPairs.value.filter(pair => pair.question.toLowerCase().includes(searchTerm));
+		};
+
+		return {
+			faqPairs,
+			searchQuery,
+			toggleCollapse,
+			filteredPairs,
+			searchQuestion
+		};
+	}
+});
+</script>
+<style lang="scss" scoped>
+.intro {
+	align-items: first baseline;
+	background-color: #bc683c;
+	color: #fce3bc;
+	display: flex;
+	font-size: 10pt;
+	gap: 6px;
+	padding: 5px;
+}
+.search {
+	margin-top: 10px;
+	.field {
+		align-self: center;
+		background-color: transparent;
+		background-image: url('../assets/background/form_field.webp');
+		background-repeat: no-repeat;
+		border: none;
+		color: #fce3bc;
+		font-size: 9pt;
+		font-weight: bold;
+		height: 22px;
+		padding-left: 8px;
+		padding-right: 8px;
+		padding-top: 2px;
+		width: 184px;
+	}
+	.button {
+		border: none;
+		height: 28px;
+		margin-left: 8px;
+		width: 145px;
+	}
+}
+.faq {
+	margin-top: 20px;
+	.titleSection {
+		background-color: #bc683c;
+		color: #fff1ad;
+		margin-bottom: 10px;
+		padding-left: 10px;
+	}
+	.results {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-top: 10px;
+		& dt {
+			color: #8e3e26;
+			cursor: pointer;
+			display: flex;
+			font-variant: small-caps;
+			font-weight: bold;
+			gap: 6px;
+			margin-top: 10px;
+			padding-left: 20px;
+			&:hover {
+				background-color: #8e3e26;
+				color: #fff1ad;
+			}
+		}
+		& dd {
+			background-color: #f3ca92;
+			border: 1px solid #fcf9d1;
+			display: block;
+			margin-inline-start: 40px;
+			outline: 2px solid #f8d39c;
+			padding: 5px;
+			width: 90%;
+		}
+	}
+}
+</style>

@@ -112,6 +112,11 @@ const router = createRouter({
 					component: () => import('../pages/HelpPage.vue')
 				},
 				{
+					path: '/faq',
+					name: 'FAQ',
+					component: () => import('../pages/FAQPage.vue')
+				},
+				{
 					path: '/dojo/qual/select-dinoz',
 					name: 'SelectDinoz',
 					component: () => import('../pages/dojo/SelectDinoz.vue')
