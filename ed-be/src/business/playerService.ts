@@ -45,7 +45,7 @@ export async function getCommonData(req: Request) {
 		await updateCompletion(req.auth.playerId, completion);
 
 		// Update last login
-		await setPlayer(req.auth.playerId, { lastLogin: new Date() });
+		await setPlayer(req.auth.playerId, { lastLogin: new Date(), labruteDone: false });
 
 		// Tik bracelet regen
 		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz =>

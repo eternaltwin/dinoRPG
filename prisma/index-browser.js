@@ -333,6 +333,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   teacher: 'teacher',
   messie: 'messie',
   matelasseur: 'matelasseur',
+  labruteDone: 'labruteDone',
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   lastLogin: 'lastLogin'

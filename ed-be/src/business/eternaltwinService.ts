@@ -28,7 +28,11 @@ export async function checkLB(req: Request) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
 
-	let LBDone = false;
+	let LBDone = player.labruteDone;
+
+	if (LBDone) {
+		throw new ErrorFormator(400, `alreadyClaimed`);
+	}
 
 	const amIDone = await fetch(`https://brute.eternaltwin.org/api/user/${player.eternalTwinId}/done`);
 	const data = await amIDone.text();
@@ -45,7 +49,11 @@ export async function checkLB(req: Request) {
 
 	const portion = Math.ceil(player._count.dinoz / 3);
 
-	await increaseItemQuantity(playerId, itemList.POTION_IRMA.itemId, portion);
+	await increaseItemQuantity(
+		playerId,
+		itemList.POTION_IRMA.itemId,
+		Math.min(portion, itemList.POTION_IRMA.maxQuantity)
+	);
 
 	return { quantity: portion };
 }

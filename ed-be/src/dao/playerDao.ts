@@ -143,6 +143,7 @@ export async function getLBResponseInformation(playerId: number) {
 		},
 		select: {
 			eternalTwinId: true,
+			labruteDone: true,
 			_count: {
 				select: {
 					dinoz: {

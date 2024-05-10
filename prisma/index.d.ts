@@ -27039,6 +27039,7 @@ export namespace Prisma {
     teacher: boolean | null
     messie: boolean | null
     matelasseur: boolean | null
+    labruteDone: boolean | null
     createdDate: Date | null
     updatedDate: Date | null
     lastLogin: Date | null
@@ -27061,6 +27062,7 @@ export namespace Prisma {
     teacher: boolean | null
     messie: boolean | null
     matelasseur: boolean | null
+    labruteDone: boolean | null
     createdDate: Date | null
     updatedDate: Date | null
     lastLogin: Date | null
@@ -27083,6 +27085,7 @@ export namespace Prisma {
     teacher: number
     messie: number
     matelasseur: number
+    labruteDone: number
     createdDate: number
     updatedDate: number
     lastLogin: number
@@ -27119,6 +27122,7 @@ export namespace Prisma {
     teacher?: true
     messie?: true
     matelasseur?: true
+    labruteDone?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -27141,6 +27145,7 @@ export namespace Prisma {
     teacher?: true
     messie?: true
     matelasseur?: true
+    labruteDone?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -27163,6 +27168,7 @@ export namespace Prisma {
     teacher?: true
     messie?: true
     matelasseur?: true
+    labruteDone?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -27272,6 +27278,7 @@ export namespace Prisma {
     teacher: boolean
     messie: boolean
     matelasseur: boolean
+    labruteDone: boolean
     createdDate: Date
     updatedDate: Date
     lastLogin: Date
@@ -27313,6 +27320,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     lastLogin?: boolean
@@ -27353,6 +27361,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     lastLogin?: boolean
@@ -27418,6 +27427,7 @@ export namespace Prisma {
       teacher: boolean
       messie: boolean
       matelasseur: boolean
+      labruteDone: boolean
       createdDate: Date
       updatedDate: Date
       lastLogin: Date
@@ -27864,6 +27874,7 @@ export namespace Prisma {
     readonly teacher: FieldRef<"Player", 'Boolean'>
     readonly messie: FieldRef<"Player", 'Boolean'>
     readonly matelasseur: FieldRef<"Player", 'Boolean'>
+    readonly labruteDone: FieldRef<"Player", 'Boolean'>
     readonly createdDate: FieldRef<"Player", 'DateTime'>
     readonly updatedDate: FieldRef<"Player", 'DateTime'>
     readonly lastLogin: FieldRef<"Player", 'DateTime'>
@@ -43460,6 +43471,7 @@ export namespace Prisma {
     teacher: 'teacher',
     messie: 'messie',
     matelasseur: 'matelasseur',
+    labruteDone: 'labruteDone',
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     lastLogin: 'lastLogin'
@@ -45266,6 +45278,7 @@ export namespace Prisma {
     teacher?: BoolFilter<"Player"> | boolean
     messie?: BoolFilter<"Player"> | boolean
     matelasseur?: BoolFilter<"Player"> | boolean
+    labruteDone?: BoolFilter<"Player"> | boolean
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
@@ -45305,6 +45318,7 @@ export namespace Prisma {
     teacher?: SortOrder
     messie?: SortOrder
     matelasseur?: SortOrder
+    labruteDone?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -45347,6 +45361,7 @@ export namespace Prisma {
     teacher?: BoolFilter<"Player"> | boolean
     messie?: BoolFilter<"Player"> | boolean
     matelasseur?: BoolFilter<"Player"> | boolean
+    labruteDone?: BoolFilter<"Player"> | boolean
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
@@ -45386,6 +45401,7 @@ export namespace Prisma {
     teacher?: SortOrder
     messie?: SortOrder
     matelasseur?: SortOrder
+    labruteDone?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -45416,6 +45432,7 @@ export namespace Prisma {
     teacher?: BoolWithAggregatesFilter<"Player"> | boolean
     messie?: BoolWithAggregatesFilter<"Player"> | boolean
     matelasseur?: BoolWithAggregatesFilter<"Player"> | boolean
+    labruteDone?: BoolWithAggregatesFilter<"Player"> | boolean
     createdDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     lastLogin?: DateTimeWithAggregatesFilter<"Player"> | Date | string
@@ -47677,6 +47694,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -47716,6 +47734,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -47754,6 +47773,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47793,6 +47813,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47832,6 +47853,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -47853,6 +47875,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47875,6 +47898,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50143,6 +50167,7 @@ export namespace Prisma {
     teacher?: SortOrder
     messie?: SortOrder
     matelasseur?: SortOrder
+    labruteDone?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -50171,6 +50196,7 @@ export namespace Prisma {
     teacher?: SortOrder
     messie?: SortOrder
     matelasseur?: SortOrder
+    labruteDone?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -50193,6 +50219,7 @@ export namespace Prisma {
     teacher?: SortOrder
     messie?: SortOrder
     matelasseur?: SortOrder
+    labruteDone?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -53636,6 +53663,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -53674,6 +53702,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -54138,6 +54167,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54176,6 +54206,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56040,6 +56071,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -56078,6 +56110,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -56253,6 +56286,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56291,6 +56325,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56711,6 +56746,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -56749,6 +56785,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -56802,6 +56839,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56840,6 +56878,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56877,6 +56916,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -56915,6 +56955,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -56968,6 +57009,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57006,6 +57048,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57043,6 +57086,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57081,6 +57125,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -57134,6 +57179,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57172,6 +57218,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58284,6 +58331,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58322,6 +58370,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58375,6 +58424,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58413,6 +58463,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58450,6 +58501,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58488,6 +58540,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58541,6 +58594,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58579,6 +58633,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58616,6 +58671,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58654,6 +58710,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58707,6 +58764,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58745,6 +58803,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58782,6 +58841,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58820,6 +58880,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58873,6 +58934,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58911,6 +58973,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58948,6 +59011,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -58986,6 +59050,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59039,6 +59104,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59077,6 +59143,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59114,6 +59181,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59152,6 +59220,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59205,6 +59274,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59243,6 +59313,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59280,6 +59351,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59318,6 +59390,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59371,6 +59444,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59409,6 +59483,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59446,6 +59521,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59484,6 +59560,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59537,6 +59614,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59575,6 +59653,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59690,6 +59769,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59728,6 +59808,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59811,6 +59892,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59849,6 +59931,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59886,6 +59969,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -59924,6 +60008,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -60105,6 +60190,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60143,6 +60229,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60313,6 +60400,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -60351,6 +60439,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -60488,6 +60577,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60526,6 +60616,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60827,6 +60918,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -60865,6 +60957,7 @@ export namespace Prisma {
     teacher?: boolean
     messie?: boolean
     matelasseur?: boolean
+    labruteDone?: boolean
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -60918,6 +61011,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60956,6 +61050,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
