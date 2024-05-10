@@ -3,7 +3,7 @@
 		<div v-if="displayToast" class="snackbar" @click="displayToast = !displayToast">
 			<template v-if="type === 'error'">{{ $t(`toast.${message}`, params) }}</template>
 			<template v-if="type === 'success'">{{ $t(`toast.${message}`, params) }}</template>
-			<template v-if="type === 'notif'"> {{ message }}</template>
+			<p v-if="type === 'notif'" v-html="formatContent(message)" />
 			<p v-if="type === 'reward'" v-html="message" />
 		</div>
 	</Transition>
