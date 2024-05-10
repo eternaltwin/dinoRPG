@@ -61,7 +61,7 @@ export default defineComponent({
 		EventBus.emit('isLoading', true);
 		try {
 			this.accountData = await PlayerService.getPlayerData(accountId);
-			this.accountData.stats.sort((a, b) => a.stat - b.stat);
+			this.accountData.stats.sort((a, b) => b.quantity - a.quantity);
 			this.dataLoaded = true;
 			EventBus.emit('isLoading', false);
 		} catch (err) {
@@ -77,7 +77,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', true);
 				try {
 					this.accountData = await PlayerService.getPlayerData(accountId);
-					this.accountData.stats.sort((a, b) => a.stat - b.stat);
+					this.accountData.stats.sort((a, b) => b.quantity - a.quantity);
 					this.dataLoaded = true;
 					EventBus.emit('isLoading', false);
 				} catch (err) {

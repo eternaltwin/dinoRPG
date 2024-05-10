@@ -1,6 +1,6 @@
 <template>
 	<ul style="list-style: none">
-		<Tippy v-for="(dinoz, index) in accountData.dinoz" :key="index" theme="small">
+		<Tippy v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">
 			<li class="dinozList">
 				<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
 					{{ dinoz.name }}
@@ -91,6 +91,16 @@ export default defineComponent({
 	computed: {
 		myAccount(): boolean {
 			return playerStore().getPlayerId === parseInt(this.$route.params.id);
+		},
+		sortedDinozList(): DinozPublicFiche[] {
+			return this.accountData.dinoz.slice().sort((a, b) => {
+				if (a.isFrozen && !b.isFrozen) {
+					return 1;
+				} else if (!a.isFrozen && b.isFrozen) {
+					return -1;
+				}
+				return 0;
+			});
 		}
 	}
 });
