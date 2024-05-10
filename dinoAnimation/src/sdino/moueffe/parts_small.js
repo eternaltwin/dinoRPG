@@ -1,8 +1,8 @@
 // @ts-check
 import { BLEND_MODES } from 'pixi.js';
-import { ref } from '../references.js';
+import { ref } from '../references_small.js';
 
-export let parts = {
+export const parts_small = {
 	// 79
 	back_bones: [
 		{
@@ -160,7 +160,7 @@ export let parts = {
 					parts: [
 						// 106
 						{
-							ref: ref.moueffe.body_acc_1,
+							ref: ref.moueffe.body_bandage,
 							transform: {
 								tx: -3.85,
 								ty: 1.7
@@ -203,7 +203,7 @@ export let parts = {
 				// 114
 				{
 					colorIdx: 1,
-					ref: ref.moueffe.head_acc_1,
+					ref: ref.moueffe.head_dino,
 					transform: {
 						tx: 6.15,
 						ty: -14
@@ -212,7 +212,7 @@ export let parts = {
 				// 114 (scaled)
 				{
 					colorIdx: 1,
-					ref: ref.moueffe.head_acc_1,
+					ref: ref.moueffe.head_dino,
 					transform: {
 						tx: 5.45,
 						ty: -14.45,
@@ -223,7 +223,7 @@ export let parts = {
 				// 116
 				{
 					colorIdx: 0,
-					ref: ref.moueffe.head_acc_2,
+					ref: ref.moueffe.head_ears,
 					transform: {
 						tx: 7.7,
 						ty: -15.3
@@ -232,7 +232,7 @@ export let parts = {
 				// 118
 				{
 					colorIdx: 1,
-					ref: ref.moueffe.head_acc_3,
+					ref: ref.moueffe.head_mohawk,
 					transform: {
 						tx: 6.5,
 						ty: -15.85
@@ -240,16 +240,16 @@ export let parts = {
 				},
 				// 119
 				{
-					ref: ref.moueffe.head_acc_4
+					ref: ref.moueffe.head_horns
 				},
 				// 120
 				{
-					ref: ref.moueffe.head_acc_5
+					ref: ref.moueffe.head_unicorn
 				},
 				// 122
 				{
 					colorIdx: 1,
-					ref: ref.moueffe.head_acc_6,
+					ref: ref.moueffe.head_hair_spikes,
 					transform: {
 						tx: 6.5,
 						ty: -15.85
