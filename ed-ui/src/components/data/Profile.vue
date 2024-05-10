@@ -146,6 +146,7 @@ export default defineComponent({
 	height: auto;
 	width: 305px;
 	margin-bottom: 10px;
+	margin-top: 9px;
 	h3 {
 		display: flex;
 		justify-content: space-evenly;
@@ -246,7 +247,6 @@ export default defineComponent({
 }
 .smallbutton {
 	background-image: url('../../assets/design/button_small.webp');
-	padding-top: 4px;
 	font-size: 9pt;
 	line-height: 7pt;
 	width: 80px;

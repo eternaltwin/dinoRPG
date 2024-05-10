@@ -20,6 +20,8 @@ import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { SkillType } from '@drpg/core/models/enums/SkillType';
 import { getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -150,6 +152,28 @@ export async function learnSkill(req: Request) {
 	await createLog(LogType.LevelUp, dinozSkills.player.id, dinozSkills.id, newDinozData.level.toString());
 
 	const newMaxExperience = levelList.find(level => level.id === dinozSkills.level + 1)?.experience;
+
+	// Update stat
+	await setSpecificStat(StatTracking.LVL_UP, dinozSkills.player.id, 1);
+	switch (skills.element) {
+		case ElementType.FIRE:
+			await setSpecificStat(StatTracking.UP_FIRE, dinozSkills.player.id, 1);
+			break;
+		case ElementType.WATER:
+			await setSpecificStat(StatTracking.UP_WATER, dinozSkills.player.id, 1);
+			break;
+		case ElementType.WOOD:
+			await setSpecificStat(StatTracking.UP_WOOD, dinozSkills.player.id, 1);
+			break;
+		case ElementType.LIGHTNING:
+			await setSpecificStat(StatTracking.UP_LIGHTNING, dinozSkills.player.id, 1);
+			break;
+		case ElementType.AIR:
+			await setSpecificStat(StatTracking.UP_AIR, dinozSkills.player.id, 1);
+			break;
+		default:
+			break;
+	}
 
 	return newMaxExperience ?? 0;
 }

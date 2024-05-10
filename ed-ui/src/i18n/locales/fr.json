@@ -3142,6 +3142,16 @@
 		"title": "Joueur :",
 		"labrute": "La Brute",
 		"profil": "Profil EternalDinoRPG",
+		"twinoidgoals": {
+			"name": "Statistiques EternalDinoRPG",
+			"points": "points",
+			"linkStats": "Statistiques",
+			"linkGains": "Gains",
+			"help": {
+				"question": "Que signifient ces compteurs ?",
+				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
+			}
+		},
 		"dinoz": "Dinoz",
 		"ranking": "Classement",
 		"inscription": "Inscrit le",
@@ -4260,5 +4270,8 @@
 			"question": "Où dois-je redémarrer lorsque mon Dinoz est mort ?",
 			"answer": "Si vous n'utilisez pas de Potion d'Ange, vous redémarrez à Dinoville avec 1 point de vie et vous perdez la moitié de votre Expérience. && && Si vous utilisez une Potion d'Ange, vous redémarrez là où vous êtes avec 1 point de vie."
 		}
+	},
+	"achievements": {
+		"reward": "{name} x {quantity}"
 	}
 }

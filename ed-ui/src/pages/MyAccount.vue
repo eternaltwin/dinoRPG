@@ -12,8 +12,15 @@
 				<img :src="getImgURL('design', 'pigmou_01')" alt="pigmou" class="dinoz" />
 				<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
 			</div>
-			<Profile :accountData="accountData"></Profile>
-			<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
+			<div style="display: flex; width: 100%; max-height: 100%">
+				<div style="width: 50%">
+					<TwinoidGoals :accountStats="accountData.stats"></TwinoidGoals>
+				</div>
+				<div style="width: 50%; display: flex; flex-direction: column">
+					<Profile :accountData="accountData"></Profile>
+					<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
+				</div>
+			</div>
 			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData"></MyDinoz>
 			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />
 		</div>
@@ -31,6 +38,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import MyDinoz from '../components/data/MyDinoz.vue';
 import Profile from '../components/data/Profile.vue';
 import EpicRewards from '../components/data/EpicRewards.vue';
+import TwinoidGoals from '../components/data/TwinoidGoals.vue';
 
 export default defineComponent({
 	name: 'MyAccount',
@@ -45,13 +53,15 @@ export default defineComponent({
 		TitleHeader,
 		MyDinoz,
 		Profile,
-		EpicRewards
+		EpicRewards,
+		TwinoidGoals
 	},
 	async created(): Promise<void> {
 		const accountId = parseInt(this.$route.params.id.toString());
 		EventBus.emit('isLoading', true);
 		try {
 			this.accountData = await PlayerService.getPlayerData(accountId);
+			this.accountData.stats.sort((a, b) => a.stat - b.stat);
 			this.dataLoaded = true;
 			EventBus.emit('isLoading', false);
 		} catch (err) {
@@ -67,6 +77,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', true);
 				try {
 					this.accountData = await PlayerService.getPlayerData(accountId);
+					this.accountData.stats.sort((a, b) => a.stat - b.stat);
 					this.dataLoaded = true;
 					EventBus.emit('isLoading', false);
 				} catch (err) {
@@ -108,6 +119,7 @@ export default defineComponent({
 	gap: 10px;
 	flex-wrap: wrap;
 	margin-top: 30px;
+	height: 100%;
 	.mandragore {
 		position: absolute;
 		right: -180px;

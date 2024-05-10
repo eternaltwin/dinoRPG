@@ -39,6 +39,8 @@ import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -136,16 +138,19 @@ export async function useItem(req: Request) {
 				category: ItemEffect.HEAL,
 				value: lifeHealed
 			};
+			//Update stats
+			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
 			break;
 		case ItemEffect.RESURRECT:
 			await updateDinoz(dinoz.id, resurrect(dinoz));
 			feedback = {
 				category: ItemEffect.RESURRECT
 			};
+			//Update stats
+			await setSpecificStat(StatTracking.DEATHS, dinoz.player.id, 1);
 			break;
 		case ItemEffect.EGG:
 			await hatchEgg(item, req.auth.playerId);
-			console.log('pouet');
 			feedback = {
 				category: ItemEffect.EGG,
 				value: item.effect.race.name
@@ -409,6 +414,9 @@ async function useSpecialItem(
 			const pamp = dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId);
 			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList.PAMPLEBOUM_PIT.itemId, quantity: 1 });
 			else await increaseItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM_PIT.itemId, 1);
+
+			//Update stats
+			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, heal(dinoz, 15).life);
 			return 'pampleboum';
 		case 'box':
 			if (!item.name) {

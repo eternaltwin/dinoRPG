@@ -101,5 +101,6 @@ export default defineComponent({
 .rewards {
 	padding-top: 10px;
 	padding-left: 5px;
+	padding-bottom: 7px;
 }
 </style>

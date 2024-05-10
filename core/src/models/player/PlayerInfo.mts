@@ -1,4 +1,5 @@
 import { DinozPublicFiche } from '../dinoz/DinozFiche.mjs';
+import { PlayerStats } from './PlayerStats.mjs';
 
 export interface PlayerInfo {
 	dinozCount: number;
@@ -10,4 +11,5 @@ export interface PlayerInfo {
 	epicRewards: number[];
 	customText: string | null;
 	completion: number;
+	stats: PlayerStats[];
 }

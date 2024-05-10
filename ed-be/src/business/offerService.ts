@@ -17,6 +17,8 @@ import { sendDiscord } from '../utils/discord.js';
 import { ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 /**
  * Get the list of current offers
@@ -349,6 +351,9 @@ export const expireOffer = async (offerId: number) => {
 			// Send Discord notification
 			sendDiscord(`Offer ${offerId} won by ${winnerBid.userId}`);
 		}
+
+		// Update stats tracking
+		await setSpecificStat(StatTracking.MARKET, offer.seller.id, 1);
 	} else {
 		// Refund seller if there is no bid
 

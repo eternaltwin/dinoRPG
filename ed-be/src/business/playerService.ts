@@ -18,6 +18,8 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
 import { updateCompletion } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 /**
  * @summary Get data from player on login
@@ -65,6 +67,9 @@ export async function getCommonData(req: Request) {
 			if (leaderWithVeilleuse.some(d => d.followers.some(di => di.id === dinoz.id))) remaning++;
 			await updateDinoz(dinoz.id, { remaining: remaning });
 		}
+
+		// Update stat
+		await setSpecificStat(StatTracking.P_DAYS, req.auth.playerId, 1);
 	}
 
 	const commonData: PlayerCommonData = {
@@ -134,7 +139,8 @@ export async function getAccountData(req: Request) {
 			});
 		}),
 		customText: playerInfo.customText,
-		completion: playerInfo.ranking.completion
+		completion: playerInfo.ranking.completion,
+		stats: playerInfo.playerTracking
 		// twinoid: playerInfo.twinosite.map(i => {return {siteId: i.siteId, points: i.points, npoints: i.npoints}})
 	};
 

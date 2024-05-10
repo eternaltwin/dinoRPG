@@ -12,6 +12,8 @@ import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeM
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 /**
  * @summary Get all items from a shop
@@ -203,6 +205,9 @@ export async function buyItem(req: Request) {
 		itemReference.itemId.toString(),
 		itemReference.quantity.toString()
 	);
+
+	//Update stats
+	await setSpecificStat(StatTracking.S_BUYER, playerId, itemReference.quantity);
 
 	return {
 		itemId: itemReference.itemId,

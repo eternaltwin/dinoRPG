@@ -440,6 +440,13 @@ exports.Prisma.DinozCatchScalarFieldEnum = {
   hp: 'hp'
 };
 
+exports.Prisma.PlayerTrackingScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  stat: 'stat',
+  quantity: 'quantity'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -534,7 +541,8 @@ exports.Prisma.ModelName = {
   OfferBid: 'OfferBid',
   Offer: 'Offer',
   Log: 'Log',
-  DinozCatch: 'DinozCatch'
+  DinozCatch: 'DinozCatch',
+  PlayerTracking: 'PlayerTracking'
 };
 
 /**

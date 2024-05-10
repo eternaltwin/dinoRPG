@@ -198,6 +198,11 @@ export type Log = $Result.DefaultSelection<Prisma.$LogPayload>
  * 
  */
 export type DinozCatch = $Result.DefaultSelection<Prisma.$DinozCatchPayload>
+/**
+ * Model PlayerTracking
+ * 
+ */
+export type PlayerTracking = $Result.DefaultSelection<Prisma.$PlayerTrackingPayload>
 
 /**
  * Enums
@@ -759,6 +764,16 @@ export class PrismaClient<
     * ```
     */
   get dinozCatch(): Prisma.DinozCatchDelegate<ExtArgs>;
+
+  /**
+   * `prisma.playerTracking`: Exposes CRUD operations for the **PlayerTracking** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PlayerTrackings
+    * const playerTrackings = await prisma.playerTracking.findMany()
+    * ```
+    */
+  get playerTracking(): Prisma.PlayerTrackingDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1265,7 +1280,8 @@ export namespace Prisma {
     OfferBid: 'OfferBid',
     Offer: 'Offer',
     Log: 'Log',
-    DinozCatch: 'DinozCatch'
+    DinozCatch: 'DinozCatch',
+    PlayerTracking: 'PlayerTracking'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1282,7 +1298,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'usernameHistory' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer' | 'log' | 'dinozCatch'
+      modelProps: 'concentration' | 'dinoz' | 'dinozItem' | 'dinozItemToDinoz' | 'dinozMission' | 'dinozSkill' | 'dinozSkillUnlockable' | 'dinozStatus' | 'importedDinoz' | 'importedDinozSkill' | 'importedDinozStatus' | 'importedPlayer' | 'importedPlayerIngredient' | 'importedPlayerItem' | 'importedPlayerReward' | 'importedPlayerScenario' | 'importedTwinoidAchievement' | 'importedTwinoidSite' | 'importedTwinoidStat' | 'migrations' | 'news' | 'nPC' | 'player' | 'usernameHistory' | 'playerDinozShop' | 'playerGather' | 'playerIngredient' | 'playerItem' | 'playerQuest' | 'playerReward' | 'ranking' | 'secret' | 'offerItem' | 'offerBid' | 'offer' | 'log' | 'dinozCatch' | 'playerTracking'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -3728,6 +3744,72 @@ export namespace Prisma {
           }
         }
       }
+      PlayerTracking: {
+        payload: Prisma.$PlayerTrackingPayload<ExtArgs>
+        fields: Prisma.PlayerTrackingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PlayerTrackingFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PlayerTrackingFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload>
+          }
+          findFirst: {
+            args: Prisma.PlayerTrackingFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PlayerTrackingFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload>
+          }
+          findMany: {
+            args: Prisma.PlayerTrackingFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload>[]
+          }
+          create: {
+            args: Prisma.PlayerTrackingCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload>
+          }
+          createMany: {
+            args: Prisma.PlayerTrackingCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.PlayerTrackingDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload>
+          }
+          update: {
+            args: Prisma.PlayerTrackingUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload>
+          }
+          deleteMany: {
+            args: Prisma.PlayerTrackingDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PlayerTrackingUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.PlayerTrackingUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$PlayerTrackingPayload>
+          }
+          aggregate: {
+            args: Prisma.PlayerTrackingAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregatePlayerTracking>
+          }
+          groupBy: {
+            args: Prisma.PlayerTrackingGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<PlayerTrackingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PlayerTrackingCountArgs<ExtArgs>,
+            result: $Utils.Optional<PlayerTrackingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4211,6 +4293,7 @@ export namespace Prisma {
     bids: number
     logs: number
     usernameHistory: number
+    playerTracking: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4228,6 +4311,7 @@ export namespace Prisma {
     bids?: boolean | PlayerCountOutputTypeCountBidsArgs
     logs?: boolean | PlayerCountOutputTypeCountLogsArgs
     usernameHistory?: boolean | PlayerCountOutputTypeCountUsernameHistoryArgs
+    playerTracking?: boolean | PlayerCountOutputTypeCountPlayerTrackingArgs
   }
 
   // Custom InputTypes
@@ -4352,6 +4436,14 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountUsernameHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UsernameHistoryWhereInput
+  }
+
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountPlayerTrackingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayerTrackingWhereInput
   }
 
 
@@ -27240,6 +27332,7 @@ export namespace Prisma {
     bids?: boolean | Player$bidsArgs<ExtArgs>
     logs?: boolean | Player$logsArgs<ExtArgs>
     usernameHistory?: boolean | Player$usernameHistoryArgs<ExtArgs>
+    playerTracking?: boolean | Player$playerTrackingArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -27282,6 +27375,7 @@ export namespace Prisma {
     bids?: boolean | Player$bidsArgs<ExtArgs>
     logs?: boolean | Player$logsArgs<ExtArgs>
     usernameHistory?: boolean | Player$usernameHistoryArgs<ExtArgs>
+    playerTracking?: boolean | Player$playerTrackingArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -27305,6 +27399,7 @@ export namespace Prisma {
       bids: Prisma.$OfferBidPayload<ExtArgs>[]
       logs: Prisma.$LogPayload<ExtArgs>[]
       usernameHistory: Prisma.$UsernameHistoryPayload<ExtArgs>[]
+      playerTracking: Prisma.$PlayerTrackingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -27722,6 +27817,8 @@ export namespace Prisma {
     logs<T extends Player$logsArgs<ExtArgs> = {}>(args?: Subset<T, Player$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     usernameHistory<T extends Player$usernameHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Player$usernameHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    playerTracking<T extends Player$playerTrackingArgs<ExtArgs> = {}>(args?: Subset<T, Player$playerTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -28413,6 +28510,27 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
+  }
+
+
+  /**
+   * Player.playerTracking
+   */
+  export type Player$playerTrackingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    where?: PlayerTrackingWhereInput
+    orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
+    cursor?: PlayerTrackingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PlayerTrackingScalarFieldEnum | PlayerTrackingScalarFieldEnum[]
   }
 
 
@@ -42076,6 +42194,964 @@ export namespace Prisma {
 
 
   /**
+   * Model PlayerTracking
+   */
+
+  export type AggregatePlayerTracking = {
+    _count: PlayerTrackingCountAggregateOutputType | null
+    _avg: PlayerTrackingAvgAggregateOutputType | null
+    _sum: PlayerTrackingSumAggregateOutputType | null
+    _min: PlayerTrackingMinAggregateOutputType | null
+    _max: PlayerTrackingMaxAggregateOutputType | null
+  }
+
+  export type PlayerTrackingAvgAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    quantity: number | null
+  }
+
+  export type PlayerTrackingSumAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    quantity: number | null
+  }
+
+  export type PlayerTrackingMinAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    stat: string | null
+    quantity: number | null
+  }
+
+  export type PlayerTrackingMaxAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    stat: string | null
+    quantity: number | null
+  }
+
+  export type PlayerTrackingCountAggregateOutputType = {
+    id: number
+    playerId: number
+    stat: number
+    quantity: number
+    _all: number
+  }
+
+
+  export type PlayerTrackingAvgAggregateInputType = {
+    id?: true
+    playerId?: true
+    quantity?: true
+  }
+
+  export type PlayerTrackingSumAggregateInputType = {
+    id?: true
+    playerId?: true
+    quantity?: true
+  }
+
+  export type PlayerTrackingMinAggregateInputType = {
+    id?: true
+    playerId?: true
+    stat?: true
+    quantity?: true
+  }
+
+  export type PlayerTrackingMaxAggregateInputType = {
+    id?: true
+    playerId?: true
+    stat?: true
+    quantity?: true
+  }
+
+  export type PlayerTrackingCountAggregateInputType = {
+    id?: true
+    playerId?: true
+    stat?: true
+    quantity?: true
+    _all?: true
+  }
+
+  export type PlayerTrackingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerTracking to aggregate.
+     */
+    where?: PlayerTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerTrackings to fetch.
+     */
+    orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PlayerTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerTrackings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PlayerTrackings
+    **/
+    _count?: true | PlayerTrackingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PlayerTrackingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PlayerTrackingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PlayerTrackingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PlayerTrackingMaxAggregateInputType
+  }
+
+  export type GetPlayerTrackingAggregateType<T extends PlayerTrackingAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlayerTracking]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePlayerTracking[P]>
+      : GetScalarType<T[P], AggregatePlayerTracking[P]>
+  }
+
+
+
+
+  export type PlayerTrackingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayerTrackingWhereInput
+    orderBy?: PlayerTrackingOrderByWithAggregationInput | PlayerTrackingOrderByWithAggregationInput[]
+    by: PlayerTrackingScalarFieldEnum[] | PlayerTrackingScalarFieldEnum
+    having?: PlayerTrackingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PlayerTrackingCountAggregateInputType | true
+    _avg?: PlayerTrackingAvgAggregateInputType
+    _sum?: PlayerTrackingSumAggregateInputType
+    _min?: PlayerTrackingMinAggregateInputType
+    _max?: PlayerTrackingMaxAggregateInputType
+  }
+
+  export type PlayerTrackingGroupByOutputType = {
+    id: number
+    playerId: number
+    stat: string
+    quantity: number
+    _count: PlayerTrackingCountAggregateOutputType | null
+    _avg: PlayerTrackingAvgAggregateOutputType | null
+    _sum: PlayerTrackingSumAggregateOutputType | null
+    _min: PlayerTrackingMinAggregateOutputType | null
+    _max: PlayerTrackingMaxAggregateOutputType | null
+  }
+
+  type GetPlayerTrackingGroupByPayload<T extends PlayerTrackingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PlayerTrackingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PlayerTrackingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PlayerTrackingGroupByOutputType[P]>
+            : GetScalarType<T[P], PlayerTrackingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PlayerTrackingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    stat?: boolean
+    quantity?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playerTracking"]>
+
+  export type PlayerTrackingSelectScalar = {
+    id?: boolean
+    playerId?: boolean
+    stat?: boolean
+    quantity?: boolean
+  }
+
+  export type PlayerTrackingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+
+  export type $PlayerTrackingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PlayerTracking"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      playerId: number
+      stat: string
+      quantity: number
+    }, ExtArgs["result"]["playerTracking"]>
+    composites: {}
+  }
+
+
+  type PlayerTrackingGetPayload<S extends boolean | null | undefined | PlayerTrackingDefaultArgs> = $Result.GetResult<Prisma.$PlayerTrackingPayload, S>
+
+  type PlayerTrackingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PlayerTrackingFindManyArgs, 'select' | 'include' | 'distinct' | 'relationLoadStrategy'> & {
+      select?: PlayerTrackingCountAggregateInputType | true
+    }
+
+  export interface PlayerTrackingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PlayerTracking'], meta: { name: 'PlayerTracking' } }
+    /**
+     * Find zero or one PlayerTracking that matches the filter.
+     * @param {PlayerTrackingFindUniqueArgs} args - Arguments to find a PlayerTracking
+     * @example
+     * // Get one PlayerTracking
+     * const playerTracking = await prisma.playerTracking.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends PlayerTrackingFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, PlayerTrackingFindUniqueArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one PlayerTracking that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {PlayerTrackingFindUniqueOrThrowArgs} args - Arguments to find a PlayerTracking
+     * @example
+     * // Get one PlayerTracking
+     * const playerTracking = await prisma.playerTracking.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends PlayerTrackingFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, PlayerTrackingFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first PlayerTracking that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerTrackingFindFirstArgs} args - Arguments to find a PlayerTracking
+     * @example
+     * // Get one PlayerTracking
+     * const playerTracking = await prisma.playerTracking.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends PlayerTrackingFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, PlayerTrackingFindFirstArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first PlayerTracking that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerTrackingFindFirstOrThrowArgs} args - Arguments to find a PlayerTracking
+     * @example
+     * // Get one PlayerTracking
+     * const playerTracking = await prisma.playerTracking.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends PlayerTrackingFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, PlayerTrackingFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more PlayerTrackings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerTrackingFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PlayerTrackings
+     * const playerTrackings = await prisma.playerTracking.findMany()
+     * 
+     * // Get first 10 PlayerTrackings
+     * const playerTrackings = await prisma.playerTracking.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const playerTrackingWithIdOnly = await prisma.playerTracking.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends PlayerTrackingFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, PlayerTrackingFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a PlayerTracking.
+     * @param {PlayerTrackingCreateArgs} args - Arguments to create a PlayerTracking.
+     * @example
+     * // Create one PlayerTracking
+     * const PlayerTracking = await prisma.playerTracking.create({
+     *   data: {
+     *     // ... data to create a PlayerTracking
+     *   }
+     * })
+     * 
+    **/
+    create<T extends PlayerTrackingCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, PlayerTrackingCreateArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many PlayerTrackings.
+     *     @param {PlayerTrackingCreateManyArgs} args - Arguments to create many PlayerTrackings.
+     *     @example
+     *     // Create many PlayerTrackings
+     *     const playerTracking = await prisma.playerTracking.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends PlayerTrackingCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, PlayerTrackingCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PlayerTracking.
+     * @param {PlayerTrackingDeleteArgs} args - Arguments to delete one PlayerTracking.
+     * @example
+     * // Delete one PlayerTracking
+     * const PlayerTracking = await prisma.playerTracking.delete({
+     *   where: {
+     *     // ... filter to delete one PlayerTracking
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends PlayerTrackingDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, PlayerTrackingDeleteArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one PlayerTracking.
+     * @param {PlayerTrackingUpdateArgs} args - Arguments to update one PlayerTracking.
+     * @example
+     * // Update one PlayerTracking
+     * const playerTracking = await prisma.playerTracking.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends PlayerTrackingUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, PlayerTrackingUpdateArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more PlayerTrackings.
+     * @param {PlayerTrackingDeleteManyArgs} args - Arguments to filter PlayerTrackings to delete.
+     * @example
+     * // Delete a few PlayerTrackings
+     * const { count } = await prisma.playerTracking.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends PlayerTrackingDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, PlayerTrackingDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayerTrackings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerTrackingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PlayerTrackings
+     * const playerTracking = await prisma.playerTracking.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends PlayerTrackingUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, PlayerTrackingUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PlayerTracking.
+     * @param {PlayerTrackingUpsertArgs} args - Arguments to update or create a PlayerTracking.
+     * @example
+     * // Update or create a PlayerTracking
+     * const playerTracking = await prisma.playerTracking.upsert({
+     *   create: {
+     *     // ... data to create a PlayerTracking
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PlayerTracking we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends PlayerTrackingUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, PlayerTrackingUpsertArgs<ExtArgs>>
+    ): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of PlayerTrackings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerTrackingCountArgs} args - Arguments to filter PlayerTrackings to count.
+     * @example
+     * // Count the number of PlayerTrackings
+     * const count = await prisma.playerTracking.count({
+     *   where: {
+     *     // ... the filter for the PlayerTrackings we want to count
+     *   }
+     * })
+    **/
+    count<T extends PlayerTrackingCountArgs>(
+      args?: Subset<T, PlayerTrackingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PlayerTrackingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PlayerTracking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerTrackingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PlayerTrackingAggregateArgs>(args: Subset<T, PlayerTrackingAggregateArgs>): Prisma.PrismaPromise<GetPlayerTrackingAggregateType<T>>
+
+    /**
+     * Group by PlayerTracking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayerTrackingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PlayerTrackingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PlayerTrackingGroupByArgs['orderBy'] }
+        : { orderBy?: PlayerTrackingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PlayerTrackingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlayerTrackingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PlayerTracking model
+   */
+  readonly fields: PlayerTrackingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PlayerTracking.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PlayerTrackingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the PlayerTracking model
+   */ 
+  interface PlayerTrackingFieldRefs {
+    readonly id: FieldRef<"PlayerTracking", 'Int'>
+    readonly playerId: FieldRef<"PlayerTracking", 'Int'>
+    readonly stat: FieldRef<"PlayerTracking", 'String'>
+    readonly quantity: FieldRef<"PlayerTracking", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * PlayerTracking findUnique
+   */
+  export type PlayerTrackingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerTracking to fetch.
+     */
+    where: PlayerTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking findUniqueOrThrow
+   */
+  export type PlayerTrackingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerTracking to fetch.
+     */
+    where: PlayerTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking findFirst
+   */
+  export type PlayerTrackingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerTracking to fetch.
+     */
+    where?: PlayerTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerTrackings to fetch.
+     */
+    orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerTrackings.
+     */
+    cursor?: PlayerTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerTrackings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerTrackings.
+     */
+    distinct?: PlayerTrackingScalarFieldEnum | PlayerTrackingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking findFirstOrThrow
+   */
+  export type PlayerTrackingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerTracking to fetch.
+     */
+    where?: PlayerTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerTrackings to fetch.
+     */
+    orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayerTrackings.
+     */
+    cursor?: PlayerTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerTrackings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayerTrackings.
+     */
+    distinct?: PlayerTrackingScalarFieldEnum | PlayerTrackingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking findMany
+   */
+  export type PlayerTrackingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayerTrackings to fetch.
+     */
+    where?: PlayerTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayerTrackings to fetch.
+     */
+    orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PlayerTrackings.
+     */
+    cursor?: PlayerTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayerTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayerTrackings.
+     */
+    skip?: number
+    distinct?: PlayerTrackingScalarFieldEnum | PlayerTrackingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking create
+   */
+  export type PlayerTrackingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PlayerTracking.
+     */
+    data: XOR<PlayerTrackingCreateInput, PlayerTrackingUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking createMany
+   */
+  export type PlayerTrackingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PlayerTrackings.
+     */
+    data: PlayerTrackingCreateManyInput | PlayerTrackingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * PlayerTracking update
+   */
+  export type PlayerTrackingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PlayerTracking.
+     */
+    data: XOR<PlayerTrackingUpdateInput, PlayerTrackingUncheckedUpdateInput>
+    /**
+     * Choose, which PlayerTracking to update.
+     */
+    where: PlayerTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking updateMany
+   */
+  export type PlayerTrackingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PlayerTrackings.
+     */
+    data: XOR<PlayerTrackingUpdateManyMutationInput, PlayerTrackingUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayerTrackings to update
+     */
+    where?: PlayerTrackingWhereInput
+  }
+
+
+  /**
+   * PlayerTracking upsert
+   */
+  export type PlayerTrackingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PlayerTracking to update in case it exists.
+     */
+    where: PlayerTrackingWhereUniqueInput
+    /**
+     * In case the PlayerTracking found by the `where` argument doesn't exist, create a new PlayerTracking with this data.
+     */
+    create: XOR<PlayerTrackingCreateInput, PlayerTrackingUncheckedCreateInput>
+    /**
+     * In case the PlayerTracking was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PlayerTrackingUpdateInput, PlayerTrackingUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking delete
+   */
+  export type PlayerTrackingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+    /**
+     * Filter which PlayerTracking to delete.
+     */
+    where: PlayerTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+
+  /**
+   * PlayerTracking deleteMany
+   */
+  export type PlayerTrackingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayerTrackings to delete
+     */
+    where?: PlayerTrackingWhereInput
+  }
+
+
+  /**
+   * PlayerTracking without action
+   */
+  export type PlayerTrackingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayerTracking
+     */
+    select?: PlayerTrackingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerTrackingInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -42534,6 +43610,16 @@ export namespace Prisma {
   };
 
   export type DinozCatchScalarFieldEnum = (typeof DinozCatchScalarFieldEnum)[keyof typeof DinozCatchScalarFieldEnum]
+
+
+  export const PlayerTrackingScalarFieldEnum: {
+    id: 'id',
+    playerId: 'playerId',
+    stat: 'stat',
+    quantity: 'quantity'
+  };
+
+  export type PlayerTrackingScalarFieldEnum = (typeof PlayerTrackingScalarFieldEnum)[keyof typeof PlayerTrackingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -44199,6 +45285,7 @@ export namespace Prisma {
     bids?: OfferBidListRelationFilter
     logs?: LogListRelationFilter
     usernameHistory?: UsernameHistoryListRelationFilter
+    playerTracking?: PlayerTrackingListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -44237,6 +45324,7 @@ export namespace Prisma {
     bids?: OfferBidOrderByRelationAggregateInput
     logs?: LogOrderByRelationAggregateInput
     usernameHistory?: UsernameHistoryOrderByRelationAggregateInput
+    playerTracking?: PlayerTrackingOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -44278,6 +45366,7 @@ export namespace Prisma {
     bids?: OfferBidListRelationFilter
     logs?: LogListRelationFilter
     usernameHistory?: UsernameHistoryListRelationFilter
+    playerTracking?: PlayerTrackingListRelationFilter
   }, "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -45092,6 +46181,59 @@ export namespace Prisma {
     dinozId?: IntNullableWithAggregatesFilter<"DinozCatch"> | number | null
     monsterId?: StringWithAggregatesFilter<"DinozCatch"> | string
     hp?: IntWithAggregatesFilter<"DinozCatch"> | number
+  }
+
+  export type PlayerTrackingWhereInput = {
+    AND?: PlayerTrackingWhereInput | PlayerTrackingWhereInput[]
+    OR?: PlayerTrackingWhereInput[]
+    NOT?: PlayerTrackingWhereInput | PlayerTrackingWhereInput[]
+    id?: IntFilter<"PlayerTracking"> | number
+    playerId?: IntFilter<"PlayerTracking"> | number
+    stat?: StringFilter<"PlayerTracking"> | string
+    quantity?: IntFilter<"PlayerTracking"> | number
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+  }
+
+  export type PlayerTrackingOrderByWithRelationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type PlayerTrackingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    stat_playerId?: PlayerTrackingStatPlayerIdCompoundUniqueInput
+    AND?: PlayerTrackingWhereInput | PlayerTrackingWhereInput[]
+    OR?: PlayerTrackingWhereInput[]
+    NOT?: PlayerTrackingWhereInput | PlayerTrackingWhereInput[]
+    playerId?: IntFilter<"PlayerTracking"> | number
+    stat?: StringFilter<"PlayerTracking"> | string
+    quantity?: IntFilter<"PlayerTracking"> | number
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+  }, "id" | "stat_playerId">
+
+  export type PlayerTrackingOrderByWithAggregationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+    _count?: PlayerTrackingCountOrderByAggregateInput
+    _avg?: PlayerTrackingAvgOrderByAggregateInput
+    _max?: PlayerTrackingMaxOrderByAggregateInput
+    _min?: PlayerTrackingMinOrderByAggregateInput
+    _sum?: PlayerTrackingSumOrderByAggregateInput
+  }
+
+  export type PlayerTrackingScalarWhereWithAggregatesInput = {
+    AND?: PlayerTrackingScalarWhereWithAggregatesInput | PlayerTrackingScalarWhereWithAggregatesInput[]
+    OR?: PlayerTrackingScalarWhereWithAggregatesInput[]
+    NOT?: PlayerTrackingScalarWhereWithAggregatesInput | PlayerTrackingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"PlayerTracking"> | number
+    playerId?: IntWithAggregatesFilter<"PlayerTracking"> | number
+    stat?: StringWithAggregatesFilter<"PlayerTracking"> | string
+    quantity?: IntWithAggregatesFilter<"PlayerTracking"> | number
   }
 
   export type ConcentrationCreateInput = {
@@ -46554,6 +47696,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -46592,6 +47735,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -46629,6 +47773,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -46667,6 +47812,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -47399,6 +48545,51 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     monsterId?: StringFieldUpdateOperationsInput | string
     hp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type PlayerTrackingCreateInput = {
+    stat: string
+    quantity: number
+    player: PlayerCreateNestedOneWithoutPlayerTrackingInput
+  }
+
+  export type PlayerTrackingUncheckedCreateInput = {
+    id?: number
+    playerId: number
+    stat: string
+    quantity: number
+  }
+
+  export type PlayerTrackingUpdateInput = {
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    player?: PlayerUpdateOneRequiredWithoutPlayerTrackingNestedInput
+  }
+
+  export type PlayerTrackingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type PlayerTrackingCreateManyInput = {
+    id?: number
+    playerId: number
+    stat: string
+    quantity: number
+  }
+
+  export type PlayerTrackingUpdateManyMutationInput = {
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type PlayerTrackingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -48881,6 +50072,12 @@ export namespace Prisma {
     none?: UsernameHistoryWhereInput
   }
 
+  export type PlayerTrackingListRelationFilter = {
+    every?: PlayerTrackingWhereInput
+    some?: PlayerTrackingWhereInput
+    none?: PlayerTrackingWhereInput
+  }
+
   export type ImportedTwinoidAchievementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -48922,6 +50119,10 @@ export namespace Prisma {
   }
 
   export type UsernameHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PlayerTrackingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -49569,6 +50770,44 @@ export namespace Prisma {
     id?: SortOrder
     dinozId?: SortOrder
     hp?: SortOrder
+  }
+
+  export type PlayerTrackingStatPlayerIdCompoundUniqueInput = {
+    stat: string
+    playerId: number
+  }
+
+  export type PlayerTrackingCountOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type PlayerTrackingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type PlayerTrackingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type PlayerTrackingMinOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type PlayerTrackingSumOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    quantity?: SortOrder
   }
 
   export type DinozCreateNestedManyWithoutConcentrationInput = {
@@ -50921,6 +52160,13 @@ export namespace Prisma {
     connect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
   }
 
+  export type PlayerTrackingCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PlayerTrackingCreateWithoutPlayerInput, PlayerTrackingUncheckedCreateWithoutPlayerInput> | PlayerTrackingCreateWithoutPlayerInput[] | PlayerTrackingUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerTrackingCreateOrConnectWithoutPlayerInput | PlayerTrackingCreateOrConnectWithoutPlayerInput[]
+    createMany?: PlayerTrackingCreateManyPlayerInputEnvelope
+    connect?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -51029,6 +52275,13 @@ export namespace Prisma {
     connectOrCreate?: UsernameHistoryCreateOrConnectWithoutPlayerInput | UsernameHistoryCreateOrConnectWithoutPlayerInput[]
     createMany?: UsernameHistoryCreateManyPlayerInputEnvelope
     connect?: UsernameHistoryWhereUniqueInput | UsernameHistoryWhereUniqueInput[]
+  }
+
+  export type PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PlayerTrackingCreateWithoutPlayerInput, PlayerTrackingUncheckedCreateWithoutPlayerInput> | PlayerTrackingCreateWithoutPlayerInput[] | PlayerTrackingUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerTrackingCreateOrConnectWithoutPlayerInput | PlayerTrackingCreateOrConnectWithoutPlayerInput[]
+    createMany?: PlayerTrackingCreateManyPlayerInputEnvelope
+    connect?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
   }
 
   export type DinozUpdateManyWithoutPlayerNestedInput = {
@@ -51247,6 +52500,20 @@ export namespace Prisma {
     deleteMany?: UsernameHistoryScalarWhereInput | UsernameHistoryScalarWhereInput[]
   }
 
+  export type PlayerTrackingUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PlayerTrackingCreateWithoutPlayerInput, PlayerTrackingUncheckedCreateWithoutPlayerInput> | PlayerTrackingCreateWithoutPlayerInput[] | PlayerTrackingUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerTrackingCreateOrConnectWithoutPlayerInput | PlayerTrackingCreateOrConnectWithoutPlayerInput[]
+    upsert?: PlayerTrackingUpsertWithWhereUniqueWithoutPlayerInput | PlayerTrackingUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PlayerTrackingCreateManyPlayerInputEnvelope
+    set?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    disconnect?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    delete?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    connect?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    update?: PlayerTrackingUpdateWithWhereUniqueWithoutPlayerInput | PlayerTrackingUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PlayerTrackingUpdateManyWithWhereWithoutPlayerInput | PlayerTrackingUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PlayerTrackingScalarWhereInput | PlayerTrackingScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -51461,6 +52728,20 @@ export namespace Prisma {
     update?: UsernameHistoryUpdateWithWhereUniqueWithoutPlayerInput | UsernameHistoryUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: UsernameHistoryUpdateManyWithWhereWithoutPlayerInput | UsernameHistoryUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: UsernameHistoryScalarWhereInput | UsernameHistoryScalarWhereInput[]
+  }
+
+  export type PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PlayerTrackingCreateWithoutPlayerInput, PlayerTrackingUncheckedCreateWithoutPlayerInput> | PlayerTrackingCreateWithoutPlayerInput[] | PlayerTrackingUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PlayerTrackingCreateOrConnectWithoutPlayerInput | PlayerTrackingCreateOrConnectWithoutPlayerInput[]
+    upsert?: PlayerTrackingUpsertWithWhereUniqueWithoutPlayerInput | PlayerTrackingUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PlayerTrackingCreateManyPlayerInputEnvelope
+    set?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    disconnect?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    delete?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    connect?: PlayerTrackingWhereUniqueInput | PlayerTrackingWhereUniqueInput[]
+    update?: PlayerTrackingUpdateWithWhereUniqueWithoutPlayerInput | PlayerTrackingUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PlayerTrackingUpdateManyWithWhereWithoutPlayerInput | PlayerTrackingUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PlayerTrackingScalarWhereInput | PlayerTrackingScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutUsernameHistoryInput = {
@@ -51817,6 +53098,20 @@ export namespace Prisma {
     delete?: DinozWhereInput | boolean
     connect?: DinozWhereUniqueInput
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutCatchesInput, DinozUpdateWithoutCatchesInput>, DinozUncheckedUpdateWithoutCatchesInput>
+  }
+
+  export type PlayerCreateNestedOneWithoutPlayerTrackingInput = {
+    create?: XOR<PlayerCreateWithoutPlayerTrackingInput, PlayerUncheckedCreateWithoutPlayerTrackingInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutPlayerTrackingInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerUpdateOneRequiredWithoutPlayerTrackingNestedInput = {
+    create?: XOR<PlayerCreateWithoutPlayerTrackingInput, PlayerUncheckedCreateWithoutPlayerTrackingInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutPlayerTrackingInput
+    upsert?: PlayerUpsertWithoutPlayerTrackingInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutPlayerTrackingInput, PlayerUpdateWithoutPlayerTrackingInput>, PlayerUncheckedUpdateWithoutPlayerTrackingInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -52359,6 +53654,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -52396,6 +53692,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -52859,6 +54156,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -52896,6 +54194,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -54759,6 +56058,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedPlayerInput = {
@@ -54796,6 +56096,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedPlayerInput = {
@@ -54970,6 +56271,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedPlayerInput = {
@@ -55007,6 +56309,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ImportedPlayerIngredientUpsertWithWhereUniqueWithoutImported_playerInput = {
@@ -55426,6 +56729,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidAchievementsInput = {
@@ -55463,6 +56767,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidAchievementsInput = {
@@ -55515,6 +56820,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidAchievementsInput = {
@@ -55552,6 +56858,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidSiteInput = {
@@ -55588,6 +56895,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidSiteInput = {
@@ -55625,6 +56933,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidSiteInput = {
@@ -55677,6 +56986,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidSiteInput = {
@@ -55714,6 +57024,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidStatsInput = {
@@ -55750,6 +57061,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidStatsInput = {
@@ -55787,6 +57099,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidStatsInput = {
@@ -55839,6 +57152,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidStatsInput = {
@@ -55876,6 +57190,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -56498,6 +57813,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PlayerTrackingCreateWithoutPlayerInput = {
+    stat: string
+    quantity: number
+  }
+
+  export type PlayerTrackingUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    stat: string
+    quantity: number
+  }
+
+  export type PlayerTrackingCreateOrConnectWithoutPlayerInput = {
+    where: PlayerTrackingWhereUniqueInput
+    create: XOR<PlayerTrackingCreateWithoutPlayerInput, PlayerTrackingUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PlayerTrackingCreateManyPlayerInputEnvelope = {
+    data: PlayerTrackingCreateManyPlayerInput | PlayerTrackingCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DinozUpsertWithWhereUniqueWithoutPlayerInput = {
     where: DinozWhereUniqueInput
     update: XOR<DinozUpdateWithoutPlayerInput, DinozUncheckedUpdateWithoutPlayerInput>
@@ -56906,6 +58242,32 @@ export namespace Prisma {
     username?: StringFilter<"UsernameHistory"> | string
   }
 
+  export type PlayerTrackingUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: PlayerTrackingWhereUniqueInput
+    update: XOR<PlayerTrackingUpdateWithoutPlayerInput, PlayerTrackingUncheckedUpdateWithoutPlayerInput>
+    create: XOR<PlayerTrackingCreateWithoutPlayerInput, PlayerTrackingUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PlayerTrackingUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: PlayerTrackingWhereUniqueInput
+    data: XOR<PlayerTrackingUpdateWithoutPlayerInput, PlayerTrackingUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type PlayerTrackingUpdateManyWithWhereWithoutPlayerInput = {
+    where: PlayerTrackingScalarWhereInput
+    data: XOR<PlayerTrackingUpdateManyMutationInput, PlayerTrackingUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type PlayerTrackingScalarWhereInput = {
+    AND?: PlayerTrackingScalarWhereInput | PlayerTrackingScalarWhereInput[]
+    OR?: PlayerTrackingScalarWhereInput[]
+    NOT?: PlayerTrackingScalarWhereInput | PlayerTrackingScalarWhereInput[]
+    id?: IntFilter<"PlayerTracking"> | number
+    playerId?: IntFilter<"PlayerTracking"> | number
+    stat?: StringFilter<"PlayerTracking"> | string
+    quantity?: IntFilter<"PlayerTracking"> | number
+  }
+
   export type PlayerCreateWithoutUsernameHistoryInput = {
     hasImported: boolean
     customText?: string | null
@@ -56940,6 +58302,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -56977,6 +58340,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -57029,6 +58393,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -57066,6 +58431,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -57102,6 +58468,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -57139,6 +58506,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -57191,6 +58559,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -57228,6 +58597,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -57264,6 +58634,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -57301,6 +58672,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -57353,6 +58725,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -57390,6 +58763,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -57426,6 +58800,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -57463,6 +58838,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -57515,6 +58891,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -57552,6 +58929,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -57588,6 +58966,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -57625,6 +59004,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -57677,6 +59057,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -57714,6 +59095,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -57750,6 +59132,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -57787,6 +59170,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -57839,6 +59223,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -57876,6 +59261,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -57912,6 +59298,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -57949,6 +59336,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -58001,6 +59389,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -58038,6 +59427,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -58074,6 +59464,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -58111,6 +59502,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -58163,6 +59555,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -58200,6 +59593,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -58314,6 +59708,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -58351,6 +59746,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -58433,6 +59829,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -58470,6 +59867,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutOffersInput = {
@@ -58506,6 +59904,7 @@ export namespace Prisma {
     bids?: OfferBidCreateNestedManyWithoutUserInput
     logs?: LogCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -58543,6 +59942,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -58723,6 +60123,7 @@ export namespace Prisma {
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     logs?: LogUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -58760,6 +60161,7 @@ export namespace Prisma {
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutOffersInput = {
@@ -58929,6 +60331,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutSellerInput
     bids?: OfferBidCreateNestedManyWithoutUserInput
     usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -58966,6 +60369,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
     usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -59102,6 +60506,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUpdateManyWithoutUserNestedInput
     usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -59139,6 +60544,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
     usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutLogsInput = {
@@ -59403,6 +60809,172 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type PlayerCreateWithoutPlayerTrackingInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutPlayerTrackingInput, PlayerUncheckedCreateWithoutPlayerTrackingInput>
+  }
+
+  export type PlayerUpsertWithoutPlayerTrackingInput = {
+    update: XOR<PlayerUpdateWithoutPlayerTrackingInput, PlayerUncheckedUpdateWithoutPlayerTrackingInput>
+    create: XOR<PlayerCreateWithoutPlayerTrackingInput, PlayerUncheckedCreateWithoutPlayerTrackingInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutPlayerTrackingInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutPlayerTrackingInput, PlayerUncheckedUpdateWithoutPlayerTrackingInput>
+  }
+
+  export type PlayerUpdateWithoutPlayerTrackingInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -60266,6 +61838,12 @@ export namespace Prisma {
     username: string
   }
 
+  export type PlayerTrackingCreateManyPlayerInput = {
+    id?: number
+    stat: string
+    quantity: number
+  }
+
   export type DinozUpdateWithoutPlayerInput = {
     name?: StringFieldUpdateOperationsInput | string
     raceId?: IntFieldUpdateOperationsInput | number
@@ -60641,6 +62219,23 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
   }
 
+  export type PlayerTrackingUpdateWithoutPlayerInput = {
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type PlayerTrackingUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type PlayerTrackingUncheckedUpdateManyWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
   export type OfferItemCreateManyOfferInput = {
     id?: number
     itemId: number
@@ -60872,6 +62467,10 @@ export namespace Prisma {
      * @deprecated Use DinozCatchDefaultArgs instead
      */
     export type DinozCatchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozCatchDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PlayerTrackingDefaultArgs instead
+     */
+    export type PlayerTrackingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerTrackingDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

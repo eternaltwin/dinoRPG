@@ -27,6 +27,8 @@ import dayjs from 'dayjs';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 /**
  * @summary Process a fight
@@ -106,6 +108,13 @@ export async function processFight(req: Request) {
 			await checkMissionFight(dinoz, result);
 		}
 	}
+
+	// Update stats
+	await setSpecificStat(
+		StatTracking.KILL_M,
+		dinozData.player.id,
+		fightResult.fighters.filter(f => f.type === 'monster').length
+	);
 
 	return result;
 }

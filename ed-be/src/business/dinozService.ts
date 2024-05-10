@@ -83,6 +83,8 @@ import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import dayjs from 'dayjs';
 import { getSpecificSecret } from '../dao/secretDao.js';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 
 /**
  * @summary Get available action from dinoz
@@ -655,6 +657,10 @@ export async function betaMove(req: Request) {
 		});
 	}
 
+	// Update stats
+	await setSpecificStat(StatTracking.MOVES, dinoz.player.id, team.length);
+	await setSpecificStat(StatTracking.KILL_M, dinoz.player.id, fight.fighters.filter(f => f.type === 'monster').length);
+
 	return fight;
 }
 
@@ -689,6 +695,9 @@ export async function resurrectDinoz(req: Request) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
 	}
+
+	// Update stats
+	await setSpecificStat(StatTracking.DEATHS, dinozData.player.id, 1);
 
 	await createLog(LogType.Revive, dinozData.player.id, dinozId);
 }
@@ -730,6 +739,7 @@ export async function digWithDinoz(req: Request) {
 	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.SHOVEL);
 		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_SHOVEL);
+		await setSpecificStat(StatTracking.BROKEN_SHOVEL, dinozData.player.id, 1);
 	}
 
 	//Try to broke enhanced shovel (75% of keeping it)
@@ -739,6 +749,7 @@ export async function digWithDinoz(req: Request) {
 	) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);
 		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_ENHANCED_SHOVEL);
+		await setSpecificStat(StatTracking.BROKEN_SHOVEL, dinozData.player.id, 1);
 	}
 
 	return reward[0];
@@ -951,6 +962,30 @@ export async function gatherWithDinoz(req: Request) {
 		await updateDinoz(dinozId, {
 			gather: false
 		});
+	}
+
+	switch (gatherPlace.type) {
+		case GatherType.CUEILLE1:
+		case GatherType.CUEILLE3:
+		case GatherType.CUEILLE4:
+		case GatherType.CUEILLE2:
+			await setSpecificStat(StatTracking.CUEILLE, dinozData.player.id, 1);
+			break;
+		case GatherType.ENERGY1:
+		case GatherType.ENERGY2:
+			await setSpecificStat(StatTracking.ENERGY, dinozData.player.id, 1);
+			break;
+		case GatherType.FISH:
+			await setSpecificStat(StatTracking.FISH, dinozData.player.id, 1);
+			break;
+		case GatherType.SEEK:
+			await setSpecificStat(StatTracking.SEEK, dinozData.player.id, 1);
+			break;
+		case GatherType.HUNT:
+			await setSpecificStat(StatTracking.CHASSE, dinozData.player.id, 1);
+			break;
+		default:
+			break;
 	}
 
 	return returnGrid;

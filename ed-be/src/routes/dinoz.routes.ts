@@ -28,6 +28,7 @@ import { cancelConcentrate, concentrate } from '../business/specialService.js';
 import { apiRoutes, regex } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import { displayPlayerGoals } from '../business/goalsService.js';
 
 const routes: Router = Router();
 

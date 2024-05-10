@@ -328,6 +328,12 @@ export async function getPlayerDataRequest(playerId: number) {
 					dinozCount: true,
 					completion: true
 				}
+			},
+			playerTracking: {
+				select: {
+					stat: true,
+					quantity: true
+				}
 			}
 		}
 	});

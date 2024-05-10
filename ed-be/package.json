@@ -13,9 +13,8 @@
     "db:sync:dev": "prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
     "db:migrate:manual": "prisma migrate dev --create-only",
     "migration": "prisma migrate deploy",
-		"seed": "node --loader ts-node/esm prisma/seed.ts"
-
-	},
+    "seed": "node --loader ts-node/esm prisma/seed.ts"
+  },
   "author": "Jolujolu",
   "license": "ISC",
   "dependencies": {
@@ -43,6 +42,7 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "toml": "^3.0.0",
+    "twinoid-goals": "^1.2.2",
     "url": "^0.11.3",
     "ws": "^8.15.1"
   },

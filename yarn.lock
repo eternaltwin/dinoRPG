@@ -5953,6 +5953,7 @@ __metadata:
     ts-jest: "npm:^29.1.1"
     ts-node: "npm:^10.9.1"
     tsc-watch: "npm:^6.0.4"
+    twinoid-goals: "npm:^1.2.2"
     typescript: "npm:^5.2.2"
     url: "npm:^0.11.3"
     ws: "npm:^8.15.1"
@@ -12453,6 +12454,13 @@ __metadata:
   version: 0.14.5
   resolution: "tweetnacl@npm:0.14.5"
   checksum: 10/04ee27901cde46c1c0a64b9584e04c96c5fe45b38c0d74930710751ea991408b405747d01dfae72f80fc158137018aea94f9c38c651cb9c318f0861a310c3679
+  languageName: node
+  linkType: hard
+
+"twinoid-goals@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "twinoid-goals@npm:1.2.2"
+  checksum: 10/8ed442a546b26a02d0c3c9eaee9727e86ea349e91c9fe2eccf2586938b4e79cfd182931f6b513c761204c60814d7daca038d2d45a1eac4ae82cd1d7615abff11
   languageName: node
   linkType: hard
 
