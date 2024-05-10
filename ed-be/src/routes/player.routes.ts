@@ -331,7 +331,6 @@ routes.get(`${commonPath}/labrute/:id`, [param('id').exists().isNumeric()], asyn
 
 	try {
 		const response = await checkLB(req);
-		console.log(response);
 		return res.status(200).send(response);
 	} catch (err) {
 		const e = err as ErrorFormator;

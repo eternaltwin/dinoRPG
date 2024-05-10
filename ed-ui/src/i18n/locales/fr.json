@@ -58,6 +58,7 @@
 		"gold": "Vous avez obtenu {value} :gold:",
 		"sphere": "Votre dinoz a appris la compétence {value}.",
 		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
+		"alreadyClaimed": "Vous avez déjà récupéré la récompense.",
 		"resurrect": "Votre dinoz est ressucité.",
 		"egg": "Vous avez ouvert un oeuf de {value}.",
 		"special": {

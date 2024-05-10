@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { getLBPlayer, getLBResponseInformation } from '../dao/playerDao.js';
+import { getLBPlayer, getLBResponseInformation, setPlayer } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import fetch from 'node-fetch';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
@@ -54,6 +54,10 @@ export async function checkLB(req: Request) {
 		itemList.POTION_IRMA.itemId,
 		Math.min(portion, itemList.POTION_IRMA.maxQuantity)
 	);
+
+	player.labruteDone = true
+
+	await setPlayer(playerId, { labruteDone: true});
 
 	return { quantity: portion };
 }
