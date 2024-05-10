@@ -136,6 +136,31 @@ export async function getEternalTwinId(playerId: number) {
 	return player;
 }
 
+export async function getLBResponseInformation(playerId: number) {
+	const player = await prisma.player.findFirst({
+		where: {
+			id: playerId
+		},
+		select: {
+			eternalTwinId: true,
+			_count: {
+				select: {
+					dinoz: {
+						where: {
+							OR: [
+								{ unavailableReason: null },
+								{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+							]
+						}
+					}
+				}
+			}
+		}
+	});
+
+	return player;
+}
+
 export async function getCommonDataRequest(playerId: number) {
 	const player = await prisma.player.findUnique({
 		where: {

@@ -43,12 +43,9 @@
 		<div class="buttonLand" v-if="isMyAccount()">
 			<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
 			<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
-			<a class="smallbutton">{{ $t(`myAccount.editAccount`) }}</a>
-			<a class="smallbutton">{{ $t(`myAccount.quest`) }}</a>
-			<!--			<p v-if="hasImport()" class="smallbutton" @click="getCode()">
-				{{ $t(`myAccount.import`) }}
-			</p>-->
-			<!--			<ImportAccount v-if="openPopinImport" @closePopin="closePopin" />-->
+			<DZButton>{{ $t(`myAccount.editAccount`) }}</DZButton>
+			<DZButton v-if="hasPDA()">{{ $t(`myAccount.quest`) }}</DZButton>
+			<DZButton @click="goLB()">{{ $t(`myAccount.labrute`) }}</DZButton>
 		</div>
 	</div>
 </template>
@@ -62,6 +59,7 @@ import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { playerStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
+import DZButton from '../common/DZButton.vue';
 
 export default defineComponent({
 	name: 'Profile',
@@ -76,6 +74,9 @@ export default defineComponent({
 			playerPosition: null as number | null
 		};
 	},
+	components: {
+		DZButton
+	},
 	props: {
 		accountData: {
 			type: Object as PropType<PlayerInfo>
@@ -85,14 +86,25 @@ export default defineComponent({
 		hasPlume(): boolean {
 			return this.accountData!.epicRewards.includes(epicList.id.plume);
 		},
+		hasPDA(): boolean {
+			return this.accountData!.epicRewards.includes(epicList.id.pda);
+		},
 		isMyAccount(): boolean {
 			return this.playerStore.getPlayerId === parseInt(this.$route.params.id as string);
 		},
 		closePopin(): void {
 			this.openPopinImport = false;
 		},
-		hasImport(): boolean {
-			return !this.accountData!.epicRewards.includes(epicList.id.import);
+		async goLB(): Promise<void> {
+			EventBus.emit('isLoading', true);
+			try {
+				const irma = await PlayerService.getLBRewards(parseInt(this.$route.params.id as string));
+				EventBus.emit('isLoading', false);
+				EventBus.emit('toast', { type: 'notif', message: this.$t(`toast.labrute`, { quantity: irma.quantity }) });
+			} catch (err) {
+				errorHandler.handle(err);
+				return;
+			}
 		},
 		async setCustomText(message: string): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -228,6 +240,9 @@ export default defineComponent({
 	margin-bottom: auto;
 	align-items: center;
 	margin-bottom: 5px;
+	* {
+		margin-bottom: 5px;
+	}
 }
 .smallbutton {
 	background-image: url('../../assets/design/button_small.webp');

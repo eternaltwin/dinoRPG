@@ -133,10 +133,10 @@ export default defineComponent({
 						return { itemId: a.itemId, quantity: 0 };
 					});
 					this.totalSell = 0;
+					const message = this.$t(`toast.ingredientSold`, { value: gold.gold });
 					EventBus.emit('toast', {
-						type: 'notification',
-						message: 'ingredientSold',
-						value: gold.gold
+						type: 'notif',
+						message: message
 					});
 					this.playerStore.addMoney(gold.gold);
 					EventBus.emit('isLoading', false);

@@ -149,11 +149,22 @@ export default defineComponent({
 						EventBus.emit('refreshDinoz', true);
 					}
 
+					let message: string;
+					switch (toast.category) {
+						case ItemEffect.SPECIAL:
+							message = this.$t(`toast.special.${toast.value}`, { value: this.$t(`item.name.${toast.effect}`) });
+							break;
+						case ItemEffect.SPHERE:
+							message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
+							break;
+						default:
+							message = this.$t(`toast.${toast.category}`, { value: toast.value });
+							break;
+					}
+
 					EventBus.emit('toast', {
-						type: 'notification',
-						message: toast.category,
-						value: toast.value,
-						effect: toast.effect
+						type: 'notif',
+						message: message
 					});
 				} catch (error) {
 					errorHandler.handle(error);

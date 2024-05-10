@@ -1,6 +1,9 @@
 import { Request } from 'express';
-import { getLBPlayer } from '../dao/playerDao.js';
+import { getLBPlayer, getLBResponseInformation } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
+import fetch from 'node-fetch';
+import { increaseItemQuantity } from '../dao/playerItemDao.js';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export async function checkPlayerLB(req: Request) {
 	const eternalTwinID = req.params.uuid;
@@ -16,4 +19,33 @@ export async function checkPlayerLB(req: Request) {
 	if (remainingAction === 0) return true;
 
 	return false;
+}
+
+export async function checkLB(req: Request) {
+	const playerId = +req.params.id;
+	const player = await getLBResponseInformation(playerId);
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+
+	let LBDone = false;
+
+	const amIDone = await fetch(`https://brute.eternaltwin.org/api/user/${player.eternalTwinId}/done`);
+	const data = await amIDone.text();
+
+	LBDone = data === 'true';
+
+	if (data !== 'true' && data !== 'false') {
+		throw new ErrorFormator(500, data);
+	}
+
+	if (!LBDone) {
+		throw new ErrorFormator(400, `needToDoAllAction`);
+	}
+
+	const portion = Math.ceil(player._count.dinoz / 3);
+
+	await increaseItemQuantity(playerId, itemList.POTION_IRMA.itemId, portion);
+
+	return { quantity: portion };
 }

@@ -96,6 +96,12 @@ export const PlayerService = {
 			.get(`/ranking/${playerId}/get/position`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	getLBRewards(playerId: number): Promise<{ quantity: number }> {
+		return http()
+			.get(`/player/labrute/${playerId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
 interface PlayerSearch {

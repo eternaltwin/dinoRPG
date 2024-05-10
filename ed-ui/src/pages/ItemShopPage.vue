@@ -213,11 +213,14 @@ export default defineComponent({
 		async buyItems(itemId: number, quantity: number): Promise<void> {
 			try {
 				const bought = await ItemShopService.buyItem(this.shopId, itemId, quantity);
+				const message = this.$t(`toast.itemBought`, {
+					quantity: bought.quantity,
+					itemName: this.$t(`item.name.${itemNameList[bought.itemId]}`)
+				});
 				EventBus.emit('isLoading', false);
 				EventBus.emit('toast', {
-					type: 'notification',
-					message: 'itemBought',
-					value: bought
+					type: 'notif',
+					message: message
 				});
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string

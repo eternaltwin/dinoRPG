@@ -171,10 +171,10 @@ export default defineComponent({
 					EventBus.emit('isLoading', true);
 					try {
 						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
+						const message = this.$t(`toast.${toast.category}`, { value: toast.value });
 						EventBus.emit('toast', {
-							type: 'notification',
-							message: toast.category,
-							value: toast.value
+							type: 'notif',
+							message: message
 						});
 					} catch (e) {
 						errorHandler.handle(e);
