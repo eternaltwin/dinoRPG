@@ -55,9 +55,40 @@ export class PartManager {
 		if (part.ref) {
 			// If the part has a reference, it is final and the element can be instantiated
 			return PartManager.getElement(part, partsDetail, palette, scale, scaling, parentTransform);
-		} else if (part.partIdx !== undefined && part.frames !== undefined) {
+		} else if (part.animation && part.parts) {
+			// If the part is an animation, set the animation and get its parts for instantiation
+			let anim = new Animation(scale);
+			anim.setAnimation(part.animation);
+			const partsScaling = PartManager.getAnimationScaling(part.animation);
+			for (const pName in part.parts) {
+				const element = PartManager.createPart(
+					part.parts[pName],
+					partsDetail,
+					palette,
+					scale,
+					scaling * (partsScaling[pName] ?? 1)
+				);
+				if (element) {
+					anim.addPart(pName, element);
+				}
+			}
+			if (part.transform) {
+				anim.transform.setFromMatrix(PixiHelper.matrixFromObject(part.transform));
+			}
+			if (part.alpha) {
+				anim.alpha = part.alpha;
+			}
+			if (part.masks) {
+				anim.setMasks(part.masks);
+			}
+			anim.filters = PartManager.createPartFilters(part);
+			return anim;
+		} else if (part.parts) {
+			let idx = 0;
 			// If the part has a partIdx, get the correct sub-part to instantiate
-			let idx = part.frames[partsDetail[part.partIdx] % part.frames.length];
+			if (part.partIdx !== undefined && part.frames !== undefined) {
+				idx = part.frames[partsDetail[part.partIdx] % part.frames.length];
+			}
 			// We add the current part transform to the parentTransform
 			const currentTransform = parentTransform.clone();
 			if (part.transform) {
@@ -92,34 +123,6 @@ export class PartManager {
 					return cont;
 				}
 			}
-		} else if (part.animation && part.parts) {
-			// If the part is an animation, set the animation and get its parts for instantiation
-			let anim = new Animation(scale);
-			anim.setAnimation(part.animation);
-			const partsScaling = PartManager.getAnimationScaling(part.animation);
-			for (const pName in part.parts) {
-				const element = PartManager.createPart(
-					part.parts[pName],
-					partsDetail,
-					palette,
-					scale,
-					scaling * (partsScaling[pName] ?? 1)
-				);
-				if (element) {
-					anim.addPart(pName, element);
-				}
-			}
-			if (part.transform) {
-				anim.transform.setFromMatrix(PixiHelper.matrixFromObject(part.transform));
-			}
-			if (part.alpha) {
-				anim.alpha = part.alpha;
-			}
-			if (part.masks) {
-				anim.setMasks(part.masks);
-			}
-			anim.filters = PartManager.createPartFilters(part);
-			return anim;
 		}
 		return null;
 	}
@@ -259,9 +262,10 @@ export class PartManager {
 	 * Get the expected scaling for a single animation.
 	 * @param {{id: string, callbacks?: object, expectedScaling?: object, frames: Array, anim?: object, offset?: number}} animation The animation to analyse.
 	 * @param {{[id: string]: number} | {}} currentScaling The current scales for the parts.
+	 * @param {number} startIdx Which frames to start looking for scalings. 0 by default.
 	 * @returns {{[id: string]: number}} The expected scaling for each parts.
 	 */
-	static getAnimationScaling(animation, currentScaling = undefined) {
+	static getAnimationScaling(animation, currentScaling = undefined, startIdx = 0) {
 		const partsScaling = currentScaling ?? {};
 		if (animation.anim) {
 			animation = animation.anim;
@@ -272,10 +276,14 @@ export class PartManager {
 				partsScaling[k] = animation.expectedScaling[k];
 			}
 		}
-		for (const f of animation.frames) {
-			for (const k in f) {
-				if (partsScaling[k] === undefined) {
-					partsScaling[k] = PartManager.transformToScale(f[k]);
+		if (animation.frames && animation.frames.length > 0) {
+			startIdx = startIdx % animation.frames.length;
+			for (let i = startIdx; i < animation.frames.length; ++i) {
+				const f = animation.frames[i];
+				for (const k in f) {
+					if (partsScaling[k] === undefined) {
+						partsScaling[k] = PartManager.transformToScale(f[k]);
+					}
 				}
 			}
 		}
@@ -285,13 +293,14 @@ export class PartManager {
 	/**
 	 * Get the expected scaling for each part of the dino.
 	 * @param {{[id: string]: {id: string, callbacks: object, frames: Array}}} animations The animation to analyse.
+	 * @param {number} startIdx Which frames of the stand animation to start taking the scalings from. 0 by default.
 	 * @returns {{[id: string]: number} | {}} The expected scaling for each parts.
 	 */
-	static getAnimationsScaling(animations) {
+	static getAnimationsScaling(animations, startIdx = 0) {
 		if (!animations) return {};
 		let partsScaling = {};
 		if (animations.stand) {
-			partsScaling = PartManager.getAnimationScaling(animations.stand, partsScaling);
+			partsScaling = PartManager.getAnimationScaling(animations.stand, partsScaling, startIdx);
 		}
 		for (const p in animations) {
 			if (p != 'stand') {

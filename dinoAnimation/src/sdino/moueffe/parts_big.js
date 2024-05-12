@@ -3,6 +3,12 @@
 import { BLEND_MODES } from 'pixi.js';
 import { ref } from '../references_big.js';
 
+export const demon_glow = {
+	distance: 5,
+	color: 0xff0000,
+	strength: 2,
+	quality: 0.5
+};
 const demon_array = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0];
 // 87
 const right_arm = [
@@ -112,8 +118,6 @@ const right_leg_hurt = {
 };
 // 142
 const tail = {
-	partIdx: 5,
-	frames: [0],
 	parts: [
 		[
 			// 139
@@ -186,7 +190,7 @@ const body_muscular = [
 			[
 				// 155
 				{
-					ref: ref.moueffe.hurt_scratch,
+					ref: ref.hurt.scratch,
 					transform: {
 						tx: -18.2,
 						ty: 7.1
@@ -275,7 +279,7 @@ const body_fat = [
 			[
 				// 155
 				{
-					ref: ref.moueffe.hurt_scratch,
+					ref: ref.hurt.scratch,
 					transform: {
 						tx: -18.85,
 						ty: -0.6
@@ -311,7 +315,7 @@ const body_fat = [
 				},
 				// 155
 				{
-					ref: ref.moueffe.hurt_scratch,
+					ref: ref.hurt.scratch,
 					transform: {
 						tx: -1.45,
 						ty: 7.8
@@ -355,12 +359,7 @@ const head_smile = [
 					tx: -7.55,
 					ty: -2.45
 				},
-				glow: {
-					distance: 5,
-					color: 0xff0000,
-					strength: 1,
-					quality: 0.5
-				}
+				glow: demon_glow
 			}
 		]
 	},
@@ -415,12 +414,7 @@ const head_puff = [
 			// 222
 			{
 				ref: ref.moueffe.head_puff_eyes_demon,
-				glow: {
-					distance: 5,
-					color: 0xff0000,
-					strength: 1,
-					quality: 0.5
-				}
+				glow: demon_glow
 			}
 		]
 	},
@@ -1109,7 +1103,7 @@ export const parts_big = {
 						parts: [
 							// 155
 							{
-								ref: ref.moueffe.hurt_scratch,
+								ref: ref.hurt.scratch,
 								transform: {
 									tx: -4.8,
 									ty: -5.5,
@@ -1173,7 +1167,7 @@ export const parts_big = {
 						parts: [
 							// 155
 							{
-								ref: ref.moueffe.hurt_scratch,
+								ref: ref.hurt.scratch,
 								transform: {
 									tx: -8.65,
 									ty: -16.1,
@@ -1275,12 +1269,7 @@ export const parts_big = {
 										tx: 1.45,
 										ty: 0.45
 									},
-									glow: {
-										distance: 5,
-										color: 0xff0000,
-										strength: 2,
-										quality: 0.5
-									}
+									glow: demon_glow
 								}
 							]
 						]
@@ -1378,12 +1367,7 @@ export const parts_big = {
 									tx: -7.55,
 									ty: -2.45
 								},
-								glow: {
-									distance: 5,
-									color: 0xff0000,
-									strength: 1,
-									quality: 0.5
-								}
+								glow: demon_glow
 							}
 						]
 					},
