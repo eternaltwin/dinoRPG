@@ -81,20 +81,9 @@ export default defineComponent({
 				this.clickedBox.push(toPush);
 				this.grid.gatherTurn--;
 			}
-			if (this.grid.gatherTurn <= 0) {
-				EventBus.emit('isLoading', true);
-				try {
-					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
-				} catch (err) {
-					errorHandler.handle(err);
-					return;
-				}
-				this.grid.grid = this.gatherResult.grid;
-				this.gatherOver = true;
-				EventBus.emit('isLoading', false);
-			}
 			const leftSquare = Math.pow(this.grid.grid[0].length, 2) + this.sumOfArrays(this.grid.grid);
-			if (leftSquare - this.clickedBox.length == 0) {
+			if (this.grid.gatherTurn <= 0 || leftSquare - this.clickedBox.length == 0) {
+				console.log('ici');
 				EventBus.emit('isLoading', true);
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
