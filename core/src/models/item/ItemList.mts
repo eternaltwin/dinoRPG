@@ -423,7 +423,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
 		isRare: false,
-		maxQuantity: 50,
+		maxQuantity: 20,
 		price: 500, // TODO double check
 		priority: 1,
 		probability: 20
