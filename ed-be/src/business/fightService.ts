@@ -584,7 +584,7 @@ export function generateMonsterList(
 				) {
 					return {
 						monster: m,
-						p: monsterLevelProba(greatestFighterLevel, m.odds * 100, m.level)
+						p: monsterLevelProba(greatestFighterLevel, m.odds * 10, m.level)
 					};
 				}
 			}
