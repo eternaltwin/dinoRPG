@@ -85,7 +85,9 @@ export const npcList: Record<string, Npc> = {
 		id: 5,
 		placeId: PlaceEnum.FORCEBRUT,
 		data: MMEX,
-		condition: undefined,
+		condition: {
+			[ConditionEnum.ACTIVE]: false
+		},
 		missions: M_MMEX,
 		flashvars: undefined
 	},

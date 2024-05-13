@@ -138,7 +138,8 @@ export const placeList: Record<
 		conditions: {
 			[Operator.OR]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
-				{ [ConditionEnum.DINOZ_LIFE]: [Comparator.LESSER_EQUAL, 10] }
+				{ [ConditionEnum.DINOZ_LIFE]: [Comparator.LESSER_EQUAL, 10] },
+				{ [ConditionEnum.ACTIVE]: false}
 			]
 		},
 		map: MapZone.DINOLAND,
