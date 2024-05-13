@@ -43,7 +43,7 @@
 		</div>
 		<template #content>
 			<h1>{{ $t(`missions.name.${missionName}`) }}</h1>
-			<p>{{ $t(`missions.description.${missionName}`) }}</p>
+			<p v-html="formatContent($t(`missions.description.${missionName}`))" />
 		</template>
 	</Tippy>
 	<MissionInformationModal
