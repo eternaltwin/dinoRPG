@@ -7,7 +7,7 @@
 					<td valign="top" align="center">
 						<div class="centerHeader" valign="top" />
 						<div class="menusky">
-							<AuthenticationPage></AuthenticationPage>
+							<AuthenticationPage :autoLog="autoLog"></AuthenticationPage>
 						</div>
 						<div class="homepage-container">
 							<div class="box">
@@ -40,9 +40,15 @@ export default defineComponent({
 	components: {
 		AuthenticationPage
 	},
+	data() {
+		return {
+			fight: undefined as Fight | undefined,
+			autoLog: false as boolean
+		};
+	},
 	mounted() {
 		const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
-		const fight = new Fight({
+		this.fight = new Fight({
 			bg: 's_dnv',
 			top: 70,
 			bottom: 0,
@@ -191,7 +197,13 @@ export default defineComponent({
 				}
 			]
 		});
-		canvas.appendChild(fight.getDisplay());
+		canvas.appendChild(this.fight.getDisplay());
+		this.fight.onFightEnd = () => {
+			this.autoLog = true;
+		};
+	},
+	unmounted() {
+		this.fight?.destroy();
 	}
 });
 </script>

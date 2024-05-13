@@ -19,6 +19,11 @@ export default defineComponent({
 			isCodePresent: false as boolean
 		};
 	},
+	props: {
+		autoLog: {
+			type: Boolean
+		}
+	},
 	methods: {
 		async authenticateToET(): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -47,6 +52,11 @@ export default defineComponent({
 				this.authenticateToET();
 			}
 		}, 1);
+	},
+	watch: {
+		autoLog() {
+			this.getRedirectUri();
+		}
 	}
 });
 </script>
