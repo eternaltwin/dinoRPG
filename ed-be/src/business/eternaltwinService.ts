@@ -4,6 +4,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import fetch from 'node-fetch';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import dayjs from 'dayjs';
 
 export async function checkPlayerLB(req: Request) {
 	const eternalTwinID = req.params.uuid;
@@ -11,6 +12,8 @@ export async function checkPlayerLB(req: Request) {
 	if (!player) {
 		throw new ErrorFormator(500, `Player ${eternalTwinID} doesn't exist.`);
 	}
+
+	if (!dayjs().isSame(player.lastLogin, 'day')) return false;
 
 	if (player.dinoz.length < 0) return false;
 

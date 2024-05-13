@@ -80,6 +80,7 @@ export async function getLBPlayer(eternalTwinId: string) {
 		select: {
 			id: true,
 			name: true,
+			lastLogin: true,
 			dinoz: {
 				select: {
 					remaining: true
