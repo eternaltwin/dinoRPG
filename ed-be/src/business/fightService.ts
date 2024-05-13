@@ -233,12 +233,13 @@ export async function rewardFight(
 
 		for (const f of monsters) {
 			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
+			let monsterXp = Math.round((f.xp ?? 10) * factor * cur);
 			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
-			xp += Math.round(f.xp ?? 10 * factor * cur);
 			// newbie bonus
-			if (d.level <= 5) xp += XP_NEWB_BONUS[d.level - 1] * cur;
+			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
 			// bonus for fighters of same level of the monster
-			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) xp += f.xpBonus;
+			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
+			xp += monsterXp
 		}
 		//TODO ??
 		/*if( !disableTrophies && d.life <= 0 ) {
@@ -256,7 +257,9 @@ export async function rewardFight(
 		if (gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel > xpf)
 			xpf = gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel;
 
+		console.log(`XP pré-bonus: ${xp}`)
 		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf));
+		console.log(`XP post-bonus: ${xp}`)
 		const max = getMaxXp(d);
 		if (d.experience + xp > max) {
 			xp = max - d.experience;
@@ -433,12 +436,14 @@ export async function rewardFightCalculate(
 
 		for (const f of monsters) {
 			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
+			let monsterXp = Math.round(f.xp ?? 10 * factor * cur);
 			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
-			xp += Math.round(f.xp ?? 10 * factor * cur);
 			// newbie bonus
-			if (d.level <= 5) xp += XP_NEWB_BONUS[d.level - 1] * cur;
+			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
 			// bonus for fighters of same level of the monster
-			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) xp += f.xpBonus;
+			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
+			console.log(`Monster ${f.name} gave ${monsterXp}`)
+			xp += monsterXp
 		}
 		//TODO ??
 		/*if( !disableTrophies && d.life <= 0 ) {
@@ -638,7 +643,7 @@ export function generateMonsterList(
 		for (let i = 0; i < count; i++) {
 			monsterLevel += m.level;
 			monsterArray.push(m);
-			if (m.groups && count > 1 && monsterLevel >= teamPowerLevel && m.groups[i].quantity != 0) {
+			if (m.groups && count > 1 && monsterLevel >= teamPowerLevel) {
 				break;
 			}
 		}
