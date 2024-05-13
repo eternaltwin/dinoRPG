@@ -350,7 +350,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 50,
 		level: 20,
 		zones: [MapZone.GTOUTCHAUD],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'cobra'
 	},
 	[Monster.PIRA]: {
 		id: Monster.PIRA,
