@@ -124,8 +124,12 @@ export default defineComponent({
 		this.dinozId = parseInt(this.$router.currentRoute.value.query.dinozId as string);
 		if (this.sessionStore.getFightResult) {
 			this.fight = this.sessionStore.getFightResult;
-			this.npcSpeech = this.dinozStore.getNpcSpeech;
-			this.npcName = this.dinozStore.getNpcName;
+			if (this.fight.result) {
+				this.npcSpeech = this.dinozStore.getNpcSpeech;
+				this.npcName = this.dinozStore.getNpcName;
+			} else {
+				this.dinozStore.setNpc(undefined, undefined);
+			}
 			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
 		}
 		EventBus.emit('isLoading', false);
