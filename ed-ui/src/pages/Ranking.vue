@@ -33,6 +33,18 @@
 	<PlayerRanking sort="classic" v-if="tabSelected === 1" />
 	<PlayerRanking sort="average" v-if="tabSelected === 2" />
 	<CompletionRanking v-if="tabSelected === 3" />
+	<input
+		type="text"
+		placeholder="Search Player"
+		v-model="searchValue"
+		list="players"
+		@keyup.enter="getPlayer()"
+	/><datalist id="players">
+		<option v-for="(players, index) in playerList" :key="index">
+			{{ players.name }}
+		</option>
+	</datalist>
+	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
 </template>
 
 <script lang="ts">
@@ -40,6 +52,12 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import PlayerRanking from '../components/rankings/PlayerRanking.vue';
 import CompletionRanking from '../components/rankings/CompletionRanking.vue';
+import { PlayerService } from '../services/index.js';
+
+interface PlayerSearch {
+	name: string;
+	id: number;
+}
 
 export default defineComponent({
 	name: 'Ranking',
@@ -50,12 +68,46 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			tabSelected: 1 as number
+			tabSelected: 1 as number,
+			displayErrorMessage: false as boolean,
+			awaitingSearch: false as boolean,
+			searchValue: undefined as string | undefined,
+			playerList: [] as Array<PlayerSearch>
 		};
 	},
 	methods: {
 		async setTab(value: number): Promise<void> {
 			this.tabSelected = value;
+		},
+		async getResults(): Promise<void> {
+			if (this.searchValue && this.searchValue.length >= 3) {
+				this.playerList = await PlayerService.searchPlayers(this.searchValue);
+			}
+		},
+		goToAccount(paramId: number): void {
+			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
+		},
+		async getPlayer(): Promise<void> {
+			this.displayErrorMessage = false;
+			const playerId: number | undefined = this.playerList.find(player => player.name === this.searchValue)?.id;
+
+			if (playerId === undefined) {
+				this.displayErrorMessage = true;
+				return;
+			}
+
+			this.goToAccount(playerId);
+		}
+	},
+	watch: {
+		searchValue(): void {
+			if (!this.awaitingSearch) {
+				setTimeout(() => {
+					this.getResults();
+					this.awaitingSearch = false;
+				}, 700); // 0.7 sec delay
+			}
+			this.awaitingSearch = true;
 		}
 	}
 });

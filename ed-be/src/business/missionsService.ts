@@ -293,7 +293,7 @@ export async function checkMissionFight(
 		const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
 		// const presentOpponents = actualStep.requirement.target.filter(value => monsters.includes(value));
 		let count = 0;
-		for (const opponent of fight.fighters.filter(f => f.type === "monster")) {
+		for (const opponent of fight.fighters.filter(f => f.type === 'monster')) {
 			if (actualStep.requirement.target.includes(monsterList.ANY.name)) count++;
 			else if (actualStep.requirement.target.includes(opponent.name)) count++;
 		}

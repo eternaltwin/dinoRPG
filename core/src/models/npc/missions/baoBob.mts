@@ -283,9 +283,7 @@ export const M_BAO_BOB: Mission[] = [
 				place: PlaceEnum.ANYWHERE,
 				requirement: {
 					actionType: ConditionEnum.KILL,
-					target: [
-						monsterList.ANY.name
-					],
+					target: [monsterList.ANY.name],
 					value: 30
 				},
 				displayedAction: 'killAll',

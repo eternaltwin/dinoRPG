@@ -16,7 +16,7 @@ export const playerStore = defineStore('playerStore', {
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
-		getPlayerId: (state: StorePlayer) => state.playerId,
+		getPlayerId: (state: StorePlayer) => state.playerId ?? 0,
 		getPlayerOptions: (state: StorePlayer) => state.playerOptions
 	},
 	actions: {

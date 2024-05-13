@@ -239,7 +239,7 @@ export async function rewardFight(
 			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
 			// bonus for fighters of same level of the monster
 			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
-			xp += monsterXp
+			xp += monsterXp;
 		}
 		//TODO ??
 		/*if( !disableTrophies && d.life <= 0 ) {
@@ -440,8 +440,8 @@ export async function rewardFightCalculate(
 			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
 			// bonus for fighters of same level of the monster
 			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
-			console.log(`Monster ${f.name} gave ${monsterXp}`)
-			xp += monsterXp
+			console.log(`Monster ${f.name} gave ${monsterXp}`);
+			xp += monsterXp;
 		}
 		//TODO ??
 		/*if( !disableTrophies && d.life <= 0 ) {

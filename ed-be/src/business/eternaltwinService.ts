@@ -58,9 +58,9 @@ export async function checkLB(req: Request) {
 		Math.min(portion, itemList.POTION_IRMA.maxQuantity)
 	);
 
-	player.labruteDone = true
+	player.labruteDone = true;
 
-	await setPlayer(playerId, { labruteDone: true});
+	await setPlayer(playerId, { labruteDone: true });
 
 	return { quantity: portion };
 }

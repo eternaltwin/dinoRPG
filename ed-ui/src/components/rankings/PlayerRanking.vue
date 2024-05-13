@@ -18,7 +18,10 @@
 					v-for="(ranking, index) in rankings"
 					:key="ranking.player.id"
 					class="select"
-					:class="(index + 1) % 2 === 0 ? 'even' : ''"
+					:class="{
+						even: (index + 1) % 2 === 0,
+						me: ranking.player.id === me
+					}"
 					@click="goToAccount(ranking.player.id)"
 				>
 					<td class="pos">
@@ -53,13 +56,15 @@ import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
+import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'PlayerRanking',
 	data() {
 		return {
 			rankings: [] as RankingGetResponse,
-			page: 1 as number
+			page: 1 as number,
+			me: playerStore().getPlayerId
 		};
 	},
 	props: {
@@ -179,5 +184,18 @@ export default defineComponent({
 }
 .hidden {
 	display: none !important;
+}
+.me > * {
+	-webkit-animation: brightness 3s infinite;
+}
+
+@-webkit-keyframes brightness {
+	0%,
+	100% {
+		-webkit-filter: brightness(80%);
+	}
+	50% {
+		-webkit-filter: brightness(120%);
+	}
 }
 </style>
