@@ -257,9 +257,7 @@ export async function rewardFight(
 		if (gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel > xpf)
 			xpf = gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel;
 
-		console.log(`XP pré-bonus: ${xp}`)
 		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf));
-		console.log(`XP post-bonus: ${xp}`)
 		const max = getMaxXp(d);
 		if (d.experience + xp > max) {
 			xp = max - d.experience;

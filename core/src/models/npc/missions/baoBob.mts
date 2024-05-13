@@ -284,12 +284,7 @@ export const M_BAO_BOB: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [
-						monsterList.KAZKA.name,
-						monsterList.PIRA.name,
-						monsterList.ANGUIL.name,
-						monsterList.BORG.name,
-						monsterList.DARK_LEECH.name,
-						monsterList.LONG_LEGGED_LEECH.name
+						monsterList.ANY.name
 					],
 					value: 30
 				},
