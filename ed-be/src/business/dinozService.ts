@@ -569,15 +569,18 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(400, 'notLeader');
 	}
 
-	const followers = dinoz.followers.map(follower => ({
+	let followers = dinoz.followers.map(follower => ({
 		...follower,
 		player: dinoz.player
 	}));
-	if (followers.filter(d => !isAlive(d)).length > 0) {
-		for (const dino of followers.filter(d => !isAlive(d))) {
-			await updateDinoz(dino.id, { leader: { disconnect: true } });
-			followers.splice(followers.indexOf(dino), 1);
+
+	const unavailableFollowers = followers.filter(d => (d.life <= 0) || (d.unavailableReason !== null));
+
+	if (unavailableFollowers.length > 0) {
+		for (const d of unavailableFollowers) {
+			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
+		followers = followers.filter(d => d.life > 0);
 	}
 
 	const team = [dinoz, ...followers];

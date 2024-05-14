@@ -364,6 +364,7 @@ export async function getDinozFightDataRequest(dinozId: number) {
 					nbrUpLightning: true,
 					nbrUpAir: true,
 					experience: true,
+					unavailableReason: true,
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					missions: true,

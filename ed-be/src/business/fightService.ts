@@ -70,10 +70,10 @@ export async function processFight(req: Request) {
 		player: dinozData.player
 	}));
 
-	const deadFollowers = followers.filter(d => d.life <= 0);
+	const unavailableFollowers = followers.filter(d => (d.life <= 0) || (d.unavailableReason !== null));
 
-	if (deadFollowers.length > 0) {
-		for (const d of deadFollowers) {
+	if (unavailableFollowers.length > 0) {
+		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
 		followers = followers.filter(d => d.life > 0);
