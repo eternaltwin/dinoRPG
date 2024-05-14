@@ -44,7 +44,7 @@ export default defineComponent({
 	data() {
 		return {
 			npcName: undefined as string | undefined,
-			dinozId: undefined as number | undefined,
+			dinozId: +this.$route.params.id as number,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
 			dinozStore: dinozStore(),
@@ -87,7 +87,7 @@ export default defineComponent({
 						case ServiceEnum.FIGHT:
 							try {
 								this.sessionStore.setFightResult(this.npcSpeech.fight);
-								this.dinozStore.setNpc(this.npcSpeech.speech, this.npcSpeech.name);
+								this.dinozStore.setNpc(this.dinozId, this.npcSpeech.speech, this.npcSpeech.name);
 								const dinozList = this.dinozStore.getDinozList;
 
 								if (!dinozList) {
@@ -131,11 +131,11 @@ export default defineComponent({
 		// // const ruffle = new URL(`/public/ruffle/ruffle.js`, import.meta.url) as string;
 		// externalScript.setAttribute('src', '/public/ruffle/ruffle.js');
 		// document.head.appendChild(externalScript);
-		let step = this.dinozStore.getNpcSpeech;
+		let step = this.dinozStore.getNpc(this.dinozId)?.npcSpeech;
 		if (!step) {
 			step = 'begin';
 		} else {
-			this.dinozStore.setNpc(undefined, undefined);
+			this.dinozStore.clearNpc(this.dinozId);
 		}
 		try {
 			this.npcName = this.$route.params.npc as string;

@@ -71,7 +71,7 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			sessionStore: sessionStore(),
 			fight: {} as FightResult,
-			dinozId: undefined as number | undefined,
+			dinozId: +this.$route.params.dinozId as number,
 			lang: localStore().getLanguage ?? 'fr',
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
@@ -90,7 +90,7 @@ export default defineComponent({
 					params: { id: this.$route.params.dinozId.toString(), npc: this.npcName }
 				});
 			} else {
-				this.dinozStore.setNpc(undefined, undefined);
+				this.dinozStore.clearNpc(this.dinozId);
 				this.$router.push({ name: 'DinozPage', params: { id: this.$route.params.dinozId } });
 			}
 		},
@@ -121,14 +121,13 @@ export default defineComponent({
 		}
 	},
 	created(): void {
-		this.dinozId = parseInt(this.$router.currentRoute.value.query.dinozId as string);
 		if (this.sessionStore.getFightResult) {
 			this.fight = this.sessionStore.getFightResult;
 			if (this.fight.result) {
-				this.npcSpeech = this.dinozStore.getNpcSpeech;
-				this.npcName = this.dinozStore.getNpcName;
+				this.npcSpeech = this.dinozStore.getNpc(this.dinozId)?.npcSpeech;
+				this.npcName = this.dinozStore.getNpc(this.dinozId)?.npcName;
 			} else {
-				this.dinozStore.setNpc(undefined, undefined);
+				this.dinozStore.clearNpc(this.dinozId);
 			}
 			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
 		}

@@ -574,7 +574,7 @@ export async function betaMove(req: Request) {
 		player: dinoz.player
 	}));
 
-	const unavailableFollowers = followers.filter(d => (d.life <= 0) || (d.unavailableReason !== null));
+	const unavailableFollowers = followers.filter(d => d.life <= 0 || d.unavailableReason !== null);
 
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {

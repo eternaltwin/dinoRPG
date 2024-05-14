@@ -33,6 +33,10 @@ export interface DinozFiche {
 	nbrUpAir: number;
 	order: number | null;
 	remainingActions: number;
+	npcAwait?: {
+		npcSpeech: string;
+		npcName: string;
+	};
 }
 
 export interface DinozPublicFiche {

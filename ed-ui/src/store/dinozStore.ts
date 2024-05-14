@@ -1,14 +1,11 @@
 import { defineStore } from 'pinia';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { StoreDinoz } from '@drpg/core/models/store/StoreDinoz';
-import { StoreStateSession } from '@drpg/core/models/store/StoreStateSession';
 
 export const dinozStore = defineStore('dinozStore', {
 	state: (): StoreDinoz => ({
 		dinozList: [],
-		dinozCount: undefined,
-		npcSpeech: undefined,
-		npcName: undefined
+		dinozCount: undefined
 	}),
 	getters: {
 		getDinozList: (state: StoreDinoz) => state.dinozList,
@@ -16,8 +13,9 @@ export const dinozStore = defineStore('dinozStore', {
 		getDinoz: (state: StoreDinoz) => {
 			return (dinozId: number) => state.dinozList?.find((dinoz: DinozFiche) => dinoz.id === dinozId);
 		},
-		getNpcSpeech: (state: StoreStateSession) => state.npcSpeech,
-		getNpcName: (state: StoreStateSession) => state.npcName
+		getNpc: (state: StoreDinoz) => {
+			return (dinozId: number) => state.dinozList?.find((dinoz: DinozFiche) => dinoz.id === dinozId)?.npcAwait;
+		}
 	},
 	actions: {
 		setDinozList(dinozList: Array<DinozFiche>): void {
@@ -30,9 +28,18 @@ export const dinozStore = defineStore('dinozStore', {
 			const dinozToUpdate = this.dinozList!.findIndex(dinozs => dinozs.id === dinoz.id);
 			this.dinozList!.splice(dinozToUpdate, 1, dinoz);
 		},
-		setNpc(speech: string, name: string): void {
-			this.npcSpeech = speech;
-			this.npcName = name;
+		setNpc(dinozId: number, speech: string, name: string): void {
+			const dinozToUpdate = this.dinozList?.find(dinozs => dinozs.id === dinozId);
+			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
+			dinozToUpdate.npcAwait = {
+				npcSpeech: speech,
+				npcName: name
+			};
+		},
+		clearNpc(dinozId: number): void {
+			const dinozToUpdate = this.dinozList?.find(dinozs => dinozs.id === dinozId);
+			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
+			dinozToUpdate.npcAwait = undefined;
 		}
 	},
 	persist: {

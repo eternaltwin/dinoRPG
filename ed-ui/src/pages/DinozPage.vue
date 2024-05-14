@@ -85,13 +85,19 @@ export default defineComponent({
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
 				dinozList.push(this.dinozData);
 			} else {
-				dinozList.splice(dinozToUpdate, 1, this.dinozData);
+				dinozList.splice(dinozToUpdate, 1, {
+					...dinozList.find(dinoz => dinoz.id!.toString() === dinozId),
+					...this.dinozData
+				});
 			}
 			if (this.dinozData.followers.length >= 1) {
 				for (const follower of this.dinozData.followers) {
 					const followerToUpdate = await DinozService.getDinozFiche(follower);
 					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
-					dinozList.splice(followerIndex, 1, followerToUpdate);
+					dinozList.splice(followerIndex, 1, {
+						...dinozList.find(dinoz => dinoz.id === followerToUpdate.id),
+						...followerToUpdate
+					});
 				}
 			}
 			this.dinozStore.setDinozList(dinozList);
