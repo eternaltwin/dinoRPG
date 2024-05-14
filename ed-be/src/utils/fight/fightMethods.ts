@@ -1646,12 +1646,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// -10% all defenses
-				fighter.stats.defense[ElementType.FIRE] -= 10;
-				fighter.stats.defense[ElementType.WATER] -= 10;
-				fighter.stats.defense[ElementType.WOOD] -= 10;
-				fighter.stats.defense[ElementType.LIGHTNING] -= 10;
-				fighter.stats.defense[ElementType.AIR] -= 10;
-				fighter.stats.defense[ElementType.VOID] -= 10;
+				fighter.stats.defense[ElementType.FIRE] -= fighter.stats.defense[ElementType.FIRE] * 0.1;
+				fighter.stats.defense[ElementType.WATER] -= fighter.stats.defense[ElementType.WATER] * 0.1;
+				fighter.stats.defense[ElementType.WOOD] -= fighter.stats.defense[ElementType.WOOD] * 0.1;
+				fighter.stats.defense[ElementType.LIGHTNING] -= fighter.stats.defense[ElementType.LIGHTNING] * 0.1;
+				fighter.stats.defense[ElementType.AIR] -= fighter.stats.defense[ElementType.AIR] * 0.1;
+				fighter.stats.defense[ElementType.VOID] -= fighter.stats.defense[ElementType.VOID] * 0.1;
 
 				// Regen 1-4 HP (weighted)
 				const data = [
