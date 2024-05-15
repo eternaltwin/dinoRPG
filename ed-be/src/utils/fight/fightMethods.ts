@@ -3732,7 +3732,6 @@ const attack = (
 
 			// FLYING
 			if (
-				// Close combat
 				is_close_combat &&
 				// Opponent has FLYING
 				hasStatus(realOpponent, Status.FLYING) &&
@@ -3757,86 +3756,88 @@ const attack = (
 
 			registerHit(fightData, attacker, [realOpponent], damage, elements, skill, skillStep);
 
-			// Poison fighter if opponent has Skill.AURA_PUANTE
-			if (realOpponent.skills.find(skill => skill.id === Skill.AURA_PUANTE)) {
-				poison(fightData, attacker, realOpponent, Skill.AURA_PUANTE, StatusLength.MEDIUM);
-			}
+			// Apply all close combat after hit effects
+			if (is_close_combat) {
+				// Poison fighter if opponent has Skill.AURA_PUANTE and close combat
+				if (realOpponent.skills.find(skill => skill.id === Skill.AURA_PUANTE)) {
+					poison(fightData, attacker, realOpponent, Skill.AURA_PUANTE, StatusLength.MEDIUM);
+				}
 
-			// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES
-			if (attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
-				poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
-			}
+				// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES and launched a water assault
+				if (elements.find(element => element === ElementType.WATER) && attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
+					poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
+				}
 
-			// Torch damage
-			if (hasStatus(attacker, Status.TORCHED)) {
-				const damage = attacker.stats.special.torchDamage;
+				// Torch damage
+				if (hasStatus(realOpponent, Status.TORCHED)) {
+					const damage = attacker.stats.special.torchDamage;
+					console.log(`torche damage ${damage}`)
 
-				registerHit(fightData, attacker, [realOpponent], damage, [ElementType.FIRE], Skill.TORCHE);
-			}
+					registerHit(fightData, realOpponent, [attacker], damage, [], Skill.TORCHE);
+				}
 
-			// ACUPUNCTURE damage
-			if (hasStatus(realOpponent, Status.HEALING)) {
-				registerHit(fightData, realOpponent, [attacker], 1, [], Skill.ACUPUNCTURE);
-			}
+				// ACUPUNCTURE damage
+				if (hasStatus(realOpponent, Status.HEALING)) {
+					registerHit(fightData, realOpponent, [attacker], 1, [], Skill.ACUPUNCTURE);
+				}
 
-			// GRIFFES_INFERNALES damage
-			if (attacker.skills.find(skill => skill.id === Skill.GRIFFES_INFERNALES)) {
-				const damage = attacker.stats.base[ElementType.FIRE];
+				// GRIFFES_INFERNALES damage
+				if (attacker.skills.find(skill => skill.id === Skill.GRIFFES_INFERNALES)) {
+					const damage = attacker.stats.base[ElementType.FIRE];
 
-				realOpponent.burnedBy = {
-					id: attacker.id,
-					skill: Skill.GRIFFES_INFERNALES,
-					damage
-				};
-				addStatus(fightData, realOpponent, Status.BURNED, StatusLength.MEDIUM);
-			}
+					realOpponent.burnedBy = {
+						id: attacker.id,
+						skill: Skill.GRIFFES_INFERNALES,
+						damage
+					};
+					addStatus(fightData, realOpponent, Status.BURNED, StatusLength.MEDIUM);
+				}
 
-			// M_FEBREZ
-			if (realOpponent.type === 'dinoz' && attacker.skills.find(skill => skill.id === Skill.M_FEBREZ)) {
-				// Regen 5% HP
-				heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
-			}
+				// M_FEBREZ
+				if (realOpponent.type === 'dinoz' && attacker.skills.find(skill => skill.id === Skill.M_FEBREZ)) {
+					// Regen 5% HP
+					heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
+				}
 
-			// SANG_ACIDE damage
-			if (
-				// Opponent has SANG_ACIDE
-				realOpponent.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
-				// If close combat
-				is_close_combat &&
-				// 1/3 chance
-				randomBetween(0, 2) === 0
-			) {
-				const damage = applyBalanceDamage(realOpponent, realOpponent.stats.special.acidBloodDamage);
+				// SANG_ACIDE damage
+				if (
+					// Opponent has SANG_ACIDE
+					realOpponent.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
+					// 1/3 chance
+					randomBetween(0, 2) === 0
+				) {
+					const damage = applyBalanceDamage(realOpponent, realOpponent.stats.special.acidBloodDamage);
 
-				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.WATER], Skill.SANG_ACIDE);
-			}
+					registerHit(fightData, realOpponent, [attacker], damage, [], Skill.SANG_ACIDE);
+				}
 
-			// FORME_VAPOREUSE
-			if (
-				// Opponent has FORME_VAPOREUSE
-				realOpponent.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
-				// 5% chance
-				randomBetween(0, 19) === 0
-			) {
-				// Add INTANGIBLE
-				addStatus(fightData, realOpponent, Status.INTANGIBLE, StatusLength.SHORT);
-			}
+				// FORME_VAPOREUSE
+				if (
+					// Opponent has FORME_VAPOREUSE
+					realOpponent.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
+					// 5% chance
+					randomBetween(0, 19) === 0
+				) {
+					// Add INTANGIBLE
+					addStatus(fightData, realOpponent, Status.INTANGIBLE, StatusLength.SHORT);
+				}
 
-			// Poison opponent if fighter has Skill.HALEINE_FETIVE
-			if (attacker.skills.find(skill => skill.id === Skill.HALEINE_FETIVE)) {
-				poison(fightData, realOpponent, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
-			}
+				// Poison opponent if fighter has Skill.HALEINE_FETIVE
+				if (attacker.skills.find(skill => skill.id === Skill.HALEINE_FETIVE)) {
+					poison(fightData, realOpponent, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
+				}
 
-			// M_ELECTROCUTION damage
-			if (is_close_combat && realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
-				const damage = randomBetween(1, 4);
-				fightData.steps.push({
-					action: 'looseHp',
-					fid: attacker.id,
-					hp: damage,
-					elements: [ElementType.LIGHTNING]
-				});
-				registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
+				// M_ELECTROCUTION damage
+				if (realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
+					const damage = randomBetween(1, 4);
+					fightData.steps.push({
+						action: 'looseHp',
+						fid: attacker.id,
+						hp: damage,
+						elements: [ElementType.LIGHTNING]
+					});
+					registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
+				}
 			}
 		}
 
