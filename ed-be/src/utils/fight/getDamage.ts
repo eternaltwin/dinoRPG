@@ -21,7 +21,7 @@ export const applyBalanceDamage = (fighter: DetailedFighter, damage: number) => 
 
 // Applies x^0.6 to damage to smooth it and obtain balanced results
 export const balanceDamage = (damage: number) => {
-	return Math.pow(Math.max(damage, 0), 0.6);
+	return Math.round(Math.pow(Math.max(damage, 0), 0.6));
 };
 
 export const getDamage = (
