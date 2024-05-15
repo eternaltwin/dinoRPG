@@ -450,7 +450,8 @@ const registerHit = (
 	opponents: DetailedFighter[],
 	damage: number,
 	damageElements: ElementType[] = [],
-	skill?: Skill
+	skill?: Skill,
+	skillStep?: SkillActivateStep,
 ) => {
 	const actualDamage: Record<number, number> = opponents.reduce(
 		(acc, opponent) => ({
@@ -570,24 +571,10 @@ const registerHit = (
 		 */
 		opponent.hp -= actualDamage[opponent.id];
 
-		if (skill) {
-			// Add hit step from skill
-			const lastSkill = fightData.steps.slice(-1)[0];
-			if (lastSkill.action === 'skillActivate') {
-				const myTarget = lastSkill.targets.find(t => t.tid === opponent.id);
-				if (!myTarget) throw new ErrorFormator(500, `Target ${opponent.id} doesn't exist in ${lastSkill.targets}`);
-				myTarget.damages = actualDamage[opponent.id];
-			}
-			// KAMIKAZE
-			if (skill === Skill.KAMIKAZE) {
-				fightData.steps.push({
-					action: 'hit',
-					fighter: stepFighter(fighter),
-					target: stepFighter(opponent),
-					damage: actualDamage[opponent.id],
-					elements: damageElements
-				});
-			}
+		if (skillStep) {
+			const skillTarget = skillStep.targets.find(t => t.tid === opponent.id);
+			if (!skillTarget) throw new ErrorFormator(500, `Target ${opponent.id} doesn't exist in ${skillStep.targets}`);
+			skillTarget.damages = actualDamage[opponent.id];
 		} else {
 			// Add hit step
 			fightData.steps.push({
@@ -3662,7 +3649,8 @@ const attack = (
 	opponent: DetailedFighter,
 	is_close_combat: boolean,
 	skill?: Skill,
-	power?: number
+	power?: number,
+	skillStep?: SkillActivateStep
 ) => {
 	// Abort if fighter is dead
 	if (fighter.hp <= 0) return;
@@ -3767,7 +3755,7 @@ const attack = (
 		if (damage) {
 			hitsCount++;
 
-			registerHit(fightData, attacker, [realOpponent], damage, elements, skill);
+			registerHit(fightData, attacker, [realOpponent], damage, elements, skill, skillStep);
 
 			// Poison fighter if opponent has Skill.AURA_PUANTE
 			if (realOpponent.skills.find(skill => skill.id === Skill.AURA_PUANTE)) {
@@ -4052,10 +4040,11 @@ const startAttack = (
 	is_close_combat: boolean,
 	disallowCombo?: boolean,
 	skill?: Skill,
-	power?: number
+	power?: number,
+	skillStep?: SkillActivateStep
 ) => {
 	// Trigger fighter attack
-	let hitAtLeastOnce = attack(fightData, fighter, opponent, is_close_combat, skill, power);
+	let hitAtLeastOnce = attack(fightData, fighter, opponent, is_close_combat, skill, power, skillStep);
 
 	// Consume energy
 	setEnergy(fighter, fighter.energy - BASE_ENERGY_COST, fightData);
