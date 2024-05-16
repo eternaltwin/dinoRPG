@@ -169,7 +169,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 			fid: fighter.id
 		});
 
-		// Temportal reduction
+		// Process all skills and items that take effect at the beginning of the fight
+
+		// Temporal reduction
 		if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
 			fightData.steps.push({
 				action: 'itemUse',
@@ -249,6 +251,16 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		// FORME_ETHERALE
 		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
 			addStatus(fightData, fighter, Status.INTANGIBLE);
+		}
+
+		// TORCHE
+		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
+			addStatus(fightData, fighter, Status.TORCHED);
+		}
+
+		// ACCUPUNCTURE
+		if (fighter.skills.some(skill => skill.id === Skill.ACUPUNCTURE)) {
+			addStatus(fightData, fighter, Status.HEALING);
 		}
 
 		// M_INITIATIVE_RESET

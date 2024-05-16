@@ -587,11 +587,6 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 		team[Skill.CHEF_DE_GUERRE] = true;
 	}
 
-	if (fighterHas[Skill.TORCHE]) {
-		fighter.status.push(createStatus(Status.TORCHED));
-		fighter.stats.defense[ElementType.FIRE] += 10;
-	}
-
 	// WOOD
 	if (fighterHas[Skill.TENACITE]) {
 		fighter.minDamage += 1;
@@ -614,10 +609,6 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 
 	if (fighterHas[Skill.KARATE_SOUS_MARIN]) {
 		fighter.skillElementalBonus[ElementType.WATER] += 10;
-	}
-
-	if (fighterHas[Skill.ACUPUNCTURE]) {
-		fighter.status.push(createStatus(Status.HEALING));
 	}
 
 	if (fighterHas[Skill.SAPEUR]) {
