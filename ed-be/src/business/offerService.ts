@@ -129,24 +129,9 @@ export async function createOffer(req: Request) {
 		}
 	}
 
-	itemsAndIngredients.push(
-		...items.map(item => {
-			const itemId = Object.entries(itemNameList).find(([, value]) => value === item.name)?.[0];
-
-			if (!itemId) {
-				throw new ErrorFormator(500, 'Item not found');
-			}
-
-			return {
-				itemId: +itemId,
-				quantity: item.count,
-				isIngredient: false
-			};
-		})
-	);
-
 	// Insert offer
 	await insertOffer(dinozId, total, itemsAndIngredients, playerId);
+	console.log(itemsAndIngredients);
 
 	// Set Dinoz as selling
 	if (dinozId) {
