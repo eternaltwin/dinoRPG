@@ -90,6 +90,24 @@ export enum DamagesEffect {
 	Missed
 }
 
+export enum LifeEffect {
+	Normal,
+	Object,
+	Skull,
+	Acid,
+	Poison,
+	Heal,
+	Explode,
+	Burn,
+	Fire,
+	Wood,
+	Water,
+	Lightning,
+	Air,
+	Gold,
+	Todo
+}
+
 export type transpiled =
 	| {
 			action: DinoAction.ADD;

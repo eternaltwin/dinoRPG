@@ -2,6 +2,7 @@ import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { Item } from '../item/ItemList.mjs';
 import { Status, FighterType } from './DetailedFighter.mjs';
+import { LifeEffect } from './transpiler.mjs';
 
 export interface StepFighter {
 	id: number;
@@ -100,7 +101,7 @@ export interface LooseHpStep {
 	action: 'looseHp';
 	fid: number;
 	hp: number;
-	elements: ElementType[];
+	fx: LifeEffect;
 }
 export interface HealStep {
 	action: 'heal';

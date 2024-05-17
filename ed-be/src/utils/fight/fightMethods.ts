@@ -38,6 +38,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { FightStats } from '@drpg/core/models/fight/FightResult';
 import { sendJSONToDiscord } from '../discord.js';
 import { ErrorFormator } from '../errorFormator.js';
+import { LifeEffect } from '@drpg/core/models/fight/transpiler';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -444,7 +445,7 @@ export const initStepFighter = (
 	return data;
 };
 
-const registerHit = (
+const 	registerHit = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	opponents: DetailedFighter[],
@@ -2264,7 +2265,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				action: 'looseHp',
 				fid: fighter.id,
 				hp: hpLost,
-				elements: [ElementType.FIRE]
+				fx: LifeEffect.Explode,
 			});
 			break;
 		}
@@ -3443,6 +3444,19 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return countered;
 };
 
+const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
+	// TODO: check for danger detector item
+	let hp_lost = applyBalanceDamage(fighter, damage)
+	fighter.hp -= hp_lost;
+
+	fightData.steps.push({
+		action: 'looseHp',
+		fid: fighter.id,
+		hp: hp_lost,
+		fx,
+	})
+}
+
 const evade = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	// No evasion if opponent is dead
 	if (opponent.hp <= 0) return false;
@@ -3834,7 +3848,7 @@ const attack = (
 						action: 'looseHp',
 						fid: attacker.id,
 						hp: damage,
-						elements: [ElementType.LIGHTNING]
+						fx: LifeEffect.Lightning,
 					});
 					registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
 				}
@@ -4254,8 +4268,9 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 										type: 'boss' as const
 									} as DetailedFighter;
 
-									// Register the hit
-									registerHit(fightData, poisoner, [fighter], poisonedBy.damage, []);
+									// Register the hp lost from poison
+									loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+
 								} else {
 									// Get poisoner
 									const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
@@ -4265,8 +4280,9 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 										throw new Error('Poisoner not found');
 									}
 
-									// Register the hit
-									registerHit(fightData, poisoner, [fighter], poisonedBy.damage, [], poisonedBy.skill);
+									// Register the hp lost from poison
+									loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+
 								}
 								break;
 							}
@@ -4287,15 +4303,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 									throw new Error('Burner not found');
 								}
 
-								// Register the hit
-								registerHit(
-									fightData,
-									burner,
-									[fighter],
-									applyBalanceDamage(fighter, burnedBy.damage),
-									[],
-									burnedBy.skill
-								);
+								// Register the hp lost from burn
+								loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Burn);
 								break;
 							}
 							case Status.HEALING: {
@@ -4304,14 +4313,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								break;
 							}
 							case Status.TORCHED: {
-								registerHit(
-									fightData,
-									fighter,
-									[fighter],
-									applyBalanceDamage(fighter, 1),
-									[ElementType.FIRE],
-									Skill.TORCHE
-								);
+								loseHp(fightData, fighter, 1, LifeEffect.Burn);
 								break;
 							}
 							default: {

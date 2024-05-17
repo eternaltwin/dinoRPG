@@ -25,7 +25,7 @@ export function resolveLifeEffect(step: FightStep) {
 		if (step.elements.length > 0) {
 			const element = step.elements[0];
 			switch (element) {
-				case 6:
+				case ElementType.VOID:
 					return 0;
 				case 1:
 					return 8;
@@ -240,12 +240,11 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 				break;
 			case 'looseHp':
 				history.push({
-					action: DinoAction.DAMAGES,
+					action: DinoAction.LOST,
 					fid: step.fid,
-					tid: step.fid,
-					damages: step.hp,
+					amount: step.hp,
 					lifeFx: {
-						fx: resolveLifeEffectv2(step.elements)
+						fx: step.fx
 					}
 				});
 				break;
