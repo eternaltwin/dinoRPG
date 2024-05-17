@@ -79,7 +79,8 @@ export default defineComponent({
 	},
 	props: {
 		accountData: {
-			type: Object as PropType<PlayerInfo>
+			type: Object as PropType<PlayerInfo>,
+			required: true
 		}
 	},
 	methods: {
@@ -121,13 +122,31 @@ export default defineComponent({
 		goToRankingPage(e: Event) {
 			e.preventDefault();
 			goTo(this.$router, 'Ranking');
+		},
+		async fetchPlayerPosition() {
+			// Fetch player position
+			try {
+				const { position } = await PlayerService.getPosition(+this.$route.params.id);
+				this.playerPosition = position;
+			} catch (err) {
+				errorHandler.handle(err);
+			}
 		}
 	},
+	watch: {
+		accountData: {
+			immediate: true,
+			handler() {
+				this.fetchPlayerPosition();
+			}
+		}
+	},
+	beforeRouteUpdate(to, from, next) {
+		this.fetchPlayerPosition();
+		next();
+	},
 	mounted() {
-		// Fetch player position
-		PlayerService.getPosition(+this.$route.params.id).then(({ position }) => {
-			this.playerPosition = position;
-		});
+		this.fetchPlayerPosition();
 
 		if (this.customText) {
 			this.customText = this.customText.replace(/\n/g, '<br>');

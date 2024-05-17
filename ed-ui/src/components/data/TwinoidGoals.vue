@@ -185,26 +185,38 @@ export default defineComponent({
 		},
 		isUnlock(stat: PlayerStats): boolean {
 			return this.wonRewards.find(r => r.stat === stat.stat) !== undefined;
+		},
+		updateStats() {
+			this.getTopStats();
+			this.achievementsPoints = this.accountStats
+				.map(stat => {
+					return dinorpg
+						.get(stat.stat)
+						.unlocks.filter(u => u.count <= stat.quantity)
+						.map(a => {
+							if (a.title) this.wonRewards.push({ unlock: a, stat: stat.stat });
+							return a.points;
+						})
+						.reduce((total, a) => {
+							return total + a;
+						}, 0);
+				})
+				.reduce((total, a) => {
+					return total + a;
+				}, 0);
 		}
 	},
 	mounted() {
-		this.getTopStats();
-		this.achievementsPoints = this.accountStats
-			.map(stat => {
-				return dinorpg
-					.get(stat.stat)
-					.unlocks.filter(u => u.count <= stat.quantity)
-					.map(a => {
-						if (a.title) this.wonRewards.push({ unlock: a, stat: stat.stat });
-						return a.points;
-					})
-					.reduce((total, a) => {
-						return total + a;
-					}, 0);
-			})
-			.reduce((total, a) => {
-				return total + a;
-			});
+		this.updateStats();
+	},
+	watch: {
+		accountStats: {
+			handler() {
+				this.updateStats();
+			},
+			deep: true,
+			immediate: true
+		}
 	}
 });
 </script>

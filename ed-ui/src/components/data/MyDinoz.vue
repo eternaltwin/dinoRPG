@@ -58,7 +58,8 @@ export default defineComponent({
 			UnavailableReasonFront,
 			raceList: raceList,
 			statusList: statusList,
-			position: dinozPlacement
+			position: dinozPlacement,
+			sortedDinozList: [] as DinozPublicFiche[]
 		};
 	},
 	methods: {
@@ -86,14 +87,9 @@ export default defineComponent({
 		goToDinoz(dinozId: number) {
 			if (!this.myAccount) return;
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
-		}
-	},
-	computed: {
-		myAccount(): boolean {
-			return playerStore().getPlayerId === parseInt(this.$route.params.id);
 		},
-		sortedDinozList(): DinozPublicFiche[] {
-			return this.accountData.dinoz.slice().sort((a, b) => {
+		updateSortedDinozList() {
+			this.sortedDinozList = this.accountData.dinoz.slice().sort((a, b) => {
 				if (a.isFrozen && !b.isFrozen) {
 					return 1;
 				} else if (!a.isFrozen && b.isFrozen) {
@@ -102,6 +98,22 @@ export default defineComponent({
 				return 0;
 			});
 		}
+	},
+	computed: {
+		myAccount(): boolean {
+			return playerStore().getPlayerId === parseInt(this.$route.params.id);
+		}
+	},
+	watch: {
+		accountData: {
+			immediate: true,
+			handler() {
+				this.updateSortedDinozList();
+			}
+		}
+	},
+	mounted() {
+		this.updateSortedDinozList();
 	}
 });
 </script>
