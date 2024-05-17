@@ -1,7 +1,7 @@
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
-import { DamagesEffect, DinoAction, EntranceEffect, FinishState, transpiled } from '@drpg/core/models/fight/transpiler';
+import { DamagesEffect, DinoAction, EntranceEffect, FinishState, LifeEffect, transpiled } from '@drpg/core/models/fight/transpiler';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
@@ -20,60 +20,23 @@ export function resolveFightingPlace(placeId: number) {
 	};
 }
 
-export function resolveLifeEffect(step: FightStep) {
-	if (step.action === 'hit') {
-		if (step.elements.length > 0) {
-			const element = step.elements[0];
-			switch (element) {
-				case ElementType.VOID:
-					return 0;
-				case 1:
-					return 8;
-				case 2:
-					return 9;
-				case 3:
-					return 10;
-				case 4:
-					return 11;
-				case 5:
-					return 12;
-				default:
-					return 0;
-			}
-		}
-		if (step.skill && step.skill === 51403) {
-			// POISON
-			return 4;
-		}
-		if (step.skill && step.skill === 31406) {
-			// SANG ACIDE
-			return 3;
-		}
+export function convertElementToLifeEffect(element: ElementType) {
+	switch (element) {
+		case ElementType.VOID:
+			return LifeEffect.Normal;
+		case ElementType.FIRE:
+			return LifeEffect.Fire;
+		case ElementType.WOOD:
+			return LifeEffect.Wood;
+		case ElementType.WATER:
+			return LifeEffect.Water;
+		case ElementType.LIGHTNING:
+			return LifeEffect.Lightning;
+		case ElementType.AIR:
+			return LifeEffect.Air;
+		default:
+			return LifeEffect.Normal;
 	}
-	return 0;
-}
-
-export function resolveLifeEffectv2(elements: ElementType[]) {
-	if (elements.length > 0) {
-		const element = elements[0];
-		switch (element) {
-			case 6:
-				return 0;
-			case 1:
-				return 8;
-			case 2:
-				return 9;
-			case 3:
-				return 10;
-			case 4:
-				return 11;
-			case 5:
-				return 12;
-			default:
-				return 0;
-		}
-	}
-	return 0;
 }
 
 export function resolveSkillName(skillId: number, t: TFunction) {
@@ -230,7 +193,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					tid: step.target.id,
 					damages: step.damage,
 					lifeFx: {
-						fx: resolveLifeEffect(step)
+						fx: convertElementToLifeEffect(step.elements[0])
 					}
 				});
 				break;

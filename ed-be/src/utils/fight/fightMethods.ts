@@ -3784,15 +3784,12 @@ const attack = (
 
 				// Torch damage
 				if (hasStatus(realOpponent, Status.TORCHED)) {
-					const damage = attacker.stats.special.torchDamage;
-					console.log(`torche damage ${damage}`)
-
-					registerHit(fightData, realOpponent, [attacker], damage, [], Skill.TORCHE);
+					loseHp(fightData, attacker, realOpponent.stats.special.torchDamage, LifeEffect.Burn);
 				}
 
 				// ACUPUNCTURE damage
 				if (hasStatus(realOpponent, Status.HEALING)) {
-					registerHit(fightData, realOpponent, [attacker], 1, [], Skill.ACUPUNCTURE);
+					loseHp(fightData, attacker, 1, LifeEffect.Normal);
 				}
 
 				// GRIFFES_INFERNALES damage
@@ -3820,9 +3817,7 @@ const attack = (
 					// 1/3 chance
 					randomBetween(0, 2) === 0
 				) {
-					const damage = applyBalanceDamage(realOpponent, realOpponent.stats.special.acidBloodDamage);
-
-					registerHit(fightData, realOpponent, [attacker], damage, [], Skill.SANG_ACIDE);
+					loseHp(fightData, attacker, realOpponent.stats.special.acidBloodDamage, LifeEffect.Acid);
 				}
 
 				// FORME_VAPOREUSE
@@ -3843,14 +3838,7 @@ const attack = (
 
 				// M_ELECTROCUTION damage
 				if (realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
-					const damage = randomBetween(1, 4);
-					fightData.steps.push({
-						action: 'looseHp',
-						fid: attacker.id,
-						hp: damage,
-						fx: LifeEffect.Lightning,
-					});
-					registerHit(fightData, realOpponent, [attacker], damage, [ElementType.VOID], Skill.M_ELECTROCUTION);
+					loseHp(fightData, attacker, randomBetween(1, 4), LifeEffect.Lightning);
 				}
 			}
 		}
