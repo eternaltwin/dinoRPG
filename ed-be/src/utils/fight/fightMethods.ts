@@ -3784,7 +3784,7 @@ const attack = (
 
 				// Torch damage
 				if (hasStatus(realOpponent, Status.TORCHED)) {
-					loseHp(fightData, attacker, realOpponent.stats.special.torchDamage, LifeEffect.Burn);
+					loseHp(fightData, attacker, realOpponent.stats.special.torchDamage, LifeEffect.Fire);
 				}
 
 				// ACUPUNCTURE damage
