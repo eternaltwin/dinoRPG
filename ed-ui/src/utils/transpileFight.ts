@@ -65,25 +65,25 @@ export function resolveStatus(status: Status) {
 			return 0;
 		case Status.TORCHED:
 			return 1;
-		case Status.BURNED:
-			return 2;
 		case Status.INTANGIBLE:
-			return 3;
+			return 2;
 		case Status.FLYING:
-			return 4;
+			return 3;
 		case Status.SLOWED:
-			return 5;
+			return 4;
 		case Status.QUICKENED:
-			return 6;
+			return 5;
 		case Status.PETRIFIED:
+			return 6;
+		case Status.SHIELDED:
 			return 7;
 		case Status.BLESSED:
 			return 8;
 		case Status.POISONED:
 			return 9;
-		case Status.SHIELDED:
-			return 10;
 		case Status.HEALING:
+			return 10;
+		case Status.BURNED:
 			return 11;
 		case Status.LOCKED:
 			return 12;
