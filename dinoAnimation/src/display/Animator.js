@@ -1,5 +1,6 @@
 // @ts-check
-import { Container, Rectangle, Sprite, Ticker } from 'pixi.js';
+import { Container, Rectangle, Ticker } from 'pixi.js';
+import { Sprite } from '@pixi/picture';
 import { PixiHelper } from './PixiHelper.js';
 import { Animation } from './Animation.js';
 import { ImageExtractor } from './ImageExtractor.js';
@@ -180,7 +181,7 @@ export class Animator extends Container {
 	 * Darkens the skin of the body.
 	 */
 	darken() {
-		this._body.filters.push(ConstantShaderManager.getAdjustColorFilter(-57, 17, -83));
+		this._body.filters.push(ConstantShaderManager.getAdjustColorFilter(-0.57, 0.17, -0.83, 0, false));
 	}
 
 	/**
