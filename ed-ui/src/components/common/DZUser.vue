@@ -1,17 +1,22 @@
 <template>
-	<!-- TODO	<span class="user-component" @click="seePlayer = !seePlayer">-->
-	<span class="user-component">
-		<img src="../../assets/design/small_member.webp" :alt="user.name" />
-		<span>{{ user.name }}</span>
-	</span>
-	<div v-if="seePlayer">Player Resume</div>
+	<div class="user-container">
+		<span class="user-component" @click="toggleMenu">
+			<img src="../../assets/design/small_member.webp" :alt="user.name" />
+			<span>{{ user.name }}</span>
+		</span>
+		<PlayerMenu v-if="seePlayer" />
+	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import PlayerMenu from './PlayerMenu.vue';
 
 export default defineComponent({
 	name: 'DZUser',
+	components: {
+		PlayerMenu
+	},
 	props: {
 		user: {
 			type: Object,
@@ -22,11 +27,20 @@ export default defineComponent({
 		return {
 			seePlayer: false
 		};
+	},
+	methods: {
+		toggleMenu() {
+			this.seePlayer = !this.seePlayer;
+		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
+.user-container {
+	position: relative;
+	display: inline-block;
+}
 .user-component {
 	display: inline-flex;
 	align-items: center;

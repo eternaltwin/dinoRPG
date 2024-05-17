@@ -4280,6 +4280,20 @@
 	"achievements": {
 		"reward": "{name} x {quantity}"
 	},
+	"playerMenu": {
+		"title": "Profil du joueur :",
+		"gridMenu": {
+			"pDRPG": "Profil DinoRPG",
+			"pEternal": "Profil EternalTwin",
+			"addContact": "Ajouter contact",
+			"sendMSG": "Envoyer un message"
+		},
+		"report": {
+			"signal": "Signaler le joueur",
+			"block": "Bloquer le joueur"
+		},
+		"contact": "Ce joueur ne fait pas partie de vos contacts."
+	},
 	"roadmap": {
 		"title": "Découvrez les prochains évènements sur DinoRPG !",
 		"small": "Prédiction d'Irma",
