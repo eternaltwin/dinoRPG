@@ -584,11 +584,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 20,
-			[Stat.FIRE_ASSAULT]: 12,
-			[Stat.WATER_ASSAULT]: 12,
-			[Stat.AIR_ASSAULT]: 12,
-			[Stat.LIGHTNING_ASSAULT]: 12,
-			[Stat.WOOD_ASSAULT]: 12
+			[Stat.FIRE_ASSAULT]: 12
 		}
 	},
 	[Skill.COULEE_DE_LAVE]: {
