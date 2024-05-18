@@ -1,7 +1,15 @@
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
-import { DamagesEffect, DinoAction, EntranceEffect, FinishState, LifeEffect, transpiled } from '@drpg/core/models/fight/transpiler';
+import {
+	DamagesEffect,
+	DinoAction,
+	EntranceEffect,
+	FinishState,
+	LifeEffect,
+	StatusEffect,
+	transpiled
+} from '@drpg/core/models/fight/transpiler';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
@@ -62,35 +70,35 @@ export function resolveSkillEffect(skillId: number) {
 export function resolveStatus(status: Status) {
 	switch (status) {
 		case Status.ASLEEP:
-			return 0;
+			return StatusEffect.Sleep;
 		case Status.TORCHED:
-			return 1;
-		case Status.INTANGIBLE:
-			return 2;
-		case Status.FLYING:
-			return 3;
-		case Status.SLOWED:
-			return 4;
-		case Status.QUICKENED:
-			return 5;
-		case Status.PETRIFIED:
-			return 6;
-		case Status.SHIELDED:
-			return 7;
-		case Status.BLESSED:
-			return 8;
-		case Status.POISONED:
-			return 9;
-		case Status.HEALING:
-			return 10;
+			return StatusEffect.Flames;
 		case Status.BURNED:
-			return 11;
+			return StatusEffect.Burn;
+		case Status.INTANGIBLE:
+			return StatusEffect.Intang;
+		case Status.FLYING:
+			return StatusEffect.Fly;
+		case Status.SLOWED:
+			return StatusEffect.Slow;
+		case Status.QUICKENED:
+			return StatusEffect.Quick;
+		case Status.PETRIFIED:
+			return StatusEffect.Stoned;
+		case Status.SHIELDED:
+			return StatusEffect.Shield;
+		case Status.BLESSED:
+			return StatusEffect.Bless;
+		case Status.POISONED:
+			return StatusEffect.Poison;
+		case Status.HEALING:
+			return StatusEffect.Heal;
 		case Status.LOCKED:
-			return 12;
+			return StatusEffect.MonoElt;
 		case Status.DAZZLED:
-			return 13;
+			return StatusEffect.Dazzled;
 		case Status.STUNNED:
-			return 14;
+			return StatusEffect.Stun;
 		default:
 			return -1;
 	}
@@ -193,7 +201,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					tid: step.target.id,
 					damages: step.damage,
 					lifeFx: {
-						fx: convertElementToLifeEffect(step.elements[0])
+						fx: convertElementToLifeEffect(step.elements[0]),
 					}
 				});
 				break;

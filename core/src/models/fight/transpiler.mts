@@ -40,6 +40,14 @@ export enum FinishState {
 	GUARD
 }
 
+export enum FighterProperty {
+	Boss,
+	Static,
+	GroundOnly,
+	Dark,
+	Nothing,
+}
+
 export enum EntranceEffect {
 	STAND,
 	JUMP,
@@ -68,6 +76,13 @@ export enum AuraType {
 	Burst,
 	Detonate,
 	Light
+}
+
+export enum GotoEffect {
+	Normal,
+	Special,
+	Over,
+	Todo
 }
 
 export enum SkillType {
@@ -108,6 +123,24 @@ export enum LifeEffect {
 	Todo
 }
 
+export enum StatusEffect {
+	Sleep,
+	Flames,
+	Burn,
+	Intang,
+	Fly,
+	Slow,
+	Quick,
+	Stoned,
+	Bless,
+	Poison,
+	Shield,
+	Heal,
+	MonoElt,
+	Dazzled,
+	Stun
+}
+
 export type transpiled =
 	| {
 			action: DinoAction.ADD;
@@ -134,7 +167,9 @@ export type transpiled =
 			tid: number;
 			damages: number;
 			lifeFx?: {
-				fx: number;
+				fx: LifeEffect,
+				amount?: number,
+				size?: number,
 			};
 			effect?: DamagesEffect;
 	  }
@@ -146,6 +181,11 @@ export type transpiled =
 			action: DinoAction.GOTO;
 			fid: number;
 			tid: number;
+			effect?: GotoEffect,
+			shadeColor?: {
+				col1?: number,
+				col2?: number
+			}
 	  }
 	| {
 			action: DinoAction.ANNOUNCE;
@@ -161,9 +201,17 @@ export type transpiled =
 					id: number;
 					life?: number;
 				}[];
-				color?: string;
-				type?: SkillType | AuraType;
 				fx?: string;
+				anim?: string,
+				type?: SkillType | AuraType;
+				speed?: number,
+				power?: number,
+				radius?: number,
+				color?: string;
+				alpha?: number,
+				remove?: boolean,
+				percent?: number,
+				ok?: boolean
 			};
 	  }
 	| {
