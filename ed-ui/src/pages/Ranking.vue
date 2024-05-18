@@ -34,6 +34,7 @@
 	<PlayerRanking sort="average" v-if="tabSelected === 2" />
 	<CompletionRanking v-if="tabSelected === 3" />
 	<input
+		class="search"
 		type="text"
 		placeholder="Search Player"
 		v-model="searchValue"
@@ -125,5 +126,19 @@ export default defineComponent({
 	background-color: #bc683c;
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
+}
+.search {
+	background-image: url('../assets/background/form_field.webp');
+	background-repeat: no-repeat;
+	border: none;
+	color: #fce3bc;
+	height: 20px;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 2px;
+	width: 185px;
+}
+.search::placeholder {
+	color: #fce3bc;
 }
 </style>

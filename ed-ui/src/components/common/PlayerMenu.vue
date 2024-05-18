@@ -1,6 +1,6 @@
 <template>
 	<div class="player-menu">
-		<p>{{ $t('playerMenu.title')}}</p>
+		<p>{{ $t('playerMenu.title') }}</p>
 		<span class="dashed"></span>
 		<div class="grid-menu">
 			<div class="dinorpg">
