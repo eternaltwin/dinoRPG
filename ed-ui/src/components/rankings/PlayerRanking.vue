@@ -22,7 +22,7 @@
 						even: (index + 1) % 2 === 0,
 						me: ranking.player.id === me
 					}"
-					@click="goToAccount(ranking.player.id)"
+					@click="togglemenu(ranking.player.id, ranking.player.name)"
 				>
 					<td class="pos">
 						{{ (page - 1) * 20 + (index + 1) }}
@@ -40,6 +40,13 @@
 						{{ ranking.average }}
 					</td>
 				</tr>
+				<PlayerMenu
+					v-if="seePlayer"
+					:isRanking="true"
+					@account-click="goToAccount"
+					:playerId="selectedPlayerId"
+					:playerName="selectedPlayerName"
+				/>
 			</tbody>
 			<tr class="select" @click="changePage(1)" :class="{ hidden: rankings.length < 20 }">
 				<td class="pos" colspan="5" style="text-align: center">
@@ -57,22 +64,34 @@ import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { playerStore } from '../../store/index.js';
+import PlayerMenu from '../common/PlayerMenu.vue';
 
 export default defineComponent({
 	name: 'PlayerRanking',
+	components: {
+		PlayerMenu
+	},
 	data() {
 		return {
 			rankings: [] as RankingGetResponse,
 			page: 1 as number,
-			me: playerStore().getPlayerId
+			me: playerStore().getPlayerId,
+			seePlayer: false,
+			selectedPlayerId: null as number | null,
+			selectedPlayerName: ''
 		};
 	},
 	props: {
 		sort: String
 	},
 	methods: {
-		goToAccount(paramId: number): void {
-			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
+		togglemenu(playerId: number, playerName: string) {
+			this.seePlayer = !this.seePlayer;
+			this.selectedPlayerId = playerId;
+			this.selectedPlayerName = playerName;
+		},
+		goToAccount(playerId: number) {
+			this.$router.push({ name: 'MyAccount', params: { id: playerId } });
 		},
 		async getRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -98,6 +117,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .wrapper {
 	margin: 5px;
+	position: relative;
 	table {
 		width: 100%;
 		margin-top: 10px;

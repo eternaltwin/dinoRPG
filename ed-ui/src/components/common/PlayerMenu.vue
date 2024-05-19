@@ -1,9 +1,11 @@
 <template>
-	<div class="player-menu">
-		<p>{{ $t('playerMenu.title') }}</p>
+	<div :class="['player-menu', { 'player-menu-ranking': isRanking }]">
+		<p>
+			{{ $t('playerMenu.title') }} <span>{{ playerName }}</span>
+		</p>
 		<span class="dashed"></span>
 		<div class="grid-menu">
-			<div class="dinorpg">
+			<div class="dinorpg" @click="handleAccountClick">
 				<img :src="getImgURL('icons', 'small_home')" alt="accountProfile" />
 				<p>{{ $t('playerMenu.gridMenu.pDRPG') }}</p>
 			</div>
@@ -39,7 +41,26 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: 'PlayerMenu'
+	name: 'PlayerMenu',
+	props: {
+		isRanking: {
+			type: Boolean,
+			default: false
+		},
+		playerId: {
+			type: Number,
+			required: true
+		},
+		playerName: {
+			type: String,
+			required: true
+		}
+	},
+	methods: {
+		handleAccountClick() {
+			this.$emit('account-click', this.playerId);
+		}
+	}
 });
 </script>
 
@@ -120,6 +141,31 @@ export default defineComponent({
 		border-top: 1px dashed #ff9200;
 		margin-top: 2px;
 		display: block;
+	}
+}
+.player-menu-ranking {
+	border: 2px solid #f3d6b1;
+	background-color: #ecbd84;
+	color: #710;
+	position: absolute;
+	top: 90px;
+	left: 196px;
+	.grid-menu {
+		& div {
+			background-color: #c88f44;
+		}
+		& div:hover {
+			background-color: #ecbd84;
+		}
+	}
+	.report {
+		color: #710;
+		& p:hover {
+			color: #fffdba;
+		}
+	}
+	.dashed {
+		border-top: 1px dashed #710;
 	}
 }
 </style>

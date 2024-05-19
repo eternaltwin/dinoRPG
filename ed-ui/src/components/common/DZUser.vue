@@ -4,7 +4,7 @@
 			<img src="../../assets/design/small_member.webp" :alt="user.name" />
 			<span>{{ user.name }}</span>
 		</span>
-		<PlayerMenu v-if="seePlayer" />
+		<PlayerMenu v-if="seePlayer" @account-click="handleAccountClick" :playerId="user.id" :playerName="user.name" />
 	</div>
 </template>
 
@@ -31,6 +31,9 @@ export default defineComponent({
 	methods: {
 		toggleMenu() {
 			this.seePlayer = !this.seePlayer;
+		},
+		handleAccountClick(playerId: number) {
+			this.$router.push({ name: 'MyAccount', params: { id: playerId } });
 		}
 	}
 });
