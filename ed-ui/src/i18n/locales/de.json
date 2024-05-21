@@ -73,7 +73,7 @@
 		"wrongQuantity": "Quantité invalide",
 		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
-		"resting": "Dein Dinoz ruht sich derzeit aus. Es wird in {min} Minuten {hp} :pv: wiederherstellen.",
+		"resting": "Dein Dinoz ruht sich derzeit aus. Er wird in {min} Minuten {hp} :pv: wiederherstellen.",
 		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:."
 	},
 	"dig": {
@@ -157,7 +157,7 @@
 			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
 			"stop_congel": "Du kannst deinen Dinoz auftauen, damit er sich wieder bewegen und kämpfen kann.",
 			"rest": "Dein Dinoz kann **sich ausruhen**, um Lebenspunkte wiederherzustellen. Er kann nun über Stufe 60 hinausgehen und Stufe 70 erreichen!",
-			"stop_rest": "Dein Dinoz hat sein volles Potenzial entfaltet. Er kann nun über Stufe 50 hinausgehen und Stufe 60 erreichen!",
+			"stop_rest": "Dein Dinoz hat sein volles Potenzial entfaltet. Du kannst ihn unterbrechen, damit er sich wieder fortbewegen und kämpfen kann.",
 			"itinerant_shop": "Beim Fliegenden Händler kannst du deine Zutaten verkaufen."
 		},
 		"name": {
@@ -793,7 +793,7 @@
 			"triceragnon": "Triceragon"
 		},
 		"description": {
-			"winks": "Die Winks haben seltsame Kräfte. Sie gehören zu den wenigen Dinoz, die vorübergehende oder endgültige Mutationen hervorrufen können. Sie haben im Laufe der Zeit eine regelrechte Wissenschaft entwickelt, die von Generation zu Generation weitergegeben wird.",
+			"winks": "Die Winks haben seltsame Kräfte. Sie gehören zu den wenigen Dinoz, die vorübergehende oder endgültige Mutationen hervorrufen können. Sie haben daraus im Laufe der Zeit eine regelrechte Wissenschaft entwickelt, die von Generation zu Generation weitergegeben wird.",
 			"sirain": "Die Siränen sind die Herrscher der Atlantinischen Inseln. Sie haben ein ziemlich gutes taktisches Gespür und behalten im Kampf stets die Übersicht, sodass sie die Schwächen ihrer Gegner ausnutzen können.",
 			"castivore": "Die von Unmengen an Haaren bedeckten Kastivoren sind friedliche Pflanzenfresser. Trotz ihrer kurzen Beine laufen sie sehr schnell und sind sehr beweglich. Sie sind treue Begleiter ihrer Besitzer und machen nicht viel Ärger, außer beim Putzen, wenn sie ihr Fell erneuern.",
 			"feross": "Der Feross ist ein besonders seltener Dinoz. Sein natürlicher Lebensraum sind die Nebelschwaden des Klebrigen Sumpfes, weshalb es sehr schwierig ist, ihn zu erkennen und noch schwieriger, ihn zu fangen. Trotz seines sanften Gemüts kann sein mächtiges Horn unter seinen Feinden verheerende Schäden anrichten.",
@@ -2329,10 +2329,10 @@
 		}
 	},
 	"tooltip": {
-		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** im Laden kaufen.",
+		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
 		"item": {
 			"use": "**Sofort** benutzen",
-			"useOff": "Cet objet ne peut pas être **utilisé**",
+			"useOff": "Dieser Gegenstand kann **nicht direkt benutzt** werden",
 			"equipTitle": "Zur **Kampfausrüstung** hinzufügen&&//Angelegte Gegenstände können von deinen Dinoz im Kampf eingesetzt werden//",
 			"equipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre dinoz//",
 			"equip": "Dieser Gegenstand **kann zur Kampfausrüstung** hinzugefügt werden",
@@ -2340,12 +2340,12 @@
 			"maxQuantity": "Maximale Anzahl:"
 		},
 		"shop": {
-			"buyMaxTopNote_part1": "Vous possédez ",
-			"buyMaxTopNote_part2": " exemplaire(s) de cet objet, sur ",
-			"buyMaxTopNote_part3": " maximum.",
-			"buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
-			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
-			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+			"buyMaxTopNote_part1": "Du hast ",
+			"buyMaxTopNote_part2": " Stück von diesem Gegenstand, bis zu einem Maximum von ",
+			"buyMaxTopNote_part3": " .",
+			"buyMaxBottomNote": "//Klicke hier, um diesen Gegenstand vollends aufzufüllen.//",
+			"invalidQuantity": "Es ist eine **gültige** Menge erforderlich.",
+			"invalidQuantity_foot": "//Prüfe, ob die Anzahl korrekt ist und ob du Platz dafür hast.//"
 		}
 	},
 	"pageTitle": {
