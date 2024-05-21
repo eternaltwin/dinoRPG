@@ -1566,6 +1566,7 @@ __metadata:
   dependencies:
     "@pixi/filter-drop-shadow": "npm:^5.2.0"
     "@pixi/filter-glow": "npm:^5.2.1"
+    "@pixi/picture": "npm:^4.0.1"
     eslint: "npm:^8.49.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-jsdoc: "npm:^46.5.1"
@@ -2674,6 +2675,21 @@ __metadata:
     "@pixi/display": 7.3.2
     "@pixi/sprite": 7.3.2
   checksum: 10/3e8b2045ae9d4b723905479da30df97d33f00d0f377c53676a9d5423f0e146240094811c507e8e5a8f1df7f6635649d24cda4ebbfba298f14f81a8af61da9043
+  languageName: node
+  linkType: hard
+
+"@pixi/picture@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@pixi/picture@npm:4.0.1"
+  peerDependencies:
+    "@pixi/constants": ^7.2.0
+    "@pixi/core": ^7.2.0
+    "@pixi/display": ^7.2.0
+    "@pixi/math": ^7.2.0
+    "@pixi/sprite": ^7.2.0
+    "@pixi/sprite-tiling": ^7.2.0
+    "@pixi/utils": ^7.2.0
+  checksum: 10/2ceb8e58e56e8f50039e9291c143572849e384212a15a8851071c09080b4c96db1488662283b0dcf89027210bb822f5acda47f90baf327c87824730c14400545
   languageName: node
   linkType: hard
 
