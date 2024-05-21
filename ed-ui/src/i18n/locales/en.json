@@ -2341,11 +2341,11 @@
 		},
 		"shop": {
 			"buyMaxTopNote_part1": "You have ",
-			"buyMaxTopNote_part2": " exemplaire(s) de cet objet, sur ",
-			"buyMaxTopNote_part3": " maximum.",
-			"buyMaxBottomNote": "Click here to maximise your sock of this item.",
-			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
-			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+			"buyMaxTopNote_part2": " piece(s) of this item, up to a maximum of ",
+			"buyMaxTopNote_part3": " .",
+			"buyMaxBottomNote": "//Click here to fully stock up on this item.//",
+			"invalidQuantity": "Please enter a **valid** quantity.",
+			"invalidQuantity_foot": "//Make sure the number you've entered is correct and that you have space for it.//"
 		}
 	},
 	"pageTitle": {
