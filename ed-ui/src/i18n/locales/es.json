@@ -43,6 +43,8 @@
 		"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
 		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
 		"AlreadySphere": "Votre dinoz a déjà acquis toutes les compétences sphériques de cette élément.",
+		"needToDoAllAction": "Vous avez encore des combats à faire.",
+		"labrute": "Vous avez obtenu {quantity} potions d'irmas.",
 		"market": {
 			"minimalValueError": "El valor total de su oferta no alcanza el valor mínimo.",
 			"tooManyItems": "No puedes vender más de {items} diferentes a la vez.",
@@ -56,6 +58,7 @@
 		"gold": "Vous avez obtenu {value} :gold:",
 		"sphere": "Votre dinoz a appris la compétence {value}.",
 		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
+		"alreadyClaimed": "Vous avez déjà récupéré la récompense.",
 		"resurrect": "Votre dinoz est ressucité.",
 		"egg": "Vous avez ouvert un oeuf de {value}.",
 		"special": {
@@ -128,7 +131,7 @@
 	},
 	"action": {
 		"description": {
-			"fight": "Busca un monstruo para combatir en este lugar. Cada Dino puede efectuar **un desplazamiento o un combate por día**.",
+			"fight": "Busca un monstruo para combatir en este lugar.",
 			"follow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. De este modo, se desplazarán juntos y se ayudarán durante los combates.",
 			"unfollow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. Cliquez sur cette action pour qu'il arrête de le suivre.",
 			"levelup": "Tu Dino ha acumulado suficiente experiencia para alcanzar el siguiente nivel. Haz clic en esta acción para aumentar la potencia de tu Dino.",
@@ -153,8 +156,8 @@
 			"action": "Votre dinoz a encore des actions gratuites à effectuer.",
 			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
 			"stop_congel": "El Dino puede escapar de la muerte una vez por combate",
-			"rest": "El Dino podrá regenerar un 15% de puntos de vida suplementarios mientras descansa Pendant ce temps, il ne pourra effectuer aucune autre action !",
-			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
+			"rest": "El Dino podrá regenerar un 15% de puntos de vida suplementarios mientras descansa Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
+			"stop_rest": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant."
 		},
 		"name": {
@@ -1301,7 +1304,7 @@
 				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
 				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
 				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
-				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+				"ok": "Voilà, tu as les feuilles de nénuphar... Et fait attention, la Forêt au delà est très dangereuse ! Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure !"
 			},
 			"playerChoice": {
 				"hello": "Bonjour !",
@@ -1378,7 +1381,7 @@
 			"playerChoice": {
 				"go": "Ce personnage a l'air dangereux... s'éloigner !",
 				"talk": "Lui parler",
-				"yes": "Euh... Oui",
+				"yes": "Ehh... sí",
 				"read": "Lire l'indicateur",
 				"missions": "Aider le Rôdeur",
 				"talk2": "Lui parler"
@@ -1538,7 +1541,7 @@
 			},
 			"fruity": {
 				"name": "Frutería",
-				"description": "«Si dejas oro en el cubo colgado en el árbol viejo, ¡caerá una fruta!» »"
+				"description": "«Si dejas oro en el cubo colgado en el árbol viejo, ¡caerá una fruta!» »_"
 			},
 			"razad": {
 				"name": "La casa de Razad",
@@ -1885,7 +1888,7 @@
 			"Bite": "Acorazado",
 			"Regeneration": "Recolectar",
 			"Electrocution": "Ataque Directo",
-			"Immaterial": "Intagigle",
+			"Immaterial": "Venerable",
 			"Flight": "Enredadera",
 			"Capture": "Capture",
 			"Venerable": "Vénérable",
@@ -2045,7 +2048,7 @@
 			"Specialiste": "Elimina el elemento más débil del ciclo de ataques",
 			"TalonDAchille": "Aumenta la potencia de todos los asaltos en 2",
 			"OeilDeLynx": "Permite al Dino recolectar plantas exóticas en ciertos lugares",
-			"NuageToxique": "Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
+			"NuageToxique": "Envenena a todos los enemigos Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
 			"HaleineFetive": "Envenena a los enemigos tocados por un asalto",
 			"Mistral": "Ataca a todos los enemigos con un poder de Aire 3",
 			"TaiChi": "Aumenta la potencia de todos los asaltos de Aire en 15. Disminuye la velocidad de los ataques Aire en 20%",
@@ -2514,7 +2517,7 @@
 			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : _« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle »._ Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
 			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : _« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
 			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : _« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
-			"wishes": "Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+			"wishes": "Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
 			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: _« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »_ Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
 			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :_« Déposez de l'or dans le seau pour votre ration quotidienne. »_",
 			"seqact": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
@@ -3029,27 +3032,27 @@
 				"pwater": "Vous ajoutez dans la gourde du vieil arbre de l'eau claire de la Fontaine et vous en profitez pour vous y rafraîchir.",
 				"bwater": "Vous complétez le contenu de la gourde avec un peu de l'eau bouillonnante qui inonde les Gorges. C'est chaud !",
 				"racine": "Les feuillages du vieil arbre s'agitent brusquement dans tous les sens et une lumière apaisante emplit la jungle tout autour de vous...",
-				"arbre": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds."
+				"garde": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds."
 			},
 			"orchid": {
 				"pickwater": "Vous remplissez la gourde d'eau du Fleuve Jumin.",
 				"worchid": "Vous versez tout le contenu de la gourde sur une magnifique fleur qui doit être l'Orchidée Quidée. Aussitôt, celle-ci s'illumine de mille feux et de jolis gouttelettes de rosées perlent sur ses feuilles gracieuses.",
-				"orchid": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse moi, tu m'fais de l'ombre !!",
-				"arbre": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat."
+				"talkingorchide": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse moi, tu m'fais de l'ombre !!",
+				"garde": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat."
 			},
 			"licens": {
-				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+				"garde": "Quelques fruits tombent de l'arbre autour de vous..."
 			},
 			"king": {
 				"yell": "Vous poussez un cri particulièrement ridicule, qui n'effraierait probablement même pas un Korgon... Il va falloir trouver mieux !",
 				"talkingorchide": "Encore là l'empaffé de la jungle ?! Qu'est-ce qu'il a l'autre à m'regarder comme ça ?",
 				"pickorchid": "Sans ménagement, vous arrachez l'orchidée et vous l'emmenez avec vous. Celle-ci crie, vous insulte copieusement et se débat autant qu'elle peut...",
 				"plantorchid": "Vous replantez d'un coup sec l'Orchidée Quidée qui ne manque pas de vous hurler dessus. Tandis que vous vous éloignez, vous pouvez encore entendre celle-ci crier des atrocités à votre égard... Voilà qui fera bien l'affaire pour effrayer les touristes !",
-				"arbre": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !"
+				"garde": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !"
 			},
 			"wishes": {
 				"tosscoin": "Vous jetez une pièce au coeur des chutes et vous attendez quelques minutes... Evidemment rien ne se produit et vous décidez d'aller exaucer le voeu de réduire la population des monstres par vous même.",
-				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+				"garde": "Quelques fruits tombent de l'arbre autour de vous..."
 			},
 			"newplt": {
 				"benevole1": "Bonjour ! Toi aussi tu viens pour aider à déblayer toute cette roche ? Pour le moment, j'ai un gros problème sur les bras... Des monstres en tous genres viennent régulièrement m'empêcher de travailler... Tu peux faire quelque chose ?",
@@ -3057,11 +3060,11 @@
 				"benevole2": "Il ne faut plus perdre une seconde, continuons !",
 				"liftrock2": "L'opération vous occupe encore plusieurs heures, même avec le cric, mais vous parvenez tout de même à dégager de nombreux arbres et plantes ensevelies sous les rochers.",
 				"benevole3": "Je vais rester ici pour arroser les plantes survivantes. Vas faire un rapport pour moi auprès du Gardien de la Forêt !",
-				"arbre": "Deux gros fruits se décrochent et tombe dans un buisson près de vous..."
+				"garde": "Deux gros fruits se décrochent et tombe dans un buisson près de vous..."
 			},
 			"gshop": {
 				"bucket": "Vous trouvez une petite branche fleurie dans le seau...",
-				"arbre": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
+				"garde": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
 			},
 			"seqact": {
 				"auree": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?"
@@ -3138,7 +3141,18 @@
 	},
 	"myAccount": {
 		"title": "Jugador:",
+		"labrute": "La Brute",
 		"profil": "Perfil de EternalDinoRPG",
+		"twinoidgoals": {
+			"name": "Statistiques EternalDinoRPG",
+			"points": "Puntos",
+			"linkStats": "Statistiques",
+			"linkGains": "Gains",
+			"help": {
+				"question": "Que signifient ces compteurs ?",
+				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
+			}
+		},
 		"dinoz": "Dinos",
 		"ranking": "Clasificación",
 		"inscription": "Inscrito el",
@@ -3890,11 +3904,14 @@
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}x {item}** with dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** bought **{quantity}x {item}**.",
+		"IngredientSold": "**{player} ({playerId})** sold **{quantity}x {item}**.",
 		"GoldWon": "**{player} ({playerId})** won **{quantity} :gold:**.",
 		"GoldLost": "**{player} ({playerId})** lost **{quantity} :gold:**.",
 		"Move": "**{player} ({playerId})** moved dinoz **{dinoz} ({dinozId})** to **{location}**.",
 		"LevelUp": "**{player} ({playerId})** leveled up dinoz **{dinoz} ({dinozId})** to **level {level}**.",
 		"Fight": "**{player} ({playerId})** fought and lost **{hpLost}HP**, gained **{gold} :gold:** and **{xp}XP**.",
+		"XPEarned": "**{player} ({playerId})** gained **{xp}XP**.",
+		"HPLost": "**{player} ({playerId})** lost **{hpLost}HP**.",
 		"Death": "**{player} ({playerId})**'s dinoz **{dinoz} ({dinozId})** died.",
 		"Revive": "**{player} ({playerId})** revived dinoz **{dinoz} ({dinozId})**.",
 		"MissionStep": "**{player} ({playerId})** advanced **{mission}** to **step {step}** with dinoz **{dinoz} ({dinozId})**.",
@@ -3902,7 +3919,9 @@
 		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
-		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**.",
+		"PlayerCreated": "**New player has arrived : {name}**.",
+		"PlayerConnected": "**Player {name}** has just logged on."
 	},
 	"selectDinoz": {
 		"selectChampions": "Choisis tes champions",
@@ -4243,7 +4262,7 @@
 		},
 		"faq27": {
 			"question": "Comment vendre son Dinoz ?",
-			"answer": "Pour pouvoir vendre son Dinoz, il faut déjà que vous en possédiez deux (vous ne pouvez pas rester sans Dinoz). Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre. && ATTENTION : cette opération est irréversible."
+			"answer": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. De este modo, se desplazarán juntos y se ayudarán durante los combates. Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre. && ATTENTION : cette opération est irréversible."
 		},
 		"faq28": {
 			"question": "Anguilloz au vinaigre",
@@ -4256,6 +4275,47 @@
 		"faq30": {
 			"question": "Où dois-je redémarrer lorsque mon Dinoz est mort ?",
 			"answer": "Si vous n'utilisez pas de Potion d'Ange, vous redémarrez à Dinoville avec 1 point de vie et vous perdez la moitié de votre Expérience. && && Si vous utilisez une Potion d'Ange, vous redémarrez là où vous êtes avec 1 point de vie."
+		}
+	},
+	"achievements": {
+		"reward": "{name} x {quantity}"
+	},
+	"playerMenu": {
+		"title": "Profil du joueur :",
+		"gridMenu": {
+			"pDRPG": "Profil DinoRPG",
+			"pEternal": "Profil EternalTwin",
+			"addContact": "Contacto",
+			"sendMSG": "Envoyer un message"
+		},
+		"report": {
+			"signal": "Signaler le joueur",
+			"block": "Bloquer le joueur"
+		},
+		"contact": "Ce joueur ne fait pas partie de vos contacts."
+	},
+	"roadmap": {
+		"title": "Découvrez les prochains évènements sur DinoRPG !",
+		"small": "Prédiction d'Irma",
+		"strong": {
+			"title1": "Version 1.0.0 (Vanilla)",
+			"title2": "Version 1.1.0 (To the West)",
+			"title3": "Roadmap to 2050"
+		},
+		"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
+		"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
+		"futurTitle": "Avenir Dinolandien",
+		"futureInfo1": {
+			"text1": "Accès aux cartes : Dinoland, Grand Tout-Chaud, Forêt de Gruhmel, Îles Atlantéinées.",
+			"text2": "Accès aux missions originelles : Papy Joe, Bao Bob, Shaman Mou, Nicolas Mulot, Dian Korgsey, Gardien de la fôret.",
+			"text3": "Et plein d'autres fonctionnalités"
+		},
+		"futureInfo2": {
+			"text1": "Accès à l'ouest de Dinoville.",
+			"text2": "Accès aux mission du Maître Elémentaire."
+		},
+		"futureInfo3": {
+			"text1": "À venir..."
 		}
 	}
 }
