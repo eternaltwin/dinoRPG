@@ -43,6 +43,8 @@
 		"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
 		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
 		"AlreadySphere": "Votre dinoz a déjà acquis toutes les compétences sphériques de cette élément.",
+		"needToDoAllAction": "Vous avez encore des combats à faire.",
+		"labrute": "Vous avez obtenu {quantity} potions d'irmas.",
 		"market": {
 			"minimalValueError": "El valor total de su oferta no alcanza el valor mínimo.",
 			"tooManyItems": "No puedes vender más de {items} diferentes a la vez.",
@@ -56,6 +58,7 @@
 		"gold": "Vous avez obtenu {value} :gold:",
 		"sphere": "Votre dinoz a appris la compétence {value}.",
 		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
+		"alreadyClaimed": "Vous avez déjà récupéré la récompense.",
 		"resurrect": "Votre dinoz est ressucité.",
 		"egg": "Vous avez ouvert un oeuf de {value}.",
 		"special": {
@@ -128,7 +131,7 @@
 	},
 	"action": {
 		"description": {
-			"fight": "Busca un monstruo para combatir en este lugar. Cada Dino puede efectuar **un desplazamiento o un combate por día**.",
+			"fight": "Recherchez un monstre à combattre à cet endroit.",
 			"follow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. De este modo, se desplazarán juntos y se ayudarán durante los combates.",
 			"unfollow": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. Cliquez sur cette action pour qu'il arrête de le suivre.",
 			"levelup": "Tu Dino ha acumulado suficiente experiencia para alcanzar el siguiente nivel. Haz clic en esta acción para aumentar la potencia de tu Dino.",
@@ -153,8 +156,8 @@
 			"action": "Votre dinoz a encore des actions gratuites à effectuer.",
 			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
 			"stop_congel": "El Dino puede escapar de la muerte una vez por combate",
-			"rest": "El Dino podrá regenerar un 15% de puntos de vida suplementarios mientras descansa Pendant ce temps, il ne pourra effectuer aucune autre action !",
-			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
+			"rest": "El Dino podrá regenerar un 15% de puntos de vida suplementarios mientras descansa Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
+			"stop_rest": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant."
 		},
 		"name": {
@@ -523,7 +526,7 @@
 			"smog_egg_christmas_green": "TODO",
 			"triceragnon_baby": "TODO",
 			"triceragnon_baby_rare": "TODO",
-			"amnesic_rice": "Esta variedad muy rara de Arroz vuelve amnésicos a los Dinos. Si come este arroz, tu Dino perderá su nombre, así como su experiencia acumulada desde su último nivel...",
+			"amnesic_rice": "Cette variété très rare de Riz rend amnésique. En le mangeant, un Dinoz oublie son nom et perd aussi l'expérience accumulée depuis son dernier niveau…",
 			"tik_bracelet": "Este objeto perteneciente a la tecnología de Caushemesh, ¡puede dar cada día hasta 10 puntos de vida al Dino que lo lleve!",
 			"magic_star": "Estas misteriosas estrellas están repartidas por todo el mundo de Dinoland. ¿Puedes encontrar las 7?",
 			"golden_napodino": "Los Napodinos de oro son piezas de oro macizo provenientes de una civilización pre-dinovillana. Tienen un gran valor para los coleccionistas, y se dice que dan buena suerte a los Dinos que lo lleven consigo.",
@@ -1301,7 +1304,7 @@
 				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
 				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
 				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
-				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+				"ok": "Voilà, tu as les feuilles de nénuphar... Et fait attention, la Forêt au delà est très dangereuse ! Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure !"
 			},
 			"playerChoice": {
 				"hello": "Bonjour !",
@@ -1378,7 +1381,7 @@
 			"playerChoice": {
 				"go": "Ce personnage a l'air dangereux... s'éloigner !",
 				"talk": "Lui parler",
-				"yes": "Euh... Oui",
+				"yes": "Ehh... sí",
 				"read": "Lire l'indicateur",
 				"missions": "Aider le Rôdeur",
 				"talk2": "Lui parler"
@@ -1538,7 +1541,7 @@
 			},
 			"fruity": {
 				"name": "Frutería",
-				"description": "«Si dejas oro en el cubo colgado en el árbol viejo, ¡caerá una fruta!» »"
+				"description": "«Si dejas oro en el cubo colgado en el árbol viejo, ¡caerá una fruta!» »_"
 			},
 			"razad": {
 				"name": "La casa de Razad",
@@ -1885,7 +1888,7 @@
 			"Bite": "Acorazado",
 			"Regeneration": "Recolectar",
 			"Electrocution": "Ataque Directo",
-			"Immaterial": "Intagigle",
+			"Immaterial": "Intangible",
 			"Flight": "Enredadera",
 			"Capture": "Capture",
 			"Venerable": "Vénérable",
@@ -2045,7 +2048,7 @@
 			"Specialiste": "Elimina el elemento más débil del ciclo de ataques",
 			"TalonDAchille": "Aumenta la potencia de todos los asaltos en 2",
 			"OeilDeLynx": "Permite al Dino recolectar plantas exóticas en ciertos lugares",
-			"NuageToxique": "Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
+			"NuageToxique": "Envenena a todos los enemigos Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
 			"HaleineFetive": "Envenena a los enemigos tocados por un asalto",
 			"Mistral": "Ataca a todos los enemigos con un poder de Aire 3",
 			"TaiChi": "Aumenta la potencia de todos los asaltos de Aire en 15. Disminuye la velocidad de los ataques Aire en 20%",
@@ -2514,7 +2517,7 @@
 			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : _« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle »._ Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
 			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : _« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
 			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : _« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
-			"wishes": "Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+			"wishes": "Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
 			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: _« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »_ Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
 			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :_« Déposez de l'or dans le seau pour votre ration quotidienne. »_",
 			"seqact": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
@@ -3138,7 +3141,18 @@
 	},
 	"myAccount": {
 		"title": "Jugador:",
+		"labrute": "La Brute",
 		"profil": "Perfil de EternalDinoRPG",
+		"twinoidgoals": {
+			"name": "Statistiques EternalDinoRPG",
+			"points": "points",
+			"linkStats": "Statistiques",
+			"linkGains": "Gains",
+			"help": {
+				"question": "Que signifient ces compteurs ?",
+				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
+			}
+		},
 		"dinoz": "Dinos",
 		"ranking": "Clasificación",
 		"inscription": "Inscrito el",
@@ -4243,7 +4257,7 @@
 		},
 		"faq27": {
 			"question": "Comment vendre son Dinoz ?",
-			"answer": "Pour pouvoir vendre son Dinoz, il faut déjà que vous en possédiez deux (vous ne pouvez pas rester sans Dinoz). Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre. && ATTENTION : cette opération est irréversible."
+			"answer": "Si quieres, tu Dino puede **seguir** a otro de tus Dinos. De este modo, se desplazarán juntos y se ayudarán durante los combates. Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre. && ATTENTION : cette opération est irréversible."
 		},
 		"faq28": {
 			"question": "Anguilloz au vinaigre",
@@ -4257,5 +4271,8 @@
 			"question": "Où dois-je redémarrer lorsque mon Dinoz est mort ?",
 			"answer": "Si vous n'utilisez pas de Potion d'Ange, vous redémarrez à Dinoville avec 1 point de vie et vous perdez la moitié de votre Expérience. && && Si vous utilisez une Potion d'Ange, vous redémarrez là où vous êtes avec 1 point de vie."
 		}
+	},
+	"achievements": {
+		"reward": "{name} x {quantity}"
 	}
 }
