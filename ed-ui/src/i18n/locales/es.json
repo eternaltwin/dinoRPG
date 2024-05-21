@@ -26,10 +26,10 @@
 		"wronglogins": "Los identificadores de Twinoid no son los correctos.",
 		"notEnoughItem": "No tienes suficiente de este artículo.",
 		"notEnoughMoney": "No tienes suficiente oro",
-		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
-		"noPMI": "Tu as besoin du Petit Missionaire Illustré pour accéder à cette page.",
-		"dinozListMissing": "Liste des Dinoz manquante",
-		"dinozDataMissing": "Données du Dinoz manquantes",
+		"noPDA": "Necesitas la Piedra en Diamantito Aglomerado para acceder a esta página.",
+		"noPMI": "Necesitas el Pequeño Misionero Ilustrado para acceder a esta página.",
+		"dinozListMissing": "Lista de Dinos que faltan",
+		"dinozDataMissing": "Faltan datos de Dino",
 		"selectADinozAtMarketFirst": "Vous devez d'abord sélectionner un Dinoz au marché.",
 		"unknownDinoz": "Dino desconocido",
 		"missingUser": "Usuario perdido",
@@ -41,7 +41,7 @@
 		"missingIrma": "Vous avez besoin de potion d'irma pour faire cette action",
 		"shovelMine": "Vous n'allez quand même creuser à côté du mineur !?!",
 		"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
-		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
+		"noFight": "Hoy la marea está perdida en la bruma... No encontrarás ningún monstruo que combatir.",
 		"AlreadySphere": "Votre dinoz a déjà acquis toutes les compétences sphériques de cette élément.",
 		"needToDoAllAction": "Vous avez encore des combats à faire.",
 		"labrute": "Vous avez obtenu {quantity} potions d'irmas.",
@@ -70,10 +70,10 @@
 			"amnesic_rice": "Votre dinoz ne sait plus comment il se prénomme, il a également perdu tout son :xp: !",
 			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
 		},
-		"wrongQuantity": "Quantité invalide",
+		"wrongQuantity": "Cantidad inválida",
 		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
-		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
+		"resting": "Tu dinoz está actualmente descansando. Il regagnera {hp} :pv: dans {min} minutes.",
 		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:."
 	},
 	"dig": {
@@ -262,11 +262,11 @@
 		"waterAssault": "Elixir",
 		"lightningAssault": "Assaut de Foudre",
 		"airAssault": "Assaut d'Air",
-		"fireDefense": "Défense de Feu",
-		"woodDefense": "Défense de Bois",
-		"waterDefense": "Défense d'Eau",
-		"lightningDefense": "Défense de Foudre",
-		"airDefense": "Défense d'Air",
+		"fireDefense": "Defensa al Fuego",
+		"woodDefense": "Defensa a la Madera",
+		"waterDefense": "Defensa al Agua",
+		"lightningDefense": "Defensa al Rayo",
+		"airDefense": "Defensa al Rayo",
 		"voidDefense": "Défense Neutre",
 		"baseElementContribution": "Contribution de l'élément de base",
 		"hpRegen": "Régénération de PV",
@@ -836,8 +836,8 @@
 			"baofan": "Fan de Bao",
 			"forgeron": "Herrero",
 			"dian": "Dian Korgsey",
-			"merguez": "Vendeur de Merguez",
-			"shaman": "Shaman Mou",
+			"merguez": "Vendedor de Salchichas",
+			"shaman": "Chamán Lacio",
 			"gardien": "Puesto de Guardia",
 			"fou": "Homme bizarre",
 			"garde_atlante": "El trueque de las islas atlantes",
@@ -845,15 +845,15 @@
 			"archis": "ArchiSage",
 			"hydargol": "Herrero",
 			"padamoine": "Apprenti padamoine",
-			"hulot": "Nicolas Mulot",
+			"hulot": "Nicolás Mulot",
 			"rodeur": "Guarida del Venerable",
 			"rodeur2": "Aliento fétido",
 			"rodeur3": "Aliento Ardiente",
-			"spelele": "Spélélélologue",
+			"spelele": "Espeleleólogo",
 			"pteroz": "El Dino se vuelve objetivo principal de los enemigos",
 			"hippo": "Anula todos los estatus negativos del Dino",
 			"rocky": "Etrange Pierre",
-			"vener": "Le Vénérable"
+			"vener": "El Venerable"
 		},
 		"professor": {
 			"speech": {
@@ -987,9 +987,9 @@
 		"mmex": {
 			"speech": {
 				"begin": "Alors que vous passiez par Forcebrut, vous rencontrez une femme, qui semblait justement vous attendre.",
-				"talk": "Tiens donc, voilà donc ce jeune Maître Eleveur dont j'ai tant entendu parler ? Il semble que Papy Joe dise beaucoup de bien à propos de toi, tant tu t'appliques à remplir ses missions ?",
-				"talk2": "Puisque tu sembles être quelqu'un à qui on peut faire confiance, j'aurais moi aussi aimé te confier quelques missions, libre à toi d'accepter ou non !",
-				"missions": "Ah désolé, cette partie la n'a encore été developpée. Reviens me voir plus tard.",
+				"talk": "Tiens donc, voilà donc ce jeune Maître Eleveur dont j'ai tant entendu parler ? Parece que Papy Jose dice muchas cosas buenas de ti, ¿porque trabajas tan duro para cumplir sus misiones?",
+				"talk2": "Como pareces alguien en quien se puede confiar, a mí también me hubiera gustado confiarte algunas misiones, ¡tú decides si las aceptas o no!",
+				"missions": "Ah, lo siento, esta parte aún no se ha desarrollado. Ven a verme más tarde.",
 				"question": "Qui je suis ?!? Ah ah ah ! Pardonne-moi, mon jeune ami, j'avais complètement oublié de me présenter ! Je suis.... .... ....",
 				"question2": "... désolée... je m'excuse. Je viens juste de me rappeler que je ne pouvais justement pas révéler qui je suis, car cela pourrait t'attirer de gros ennuis ! Mais comme c'est tout de même très malpoli, je vais te révéler quelque chose d'intéressant...",
 				"double": "Voyons voir... Je suppose que jusqu'à présent, tu as appris que chaque compétence correspondait à un unique élément parmi les cinq élements possibles ? Par exemple, Colère correspond à l'élément Feu et Perception correspond à l'élément Eau.",
@@ -1067,7 +1067,7 @@
 		"bob": {
 			"speech": {
 				"begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Eleveur ?",
-				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on\n\t\torganise des rallyes tout autour de Dinoland !",
+				"question": "Une question ? Mmmmmm.... ¿Qué tal una pequeña misión para tu Dino? Avec des amis, on\n\t\torganise des rallyes tout autour de Dinoland !",
 				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
 				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. Je pourrais alors répondre à ton voeu le plus cher.",
 				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons. Cela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
@@ -1153,7 +1153,7 @@
 				"nothing": "D'accord, bon voyage !"
 			},
 			"playerChoice": {
-				"missions": "Consulter la liste des Missions",
+				"missions": "Consulta la lista de Misiones",
 				"korgons": "Les Korgons ?",
 				"why": "Il ne faut pas les regarder ?",
 				"wood": "Ils mangent du bois ?",
@@ -1186,13 +1186,13 @@
 				"nothing": "Hey, essaye pas d'me rouler, ton dinoz a déjà un charme... Reviens me voir plus tard.",
 				"force": "Fort ? le gros dorogon Vener' là ?... bah ouais un peu... C'est la première cause de mortalité chez les touristes, juste devant les crises cardiaques causées par nos merguez... Ha la la, qué p'tites natures ces touristes... ",
 				"merci": "Tchao mon pote... à la prochaine...",
-				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
+				"more": "Uhmm.... Si tu Dino acepta completar algunas misiones por mí, le confiaré mi Guía de Estrategia. C'est super pratique...",
 				"accept": "Marché conclu..."
 			},
 			"playerChoice": {
 				"vener": "Le Vénérable...",
 				"souvenir": "On peut acheter des souvenirs dans le coin ?",
-				"missions": "Consulter la liste des Missions",
+				"missions": "Consulta la lista de Misiones",
 				"charm": "On m'a parlé d'un charme...",
 				"boost": "Accepter le Charme",
 				"nothing": "Accepter le Charme",
@@ -1209,7 +1209,7 @@
 				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à plus grande votre surprise, vous  constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
 			},
 			"playerChoice": {
-				"missions": "Consulter la liste des Missions",
+				"missions": "Consulta la lista de Misiones",
 				"shake": "Secouer un peu cet arbre",
 				"item": "Aie ! Qu'est-ce que c'est ?"
 			}
@@ -1342,7 +1342,7 @@
 				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
 				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
 				"fauna": "Entre les roncivores, les korgons et les fauve-souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! A la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
-				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
+				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Creo que sería más prudente planificar primero una misión de reconocimiento. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
 				"explore": "Ca serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
 				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
 				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
@@ -1365,7 +1365,7 @@
 				"problem": "Ouh la ! Qu'est-ce qui vous arrive ?",
 				"sickstatus": "Lui parler",
 				"better": "Vous avez l'air d'aller bien mieux...",
-				"missions": "Consulter la liste des Missions",
+				"missions": "Consulta la lista de Misiones",
 				"curesearch": "Voyons voir ça..."
 			}
 		},
@@ -1383,19 +1383,19 @@
 				"talk": "Lui parler",
 				"yes": "Ehh... sí",
 				"read": "Lire l'indicateur",
-				"missions": "Aider le Rôdeur",
+				"missions": "Ayuda al guardabosques",
 				"talk2": "Lui parler"
 			}
 		},
 		"rodeur2": {
 			"speech": {
 				"begin": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
-				"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
+				"qual2": "En lugar de decir estupideces, será mejor que intentes cumplir tu misión...",
 				"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
 				"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
 				"ether": "Aprés des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Celà nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
 				"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
-				"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?"
+				"more": "Mais j'en ai déjà trop dit... Para convencerse de la tecnología de Caushemesh, ¿qué tal una pequeña misión?"
 			},
 			"playerChoice": {
 				"qual2": "Surement de la mauvaise qualité...",
@@ -1404,7 +1404,7 @@
 				"ether": "L'Ether ?",
 				"next": "Et...",
 				"more": "...",
-				"missions": "Accepter une mission."
+				"missions": "Acepta una misión."
 			}
 		},
 		"rodeur3": {
@@ -2016,7 +2016,7 @@
 			"Sumo": "Aumenta el máximo de puntos de vida en 100",
 			"SansPitie": "Elige el objetivo con menos puntos de vida en cada asalto",
 			"CloneAqueux": "Crea un clon del Dino con 1 punto de vida",
-			"GriffesEmpoisonnees": "Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
+			"GriffesEmpoisonnees": "Si un des assauts d'Eau du dinoz touche un ennemi, il est empoisonné pour une durée moyenne",
 			"Cuisinier": "Aumenta el beneficio de vida de los objetos en 10% para todos los Dinos",
 			"SangAcide": "Si uno de los ataques toca al Dino, éste puede quitarle vida al enemigo",
 			"Regenerescence": "Aumenta la velocidad de recuperación de puntos de vida durante el descanso",
@@ -2362,7 +2362,7 @@
 		"dinozNaming": "Dino-RPG [ Elegir nombre ]",
 		"fight": "Dino-RPG [ ¡Combate! ]",
 		"gather": "Dino-RPG [ ",
-		"dinozMissions": "Dino-RPG [ Missions de mes Dinoz ]",
+		"dinozMissions": "Dino-RPG [Misión de mi Dino]",
 		"manageDinoz": "Dino-RPG [ Gestion de mes Dinoz ]",
 		"market": "Dino-RPG [ Marché des Eleveurs ]",
 		"dojo": "Dino-RPG [ Dojo ]",
@@ -2402,7 +2402,7 @@
 	"missions": {
 		"header": "Lista de misiones",
 		"headers": {
-			"title": "Titre",
+			"title": "Título",
 			"status": "Estatus"
 		},
 		"xp": "puntos de experiencia",
@@ -2445,21 +2445,21 @@
 			"rally3": "El Rally de los Tiburones",
 			"rally4": "El Rally de las Ballenas",
 			"tour": "El tour de Dinoland",
-			"kswim": "Comme un Korgon dans l'eau",
-			"rivals": "Korgons du nord, Korgons du sud",
-			"kfood": "Steak de bois",
-			"poison": "Rivalités korgons",
-			"init1": "La mise à l'épreuve",
-			"init2": "L'épouvantarchelion",
-			"burn": "Au feu !",
-			"barbec": "Le barbecue déjanté",
+			"kswim": "Como un Korgón en el agua",
+			"rivals": "Korgones del norte, Korgones del sur",
+			"kfood": "Filete de madera",
+			"poison": "Rivalidades Korgón",
+			"init1": "La puesta a prueba",
+			"init2": "El espanta-arqueliano",
+			"burn": "¡Fuego!",
+			"barbec": "La barbacoa desmontada",
 			"joke": "Los sellos",
-			"defend": "La défense des Forges !",
-			"shipmt": "Le colis disparu",
-			"sales": "Commerce (peu) équitable",
-			"ritual": "Rituel ridicule",
-			"hiero": "Hiéroglyphes",
-			"pigeon": "Pigeon voyageur",
+			"defend": "¡En defensa de las fraguas!",
+			"shipmt": "El paquete desaparecido",
+			"sales": "Comercio (poco) justo",
+			"ritual": "Ritual ridículo",
+			"hiero": "Jeroglíficos",
+			"pigeon": "Paloma mensajera",
 			"unmute": "Bosque de Escarcha",
 			"orchid": "Amuleto verde",
 			"licens": "Permis de couper",
@@ -2627,7 +2627,7 @@
 			"mmeducraft1": "Jacqueline Ducraft",
 			"mmeducraft2": "Jacqueline Ducraft",
 			"nioufniouf": "NioufNiouf",
-			"papyjoe": "Papy Joe",
+			"papyjoe": "Papy Jose",
 			"pureWater": "Eau Pure",
 			"kbook": "Livre de Recettes",
 			"timbre": "Ramasser les Timbres",
@@ -2657,7 +2657,7 @@
 			"hidefiquoia": "Cacher le Fikoïa",
 			"tree": "Arbre étrange",
 			"dian": "Dian Korgsey",
-			"shaman": "Valider la mission",
+			"shaman": "Validar la misión",
 			"forgeron": "Fatigador",
 			"garde": "Garde des forges",
 			"artisan": "Artisan des Forges",
@@ -2711,7 +2711,7 @@
 			"bucket": "Examiner le seau",
 			"talkingorchide": "Orchidée Quidée parlante",
 			"benevole": "Bénévole «Paix Verte»",
-			"arbre": "Valider la Mission",
+			"arbre": "Validar la Misión",
 			"pickfigo": "Disfraz de Globlin",
 			"pickpuru": "Purulente Noire",
 			"pickvisqueuse": "Zarpas punzantes",
@@ -2740,7 +2740,7 @@
 		"place": {
 			"port": "au Port de Prêche",
 			"market": "à la Place du Marché",
-			"papyjoe": "Chez Papy Joe",
+			"papyjoe": "Casa de Papy Jose",
 			"forcebrut": "à Forcebrut",
 			"dnv": "à Dinoville",
 			"colesc": "aux Collines Escarpées",
@@ -2752,7 +2752,7 @@
 			"fosslv": "à Fosselave",
 			"camp": "au camp Korgon",
 			"auree": "à L'Orée de la Forêt",
-			"papy": "Chez Papy Joe",
+			"papy": "Casa de Papy Jose",
 			"skull": "au Cimetière du Crépuscule",
 			"chemin": "au Chemin Glauque",
 			"collin": "aux Collines Hantées",
@@ -2881,14 +2881,14 @@
 				"bob": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
 			},
 			"kilksk": {
-				"bob": "Bravo, c'était une mission branchée n'est-ce pas ?"
+				"bob": "Bien hecho, fue una misión genial, ¿no?"
 			},
 			"kilang": {
 				"marchand": "Uhm ? Tu viens de la part de M. Bao ? Tu cherches du vinaigre ?? Tiens, j'ai ce vieux Chateau Forcebrut qui devrait être parfait pour la cuisine.",
 				"pecheur": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville.",
 				"mmeseyche": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !",
 				"adam": "Uhmmm ! Des anguilloz au vinaigre !! J'adoooore ! Désolé de ne pas avoir attendu au Port de Prêche, je vais prévenir ce cher Bob pour qu'il te récompense correctement !",
-				"bob": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
+				"bob": "¿Entonces deambulamos por todas partes durante una Misión? Adam m'as tout raconté, voilà pour toi."
 			},
 			"bigpch": {
 				"bob": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
@@ -3846,7 +3846,7 @@
 		"missions": "Misiones",
 		"see": "Ver",
 		"total": "Total",
-		"missionsFrom": "Missions de \"{npc}\""
+		"missionsFrom": "Misiones de \"{npc}\""
 	},
 	"market": {
 		"title": "Marché des Eleveurs",
@@ -3977,7 +3977,7 @@
 		},
 		"text": {
 			"stop": "Arrêter le Guide",
-			"intro": "Bienvenue sur DinoRPG ! && && Sur ce site, vous jouez un Maître Eleveur et vous pouvez adopte une ou plusieurs petites créatures sauvages nommées les Dinoz. Vous pouvez ainsi parcourir le monde de Dinoland, faire combattre et évoluer vos Dinoz, accomplir des Missions et remplir les nombreuses Quêtes que vous rencontrerez au cours de votre aventure. && && Si vous avez besoin d'aide, vous pouvez à tout moment accéder à ce Guide du Jeu en cliquant sur le bouton dans le Menu de droite. && && Pour découvrir la suite du Guide, merci de cliquer sur le bouton ci-dessous.",
+			"intro": "Bienvenue sur DinoRPG ! && && Sur ce site, vous jouez un Maître Eleveur et vous pouvez adopte une ou plusieurs petites créatures sauvages nommées les Dinoz. Podrás viajar por el mundo de Dinoland, hacer que tu Dino luche y evolucione, cumplir Misiones y completar las numerosas Misiones que encontrarás durante tu aventura. && && Si vous avez besoin d'aide, vous pouvez à tout moment accéder à ce Guide du Jeu en cliquant sur le bouton dans le Menu de droite. && && Pour découvrir la suite du Guide, merci de cliquer sur le bouton ci-dessous.",
 			"adopt": "La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de 200.000 :gold: (pièces d'or) obtenues lors de la création de votre compte. && && En cliquant sur ACHETER UN DINOZ dans le Menu de gauche, vous pourrez accéder à la Boutique des Dinoz. Chaque Dinoz est unique et chaque jour cette boutique vous proposera une sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus. && && Chaque Dinoz est présenté de la façon suivante :",
 			"adopt2": "Vous pouvez voir une image du Dinoz, sa Race et son Prix. Il existe différentes races de Dinoz, chacune ayant ses propres spécificités. En particulier, les valeurs des 5 éléments indiquées lors de l'achat dépendent de la race du Dinoz, et certaines races disposent d'une compétence supplémentaire. Ces deux points influencent le combat comme nous le verrons plus tard. Le prix varie aussi en fonction de la race du Dinoz, certaines races étant plus rares et donc plus chères. && && Dans un premier temps, choisissez le Dinoz que vous préférez et achetez-le.",
 			"name": "Une fois votre Dinoz acheté, il vous est demandé de lui donner un Nom, comme par exemple ici :",
@@ -4059,9 +4059,9 @@
 			"exp2-1": "Ensuite, il vous est demandé d'apprendre une compétence, dont la liste est déterminée en fonction de l'élément qui a été choisi. Suivant la description de la compétence, choisissez celle qui vous convient le mieux. && && Vous pouvez retrouver la liste des compétences que votre Dinoz a appris à partir de l'onglet Détails sur sa fiche. && && En fonction de la race de votre Dinoz, les probabilités d'augmenter un élément donné ne sont pas les mêmes, et donc les choix de compétences et les possibilités de développement de votre Dinoz vont varier.",
 			"exp3": "...Débloquer des Compétences :",
 			"exp3-1": "Chaque compétence que votre Dinoz apprend peut lui permettre d'accéder à d'autres compétences plus puissantes. Cependant, avant de pouvoir les apprendre, il faudra les débloquer. Cette option vous est proposée quand votre Dinoz change de niveau si cela est possible. && && Il vous faudra donc choisir entre apprendre plus de compétences pour pouvoir en débloquer plusieurs d'un coup ou débloquer plus rapidement les compétences les plus puissantes.",
-			"missions": "Au cours de vos aventures dans Dinoland, vous pourrez rencontrer de nombreux personnages. Certains de ces personnages comme Papy Joe vous donneront accès à une liste de Missions. && && Chaque Mission à un objectif précis :",
-			"missions2": "Votre Dinoz ne peut effectuer qu'une seule mission à la fois, donc choisissez avec soin celle que vous voulez effectuer puis accomplissez-là. Une fois l'objectif de la mission rempli, vous pouvez retourner voir le personnage qui a donné la mission à votre Dinoz pour obtenir une récompense. && && Certaines missions sont bloquées au départ. Pour les débloquer, il vous faudra finir d'autres missions auparavant, augmenter le niveau de votre Dinoz, ou terminer certaines Quêtes données par d'autres personnages. && && Une fois une mission terminée par un Dinoz, elle pourra être à nouveau effectuée par un autre de vos Dinoz.",
-			"status": "En complétant différentes Missions / Quêtes, votre Dinoz va pouvoir obtenir de nombreux statuts qui seront répertoriés sur sa fiche. Placez la souris sur une de ces statuts pour obtenir de l'aide sur son effet. && && En général, les statuts sont permanents. Cela veut dire qu'une fois obtenus, vous ne pourrez pas les perdre. Cependant, certains statuts sont temporaires et peuvent donc être perdus. && && Les statuts sont affichés quand vous consultez les Dinozs d'un autre joueur : saurez-vous en consulter le maximum ?",
+			"missions": "Au cours de vos aventures dans Dinoland, vous pourrez rencontrer de nombreux personnages. Algunos de estos personajes, como Papy Jose, te darán acceso a una lista de misiones. && && Cada Misión tiene un objetivo específico:",
+			"missions2": "Tu Dino solo podrá realizar una misión a la vez, así que elige con cuidado cuál quieres realizar y luego complétala. Una vez completado el objetivo de la misión, podrás volver con el personaje que le dio la misión a tu Dino para obtener una recompensa. && && Algunas misiones están bloqueadas al principio. Para desbloquearlos, necesitarás completar otras misiones de antemano, aumentar el nivel de tu Dino o completar ciertas misiones asignadas por otros personajes. && && Una vez que un Dino ha completado una misión, otro de tus Dinos puede volver a realizarla.",
+			"status": "Al completar diferentes Misiones, tu Dino podrá obtener numerosos estados que aparecerán en su archivo. Placez la souris sur une de ces statuts pour obtenir de l'aide sur son effet. && && En général, les statuts sont permanents. Cela veut dire qu'une fois obtenus, vous ne pourrez pas les perdre. Cependant, certains statuts sont temporaires et peuvent donc être perdus. && && Les statuts sont affichés quand vous consultez les Dinozs d'un autre joueur : saurez-vous en consulter le maximum ?",
 			"equipment": "Sur sa fiche, votre Dinoz d'un certain nombre d'emplacements disponibles pour des équipements de combat. Certains peuvent en effet être équipés dans un de ces emplacements et ils seront alors utilisables en combat. && && Pour équiper un objet de combat, utilisez l'onglet Inventaire. L'action équiper n'est disponible que pour certains objets. Une fois un objet équipé, vous pouvez à tout moment l'enlever en cliquant sur son emplacement dans l'équipement. Voici un exemple :",
 			"equipment2": "La plupart des objets de combat ne sont utilisables qu'une seule fois. Cela veut dire que lorsque votre Dinoz l'utilisera lors d'un combat, il sera détruit et un nouvel objet pourra alors être équipé à sa place. && && Les équipements de combat permettent d'adapter votre stratégie en fonction des monstres que vous rencontrez, faites-en bon usage.",
 			"epic": "Sur votre fiche de Maître Dinoz, accessible à partir du lien Mon Compte dans le menu de droite, vous pouvez retrouver la liste de vos récompenses épiques. && && Ces objets peuvent être récupérés de différentes façons, soit par l'accomplissement de Quêtes, soit par la participation à des évènements qui rythment la vie du site. Vous ne pouvez en posséder qu'un seul exemplaire de chaque et ils sont visibles par les autres joueurs de DinoRPG.",
@@ -4130,7 +4130,7 @@
 			"questions2": "Pourquoi le jeu a-t-il été arrêté par Motion Twin ? Motion Twin a arrêté de développer leurs jeux en ligne lorsqu'Adobe a cessé de mettre à jour Flash Player en 2020. Motion Twin a arrêté l'intégralité de ses jeux web et de Twinoid en Novembre 2023.",
 			"questions3": "Mais DinoRPG est toujours là ? Oui, grâce à Eternal-Twin. Ce projet lancé par quelques joueurs ont décidé de sauvegarder ces jeux, et d'éviter la disparition complète de cet héritage vidéoludique commun.",
 			"questions4": "DinoRPG est-t-il gratuit ? Oui, DinoRPG est un jeu gratuit.",
-			"questions5": "Comment obtenir plus de pièces d'or ? Vos Dinoz pourront récupérer des pièces d'or chaque jour en combattant, ou en validant leurs missions. De plus, chaque jour vous obtiendrez un Ticket Daily qui vous permettra de récupérer de l'or ou une Boîte contenant divers objets, oeufs de Dinoz. Ou tout simplement vendre vos ingrédients au Marchand Ambulant.",
+			"questions5": "Comment obtenir plus de pièces d'or ? Tu Dino podrá recolectar monedas de oro todos los días luchando o completando sus misiones. De plus, chaque jour vous obtiendrez un Ticket Daily qui vous permettra de récupérer de l'or ou une Boîte contenant divers objets, oeufs de Dinoz. Ou tout simplement vendre vos ingrédients au Marchand Ambulant.",
 			"questions6": "En cas de problèmes, bugs, ou de suggestions, merci de nous contacter sur le Discord d'Eternal-Twin.",
 			"support": "...Vider son cache :",
 			"support-1": "Avant toute autre chose, pensez à essayer de vider le cache de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.",
@@ -4157,8 +4157,8 @@
 		"search": "Buscar",
 		"qa": "Preguntas / Respuestas :",
 		"faq1": {
-			"question": "Pourquoi les deux dernières missions de Papy Joe ne se débloquent pas ?",
-			"answer": "La mission 'Les Géants' se débloquera quand votre Dinoz aura atteint le niveau 11 et 'L'exploit du mois' quand il sera au niveau 18."
+			"question": "¿Por qué no se desbloquean las dos últimas misiones de Papy Jose?",
+			"answer": "La misión 'Los Gigantes' se desbloqueará cuando tu Dino haya alcanzado el nivel 11 y 'El desafío del mes' cuando esté en el nivel 18."
 		},
 		"faq2": {
 			"question": "Où se trouve le chien de Mme Ducraft ?",
@@ -4170,23 +4170,23 @@
 		},
 		"faq4": {
 			"question": "Comment obtenir la Perle de la Fontaine ?",
-			"answer": "Il vous faudra la Bouée. && A partir du Port de Prêche, accédez à l'Îles Waïkiki (Îles Atantéinées), puis accédez aux chutes Mutantes (accessibles depuis le Dôme Soulaflotte, Chez Bao Bob, et depuis le Marais Collant). && && Discutez avec Maître Hydargol, et suivez ses instructions. Si vous menez à bien la mission qu'il vous donnera, vous obtiendrez la Perle de la Fontaine."
+			"answer": "Il vous faudra la Bouée. && A partir du Port de Prêche, accédez à l'Îles Waïkiki (Îles Atantéinées), puis accédez aux chutes Mutantes (accessibles depuis le Dôme Soulaflotte, Chez Bao Bob, et depuis le Marais Collant). && && Discutez avec Maître Hydargol, et suivez ses instructions. Si completas con éxito la misión que te asigna, obtendrás la Perla de la Fuente."
 		},
 		"faq5": {
 			"question": "Comment enlever une compétence à un Dinoz ?",
-			"answer": "Les compétences apprises ne peuvent être supprimées mais vous pouvez en désactiver certaines grâce au Guide de Stratégie en 130 leçons que vous obtiendrez en accomplissant la seconde mission du Shaman mou, 'L'épouvantarchélion'. && && En règle générale, il faut éviter de choisir des attaques (compétences A) dans les éléments mineurs de votre dinoz. && Ex : Canon à eau est déconseillé pour un pigmou."
+			"answer": "Las habilidades aprendidas no se pueden borrar pero sí puedes desactivar algunas de ellas gracias a la Guía de Estrategia en 130 lecciones que obtendrás al completar la segunda misión del Chamán Lacio, 'Él espanta-arqueliano'. && && En règle générale, il faut éviter de choisir des attaques (compétences A) dans les éléments mineurs de votre dinoz. && Ex : Canon à eau est déconseillé pour un pigmou."
 		},
 		"faq6": {
 			"question": "Comment obtenir la Lanterne ?",
-			"answer": "Tout d'abord, vous devez avoir le Gant des Zors afin d'accéder à la forêt de Grumhel par les Îles Atlateinnées. && && Allez sur les Collines Hantées et parlez à L'Homme Bizarre. Ignorez-le et combattez un monstre. && La Lanterne permet d'aller aux Gorges Profondes et faire la mission Hiéroglyphes du Shaman Mou."
+			"answer": "Tout d'abord, vous devez avoir le Gant des Zors afin d'accéder à la forêt de Grumhel par les Îles Atlateinnées. && && Allez sur les Collines Hantées et parlez à L'Homme Bizarre. Ignorez-le et combattez un monstre. && La Linterna te permite ir a Gargantas Profundas y realizar la misión Jeroglíficos del Chamán Lacio."
 		},
 		"faq7": {
 			"question": "Comment obtenir le Gant des Zors ? Comment accéder à la forêt de Gruhmel ?",
 			"answer": "Il vous faudra tout d'abord la Bouée, le Matériel d'escalade, la Pelle et l'Appeau à Rascaphandre. && Avec la Pelle, creusez aux Pentes de Basalte (Mont Tout Chaud), au Marais Collant (Îles Atlantéinées) et à la Fontaine de Jouvence (Royaume de Dinoville). Vous devriez obtenir les statuts 'boue du Marais', 'éclat de Granit' et 'Eau Pure'. && && Allez ensuite au Dôme Soulaflotte parler à l'Archisage, et donnez-lui vos objets récoltés. Après avoir combattu l'Elemental de bois, vous obtiendrez le Gant des Zors. Rendez-vous maintenant aux Chutes Mutantes. && && J'ignore si vous devez déjà avoir la Perle de la Fontaine, mais c'est préférable. Parlez à Maître Hydargol et acceptez de lui prêter le Gant des Zors. Vous obtiendrez une Feuille de Nénuphar. A présent, vous pouvez accéder à la forêt de Grumhel à partir des Chutes Mutantes."
 		},
 		"faq8": {
-			"question": "Où se trouve le marché des îles Atlantéinées où je dois échanger une banane contre un porte-manteau (deuxième mission de Bao Bob, 'Le troc des îles Atlantéinées' ?",
-			"answer": "Cette mission se fait par étape. Vous devrez vous rendre au Mines de Corail, puis aux Iles Waikiki, puis au Chutes Mutantes, puis au Marais Collant, à nouveau aux Mines de Corail et enfin chez M. Bao Bob. && && Dans chacun de ces lieux, vous devez discuter avec un personnage et effectuer l'échange qu'il vous propose."
+			"question": "¿Dónde está el mercado de las Islas Atlanteidas donde tengo que cambiar un plátano por un perchero (segunda misión de Bao Bob, 'El Trueque de las Islas Atlanteidas')?",
+			"answer": "Esta misión se realiza por etapas. Vous devrez vous rendre au Mines de Corail, puis aux Iles Waikiki, puis au Chutes Mutantes, puis au Marais Collant, à nouveau aux Mines de Corail et enfin chez M. Bao Bob. && && Dans chacun de ces lieux, vous devez discuter avec un personnage et effectuer l'échange qu'il vous propose."
 		},
 		"faq9": {
 			"question": "Que choisir au jeu du Pile-ou-face face à Yakuzi ?",
@@ -4197,7 +4197,7 @@
 			"answer": "Tout Dinoz qui se trouve à la Fontaine de Jouvence à minuit gagnera 5 :pv: par jour lors de votre connexion quotidienne. L’effet n’est pas cumulatif."
 		},
 		"faq11": {
-			"question": "Où se trouve le dictionnaire demandé dans la première mission du Shaman mou, 'La mise à l'épreuve' ?",
+			"question": "¿Dónde está el diccionario solicitado en la primera misión del Chamán Lacio, 'La puesta a prueba'?",
 			"answer": "Le dictionnaire est à l'Université."
 		},
 		"faq12": {
@@ -4205,8 +4205,8 @@
 			"answer": "Vous ne pouvez pas les faire s'affronter mais vous pouvez les faire se battre les uns aux cotés des autres. Pour grouper vos dinoz, ils doivent se trouver aux même endroit et posséder chacun une action disponible. && && Sélectionnez l'action 'Faire suivre' : vos dinoz sont désormais en équipe. Vous pouvez grouper jusqu'à trois dinoz, la limite peut passer à cinq si le dinoz chef de groupe a appris les compétences :bois: Sympathie et Charisme."
 		},
 		"faq13": {
-			"question": "J'ai fini les missions de Papy Joe, comment puis-je en avoir d'autres ?",
-			"answer": "Aux îles Atlantéinées, M. Bao Bob (Chez Bao Bob) vous proposera une nouvelle liste de missions. Aux Mont Tout Chaud, c'est le Shaman mou (Fosselave) qui a besoin de vos services."
+			"question": "Terminé las misiones de Papy Jose, ¿cómo puedo conseguir más?",
+			"answer": "En las Islas Atlanteidas, Don Bao Bob (Chez Bao Bob) te ofrecerá una nueva lista de misiones. Aux Mont Tout Chaud, c'est le Shaman mou (Fosselave) qui a besoin de vos services."
 		},
 		"faq14": {
 			"question": "Comment accéder aux Steppes Magnétiques ?",
@@ -4226,7 +4226,7 @@
 		},
 		"faq18": {
 			"question": "Où trouver le colis disparu ?",
-			"answer": "Parler au type qui a perdu le colis aux Forges du Grand Tout Chaud. Il faut pour cela descendre aux Pentes de Basalte. Il faut tuer 4 Gobelins. && && Ensuite, remonter au Tunnel sous la Branche. 6 Gobelins à tuer. && && Retourner valider la Mission à Fosselave."
+			"answer": "Parler au type qui a perdu le colis aux Forges du Grand Tout Chaud. Il faut pour cela descendre aux Pentes de Basalte. Il faut tuer 4 Gobelins. && && Ensuite, remonter au Tunnel sous la Branche. 6 Gobelins à tuer. && && Regresar para validar la Misión en Fosalava."
 		},
 		"faq19": {
 			"question": "Comment accéder au Dome Soulaflotte ?",
@@ -4242,7 +4242,7 @@
 		},
 		"faq22": {
 			"question": "Comment accéder à la forêt de Grumhel à partir des Gorges Profondes ou comment accéder à la seconde partie de la forêt de Grumhel ?",
-			"answer": "Il vous faudra le Gant des Zors, une Feuille de Nénufar et la Bouée. Rendez-vous aux chutes Mutantes, et déplacez-vous à la forêt de Grumhel (Lieu 'Contourner les Chutes Mutantes'). A partir de là, rendez-vous aux Montagnes hantées. Parlez à l'homme Bizarre et ignorez-le. Il vous parlera alors d'un horrible monstre, et demandez à le combattre. Vous entrerez alors en combat avec un Korgon Farceur. Si vous réussissez à la vaincre (ce qui est fort possible), l'Homme Bizarre s'enfuira, vous laissant sa lanterne. A présent, quittez la Forêt de Grumhel, quittez les Îles Atlantéinées, quittez dinoLand et rendez vous au Mont Tout Chaud, au Tunnel sous la Branche. A partir de là, accédez aux Gorges Profondes (action Se déplacer). A partir des Gorges Profondes, accéder au Camp des Korgons (action Se Déplacer). Vous êtes maintenant au camp des Korgons, dans la seconde partie de la forêt de Grumehl. Pour rallier les deux parties, faites les missions de Dian Korgsey, et obtenez les Palmes de Korgon. A présent, vous avez la possibilité de vous déplacer du Camp des Korgons au Fleuve Jumin, et vice-versa."
+			"answer": "Il vous faudra le Gant des Zors, une Feuille de Nénufar et la Bouée. Rendez-vous aux chutes Mutantes, et déplacez-vous à la forêt de Grumhel (Lieu 'Contourner les Chutes Mutantes'). A partir de là, rendez-vous aux Montagnes hantées. Parlez à l'homme Bizarre et ignorez-le. Il vous parlera alors d'un horrible monstre, et demandez à le combattre. Vous entrerez alors en combat avec un Korgon Farceur. Si vous réussissez à la vaincre (ce qui est fort possible), l'Homme Bizarre s'enfuira, vous laissant sa lanterne. A présent, quittez la Forêt de Grumhel, quittez les Îles Atlantéinées, quittez dinoLand et rendez vous au Mont Tout Chaud, au Tunnel sous la Branche. A partir de là, accédez aux Gorges Profondes (action Se déplacer). A partir des Gorges Profondes, accéder au Camp des Korgons (action Se Déplacer). Vous êtes maintenant au camp des Korgons, dans la seconde partie de la forêt de Grumehl. Para unir a los dos grupos, realiza las misiones de Dyan Korgse y obtén las Aletas de korgones. A présent, vous avez la possibilité de vous déplacer du Camp des Korgons au Fleuve Jumin, et vice-versa."
 		},
 		"faq23": {
 			"question": "Comment obtenir la Pelle (Creuser) ?",
@@ -4258,7 +4258,7 @@
 		},
 		"faq26": {
 			"question": "Comment obtenir un Kabuki ?",
-			"answer": "Pour obtenir ce précieux dinoz, il vous faudra l'aura Kabuki, qui s'obtient grâce à la quête de Yakuzi ! && && Dans un premier temps, vous aurez besoin de rencontrer Yakuzi au Port de Prêche (rencontre aléatoire), et d'accepter ses deux paris. && Il disparaitra ensuite, et vous pourrez de nouveau le rencontrer, tout d'abord aux Forges, ensuite aux Gorges Profondes. && Lors de cette dernière rencontre, vous obtiendrez un parchemin, que vous devrez faire traduire à l'Université par un professeur. && Ce dernier vous apprendra qu'il faudra lui donner plusieurs ingrédients pour avancer dans votre quête. && Une fois ces ingrédients donnés, et après un délai d'attente de quelques jours, vous devrez vous rendre aux Mines de Corail (il se peut que vous deviez attendre un peu, le temps qu'un onglet apparaisse, comme pour une étape de mission). && Pour terminer cette quête, vous devrez poursuivre votre assaillant sur l'Ile du Totem, qui n'est pas accessible avant. && && Vous obtiendrez aisni un Oeuf de Kabuki, et l'aura kabuki, qui vous permettra de vous rendre sur ce lieu aussi souvent que vous le voudrez."
+			"answer": "Pour obtenir ce précieux dinoz, il vous faudra l'aura Kabuki, qui s'obtient grâce à la quête de Yakuzi ! && && Dans un premier temps, vous aurez besoin de rencontrer Yakuzi au Port de Prêche (rencontre aléatoire), et d'accepter ses deux paris. && Il disparaitra ensuite, et vous pourrez de nouveau le rencontrer, tout d'abord aux Forges, ensuite aux Gorges Profondes. && Lors de cette dernière rencontre, vous obtiendrez un parchemin, que vous devrez faire traduire à l'Université par un professeur. && Ce dernier vous apprendra qu'il faudra lui donner plusieurs ingrédients pour avancer dans votre quête. && Una vez dados estos ingredientes, y después de un periodo de espera de unos días, tendrás que dirigirte a las Minas de Coral (quizás tengas que esperar un poco mientras aparece una pestaña, como para una etapa de misión). && Pour terminer cette quête, vous devrez poursuivre votre assaillant sur l'Ile du Totem, qui n'est pas accessible avant. && && Vous obtiendrez aisni un Oeuf de Kabuki, et l'aura kabuki, qui vous permettra de vous rendre sur ce lieu aussi souvent que vous le voudrez."
 		},
 		"faq27": {
 			"question": "Comment vendre son Dinoz ?",
@@ -4295,8 +4295,8 @@
 		"contact": "Ce joueur ne fait pas partie de vos contacts."
 	},
 	"roadmap": {
-		"title": "Découvrez les prochains évènements sur DinoRPG !",
-		"small": "Prédiction d'Irma",
+		"title": "¡Descubre los próximos acontecimientos en DinoRPG!",
+		"small": "Predicción de la Bruja Lola",
 		"strong": {
 			"title1": "Version 1.0.0 (Vanilla)",
 			"title2": "Version 1.1.0 (To the West)",
@@ -4307,12 +4307,12 @@
 		"futurTitle": "Avenir Dinolandien",
 		"futureInfo1": {
 			"text1": "Accès aux cartes : Dinoland, Grand Tout-Chaud, Forêt de Gruhmel, Îles Atlantéinées.",
-			"text2": "Accès aux missions originelles : Papy Joe, Bao Bob, Shaman Mou, Nicolas Mulot, Dian Korgsey, Gardien de la fôret.",
+			"text2": "Acceso a las misiones originales: Papy Jose, Bao Bob, Chamán Lacio, Nicolas Mulot, Dyan Korgse, Guardián de la Jungla.",
 			"text3": "Et plein d'autres fonctionnalités"
 		},
 		"futureInfo2": {
 			"text1": "Accès à l'ouest de Dinoville.",
-			"text2": "Accès aux mission du Maître Elémentaire."
+			"text2": "Acceso a las misiones del Maestro Elemental."
 		},
 		"futureInfo3": {
 			"text1": "À venir..."
