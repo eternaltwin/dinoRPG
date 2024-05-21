@@ -538,7 +538,7 @@
 			"easter_egg": "An Urma's egg can be used to obtain an item among all those that exist in Dinoland. Will it be a rare or comon item you'll get ?",
 			"fire_cracker": "TODO",
 			"special_potion_irma": "Madam Irma's famous potion allows the Dinoz who drinks it to *play a new action immediately* without having to wait for the next day. But you can only carry 3.",
-			"daily_ticket": "This ticket allows you to unlock a daily box.",
+			"daily_ticket": "This ticket allows you to unlock a daily box at the University.",
 			"box_common": "Cette boîte semble contenir des objets assez communs.",
 			"box_rare": "Cette boîte brillante semble contenir des objets rares.",
 			"box_epic": "Cette magnifique boîte semble contenir quelque chose d'extraordinaire.",
@@ -2333,7 +2333,7 @@
 		"item": {
 			"use": "Use **immediately**",
 			"useOff": "This item can't be **used**",
-			"equipTitle": "Add to **combats items**.",
+			"equipTitle": "Add to **combats items**&&//Equipped items can be used by your Dinoz during battle//",
 			"equipDescription": "//Objects which have been equipped can be used by your Dinoz during combats//",
 			"equip": "This item can be **equipped**",
 			"equipOff": "This item can't be **equipped**",
@@ -2478,7 +2478,7 @@
 		"tooltip": "Mission: {mission}",
 		"description": {
 			"fish": "Madame Seyche, a resident of Dinoville, is looking for fresh fish to organize a dinner with her friends. Can you get her some fish from the Merchant in Port of Prêche in the south? He has been warned and he is waiting for you.",
-			"dog": "The old lady Ducraft lost her poodle while visiting her son in the Steep Hills, can you find him?",
+			"dog": "The old lady Ducraft lost her poodle while visiting her son in the Precipitous Hills, can you find him?",
 			"kilgou": "De nombreux Loups et Goupignons sévissent dans les Collines Escarpées au nord de Dinoville, le chef d'un village voisin cherche quelqu'un pour en tuer quelques-uns et ainsi leur faire peur pour qu'ils se calment, sauras-tu te montrer suffisamment fort ?",
 			"kilwlf": "Recently, farmers have had a lot of problems with groups of wolves attacking their goats. Can you take a walk here and there and kill a few to keep them away?",
 			"fflow": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
