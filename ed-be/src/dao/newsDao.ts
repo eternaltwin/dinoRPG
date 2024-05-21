@@ -26,7 +26,8 @@ export const getBatchOfNews = async (page: number) => {
 			frenchTitle: true,
 			englishTitle: true,
 			spanishTitle: true,
-			germanTitle: true
+			germanTitle: true,
+			createdDate: true
 		}
 	});
 
@@ -50,3 +51,14 @@ export const getNewsIllus = async (id: number) => {
 
 	return news;
 };
+
+export const getNewsDate = async (id: number) => {
+	const news = await prisma.news.findUnique({
+		where: { id },
+		select: { createdDate: true}
+	})
+
+	if (!news) throw new ErrorFormator(500, 'News not found');
+
+	return news;
+}

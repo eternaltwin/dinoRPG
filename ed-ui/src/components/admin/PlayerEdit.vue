@@ -1,200 +1,200 @@
 <template>
 	<form @submit.prevent="sendUpdate()">
-		<table>
-			<tbody>
-				<tr>
-					<th>Champs</th>
-					<th>Valeur actuelle</th>
-					<th>Valeur désirée</th>
-				</tr>
-				<tr>
-					<td>customText</td>
-					<td>{{ player.customText }}</td>
-					<td>
-						<input type="text" v-model="playerFields.customText" />
-					</td>
-				</tr>
-				<tr>
-					<td>hasImported</td>
-					<td>{{ player.hasImported }}</td>
-					<td>
-						<input
-							class="radio"
-							type="radio"
-							id="true"
-							value="true"
-							name="hasImported"
-							v-model="playerFields.hasImported"
+		<fieldset>
+			<legend>Player details</legend>
+			<div>
+				<label class="title" for="playerName">Player :</label>
+				<input type="text" id="playerName" v-model="player.name" disabled />
+				<input type="text" id="playerName" v-model="player.eternalTwinId" disabled />
+			</div>
+			<div>
+				<label class="title" for="playerHasImported">HasImported :</label>
+				<input id="playerHasImported" type="text" disabled v-model="player.hasImported" />
+				<div class="hasImported">
+					<input
+						class="radio"
+						type="radio"
+						id="true"
+						value="true"
+						name="hasImported"
+						v-model="playerFields.hasImported"
+					/>
+					<label class="radio" for="true">true</label>
+					<input
+						class="radio"
+						type="radio"
+						id="false"
+						value="false"
+						name="hasImported"
+						v-model="playerFields.hasImported"
+					/>
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerCustomText">CustomText :</label>
+				<input type="text" disabled v-model="player.customText" />
+				<input type="text" id="playerCustomText" v-model="playerFields.customText" />
+			</div>
+			<div>
+				<label class="title" for="playerMoney">Money :</label>
+				<input type="text" id="playerMoney" disabled v-model="player.money" />
+				<div class="money">
+					<input type="number" min="0" v-model="playerFields.money" />
+					<input class="radio" type="radio" id="add" value="add" name="operation" v-model="playerFields.operation" />
+					<label class="radio" for="add">add</label>
+					<input
+						class="radio"
+						type="radio"
+						id="remove"
+						value="remove"
+						name="operation"
+						v-model="playerFields.operation"
+					/>
+					<label class="radio" for="remove">remove</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerQuetzuBought">Quetzu Bought :</label>
+				<input type="text" v-model="player.quetzuBought" />
+				<input type="number" min="0" max="6" v-model="playerFields.quetzuBought" />
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Rewards</legend>
+			<div class="rewards">
+				<template v-for="(reward, index) in player.rewards" :key="index">
+					<Tippy theme="normal">
+						<img
+							:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward]}`)"
+							:alt="epicList.imgName[reward]"
 						/>
-						<label class="radio" for="true">true</label><br />
-						<input
-							class="radio"
-							type="radio"
-							id="false"
-							value="false"
-							name="hasImported"
-							v-model="playerFields.hasImported"
-						/>
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>rewards</td>
-					<td>
-						<template v-for="(reward, index) in player.rewards" :key="index">
-							<Tippy theme="normal">
-								<img
-									:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward]}`)"
-									:alt="epicList.imgName[reward]"
-								/>
-								<template #content>
-									<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward]}`))" />
-									<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward]}`))" />
-								</template>
-							</Tippy>
+						<template #content>
+							<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward]}`))" />
+							<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward]}`))" />
 						</template>
-					</td>
-					<td>
-						<select v-model="playerFields.rewards" multiple size="4">
-							<option v-for="(reward, index) in epicListFiltered" :key="index" :value="reward">
-								{{ epicList.imgName[reward] }}
-							</option>
-						</select>
-						<input
-							class="radio"
-							type="radio"
-							value="add"
-							name="epicOperation"
-							@click="filterEpicList('add')"
-							v-model="playerFields.epicOperation"
-						/>
-						<label class="radio" for="add">add</label>
-						<input
-							class="radio"
-							type="radio"
-							value="remove"
-							name="epicOperation"
-							@click="filterEpicList('remove')"
-							v-model="playerFields.epicOperation"
-						/>
-						<label class="radio" for="remove">remove</label>
-					</td>
-				</tr>
-				<tr>
-					<td>money</td>
-					<td>{{ player.money }}</td>
-					<td>
-						<input type="number" min="0" v-model="playerFields.money" /><br />
-						<input class="radio" type="radio" id="add" value="add" name="operation" v-model="playerFields.operation" />
-						<label class="radio" for="add">add</label>
-						<input
-							class="radio"
-							type="radio"
-							id="remove"
-							value="remove"
-							name="operation"
-							v-model="playerFields.operation"
-						/>
-						<label class="radio" for="remove">remove</label>
-					</td>
-				</tr>
-				<tr>
-					<td>quetzuBought</td>
-					<td>{{ player.quetzuBought }}</td>
-					<td><input type="number" min="0" max="6" v-model="playerFields.quetzuBought" /><br /></td>
-				</tr>
-				<tr>
-					<td>leader</td>
-					<td>{{ player.leader }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="leader" v-model="playerFields.leader" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="leader" v-model="playerFields.leader" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>engineer</td>
-					<td>{{ player.engineer }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="engineer" v-model="playerFields.engineer" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="engineer" v-model="playerFields.engineer" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>cooker</td>
-					<td>{{ player.cooker }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="cooker" v-model="playerFields.cooker" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="cooker" v-model="playerFields.cooker" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>shopKeeper</td>
-					<td>{{ player.shopKeeper }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="shopKeeper" v-model="playerFields.shopKeeper" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="shopKeeper" v-model="playerFields.shopKeeper" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>merchant</td>
-					<td>{{ player.merchant }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="merchant" v-model="playerFields.merchant" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="merchant" v-model="playerFields.merchant" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>priest</td>
-					<td>{{ player.priest }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="priest" v-model="playerFields.priest" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="priest" v-model="playerFields.priest" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>teacher</td>
-					<td>{{ player.teacher }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="teacher" v-model="playerFields.teacher" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="teacher" v-model="playerFields.teacher" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>messie</td>
-					<td>{{ player.messie }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="messie" v-model="playerFields.messie" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="messie" v-model="playerFields.messie" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>matelasseur</td>
-					<td>{{ player.matelasseur }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="matelasseur" v-model="playerFields.matelasseur" />
-						<label class="radio" for="true">true</label><br />
-						<input class="radio" type="radio" value="false" name="matelasseur" v-model="playerFields.matelasseur" />
-						<label class="radio" for="false">false</label>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+					</Tippy>
+				</template>
+			</div>
+			<div class="rewards">
+				<select v-model="playerFields.rewards" multiple size="5">
+					<option v-for="(reward, index) in epicListFiltered" :key="index" :value="reward">
+						{{ epicList.imgName[reward] }}
+					</option>
+				</select>
+				<input
+					class="radio"
+					type="radio"
+					value="add"
+					name="epicOperation"
+					@click="filterEpicList('add')"
+					v-model="playerFields.epicOperation"
+				/>
+				<label class="radio" for="add">add</label>
+				<input
+					class="radio"
+					type="radio"
+					value="remove"
+					name="epicOperation"
+					@click="filterEpicList('remove')"
+					v-model="playerFields.epicOperation"
+				/>
+				<label class="radio" for="remove">remove</label>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>U Skills</legend>
+			<div>
+				<label class="title" for="playerLeader">Leader :</label>
+				<input id="playerLeader" type="text" v-model="player.leader" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="leader" v-model="playerFields.leader" />
+					<label class="radio" for="true">true</label>
+					<input class="radio" type="radio" value="false" name="leader" v-model="playerFields.leader" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerEngineer">Engineer :</label>
+				<input id="playerEngineer" type="text" v-model="player.engineer" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="engineer" v-model="playerFields.engineer" />
+					<label class="radio" for="true">true</label>
+					<input class="radio" type="radio" value="false" name="engineer" v-model="playerFields.engineer" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerCooker">Cooker :</label>
+				<input id="playerCooker" type="text" v-model="player.cooker" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="cooker" v-model="playerFields.cooker" />
+					<label class="radio" for="true">true</label>
+					<input class="radio" type="radio" value="false" name="cooker" v-model="playerFields.cooker" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerShopKeeper">ShopKeeper :</label>
+				<input id="playerShopKeeper" type="text" v-model="player.shopKeeper" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="shopKeeper" v-model="playerFields.shopKeeper" />
+					<label class="radio" for="true">true</label>
+					<input class="radio" type="radio" value="false" name="shopKeeper" v-model="playerFields.shopKeeper" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerMerchant">Merchant :</label>
+				<input id="playerMerchant" type="text" v-model="player.merchant" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="merchant" v-model="playerFields.merchant" />
+					<label class="radio" for="true">true</label>
+					<input class="radio" type="radio" value="false" name="merchant" v-model="playerFields.merchant" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerPriest">Priest :</label>
+				<input id="playerPriest" type="text" v-model="player.priest" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="priest" v-model="playerFields.priest" />
+					<label class="radio" for="true">true</label>
+					<input class="radio" type="radio" value="false" name="priest" v-model="playerFields.priest" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerTeacher">Teacher :</label>
+				<input id="playerTeacher" type="text" v-model="player.teacher" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="teacher" v-model="playerFields.teacher" />
+					<label class="radio" for="true">true</label><br />
+					<input class="radio" type="radio" value="false" name="teacher" v-model="playerFields.teacher" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerMessiah">Messiah :</label>
+				<input id="playerMessiah" type="text" v-model="player.messie" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="messie" v-model="playerFields.messie" />
+					<label class="radio" for="true">true</label><br />
+					<input class="radio" type="radio" value="false" name="messie" v-model="playerFields.messie" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="playerMatelasseur">Matelasseur :</label>
+				<input id="playerMatelasseur" type="text" v-model="player.matelasseur" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="matelasseur" v-model="playerFields.matelasseur" />
+					<label class="radio" for="true">true</label><br />
+					<input class="radio" type="radio" value="false" name="matelasseur" v-model="playerFields.matelasseur" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+		</fieldset>
 		<input type="submit" />
 	</form>
 </template>
@@ -300,49 +300,88 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+form {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #ecbd84;
+	border-spacing: 2px;
+	padding: 5px;
+	fieldset {
+		border: 2px solid #bc683c;
+		margin: 15px 0;
+		padding: 20px;
+		width: 90%;
+	}
+	legend {
+		font-size: 13pt;
+		text-shadow: 1px 1px 0px #356847;
+		padding-left: 8px;
+		padding-right: 8px;
+		padding-bottom: 8px;
+		height: 41px;
+		color: #fffdba;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 1.5pt;
+		text-align: left;
+		border: 1px solid #356847;
+		background-color: #c64e36;
+		background-image: url('../../assets/background/table_header.webp');
+		background-position: left bottom;
+		width: 60%;
+	}
+	div {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+	}
+	label {
+		display: block;
+		margin-bottom: 5px;
+		color: #710;
+		font-size: 9pt;
+	}
+	input[type='text'],
+	input[type='number'],
+	select {
+		width: calc(100% - 20px);
+		padding: 5px;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		border: 1px solid #c88f44;
+		background-color: #f3ca92;
+		color: #710;
+	}
+	input[type='submit'] {
+		margin-top: 20px;
+		background-color: #c64e36;
+		color: #fffdba;
+		border: none;
+		padding: 10px 20px;
+		cursor: pointer;
+		border-radius: 5px;
+	}
+}
 .radio {
 	padding-right: 10px;
 	margin-left: 3px;
 	margin-top: 3px;
 }
-table {
-	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	border: 2px solid #bc683c;
-	background-color: #ecbd84;
-	border-collapse: separate;
-	border-spacing: 1px;
-	tr {
-		display: table-row;
-		th {
-			font-size: 8pt;
-			text-shadow: 1px 1px 0px #356847;
-			padding-left: 4px;
-			padding-right: 4px;
-			padding-bottom: 8px;
-			height: 41px;
-			vertical-align: bottom;
-			color: #fffdba;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 1pt;
-			text-align: left;
-			white-space: nowrap;
-			border: 1px solid #356847;
-			background-color: #c64e36;
-			background-image: url('../../assets/background/table_header.webp');
-			background-position: left bottom;
-			max-width: 222px;
-		}
-		td {
-			font-size: 9pt;
-			padding: 1px 5px;
-			color: #710;
-			background-color: #f3ca92;
-			border: 1px solid #c88f44;
-			height: 75px;
-		}
-	}
+.hasImported,
+.money,
+.rewards,
+.uSkills {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin-bottom: 5px;
+}
+.title {
+	text-transform: uppercase;
+	font-weight: bold;
+	margin-top: 5px;
 }
 </style>

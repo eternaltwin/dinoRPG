@@ -29,16 +29,9 @@ const createLogForMultipleDinoz = async (
 	});
 };
 
-const getLogList = async (page: number, type?: LogType, playerId?: number, dinozId?: number) => {
+const getLogListAll = async () => {
 	return await prisma.log.findMany({
-		where: {
-			type,
-			playerId,
-			dinozId
-		},
 		orderBy: { createdAt: 'desc' },
-		skip: (page - 1) * 100,
-		take: 100,
 		include: {
 			player: { select: { id: true, name: true } },
 			dinoz: { select: { id: true, name: true } }
@@ -46,4 +39,35 @@ const getLogList = async (page: number, type?: LogType, playerId?: number, dinoz
 	});
 };
 
-export { createLog, createLogForMultipleDinoz, getLogList };
+const getLogList = async (page: number, type?: LogType, playerId?: number, dinozId?: number) => {
+	return await prisma.log.findMany({
+		where: {
+			type,
+			playerId,
+			dinozId
+		},	
+		orderBy: { createdAt: 'desc' },
+		skip: (page - 1) * 100,
+		take: 100,
+		include: {
+			player: { select: { id: true, name: true } },
+			dinoz: { select: { id: true, name: true } }
+		}	
+	});	
+};	
+
+const getLogListByDate = async (type?: LogType, fromDate?: Date, toDate?: Date) => {
+	return await prisma.log.findMany({
+		where: {
+			type,
+			createdAt: { gte: fromDate, lte: toDate }
+		},
+		orderBy: { createdAt: 'desc' },
+		include: {
+			player: { select: { id: true, name: true } },
+			dinoz: { select: { id: true, name: true } }
+		}
+	});
+}
+
+export { createLog, createLogForMultipleDinoz, getLogList, getLogListAll, getLogListByDate };

@@ -483,32 +483,37 @@ model Offer {
 }
 
 enum LogType {
-  ItemUsed
-  ItemBought
-  GoldWon
-  GoldLost
-  Move
-  LevelUp
-  Fight
-  Death
-  Revive
-  MissionStep
-  MissionFinished
-  MissionCanceled
-  Gather
-  CreateDinoz
-  ChangeDinozOrder
-  AdminUpdateDinoz
-  AdminAddStatus
-  AdminRemoveStatus
-  AdminAddSkill
-  AdminRemoveSkill
-  AdminAddMoney
-  AdminRemoveMoney
-  AdminAddReward
-  AdminRemoveReward
-  AdminUpdatePlayer
-  AdminUpdateSecret
+	ItemUsed
+	ItemBought
+	IngredientSold
+	GoldWon
+	GoldLost
+	Move
+	LevelUp
+	Fight
+	XPEarned
+	HPLost
+	Death
+	Revive
+	MissionStep
+	MissionFinished
+	MissionCanceled
+	Gather
+	CreateDinoz
+	ChangeDinozOrder
+	PlayerCreated
+	PlayerConnected
+	AdminUpdateDinoz
+	AdminAddStatus
+	AdminRemoveStatus
+	AdminAddSkill
+	AdminRemoveSkill
+	AdminAddMoney
+	AdminRemoveMoney
+	AdminAddReward
+	AdminRemoveReward
+	AdminUpdatePlayer
+	AdminUpdateSecret
 }
 
 model Log {

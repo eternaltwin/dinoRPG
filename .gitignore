@@ -44,6 +44,7 @@ package-lock.json
 etwin.toml
 config_development.toml
 .env.development
+eternaltwin.local.toml
 
 # Prisma
 prisma/*.js

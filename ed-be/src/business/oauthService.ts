@@ -9,6 +9,8 @@ import { addPlayerInRanking } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getAllSecretsRequest } from '../dao/secretDao.js';
+import { createLog } from '../dao/logDao.js';
+import { LogType } from '@drpg/prisma';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -64,6 +66,13 @@ export async function authenticateToET(req: Request) {
 		});
 		// Create player at position 0 in ranking
 		await addPlayerInRanking(player.id);
+		await createLog(
+			LogType.PlayerCreated,
+			player.id,
+			undefined,
+			player.name.toString(),
+			player.id
+		)
 	}
 
 	// Update display name if changed on ET side
@@ -71,6 +80,13 @@ export async function authenticateToET(req: Request) {
 		await setPlayer(player.id, { name: user.user.display_name.current.value });
 		await archiveOldUsername(player.id, player.name);
 	}
+	
+	await createLog(
+		LogType.PlayerConnected,
+		player.id,
+		undefined,
+		player.name.toString()
+	)
 
 	// Forge JWT with playerId
 	return await forgeJWT(player.id);

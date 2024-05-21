@@ -1,176 +1,160 @@
 <template>
 	<form @submit.prevent="dinozUpdate()">
-		<table>
-			<tbody>
-				<tr>
-					<th>Champs</th>
-					<th>Valeur actuelle</th>
-					<th>Valeur désirée</th>
-				</tr>
-				<tr>
-					<td>name</td>
-					<td>{{ dinoz.name }}</td>
-					<td>
-						<input type="text" v-model="dinozField.name" />
-					</td>
-				</tr>
-				<tr>
-					<td>unavailableReason</td>
-					<td>{{ dinoz.unavailableReason }}</td>
-					<td>
-						<select v-model="dinozField.unavailableReason" size="5">
-							<template v-for="unavailableReason in unavailableReasonListFiltered" :key="unavailableReason">
-								<option :value="unavailableReason">
-									{{ unavailableReason }}
-								</option>
-							</template>
-						</select>
-						<br />
-						<input
-							v-if="dinoz.unavailableReason === null"
-							class="radio"
-							type="radio"
-							value="add"
-							name="addUnavailableReason"
-							v-model="unavailableReasonOperation"
-						/>
-						<label class="radio" v-if="dinoz.unavailableReason === null">add</label>
-						<input
-							v-if="dinoz.unavailableReason"
-							class="radio"
-							type="radio"
-							value="remove"
-							name="removeUnavailableReason"
-							v-model="unavailableReasonOperation"
-						/>
-						<label class="radio" v-if="dinoz.unavailableReason">remove</label>
-					</td>
-				</tr>
-				<tr>
-					<td>canChangeName</td>
-					<td>{{ dinoz.canChangeName }}</td>
-					<td>
-						<input class="radio" type="radio" value="true" name="canChangeName" v-model="dinozField.canChangeName" />
-						<label class="radio">true</label><br />
-						<input class="radio" type="radio" value="false" name="canChangeName" v-model="dinozField.canChangeName" />
-						<label class="radio">false</label>
-					</td>
-				</tr>
-				<tr>
-					<td>level</td>
-					<td>{{ dinoz.level }}</td>
-					<td>
-						<input type="number" min="1" max="80" v-model="dinozField.level" />
-					</td>
-				</tr>
-				<tr>
-					<td>placeId</td>
-					<td>{{ dinoz.placeId }}</td>
-					<td>
-						<input type="number" min="1" v-model="dinozField.placeId" />
-					</td>
-				</tr>
-				<tr>
-					<td>life</td>
-					<td>{{ dinoz.life }}</td>
-					<td>
-						<input type="number" min="0" v-model="dinozField.life" />
-					</td>
-				</tr>
-				<tr>
-					<td>maxLife</td>
-					<td>{{ dinoz.maxLife }}</td>
-					<td>
-						<input type="number" min="0" v-model="dinozField.maxLife" />
-					</td>
-				</tr>
-				<tr>
-					<td>experience</td>
-					<td>{{ dinoz.experience }}</td>
-					<td>
-						<input type="number" min="0" v-model="dinozField.experience" />
-					</td>
-				</tr>
-				<tr>
-					<td>Status</td>
-					<td>
-						<template v-for="(status, index) in dinoz.status" :key="index">
-							<Tippy theme="normal" v-if="statusList.displayed[status]">
-								<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
-								<template #content>
-									<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
-									<p v-html="formatContent($t(`status.description.${status}`))"></p>
-								</template>
-							</Tippy>
-							<p v-if="!statusList.displayed[status]" v-html="statusList.imgName[status]" />
+		<fieldset>
+			<legend>Dinoz Details</legend>
+			<div>
+				<label class="title" for="dinozName">Name :</label>
+				<input id="dinozName" type="text" v-model="dinoz.name" disabled />
+				<input type="text" v-model="dinozField.name" />
+			</div>
+			<div>
+				<label class="title" for="dinozCanChangeName">Can Change Name :</label>
+				<input id="dinozCanChangeName" type="text" v-model="dinoz.canChangeName" disabled />
+				<div class="canChangeName">
+					<input class="radio" type="radio" value="true" name="canChangeName" v-model="dinozField.canChangeName" />
+					<label class="radio">true</label><br />
+					<input class="radio" type="radio" value="false" name="canChangeName" v-model="dinozField.canChangeName" />
+					<label class="radio">false</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="dinozLocation">PlaceID :</label>
+				<input id="dinozLocation" type="text" v-model="dinoz.placeId" disabled />
+				<input type="number" min="1" v-model="dinozField.placeId" />
+			</div>
+			<div>
+				<label class="title" for="dinozLevel">Level :</label>
+				<input id="dinozLevel" type="text" v-model="dinoz.level" disabled />
+				<input type="number" min="1" max="80" v-model="dinozField.level" />
+			</div>
+			<div>
+				<label class="title" for="dinozExperience">Experience :</label>
+				<input id="dinozExperience" type="text" v-model="dinoz.experience" disabled />
+				<input type="number" min="0" v-model="dinozField.experience" />
+			</div>
+			<div>
+				<label class="title" for="dinozLife">Life :</label>
+				<input id="dinozLife" type="text" v-model="dinoz.life" disabled />
+				<input type="number" min="0" v-model="dinozField.life" />
+			</div>
+			<div>
+				<label class="title" for="dinozMaxLife">Max Life :</label>
+				<input id="dinozMaxLife" type="text" v-model="dinoz.maxLife" disabled />
+				<input type="number" min="0" v-model="dinozField.maxLife" />
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Dinoz Statuses</legend>
+			<div>
+				<label class="title" for="dinozUnavailableReason">Unavailable Reason :</label>
+				<input id="dinozUnavailableReason" type="text" v-model="dinoz.unavailableReason" disabled />
+				<div class="unavailableReason">
+					<select v-model="dinozField.unavailableReason" size="5">
+						<template v-for="unavailableReason in unavailableReasonListFiltered" :key="unavailableReason">
+							<option :value="unavailableReason">
+								{{ unavailableReason }}
+							</option>
 						</template>
-					</td>
-					<td>
-						<select v-model="dinozField.statusList" multiple size="4">
-							<template v-for="(status, index) in statusListFiltered" :key="index">
-								<option :value="status">
-									{{ $t(`status.name.${status}`) }}
-								</option>
+					</select>
+					<input
+						v-if="dinoz.unavailableReason === null"
+						class="radio"
+						type="radio"
+						value="add"
+						name="addUnavailableReason"
+						v-model="unavailableReasonOperation"
+					/>
+					<label class="radio" v-if="dinoz.unavailableReason === null">add</label>
+					<input
+						v-if="dinoz.unavailableReason"
+						class="radio"
+						type="radio"
+						value="remove"
+						name="removeUnavailableReason"
+						v-model="unavailableReasonOperation"
+					/>
+					<label class="radio" v-if="dinoz.unavailableReason">remove</label>
+				</div>
+			</div>
+			<div>
+				<label class="title" for="dinozStatuses">Statuses :</label>
+				<div class="statuses">
+					<template v-for="(status, index) in dinoz.status" :key="index">
+						<Tippy theme="normal" v-if="statusList.displayed[status]">
+							<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
+							<template #content>
+								<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
+								<p v-html="formatContent($t(`status.description.${status}`))"></p>
 							</template>
-						</select>
-						<input
-							class="radio"
-							type="radio"
-							value="add"
-							name="addStatus"
-							@click="filterStatusList('add')"
-							v-model="statusOperation"
-						/>
-						<label class="radio">add</label>
-						<input
-							class="radio"
-							type="radio"
-							value="remove"
-							name="removeStatus"
-							@click="filterStatusList('remove')"
-							v-model="statusOperation"
-						/>
-						<label class="radio">remove</label>
-					</td>
-				</tr>
-				<tr>
-					<td>Skill</td>
-					<td>
-						<template v-for="skillId in dinoz.skills" :key="skillId">
-							{{ $t(`skill.name.${skillList[skillId].name}`) }} <br />
+						</Tippy>
+						<p v-if="!statusList.displayed[status]" v-html="statusList.imgName[status]" />
+					</template>
+				</div>
+				<div class="statuses">
+					<select v-model="dinozField.statusList" multiple size="4">
+						<template v-for="(status, index) in statusListFiltered" :key="index">
+							<option :value="status">
+								{{ $t(`status.name.${status}`) }}
+							</option>
 						</template>
-					</td>
-					<td>
-						<select v-model="dinozField.skillList" multiple size="10">
-							<template v-for="skill in skillListFiltered" :key="skill.id">
-								<option :value="skill.id">
-									{{ $t(`skill.name.${skill.name}`) }}
-								</option>
-							</template>
-						</select>
-						<br />
-						<input
-							class="radio"
-							type="radio"
-							value="add"
-							name="addSkill"
-							@click="filterSkillList('add')"
-							v-model="skillOperation"
-						/>
-						<label class="radio">add</label>
-						<input
-							class="radio"
-							type="radio"
-							value="remove"
-							name="removeSkill"
-							@click="filterSkillList('remove')"
-							v-model="skillOperation"
-						/>
-						<label class="radio">remove</label>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+					</select>
+					<input
+						class="radio"
+						type="radio"
+						value="add"
+						name="addStatus"
+						@click="filterStatusList('add')"
+						v-model="statusOperation"
+					/>
+					<label class="radio">add</label>
+					<input
+						class="radio"
+						type="radio"
+						value="remove"
+						name="removeStatus"
+						@click="filterStatusList('remove')"
+						v-model="statusOperation"
+					/>
+					<label class="radio">remove</label>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Dinoz Skills</legend>
+			<div class="skills">
+				<template v-for="skillId in dinoz.skills" :key="skillId">
+					<div class="skills" />
+					{{ $t(`skill.name.${skillList[skillId].name}`) }}
+				</template>
+			</div>
+			<div class="skills">
+				<select v-model="dinozField.skillList" multiple size="10">
+					<template v-for="skill in skillListFiltered" :key="skill.id">
+						<option :value="skill.id">
+							{{ $t(`skill.name.${skill.name}`) }}
+						</option>
+					</template>
+				</select>
+				<input
+					class="radio"
+					type="radio"
+					value="add"
+					name="addSkill"
+					@click="filterSkillList('add')"
+					v-model="skillOperation"
+				/>
+				<label class="radio">add</label>
+				<input
+					class="radio"
+					type="radio"
+					value="remove"
+					name="removeSkill"
+					@click="filterSkillList('remove')"
+					v-model="skillOperation"
+				/>
+				<label class="radio">remove</label>
+			</div>
+		</fieldset>
 		<input type="submit" />
 	</form>
 </template>
@@ -314,49 +298,88 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+form {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #ecbd84;
+	border-spacing: 2px;
+	padding: 5px;
+	fieldset {
+		border: 2px solid #bc683c;
+		margin: 15px 0;
+		padding: 20px;
+		width: 90%;
+	}
+	legend {
+		font-size: 13pt;
+		text-shadow: 1px 1px 0px #356847;
+		padding-left: 8px;
+		padding-right: 8px;
+		padding-bottom: 8px;
+		height: 41px;
+		color: #fffdba;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 1.5pt;
+		text-align: left;
+		border: 1px solid #356847;
+		background-color: #c64e36;
+		background-image: url('../../assets/background/table_header.webp');
+		background-position: left bottom;
+		width: 60%;
+	}
+	div {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+	}
+	label {
+		display: block;
+		margin-bottom: 5px;
+		color: #710;
+		font-size: 9pt;
+	}
+	input[type='text'],
+	input[type='number'],
+	select {
+		width: calc(100% - 20px);
+		padding: 5px;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		border: 1px solid #c88f44;
+		background-color: #f3ca92;
+		color: #710;
+	}
+	input[type='submit'] {
+		margin-top: 20px;
+		background-color: #c64e36;
+		color: #fffdba;
+		border: none;
+		padding: 10px 20px;
+		cursor: pointer;
+		border-radius: 5px;
+	}
+}
 .radio {
 	padding-right: 10px;
 	margin-left: 3px;
 	margin-top: 3px;
 }
-table {
-	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	border: 2px solid #bc683c;
-	background-color: #ecbd84;
-	border-collapse: separate;
-	border-spacing: 1px;
-	tr {
-		display: table-row;
-		th {
-			font-size: 8pt;
-			text-shadow: 1px 1px 0px #356847;
-			padding-left: 4px;
-			padding-right: 4px;
-			padding-bottom: 8px;
-			height: 41px;
-			vertical-align: bottom;
-			color: #fffdba;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 1pt;
-			text-align: left;
-			white-space: nowrap;
-			border: 1px solid #356847;
-			background-color: #c64e36;
-			background-image: url('../../assets/background/table_header.webp');
-			background-position: left bottom;
-			max-width: 222px;
-		}
-		td {
-			font-size: 9pt;
-			padding: 1px 5px;
-			color: #710;
-			background-color: #f3ca92;
-			border: 1px solid #c88f44;
-			height: 75px;
-		}
-	}
+.canChangeName,
+.unavailableReason,
+.statuses,
+.skills {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin-bottom: 5px;
+}
+.title {
+	text-transform: uppercase;
+	font-weight: bold;
+	margin-top: 5px;
 }
 </style>

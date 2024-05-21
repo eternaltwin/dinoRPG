@@ -207,7 +207,7 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 			}
 			break;
 		case 'remove':
-			const promises = rewardList.map(reward => removeRewardFromPlayer(+req.params.id, reward));
+			const promises = rewardList.map(reward => removeRewardFromPlayer(+req.params.id, +reward));
 			await Promise.all(promises);
 
 			for (const reward of rewardList) {
@@ -358,7 +358,6 @@ export async function editPlayer(req: Request) {
 	}
 	if (typeof player.messie !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, 'messie', player.messie);
-		console.log(player.messie);
 	}
 	if (typeof player.matelasseur !== 'undefined') {
 		await createLog(

@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { createNews, getBatchOfNews, getNewsIllus, updateAnyNews } from '../dao/newsDao.js';
+import { createNews, getBatchOfNews, getNewsIllus, updateAnyNews, getNewsDate } from '../dao/newsDao.js';
 
 /**
  * @summary Create a news
@@ -74,4 +74,10 @@ export async function getNewsIllustration(req: Request<{ id: string }>) {
 	const news = await getNewsIllus(+req.params.id);
 
 	return news.image;
+}
+
+export async function getNewsCreatedDate(req: Request<{ id: string }>) {
+	const news = await getNewsDate(+req.params.id);
+
+	return news.createdDate;
 }

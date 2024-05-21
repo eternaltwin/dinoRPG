@@ -8,47 +8,56 @@
 	<label for="createNews">Or type the name to create a news : </label>
 	<input id="createNews" v-model="newsEdit.title" type="text" />
 	<form @submit.prevent="submit()" v-if="newsEdit.title">
-		<table>
-			<tbody>
-				<tr>
-					<th>Langue</th>
-					<th>Texte</th>
-				</tr>
-				<tr>
-					<td>French Title</td>
-					<td><textarea v-model="newsEdit.frenchTitle" /></td>
-				</tr>
-				<tr>
-					<td>English Title</td>
-					<td><textarea v-model="newsEdit.englishTitle" /></td>
-				</tr>
-				<tr>
-					<td>Spanish Title</td>
-					<td><textarea v-model="newsEdit.spanishTitle" /></td>
-				</tr>
-				<tr>
-					<td>German Title</td>
-					<td><textarea v-model="newsEdit.germanTitle" /></td>
-				</tr>
-				<tr>
-					<td>French</td>
-					<td><textarea v-model="newsEdit.frenchText" /></td>
-				</tr>
-				<tr>
-					<td>English</td>
-					<td><textarea v-model="newsEdit.englishText" /></td>
-				</tr>
-				<tr>
-					<td>Spanish</td>
-					<td><textarea v-model="newsEdit.spanishText" /></td>
-				</tr>
-				<tr>
-					<td>German</td>
-					<td><textarea v-model="newsEdit.germanText" /></td>
-				</tr>
-			</tbody>
-		</table>
-		<input type="file" ref="file" @change="upfile" />
+		<fieldset>
+			<legend>Title News</legend>
+			<div>
+				<label for="frenchTitle" class="title">French Title :</label>
+				<textarea id="frenchTitle" v-model="newsEdit.frenchTitle" />
+			</div>
+			<div>
+				<label for="englishTitle" class="title">English Title :</label>
+				<textarea id="englishTitle" v-model="newsEdit.englishTitle" />
+			</div>
+			<div>
+				<label for="spanishTitle" class="title">Spanish Title :</label>
+				<textarea id="spanishTitle" v-model="newsEdit.spanishTitle" />
+			</div>
+			<div>
+				<label for="germanTitle" class="title">Spanish Title :</label>
+				<textarea id="germanTitle" v-model="newsEdit.germanTitle" />
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Text News</legend>
+			<div>
+				<label for="frenchText" class="title">French Text :</label>
+				<textarea id="frenchText" v-model="newsEdit.frenchText" />
+			</div>
+			<div>
+				<label for="englishText" class="title">English Text :</label>
+				<textarea id="englishText" v-model="newsEdit.englishText" />
+			</div>
+			<div>
+				<label for="spanishText" class="title">Spanish Text :</label>
+				<textarea id="spanishText" v-model="newsEdit.spanishText" />
+			</div>
+			<div>
+				<label for="germanText" class="title">German Text :</label>
+				<textarea id="germanText" v-model="newsEdit.germanText" />
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>File News</legend>
+			<div>
+				<input type="file" ref="file" @change="upfile" />
+				<img
+					v-if="filePreviewUrl"
+					:src="filePreviewUrl"
+					alt="File Preview"
+					style="max-width: 300px; max-height: 300px"
+				/>
+			</div>
+		</fieldset>
 		<input type="submit" />
 	</form>
 </template>
@@ -68,7 +77,8 @@ export default defineComponent({
 			newsEdit: {} as Partial<AllNews>,
 			batchNews: [] as NewsGetResponse,
 			formData: new FormData(),
-			newSelect: false as boolean
+			newSelect: false as boolean,
+			filePreviewUrl: ''
 		};
 	},
 	methods: {
@@ -122,8 +132,17 @@ export default defineComponent({
 		},
 		upfile(): void {
 			const image = this.$refs.file! as HTMLInputElement;
-			this.formData.delete('file');
-			this.formData.append('file', image!.files![0]);
+			const file = image.files![0];
+
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = e => {
+					this.filePreviewUrl = e.target!.result as string;
+				};
+				reader.readAsDataURL(file);
+				this.formData.delete('file');
+				this.formData.append('file', image!.files![0]);
+			}
 		}
 	},
 	async mounted(): Promise<void> {
@@ -140,44 +159,80 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-table {
+form {
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 20px;
 	margin-bottom: 10px;
-	border: 2px solid #bc683c;
 	background-color: #ecbd84;
-	border-collapse: separate;
-	border-spacing: 1px;
-	tr {
-		display: table-row;
-		th {
-			font-size: 8pt;
-			text-shadow: 1px 1px 0px #356847;
-			padding-left: 4px;
-			padding-right: 4px;
-			padding-bottom: 8px;
-			height: 41px;
-			vertical-align: bottom;
-			color: #fffdba;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 1pt;
-			text-align: left;
-			white-space: nowrap;
-			border: 1px solid #356847;
-			background-color: #c64e36;
-			background-image: url('../../assets/background/table_header.webp');
-			background-position: left bottom;
-			max-width: 222px;
-		}
-		td {
-			font-size: 9pt;
-			padding: 1px 5px;
-			color: #710;
-			background-color: #f3ca92;
-			border: 1px solid #c88f44;
-			height: 75px;
-		}
+	border-spacing: 2px;
+	padding: 5px;
+	fieldset {
+		border: 2px solid #bc683c;
+		margin: 15px 0;
+		padding: 20px;
+		width: 90%;
 	}
+	legend {
+		font-size: 13pt;
+		text-shadow: 1px 1px 0px #356847;
+		padding-left: 8px;
+		padding-right: 8px;
+		padding-bottom: 8px;
+		height: 41px;
+		color: #fffdba;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 1.5pt;
+		text-align: left;
+		border: 1px solid #356847;
+		background-color: #c64e36;
+		background-image: url('../../assets/background/table_header.webp');
+		background-position: left bottom;
+		width: 60%;
+	}
+	div {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+	}
+	label {
+		display: block;
+		margin-bottom: 5px;
+		color: #710;
+		font-size: 9pt;
+	}
+	textarea {
+		width: calc(100% - 20px);
+		padding: 5px;
+		margin-top: 5px;
+		margin-bottom: 10px;
+		border: 1px solid #c88f44;
+		background-color: #f3ca92;
+		color: #710;
+	}
+	input[type='submit'],
+	input[type='file'] {
+		margin-top: 20px;
+		background-color: #c64e36;
+		color: #fffdba;
+		border: none;
+		padding: 10px 20px;
+		cursor: pointer;
+		border-radius: 5px;
+	}
+}
+input[type='text'],
+select {
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 1px solid #c88f44;
+	background-color: #f3ca92;
+	color: #710;
+}
+.title {
+	text-transform: uppercase;
+	font-weight: bold;
+	margin-top: 5px;
 }
 </style>

@@ -368,6 +368,19 @@ export async function rewardFight(
 		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0)
 	);
 
+	await createLog(
+		LogType.XPEarned,
+		playerId,
+		undefined,
+		fightResult.winner ? totalWinXP : 0
+	)
+	await createLog(
+		LogType.HPLost,
+		playerId,
+		undefined,
+		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0)
+	)
+
 	return {
 		fighters: fightResult.fighters,
 		goldEarned: fightResult.winner ? gold : -goldLost,

@@ -152,11 +152,16 @@ export async function sellIngredient(req: Request) {
 			throw new ErrorFormator(500, `You cannot have less than 0 of this item.`);
 		gold += ingre.price * ingre.quantity;
 		await decreaseIngredientQuantity(playerId, ingre.ingredientId, ingre.quantity);
+		await createLog(
+			LogType.IngredientSold,
+			playerId,
+			undefined,
+			ingre.ingredientId,
+			ingre.quantity.toString()
+		)
 	}
 
 	await addMoney(playerId, gold);
-
-	await createLog(LogType.GoldWon, playerId, undefined, gold.toString());
 
 	return { gold: gold };
 }

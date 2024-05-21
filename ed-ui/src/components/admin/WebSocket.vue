@@ -32,3 +32,24 @@ export default defineComponent({
 	}
 });
 </script>
+<style lang="scss" scoped>
+input[type='text'],
+input[type='number'],
+select {
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 1px solid #c88f44;
+	background-color: #f3ca92;
+	color: #710;
+}
+button {
+	margin-top: 20px;
+	background-color: #c64e36;
+	color: #fffdba;
+	border: 1px solid #c64e36;
+	padding: 5px 20px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+</style>

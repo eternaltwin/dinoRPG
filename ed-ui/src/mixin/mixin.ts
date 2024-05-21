@@ -1,7 +1,18 @@
 import { formatText } from '../utils/formatText.js';
 
+const pad = (n: number) => (n < 10 ? `0${n}` : n);
+
 export const mixin = {
 	methods: {
+		formatDate(date: string): string {
+			const dateObj = new Date(date);
+			const month = pad(dateObj.getMonth() + 1);
+			const day = pad(dateObj.getDate());
+			const hours = pad(dateObj.getHours());
+			const minutes = pad(dateObj.getMinutes());
+			const seconds = pad(dateObj.getSeconds());
+			return `${day}/${month} ${hours}:${minutes}:${seconds}`;
+		},
 		formatContent(value: string): string {
 			return !value ? '' : formatText(value.toString());
 		},

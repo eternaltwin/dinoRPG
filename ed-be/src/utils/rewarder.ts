@@ -10,8 +10,9 @@ import { ErrorFormator } from './errorFormator.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Dinoz, DinozStatus, Player } from '@drpg/prisma';
+import { Dinoz, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
+import { createLog } from '../dao/logDao.js';
 
 export async function rewarder(
 	rewards: Rewarder[],
@@ -57,6 +58,7 @@ export async function rewarder(
 					break;
 				case RewardEnum.EXPERIENCE:
 					await updateDinoz(dinoz.id, { experience: { increment: reward.value } });
+					await createLog(LogType.XPEarned, playerId, undefined, reward.value)
 					break;
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);

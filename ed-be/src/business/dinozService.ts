@@ -253,20 +253,6 @@ export async function getAvailableActions(
 		);
 	}
 
-	//TODO
-	// Itinerant Merchant Shop
-	/*	const itinerantShopAvailable = Object.values(itinerantShopList).find(
-		itinerantShop => itinerantShop.placeId == dinoz.placeId
-	);
-	if (itinerantShopAvailable) {
-		const shopAction: ActionFiche = {
-			name: actionList[Action.ITINERANTSHOP].name,
-			imgName: actionList[Action.ITINERANTSHOP].imgName,
-			prop: itinerantShopAvailable.itinerantId
-		};
-		availableActions.push(shopAction);
-	}*/
-
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
 		if (!npc.condition || checkCondition(npc.condition, [dinoz])) {

@@ -10,23 +10,26 @@
 	</div>
 	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
 	<ul class="tabs" style="margin-top: 10px">
-		<li :class="tabSelected === 1 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 1"> Player Edit </a>
+		<li>
+			<a href="#" :class="tabSelected === 1 ? 'active' : ''" @click="setTab(1)"> Player Edit </a>
 		</li>
-		<li :class="tabSelected === 2 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 2"> Dinoz Edit </a>
+		<li>
+			<a href="#" :class="tabSelected === 2 ? 'active' : ''" @click="setTab(2)"> Dinoz Edit </a>
 		</li>
-		<li :class="tabSelected === 3 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 3"> News </a>
+		<li>
+			<a href="#" :class="tabSelected === 3 ? 'active' : ''" @click="setTab(3)"> News </a>
 		</li>
-		<li :class="tabSelected === 4 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 4"> Secret </a>
+		<li>
+			<a href="#" :class="tabSelected === 4 ? 'active' : ''" @click="setTab(4)"> Secret </a>
 		</li>
-		<li :class="tabSelected === 5 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 5"> Logs </a>
+		<li>
+			<a href="#" :class="tabSelected === 5 ? 'active' : ''" @click="setTab(5)"> Logs </a>
 		</li>
-		<li :class="tabSelected === 6 ? 'active' : ''">
-			<a href="#" @click="tabSelected = 6"> WebSocket </a>
+		<li>
+			<a href="#" :class="tabSelected === 6 ? 'active' : ''" @click="setTab(6)"> WebSocket </a>
+		</li>
+		<li>
+			<a href="#" :class="tabSelected === 7 ? 'active' : ''" @click="setTab(7)"> GameStats </a>
 		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
@@ -44,6 +47,7 @@
 	<SecretEdit v-if="tabSelected === 4" />
 	<LogsView v-if="tabSelected === 5" />
 	<WebSocket v-if="tabSelected === 6" />
+	<GameStats v-if="tabSelected === 7" />
 </template>
 
 <script lang="ts">
@@ -57,6 +61,7 @@ import NewsEdit from '../components/admin/NewsEdit.vue';
 import SecretEdit from '../components/admin/SecretEdit.vue';
 import LogsView from '../components/admin/LogsView.vue';
 import WebSocket from '../components/admin/WebSocket.vue';
+import GameStats from '../components/admin/GameStats.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Player } from '@drpg/core/models/player/Player';
 
@@ -67,7 +72,7 @@ interface PlayerSearch {
 
 export default defineComponent({
 	name: 'AdminDashBoard',
-	components: { NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, WebSocket },
+	components: { NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, WebSocket, GameStats },
 	data() {
 		return {
 			searchValue: undefined as string | undefined,
@@ -137,7 +142,29 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.active {
+	background-color: #f3ca92;
+	color: #710;
+	padding: 4px;
+}
 .red {
 	color: red;
+}
+input[type='text'],
+select {
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 1px solid #c88f44;
+	background-color: #f3ca92;
+	color: #710;
+}
+input[type='submit'] {
+	margin-top: 20px;
+	background-color: #c64e36;
+	color: #fffdba;
+	border: 1px solid #c64e36;
+	padding: 5px 20px;
+	cursor: pointer;
 }
 </style>

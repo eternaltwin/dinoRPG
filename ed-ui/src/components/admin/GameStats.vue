@@ -3,11 +3,15 @@
 		<option value="null">All</option>
 		<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>
 	</select>
-	<input type="number" v-model="userId" placeholder="userId" />
-	<input type="number" v-model="dinozId" placeholder="dinozId" />
+	<input type="datetime-local" v-model="fromDate" placeholder="fromDate" />
+	<input type="datetime-local" v-model="toDate" placeholder="toDate" />
+	<button @click="reload" :disabled="!logs.length">Reload</button>
+	<div v-if="type !== 'null' && type !== null">
+		<Line v-if="loaded" :data="chartData" :options="chartOptions" :width="400" :height="400" />
+	</div>
 	<table>
 		<tbody>
-			<tr v-for="log in logs" :key="log.id">
+			<tr v-for="(log, index) in paginatedLogs" :key="index">
 				<td>[{{ formatDate(log.createdAt as unknown as string) }}]</td>
 				<td v-html="formatContent($t(`logs.${log.type}`, getLogPropsForTranslation($t, log)))" />
 			</tr>
@@ -19,17 +23,30 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { LogsService } from '../../services/index.js';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { LogsService } from '../../services/index.js';
 import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { missionsList } from '../../constants/missions.js';
 import { placeList } from '../../constants/place.js';
 import { epicList } from '../../constants/epic.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { mixin } from '../../mixin/mixin.js';
+import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend
+} from 'chart.js';
+import { Line } from 'vue-chartjs';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const LogTypes = [
 	'ItemUsed',
@@ -248,47 +265,154 @@ const getLogPropsForTranslation = (
 };
 
 export default defineComponent({
-	name: 'LogsView',
+	name: 'GameStats',
+	components: {
+		// eslint-disable-next-line vue/no-reserved-component-names
+		Line
+	},
 	data() {
 		return {
-			logs: [] as LogListResponse,
 			page: 1,
-			type: null as LogListResponse[number]['type'] | null,
-			userId: null as number | null,
-			dinozId: null as number | null,
+			logs: [] as LogListResponse,
+			type: null as LogListResponse[number]['type'] | string | null,
 			LogTypes,
-			getLogPropsForTranslation
+			getLogPropsForTranslation,
+			fromDate: null as Date | null,
+			toDate: null as Date | null,
+			loaded: false,
+			chartData: null,
+			chartOptions: {
+				scales: {
+					x: {
+						type: 'time',
+						time: {
+							unit: 'day'
+						}
+					},
+					y: {
+						ticks: {
+							beginAtZero: true
+						}
+					}
+				},
+				responsive: true,
+				maintainAspectRatio: false
+			}
 		};
+	},
+	computed: {
+		paginatedLogs() {
+			const startIndex = (this.page - 1) * 100;
+			const endIndex = this.page * 100;
+			return this.logs.slice(startIndex, endIndex);
+		}
 	},
 	methods: {
 		async reload() {
 			EventBus.emit('isLoading', true);
 			try {
-				const page = this.page;
-				const type = this.type;
-				const userId = this.userId || null;
-				const dinozId = this.dinozId || null;
-				this.logs = await LogsService.list(page, type, userId, dinozId);
+				const fromDate = this.fromDate || null;
+				const toDate = this.toDate || null;
+				const type = this.type || null;
+				const logType = type as LogListResponse[number]['type'];
+				this.logs = await LogsService.listByDate(logType, fromDate, toDate);
+				this.generateChart();
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				console.log(err);
 				errorHandler.handle(err);
 				return;
 			}
+		},
+		generateChart() {
+			this.loaded = false;
+			// Initialiser un objet pour stocker les totaux par jour
+			const totalsByDay = {};
+			// Parcourir les logs
+			this.logs.forEach(log => {
+				const logDate = new Date(log.createdAt);
+				const formattedDate = logDate.toLocaleDateString();
+				const formattedHour = logDate.getHours().toString().padStart(2, '0') + ':00';
+				// Vérifier si l'entrée pour cette date existe déjà dans totalsByDay
+				if (!totalsByDay[formattedDate]) {
+					// Si elle n'existe pas, initialiser une entrée pour cette date avec un objet vide
+					totalsByDay[formattedDate] = {};
+				}
+				// Vérifier si l'heure existe déjà dans les totaux pour cette date
+				if (!totalsByDay[formattedDate][formattedHour]) {
+					// Si elle n'existe pas, initialiser l'heure avec le total actuel
+					totalsByDay[formattedDate][formattedHour] = this.getLogTypeTotal(log.type, log.values);
+				} else {
+					// Sinon, ajouter le total actuel à celui existant
+					totalsByDay[formattedDate][formattedHour] += this.getLogTypeTotal(log.type, log.values);
+				}
+			});
+
+			// Convertir les données agrégées par jour et par heure en un tableau d'objets pour le graphique
+			const labels: string[] = [];
+			const datasets: { label: string | null; data: unknown[]; borderColor: string; fill: boolean }[] = [];
+			// Parcourir les dates
+			Object.keys(totalsByDay).forEach(date => {
+				// Parcourir les heures pour chaque date
+				Object.keys(totalsByDay[date]).forEach(hour => {
+					// Ajouter l'heure à la liste des labels
+					labels.push(`${date} ${hour}`);
+					// Ajouter le total correspondant à l'heure au dataset
+					if (!datasets[0]) {
+						// Si le dataset n'existe pas encore, l'initialiser
+						datasets.push({
+							label: this.type,
+							data: [totalsByDay[date][hour]],
+							borderColor: '#c88f44',
+							fill: false
+						});
+					} else {
+						// Sinon, ajouter le total au dataset existant
+						datasets[0].data.push(totalsByDay[date][hour]);
+					}
+				});
+			});
+			labels.reverse();
+			// Inverser l'ordre des données dans chaque dataset pour correspondre à l'ordre des labels
+			datasets.forEach(dataset => {
+				if (dataset && dataset.data) {
+					dataset.data.reverse();
+				}
+			});
+			// Créer les données du graphique
+			const chartData = {
+				labels: labels,
+				datasets: datasets
+			};
+			// Mettre à jour les données du graphique
+			this.chartData = chartData;
+			this.chartOptions = {};
+			this.loaded = true;
+		},
+		getLogTypeTotal(type, values) {
+			switch (type) {
+				case 'GoldWon':
+				case 'GoldLost':
+				case 'XPEarned':
+				case 'HPLost':
+					return Number(values[0]);
+				case 'ItemBought':
+				case 'IngredientSold':
+					return Number(values[1]);
+				default:
+					return 1;
+			}
 		}
 	},
 	mixins: [errorHandler, mixin],
-	async mounted() {
-		this.reload();
-	},
 	watch: {
 		type() {
 			this.reload();
 		},
-		userId() {
+		fromDate() {
 			this.reload();
 		},
-		dinozId() {
+		toDate() {
 			this.reload();
 		},
 		page() {
@@ -299,9 +423,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-input[type='number'],
+input[type='datetime-local'],
 select {
-	padding: 2px;
+	padding: 5px;
 	margin-top: 5px;
 	margin-bottom: 10px;
 	border: 1px solid #c88f44;
@@ -309,12 +433,12 @@ select {
 	color: #710;
 }
 button {
-	margin-top: 20px;
 	background-color: #c64e36;
 	color: #fffdba;
 	border: 1px solid #c64e36;
 	padding: 5px 20px;
 	cursor: pointer;
+	margin-top: 10px;
 	margin-right: 10px;
 }
 table td {
