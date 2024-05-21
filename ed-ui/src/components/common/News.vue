@@ -22,6 +22,7 @@
 		</div>
 	</div>
 	<a v-if="displayedBatch.length % 10 === 0" class="overload" @click="overload(page + 1)"> {{ $t('news.overload') }}</a>
+	<Roadmap></Roadmap>
 </template>
 
 <script lang="ts">
@@ -32,9 +33,13 @@ import { NewsService } from '../../services/index.js';
 import { localStore } from '../../store/index.js';
 import { API_BASE, errorHandler } from '../../utils/index.js';
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
+import Roadmap from './Roadmap.vue';
 
 export default defineComponent({
 	name: 'News',
+	components: {
+		Roadmap
+	},
 	data() {
 		return {
 			localStore: localStore(),

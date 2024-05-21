@@ -4279,5 +4279,29 @@
 	},
 	"achievements": {
 		"reward": "{name} x {quantity}"
+	},
+	"roadmap": {
+		"title": "Découvrez les prochains évènements sur DinoRPG !",
+		"small": "Prédiction d'Irma",
+		"strong": {
+			"title1": "Version 1.0.0 (Vanilla)",
+			"title2": "Version 1.1.0 (To the West)",
+			"title3": "Roadmap to 2050"
+		},
+		"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
+		"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
+		"futurTitle": "Avenir Dinolandien",
+		"futureInfo1": {
+			"text1": "Accès aux cartes : Dinoland, Grand Tout-Chaud, Forêt de Gruhmel, Îles Atlantéinées.",
+			"text2": "Accès aux missions originelles : Papy Joe, Bao Bob, Shaman Mou, Nicolas Mulot, Dian Korgsey, Gardien de la fôret.",
+			"text3": "Et plein d'autres fonctionnalités"
+		},
+		"futureInfo2": {
+			"text1": "Accès à l'ouest de Dinoville.",
+			"text2": "Accès aux mission du Maître Elémentaire."
+		},
+		"futureInfo3": {
+			"text1": "À venir..."
+		}
 	}
 }
