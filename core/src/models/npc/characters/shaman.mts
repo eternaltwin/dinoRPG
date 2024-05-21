@@ -48,6 +48,9 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 	},
 	nothing: {
 		stepName: 'nothing',
+		condition: {
+			[ConditionEnum.STATUS]: DinozStatusId.FIRE_CHARM
+		},
 		nextStep: []
 	},
 	force: {

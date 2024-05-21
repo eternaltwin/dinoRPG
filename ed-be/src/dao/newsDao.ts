@@ -55,10 +55,10 @@ export const getNewsIllus = async (id: number) => {
 export const getNewsDate = async (id: number) => {
 	const news = await prisma.news.findUnique({
 		where: { id },
-		select: { createdDate: true}
-	})
+		select: { createdDate: true }
+	});
 
 	if (!news) throw new ErrorFormator(500, 'News not found');
 
 	return news;
-}
+};

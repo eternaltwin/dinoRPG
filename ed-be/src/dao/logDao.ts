@@ -45,16 +45,16 @@ const getLogList = async (page: number, type?: LogType, playerId?: number, dinoz
 			type,
 			playerId,
 			dinozId
-		},	
+		},
 		orderBy: { createdAt: 'desc' },
 		skip: (page - 1) * 100,
 		take: 100,
 		include: {
 			player: { select: { id: true, name: true } },
 			dinoz: { select: { id: true, name: true } }
-		}	
-	});	
-};	
+		}
+	});
+};
 
 const getLogListByDate = async (type?: LogType, fromDate?: Date, toDate?: Date) => {
 	return await prisma.log.findMany({
@@ -68,6 +68,6 @@ const getLogListByDate = async (type?: LogType, fromDate?: Date, toDate?: Date) 
 			dinoz: { select: { id: true, name: true } }
 		}
 	});
-}
+};
 
 export { createLog, createLogForMultipleDinoz, getLogList, getLogListAll, getLogListByDate };

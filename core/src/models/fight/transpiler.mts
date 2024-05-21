@@ -45,7 +45,7 @@ export enum FighterProperty {
 	Static,
 	GroundOnly,
 	Dark,
-	Nothing,
+	Nothing
 }
 
 export enum EntranceEffect {
@@ -167,9 +167,9 @@ export type transpiled =
 			tid: number;
 			damages: number;
 			lifeFx?: {
-				fx: LifeEffect,
-				amount?: number,
-				size?: number,
+				fx: LifeEffect;
+				amount?: number;
+				size?: number;
 			};
 			effect?: DamagesEffect;
 	  }
@@ -181,11 +181,11 @@ export type transpiled =
 			action: DinoAction.GOTO;
 			fid: number;
 			tid: number;
-			effect?: GotoEffect,
+			effect?: GotoEffect;
 			shadeColor?: {
-				col1?: number,
-				col2?: number
-			}
+				col1?: number;
+				col2?: number;
+			};
 	  }
 	| {
 			action: DinoAction.ANNOUNCE;
@@ -202,16 +202,16 @@ export type transpiled =
 					life?: number;
 				}[];
 				fx?: string;
-				anim?: string,
+				anim?: string;
 				type?: SkillType | AuraType;
-				speed?: number,
-				power?: number,
-				radius?: number,
+				speed?: number;
+				power?: number;
+				radius?: number;
 				color?: string;
-				alpha?: number,
-				remove?: boolean,
-				percent?: number,
-				ok?: boolean
+				alpha?: number;
+				remove?: boolean;
+				percent?: number;
+				ok?: boolean;
 			};
 	  }
 	| {

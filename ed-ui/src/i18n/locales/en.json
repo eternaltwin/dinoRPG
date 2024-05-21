@@ -43,8 +43,6 @@
 		"noMovement": "Today, the swamp is completely flooded! You can't move here. You have to wait until tomorrow to get out of this quagmire.",
 		"noFight": "Today, the swamp is lost in haze ... You will not find any monster to fight.",
 		"AlreadySphere": "This dinoz already know all sphere skills from this element.",
-		"needToDoAllAction": "Vous avez encore des combats à faire.",
-		"labrute": "Vous avez obtenu {quantity} potions d'irmas.",
 		"market": {
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
@@ -57,8 +55,7 @@
 		"heal": "Votre dinoz s'est soigné de {value} :hp:",
 		"gold": "Vous avez obtenu {value} :gold:",
 		"sphere": "Votre dinoz a appris la compétence {value}.",
-		"action": "You consumed {value} of Madame Irma's Potions and may take further action.",
-		"alreadyClaimed": "Vous avez déjà récupéré la récompense.",
+		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
 		"resurrect": "Votre dinoz est ressucité.",
 		"egg": "Vous avez ouvert un oeuf de {value}.",
 		"special": {
@@ -131,7 +128,7 @@
 	},
 	"action": {
 		"description": {
-			"fight": "Recherchez un monstre à combattre à cet endroit.",
+			"fight": "Search for a monster to fight at this location. You can perform **one move or fight per day** and by Dinoz.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
 			"unfollow": "Your Dinoz is currently following another Dinoz. Click this action to stop following.",
 			"levelup": "Your Dinoz earned enough experience to reach the next level. Click this action to increase the power of your Dinoz.",
@@ -179,7 +176,7 @@
 			"party": "Firework",
 			"concentrate": "Arrêter de se concentrer",
 			"market": "Marché aux éleveurs",
-			"disband": "Disband group",
+			"disband": "Dissoudre le groupe",
 			"daily": "Daily ticket",
 			"irma": "Potion d'Irma",
 			"irmas": "Madam Irma's Potions: Group",
@@ -526,7 +523,7 @@
 			"smog_egg_christmas_green": "TODO",
 			"triceragnon_baby": "TODO",
 			"triceragnon_baby_rare": "To do",
-			"amnesic_rice": "Cette variété très rare de Riz rend amnésique. En le mangeant, un Dinoz oublie son nom et perd aussi l'expérience accumulée depuis son dernier niveau…",
+			"amnesic_rice": "This rice will cause a Dinoz to have amnesia. After eating it a Dinoz forgets his name along with the experience he has gained since his last level up.",
 			"tik_bracelet": "This bracelet, created using Caushemesh technology, can restore up to 10 health points each day to the Dinoz who wears it!",
 			"magic_star": "These mysterious stars are scattered throughout Dinoland. Will you be able to find all 7?",
 			"golden_napodino": "Gold Napodinos are solid gold coins dating back to a pre-dinotown civilization. They are highly desired by collectors, and people say that they give luck to Dinoz who choose to carry them.",
@@ -1304,7 +1301,7 @@
 				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
 				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
 				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
-				"ok": "Voilà, tu as les feuilles de nénuphar... Et fait attention, la Forêt au delà est très dangereuse ! Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure !"
+				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
 			},
 			"playerChoice": {
 				"hello": "Bonjour !",
@@ -1695,7 +1692,7 @@
 			"RayonKaarSher": "Kaar-Sher Beam",
 			"Magasinier": "Storekeeper",
 			"Perception": "Perception",
-			"CoupsSournois": "Tricky Hit",
+			"CoupsSournois": "Coup Sournois",
 			"ApprentiPecheur": "Aprentice Fisher",
 			"CoupFatal": "Fatal Hits",
 			"EntrainementSousMarin": "Undersea Training",
@@ -1712,7 +1709,7 @@
 			"Cuisinier": "Cooker",
 			"SangAcide": "Acid Blood",
 			"Regenerescence": "Regeneration",
-			"PremiersSoins": "First Aid",
+			"PremiersSoins": "Premiers Soins",
 			"PureeSalvatrice": "Saving Pure",
 			"AuraHermetique": "Hermetic Aura",
 			"CrepusculeFlambloyant": "Blazing Twilight",
@@ -1724,7 +1721,7 @@
 			"Paratonnerre": "Lightning Conductor",
 			"Medecine": "Medicine",
 			"FissionElementaire": "Elemental Fission",
-			"CrocsDiamant": "Diamond Fangs",
+			"CrocsDiamant": "Diamant Fangs",
 			"Brancardier": "Hospital Porter",
 			"Marchand": "Merchant",
 			"Reincarnation": "Reincarnation",
@@ -1888,11 +1885,11 @@
 			"Bite": "Bite",
 			"Regeneration": "Regeneration",
 			"Electrocution": "Electrocution",
-			"Immaterial": "Intangible",
+			"Immaterial": "Intagigle",
 			"Flight": "Etherwasp",
 			"Capture": "Catch",
 			"Venerable": "Vénérable",
-			"Renforts": "Reinforcements"
+			"Renforts": "Renforts"
 		},
 		"description": {
 			"GriffesEnflammees": "Increases the strength of all fire assaults by 7",
@@ -2517,7 +2514,7 @@
 			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : _« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle »._ Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
 			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : _« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
 			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : _« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
-			"wishes": "Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+			"wishes": "Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
 			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: _« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »_ Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
 			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :_« Déposez de l'or dans le seau pour votre ration quotidienne. »_",
 			"seqact": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
@@ -3141,18 +3138,7 @@
 	},
 	"myAccount": {
 		"title": "Player:",
-		"labrute": "La Brute",
 		"profil": "EternalDinoRPG Profile",
-		"twinoidgoals": {
-			"name": "Statistiques EternalDinoRPG",
-			"points": "points",
-			"linkStats": "Statistiques",
-			"linkGains": "Gains",
-			"help": {
-				"question": "Que signifient ces compteurs ?",
-				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
-			}
-		},
 		"dinoz": "Dinoz",
 		"ranking": "Ranking",
 		"inscription": "Registered on",
@@ -3899,7 +3885,7 @@
 	},
 	"following": "This Dinoz is following their group leader.",
 	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
-	"follow": "The group leader is {leader}.",
+	"follow": "Le chef de groupe est {leader}.",
 	"followed": "This Dinoz is a group leader.",
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}x {item}** with dinoz **{dinoz} ({dinozId})**.",
@@ -4148,7 +4134,7 @@
 		}
 	},
 	"faq": {
-		"intro": "Vous pouvez trouver ici toutes les réponses à vos questions sur le jeu. Essayez toutefois de ne pas trop utiliser cette section, car de nombreux secrets sont plus amusants si vous les découvrez par vous-même en cherchant un peu.",
+		"intro": "This section contains helpful answers to the most frequently asked questions on DinoRPG. However, we encourage you to learn more through playing; the experience is much more rewarding.",
 		"search": "Search",
 		"qa": "Questions / Answers :",
 		"faq1": {
@@ -4157,7 +4143,7 @@
 		},
 		"faq2": {
 			"question": "Where's Mrs Ducraft's dog?",
-			"answer": "Le Chien de Mme Ducraft se trouve au Port de Prêche, accessible depuis la Fontaine de Jouvence. La fontaine de Jouvence est accessible depuis Dinoville, Forcebrut, ou Chez Papy Joe."
+			"answer": "The Dog is in Frish Port."
 		},
 		"faq3": {
 			"question": "How to get more than 18 Dinoz?",
@@ -4240,7 +4226,7 @@
 			"answer": "You will need the Zors Glove, a Lily Pad Leaf, and the Buoy. Go to the Mutant Falls, and move to the Grumhel forest (Location 'Bypassing the Mutant Falls'). From there, head to the Haunted Hills. Talk to the Strange Man and ignore him. He will then talk to you about a dreadful monster and ask to fight it. You will then enter a battle with a Mischievous Korgon. If you manage to defeat it (which is highly possible), the Strange Man will flee, leaving you his lantern. Now, leave the Grumhel Forest, leave the Atlantean Islands, leave DinoLand, and go to the Tunnel under the Branch. From there, access the Deep Gorges. From the Deep Gorges, access the Korgon Camp. You are now at the Korgon camp, in the second part of the Grumhel forest. To link the two parts, complete the missions of Dian Korgsey and obtain the Korgon Fins. Now, you have the ability to move from the Korgon Camp to the Jumin River, and vice versa."
 		},
 		"faq23": {
-			"question": "Comment obtenir la Pelle (Creuser) ?",
+			"question": "How do I get the Shovel (Dig)?",
 			"answer": "First you need the Buoy. From the Frish Port, go to the Atlantean Islands, then move on to the Coral Mines. Talk to the Coral Miner and say yes. && He'll give you the shovel, but every time you dig it will break, and you'll have to come back to him to get it fixed."
 		},
 		"faq24": {
@@ -4271,8 +4257,5 @@
 			"question": "Where do I restart when my Dinoz is Dead?",
 			"answer": "If you do not use an Angel Potion, You will restart at DinoTown with 1 health point and you will lose half of your Experience. && && If you use an Angel Potion, You restart where you are with 1 health point."
 		}
-	},
-	"achievements": {
-		"reward": "{name} x {quantity}"
 	}
 }

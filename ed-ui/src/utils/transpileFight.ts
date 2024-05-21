@@ -201,7 +201,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 					tid: step.target.id,
 					damages: step.damage,
 					lifeFx: {
-						fx: convertElementToLifeEffect(step.elements[0]),
+						fx: convertElementToLifeEffect(step.elements[0])
 					}
 				});
 				break;

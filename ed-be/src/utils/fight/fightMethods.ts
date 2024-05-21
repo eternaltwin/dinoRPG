@@ -445,14 +445,14 @@ export const initStepFighter = (
 	return data;
 };
 
-const 	registerHit = (
+const registerHit = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	opponents: DetailedFighter[],
 	damage: number,
 	damageElements: ElementType[] = [],
 	skill?: Skill,
-	skillStep?: SkillActivateStep,
+	skillStep?: SkillActivateStep
 ) => {
 	const actualDamage: Record<number, number> = opponents.reduce(
 		(acc, opponent) => ({
@@ -2265,7 +2265,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				action: 'looseHp',
 				fid: fighter.id,
 				hp: hpLost,
-				fx: LifeEffect.Explode,
+				fx: LifeEffect.Explode
 			});
 			break;
 		}
@@ -3446,16 +3446,16 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 
 const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
-	let hp_lost = applyBalanceDamage(fighter, damage)
+	let hp_lost = applyBalanceDamage(fighter, damage);
 	fighter.hp -= hp_lost;
 
 	fightData.steps.push({
 		action: 'looseHp',
 		fid: fighter.id,
 		hp: hp_lost,
-		fx,
-	})
-}
+		fx
+	});
+};
 
 const evade = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	// No evasion if opponent is dead
@@ -3778,7 +3778,10 @@ const attack = (
 				}
 
 				// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES and launched a water assault
-				if (elements.find(element => element === ElementType.WATER) && attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
+				if (
+					elements.find(element => element === ElementType.WATER) &&
+					attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)
+				) {
 					poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
 				}
 
@@ -4258,7 +4261,6 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 									// Register the hp lost from poison
 									loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
-
 								} else {
 									// Get poisoner
 									const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
@@ -4270,7 +4272,6 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 									// Register the hp lost from poison
 									loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
-
 								}
 								break;
 							}

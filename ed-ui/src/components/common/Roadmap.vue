@@ -202,7 +202,7 @@ export default defineComponent({
 							margin-top: 4px;
 							margin-left: 40px;
 							& li {
-                                margin-top: 4px;
+								margin-top: 4px;
 								margin-left: 80px;
 								margin-right: 100px;
 								& span {

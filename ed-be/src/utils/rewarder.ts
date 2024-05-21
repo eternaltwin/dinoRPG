@@ -58,7 +58,7 @@ export async function rewarder(
 					break;
 				case RewardEnum.EXPERIENCE:
 					await updateDinoz(dinoz.id, { experience: { increment: reward.value } });
-					await createLog(LogType.XPEarned, playerId, undefined, reward.value)
+					await createLog(LogType.XPEarned, playerId, undefined, reward.value);
 					break;
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
