@@ -2389,7 +2389,7 @@
 			"fish": "poissons",
 			"hunt": "Hunt",
 			"seek": "Fouiller",
-			"energy": "Adrenaline",
+			"energy": "energy",
 			"anniv": "trésors fabuleux",
 			"xmas": "Cadeaux de Noël",
 			"tictac": "trésors dans le jardin de Papy Joe",
@@ -2397,7 +2397,7 @@
 			"party": "trésors fabuleux",
 			"daily": "daily rewards"
 		},
-		"disclaimer": "Click on {number} grid box(es) to find {search}"
+		"disclaimer": "Click on {number} grid box(es) to search for {search}"
 	},
 	"missions": {
 		"header": "Missions list",
