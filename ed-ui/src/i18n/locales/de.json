@@ -157,7 +157,7 @@
 			"congel": "Permet de Congeler votre Dinoz dans la Grotte du Zero Relatif !",
 			"stop_congel": "Du kannst deinen Dinoz auftauen, damit er sich wieder bewegen und kämpfen kann.",
 			"rest": "Dein Dinoz kann **sich ausruhen**, um Lebenspunkte wiederherzustellen. Er kann nun über Stufe 60 hinausgehen und Stufe 70 erreichen!",
-			"stop_rest": "Dein Dinoz hat sein volles Potenzial entfaltet. Du kannst ihn unterbrechen, damit er sich wieder fortbewegen und kämpfen kann.",
+			"stop_rest": "Dein Dinoz ruht sich derzeit aus. Du kannst ihn unterbrechen, damit er sich wieder fortbewegen und kämpfen kann.",
 			"itinerant_shop": "Beim Fliegenden Händler kannst du deine Zutaten verkaufen."
 		},
 		"name": {
@@ -299,7 +299,7 @@
 			"little_pepper": "Kleine Paprika",
 			"zippo": "Feuerzeug",
 			"sos_flame": "Rettungsflämmchen",
-			"refrigerated_shield": "Gekühlter Schild",
+			"refrigerated_shield": "Vereister Schild",
 			"fuca_pill": "Fuca-Dragee",
 			"monochromatic": "Monochrom",
 			"poisonite_shot": "Giftstich",
@@ -430,7 +430,7 @@
 			"little_pepper": "Erhöht den nächsten Angriff deines Dinoz um 10.",
 			"zippo": "Votre Dinoz s'enflamme !",
 			"sos_flame": "Nichts geht über ein Notfallflämmchen, das einem im Kampf hilft.",
-			"refrigerated_shield": "Augmente la défense contre le Feu de 20.",
+			"refrigerated_shield": "Erhöht deine Feuerabwehr um 20.",
 			"fuca_pill": "Double la vitesse des attaques de votre Dinoz.",
 			"monochromatic": "Dein Dinoz verwendet zum Angreifen immer sein stärkstes Element.",
 			"poisonite_shot": "Protège votre Dinoz des effets du poison.",
@@ -834,7 +834,7 @@
 			"papy": "Papy Joe",
 			"bob": "M. Bao Bob",
 			"baofan": "Fan de Bao",
-			"forgeron": "Forgeron",
+			"forgeron": "Schmiedin",
 			"dian": "Dian Korgsey",
 			"merguez": "Merguez-Verkäufer",
 			"shaman": "Lässiger Schamane",
@@ -1126,19 +1126,19 @@
 		},
 		"forgeron": {
 			"speech": {
-				"begin": "Du betrittst die Schmieden der Lavagrube. Die hier herrschende Hitze muss sich gegenüber dem Inneren des Großen Immerhitzus-Kraters überhaupt nicht schämen. Ici rien ne se crée, tout se transforme, à grand coup de marteau !  100 pièces d'or pour réparer une pelle, c'est donné  non ?",
-				"pelle": "Et une pelle dans la gueule ca te tente ?",
-				"repair": "Et voilà, ta pelle est réparée mon ptit gars ! Ca fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
-				"repair2": "Et voilà, ta pelle est réparée mon ptit gars ! Ca fera 100 pièces d'or. T'es gentil, t'oublie pas de passer à la caisse.",
-				"thanks": "Reviens si t'as encore besoin de nos services ptit gars !",
-				"no": "Reviens avec les poches pleines ptit gars, tu nous fais perdre notre temps !"
+				"begin": "Du betrittst die Schmieden der Lavagrube. Die hier herrschende Hitze muss sich gegenüber dem Inneren des Großen Immerhitzus-Kraters überhaupt nicht schämen. Nichts wird erschaffen, aber alles wird transformiert, und zwar mit jedem mächtigen Hammerhieb!  100 Goldstücke für eine Schaufelreparatur ist doch geschenkt, oder?",
+				"pelle": "Wie wär's denn mit der Schaufel auf die Schnauze?",
+				"repair": "Bitt schön, deine Schaufel ist repariert, du Knirps! Das macht dann 100 Goldstücke. Braves Kind. Dank dran, an der Kasse vorbeizuschauen.",
+				"repair2": "Bitt schön, deine Schaufel ist repariert, du Knirps! Das macht dann 100 Goldstücke. Braves Kind. Dank dran, an der Kasse vorbeizuschauen.",
+				"thanks": "Komm vorbei, wenn du mal wieder was brauchst, du Knirps!",
+				"no": "Hör auf unsere Zeit zu verschwinden und komm wieder, sobald du Kohle hast, du Knirps!"
 			},
 			"playerChoice": {
-				"pelle": "Pouvez me rouler une...",
-				"repair": "Pouvez vous me réparer ma pelle ?",
-				"repair2": "Pouvez vous me réparer ma super pelle ?",
-				"thanks": "Euh oui mdame !",
-				"no": "Rien de particulier"
+				"pelle": "Du könntest mir ja eine zusammenklöppeln...",
+				"repair": "Könntest du meine Schaufel reparieren?",
+				"repair2": "Könntest du meine Superschaufel reparieren?",
+				"thanks": "Jawohl, Fräulein!",
+				"no": "Schon gut"
 			}
 		},
 		"dian": {
@@ -1599,8 +1599,8 @@
 			"Sprint": "Sprint",
 			"ProteinesDinozienne": "Dinozische Proteine",
 			"Extenuation": "Abschwächung",
-			"CarapaceDeMagma": "Magma-Panzer",
-			"Carapace": "Panzer",
+			"CarapaceDeMagma": "Magma-Panzerung",
+			"Carapace": "Panzerung",
 			"Sauvagerie": "Wildheit",
 			"Endurance": "Ausdauer",
 			"Vignes": "Reben",
@@ -2249,7 +2249,7 @@
 		},
 		"description": {
 			"2": "Die Kletterausrüstung ermöglicht es diesem Dinoz, steile Hänge zu erklimmen.",
-			"1": "Die Boje ermöglicht es diesem Dinoz, einige kleine Gewässer zu überqueren, ohne dass es ertrinkt.",
+			"1": "Die Boje ermöglicht es diesem Dinoz, einige kleine Gewässer zu überqueren, ohne dass er ertrinkt.",
 			"65": "Dein Dinoz wurde vom Wächter von Cuzcous verflucht...",
 			"63": "Dieser Dinoz ist ein wahrer Dämon, aber woher könnte das kommen? ...",
 			"3": "Mit der Laterne kann dieser Dinoz die tiefsten Höhlen erforschen, ohne Gefahr zu laufen, sich zu verirren.",
@@ -2389,7 +2389,7 @@
 			"fish": "poissons",
 			"hunt": "Jagen",
 			"seek": "Feodaron",
-			"energy": "énergie",
+			"energy": "Energie",
 			"anniv": "trésors fabuleux",
 			"xmas": "Weihnachtsgeschenke",
 			"tictac": "Bei Papy Joe",
@@ -2658,7 +2658,7 @@
 			"tree": "Arbre étrange",
 			"dian": "Dian Korgsey",
 			"shaman": "Mission abschließen",
-			"forgeron": "Forgeron",
+			"forgeron": "Schmiedin",
 			"garde": "Schmiedenwächter",
 			"artisan": "Artisan des Forges",
 			"eclaireur": "Glühende Faust",
