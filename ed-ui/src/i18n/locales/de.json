@@ -4295,27 +4295,27 @@
 		"contact": "Ce joueur ne fait pas partie de vos contacts."
 	},
 	"roadmap": {
-		"title": "Découvrez les prochains évènements sur DinoRPG !",
-		"small": "Prédiction d'Irma",
+		"title": "Entdecke die kommenden Ereignisse in Dino-RPG!",
+		"small": "Irmas Vorhersage",
 		"strong": {
 			"title1": "Version 1.0.0 (Vanilla)",
-			"title2": "Version 1.1.0 (To the West)",
-			"title3": "Roadmap to 2050"
+			"title2": "Version 1.1.0 (Auf in den Westen)",
+			"title3": "Roadmap bis 2050"
 		},
-		"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
-		"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
-		"futurTitle": "Dinoz-Würfel",
+		"help": "Klicke auf die obigen Erweiterungen, um mehr zu erfahren!",
+		"disclaimer": "Irmas Vorhersagen sind nicht unfehlbar, weshalb für die Neuerungen kein Veröffentlichungsdatum gewährt wird. Wenn es soweit ist, wird zu der jeweiligen Erneuerung eine offizielle Ankündigung auf der Webseite erscheinen.",
+		"futurTitle": "Dinoländische Zukunft",
 		"futureInfo1": {
-			"text1": "Accès aux cartes : Dinoland, Grand Tout-Chaud, Forêt de Gruhmel, Îles Atlantéinées.",
-			"text2": "Accès aux missions originelles : Papy Joe, Bao Bob, Shaman Mou, Nicolas Mulot, Dian Korgsey, Gardien de la fôret.",
-			"text3": "Et plein d'autres fonctionnalités"
+			"text1": "Zugang zu den Karten: Dinoland, Der Große Immerhitzus, Grumhel-Wald und die Atlantinische Inseln.",
+			"text2": "Zugriff zu den Kernmissionen: Papy Joe, Bao Bob, Lässiger Schamane, Heinz Fielmann, Dian Korgsey und der Waldwächter.",
+			"text3": "Und viele andere Funktionalitäten."
 		},
 		"futureInfo2": {
-			"text1": "Accès à l'ouest de Dinoville.",
-			"text2": "Accès aux mission du Maître Elémentaire."
+			"text1": "Zugang zum Westen von Dinoville.",
+			"text2": "Zugang zu den Missionen vom Meister der Elemente."
 		},
 		"futureInfo3": {
-			"text1": "À venir..."
+			"text1": "Demnächst..."
 		}
 	}
 }
