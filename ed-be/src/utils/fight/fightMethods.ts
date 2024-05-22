@@ -20,16 +20,19 @@ import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import {
+	ASSAULT_POWER,
 	BASE_ENERGY_COST,
 	CYCLE,
 	DEFAULT_MAX_ENERGY,
 	ENERGY_RECOVERY_BASE_FACTOR,
+	MAXIMUM_COMBO_COUNT,
 	MAXIMUM_MAX_ENERGY,
+	MINIMUM_ENERGY_TO_ACT,
 	TIME_BASE,
 	TIME_FACTOR
 } from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
-import { applyBalanceDamage, getBasicElementDamage, getDamage } from './getDamage.js';
+import { applyBalanceDamage, calculateDamage, getAttackDefense, getBasicElementDamage, getDamage, getElementalAttack } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
 import randomBetween from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
@@ -840,50 +843,33 @@ const evadedSkill = (fightData: DetailedFight, opponent: DetailedFighter, skill:
 
 /// Triggers an attack of type assault, it targets a single target in close combat
 /// By default, it is assumed that the assault is a normal one (not triggered from a skill)
+/// This method will perform target selection with assault rules if no target is provided
+// Unless specific, it is expected to combo
 const launchAssault = (
 	fightData: DetailedFight,
-	fighter: DetailedFighter,
-	opponent: DetailedFighter,
-	disallowCombo?: boolean,
+	attacker: DetailedFighter,
+	target?: DetailedFighter,
+	allowCombo?: boolean,
 	skill?: Skill,
 	power?: number,
 	skillStep?: SkillActivateStep
 ) => {
-	// Trigger fighter attack
-	let hitAtLeastOnce = attackTarget(fightData, fighter, opponent, true, skill, power, skillStep);
-
-	// Consume energy
-	setEnergy(fighter, fighter.energy - BASE_ENERGY_COST, fightData);
-
-	// Get combo chances
-	const combo = fighter.stats.special.multihit - 1;
-
-	let comboCount = 1;
-
-	// Repeat attack only if not countering
-	if (!disallowCombo) {
-		let random = Math.random();
-		while (random < combo && comboCount <= 10) {
-			// Trigger fighter attack
-			const hit = attackTarget(fightData, fighter, opponent, true, skill, power);
-
-			hitAtLeastOnce = hitAtLeastOnce || hit;
-
-			// Consume energy
-			setEnergy(fighter, fighter.energy - (BASE_ENERGY_COST + comboCount), fightData);
-
-			// Multihit stat
-			updateStat(fightData, fighter, 'multiHits', 1);
-
-			random = Math.random();
-			comboCount++;
-		}
+	if (target === undefined) {
+		// Get random opponent
+		target = getRandomOpponent(fightData, attacker);
 	}
 
-	return !!hitAtLeastOnce;
+	let assault_attack: [ElementType, number][] = [[attacker.element, getElementalAttack(attacker, attacker.element, ASSAULT_POWER)]];
+
+	// Trigger fighter attack
+	let hitCount = attackTarget(fightData, attacker, target, allowCombo || true, false, assault_attack, skill, skillStep);
+
+	return !!hitCount;
 };
 
 /// Triggers an attack from a skill that targets a single fighter
+/// This method will perform target selection with non-close combat and skill rules if no target
+/// is provided
 const attackSingleOpponent = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
@@ -2407,7 +2393,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push({ tid: opponent.id });
 
-			const hit = attackTarget(fightData, fighter, opponent, true);
+			const hit = launchAssault(fightData, fighter, opponent, true);
 
 			if (hit) {
 				let damage = 0;
@@ -2438,7 +2424,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push({ tid: opponent.id });
 
-			const hit = attackTarget(fightData, fighter, opponent, true);
+			const hit = launchAssault(fightData, fighter, opponent, true);
 
 			if (hit) {
 				let damage = 0;
@@ -3708,22 +3694,32 @@ export const applyStrategy = (fightData: DetailedFight, fighter: DetailedFighter
 	fighter.elements = defenses.map(defense => defense.element);
 };
 
+/// Determines the attack power of the attacker, the defense of the target, the damage inflicted.
+/// Then applies defense effects such as burn, evasion, etc. then check for combos and also counter, and probably more.
+/// Note: it is difficult to breakdown this method as the pieces are intertwined.
+/// This method does not perform target selection
+/// By default, it is considered a distant attack (i.e closeCombat = false) and without combo (allowCombo = false)
 const attackTarget = (
 	fightData: DetailedFight,
-	fighter: DetailedFighter,
-	opponent: DetailedFighter,
-	is_close_combat: boolean,
+	attacker: DetailedFighter,
+	target: DetailedFighter,
+	closeCombat?: boolean,
+	allowCombo?: boolean,
+	element_attack?: [ElementType, number][],
 	skill?: Skill,
-	power?: number,
 	skillStep?: SkillActivateStep
 ) => {
+	// By default, the attack is considered not close combat and without combo
+	const isCloseCombat = closeCombat || false;
+	const canCombo = allowCombo || false;
+
 	// Abort if fighter is dead
-	if (fighter.hp <= 0) return;
+	if (attacker.hp <= 0) return;
 
 	// Store as previous target
-	fighter.previousTarget = opponent.id;
+	attacker.previousTarget = target.id;
 
-	const attackers = [fighter];
+	// const attackers = [attacker];
 
 	// Add teammates if Item.FRIENDLY_WHISTLE
 	// TODO: rework, friendly whistle effect takes place at the beginning of the next turn
@@ -3738,10 +3734,10 @@ const attackTarget = (
 	// 	updateStat(fightData, fighter, 'groupAttacks', 1);
 	// }
 
-	let realOpponent = opponent;
+	let realOpponent = target;
 
 	// Check if a dinoz is protecting the opponent
-	const protector = getOpponents(fightData, fighter).find(opponent => opponent.protecting === opponent.id);
+	const protector = getOpponents(fightData, attacker).find(opponent => opponent.protecting === opponent.id);
 
 	if (protector) {
 		realOpponent = protector;
@@ -3750,17 +3746,31 @@ const attackTarget = (
 		fightData.steps.push({
 			action: 'moveTo',
 			fid: protector.id,
-			tid: opponent.id
+			tid: target.id
 		});
 	}
 
 	let hitsCount = 0;
+	let energyConsumed = BASE_ENERGY_COST;
 
-	for (const attacker of attackers) {
+	// If the elemental attack is not defined, default to a basic assault
+	if (!element_attack) {
+		element_attack  = [[attacker.element, getElementalAttack(attacker, attacker.element, ASSAULT_POWER)]];
+	}
+
+	let { attack, defense, elements } = getAttackDefense(attacker, target, element_attack, isCloseCombat);
+
+	// TODO: rework multiple attackers (part of whistle rework)
+	// for (const attacker of attackers) {
+	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
+		// Increment the attacker's combo counter
+		attacker.comboCounter++;
+
 		// Get damage
-		const damageAndElements = getDamage(attacker, realOpponent, skill, undefined, power);
-		let { damage } = damageAndElements;
-		const { elements } = damageAndElements;
+		let damage = calculateDamage(attacker, attack, defense, isCloseCombat);
+		// const damageAndElements = getDamage(attacker, realOpponent, skill, undefined, power);
+		// let { damage } = damageAndElements;
+		// const { elements } = damageAndElements;
 
 		// Add attempt step
 		fightData.steps.push({
@@ -3797,7 +3807,7 @@ const attackTarget = (
 
 			// FLYING
 			if (
-				is_close_combat &&
+				isCloseCombat &&
 				// Opponent has FLYING
 				hasStatus(realOpponent, Status.FLYING) &&
 				// Attacker doesn't have FLYING
@@ -3815,6 +3825,9 @@ const attackTarget = (
 			}
 		}
 
+		// Update the attacker's energy
+		setEnergy(attacker, attacker.energy - energyConsumed, fightData);
+
 		// Register hit if damage was done
 		if (damage) {
 			hitsCount++;
@@ -3822,7 +3835,7 @@ const attackTarget = (
 			registerHit(fightData, attacker, [realOpponent], damage, elements, skill, skillStep);
 
 			// Apply all close combat after hit effects
-			if (is_close_combat) {
+			if (isCloseCombat) {
 				// Poison fighter if opponent has Skill.AURA_PUANTE and close combat
 				if (realOpponent.skills.find(skill => skill.id === Skill.AURA_PUANTE)) {
 					poison(fightData, attacker, realOpponent, Skill.AURA_PUANTE, StatusLength.MEDIUM);
@@ -3897,17 +3910,43 @@ const attackTarget = (
 			}
 		}
 
-		// Cancel FLYING
-		if (!hasStatus(attacker, Status.KEEP_FLYING)) {
-			removeStatus(fightData, attacker, Status.FLYING);
+		if (canCombo) {
+			if (Math.random() < (attacker.stats.special.multihit - 1)) {
+				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
+				energyConsumed++;
+				updateStat(fightData, attacker, 'multiHits', 1);
+				continue;
+			}
+		}
+		break;
+	}
+
+	// The target can counter if it's still alive and the attack was in close combat
+	if (target.hp > 0) {
+		if (isCloseCombat && counterAttack(fightData, target)) {
+			// Add counter step
+			fightData.steps.push({
+				action: 'counter',
+				fighter: stepFighter(target),
+				opponent: stepFighter(attacker)
+			});
+
+			// Opponent attacks fighter: the counter can combo
+			attackTarget(fightData, target, attacker, true, true);
 		}
 	}
+
+	// Cancel FLYING
+	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
+		removeStatus(fightData, attacker, Status.FLYING);
+	}
+	// }
 
 	if (protector) {
 		// Add moveBack step
 		fightData.steps.push({
 			action: 'moveBack',
-			fid: protector.id
+			fid: target.id
 		});
 	}
 
@@ -4333,6 +4372,25 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		return;
 	}
 
+	if (fightData.lastFighter !== undefined)
+	{
+		console.log(`Last fighter ID: ${fightData.lastFighter.id} & combo: ${fightData.lastFighter.comboCounter}`);
+	}
+	// If the last fighter that played is different than the current fighter, reset both combo counts
+	if (fightData.lastFighter !== undefined && fightData.lastFighter.id !== attacker.id) {
+		fightData.lastFighter.comboCounter = 0;
+		attacker.comboCounter = 0;
+	};
+
+	fightData.lastFighter = attacker;
+	fightData.lastFighter.comboCounter++;
+
+	// Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
+	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT || attacker.energy < MINIMUM_ENERGY_TO_ACT) {
+		// TODO log history tired
+		return;
+	}
+
 	// Event activation
 	const possibleEvent = randomlyGetEvent(fightData, attacker);
 	if (possibleEvent) {
@@ -4380,21 +4438,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 	// Fighter attacks opponent
 	launchAssault(fightData, attacker, opponent, true);
+	// Remove an extra 4 energy for the assault
 	setEnergy(attacker, attacker.energy - 4, fightData);
-	const countered = counterAttack(fightData, opponent);
-
-	// If the opponent succeeds at countering, execute the counter
-	if (countered) {
-		// Add counter step
-		fightData.steps.push({
-			action: 'counter',
-			fighter: stepFighter(opponent),
-			opponent: stepFighter(attacker)
-		});
-
-		// Opponent attacks fighter
-		launchAssault(fightData, opponent, attacker, true);
-	}
 
 	endTurnChecks(fightData, attacker);
 };

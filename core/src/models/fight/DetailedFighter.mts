@@ -98,6 +98,8 @@ export interface DetailedFighter {
 	// If the fighter needs to use smoothed calculations
 	balanced: boolean;
 	escaped?: boolean;
+	// Current counter of attacks performed in a row (assault and skills)
+	comboCounter: number;
 
 	// Raw stats
 	maxHp: number;

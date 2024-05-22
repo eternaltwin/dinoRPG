@@ -24,6 +24,110 @@ export const balanceDamage = (damage: number) => {
 	return Math.round(Math.pow(Math.max(damage, 0), 0.6));
 };
 
+// Calculates the elemental attack given the fighter and the power of the attack
+export const getElementalAttack = (
+	fighter: DetailedFighter,
+	element_type: ElementType,
+	power: number
+) => {
+	return fighter.stats.base[element_type] * power;
+}
+
+// Returns the attack and defense score for a given attack considering the various bonuses
+// of the attacker and the target
+// Note: calling this method resets the attacker's next assault bonuses (multiplier and additive)
+export const getAttackDefense = (
+	attacker: DetailedFighter,
+	target: DetailedFighter,
+	element_attack: [ElementType, number][],
+	isCloseCombat: boolean,
+) => {
+	let attack = BASE_ATTACK_VALUE;
+	let defense = BASE_DEFENSE_VALUE;
+	let sum_of_elements = 0;
+	let elements: ElementType[] = [];
+
+	// Go over all the elements of the attack
+	// Add the attacker's elemental attack and possible bonus to the attack score
+	// Add the target's elemental defense
+	element_attack.forEach(val => {
+		const ele = val[0];
+		const att = val[1];
+		elements.push(ele);
+		attack += att;
+		sum_of_elements += att;
+		if (att > 0) {
+			defense += target.stats.defense[ele];
+			if (isCloseCombat) {
+				attack += attacker.stats.assaultBonus[ele];
+			}
+			else {
+				attack += attacker.skillElementalBonus[ele];
+			}
+		}
+	});
+
+	// Add close combat specific bonuses
+	if (isCloseCombat) {
+		attack += attacker.nextAssaultBonus;
+		attack *= attacker.nextAssaultMultiplier;
+		attacker.nextAssaultBonus = 0;
+		attacker.nextAssaultMultiplier = 1;
+	}
+
+	// -25% to attack score if attacker is WEAKENED
+	if (hasStatus(attacker, Status.WEAKENED)) {
+		attack *= 0.75;
+	}
+
+	// Average the defense in case of multi-element attack
+	if (sum_of_elements > 0) {
+		defense /= sum_of_elements;
+	}
+
+	// Add armor to the defense unless the attacker cancels it
+	if (!attacker.cancelArmor) {
+		defense += target.stats.special.armor;
+	}
+
+	return {
+		attack,
+		defense,
+		elements
+	};
+}
+
+// Applies final factors to the attack score:
+// - random bonus of up to 33%
+// - global factor
+export const calculateDamage = (
+	attacker: DetailedFighter,
+	attack: number,
+	defense: number,
+	isCloseCombat: boolean,
+) => {
+	// Apply random factor
+	const random_attack_bonus = (Math.random() * attack) / 3;
+	attack += random_attack_bonus;
+
+	// Apply global factor
+	attack *= ATTACK_GLOBAL_FACTOR;
+
+	let damage = attack - defense;
+
+	// Check for global minimum damage
+	if (damage < attacker.minDamage) {
+		damage = attacker.minDamage
+	}
+
+	// Check for assault specific minimum damage
+	if (isCloseCombat && damage < attacker.minAssaultDamage) {
+		damage = attacker.minAssaultDamage;
+	}
+
+	return damage;
+}
+
 export const getDamage = (
 	attacker: DetailedFighter,
 	opponent: DetailedFighter,
