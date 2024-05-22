@@ -48,6 +48,9 @@ import { Line } from 'vue-chartjs';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+// Permet la gestion des totaux du graph par jour / par heure
+const diffDays = 0;
+
 const LogTypes = [
 	'ItemUsed',
 	'ItemBought',
@@ -286,7 +289,7 @@ export default defineComponent({
 					x: {
 						type: 'time',
 						time: {
-							unit: 'day'
+							unit: diffDays > 1 ? 'day' : 'hour'
 						}
 					},
 					y: {
@@ -326,65 +329,40 @@ export default defineComponent({
 		},
 		generateChart() {
 			this.loaded = false;
-			// Initialiser un objet pour stocker les totaux par jour
-			const totalsByDay = {};
-			// Parcourir les logs
+			const fromDate = this.fromDate ? new Date(this.fromDate) : null;
+			const toDate = this.toDate ? new Date(this.toDate) : null;
+			const diffTime = fromDate && toDate ? Math.abs(toDate.getTime() - fromDate.getTime()) : 0;
+			const diffDays = diffTime > 0 ? Math.ceil(diffTime / (1000 * 60 * 60 * 24)) : 0;
+			const totalsByPeriod = {};
 			this.logs.forEach(log => {
 				const logDate = new Date(log.createdAt);
-				const formattedDate = logDate.toLocaleDateString();
-				const formattedHour = logDate.getHours().toString().padStart(2, '0') + ':00';
-				// Vérifier si l'entrée pour cette date existe déjà dans totalsByDay
-				if (!totalsByDay[formattedDate]) {
-					// Si elle n'existe pas, initialiser une entrée pour cette date avec un objet vide
-					totalsByDay[formattedDate] = {};
-				}
-				// Vérifier si l'heure existe déjà dans les totaux pour cette date
-				if (!totalsByDay[formattedDate][formattedHour]) {
-					// Si elle n'existe pas, initialiser l'heure avec le total actuel
-					totalsByDay[formattedDate][formattedHour] = this.getLogTypeTotal(log.type, log.values);
+				let formattedPeriod;
+				if (!fromDate || !toDate || diffDays > 1) {
+					formattedPeriod = logDate.toLocaleDateString();
 				} else {
-					// Sinon, ajouter le total actuel à celui existant
-					totalsByDay[formattedDate][formattedHour] += this.getLogTypeTotal(log.type, log.values);
+					const formattedDate = logDate.toLocaleDateString();
+					const formattedHour = logDate.getHours().toString().padStart(2, '0') + ':00';
+					formattedPeriod = `${formattedDate} ${formattedHour}`;
 				}
-			});
 
-			// Convertir les données agrégées par jour et par heure en un tableau d'objets pour le graphique
-			const labels: string[] = [];
-			const datasets: { label: string | null; data: unknown[]; borderColor: string; fill: boolean }[] = [];
-			// Parcourir les dates
-			Object.keys(totalsByDay).forEach(date => {
-				// Parcourir les heures pour chaque date
-				Object.keys(totalsByDay[date]).forEach(hour => {
-					// Ajouter l'heure à la liste des labels
-					labels.push(`${date} ${hour}`);
-					// Ajouter le total correspondant à l'heure au dataset
-					if (!datasets[0]) {
-						// Si le dataset n'existe pas encore, l'initialiser
-						datasets.push({
-							label: this.type,
-							data: [totalsByDay[date][hour]],
-							borderColor: '#c88f44',
-							fill: false
-						});
-					} else {
-						// Sinon, ajouter le total au dataset existant
-						datasets[0].data.push(totalsByDay[date][hour]);
-					}
-				});
-			});
-			labels.reverse();
-			// Inverser l'ordre des données dans chaque dataset pour correspondre à l'ordre des labels
-			datasets.forEach(dataset => {
-				if (dataset && dataset.data) {
-					dataset.data.reverse();
+				if (!totalsByPeriod[formattedPeriod]) {
+					totalsByPeriod[formattedPeriod] = 0;
 				}
+				totalsByPeriod[formattedPeriod] += this.getLogTypeTotal(log.type, log.values);
 			});
-			// Créer les données du graphique
+			const labels = Object.keys(totalsByPeriod).reverse();
+			const data = Object.values(totalsByPeriod).reverse();
 			const chartData = {
 				labels: labels,
-				datasets: datasets
+				datasets: [
+					{
+						label: this.type,
+						data: data,
+						borderColor: '#c88f44',
+						fill: false
+					}
+				]
 			};
-			// Mettre à jour les données du graphique
 			this.chartData = chartData;
 			this.chartOptions = {};
 			this.loaded = true;
