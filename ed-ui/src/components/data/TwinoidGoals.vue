@@ -206,9 +206,6 @@ export default defineComponent({
 				}, 0);
 		}
 	},
-	mounted() {
-		this.updateStats();
-	},
 	watch: {
 		accountStats: {
 			handler() {
