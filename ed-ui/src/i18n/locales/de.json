@@ -853,7 +853,7 @@
 			"pteroz": "Seltsamer Dinoz",
 			"hippo": "Seltsamer Dinoz",
 			"rocky": "Etrange Pierre",
-			"vener": "Le Vénérable"
+			"vener": "Der Ehrwürdige"
 		},
 		"professor": {
 			"speech": {
@@ -1190,7 +1190,7 @@
 				"accept": "Marché conclu..."
 			},
 			"playerChoice": {
-				"vener": "Le Vénérable...",
+				"vener": "Der Ehrwürdige...",
 				"souvenir": "On peut acheter des souvenirs dans le coin ?",
 				"missions": "Missionsliste betrachten",
 				"charm": "On m'a parlé d'un charme...",
@@ -2773,7 +2773,7 @@
 			"bslt": "zu den Basalthängen",
 			"forges": "zu den Schmieden des Großen Immerhitzus",
 			"rashpk": "zu den Aschpuckruinen",
-			"vener": "au Repaire du Vénérable",
+			"vener": "zur Höhle des Ehrwürdigen",
 			"tunel": "zum Tunnel unter dem Ast",
 			"gorges": "zu den Tiefen Schluchten",
 			"tourbt": "à la Tour de Karinbao",
