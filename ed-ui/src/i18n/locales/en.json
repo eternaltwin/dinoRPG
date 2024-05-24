@@ -3752,7 +3752,7 @@
 			"removeStatus": "**{fighter}** is no longer **{status}**.",
 			"itemUse": "**{fighter}** used **{item}**.",
 			"hypnotize": "**{fighter}** switched sides.",
-			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie."
+			"gainEnergy": "**{fighter}** regained energy and now has **{energy}** energy."
 		}
 	},
 	"ingredients": {
