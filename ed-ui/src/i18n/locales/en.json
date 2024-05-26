@@ -2450,7 +2450,7 @@
 			"kfood": "Wood Steak",
 			"poison": "Korgon Rivalries",
 			"init1": "The Trial",
-			"init2": "Werewolf",
+			"init2": "The Archelionscarer",
 			"burn": "Fire !",
 			"barbec": "The crazy barbecue",
 			"joke": "Glidwings",
@@ -2957,7 +2957,7 @@
 			"init2": {
 				"claw": "Vous récupérez deux grosses griffes de bébé Archelion. Il faut maintenant les tailler correctement.",
 				"forgeron": "Tailler des griffes d'Archelion ? Vous savez que c'est dangereux de se promener avec ce genre de choses ?! Même si ça les effraie un peu, ça attire TOUS les autres monstres !! Ah vraiment bravo ! En voilà déjà qui arrivent...",
-				"garde": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? Il veut un Epouvantarchelion ? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
+				"garde": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? He wants an Archelionscarer? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
 				"garde2": "Bon donnez-moi ces Griffes que je nous en débarrasse ! Pour ce qui est des Archélions, pour les éloigner, voici une pommade odorante à appliquer chaque matin. Je vous préviens, ça sent fort...",
 				"shaman": "Ah ? Je ne savais pas pour les griffes ! Ben... Au temps pour moi... J'espère que le Garde des Forges ne vous a pas trop fait d'histoires. Merci pour la pommade, j'imagine que ça fera bien l'affaire ! Tenez voilà le Guide de Stratégie que j'ai en ma possession pour vous remercier."
 			},
@@ -4174,7 +4174,7 @@
 		},
 		"faq5": {
 			"question": "How to remove a skill from a Dinoz?",
-			"answer": "Learned skills cannot be removed, but you can disable some using the 130-lesson Strategy Guide you will obtain by completing the second mission of the Soft Shaman. && && As a general rule, avoid choosing attacks (A skills) in the minor elements of your Dinoz. && For example, Water Cannon is not recommended for a pigmou."
+			"answer": "Learned skills cannot be removed, but you can disable certain ones using the 130-lesson Strategy Guide you will obtain by completing \"The Archelionscarer\" - the second mission of the Soft Shaman. && && As a general rule, avoid choosing attacks (A skills) in the minor elements of your Dinoz. && For example, Water Cannon is not recommended for a pigmou."
 		},
 		"faq6": {
 			"question": "How to obtain the Lantern?",
