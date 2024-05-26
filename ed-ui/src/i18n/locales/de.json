@@ -2451,7 +2451,7 @@
 			"poison": "Rivalités korgons",
 			"init1": "Bewährungsprobe",
 			"init2": "Die Archelöwenscheuche",
-			"burn": "Au feu !",
+			"burn": "Feuer!",
 			"barbec": "Le barbecue déjanté",
 			"joke": "Luchsauge",
 			"defend": "La défense des Forges !",
@@ -2503,7 +2503,7 @@
 			"kfood": "Il existe quelque part dans Grumhel une espèce rare d'arbre que les Korgons adorent : le Fikoïa Cendré ! J'ignore où on peut en trouver, mais je te payerai bien si tu m'en apportes !",
 			"poison": "Le Fikoïa Cendré que vous avez découvert va rapidement devenir un point stratégique pour les korgons du sud... Il faut réagir vite ! Nous allons \"piéger\" quelques branches de cet arbre pour les dissuader de le manger... Evidemment, nous, nous saurons quelles branches ne pas toucher... Hi hi hi.",
 			"init1": "Yo... Also, was das Strategiehandbuch angeht, das musst du erstmal übersetzen... zu den Aschpuckruinen. Das kriegst du schon hin.",
-			"init2": "Ha, ces merguez d'Archelion m'ont donné la pêche ! Bon, je vois que tu es quelqu'un de capable ! Rends-moi un dernier petit service et je te laisserai mon Guide de Stratégie. Die Gegend um den Großen Immerhitzus ist ein idealer Lebensraum für Archelöwen jeglicher Größe... Sauvage, pas humide pour un sou et en perpetuelle éruption ! Mais il faut les tenir éloignés de nous si on ne veut pas leur servir de déjeuner... Je veux que tu me fabriques une sorte d'épouvantail à Archelions ! Il me faut donc des Griffes Taillées.",
+			"init2": "Ha, diese Merguez hatten's echt in sich! Wie ich sehe, hast du echt was drauf! Tue mir noch einen letzten kleinen Gefallen und ich überlasse dir mein Strategiehandbuch. Die Gegend um den Großen Immerhitzus ist ein idealer Lebensraum für Archelöwen jeglicher Größe... Wild, nicht ein Tropfen Feuchtigkeit und immerzu am Ausbrechen! Nichtsdestotrotz müssen wir sie von uns Fernhalten, wenn wir nicht als Mittagessen enden wollen... Ich möchte, dass du mir eine Art Vogelscheuche für Archelöwen anfertigst! Hierzu bräuchte ich Geschärfte Klauen.",
 			"burn": "Comme tu as dû le remarquer, la région est peuplée d'un nombre invraisemblable de Flammèches... Même si leur présence est nécessaire au grand équilibre cosmique, leur nombre progresse bien trop vite et doit être contrôlé ! Du musst schnell handeln! Begib dich zum Tunnel unter dem Ast, indem du am Krater entlangläufst. Ihre Präsenz dort unten ist wirklich kritisch geworden!",
 			"barbec": "Ce vendeur de Merguez aux ruines Ashpouk utilise un combustible spécial qui provoque l'apparition de nombreuses flammèches dans la région... Il faut faire quelque chose ! Toutefois, pas question d'empêcher ce pauvre vendeur de faire son travail, on va trouver une solution plus subtile. Commence par me récupérer quelques ingrédients: une branche séchée, une écaille de Dorogon et un morceau de basalte jaune. Broie et mélange bien le tout, et jette ça dans le barbecue !",
 			"joke": "Zwischen dem Universitätsprofessor Eugen und meiner Wenigkeit läuft bereits seit Jahren eine Fehde... Nous n'arrivons jamais à tomber d'accord sur quelque sujet que ce soit ! Aide-moi à lui jouer un petit tour, à ce vieux grincheux. Il faut tout d'abord trouver des choses qui sentent suffisamment fort ! Le Port de Prêche est idéal pour ça...",
@@ -2552,7 +2552,7 @@
 			"inscriptions": "Examiner les inscriptions",
 			"dictionnaire": "Aschpuckisches Wörterbuch",
 			"inscriptions_decrypt": "Die Inschriften entschlüsseln",
-			"claw": "Ramasser les griffes",
+			"claw": "Klauen einsammeln",
 			"cinder": "Examiner le tas de cendres",
 			"sniff": "Reben",
 			"seek": "Fouiller les environs",
@@ -2955,11 +2955,11 @@
 				"shaman": "Hmmm... Sieht aus wie ein Kochrezept... wie das der legendären Archelöwen-Merguez. Coole Sache... Da werd ich mir doch gleich welche machen! Dann komm ich vielleicht wieder in Schwung... Auf alle Fälle hast du es geschafft, dieses Ding hier zu übersetzen... Auf den Kopf gefallen bist du nicht."
 			},
 			"init2": {
-				"claw": "Vous récupérez deux grosses griffes de bébé Archelion. Il faut maintenant les tailler correctement.",
-				"forgeron": "Tailler des griffes d'Archelion ? Vous savez que c'est dangereux de se promener avec ce genre de choses ?! Même si ça les effraie un peu, ça attire TOUS les autres monstres !! Ah vraiment bravo ! En voilà déjà qui arrivent...",
-				"garde": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? Il veut un Epouvantarchelion ? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
-				"garde2": "Bon donnez-moi ces Griffes que je nous en débarrasse ! Pour ce qui est des Archélions, pour les éloigner, voici une pommade odorante à appliquer chaque matin. Je vous préviens, ça sent fort...",
-				"shaman": "Ah ? Je ne savais pas pour les griffes ! Ben... Au temps pour moi... J'espère que le Garde des Forges ne vous a pas trop fait d'histoires. Merci pour la pommade, j'imagine que ça fera bien l'affaire ! Tenez voilà le Guide de Stratégie que j'ai en ma possession pour vous remercier."
+				"claw": "Du sammelst zwei große Archelöwenbabyklauen ein. Jetzt muss man sie nur noch ordentlich schleifen.",
+				"forgeron": "Archelöwenklauen schleifen? Du weißt schon, dass es gefährlich ist, mit sowas herumzulaufen, oder?! Ein paar mag es ja abschrecken, aber alle ANDEREN zieht es nur an!! Na klasse! Da kommen sie ja schon...",
+				"garde": "Bist du etwa für diesen Saustall hier verantwortlich?! Na herzlichen Glückwunsch. Was soll das heißen, dieser Quacksalberschamane hat dich geschickt? Er will eine Archelöwenscheuche? Das ist echt einfach, dazu muss man nur... OH! Achtung, da kommen noch welche!!",
+				"garde2": "Gib mir schon die Klauen, damit ich sie loswerden kann! Was die Archelöwen angeht, um sie fernzuhalten, ist hier eine Salbe mit Geruch, die man jeden Morgen auftragen muss. Ich muss dich allerdings warnen: Sie riecht ziemlich streng...",
+				"shaman": "Hä? Das mit den Klauen wusst ich gar nicht! Tja... Jetzt schon... Ich hoffe, der Schmiedenwächter hat dir nicht allzu viel Ärger bereitet. Danke für die Salbe. Ich schätze, sie wird ihren Zweck schon erfüllen! Und hier ist auch das Strategiehandbuch, das ich schon dabei hatte, um mich bei dir zu bedanken."
 			},
 			"burn": {
 				"cinder": "Les cendres laissées par ces flammèches ont une odeur étrange... Ca ressemble fort à une odeur de friture ! Il faudrait enquêter à ce sujet...",
