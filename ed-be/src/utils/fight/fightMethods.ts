@@ -34,7 +34,7 @@ import {
 import { DetailedFight } from './generateFight.js';
 import { applyBalanceDamage, calculateDamage, getAttackDefense, getBasicElementDamage, getDamage, getElementalAttack } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
-import randomBetween from './randomBetween.js';
+import randomBetween, { randomBetweenMaxExcluded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -813,9 +813,7 @@ const registerHit = (
 	});
 };
 
-const evadedSkill = (fightData: DetailedFight, opponent: DetailedFighter, skill: SkillDetails) => {
-	if (opponent.hp <= 0) return false;
-
+const checkSkillEvasion = (opponent: DetailedFighter) => {
 	// Some statues prevent skill evasion
 	const statusesPreventingEvasion = [Status.ASLEEP, Status.PETRIFIED, Status.FLYING, Status.STUNNED];
 	if (statusesPreventingEvasion.some(status => hasStatus(opponent, status))) {
@@ -824,18 +822,13 @@ const evadedSkill = (fightData: DetailedFight, opponent: DetailedFighter, skill:
 
 	let evasion = 0;
 
-	// 10% chance to evade skills A with Skill.DEPLACEMENT_INSTANTANE
-	if (skill.type === SkillType.A && opponent.skills.find(s => s.id === Skill.DEPLACEMENT_INSTANTANE)) {
-		evasion += 0.1;
+	// 15% chance to evade skills A with Skill.DEPLACEMENT_INSTANTANE
+	if (opponent.skills.find(s => s.id === Skill.DEPLACEMENT_INSTANTANE)) {
+		evasion += 0.15;
 	}
 
 	const random = Math.random();
 	const evaded = random < evasion;
-
-	// Evasion stat
-	if (evaded) {
-		updateStat(fightData, opponent, 'evasions', 1);
-	}
 
 	return evaded;
 };
@@ -889,7 +882,7 @@ const attackSingleOpponent = (
 		const skill = skillOrItem;
 
 		// Check if opponent evaded
-		if (evadedSkill(fightData, opponent, skill)) {
+		if (checkSkillEvasion(opponent)) {
 			// Add evade step
 			fightData.steps.push({
 				action: 'evade',
@@ -931,7 +924,7 @@ const attackMultipleOpponents = (
 		step.targets.push({ tid: opponent.id });
 
 		// Check if opponent evaded
-		if (evadedSkill(fightData, opponent, skill)) {
+		if (checkSkillEvasion(opponent)) {
 			// Add evade step
 			fightData.steps.push({
 				action: 'evade',
@@ -973,7 +966,7 @@ const attackAllOpponents = (
 		step.targets.push({ tid: opponent.id });
 
 		// Check if opponent evaded
-		if (evadedSkill(fightData, opponent, skill)) {
+		if (checkSkillEvasion(opponent)) {
 			// Add evade step
 			fightData.steps.push({
 				action: 'evade',
@@ -2594,7 +2587,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			opponents.forEach(opponent => {
 				// Check if opponent evaded
-				if (evadedSkill(fightData, opponent, skill)) {
+				if (checkSkillEvasion(opponent)) {
 					// Add evade step
 					fightData.steps.push({
 						action: 'evade',
@@ -3495,9 +3488,6 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 };
 
 const evade = (fightData: DetailedFight, opponent: DetailedFighter) => {
-	// No evasion if opponent is dead
-	if (opponent.hp <= 0) return false;
-
 	const random = Math.random();
 	const evaded = random < opponent.stats.special.evasion - 1;
 
@@ -3779,67 +3769,108 @@ const attackTarget = (
 			target: stepFighter(realOpponent)
 		});
 
-		// Assault stat
-		updateStat(fightData, attacker, 'attacks', 1);
-		if (!skill) {
-			updateStat(fightData, attacker, 'assaults', 1);
+		// Apply defensive skills
+		checkDefensiveSkills(fightData, attacker, target, damage, elements, isCloseCombat, skill);
+
+		// Check for assault dodge
+		let isDodged = false;
+		if (isCloseCombat && (Math.random() < target.stats.special.evasion - 1)) {
+			isDodged = true;
 		}
 
-		if (miss(attacker)) {
+		// Check for skill evasion
+		const isSuperDodged = checkSkillEvasion(target);
+
+		// Check for special statuses: flying, intangible, dazzled
+		// FLYING
+		if (
+			isCloseCombat &&
+			// Opponent has FLYING
+			hasStatus(realOpponent, Status.FLYING) &&
+			// Attacker doesn't have FLYING
+			!hasStatus(attacker, Status.FLYING) &&
+			// Attacker can't hit flying opponent
+			!attacker.canHitFlying
+		) {
 			damage = 0;
 
-			// Add miss step
+			// Probably useless
+			// // Add miss step
+			// fightData.steps.push({
+			// 	action: 'miss',
+			// 	fighter: stepFighter(attacker)
+			// });
+		}
+
+		// INTANGIBLE
+		let break_intangible = false;
+		if (hasStatus(target, Status.INTANGIBLE)) {
+			if ((isCloseCombat && attacker.canHitIntangible) || elements.some(e => e == ElementType.AIR)) {
+				damage = 1;
+				break_intangible = true;
+			} else {
+				damage = 0;
+			}
+		}
+
+		// DAZZLED
+		if (hasStatus(attacker, Status.INTANGIBLE)) {
+			if (randomBetweenMaxExcluded(0, 3) === 0) {
+				damage = 0;
+			}
+		// 	// Probably useless
+		// 	fightData.steps.push({
+		// 		action: 'miss',
+		// 		fighter: stepFighter(attacker)
+		// 	});
+		}
+
+		if (isDodged || isSuperDodged) {	
+			// Add miss step (useful?)
 			fightData.steps.push({
 				action: 'miss',
 				fighter: stepFighter(attacker)
 			});
+			updateStat(fightData, attacker, 'evasions', 1);
+			damage = 0;
+		}
+
+		// Apply and log damage
+		target.hp -= damage;
+
+		// Update skill step or add hit step
+		if (skillStep) {
+			const skillTarget = skillStep.targets.find(t => t.tid === target.id);
+			if (!skillTarget) throw new ErrorFormator(500, `Target ${target.id} doesn't exist in ${skillStep.targets}`);
+			skillTarget.damages = damage;
 		} else {
-			// Check if opponent evaded
-			if (evade(fightData, realOpponent)) {
-				damage = 0;
+			fightData.steps.push({
+				action: 'hit',
+				fighter: stepFighter(attacker),
+				target: stepFighter(target),
+				damage: damage,
+				elements: elements,
+				skill
+			});
+		}
 
-				// Add evade step
-				fightData.steps.push({
-					action: 'evade',
-					fighter: stepFighter(realOpponent)
-				});
-			}
-
-			// FLYING
-			if (
-				isCloseCombat &&
-				// Opponent has FLYING
-				hasStatus(realOpponent, Status.FLYING) &&
-				// Attacker doesn't have FLYING
-				!hasStatus(attacker, Status.FLYING) &&
-				// Attacker can't hit flying opponent
-				!attacker.canHitFlying
-			) {
-				damage = 0;
-
-				// Add miss step
-				fightData.steps.push({
-					action: 'miss',
-					fighter: stepFighter(attacker)
-				});
-			}
+		// Break intangible if conditions met
+		if (break_intangible) {
+			removeStatus(fightData, target, Status.INTANGIBLE);
 		}
 
 		// Update the attacker's energy
 		setEnergy(attacker, attacker.energy - energyConsumed, fightData);
 
-		// Register hit if damage was done
-		if (damage) {
-			hitsCount++;
+		// Check for after attack skills
+		
+		// Check for after defense skills
 
-			registerHit(fightData, attacker, [realOpponent], damage, elements, skill, skillStep);
+		// // Register hit if damage was done
+		// if (damage) {
+		// 	hitsCount++;
 
-			// Apply all close combat after hit effects
-			if (isCloseCombat) {
-				// Poison fighter if opponent has Skill.AURA_PUANTE and close combat
-				if (realOpponent.skills.find(skill => skill.id === Skill.AURA_PUANTE)) {
-					poison(fightData, attacker, realOpponent, Skill.AURA_PUANTE, StatusLength.MEDIUM);
-				}
+		// 	registerHit(fightData, attacker, [realOpponent], damage, elements, skill, skillStep);
 
 				// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES and launched a water assault
 				if (
@@ -3849,67 +3880,73 @@ const attackTarget = (
 					poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
 				}
 
-				// Torch damage
-				if (hasStatus(realOpponent, Status.TORCHED)) {
-					loseHp(fightData, attacker, realOpponent.stats.special.torchDamage, LifeEffect.Fire);
-				}
+		// 		// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES and launched a water assault
+		// 		if (elements.find(element => element === ElementType.WATER) && attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
+		// 			poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
+		// 		}
 
-				// ACUPUNCTURE damage
-				if (hasStatus(realOpponent, Status.HEALING)) {
-					loseHp(fightData, attacker, 1, LifeEffect.Normal);
-				}
+		// 		// Torch damage
+		// 		if (hasStatus(realOpponent, Status.TORCHED)) {
+		// 			loseHp(fightData, attacker, realOpponent.stats.special.torchDamage, LifeEffect.Fire);
+		// 		}
 
-				// GRIFFES_INFERNALES damage
-				if (attacker.skills.find(skill => skill.id === Skill.GRIFFES_INFERNALES)) {
-					const damage = attacker.stats.base[ElementType.FIRE];
+		// 		// ACUPUNCTURE damage
+		// 		if (hasStatus(realOpponent, Status.HEALING)) {
+		// 			loseHp(fightData, attacker, 1, LifeEffect.Normal);
+		// 		}
 
-					realOpponent.burnedBy = {
-						id: attacker.id,
-						skill: Skill.GRIFFES_INFERNALES,
-						damage
-					};
-					addStatus(fightData, realOpponent, Status.BURNED, StatusLength.MEDIUM);
-				}
+		// 		// GRIFFES_INFERNALES damage
+		// 		if (attacker.skills.find(skill => skill.id === Skill.GRIFFES_INFERNALES)) {
+		// 			const damage = attacker.stats.base[ElementType.FIRE];
 
-				// M_FEBREZ
-				if (realOpponent.type === 'dinoz' && attacker.skills.find(skill => skill.id === Skill.M_FEBREZ)) {
-					// Regen 5% HP
-					heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
-				}
+		// 			realOpponent.burnedBy = {
+		// 				id: attacker.id,
+		// 				skill: Skill.GRIFFES_INFERNALES,
+		// 				damage
+		// 			};
+		// 			addStatus(fightData, realOpponent, Status.BURNED, StatusLength.MEDIUM);
+		// 		}
 
-				// SANG_ACIDE damage
-				if (
-					// Opponent has SANG_ACIDE
-					realOpponent.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
-					// 1/3 chance
-					randomBetween(0, 2) === 0
-				) {
-					loseHp(fightData, attacker, realOpponent.stats.special.acidBloodDamage, LifeEffect.Acid);
-				}
+		// 		// M_FEBREZ
+		// 		if (realOpponent.type === 'dinoz' && attacker.skills.find(skill => skill.id === Skill.M_FEBREZ)) {
+		// 			// Regen 5% HP
+		// 			heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
+		// 		}
 
-				// FORME_VAPOREUSE
-				if (
-					// Opponent has FORME_VAPOREUSE
-					realOpponent.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
-					// 5% chance
-					randomBetween(0, 19) === 0
-				) {
-					// Add INTANGIBLE
-					addStatus(fightData, realOpponent, Status.INTANGIBLE, StatusLength.SHORT);
-				}
+		// 		// SANG_ACIDE damage
+		// 		if (
+		// 			// Opponent has SANG_ACIDE
+		// 			realOpponent.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
+		// 			// 1/3 chance
+		// 			randomBetween(0, 2) === 0
+		// 		) {
+		// 			loseHp(fightData, attacker, realOpponent.stats.special.acidBloodDamage, LifeEffect.Acid);
+		// 		}
 
-				// Poison opponent if fighter has Skill.HALEINE_FETIVE
-				if (attacker.skills.find(skill => skill.id === Skill.HALEINE_FETIVE)) {
-					poison(fightData, realOpponent, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
-				}
+		// 		// FORME_VAPOREUSE
+		// 		if (
+		// 			// Opponent has FORME_VAPOREUSE
+		// 			realOpponent.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
+		// 			// 5% chance
+		// 			randomBetween(0, 19) === 0
+		// 		) {
+		// 			// Add INTANGIBLE
+		// 			addStatus(fightData, realOpponent, Status.INTANGIBLE, StatusLength.SHORT);
+		// 		}
 
-				// M_ELECTROCUTION damage
-				if (realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
-					loseHp(fightData, attacker, randomBetween(1, 4), LifeEffect.Lightning);
-				}
-			}
-		}
+		// 		// Poison opponent if fighter has Skill.HALEINE_FETIVE
+		// 		if (attacker.skills.find(skill => skill.id === Skill.HALEINE_FETIVE)) {
+		// 			poison(fightData, realOpponent, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
+		// 		}
 
+		// 		// M_ELECTROCUTION damage
+		// 		if (realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
+		// 			loseHp(fightData, attacker, randomBetween(1, 4), LifeEffect.Lightning);
+		// 		}
+		// 	}
+		// }
+
+		// Check for combo
 		if (canCombo) {
 			if (Math.random() < (attacker.stats.special.multihit - 1)) {
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
@@ -3918,7 +3955,16 @@ const attackTarget = (
 				continue;
 			}
 		}
+
 		break;
+	}
+
+	// Update target's life
+
+	// Update stats
+	updateStat(fightData, attacker, 'attacks', 1);
+	if (!skill) {
+		updateStat(fightData, attacker, 'assaults', 1);
 	}
 
 	// The target can counter if it's still alive and the attack was in close combat
@@ -3952,6 +3998,113 @@ const attackTarget = (
 
 	return !!hitsCount;
 };
+
+const checkDefensiveSkills = (fightData: DetailedFight, attacker: DetailedFighter, target: DetailedFighter, damage: number, elements: ElementType[], isCloseCombat: boolean, skill: Skill) => {
+	// Reduce damage by bulle percentage
+	if (
+		// Opponent has BULLE
+		target.stats.special.bubbleRate > 1 &&
+		// Don't trigger on assaults and invocations
+		!isCloseCombat &&
+		skillList[skill].type !== SkillType.I &&
+		// Don't trigger for bosses
+		attacker.type !== 'boss' &&
+		// Don't trigger for WOOD
+		!elements.includes(ElementType.WOOD) &&
+		// Don't trigger for VOID
+		!elements.includes(ElementType.VOID)
+	) {
+		damage = Math.round(damage * (target.stats.special.bubbleRate - 1));
+
+		// TODO add bubble effect post skill/hit
+		// if (actualDamage[opponent.id] < damage) {
+		// 	// Add resist step
+		// 	fightData.steps.push({
+		// 		action: 'resist',
+		// 		dinoz: stepFighter(opponent)
+		// 	});
+		// }
+	}
+
+	// 5% chance to reduce damage by 5 if Skill.CUIRASSE
+	if (target.skills.find(s => s.id === Skill.CUIRASSE)) {
+		const random = Math.random();
+
+		if (random < 0.05) {
+			damage = Math.max(damage - 5, 0);
+
+		// TODO add CUIRASSE effect post skill/hit
+			// // Add resist step
+			// fightData.steps.push({
+			// 	action: 'resist',
+			// 	dinoz: stepFighter(opponent)
+			// });
+		}
+	}
+
+	// Check for mud wall
+	if (target.mudWall) {
+		const tempDamage = damage;
+		damage -= target.mudWall;
+		target.mudWall -= tempDamage;
+
+		if (target.mudWall <= 0) {
+			target.mudWall = undefined;
+
+		// TODO add expire effect post skill/hit
+			// // Add skillExpire step
+			// fightData.steps.push({
+			// 	action: 'skillExpire',
+			// 	dinoz: stepFighter(target),
+			// 	skill: Skill.MUR_DE_BOUE
+			// });
+		}
+	}
+
+	// M_RESISTANCE
+	if (target.skills.find(s => s.id === Skill.M_RESISTANCE)) {
+		// 0 damage if skill
+		if (!isCloseCombat) {
+			damage = 0;
+
+			// Add skill step ???
+			fightData.steps.push({
+				action: 'skillActivate',
+				fid: target.id,
+				skill,
+				targets: []
+			});
+		}
+	}
+
+	// M_PROTECTION
+	if (target.skills.find(s => s.id === Skill.M_PROTECTION)) {
+		// Only take 1/3 damage on assaults
+		if (isCloseCombat) {
+			damage = Math.round(damage / 3);
+		}
+	}
+
+	// M_ELEMENTAL
+	if (target.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
+		// TODO rework: the damage of only all except one specific element is negated
+		if (damage) {
+			// Negate damage
+			damage = 0;
+		} else {
+			// Take 29 + 0-3 damage
+			const random = randomBetween(0, 3);
+
+			damage = 29 + random;
+		}
+	}
+
+	// M_DISABLE
+	if (damage && target.skills.find(s => s.id === Skill.M_DISABLE)) {
+		damage = 1;
+	}
+
+}
 
 export const checkDeaths = (fightData: DetailedFight) => {
 	let attackersAlive = 0;
