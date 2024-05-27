@@ -335,13 +335,6 @@ export const getDamage = (
 		}
 	}
 
-	// Cancel lightning damage if M_VEGETOX_DEFENDER
-	if (opponent.skills.some(skill => skill.id === Skill.M_VEGETOX_DEFENDER)) {
-		if (attackElements.includes(ElementType.LIGHTNING)) {
-			damage = 0;
-		}
-	}
-
 	return {
 		damage,
 		elements: attackElements

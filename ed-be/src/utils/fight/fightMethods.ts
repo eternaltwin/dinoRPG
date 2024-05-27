@@ -243,6 +243,7 @@ export const setEnergy = (fighter: DetailedFighter, new_energy: number, fightDat
 		delta = fighter.maxEnergy - fighter.energy;
 		fighter.energy = fighter.maxEnergy;
 	} else if (new_energy < 0) {
+		delta = -fighter.energy;
 		fighter.energy = 0;
 	} else {
 		delta = new_energy - fighter.energy;
@@ -253,6 +254,11 @@ export const setEnergy = (fighter: DetailedFighter, new_energy: number, fightDat
 			action: 'gainEnergy',
 			fighter: stepFighter(fighter),
 			energy: fighter.energy
+		});
+	} else if (delta < 0) {
+		fightData.steps.push({
+			action: 'reduceEnergy',
+			fighter: stepFighter(fighter),
 		});
 	}
 };
@@ -3769,8 +3775,8 @@ const attackTarget = (
 			target: stepFighter(realOpponent)
 		});
 
-		// Apply defensive skills
-		checkDefensiveSkills(fightData, attacker, target, damage, elements, isCloseCombat, skill);
+		// Apply defensive effects
+		checkDefensiveEffects(fightData, attacker, target, damage, elements, isCloseCombat, skill ? skillList[skill].type !== SkillType.I : false);
 
 		// Check for assault dodge
 		let isDodged = false;
@@ -3862,9 +3868,11 @@ const attackTarget = (
 		// Update the attacker's energy
 		setEnergy(attacker, attacker.energy - energyConsumed, fightData);
 
-		// Check for after attack skills
-		
-		// Check for after defense skills
+		// Check for after attack effects of the attacker
+		checkAfterAttackEffects(fightData, attacker, target, damage, elements, isCloseCombat, isDodged);
+
+		// Check for after defense effects of the target
+		checkAfterDefenseEffects(fightData, attacker, target, damage, elements, isCloseCombat, isDodged);
 
 		// // Register hit if damage was done
 		// if (damage) {
@@ -3872,28 +3880,10 @@ const attackTarget = (
 
 		// 	registerHit(fightData, attacker, [realOpponent], damage, elements, skill, skillStep);
 
-				// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES and launched a water assault
-				if (
-					elements.find(element => element === ElementType.WATER) &&
-					attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)
-				) {
-					poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
-				}
+		// 	// Apply all close combat after hit effects
+		// 	if (isCloseCombat) {
 
-		// 		// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES and launched a water assault
-		// 		if (elements.find(element => element === ElementType.WATER) && attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
-		// 			poison(fightData, realOpponent, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
-		// 		}
 
-		// 		// Torch damage
-		// 		if (hasStatus(realOpponent, Status.TORCHED)) {
-		// 			loseHp(fightData, attacker, realOpponent.stats.special.torchDamage, LifeEffect.Fire);
-		// 		}
-
-		// 		// ACUPUNCTURE damage
-		// 		if (hasStatus(realOpponent, Status.HEALING)) {
-		// 			loseHp(fightData, attacker, 1, LifeEffect.Normal);
-		// 		}
 
 		// 		// GRIFFES_INFERNALES damage
 		// 		if (attacker.skills.find(skill => skill.id === Skill.GRIFFES_INFERNALES)) {
@@ -3913,35 +3903,9 @@ const attackTarget = (
 		// 			heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
 		// 		}
 
-		// 		// SANG_ACIDE damage
-		// 		if (
-		// 			// Opponent has SANG_ACIDE
-		// 			realOpponent.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
-		// 			// 1/3 chance
-		// 			randomBetween(0, 2) === 0
-		// 		) {
-		// 			loseHp(fightData, attacker, realOpponent.stats.special.acidBloodDamage, LifeEffect.Acid);
-		// 		}
-
-		// 		// FORME_VAPOREUSE
-		// 		if (
-		// 			// Opponent has FORME_VAPOREUSE
-		// 			realOpponent.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
-		// 			// 5% chance
-		// 			randomBetween(0, 19) === 0
-		// 		) {
-		// 			// Add INTANGIBLE
-		// 			addStatus(fightData, realOpponent, Status.INTANGIBLE, StatusLength.SHORT);
-		// 		}
-
 		// 		// Poison opponent if fighter has Skill.HALEINE_FETIVE
 		// 		if (attacker.skills.find(skill => skill.id === Skill.HALEINE_FETIVE)) {
 		// 			poison(fightData, realOpponent, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
-		// 		}
-
-		// 		// M_ELECTROCUTION damage
-		// 		if (realOpponent.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
-		// 			loseHp(fightData, attacker, randomBetween(1, 4), LifeEffect.Lightning);
 		// 		}
 		// 	}
 		// }
@@ -3999,14 +3963,14 @@ const attackTarget = (
 	return !!hitsCount;
 };
 
-const checkDefensiveSkills = (fightData: DetailedFight, attacker: DetailedFighter, target: DetailedFighter, damage: number, elements: ElementType[], isCloseCombat: boolean, skill: Skill) => {
+const checkDefensiveEffects = (fightData: DetailedFight, attacker: DetailedFighter, target: DetailedFighter, damage: number, elements: ElementType[], isCloseCombat: boolean, isInvocation: boolean) => {
 	// Reduce damage by bulle percentage
 	if (
 		// Opponent has BULLE
 		target.stats.special.bubbleRate > 1 &&
 		// Don't trigger on assaults and invocations
 		!isCloseCombat &&
-		skillList[skill].type !== SkillType.I &&
+		!isInvocation &&
 		// Don't trigger for bosses
 		attacker.type !== 'boss' &&
 		// Don't trigger for WOOD
@@ -4026,12 +3990,26 @@ const checkDefensiveSkills = (fightData: DetailedFight, attacker: DetailedFighte
 		// }
 	}
 
-	// 5% chance to reduce damage by 5 if Skill.CUIRASSE
-	if (target.skills.find(s => s.id === Skill.CUIRASSE)) {
-		const random = Math.random();
+	// FORME VAPOREUSE
+	if (
+		// Opponent has FORME_VAPOREUSE
+		target.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
+		// 6% chance
+		randomBetween(0, 99) < 6
+	) {
+		// TODO announce skill
+		// Add INTANGIBLE
+		addStatus(fightData, target, Status.INTANGIBLE, StatusLength.SHORT);
+	}
 
-		if (random < 0.05) {
-			damage = Math.max(damage - 5, 0);
+	// CUIRASSE
+	if (isCloseCombat && target.skills.find(s => s.id === Skill.CUIRASSE)  &&
+		// 5 % chance
+		randomBetween(0, 99) < 5
+	) {
+		// TODO announce skill
+		// Reduce damage by 5
+		damage = Math.max(damage - 5, 0);
 
 		// TODO add CUIRASSE effect post skill/hit
 			// // Add resist step
@@ -4039,14 +4017,19 @@ const checkDefensiveSkills = (fightData: DetailedFight, attacker: DetailedFighte
 			// 	action: 'resist',
 			// 	dinoz: stepFighter(opponent)
 			// });
-		}
 	}
 
 	// Check for mud wall
 	if (target.mudWall) {
-		const tempDamage = damage;
-		damage -= target.mudWall;
-		target.mudWall -= tempDamage;
+		// TODO announce skill only the first time it tanks damage
+		target.mudWall -= damage;
+
+		// If negative, the overflow damage goes through the mud wall
+		if (target.mudWall < 0) {
+			damage = -target.mudWall; // Negative of negative: positive!
+		} else {
+			target.mudWall = 0;
+		}
 
 		if (target.mudWall <= 0) {
 			target.mudWall = undefined;
@@ -4062,32 +4045,29 @@ const checkDefensiveSkills = (fightData: DetailedFight, attacker: DetailedFighte
 	}
 
 	// M_RESISTANCE
-	if (target.skills.find(s => s.id === Skill.M_RESISTANCE)) {
+	if (!isCloseCombat && target.skills.find(s => s.id === Skill.M_RESISTANCE)) {
+		// TODO annouce skill
 		// 0 damage if skill
-		if (!isCloseCombat) {
-			damage = 0;
+		damage = 0;
 
-			// Add skill step ???
-			fightData.steps.push({
-				action: 'skillActivate',
-				fid: target.id,
-				skill,
-				targets: []
-			});
-		}
+		// Add skill step ???
+		// fightData.steps.push({
+		// 	action: 'skillActivate',
+		// 	fid: target.id,
+		// 	skill,
+		// 	targets: []
+		// });
 	}
 
 	// M_PROTECTION
-	if (target.skills.find(s => s.id === Skill.M_PROTECTION)) {
+	if (isCloseCombat && target.skills.find(s => s.id === Skill.M_PROTECTION)) {
 		// Only take 1/3 damage on assaults
-		if (isCloseCombat) {
-			damage = Math.round(damage / 3);
-		}
+		damage = Math.round(damage / 3);
 	}
 
 	// M_ELEMENTAL
 	if (target.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
-		// TODO rework: the damage of only all except one specific element is negated
+		// TODO rework: the damage of all except one specific element is negated
 		if (damage) {
 			// Negate damage
 			damage = 0;
@@ -4104,7 +4084,136 @@ const checkDefensiveSkills = (fightData: DetailedFight, attacker: DetailedFighte
 		damage = 1;
 	}
 
+	// M_WORM: absorb all water damage
+	if (elements.includes(ElementType.WATER) && target.skills.find(s => s.id === Skill.M_WORM)) {
+		target.absorbed = damage;
+		damage = 0;
+	}
+
+	// M_VEGETOX_DEFENDER: cancel all lightning damage
+	if (target.skills.some(skill => skill.id === Skill.M_VEGETOX_DEFENDER)) {
+		if (elements.includes(ElementType.LIGHTNING)) {
+			damage = 0;
+		}
+	}
 }
+
+const checkAfterAttackEffects = (fightData: DetailedFight, attacker: DetailedFighter, target: DetailedFighter, damage: number, elements: ElementType[], isCloseCombat: boolean, isDodged: boolean) => {
+	// Poison opponent if fighter has Skill.GRIFFES_EMPOISONNEES and launched a water assault that dealt a least 1 damage
+	if (isCloseCombat && damage > 0 && elements.find(element => element === ElementType.WATER) && attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)) {
+		poison(fightData, target, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
+	}
+
+	// CONCENTRATION: save last target ID if it was an assault and the target is not the same as the original side of the attacker
+	if (isCloseCombat && attacker.attacker != target.attacker && attacker.skills.find(skill => skill.id === Skill.CONCENTRATION)) {
+		attacker.previousTarget = target.id;
+	}
+
+	// Poison opponent if fighter has Skill.HALEINE_FETIVE and landed a hit with an assault
+	if (isCloseCombat && damage > 0 && attacker.skills.find(skill => skill.id === Skill.HALEINE_FETIVE)) {
+		poison(fightData, target, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
+	}
+
+	// TODO
+	// "febrez" skill for Valentine?
+
+	// Burn opponent if fighter has Skill.GRIFFES_INFERNALES and landed a hit with an assault that was not dodged
+	if (isCloseCombat && !isDodged && attacker.skills.find(skill => skill.id === Skill.GRIFFES_INFERNALES)) {
+		const damage = attacker.stats.base[ElementType.FIRE];
+
+		target.burnedBy = {
+			id: attacker.id,
+			skill: Skill.GRIFFES_INFERNALES,
+			damage
+		};
+		addStatus(fightData, target, Status.BURNED, StatusLength.MEDIUM);
+	}
+
+	// 30% chance to steal all energy from target if fighter has Skill.QI_GONG and landed a hit with an assault
+	if (isCloseCombat && damage > 0 && attacker.skills.some(skill => skill.id === Skill.QI_GONG)) {
+		// 30% Chance to deplete energy
+		if (Math.random() < 0.3) {
+			// TODO announce the skill
+			const energyStolen = target.energy;
+			
+			setEnergy(target, 0, fightData);
+			setEnergy(attacker, attacker.energy + energyStolen, fightData);
+		}
+	}
+}
+
+const checkAfterDefenseEffects = (fightData: DetailedFight, attacker: DetailedFighter, target: DetailedFighter, damage: number, elements: ElementType[], isCloseCombat: boolean, isDodged: boolean) => {
+	// Objet: voleur de vie
+
+	// Objet: costume
+
+	// Statuses: sleep, flames Torche (competence ou briqué), intangible, 
+	// Torch: close combat and hit landed
+	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
+		loseHp(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+	}
+
+	// Skills:
+	// Accupuncture (through a status): close combat and hit landed
+	if (isCloseCombat && damage > 0 && hasStatus(target, Status.HEALING)) {
+		loseHp(fightData, attacker, 1, LifeEffect.Normal);
+	}
+
+	// Sang acide: close combat and hit landed
+	if (isCloseCombat && damage > 0 &&
+		target.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
+		// 1/3 chance
+		randomBetween(0, 2) === 0
+	) {
+		loseHp(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
+	}
+
+	// Aura puante: close combat and hit landed, the attacker must not be poisoned
+	if (isCloseCombat && damage > 0 && !hasStatus(attacker, Status.POISONED) && target.skills.find(skill => skill.id === Skill.AURA_PUANTE)) {
+		// TODO announce the skill
+		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.MEDIUM);
+	}
+
+	// Bulle (add fx?)
+
+	// Electrocution (Anguilloz)
+	if (isCloseCombat && damage > 0 && target.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
+		loseHp(fightData, attacker, randomBetween(1, 3), LifeEffect.Lightning);
+	}
+
+	// Worm (or any absorb?): heal the damage absorbed
+	if (target.absorbed && target.skills.find(skill => skill.id === Skill.M_WORM)) {
+		heal(fightData, target, target.absorbed);
+	}
+
+	// Vol d'or
+	// TODO
+
+	// Spikes (M_POISONED_PICKS - Cactus): attacker takes dammage after an assault and cactus spikes increaase
+	if (isCloseCombat && damage > 0 && target.spikes) {
+		loseHp(fightData, attacker, target.spikes, LifeEffect.Poison);
+		target.spikes += 1;
+	}
+
+	// Contamination (Gropignon): 1 out of 5 chance to poison attacker if hit by assault
+	if (isCloseCombat && damage > 0 && target.skills.some(skill => skill.id === Skill.M_CONTAMINATION)  &&
+		// 1/5 chance
+		randomBetween(0, 4) === 0
+	) {
+		// TODO announce the skill
+		poison(fightData, attacker, target, Skill.M_CONTAMINATION, StatusLength.SHORT);
+	}
+
+	// Repousse (garde végétox)
+
+	// Source de vie
+
+	// Vide énergétique
+
+	// Mur de boue ??
+
+}
+
 
 export const checkDeaths = (fightData: DetailedFight) => {
 	let attackersAlive = 0;
