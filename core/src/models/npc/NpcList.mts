@@ -116,7 +116,6 @@ export const npcList: Record<string, Npc> = {
 		condition: { [ConditionEnum.ACTIVE]: false }, //TODO use fmedal as condition
 		data: FORGERON,
 		flashvars: 'frame=blabla',
-		condition: undefined,
 		missions: undefined
 	},
 	BOB: {
