@@ -113,7 +113,7 @@ export const npcList: Record<string, Npc> = {
 		name: 'forgeron',
 		id: 8,
 		placeId: PlaceEnum.FORGES_DU_GTC,
-		// condition: set to epic(medaillon à trois yeux) later
+		condition: { [ConditionEnum.ACTIVE]: false }, //TODO use fmedal as condition
 		data: FORGERON,
 		flashvars: 'frame=blabla',
 		condition: undefined,
