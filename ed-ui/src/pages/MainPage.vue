@@ -58,21 +58,25 @@ export default defineComponent({
 	methods: {
 		async firstLoad() {
 			EventBus.emit('isLoading', true);
-			const commonData = await PlayerService.getLoggedInData();
+			try {
+				const commonData = await PlayerService.getLoggedInData();
+				// Set data in sessionStore
+				this.playerStore.setMoney(commonData.money);
+				this.dinozStore.setDinozList(commonData.dinoz);
+				this.dinozStore.setDinozCount(commonData.dinozCount);
 
-			// Set data in sessionStore
-			this.playerStore.setMoney(commonData.money);
-			this.dinozStore.setDinozList(commonData.dinoz);
-			this.dinozStore.setDinozCount(commonData.dinozCount);
-
-			if (!this.playerStore.getPlayerId) {
-				this.playerStore.setPlayerId(commonData.id);
-				this.playerStore.setPlayerName(commonData.name);
-				this.playerStore.setPlayerOptions(commonData.playerOptions);
-				this.playerStore.setAdmin(commonData.admin);
+				if (!this.playerStore.getPlayerId) {
+					this.playerStore.setPlayerId(commonData.id);
+					this.playerStore.setPlayerName(commonData.name);
+					this.playerStore.setPlayerOptions(commonData.playerOptions);
+					this.playerStore.setAdmin(commonData.admin);
+				}
+				this.loaded = true;
+				EventBus.emit('isLoading', false);
+			} catch (e) {
+				errorHandler.handle(e);
+				return;
 			}
-			this.loaded = true;
-			EventBus.emit('isLoading', false);
 		}
 	},
 	async mounted() {
