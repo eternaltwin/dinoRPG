@@ -48,7 +48,7 @@
       "dinoAnimation/"
     ]
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.2.2",
   "devDependencies": {
     "concurrently": "^8.2.2",
     "husky": "^8.0.3",

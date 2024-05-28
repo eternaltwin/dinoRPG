@@ -48,7 +48,8 @@ export const AdminService = {
 		priest?: boolean | null,
 		teacher?: boolean | null,
 		messie?: boolean | null,
-		matelasseur?: boolean | null
+		matelasseur?: boolean | null,
+		role?: 'admin' | 'player' | 'beta' | null
 	): Promise<void> {
 		return http()
 			.put(`/admin/player/${id}`, {
@@ -63,7 +64,8 @@ export const AdminService = {
 				priest: priest,
 				teacher: teacher,
 				messie: messie,
-				matelasseur: matelasseur
+				matelasseur: matelasseur,
+				role: role
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));

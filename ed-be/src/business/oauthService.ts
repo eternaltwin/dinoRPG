@@ -1,16 +1,18 @@
 import { Request } from 'express';
 import { archiveOldUsername, createPlayer, getPlayerId, setPlayer } from '../dao/playerDao.js';
-import { getConfig, forgeJWT } from '../utils/index.js';
-import { Config } from '@drpg/core/models/config/Config';
+import { forgeJWT } from '../utils/index.js';
+import { Config, loadConfig } from '../config/config.js';
 import { RfcOauthClient } from '@eternaltwin/oauth-client-http/rfc-oauth-client';
 import { OauthAccessToken } from '@eternaltwin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
-import { getAllSecretsRequest } from '../dao/secretDao.js';
+import { getSpecificSecret } from '../dao/secretDao.js';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
+import urlJoin from 'url-join';
+import { AdminRole } from '@drpg/prisma';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -22,26 +24,14 @@ import { LogType } from '@drpg/prisma';
 export async function authenticateToET(req: Request) {
 	let token: OauthAccessToken;
 	let user: User;
-	const config: Config = getConfig();
+	const config: Config = loadConfig();
 
 	try {
 		token = await getAuthorizationToken(req.body.code);
-		user = await getUser(token.accessToken, config.general.eternalTwinServerUri);
+		user = await getUser(token.accessToken, config.eternaltwin.url);
 	} catch (err) {
 		console.error(err);
 		throw new ErrorFormator(500, 'An error occurred');
-	}
-
-	const secrets = await getAllSecretsRequest();
-	const beta = secrets.find(s => s.key === 'beta');
-	const userAllowedBeta = secrets.find(s => s.key === user.user.id);
-	const admins: (string | undefined)[] = Object.values(config.admin);
-
-	if (beta && !admins.includes(user.user.id) && !userAllowedBeta) {
-		throw new ErrorFormator(
-			500,
-			`User ${user.user.id} (${user.user.display_name.current.value}), you are not allowed to enter the beta website.`
-		);
 	}
 
 	// Check if player already exists in database
@@ -62,7 +52,8 @@ export async function authenticateToET(req: Request) {
 			shopKeeper: false,
 			merchant: false,
 			priest: false,
-			teacher: false
+			teacher: false,
+			role: AdminRole.PLAYER
 		});
 		// Create player at position 0 in ranking
 		await addPlayerInRanking(player.id);
@@ -75,7 +66,17 @@ export async function authenticateToET(req: Request) {
 		await archiveOldUsername(player.id, player.name);
 	}
 
-	await createLog(LogType.PlayerConnected, player.id, undefined, player.name.toString());
+	const beta = await getSpecificSecret('beta');
+
+	if (beta) {
+		const admin = config.administrator;
+		if (!(admin === user.user.id) && player.role === AdminRole.PLAYER) {
+			throw new ErrorFormator(
+				500,
+				`User ${user.user.id} (${user.user.display_name.current.value}), you are not allowed to enter the beta website.`
+			);
+		}
+	}
 
 	// Forge JWT with playerId
 	return await forgeJWT(player.id);
@@ -100,7 +101,7 @@ async function getUser(accessToken: string, eternalTwinURI: string) {
 }
 
 async function getAuthorizationToken(code: string) {
-	const oauthClient: RfcOauthClient = getRfcOauthClient(true);
+	const oauthClient: RfcOauthClient = getRfcOauthClient();
 
 	return oauthClient.getAccessToken(code);
 }
@@ -111,21 +112,20 @@ async function getAuthorizationToken(code: string) {
  * @return URL
  */
 export async function getAuthorizationUri() {
-	const oauthClient: RfcOauthClient = getRfcOauthClient(false);
+	const oauthClient: RfcOauthClient = getRfcOauthClient();
 
 	return oauthClient.getAuthorizationUri('base', 'authenticate');
 }
 
-function getRfcOauthClient(useDockerUri: boolean) {
-	const config = getConfig();
-	const eternalTwinURI = useDockerUri ? config.general.eternalTwinServerUri : config.general.eternalTwinPublicUri;
+function getRfcOauthClient() {
+	const config = loadConfig();
 
 	return new RfcOauthClient({
-		authorizationEndpoint: new URL(`${eternalTwinURI}${config.oauth.authorizationUri}`),
-		tokenEndpoint: new URL(`${eternalTwinURI}${config.oauth.tokenUri}`),
-		callbackEndpoint: new URL(`${config.general.frontUri}${config.oauth.callbackUri}`),
-		clientId: config.oauth.clientId,
-		clientSecret: config.oauth.clientSecret
+		authorizationEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/authorize')),
+		tokenEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/token')),
+		callbackEndpoint: new URL(urlJoin(config.selfUrl.toString(), 'authentication')),
+		clientId: config.eternaltwin.clientRef,
+		clientSecret: config.eternaltwin.secret
 	});
 }
 

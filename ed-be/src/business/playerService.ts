@@ -20,6 +20,8 @@ import { updateCompletion } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { createLog } from '../dao/logDao.js';
+import { LogType } from '@drpg/prisma';
 
 /**
  * @summary Get data from player on login
@@ -70,6 +72,7 @@ export async function getCommonData(req: Request) {
 
 		// Update stat
 		await setSpecificStat(StatTracking.P_DAYS, req.auth.playerId, 1);
+		await createLog(LogType.PlayerConnected, playerCommonData.id, undefined, playerCommonData.name.toString());
 	}
 
 	const commonData: PlayerCommonData = {

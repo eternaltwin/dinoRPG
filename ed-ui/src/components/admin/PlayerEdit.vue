@@ -59,6 +59,18 @@
 				<input type="text" v-model="player.quetzuBought" />
 				<input type="number" min="0" max="6" v-model="playerFields.quetzuBought" />
 			</div>
+			<div>
+				<label class="title" for="role">Role :</label>
+				<input id="role" type="text" v-model="player.role" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="admin" name="role" v-model="playerFields.role" />
+					<label class="radio" for="admin">admin</label>
+					<input class="radio" type="radio" value="beta" name="role" v-model="playerFields.role" />
+					<label class="radio" for="beta">beta</label>
+					<input class="radio" type="radio" value="player" name="role" v-model="playerFields.role" />
+					<label class="radio" for="player">player</label>
+				</div>
+			</div>
 		</fieldset>
 		<fieldset>
 			<legend>Rewards</legend>
@@ -235,7 +247,8 @@ export default defineComponent({
 				this.playerFields.priest !== undefined ||
 				this.playerFields.teacher !== undefined ||
 				this.playerFields.messie !== undefined ||
-				this.playerFields.matelasseur !== undefined
+				this.playerFields.matelasseur !== undefined ||
+				this.playerFields.role !== undefined
 			) {
 				await AdminService.updatePlayer(
 					this.player.id,
@@ -250,7 +263,8 @@ export default defineComponent({
 					this.playerFields.priest,
 					this.playerFields.teacher,
 					this.playerFields.messie,
-					this.playerFields.matelasseur
+					this.playerFields.matelasseur,
+					this.playerFields.role
 				);
 			}
 

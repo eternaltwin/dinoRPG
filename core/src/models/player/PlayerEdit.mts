@@ -15,4 +15,5 @@ export interface PlayerEdit {
 	teacher?: boolean;
 	messie?: boolean;
 	matelasseur?: boolean;
+	role?: 'admin' | 'beta' | 'playe';
 }

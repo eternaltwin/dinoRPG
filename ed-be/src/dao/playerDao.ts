@@ -2,6 +2,7 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 import { LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
+import { AdminRole } from '@drpg/prisma';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -58,6 +59,19 @@ export async function resetUser(playerId: number) {
 
 // Getters
 
+export async function getRolePlayer(role: AdminRole) {
+	const players = await prisma.player.findMany({
+		where: {
+			role: role
+		},
+		select: {
+			id: true,
+			eternalTwinId: true
+		}
+	});
+	return players;
+}
+
 export async function getPlayerId(eternalTwinId: string) {
 	const player = await prisma.player.findFirst({
 		where: {
@@ -65,7 +79,8 @@ export async function getPlayerId(eternalTwinId: string) {
 		},
 		select: {
 			id: true,
-			name: true
+			name: true,
+			role: true
 		}
 	});
 

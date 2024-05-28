@@ -1,8 +1,8 @@
 import cron from 'cron';
-import { sendDiscord } from '../utils/discord.js';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { setSpecificSecret } from '../dao/secretDao.js';
+import { LOGGER } from '../context.js';
 
 const itinerantMerchant = () => {
 	const CronJob = cron.CronJob;
@@ -16,7 +16,7 @@ const itinerantMerchant = () => {
 		const weekPlace = availablePlace[random];
 		try {
 			await setSpecificSecret('itinerant', weekPlace.placeId.toString());
-			sendDiscord(`Itinerant merchant is at ${weekPlace.name}`);
+			LOGGER.log(`Itinerant merchant is at ${weekPlace.name}`);
 		} catch (err) {
 			console.error(`Cannot heal resting dinoz: ${err}`);
 		}

@@ -336,7 +336,8 @@ exports.Prisma.PlayerScalarFieldEnum = {
   labruteDone: 'labruteDone',
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
-  lastLogin: 'lastLogin'
+  lastLogin: 'lastLogin',
+  role: 'role'
 };
 
 exports.Prisma.UsernameHistoryScalarFieldEnum = {
@@ -468,6 +469,13 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
   selling: 'selling',
   superdom: 'superdom',
   resting: 'resting'
+};
+
+exports.AdminRole = exports.$Enums.AdminRole = {
+  ADMIN: 'ADMIN',
+  MODERATOR: 'MODERATOR',
+  BETA: 'BETA',
+  PLAYER: 'PLAYER'
 };
 
 exports.OfferStatus = exports.$Enums.OfferStatus = {

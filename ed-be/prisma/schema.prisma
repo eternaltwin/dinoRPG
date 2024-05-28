@@ -2,7 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   output          = "../../prisma"
   binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
-  previewFeatures = ["relationJoins", "nativeDistinct"]
+  previewFeatures = ["relationJoins", "nativeDistinct", "tracing"]
 }
 
 datasource db {
@@ -334,6 +334,7 @@ model Player {
   createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
   updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
   lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
+  role                        AdminRole                    @default(PLAYER)
   dinoz                       Dinoz[]
   importedPlayer              ImportedPlayer?
   importedTwinoidAchievements ImportedTwinoidAchievement[]
@@ -469,6 +470,13 @@ enum OfferStatus {
   CANCELLED
 }
 
+enum AdminRole {
+  ADMIN
+  MODERATOR
+  BETA
+  PLAYER
+}
+
 model Offer {
   id       Int         @id @default(autoincrement())
   sellerId Int
@@ -483,37 +491,37 @@ model Offer {
 }
 
 enum LogType {
-	ItemUsed
-	ItemBought
-	IngredientSold
-	GoldWon
-	GoldLost
-	Move
-	LevelUp
-	Fight
-	XPEarned
-	HPLost
-	Death
-	Revive
-	MissionStep
-	MissionFinished
-	MissionCanceled
-	Gather
-	CreateDinoz
-	ChangeDinozOrder
-	PlayerCreated
-	PlayerConnected
-	AdminUpdateDinoz
-	AdminAddStatus
-	AdminRemoveStatus
-	AdminAddSkill
-	AdminRemoveSkill
-	AdminAddMoney
-	AdminRemoveMoney
-	AdminAddReward
-	AdminRemoveReward
-	AdminUpdatePlayer
-	AdminUpdateSecret
+  ItemUsed
+  ItemBought
+  IngredientSold
+  GoldWon
+  GoldLost
+  Move
+  LevelUp
+  Fight
+  XPEarned
+  HPLost
+  Death
+  Revive
+  MissionStep
+  MissionFinished
+  MissionCanceled
+  Gather
+  CreateDinoz
+  ChangeDinozOrder
+  PlayerCreated
+  PlayerConnected
+  AdminUpdateDinoz
+  AdminAddStatus
+  AdminRemoveStatus
+  AdminAddSkill
+  AdminRemoveSkill
+  AdminAddMoney
+  AdminRemoveMoney
+  AdminAddReward
+  AdminRemoveReward
+  AdminUpdatePlayer
+  AdminUpdateSecret
 }
 
 model Log {

@@ -8,6 +8,7 @@ import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
+import { AdminRole } from '@drpg/prisma';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -261,10 +262,26 @@ export async function listAllDinozFromPlayer(req: Request) {
  * @param req.body.teacher {boolean}
  * @param req.body.messie {boolean}
  * @param req.body.matelasseur {boolean}
+ * @param req.body.role {"admin" | "beta" | "player"}
  */
 export async function editPlayer(req: Request) {
 	if (!req.auth?.playerId) {
 		throw new ErrorFormator(500, `You need to be logged in.`);
+	}
+
+	let role;
+	switch (req.body.role) {
+		case 'admin':
+			role = AdminRole.ADMIN;
+			break;
+		case 'beta':
+			role = AdminRole.BETA;
+			break;
+		case 'player':
+			role = AdminRole.PLAYER;
+			break;
+		default:
+			role = undefined;
 	}
 
 	const player = {
@@ -279,7 +296,8 @@ export async function editPlayer(req: Request) {
 		priest: req.body.priest,
 		teacher: req.body.teacher,
 		messie: req.body.messie,
-		matelasseur: req.body.matelasseur
+		matelasseur: req.body.matelasseur,
+		role: role
 	};
 
 	await setPlayer(+req.params.id, player);
@@ -400,7 +418,8 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		messie: player.messie,
 		matelasseur: player.matelasseur,
 		createdDate: player.createdDate,
-		rewards: player.rewards.map(reward => reward.rewardId)
+		rewards: player.rewards.map(reward => reward.rewardId),
+		role: player.role
 	};
 
 	return playerToSend;

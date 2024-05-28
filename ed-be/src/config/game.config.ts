@@ -1,4 +1,4 @@
-import { getEnvironnement } from '../utils/context.js';
+import { loadConfig } from '../config/config.js';
 
 const gameConfig: GameConfig = {
 	development: {
@@ -51,4 +51,6 @@ interface GameConfig {
 	};
 }
 
-export default gameConfig[getEnvironnement()];
+const env = loadConfig().isProduction ? 'production' : 'development';
+
+export default gameConfig[env];

@@ -1,15 +1,14 @@
 import cron from 'cron';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { sendDiscord } from '../utils/discord.js';
 import dayjs from 'dayjs';
 import { prisma } from '../prisma.js';
+import { LOGGER } from '../context.js';
 
 // Truncate table 'player_dinoz_shop' at midnight
 const healRestingDinoz = () => {
 	const CronJob = cron.CronJob;
 
 	return new CronJob('0 * * * *', async () => {
-		sendDiscord(`Start healing resting dinoz.`);
 		const startTime = dayjs();
 		try {
 			const healed = await prisma.$executeRaw`
@@ -100,7 +99,7 @@ const healRestingDinoz = () => {
 
 			`;
 			const endTime = dayjs();
-			sendDiscord(`Operation healed ${healed} dinoz and ended in ${endTime.diff(startTime)}ms.`);
+			LOGGER.log(`Operation healed ${healed} dinoz and ended in ${endTime.diff(startTime)}ms.`);
 		} catch (err) {
 			console.error(`Cannot heal resting dinoz: ${err}`);
 		}

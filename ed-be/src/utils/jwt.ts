@@ -1,12 +1,12 @@
-import { Config } from '@drpg/core/models/config/Config';
 import { Request, Response } from 'express';
 import expressJwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
-import { getEternalTwinId } from '../dao/playerDao.js';
-import { getConfig } from './context.js';
+import { getEternalTwinId, getRolePlayer } from '../dao/playerDao.js';
+import { Config, loadConfig } from '../config/config.js';
+import { AdminRole } from '@drpg/prisma';
 
 const jwtConfig = () => {
-	const config = getConfig() as Config;
+	const config = loadConfig() as Config;
 	const secret: string = config.jwt.secretKey;
 	return expressJwt.expressjwt({ secret, algorithms: ['HS256'] }).unless({
 		path: [/\/api\/v1\/oauth*/, /\/api-docs*/, /\/api\/v1\/news\/\d+\/illustration/, /\/api\/v1\/eternaltwin*/]
@@ -14,7 +14,7 @@ const jwtConfig = () => {
 };
 
 const forgeJWT = async (playerId: number): Promise<string> => {
-	const config: Config = getConfig();
+	const config: Config = loadConfig();
 	const exp: number = Math.round(Date.now() / 1000) + config.jwt.expiration;
 	const isAdmin: boolean = await isPlayerAdmin(playerId, config);
 	return jsonwebtoken.sign(
@@ -39,8 +39,12 @@ const checkIsAdmin = (req: Request, res: Response, next: () => void) => {
 
 async function isPlayerAdmin(playerId: number, config: Config): Promise<boolean> {
 	const ETId = await getEternalTwinId(playerId);
-	const admins: (string | undefined)[] = Object.values(config.admin);
-	return admins.includes(ETId?.eternalTwinId);
+	if (!ETId) return false;
+	const admin = config.administrator;
+	if (admin === ETId.eternalTwinId) return true;
+	const administrators = await getRolePlayer(AdminRole.ADMIN);
+	if (administrators.some(p => p.eternalTwinId === ETId.eternalTwinId)) return true;
+	return false;
 }
 
 export { checkIsAdmin, forgeJWT, jwtConfig };

@@ -1,3 +1,5 @@
+import { AdminRole } from '@drpg/prisma';
+
 export interface Player {
 	id: number;
 	hasImported: boolean;
@@ -16,4 +18,5 @@ export interface Player {
 	matelasseur: boolean;
 	rewards: number[];
 	customText: string | null;
+	role: AdminRole;
 }
