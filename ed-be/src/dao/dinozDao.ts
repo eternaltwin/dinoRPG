@@ -38,6 +38,7 @@ export async function getDinozItinerantShop(dinozId: number) {
 			placeId: true,
 			level: true,
 			life: true,
+			items: { select: { itemId: true } },
 			status: { select: { statusId: true } },
 			missions: { select: { missionId: true, isFinished: true } },
 			skills: { select: { skillId: true } },
@@ -201,6 +202,7 @@ export async function getDinozMissionsInfo(dinozId: number) {
 					rewards: { select: { rewardId: true } }
 				}
 			},
+			items: { select: { itemId: true } },
 			status: { select: { statusId: true } },
 			skills: { select: { skillId: true } },
 			missions: {
@@ -493,6 +495,7 @@ export async function getDinozGatherData(dinozId: number) {
 			placeId: true,
 			level: true,
 			life: true,
+			items: { select: { itemId: true } },
 			gather: true,
 			player: {
 				select: {

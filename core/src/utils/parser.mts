@@ -54,7 +54,9 @@ export function conditionParser(
 		//TODO: Implement scenario
 		result = false;
 	} else if (POSSESS_OBJECT) {
-		result = dinozList.every(dinoz => dinoz.player?.items.some(item => item.itemId === POSSESS_OBJECT));
+		result =
+			dinozList.every(dinoz => dinoz.player?.items.some(item => item.itemId === POSSESS_OBJECT)) ||
+			dinozList.some(dinoz => dinoz.items.some(item => item.itemId === POSSESS_OBJECT));
 	} else if (RANDOM) {
 		const score = Math.floor(Math.random() * RANDOM);
 		const target = 0;
