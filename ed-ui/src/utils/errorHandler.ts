@@ -1,6 +1,7 @@
 import EventBus from '../events/index.js';
 import router from '../router/index.js';
 import axios from 'axios';
+import { localStore } from '../store/index.js';
 
 export const errorHandler = {
 	handle(err: unknown): void {
@@ -10,10 +11,10 @@ export const errorHandler = {
 				EventBus.emit('isLoading', false);
 				EventBus.emit('toast', { type: 'error', message: err.response.data as string });
 			} else if (err.response.status === 401) {
-				sessionStorage.clear();
+				localStore().$reset();
 				router.go(0);
 			} else if (err.response.status === 405) {
-				sessionStorage.clear();
+				localStore().$reset();
 				router.go(0);
 			} else {
 				// For pop up display if it's a servor error
