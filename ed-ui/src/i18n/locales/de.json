@@ -55,7 +55,7 @@
 		},
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Votre dinoz s'est soigné de {value} :hp:",
-		"gold": "Du hast {value} :gold: erhalten",
+		"gold": "Du hast {value} :gold: erhalten.",
 		"sphere": "Votre dinoz a appris la compétence {value}.",
 		"action": "Es wurden {value} Tränke von Madame Irma getrunken und neue Aktionen gewährt.",
 		"alreadyClaimed": "Du hast diese Belohnung bereits erhalten.",
