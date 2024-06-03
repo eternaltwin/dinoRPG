@@ -3732,7 +3732,7 @@ const attackTarget = (
 		attacker.comboCounter++;
 
 		// Get damage
-		let damage = calculateDamage(attacker, attack, defense, isCloseCombat);
+		let damage = calculateDamage(attacker, target, attack, defense, isCloseCombat);
 
 		// // Add attempt step
 		// fightData.steps.push({

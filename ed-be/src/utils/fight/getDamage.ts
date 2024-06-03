@@ -109,7 +109,7 @@ export const getAttackDefense = (
 		attack += att;
 		sum_of_elements += att;
 		if (att > 0) {
-			defense += target.stats.defense[ele];
+			defense += target.stats.defense[ele] * att;
 			if (isCloseCombat) {
 				attack += attacker.stats.assaultBonus[ele];
 			}
@@ -152,8 +152,10 @@ export const getAttackDefense = (
 // Applies final factors to the attack score:
 // - random bonus of up to 33%
 // - global factor
+// - balance if both fighters need balanced damage
 export const calculateDamage = (
 	attacker: DetailedFighter,
+	target: DetailedFighter,
 	attack: number,
 	defense: number,
 	isCloseCombat: boolean,
@@ -165,7 +167,14 @@ export const calculateDamage = (
 	// Apply global factor
 	attack *= ATTACK_GLOBAL_FACTOR;
 
-	let damage = Math.round(attack - defense);
+	let damage = attack - defense;
+
+	// Apply balance effect if both fighters needs to be balanced
+	if (attacker.balanced && target.balanced) {
+		damage = balanceDamage(damage);
+	}
+
+	damage = Math.round(damage);
 
 	// Check for global minimum damage
 	if (damage < attacker.minDamage) {
