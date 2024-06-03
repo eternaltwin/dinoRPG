@@ -2506,7 +2506,7 @@
 			"init2": "Ha, diese Merguez hatten's echt in sich! Wie ich sehe, hast du echt was drauf! Tue mir noch einen letzten kleinen Gefallen und ich überlasse dir mein Strategiehandbuch. Die Gegend um den Großen Immerhitzus ist ein idealer Lebensraum für Archelöwen jeglicher Größe... Wild, nicht ein Tropfen Feuchtigkeit und immerzu am Ausbrechen! Nichtsdestotrotz müssen wir sie von uns Fernhalten, wenn wir nicht als Mittagessen enden wollen... Ich möchte, dass du mir eine Art Vogelscheuche für Archelöwen anfertigst! Hierzu bräuchte ich Geschärfte Klauen.",
 			"burn": "Wie du sicherlich schon bemerkt hast, ist die Gegend hier von einer unwahrscheinlich großen Anzahl an Flämmchen bevölkert... Auch wenn ihr Dasein für das große kosmische Gleichgewicht vonnöten ist, wächst ihre Anzahl viel zu schnell und muss wieder unter Kontrolle gebracht werden! Du musst schnell handeln! Begib dich zum Tunnel unter dem Ast, indem du am Krater entlangläufst. Ihre Präsenz dort unten ist wirklich kritisch geworden!",
 			"barbec": "Dieser Merguez-Verkäufer in den Aschpuckruinen benutzt einen speziellen Brennstoff, der für die zahlreichen Flämmchen in der Region verantwortlich ist... Dagegen muss etwas getan werden! Allerdings können wir diesen armen Teufel nicht daran hindern, seine Arbeit zu machen, also werden eine unauffälligere Lösung finden müssen. Du kannst schon mal damit anfangen, ein paar Zutaten einzusammeln: Einen getrockneten Ast, eine Drachenschuppe und ein Stück gelben Basalt. Zermahle alles, vermische es gut und schmeiß es dann in den Grill!",
-			"joke": "Zwischen dem Universitätsprofessor Eugen und meiner Wenigkeit läuft bereits seit Jahren eine Fehde... Nous n'arrivons jamais à tomber d'accord sur quelque sujet que ce soit ! Aide-moi à lui jouer un petit tour, à ce vieux grincheux. Il faut tout d'abord trouver des choses qui sentent suffisamment fort ! Le Port de Prêche est idéal pour ça...",
+			"joke": "Zwischen dem Universitätsprofessor Eugen und meiner Wenigkeit läuft bereits seit Jahren eine Fehde... Egal um welches Thema es sich handelt, wir sind uns nie einig! Hilf mir doch mal, der alten Miesmuschel einen kleinen Streich zu spielen. Zunächst ein mal musst du ein paar übelriechende Sachen finden! Der Predigerhafen ist dafür der ideale Ort...",
 			"defend": "J'ai aperçu ce matin des cohortes de créatures avancer dans les montagnes en contrebas... Ich würde mein Mojo darauf verwetten, dass sie geradewegs auf die Schmieden des Großen Immerhitzus zusteuerten! Porte-leur assistance sans plus tarder !",
 			"shipmt": "Il y a quelques temps, j'ai commandé à Papy Joe une nouvelle réserve de poudres pour mes rituels, mais mon colis n'est toujours pas arrivé ! Peut être qu'avec l'attaque récente des Forges, il a été perdu quelque part ? Peux-tu me le retrouver ? C'est très urgent !",
 			"sales": "Pour me permettre de manger à ma faim, je vends de temps à autre des petites babioles sur le Marché de Dinoville. Comme je suis très pris en ce moment, pourrais-tu y aller à ma place ? Je te donnerai un généreux pourcentage des ventes ! Tu verras, ça se vend bien.",
@@ -2563,8 +2563,8 @@
 			"basalte": "Basalt durchsuchen",
 			"mix": "Zutaten zermahlen",
 			"use": "Mischung anwenden",
-			"rfish": "Prendre des restes de poisson",
-			"strap": "Piéger le bureau du professeur",
+			"rfish": "Ein paar Fischreste mitnehmen",
+			"strap": "Das Büro des Professors präparieren",
 			"banner": "Ramasser leur bannière",
 			"pickup": "Ramasser le colis",
 			"sound": "Des bruits suspects...",
@@ -2680,8 +2680,8 @@
 			"basalte": "Basalt durchsuchen",
 			"mix": "Zutaten zermahlen",
 			"use": "Mischung anwenden",
-			"rfish": "Prendre des restes de poisson",
-			"strap": "Piéger le bureau du professeur",
+			"rfish": "Ein paar Fischreste mitnehmen",
+			"strap": "Das Büro des Professors präparieren",
 			"banner": "Ramasser leur bannière",
 			"pickup": "Ramasser le colis",
 			"sound": "Des bruits suspects...",
@@ -2979,9 +2979,9 @@
 				"shaman": "Gut gemacht! Die Mischung dürfte die Wirkung des magischen Brennstoffs, der in diesem Grill verwendet wird, eindämmen, ohne dabei den Geschmack der köstlichen Merguez allzu sehr zu verändern! Hier hast du als kleines Dankeschön ein gezähmtes Flämmchen."
 			},
 			"joke": {
-				"rfish": "Vous récupérez les pires morceaux de poisson parmi les invendus, notamment un terrifiant Poisson-Fétide !",
-				"strap": "Du verteilst die stinkenden Überreste vom ranzigen Fisch auf die Schubladen des Büros von Professor Eugen... Hi hi hi !",
-				"shaman": "Ah ah ! C'est parfait ! Jamais je n'aurais imaginé que tu irais jusqu'à lui cacher un poisson Fétide dans son bureau... C'est machiavélique !"
+				"rfish": "Du sammelst vom unverkauften Fisch die übelriechendsten Stücke ein. Insbesondere einen fürchterlichen Ranzigfisch!",
+				"strap": "Du verteilst die stinkenden Überreste vom Ranzigfisch auf die Schubladen des Büros von Professor Eugen... Hihihi!",
+				"shaman": "Aha! Es ist perfekt! Ich hätte nie gedacht, dass du so weit gehen würdest, einen Ranzigfisch in seinem Büro zu verstecken... Das ist geradezu diabolisch!"
 			},
 			"defend": {
 				"garde1": "Au rapport soldat ! Va falloir tenir le choc ! Tenez vos positions !! Là-bas, voilà des monstres !",
