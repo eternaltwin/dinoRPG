@@ -2,7 +2,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 
 export const FixedSkillDamage: Skill[] = [
-	Skill.M_BOOM,
+	Skill.M_GROTOX,
 	Skill.M_BITE,
 	Skill.M_ABSORPTION,
 	Skill.M_COMET,
@@ -136,7 +136,7 @@ export const SkillAttacks: Partial<Record<Skill, Partial<Record<ElementType, num
 	[Skill.M_ELEMENTAL_DISCIPLE]: {
 		[ElementType.AIR]: 200
 	},
-	[Skill.M_BOOM]: {
+	[Skill.M_GROTOX]: {
 		[ElementType.VOID]: 60
 	},
 	[Skill.M_TORNADO]: {

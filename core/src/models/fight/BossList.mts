@@ -675,7 +675,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		balanced: true,
 		hp: 50,
 		odds: 100,
-		skills: [Skill.M_BOOM],
+		skills: [Skill.M_GROTOX],
 		zones: [],
 		canBeCaptured: false
 	},

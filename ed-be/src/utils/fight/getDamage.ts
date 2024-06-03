@@ -72,8 +72,8 @@ export const getMultiElementalAttack = (
 	return element_type_power.map(val => {
 		let ele = val[0];
 		let power = val[1];
-		return fighter.stats.base[ele] * power;
-	});
+		return [ele, fighter.stats.base[ele] * power];
+	}) as [ElementType, number][];
 
 	// return {
 	// 	[ElementType.AIR]: air_attack,
@@ -165,7 +165,7 @@ export const calculateDamage = (
 	// Apply global factor
 	attack *= ATTACK_GLOBAL_FACTOR;
 
-	let damage = attack - defense;
+	let damage = Math.round(attack - defense);
 
 	// Check for global minimum damage
 	if (damage < attacker.minDamage) {

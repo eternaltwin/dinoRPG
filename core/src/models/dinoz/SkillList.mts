@@ -313,8 +313,8 @@ export enum Skill {
 	M_IMMATERIAL = 99908,
 	M_RESISTANCE = 99909,
 	M_PROTECTION = 99910,
-	M_COMET = 99912,
-	M_VENERABLE = 99913,
+	M_COMET = 99912, // noted as "comet" in MT's code, Gardien Arboricole's skill
+	M_VENERABLE = 99913, // noted as "vener" in MT's code, Venerable's skill
 	M_BITE = 99914,
 	M_ELEMENTAL = 99915,
 	M_DISABLE = 99916,
@@ -329,24 +329,24 @@ export enum Skill {
 	M_INVISIBILITY = 99927,
 	M_YAKUZI = 99928,
 	M_CONTAMINATION = 99929,
-	M_ELEMENTAL_DISCIPLE = 99930,
+	M_ELEMENTAL_DISCIPLE = 99930, // noted as "elhelp" in MT's code, Elemental Disciple's skill
 	M_CURSED_WAND = 99931,
 	M_ALL_FOR_ONE = 99932,
 	M_INITIATIVE_RESET = 99933,
 	M_HEAL_GROUP = 99934,
 	M_LAST_BREATH = 99935,
 	M_UNTOUCHABLE = 99936,
-	M_VEGETOX_DEFENDER = 99937, // noted as "mugard" in MT code
+	M_VEGETOX_DEFENDER = 99937, // noted as "mugard" in MT's code
 	M_INFINITE_REINFORCEMENTS = 99938,
 	M_FASTER = 99939,
-	M_DEMYOM_ATTACK = 99940,
-	M_DEMYOM_HEAL = 99941,
-	M_BOOM = 99942,
+	M_DEMYOM_ATTACK = 99940, // noted as "kuzbos" in MT's code, Gardien Demyon's pffensive skill
+	M_DEMYOM_HEAL = 99941, // noted as "kuzbos" in MT's code, Gardien Demyon's healing skill
+	M_GROTOX = 99942, // noted as "grotox" in MT's code, Grotox's skill
 	M_FRUKOPTER_FLIGHT = 99943,
 	M_TORNADO = 99944,
-	M_AIR_BLADE = 99945,
+	M_AIR_BLADE = 99945, // noted as "rapaca" in MT's code, Rapacarapace's skill
 	M_FEBREZ = 99948,
-	M_GRIZOU = 99949,
+	M_GRIZOU = 99949, // noted as "grizou" in MT's code, used by various monsters and bosses
 	// SPECIAL SKILLS
 	CATCH = 999999
 }
@@ -5052,8 +5052,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 2,
 		probability: 10
 	},
-	[Skill.M_BOOM]: {
-		id: Skill.M_BOOM,
+	[Skill.M_GROTOX]: {
+		id: Skill.M_GROTOX,
 		name: 'Boom',
 		type: SkillType.A,
 		energy: Energy.E20,
