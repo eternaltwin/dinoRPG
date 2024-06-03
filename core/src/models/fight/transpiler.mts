@@ -126,16 +126,16 @@ export enum LifeEffect {
 export enum StatusEffect {
 	Sleep,
 	Flames,
-	Burn,
 	Intang,
 	Fly,
 	Slow,
 	Quick,
 	Stoned,
+	Shield,
 	Bless,
 	Poison,
-	Shield,
 	Heal,
+	Burn,
 	MonoElt,
 	Dazzled,
 	Stun
