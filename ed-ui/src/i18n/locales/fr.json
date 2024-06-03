@@ -2016,7 +2016,7 @@
 			"Sumo": "Augmente les PV max de 100",
 			"SansPitie": "Les assauts ciblent l'ennemi avec le moins de PV",
 			"CloneAqueux": "Crée une copie du lanceur avec 1 PV",
-			"GriffesEmpoisonnees": "Les ennemis touchés par un assaut eau sont empoisonnés et subissent des dégats basés sur la valeur de l'élément eau du lanceur à chaque tour",
+			"GriffesEmpoisonnees": "Si un des assauts d'Eau du dinoz touche un ennemi, il est empoisonné pour une durée moyenne",
 			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les dinozs",
 			"SangAcide": "Les ennemis attaquant le dinoz en mêlée ont une chance de subir des dégats relatifs à l'élément eau du dinoz",
 			"Regenerescence": "Augmente de 2 les PV récupérés par heure lors du repos",
