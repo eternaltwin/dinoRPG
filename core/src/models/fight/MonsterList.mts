@@ -97,7 +97,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	[Monster.GOUPIGNON]: {
 		id: Monster.GOUPIGNON,
 		name: 'goupignon',
-		hp: 200,
+		hp: 20,
 		elements: {
 			fire: 0,
 			wood: 0,
