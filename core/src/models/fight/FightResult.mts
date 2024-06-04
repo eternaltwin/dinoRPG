@@ -43,8 +43,7 @@ export interface CatchResult {
 
 export type FightStats = {
 	startingHp: number;
-	hpLeft: number;
-	damageReceived: number;
+	hpLost: number;
 	hpHealed: number;
 	attacks: number;
 	groupAttacks: number;
@@ -57,8 +56,10 @@ export type FightStats = {
 	elements: Record<
 		ElementType,
 		{
-			damage: number;
+			damage_dealt: number;
 			attacks: number;
+			damage_received: number;
+			defenses: number;
 		}
 	>;
 };

@@ -233,13 +233,13 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 export const updateStat = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	stat: keyof Omit<FightStats, 'elements'> | 'el.damage' | 'el.attacks',
+	stat: keyof Omit<FightStats, 'elements'> | 'el.damage_dealt' | 'el.attacks' | 'el.damage_received' | 'el.defenses',
 	value: number,
 	element?: ElementType
 ) => {
 	const stats = fighter.attacker ? fightData.stats.attack : fightData.stats.defense;
 
-	if (stat === 'el.damage') {
+	if (stat === 'el.damage_dealt') {
 		if (!element) {
 			sendJSONToDiscord('Error `Element is required for damage stat` in `updateStat`.', {
 				fightData: fightData,
@@ -251,7 +251,23 @@ export const updateStat = (
 			throw new Error('Element is required for damage stat');
 		}
 
-		stats.elements[element].damage += value;
+		stats.elements[element].damage_dealt += value;
+		return;
+	}
+
+	if (stat === 'el.damage_received') {
+		if (!element) {
+			sendJSONToDiscord('Error `Element is required for damage stat` in `updateStat`.', {
+				fightData: fightData,
+				fighter: fighter,
+				stat: stat,
+				value: value,
+				element: value
+			});
+			throw new Error('Element is required for damage stat');
+		}
+
+		stats.elements[element].damage_received += value;
 		return;
 	}
 
@@ -268,6 +284,22 @@ export const updateStat = (
 		}
 
 		stats.elements[element].attacks += value;
+		return;
+	}
+
+	if (stat === 'el.defenses') {
+		if (!element) {
+			sendJSONToDiscord('Error `Element is required for attacks stat` in `updateStat`.', {
+				fightData: fightData,
+				fighter: fighter,
+				stat: stat,
+				value: value,
+				element: value
+			});
+			throw new Error('Element is required for attacks stat');
+		}
+
+		stats.elements[element].defenses += value;
 		return;
 	}
 
@@ -507,139 +539,6 @@ export const initStepFighter = (
 // 		}),
 // 		{}
 // 	);
-
-// 	opponents.forEach(opponent => {
-// 		/**
-// 		 * PRE-DAMAGE
-// 		 */
-
-// 		// Reduce damage by bulle percentage
-// 		if (
-// 			// Opponent has BULLE
-// 			opponent.stats.special.bubbleRate > 1 &&
-// 			// Don't trigger on assaults and invocations
-// 			skill &&
-// 			skillList[skill].type !== SkillType.I &&
-// 			// Don't trigger for bosses
-// 			fighter.type !== 'boss' &&
-// 			// Don't trigger for WOOD
-// 			!damageElements.includes(ElementType.WOOD) &&
-// 			// Don't trigger for VOID
-// 			!damageElements.includes(ElementType.VOID)
-// 		) {
-// 			actualDamage[opponent.id] = Math.round(damage * (opponent.stats.special.bubbleRate - 1));
-
-// 			if (actualDamage[opponent.id] < damage) {
-// 				// Add resist step
-// 				fightData.steps.push({
-// 					action: 'resist',
-// 					dinoz: stepFighter(opponent)
-// 				});
-// 			}
-// 		}
-
-// 		// 5% chance to reduce damage by 5 if Skill.CUIRASSE
-// 		if (opponent.skills.find(s => s.id === Skill.CUIRASSE)) {
-// 			const random = Math.random();
-
-// 			if (random < 0.05) {
-// 				actualDamage[opponent.id] = Math.max(actualDamage[opponent.id] - 5, 0);
-
-// 				// Add resist step
-// 				fightData.steps.push({
-// 					action: 'resist',
-// 					dinoz: stepFighter(opponent)
-// 				});
-// 			}
-// 		}
-
-// 		// Check for mud wall
-// 		if (opponent.mudWall) {
-// 			const tempDamage = actualDamage[opponent.id];
-// 			actualDamage[opponent.id] -= opponent.mudWall;
-// 			opponent.mudWall -= tempDamage;
-
-// 			if (opponent.mudWall <= 0) {
-// 				opponent.mudWall = undefined;
-
-// 				// Add skillExpire step
-// 				fightData.steps.push({
-// 					action: 'skillExpire',
-// 					dinoz: stepFighter(opponent),
-// 					skill: Skill.MUR_DE_BOUE
-// 				});
-// 			}
-// 		}
-
-// 		// M_RESISTANCE
-// 		if (opponent.skills.find(s => s.id === Skill.M_RESISTANCE)) {
-// 			// 0 damage if skill
-// 			if (skill) {
-// 				actualDamage[opponent.id] = 0;
-
-// 				// Add skill step
-// 				fightData.steps.push({
-// 					action: 'skillActivate',
-// 					fid: opponent.id,
-// 					skill,
-// 					targets: []
-// 				});
-// 			}
-// 		}
-
-// 		// M_PROTECTION
-// 		if (opponent.skills.find(s => s.id === Skill.M_PROTECTION)) {
-// 			// Only take 1/3 damage on assaults
-// 			if (!skill) {
-// 				actualDamage[opponent.id] = Math.round(actualDamage[opponent.id] / 3);
-// 			}
-// 		}
-
-// 		// M_ELEMENTAL
-// 		if (opponent.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
-// 			if (damageElements.includes(opponent.element)) {
-// 				// Negate damage
-// 				actualDamage[opponent.id] = 0;
-// 			} else {
-// 				// Take 29 + 0-3 damage
-// 				const random = randomBetween(0, 3);
-
-// 				actualDamage[opponent.id] = 29 + random;
-// 			}
-// 		}
-
-// 		// M_DISABLE
-// 		if (actualDamage[opponent.id] && opponent.skills.find(s => s.id === Skill.M_DISABLE)) {
-// 			actualDamage[opponent.id] = 1;
-// 		}
-
-// 		/**
-// 		 * DAMAGE
-// 		 */
-// 		opponent.hp -= actualDamage[opponent.id];
-
-// 		if (skillStep) {
-// 			const skillTarget = skillStep.targets.find(t => t.tid === opponent.id);
-// 			if (!skillTarget) throw new ErrorFormator(500, `Target ${opponent.id} doesn't exist in ${skillStep.targets}`);
-// 			skillTarget.damages = actualDamage[opponent.id];
-// 		} else {
-// 			// Add hit step
-// 			fightData.steps.push({
-// 				action: 'hit',
-// 				fighter: stepFighter(fighter),
-// 				target: stepFighter(opponent),
-// 				damage: actualDamage[opponent.id],
-// 				elements: damageElements,
-// 				skill
-// 			});
-// 		}
-
-// 		// Damage stats
-// 		damageElements.forEach(element => {
-// 			updateStat(fightData, fighter, 'el.damage', actualDamage[opponent.id], element);
-// 			updateStat(fightData, fighter, 'el.attacks', 1, element);
-// 		});
-// 		updateStat(fightData, opponent, 'damageReceived', actualDamage[opponent.id]);
 
 // 		/**
 // 		 * POST-DAMAGE
@@ -3636,6 +3535,8 @@ const attackTarget = (
 
 	let { attack, defense, elements } = getAttackDefense(attacker, target, element_attack, isCloseCombat);
 
+	let total_damage = 0;
+
 	// TODO: rework multiple attackers (part of whistle rework)
 	// for (const attacker of attackers) {
 	// }
@@ -3721,6 +3622,7 @@ const attackTarget = (
 
 		// Apply and log damage
 		target.hp -= damage;
+		total_damage += damage;
 
 		// Update skill step or add hit step
 		if (stepIndex) {
@@ -3766,6 +3668,13 @@ const attackTarget = (
 	}
 
 	// Update stats
+	elements.forEach(e => {
+		updateStat(fightData, attacker, 'el.damage_dealt', total_damage, e);
+		updateStat(fightData, attacker, 'el.attacks', 1, e);
+		updateStat(fightData, target, 'el.damage_received', total_damage, e);
+		updateStat(fightData, target, 'el.defenses', 1, e);
+	});
+	updateStat(fightData, target, 'hpLost', total_damage);
 	updateStat(fightData, attacker, 'attacks', 1);
 	if (!skill) {
 		updateStat(fightData, attacker, 'assaults', 1);
@@ -3906,15 +3815,14 @@ const checkDefensiveEffects = (fightData: DetailedFight, attacker: DetailedFight
 
 	// M_ELEMENTAL
 	if (target.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
-		// TODO rework: the damage of all except one specific element is negated
-		if (damage) {
-			// Negate damage
-			damage = 0;
-		} else {
-			// Take 29 + 0-3 damage
+		if (elements.find(e => e === target.element)) {
+			// Take 29 + 0-3 damage if the attack contains the element of the opposing fighter
 			const random = randomBetween(0, 3);
 
 			damage = 29 + random;
+		} else {
+			// Else nothing, damage is fully negated
+			damage = 0;
 		}
 	}
 

@@ -71,8 +71,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		stats: {
 			attack: {
 				startingHp: 0,
-				hpLeft: 0,
-				damageReceived: 0,
+				hpLost: 0,
 				hpHealed: 0,
 				attacks: 0,
 				groupAttacks: 0,
@@ -84,35 +83,46 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 				petrified: 0,
 				elements: {
 					[ElementType.FIRE]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.WOOD]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.WATER]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.LIGHTNING]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.AIR]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.VOID]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					}
 				}
 			},
 			defense: {
 				startingHp: 0,
-				hpLeft: 0,
-				damageReceived: 0,
+				hpLost: 0,
 				hpHealed: 0,
 				attacks: 0,
 				groupAttacks: 0,
@@ -124,28 +134,40 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 				petrified: 0,
 				elements: {
 					[ElementType.FIRE]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.WOOD]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.WATER]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.LIGHTNING]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.AIR]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					},
 					[ElementType.VOID]: {
-						damage: 0,
-						attacks: 0
+						damage_dealt: 0,
+						attacks: 0,
+						damage_received: 0,
+						defenses: 0,
 					}
 				}
 			}
@@ -376,9 +398,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 			// Regen to starting HP
 			heal(fightData, fighter, fighter.startingHp - fighter.hp);
 		}
-
-		// HP left stat
-		updateStat(fightData, fighter, 'hpLeft', Math.max(fighter.hp, 0));
 	});
 
 	if (winner) {
