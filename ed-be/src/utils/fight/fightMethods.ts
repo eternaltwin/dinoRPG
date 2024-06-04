@@ -523,6 +523,7 @@ export const initStepFighter = (
 	return data;
 };
 
+// TODO make sure to port the stuff from here to the appropriate places
 // const registerHit = (
 // 	fightData: DetailedFight,
 // 	fighter: DetailedFighter,
@@ -4402,17 +4403,21 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	}
 
 	// If the last fighter that played is different than the current fighter, reset both combo counts
-	if (fightData.lastFighter !== undefined && fightData.lastFighter.id !== attacker.id) {
-		fightData.lastFighter.comboCounter = 0;
+	if (fightData.lastFighterId !== undefined && fightData.lastFighterId !== attacker.id) {
+		const lastFighter = fightData.fighters.find(f => f.id === fightData.lastFighterId);
+		if (lastFighter) {
+			lastFighter.comboCounter = 0;
+		}
 		attacker.comboCounter = 0;
 	};
 
-	fightData.lastFighter = attacker;
-	fightData.lastFighter.comboCounter++;
+	fightData.lastFighterId = attacker.id;
+	attacker.comboCounter++;
 
 	// Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
 	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT || attacker.energy < MINIMUM_ENERGY_TO_ACT) {
 		// TODO log history tired
+		endTurnChecks(fightData, attacker);
 		return;
 	}
 

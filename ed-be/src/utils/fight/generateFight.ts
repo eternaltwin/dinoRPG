@@ -30,7 +30,7 @@ export type DetailedFight = {
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 	time: number;
-	lastFighter: DetailedFighter | undefined;
+	lastFighterId: number | undefined;
 	environment?: {
 		type: Skill;
 		caster: DetailedFighter;
@@ -66,7 +66,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		time: 0,
-		lastFighter: undefined,
+		lastFighterId: undefined,
 		place: config.place,
 		stats: {
 			attack: {
