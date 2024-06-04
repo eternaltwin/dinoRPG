@@ -85,6 +85,7 @@ export const getOpponents = (fightData: DetailedFight, fighter: DetailedFighter,
 const chooseRandomOpponentForAssault = (attacker: DetailedFighter, opponents: DetailedFighter[]) => {
 	const canAttackFlying = attacker.canHitFlying || hasStatus(attacker, Status.FLYING);
 	const canHitIntangible = attacker.canHitIntangible; // || 
+	// TODO
 
 	// Target lowest HP opponent if Skill.SANS_PITIE
 	if (attacker.skills.find(skill => skill.id === Skill.SANS_PITIE)) {
@@ -490,370 +491,307 @@ export const initStepFighter = (
 	return data;
 };
 
-const registerHit = (
-	fightData: DetailedFight,
-	fighter: DetailedFighter,
-	opponents: DetailedFighter[],
-	damage: number,
-	damageElements: ElementType[] = [],
-	skill?: Skill,
-	skillStep?: SkillActivateStep
-) => {
-	const actualDamage: Record<number, number> = opponents.reduce(
-		(acc, opponent) => ({
-			...acc,
-			[opponent.id]: damage
-		}),
-		{}
-	);
+// const registerHit = (
+// 	fightData: DetailedFight,
+// 	fighter: DetailedFighter,
+// 	opponents: DetailedFighter[],
+// 	damage: number,
+// 	damageElements: ElementType[] = [],
+// 	skill?: Skill,
+// 	skillStep?: SkillActivateStep
+// ) => {
+// 	const actualDamage: Record<number, number> = opponents.reduce(
+// 		(acc, opponent) => ({
+// 			...acc,
+// 			[opponent.id]: damage
+// 		}),
+// 		{}
+// 	);
 
-	opponents.forEach(opponent => {
-		/**
-		 * PRE-DAMAGE
-		 */
+// 	opponents.forEach(opponent => {
+// 		/**
+// 		 * PRE-DAMAGE
+// 		 */
 
-		// Reduce damage by bulle percentage
-		if (
-			// Opponent has BULLE
-			opponent.stats.special.bubbleRate > 1 &&
-			// Don't trigger on assaults and invocations
-			skill &&
-			skillList[skill].type !== SkillType.I &&
-			// Don't trigger for bosses
-			fighter.type !== 'boss' &&
-			// Don't trigger for WOOD
-			!damageElements.includes(ElementType.WOOD) &&
-			// Don't trigger for VOID
-			!damageElements.includes(ElementType.VOID)
-		) {
-			actualDamage[opponent.id] = Math.round(damage * (opponent.stats.special.bubbleRate - 1));
+// 		// Reduce damage by bulle percentage
+// 		if (
+// 			// Opponent has BULLE
+// 			opponent.stats.special.bubbleRate > 1 &&
+// 			// Don't trigger on assaults and invocations
+// 			skill &&
+// 			skillList[skill].type !== SkillType.I &&
+// 			// Don't trigger for bosses
+// 			fighter.type !== 'boss' &&
+// 			// Don't trigger for WOOD
+// 			!damageElements.includes(ElementType.WOOD) &&
+// 			// Don't trigger for VOID
+// 			!damageElements.includes(ElementType.VOID)
+// 		) {
+// 			actualDamage[opponent.id] = Math.round(damage * (opponent.stats.special.bubbleRate - 1));
 
-			if (actualDamage[opponent.id] < damage) {
-				// Add resist step
-				fightData.steps.push({
-					action: 'resist',
-					dinoz: stepFighter(opponent)
-				});
-			}
-		}
+// 			if (actualDamage[opponent.id] < damage) {
+// 				// Add resist step
+// 				fightData.steps.push({
+// 					action: 'resist',
+// 					dinoz: stepFighter(opponent)
+// 				});
+// 			}
+// 		}
 
-		// 5% chance to reduce damage by 5 if Skill.CUIRASSE
-		if (opponent.skills.find(s => s.id === Skill.CUIRASSE)) {
-			const random = Math.random();
+// 		// 5% chance to reduce damage by 5 if Skill.CUIRASSE
+// 		if (opponent.skills.find(s => s.id === Skill.CUIRASSE)) {
+// 			const random = Math.random();
 
-			if (random < 0.05) {
-				actualDamage[opponent.id] = Math.max(actualDamage[opponent.id] - 5, 0);
+// 			if (random < 0.05) {
+// 				actualDamage[opponent.id] = Math.max(actualDamage[opponent.id] - 5, 0);
 
-				// Add resist step
-				fightData.steps.push({
-					action: 'resist',
-					dinoz: stepFighter(opponent)
-				});
-			}
-		}
+// 				// Add resist step
+// 				fightData.steps.push({
+// 					action: 'resist',
+// 					dinoz: stepFighter(opponent)
+// 				});
+// 			}
+// 		}
 
-		// Check for mud wall
-		if (opponent.mudWall) {
-			const tempDamage = actualDamage[opponent.id];
-			actualDamage[opponent.id] -= opponent.mudWall;
-			opponent.mudWall -= tempDamage;
+// 		// Check for mud wall
+// 		if (opponent.mudWall) {
+// 			const tempDamage = actualDamage[opponent.id];
+// 			actualDamage[opponent.id] -= opponent.mudWall;
+// 			opponent.mudWall -= tempDamage;
 
-			if (opponent.mudWall <= 0) {
-				opponent.mudWall = undefined;
+// 			if (opponent.mudWall <= 0) {
+// 				opponent.mudWall = undefined;
 
-				// Add skillExpire step
-				fightData.steps.push({
-					action: 'skillExpire',
-					dinoz: stepFighter(opponent),
-					skill: Skill.MUR_DE_BOUE
-				});
-			}
-		}
+// 				// Add skillExpire step
+// 				fightData.steps.push({
+// 					action: 'skillExpire',
+// 					dinoz: stepFighter(opponent),
+// 					skill: Skill.MUR_DE_BOUE
+// 				});
+// 			}
+// 		}
 
-		// M_RESISTANCE
-		if (opponent.skills.find(s => s.id === Skill.M_RESISTANCE)) {
-			// 0 damage if skill
-			if (skill) {
-				actualDamage[opponent.id] = 0;
+// 		// M_RESISTANCE
+// 		if (opponent.skills.find(s => s.id === Skill.M_RESISTANCE)) {
+// 			// 0 damage if skill
+// 			if (skill) {
+// 				actualDamage[opponent.id] = 0;
 
-				// Add skill step
-				fightData.steps.push({
-					action: 'skillActivate',
-					fid: opponent.id,
-					skill,
-					targets: []
-				});
-			}
-		}
+// 				// Add skill step
+// 				fightData.steps.push({
+// 					action: 'skillActivate',
+// 					fid: opponent.id,
+// 					skill,
+// 					targets: []
+// 				});
+// 			}
+// 		}
 
-		// M_PROTECTION
-		if (opponent.skills.find(s => s.id === Skill.M_PROTECTION)) {
-			// Only tak 1/3 damage on assaults
-			if (!skill) {
-				actualDamage[opponent.id] = Math.round(actualDamage[opponent.id] / 3);
-			}
-		}
+// 		// M_PROTECTION
+// 		if (opponent.skills.find(s => s.id === Skill.M_PROTECTION)) {
+// 			// Only take 1/3 damage on assaults
+// 			if (!skill) {
+// 				actualDamage[opponent.id] = Math.round(actualDamage[opponent.id] / 3);
+// 			}
+// 		}
 
-		// M_ELEMENTAL
-		if (opponent.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
-			if (damageElements.includes(opponent.element)) {
-				// Negate damage
-				actualDamage[opponent.id] = 0;
-			} else {
-				// Take 29 + 0-3 damage
-				const random = randomBetween(0, 3);
+// 		// M_ELEMENTAL
+// 		if (opponent.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
+// 			if (damageElements.includes(opponent.element)) {
+// 				// Negate damage
+// 				actualDamage[opponent.id] = 0;
+// 			} else {
+// 				// Take 29 + 0-3 damage
+// 				const random = randomBetween(0, 3);
 
-				actualDamage[opponent.id] = 29 + random;
-			}
-		}
+// 				actualDamage[opponent.id] = 29 + random;
+// 			}
+// 		}
 
-		// M_DISABLE
-		if (actualDamage[opponent.id] && opponent.skills.find(s => s.id === Skill.M_DISABLE)) {
-			actualDamage[opponent.id] = 1;
-		}
+// 		// M_DISABLE
+// 		if (actualDamage[opponent.id] && opponent.skills.find(s => s.id === Skill.M_DISABLE)) {
+// 			actualDamage[opponent.id] = 1;
+// 		}
 
-		/**
-		 * DAMAGE
-		 */
-		opponent.hp -= actualDamage[opponent.id];
+// 		/**
+// 		 * DAMAGE
+// 		 */
+// 		opponent.hp -= actualDamage[opponent.id];
 
-		if (skillStep) {
-			const skillTarget = skillStep.targets.find(t => t.tid === opponent.id);
-			if (!skillTarget) throw new ErrorFormator(500, `Target ${opponent.id} doesn't exist in ${skillStep.targets}`);
-			skillTarget.damages = actualDamage[opponent.id];
-		} else {
-			// Add hit step
-			fightData.steps.push({
-				action: 'hit',
-				fighter: stepFighter(fighter),
-				target: stepFighter(opponent),
-				damage: actualDamage[opponent.id],
-				elements: damageElements,
-				skill
-			});
-		}
+// 		if (skillStep) {
+// 			const skillTarget = skillStep.targets.find(t => t.tid === opponent.id);
+// 			if (!skillTarget) throw new ErrorFormator(500, `Target ${opponent.id} doesn't exist in ${skillStep.targets}`);
+// 			skillTarget.damages = actualDamage[opponent.id];
+// 		} else {
+// 			// Add hit step
+// 			fightData.steps.push({
+// 				action: 'hit',
+// 				fighter: stepFighter(fighter),
+// 				target: stepFighter(opponent),
+// 				damage: actualDamage[opponent.id],
+// 				elements: damageElements,
+// 				skill
+// 			});
+// 		}
 
-		// Damage stats
-		damageElements.forEach(element => {
-			updateStat(fightData, fighter, 'el.damage', actualDamage[opponent.id], element);
-			updateStat(fightData, fighter, 'el.attacks', 1, element);
-		});
-		updateStat(fightData, opponent, 'damageReceived', actualDamage[opponent.id]);
+// 		// Damage stats
+// 		damageElements.forEach(element => {
+// 			updateStat(fightData, fighter, 'el.damage', actualDamage[opponent.id], element);
+// 			updateStat(fightData, fighter, 'el.attacks', 1, element);
+// 		});
+// 		updateStat(fightData, opponent, 'damageReceived', actualDamage[opponent.id]);
 
-		/**
-		 * POST-DAMAGE
-		 */
+// 		/**
+// 		 * POST-DAMAGE
+// 		 */
 
-		// Danger detector (prevent hit if damage > 25)
-		if (opponent.items.some(item => item.itemId === Item.DANGER_DETECTOR) && actualDamage[opponent.id] > 25) {
-			// Add item use step
-			fightData.steps.push({
-				action: 'itemUse',
-				fighter: stepFighter(opponent),
-				itemId: Item.DANGER_DETECTOR
-			});
+// 		// Danger detector (prevent hit if damage > 25)
+// 		if (opponent.items.some(item => item.itemId === Item.DANGER_DETECTOR) && actualDamage[opponent.id] > 25) {
+// 			// Add item use step
+// 			fightData.steps.push({
+// 				action: 'itemUse',
+// 				fighter: stepFighter(opponent),
+// 				itemId: Item.DANGER_DETECTOR
+// 			});
 
-			// Add to items used
-			opponent.itemsUsed.push(Item.DANGER_DETECTOR);
+// 			// Add to items used
+// 			opponent.itemsUsed.push(Item.DANGER_DETECTOR);
 
-			// Get item index
-			const itemIndex = opponent.items.findIndex(item => item.itemId === Item.DANGER_DETECTOR);
+// 			// Get item index
+// 			const itemIndex = opponent.items.findIndex(item => item.itemId === Item.DANGER_DETECTOR);
 
-			// Remove from items
-			opponent.items.splice(itemIndex, 1);
+// 			// Remove from items
+// 			opponent.items.splice(itemIndex, 1);
 
-			// Restore HP
-			opponent.hp += actualDamage[opponent.id];
+// 			// Restore HP
+// 			opponent.hp += actualDamage[opponent.id];
 
-			actualDamage[opponent.id] = 0;
-		}
+// 			actualDamage[opponent.id] = 0;
+// 		}
 
-		// Wake up:
-		// Without Amazonie, wake up if the target lost at least 1 hp
-		// With Amazonie, wake up if the target lost at least 11 hp
-		if (
-			(fightData.environment?.type !== Skill.AMAZONIE && actualDamage[opponent.id] > 0) ||
-			(fightData.environment?.type === Skill.AMAZONIE && actualDamage[opponent.id] > 10)
-		) {
-			removeStatus(fightData, opponent, Status.ASLEEP);
-		}
+// 		// Survive with 1 HP if canSurvive
+// 		if (opponent.canSurvive && opponent.hp <= 1) {
+// 			opponent.canSurvive = false;
+// 			opponent.hp = 1;
 
-		// Intangible
-		if (hasStatus(opponent, Status.INTANGIBLE) && actualDamage[opponent.id]) {
-			removeStatus(fightData, opponent, Status.INTANGIBLE);
-		}
+// 			// Add survival step
+// 			fightData.steps.push({
+// 				action: 'survive',
+// 				dinoz: stepFighter(opponent)
+// 			});
+// 		}
 
-		// Survive with 1 HP if canSurvive
-		if (opponent.canSurvive && opponent.hp <= 1) {
-			opponent.canSurvive = false;
-			opponent.hp = 1;
+// 		// Dimensional powder item
 
-			// Add survival step
-			fightData.steps.push({
-				action: 'survive',
-				dinoz: stepFighter(opponent)
-			});
-		}
+// 		// Check if any fighter has Item.DIMENSIONAL_POWDER
+// 		const dimensionalPowderUser = getFighters(fightData).find(f =>
+// 			f.items.some(item => item.itemId === Item.DIMENSIONAL_POWDER)
+// 		);
 
-		// Dimensional powder item
+// 		if (dimensionalPowderUser) {
+// 			// Add item use step
+// 			fightData.steps.push({
+// 				action: 'itemUse',
+// 				fighter: stepFighter(dimensionalPowderUser),
+// 				itemId: Item.DIMENSIONAL_POWDER
+// 			});
 
-		// Check if any fighter has Item.DIMENSIONAL_POWDER
-		const dimensionalPowderUser = getFighters(fightData).find(f =>
-			f.items.some(item => item.itemId === Item.DIMENSIONAL_POWDER)
-		);
+// 			// Escape opponent if HP requirement is met
+// 			if (opponent.startingHp > 10 && opponent.hp > 0 && opponent.hp < 10) {
+// 				// Add leave step
+// 				fightData.steps.push({
+// 					action: 'leave',
+// 					fighter: stepFighter(opponent),
+// 					animation: LeaveAnimation.BLACKHOLE
+// 				});
 
-		if (dimensionalPowderUser) {
-			// Add item use step
-			fightData.steps.push({
-				action: 'itemUse',
-				fighter: stepFighter(dimensionalPowderUser),
-				itemId: Item.DIMENSIONAL_POWDER
-			});
+// 				opponent.escaped = true;
+// 			}
+// 		}
 
-			// Escape opponent if HP requirement is met
-			if (opponent.startingHp > 10 && opponent.hp > 0 && opponent.hp < 10) {
-				// Add leave step
-				fightData.steps.push({
-					action: 'leave',
-					fighter: stepFighter(opponent),
-					animation: LeaveAnimation.BLACKHOLE
-				});
+// 		// LIFE_STEALER
+// 		if (
+// 			actualDamage[opponent.id] &&
+// 			opponent.hp < 20 &&
+// 			!hasStatus(opponent, Status.STOLE_LIFE) &&
+// 			opponent.items.some(item => item.itemId === Item.LIFE_STEALER)
+// 		) {
+// 			// Steal 30 HP from a random opponent
+// 			const randomOpponent = getRandomOpponent(fightData, opponent);
 
-				opponent.escaped = true;
-			}
-		}
+// 			// Add item use step
+// 			fightData.steps.push({
+// 				action: 'itemUse',
+// 				fighter: stepFighter(opponent),
+// 				itemId: Item.LIFE_STEALER
+// 			});
 
-		// LIFE_STEALER
-		if (
-			actualDamage[opponent.id] &&
-			opponent.hp < 20 &&
-			!hasStatus(opponent, Status.STOLE_LIFE) &&
-			opponent.items.some(item => item.itemId === Item.LIFE_STEALER)
-		) {
-			// Steal 30 HP from a random opponent
-			const randomOpponent = getRandomOpponent(fightData, opponent);
+// 			registerHit(fightData, opponent, [randomOpponent], 30);
 
-			// Add item use step
-			fightData.steps.push({
-				action: 'itemUse',
-				fighter: stepFighter(opponent),
-				itemId: Item.LIFE_STEALER
-			});
+// 			heal(fightData, opponent, 30);
 
-			registerHit(fightData, opponent, [randomOpponent], 30);
+// 			// Add status
+// 			addStatus(fightData, opponent, Status.STOLE_LIFE);
+// 		}
 
-			heal(fightData, opponent, 30);
+// 		// Remove costume if fire damage
+// 		if (opponent.costume && damage && damageElements.includes(ElementType.FIRE)) {
+// 			// Take 3 damage
+// 			registerHit(fightData, opponent, [opponent], 3);
 
-			// Add status
-			addStatus(fightData, opponent, Status.STOLE_LIFE);
-		}
+// 			// Add leave step
+// 			fightData.steps.push({
+// 				action: 'leave',
+// 				fighter: stepFighter(opponent)
+// 			});
 
-		// Remove costume if fire damage
-		if (opponent.costume && damage && damageElements.includes(ElementType.FIRE)) {
-			// Take 3 damage
-			registerHit(fightData, opponent, [opponent], 3);
+// 			// Add remove costume step
+// 			fightData.steps.push({
+// 				action: 'removeCostume',
+// 				fighter: stepFighter(opponent)
+// 			});
 
-			// Add leave step
-			fightData.steps.push({
-				action: 'leave',
-				fighter: stepFighter(opponent)
-			});
+// 			opponent.costume = undefined;
 
-			// Add remove costume step
-			fightData.steps.push({
-				action: 'removeCostume',
-				fighter: stepFighter(opponent)
-			});
+// 			// Add arrive step
+// 			fightData.steps.push({
+// 				action: 'arrive',
+// 				fid: opponent.id
+// 			});
+// 		}
 
-			opponent.costume = undefined;
+// 		// Skill.VIDE_ENERGETIQUE
+// 		if (actualDamage[opponent.id] && opponent.skills.some(skill => skill.id === Skill.VIDE_ENERGETIQUE)) {
+// 			// 1/6 Chance to reduce energy recovery
+// 			if (randomBetween(0, 5) === 0) {
+// 				fighter.stats.special.energyRecovery *= 0.85;
 
-			// Add arrive step
-			fightData.steps.push({
-				action: 'arrive',
-				fid: opponent.id
-			});
-		}
+// 				// Add reduce energy step
+// 				fightData.steps.push({
+// 					action: 'reduceEnergy',
+// 					fighter: stepFighter(fighter)
+// 				});
+// 			}
+// 		}
 
-		// Qi Gong
-		if (actualDamage[opponent.id] && fighter.skills.some(skill => skill.id === Skill.QI_GONG)) {
-			// 30% Chance to deplete energy
-			if (Math.random() < 0.3) {
-				const energyTransferred = Math.max(fighter.maxEnergy - fighter.energy, opponent.energy);
-				opponent.energy = 0;
-				setEnergy(fighter, fighter.energy + energyTransferred, fightData);
+// 		// Skill.SOURCE_DE_VIE
+// 		if (actualDamage[opponent.id] && opponent.skills.some(skill => skill.id === Skill.SOURCE_DE_VIE)) {
+// 			// 1/6 Chance to steal 5% HP
+// 			if (randomBetween(0, 5) === 0) {
+// 				const hpStolen = Math.round(opponent.hp * 0.05);
 
-				// Add reduce energy step
-				fightData.steps.push({
-					action: 'reduceEnergy',
-					fighter: stepFighter(opponent)
-				});
+// 				registerHit(fightData, opponent, [fighter], hpStolen);
+// 				heal(fightData, opponent, hpStolen);
+// 			}
+// 		}
 
-				// Add gain energy step
-				fightData.steps.push({
-					action: 'gainEnergy',
-					fighter: stepFighter(fighter),
-					energy: energyTransferred
-				});
-			}
-		}
-
-		// Skill.VIDE_ENERGETIQUE
-		if (actualDamage[opponent.id] && opponent.skills.some(skill => skill.id === Skill.VIDE_ENERGETIQUE)) {
-			// 1/6 Chance to reduce energy recovery
-			if (randomBetween(0, 5) === 0) {
-				fighter.stats.special.energyRecovery *= 0.85;
-
-				// Add reduce energy step
-				fightData.steps.push({
-					action: 'reduceEnergy',
-					fighter: stepFighter(fighter)
-				});
-			}
-		}
-
-		// Skill.SOURCE_DE_VIE
-		if (actualDamage[opponent.id] && opponent.skills.some(skill => skill.id === Skill.SOURCE_DE_VIE)) {
-			// 1/6 Chance to steal 5% HP
-			if (randomBetween(0, 5) === 0) {
-				const hpStolen = Math.round(opponent.hp * 0.05);
-
-				registerHit(fightData, opponent, [fighter], hpStolen);
-				heal(fightData, opponent, hpStolen);
-			}
-		}
-
-		// Status.M_ABSORB
-		if (actualDamage[opponent.id] && hasStatus(fighter, Status.M_ABSORB)) {
-			// Heal damage done
-			heal(fightData, fighter, actualDamage[opponent.id]);
-		}
-
-		// M_WORM
-		if (opponent.absorbed && opponent.skills.some(skill => skill.id === Skill.M_WORM)) {
-			// Heal damage absorbed
-			heal(fightData, opponent, opponent.absorbed);
-
-			opponent.absorbed = undefined;
-		}
-
-		// Spikes
-		if (actualDamage[opponent.id] && opponent.spikes) {
-			// Take spike damage on assaults
-			if (!skill) {
-				registerHit(fightData, opponent, [fighter], opponent.spikes, undefined, Skill.M_POISONED_PICKS);
-				opponent.spikes += 1;
-			}
-		}
-
-		// M_CONTAMINATION
-		if (actualDamage[opponent.id] && opponent.skills.some(skill => skill.id === Skill.M_CONTAMINATION)) {
-			// 1/6 Chance to poison on assaults
-			if (!skill && randomBetween(0, 5) === 0) {
-				poison(fightData, opponent, fighter, Skill.M_CONTAMINATION, StatusLength.SHORT);
-			}
-		}
-	});
-};
+// 		// Status.M_ABSORB
+// 		if (actualDamage[opponent.id] && hasStatus(fighter, Status.M_ABSORB)) {
+// 			// Heal damage done
+// 			heal(fightData, fighter, actualDamage[opponent.id]);
+// 		}
+// 	});
+// };
 
 const checkSkillEvasion = (opponent: DetailedFighter) => {
 	// Some statues prevent skill evasion
@@ -943,38 +881,6 @@ const attackSingleOpponent = (
 	attackTarget(fightData, fighter, opponent, false, false, element_attack, skill, stepIndex);
 
 	return opponent;
-};
-
-
-/// Triggers an attack from a skill that targets multiple a given list of fighters
-const attackMultipleOpponents = (
-	fightData: DetailedFight,
-	fighter: DetailedFighter,
-	opponents: DetailedFighter[],
-	skill: SkillDetails,
-	step: SkillActivateStep
-) => {
-	opponents.forEach(opponent => {
-		// Add target
-		step.targets.push({ tid: opponent.id });
-
-		// Check if opponent evaded
-		if (checkSkillEvasion(opponent)) {
-			// Add evade step
-			fightData.steps.push({
-				action: 'evade',
-				fighter: stepFighter(opponent)
-			});
-
-			return;
-		}
-
-		// Get damage
-		const { damage, elements } = getDamage(fighter, opponent, skill.id);
-
-		// Register the hit
-		registerHit(fightData, fighter, [opponent], damage, elements, skill.id);
-	});
 };
 
 /// Triggers an attack from a skill that targets all fighters of the opposing team
@@ -1180,7 +1086,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.COMBUSTION:
 				const opponents = getOpponents(fightData, fighter);
 				opponents.forEach(opponent => {
-					loseHp(fightData, opponent, opponent.stats.base[ElementType.WOOD], LifeEffect.Fire, stepIndex);
+					loseHpBalanced(fightData, opponent, opponent.stats.base[ElementType.WOOD], LifeEffect.Fire, stepIndex);
 				})
 				break;
 			case Skill.BRASERO: {
@@ -1547,10 +1453,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.M_CURSED_WAND: {
-				// Get all opponent dinoz
-				const opponents = getOpponents(fightData, fighter, ['dinoz']);
+				// TODO rework
+				// // Get all opponent dinoz
+				// const opponents = getOpponents(fightData, fighter, ['dinoz']);
 
-				attackMultipleOpponents(fightData, fighter, opponents, event, step);
+				// attackMultipleOpponents(fightData, fighter, opponents, event, step);
 				break;
 			}
 			case Skill.M_HEAL_GROUP: {
@@ -2313,13 +2220,15 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.DETONATION: {
 			// The fighter will not suicide with the skill, it just loses its roll
 			if (fighter.hp > 5) {
-				registerHit(fightData, fighter, [fighter], 5, [ElementType.FIRE], skill.id);
+				loseHp(fightData, fighter, 5, LifeEffect.Burn)
 				// Increase the time of all other fighters to make it look like the caster "gained" time
 				getFighters(fightData).forEach(f => {
 					if (f.id !== fighter.id) {
 						f.time += 15 * TIME_FACTOR;
 					}
 				});
+			} else {
+				return cancel();
 			}
 			break;
 		}
@@ -2391,7 +2300,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					damage = applyBalanceDamage(opponent, Math.round(opponent.hp / 2));
 				}
 
-				loseHp(fightData, opponent, damage, LifeEffect.Skull, stepIndex);
+				loseHpBalanced(fightData, opponent, damage, LifeEffect.Skull, stepIndex);
 			}
 			break;
 		}
@@ -2419,7 +2328,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					damage = applyBalanceDamage(opponent, opponent.hp);
 				}
 
-				loseHp(fightData, opponent, damage, LifeEffect.Skull, stepIndex);
+				loseHpBalanced(fightData, opponent, damage, LifeEffect.Skull, stepIndex);
 			}
 			break;
 		}
@@ -3445,22 +3354,25 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return countered;
 };
 
+const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect, stepIndex?: number) => {
+	loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx, stepIndex);
+};
+
 const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect, stepIndex?: number) => {
 	// TODO: check for danger detector item
-	let hp_lost = applyBalanceDamage(fighter, damage);
-	fighter.hp -= hp_lost;
+	fighter.hp -= damage;
 
 	if (stepIndex) {
-		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({tid: fighter.id, damages: hp_lost})
+		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({tid: fighter.id, damages: damage})
 	} else {
 		fightData.steps.push({
 			action: 'looseHp',
 			fid: fighter.id,
-			hp: hp_lost,
+			hp: damage,
 			fx,
 		})
 	}
-}
+};
 
 const evade = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	const random = Math.random();
@@ -4081,7 +3993,12 @@ const checkAfterDefenseEffects = (fightData: DetailedFight, attacker: DetailedFi
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible, 
 	// Torch: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
-		loseHp(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+		loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+	}
+
+	// Burn
+	if (isCloseCombat && damage > 0 && hasStatus(target, Status.BURNED)) {
+		loseHpBalanced(fightData, attacker, 1, LifeEffect.Fire);
 	}
 
 	// Skills:
@@ -4096,7 +4013,7 @@ const checkAfterDefenseEffects = (fightData: DetailedFight, attacker: DetailedFi
 		// 1/3 chance
 		randomBetween(0, 2) === 0
 	) {
-		loseHp(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
+		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
 
 	// Aura puante: close combat and hit landed, the attacker must not be poisoned
@@ -4143,6 +4060,17 @@ const checkAfterDefenseEffects = (fightData: DetailedFight, attacker: DetailedFi
 
 	// Mur de boue ??
 
+	// Wake up:
+	// Without Amazonie, wake up if the target lost at least 1 hp
+	// With Amazonie, wake up if the target lost at least 11 hp
+	if (
+		(fightData.environment?.type !== Skill.AMAZONIE && damage > 0) ||
+		(fightData.environment?.type === Skill.AMAZONIE && damage > 10)
+	) {
+		removeStatus(fightData, target, Status.ASLEEP);
+	}
+
+
 }
 
 
@@ -4175,7 +4103,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 					});
 
 					// Kill opponent
-					registerHit(fightData, fighter, [opponent], opponent.hp);
+					loseHp(fightData, fighter, opponent.hp, LifeEffect.Skull);
 				}
 			}
 
@@ -4418,7 +4346,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 						const damage = Math.round(f.hp * 0.05);
 
 						// Register the hit
-						registerHit(fightData, attacker, [f], damage, [ElementType.LIGHTNING], Skill.FEU_DE_ST_ELME);
+						loseHp(fightData, attacker, Math.ceil(attacker.hp * 0.05), LifeEffect.Skull);
 					}
 				});
 			}
@@ -4532,7 +4460,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								}
 
 								// Register the hp lost from burn
-								loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Burn);
+								loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
 								break;
 							}
 							case Status.HEALING: {
@@ -4541,7 +4469,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								break;
 							}
 							case Status.TORCHED: {
-								loseHp(fightData, fighter, 1, LifeEffect.Burn);
+								loseHp(fightData, fighter, 1, LifeEffect.Fire);
 								break;
 							}
 							default: {
