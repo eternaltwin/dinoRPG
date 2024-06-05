@@ -8,6 +8,7 @@ export interface FightResult {
 	fighters: FighterRecap[];
 	goldEarned: number;
 	xpEarned: number;
+	levelUp: boolean;
 	totalHpLost: number;
 	result: boolean;
 	history: FightStep[];

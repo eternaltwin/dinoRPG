@@ -86,37 +86,37 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.WOOD]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.WATER]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.LIGHTNING]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.AIR]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.VOID]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					}
 				}
 			},
@@ -137,37 +137,37 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.WOOD]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.WATER]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.LIGHTNING]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.AIR]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					},
 					[ElementType.VOID]: {
 						damage_dealt: 0,
 						attacks: 0,
 						damage_received: 0,
-						defenses: 0,
+						defenses: 0
 					}
 				}
 			}

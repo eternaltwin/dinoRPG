@@ -213,6 +213,7 @@ export async function rewardFight(
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
 
 	let fgold = 0;
+	let levelup = false;
 
 	for (const d of team) {
 		//TODO escape
@@ -260,6 +261,7 @@ export async function rewardFight(
 		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf));
 		const max = getMaxXp(d);
 		if (d.experience + xp > max) {
+			levelup = true;
 			xp = max - d.experience;
 			if (xp < 0) xp = 0;
 		}
@@ -380,6 +382,7 @@ export async function rewardFight(
 		fighters: fightResult.fighters,
 		goldEarned: fightResult.winner ? gold : -goldLost,
 		xpEarned: fightResult.winner ? totalWinXP : 0,
+		levelUp: levelup,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
 		result: fightResult.winner,
 		history: fightResult.steps,

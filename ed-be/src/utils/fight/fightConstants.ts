@@ -11,5 +11,4 @@ export const MINIMUM_ENERGY_TO_ACT = 5;
 export const ATTACK_GLOBAL_FACTOR = 0.9;
 export const ASSAULT_POWER = 5;
 
-
 export const MAXIMUM_COMBO_COUNT = 10;

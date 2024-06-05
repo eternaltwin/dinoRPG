@@ -1,6 +1,6 @@
 /**
  * INTEGERS ONLY
- * 
+ *
  * Returns a random integer between min and max (included)
  */
 const randomBetween = (min: number, max: number) => {
@@ -11,7 +11,7 @@ const randomBetween = (min: number, max: number) => {
 
 /**
  * INTEGERS ONLY
- * 
+ *
  * Returns a random integer between min and max (excluded)
  */
 export const randomBetweenMaxExcluded = (min: number, max: number) => {

@@ -23,7 +23,7 @@
 			<div class="results xp">
 				{{ fight.xpEarned }}
 				<img
-					v-if="fight.result && fight.xpEarned === 0"
+					v-if="fight.result && fight.levelUp"
 					:src="getImgURL('icons', `small_lup`)"
 					alt="lup"
 					v-tippy="{

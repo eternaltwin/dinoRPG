@@ -25,19 +25,12 @@ export const balanceDamage = (damage: number) => {
 };
 
 // Calculates the attack power for a given element, the fighter and the power of the attack
-export const getElementalAttack = (
-	fighter: DetailedFighter,
-	element_type: ElementType,
-	power: number
-) => {
+export const getElementalAttack = (fighter: DetailedFighter, element_type: ElementType, power: number) => {
 	return [[element_type, fighter.stats.base[element_type] * power]] as [ElementType, number][];
-}
+};
 
 // Calculates the attack power for multiple elements, the fighter and the power of the attack
-export const getMultiElementalAttack = (
-	fighter: DetailedFighter,
-	element_type_power: [ElementType, number][],
-) => {
+export const getMultiElementalAttack = (fighter: DetailedFighter, element_type_power: [ElementType, number][]) => {
 	// let air_attack = 0;
 	// let fire_attack = 0;
 	// let lightning_attack = 0;
@@ -48,25 +41,25 @@ export const getMultiElementalAttack = (
 	// element_type_power.forEach(val => {
 	// 	let ele = val[0];
 	// 	let power = val[1];
-		
-		// if (ele === ElementType.AIR) {
-		// 	air_attack = power * fighter.stats.base[ElementType.AIR];
-		// }
-		// else if (ele === ElementType.FIRE) {
-		// 	fire_attack = power * fighter.stats.base[ElementType.FIRE];
-		// }
-		// else if (ele === ElementType.LIGHTNING) {
-		// 	lightning_attack = power * fighter.stats.base[ElementType.LIGHTNING];
-		// }
-		// else if (ele === ElementType.WATER) {
-		// 	water_attack = power * fighter.stats.base[ElementType.WATER];
-		// }
-		// else if (ele === ElementType.WOOD) {
-		// 	wood_attack = power * fighter.stats.base[ElementType.WOOD];
-		// }
-		// else if (ele === ElementType.VOID) {
-		// 	void_attack = power * fighter.stats.base[ElementType.VOID];
-		// }
+
+	// if (ele === ElementType.AIR) {
+	// 	air_attack = power * fighter.stats.base[ElementType.AIR];
+	// }
+	// else if (ele === ElementType.FIRE) {
+	// 	fire_attack = power * fighter.stats.base[ElementType.FIRE];
+	// }
+	// else if (ele === ElementType.LIGHTNING) {
+	// 	lightning_attack = power * fighter.stats.base[ElementType.LIGHTNING];
+	// }
+	// else if (ele === ElementType.WATER) {
+	// 	water_attack = power * fighter.stats.base[ElementType.WATER];
+	// }
+	// else if (ele === ElementType.WOOD) {
+	// 	wood_attack = power * fighter.stats.base[ElementType.WOOD];
+	// }
+	// else if (ele === ElementType.VOID) {
+	// 	void_attack = power * fighter.stats.base[ElementType.VOID];
+	// }
 	// });
 
 	return element_type_power.map(val => {
@@ -83,7 +76,7 @@ export const getMultiElementalAttack = (
 	// 	[ElementType.WOOD]: wood_attack,
 	// 	[ElementType.VOID]: void_attack,
 	// };
-}
+};
 
 // Returns the attack and defense score for a given attack considering the various bonuses
 // of the attacker and the target
@@ -92,7 +85,7 @@ export const getAttackDefense = (
 	attacker: DetailedFighter,
 	target: DetailedFighter,
 	element_attack: [ElementType, number][],
-	isCloseCombat: boolean,
+	isCloseCombat: boolean
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
@@ -112,8 +105,7 @@ export const getAttackDefense = (
 			defense += target.stats.defense[ele] * att;
 			if (isCloseCombat) {
 				attack += attacker.stats.assaultBonus[ele];
-			}
-			else {
+			} else {
 				attack += attacker.skillElementalBonus[ele];
 			}
 		}
@@ -147,7 +139,7 @@ export const getAttackDefense = (
 		defense,
 		elements
 	};
-}
+};
 
 // Applies final factors to the attack score:
 // - random bonus of up to 33%
@@ -158,7 +150,7 @@ export const calculateDamage = (
 	target: DetailedFighter,
 	attack: number,
 	defense: number,
-	isCloseCombat: boolean,
+	isCloseCombat: boolean
 ) => {
 	// Apply random factor
 	const random_attack_bonus = (Math.random() * attack) / 3;
@@ -178,7 +170,7 @@ export const calculateDamage = (
 
 	// Check for global minimum damage
 	if (damage < attacker.minDamage) {
-		damage = attacker.minDamage
+		damage = attacker.minDamage;
 	}
 
 	// Check for assault specific minimum damage
@@ -187,7 +179,7 @@ export const calculateDamage = (
 	}
 
 	return damage;
-}
+};
 
 export const getDamage = (
 	attacker: DetailedFighter,
