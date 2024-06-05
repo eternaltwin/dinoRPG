@@ -2016,7 +2016,7 @@
 			"Sumo": "Increases maximum health points by 100",
 			"SansPitie": "Chooses the target with the least health points for each assault",
 			"CloneAqueux": "Creates a clone of the Dinoz with 1 health point",
-			"GriffesEmpoisonnees": "Les ennemis touchés par un assaut eau sont empoisonnés et subissent des dégats basés sur la valeur de l'élément eau du lanceur à chaque tour",
+			"GriffesEmpoisonnees": "Si un des assauts d'Eau du dinoz touche un ennemi, il est empoisonné pour une durée moyenne",
 			"Cuisinier": "Increases the life gain of the items by 10% for all the Dinoz",
 			"SangAcide": "If one of the enemy's assaults hits the Dinoz, he can make the enemy lose some life",
 			"Regenerescence": "Increases speed of health points recovery when resting",
