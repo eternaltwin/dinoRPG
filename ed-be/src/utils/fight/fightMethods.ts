@@ -82,51 +82,51 @@ export const getOpponents = (fightData: DetailedFight, fighter: DetailedFighter,
 	return opponents;
 };
 
-const chooseRandomOpponentForAssault = (attacker: DetailedFighter, opponents: DetailedFighter[]) => {
+const chooseRandomOpponentForAssault = (attacker: DetailedFighter, opponents: DetailedFighter[], power?: [ElementType, number][]) => {
+	// The attacker can hit flying units if it is itself flying or it has the capacity to.
 	const canAttackFlying = attacker.canHitFlying || hasStatus(attacker, Status.FLYING);
-	const canHitIntangible = attacker.canHitIntangible; // || 
-	// TODO
+	// The attacker can hit intangible units if it has the capacity to, the attack deals non-zero air damage, or its current element is air.
+	const canHitIntangible = attacker.canHitIntangible || (power ? power.some(val => val[0] === ElementType.AIR) : attacker.element === ElementType.AIR)
 
-	// Target lowest HP opponent if Skill.SANS_PITIE
-	if (attacker.skills.find(skill => skill.id === Skill.SANS_PITIE)) {
-		let lowestHp = Infinity;
-		let lowestHpOpponent: DetailedFighter | null = null;
-
-		opponents.forEach(opponent => {
-			if (opponent.hp < lowestHp) {
-				lowestHp = opponent.hp;
-				lowestHpOpponent = opponent;
-			}
-		});
-
-		if (!lowestHpOpponent) {
-			sendJSONToDiscord('Error `No lowest HP opponent found` in `chooseRandomOpponent`.', {
-				fighter: attacker,
-				opponents: opponents
-			});
-			throw new Error('No lowest HP opponent found');
+	// List all invalid opponents
+	let unreachable_opponents: DetailedFighter[] = [];
+	opponents.forEach(opponent => {
+		// Filter out flying opponents if unreachable
+		if (hasStatus(opponent, Status.FLYING) && !canAttackFlying) {
+			unreachable_opponents.push(opponent);
 		}
+		// Filter out intangible opponents if unreachable
+		else if (hasStatus(opponent, Status.INTANGIBLE) && !canHitIntangible) {
+			unreachable_opponents.push(opponent);
+		}
+	});
 
-		return lowestHpOpponent;
+	let filtered_opponents: DetailedFighter[] = [];
+	if (unreachable_opponents.length !== opponents.length) {
+		filtered_opponents = opponents.filter(o => !unreachable_opponents.includes(o));
+	}
+	else {
+		filtered_opponents = opponents;
 	}
 
-	// Else same target as before if CONCENTRATION
-	if (attacker.skills.find(skill => skill.id === Skill.CONCENTRATION)) {
-		if (attacker.previousTarget) {
-			const target = opponents.find(opponent => opponent.id === attacker.previousTarget);
-
-			if (target) {
-				return target;
-			}
+	// Apply target filtering skills:
+	// Reduce the list of targets to only those with rock
+	let opponents_have_rock = opponents.some(opponent => opponent.skills.some(s => s.id === Skill.ROCK));
+	if (opponents_have_rock) {
+		// Filter based on the fighters with the ROCK skill: if the opposing team has the rock skill,
+		// then one chance out of 2 to target only the rock fighters
+		if (randomBetweenMaxExcluded(0,2) === 0) {
+			filtered_opponents = filtered_opponents.filter(opponent =>  opponent.skills.some(s => s.id === Skill.ROCK));
 		}
 	}
 
-	// Else find best target based on defense if ANALYSE
+	// First: find best target based on defense if ANALYSE
+	// TODO double check
 	if (attacker.skills.find(skill => skill.id === Skill.ANALYSE)) {
 		let worstDefense = Infinity;
 		let opponentWithWorstDefense: DetailedFighter | null = null;
 
-		opponents.forEach(opponent => {
+		filtered_opponents.forEach(opponent => {
 			const defense = opponent.stats.defense[attacker.element];
 
 			if (defense < worstDefense) {
@@ -146,22 +146,48 @@ const chooseRandomOpponentForAssault = (attacker: DetailedFighter, opponents: De
 		return opponentWithWorstDefense;
 	}
 
-	// Prioritize dinoz with Rock skill
-	const withRock = opponents.filter(opponent => opponent.skills.find(skill => skill.id === Skill.ROCK));
+	// Second: target lowest HP opponent if Skill.SANS_PITIE
+	// TODO double check
+	if (attacker.skills.find(skill => skill.id === Skill.SANS_PITIE)) {
+		let lowestHp = Infinity;
+		let lowestHpOpponent: DetailedFighter | null = null;
 
-	if (withRock.length) {
-		const random = randomBetween(0, withRock.length - 1);
+		filtered_opponents.forEach(opponent => {
+			if (opponent.hp < lowestHp) {
+				lowestHp = opponent.hp;
+				lowestHpOpponent = opponent;
+			}
+		});
 
-		return withRock[random];
+		if (!lowestHpOpponent) {
+			sendJSONToDiscord('Error `No lowest HP opponent found` in `chooseRandomOpponent`.', {
+				fighter: attacker,
+				opponents: opponents
+			});
+			throw new Error('No lowest HP opponent found');
+		}
+
+		return lowestHpOpponent;
 	}
 
-	if (!opponents.length) {
+	// Last: same target as before if CONCENTRATION
+	if (attacker.skills.find(skill => skill.id === Skill.CONCENTRATION)) {
+		if (attacker.previousTarget) {
+			const target = filtered_opponents.find(opponent => opponent.id === attacker.previousTarget);
+
+			if (target) {
+				return target;
+			}
+		}
+	}
+
+	if (!filtered_opponents.length) {
 		return null;
 	}
 
-	const random = randomBetween(0, opponents.length - 1);
+	const random = randomBetween(0, filtered_opponents.length - 1);
 
-	return opponents[random];
+	return filtered_opponents[random];
 };
 
 /// Choose a random opponent from a list
@@ -207,7 +233,7 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 	return randomOpponent;
 };
 
-export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: DetailedFighter) => {
+export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: DetailedFighter, power?: [ElementType, number][]) => {
 	const opponents = getOpponents(fightData, fighter);
 	if (!opponents.length) {
 		sendJSONToDiscord('Error `No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
