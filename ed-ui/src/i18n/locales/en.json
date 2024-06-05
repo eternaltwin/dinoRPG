@@ -43,6 +43,8 @@
 		"noMovement": "Today, the swamp is completely flooded! You can't move here. You have to wait until tomorrow to get out of this quagmire.",
 		"noFight": "Today, the swamp is lost in haze ... You will not find any monster to fight.",
 		"AlreadySphere": "This dinoz already know all sphere skills from this element.",
+		"needToDoAllAction": "Vous avez encore des combats à faire.",
+		"labrute": "Vous avez obtenu {quantity} potions d'irmas.",
 		"market": {
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
@@ -55,7 +57,8 @@
 		"heal": "Votre dinoz s'est soigné de {value} :hp:",
 		"gold": "Vous avez obtenu {value} :gold:",
 		"sphere": "Votre dinoz a appris la compétence {value}.",
-		"action": "Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
+		"action": "You consumed {value} of Madame Irma's Potions and may take further action.",
+		"alreadyClaimed": "Vous avez déjà récupéré la récompense.",
 		"resurrect": "Votre dinoz est ressucité.",
 		"egg": "Vous avez ouvert un oeuf de {value}.",
 		"special": {
@@ -128,7 +131,7 @@
 	},
 	"action": {
 		"description": {
-			"fight": "Search for a monster to fight at this location. You can perform **one move or fight per day** and by Dinoz.",
+			"fight": "Search for a monster to fight at this location.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
 			"unfollow": "Your Dinoz is currently following another Dinoz. Click this action to stop following.",
 			"levelup": "Your Dinoz earned enough experience to reach the next level. Click this action to increase the power of your Dinoz.",
@@ -166,7 +169,7 @@
 			"dig": "Dig",
 			"cueille": "Harvester",
 			"fish": "Lavapit",
-			"hunt": "Shell",
+			"hunt": "Hunt",
 			"seek": "Search",
 			"energy": "Energize",
 			"anniv": "Sandcastle",
@@ -176,14 +179,14 @@
 			"party": "Firework",
 			"concentrate": "Arrêter de se concentrer",
 			"market": "Marché aux éleveurs",
-			"disband": "Dissoudre le groupe",
+			"disband": "Disband group",
 			"daily": "Daily ticket",
 			"irma": "Potion d'Irma",
 			"irmas": "Madam Irma's Potions: Group",
 			"action": "New action",
 			"congel": "The stamps",
 			"stop_congel": "Décongeler",
-			"rest": "Resurrect",
+			"rest": "Rest",
 			"stop_rest": "Stop resting",
 			"itinerant_shop": "Travelling Merchant"
 		}
@@ -535,7 +538,7 @@
 			"easter_egg": "An Urma's egg can be used to obtain an item among all those that exist in Dinoland. Will it be a rare or comon item you'll get ?",
 			"fire_cracker": "TODO",
 			"special_potion_irma": "Madam Irma's famous potion allows the Dinoz who drinks it to *play a new action immediately* without having to wait for the next day. But you can only carry 3.",
-			"daily_ticket": "This ticket allows you to unlock a daily box.",
+			"daily_ticket": "This ticket allows you to unlock a daily box at the University.",
 			"box_common": "Cette boîte semble contenir des objets assez communs.",
 			"box_rare": "Cette boîte brillante semble contenir des objets rares.",
 			"box_epic": "Cette magnifique boîte semble contenir quelque chose d'extraordinaire.",
@@ -1301,7 +1304,7 @@
 				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
 				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
 				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
-				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+				"ok": "Voilà, tu as les feuilles de nénuphar... Et fait attention, la Forêt au delà est très dangereuse ! Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure !"
 			},
 			"playerChoice": {
 				"hello": "Bonjour !",
@@ -1602,7 +1605,7 @@
 			"Endurance": "Endurance",
 			"Vignes": "Vines",
 			"RenfortsKorgon": "Korgon Reinforcement",
-			"Sympathique": "Sympathtic",
+			"Sympathique": "Sympathetic",
 			"Croissance": "Growth",
 			"EtatPrimal": "Primal State",
 			"InstinctSauvage": "Wild Instinct",
@@ -1692,7 +1695,7 @@
 			"RayonKaarSher": "Kaar-Sher Beam",
 			"Magasinier": "Storekeeper",
 			"Perception": "Perception",
-			"CoupsSournois": "Coup Sournois",
+			"CoupsSournois": "Tricky Hit",
 			"ApprentiPecheur": "Aprentice Fisher",
 			"CoupFatal": "Fatal Hits",
 			"EntrainementSousMarin": "Undersea Training",
@@ -1709,7 +1712,7 @@
 			"Cuisinier": "Cooker",
 			"SangAcide": "Acid Blood",
 			"Regenerescence": "Regeneration",
-			"PremiersSoins": "Premiers Soins",
+			"PremiersSoins": "First Aid",
 			"PureeSalvatrice": "Saving Pure",
 			"AuraHermetique": "Hermetic Aura",
 			"CrepusculeFlambloyant": "Blazing Twilight",
@@ -1721,7 +1724,7 @@
 			"Paratonnerre": "Lightning Conductor",
 			"Medecine": "Medicine",
 			"FissionElementaire": "Elemental Fission",
-			"CrocsDiamant": "Diamant Fangs",
+			"CrocsDiamant": "Diamond Fangs",
 			"Brancardier": "Hospital Porter",
 			"Marchand": "Merchant",
 			"Reincarnation": "Reincarnation",
@@ -1885,11 +1888,11 @@
 			"Bite": "Bite",
 			"Regeneration": "Regeneration",
 			"Electrocution": "Electrocution",
-			"Immaterial": "Intagigle",
+			"Immaterial": "Intangible",
 			"Flight": "Etherwasp",
 			"Capture": "Catch",
 			"Venerable": "Vénérable",
-			"Renforts": "Renforts"
+			"Renforts": "Reinforcements"
 		},
 		"description": {
 			"GriffesEnflammees": "Increases the strength of all fire assaults by 7",
@@ -2307,7 +2310,7 @@
 		"completion": "Completion"
 	},
 	"layout": {
-		"fx": "Status",
+		"fx": "Statuses",
 		"elements": "Information",
 		"action": "Actions",
 		"level": "This level reflects the strength of your dinoz.",
@@ -2330,7 +2333,7 @@
 		"item": {
 			"use": "Use **immediately**",
 			"useOff": "This item can't be **used**",
-			"equipTitle": "Add to **combats items**.",
+			"equipTitle": "Add to **combats items**&&//Equipped items can be used by your Dinoz during battle//",
 			"equipDescription": "//Objects which have been equipped can be used by your Dinoz during combats//",
 			"equip": "This item can be **equipped**",
 			"equipOff": "This item can't be **equipped**",
@@ -2338,11 +2341,11 @@
 		},
 		"shop": {
 			"buyMaxTopNote_part1": "You have ",
-			"buyMaxTopNote_part2": " exemplaire(s) de cet objet, sur ",
-			"buyMaxTopNote_part3": " maximum.",
-			"buyMaxBottomNote": "Click here to maximise your sock of this item.",
-			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
-			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+			"buyMaxTopNote_part2": " piece(s) of this item, up to a maximum of ",
+			"buyMaxTopNote_part3": " .",
+			"buyMaxBottomNote": "//Click here to fully stock up on this item.//",
+			"invalidQuantity": "Please enter a **valid** quantity.",
+			"invalidQuantity_foot": "//Make sure the number you've entered is correct and that you have space for it.//"
 		}
 	},
 	"pageTitle": {
@@ -2384,9 +2387,9 @@
 		"type": {
 			"cueille": "plantes",
 			"fish": "poissons",
-			"hunt": "Fight",
+			"hunt": "Hunt",
 			"seek": "Fouiller",
-			"energy": "Adrenaline",
+			"energy": "energy",
 			"anniv": "trésors fabuleux",
 			"xmas": "Cadeaux de Noël",
 			"tictac": "trésors dans le jardin de Papy Joe",
@@ -2394,7 +2397,7 @@
 			"party": "trésors fabuleux",
 			"daily": "daily rewards"
 		},
-		"disclaimer": "Click on {number} grid box(es) to find {search}"
+		"disclaimer": "Click on {number} grid box(es) to search for {search}"
 	},
 	"missions": {
 		"header": "Missions list",
@@ -2447,7 +2450,7 @@
 			"kfood": "Wood Steak",
 			"poison": "Korgon Rivalries",
 			"init1": "The Trial",
-			"init2": "Werewolf",
+			"init2": "The Archelionscarer",
 			"burn": "Fire !",
 			"barbec": "The crazy barbecue",
 			"joke": "Glidwings",
@@ -2475,7 +2478,7 @@
 		"tooltip": "Mission: {mission}",
 		"description": {
 			"fish": "Madame Seyche, a resident of Dinoville, is looking for fresh fish to organize a dinner with her friends. Can you get her some fish from the Merchant in Port of Prêche in the south? He has been warned and he is waiting for you.",
-			"dog": "The old lady Ducraft lost her poodle while visiting her son in the Steep Hills, can you find him?",
+			"dog": "The old lady Ducraft lost her poodle while visiting her son in the Precipitous Hills, can you find him?",
 			"kilgou": "De nombreux Loups et Goupignons sévissent dans les Collines Escarpées au nord de Dinoville, le chef d'un village voisin cherche quelqu'un pour en tuer quelques-uns et ainsi leur faire peur pour qu'ils se calment, sauras-tu te montrer suffisamment fort ?",
 			"kilwlf": "Recently, farmers have had a lot of problems with groups of wolves attacking their goats. Can you take a walk here and there and kill a few to keep them away?",
 			"fflow": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
@@ -2496,7 +2499,7 @@
 			"rally4": "Participe au Rallye des Baleines ! Rejoins Fosselave puis reviens ici le plus rapidement possible !",
 			"tour": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! The first stage is on Waikiki Island.",
 			"kswim": "The Grumhel Jungle is a fascinating place! Here, take the korgons for example. They have adapted wonderfully to their environment! Did you know that they made their own flippers in order to be able to cross the Jumin river without difficulty? No? Here, I'm willing to offer you a pair if you bring me back some basic necessities...",
-			"rivals": "If the Korgons of this part of the Jungle are almost sociable, there are some in the South, on the edges of the Dark Path who are otherwise less friendly. I think if you brought me proof of victory over those to the south, the korgons here would appreciate us much more!",
+			"rivals": "While the Korgons from these parts of the Jungle are almost sociable, there are some in the South, on the outskirts of the Sinister Path who are otherwise less friendly. I think if you brought me proof of victory over those to the south, the korgons here would appreciate us much more!",
 			"kfood": "There is somewhere in Grumhel a rare species of tree that the Korgons love: the Ashen Fikoïa! I don't know where you can find some, but I'll pay you well if you bring me some!",
 			"poison": "The Ashen Fikoïa that you have discovered will quickly become a strategic point for the korgons of the south... We need to react quickly! We are going to \"trap\" some branches of this tree to dissuade them from eating it... Of course, we will know which branches not to touch... Hi hi hi.",
 			"init1": "Yo... So, for the Strategy Guide, you have to translate it... to the Ashpouk ruins. You should be able.",
@@ -2514,7 +2517,7 @@
 			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : _« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle »._ Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
 			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : _« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
 			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : _« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
-			"wishes": "Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+			"wishes": "Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
 			"newplt": "Une longue bande de tissu est enroulée autour du vieil arbre: _« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »_ Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
 			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :_« Déposez de l'or dans le seau pour votre ration quotidienne. »_",
 			"seqact": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
@@ -2548,11 +2551,11 @@
 			"hide": "Hide the Fikoïa",
 			"inscriptions": "Examiner les inscriptions",
 			"dictionnaire": "Ashpoukian Dictionary",
-			"inscriptions_decrypt": "Treasury Note",
+			"inscriptions_decrypt": "Decipher the inscriptions",
 			"claw": "Pick up the claws",
 			"cinder": "Examine the pile of ashes",
-			"sniff": "Renifler",
-			"seek": "Fouiller les environs",
+			"sniff": "Sniff",
+			"seek": "Search the area",
 			"sbranch": "Pick up a branch",
 			"ecaille": "Voler une écaille au Vénérable",
 			"floor": "Re-Searcher",
@@ -2654,10 +2657,10 @@
 			"hidefiquoia": "Hide the Fikoia",
 			"tree": "Strange Tree",
 			"dian": "Dian Korgsey",
-			"shaman": "Validate Mission",
+			"shaman": "Validate the mission",
 			"forgeron": "Blacksmith",
 			"garde": "Forge Guard",
-			"artisan": "Skill Forger",
+			"artisan": "Forge Artisan",
 			"eclaireur": "Forge Scout",
 			"convoy": "Dinoville conveyor",
 			"profLetter": "Eugene (give letter)",
@@ -2665,7 +2668,7 @@
 			"archeo": "Shoveled Archaeologist",
 			"inscriptions": "Examiner les inscriptions",
 			"dictionnaire": "Ashpouk dictionary",
-			"inscriptions_decrypt": "Registered on",
+			"inscriptions_decrypt": "Decipher the inscriptions",
 			"claw": "Pick up the claws",
 			"cinder": "Examine the pile of ashes",
 			"sniff": "Sniff",
@@ -2954,14 +2957,14 @@
 			"init2": {
 				"claw": "Vous récupérez deux grosses griffes de bébé Archelion. Il faut maintenant les tailler correctement.",
 				"forgeron": "Tailler des griffes d'Archelion ? Vous savez que c'est dangereux de se promener avec ce genre de choses ?! Même si ça les effraie un peu, ça attire TOUS les autres monstres !! Ah vraiment bravo ! En voilà déjà qui arrivent...",
-				"garde": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? Il veut un Epouvantarchelion ? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
+				"garde": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? He wants an Archelionscarer? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
 				"garde2": "Bon donnez-moi ces Griffes que je nous en débarrasse ! Pour ce qui est des Archélions, pour les éloigner, voici une pommade odorante à appliquer chaque matin. Je vous préviens, ça sent fort...",
 				"shaman": "Ah ? Je ne savais pas pour les griffes ! Ben... Au temps pour moi... J'espère que le Garde des Forges ne vous a pas trop fait d'histoires. Merci pour la pommade, j'imagine que ça fera bien l'affaire ! Tenez voilà le Guide de Stratégie que j'ai en ma possession pour vous remercier."
 			},
 			"burn": {
 				"cinder": "Les cendres laissées par ces flammèches ont une odeur étrange... Ca ressemble fort à une odeur de friture ! Il faudrait enquêter à ce sujet...",
 				"artisan": "Des flammèches qui sentent la friture vous dites ? Aucune idée. Mais il m'semble qu'il y a un genre d'odeur comme vous dites vers l'ouest...",
-				"sniff": "Snif, snif... Pas de doute ! L'odeur de friture ici est la même que celle des cendres de Flammèches que vous avez combattues ! Pas de temps à perdre, il va falloir se battre pour faire le ménage...",
+				"sniff": "Sniff, sniff... Pas de doute ! L'odeur de friture ici est la même que celle des cendres de Flammèches que vous avez combattues ! Pas de temps à perdre, il va falloir se battre pour faire le ménage...",
 				"seek": "De toutes évidences, ces flammèches sortent du Barbecue même du vendeur de Merguez... Il faut signaler ce problème au Shaman Mou !",
 				"shaman": "Tes actions ont partiellement rétabli l'équilibre dans la région, c'est un bon début ! Mais il va falloir faire quelque chose pour cette histoire de Barbecue... En attendant, voilà de quoi te récompenser."
 			},
@@ -3029,27 +3032,27 @@
 				"pwater": "Vous ajoutez dans la gourde du vieil arbre de l'eau claire de la Fontaine et vous en profitez pour vous y rafraîchir.",
 				"bwater": "Vous complétez le contenu de la gourde avec un peu de l'eau bouillonnante qui inonde les Gorges. C'est chaud !",
 				"racine": "Les feuillages du vieil arbre s'agitent brusquement dans tous les sens et une lumière apaisante emplit la jungle tout autour de vous...",
-				"arbre": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds."
+				"garde": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds."
 			},
 			"orchid": {
 				"pickwater": "Vous remplissez la gourde d'eau du Fleuve Jumin.",
 				"worchid": "Vous versez tout le contenu de la gourde sur une magnifique fleur qui doit être l'Orchidée Quidée. Aussitôt, celle-ci s'illumine de mille feux et de jolis gouttelettes de rosées perlent sur ses feuilles gracieuses.",
-				"orchid": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse moi, tu m'fais de l'ombre !!",
-				"arbre": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat."
+				"talkingorchide": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse moi, tu m'fais de l'ombre !!",
+				"garde": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat."
 			},
 			"licens": {
-				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+				"garde": "Quelques fruits tombent de l'arbre autour de vous..."
 			},
 			"king": {
 				"yell": "Vous poussez un cri particulièrement ridicule, qui n'effraierait probablement même pas un Korgon... Il va falloir trouver mieux !",
 				"talkingorchide": "Encore là l'empaffé de la jungle ?! Qu'est-ce qu'il a l'autre à m'regarder comme ça ?",
 				"pickorchid": "Sans ménagement, vous arrachez l'orchidée et vous l'emmenez avec vous. Celle-ci crie, vous insulte copieusement et se débat autant qu'elle peut...",
 				"plantorchid": "Vous replantez d'un coup sec l'Orchidée Quidée qui ne manque pas de vous hurler dessus. Tandis que vous vous éloignez, vous pouvez encore entendre celle-ci crier des atrocités à votre égard... Voilà qui fera bien l'affaire pour effrayer les touristes !",
-				"arbre": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !"
+				"garde": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !"
 			},
 			"wishes": {
 				"tosscoin": "Vous jetez une pièce au coeur des chutes et vous attendez quelques minutes... Evidemment rien ne se produit et vous décidez d'aller exaucer le voeu de réduire la population des monstres par vous même.",
-				"arbre": "Quelques fruits tombent de l'arbre autour de vous..."
+				"garde": "Quelques fruits tombent de l'arbre autour de vous..."
 			},
 			"newplt": {
 				"benevole1": "Bonjour ! Toi aussi tu viens pour aider à déblayer toute cette roche ? Pour le moment, j'ai un gros problème sur les bras... Des monstres en tous genres viennent régulièrement m'empêcher de travailler... Tu peux faire quelque chose ?",
@@ -3057,11 +3060,11 @@
 				"benevole2": "Il ne faut plus perdre une seconde, continuons !",
 				"liftrock2": "L'opération vous occupe encore plusieurs heures, même avec le cric, mais vous parvenez tout de même à dégager de nombreux arbres et plantes ensevelies sous les rochers.",
 				"benevole3": "Je vais rester ici pour arroser les plantes survivantes. Vas faire un rapport pour moi auprès du Gardien de la Forêt !",
-				"arbre": "Deux gros fruits se décrochent et tombe dans un buisson près de vous..."
+				"garde": "Deux gros fruits se décrochent et tombe dans un buisson près de vous..."
 			},
 			"gshop": {
 				"bucket": "Vous trouvez une petite branche fleurie dans le seau...",
-				"arbre": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
+				"garde": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
 			},
 			"seqact": {
 				"auree": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?"
@@ -3127,7 +3130,7 @@
 			"korgon": "Korgon Finns",
 			"korgon:ronciv": "Korgons ou alliés",
 			"barche": "Bébé Archélion",
-			"flam": "Firebrand",
+			"flam": "Flamelet",
 			"cobra": "Cobrasero",
 			"goblin": "Gobelin",
 			"bat": "Fauve Souris",
@@ -3138,7 +3141,18 @@
 	},
 	"myAccount": {
 		"title": "Player:",
+		"labrute": "La Brute",
 		"profil": "EternalDinoRPG Profile",
+		"twinoidgoals": {
+			"name": "Statistiques EternalDinoRPG",
+			"points": "points",
+			"linkStats": "Statistiques",
+			"linkGains": "Gains",
+			"help": {
+				"question": "Que signifient ces compteurs ?",
+				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
+			}
+		},
 		"dinoz": "Dinoz",
 		"ranking": "Ranking",
 		"inscription": "Registered on",
@@ -3738,7 +3752,7 @@
 			"removeStatus": "**{fighter}** is no longer **{status}**.",
 			"itemUse": "**{fighter}** used **{item}**.",
 			"hypnotize": "**{fighter}** switched sides.",
-			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie."
+			"gainEnergy": "**{fighter}** regained energy and now has **{energy}** energy."
 		}
 	},
 	"ingredients": {
@@ -3885,16 +3899,19 @@
 	},
 	"following": "This Dinoz is following their group leader.",
 	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
-	"follow": "Le chef de groupe est {leader}.",
+	"follow": "The group leader is {leader}.",
 	"followed": "This Dinoz is a group leader.",
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}x {item}** with dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** bought **{quantity}x {item}**.",
+		"IngredientSold": "**{player} ({playerId})** sold **{quantity}x {item}**.",
 		"GoldWon": "**{player} ({playerId})** won **{quantity} :gold:**.",
 		"GoldLost": "**{player} ({playerId})** lost **{quantity} :gold:**.",
 		"Move": "**{player} ({playerId})** moved dinoz **{dinoz} ({dinozId})** to **{location}**.",
 		"LevelUp": "**{player} ({playerId})** leveled up dinoz **{dinoz} ({dinozId})** to **level {level}**.",
 		"Fight": "**{player} ({playerId})** fought and lost **{hpLost}HP**, gained **{gold} :gold:** and **{xp}XP**.",
+		"XPEarned": "**{player} ({playerId})** gained **{xp}XP**.",
+		"HPLost": "**{player} ({playerId})** lost **{hpLost}HP**.",
 		"Death": "**{player} ({playerId})**'s dinoz **{dinoz} ({dinozId})** died.",
 		"Revive": "**{player} ({playerId})** revived dinoz **{dinoz} ({dinozId})**.",
 		"MissionStep": "**{player} ({playerId})** advanced **{mission}** to **step {step}** with dinoz **{dinoz} ({dinozId})**.",
@@ -3902,7 +3919,9 @@
 		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
-		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**."
+		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**.",
+		"PlayerCreated": "**New player has arrived : {name}**.",
+		"PlayerConnected": "**Player {name}** has just logged on."
 	},
 	"selectDinoz": {
 		"selectChampions": "Select your champions",
@@ -4134,7 +4153,7 @@
 		}
 	},
 	"faq": {
-		"intro": "This section contains helpful answers to the most frequently asked questions on DinoRPG. However, we encourage you to learn more through playing; the experience is much more rewarding.",
+		"intro": "Vous pouvez trouver ici toutes les réponses à vos questions sur le jeu. Essayez toutefois de ne pas trop utiliser cette section, car de nombreux secrets sont plus amusants si vous les découvrez par vous-même en cherchant un peu.",
 		"search": "Search",
 		"qa": "Questions / Answers :",
 		"faq1": {
@@ -4143,7 +4162,7 @@
 		},
 		"faq2": {
 			"question": "Where's Mrs Ducraft's dog?",
-			"answer": "The Dog is in Frish Port."
+			"answer": "Le Chien de Mme Ducraft se trouve au Port de Prêche, accessible depuis la Fontaine de Jouvence. La fontaine de Jouvence est accessible depuis Dinoville, Forcebrut, ou Chez Papy Joe."
 		},
 		"faq3": {
 			"question": "How to get more than 18 Dinoz?",
@@ -4155,7 +4174,7 @@
 		},
 		"faq5": {
 			"question": "How to remove a skill from a Dinoz?",
-			"answer": "Learned skills cannot be removed, but you can disable some using the 130-lesson Strategy Guide you will obtain by completing the second mission of the Soft Shaman. && && As a general rule, avoid choosing attacks (A skills) in the minor elements of your Dinoz. && For example, Water Cannon is not recommended for a pigmou."
+			"answer": "Learned skills cannot be removed, but you can disable certain ones using the 130-lesson Strategy Guide you will obtain by completing \"The Archelionscarer\" - the second mission of the Soft Shaman. && && As a general rule, avoid choosing attacks (A skills) in the minor elements of your Dinoz. && For example, Water Cannon is not recommended for a pigmou."
 		},
 		"faq6": {
 			"question": "How to obtain the Lantern?",
@@ -4226,7 +4245,7 @@
 			"answer": "You will need the Zors Glove, a Lily Pad Leaf, and the Buoy. Go to the Mutant Falls, and move to the Grumhel forest (Location 'Bypassing the Mutant Falls'). From there, head to the Haunted Hills. Talk to the Strange Man and ignore him. He will then talk to you about a dreadful monster and ask to fight it. You will then enter a battle with a Mischievous Korgon. If you manage to defeat it (which is highly possible), the Strange Man will flee, leaving you his lantern. Now, leave the Grumhel Forest, leave the Atlantean Islands, leave DinoLand, and go to the Tunnel under the Branch. From there, access the Deep Gorges. From the Deep Gorges, access the Korgon Camp. You are now at the Korgon camp, in the second part of the Grumhel forest. To link the two parts, complete the missions of Dian Korgsey and obtain the Korgon Fins. Now, you have the ability to move from the Korgon Camp to the Jumin River, and vice versa."
 		},
 		"faq23": {
-			"question": "How do I get the Shovel (Dig)?",
+			"question": "Comment obtenir la Pelle (Creuser) ?",
 			"answer": "First you need the Buoy. From the Frish Port, go to the Atlantean Islands, then move on to the Coral Mines. Talk to the Coral Miner and say yes. && He'll give you the shovel, but every time you dig it will break, and you'll have to come back to him to get it fixed."
 		},
 		"faq24": {
@@ -4256,6 +4275,47 @@
 		"faq30": {
 			"question": "Where do I restart when my Dinoz is Dead?",
 			"answer": "If you do not use an Angel Potion, You will restart at DinoTown with 1 health point and you will lose half of your Experience. && && If you use an Angel Potion, You restart where you are with 1 health point."
+		}
+	},
+	"achievements": {
+		"reward": "{name} x {quantity}"
+	},
+	"playerMenu": {
+		"title": "Profil du joueur :",
+		"gridMenu": {
+			"pDRPG": "Profil DinoRPG",
+			"pEternal": "Profil EternalTwin",
+			"addContact": "Ajouter contact",
+			"sendMSG": "Envoyer un message"
+		},
+		"report": {
+			"signal": "Signaler le joueur",
+			"block": "Bloquer le joueur"
+		},
+		"contact": "Ce joueur ne fait pas partie de vos contacts."
+	},
+	"roadmap": {
+		"title": "Découvrez les prochains évènements sur DinoRPG !",
+		"small": "Prédiction d'Irma",
+		"strong": {
+			"title1": "Version 1.0.0 (Vanilla)",
+			"title2": "Version 1.1.0 (To the West)",
+			"title3": "Roadmap to 2050"
+		},
+		"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
+		"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
+		"futurTitle": "Avenir Dinolandien",
+		"futureInfo1": {
+			"text1": "Accès aux cartes : Dinoland, Grand Tout-Chaud, Forêt de Gruhmel, Îles Atlantéinées.",
+			"text2": "Accès aux missions originelles : Papy Joe, Bao Bob, Shaman Mou, Nicolas Mulot, Dian Korgsey, Gardien de la fôret.",
+			"text3": "Et plein d'autres fonctionnalités"
+		},
+		"futureInfo2": {
+			"text1": "Accès à l'ouest de Dinoville.",
+			"text2": "Accès aux mission du Maître Elémentaire."
+		},
+		"futureInfo3": {
+			"text1": "Deal..."
 		}
 	}
 }
