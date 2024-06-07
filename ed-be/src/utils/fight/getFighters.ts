@@ -12,8 +12,8 @@ import { PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { MAXIMUM_MAX_ENERGY, TIME_BASE, TIME_FACTOR } from './fightConstants.js';
-import { createStatus, setEnergy, setMaxEnergy } from './fightMethods.js';
+import { TIME_BASE, TIME_FACTOR } from './fightConstants.js';
+import { createStatus, setMaxEnergy } from './fightMethods.js';
 import { getBasicElementDamage } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
@@ -396,19 +396,19 @@ export const initializeMonster = (
 				[ElementType.LIGHTNING]: monster.elements.lightning,
 				[ElementType.WATER]: monster.elements.water,
 				[ElementType.WOOD]: monster.elements.wood,
-				[ElementType.VOID]: 0
+				[ElementType.VOID]: monster.bonus_attack ?? 0
 			},
 			assaultBonus: {
 				[ElementType.AIR]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.AIR).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.AIR).bonus,
 				[ElementType.FIRE]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.FIRE).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.FIRE).bonus,
 				[ElementType.LIGHTNING]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.LIGHTNING).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.LIGHTNING).bonus,
 				[ElementType.WATER]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.WATER).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.WATER).bonus,
 				[ElementType.WOOD]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.WOOD).bonus + (monster.bonus_attack ?? 0),
+					getAssaultStat(similiDinoz, [], skills, AssaultElement.WOOD).bonus,
 				[ElementType.VOID]: 0
 			},
 			defense: {
@@ -481,16 +481,6 @@ export const initializeMonster = (
 		permanentStatusGained: []
 	};
 
-	// Handle bonuses
-	const handleMonsterBonuses = MonsterBonus[monster.id];
-
-	if (handleMonsterBonuses) {
-		handleMonsterBonuses(fighter);
-	}
-
-	// Skills
-	handleSkills(team, fighter, place);
-
 	// Handle elements (from highest to lowest)
 	const elements = [
 		{ element: ElementType.FIRE, value: fighter.stats.base[ElementType.FIRE] },
@@ -515,6 +505,16 @@ export const initializeMonster = (
 	if (fighter.elements.length === 0) {
 		fighter.elements = [ElementType.VOID];
 	}
+
+	// Handle bonuses after the elements have been handled
+	const handleMonsterBonuses = MonsterBonus[monster.id];
+
+	if (handleMonsterBonuses) {
+		handleMonsterBonuses(fighter);
+	}
+
+	// Skills only after the elements have been handled
+	handleSkills(team, fighter, place);
 
 	// SPECIALISTE
 	if (fighter.skills.some(skill => skill.id === Skill.SPECIALISTE)) {

@@ -29,18 +29,11 @@ import {
 	MAXIMUM_MAX_ENERGY,
 	MINIMUM_ENERGY_TO_ACT,
 	TIME_BASE,
-	TIME_FACTOR
+	TIME_FACTOR,
+	VOID_ASSAULT_POWER
 } from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
-import {
-	applyBalanceDamage,
-	calculateDamage,
-	getAttackDefense,
-	getBasicElementDamage,
-	getDamage,
-	getElementalAttack,
-	getMultiElementalAttack
-} from './getDamage.js';
+import { applyBalanceDamage, calculateDamage, getAttackDefense, getBasicElementDamage, getElementalAttack, getMultiElementalAttack } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
 import randomBetween, { randomBetweenMaxExcluded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
@@ -787,7 +780,7 @@ const launchAssault = (
 		tid: target.id
 	});
 
-	let assault_attack = power || getElementalAttack(attacker, attacker.element, ASSAULT_POWER);
+	let assault_attack = power || getElementalAttack(attacker, attacker.element, attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER);
 
 	// Trigger fighter attack
 	let hitCount = attackTarget(fightData, attacker, target, allowCombo || true, false, assault_attack, skill, stepIndex);
@@ -3138,27 +3131,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_BITE: {
-			// Get random opponent
-			const opponent = getRandomOpponent(fightData, fighter);
-
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fid: fighter.id,
-				tid: opponent.id
-			});
-
-			// Fighter attacks opponent
-			launchAssault(fightData, fighter, opponent, false, Skill.M_BITE);
-
-			// Check if fighter is not dead
-			if (fighter.hp > 0) {
-				// Add moveBack step
-				fightData.steps.push({
-					action: 'moveBack',
-					fid: fighter.id
-				});
-			}
+			launchAssault(fightData, fighter, undefined, false, Skill.M_BITE, [[ElementType.VOID, 7]]);
 			break;
 		}
 		case Skill.M_STINGER: {
@@ -3687,7 +3660,7 @@ const attackTarget = (
 
 	// If the elemental attack is not defined, default to a basic assault
 	if (!element_attack) {
-		element_attack = getElementalAttack(attacker, attacker.element, ASSAULT_POWER);
+		element_attack  = getElementalAttack(attacker, attacker.element, attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER);
 	}
 
 	let { attack, defense, elements } = getAttackDefense(attacker, target, element_attack, isCloseCombat);
@@ -3699,6 +3672,8 @@ const attackTarget = (
 	// }
 	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
 		// Increment the attacker's combo counter
+		// If we arrive here, the comboCounter is already at 1 due to turn initialization
+		// Note: this would prevent infinite counter too...
 		attacker.comboCounter++;
 
 		// Get damage

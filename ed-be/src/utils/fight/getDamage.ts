@@ -181,215 +181,216 @@ export const calculateDamage = (
 	return damage;
 };
 
-export const getDamage = (
-	attacker: DetailedFighter,
-	opponent: DetailedFighter,
-	skill?: Skill,
-	item?: Item,
-	power?: number
-) => {
-	let attack = BASE_ATTACK_VALUE;
-	let defense = BASE_DEFENSE_VALUE;
-	let attackElements: ElementType[] = [];
+// TODO remove when all has been handled in the new methods
+// export const getDamage = (
+// 	attacker: DetailedFighter,
+// 	opponent: DetailedFighter,
+// 	skill?: Skill,
+// 	item?: Item,
+// 	power?: number
+// ) => {
+// 	let attack = BASE_ATTACK_VALUE;
+// 	let defense = BASE_DEFENSE_VALUE;
+// 	let attackElements: ElementType[] = [];
 
-	// Calculate the attacker's attack score
-	// From a skill
-	if (skill && !power) {
-		// Cancel if intangible
-		if (hasStatus(opponent, Status.INTANGIBLE)) {
-			return {
-				damage: 0,
-				elements: []
-			};
-		}
+// 	// Calculate the attacker's attack score
+// 	// From a skill
+// 	if (skill && !power) {
+// 		// Cancel if intangible
+// 		if (hasStatus(opponent, Status.INTANGIBLE)) {
+// 			return {
+// 				damage: 0,
+// 				elements: []
+// 			};
+// 		}
 
-		// Get the skill base damage relative to the skill power
-		switch (skill) {
-			// Combustion inflicts a fixed amount, so the value is directly returned
-			case Skill.COMBUSTION: {
-				return {
-					damage: applyBalanceDamage(opponent, opponent.stats.base[ElementType.WOOD]),
-					elements: [ElementType.WOOD]
-				};
-			}
-			// 50% of the opponent's HP
-			case Skill.M_CURSED_WAND: {
-				return {
-					damage: Math.round(opponent.hp * 0.5),
-					elements: [ElementType.VOID]
-				};
-			}
-			// ECRASEMENT
-			case Skill.ECRASEMENT: {
-				// Get strongest element
-				const strongestElement = [
-					attacker.stats.base[ElementType.FIRE],
-					attacker.stats.base[ElementType.WATER],
-					attacker.stats.base[ElementType.WOOD],
-					attacker.stats.base[ElementType.LIGHTNING],
-					attacker.stats.base[ElementType.AIR]
-				].sort((a, b) => b - a)[0];
+// 		// Get the skill base damage relative to the skill power
+// 		switch (skill) {
+// 			// Combustion inflicts a fixed amount, so the value is directly returned
+// 			case Skill.COMBUSTION: {
+// 				return {
+// 					damage: applyBalanceDamage(opponent, opponent.stats.base[ElementType.WOOD]),
+// 					elements: [ElementType.WOOD]
+// 				};
+// 			}
+// 			// 50% of the opponent's HP
+// 			case Skill.M_CURSED_WAND: {
+// 				return {
+// 					damage: Math.round(opponent.hp * 0.5),
+// 					elements: [ElementType.VOID]
+// 				};
+// 			}
+// 			// ECRASEMENT
+// 			case Skill.ECRASEMENT: {
+// 				// Get strongest element
+// 				const strongestElement = [
+// 					attacker.stats.base[ElementType.FIRE],
+// 					attacker.stats.base[ElementType.WATER],
+// 					attacker.stats.base[ElementType.WOOD],
+// 					attacker.stats.base[ElementType.LIGHTNING],
+// 					attacker.stats.base[ElementType.AIR]
+// 				].sort((a, b) => b - a)[0];
 
-				const power = strongestElement * 5;
+// 				const power = strongestElement * 5;
 
-				attack += Math.max(power, 40);
+// 				attack += Math.max(power, 40);
 
-				break;
-			}
-			// M_DEMYOM_ATTACK
-			case Skill.M_DEMYOM_ATTACK: {
-				const power = attacker.stats.base[attacker.element] * 8;
+// 				break;
+// 			}
+// 			// M_DEMYOM_ATTACK
+// 			case Skill.M_DEMYOM_ATTACK: {
+// 				const power = attacker.stats.base[attacker.element] * 8;
 
-				attack += Math.max(power, 40);
+// 				attack += Math.max(power, 40);
 
-				break;
-			}
-			// M_GRIZOU
-			case Skill.M_GRIZOU: {
-				const power = attacker.stats.base[ElementType.VOID];
+// 				break;
+// 			}
+// 			// M_GRIZOU
+// 			case Skill.M_GRIZOU: {
+// 				const power = attacker.stats.base[ElementType.VOID];
 
-				attack += power;
+// 				attack += power;
 
-				break;
-			}
-			// Handle by default skills as an offensive skill with a list of element powers
-			default: {
-				const skillAttack = SkillAttacks[skill];
+// 				break;
+// 			}
+// 			// Handle by default skills as an offensive skill with a list of element powers
+// 			default: {
+// 				const skillAttack = SkillAttacks[skill];
 
-				if (!skillAttack) {
-					throw new Error(`Skill attack ${skill} not found`);
-				}
+// 				if (!skillAttack) {
+// 					throw new Error(`Skill attack ${skill} not found`);
+// 				}
 
-				attackElements = Object.keys(skillAttack).map(element => +element as ElementType);
+// 				attackElements = Object.keys(skillAttack).map(element => +element as ElementType);
 
-				// Don't use elements for fixed attacks
-				if (FixedSkillDamage.includes(skill)) {
-					attack += attackElements.reduce((acc, element) => {
-						const elementPower = skillAttack[element] || 0;
-						return acc + elementPower;
-					}, 0);
-				} else {
-					attack += attackElements.reduce((acc, element) => {
-						const elementPower = skillAttack[element] || 0;
-						const elementValue = attacker.stats.base[element];
-						return acc + elementPower * elementValue;
-					}, 0);
-				}
+// 				// Don't use elements for fixed attacks
+// 				if (FixedSkillDamage.includes(skill)) {
+// 					attack += attackElements.reduce((acc, element) => {
+// 						const elementPower = skillAttack[element] || 0;
+// 						return acc + elementPower;
+// 					}, 0);
+// 				} else {
+// 					attack += attackElements.reduce((acc, element) => {
+// 						const elementPower = skillAttack[element] || 0;
+// 						const elementValue = attacker.stats.base[element];
+// 						return acc + elementPower * elementValue;
+// 					}, 0);
+// 				}
 
-				break;
-			}
-		}
+// 				break;
+// 			}
+// 		}
 
-		// Add elemental bonuses corresponding to the skill elements
-		for (const element of attackElements) {
-			attack += attacker.skillElementalBonus[element];
-		}
-		// From an item
-	} else if (item) {
-		switch (item) {
-			case Item.SORCERERS_STICK: {
-				// 30% of the opponent's HP
-				attack = opponent.hp * 0.3;
-			}
-			default: {
-				console.warn(`Item ${item} not handled`);
-				break;
-			}
-		}
-		// From an assault (the assault can be triggered by a skill)
-	} else {
-		if (power && skill) {
-			attackElements = [...skillList[skill].element];
-		} else {
-			attackElements = [attacker.element];
-		}
+// 		// Add elemental bonuses corresponding to the skill elements
+// 		for (const element of attackElements) {
+// 			attack += attacker.skillElementalBonus[element];
+// 		}
+// 		// From an item
+// 	} else if (item) {
+// 		switch (item) {
+// 			case Item.SORCERERS_STICK: {
+// 				// 30% of the opponent's HP
+// 				attack = opponent.hp * 0.3;
+// 			}
+// 			default: {
+// 				console.warn(`Item ${item} not handled`);
+// 				break;
+// 			}
+// 		}
+// 		// From an assault (the assault can be triggered by a skill)
+// 	} else {
+// 		if (power && skill) {
+// 			attackElements = [...skillList[skill].element];
+// 		} else {
+// 			attackElements = [attacker.element];
+// 		}
 
-		// Intangible
-		if (hasStatus(opponent, Status.INTANGIBLE)) {
-			// Can hit intangible or is air element
-			if (attacker.canHitIntangible || attackElements.includes(ElementType.AIR)) {
-				return {
-					damage: 1,
-					elements: attackElements
-				};
-			} else {
-				return {
-					damage: 0,
-					elements: attackElements
-				};
-			}
-		}
+// 		// Intangible
+// 		if (hasStatus(opponent, Status.INTANGIBLE)) {
+// 			// Can hit intangible or is air element
+// 			if (attacker.canHitIntangible || attackElements.includes(ElementType.AIR)) {
+// 				return {
+// 					damage: 1,
+// 					elements: attackElements
+// 				};
+// 			} else {
+// 				return {
+// 					damage: 0,
+// 					elements: attackElements
+// 				};
+// 			}
+// 		}
 
-		const assaultElement = attackElements[0] || attacker.element;
-		let assaultValue = getBasicElementDamage(attacker, assaultElement, power);
+// 		const assaultElement = attackElements[0] || attacker.element;
+// 		let assaultValue = getBasicElementDamage(attacker, assaultElement, power);
 
-		// No extra damage if VOID
-		if (assaultElement === ElementType.VOID) {
-			assaultValue = 1;
-		}
+// 		// No extra damage if VOID
+// 		if (assaultElement === ElementType.VOID) {
+// 			assaultValue = 1;
+// 		}
 
-		// Damage from a normal hit
-		attack += assaultValue * (power || 1);
+// 		// Damage from a normal hit
+// 		attack += assaultValue * (power || 1);
 
-		// Add next assault bonus
-		attack += attacker.nextAssaultBonus;
-		attacker.nextAssaultBonus = 0;
+// 		// Add next assault bonus
+// 		attack += attacker.nextAssaultBonus;
+// 		attacker.nextAssaultBonus = 0;
 
-		// Multiply by next assault multiplier
-		attack *= attacker.nextAssaultMultiplier;
-		attacker.nextAssaultMultiplier = 1;
+// 		// Multiply by next assault multiplier
+// 		attack *= attacker.nextAssaultMultiplier;
+// 		attacker.nextAssaultMultiplier = 1;
 
-		// -25% damage if WEAKENED
-		if (hasStatus(attacker, Status.WEAKENED)) {
-			attack *= 0.75;
-		}
-	}
+// 		// -25% damage if WEAKENED
+// 		if (hasStatus(attacker, Status.WEAKENED)) {
+// 			attack *= 0.75;
+// 		}
+// 	}
 
-	// Add random attack bonus: up to 33%
-	const random_attack_bonus = (Math.random() * attack) / 3;
-	attack += random_attack_bonus;
+// 	// Add random attack bonus: up to 33%
+// 	const random_attack_bonus = (Math.random() * attack) / 3;
+// 	attack += random_attack_bonus;
 
-	// Apply global attack factor
-	attack *= ATTACK_GLOBAL_FACTOR;
+// 	// Apply global attack factor
+// 	attack *= ATTACK_GLOBAL_FACTOR;
 
-	// Calculate the opponent's defense score
-	// TODO for multi-element skills, there's a different calculation to use
-	const assaultElement = attackElements[0] || attacker.element;
-	defense += opponent.stats.defense[assaultElement];
+// 	// Calculate the opponent's defense score
+// 	// TODO for multi-element skills, there's a different calculation to use
+// 	const assaultElement = attackElements[0] || attacker.element;
+// 	defense += opponent.stats.defense[assaultElement];
 
-	// Add armor to the defense unless the attacker cancels it
-	if (!attacker.cancelArmor) {
-		defense += opponent.stats.special.armor;
-	}
+// 	// Add armor to the defense unless the attacker cancels it
+// 	if (!attacker.cancelArmor) {
+// 		defense += opponent.stats.special.armor;
+// 	}
 
-	let damage = attack - defense;
+// 	let damage = attack - defense;
 
-	// Smooth damage to prevent crazy numbers if both fighters require it
-	if (attacker.balanced && opponent.balanced) {
-		damage = balanceDamage(damage);
-	}
+// 	// Smooth damage to prevent crazy numbers if both fighters require it
+// 	if (attacker.balanced && opponent.balanced) {
+// 		damage = balanceDamage(damage);
+// 	}
 
-	damage = Math.round(damage);
+// 	damage = Math.round(damage);
 
-	// Set minimum damage
-	if (damage < attacker.minDamage) {
-		damage = attacker.minDamage;
-	}
-	// Set minimum damage for assaults only
-	if (!skill && damage < attacker.minAssaultDamage) {
-		damage = attacker.minAssaultDamage;
-	}
+// 	// Set minimum damage
+// 	if (damage < attacker.minDamage) {
+// 		damage = attacker.minDamage;
+// 	}
+// 	// Set minimum damage for assaults only
+// 	if (!skill && damage < attacker.minAssaultDamage) {
+// 		damage = attacker.minAssaultDamage;
+// 	}
 
-	// Absorb water damage if M_WORM
-	if (opponent.skills.some(skill => skill.id === Skill.M_WORM)) {
-		if (attackElements.includes(ElementType.WATER)) {
-			opponent.absorbed = damage;
-			damage = 0;
-		}
-	}
+// 	// Absorb water damage if M_WORM
+// 	if (opponent.skills.some(skill => skill.id === Skill.M_WORM)) {
+// 		if (attackElements.includes(ElementType.WATER)) {
+// 			opponent.absorbed = damage;
+// 			damage = 0;
+// 		}
+// 	}
 
-	return {
-		damage,
-		elements: attackElements
-	};
-};
+// 	return {
+// 		damage,
+// 		elements: attackElements
+// 	};
+// };
