@@ -1,7 +1,7 @@
 // @ts-check
 import { ref } from '../references_small.js';
 
-export const parts = {
+export const parts_small = {
 	// 473
 	right_wing: [
 		{
@@ -128,7 +128,7 @@ export const parts = {
 				// 493
 				{
 					colorIdx: 0,
-					ref: ref.pteroz.beak_broken,
+					ref: ref.pteroz.beak_mouth,
 					transform: {
 						tx: -2.75,
 						ty: 1.7
