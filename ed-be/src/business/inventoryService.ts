@@ -250,7 +250,7 @@ async function hatchEgg(item: ItemFiche, playerId: number) {
 			break;
 		case itemList.PTEROZ_EGG_RARE.itemId:
 			// TODO does not exist in MT's code: invent or remove. Currently placeholder.
-			// Note: there does not seem to be a rare thingy for the hippoclamp in the swf
+			// Note: there does not seem to be a rare thingy for the pteroz in the swf
 			// Color palette has no effect
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;

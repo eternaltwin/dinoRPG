@@ -208,8 +208,6 @@ export async function rewardFight(
 	const xpFactor = 1.0;
 	let totalWinXP = 0;
 
-	//TODO use Array<MonsterFiche> input rather than MonsterFiche
-
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
 
 	let fgold = 0;

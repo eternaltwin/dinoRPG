@@ -180,6 +180,12 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 			case 'expireEnvironment':
 				break;
 			case 'gainEnergy':
+				myFighter = fighters.find(f => f.id === step.fighter.id);
+				if (!myFighter) {
+					console.warn(`Cannot find fighter ${step.fighter.id}`);
+					return;
+				}
+				myFighter.energy += step.energy;
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [{ fid: step.fighter.id, energy: step.energy }]
