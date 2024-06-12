@@ -111,9 +111,10 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .roadmap {
-	position: absolute;
+	position: relative;
 	bottom: 0px;
-	width: 520px;
+	margin-top: 50px;
+	max-width: 520px;
 	& h3 {
 		color: #9a4029;
 		font-variant: small-caps;
