@@ -28,8 +28,8 @@
 	<div class="faq">
 		<h3 class="titleSection">{{ $t('faq.qa') }}</h3>
 		<dl class="results">
-			<template v-for="(pair, index) in filteredPairs" :key="index">
-				<dt @click="toggleCollapse(index)">
+			<template v-for="(pair, index) in filteredPairs" :key="pair.id">
+				<dt @click="toggleCollapse(pair.id)">
 					<span><img :src="getImgURL('icons', 'small_follow')" /></span>
 					<p v-html="formatContent(pair.question)" />
 				</dt>
@@ -39,10 +39,11 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 
 interface FaqPair {
+	id: number;
 	question: string;
 	answer: string;
 	collapsed: boolean;
@@ -55,57 +56,57 @@ export default defineComponent({
 	},
 	data() {
 		const faqPairs = ref<FaqPair[]>([
-			{ question: this.$t('faq.faq1.question'), answer: this.$t('faq.faq1.answer'), collapsed: true },
-			{ question: this.$t('faq.faq2.question'), answer: this.$t('faq.faq2.answer'), collapsed: true },
-			{ question: this.$t('faq.faq8.question'), answer: this.$t('faq.faq8.answer'), collapsed: true },
-			{ question: this.$t('faq.faq3.question'), answer: this.$t('faq.faq3.answer'), collapsed: true },
-			//{ question: this.$t('faq.faq9.question'), answer: this.$t('faq.faq9.answer'), collapsed: true },
-			{ question: this.$t('faq.faq10.question'), answer: this.$t('faq.faq10.answer'), collapsed: true },
-			{ question: this.$t('faq.faq4.question'), answer: this.$t('faq.faq4.answer'), collapsed: true },
-			{ question: this.$t('faq.faq5.question'), answer: this.$t('faq.faq5.answer'), collapsed: true },
-			{ question: this.$t('faq.faq6.question'), answer: this.$t('faq.faq6.answer'), collapsed: true },
-			{ question: this.$t('faq.faq11.question'), answer: this.$t('faq.faq11.answer'), collapsed: true },
-			{ question: this.$t('faq.faq12.question'), answer: this.$t('faq.faq12.answer'), collapsed: true },
-			{ question: this.$t('faq.faq13.question'), answer: this.$t('faq.faq13.answer'), collapsed: true },
-			//{ question: this.$t('faq.faq14.question'), answer: this.$t('faq.faq14.answer'), collapsed: true },
-			//{ question: this.$t('faq.faq15.question'), answer: this.$t('faq.faq15.answer'), collapsed: true },
-			//{ question: this.$t('faq.faq16.question'), answer: this.$t('faq.faq16.answer'), collapsed: true },
-			{ question: this.$t('faq.faq7.question'), answer: this.$t('faq.faq7.answer'), collapsed: true },
-			{ question: this.$t('faq.faq17.question'), answer: this.$t('faq.faq17.answer'), collapsed: true },
-			{ question: this.$t('faq.faq18.question'), answer: this.$t('faq.faq18.answer'), collapsed: true },
-			{ question: this.$t('faq.faq19.question'), answer: this.$t('faq.faq19.answer'), collapsed: true },
-			//{ question: this.$t('faq.faq20.question'), answer: this.$t('faq.faq20.answer'), collapsed: true },
-			{ question: this.$t('faq.faq21.question'), answer: this.$t('faq.faq21.answer'), collapsed: true },
-			{ question: this.$t('faq.faq22.question'), answer: this.$t('faq.faq22.answer'), collapsed: true },
-			{ question: this.$t('faq.faq23.question'), answer: this.$t('faq.faq23.answer'), collapsed: true },
-			{ question: this.$t('faq.faq24.question'), answer: this.$t('faq.faq24.answer'), collapsed: true },
-			{ question: this.$t('faq.faq25.question'), answer: this.$t('faq.faq25.answer'), collapsed: true },
-			//{ question: this.$t('faq.faq26.question'), answer: this.$t('faq.faq26.answer'), collapsed: true },
-			{ question: this.$t('faq.faq27.question'), answer: this.$t('faq.faq27.answer'), collapsed: true },
-			{ question: this.$t('faq.faq28.question'), answer: this.$t('faq.faq28.answer'), collapsed: true },
-			{ question: this.$t('faq.faq29.question'), answer: this.$t('faq.faq29.answer'), collapsed: true },
-			{ question: this.$t('faq.faq30.question'), answer: this.$t('faq.faq30.answer'), collapsed: true }
+			{ id: 1, question: this.$t('faq.faq1.question'), answer: this.$t('faq.faq1.answer'), collapsed: true },
+			{ id: 2, question: this.$t('faq.faq2.question'), answer: this.$t('faq.faq2.answer'), collapsed: true },
+			{ id: 3, question: this.$t('faq.faq8.question'), answer: this.$t('faq.faq8.answer'), collapsed: true },
+			{ id: 4, question: this.$t('faq.faq3.question'), answer: this.$t('faq.faq3.answer'), collapsed: true },
+			//{ id: 5, question: this.$t('faq.faq9.question'), answer: this.$t('faq.faq9.answer'), collapsed: true },
+			{ id: 6, question: this.$t('faq.faq10.question'), answer: this.$t('faq.faq10.answer'), collapsed: true },
+			{ id: 7, question: this.$t('faq.faq4.question'), answer: this.$t('faq.faq4.answer'), collapsed: true },
+			{ id: 8, question: this.$t('faq.faq5.question'), answer: this.$t('faq.faq5.answer'), collapsed: true },
+			{ id: 9, question: this.$t('faq.faq6.question'), answer: this.$t('faq.faq6.answer'), collapsed: true },
+			{ id: 10, question: this.$t('faq.faq11.question'), answer: this.$t('faq.faq11.answer'), collapsed: true },
+			{ id: 11, question: this.$t('faq.faq12.question'), answer: this.$t('faq.faq12.answer'), collapsed: true },
+			{ id: 12, question: this.$t('faq.faq13.question'), answer: this.$t('faq.faq13.answer'), collapsed: true },
+			//{ id: 13, question: this.$t('faq.faq14.question'), answer: this.$t('faq.faq14.answer'), collapsed: true },
+			//{ id: 14, question: this.$t('faq.faq15.question'), answer: this.$t('faq.faq15.answer'), collapsed: true },
+			//{ id: 15, question: this.$t('faq.faq16.question'), answer: this.$t('faq.faq16.answer'), collapsed: true },
+			{ id: 16, question: this.$t('faq.faq7.question'), answer: this.$t('faq.faq7.answer'), collapsed: true },
+			{ id: 17, question: this.$t('faq.faq17.question'), answer: this.$t('faq.faq17.answer'), collapsed: true },
+			{ id: 18, question: this.$t('faq.faq18.question'), answer: this.$t('faq.faq18.answer'), collapsed: true },
+			{ id: 19, question: this.$t('faq.faq19.question'), answer: this.$t('faq.faq19.answer'), collapsed: true },
+			//{ id: 20, question: this.$t('faq.faq20.question'), answer: this.$t('faq.faq20.answer'), collapsed: true },
+			{ id: 21, question: this.$t('faq.faq21.question'), answer: this.$t('faq.faq21.answer'), collapsed: true },
+			{ id: 22, question: this.$t('faq.faq22.question'), answer: this.$t('faq.faq22.answer'), collapsed: true },
+			{ id: 23, question: this.$t('faq.faq23.question'), answer: this.$t('faq.faq23.answer'), collapsed: true },
+			{ id: 24, question: this.$t('faq.faq24.question'), answer: this.$t('faq.faq24.answer'), collapsed: true },
+			{ id: 25, question: this.$t('faq.faq25.question'), answer: this.$t('faq.faq25.answer'), collapsed: true },
+			//{ id: 26, question: this.$t('faq.faq26.question'), answer: this.$t('faq.faq26.answer'), collapsed: true },
+			{ id: 27, question: this.$t('faq.faq27.question'), answer: this.$t('faq.faq27.answer'), collapsed: true },
+			{ id: 28, question: this.$t('faq.faq28.question'), answer: this.$t('faq.faq28.answer'), collapsed: true },
+			{ id: 29, question: this.$t('faq.faq29.question'), answer: this.$t('faq.faq29.answer'), collapsed: true },
+			{ id: 30, question: this.$t('faq.faq30.question'), answer: this.$t('faq.faq30.answer'), collapsed: true }
 		]);
 
 		const searchQuery = ref<string>('');
 
-		const toggleCollapse = (index: number) => {
-			faqPairs.value[index].collapsed = !faqPairs.value[index].collapsed;
+		const toggleCollapse = (id: number) => {
+			const pair = faqPairs.value.find(pair => pair.id === id);
+			if (pair) {
+				pair.collapsed = !pair.collapsed;
+			}
 		};
 
-		const filteredPairs = ref<FaqPair[]>(faqPairs.value);
-
-		const searchQuestion = () => {
+		const filteredPairs = computed(() => {
 			const searchTerm = searchQuery.value.toLowerCase();
-			filteredPairs.value = faqPairs.value.filter(pair => pair.question.toLowerCase().includes(searchTerm));
-		};
+			return faqPairs.value.filter(pair => pair.question.toLowerCase().includes(searchTerm));
+		});
 
 		return {
 			faqPairs,
 			searchQuery,
 			toggleCollapse,
-			filteredPairs,
-			searchQuestion
+			filteredPairs
 		};
 	}
 });
