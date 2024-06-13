@@ -2,16 +2,17 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
 import { Item } from '@drpg/core/models/item/ItemList';
-import { ATTACK_GLOBAL_FACTOR } from './fightConstants.js';
+import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from './fightConstants.js';
 import { FixedSkillDamage, SkillAttacks } from './skillAttacks.js';
 import { hasStatus } from './fightMethods.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
-export const DEFAULT_ATTACK_POWER = 5;
 
-export const getBasicElementDamage = (fighter: DetailedFighter, element: ElementType, power?: number) => {
-	return fighter.stats.base[element] * (power || DEFAULT_ATTACK_POWER) + fighter.stats.assaultBonus[element];
+// Gets the assault value for a given element
+// Does not take into account multipliers and next-assault-type bonuses
+export const getAssaultValue = (fighter: DetailedFighter, element: ElementType, power?: number) => {
+	return fighter.stats.base[element] * (power || ASSAULT_POWER) + fighter.stats.assaultBonus[element] + fighter.allAssaultBonus;
 };
 
 // Balance the damage if the fighter (supposedly the target of the damage) requires balanced damage
@@ -113,12 +114,13 @@ export const getAttackDefense = (
 
 	// Add close combat specific bonuses
 	if (isCloseCombat) {
-		attack += attacker.nextAssaultBonus;
-		attack *= attacker.nextAssaultMultiplier;
+		attack += attacker.nextAssaultBonus + attacker.allAssaultBonus;
+		attack *= attacker.nextAssaultMultiplier * attacker.allAssaultMultiplier;
 		attacker.nextAssaultBonus = 0;
 		attacker.nextAssaultMultiplier = 1;
 	}
 
+	// TODO this needs to be reworked, see Abysse
 	// -25% to attack score if attacker is WEAKENED
 	if (hasStatus(attacker, Status.WEAKENED)) {
 		attack *= 0.75;

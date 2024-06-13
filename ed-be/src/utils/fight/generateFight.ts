@@ -18,7 +18,7 @@ import {
 	stepFighter,
 	updateStat
 } from './fightMethods.js';
-import { getBasicElementDamage } from './getDamage.js';
+import { getAssaultValue } from './getDamage.js';
 import randomBetween from './randomBetween.js';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -222,7 +222,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 					ElementType.WATER,
 					ElementType.LIGHTNING,
 					ElementType.AIR
-				].sort((a, b) => getBasicElementDamage(opponent, a) - getBasicElementDamage(opponent, b))[0] as ElementType;
+				].sort((a, b) => getAssaultValue(opponent, a) - getAssaultValue(opponent, b))[0] as ElementType;
 
 				// Lock opponent for 3 turns
 				opponent.element = weakestElement;

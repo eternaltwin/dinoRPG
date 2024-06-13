@@ -14,7 +14,7 @@ import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat'
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { TIME_BASE, TIME_FACTOR } from './fightConstants.js';
 import { createStatus, setMaxEnergy } from './fightMethods.js';
-import { getBasicElementDamage } from './getDamage.js';
+import { getAssaultValue } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { DetailedFight } from './generateFight.js';
@@ -172,6 +172,8 @@ export const initializeDinoz = (
 			[ElementType.WOOD]: 0,
 			[ElementType.VOID]: 0
 		},
+		allAssaultBonus: 0,
+		allAssaultMultiplier: 1,
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
 		costume,
@@ -289,6 +291,8 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		minDamage: dinoz.minDamage,
 		minAssaultDamage: dinoz.minAssaultDamage,
 		skillElementalBonus: dinoz.skillElementalBonus,
+		allAssaultBonus: dinoz.allAssaultBonus,
+		allAssaultMultiplier: 1, // Not carried over to clone from original dinoz
 		nextAssaultBonus: 0, // Not carried over to clone from original dinoz
 		nextAssaultMultiplier: 1, // Not carried over to clone from original dinoz
 		costume: undefined,
@@ -474,6 +478,8 @@ export const initializeMonster = (
 			[ElementType.WOOD]: 0,
 			[ElementType.VOID]: 0
 		},
+		allAssaultBonus: 0,
+		allAssaultMultiplier: 1,
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
 		invocations: 0,
@@ -578,6 +584,10 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 	);
 
 	// FIRE
+	if (fighterHas[Skill.FORCE]) {
+		fighter.allAssaultBonus += 1;
+	}
+
 	if (fighterHas[Skill.CHARGE]) {
 		fighter.nextAssaultBonus += 5;
 	}
@@ -825,7 +835,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 
 		// ITEMS
 		if (team1[Item.EMBER] || team2[Item.EMBER]) {
-			fighter.stats.assaultBonus[ElementType.FIRE] += getBasicElementDamage(fighter, ElementType.FIRE) * 0.3;
+			fighter.stats.assaultBonus[ElementType.FIRE] += getAssaultValue(fighter, ElementType.FIRE) * 0.3;
 		}
 		if (team1[Item.BEER] || team2[Item.BEER]) {
 			fighter.status.push(createStatus(Status.BEER));

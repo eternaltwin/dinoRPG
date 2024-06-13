@@ -33,7 +33,7 @@ import {
 	VOID_ASSAULT_POWER
 } from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
-import { applyBalanceDamage, calculateDamage, getAttackDefense, getBasicElementDamage, getElementalAttack, getMultiElementalAttack } from './getDamage.js';
+import { applyBalanceDamage, calculateDamage, getAssaultValue, getAttackDefense, getElementalAttack, getMultiElementalAttack } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
 import randomBetween, { randomBetweenMaxExcluded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
@@ -938,6 +938,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			// Add WEAKENED to all fighters with WATER < 10
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.WATER] < 10) {
+					// TODO: this probably needs rework as it applies a nextAssaultMultiplier = 0.75
 					addStatus(fightData, f, Status.WEAKENED);
 				}
 			});
@@ -1230,18 +1231,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fighter.skills = [];
 				fighter.items = [];
 
-				const fire = getBasicElementDamage(fighter, ElementType.FIRE);
-				const water = getBasicElementDamage(fighter, ElementType.WATER);
-				const wood = getBasicElementDamage(fighter, ElementType.WOOD);
-				const lightning = getBasicElementDamage(fighter, ElementType.LIGHTNING);
-				const air = getBasicElementDamage(fighter, ElementType.AIR);
-
-				// x2 to assault damages
-				fighter.stats.assaultBonus[ElementType.FIRE] += fire;
-				fighter.stats.assaultBonus[ElementType.WATER] += water;
-				fighter.stats.assaultBonus[ElementType.WOOD] += wood;
-				fighter.stats.assaultBonus[ElementType.LIGHTNING] += lightning;
-				fighter.stats.assaultBonus[ElementType.AIR] += air;
+				fighter.allAssaultMultiplier = 2;
 
 				break;
 			}
