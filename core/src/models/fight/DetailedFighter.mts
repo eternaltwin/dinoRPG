@@ -109,6 +109,7 @@ export interface DetailedFighter {
 	maxEnergy: number;
 	stats: {
 		base: Record<ElementType, number>;
+		// Assault elemental bonuses
 		assaultBonus: Record<ElementType, number>;
 		defense: Record<ElementType, number>;
 		special: Record<SpecialStatUsedInFights, number>;
@@ -152,6 +153,8 @@ export interface DetailedFighter {
 	skillElementalBonus: Record<ElementType, number>;
 	nextSkill?: SkillDetails;
 	// Assault bonuses
+	allAssaultBonus: number;
+	allAssaultMultiplier: number;
 	nextAssaultBonus: number;
 	nextAssaultMultiplier: number;
 	// Cancel armor

@@ -3,7 +3,6 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from './fightConstants.js';
-import { FixedSkillDamage, SkillAttacks } from './skillAttacks.js';
 import { hasStatus } from './fightMethods.js';
 
 const BASE_ATTACK_VALUE = 2;

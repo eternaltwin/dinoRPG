@@ -588,6 +588,10 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 		fighter.allAssaultBonus += 1;
 	}
 
+	if (fighterHas[Skill.ARTS_MARTIAUX]) {
+		fighter.allAssaultBonus += 2;
+	}
+
 	if (fighterHas[Skill.CHARGE]) {
 		fighter.nextAssaultBonus += 5;
 	}
