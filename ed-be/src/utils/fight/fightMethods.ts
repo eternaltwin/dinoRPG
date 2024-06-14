@@ -741,43 +741,54 @@ const checkSkillEvasion = (opponent: DetailedFighter) => {
 	return evaded;
 };
 
-/// Triggers an attack of type assault, it targets a single target in close combat
-/// By default, it is assumed that the assault is a normal one (not triggered from a skill)
-/// This method will perform target selection with assault rules if no target is provided
-// Unless specific, it is expected to combo
+// Triggers an attack of type assault, it targets a single target in close combat
+// By default, it is assumed that the assault is a normal one (not triggered from a skill)
+// This method will perform target selection with assault rules if no target is provided
+// Unless specified, this is assimilated as a assault, will be able to combo and use assault bonuses
+// Unless specified, the attacker will move to its target by default
 const launchAssault = (
 	fightData: DetailedFight,
 	attacker: DetailedFighter,
 	target?: DetailedFighter,
-	allowCombo?: boolean,
+	isAssault?: boolean, // Defines if the assault can combo and use assault bonuses
 	skill?: Skill,
 	power?: [ElementType, number][],
-	stepIndex?: number
+	// stepIndex?: number,
+	goto?: boolean,
 ) => {
+	if (goto === undefined) {
+		goto = true; // Cannot use the || symbol because it becomes a logical operation if goto is defined
+	}
+
 	if (target === undefined) {
 		// Get random opponent
 		target = getRandomOpponentForAssault(fightData, attacker);
 	}
 
-	// Add target if the step exists already
-	if (stepIndex) {
-		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: target.id });
-	}
+	// // Add target if the step exists already
+	// if (stepIndex) {
+	// 	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: target.id });
+	// }
 
-	// Add moveTo step
-	fightData.steps.push({
-		action: 'moveTo',
-		fid: attacker.id,
-		tid: target.id
-	});
+	console.log(`${goto}`);
+
+	if (goto)
+	{
+		// Add moveTo step
+		fightData.steps.push({
+			action: 'moveTo',
+			fid: attacker.id,
+			tid: target.id
+		});
+	}
 
 	let assault_attack = power || getElementalAttack(attacker, attacker.element, attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER);
 
 	// Trigger fighter attack
-	let result = attackTarget(fightData, attacker, target, allowCombo || true, false, assault_attack, skill, stepIndex);
+	let result = attackTarget(fightData, attacker, target, isAssault || true, assault_attack, skill); //), stepIndex);
 
 	// Add moveBack step if attacker is still alive
-	if (attacker.hp > 0) {
+	if (goto && attacker.hp > 0) {
 		fightData.steps.push({
 			action: 'moveBack',
 			fid: attacker.id
@@ -804,7 +815,7 @@ const attackSingleOpponent = (
 	// Add target
 	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: opponent.id });
 
-	return attackTarget(fightData, fighter, opponent, false, false, element_attack, skill, stepIndex);
+	return attackTarget(fightData, fighter, opponent, false, element_attack, skill, stepIndex);
 };
 
 /// Triggers an attack from a skill that targets all fighters of the opposing team
@@ -833,7 +844,7 @@ const attackAllOpponents = (
 		// Add target
 		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: target.id });
 
-		attackTarget(fightData, fighter, target, false, false, element_attack, skill, stepIndex);
+		attackTarget(fightData, fighter, target, false, element_attack, skill, stepIndex);
 	});
 };
 
@@ -1955,7 +1966,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		case Skill.ENVOL: {
 			// Attack opponent
-			launchAssault(fightData, fighter, undefined, true);
+			launchAssault(fightData, fighter, undefined, true, skill.id);
 
 			// Check if fighter is not dead
 			if (fighter.hp > 0) {
@@ -1976,7 +1987,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fighter.nextAssaultBonus += 2 * fighter.stats.base[ElementType.AIR];
 
 			// Attack opponent
-			launchAssault(fightData, fighter, undefined, true);
+			launchAssault(fightData, fighter, undefined, true, skill.id);
 			break;
 		}
 		case Skill.NUAGE_TOXIQUE: {
@@ -1991,9 +2002,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fighter.nextAssaultMultiplier *= 2;
 
 			// Attack opponent
-			const hit = launchAssault(fightData, fighter, undefined, true);
+			const hit = launchAssault(fightData, fighter, undefined, true, skill.id);
 
-			if (hit) {
+			if (hit.hpLost > 0) {
 				// Increase time
 				fighter.time += 15 * TIME_FACTOR;
 			}
@@ -2104,27 +2115,18 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 12), skill.id, stepIndex);
 			break;
 		case Skill.PAUME_CHALUMEAU: {
-			// Increase time
+			// Increase time of the attacker
 			fighter.time += 15 * TIME_FACTOR;
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 10), skill.id, stepIndex);
+			// This skill cannot combo but is an assault
+			launchAssault(fightData, fighter, undefined, false, skill.id, getElementalAttack(fighter, ElementType.FIRE, 10));
 			break;
 		}
 		case Skill.KAMIKAZE: {
-			// const skillTarget = attackSingleOpponent(fightData, fighter, skill, step);
-			const opponent = getRandomOpponent(fightData, fighter);
-			launchAssault(fightData, fighter, opponent, true, Skill.KAMIKAZE);
+			// This skill cannot combo but is an assault
+			launchAssault(fightData, fighter, undefined, false, skill.id, getElementalAttack(fighter, ElementType.FIRE, 15));
 
 			// Loose 50% HP
-			const hpLost = Math.round(fighter.hp / 2);
-			fighter.hp -= hpLost;
-
-			// Add looseHp step
-			fightData.steps.push({
-				action: 'looseHp',
-				fid: fighter.id,
-				hp: hpLost,
-				fx: LifeEffect.Explode
-			});
+			loseHp(fightData, fighter, Math.round(fighter.hp / 2), LifeEffect.Fire);
 			break;
 		}
 		case Skill.SIESTE: {
@@ -2178,6 +2180,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push({ tid: opponent.id });
 
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fid: fighter.id,
+				tid: opponent.id
+			});
+
 			for (let i = 0; i < 5; i++) {
 				// Fighter attacks opponent
 				launchAssault(
@@ -2186,8 +2195,18 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					opponent,
 					false,
 					Skill.DANSE_FOUDROYANTE,
-					getElementalAttack(fighter, ElementType.LIGHTNING, 3)
+					getElementalAttack(fighter, ElementType.LIGHTNING, 3),
+					// undefined,
+					false
 				);
+			}
+
+			// Add moveBack step if attacker is still alive
+			if (fighter.hp > 0) {
+				fightData.steps.push({
+					action: 'moveBack',
+					fid: fighter.id
+				});
 			}
 			break;
 		}
@@ -2212,9 +2231,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const opponent = getRandomOpponentForAssault(fightData, fighter);
 
-			const hit = launchAssault(fightData, fighter, opponent, true);
+			const hit = launchAssault(fightData, fighter, opponent, true, skill.id);
 
-			if (hit) {
+			if (hit.hpLost > 0) {
 				let damage = 0;
 
 				// 0 damage if boss or Skill.PERCEPTION
@@ -2223,7 +2242,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					damage = applyBalanceDamage(opponent, Math.round(opponent.hp / 2));
 				}
 
-				loseHpBalanced(fightData, opponent, damage, LifeEffect.Skull, stepIndex);
+				loseHpBalanced(fightData, opponent, damage, LifeEffect.Skull);
 			}
 			break;
 		}
@@ -2246,9 +2265,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const opponent = getRandomOpponentForAssault(fightData, fighter);
 
-			const hit = launchAssault(fightData, fighter, opponent, true);
+			const hit = launchAssault(fightData, fighter, opponent, true, skill.id);
 
-			if (hit) {
+			if (hit.hpLost > 0) {
 				let damage = 0;
 
 				// 0 damage if boss or Skill.PERCEPTION
@@ -2257,7 +2276,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					damage = applyBalanceDamage(opponent, opponent.hp);
 				}
 
-				loseHpBalanced(fightData, opponent, damage, LifeEffect.Skull, stepIndex);
+				loseHpBalanced(fightData, opponent, damage, LifeEffect.Skull);
 			}
 			break;
 		}
@@ -2978,7 +2997,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			// Attack opponent with a classic asssault
 			// Note: in MT code it calls directly `attackTarget` but with all descriptors of an assault
-			launchAssault(fightData, fighter, opponent, false, skill.id, undefined, stepIndex);
+			launchAssault(fightData, fighter, opponent, false, skill.id);
 
 			// Cancel FLYING and INTANGIBLE
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
@@ -3031,24 +3050,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fid: fighter.id,
-				tid: opponent.id
-			});
-
 			// Attack opponent
-			launchAssault(fightData, fighter, opponent, false, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
-
-			// Check if fighter is not dead
-			if (fighter.hp > 0) {
-				// Add moveBack step
-				fightData.steps.push({
-					action: 'moveBack',
-					fid: fighter.id
-				});
-			}
+			launchAssault(fightData, fighter, opponent, true, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
 
 			// Remove status
 			removeStatus(fightData, fighter, Status.M_ABSORB);
@@ -3058,26 +3061,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fid: fighter.id,
-				tid: opponent.id
-			});
-
 			// Attack opponent
-			launchAssault(fightData, fighter, opponent, true);
+			launchAssault(fightData, fighter, opponent, true, skill.id);
 
 			// If not dead
 			if (fighter.hp > 0) {
 				// Add FLYING
 				addStatus(fightData, fighter, Status.FLYING);
-
-				// Add moveBack step
-				fightData.steps.push({
-					action: 'moveBack',
-					fid: fighter.id
-				});
 			}
 			break;
 		}
@@ -3089,36 +3079,20 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_BITE: {
-			launchAssault(fightData, fighter, undefined, false, Skill.M_BITE, [[ElementType.VOID, 7]]);
+			launchAssault(fightData, fighter, undefined, true, Skill.M_BITE, [[ElementType.VOID, 7]]);
 			break;
 		}
 		case Skill.M_STINGER: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fid: fighter.id,
-				tid: opponent.id
-			});
-
 			// Fighter attacks opponent
-			launchAssault(fightData, fighter, opponent, false, Skill.M_BITE, [[ElementType.VOID, 7]]);
+			const hit = launchAssault(fightData, fighter, opponent, true, Skill.M_STINGER, [[ElementType.VOID, 7]]);
 
 			// Check if opponent is not dead
-			if (opponent.hp > 0) {
+			if (hit.target && hit.hpLost > 0) {
 				// Add poison
 				poison(fightData, opponent, fighter, Skill.M_STINGER);
-			}
-
-			// Check if fighter is not dead
-			if (fighter.hp > 0) {
-				// Add moveBack step
-				fightData.steps.push({
-					action: 'moveBack',
-					fid: fighter.id
-				});
 			}
 
 			// Half the probability of this skill
@@ -3151,18 +3125,11 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fid: fighter.id,
-				tid: opponent.id
-			});
-
 			// Fighter attacks opponent
-			launchAssault(fightData, fighter, opponent, true);
+			const hit = launchAssault(fightData, fighter, opponent, true, skill.id);
 
 			// Check if fighter is not dead
-			if (fighter.hp > 0) {
+			if (hit.target && hit.hpLost > 0) {
 				const goldStolen = (randomBetween(0, 5) + 8) * 10;
 				fighter.goldStolen = {
 					...fighter.goldStolen,
@@ -3185,12 +3152,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				flee.priority = 1;
 				flee.probability = 60;
 				fighter.skills.push(flee);
-
-				// Add moveBack step
-				fightData.steps.push({
-					action: 'moveBack',
-					fid: fighter.id
-				});
 			}
 			break;
 		}
@@ -3215,24 +3176,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			sameRace.forEach(ally => {
-				// Add moveTo step
-				fightData.steps.push({
-					action: 'moveTo',
-					fid: ally.id,
-					tid: opponent.id
-				});
-
 				// Ally attacks opponent
 				launchAssault(fightData, ally, opponent, true);
-
-				// Check if fighter is not dead
-				if (ally.hp > 0) {
-					// Add moveBack step
-					fightData.steps.push({
-						action: 'moveBack',
-						fid: ally.id
-					});
-				}
 			});
 			break;
 		}
@@ -3567,22 +3512,21 @@ const attackTarget = (
 	fightData: DetailedFight,
 	attacker: DetailedFighter,
 	target: DetailedFighter,
-	closeCombat?: boolean,
-	allowCombo?: boolean,
+	isAssault?: boolean,
 	element_attack?: [ElementType, number][],
 	skill?: Skill,
 	stepIndex?: number
 ) => {
-	// By default, the attack is considered not close combat and without combo
-	const isCloseCombat = closeCombat || false;
-	const canCombo = allowCombo || false;
+	// By default, the attack is considered not an assault and cannot combo
+	isAssault = isAssault || false;
+	const canCombo = isAssault || false;
 
 	// Abort if fighter is dead
 	if (attacker.hp <= 0) {
 		return {
 			attacker: attacker,
 			target: target,
-			isCloseCombat: isCloseCombat,
+			isAssault: isAssault,
 			evasion: false,
 			hpLost: 0,
 		}
@@ -3628,7 +3572,7 @@ const attackTarget = (
 		element_attack  = getElementalAttack(attacker, attacker.element, attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER);
 	}
 
-	let { attack, defense, elements } = getAttackDefense(attacker, target, element_attack, isCloseCombat);
+	let { attack, defense, elements } = getAttackDefense(attacker, target, element_attack, isAssault);
 
 	let totalDamage = 0;
 	let totalEnergyCost = energyCost;
@@ -3644,7 +3588,7 @@ const attackTarget = (
 		attacker.comboCounter++;
 
 		// Get damage
-		let damage = calculateDamage(attacker, target, attack, defense, isCloseCombat);
+		let damage = calculateDamage(attacker, target, attack, defense, isAssault);
 
 		// // Add attempt step
 		// fightData.steps.push({
@@ -3660,13 +3604,13 @@ const attackTarget = (
 			target,
 			damage,
 			elements,
-			isCloseCombat,
+			isAssault,
 			skill ? skillList[skill].type !== SkillType.I : false
 		);
 
 		// Check for assault dodge
 		let isDodged = false;
-		if (isCloseCombat && Math.random() < target.stats.special.evasion - 1) {
+		if (isAssault && Math.random() < target.stats.special.evasion - 1) {
 			isDodged = true;
 		}
 
@@ -3676,7 +3620,7 @@ const attackTarget = (
 		// Check for special statuses: flying, intangible, dazzled
 		// FLYING
 		if (
-			isCloseCombat &&
+			isAssault &&
 			// Opponent has FLYING
 			hasStatus(realOpponent, Status.FLYING) &&
 			// Attacker doesn't have FLYING
@@ -3697,7 +3641,7 @@ const attackTarget = (
 		// INTANGIBLE
 		let break_intangible = false;
 		if (hasStatus(target, Status.INTANGIBLE)) {
-			if ((isCloseCombat && attacker.canHitIntangible) || elements.some(e => e == ElementType.AIR)) {
+			if ((isAssault && attacker.canHitIntangible) || elements.some(e => e == ElementType.AIR)) {
 				damage = 1;
 				break_intangible = true;
 			} else {
@@ -3758,10 +3702,10 @@ const attackTarget = (
 		totalEnergyCost += energyCost;
 
 		// Check for after attack effects of the attacker
-		checkAfterAttackEffects(fightData, attacker, target, damage, elements, isCloseCombat, isDodged);
+		checkAfterAttackEffects(fightData, attacker, target, damage, elements, isAssault, isDodged);
 
 		// Check for after defense effects of the target
-		checkAfterDefenseEffects(fightData, attacker, target, damage, elements, isCloseCombat, isDodged);
+		checkAfterDefenseEffects(fightData, attacker, target, damage, elements, isAssault, isDodged);
 
 		// Check for combo
 		if (canCombo) {
@@ -3793,7 +3737,7 @@ const attackTarget = (
 
 	// The target can counter if it's still alive and the attack was in close combat
 	if (target.hp > 0) {
-		if (isCloseCombat && counterAttack(fightData, target)) {
+		if (isAssault && counterAttack(fightData, target)) {
 			// Add counter step
 			fightData.steps.push({
 				action: 'counter',
@@ -3802,7 +3746,7 @@ const attackTarget = (
 			});
 
 			// Opponent attacks fighter: the counter can combo
-			attackTarget(fightData, target, attacker, true, true);
+			attackTarget(fightData, target, attacker, true);
 		}
 	}
 
@@ -3822,7 +3766,7 @@ const attackTarget = (
 	return {
 		attacker: attacker,
 		target: target,
-		isCloseCombat: isCloseCombat,
+		isAssault: isAssault,
 		evasion: evasion,
 		hpLost: totalDamage,
 	};

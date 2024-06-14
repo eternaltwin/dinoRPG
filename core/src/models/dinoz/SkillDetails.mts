@@ -56,7 +56,7 @@ export interface SkillDetails {
 	tree?: SkillTree;
 	unlockedFrom?: Skill[];
 	raceId?: number[]; // For specific race skill (ex : fly for Pteroz)
-	isBaseSkill: boolean; // If true : dinoz knows this skill when he's bought
+	isBaseSkill: boolean; // If true : dinoz knows this skill when bought
 	isSphereSkill: boolean; // true : the skill can only be learned with a sphere object
 	effects?: SkillEffects;
 	globalEffects?: SkillEffects;

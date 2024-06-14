@@ -318,7 +318,7 @@ export enum Skill {
 	M_BITE = 99914,
 	M_ELEMENTAL = 99915,
 	M_DISABLE = 99916,
-	M_STINGER = 99917,
+	M_STINGER = 99917, // noted as "scorp" in MT's code, Venerable's skill
 	M_WORM = 99918,
 	M_WORM_2 = 99919,
 	M_POISONED_PICKS = 99920,
@@ -331,7 +331,7 @@ export enum Skill {
 	M_CONTAMINATION = 99929,
 	M_ELEMENTAL_DISCIPLE = 99930, // noted as "elhelp" in MT's code, Elemental Disciple's skill
 	M_CURSED_WAND = 99931,
-	M_ALL_FOR_ONE = 99932,
+	M_ALL_FOR_ONE = 99932, // noted as "attall" in MT's code, Elemental Disciple's skill
 	M_INITIATIVE_RESET = 99933,
 	M_HEAL_GROUP = 99934,
 	M_LAST_BREATH = 99935,
