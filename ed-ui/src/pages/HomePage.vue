@@ -217,19 +217,15 @@ export default defineComponent({
 		align-self: center;
 		max-width: 1280px;
 		margin: 1em 3vw;
-
 		.box {
 			position: relative;
 			max-width: calc(640px - 2em);
 			margin: 1em 1em 1em;
 			padding: 1em 1.5em;
-
 			@include corner-bezel(18.5px);
-
 			box-shadow: inset 0 0 2.1em 1.2em #b4e0ff;
 			background-color: #52b6ff;
 		}
-
 		p {
 			text-align: justify;
 			font-size: 15px;
@@ -239,7 +235,6 @@ export default defineComponent({
 				arial;
 			color: #016390;
 		}
-
 		img {
 			width: auto;
 			height: auto;
@@ -248,7 +243,6 @@ export default defineComponent({
 			border-radius: 0.4em;
 			background-color: rgba(15, 15, 67, 0.5);
 		}
-
 		a {
 			color: #016390;
 			font-weight: bold;
@@ -283,7 +277,6 @@ export default defineComponent({
 			font-size: 1.2em;
 			font-style: normal;
 			font-weight: bold;
-
 			//    &.red { color: #ff4e64; }
 			&.red {
 				color: inherit;
@@ -296,34 +289,51 @@ export default defineComponent({
 		display: flex;
 		justify-content: center;
 		position: relative;
-		margin-top: -12em;
+		margin-top: -8em;
 	}
 	td {
 		text-align: center;
+		padding: 0;
 	}
 	table {
 		border-collapse: collapse;
 		border-spacing: 0;
+		width: 100%;
 	}
 	.right {
 		background-position: left top;
 		background-image: url('../assets/background/bg_ciel.webp');
-		width: 50%;
-		background-repeat: repeat-x;
 	}
 	.left {
 		background-position: right top;
 		background-image: url('../assets/background/bg_ciel.webp');
-		width: 50%;
+	}
+	.right,
+	.left {
 		background-repeat: repeat-x;
+		width: 50%;
+		@media (max-width: 1024px) {
+			width: 1%;
+		}
+		@media (max-width: 1010px) {
+			width: 0%;
+		}
 	}
 	.centerHeader {
 		background-image: url('../assets/background/sky_headerbg_02.webp');
 		background-repeat: no-repeat;
+		background-position: center;
 		width: 1008px;
 		height: 510px;
 		margin: 0;
 		padding: 0;
+		@media (max-width: 1024px) {
+			width: 100%;
+		}
+		@media (max-width: 768px) {
+			background-image: url('../assets/background/sky_headerbg.webp');
+			background-size: cover;
+		}
 	}
 	.sign {
 		position: inherit;
@@ -346,6 +356,17 @@ export default defineComponent({
 			-1px 1px 0 #a5d9ff,
 			1px -1px 0 #a5d9ff,
 			0 2px 2px #0076cc;
+		padding: 10px;
+		overflow: hidden;
+		animation: disappear 2s infinite alternate;
+	}
+	@keyframes disappear {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
 	}
 	.sign:hover {
 		color: #52b6ff;
@@ -360,6 +381,18 @@ export default defineComponent({
 			-1px 1px 0 white,
 			1px -1px 0 white,
 			0 2px 2px #0076cc;
+		animation: none;
+	}
+	.sign:hover::before {
+		animation: appear 2s infinite alternate;
+	}
+	@keyframes appear {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 	.bloc {
 		width: 53em;

@@ -28,7 +28,7 @@
 	<div class="faq">
 		<h3 class="titleSection">{{ $t('faq.qa') }}</h3>
 		<dl class="results">
-			<template v-for="(pair, index) in filteredPairs" :key="pair.id">
+			<template v-for="pair in filteredPairs" :key="pair.id">
 				<dt @click="toggleCollapse(pair.id)">
 					<span><img :src="getImgURL('icons', 'small_follow')" /></span>
 					<p v-html="formatContent(pair.question)" />
