@@ -34,6 +34,15 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.RASCAPHANDRE_DECOY
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: DinozStatusId.JVBZ,
+				reverse: true
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: DinozStatusId.FRETURN
 			}
 		]
 	},
@@ -43,7 +52,7 @@ export const JOVEBOZE_RASCA: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.JVBZ,
+				value: DinozStatusId.FRETURN,
 				reverse: true
 			}
 		]

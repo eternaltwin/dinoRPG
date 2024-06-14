@@ -51,6 +51,14 @@ export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.SWAMP_MUD,
 				reverse: true
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: DinozStatusId.ZORS_GLOVE
+			},
+			{
+				rewardType: RewardEnum.STATUS,
+				value: DinozStatusId.FRETURN
 			}
 		]
 	},
@@ -60,7 +68,8 @@ export const ARCHISAGE: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
-				value: DinozStatusId.ZORS_GLOVE
+				value: DinozStatusId.FRETURN,
+				reverse: true
 			}
 		]
 	},
