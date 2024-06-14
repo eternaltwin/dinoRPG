@@ -14,14 +14,14 @@
 			</div>
 			<div style="display: flex; width: 100%; max-height: 100%">
 				<div style="width: 50%">
-					<TwinoidGoals :accountStats="accountData.stats"></TwinoidGoals>
+					<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>
 				</div>
 				<div style="width: 50%; display: flex; flex-direction: column">
-					<Profile :accountData="accountData"></Profile>
-					<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
+					<Profile :accountData="accountData" :key="accountData"></Profile>
+					<EpicRewards :epicRewards="accountData.epicRewards" :key="accountData.epicRewards"></EpicRewards>
 				</div>
 			</div>
-			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData"></MyDinoz>
+			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
 			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />
 		</div>
 	</div>
