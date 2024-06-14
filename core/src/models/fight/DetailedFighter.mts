@@ -109,7 +109,7 @@ export interface DetailedFighter {
 	maxEnergy: number;
 	stats: {
 		base: Record<ElementType, number>;
-		// Assault elemental bonuses
+		// Assault elemental bonuses. This includes the "allAssaultBonus" from MT too, as it is just handled as a bonus for all assault elements.
 		assaultBonus: Record<ElementType, number>;
 		defense: Record<ElementType, number>;
 		special: Record<SpecialStatUsedInFights, number>;
@@ -153,7 +153,6 @@ export interface DetailedFighter {
 	skillElementalBonus: Record<ElementType, number>;
 	nextSkill?: SkillDetails;
 	// Assault bonuses
-	allAssaultBonus: number;
 	allAssaultMultiplier: number;
 	nextAssaultBonus: number;
 	nextAssaultMultiplier: number;

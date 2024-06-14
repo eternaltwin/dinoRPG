@@ -172,7 +172,6 @@ export const initializeDinoz = (
 			[ElementType.WOOD]: 0,
 			[ElementType.VOID]: 0
 		},
-		allAssaultBonus: 0,
 		allAssaultMultiplier: 1,
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
@@ -291,7 +290,6 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		minDamage: dinoz.minDamage,
 		minAssaultDamage: dinoz.minAssaultDamage,
 		skillElementalBonus: dinoz.skillElementalBonus,
-		allAssaultBonus: dinoz.allAssaultBonus,
 		allAssaultMultiplier: 1, // Not carried over to clone from original dinoz
 		nextAssaultBonus: 0, // Not carried over to clone from original dinoz
 		nextAssaultMultiplier: 1, // Not carried over to clone from original dinoz
@@ -478,7 +476,6 @@ export const initializeMonster = (
 			[ElementType.WOOD]: 0,
 			[ElementType.VOID]: 0
 		},
-		allAssaultBonus: 0,
 		allAssaultMultiplier: 1,
 		nextAssaultBonus: 0,
 		nextAssaultMultiplier: 1,
@@ -584,14 +581,6 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 	);
 
 	// FIRE
-	if (fighterHas[Skill.FORCE]) {
-		fighter.allAssaultBonus += 1;
-	}
-
-	if (fighterHas[Skill.ARTS_MARTIAUX]) {
-		fighter.allAssaultBonus += 2;
-	}
-
 	if (fighterHas[Skill.CHARGE]) {
 		fighter.nextAssaultBonus += 5;
 	}

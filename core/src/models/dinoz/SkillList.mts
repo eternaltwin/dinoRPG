@@ -401,6 +401,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [],
 		isBaseSkill: false,
 		isSphereSkill: false,
+		effects: {
+			[Stat.AIR_ASSAULT]: 1,
+			[Stat.FIRE_ASSAULT]: 1,
+			[Stat.LIGHTNING_ASSAULT]: 1,
+			[Stat.WATER_ASSAULT]: 1,
+			[Stat.WOOD_ASSAULT]: 1
+		}
 	},
 	[Skill.BRASERO]: {
 		id: Skill.BRASERO,
@@ -507,6 +514,14 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [11103],
 		isBaseSkill: false,
 		isSphereSkill: false,
+		effects: {
+			[Stat.AIR_ASSAULT]: 2,
+			[Stat.FIRE_ASSAULT]: 2,
+			[Stat.LIGHTNING_ASSAULT]: 2,
+			[Stat.WATER_ASSAULT]: 2,
+			[Stat.WOOD_ASSAULT]: 2
+		}
+
 	},
 	[Skill.DETONATION]: {
 		id: Skill.DETONATION,

@@ -11,7 +11,7 @@ const BASE_DEFENSE_VALUE = 0;
 // Gets the assault value for a given element
 // Does not take into account multipliers and next-assault-type bonuses
 export const getAssaultValue = (fighter: DetailedFighter, element: ElementType, power?: number) => {
-	return fighter.stats.base[element] * (power || ASSAULT_POWER) + fighter.stats.assaultBonus[element] + fighter.allAssaultBonus;
+	return fighter.stats.base[element] * (power || ASSAULT_POWER) + fighter.stats.assaultBonus[element];
 };
 
 // Balance the damage if the fighter (supposedly the target of the damage) requires balanced damage
@@ -113,7 +113,7 @@ export const getAttackDefense = (
 
 	// Add close combat specific bonuses
 	if (isCloseCombat) {
-		attack += attacker.nextAssaultBonus + attacker.allAssaultBonus;
+		attack += attacker.nextAssaultBonus;
 		attack *= attacker.nextAssaultMultiplier * attacker.allAssaultMultiplier;
 		attacker.nextAssaultBonus = 0;
 		attacker.nextAssaultMultiplier = 1;
