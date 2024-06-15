@@ -125,7 +125,6 @@ import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import DZFollow from '../../components/dinoz/DZFollow.vue';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
-import dayjs from 'dayjs';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -146,7 +145,6 @@ export default defineComponent({
 			dinozId: this.$route.params.id.toString(),
 			Action,
 			hpRegen: 1,
-			currentDay: dayjs().day(),
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[]
 		};

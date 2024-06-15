@@ -72,7 +72,6 @@ import { utils } from '../../utils/index.js';
 import DinozList from '../../components/dinoz/DinozList.vue';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import dayjs from 'dayjs';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -87,6 +86,15 @@ export default defineComponent({
 		DinozList
 	},
 	methods: {
+		changeTimezone(date: Date, ianatz: string) {
+			const invdate = new Date(
+				date.toLocaleString('en-US', {
+					timeZone: ianatz
+				})
+			);
+			const diff = date.getTime() - invdate.getTime();
+			return new Date(date.getTime() - diff); // needs to substract
+		},
 		goToPage(pageName: string) {
 			this.$router.push({ name: pageName });
 		},
@@ -110,7 +118,8 @@ export default defineComponent({
 		},
 		getPlaceImage(place: string | null) {
 			if (!place) return;
-			if (place === 'marais' && !(dayjs().day() === 1 || dayjs().day() === 2 || dayjs().day() === 5)) {
+			const today = this.changeTimezone(new Date(), 'GMT').getDay();
+			if (place === 'marais' && !(today === 1 || today === 2 || today === 5)) {
 				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url);
 			}
 			return new URL(`/src/assets/place/${place}.webp`, import.meta.url);
