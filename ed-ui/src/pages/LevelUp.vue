@@ -189,7 +189,7 @@ export default defineComponent({
 				confirm(
 					this.$t('levelup.confirmSkill', {
 						skill: this.$t(`skill.name.${skillList[skillId].name}`),
-						level: this.dinozData.level
+						level: this.dinozData.level + 1
 					})
 				)
 			) {
