@@ -5,7 +5,8 @@
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<template v-for="didi in dinozFullParty" :key="didi">
+		<template v-for="didi in [dinoz, dinozFullParty]" :key="didi">
+			{{ didi.missionId }}
 			<MissionHUDVue
 				v-if="didi.missionId"
 				:missionId="didi.missionId"
@@ -22,18 +23,18 @@
 			</template>
 		</Tippy>
 		<DZDisclaimer
-			v-if="dinozActions?.some(a => a.name === Action.STOP_REST)"
+			v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST)"
 			:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
 			timer
 		></DZDisclaimer>
 		<ul>
 			<table class="action_button">
 				<tbody>
-					<DZFollow v-if="dinozActions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
+					<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
 					<Tippy
 						tag="tr"
 						theme="normal"
-						v-for="action in dinozActions?.filter(a => a.name !== Action.FOLLOW)"
+						v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW)"
 						:key="action"
 						:id="action.imgName"
 						@click="launch(action)"
@@ -146,7 +147,8 @@ export default defineComponent({
 			Action,
 			hpRegen: 1,
 			currentDay: dayjs().day(),
-			itinerantName: '' as string
+			itinerantName: '' as string,
+			dinozFullParty: [] as DinozFiche[]
 		};
 	},
 	components: {
@@ -158,9 +160,11 @@ export default defineComponent({
 		DZFollow
 	},
 	props: {
-		dinozActions: Object as PropType<Array<ActionFiche>>,
 		updateActions: Function as PropType<(actions: Array<ActionFiche>) => void>,
-		missionId: Number
+		dinoz: {
+			type: Object as PropType<DinozFiche>,
+			required: true
+		}
 	},
 	methods: {
 		async launch(action: ActionFiche) {
@@ -246,13 +250,16 @@ export default defineComponent({
 					break;
 				case Action.MISSION:
 					if (this.mission && this.mission.actionType === ConditionEnum.FINISH_MISSION) {
-						this.missionReward = await MissionService.finishMission(this.$route.params.id.toString(), this.missionId!);
+						this.missionReward = await MissionService.finishMission(
+							this.$route.params.id.toString(),
+							this.dinoz.missionId!
+						);
 					} else {
 						try {
 							this.npcName = action.prop as string;
 							this.NPCModal = await MissionService.interactMission(
 								this.$route.params.id.toString(),
-								this.missionId!,
+								this.dinoz.missionId!,
 								action.prop as string
 							);
 						} catch (e) {
@@ -480,21 +487,13 @@ export default defineComponent({
 	},
 	computed: {
 		missionName() {
-			if (this.missionId) {
-				return missionsList[this.missionId!];
+			if (this.dinoz.missionId) {
+				return missionsList[this.dinoz.missionId!];
 			}
 			return undefined;
 		},
 		storeMission() {
 			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missionHUD || null;
-		},
-		dinoz() {
-			return dinozStore().getDinoz(+this.dinozId);
-		},
-		dinozFullParty() {
-			return dinozStore().getDinozList!.filter(
-				dinoz => this.dinoz?.followers.includes(dinoz.id) || dinoz.id === this.dinoz?.id
-			);
 		},
 		leaderDinoz() {
 			return dinozStore().getDinoz(this.dinoz.leaderId);
@@ -510,9 +509,12 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		if (this.dinozActions?.some(a => a.name === Action.STOP_REST)) {
+		if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 			await this.regenRate();
 		}
+		this.dinozFullParty = dinozStore().getDinozList!.filter(
+			dinoz => this.dinoz?.followers.includes(dinoz.id) || dinoz.id === this.dinoz?.id
+		);
 	}
 });
 </script>

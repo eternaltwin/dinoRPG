@@ -8,9 +8,8 @@
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
 			v-if="isReady"
-			:dinozActions="dinozData.actions"
 			:updateActions="updateActions"
-			:missionId="dinozData.missionId"
+			:dinoz="dinozData"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
 			:key="dinozData"
