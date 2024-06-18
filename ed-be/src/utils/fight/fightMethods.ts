@@ -33,7 +33,14 @@ import {
 	VOID_ASSAULT_POWER
 } from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
-import { applyBalanceDamage, calculateDamage, getAssaultValue, getAttackDefense, getElementalAttack, getMultiElementalAttack } from './getDamage.js';
+import {
+	applyBalanceDamage,
+	calculateDamage,
+	getAssaultValue,
+	getAttackDefense,
+	getElementalAttack,
+	getMultiElementalAttack
+} from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
 import randomBetween, { randomBetweenMaxExcluded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
@@ -99,7 +106,7 @@ const chooseRandomOpponentForAssault = (
 		(power ? power.some(val => val[0] === ElementType.AIR) : attacker.element === ElementType.AIR);
 
 	// List all invalid opponents
-	let unreachable_opponents: DetailedFighter[] = [];
+	const unreachable_opponents: DetailedFighter[] = [];
 	opponents.forEach(opponent => {
 		// Filter out flying opponents if unreachable
 		if (hasStatus(opponent, Status.FLYING) && !canAttackFlying) {
@@ -120,7 +127,7 @@ const chooseRandomOpponentForAssault = (
 
 	// Apply target filtering skills:
 	// Reduce the list of targets to only those with rock
-	let opponents_have_rock = opponents.some(opponent => opponent.skills.some(s => s.id === Skill.ROCK));
+	const opponents_have_rock = opponents.some(opponent => opponent.skills.some(s => s.id === Skill.ROCK));
 	if (opponents_have_rock) {
 		// Filter based on the fighters with the ROCK skill: if the opposing team has the rock skill,
 		// then one chance out of 2 to target only the rock fighters
@@ -146,7 +153,9 @@ const chooseRandomOpponentForAssault = (
 			}
 		});
 
-		filtered_opponents = filtered_opponents.filter(opponent => opponent.stats.defense[attacker.element] === worstDefense);
+		filtered_opponents = filtered_opponents.filter(
+			opponent => opponent.stats.defense[attacker.element] === worstDefense
+		);
 	}
 
 	// Second: target lowest HP opponent if Skill.SANS_PITIE
@@ -754,7 +763,7 @@ const launchAssault = (
 	skill?: Skill,
 	power?: [ElementType, number][],
 	// stepIndex?: number,
-	goto?: boolean,
+	goto?: boolean
 ) => {
 	if (goto === undefined) {
 		goto = true; // Cannot use the || symbol because it becomes a logical operation if goto is defined
@@ -770,10 +779,9 @@ const launchAssault = (
 	// 	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: target.id });
 	// }
 
-	console.log(`${goto}`);
+	// console.log(`${goto}`);
 
-	if (goto)
-	{
+	if (goto) {
 		// Add moveTo step
 		fightData.steps.push({
 			action: 'moveTo',
@@ -782,10 +790,16 @@ const launchAssault = (
 		});
 	}
 
-	let assault_attack = power || getElementalAttack(attacker, attacker.element, attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER);
+	const assault_attack =
+		power ||
+		getElementalAttack(
+			attacker,
+			attacker.element,
+			attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER
+		);
 
 	// Trigger fighter attack
-	let result = attackTarget(fightData, attacker, target, isAssault || true, assault_attack, skill); //), stepIndex);
+	const result = attackTarget(fightData, attacker, target, isAssault || true, assault_attack, skill); //), stepIndex);
 
 	// Add moveBack step if attacker is still alive
 	if (goto && attacker.hp > 0) {
@@ -2029,7 +2043,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				return true;
 			}
 
-			const result = attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 0), skill.id, stepIndex);
+			const result = attackSingleOpponent(
+				fightData,
+				fighter,
+				getElementalAttack(fighter, ElementType.AIR, 0),
+				skill.id,
+				stepIndex
+			);
 
 			// If the target is not a boss or the skill was not evaded, remove the opponent
 			if (opponent.type !== 'boss' && !result.evasion) {
@@ -3528,9 +3548,9 @@ const attackTarget = (
 			target: target,
 			isAssault: isAssault,
 			evasion: false,
-			hpLost: 0,
-		}
-	};
+			hpLost: 0
+		};
+	}
 
 	// Store as previous target
 	attacker.previousTarget = target.id;
@@ -3569,10 +3589,14 @@ const attackTarget = (
 
 	// If the elemental attack is not defined, default to a basic assault
 	if (!element_attack) {
-		element_attack  = getElementalAttack(attacker, attacker.element, attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER);
+		element_attack = getElementalAttack(
+			attacker,
+			attacker.element,
+			attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER
+		);
 	}
 
-	let { attack, defense, elements } = getAttackDefense(attacker, target, element_attack, isAssault);
+	const { attack, defense, elements } = getAttackDefense(attacker, target, element_attack, isAssault);
 
 	let totalDamage = 0;
 	let totalEnergyCost = energyCost;
@@ -3768,7 +3792,7 @@ const attackTarget = (
 		target: target,
 		isAssault: isAssault,
 		evasion: evasion,
-		hpLost: totalDamage,
+		hpLost: totalDamage
 	};
 };
 

@@ -132,12 +132,14 @@ export default defineComponent({
 		// externalScript.setAttribute('src', '/public/ruffle/ruffle.js');
 		// document.head.appendChild(externalScript);
 		let step = this.dinozStore.getNpc(this.dinozId)?.npcSpeech;
+		console.log(this.dinozStore.getNpc(this.dinozId));
 		if (!step) {
 			step = 'begin';
 		} else {
-			this.dinozStore.clearNpc(this.dinozId);
+			console.log(step);
+			// this.dinozStore.clearNpc(this.dinozId);
 		}
-		try {
+		/*try {
 			this.npcName = this.$route.params.npc as string;
 			this.dinozId = parseInt(this.$route.params.id as string);
 			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
@@ -146,7 +148,7 @@ export default defineComponent({
 		} catch (err) {
 			errorHandler.handle(err);
 			return;
-		}
+		}*/
 	}
 });
 </script>

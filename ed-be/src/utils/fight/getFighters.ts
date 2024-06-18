@@ -401,16 +401,11 @@ export const initializeMonster = (
 				[ElementType.VOID]: monster.bonus_attack ?? 0
 			},
 			assaultBonus: {
-				[ElementType.AIR]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.AIR).bonus,
-				[ElementType.FIRE]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.FIRE).bonus,
-				[ElementType.LIGHTNING]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.LIGHTNING).bonus,
-				[ElementType.WATER]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.WATER).bonus,
-				[ElementType.WOOD]:
-					getAssaultStat(similiDinoz, [], skills, AssaultElement.WOOD).bonus,
+				[ElementType.AIR]: getAssaultStat(similiDinoz, [], skills, AssaultElement.AIR).bonus,
+				[ElementType.FIRE]: getAssaultStat(similiDinoz, [], skills, AssaultElement.FIRE).bonus,
+				[ElementType.LIGHTNING]: getAssaultStat(similiDinoz, [], skills, AssaultElement.LIGHTNING).bonus,
+				[ElementType.WATER]: getAssaultStat(similiDinoz, [], skills, AssaultElement.WATER).bonus,
+				[ElementType.WOOD]: getAssaultStat(similiDinoz, [], skills, AssaultElement.WOOD).bonus,
 				[ElementType.VOID]: 0
 			},
 			defense: {

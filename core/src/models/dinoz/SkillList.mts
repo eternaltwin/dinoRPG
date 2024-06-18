@@ -521,7 +521,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.WATER_ASSAULT]: 2,
 			[Stat.WOOD_ASSAULT]: 2
 		}
-
 	},
 	[Skill.DETONATION]: {
 		id: Skill.DETONATION,
