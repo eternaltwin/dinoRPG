@@ -15,6 +15,7 @@ import { Status } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -51,6 +52,18 @@ export function resolveSkillName(skillId: number, t: TFunction) {
 	const skill = Object.values(skillList).find(skill => skill.id === skillId);
 	if (!skill) return 'inconnu';
 	return t(`skill.name.${skill.name}`);
+}
+
+export function resolveItemName(itemId: number, t: TFunction) {
+	const item = Object.values(itemList).find(item => item.itemId === itemId);
+	if (!item) return 'inconnu';
+	return t(`item.name.${item.name}`);
+}
+
+export function resolveItemImagePath(itemId: number) {
+	const item = Object.values(itemList).find(item => item.itemId === itemId);
+	if (!item) return 'inconnu';
+	return item.name;
 }
 
 export function getSkillEnergy(skillId: number) {
@@ -212,6 +225,12 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 				});
 				break;
 			case 'itemUse':
+				history.push({
+					action: DinoAction.OBJECT,
+					fid: step.fighter.id,
+					name: resolveItemName(step.itemId, t),
+					item: 'inconnu' // TODO: use resolveItemImage(step.itemId) but not ready yet
+				});
 				break;
 			case 'leave':
 				break;
