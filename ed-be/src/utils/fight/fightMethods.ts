@@ -884,7 +884,7 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	monster.master = fighter.id;
 
 	// Adjust time
-	monster.time = fighter.time;
+	monster.time = fighter.time + randomBetweenMaxExcluded(0, TIME_BASE) * TIME_FACTOR;
 
 	// Add monster to fighters
 	fightData.fighters.push(monster);

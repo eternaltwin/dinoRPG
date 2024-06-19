@@ -4,6 +4,7 @@ import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { GameEvent } from '../event/Events.mjs';
 import { Boss } from './BossList.mjs';
 import { Monster } from './MonsterList.mjs';
+import { EntranceEffect } from './transpiler.mjs';
 
 export type MonsterFiche = {
 	id: Monster | Boss;
@@ -32,6 +33,7 @@ export type MonsterFiche = {
 	events?: GameEvent[];
 	noMove?: boolean;
 	display?: string;
+	entrance?: EntranceEffect;
 };
 
 export type groupMonster = {

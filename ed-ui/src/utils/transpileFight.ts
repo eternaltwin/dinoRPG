@@ -132,7 +132,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 						scale: myFighter.type === 'dinoz' || myFighter.type === 'clone' ? myFighter.maxHp / 100 : 1,
 						fid: myFighter.id,
 						gfx: myFighter.display,
-						entrance: EntranceEffect.JUMP
+						entrance: EntranceEffect.JUMP // Actual default is stand, but it's way less classy
 					}
 				});
 				myFighter = undefined;

@@ -807,6 +807,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 			fighter.stats.assaultBonus[ElementType.WOOD] += 2;
 			fighter.stats.assaultBonus[ElementType.WATER] += 2;
 			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 2;
+			fighter.stats.assaultBonus[ElementType.VOID] += 2;
 		}
 		// WOOD
 		if (team[Skill.GARDE_FORESTIER]) {
