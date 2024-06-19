@@ -929,7 +929,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 0,
 		zones: [MapZone.ALL],
-		canBeCaptured: true
+		canBeCaptured: false,
+		display: 'egrllz'
 	},
 	[Monster.BAMBOOZ_SPROUTING]: {
 		id: Monster.BAMBOOZ_SPROUTING,

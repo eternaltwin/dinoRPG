@@ -774,14 +774,8 @@ const launchAssault = (
 		target = getRandomOpponentForAssault(fightData, attacker);
 	}
 
-	// // Add target if the step exists already
-	// if (stepIndex) {
-	// 	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: target.id });
-	// }
-
-	// console.log(`${goto}`);
-
-	if (goto) {
+	if (goto)
+	{
 		// Add moveTo step
 		fightData.steps.push({
 			action: 'moveTo',
@@ -3674,7 +3668,7 @@ const attackTarget = (
 		}
 
 		// DAZZLED
-		if (hasStatus(attacker, Status.INTANGIBLE)) {
+		if (hasStatus(attacker, Status.DAZZLED)) {
 			if (randomBetweenMaxExcluded(0, 3) === 0) {
 				damage = 0;
 			}
