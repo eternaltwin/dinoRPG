@@ -3628,7 +3628,7 @@ const attackTarget = (
 
 		// Check for assault dodge
 		let isDodged = false;
-		if (isAssault && Math.random() < target.stats.special.evasion - 1) {
+		if (isAssault && !hasStatus(target, Status.PETRIFIED) && Math.random() < target.stats.special.evasion - 1) {
 			isDodged = true;
 		}
 
@@ -3755,7 +3755,7 @@ const attackTarget = (
 
 	// The target can counter if it's still alive and the attack was in close combat
 	if (target.hp > 0) {
-		if (isAssault && counterAttack(fightData, target)) {
+		if (isAssault && !hasStatus(target, Status.PETRIFIED) && counterAttack(fightData, target)) {
 			// Add counter step
 			fightData.steps.push({
 				action: 'counter',
