@@ -137,9 +137,9 @@ export default defineComponent({
 			step = 'begin';
 		} else {
 			console.log(step);
-			// this.dinozStore.clearNpc(this.dinozId);
+			this.dinozStore.clearNpc(this.dinozId);
 		}
-		/*try {
+		try {
 			this.npcName = this.$route.params.npc as string;
 			this.dinozId = parseInt(this.$route.params.id as string);
 			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
@@ -148,7 +148,7 @@ export default defineComponent({
 		} catch (err) {
 			errorHandler.handle(err);
 			return;
-		}*/
+		}
 	}
 });
 </script>
