@@ -197,12 +197,17 @@ export const npcList: Record<string, Npc> = {
 		id: 17,
 		placeId: PlaceEnum.PORT_DE_PRECHE,
 		condition: {
-			[Operator.OR]: [
-				{ [ConditionEnum.STATUS]: DinozStatusId.JVBZ },
-				{
-					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
-				}
+			[Operator.AND]: [
+				{ [Operator.OR]: [
+						{ [ConditionEnum.STATUS]: DinozStatusId.JVBZ },
+						{
+							[ConditionEnum.STATUS]: DinozStatusId.FRETURN
+						}
+					]
+				},
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY } }
 			]
+
 		},
 		data: JOVEBOZE_RASCA,
 		missions: undefined,
