@@ -1210,6 +1210,16 @@ export async function frozeDinoz(req: Request) {
 		throw new ErrorFormator(500, 'No dinoz found');
 	}
 
+	if (dinoz.leaderId) {
+		await updateDinoz(dinozId, { leader: { disconnect: true } });
+	}
+
+	if (dinoz.followers.length > 0) {
+		for (const d of dinoz.followers) {
+			await updateDinoz(d.id, { leader: { disconnect: true } });
+		}
+	}
+
 	if (dinoz.unavailableReason === UnavailableReason.frozen) {
 		throw new ErrorFormator(500, 'Dinoz already frozen');
 	}

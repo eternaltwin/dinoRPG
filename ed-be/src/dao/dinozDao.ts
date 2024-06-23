@@ -699,7 +699,10 @@ export async function checkFrozenDinoz(dinozId: number) {
 		},
 		select: {
 			id: true,
-			unavailableReason: true
+			unavailableReason: true,
+			followers: true,
+			leaderId: true,
+			player: true
 		}
 	});
 }
