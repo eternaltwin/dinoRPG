@@ -173,7 +173,7 @@ export const toDinozFiche = (
 		maxItems: backpackSlot(dinoz),
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
 		borderPlace:
-			dinoz.unavailableReason === UnavailableReasonFront.frozen || (dinoz.remaining === 0 && !dinoz.fight)
+			dinoz.unavailableReason !== null || (dinoz.remaining === 0 && !dinoz.fight) || dinoz.leaderId
 				? []
 				: actualPlace(dinoz)
 						.borderPlace.map(placeId => {
