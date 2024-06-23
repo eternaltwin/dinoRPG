@@ -7,7 +7,7 @@
 		</div>
 		<template v-for="didi in dinozFullParty" :key="didi">
 			<MissionHUDVue
-				v-if="didi.missionId"
+				v-if="didi.missionHUD"
 				:missionId="didi.missionId"
 				:dinozName="didi.name"
 				:dinozId="didi.id"
@@ -511,6 +511,7 @@ export default defineComponent({
 		}
 		this.dinozFullParty = dinozStore().getDinozList!.filter(dinoz => this.dinoz?.followers.includes(dinoz.id));
 		this.dinozFullParty.push(this.dinoz);
+		console.log(this.dinozFullParty);
 	}
 });
 </script>
