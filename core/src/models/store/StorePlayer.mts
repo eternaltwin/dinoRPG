@@ -6,4 +6,5 @@ export interface StorePlayer {
 	playerName: string;
 	playerOptions: PlayerOptions;
 	admin: boolean;
+	priest: boolean;
 }

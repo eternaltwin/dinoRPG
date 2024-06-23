@@ -215,11 +215,11 @@ export type transpiled =
 			};
 	  }
 	| {
-		action: DinoAction.OBJECT;
-		fid: number;
-		name: string;
-		item: string;
-	}
+			action: DinoAction.OBJECT;
+			fid: number;
+			name: string;
+			item: string;
+	  }
 	| {
 			action: DinoAction.ENERGY;
 			fighters: {

@@ -9,4 +9,5 @@ export interface PlayerCommonData {
 	name: string;
 	playerOptions: PlayerOptions;
 	admin: boolean;
+	priest: boolean;
 }

@@ -47,7 +47,8 @@ export const getSpecialStat = (
 	dinoz: Pick<DinozFiche, 'items' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
 	statuses: DinozStatusId[],
 	skills: Pick<SkillDetails, 'id' | 'effects' | 'name' | 'element'>[],
-	stat: SpecialStat
+	stat: SpecialStat,
+	PRIEST?: boolean
 ) => {
 	// Special case for BUBBLE_RATE (value not influenced by skills)
 	if (stat === SpecialStat.BUBBLE_RATE) {
@@ -216,6 +217,10 @@ export const getSpecialStat = (
 
 		return a.type === 'base' ? -1 : 1;
 	});
+
+	if (stat === SpecialStat.HP_REGEN && PRIEST) {
+		value++;
+	}
 
 	return {
 		name: stat,

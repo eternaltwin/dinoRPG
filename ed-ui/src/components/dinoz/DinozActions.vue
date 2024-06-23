@@ -102,7 +102,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
-import { dinozStore, sessionStore } from '../../store/index.js';
+import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozService, FightService, MissionService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -145,7 +145,8 @@ export default defineComponent({
 			Action,
 			hpRegen: 1,
 			itinerantName: '' as string,
-			dinozFullParty: [] as DinozFiche[]
+			dinozFullParty: [] as DinozFiche[],
+			playerStore: playerStore()
 		};
 	},
 	components: {
@@ -475,10 +476,12 @@ export default defineComponent({
 		async regenRate() {
 			const data = this.dinoz;
 			const dinozSkill = await DinozService.getDinozSkill(+this.dinozId);
+			const priest = this.playerStore.isPriest;
 			const specialStats = Object.values(SpecialStat)
-				.map(stat => getSpecialStat(data, data.status, dinozSkill, stat as SpecialStat))
+				.map(stat => getSpecialStat(data, data.status, dinozSkill, stat as SpecialStat, priest))
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
+			console.log(specialStats);
 			regen ? (this.hpRegen = regen.value) : 1;
 		}
 	},
@@ -511,7 +514,6 @@ export default defineComponent({
 		}
 		this.dinozFullParty = dinozStore().getDinozList!.filter(dinoz => this.dinoz?.followers.includes(dinoz.id));
 		this.dinozFullParty.push(this.dinoz);
-		console.log(this.dinozFullParty);
 	}
 });
 </script>

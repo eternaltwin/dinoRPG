@@ -304,7 +304,7 @@ import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat'
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { dinozStore } from '../../store/dinozStore.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -327,7 +327,8 @@ export default defineComponent({
 			defenseStats: [] as ReturnType<typeof getDefenseStat>[],
 			SpecialStat: SpecialStat,
 			getSpecialStat,
-			specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[]
+			specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[],
+			playerStore: playerStore()
 		};
 	},
 	methods: {
@@ -406,8 +407,10 @@ export default defineComponent({
 				getDefenseStat(data, data.status, this.dinozSkill, stat as DefenseElement)
 			);
 
+			const priest = this.playerStore.isPriest;
+
 			this.specialStats = Object.values(SpecialStat)
-				.map(stat => getSpecialStat(data, data.status, this.dinozSkill, stat as SpecialStat))
+				.map(stat => getSpecialStat(data, data.status, this.dinozSkill, stat as SpecialStat, priest))
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 
 			// Refresh special stats on EventBus `refreshInventory`

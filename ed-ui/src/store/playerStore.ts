@@ -12,12 +12,14 @@ export const playerStore = defineStore('playerStore', {
 			hasPMI: false,
 			currentDinozId: undefined
 		},
-		admin: false
+		admin: false,
+		priest: false
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
 		getPlayerId: (state: StorePlayer) => state.playerId ?? 0,
-		getPlayerOptions: (state: StorePlayer) => state.playerOptions
+		getPlayerOptions: (state: StorePlayer) => state.playerOptions,
+		isPriest: (state: StorePlayer) => state.priest
 	},
 	actions: {
 		setMoney(money: number): void {
@@ -37,6 +39,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setAdmin(admin: boolean): void {
 			this.admin = admin;
+		},
+		setPriest(priest: boolean): void {
+			this.priest = priest;
 		}
 	},
 	persist: {

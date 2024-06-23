@@ -774,8 +774,7 @@ const launchAssault = (
 		target = getRandomOpponentForAssault(fightData, attacker);
 	}
 
-	if (goto)
-	{
+	if (goto) {
 		// Add moveTo step
 		fightData.steps.push({
 			action: 'moveTo',
