@@ -197,7 +197,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 1,
 		level: 10,
 		zones: [MapZone.ILES],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'eearth'
 	},
 	[Boss.PTEROZ]: {
 		id: Boss.PTEROZ,
