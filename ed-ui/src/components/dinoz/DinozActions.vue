@@ -5,8 +5,7 @@
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<template v-for="didi in [dinoz, dinozFullParty]" :key="didi">
-			{{ didi.missionId }}
+		<template v-for="didi in dinozFullParty" :key="didi">
 			<MissionHUDVue
 				v-if="didi.missionId"
 				:missionId="didi.missionId"
@@ -510,9 +509,8 @@ export default defineComponent({
 		if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 			await this.regenRate();
 		}
-		this.dinozFullParty = dinozStore().getDinozList!.filter(
-			dinoz => this.dinoz?.followers.includes(dinoz.id) || dinoz.id === this.dinoz?.id
-		);
+		this.dinozFullParty = dinozStore().getDinozList!.filter(dinoz => this.dinoz?.followers.includes(dinoz.id));
+		this.dinozFullParty.push(this.dinoz);
 	}
 });
 </script>
