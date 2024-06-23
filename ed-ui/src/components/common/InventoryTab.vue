@@ -142,7 +142,11 @@ export default defineComponent({
 					if (item.effect && item.effect.category === ItemEffect.EGG) {
 						await this.refreshDinozList();
 					}
-					if (item.effect && item.effect.category === ItemEffect.SPECIAL && item.effect.value === 'rice') {
+					if (
+						item.effect &&
+						item.effect.category === ItemEffect.SPECIAL &&
+						(item.effect.value === 'rice' || item.effect.value === 'pampleboum')
+					) {
 						EventBus.emit('refreshDinoz', true);
 					}
 					if (item.effect && item.effect.category === ItemEffect.RESURRECT) {
