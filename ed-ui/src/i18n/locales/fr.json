@@ -74,7 +74,8 @@
 		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
 		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
-		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:."
+		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:.",
+		"notLeader": "Ce dinoz n'est pas le leader de son groupe"
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
@@ -1581,10 +1582,20 @@
 	"skill": {
 		"energy": {
 			"0": "**Consommation d'énergie :** aucune.",
+			"5": "**Consommation d'énergie :** faible.",
 			"10": "**Consommation d'énergie :** faible.",
 			"20": "**Consommation d'énergie :** normale.",
+			"25": "**Consommation d'énergie :** normale.",
+			"30": "**Consommation d'énergie :** normale.",
+			"35": "**Consommation d'énergie :** normale.",
+			"40": "**Consommation d'énergie :** normale.",
+			"45": "**Consommation d'énergie :** normale.",
 			"50": "**Consommation d'énergie :** forte.",
-			"75": "**Consommation d'énergie :** très forte."
+			"55": "**Consommation d'énergie :** forte.",
+			"60": "**Consommation d'énergie :** forte.",
+			"65": "**Consommation d'énergie :** forte.",
+			"75": "**Consommation d'énergie :** très forte.",
+			"80": "**Consommation d'énergie :** très forte."
 		},
 		"name": {
 			"GriffesEnflammees": "Griffes Enflammées",
@@ -2746,7 +2757,7 @@
 			"colesc": "aux Collines Escarpées",
 			"fountj": "à la Fontaine de Jouvence",
 			"universite": "à l'Université",
-			"marais": "au marais colant",
+			"marais": "au marais collant",
 			"ilewkk": "à l'île Waïkiki",
 			"bob": "Chez M. Bao Bob",
 			"fosslv": "à Fosselave",
@@ -3071,7 +3082,7 @@
 			},
 			"toxic": {
 				"pickfigo": "Vous cueillez une fleur boursouflée et toute poisseuse...",
-				"pickpuru": "La Purulente dégage un petit nuage pollen malodorant vraiment suspect.",
+				"pickpuru": "La Purulente dégage un petit nuage de pollen malodorant vraiment suspect.",
 				"pickvisqueuse": "Vous trouvez une sorte de gros nénuphar verdâtre étalé dans une large flaque d'eau croupie.",
 				"auree": "Ca m'a l'air d'aller... Je vais essayer de trouver laquelle de ces plantes provoque une allergie chez moi... Voilà pour le service."
 			},
