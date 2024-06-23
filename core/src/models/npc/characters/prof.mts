@@ -172,6 +172,7 @@ export const PROFESSOR: Readonly<Record<string, NpcData>> = {
 	},
 	stone_no: {
 		stepName: 'stone_no',
+		target: 'question',
 		nextStep: ['menu']
 	},
 	noquestion: {
