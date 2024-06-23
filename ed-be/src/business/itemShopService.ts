@@ -139,7 +139,7 @@ export async function buyItem(req: Request) {
 	// All checks passed, now do the checks specific to normal and magic items
 
 	// Get the reference of the item from the constants
-	const itemReference = Object.values(itemList).find(item => item.itemId === itemId);
+	const itemReference = structuredClone(Object.values(itemList).find(item => item.itemId === itemId));
 
 	if (!itemReference) {
 		throw new ErrorFormator(500, `Item ${itemId} doesn't exist.`);
