@@ -1167,7 +1167,7 @@ export async function useIrma(req: Request) {
 		throw new ErrorFormator(400, 'notEnoughIrma');
 	}
 
-	for (const dino of team) {
+	for (const dino of team.filter(d => !d.fight)) {
 		if (dino.remaining > 0) {
 			await updateDinoz(dino.id, {
 				fight: true,

@@ -681,7 +681,8 @@ export async function getIrmaUsageInfo(dinozId: number) {
 		select: {
 			id: true,
 			remaining: true,
-			followers: { select: { id: true, remaining: true } },
+			fight: true,
+			followers: { select: { id: true, remaining: true, fight: true } },
 			player: {
 				select: {
 					id: true,
