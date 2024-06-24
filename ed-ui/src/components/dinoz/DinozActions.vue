@@ -124,6 +124,7 @@ import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 import DZFollow from '../../components/dinoz/DZFollow.vue';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -173,11 +174,13 @@ export default defineComponent({
 					EventBus.emit('isLoading', true);
 					try {
 						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
-						const message = this.$t(`toast.${toast.category}`, { value: toast.value });
-						EventBus.emit('toast', {
-							type: 'notif',
-							message: message
-						});
+						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
+							const message = this.$t(`toast.${toast.category}`, { value: toast.value });
+							EventBus.emit('toast', {
+								type: 'notif',
+								message: message
+							});
+						}
 					} catch (e) {
 						errorHandler.handle(e);
 					}
