@@ -287,7 +287,10 @@ export const placeList: Record<
 		name: 'gogrum',
 		borderPlace: [25],
 		conditions: {
-			[ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF },
+				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE }
+			]
 		},
 		alias: 14,
 		map: MapZone.JUNGLE

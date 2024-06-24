@@ -243,7 +243,10 @@ export const npcList: Record<string, Npc> = {
 		id: 20,
 		placeId: PlaceEnum.PORT_DE_PRECHE,
 		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.ZENBRO
+			[Operator.AND]: [
+				{ [ConditionEnum.STATUS]: DinozStatusId.ZENBRO },
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
+			]
 		},
 		data: PADAMOINE,
 		missions: undefined,
