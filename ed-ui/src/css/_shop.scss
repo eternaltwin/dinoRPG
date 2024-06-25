@@ -4,19 +4,17 @@
 	}
 
 	.sheet {
+		display: flex;
+		align-items: flex-start;
 		height: 76px;
 	    padding: 1px;
-	    margin-bottom: 30px;
 	    clear: both;
 	    background-image: url("../assets/design/shop_dinoz_bg.webp");
 	    background-position: 20px 0px;
 	    background-repeat: no-repeat;
 
-	    a.button {
-	    	margin-top: 20px;
-	    }
 
-	    a.button, .price {
+	    .price {
 	    	position: absolute;
     		margin-left: 225px;
 	    }
@@ -27,8 +25,7 @@
 	    }
 
 	    .infos {
-	    	margin-top: 10px;
-    		padding-left: 200px;
+				margin-top: 5px;
 
     		.race {
     			margin-bottom: 1px;
@@ -51,8 +48,8 @@
 	    }
 
 	    .price {
-	    	position: absolute;
-		    margin-left: 225px;
+	    	//position: absolute;
+		    //margin-left: 225px;
 		    padding-left: 5px;
 		    width: 90px;
 		    height: 18px;
@@ -76,6 +73,7 @@
     background-color: #9a4029;
     border-radius: 10px;
     cursor: help;
+	margin-top: -5px;
 }
 
 .price {

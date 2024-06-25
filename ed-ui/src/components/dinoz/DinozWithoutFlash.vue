@@ -1,47 +1,43 @@
 <template>
-	<!--	<component
-		v-if="raceName === 'moueffe' || raceName === 'pigmou'"
-		:is="dinozToDisplay"
-		:display="display"
-		:life="life"
-		:flip="flip"
-	></component> -->
-	<DinozSWF
-		:display="display"
-		:width="190"
-		:height="165"
-		type="dino"
-		:flip="-flip"
-		:shop="shop"
-		:isFrozen="isFrozen"
-	></DinozSWF>
+	<img v-if="loaded" :src="dinoImg" />
 </template>
 
 <script lang="ts">
-import { raceList } from '../../constants/index.js';
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
+import { dino } from '@drpg/dino-animation';
 
 export default defineComponent({
 	name: 'DinozWithoutFlash',
-	components: {
-		DinozSWF: defineAsyncComponent(() => import('../../components/dinoz/DinozSWF.vue'))
+	data() {
+		return {
+			dinoImg: undefined as string | undefined,
+			loaded: false as boolean
+		};
 	},
 	props: {
 		display: { type: String, required: true },
 		life: { type: Number, required: true },
 		flip: { type: Number, required: true },
-		race: { type: Number, required: true },
-		shop: { type: Boolean, required: false },
 		isFrozen: { type: Boolean, required: false }
 	},
-	computed: {
-		dinozToDisplay(): string {
-			const raceName: string = Object.entries(raceList).find(race => parseInt(race[0]) === this.race)![1];
-			return defineAsyncComponent(() => import(`./${raceName}/${raceName}.vue`));
-		},
-		raceName(): string {
-			return Object.entries(raceList).find(race => parseInt(race[0]) === this.race)![1];
-		}
+	mounted() {
+		const dinos = new dino({
+			data: this.display,
+			flip: this.flip ? 1 : 0,
+			damages: this.life > 0.5 ? 0 : this.life > 0.1 ? 1 : 2,
+			dark: false,
+			scale: 1,
+			shadow: true,
+			congel: this.isFrozen ?? false
+		});
+		dinos.toRawImage(
+			value => {
+				this.dinoImg = value;
+				this.loaded = true;
+			},
+			190,
+			165
+		);
 	}
 });
 </script>

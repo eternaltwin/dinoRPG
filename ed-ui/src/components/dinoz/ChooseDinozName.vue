@@ -10,7 +10,7 @@
 		<div class="dinoz_display">
 			<DinozWithoutFlash
 				:display="dinozData.display"
-				:life="dinozData.life"
+				:life="1"
 				:flip="-1"
 				:race="dinozData.race.raceId"
 			></DinozWithoutFlash>
