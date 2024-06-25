@@ -2,6 +2,7 @@
 	<ul style="list-style: none">
 		<Tippy v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">
 			<li class="dinozList">
+				<DinozWithoutFlash class="dinoz" :display="dinoz.display" :life="1" :flip="1" :isFrozen="dinoz.isFrozen" />
 				<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
 					{{ dinoz.name }}
 				</div>
@@ -9,16 +10,6 @@
 					{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
 					{{ $t(`myAccount.level`) }} {{ dinoz.level }}
 				</div>
-				<DinozWithoutFlash
-					:style="style(dinoz)"
-					:display="dinoz.display"
-					:life="dinoz.life"
-					:flip="1"
-					:race="dinoz.race.raceId"
-					:shop="true"
-					:isFrozen="dinoz.isFrozen"
-					style="position: absolute"
-				/>
 			</li>
 			<template v-if="dinoz.status && dinoz.status.length > 0" #content>
 				<template v-for="(status, index) in dinoz.status" :key="index">
@@ -140,7 +131,7 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #52646b;
 	background-color: transparent;
-	margin-top: 145px;
+	margin-top: -25px;
 }
 .dinozInfo {
 	text-align: center;
@@ -152,5 +143,10 @@ export default defineComponent({
 .link:hover {
 	text-decoration: underline;
 	cursor: pointer;
+}
+.dinoz {
+	position: inherit;
+	top: -15px;
+	left: -12px;
 }
 </style>

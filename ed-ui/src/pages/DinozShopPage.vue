@@ -5,57 +5,59 @@
 			<div class="titlePage">Enclos des dinoz</div>
 		</div>
 		<DZDisclaimer help :content="$t('shop.dinoz.help')" />
-		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
-			<div class="dinoz_display">
-				<DinozWithoutFlash
-					:display="dinoz.display"
-					:life="parseInt(dinoz.life)"
-					:flip="-1"
-					:race="dinoz.race.raceId"
-					:shop="true"
-				></DinozWithoutFlash>
-			</div>
-			<div class="infos">
-				<div class="price">
-					<span class="money"
-						>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
-						<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-					</span>
+		<div class="sheets">
+			<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
+				<!--			<div class="dinoz_display">-->
+				<DinozWithoutFlash class="dinoImg" :display="dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
+				<!--			</div>-->
+				<div class="infos">
+					<div class="row1">
+						<div class="race">
+							<Tippy theme="normal">
+								<strong>Race :</strong>
+								{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
+								<template #content>
+									<h1>{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}</h1>
+									<p>
+										{{ $t(`race.description.${raceList[dinoz.race.raceId]}`) }}
+									</p>
+								</template>
+							</Tippy>
+						</div>
+						<div class="price1">
+							<span class="money1"
+								>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
+								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
+							</span>
+						</div>
+					</div>
+					<div class="row2">
+						<Elements
+							:fire="dinoz.race.nbrFire"
+							:wood="dinoz.race.nbrWood"
+							:water="dinoz.race.nbrWater"
+							:lightning="dinoz.race.nbrLightning"
+							:air="dinoz.race.nbrAir"
+							style="margin-top: -5px"
+						></Elements>
+						<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{ $t('button.chose') }}</a>
+					</div>
+
+					<template v-if="dinoz.race.skillId && dinoz.race.skillId.length > 0">
+						<Tippy theme="normal" tag="div" class="skill" v-for="skillId in dinoz.race.skillId" :key="skillId">
+							<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
+							{{ $t(`skill.name.${skillList[skillId].name}`) }}
+							<template #content>
+								<h1>
+									{{ $t(`skill.name.${skillList[skillId].name}`) }}
+								</h1>
+								<p>
+									{{ $t(`skill.description.${skillList[skillId].name}`) }}
+								</p>
+							</template>
+						</Tippy>
+					</template>
 				</div>
-				<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{ $t('button.chose') }}</a>
-				<div class="race">
-					<Tippy theme="normal">
-						<strong>Race :</strong>
-						{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
-						<template #content>
-							<h1>{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}</h1>
-							<p>
-								{{ $t(`race.description.${raceList[dinoz.race.raceId]}`) }}
-							</p>
-						</template>
-					</Tippy>
-				</div>
-				<Elements
-					:fire="dinoz.race.nbrFire"
-					:wood="dinoz.race.nbrWood"
-					:water="dinoz.race.nbrWater"
-					:lightning="dinoz.race.nbrLightning"
-					:air="dinoz.race.nbrAir"
-				></Elements>
-				<template v-if="dinoz.race.skillId && dinoz.race.skillId.length > 0">
-					<Tippy theme="normal" tag="div" class="skill" v-for="skillId in dinoz.race.skillId" :key="skillId">
-						<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
-						{{ $t(`skill.name.${skillList[skillId].name}`) }}
-						<template #content>
-							<h1>
-								{{ $t(`skill.name.${skillList[skillId].name}`) }}
-							</h1>
-							<p>
-								{{ $t(`skill.description.${skillList[skillId].name}`) }}
-							</p>
-						</template>
-					</Tippy>
-				</template>
 			</div>
 		</div>
 	</div>
@@ -147,9 +149,41 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.sheets {
+	display: flex;
+	gap: 30px;
+	flex-direction: column;
+}
 .dinoz_display {
 	position: relative;
 	left: 15px;
 	top: -12px;
+}
+.row1 {
+	display: flex;
+	gap: 10px;
+}
+.row2 {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+.price1 {
+	padding-left: 5px;
+	width: 90px;
+	height: 18px;
+	font-size: 10pt;
+	background-color: #9a4029;
+	border-radius: 10px;
+
+	.money1 {
+		color: #ffee92;
+		font-weight: bold;
+		font-size: 9pt;
+	}
+}
+.dinoImg {
+	bottom: 70px;
+	position: relative;
 }
 </style>

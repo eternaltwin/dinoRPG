@@ -8,7 +8,7 @@
 	<Tippy theme="normal" tag="div" id="dinozVisual">
 		<DinozWithoutFlash
 			:display="dinozData.display"
-			:life="dinozData.life"
+			:life="dinozData.life / dinozData.maxLife"
 			:flip="-1"
 			:race="dinozData.race.raceId"
 			:key="dinozData.display"
@@ -58,7 +58,7 @@ export default defineComponent({
 			position: dinozPlacement
 		};
 	},
-	props: { dinozData: Object as PropType<DinozFiche> },
+	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	computed: {
 		dinozRace(): string {
 			return Object.entries(raceList).find(race => parseInt(race[0]) === this.dinozData!.race?.raceId)![1];

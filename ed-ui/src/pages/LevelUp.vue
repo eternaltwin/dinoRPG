@@ -24,7 +24,7 @@
 					top: `45px`
 				}"
 				:display="dinozData.display"
-				:life="dinozData.life"
+				:life="dinozData.life / dinozData.maxLife"
 				:flip="1"
 				:race="dinozData.race.raceId"
 			/>
