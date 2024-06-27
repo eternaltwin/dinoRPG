@@ -160,7 +160,7 @@ export const toDinozFiche = (
 		display: dinoz.display,
 		unavailableReason: dinoz.unavailableReason,
 		level: dinoz.level,
-		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId?? null,
+		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
 		leaderId: dinoz.leaderId,
 		followers: dinoz.followers.map(follower => follower.id),
 		life: dinoz.life,

@@ -97,25 +97,27 @@ export async function getDinozFromDinozShop(req: Request) {
 		const dinozCreatedInShop = await createMultipleDinoz(dinozArray);
 
 		const listDinozShop = dinozCreatedInShop
-			.map(dinozShop => {return {
-				id: dinozShop.id.toString(),
-				race: getRace(dinozShop).name.toUpperCase(),
-				display: dinozShop.display
-			}})
+			.map(dinozShop => {
+				return {
+					id: dinozShop.id.toString(),
+					race: getRace(dinozShop).name.toUpperCase(),
+					display: dinozShop.display
+				};
+			})
 			.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 
 		return listDinozShop;
 	} else {
 		const listDinozShop = playerData.dinozShop
-			.map(dinozShop => { return {
-				id: dinozShop.id.toString(),
-				race: getRace(dinozShop).name.toUpperCase(),
-				display: dinozShop.display
-			}})
+			.map(dinozShop => {
+				return {
+					id: dinozShop.id.toString(),
+					race: getRace(dinozShop).name.toUpperCase(),
+					display: dinozShop.display
+				};
+			})
 			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
 
 		return listDinozShop;
 	}
 }
-
-
