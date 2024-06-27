@@ -7,9 +7,7 @@
 		<DZDisclaimer help :content="$t('shop.dinoz.help')" />
 		<div class="sheets">
 			<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
-				<!--			<div class="dinoz_display">-->
 				<DinozWithoutFlash class="dinoImg" :display="dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
-				<!--			</div>-->
 				<div class="infos">
 					<div class="row1">
 						<div class="race">
@@ -76,7 +74,6 @@ import { DinozShopFicheLite } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
 import { playerStore, dinozStore } from '../store/index.js';
-// import { raceList } from '../constants/index.js';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import EventBus from '../events/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';

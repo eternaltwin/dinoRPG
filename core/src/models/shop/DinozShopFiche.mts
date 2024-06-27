@@ -6,8 +6,3 @@ export interface DinozShopFicheLite {
 	race: string;
 }
 
-export interface DinozShopFicheFront {
-	id: string;
-	display: string;
-	race: string;
-}
