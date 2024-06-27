@@ -132,24 +132,12 @@ export default defineComponent({
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
 					await this.resfreshInventory();
 
-					// Update Dinoz HP bar if item heals
-					if (item.effect && item.effect.category === ItemEffect.HEAL) {
-						EventBus.emit('refreshDinoz', true);
-					}
-
-					EventBus.emit('refreshMoney', true);
-					EventBus.emit('isLoading', false);
-					if (item.effect && item.effect.category === ItemEffect.EGG) {
+					// EventBus.emit('isLoading', false);
+					if (toast.category === ItemEffect.EGG) {
 						await this.refreshDinozList();
-					}
-					if (
-						item.effect &&
-						item.effect.category === ItemEffect.SPECIAL &&
-						(item.effect.value === 'rice' || item.effect.value === 'pampleboum')
-					) {
-						EventBus.emit('refreshDinoz', true);
-					}
-					if (item.effect && item.effect.category === ItemEffect.RESURRECT) {
+					} else if (toast.category === ItemEffect.GOLD) {
+						EventBus.emit('refreshMoney', true);
+					} else {
 						EventBus.emit('refreshDinoz', true);
 					}
 
