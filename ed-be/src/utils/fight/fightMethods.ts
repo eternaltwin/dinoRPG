@@ -1030,7 +1030,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.COMBUSTION:
 				const opponents = getOpponents(fightData, fighter);
 				opponents.forEach(opponent => {
-					loseHpBalanced(fightData, opponent, opponent.stats.base[ElementType.WOOD], LifeEffect.Fire, stepIndex);
+					loseHpBalanced(fightData, opponent, opponent.stats.base[ElementType.WOOD], LifeEffect.Fire);
 				});
 				break;
 			case Skill.BRASERO: {
@@ -3293,9 +3293,8 @@ const loseHpBalanced = (
 	fighter: DetailedFighter,
 	damage: number,
 	fx: LifeEffect,
-	stepIndex?: number
 ) => {
-	loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx, stepIndex);
+	loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
 };
 
 const loseHp = (
@@ -3303,21 +3302,16 @@ const loseHp = (
 	fighter: DetailedFighter,
 	damage: number,
 	fx: LifeEffect,
-	stepIndex?: number
 ) => {
 	// TODO: check for danger detector item
 	fighter.hp -= damage;
 
-	if (stepIndex) {
-		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: fighter.id, damages: damage });
-	} else {
-		fightData.steps.push({
-			action: 'looseHp',
-			fid: fighter.id,
-			hp: damage,
-			fx
-		});
-	}
+	fightData.steps.push({
+		action: 'looseHp',
+		fid: fighter.id,
+		hp: damage,
+		fx
+	});
 };
 
 const evade = (fightData: DetailedFight, opponent: DetailedFighter) => {
