@@ -871,7 +871,8 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 		null,
 		fighter.attacker ? 0 : 1,
 		monsterData,
-		fightData.place
+		fightData.place,
+		true
 	);
 
 	monster.master = fighter.id;

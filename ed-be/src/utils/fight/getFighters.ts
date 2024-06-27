@@ -325,7 +325,8 @@ export const initializeMonster = (
 	team: Team | null,
 	teamIndex: number,
 	monster: MonsterFiche,
-	place: PlaceEnum
+	place: PlaceEnum,
+	is_reinforcement: boolean,
 ): DetailedFighter => {
 	memory.existingMonsters++;
 
@@ -382,7 +383,7 @@ export const initializeMonster = (
 		display: monster.display ?? '',
 		name: monster.name,
 		level: monster.level,
-		type: 'monster' as const,
+		type: is_reinforcement ?  'reinforcement' : 'monster' as const,
 		attacker: teamIndex === 0,
 		maxHp: monster.hp,
 		startingHp: monster.hp,
@@ -777,7 +778,8 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 						team,
 						index,
 						{ ...monsterList[dinozCatch.monsterId as Monster] },
-						place
+						place,
+						true
 					);
 					monster.startingHp = dinozCatch.hp;
 					monster.hp = dinozCatch.hp;
@@ -793,7 +795,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		);
 
 		// Monsters
-		fighters.push(...monsters.map(monster => initializeMonster(memory, team, index, monster, place)));
+		fighters.push(...monsters.map(monster => initializeMonster(memory, team, index, monster, place, false)));
 	});
 
 	// Handle team wide modifiers

@@ -83,7 +83,7 @@ export type FighterStatus = {
 	cycle: boolean;
 };
 
-export type FighterType = 'dinoz' | 'monster' | 'boss' | 'clone';
+export type FighterType = 'dinoz' | 'monster' | 'boss' | 'clone' | 'reinforcement';
 
 export interface DetailedFighter {
 	// Metadata
