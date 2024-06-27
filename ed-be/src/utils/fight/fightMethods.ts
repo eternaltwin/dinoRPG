@@ -4447,29 +4447,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 									throw new Error('Missing poison data');
 								}
 
-								// TODO: Temporary code to avoid endless fights
-								// Forced poison to end the fight
-								if (poisonedBy.id === -666) {
-									const poisoner = {
-										id: -666,
-										name: 'God',
-										type: 'boss' as const
-									} as DetailedFighter;
-
-									// Register the hp lost from poison
-									loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
-								} else {
-									// Get poisoner
-									const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
-
-									if (!poisoner) {
-										sendJSONToDiscord('Error `Poisoner not found` in `playFighterTurn`.', { fightData: fightData });
-										throw new Error('Poisoner not found');
-									}
-
-									// Register the hp lost from poison
-									loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
-								}
+								// Register the hp lost from poison
+								loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
 								break;
 							}
 							case Status.BURNED: {
@@ -4518,6 +4497,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	}
 
 	checkDeaths(fightData);
+
+	// Abort if the attacker that was just picked died from a status
+	if (attacker.hp <= 0) {
+		return;
+	}
 
 	if (fightData.loser) {
 		return;
