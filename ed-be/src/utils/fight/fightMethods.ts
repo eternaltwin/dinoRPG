@@ -2042,18 +2042,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				getElementalAttack(fighter, ElementType.AIR, 0),
 				skill.id,
-				stepIndex
+				stepIndex,
+				opponent
 			);
 
 			// If the target is not a boss or the skill was not evaded, remove the opponent
 			if (opponent.type !== 'boss' && !result.evasion) {
-				// Add leave step
-				fightData.steps.push({
-					action: 'leave',
-					fighter: stepFighter(opponent),
-					animation: LeaveAnimation.BLACKHOLE
-				});
-
 				opponent.escaped = true;
 			}
 
@@ -2194,6 +2188,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			step.targets.push({ tid: opponent.id });
 
+			// For this skill, the move to and move back steps are handled outside of the launchAssault method
 			// Add moveTo step
 			fightData.steps.push({
 				action: 'moveTo',
@@ -4274,15 +4269,6 @@ export const checkDeaths = (fightData: DetailedFight) => {
 };
 
 const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
-	// Check if fighter is not dead
-	if (attacker.hp > 0) {
-		// Add moveBack step
-		fightData.steps.push({
-			action: 'moveBack',
-			fid: attacker.id
-		});
-	}
-
 	// Calculate new attacker's time
 	let time = TIME_BASE * TIME_FACTOR * attacker.stats.speed.global * attacker.stats.speed[attacker.element];
 
