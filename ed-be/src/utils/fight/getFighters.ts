@@ -50,6 +50,7 @@ export const initializeDinoz = (
 
 		// Add bamboo monster
 		if (team && itemFiche.itemId === Item.BAMBOO_FRIEND) {
+			// TODO: fix and use the right methods or do it somewhere else as it may be missed
 			team.monsterList.push({ ...monsterList.BAMBOOZ_SPROUTING });
 		}
 
