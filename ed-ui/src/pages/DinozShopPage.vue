@@ -15,36 +15,42 @@
 						<div class="race">
 							<Tippy theme="normal">
 								<strong>Race :</strong>
-								{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
+								{{ $t(`race.name.${raceList[dinoz.race].name}`) }}
 								<template #content>
-									<h1>{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}</h1>
+									<h1>{{ $t(`race.name.${raceList[dinoz.race].name}`) }}</h1>
 									<p>
-										{{ $t(`race.description.${raceList[dinoz.race.raceId]}`) }}
+										{{ $t(`race.description.${raceList[dinoz.race].name}`) }}
 									</p>
 								</template>
 							</Tippy>
 						</div>
 						<div class="price1">
 							<span class="money1"
-								>{{ utils.beautifulNumber(dinoz.race.price.toString()) }}
+								>{{ utils.beautifulNumber(raceList[dinoz.race].price.toString()) }}
 								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
 							</span>
 						</div>
 					</div>
 					<div class="row2">
 						<Elements
-							:fire="dinoz.race.nbrFire"
-							:wood="dinoz.race.nbrWood"
-							:water="dinoz.race.nbrWater"
-							:lightning="dinoz.race.nbrLightning"
-							:air="dinoz.race.nbrAir"
+							:fire="raceList[dinoz.race].upChance.fire"
+							:wood="raceList[dinoz.race].upChance.wood"
+							:water="raceList[dinoz.race].upChance.water"
+							:lightning="raceList[dinoz.race].upChance.lightning"
+							:air="raceList[dinoz.race].upChance.air"
 							style="margin-top: -5px"
 						></Elements>
 						<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{ $t('button.chose') }}</a>
 					</div>
 
-					<template v-if="dinoz.race.skillId && dinoz.race.skillId.length > 0">
-						<Tippy theme="normal" tag="div" class="skill" v-for="skillId in dinoz.race.skillId" :key="skillId">
+					<template v-if="raceList[dinoz.race].skillId">
+						<Tippy
+							theme="normal"
+							tag="div"
+							class="skill"
+							v-for="skillId in raceList[dinoz.race].skillId"
+							:key="skillId"
+						>
 							<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
 							{{ $t(`skill.name.${skillList[skillId].name}`) }}
 							<template #content>
@@ -66,11 +72,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { DinozShopService, DinozService } from '../services/index.js';
-import { DinozShopFiche } from '@drpg/core/models/shop/DinozShopFiche';
+import { DinozShopFicheLite } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { errorHandler, utils } from '../utils/index.js';
 import { playerStore, dinozStore } from '../store/index.js';
-import { raceList } from '../constants/index.js';
+// import { raceList } from '../constants/index.js';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import EventBus from '../events/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
@@ -85,7 +92,7 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			utils: utils,
-			dinozList: [] as Array<DinozShopFiche>,
+			dinozList: [] as Array<DinozShopFicheLite>,
 			raceList: raceList,
 			skillList
 		};
@@ -97,7 +104,7 @@ export default defineComponent({
 		DZDisclaimer
 	},
 	methods: {
-		async openPopinConfirmChoice(dinoz: DinozShopFiche): Promise<void> {
+		async openPopinConfirmChoice(dinoz: DinozShopFicheLite): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
 			if (res) {
 				EventBus.emit('isLoading', true);

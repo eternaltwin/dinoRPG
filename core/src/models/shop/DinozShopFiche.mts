@@ -1,7 +1,13 @@
 import { DinozRace } from '../dinoz/DinozRace.mjs';
 
-export interface DinozShopFiche {
+export interface DinozShopFicheLite {
 	id: string;
 	display: string;
-	race: DinozRace;
+	race: string;
+}
+
+export interface DinozShopFicheFront {
+	id: string;
+	display: string;
+	race: string;
 }

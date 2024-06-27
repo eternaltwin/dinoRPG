@@ -1,14 +1,14 @@
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
-import { PlayerDinozShop, Prisma } from '@drpg/prisma';
+import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomLetter, getRandomNumber } from '../utils/index.js';
+import { getRace } from '@drpg/core/utils/DinozUtils';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -97,38 +97,25 @@ export async function getDinozFromDinozShop(req: Request) {
 		const dinozCreatedInShop = await createMultipleDinoz(dinozArray);
 
 		const listDinozShop = dinozCreatedInShop
-			.map(dinozShop => setDinozShopFiche(dinozShop))
+			.map(dinozShop => {return {
+				id: dinozShop.id.toString(),
+				race: getRace(dinozShop).name.toUpperCase(),
+				display: dinozShop.display
+			}})
 			.sort((dinoz1, dinoz2) => +dinoz1.id - +dinoz2.id);
 
 		return listDinozShop;
 	} else {
 		const listDinozShop = playerData.dinozShop
-			.map(dinozShop => setDinozShopFiche(dinozShop))
+			.map(dinozShop => { return {
+				id: dinozShop.id.toString(),
+				race: getRace(dinozShop).name.toUpperCase(),
+				display: dinozShop.display
+			}})
 			.sort((dinoz1, dinoz2) => parseInt(dinoz1.id) - parseInt(dinoz2.id));
 
 		return listDinozShop;
 	}
 }
 
-/**
- * @summary Map the race and skill to a new dinoz
- * @param dinozShop {PlayerDinozShop}
- * @return void
- */
-function setDinozShopFiche(dinozShop: Pick<PlayerDinozShop, 'raceId' | 'id' | 'display'>) {
-	const raceFound = Object.values(raceList).find(race => race.raceId === dinozShop.raceId);
 
-	if (!raceFound) {
-		throw new ErrorFormator(500, `Race ${dinozShop.raceId} doesn't exist.`);
-	}
-
-	raceFound.skillId = Object.values(skillList)
-		.filter(skill => skill.raceId?.some(raceId => raceId === raceFound.raceId) && skill.isBaseSkill)
-		.map(skill => skill.id);
-
-	return {
-		id: dinozShop.id.toString(),
-		race: raceFound,
-		display: dinozShop.display
-	};
-}
