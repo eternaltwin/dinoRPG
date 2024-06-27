@@ -10,7 +10,7 @@ export interface DinozFiche {
 	display: string;
 	unavailableReason: UnavailableReason | null;
 	level: number;
-	missionId: number | undefined;
+	missionId: number | undefined | null;
 	missionHUD: MissionHUD | null;
 	leaderId: number | null;
 	followers: number[];
