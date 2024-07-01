@@ -7,38 +7,49 @@
 				</div>
 				<p>{{ $t(`missions.dialog.${missionName}.${validator}`) }}</p>
 				<ul>
-					<li v-if="xp"><img :src="getImgURL('icons', 'small_xp')" alt="xp" /> {{ xp }} {{ $t('missions.xp') }}</li>
-					<li v-if="gold">
-						<img :src="getImgURL('icons', 'small_gold')" alt="or" /> {{ gold }} {{ $t('missions.gold') }}
-					</li>
-					<li v-if="items.length > 0">
-						{{ $t('missions.item') }}
-						<Tippy
-							theme="normal"
-							tag="img"
-							v-for="item in items"
-							:key="item"
-							:src="getImgURL('item', `item_${item}`)"
-							alt="use"
-						>
-							<template #content>
-								<h1 v-html="formatContent($t(`item.name.${item}`))" />
-								<p v-html="formatContent($t(`item.description.${item}`))" />
-							</template>
-						</Tippy>
-					</li>
-					<li v-if="epic">
-						<Tippy theme="normal" tag="img" :src="getImgURL('epicRewards', `collec_${epic}`)" alt="use">
-							<template #content>
-								<h1 v-html="formatContent($t(`rewards.name.${epic}`))" />
-								<p v-html="formatContent($t(`rewards.description.${epic}`))" />
-							</template>
-						</Tippy>
-					</li>
-					<li v-if="status">
-						<img :src="getImgURL('status', `fx_${status}`)" :alt="status" />
-						{{ $t(`status.name.${statusId}`) }}
-					</li>
+					<template v-for="reward in missionReward" :key="reward">
+						<li v-if="reward.rewardType === rewardEnum.EXPERIENCE">
+							<img :src="getImgURL('icons', 'small_xp')" alt="xp" /> {{ reward.value }} {{ $t('missions.xp') }}
+						</li>
+						<li v-if="reward.rewardType === rewardEnum.GOLD">
+							<img :src="getImgURL('icons', 'small_gold')" alt="or" /> {{ reward.value }} {{ $t('missions.gold') }}
+						</li>
+						<li v-if="reward.rewardType === rewardEnum.ITEM">
+							<Tippy
+								theme="normal"
+								tag="img"
+								:src="getImgURL('item', `item_${itemNameList[reward.value]}`)"
+								:alt="itemNameList[reward.value]"
+							>
+								<template #content>
+									<h1 v-html="formatContent($t(`item.name.${itemNameList[reward.value]}`))" />
+									<p v-html="formatContent($t(`item.description.${itemNameList[reward.value]}`))" />
+								</template>
+							</Tippy>
+							{{ $t(`item.name.${itemNameList[reward.value]}`) }} x {{ reward.quantity }}
+						</li>
+						<li v-if="reward.rewardType === rewardEnum.EPIC">
+							<Tippy
+								theme="normal"
+								tag="img"
+								:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward.value]}`)"
+								:alt="epicList.imgName[reward.value]"
+							>
+								<template #content>
+									<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward.value]}`))" />
+									<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward.value]}`))" />
+								</template>
+							</Tippy>
+							{{ $t(`rewards.name.${epicList.imgName[reward.value]}`) }}
+						</li>
+						<li v-if="reward.rewardType === rewardEnum.STATUS && statusList.displayed[reward.value]">
+							<img
+								:src="getImgURL('status', `fx_${statusList.imgName[reward.value]}`)"
+								:alt="statusList.imgName[reward.value]"
+							/>
+							{{ $t(`status.name.${reward.value}`) }}
+						</li>
+					</template>
 				</ul>
 				<div class="option">
 					<a class="button" @click="$emit('close')">
@@ -64,7 +75,11 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			rewardEnum: RewardEnum,
+			itemNameList: itemNameList,
+			epicList: epicList,
+			statusList: statusList
 		};
 	},
 	props: {
@@ -85,53 +100,6 @@ export default defineComponent({
 			return typeof myDinoz.missionHUD?.target === 'string'
 				? myDinoz.missionHUD?.target
 				: myDinoz.missionHUD?.target[0].name || '';
-		},
-		xp(): number | undefined {
-			const isXP: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EXPERIENCE);
-			if (isXP?.rewardType === RewardEnum.EXPERIENCE) {
-				return isXP.value;
-			} else {
-				return undefined;
-			}
-		},
-		gold(): number | undefined {
-			const isGold: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.GOLD);
-			if (isGold && isGold.rewardType === RewardEnum.GOLD) {
-				this.playerStore.addMoney(isGold.value);
-				return isGold.value;
-			} else {
-				return undefined;
-			}
-		},
-		items(): Array<string | undefined> {
-			const isItem: Array<Rewarder> | undefined = this.missionReward.filter(el => el.rewardType === RewardEnum.ITEM);
-			return isItem.map(el => {
-				if (el.rewardType === RewardEnum.ITEM) return itemNameList[el.value];
-			});
-		},
-		epic(): string | undefined {
-			const isEpic: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.EPIC);
-			if (isEpic?.rewardType === RewardEnum.EPIC) {
-				return epicList.imgName[isEpic.value];
-			} else {
-				return undefined;
-			}
-		},
-		status(): string | undefined {
-			const isStatus: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.STATUS);
-			if (isStatus?.rewardType === RewardEnum.STATUS) {
-				return statusList.imgName[isStatus.value];
-			} else {
-				return undefined;
-			}
-		},
-		statusId(): number | undefined {
-			const isStatus: Rewarder | undefined = this.missionReward.find(el => el.rewardType === RewardEnum.STATUS);
-			if (isStatus?.rewardType === RewardEnum.STATUS) {
-				return isStatus.value;
-			} else {
-				return undefined;
-			}
 		}
 	}
 });
