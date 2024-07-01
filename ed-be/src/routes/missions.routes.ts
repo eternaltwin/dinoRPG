@@ -223,6 +223,7 @@ routes.put(
 			return res.status(200).send(response);
 		} catch (err) {
 			const e = err as ErrorFormator;
+			await postError(e, res);
 			return res.status(500).send(e.message);
 		}
 	}
