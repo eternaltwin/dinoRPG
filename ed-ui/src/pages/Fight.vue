@@ -3,7 +3,10 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
-	<FullFightAnimation :place="fight.place" @fightEnded="fightEnded = true" />
+	<Suspense>
+		<FullFightAnimation :fight="fightTransformed" />
+		<template #fallback> Loading... </template>
+	</Suspense>
 	<p class="fight-history" v-html="fightHistory" />
 	<Transition name="bounce">
 		<div v-if="fightEnded" class="wrapper">
@@ -49,21 +52,23 @@
 </template>
 
 <script lang="ts">
-import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap, FightResult } from '@drpg/core/models/fight/FightResult';
 import { FightService } from '../services/index.js';
 import { localStore, playerStore, dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/index.js';
 import EventBus from '../events/index.js';
-import { defineComponent, PropType } from 'vue';
-import FullFightAnimation from '../components/fight/FullFightAnimation.vue';
+import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
 import translateFightStep from '../utils/translateFightStep.js';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
+import { Fight } from '@drpg/dino-animation';
 
 export default defineComponent({
 	name: 'Fight',
 	components: {
 		TitleHeader,
-		FullFightAnimation
+		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
 	data() {
 		return {
@@ -76,7 +81,8 @@ export default defineComponent({
 			fightHistory: undefined as string | undefined,
 			npcSpeech: undefined as string | undefined,
 			npcName: undefined as string | undefined,
-			fightEnded: false as boolean
+			fightEnded: false as boolean,
+			fightTransformed: {} as Fight
 		};
 	},
 	props: {
@@ -131,6 +137,30 @@ export default defineComponent({
 			}
 			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
 		}
+		const fightResult = this.sessionStore.getFightResult;
+		if (!fightResult) return;
+		const fightSteps = fightResult.history as FightStep[];
+		const fighters = fightResult.fighters as FighterRecap[];
+		if (!fightSteps || !fighters) return;
+
+		console.log(fightSteps);
+
+		console.log(fighters);
+		const nexFight = transpileFight(structuredClone(toRaw(fighters)), fightSteps, this.$t);
+		if (!nexFight) {
+			return;
+		}
+		const initPlace = resolveFightingPlace(this.fight.place);
+		this.fightTransformed = new Fight({
+			...initPlace,
+			history: nexFight.filter(n => n != undefined),
+			lang: this.lang
+		});
+		this.fightTransformed.onFightEnd = () => {
+			this.fightEnded = true;
+		};
+
+		console.log(nexFight.filter(n => n != undefined));
 		EventBus.emit('isLoading', false);
 	},
 	unmounted(): void {

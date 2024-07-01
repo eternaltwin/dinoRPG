@@ -18,7 +18,10 @@
 									<a href="https://discord.gg/ERc3svy">Discord</a>.
 								</p>
 							</div>
-							<div id="pixiCanvas"></div>
+							<Suspense>
+								<FullFightAnimation :fight="fight" />
+								<template #fallback> Loading... </template>
+							</Suspense>
 						</div>
 					</td>
 					<td class="right" valign="top" />
@@ -30,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { Fight } from '@drpg/dino-animation';
 import AuthenticationPage from '../pages/AuthenticationPage.vue';
 import { DinoAction, EmoteBehaviour, EmoteList, EntranceEffect, FinishState } from '@drpg/core/models/fight/transpiler';
@@ -38,16 +41,16 @@ import { DinoAction, EmoteBehaviour, EmoteList, EntranceEffect, FinishState } fr
 export default defineComponent({
 	name: 'HomePage',
 	components: {
-		AuthenticationPage
+		AuthenticationPage,
+		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
 	data() {
 		return {
-			fight: undefined as Fight | undefined,
+			fight: {} as Fight,
 			autoLog: false as boolean
 		};
 	},
 	mounted() {
-		const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
 		this.fight = new Fight({
 			bg: 's_dnv',
 			top: 70,
@@ -197,7 +200,6 @@ export default defineComponent({
 				}
 			]
 		});
-		canvas.appendChild(this.fight.getDisplay());
 		this.fight.onFightEnd = () => {
 			this.autoLog = true;
 		};

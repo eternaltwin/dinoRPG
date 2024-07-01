@@ -130,17 +130,6 @@ const router = createRouter({
 					path: '/dojo/tournament/:id?',
 					name: 'DojoTournament',
 					component: () => import('../pages/dojo/DojoTournament.vue')
-				},
-				{
-					path: '/fight/pixi',
-					name: 'PixiFight',
-					component: () => import('../components/fight/PixiFight.vue'),
-					props: {
-						dinoz: {
-							display: '09T1Yt9wqq4Rx000'
-						},
-						placeName: 'vener'
-					}
 				}
 				// Import are not available
 				/*{
