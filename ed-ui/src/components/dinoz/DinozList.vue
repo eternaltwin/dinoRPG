@@ -201,6 +201,9 @@ ul {
 					gap: 2px;
 					margin-top: 4px;
 					flex-wrap: wrap-reverse;
+					img {
+						object-fit: contain;
+					}
 				}
 			}
 		}
