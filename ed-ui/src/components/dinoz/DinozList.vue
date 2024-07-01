@@ -13,7 +13,10 @@
 			<a @click="goToDinozPage(dinoz.id)">
 				<span class="icon">
 					<span class="tinyBar">
-						<span :style="getLifeBarWidth(dinoz.life, dinoz.maxLife)"></span>
+						<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
+					</span>
+					<span class="tinyBar">
+						<span class="xp" :style="getBarWidth(dinoz.experience, dinoz.maxExperience)"></span>
 					</span>
 					<div class="icons">
 						<template v-for="i in dinoz.remainingActions" :key="i">
@@ -89,8 +92,9 @@ export default defineComponent({
 		goToDinozPage(dinozId: number): void {
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 		},
-		getLifeBarWidth(life: number, maxLife: number): string {
-			const width: number = Math.round((life / maxLife) * 36);
+		getBarWidth(actual: number, max: number): string {
+			if (actual > max) actual = max;
+			const width: number = Math.round((actual / max) * 36);
 			return `width : ${width}px`;
 		},
 		getPlaceName(placeId: number): string {
@@ -192,25 +196,39 @@ ul {
 				font-size: 0pt;
 				line-height: 0pt;
 				.icons {
-					height: 20px;
 					overflow: hidden;
-					img {
-						margin-right: 2px;
-						margin-top: 4px;
-					}
+					display: flex;
+					gap: 2px;
+					margin-top: 4px;
+					flex-wrap: wrap-reverse;
 				}
 			}
 		}
 
 		&.light {
 			a {
-				height: 35px;
+				height: 48px;
 
 				.icon {
 					float: right;
 
 					.tinyBar {
 						margin-top: 4px;
+						display: block;
+						height: 2px;
+						width: 36px;
+						border: 1px solid #bc683c;
+						background-color: black;
+						.life {
+							display: block;
+							height: 2px;
+							background-color: yellow;
+						}
+						.xp {
+							display: block;
+							height: 2px;
+							background-color: #ff54e4;
+						}
 					}
 				}
 			}

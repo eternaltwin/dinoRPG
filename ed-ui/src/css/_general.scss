@@ -97,20 +97,6 @@ input, a {
 }
 
 span {
-	&.tinyBar {
-		display : block;
-		height : 2px;
-		width : 36px;
-		border : 1px solid #bc683c;
-		background-color : black;
-
-		span {
-			display : block;
-			height : 2px;
-			background-color : yellow;
-		}
-	}
-
 	&.tix, &.money {
 		color: #58321d;
 	    font-weight: bold;
