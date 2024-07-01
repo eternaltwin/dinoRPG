@@ -19,6 +19,24 @@
 						<span class="xp" :style="getBarWidth(dinoz.experience, dinoz.maxExperience)"></span>
 					</span>
 					<div class="icons">
+						<img
+							v-if="dinoz.leaderId"
+							:src="getImgURL('icons', 'small_follow')"
+							v-tippy="{
+								content: formatContent($t('following')),
+								theme: 'small'
+							}"
+							alt="lvlup"
+						/>
+						<img
+							v-if="dinoz.followers.length > 0"
+							:src="getImgURL('icons', 'crown', true)"
+							v-tippy="{
+								content: formatContent($t('followed')),
+								theme: 'small'
+							}"
+							alt="lvlup"
+						/>
 						<template v-for="i in dinoz.remainingActions" :key="i">
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
@@ -34,24 +52,6 @@
 							:src="getImgURL('icons', 'small_lup')"
 							v-tippy="{
 								content: formatContent($t('levelup.small')),
-								theme: 'small'
-							}"
-							alt="lvlup"
-						/>
-						<img
-							v-if="dinoz.leaderId"
-							:src="getImgURL('icons', 'small_follow')"
-							v-tippy="{
-								content: formatContent($t('following')),
-								theme: 'small'
-							}"
-							alt="lvlup"
-						/>
-						<img
-							v-if="dinoz.followers.length > 0"
-							:src="getImgURL('icons', 'crown', true)"
-							v-tippy="{
-								content: formatContent($t('followed')),
 								theme: 'small'
 							}"
 							alt="lvlup"
