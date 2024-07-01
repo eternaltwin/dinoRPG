@@ -99,6 +99,14 @@ export default defineComponent({
 					});
 				}
 			}
+			const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
+			if (storedFollowers.length > 0) {
+				storedFollowers.map(d => {
+					if (!this.dinozData.followers.includes(d.id)) {
+						d.leaderId = null;
+					}
+				});
+			}
 			this.dinozStore.setDinozList(dinozList);
 			this.playerStore.setPlayerOptions({
 				...this.playerStore.playerOptions,
