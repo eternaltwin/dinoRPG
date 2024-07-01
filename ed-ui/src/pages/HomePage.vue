@@ -203,9 +203,6 @@ export default defineComponent({
 		this.fight.onFightEnd = () => {
 			this.autoLog = true;
 		};
-	},
-	unmounted() {
-		this.fight?.destroy();
 	}
 });
 </script>
