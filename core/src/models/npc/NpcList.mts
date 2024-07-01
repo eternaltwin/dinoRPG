@@ -197,16 +197,16 @@ export const npcList: Record<string, Npc> = {
 		id: 17,
 		placeId: PlaceEnum.PORT_DE_PRECHE,
 		condition: {
-			[Operator.AND]: [
+			[Operator.OR]: [
 				{
-					[Operator.OR]: [
-						{ [ConditionEnum.STATUS]: DinozStatusId.JVBZ },
+					[Operator.AND]: [
+						{ [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY },
 						{
 							[ConditionEnum.STATUS]: DinozStatusId.FRETURN
 						}
 					]
 				},
-				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY } }
+				{ [ConditionEnum.STATUS]: DinozStatusId.JVBZ }
 			]
 		},
 		data: JOVEBOZE_RASCA,
