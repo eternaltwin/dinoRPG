@@ -6,16 +6,11 @@ before_script:
   - cp ed-be/config_development.toml.example ed-be/config_development.toml
   - "node --version"
   - "yarn --version"
-  - "rustc --version"
-  - "cargo --version"
   - yarn install
 
 container-build:
   stage: build
   image: "demurgos/node:2023.6"
-  variables:
-    CARGO_HOME: ".cargo"
-    RUSTFLAGS: "-C target-feature=-crt-static"
   cache:
     - key:
         files:
