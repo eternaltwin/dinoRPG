@@ -5488,15 +5488,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cargo-cp-artifact@npm:^0.1":
-  version: 0.1.8
-  resolution: "cargo-cp-artifact@npm:0.1.8"
-  bin:
-    cargo-cp-artifact: bin/cargo-cp-artifact.js
-  checksum: 10/04c83f065f1692669a313f0a000d2bba3f210bb1fed52b23ad82884f1235aff6d0718520bafbe1331c09a964227c7f67375962d559bdfcbdd73ad78057755a7b
-  languageName: node
-  linkType: hard
-
 "caseless@npm:~0.12.0":
   version: 0.12.0
   resolution: "caseless@npm:0.12.0"
@@ -6447,7 +6438,6 @@ __metadata:
     jest-junit: "npm:^16.0.0"
     jsonwebtoken: "npm:^9.0.2"
     multer: "npm:^1.4.5-lts.1"
-    native-dinorpg: "workspace:^*"
     node-fetch: "npm:^3.3.2"
     node-schedule: "npm:^2.1.1"
     nodemon: "npm:^3.0.1"
@@ -10347,14 +10337,6 @@ __metadata:
   checksum: 10/ac1eb60f615b272bccb0e2b9cd933720dad30bf9708424f691b8113826bb91aca7e9d14ef5d9415a6ba15c266b37817256f58d8ce980c82b0ba3185352565679
   languageName: node
   linkType: hard
-
-"native-dinorpg@workspace:^*, native-dinorpg@workspace:native":
-  version: 0.0.0-use.local
-  resolution: "native-dinorpg@workspace:native"
-  dependencies:
-    cargo-cp-artifact: "npm:^0.1"
-  languageName: unknown
-  linkType: soft
 
 "natural-compare@npm:^1.4.0":
   version: 1.4.0

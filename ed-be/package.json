@@ -43,7 +43,6 @@
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
-    "native-dinorpg": "workspace:^*",
     "node-fetch": "^3.3.2",
     "node-schedule": "^2.1.1",
     "pg": "^8.11.3",
