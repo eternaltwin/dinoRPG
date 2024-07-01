@@ -9,7 +9,7 @@ const gameConfig: GameConfig = {
 			initialMaxLevel: 50
 		},
 		shop: {
-			dinozNumber: 500,
+			dinozNumber: 10,
 			buyableQuetzu: 6
 		},
 		general: {

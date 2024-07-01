@@ -484,7 +484,6 @@ export default defineComponent({
 				.map(stat => getSpecialStat(data, data.status, dinozSkill, stat as SpecialStat, priest))
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
-			console.log(specialStats);
 			regen ? (this.hpRegen = regen.value) : 1;
 		}
 	},
