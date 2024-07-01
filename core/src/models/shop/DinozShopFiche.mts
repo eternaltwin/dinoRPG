@@ -5,4 +5,3 @@ export interface DinozShopFicheLite {
 	display: string;
 	race: string;
 }
-
