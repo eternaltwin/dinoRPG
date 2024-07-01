@@ -28,7 +28,6 @@ gitpodInstall:
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg yarn install
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg_eternal_twin yarn install
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg_eternal_twin yarn etwin db upgrade
-	docker compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg yarn build:native
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml run -u node drpg yarn migration
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.gitpod.yml up --no-recreate
 
@@ -46,7 +45,6 @@ install: build
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn install
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn install
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg_eternal_twin yarn etwin db upgrade
-	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn build:native
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml run -u node drpg yarn migration
 	docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d --no-recreate
 

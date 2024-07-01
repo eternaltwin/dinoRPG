@@ -25,7 +25,6 @@ container-build:
   artifacts:
     paths:
       - node_modules/
-      - native/
   script:
     - yarn build:gitlab
   rules:
