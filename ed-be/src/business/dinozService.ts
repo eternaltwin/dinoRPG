@@ -320,13 +320,6 @@ export async function getDinozFiche(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozData.id} doesn't belong to player ${req.auth.playerId}`);
 	}
 
-	//Remove temporary status
-	const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
-	if (tempStatus.length > 0) {
-		const promises = tempStatus.map(r => removeStatusFromDinoz(dinozData.id, r.statusId));
-		await Promise.all(promises);
-	}
-
 	// Create the answer that will be sent back
 	const ret = toDinozFiche(dinozData);
 	ret.actions = await getAvailableActions(dinozData);
@@ -570,6 +563,15 @@ export async function betaMove(req: Request) {
 	}
 
 	const team = [dinoz, ...followers];
+
+	for (const dinozData of team) {
+		//Remove temporary status
+		const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
+		if (tempStatus.length > 0) {
+			const promises = tempStatus.map(r => removeStatusFromDinoz(dinozData.id, r.statusId));
+			await Promise.all(promises);
+		}
+	}
 
 	if (dinoz.concentration) {
 		throw new ErrorFormator(400, 'concentration');
