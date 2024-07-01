@@ -250,6 +250,7 @@ export default defineComponent({
 					this.resurect = true;
 					break;
 				case Action.MISSION:
+					EventBus.emit('isLoading', true);
 					if (this.mission && this.mission.actionType === ConditionEnum.FINISH_MISSION) {
 						this.missionReward = await MissionService.finishMission(
 							this.$route.params.id.toString(),
@@ -267,6 +268,7 @@ export default defineComponent({
 							errorHandler.handle(e);
 						}
 					}
+					EventBus.emit('isLoading', false);
 					break;
 				case Action.DIG:
 					try {
