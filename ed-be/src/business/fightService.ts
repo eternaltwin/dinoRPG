@@ -76,7 +76,7 @@ export async function processFight(req: Request) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
-		followers = followers.filter(d => d.life > 0);
+		followers = followers.filter(d => d.life > 0 && d.unavailableReason === null);
 	}
 
 	const team = [dinozData, ...followers];
