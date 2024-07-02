@@ -1346,7 +1346,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.M_ELEMENTAL: {
 				// Lock into a random element
-				let randomElement = fighter.element;
+				let randomElement = randomBetween(1, 6) as ElementType;
 
 				while (fighter.element === randomElement) {
 					randomElement = randomBetween(1, 6) as ElementType;
@@ -3503,7 +3503,8 @@ export const applyStrategy = (fightData: DetailedFight, fighter: DetailedFighter
 	defenses.sort((a, b) => a.defense - b.defense);
 
 	// Apply order to fighter elements
-	fighter.elements = defenses.map(defense => defense.element);
+	// Note: filter out elements that are not in the fighter's element wheel
+	fighter.elements = defenses.filter(defense => fighter.elements.includes(defense.element)).map(defense => defense.element);
 };
 
 /// Determines the attack power of the attacker, the defense of the target, the damage inflicted.
