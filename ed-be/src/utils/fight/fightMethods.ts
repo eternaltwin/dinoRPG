@@ -722,11 +722,6 @@ export const initStepFighter = (
 // 			}
 // 		}
 
-// 		// Status.M_ABSORB
-// 		if (actualDamage[opponent.id] && hasStatus(fighter, Status.M_ABSORB)) {
-// 			// Heal damage done
-// 			heal(fightData, fighter, actualDamage[opponent.id]);
-// 		}
 // 	});
 // };
 
@@ -3034,14 +3029,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_ABSORPTION: {
-			// Add status
-			addStatus(fightData, fighter, Status.M_ABSORB);
-
 			// Attack opponent
-			launchAssault(fightData, fighter, true, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
+			let hit = launchAssault(fightData, fighter, true, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
 
-			// Remove status
-			removeStatus(fightData, fighter, Status.M_ABSORB);
+			if (hit.hpLost > 0) {
+				heal(fightData, fighter, hit.hpLost);
+			}
 			break;
 		}
 		case Skill.M_FLIGHT: {

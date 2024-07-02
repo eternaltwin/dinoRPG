@@ -30,7 +30,6 @@ export enum Status {
 	COPY_HEAL = 'copyHeal',
 	NO_INVOCATION = 'noInvocation',
 	USED_FUJIN = 'usedFujin',
-	M_ABSORB = 'mAbsorb',
 	NO_ASSAULT = 'noAssault',
 	NO_POISON = 'noPoison',
 	NO_CURSE = 'noCurse',
