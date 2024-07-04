@@ -10,22 +10,37 @@ export async function calculatePlayerPower(playerId: number) {
 	if (!boxInfo) throw new ErrorFormator(500, `Player doesn't exist`);
 	const dinozCount = boxInfo._count.dinoz;
 	if (dinozCount <= 0) return dinozCount;
-	const missionAverage = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a._count.missions, 0) / dinozCount;
-	const averageDinoz = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a.level, 0) / dinozCount;
+	const missionTotal = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a._count.missions, 0);
+	const AVAILABLE_MISSIONS = 55;
+	const dinozLevelTotal = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a.level, 0);
 	const totalRewards = boxInfo.rewards.filter(r => r.rewardId <= 24).length;
+	const AVAIALBLE_REWARDS = 23;
+	const universalCount = (boxInfo.cooker ? 1 :0) +
+		(boxInfo.engineer ? 1 : 0) +
+		(boxInfo.matelasseur ? 1 : 0) +
+		(boxInfo.merchant ? 1 : 0) +
+		(boxInfo.messie ? 1 : 0) +
+		(boxInfo.leader ? 1 : 0) +
+		(boxInfo.priest ? 1 : 0) +
+		(boxInfo.shopKeeper ? 1 : 0) +
+		(boxInfo.teacher ? 1 : 0);
+	const AVAIALBLE_UNIVERSAL = 9;
+
 
 	const coefficients = {
 		dinoz: 1,
+		universal: 1,
 		missions: 5,
 		level: 3,
 		rewards: 10
 	};
 	const completion =
 		(((dinozCount / gameConfig.dinoz.maxQuantity) * coefficients.dinoz +
-			(missionAverage / 55) * coefficients.missions +
-			(averageDinoz / gameConfig.dinoz.maxLevel) * coefficients.level +
-			(totalRewards / 23) * coefficients.rewards) /
-			(coefficients.dinoz + coefficients.missions + coefficients.level + coefficients.rewards)) *
+			(universalCount / AVAIALBLE_UNIVERSAL) * coefficients.universal +
+			(missionTotal / (AVAILABLE_MISSIONS * gameConfig.dinoz.maxQuantity)) * coefficients.missions +
+			(dinozLevelTotal / (gameConfig.dinoz.maxLevel * gameConfig.dinoz.maxQuantity)) * coefficients.level +
+			(totalRewards / AVAIALBLE_REWARDS) * coefficients.rewards) /
+			(coefficients.dinoz + coefficients.universal + coefficients.missions + coefficients.level + coefficients.rewards)) *
 		100;
 
 	return completion;

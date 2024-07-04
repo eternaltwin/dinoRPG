@@ -507,7 +507,16 @@ export async function getBoxHandlerInformations(playerId: number) {
 					]
 				}
 			},
-			rewards: true
+			rewards: true,
+			cooker: true,
+			engineer: true,
+			leader: true,
+			matelasseur: true,
+			merchant: true,
+			messie: true,
+			teacher: true,
+			priest: true,
+			shopKeeper: true,
 		}
 	});
 
