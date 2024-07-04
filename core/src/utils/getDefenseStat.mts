@@ -12,6 +12,10 @@ export enum DefenseElement {
 	NEUTRAL = 'void'
 }
 
+// Determines the defense of a given element
+// For the sake of a nice break down, here we look at what elements contribute to element X
+// It is given by the following matrix. Note that this matrix is different than the contribution of element X to element Y.
+// 
 export const getDefenseStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
 	statuses: DinozStatusId[],
@@ -70,7 +74,7 @@ export const getDefenseStat = (
 
 	// x0.5
 	const firstWeakElementName =
-		elementWheel[(elementWheel.indexOf(elementName) - 1 + elementWheel.length) % elementWheel.length];
+		elementWheel[(elementWheel.indexOf(elementName) + 1) % elementWheel.length];
 	const firstWeakElement = {
 		name: firstWeakElementName,
 		value: elementStat[firstWeakElementName],
@@ -78,7 +82,7 @@ export const getDefenseStat = (
 		globalBonus: 0
 	};
 	const secondWeakElementName =
-		elementWheel[(elementWheel.indexOf(elementName) - 2 + elementWheel.length) % elementWheel.length];
+		elementWheel[(elementWheel.indexOf(elementName) + 2) % elementWheel.length];
 	const secondWeakElement = {
 		name: secondWeakElementName,
 		value: elementStat[secondWeakElementName],
@@ -87,14 +91,14 @@ export const getDefenseStat = (
 	};
 
 	// x1.5
-	const firstStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 1) % elementWheel.length];
+	const firstStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 3) % elementWheel.length];
 	const firstStrongElement = {
 		name: firstStrongElementName,
 		value: elementStat[firstStrongElementName],
 		bonus: 0,
 		globalBonus: 0
 	};
-	const secondStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 2) % elementWheel.length];
+	const secondStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 4) % elementWheel.length];
 	const secondStrongElement = {
 		name: secondStrongElementName,
 		value: elementStat[secondStrongElementName],
@@ -179,7 +183,8 @@ export const getDefenseStat = (
 		}
 	});
 
-	const result = Math.ceil(
+	// Do not ceil/round or this will mess with the fight calculation. Up to the user of the method to ceil/round.
+	const result =
 		0.5 * (secondWeakElement.value + secondWeakElement.globalBonus) +
 			secondWeakElement.bonus +
 			0.5 * (firstWeakElement.value + firstWeakElement.globalBonus) +
@@ -188,8 +193,7 @@ export const getDefenseStat = (
 			1.5 * (firstStrongElement.value + firstStrongElement.globalBonus) +
 			firstStrongElement.bonus +
 			1.5 * (secondStrongElement.value + secondStrongElement.globalBonus) +
-			secondStrongElement.bonus
-	);
+			secondStrongElement.bonus;
 
 	return {
 		name: elementName,

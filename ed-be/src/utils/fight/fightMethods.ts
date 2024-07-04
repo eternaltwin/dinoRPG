@@ -1135,8 +1135,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.ETAT_PRIMAL: {
 				getFighters(fightData).forEach(f => {
-					// Remove team bad status
 					if (f.attacker === fighter.attacker) {
+						// Remove team bad status
 						removeStatus(fightData, f, ...f.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
 					} else {
 						// Remove opponent team good status
@@ -1150,12 +1150,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.PRINTEMPS_PRECOCE: {
-				// Heal all allies
+				// Heal all allies except fighter
 				getAllies(fightData, fighter).forEach(f => {
 					// Skip self
 					if (f.id === fighter.id) return;
 
-					// Heal 1-wood HP
+					// Heal random amount between 1 and wood element of fighter
 					heal(fightData, f, randomBetween(1, fighter.stats.base[ElementType.WOOD]));
 				});
 				break;

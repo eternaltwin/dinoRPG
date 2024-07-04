@@ -739,6 +739,39 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 	// TODO: handle other skills
 };
 
+// Applies a bonus of a given element to all defenses of the fighter, except void
+// The defense in the first "weak" element gains 0.5 of the bonus
+// The defense in the second "weak" element gains 0.5 of the bonus
+// The defense of the element itself, gains the bonus
+// The defense in the first "strong" element, gains 1.5 of the bonus
+// The defense in the second "strong" element, gains 1.5 of the bonus
+// In other words, here we look at what is the contribution of element X to element Y. It is given by the matrix:
+// 
+const applyGlobalDefenseBonus = (fighter: DetailedFighter, element: ElementType, bonus: number) => {
+	const elementWheel: ElementType[] = [
+		ElementType.FIRE,
+		ElementType.WOOD,
+		ElementType.WATER,
+		ElementType.LIGHTNING,
+		ElementType.AIR
+	] as const;
+
+	if (element === ElementType.VOID) {
+		throw new Error(`Cannot process global defense bonus of void`);
+	}
+
+	// The defense of the element itself increases by the bonus
+	fighter.stats.defense[element] += bonus;
+	// The defense in the first "strong" element increases by 1.5 of the bonus
+	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 1) % elementWheel.length]] += 1.5 * bonus;
+	// The defense in the second "strong" element increases by 1.5 of the bonus
+	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 2) % elementWheel.length]] += 1.5 * bonus;
+	// The defense in the first "weak" element increases by 0.5 of the bonus
+	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 3) % elementWheel.length]] += 0.5 * bonus;
+	// The defense in the second "weak" element increases by 0.5 of the bonus
+	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 4) % elementWheel.length]] += 0.5 * bonus;
+};
+
 const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighter[] => {
 	const fighters: DetailedFighter[] = [];
 
@@ -812,9 +845,9 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 2;
 			fighter.stats.assaultBonus[ElementType.VOID] += 2;
 		}
-		// WOOD
+		// WOOD: global defense bonus of wood to the team
 		if (team[Skill.GARDE_FORESTIER]) {
-			fighter.stats.defense[ElementType.WOOD] += 3;
+			applyGlobalDefenseBonus(fighter, ElementType.WOOD, 3);
 		}
 		// LIGHTNING
 		if (team[Skill.ELECTROLYSE]) {
