@@ -86,7 +86,7 @@ const right_leg_hurt = {
 	parts: [
 		// 109
 		{
-			ref: ref.moueffe.hurt_bruise_blue,
+			ref: ref.hurt.bruise_blue,
 			transform: {
 				tx: 1.7,
 				ty: -1.2,
@@ -103,7 +103,7 @@ const right_leg_hurt = {
 			},
 			// 113
 			{
-				ref: ref.moueffe.hurt_bruise_red,
+				ref: ref.hurt.bruise_red,
 				transform: {
 					tx: 0.65,
 					ty: -3.4,
@@ -198,7 +198,7 @@ const body_muscular = [
 				},
 				// 113
 				{
-					ref: ref.moueffe.hurt_bruise_red,
+					ref: ref.hurt.bruise_red,
 					transform: {
 						tx: 1.4,
 						ty: 11.5,
@@ -216,7 +216,7 @@ const body_muscular = [
 				},
 				// 110
 				{
-					ref: ref.moueffe.hurt_bruise_blue,
+					ref: ref.hurt.bruise_blue,
 					transform: {
 						tx: -21.9,
 						ty: 2.2,
@@ -287,7 +287,7 @@ const body_fat = [
 				},
 				// 113
 				{
-					ref: ref.moueffe.hurt_bruise_red,
+					ref: ref.hurt.bruise_red,
 					transform: {
 						tx: 1.4,
 						ty: 11.5,
@@ -305,7 +305,7 @@ const body_fat = [
 				},
 				// 110
 				{
-					ref: ref.moueffe.hurt_bruise_blue,
+					ref: ref.hurt.bruise_blue,
 					transform: {
 						tx: -19.5,
 						ty: -1.75,
@@ -1120,7 +1120,7 @@ export const parts_big = {
 								},
 								// 113
 								{
-									ref: ref.moueffe.hurt_bruise_red,
+									ref: ref.hurt.bruise_red,
 									transform: {
 										tx: -1.65,
 										ty: -9.1,
@@ -1132,7 +1132,7 @@ export const parts_big = {
 								},
 								// 110
 								{
-									ref: ref.moueffe.hurt_bruise_blue,
+									ref: ref.hurt.bruise_blue,
 									transform: {
 										tx: -17.9,
 										ty: -3.65,
@@ -1184,7 +1184,7 @@ export const parts_big = {
 								},
 								// 113
 								{
-									ref: ref.moueffe.hurt_bruise_red,
+									ref: ref.hurt.bruise_red,
 									transform: {
 										tx: -9.5,
 										ty: -17.45,
@@ -1196,7 +1196,7 @@ export const parts_big = {
 								},
 								// 110
 								{
-									ref: ref.moueffe.hurt_bruise_blue,
+									ref: ref.hurt.bruise_blue,
 									transform: {
 										tx: -17.9,
 										ty: -4.05,
