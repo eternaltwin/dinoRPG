@@ -15,7 +15,23 @@ export enum DefenseElement {
 // Determines the defense of a given element
 // For the sake of a nice break down, here we look at what elements contribute to element X
 // It is given by the following matrix. Note that this matrix is different than the contribution of element X to element Y.
-// 
+// Row is element of the defense \ Column is the contribution of each element to that defense
+//           \  Fire  |  Wood  |  Water  | Lightning |  Air
+// Fire      |    1   |  0.5   |   0.5   |     1.5   |  1.5
+// Wood      |   1.5  |    1   |   0.5   |     0.5   |  1.5
+// Water     |   1.5  |  1.5   |     1   |     0.5   |  0.5
+// Lightning |   0.5  |  1.5   |   1.5   |       1   |  0.5
+// Air       |   0.5  |  0.5   |   1.5   |     1.5   |    1
+// For example: to know the factor of each element for the Air defense, look at the Air row:
+// 0.5 from Fire and Wood, 1.5 from Water and Lightning and 1 from Air
+// Vocabulary-wise, this can be said as:
+// - Fire and Wood are weak against Air because they provide the least defense against it
+// - Water and Lightning are strong against Air because they provide the most defense against it
+// The "wheel" is: an element is strong against the next 2 and weak against the previous 2
+// Fire -> Wood -> Water
+// ^                |
+// |                v
+// Air    <-    Lightning
 export const getDefenseStat = (
 	dinoz: Pick<DinozFiche, 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
 	statuses: DinozStatusId[],
@@ -72,7 +88,7 @@ export const getDefenseStat = (
 		globalBonus: 0
 	};
 
-	// x0.5
+	// Weak element, contributes x0.5
 	const firstWeakElementName =
 		elementWheel[(elementWheel.indexOf(elementName) + 1) % elementWheel.length];
 	const firstWeakElement = {
@@ -90,7 +106,7 @@ export const getDefenseStat = (
 		globalBonus: 0
 	};
 
-	// x1.5
+	// Strong element contributes x1.5
 	const firstStrongElementName = elementWheel[(elementWheel.indexOf(elementName) + 3) % elementWheel.length];
 	const firstStrongElement = {
 		name: firstStrongElementName,

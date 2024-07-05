@@ -746,7 +746,22 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 // The defense in the first "strong" element, gains 1.5 of the bonus
 // The defense in the second "strong" element, gains 1.5 of the bonus
 // In other words, here we look at what is the contribution of element X to element Y. It is given by the matrix:
-// 
+// Row is element of the bonus \ Column is impact on the other elements
+//           \  Fire  |  Wood  |  Water  | Lightning |  Air
+// Fire      |    1   |  1.5   |   1.5   |     0.5   |  0.5
+// Wood      |   0.5  |    1   |   1.5   |     1.5   |  0.5
+// Water     |   0.5  |  0.5   |     1   |     1.5   |  1.5
+// Lightning |   1.5  |  0.5   |   0.5   |       1   |  1.5
+// Air       |   1.5  |  1.5   |   0.5   |     0.5   |    1
+// For example: a bonus of 2 in Air will propagate to the all the elements as follows by looking at the Air row:
+// 2 * 1.5 in Fire and Wood, 2 * 0.5 in Water and Lightning and 2 * 1 in Air
+// Vocabulary-wise, this can be said as Air is strong against Fire and Wood as it provides the most defense against those elements
+// and weak against water and lightning as the provides the least defense against those elements
+// The "wheel" is: an element is strong against the next 2 and weak against the previous 2
+// Fire -> Wood -> Water
+// ^                |
+// |                v
+// Air    <-    Lightning
 const applyGlobalDefenseBonus = (fighter: DetailedFighter, element: ElementType, bonus: number) => {
 	const elementWheel: ElementType[] = [
 		ElementType.FIRE,
@@ -762,13 +777,13 @@ const applyGlobalDefenseBonus = (fighter: DetailedFighter, element: ElementType,
 
 	// The defense of the element itself increases by the bonus
 	fighter.stats.defense[element] += bonus;
-	// The defense in the first "strong" element increases by 1.5 of the bonus
+	// The defense in the first next element increases by 1.5 of the bonus, this is the first "strong" element
 	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 1) % elementWheel.length]] += 1.5 * bonus;
-	// The defense in the second "strong" element increases by 1.5 of the bonus
+	// The defense in the second next element increases by 1.5 of the bonus, this is the second "strong" element
 	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 2) % elementWheel.length]] += 1.5 * bonus;
-	// The defense in the first "weak" element increases by 0.5 of the bonus
+	// The defense in the third element increases by 0.5 of the bonus, this is the first "weak" element
 	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 3) % elementWheel.length]] += 0.5 * bonus;
-	// The defense in the second "weak" element increases by 0.5 of the bonus
+	// The defense in the fourth element increases by 0.5 of the bonus, this is the second "weak" element
 	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 4) % elementWheel.length]] += 0.5 * bonus;
 };
 
