@@ -764,17 +764,37 @@ const launchAssault = (
 		return null;
 	}
 
+	let realTarget = target;
+	// Check if a dinoz is protecting the opponent and replace the target with the protector
+	const protector = getOpponents(fightData, attacker).find(opponent => opponent.protecting === target!.id);
+	if (protector) {
+		// Add moveTo step
+		fightData.steps.push({
+			action: 'moveTo',
+			fid: protector.id,
+			tid: target.id
+		});
+		realTarget = protector;
+	}
+
 	if (goto) {
 		// Add moveTo step
 		fightData.steps.push({
 			action: 'moveTo',
 			fid: attacker.id,
-			tid: target.id
+			tid: realTarget.id
 		});
 	}
 
 	// Trigger fighter attack
-	const result = attackTarget(fightData, attacker, target, isAssault, power, skill);
+	const result = attackTarget(fightData, attacker, realTarget, isAssault, power, skill);
+
+	if (protector && protector.hp > 0) {
+		fightData.steps.push({
+			action: 'moveBack',
+			fid: realTarget.id
+		});
+	}
 
 	// Add moveBack step if attacker is still alive
 	if (goto && attacker.hp > 0) {
@@ -800,11 +820,34 @@ const attackSingleOpponent = (
 ) => {
 	// Unless specified, pick random opponent by default
 	const opponent = target ?? getRandomOpponent(fightData, fighter);
+	let realOpponent = opponent;
+
+	// Check if a dinoz is protecting the opponent and replace the target with the protector
+	const protector = getOpponents(fightData, opponent).find(o => o.protecting === opponent.id);
+	if (protector) {
+		// Add moveTo step
+		fightData.steps.push({
+			action: 'moveTo',
+			fid: protector.id,
+			tid: opponent.id
+		});
+		realOpponent = protector;
+	}
 
 	// Add target
-	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: opponent.id });
+	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: realOpponent.id });
 
-	return attackTarget(fightData, fighter, opponent, false, element_attack, skill, stepIndex);
+	let result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, stepIndex);
+
+	if (protector && protector.hp > 0) {
+		// Add moveBack step
+		fightData.steps.push({
+			action: 'moveBack',
+			fid: realOpponent.id
+		});
+	}
+
+	return result;
 };
 
 /// Triggers an attack from a skill that targets all fighters of the opposing team
@@ -830,10 +873,31 @@ const attackAllOpponents = (
 	}
 
 	targets.forEach(target => {
-		// Add target
-		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: target.id });
+		let realTarget = target;
+		// Check if a dinoz is protecting the opponent and replace the target with the protector
+		const protector = getOpponents(fightData, target).find(opponent => opponent.protecting === target.id);
+		if (protector) {
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fid: protector.id,
+				tid: target.id
+			});
+			realTarget = protector;
+		}
 
-		attackTarget(fightData, fighter, target, false, element_attack, skill, stepIndex);
+		// Add target
+		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: realTarget.id });
+
+		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, stepIndex);
+
+		if (protector && protector.hp > 0) {
+			// Add moveBack step
+			fightData.steps.push({
+				action: 'moveBack',
+				fid: realTarget.id
+			});
+		}
 	});
 };
 
@@ -1198,6 +1262,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 						event: event
 					});
 					throw new Error('No lowest HP ally found');
+				}
+
+				// Nothing happens if the target is already protected
+				if (fightData.protectedFighters.find(id => id === lowestHpAlly.id)) {
+					break;
+				} else {
+					fightData.protectedFighters.push(lowestHpAlly.id);
 				}
 
 				// Protect lowest HP ally
@@ -3529,20 +3600,6 @@ const attackTarget = (
 
 	let realOpponent = target;
 
-	// Check if a dinoz is protecting the opponent
-	const protector = getOpponents(fightData, attacker).find(opponent => opponent.protecting === opponent.id);
-
-	if (protector) {
-		realOpponent = protector;
-
-		// Add moveTo step
-		fightData.steps.push({
-			action: 'moveTo',
-			fid: protector.id,
-			tid: target.id
-		});
-	}
-
 	let energyCost = BASE_ENERGY_COST;
 
 	// If the power is not defined, default to a basic assault
@@ -3739,14 +3796,6 @@ const attackTarget = (
 	// Cancel FLYING
 	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
 		removeStatus(fightData, attacker, Status.FLYING);
-	}
-
-	if (protector) {
-		// Add moveBack step
-		fightData.steps.push({
-			action: 'moveBack',
-			fid: target.id
-		});
 	}
 
 	return {

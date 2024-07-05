@@ -29,6 +29,7 @@ export type DetailedFight = {
 	steps: FightStep[];
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
+	protectedFighters: number[];
 	time: number;
 	lastFighterId: number | undefined;
 	environment?: {
@@ -65,6 +66,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		steps: [] as FightStep[],
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
+		protectedFighters: [],
 		time: 0,
 		lastFighterId: undefined,
 		place: config.place,
