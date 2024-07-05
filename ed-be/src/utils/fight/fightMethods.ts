@@ -245,11 +245,7 @@ export const getRandomOpponentForAssault = (
 ) => {
 	const opponents = getOpponents(fightData, fighter);
 	if (!opponents.length) {
-		sendJSONToDiscord('Error `No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
-			fightData: fightData,
-			fighter: fighter
-		});
-		throw new Error('No opponent found');
+		return null;
 	}
 
 	const randomOpponent = chooseRandomOpponentForAssault(fighter, opponents);
@@ -755,7 +751,7 @@ const launchAssault = (
 	isAssault: boolean, // Defines if the assault can combo and use assault bonuses. Exception, no combo if power is set
 	skill?: Skill,
 	power?: [ElementType, number][],
-	target?: DetailedFighter,
+	target?: DetailedFighter | null,
 	goto?: boolean
 ) => {
 	// Unless specified, this method will add to the history the move to and move back steps by default
@@ -763,6 +759,10 @@ const launchAssault = (
 
 	// Unless specified, pick a random opponent by default
 	target = target ?? getRandomOpponentForAssault(fightData, attacker);
+
+	if (target === null) {
+		return null;
+	}
 
 	if (goto) {
 		// Add moveTo step
@@ -1994,7 +1994,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Attack opponent
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			if (hit.hpLost > 0) {
+			if (hit && hit.hpLost > 0) {
 				// Increase time
 				fighter.time += 15 * TIME_FACTOR;
 			}
@@ -2162,24 +2162,24 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.DANSE_FOUDROYANTE: {
-			// Attack a random opponent 5 times
+			// Attack a random opponent 5 times with an lightning assault of power 3
 
-			// Get opponent
-			const opponent = getRandomOpponent(fightData, fighter);
-
-			// Add target
-			step.targets.push({ tid: opponent.id });
-
-			// For this skill, the move to and move back steps are handled outside of the launchAssault method
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fid: fighter.id,
-				tid: opponent.id
-			});
-
-			// NOTE is the oppoent the same for the 5 attacks?
 			for (let i = 0; i < 5; i++) {
+				// Get opponent for assault, the opponent can change in between the 5 hits
+				const opponent = getRandomOpponentForAssault(fightData, fighter);
+
+				if (opponent === null) {
+					break;
+				}
+
+				// For this skill, the move to and move back steps are handled outside of the launchAssault method
+				// Add moveTo step
+				fightData.steps.push({
+					action: 'moveTo',
+					fid: fighter.id,
+					tid: opponent.id
+				});
+
 				// Fighter attacks opponent
 				launchAssault(
 					fightData,
@@ -2222,7 +2222,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			if (hit.hpLost > 0) {
+			if (hit && hit.hpLost > 0) {
 				let damage = 0;
 
 				// 0 damage if boss or Skill.PERCEPTION
@@ -2254,7 +2254,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			if (hit.hpLost > 0) {
+			if (hit && hit.hpLost > 0) {
 				let damage = 0;
 
 				// 0 damage if boss or Skill.PERCEPTION
@@ -2976,17 +2976,32 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		// More race skills
 		case Skill.BIGMAGNON: {
-			// Attack opponent with a classic asssault
-			// Note: in MT code it calls directly `attackTarget` but with all descriptors of an assault
-			let result = launchAssault(fightData, fighter, true, skill.id);
+			// Attack opponent with a classic assault
+			// Note: in MT code it calls directly `attackTarget` but with all descriptors of an assault and with a non-assault specific target
+			let target = getRandomOpponent(fightData, fighter);
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fid: fighter.id,
+				tid: target.id
+			});
+
+			attackTarget(fightData, fighter, target, true, undefined, skill.id);
 
 			// Cancel FLYING and INTANGIBLE
-			removeStatus(fightData, result.target, Status.FLYING, Status.INTANGIBLE);
+			removeStatus(fightData, target, Status.FLYING, Status.INTANGIBLE);
 
 			// Add STUNNED if not boss
-			if (result.target.type !== 'boss') {
-				addStatus(fightData, result.target, Status.STUNNED, StatusLength.MEDIUM);
+			if (target.type !== 'boss') {
+				addStatus(fightData, target, Status.STUNNED, StatusLength.MEDIUM);
 			}
+
+			// Add moveBack step
+			fightData.steps.push({
+				action: 'moveBack',
+				fid: fighter.id
+			});
 
 			break;
 		}
@@ -3028,7 +3043,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Attack opponent
 			let hit = launchAssault(fightData, fighter, true, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
 
-			if (hit.hpLost > 0) {
+			if (hit) {
 				heal(fightData, fighter, hit.hpLost);
 			}
 			break;
@@ -3060,7 +3075,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const hit = launchAssault(fightData, fighter, true, Skill.M_STINGER, [[ElementType.VOID, 7]]);
 
 			// Check if opponent is not dead
-			if (hit.target && hit.hpLost > 0) {
+			if (hit && hit.target && hit.hpLost > 0) {
 				// Add poison
 				poison(fightData, hit.target, fighter, Skill.M_STINGER);
 			}
@@ -3095,10 +3110,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Fighter attacks opponent
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			const opponent = hit.target;
-
 			// Check if fighter is not dead
-			if (hit.target && hit.hpLost > 0) {
+			if (hit && hit.target && hit.hpLost > 0) {
+				const opponent = hit.target;
 				const goldStolen = (randomBetween(0, 5) + 8) * 10;
 				fighter.goldStolen = {
 					...fighter.goldStolen,
