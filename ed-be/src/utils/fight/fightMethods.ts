@@ -722,6 +722,7 @@ export const initStepFighter = (
 
 const checkSkillEvasion = (opponent: DetailedFighter) => {
 	// Some statues prevent skill evasion
+	// Note: yes a flying dinoz cannot dodge a skill
 	const statusesPreventingEvasion = [Status.ASLEEP, Status.PETRIFIED, Status.FLYING, Status.STUNNED];
 	if (statusesPreventingEvasion.some(status => hasStatus(opponent, status))) {
 		return false;
@@ -2029,7 +2030,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Attack opponent
 			launchAssault(fightData, fighter, true, skill.id);
 
-			// Check if fighter is not dead
+			// Fighter starts flying if not dead after the assault
 			if (fighter.hp > 0) {
 				addStatus(fightData, fighter, Status.FLYING);
 			}
@@ -3077,6 +3078,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.ECRASEMENT: {
+			// Get non flying opponents
 			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, Status.FLYING));
 
 			// Get dinoz best element
@@ -3793,11 +3795,6 @@ const attackTarget = (
 		}
 	}
 
-	// Cancel FLYING
-	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
-		removeStatus(fightData, attacker, Status.FLYING);
-	}
-
 	return {
 		attacker: attacker,
 		target: target,
@@ -4013,6 +4010,11 @@ const checkAfterAttackEffects = (
 			setEnergy(target, 0, fightData);
 			setEnergy(attacker, attacker.energy + energyStolen, fightData);
 		}
+	}
+
+	// Cancel FLYING
+	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
+		removeStatus(fightData, attacker, Status.FLYING);
 	}
 };
 
