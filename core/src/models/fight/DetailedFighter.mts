@@ -144,6 +144,8 @@ export interface DetailedFighter {
 	// Min damage
 	minDamage: number;
 	minAssaultDamage: number;
+	// Perception
+	perception: boolean;
 	// Flying
 	canHitFlying: boolean;
 	// Intangible

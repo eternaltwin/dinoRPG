@@ -4609,7 +4609,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10
@@ -4622,7 +4622,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 25
@@ -4635,7 +4635,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 60
@@ -4648,7 +4648,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_FLIGHT]: {
@@ -4659,7 +4659,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 60
@@ -4672,7 +4672,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30
@@ -4685,7 +4685,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_PROTECTION]: {
@@ -4696,7 +4696,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_COMET]: {
@@ -4707,7 +4707,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30,
@@ -4721,7 +4721,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
@@ -4735,7 +4735,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 15
@@ -4748,7 +4748,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 50
@@ -4761,7 +4761,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_STINGER]: {
@@ -4772,7 +4772,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 20
@@ -4785,7 +4785,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_WORM_2]: {
@@ -4796,7 +4796,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
@@ -4810,7 +4810,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_INSTANT_FLEE]: {
@@ -4821,7 +4821,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 100
@@ -4834,7 +4834,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 10
@@ -4847,7 +4847,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 20
@@ -4860,7 +4860,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 0
@@ -4873,7 +4873,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 30
@@ -4886,7 +4886,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 8,
 		probability: 15
@@ -4899,7 +4899,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_ELEMENTAL_DISCIPLE]: {
@@ -4910,7 +4910,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -4923,7 +4923,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -4936,7 +4936,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -4949,7 +4949,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_HEAL_GROUP]: {
@@ -4960,7 +4960,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -4973,7 +4973,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -4986,7 +4986,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 50
@@ -4999,7 +4999,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_INFINITE_REINFORCEMENTS]: {
@@ -5010,7 +5010,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_FASTER]: {
@@ -5021,7 +5021,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 60
@@ -5034,7 +5034,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 20
@@ -5047,7 +5047,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 10
@@ -5060,7 +5060,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
 		probability: 30
@@ -5073,7 +5073,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
 		probability: 60
@@ -5086,7 +5086,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
 		probability: 25
@@ -5099,7 +5099,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100
@@ -5112,7 +5112,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false
 	},
 	[Skill.M_GRIZOU]: {
@@ -5123,7 +5123,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 100,
@@ -5137,7 +5137,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
-		isBaseSkill: true,
+		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
 		probability: 5

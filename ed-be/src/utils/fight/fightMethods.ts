@@ -2297,8 +2297,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			if (hit && hit.hpLost > 0) {
 				let damage = 0;
 
-				// 0 damage if boss or Skill.PERCEPTION
-				if (!hit.target.skills.find(s => s.id === Skill.PERCEPTION) && hit.target.type !== 'boss') {
+				// Base damage of half the target hp if is does not know perception or is not a boss
+				if (!hit.target.perception && hit.target.type !== 'boss') {
 					// 50% HP otherwise
 					damage = applyBalanceDamage(hit.target, Math.round(hit.target.hp / 2));
 				}
@@ -2329,8 +2329,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			if (hit && hit.hpLost > 0) {
 				let damage = 0;
 
-				// 0 damage if boss or Skill.PERCEPTION
-				if (!hit.target.skills.find(s => s.id === Skill.PERCEPTION) && hit.target.type !== 'boss') {
+				// Base damage of whole target hp if is does not know perception or is not a boss
+				if (!hit.target.perception && hit.target.type !== 'boss') {
 					// 100% HP otherwise
 					damage = applyBalanceDamage(hit.target, hit.target.hp);
 				}
