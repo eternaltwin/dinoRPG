@@ -115,7 +115,7 @@ export default defineComponent({
 				}
 
 				// Update player's money
-				const newMoney = (this.playerStore.getMoney! - dinoz.race.price!) as number;
+				const newMoney = (this.playerStore.getMoney! - this.raceList[dinoz.race].price) as number;
 				this.playerStore.setMoney(newMoney);
 
 				const dinozStore = this.dinozStore.getDinozList;
