@@ -191,8 +191,8 @@ export const placeList: Array<PlaceDisplayed> = [
 		icon: PlaceIcon.DEFAULT,
 		map: MapZone.JUNGLE,
 		hidden: false,
-		xFactor: 2,
-		yFactor: 10
+		xFactor: 1.35,
+		yFactor: 5
 	},
 	{
 		placeId: 102,
@@ -202,8 +202,8 @@ export const placeList: Array<PlaceDisplayed> = [
 		icon: PlaceIcon.DEFAULT,
 		map: MapZone.JUNGLE,
 		hidden: false,
-		xFactor: 2,
-		yFactor: 10
+		xFactor: 1.35,
+		yFactor: 5
 	},
 	{
 		placeId: 18,
