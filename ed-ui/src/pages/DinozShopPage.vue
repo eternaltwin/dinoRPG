@@ -31,11 +31,11 @@
 					</div>
 					<div class="row2">
 						<Elements
-							:fire="raceList[dinoz.race].upChance.fire"
-							:wood="raceList[dinoz.race].upChance.wood"
-							:water="raceList[dinoz.race].upChance.water"
-							:lightning="raceList[dinoz.race].upChance.lightning"
-							:air="raceList[dinoz.race].upChance.air"
+							:fire="raceList[dinoz.race].nbrFire"
+							:wood="raceList[dinoz.race].nbrWood"
+							:water="raceList[dinoz.race].nbrWater"
+							:lightning="raceList[dinoz.race].nbrLightning"
+							:air="raceList[dinoz.race].nbrAir"
 							style="margin-top: -5px"
 						></Elements>
 						<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{ $t('button.chose') }}</a>
