@@ -728,6 +728,7 @@ const checkSkillEvasion = (opponent: DetailedFighter) => {
 		return false;
 	}
 
+	// TODO fix this: clones can inherit the super doge stat so this needs to be reworked
 	let evasion = 0;
 
 	// 15% chance to evade skills A with Skill.DEPLACEMENT_INSTANTANE
