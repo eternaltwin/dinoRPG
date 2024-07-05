@@ -19,8 +19,8 @@
 								</p>
 							</div>
 							<Suspense>
-								<FullFightAnimation :fight="fight" />
-								<template #fallback> Loading... </template>
+								<FullFightAnimation :fight="fight" @animationEnded="autoLog = true" />
+								<template #fallback> <Loading /> </template>
 							</Suspense>
 						</div>
 					</td>
@@ -34,24 +34,32 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-import { Fight } from '@drpg/dino-animation';
-import AuthenticationPage from '../pages/AuthenticationPage.vue';
-import { DinoAction, EmoteBehaviour, EmoteList, EntranceEffect, FinishState } from '@drpg/core/models/fight/transpiler';
+import AuthenticationPage from './AuthenticationPage.vue';
+import {
+	DinoAction,
+	EmoteBehaviour,
+	EmoteList,
+	EntranceEffect,
+	FinishState,
+	preFightLoader
+} from '@drpg/core/models/fight/transpiler';
+import Loading from '../components/utils/Loading.vue';
 
 export default defineComponent({
 	name: 'HomePage',
 	components: {
 		AuthenticationPage,
-		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
+		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue')),
+		Loading
 	},
 	data() {
 		return {
-			fight: {} as Fight,
+			fight: {} as preFightLoader,
 			autoLog: false as boolean
 		};
 	},
 	mounted() {
-		this.fight = new Fight({
+		this.fight = {
 			bg: 's_dnv',
 			top: 70,
 			bottom: 0,
@@ -63,6 +71,7 @@ export default defineComponent({
 						props: [],
 						dino: true,
 						life: 100,
+						maxLife: 100,
 						name: 'Gerardufoin',
 						side: true,
 						scale: 1,
@@ -77,6 +86,7 @@ export default defineComponent({
 						props: [],
 						dino: true,
 						life: 100,
+						maxLife: 100,
 						name: 'Biosha',
 						side: true,
 						scale: 1,
@@ -92,6 +102,7 @@ export default defineComponent({
 						dino: true,
 						life: 100,
 						name: 'Zenoo',
+						maxLife: 100,
 						side: true,
 						scale: 1,
 						fid: 2,
@@ -105,6 +116,7 @@ export default defineComponent({
 						props: [],
 						dino: true,
 						life: 100,
+						maxLife: 100,
 						name: 'Jahaa',
 						side: true,
 						scale: 1,
@@ -119,6 +131,7 @@ export default defineComponent({
 						props: [],
 						dino: true,
 						life: 100,
+						maxLife: 100,
 						name: 'Jolu',
 						side: true,
 						scale: 1,
@@ -169,6 +182,7 @@ export default defineComponent({
 						props: [],
 						dino: false,
 						life: 100,
+						maxLife: 100,
 						name: 'Mandragore',
 						side: false,
 						scale: 1,
@@ -199,9 +213,6 @@ export default defineComponent({
 					right: FinishState.ESCAPE
 				}
 			]
-		});
-		this.fight.onFightEnd = () => {
-			this.autoLog = true;
 		};
 	}
 });
@@ -211,9 +222,9 @@ export default defineComponent({
 #nav {
 	.homepage-container {
 		display: flex;
-		flex-flow: row wrap;
+		flex-flow: column;
 		justify-content: center;
-		align-self: center;
+		align-items: center;
 		max-width: 1280px;
 		margin: 1em 3vw;
 		.box {

@@ -1,3 +1,13 @@
+export type preFightLoader = {
+	bg?: string;
+	history?: transpiled[];
+	debug?: boolean;
+	top?: number,
+	bottom?: number,
+	ground?: number,
+	lang?: string;
+};
+
 export enum DinoAction {
 	ADD,
 	ANNOUNCE,
@@ -155,6 +165,8 @@ export type transpiled =
 				fid: number;
 				gfx: string | undefined;
 				entrance: EntranceEffect;
+				x?: number;
+				y?: number;
 			};
 	  }
 	| {
@@ -278,6 +290,15 @@ export type transpiled =
 			action: DinoAction.FLIP;
 			fid: number;
 	  }
+	| {
+	action: DinoAction.TEXT;
+	message: string;
+}
+	| {
+	action: DinoAction.TALK;
+	message: string;
+	fid: number;
+}
 	| {
 			action: DinoAction.WAIT;
 			time: number;

@@ -3,52 +3,54 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
-	<Suspense>
-		<FullFightAnimation :fight="fightTransformed" />
-		<template #fallback> Loading... </template>
-	</Suspense>
-	<p class="fight-history" v-html="fightHistory" />
-	<Transition name="bounce">
-		<div v-if="fightEnded" class="wrapper">
-			<div class="debrief" :class="lang">
-				<img
-					v-if="fight.result"
-					:src="getImgURL('design', `large_fight_win`)"
-					alt="win"
-					v-tippy="{
-						content: formatContent($t(`fight.win`)),
-						theme: 'small'
-					}"
-				/>
-				<img
-					v-else
-					:src="getImgURL('design', `large_fight_lose`)"
-					alt="lose"
-					v-tippy="{
-						content: formatContent($t(`fight.lose`)),
-						theme: 'small'
-					}"
-				/>
-				<div class="results life">{{ fight.totalHpLost }}</div>
-				<div class="results xp">
-					{{ fight.xpEarned }}
+	<div class="content">
+		<Suspense>
+			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
+			<template #fallback> <Loading /> </template>
+		</Suspense>
+		<p class="fight-history" v-html="fightHistory" />
+		<Transition name="bounce">
+			<div v-if="fightEnded" class="wrapper">
+				<div class="debrief" :class="lang">
 					<img
-						v-if="fight.result && fight.xpEarned === 0"
-						:src="getImgURL('icons', `small_lup`)"
-						alt="lup"
+						v-if="fight.result"
+						:src="getImgURL('design', `large_fight_win`)"
+						alt="win"
 						v-tippy="{
-							content: formatContent($t(`fight.lvlup`)),
+							content: formatContent($t(`fight.win`)),
 							theme: 'small'
 						}"
 					/>
+					<img
+						v-else
+						:src="getImgURL('design', `large_fight_lose`)"
+						alt="lose"
+						v-tippy="{
+							content: formatContent($t(`fight.lose`)),
+							theme: 'small'
+						}"
+					/>
+					<div class="results life">{{ fight.totalHpLost }}</div>
+					<div class="results xp">
+						{{ fight.xpEarned }}
+						<img
+							v-if="fight.result && fight.xpEarned === 0"
+							:src="getImgURL('icons', `small_lup`)"
+							alt="lup"
+							v-tippy="{
+								content: formatContent($t(`fight.lvlup`)),
+								theme: 'small'
+							}"
+						/>
+					</div>
+					<div class="results money">{{ fight.goldEarned }}</div>
 				</div>
-				<div class="results money">{{ fight.goldEarned }}</div>
+				<a class="button" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</a>
+				<a class="button" v-if="isDevEnv()" @click="processFight()">[Dev] Fight again</a>
+				<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
 			</div>
-			<a class="button" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</a>
-			<a class="button" v-if="isDevEnv()" @click="processFight()">[Dev] Fight again</a>
-			<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
-		</div>
-	</Transition>
+		</Transition>
+	</div>
 </template>
 
 <script lang="ts">
@@ -62,11 +64,13 @@ import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
 import translateFightStep from '../utils/translateFightStep.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
-import { Fight } from '@drpg/dino-animation';
+import { preFightLoader } from '@drpg/core/models/fight/transpiler';
+import Loading from '../components/utils/Loading.vue';
 
 export default defineComponent({
 	name: 'Fight',
 	components: {
+		Loading,
 		TitleHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
@@ -82,7 +86,7 @@ export default defineComponent({
 			npcSpeech: undefined as string | undefined,
 			npcName: undefined as string | undefined,
 			fightEnded: false as boolean,
-			fightTransformed: {} as Fight
+			fightTransformed: {} as preFightLoader
 		};
 	},
 	props: {
@@ -151,13 +155,10 @@ export default defineComponent({
 			return;
 		}
 		const initPlace = resolveFightingPlace(this.fight.place);
-		this.fightTransformed = new Fight({
+		this.fightTransformed = {
 			...initPlace,
 			history: nexFight.filter(n => n != undefined),
 			lang: this.lang
-		});
-		this.fightTransformed.onFightEnd = () => {
-			this.fightEnded = true;
 		};
 
 		console.log(nexFight.filter(n => n != undefined));
@@ -170,6 +171,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.content {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
 .results {
 	position: absolute;
 	padding-left: 20px;
