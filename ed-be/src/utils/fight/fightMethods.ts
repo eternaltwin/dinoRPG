@@ -242,7 +242,6 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 export const getRandomOpponentForAssault = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	power?: [ElementType, number][]
 ) => {
 	const opponents = getOpponents(fightData, fighter);
 	if (!opponents.length) {
@@ -759,14 +758,11 @@ const launchAssault = (
 	target?: DetailedFighter,
 	goto?: boolean
 ) => {
-	if (goto === undefined) {
-		goto = true; // Cannot use the || symbol because it becomes a logical operation if goto is defined
-	}
+	// Unless specified, this method will add to the history the move to and move back steps by default
+	goto = goto ?? true;
 
-	if (target === undefined) {
-		// Get random opponent
-		target = getRandomOpponentForAssault(fightData, attacker);
-	}
+	// Unless specified, pick a random opponent by default
+	target = target ?? getRandomOpponentForAssault(fightData, attacker);
 
 	if (goto) {
 		// Add moveTo step
@@ -802,8 +798,8 @@ const attackSingleOpponent = (
 	stepIndex: number,
 	target?: DetailedFighter
 ) => {
-	// Get random opponent
-	const opponent = target || getRandomOpponent(fightData, fighter);
+	// Unless specified, pick random opponent by default
+	const opponent = target ?? getRandomOpponent(fightData, fighter);
 
 	// Add target
 	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: opponent.id });
@@ -823,7 +819,7 @@ const attackAllOpponents = (
 	count?: number
 ) => {
 	// Attack each opponent
-	const targets = opponents || getOpponents(fightData, fighter);
+	const targets = opponents ?? getOpponents(fightData, fighter);
 
 	// Reduce the list of impacted of opponents to a random count only if a specific count is impacted
 	if (count) {
@@ -1135,8 +1131,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.ETAT_PRIMAL: {
 				getFighters(fightData).forEach(f => {
+					// Remove team bad status
 					if (f.attacker === fighter.attacker) {
-						// Remove team bad status
 						removeStatus(fightData, f, ...f.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
 					} else {
 						// Remove opponent team good status
@@ -1150,12 +1146,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.PRINTEMPS_PRECOCE: {
-				// Heal all allies except fighter
+				// Heal all allies
 				getAllies(fightData, fighter).forEach(f => {
 					// Skip self
 					if (f.id === fighter.id) return;
 
-					// Heal random amount between 1 and wood element of fighter
+					// Heal 1-wood HP
 					heal(fightData, f, randomBetween(1, fighter.stats.base[ElementType.WOOD]));
 				});
 				break;
@@ -3014,7 +3010,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 
-		// More onster skills
+		// More monster skills
 		case Skill.M_RENFORTS: {
 			const monsterDetails =
 				Object.values(monsterList).find(monster => monster.name === fighter.name) ||
@@ -3485,9 +3481,9 @@ const attackTarget = (
 	skill?: Skill,
 	stepIndex?: number
 ) => {
-	// By default, the attack is considered not an assault and cannot combo
-	isAssault = isAssault || false;
-	let canCombo = isAssault || false;
+	// Unless specified, the attack is considered not an assault and cannot combo by default
+	isAssault = isAssault ?? false;
+	let canCombo = isAssault ?? false;
 
 	// Abort if fighter is dead
 	if (attacker.hp <= 0) {
@@ -4487,7 +4483,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	}
 
 	// Skill activation
-	const possibleSkill = attacker.nextSkill || randomlyGetSkill(attacker);
+	// Unless specified, pick a random skill by default.
+	const possibleSkill = attacker.nextSkill ?? randomlyGetSkill(attacker);
 	if (possibleSkill) {
 		// End turn if skill activated
 		if (activateSkill(fightData, possibleSkill)) {

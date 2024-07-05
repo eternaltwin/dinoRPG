@@ -145,9 +145,9 @@ export interface DetailedFighter {
 	minDamage: number;
 	minAssaultDamage: number;
 	// Flying
-	canHitFlying?: boolean;
+	canHitFlying: boolean;
 	// Intangible
-	canHitIntangible?: boolean;
+	canHitIntangible: boolean;
 	// Skill bonuses
 	skillElementalBonus: Record<ElementType, number>;
 	nextSkill?: SkillDetails;

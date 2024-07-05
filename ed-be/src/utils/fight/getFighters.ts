@@ -179,7 +179,9 @@ export const initializeDinoz = (
 		costume,
 		invocations: 1,
 		initiallyCursed: dinoz.status.some(status => status.statusId === DinozStatusId.CURSED),
-		permanentStatusGained: []
+		permanentStatusGained: [],
+		canHitFlying: false,
+		canHitIntangible: false,
 	};
 
 	handleSkills(team, fighter, place);
@@ -478,7 +480,9 @@ export const initializeMonster = (
 		nextAssaultMultiplier: 1,
 		invocations: 0,
 		initiallyCursed: false,
-		permanentStatusGained: []
+		permanentStatusGained: [],
+		canHitFlying: false,
+		canHitIntangible: false,
 	};
 
 	// Handle elements (from highest to lowest)
