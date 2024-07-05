@@ -129,7 +129,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				stepId: 2,
-				place: PlaceEnum.CAMP_KORGON,
+				place: PlaceEnum.AUREE_DE_LA_FORET,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
 					target: 'talkingorchide'
