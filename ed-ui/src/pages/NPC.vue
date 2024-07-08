@@ -127,20 +127,15 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
-		// const externalScript = document.createElement('script');
-		// // const ruffle = new URL(`/public/ruffle/ruffle.js`, import.meta.url) as string;
-		// externalScript.setAttribute('src', '/public/ruffle/ruffle.js');
-		// document.head.appendChild(externalScript);
-		let step = this.dinozStore.getNpc(this.dinozId)?.npcSpeech;
-		console.log(this.dinozStore.getNpc(this.dinozId));
-		if (!step) {
-			step = 'begin';
+		const npc = this.dinozStore.getNpc(this.dinozId);
+		this.npcName = this.$route.params.npc as string;
+		let step = 'begin';
+		if (npc && npc.npcName === this.npcName) {
+			step = npc.npcSpeech;
 		} else {
-			console.log(step);
 			this.dinozStore.clearNpc(this.dinozId);
 		}
 		try {
-			this.npcName = this.$route.params.npc as string;
 			this.dinozId = parseInt(this.$route.params.id as string);
 			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
 			this.loaded = true;
