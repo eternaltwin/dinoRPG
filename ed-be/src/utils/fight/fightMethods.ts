@@ -2332,7 +2332,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 				// Base damage of whole target hp if is does not know perception or is not a boss
 				if (!hit.target.perception && hit.target.type !== 'boss') {
-					// 100% HP otherwise
+					// 100% current HP otherwise
 					damage = applyBalanceDamage(hit.target, hit.target.hp);
 				}
 

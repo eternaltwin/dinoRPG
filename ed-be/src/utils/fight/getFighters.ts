@@ -289,7 +289,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		skills: [], // No skills for clones
 		status: [], // No statuses for clones
 		activeSkills: [],
-		elements: dinoz.elements, // Copy exactly the elements of the original dinoz
+		elements: [], // Copy exactly the elements of the original dinoz, see below
 		element: ElementType.AIR, // Temporary, is changed below
 		minDamage: dinoz.minDamage,
 		minAssaultDamage: dinoz.minAssaultDamage,
@@ -308,15 +308,25 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		cancelArmor: dinoz.cancelArmor
 	};
 
-	// Make sure the clone starts with the highest element
-	const bestElement = clone.elements.reduce((acc, element) => {
-		if (clone.stats.base[element] > clone.stats.base[acc]) {
-			return element;
-		}
+	// Redo the element ordering because the original dinoz may have altered elements
+	// Handle elements (from highest to lowest)
+	const elements = [
+		{ element: ElementType.FIRE, value: clone.stats.base[ElementType.FIRE] },
+		{ element: ElementType.WOOD, value: clone.stats.base[ElementType.WOOD] },
+		{ element: ElementType.WATER, value: clone.stats.base[ElementType.WATER] },
+		{ element: ElementType.LIGHTNING, value: clone.stats.base[ElementType.LIGHTNING] },
+		{ element: ElementType.AIR, value: clone.stats.base[ElementType.AIR] }
+	];
 
-		return acc;
-	}, ElementType.FIRE);
-	clone.element = bestElement;
+	// Order the elements from highest to lowest, random if equal
+	elements.sort((a, b) => {
+		if (b.value !== a.value) {
+			return b.value - a.value;
+		}
+		return Math.random() > 0.5 ? 1 : -1;
+	});
+	clone.elements = elements.map(element => element.element);
+	clone.element = clone.elements[0];
 
 	return clone;
 };
