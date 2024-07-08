@@ -4,7 +4,7 @@ import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { rewardList } from '../../reward/RewardList.mjs';
+import { Reward } from '../../reward/RewardList.mjs';
 
 export const M_PAPY_JOE: Mission[] = [
 	// Missions 1 to 10
@@ -322,7 +322,7 @@ export const M_PAPY_JOE: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.MSG
+				value: Reward.MSG
 			}
 		],
 		steps: [

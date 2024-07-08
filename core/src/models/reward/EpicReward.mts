@@ -1,5 +1,5 @@
 export interface EpicReward {
-	playerId: number;
-	rewardId: number;
+	id: number;
 	name: string;
+	displayed: boolean;
 }

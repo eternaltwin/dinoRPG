@@ -3,7 +3,7 @@ import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
-import { rewardList } from '../../reward/RewardList.mjs';
+import { Reward } from '../../reward/RewardList.mjs';
 
 export const VENERABLE: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -28,7 +28,7 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.VENER
+				value: Reward.VENER
 			},
 			{
 				rewardType: RewardEnum.STATUS,

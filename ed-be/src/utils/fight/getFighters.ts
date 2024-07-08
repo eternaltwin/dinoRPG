@@ -341,7 +341,7 @@ export const initializeMonster = (
 	teamIndex: number,
 	monster: MonsterFiche,
 	place: PlaceEnum,
-	is_reinforcement: boolean,
+	is_reinforcement: boolean
 ): DetailedFighter => {
 	memory.existingMonsters++;
 
@@ -398,7 +398,7 @@ export const initializeMonster = (
 		display: monster.display ?? '',
 		name: monster.name,
 		level: monster.level,
-		type: is_reinforcement ?  'reinforcement' : 'monster' as const,
+		type: is_reinforcement ? 'reinforcement' : ('monster' as const),
 		attacker: teamIndex === 0,
 		maxHp: monster.hp,
 		startingHp: monster.hp,

@@ -1,7 +1,7 @@
 import { Item } from '@drpg/core/models/item/ItemList';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche, toDinozFicheLite, toDinozPublicFiche } from '@drpg/core/utils/DinozUtils';
 import dayjs from 'dayjs';
 import { Request } from 'express';
@@ -91,8 +91,8 @@ export async function getCommonData(req: Request) {
 		id: playerCommonData.id,
 		name: playerCommonData.name,
 		playerOptions: {
-			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PDA),
-			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === rewardList.PMI)
+			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PDA),
+			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI)
 		},
 		admin: req.auth.isAdmin || false,
 		priest: playerCommonData.priest
@@ -168,7 +168,7 @@ export async function setCustomText(req: Request) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
 	//Check if user can edit
-	if (!playerProfile.rewards.some(reward => reward.rewardId === rewardList.PLUME)) {
+	if (!playerProfile.rewards.some(reward => reward.rewardId === Reward.PLUME)) {
 		throw new ErrorFormator(500, `Player ${playerId} cannot edit this field`);
 	}
 

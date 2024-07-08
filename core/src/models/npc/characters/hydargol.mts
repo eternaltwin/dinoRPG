@@ -1,6 +1,6 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
-import { rewardList } from '../../reward/RewardList.mjs';
+import { Reward } from '../../reward/RewardList.mjs';
 import { NpcData } from '../NpcData.mjs';
 
 export const HYDARGOL: Readonly<Record<string, NpcData>> = {
@@ -24,7 +24,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF } },
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PERLE } }
 			]
 		},
 		nextStep: ['get']
@@ -34,7 +34,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF },
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PERLE } }
 			]
 		},
 		reward: [
@@ -45,7 +45,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 			},
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.PERLE
+				value: Reward.PERLE
 			}
 		],
 		nextStep: []
@@ -53,7 +53,7 @@ export const HYDARGOL: Readonly<Record<string, NpcData>> = {
 	act: {
 		stepName: 'act',
 		condition: {
-			[ConditionEnum.COLLEC]: rewardList.PERLE
+			[ConditionEnum.COLLEC]: Reward.PERLE
 		},
 		nextStep: ['gant']
 	},

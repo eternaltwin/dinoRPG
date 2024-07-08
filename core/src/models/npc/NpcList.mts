@@ -34,7 +34,7 @@ import { Npc } from './npc.mjs';
 import { M_MMEX } from './missions/mmex.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { SPELELE } from './characters/spelele.mjs';
-import { rewardList } from '../reward/RewardList.mjs';
+import { Reward } from '../reward/RewardList.mjs';
 import { PTEROZ, ROCKY, HIPPO } from './characters/totems.mjs';
 import { VENERABLE } from './characters/vener.mjs';
 
@@ -245,7 +245,7 @@ export const npcList: Record<string, Npc> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.ZENBRO },
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PERLE } }
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PERLE } }
 			]
 		},
 		data: PADAMOINE,
@@ -297,10 +297,7 @@ export const npcList: Record<string, Npc> = {
 		data: RODEUR3,
 		missions: undefined,
 		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF },
-				{ [Operator.NOT]: { [ConditionEnum.POSSESS_OBJECT]: itemList.TIK_BRACELET.itemId } }
-			]
+			[Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK }
 		},
 		flashvars: undefined
 	},
@@ -325,7 +322,7 @@ export const npcList: Record<string, Npc> = {
 			[Operator.OR]: [
 				{
 					[Operator.AND]: [
-						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.PTEROZ } },
+						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PTEROZ } },
 						{ [ConditionEnum.MINLEVEL]: 8 }
 					]
 				},
@@ -346,7 +343,7 @@ export const npcList: Record<string, Npc> = {
 			[Operator.OR]: [
 				{
 					[Operator.AND]: [
-						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.HIPPO } },
+						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.HIPPO } },
 						{ [ConditionEnum.MINLEVEL]: 8 }
 					]
 				},
@@ -367,7 +364,7 @@ export const npcList: Record<string, Npc> = {
 			[Operator.OR]: [
 				{
 					[Operator.AND]: [
-						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: rewardList.ROCKY } },
+						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.ROCKY } },
 						{ [ConditionEnum.MINLEVEL]: 13 }
 					]
 				},

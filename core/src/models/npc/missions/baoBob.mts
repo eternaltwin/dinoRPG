@@ -4,7 +4,7 @@ import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { rewardList } from '../../reward/RewardList.mjs';
+import { Reward } from '../../reward/RewardList.mjs';
 
 export const M_BAO_BOB: Mission[] = [
 	// Missions 12 to 21
@@ -491,7 +491,7 @@ export const M_BAO_BOB: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.TOUR
+				value: Reward.TOUR
 			}
 		],
 		steps: [
