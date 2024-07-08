@@ -253,6 +253,8 @@ export async function getAvailableActions(
 		);
 	}
 
+	// Hack to remove FRETURN so dinoz can still be redirected to NPC but cannot talk to them explicitly
+	dinoz.status = dinoz.status.filter(s => s.statusId !== DinozStatusId.FRETURN)
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
 		if (!npc.condition || checkCondition(npc.condition, [dinoz])) {
