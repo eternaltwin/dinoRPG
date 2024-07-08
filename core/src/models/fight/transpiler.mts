@@ -2,9 +2,9 @@ export type preFightLoader = {
 	bg?: string;
 	history?: transpiled[];
 	debug?: boolean;
-	top?: number,
-	bottom?: number,
-	ground?: number,
+	top?: number;
+	bottom?: number;
+	ground?: number;
 	lang?: string;
 };
 
@@ -291,14 +291,14 @@ export type transpiled =
 			fid: number;
 	  }
 	| {
-	action: DinoAction.TEXT;
-	message: string;
-}
+			action: DinoAction.TEXT;
+			message: string;
+	  }
 	| {
-	action: DinoAction.TALK;
-	message: string;
-	fid: number;
-}
+			action: DinoAction.TALK;
+			message: string;
+			fid: number;
+	  }
 	| {
 			action: DinoAction.WAIT;
 			time: number;

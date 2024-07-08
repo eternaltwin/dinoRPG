@@ -10,7 +10,7 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 import { shopList } from '@drpg/core/models/shop/ShopList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import {
 	actualPlace,
@@ -997,7 +997,7 @@ export async function getDinozToManage(req: Request) {
 	const rewards = await getPlayerRewards(playerId);
 
 	// Check if player has PDA
-	const hasPDA = rewards.some(reward => reward.rewardId === rewardList.PDA);
+	const hasPDA = rewards.some(reward => reward.rewardId === Reward.PDA);
 
 	// Stop if player doesn't have PDA
 	if (!hasPDA) {
@@ -1031,7 +1031,7 @@ export async function updateOrders(req: Request) {
 	const rewards = await getPlayerRewards(playerId);
 
 	// Check if player has PDA
-	const hasPDA = rewards.some(reward => reward.rewardId === rewardList.PDA);
+	const hasPDA = rewards.some(reward => reward.rewardId === Reward.PDA);
 
 	// Stop if player doesn't have PDA
 	if (!hasPDA) {

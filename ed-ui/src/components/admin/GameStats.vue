@@ -30,7 +30,6 @@ import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { missionsList } from '../../constants/missions.js';
 import { placeList } from '../../constants/place.js';
-import { epicList } from '../../constants/epic.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { mixin } from '../../mixin/mixin.js';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
@@ -45,6 +44,7 @@ import {
 	Legend
 } from 'chart.js';
 import { Line } from 'vue-chartjs';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -232,13 +232,13 @@ const getLogPropsForTranslation = (
 		case 'AdminAddReward':
 			values = {
 				targetId: log.values[0],
-				reward: $t(`rewards.name.${epicList.imgName[+log.values[1]]}`)
+				reward: $t(`rewards.name.${rewardList[+log.values[1]].name}`)
 			};
 			break;
 		case 'AdminRemoveReward':
 			values = {
 				targetId: log.values[0],
-				reward: $t(`rewards.name.${epicList.imgName[+log.values[1]]}`)
+				reward: $t(`rewards.name.${rewardList[+log.values[1]].name}`)
 			};
 			break;
 		case 'AdminUpdatePlayer':

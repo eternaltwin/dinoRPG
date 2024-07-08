@@ -8,7 +8,7 @@ import { MissionID } from '@drpg/core/models/missions/missionList';
 import { MissionStep } from '@drpg/core/models/missions/missionSteps';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, DinozMission } from '@drpg/prisma';
@@ -349,7 +349,7 @@ export async function getGlobalMissions(req: Request) {
 	const rewards = await getPlayerRewards(playerId);
 
 	// Check if player has PMI
-	const hasPMI = rewards.some(reward => reward.rewardId === rewardList.PMI);
+	const hasPMI = rewards.some(reward => reward.rewardId === Reward.PMI);
 
 	// Stop if player doesn't have PMI
 	if (!hasPMI) {

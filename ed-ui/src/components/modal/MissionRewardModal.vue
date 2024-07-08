@@ -32,15 +32,15 @@
 							<Tippy
 								theme="normal"
 								tag="img"
-								:src="getImgURL('epicRewards', `collec_${epicList.imgName[reward.value]}`)"
-								:alt="epicList.imgName[reward.value]"
+								:src="getImgURL('epicRewards', `collec_${rewardList[reward.value].name}`)"
+								:alt="rewardList[reward.value].name"
 							>
 								<template #content>
-									<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[reward.value]}`))" />
-									<p v-html="formatContent($t(`rewards.description.${epicList.imgName[reward.value]}`))" />
+									<h1 v-html="formatContent($t(`rewards.name.${rewardList[reward.value].name}`))" />
+									<p v-html="formatContent($t(`rewards.description.${rewardList[reward.value].name}`))" />
 								</template>
 							</Tippy>
-							{{ $t(`rewards.name.${epicList.imgName[reward.value]}`) }}
+							{{ $t(`rewards.name.${rewardList[reward.value].name}`) }}
 						</li>
 						<li v-if="reward.rewardType === rewardEnum.STATUS && statusList.displayed[reward.value]">
 							<img
@@ -63,12 +63,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList, missionsList, statusList } from '../../constants/index.js';
+import { missionsList, statusList } from '../../constants/index.js';
 import { dinozStore, playerStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 
 export default defineComponent({
 	name: 'MissionRewardModal',
@@ -78,7 +79,7 @@ export default defineComponent({
 			playerStore: playerStore(),
 			rewardEnum: RewardEnum,
 			itemNameList: itemNameList,
-			epicList: epicList,
+			rewardList: rewardList,
 			statusList: statusList
 		};
 	},

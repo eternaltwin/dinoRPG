@@ -2414,7 +2414,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const monster = opponents[randomBetween(0, opponents.length - 1)];
 
 			// Attack opponent
-			const hit = launchAssault(fightData, fighter, true, undefined, [[0 as ElementType,0]], monster);
+			const hit = launchAssault(fightData, fighter, true, undefined, [[0 as ElementType, 0]], monster);
 
 			// Only continue if not already caught and hit and not dead
 			if (!monster.catcher && hit && monster.hp > 0) {
@@ -3143,7 +3143,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.M_ALL_FOR_ONE: {
 			// TODO corner case missing, check MT code
 			// Get all allies from the same race
-			const sameRace = getAllies(fightData, fighter, ['monster']).filter(ally => ally.name === fighter.name && ally.time < Infinity);
+			const sameRace = getAllies(fightData, fighter, ['monster']).filter(
+				ally => ally.name === fighter.name && ally.time < Infinity
+			);
 
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
@@ -3247,21 +3249,11 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return countered;
 };
 
-const loseHpBalanced = (
-	fightData: DetailedFight,
-	fighter: DetailedFighter,
-	damage: number,
-	fx: LifeEffect,
-) => {
+const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
 };
 
-const loseHp = (
-	fightData: DetailedFight,
-	fighter: DetailedFighter,
-	damage: number,
-	fx: LifeEffect,
-) => {
+const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
 	fighter.hp -= damage;
 
@@ -3468,7 +3460,9 @@ export const applyStrategy = (fightData: DetailedFight, fighter: DetailedFighter
 
 	// Apply order to fighter elements
 	// Note: filter out elements that are not in the fighter's element wheel
-	fighter.elements = defenses.filter(defense => fighter.elements.includes(defense.element)).map(defense => defense.element);
+	fighter.elements = defenses
+		.filter(defense => fighter.elements.includes(defense.element))
+		.map(defense => defense.element);
 };
 
 /// Determines the attack power of the attacker, the defense of the target, the damage inflicted.
@@ -3544,7 +3538,7 @@ const attackTarget = (
 			attacker.element === ElementType.VOID ? VOID_ASSAULT_POWER : ASSAULT_POWER
 		);
 	} else {
-	// Any attack where the power was pre-defined cannot combo
+		// Any attack where the power was pre-defined cannot combo
 		canCombo = false;
 	}
 

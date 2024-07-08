@@ -52,7 +52,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList } from '../../constants/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
@@ -60,6 +59,7 @@ import { errorHandler } from '../../utils/index.js';
 import { playerStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 
 export default defineComponent({
 	name: 'Profile',
@@ -85,10 +85,10 @@ export default defineComponent({
 	},
 	methods: {
 		hasPlume(): boolean {
-			return this.accountData!.epicRewards.includes(epicList.id.plume);
+			return this.accountData!.epicRewards.includes(Reward.PLUME);
 		},
 		hasPDA(): boolean {
-			return this.accountData!.epicRewards.includes(epicList.id.pda);
+			return this.accountData!.epicRewards.includes(Reward.PDA);
 		},
 		isMyAccount(): boolean {
 			return this.playerStore.getPlayerId === parseInt(this.$route.params.id as string);

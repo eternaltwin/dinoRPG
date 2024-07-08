@@ -1,7 +1,7 @@
 import { RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { bossList } from '../../fight/BossList.mjs';
-import { rewardList } from '../../reward/RewardList.mjs';
+import { Reward } from '../../reward/RewardList.mjs';
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 
 export const PTEROZ: Readonly<Record<string, NpcData>> = {
@@ -17,7 +17,7 @@ export const PTEROZ: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.PTEROZ
+				value: Reward.PTEROZ
 			},
 			{
 				rewardType: RewardEnum.STATUS,
@@ -59,7 +59,7 @@ export const HIPPO: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.HIPPO
+				value: Reward.HIPPO
 			},
 			{
 				rewardType: RewardEnum.STATUS,
@@ -102,7 +102,7 @@ export const ROCKY: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.EPIC,
-				value: rewardList.ROCKY
+				value: Reward.ROCKY
 			},
 			{
 				rewardType: RewardEnum.STATUS,

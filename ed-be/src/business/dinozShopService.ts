@@ -1,6 +1,6 @@
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
@@ -54,16 +54,16 @@ export async function getDinozFromDinozShop(req: Request) {
 		}
 
 		player.rewards.forEach(playerReward => {
-			if (playerReward.rewardId === rewardList.ROCKY) {
+			if (playerReward.rewardId === Reward.ROCKY) {
 				availableRaces.push(raceList.ROCKY);
 			}
-			if (playerReward.rewardId === rewardList.HIPPO) {
+			if (playerReward.rewardId === Reward.HIPPO) {
 				availableRaces.push(raceList.HIPPOCLAMP);
 			}
-			if (playerReward.rewardId === rewardList.PTEROZ) {
+			if (playerReward.rewardId === Reward.PTEROZ) {
 				availableRaces.push(raceList.PTEROZ);
 			}
-			if (playerReward.rewardId === rewardList.QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
+			if (playerReward.rewardId === Reward.QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
 				availableRaces.push(raceList.QUETZU);
 			}
 		});

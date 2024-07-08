@@ -516,7 +516,7 @@ export async function getBoxHandlerInformations(playerId: number) {
 			messie: true,
 			teacher: true,
 			priest: true,
-			shopKeeper: true,
+			shopKeeper: true
 		}
 	});
 

@@ -6,15 +6,12 @@
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 		</h3>
 		<div class="rewards">
-			<template v-for="(rewards, index) in epicRewards" :key="index">
-				<Tippy theme="normal">
-					<img
-						:src="getImgURL('epicRewards', `collec_${epicList.imgName[rewards]}`)"
-						:alt="epicList.imgName[rewards]"
-					/>
+			<template v-for="(reward, index) in epicRewards" :key="index">
+				<Tippy theme="normal" v-if="rewardList[reward].displayed">
+					<img :src="getImgURL('epicRewards', `collec_${rewardList[reward].name}`)" :alt="rewardList[reward].name" />
 					<template #content>
-						<h1 v-html="formatContent($t(`rewards.name.${epicList.imgName[rewards]}`))" />
-						<p v-html="formatContent($t(`rewards.description.${epicList.imgName[rewards]}`))" />
+						<h1 v-html="formatContent($t(`rewards.name.${rewardList[reward].name}`))" />
+						<p v-html="formatContent($t(`rewards.description.${rewardList[reward].name}`))" />
 					</template>
 				</Tippy>
 			</template>
@@ -24,13 +21,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { epicList } from '../../constants/index.js';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
 
 export default defineComponent({
 	name: 'EpicRewards',
 	data() {
 		return {
-			epicList: epicList
+			rewardList: rewardList
 		};
 	},
 	props: {
