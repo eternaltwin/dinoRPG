@@ -206,6 +206,7 @@ export default defineComponent({
 					});
 					break;
 				case Action.NPC:
+					this.dinozStore.clearNpc(+this.dinozId);
 					this.$router.push({
 						name: 'NPC',
 						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
