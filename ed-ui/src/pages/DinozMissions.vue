@@ -138,6 +138,7 @@ export default defineComponent({
 			errorHandler.handle(error);
 			return;
 		}
+		EventBus.emit('isLoading', false);
 	}
 });
 </script>

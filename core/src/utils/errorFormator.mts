@@ -8,3 +8,9 @@ export class ErrorFormator extends Error {
 		this.message = message;
 	}
 }
+
+export class ExpectedError extends Error {
+	constructor(message = '') {
+		super(message);
+	}
+}

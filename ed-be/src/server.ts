@@ -45,6 +45,7 @@ import { itinerantMerchant } from './cron/itinerantMerchant.js';
 import { GLOBAL, ServerContext } from './context.js';
 import { readyCheck } from './middleware/readyCheck.js';
 import initRoutes from './routes/index.js';
+import lockMiddleware from './middleware/lock.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -63,6 +64,7 @@ declare global {
 // Load TOML configuration file
 // loadConfigFile();
 
+/*
 export function test(cx: ServerContext) {
 	const app = express();
 	const config = loadConfig();
@@ -138,6 +140,7 @@ export function test(cx: ServerContext) {
 
 	wss.on('close', () => clearInterval(interval));
 }
+*/
 
 export function main(cx: ServerContext) {
 	cx.logger.log(`Server started`);
@@ -152,6 +155,7 @@ export function main(cx: ServerContext) {
 			extended: true
 		})
 	);
+	app.use(lockMiddleware);
 	app.use(readyCheck);
 
 	app.listen(port, () => {

@@ -167,11 +167,11 @@ export default defineComponent({
 	},
 	methods: {
 		async launch(action: ActionFiche) {
+			EventBus.emit('isLoading', true);
 			switch (action.name) {
 				case Action.IRMA:
 				case Action.IRMAS:
 				case Action.ACTION:
-					EventBus.emit('isLoading', true);
 					try {
 						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
 						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
@@ -184,7 +184,6 @@ export default defineComponent({
 					} catch (e) {
 						errorHandler.handle(e);
 					}
-					EventBus.emit('isLoading', false);
 					EventBus.emit('refreshDinoz', true);
 					break;
 				case Action.LEVEL_UP:
@@ -215,7 +214,6 @@ export default defineComponent({
 				case Action.FIGHT: {
 					const dinozId = +this.$route.params.id;
 
-					EventBus.emit('isLoading', true);
 					// eslint-disable-next-line
 					try {
 						const fight = await FightService.processFight(+this.$route.params.id);
@@ -224,7 +222,6 @@ export default defineComponent({
 
 						if (!dinozList) {
 							EventBus.emit('toast', { type: 'error', message: 'missingData' });
-							EventBus.emit('isLoading', false);
 							return;
 						}
 
@@ -251,7 +248,6 @@ export default defineComponent({
 					this.resurect = true;
 					break;
 				case Action.MISSION:
-					EventBus.emit('isLoading', true);
 					if (this.mission && this.mission.actionType === ConditionEnum.FINISH_MISSION) {
 						this.missionReward = await MissionService.finishMission(
 							this.$route.params.id.toString(),
@@ -269,7 +265,6 @@ export default defineComponent({
 							errorHandler.handle(e);
 						}
 					}
-					EventBus.emit('isLoading', false);
 					break;
 				case Action.DIG:
 					try {
@@ -450,6 +445,7 @@ export default defineComponent({
 					console.log(action.name);
 					break;
 			}
+			EventBus.emit('isLoading', false);
 		},
 		continueMission() {
 			this.NPCModal = undefined;

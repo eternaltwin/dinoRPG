@@ -88,6 +88,7 @@ export default defineComponent({
 			goTo(this.$router, 'MainPage');
 			return;
 		}
+		EventBus.emit('isLoading', false);
 	}
 });
 </script>

@@ -141,6 +141,7 @@ export default defineComponent({
 		if (!this.playerStore.playerOptions.hasPDA) {
 			EventBus.emit('toast', { type: 'error', message: 'noPDA' });
 			this.$router.back();
+			EventBus.emit('isLoading', false);
 			return;
 		}
 
@@ -153,6 +154,7 @@ export default defineComponent({
 				if (dinoz.order === null) {
 					dinoz.order = index;
 				}
+				EventBus.emit('isLoading', false);
 				return dinoz;
 			});
 		} catch (error) {
