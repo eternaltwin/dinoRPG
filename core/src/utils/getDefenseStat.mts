@@ -89,16 +89,14 @@ export const getDefenseStat = (
 	};
 
 	// Weak element, contributes x0.5
-	const firstWeakElementName =
-		elementWheel[(elementWheel.indexOf(elementName) + 1) % elementWheel.length];
+	const firstWeakElementName = elementWheel[(elementWheel.indexOf(elementName) + 1) % elementWheel.length];
 	const firstWeakElement = {
 		name: firstWeakElementName,
 		value: elementStat[firstWeakElementName],
 		bonus: 0,
 		globalBonus: 0
 	};
-	const secondWeakElementName =
-		elementWheel[(elementWheel.indexOf(elementName) + 2) % elementWheel.length];
+	const secondWeakElementName = elementWheel[(elementWheel.indexOf(elementName) + 2) % elementWheel.length];
 	const secondWeakElement = {
 		name: secondWeakElementName,
 		value: elementStat[secondWeakElementName],
@@ -202,14 +200,14 @@ export const getDefenseStat = (
 	// Do not ceil/round or this will mess with the fight calculation. Up to the user of the method to ceil/round.
 	const result =
 		0.5 * (secondWeakElement.value + secondWeakElement.globalBonus) +
-			secondWeakElement.bonus +
-			0.5 * (firstWeakElement.value + firstWeakElement.globalBonus) +
-			firstWeakElement.bonus +
-			(element.value + element.bonus + element.globalBonus) +
-			1.5 * (firstStrongElement.value + firstStrongElement.globalBonus) +
-			firstStrongElement.bonus +
-			1.5 * (secondStrongElement.value + secondStrongElement.globalBonus) +
-			secondStrongElement.bonus;
+		secondWeakElement.bonus +
+		0.5 * (firstWeakElement.value + firstWeakElement.globalBonus) +
+		firstWeakElement.bonus +
+		(element.value + element.bonus + element.globalBonus) +
+		1.5 * (firstStrongElement.value + firstStrongElement.globalBonus) +
+		firstStrongElement.bonus +
+		1.5 * (secondStrongElement.value + secondStrongElement.globalBonus) +
+		secondStrongElement.bonus;
 
 	return {
 		name: elementName,

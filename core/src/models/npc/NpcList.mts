@@ -297,7 +297,10 @@ export const npcList: Record<string, Npc> = {
 		data: RODEUR3,
 		missions: undefined,
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK }
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF }
+			]
 		},
 		flashvars: undefined
 	},

@@ -182,7 +182,7 @@ export const initializeDinoz = (
 		permanentStatusGained: [],
 		perception: false,
 		canHitFlying: false,
-		canHitIntangible: false,
+		canHitIntangible: false
 	};
 
 	handleSkills(team, fighter, place);
@@ -495,7 +495,7 @@ export const initializeMonster = (
 		permanentStatusGained: [],
 		perception: false,
 		canHitFlying: false,
-		canHitIntangible: false,
+		canHitIntangible: false
 	};
 
 	// Handle elements (from highest to lowest)

@@ -239,10 +239,7 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 	return randomOpponent;
 };
 
-export const getRandomOpponentForAssault = (
-	fightData: DetailedFight,
-	fighter: DetailedFighter,
-) => {
+export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const opponents = getOpponents(fightData, fighter);
 	if (!opponents.length) {
 		return null;
