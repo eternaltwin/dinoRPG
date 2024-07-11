@@ -1225,6 +1225,7 @@
 				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur !  Moi je les ai vus !",
 				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter  un regard derrière vous...",
 				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
+				"lowLevel": "NOOOOOOOOONNNN !!!!!&&N'y allez pas, c'est beaucoup trop dangereux pour vous, sombre fou ! Revenez  le combattre lorsque votre dinoz sera plus puissant. Je ne veux pas vous offrir de potions d'ange.",
 				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà  tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et  noire) !",
 				"fight_win": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grande surprise qu'il  a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à  son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les  endroits obscurs."
 			},
@@ -1238,7 +1239,8 @@
 				"leave": "Euh je vais vous laisser...",
 				"seenWhat": "Vu quoi ",
 				"show": "Erk ! Il a l'air dangereux !",
-				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
+				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !",
+				"lowLevel": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
 			}
 		},
 		"garde_atlante": {
@@ -1349,7 +1351,8 @@
 				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
 				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amené étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut être m'aider à Drouver un remède ? ...",
 				"sickstatus": "Alors, vous avez trouvé un rebède ?",
-				"better": "Le remède que vous m'avez amené a été très efficace !"
+				"better": "Le remède que vous m'avez amené a été très efficace !",
+				"lowLevel": "Oh mince... Tu n'es visiblement pas assez fort pour que je te confie des missions. Je ne voudrais pas que ton dinoz se blesse. Revient me voir lorsque tu auras pris quelques niveaux de plus !"
 			},
 			"playerChoice": {
 				"welcome": "Lui parler",
@@ -1367,6 +1370,7 @@
 				"sickstatus": "Lui parler",
 				"better": "Vous avez l'air d'aller bien mieux...",
 				"missions": "Consulter la liste des Missions",
+				"lowLevel": "Consulter la liste des Missions",
 				"curesearch": "Voyons voir ça..."
 			}
 		},

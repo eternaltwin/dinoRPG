@@ -11,7 +11,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	},
 	welcome: {
 		stepName: 'welcome',
-		nextStep: ['who', 'better', 'missions'],
+		nextStep: ['who', 'better', 'missions', 'lowLevel'],
 		condition: {
 			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_TOXIC } },
@@ -21,7 +21,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	},
 	better: {
 		stepName: 'better',
-		nextStep: ['flora', 'fauna', 'myst', 'missions'],
+		nextStep: ['flora', 'fauna', 'myst', 'missions', 'lowLevel'],
 		condition: {
 			[ConditionEnum.FINISHED_MISSION]: MissionID.HULOT_HUCURE
 		}
@@ -53,23 +53,23 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	},
 	role: {
 		stepName: 'role',
-		nextStep: ['flora', 'fauna', 'myst', 'missions']
+		nextStep: ['flora', 'fauna', 'myst', 'missions', 'lowLevel']
 	},
 	myst: {
 		stepName: 'myst',
-		nextStep: ['flora', 'fauna', 'fear', 'missions']
+		nextStep: ['flora', 'fauna', 'fear', 'missions', 'lowLevel']
 	},
 	flora: {
 		stepName: 'flora',
-		nextStep: ['whynot', 'fauna', 'myst', 'missions']
+		nextStep: ['whynot', 'fauna', 'myst', 'missions', 'lowLevel']
 	},
 	fauna: {
 		stepName: 'fauna',
-		nextStep: ['flora', 'myst', 'missions']
+		nextStep: ['flora', 'myst', 'missions', 'lowLevel']
 	},
 	whynot: {
 		stepName: 'whynot',
-		nextStep: ['fear', 'other', 'missions']
+		nextStep: ['fear', 'other', 'missions', 'lowLevel']
 	},
 	fear: {
 		stepName: 'fear',
@@ -80,7 +80,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	},
 	explore: {
 		stepName: 'explore',
-		nextStep: ['missions'],
+		nextStep: ['missions', 'lowLevel'],
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
@@ -105,9 +105,16 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	missions: {
 		stepName: 'missions',
 		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.HUMISS
+			[Operator.AND]: [{ [ConditionEnum.STATUS]: DinozStatusId.HUMISS }, { [ConditionEnum.MINLEVEL]: 20 }]
 		},
 		nextStep: []
+	},
+	lowLevel: {
+		stepName: 'lowLevel',
+		nextStep: [],
+		condition: {
+			[ConditionEnum.MAXLEVEL]: 19
+		}
 	},
 	stop: {
 		stepName: 'stop',

@@ -1,5 +1,5 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
-import { TriggerEnum, RewardEnum } from '../../enums/Parser.mjs';
+import { TriggerEnum, RewardEnum, ConditionEnum } from '../../enums/Parser.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
 import { NpcData } from '../NpcData.mjs';
 
@@ -39,22 +39,32 @@ export const FOU: Readonly<Record<string, NpcData>> = {
 	},
 	show: {
 		stepName: 'show',
-		nextStep: ['fight', 'run']
+		nextStep: ['fight', 'run', 'lowLevel']
 	},
 	fight: {
 		stepName: 'fight',
 		nextStep: ['fight_win'],
-		fight: [monsterList.KORGON]
-	},
-	fight_win: {
-		stepName: 'fight_win',
-		nextStep: [],
+		fight: [monsterList.KORGON],
+		condition: {
+			[ConditionEnum.MINLEVEL]: 18
+		},
 		reward: [
 			{
 				rewardType: RewardEnum.STATUS,
 				value: DinozStatusId.LANTERN
 			}
 		]
+	},
+	lowLevel: {
+		stepName: 'lowLevel',
+		nextStep: [],
+		condition: {
+			[ConditionEnum.MAXLEVEL]: 17
+		}
+	},
+	fight_win: {
+		stepName: 'fight_win',
+		nextStep: []
 	},
 	stop: {
 		stepName: 'stop',
