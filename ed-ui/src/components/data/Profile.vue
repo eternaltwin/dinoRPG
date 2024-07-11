@@ -133,14 +133,14 @@ export default defineComponent({
 			}
 		}
 	},
-	watch: {
+	/*	watch: {
 		accountData: {
 			immediate: true,
 			handler() {
 				this.fetchPlayerPosition();
 			}
 		}
-	},
+	},*/
 	beforeRouteUpdate(to, from, next) {
 		this.fetchPlayerPosition();
 		next();

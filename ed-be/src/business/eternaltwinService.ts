@@ -5,6 +5,8 @@ import fetch from 'node-fetch';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import dayjs from 'dayjs';
+import { createLog } from '../dao/logDao.js';
+import { LogType } from '@drpg/prisma';
 
 export async function checkPlayerLB(req: Request) {
 	const eternalTwinID = req.params.uuid;
@@ -43,6 +45,9 @@ export async function checkLB(req: Request) {
 	LBDone = data === 'true';
 
 	if (data !== 'true' && data !== 'false') {
+		if (data === 'No brutes found') {
+			throw new ErrorFormator(400, 'noBruteFound');
+		}
 		throw new ErrorFormator(500, data);
 	}
 
@@ -61,6 +66,11 @@ export async function checkLB(req: Request) {
 	player.labruteDone = true;
 
 	await setPlayer(playerId, { labruteDone: true });
+	await createLog(
+		LogType.LBDone,
+		playerId,
+		undefined
+	);
 
 	return { quantity: portion };
 }

@@ -72,6 +72,7 @@ const LogTypes = [
 	'ChangeDinozOrder',
 	'PlayerCreated',
 	'PlayerConnected',
+	'LBDone',
 	'AdminUpdateDinoz',
 	'AdminAddStatus',
 	'AdminRemoveStatus',

@@ -15,6 +15,7 @@
 		"faq": "FAQ"
 	},
 	"toast": {
+		"noBruteFound": "Aucune brute trouvée.",
 		"DinozIsDead": "Votre dinoz est mort et ne peut pas être soigné.",
 		"AlreadyAtMaxHealth": "Votre dinoz ne peut pas être plus soigné.",
 		"DinozNotDead": "Votre dinoz est déjà en vie.",
@@ -3936,7 +3937,8 @@
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**New player has arrived : {name}**.",
-		"PlayerConnected": "**Player {name}** has just logged on."
+		"PlayerConnected": "**Player {name}** has just logged on.",
+		"LBDone": "**Player {player}** just claimed his rewards."
 	},
 	"selectDinoz": {
 		"selectChampions": "Choisis tes champions",

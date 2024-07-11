@@ -259,6 +259,7 @@ export const LogType: {
   ChangeDinozOrder: 'ChangeDinozOrder',
   PlayerCreated: 'PlayerCreated',
   PlayerConnected: 'PlayerConnected',
+  LBDone: 'LBDone',
   AdminUpdateDinoz: 'AdminUpdateDinoz',
   AdminAddStatus: 'AdminAddStatus',
   AdminRemoveStatus: 'AdminRemoveStatus',
