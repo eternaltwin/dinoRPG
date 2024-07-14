@@ -1092,7 +1092,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.BENEDICTION: {
-				addStatus(fightData, fighter, Status.BLESSED, StatusLength.MEDIUM);
+				getAllies(fightData, fighter).forEach(fighter => {
+					addStatus(fightData, fighter, Status.BLESSED, StatusLength.MEDIUM);
+				});
 				break;
 			}
 			case Skill.FOCUS: {
