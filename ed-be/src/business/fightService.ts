@@ -98,6 +98,13 @@ export async function processFight(req: Request) {
 		fight = await moveFight(team, dinozData.placeId, player);
 	}
 
+	//Consume fight action
+	for (const dino of team) {
+		await updateDinoz(dino.id, {
+			fight: false
+		});
+	}
+
 	// Update stats
 	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === 'monster').length);
 
