@@ -19,7 +19,7 @@
     "build:gitlab": "yarn run build:back && yarn run build:front",
     "build": "yarn run build:back && yarn run build:front",
     "build-debug": "yarn run build:back && yarn run build:front",
-    "etwin": "cd Eternaltwin && yarn run etwin db upgrade",
+    "etwin": "cd Eternaltwin && yarn run eternaltwin db sync",
     "test:ci": "cd ed-be && yarn run test:ci",
     "coverage": "cd ed-be && yarn run coverage",
     "lint:test": "cd ed-ui && yarn lint:test",
