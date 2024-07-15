@@ -40,7 +40,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 3
 		},
 		price: 600,
-		swfLetter: '0A'
+		swfLetter: '0A',
+		skillId: [61114] //FORCE_DE_LUMIERE
 	},
 	PIGMOU: {
 		raceId: 3,
@@ -59,7 +60,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 20000,
-		swfLetter: '10'
+		swfLetter: '10',
+		skillId: [61103] //CHARGE_CORNUE
 	},
 	PIGMOU_DEMON: {
 		raceId: 4,
@@ -78,7 +80,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 800,
-		swfLetter: '1'
+		swfLetter: '1',
+		skillId: [61115] //CHARGE_PIGMOU
 	},
 	WINKS: {
 		raceId: 5,
@@ -97,7 +100,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 20000,
-		swfLetter: '20'
+		swfLetter: '20',
+		skillId: [61102] //COQUE
 	},
 	WINKS_DEMON: {
 		raceId: 6,
@@ -116,7 +120,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 700,
-		swfLetter: '2A'
+		swfLetter: '2A',
+		skillId: [61118] //DUR_A_CUIRE
 	},
 	PLANAILLE: {
 		raceId: 7,
@@ -154,7 +159,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 4
 		},
 		price: 700,
-		swfLetter: '3A'
+		swfLetter: '3A',
+		skillId: [61116] //FORCE_DES_TENEBRES
 	},
 	CASTIVORE: {
 		raceId: 9,
@@ -192,7 +198,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 18000,
-		swfLetter: '50'
+		swfLetter: '50',
+		skillId: [61104] //ROCK
 	},
 	PTEROZ: {
 		raceId: 11,
@@ -306,7 +313,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 700,
-		swfLetter: 'AA'
+		swfLetter: 'AA',
+		skillId: [61111] //GROS_COSTAUD
 	},
 	WANWAN: {
 		raceId: 17,
@@ -344,7 +352,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 900,
-		swfLetter: 'BA'
+		swfLetter: 'BA',
+		skillId: [61101] //FRENESIE_COLLECTIVE
 	},
 	SANTAZ: {
 		raceId: 19,
@@ -363,7 +372,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 12
 		},
 		price: 0,
-		swfLetter: 'C0'
+		swfLetter: 'C0',
+		skillId: [61105] //PIETINEMENT
 	},
 	FEROSS: {
 		raceId: 20,
@@ -382,7 +392,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 0,
-		swfLetter: 'D0'
+		swfLetter: 'D0',
+		skillId: [61106] //CUIRASSE
 	},
 	KABUKI: {
 		raceId: 21,
@@ -401,7 +412,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 0,
-		swfLetter: 'E0'
+		swfLetter: 'E0',
+		skillId: [61107] //INSAISISSABLE
 	},
 	KABUKI_DEMON: {
 		raceId: 22,
@@ -420,7 +432,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 800,
-		swfLetter: 'EA'
+		swfLetter: 'EA',
+		skillId: [61107, 61112] // INSAISISSABLE & ORIGINE_CAUSHEMESHENNE
 	},
 	MAHAMUTI: {
 		raceId: 23,
@@ -439,7 +452,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 1
 		},
 		price: 0,
-		swfLetter: 'F0'
+		swfLetter: 'F0',
+		skillId: [61113] //ECRASEMENT
 	},
 	SOUFFLET: {
 		raceId: 24,
@@ -458,7 +472,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 8
 		},
 		price: 0,
-		swfLetter: 'G0'
+		swfLetter: 'G0',
+		skillId: [61109] //NAPOMAGICIEN
 	},
 	TOUFUFU: {
 		raceId: 25,
@@ -477,7 +492,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 5
 		},
 		price: 0,
-		swfLetter: 'H0'
+		swfLetter: 'H0',
+		skillId: [61108] //DEPLACEMENT_INSTANTANE
 	},
 	QUETZU: {
 		raceId: 26,
@@ -534,7 +550,8 @@ export const raceList: Record<string, DinozRace> = {
 			air: 2
 		},
 		price: 0,
-		swfLetter: 'K0'
+		swfLetter: 'K0',
+		skillId: [61117] //BIGMAGNON
 	}
 };
 

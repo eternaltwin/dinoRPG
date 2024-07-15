@@ -40,7 +40,6 @@
 						></Elements>
 						<a class="button bSmall" @click="openPopinConfirmChoice(dinoz)">{{ $t('button.chose') }}</a>
 					</div>
-
 					<template v-if="raceList[dinoz.race].skillId">
 						<Tippy
 							theme="normal"
