@@ -53,7 +53,7 @@ export default defineComponent({
 	methods: {
 		async nameDinoz(): Promise<void> {
 			// Check if dinoz name matches regex
-			if (this.regexName.test(this.name!)) {
+			if (this.name && this.regexName.test(this.name)) {
 				EventBus.emit('isLoading', true);
 				try {
 					await DinozService.setDinozName(this.dinozData!.id!, this.name!);
@@ -76,6 +76,9 @@ export default defineComponent({
 				EventBus.emit('toast', { message: 'OnlyLettersAndNumbers', type: 'error' });
 			}
 		}
+	},
+	mounted() {
+		EventBus.emit('isLoading', false);
 	}
 });
 </script>
