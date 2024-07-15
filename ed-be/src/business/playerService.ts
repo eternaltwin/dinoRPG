@@ -79,14 +79,7 @@ export async function getCommonData(req: Request) {
 		money: playerCommonData.money,
 		dinozCount: await getDinozTotalCount(),
 		dinoz: playerCommonData.dinoz.map(dinoz => {
-			return toDinozFiche({
-				...dinoz,
-				player: {
-					engineer: playerCommonData.engineer,
-					rewards: playerCommonData.rewards,
-					items: playerCommonData.items
-				}
-			});
+			return toDinozFiche(playerCommonData, dinoz.id);
 		}),
 		id: playerCommonData.id,
 		name: playerCommonData.name,

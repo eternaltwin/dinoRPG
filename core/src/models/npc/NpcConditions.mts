@@ -1,6 +1,7 @@
 import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { DayEnum } from '../enums/dayEnum.mjs';
+import { Scenario } from '../enums/Scenario.mjs';
 
 // Choisit le type de value en fonction de l'enum utilisée
 export type Condition = {
@@ -16,19 +17,20 @@ export type Condition = {
 	[ConditionEnum.STATUS]?: number;
 	[ConditionEnum.RANDOM]?: number;
 	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number];
-	[ConditionEnum.SCENARIO]?: [string, number];
+	[ConditionEnum.SCENARIO]?: [Scenario, number, '+' | '-' | '='];
 	[ConditionEnum.CURRENT_MISSION]?: number;
 	[ConditionEnum.POSSESS_INGREDIENT]?: string;
 	[ConditionEnum.ACTIVE]?: boolean;
 	[ConditionEnum.PLAYER_EPIC]?: string;
-	[ConditionEnum.HOUR_RAND]?: string;
+	[ConditionEnum.HOUR]?: number;
 	[ConditionEnum.TAG]?: string;
 	[ConditionEnum.GVAR]?: string;
 	[ConditionEnum.EVENT]?: string;
 	[ConditionEnum.CLANACT]?: string;
 	[ConditionEnum.SWAIT]?: string;
 	[ConditionEnum.RACE]?: string;
-	[ConditionEnum.EQUIP]?: string;
+	[ConditionEnum.EQUIP]?: number;
+	[ConditionEnum.TIME]?: number;
 	[ConditionEnum.UTIME]?: string;
 	[ConditionEnum.GOTO]?: string;
 	[ConditionEnum.TALKTO]?: string;

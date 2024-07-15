@@ -227,7 +227,8 @@ export async function getCommonDataRequest(playerId: number) {
 			},
 			rewards: true,
 			matelasseur: true,
-			items: { select: { itemId: true, quantity: true } }
+			items: { select: { itemId: true, quantity: true } },
+			quests: { select: { questId: true, progression: true } }
 		}
 	});
 
@@ -242,7 +243,8 @@ export async function getAllInformationFromPlayer(playerId: number) {
 		include: {
 			items: true,
 			ingredients: true,
-			rewards: true
+			rewards: true,
+			quests: true
 		}
 	});
 

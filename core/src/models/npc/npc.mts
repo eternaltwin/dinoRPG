@@ -9,5 +9,6 @@ export interface Npc {
 	condition?: Condition;
 	data: Readonly<Record<string, NpcData>>;
 	missions?: Mission[];
+	display?: string;
 	flashvars?: string;
 }

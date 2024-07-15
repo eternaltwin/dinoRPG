@@ -16,4 +16,8 @@ export type ItemFeedBack =
 			category: ItemEffect.SPECIAL;
 			value: string;
 			effect: string;
+	  }
+	| {
+			category: ItemEffect.QUEST;
+			value: string;
 	  };

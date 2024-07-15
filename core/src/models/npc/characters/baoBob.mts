@@ -2,6 +2,8 @@ import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { Scenario } from '../../enums/Scenario.mjs';
+import { itemList } from '../../item/ItemList.mjs';
 
 export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -75,7 +77,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'quest4',
 		nextStep: ['noingr', 'ingr', 'bye'],
 		condition: {
-			[ConditionEnum.SCENARIO]: ['magnet', 8]
+			[ConditionEnum.SCENARIO]: [Scenario.MAGNET, 8, '=']
 		}
 	},
 	noingr: {
@@ -121,7 +123,7 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 			},
 			{
 				rewardType: RewardEnum.SCENARIO,
-				name: 'magnet',
+				value: Scenario.MAGNET,
 				step: 9
 			}
 		]
@@ -134,6 +136,38 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		stepName: 'bye',
 		nextStep: [],
 		alias: 'nothing'
+	},
+	stop: {
+		stepName: 'stop',
+		nextStep: []
+	}
+};
+
+export const BOB_STAR: Readonly<Record<string, NpcData>> = {
+	begin: {
+		stepName: 'begin',
+		nextStep: ['ok'],
+		initialStep: true
+	},
+	ok: {
+		stepName: 'ok',
+		nextStep: ['star']
+	},
+	star: {
+		stepName: 'star',
+		reward: [
+			{
+				rewardType: RewardEnum.ITEM,
+				value: itemList.MAGIC_STAR.itemId,
+				quantity: 1
+			},
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.STAR,
+				step: 7
+			}
+		],
+		nextStep: []
 	},
 	stop: {
 		stepName: 'stop',

@@ -5,5 +5,6 @@ export enum ItemEffect {
 	ACTION = 'action',
 	SPHERE = 'sphere',
 	GOLD = 'gold',
-	SPECIAL = 'special'
+	SPECIAL = 'special',
+	QUEST = 'quest'
 }

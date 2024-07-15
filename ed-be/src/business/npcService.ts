@@ -6,7 +6,6 @@ import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Request } from 'express';
 import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
-import { getAllInformationFromPlayer } from '../dao/playerDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
 import { calculateFight, rewardFight } from './fightService.js';
@@ -22,40 +21,37 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	if (!req.auth?.playerId) {
 		throw new ErrorFormator(500, `Unauthorized.`);
 	}
+	const playerId = req.auth.playerId;
 
-	const dinozBase = await getDinozNPCRequest(dinozId);
-	const player = await getAllInformationFromPlayer(req.auth.playerId);
+	const player = await getDinozNPCRequest(dinozId, playerId);
 
-	if (!dinozBase || !player) {
-		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+	const dinozBase = player.dinoz.find(d => d.id === dinozId);
+
+	if (!dinozBase) {
+		throw new ErrorFormator(500, `Dinoz is not here.`);
 	}
 
 	if (dinozBase.canChangeName) {
 		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
 
-	let dinoz = {
-		...dinozBase,
-		player
-	};
+	let dinoz = player.dinoz;
 
-	// Check if dinoz belongs to player who do the request
-	if (dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth.playerId}`);
-	}
-
-	const actualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
+	const actualPlace = Object.values(placeList).find(place => place.placeId === dinozBase.placeId);
 	const pnj = Object.values(npcList).find(pnj => pnj.name === npcName);
 
 	if (!actualPlace) {
-		throw new ErrorFormator(500, `Place ${dinoz.placeId} doesn't exist.`);
+		throw new ErrorFormator(500, `Place ${dinozBase.placeId} doesn't exist.`);
 	}
 
 	if (!pnj) {
 		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
 	}
 
-	if (req.body.stop !== true && pnj.condition && !checkCondition(pnj.condition, [dinoz])) {
+	if (req.body.stop !== true && pnj.condition && !checkCondition(pnj.condition, player, dinozId)) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} don't meet requirement to talk to ${pnj.name}.`);
 	}
 	if (actualPlace.placeId !== pnj.placeId && !req.body.stop) {
@@ -74,7 +70,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		nextStepWanted = nextStepWantedData.stepName;
 	}
 
-	let dinozTalk = dinoz.npcs.find(npc => npc.npcId === pnj.id);
+	let dinozTalk = dinozBase.npcs.find(npc => npc.npcId === pnj.id);
 	// Create NPC's entry at first step for this dinoz
 	if (dinozTalk === undefined) {
 		dinozTalk = await createDinozStep(dinozId, {
@@ -111,7 +107,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		) {
 			throw new ErrorFormator(500, `This step is not reachable.`);
 		}
-		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, [dinoz])) {
+		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, player, dinozId)) {
 			throw new ErrorFormator(500, `The dinoz doesn't fullfill the conditions.`);
 		}
 
@@ -127,23 +123,27 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 		// Action
 		if (nextStepWantedData && nextStepWantedData.fight) {
-			const dinozData = await getDinozFightDataRequest(dinozId);
+			const playerData = await getDinozFightDataRequest(dinozId, playerId);
+			if (!playerData) {
+				throw new ErrorFormator(500, `No player ${playerId} found`);
+			}
+			const dinozData = player.dinoz.find(d => d.id === dinozId);
 			if (!dinozData) {
 				throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 			}
 
-			const team = [dinozData];
+			const team = playerData.dinoz;
 			if (!isAlive(dinozData)) {
 				throw new ErrorFormator(400, 'dead');
 			}
-			const fightResult = calculateFight(team, dinoz.placeId, nextStepWantedData.fight);
+			const fightResult = calculateFight(team, dinozData.placeId, nextStepWantedData.fight);
 
-			const result = await rewardFight(team, nextStepWantedData.fight, fightResult, dinoz.placeId);
+			const result = await rewardFight(team, nextStepWantedData.fight, fightResult, dinozData.placeId, playerData);
 			// Reward statement
 			if (result.result) {
 				await updateDinozStep(dinozId, pnj.id, nextStepWanted);
 				if (nextStepWantedData.reward !== undefined) {
-					await rewarder(nextStepWantedData.reward, [dinoz]);
+					await rewarder(nextStepWantedData.reward, team, playerId);
 				}
 			}
 			return {
@@ -162,18 +162,18 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// Reward statement
 		if (nextStepWantedData.reward !== undefined) {
 			checkRedirect(nextStepWantedData.reward, npcName, nextStepWantedData.stepName);
-			await rewarder(nextStepWantedData.reward, [dinoz]);
+			await rewarder(nextStepWantedData.reward, dinoz, playerId);
 
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
-			const refreshedDinoz = await getDinozNPCRequest(dinozId);
-
+			const refreshedPlayer = await getDinozNPCRequest(dinozId, playerId);
+			if (!refreshedPlayer) {
+				throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+			}
+			const refreshedDinoz = player.dinoz.find(d => d.id === dinozId);
 			if (!refreshedDinoz) {
 				throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 			}
-			dinoz = {
-				...refreshedDinoz,
-				player
-			};
+			dinoz = player.dinoz;
 		}
 
 		await updateDinozStep(dinozId, pnj.id, nextStepWanted);
@@ -186,7 +186,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		if (!dinoz) {
 			throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 		}
-		return condition === undefined || checkCondition(condition, [dinoz]);
+		return condition === undefined || checkCondition(condition, player, dinozId);
 	});
 
 	return {

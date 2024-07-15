@@ -29,36 +29,39 @@ export async function getActiveDinoz(playerId: number) {
 	return dinozList;
 }
 
-export async function getDinozItinerantShop(dinozId: number) {
-	const dinoz = await prisma.dinoz.findUnique({
-		where: {
-			id: dinozId
-		},
+export async function getDinozItinerantShop(dinozId: number, playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: { id: playerId },
 		select: {
-			placeId: true,
-			level: true,
-			life: true,
-			items: { select: { itemId: true } },
-			status: { select: { statusId: true } },
-			missions: { select: { missionId: true, isFinished: true } },
-			skills: { select: { skillId: true } },
-			player: {
+			id: true,
+			money: true,
+			ingredients: {
+				select: {
+					ingredientId: true,
+					quantity: true
+				}
+			},
+			items: { select: { itemId: true, quantity: true } },
+			rewards: { select: { rewardId: true } },
+			quests: { select: { questId: true, progression: true } },
+			dinoz: {
 				select: {
 					id: true,
-					money: true,
-					ingredients: {
-						select: {
-							ingredientId: true,
-							quantity: true
-						}
-					},
-					items: { select: { itemId: true, quantity: true } },
-					rewards: { select: { rewardId: true } }
+					placeId: true,
+					level: true,
+					life: true,
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					missions: { select: { missionId: true, isFinished: true } },
+					skills: { select: { skillId: true } }
+				},
+				where: {
+					id: dinozId
 				}
 			}
 		}
 	});
-	return dinoz;
+	return player;
 }
 
 export async function getAllDinozFromAccount(playerId: number) {
@@ -134,8 +137,55 @@ export async function getDinozPlace(dinozId: number) {
 	return dinoz;
 }
 
-export async function getDinozFicheRequest(dinozId: number) {
-	const dinoz = await prisma.dinoz.findUnique({
+export async function getDinozFicheRequest(dinozId: number, playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: { id: playerId },
+		select: {
+			id: true,
+			money: true,
+			engineer: true,
+			items: {
+				select: { itemId: true, quantity: true }
+			},
+			quests: { select: { questId: true, progression: true } },
+			rewards: { select: { rewardId: true } },
+			dinoz: {
+				select: {
+					id: true,
+					display: true,
+					life: true,
+					maxLife: true,
+					experience: true,
+					nbrUpAir: true,
+					nbrUpFire: true,
+					nbrUpLightning: true,
+					nbrUpWater: true,
+					nbrUpWood: true,
+					name: true,
+					level: true,
+					placeId: true,
+					raceId: true,
+					leaderId: true,
+					unavailableReason: true,
+					fight: true,
+					gather: true,
+					remaining: true,
+					order: true,
+					canChangeName: true,
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					missions: true,
+					skills: { select: { skillId: true } },
+					followers: { select: { id: true } },
+					concentration: true
+				},
+				where: {
+					OR: [{ id: dinozId }, { leaderId: dinozId }]
+				}
+			}
+		}
+	});
+	/*const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
 			id: true,
@@ -168,7 +218,8 @@ export async function getDinozFicheRequest(dinozId: number) {
 						select: { itemId: true, quantity: true }
 					},
 					rewards: { select: { rewardId: true } },
-					dinoz: { select: { leaderId: true } }
+					dinoz: { select: { leaderId: true } },
+					quests: { select: { questId: true, progression: true}}
 				}
 			},
 			items: { select: { itemId: true } },
@@ -178,14 +229,46 @@ export async function getDinozFicheRequest(dinozId: number) {
 			followers: { select: { id: true } },
 			concentration: true
 		}
-	});
+	});*/
 
-	return dinoz;
+	return player;
 }
 
-export type DinozWithMissionData = NonNullable<Awaited<ReturnType<typeof getDinozMissionsInfo>>>;
-export async function getDinozMissionsInfo(dinozId: number) {
-	const dinoz = await prisma.dinoz.findUnique({
+export type PlayerWithMissionData = NonNullable<Awaited<ReturnType<typeof getDinozMissionsInfo>>>;
+export async function getDinozMissionsInfo(dinozId: number, playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: { id: playerId },
+		select: {
+			id: true,
+			money: true,
+			items: { select: { itemId: true, quantity: true } },
+			rewards: { select: { rewardId: true } },
+			quests: { select: { questId: true, progression: true } },
+			dinoz: {
+				select: {
+					id: true,
+					level: true,
+					placeId: true,
+					experience: true,
+					life: true,
+					canChangeName: true,
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					skills: { select: { skillId: true } },
+					missions: {
+						select: {
+							missionId: true,
+							step: true,
+							isFinished: true,
+							progress: true
+						}
+					}
+				},
+				where: { id: dinozId }
+			}
+		}
+	});
+	/*const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
 			id: true,
@@ -214,9 +297,9 @@ export async function getDinozMissionsInfo(dinozId: number) {
 				}
 			}
 		}
-	});
+	});*/
 
-	return dinoz;
+	return player;
 }
 
 export async function getDinozConcentrationRequest(dinozId: number) {
@@ -248,7 +331,13 @@ export async function getDinozFicheLiteRequest(dinozId: number) {
 			experience: true,
 			name: true,
 			followers: true,
-			player: { select: { id: true } }
+			placeId: true,
+			player: {
+				select: {
+					id: true,
+					quests: { select: { questId: true, progression: true } }
+				}
+			}
 		}
 	});
 
@@ -278,7 +367,8 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 					cooker: true,
 					items: {
 						select: { id: true, itemId: true, quantity: true }
-					}
+					},
+					quests: { select: { questId: true, progression: true } }
 				}
 			},
 			status: { select: { statusId: true } },
@@ -312,8 +402,54 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 	return dinoz;
 }
 
-export async function getDinozFightDataRequest(dinozId: number) {
-	const dinoz = await prisma.dinoz.findUnique({
+export async function getDinozFightDataRequest(dinozId: number, playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: { id: playerId },
+		select: {
+			id: true,
+			money: true,
+			items: { select: { itemId: true, quantity: true } },
+			rewards: { select: { rewardId: true } },
+			quests: { select: { questId: true, progression: true } },
+			teacher: true,
+			dinoz: {
+				select: {
+					id: true,
+					display: true,
+					playerId: true,
+					name: true,
+					level: true,
+					life: true,
+					maxLife: true,
+					experience: true,
+					nbrUpFire: true,
+					nbrUpWood: true,
+					unavailableReason: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpAir: true,
+					placeId: true,
+					leaderId: true,
+					canChangeName: true,
+					fight: true,
+					items: { select: { itemId: true } },
+					skills: {
+						select: { skillId: true },
+						where: { state: { equals: true } }
+					},
+					status: { select: { statusId: true } },
+					catches: { select: { id: true, hp: true, monsterId: true } },
+					missions: true,
+					concentration: true
+				},
+				where: {
+					OR: [{ id: dinozId }, { leaderId: dinozId }]
+				}
+			}
+		}
+	});
+
+	/*	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
 			id: true,
@@ -381,31 +517,41 @@ export async function getDinozFightDataRequest(dinozId: number) {
 			missions: true,
 			concentration: true
 		}
-	});
+	});*/
 
-	return dinoz;
+	return player;
 }
 
-export async function getDinozNPCRequest(dinozId: number) {
-	const dinoz = prisma.dinoz.findUnique({
-		where: { id: dinozId },
+export async function getDinozNPCRequest(dinozId: number, playerId: number) {
+	const player = prisma.player.findUnique({
+		where: { id: playerId },
 		select: {
+			dinoz: {
+				where: { id: dinozId },
+				select: {
+					id: true,
+					life: true,
+					experience: true,
+					name: true,
+					level: true,
+					placeId: true,
+					canChangeName: true,
+					skills: { select: { skillId: true } },
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					npcs: { select: { npcId: true, step: true } },
+					missions: true
+				}
+			},
 			id: true,
-			life: true,
-			experience: true,
-			name: true,
-			level: true,
-			placeId: true,
-			canChangeName: true,
-			skills: { select: { skillId: true } },
-			items: { select: { itemId: true } },
-			status: { select: { statusId: true } },
-			npcs: { select: { npcId: true, step: true } },
-			missions: true
+			items: true,
+			ingredients: true,
+			rewards: true,
+			quests: true
 		}
 	});
 
-	return dinoz;
+	return player;
 }
 
 export async function getDinozSkillRequest(dinozId: number) {
@@ -487,32 +633,35 @@ export async function getDinozTotalCount() {
 	return prisma.dinoz.count();
 }
 
-export async function getDinozGatherData(dinozId: number) {
-	const dinoz = await prisma.dinoz.findUnique({
-		where: { id: dinozId },
+export async function getDinozGatherData(dinozId: number, playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: { id: playerId },
 		select: {
 			id: true,
-			placeId: true,
-			level: true,
-			life: true,
-			items: { select: { itemId: true } },
-			gather: true,
-			player: {
+			money: true,
+			items: { select: { id: true, itemId: true, quantity: true } },
+			rewards: { select: { rewardId: true } },
+			ingredients: true,
+			quests: { select: { questId: true, progression: true } },
+			dinoz: {
 				select: {
 					id: true,
-					money: true,
-					items: { select: { id: true, itemId: true, quantity: true } },
-					rewards: { select: { rewardId: true } },
-					ingredients: true
-				}
-			},
-			skills: { select: { skillId: true } },
-			status: { select: { statusId: true } },
-			missions: { select: { missionId: true, isFinished: true } }
+					placeId: true,
+					level: true,
+					life: true,
+					items: { select: { itemId: true } },
+					gather: true,
+					player: {},
+					skills: { select: { skillId: true } },
+					status: { select: { statusId: true } },
+					missions: { select: { missionId: true, isFinished: true } }
+				},
+				where: { id: dinozId }
+			}
 		}
 	});
 
-	return dinoz;
+	return player;
 }
 
 // Setters

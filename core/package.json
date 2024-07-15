@@ -27,6 +27,7 @@
     "./src/"
   ],
   "dependencies": {
-    "dayjs": "^1.11.10"
+    "dayjs": "^1.11.10",
+    "pure-rand": "^6.1.0"
   }
 }

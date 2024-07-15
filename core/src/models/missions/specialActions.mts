@@ -7,4 +7,11 @@ export interface SpecialActions {
 	condition: Condition;
 	opponents?: MonsterFiche[];
 	reward: Rewarder[];
+	startText?: FightText;
+	endText?: FightText;
+}
+
+export interface FightText {
+	type: 'message' | 'announce';
+	text: string;
 }

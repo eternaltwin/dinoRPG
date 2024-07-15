@@ -149,6 +149,9 @@ export default defineComponent({
 						case ItemEffect.SPHERE:
 							message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
 							break;
+						case ItemEffect.QUEST:
+							message = this.$t(`quest.${toast.value}`);
+							break;
 						default:
 							message = this.$t(`toast.${toast.category}`, { value: toast.value });
 							break;

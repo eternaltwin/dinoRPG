@@ -1,13 +1,15 @@
 import { ConditionEnum } from '../models/enums/Parser.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
-import { DinozForConditionCheck } from '../constants.mjs';
+import { PlayerForConditionCheck } from '../constants.mjs';
 import dayjs from 'dayjs';
 import { ErrorFormator } from '../utils/errorFormator.mjs';
+import prand from 'pure-rand';
 
 export function conditionParser(
 	condition: Condition,
-	dinozList: DinozForConditionCheck[],
+	player: PlayerForConditionCheck,
+	activeDinoz: number,
 	secret?: { key: string; value: string }
 ): boolean {
 	let result;
@@ -27,54 +29,83 @@ export function conditionParser(
 	const ACTIVE = condition[ConditionEnum.ACTIVE];
 	const DAY = condition[ConditionEnum.DAY];
 	const WEEK_PLACE = condition[ConditionEnum.WEEK_PLACE];
+	const TIME = condition[ConditionEnum.TIME];
+	const EQUIP = condition[ConditionEnum.EQUIP];
+	const HOUR = condition[ConditionEnum.HOUR];
+
+	const myDinoz = player.dinoz.find(d => d.id === activeDinoz);
+
+	if (!myDinoz) {
+		throw new ErrorFormator(500, `No dinoz ${activeDinoz} found for parser.`);
+	}
 
 	if (MIN_LEVEL) {
-		result = dinozList.every(dinoz => dinoz.level >= MIN_LEVEL);
+		result = myDinoz.level >= MIN_LEVEL;
 	} else if (MAX_LEVEL) {
-		result = dinozList.every(dinoz => dinoz.level <= MAX_LEVEL);
+		result = myDinoz.level <= MAX_LEVEL;
 	} else if (STATUS) {
-		result = dinozList.every(dinoz => dinoz.status.some(st => st.statusId === STATUS));
+		result = myDinoz.status.some(st => st.statusId === STATUS);
 	} else if (FINISHED_MISSION) {
-		result = dinozList.every(
-			dinoz => dinoz.missions.find(missions => missions.missionId === FINISHED_MISSION)?.isFinished ?? false
-		);
+		result = myDinoz.missions.find(missions => missions.missionId === FINISHED_MISSION)?.isFinished ?? false;
 	} else if (SKILL) {
-		result = dinozList.every(dinoz => dinoz.skills.some(dinozSkill => dinozSkill.skillId === SKILL));
+		result = myDinoz.skills.some(dinozSkill => dinozSkill.skillId === SKILL);
 	} else if (GOTO) {
 		const place = Object.entries(placeList).find(place => place[0].toUpperCase() === GOTO.toUpperCase());
 		if (!place) {
 			throw new Error(`Place ${GOTO} doesn't exist.`);
 		}
-		result = dinozList.every(dinoz => place[1].placeId === dinoz.placeId);
+		result = player.dinoz.every(dinoz => place[1].placeId === dinoz.placeId);
 	} else if (PLACE_IS) {
 		const thisplace = placeList[PLACE_IS];
 
-		result = dinozList.every(dinoz => (thisplace.placeId || dinoz.placeId) === dinoz.placeId);
+		result = myDinoz.placeId === thisplace.placeId;
 	} else if (SCENARIO) {
-		//TODO: Implement scenario
-		result = false;
+		const quest = SCENARIO[0];
+		const step = SCENARIO[1];
+		const target = SCENARIO[2];
+		const playerQuest = player.quests.find(q => q.questId === quest);
+		if (playerQuest) {
+			switch (target) {
+				case '=':
+					result = playerQuest.progression === step;
+					break;
+				case '+':
+					result = playerQuest.progression >= step;
+					break;
+				case '-':
+					result = playerQuest.progression <= step;
+					break;
+				default:
+					result = false;
+					break;
+			}
+		} else if (step === 0 && !playerQuest) {
+			result = true;
+		} else {
+			result = false;
+		}
 	} else if (POSSESS_OBJECT) {
 		result =
-			dinozList.every(dinoz => dinoz.player?.items.some(item => item.itemId === POSSESS_OBJECT)) ||
-			dinozList.some(dinoz => dinoz.items.some(item => item.itemId === POSSESS_OBJECT));
+			player.items.some(item => item.itemId === POSSESS_OBJECT) ||
+			player.dinoz.some(dinoz => dinoz.items.some(item => item.itemId === POSSESS_OBJECT));
 	} else if (RANDOM) {
 		const score = Math.floor(Math.random() * RANDOM);
 		const target = 0;
 		result = score == target;
 	} else if (COLLEC) {
-		result = dinozList.every(dinoz => dinoz.player?.rewards.some(reward => reward.rewardId === COLLEC));
+		result = player.rewards.some(reward => reward.rewardId === COLLEC);
 	} else if (DINOZ_LIFE) {
 		switch (DINOZ_LIFE[0]) {
 			case '==':
-				return dinozList.every(dinoz => dinoz.life === DINOZ_LIFE[1]);
+				return myDinoz.life === DINOZ_LIFE[1];
 			case '>':
-				return dinozList.every(dinoz => dinoz.life > DINOZ_LIFE[1]);
+				return myDinoz.life > DINOZ_LIFE[1];
 			case '>=':
-				return dinozList.every(dinoz => dinoz.life >= DINOZ_LIFE[1]);
+				return myDinoz.life >= DINOZ_LIFE[1];
 			case '<':
-				return dinozList.every(dinoz => dinoz.life < DINOZ_LIFE[1]);
+				return myDinoz.life < DINOZ_LIFE[1];
 			case '<=':
-				return dinozList.every(dinoz => dinoz.life <= DINOZ_LIFE[1]);
+				return myDinoz.life <= DINOZ_LIFE[1];
 			default:
 				return false;
 		}
@@ -86,7 +117,18 @@ export function conditionParser(
 		if (secret?.key !== 'itinerant' || isNaN(parseInt(secret.value))) {
 			throw new ErrorFormator(500, `No secret found for itinerant`);
 		}
-		result = dinozList.every(dinoz => dinoz.placeId === parseInt(secret.value));
+		result = myDinoz.placeId === parseInt(secret.value);
+	} else if (TIME) {
+		const hour = dayjs().hour();
+		const seed = hour + myDinoz.id;
+		const rng = prand.xoroshiro128plus(seed);
+		const value = prand.unsafeUniformIntDistribution(0, TIME, rng); // value between 0 and TIME (based on actual hour + dinozId)
+		result = value === 0;
+	} else if (EQUIP) {
+		result = myDinoz.items.some(i => i.itemId === EQUIP);
+	} else if (HOUR) {
+		const hour = dayjs().hour();
+		result = hour === HOUR;
 	} else {
 		result = false;
 	}

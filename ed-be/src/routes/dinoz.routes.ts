@@ -330,8 +330,8 @@ routes.put(
 		}
 
 		try {
-			await resurrectDinoz(req);
-			return res.status(200).send();
+			const ret = await resurrectDinoz(req);
+			return res.status(200).send(ret);
 		} catch (err) {
 			const e = err as ErrorFormator;
 			await postError(e, res);

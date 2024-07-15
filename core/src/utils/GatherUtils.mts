@@ -2,7 +2,7 @@ import { PlayerGather, Prisma } from '@drpg/prisma';
 import { GatherData } from '../models/gather/gatherData.mjs';
 import { gatherList } from '../models/gather/gatherList.mjs';
 import { GatherType } from '../models/enums/GatherType.mjs';
-import { DinozForConditionCheck } from '../constants.mjs';
+import { PlayerForConditionCheck } from '../constants.mjs';
 import { GatherRewards } from '../models/gather/gatherRewards.mjs';
 import { GatherResultGrid } from '../models/gather/gatherResultGrid.mjs';
 import { itemList } from '../models/item/ItemList.mjs';
@@ -62,7 +62,7 @@ export const getPublicGrid = (grid: Pick<PlayerGather, 'grid'>) => {
 
 export const discoverBox = (
 	grid: Pick<PlayerGather, 'grid'>,
-	dinoz: DinozForConditionCheck,
+	player: PlayerForConditionCheck,
 	gridInformation: GatherData,
 	...box: [number, number][]
 ): { grid: GatherResultGrid; rewards: GatherRewards } => {
@@ -92,7 +92,9 @@ export const discoverBox = (
 				if (!gridIngredient) throw new Error('Ingredient not found in gridInformation.items');
 				const condition = gridIngredient.condition;
 				ingredient[1].name = ingredient[0].toLowerCase();
-				ingredient[1] && checkCondition(condition, [dinoz]) ? rewards.ingredients.push(ingredient[1]) : 0;
+				ingredient[1] && checkCondition(condition, player, player.dinoz[0].id)
+					? rewards.ingredients.push(ingredient[1])
+					: 0;
 			}
 		}
 	}

@@ -6,7 +6,7 @@ import { ErrorFormator } from './errorFormator.js';
 
 export async function triggerAction(action: NpcAction, dinoz: DinozToRewardFight) {
 	let result;
-	switch (action.actionType) {
+	/*switch (action.actionType) {
 		case TriggerEnum.FIGHT:
 			result = false;
 			const fightingDinoz = await getDinozFightDataRequest(dinoz.id);
@@ -22,7 +22,7 @@ export async function triggerAction(action: NpcAction, dinoz: DinozToRewardFight
 		default:
 			result = false;
 			break;
-	}
+	}*/
 	return result;
 
 	// if (reward != undefined && result) {

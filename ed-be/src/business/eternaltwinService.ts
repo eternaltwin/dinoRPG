@@ -66,11 +66,7 @@ export async function checkLB(req: Request) {
 	player.labruteDone = true;
 
 	await setPlayer(playerId, { labruteDone: true });
-	await createLog(
-		LogType.LBDone,
-		playerId,
-		undefined
-	);
+	await createLog(LogType.LBDone, playerId, undefined);
 
 	return { quantity: portion };
 }

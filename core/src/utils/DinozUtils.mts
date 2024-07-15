@@ -6,6 +6,7 @@ import {
 	Player,
 	PlayerItem,
 	PlayerReward,
+	PlayerQuest,
 	type Dinoz,
 	Prisma
 } from '@drpg/prisma';
@@ -16,7 +17,7 @@ import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { getHUDObjective } from './MissionUtils.mjs';
 import { checkCondition } from './checkCondition.mjs';
-import { DinozForConditionCheck } from '../constants.mjs';
+import { PlayerForConditionCheck } from '../constants.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
 import { DinozRace, UpChance } from '../models/dinoz/DinozRace.mjs';
 import { GatherData } from '../models/gather/gatherData.mjs';
@@ -97,63 +98,65 @@ export const getRace = (dinoz: Pick<Dinoz, 'raceId'>) => {
 };
 
 export const backpackSlot = (
+	engineer: boolean,
 	dinoz: Pick<Dinoz, 'id'> & {
 		skills: Pick<DinozSkill, 'skillId'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
-		player: Pick<Player, 'engineer'> | null;
 	}
 ) => {
-	if (!dinoz.player) {
-		throw new Error(`Dinoz ${dinoz.id} doesn't belong to a player.`);
-	}
-
 	let total = 2;
 	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.POCHE_VENTRALE].id)) total++;
 	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.SURPLIS_DHADES].id)) total++;
 	if (dinoz.status.find(status => status.statusId === DinozStatusId.BACKPACK)) total++;
-	if (dinoz.player.engineer) total++;
+	if (engineer) total++;
 
 	// TODO: Check for other dinoz storekeeper here
 	return total;
 };
 
-export type DinozForDinozFiche = Parameters<typeof toDinozFiche>[0];
+export type PlayerForDinozFiche = Parameters<typeof toDinozFiche>[0];
 export const toDinozFiche = (
-	dinoz: Pick<
-		Dinoz,
-		| 'id'
-		| 'name'
-		| 'display'
-		| 'unavailableReason'
-		| 'level'
-		| 'leaderId'
-		| 'life'
-		| 'maxLife'
-		| 'experience'
-		| 'raceId'
-		| 'placeId'
-		| 'nbrUpFire'
-		| 'nbrUpWood'
-		| 'nbrUpWater'
-		| 'nbrUpLightning'
-		| 'nbrUpAir'
-		| 'order'
-		| 'remaining'
-		| 'fight'
-	> & {
-		missions: DinozMission[];
-		items: Pick<DinozItem, 'itemId'>[];
-		status: Pick<DinozStatus, 'statusId'>[];
-		skills: Pick<DinozSkill, 'skillId'>[];
-		followers: Pick<Dinoz, 'id'>[];
-		player:
-			| (Pick<Player, 'engineer'> & {
-					items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
-					rewards: Pick<PlayerReward, 'rewardId'>[];
-			  })
-			| null;
-	}
+	player: Pick<Player, 'id' | 'engineer'> & {
+		items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
+		rewards: Pick<PlayerReward, 'rewardId'>[];
+		quests: Pick<PlayerQuest, 'questId' | 'progression'>[];
+		dinoz: (Pick<
+			Dinoz,
+			| 'id'
+			| 'name'
+			| 'display'
+			| 'unavailableReason'
+			| 'level'
+			| 'leaderId'
+			| 'life'
+			| 'maxLife'
+			| 'experience'
+			| 'raceId'
+			| 'placeId'
+			| 'nbrUpFire'
+			| 'nbrUpWood'
+			| 'nbrUpWater'
+			| 'nbrUpLightning'
+			| 'nbrUpAir'
+			| 'order'
+			| 'remaining'
+			| 'fight'
+		> & {
+			missions: DinozMission[];
+			items: Pick<DinozItem, 'itemId'>[];
+			status: Pick<DinozStatus, 'statusId'>[];
+			skills: Pick<DinozSkill, 'skillId'>[];
+			followers: Pick<Dinoz, 'id'>[];
+		})[];
+	},
+	activeDinoz: number
 ): DinozFiche => {
+	const playerForCondition = structuredClone(player);
+	const dinoz = player.dinoz.find(d => d.id === activeDinoz);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Inexistant dinoz`);
+	}
+	playerForCondition.dinoz = [dinoz];
 	return {
 		id: dinoz.id,
 		name: dinoz.name,
@@ -170,7 +173,7 @@ export const toDinozFiche = (
 		race: getRace(dinoz),
 		placeId: dinoz.placeId,
 		items: dinoz.items?.map(item => item.itemId),
-		maxItems: backpackSlot(dinoz),
+		maxItems: backpackSlot(player.engineer, dinoz),
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
 		borderPlace:
 			dinoz.unavailableReason !== null || (dinoz.remaining === 0 && !dinoz.fight) || dinoz.leaderId
@@ -183,7 +186,7 @@ export const toDinozFiche = (
 							}
 							return place;
 						})
-						.filter(place => !place.conditions || checkCondition(place.conditions, [dinoz]))
+						.filter(place => !place.conditions || checkCondition(place.conditions, playerForCondition, dinoz.id))
 						.map(place => place.placeId),
 		nbrUpFire: dinoz.nbrUpFire,
 		nbrUpWood: dinoz.nbrUpWood,
@@ -274,8 +277,8 @@ export const knowSkillId = (
 	return dinoz.skills.some(skill => skill.skillId === skillId);
 };
 
-export const canGoToThisPlace = (dinoz: DinozForConditionCheck, condition: Condition) => {
-	return checkCondition(condition, [dinoz]);
+export const canGoToThisPlace = (player: PlayerForConditionCheck, condition: Condition, activeDinoz: number) => {
+	return checkCondition(condition, player, activeDinoz);
 };
 
 export const possessStatus = (
@@ -532,13 +535,13 @@ export const calculateXPBonus = (
 	dinoz: Pick<Dinoz, 'id'> & {
 		skills: Pick<DinozSkill, 'skillId'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
-		player: Pick<Player, 'teacher'> | null;
 	},
-	xp: number
+	xp: number,
+	player: Pick<Player, 'teacher'>
 ) => {
 	let f = 1.0;
 	if (dinoz.skills.some(s => s.skillId === Skill.INTELLIGENCE)) f *= 1.05;
-	if (dinoz.player && dinoz.player.teacher) f *= 1.05;
+	if (player.teacher) f *= 1.05;
 	//TODO encyclopedie et maudit
 	/*if( d.hasEquip(Data.OBJECTS.list.mencly) )
 		f *= 1.15;

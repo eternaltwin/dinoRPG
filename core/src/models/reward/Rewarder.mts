@@ -27,7 +27,7 @@ export type Rewarder =
 	  }
 	| {
 			rewardType: RewardEnum.SCENARIO;
-			name: string;
+			value: number;
 			step: number;
 			reverse?: boolean;
 	  }

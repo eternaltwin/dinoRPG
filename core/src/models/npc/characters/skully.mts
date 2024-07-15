@@ -3,10 +3,10 @@ import { itemList } from '../../item/ItemList.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
 
-export const MERGUEZ: Readonly<Record<string, NpcData>> = {
+export const SKULLY: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
-		nextStep: ['ah'],
+		nextStep: [],
 		initialStep: true
 	},
 	ah: {
@@ -34,7 +34,7 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 	}
 };
 
-export const MERGUEZ_STAR: Readonly<Record<string, NpcData>> = {
+export const SKULLY_STAR: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
 		nextStep: ['ok'],
@@ -55,7 +55,7 @@ export const MERGUEZ_STAR: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.SCENARIO,
 				value: Scenario.STAR,
-				step: 3
+				step: 6
 			}
 		],
 		nextStep: []

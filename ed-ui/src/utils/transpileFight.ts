@@ -16,6 +16,7 @@ import { TFunction } from './translateFightStep.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { FightText } from '@drpg/core/models/missions/specialActions';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -117,9 +118,22 @@ export function resolveStatus(status: Status) {
 	}
 }
 
-export function transpileFight(fighters: Array<FighterRecap>, fight: Array<FightStep>, t: TFunction) {
+export function transpileFight(
+	fighters: Array<FighterRecap>,
+	fight: Array<FightStep>,
+	t: TFunction,
+	startText: FightText | undefined,
+	endText: FightText | undefined,
+	victory: boolean
+) {
 	const history: transpiled[] = [];
 	let myFighter: FighterRecap | undefined;
+	if (startText) {
+		history.push({
+			action: DinoAction.TEXT,
+			message: t(`quest.${startText.text}`)
+		});
+	}
 	for (let i = 0; i < fight.length; i++) {
 		const step = fight[i];
 
@@ -133,7 +147,7 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 				history.push({
 					action: DinoAction.ADD,
 					fighter: {
-						props: [],
+						props: [myFighter.type === 'boss' ? 'Boss' : null, myFighter.dark ? 'Dark' : null],
 						dino: myFighter.type === 'dinoz' || myFighter.type === 'clone',
 						life: myFighter.startingHp,
 						maxLife: myFighter.maxHp,
@@ -142,7 +156,12 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 								? myFighter.name
 								: resolveMonsterName(myFighter.name, t),
 						side: myFighter.attacker,
-						scale: myFighter.type === 'dinoz' || myFighter.type === 'clone' ? myFighter.maxHp / 100 : 1,
+						scale:
+							myFighter.type === 'dinoz' || myFighter.type === 'clone'
+								? myFighter.maxHp / 100
+								: myFighter.size
+								  ? myFighter.size / 100
+								  : 1,
 						fid: myFighter.id,
 						gfx: myFighter.display,
 						entrance: EntranceEffect.JUMP // Actual default is stand, but it's way less classy
@@ -339,6 +358,12 @@ export function transpileFight(fighters: Array<FighterRecap>, fight: Array<Fight
 			case 'survive':
 				break;
 		}
+	}
+	if (endText && victory) {
+		history.push({
+			action: DinoAction.TEXT,
+			message: t(`quest.${endText.text}`)
+		});
 	}
 	history.push({
 		action: DinoAction.FINISH,

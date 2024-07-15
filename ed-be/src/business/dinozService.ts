@@ -1,4 +1,4 @@
-import { DinozForConditionCheck } from '@drpg/core/constants';
+import { PlayerForConditionCheck } from '@drpg/core/constants';
 import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -17,7 +17,7 @@ import {
 	canChangeSkillState,
 	canGoToThisPlace,
 	canLevelUp,
-	DinozForDinozFiche,
+	PlayerForDinozFiche,
 	getFollowableDinoz,
 	getMaxFollowers,
 	getNumberOfGatheringTries,
@@ -36,7 +36,7 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Concentration, Dinoz, DinozMission, LogType, Player, UnavailableReason } from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, LogType, DinozStatus, UnavailableReason } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -85,26 +85,34 @@ import { getSpecificSecret } from '../dao/secretDao.js';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { updateQuest } from '../dao/questsDao.js';
 
 /**
  * @summary Get available action from dinoz
  */
 export async function getAvailableActions(
-	dinoz: DinozForConditionCheck &
-		Pick<
-			Dinoz,
-			'id' | 'experience' | 'leaderId' | 'fight' | 'gather' | 'remaining' | 'maxLife' | 'unavailableReason'
-		> & {
-			missions: DinozMission[];
-			concentration: Concentration | null;
-			player: (DinozForConditionCheck['player'] & Pick<Player, 'id'>) | null;
-			followers: Pick<Dinoz, 'id'>[];
-		}
+	dinoz: Pick<
+		Dinoz,
+		| 'level'
+		| 'id'
+		| 'experience'
+		| 'leaderId'
+		| 'fight'
+		| 'gather'
+		| 'remaining'
+		| 'maxLife'
+		| 'unavailableReason'
+		| 'placeId'
+		| 'life'
+	> & {
+		missions: DinozMission[];
+		concentration: Concentration | null;
+		followers: Pick<Dinoz, 'id'>[];
+		status: Pick<DinozStatus, 'statusId'>[];
+	},
+	player: PlayerForConditionCheck
 ) {
-	if (!dinoz.player) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to any player.`);
-	}
-
 	const availableActions: ActionFiche[] = [];
 
 	const dinozPlace = actualPlace(dinoz);
@@ -127,7 +135,7 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.UNFOLLOW]);
 	} else {
 		// Check if there is a dinoz to follow
-		const potentialDinozToFollow = await getAvailableDinozToFollow(dinoz.player.id, dinoz.id);
+		const potentialDinozToFollow = await getAvailableDinozToFollow(player.id, dinoz.id);
 		const dinozToFollow = getFollowableDinoz(
 			potentialDinozToFollow.map(dinoz => ({
 				...dinoz,
@@ -188,7 +196,7 @@ export async function getAvailableActions(
 	if (
 		dinoz.gather &&
 		dinozPlace.gather !== undefined &&
-		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition, [dinoz])
+		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition, player, dinoz.id)
 	) {
 		const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.gather);
 		if (!gatherFound) {
@@ -203,7 +211,11 @@ export async function getAvailableActions(
 	// Special Gather
 	if (
 		dinozPlace.specialGather !== undefined &&
-		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather)?.condition, [dinoz])
+		checkCondition(
+			Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather)?.condition,
+			player,
+			dinoz.id
+		)
 	) {
 		const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather);
 		if (!gatherFound) {
@@ -230,7 +242,7 @@ export async function getAvailableActions(
 	const shopAvailable = Object.values(shopList).filter(
 		shop =>
 			(shop.placeId === dinoz.placeId || shop.placeId === PlaceEnum.NOWHERE) &&
-			checkCondition(shop.condition, [dinoz], itinerant)
+			checkCondition(shop.condition, player, dinoz.id, itinerant)
 	);
 	if (shopAvailable.length > 0) {
 		// Add all the shop id to the action
@@ -257,7 +269,7 @@ export async function getAvailableActions(
 	dinoz.status = dinoz.status.filter(s => s.statusId !== DinozStatusId.FRETURN);
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
-		if (!npc.condition || checkCondition(npc.condition, [dinoz])) {
+		if (!npc.condition || checkCondition(npc.condition, player, dinoz.id)) {
 			availableActions.push({
 				name: actionList[Action.NPC].name,
 				imgName: actionList[Action.NPC].imgName,
@@ -302,29 +314,31 @@ export async function getAvailableActions(
 export async function getDinozFiche(req: Request) {
 	const dinozId = +req.params.id;
 
-	if (!req.auth) {
+	if (!req.auth || !req.auth.playerId) {
 		throw new ErrorFormator(500, `Unauthorized`);
 	}
 
 	// Retrieve player from dinozId
-	const dinozData = await getDinozFicheRequest(dinozId);
+	const playerData = await getDinozFicheRequest(dinozId, req.auth.playerId);
 
-	if (!dinozData) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	if (!playerData) {
+		throw new ErrorFormator(500, `No player found.`);
 	}
 
-	if (!dinozData.player) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to any player.`);
+	if (playerData.dinoz.length === 0) {
+		throw new ErrorFormator(500, `No dinoz found.`);
 	}
+
+	const myDinoz = playerData.dinoz.find(d => d.id === dinozId);
 
 	// If player found is different from player who do the request, throw exception
-	if (dinozData.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozData.id} doesn't belong to player ${req.auth.playerId}`);
+	if (!myDinoz) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth.playerId}`);
 	}
 
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(dinozData);
-	ret.actions = await getAvailableActions(dinozData);
+	const ret = toDinozFiche(playerData, dinozId);
+	ret.actions = await getAvailableActions(myDinoz, playerData);
 
 	return ret;
 }
@@ -404,18 +418,22 @@ export async function buyDinoz(req: Request) {
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated = await createDinoz(newDinozProps);
-	const newDinoz: DinozForDinozFiche = {
-		...dinozCreated,
-		status: [],
-		skills: [],
-		missions: [],
+	const newDinoz: PlayerForDinozFiche = {
+		id: req.auth.playerId,
+		engineer: false,
 		items: [],
-		followers: [],
-		player: {
-			engineer: false,
-			items: [],
-			rewards: []
-		}
+		rewards: [],
+		quests: [],
+		dinoz: [
+			{
+				...dinozCreated,
+				status: [],
+				skills: [],
+				missions: [],
+				items: [],
+				followers: []
+			}
+		]
 	};
 
 	const skillsToAdd = Object.values(skillList).filter(
@@ -432,7 +450,7 @@ export async function buyDinoz(req: Request) {
 	await updateDinozCount(req.auth.playerId, 1);
 	await updatePoints(req.auth.playerId, 1);
 
-	return toDinozFiche(newDinoz);
+	return toDinozFiche(newDinoz, newDinoz.id);
 }
 
 /**
@@ -527,15 +545,19 @@ export async function setSkillState(req: Request) {
 export async function betaMove(req: Request) {
 	//Retrieve dinozId
 	const dinozId = +req.body.dinozId;
-	const dinoz = await getDinozFightDataRequest(dinozId);
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized`);
+	}
+	const playerId = +req.auth.playerId;
+	const player = await getDinozFightDataRequest(dinozId, playerId);
 
-	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
 
-	// Check if dinoz belongs to player who do the request
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+	const dinoz = player.dinoz.find(d => d.id === dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	if (dinoz.canChangeName) {
@@ -550,21 +572,16 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(400, 'notLeader');
 	}
 
-	let followers = dinoz.followers.map(follower => ({
-		...follower,
-		player: dinoz.player
-	}));
+	let team = player.dinoz;
 
-	const unavailableFollowers = followers.filter(d => d.life <= 0 || d.unavailableReason !== null);
+	const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== null);
 
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
-		followers = followers.filter(d => d.life > 0 && d.unavailableReason === null);
+		team = team.filter(d => d.life > 0 && d.unavailableReason === null);
 	}
-
-	const team = [dinoz, ...followers];
 
 	for (const dinozData of team) {
 		//Remove temporary status
@@ -606,7 +623,14 @@ export async function betaMove(req: Request) {
 	// Check if condition to go to desired place are fullfilled for dinoz and followers
 	if (desiredPlace.conditions) {
 		for (const member of team) {
-			if (!canGoToThisPlace(member, desiredPlace.conditions)) {
+			const memberToTest: PlayerForConditionCheck = {
+				id: player.id,
+				items: player.items,
+				rewards: player.rewards,
+				quests: player.quests,
+				dinoz: [member]
+			};
+			if (!canGoToThisPlace(memberToTest, desiredPlace.conditions, member.id)) {
 				throw new ErrorFormator(400, `missingStatus`);
 			}
 		}
@@ -625,9 +649,9 @@ export async function betaMove(req: Request) {
 		throw new ErrorFormator(400, `noMovement`);
 	}
 
-	let fight = await mouvementListener(team, finalPlace);
+	let fight = await mouvementListener(player, team, finalPlace);
 	if (!fight) {
-		fight = await moveFight(team, finalPlace);
+		fight = await moveFight(team, finalPlace, player);
 		if (fight.result) {
 			await updateMultipleDinoz(
 				team.map(d => d.id),
@@ -636,7 +660,7 @@ export async function betaMove(req: Request) {
 
 			await createLogForMultipleDinoz(
 				LogType.Move,
-				dinoz.player.id,
+				player.id,
 				team.map(d => d.id),
 				finalPlace.toString()
 			);
@@ -651,8 +675,8 @@ export async function betaMove(req: Request) {
 	}
 
 	// Update stats
-	await setSpecificStat(StatTracking.MOVES, dinoz.player.id, team.length);
-	await setSpecificStat(StatTracking.KILL_M, dinoz.player.id, fight.fighters.filter(f => f.type === 'monster').length);
+	await setSpecificStat(StatTracking.MOVES, player.id, team.length);
+	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === 'monster').length);
 
 	return fight;
 }
@@ -689,6 +713,16 @@ export async function resurrectDinoz(req: Request) {
 		}
 	}
 
+	const starQuest = dinozData.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 7);
+	if (starQuest && dinozData.placeId === PlaceEnum.JUNGLE_SAUVAGE) {
+		await updateQuest(dinozData.player.id, Scenario.STAR, 8);
+		await increaseItemQuantity(dinozData.player.id, itemList.MAGIC_STAR.itemId, 1);
+		return {
+			category: ItemEffect.QUEST,
+			value: 'resurrect_star_found'
+		};
+	}
+
 	// Update stats
 	await setSpecificStat(StatTracking.DEATHS, dinozData.player.id, 1);
 
@@ -697,14 +731,18 @@ export async function resurrectDinoz(req: Request) {
 
 export async function digWithDinoz(req: Request) {
 	const dinozId = +req.params.id;
-	const dinozData = await getDinozFicheRequest(dinozId);
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized`);
+	}
+	const playerId = +req.auth.playerId;
+	const player = await getDinozFicheRequest(dinozId, playerId);
 
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
-	}
-
-	if (!dinozData.player || !req.auth || dinozData.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
 	if (
@@ -721,18 +759,18 @@ export async function digWithDinoz(req: Request) {
 
 	const digPlace = Object.values(digTreasures).find(dig => dig.place === dinozData.placeId);
 	let reward: Rewarder[];
-	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, [dinozData])) {
+	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, player, dinozId)) {
 		reward = digPlace.reward;
 	} else {
 		reward = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(100, 500) }];
 	}
-	await rewarder(reward, [dinozData]);
+	await rewarder(reward, [dinozData], playerId);
 
 	//Broke shovel
 	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.SHOVEL);
 		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_SHOVEL);
-		await setSpecificStat(StatTracking.BROKEN_SHOVEL, dinozData.player.id, 1);
+		await setSpecificStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
 	}
 
 	//Try to broke enhanced shovel (75% of keeping it)
@@ -742,7 +780,7 @@ export async function digWithDinoz(req: Request) {
 	) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);
 		await addStatusToDinoz(dinozData.id, DinozStatusId.BROKEN_ENHANCED_SHOVEL);
-		await setSpecificStat(StatTracking.BROKEN_SHOVEL, dinozData.player.id, 1);
+		await setSpecificStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
 	}
 
 	return reward[0];
@@ -751,14 +789,17 @@ export async function digWithDinoz(req: Request) {
 export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.params.type.toString().toLowerCase());
-	const dinozData = await getDinozGatherData(dinozId);
-
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized`);
+	}
+	const playerId = +req.auth.playerId;
+	const player = await getDinozGatherData(dinozId, playerId);
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
-	}
-
-	if (!dinozData.player || !req.auth || dinozData.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to any player.`);
 	}
 
 	const place = actualPlace(dinozData);
@@ -775,14 +816,14 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	}
 	const idOfTypeOfGrid = +typeOfGrid[1];
 
-	const playerGrid = await getCommonGatherInfo(dinozData.player.id);
+	const playerGrid = await getCommonGatherInfo(player.id);
 	const gatherPlace = gatherPlaceArray.find(place => place.type === idOfTypeOfGrid);
 
 	if (!gatherPlace) {
 		throw new ErrorFormator(500, `Dinoz cannot gather at this place`);
 	}
 
-	if (!checkCondition(gatherPlace.condition, [dinozData])) {
+	if (!checkCondition(gatherPlace.condition, player, dinozId)) {
 		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
 	}
 
@@ -795,7 +836,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	// Generate a new one if all box are empty
 	if (myGrid.grid.every(box => box === -1)) {
 		myGrid = await updateGrid(
-			dinozData.player.id,
+			player.id,
 			dinozId,
 			myGrid.id,
 			initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace)
@@ -818,13 +859,17 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 export async function gatherWithDinoz(req: Request) {
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.body.type.toString().toLowerCase());
-	const dinozData = await getDinozGatherData(dinozId);
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized`);
+	}
+	const playerId = +req.auth.playerId;
+	const player = await getDinozGatherData(dinozId, playerId);
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
-	}
-
-	if (!dinozData.player || !req.auth || dinozData.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to any player.`);
 	}
 
 	const place = actualPlace(dinozData);
@@ -839,7 +884,7 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ErrorFormator(500, `This type of grid doesn't exist`);
 	}
 	const idOfTypeOfGrid = +typeOfGrid[1];
-	const playerGrid = await getCommonGatherInfo(dinozData.player.id);
+	const playerGrid = await getCommonGatherInfo(player.id);
 	const gatherPlace = gatherPlaceArray.find(place => place.type === typeOfGrid[1]);
 	const myGrid = playerGrid.find(grid => grid.place === place.placeId && grid.type === idOfTypeOfGrid);
 
@@ -855,17 +900,17 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ErrorFormator(500, `You don't have generated any grid.`);
 	}
 
-	if (!checkCondition(gatherPlace.condition, [dinozData])) {
+	if (!checkCondition(gatherPlace.condition, player, dinozId)) {
 		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
 	}
 
 	// Consume token if it's a special gather
 	if (gatherPlace.special) {
-		const playerToken = dinozData.player.items.find(item => item.itemId === gatherPlace.cost.itemId);
+		const playerToken = player.items.find(item => item.itemId === gatherPlace.cost.itemId);
 		if (!playerToken) throw new ErrorFormator(500, `You don't have the needed token to gather here.`);
-		await decreaseItemQuantity(dinozData.player.id, gatherPlace.cost.itemId, 1);
+		await decreaseItemQuantity(player.id, gatherPlace.cost.itemId, 1);
 
-		await createLog(LogType.ItemUsed, dinozData.player.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
+		await createLog(LogType.ItemUsed, player.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
 	}
 
 	// Sanitize the box to open
@@ -886,22 +931,22 @@ export async function gatherWithDinoz(req: Request) {
 		throw new ErrorFormator(500, `You have selected too many square`);
 	}
 
-	const returnGrid = discoverBox(myGrid, dinozData, gatherPlace, ...boxToOpen);
-	await updateGrid(dinozData.player.id, dinozId, myGrid.id, saveGrid(myGrid, ...boxToOpen));
+	const returnGrid = discoverBox(myGrid, player, gatherPlace, ...boxToOpen);
+	await updateGrid(player.id, dinozId, myGrid.id, saveGrid(myGrid, ...boxToOpen));
 
 	for (const [index, i] of returnGrid.rewards.item.entries()) {
-		const itemToReward = dinozData.player.items.find(items => items.itemId === i.itemId);
+		const itemToReward = player.items.find(items => items.itemId === i.itemId);
 		if (i.itemId === itemList.BOX_HANDLER.itemId) {
-			const completion = await getPlayerCompletion(dinozData.player.id);
+			const completion = await getPlayerCompletion(player.id);
 			if (completion?.ranking?.completion === undefined) {
 				throw new ErrorFormator(500, `Failed to find completion.`);
 			}
 			const box = selectBox(completion.ranking.completion);
-			const boxToReward = dinozData.player.items.find(items => items.itemId === box.itemId);
+			const boxToReward = player.items.find(items => items.itemId === box.itemId);
 			if (boxToReward) {
-				await increaseItemQuantity(dinozData.player.id, boxToReward.itemId, 1);
+				await increaseItemQuantity(player.id, boxToReward.itemId, 1);
 			} else {
-				dinozData.player.items.push(await insertItem(dinozData.player.id, { itemId: box.itemId, quantity: 1 }));
+				player.items.push(await insertItem(player.id, { itemId: box.itemId, quantity: 1 }));
 			}
 			returnGrid.rewards.item[index] = box;
 		} else {
@@ -917,19 +962,19 @@ export async function gatherWithDinoz(req: Request) {
 				itemList.GOLD20000.itemId
 			];
 			if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
-				await increaseItemQuantity(dinozData.player.id, i.itemId, 1);
+				await increaseItemQuantity(player.id, i.itemId, 1);
 				// Update quantity in case multiple were obtained and the max was reached
 				itemToReward.quantity += 1;
 			} else if (goldItems.includes(i.itemId)) {
-				await addMoney(dinozData.player.id, i.price);
+				await addMoney(player.id, i.price);
 			} else {
-				dinozData.player.items.push(await insertItem(dinozData.player.id, { itemId: i.itemId, quantity: 1 }));
+				player.items.push(await insertItem(player.id, { itemId: i.itemId, quantity: 1 }));
 			}
 		}
 	}
 
 	for (const i of returnGrid.rewards.ingredients) {
-		const ingredientToReward = dinozData.player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
+		const ingredientToReward = player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
 
 		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
 			if (!ingredientToReward.playerId) {
@@ -941,9 +986,9 @@ export async function gatherWithDinoz(req: Request) {
 		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
 			// Do nothing
 		} else {
-			dinozData.player.ingredients.push(
+			player.ingredients.push(
 				await setIngredient({
-					player: { connect: { id: dinozData.player.id } },
+					player: { connect: { id: player.id } },
 					ingredientId: i.ingredientId,
 					quantity: 1
 				})
@@ -962,20 +1007,20 @@ export async function gatherWithDinoz(req: Request) {
 		case GatherType.CUEILLE3:
 		case GatherType.CUEILLE4:
 		case GatherType.CUEILLE2:
-			await setSpecificStat(StatTracking.CUEILLE, dinozData.player.id, 1);
+			await setSpecificStat(StatTracking.CUEILLE, player.id, 1);
 			break;
 		case GatherType.ENERGY1:
 		case GatherType.ENERGY2:
-			await setSpecificStat(StatTracking.ENERGY, dinozData.player.id, 1);
+			await setSpecificStat(StatTracking.ENERGY, player.id, 1);
 			break;
 		case GatherType.FISH:
-			await setSpecificStat(StatTracking.FISH, dinozData.player.id, 1);
+			await setSpecificStat(StatTracking.FISH, player.id, 1);
 			break;
 		case GatherType.SEEK:
-			await setSpecificStat(StatTracking.SEEK, dinozData.player.id, 1);
+			await setSpecificStat(StatTracking.SEEK, player.id, 1);
 			break;
 		case GatherType.HUNT:
-			await setSpecificStat(StatTracking.CHASSE, dinozData.player.id, 1);
+			await setSpecificStat(StatTracking.CHASSE, player.id, 1);
 			break;
 		default:
 			break;
@@ -1056,14 +1101,19 @@ export async function updateOrders(req: Request) {
 export async function followDinoz(req: Request) {
 	const dinozId = +req.params.id;
 	const dinozToFollowId = +req.params.targetId;
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized`);
+	}
+	const playerId = +req.auth.playerId;
 
-	const dinoz = await getDinozFicheRequest(dinozId);
-	const leader = await getDinozFicheRequest(dinozToFollowId);
+	const player_dinoz = await getDinozFicheRequest(dinozId, playerId);
+	const player_leader = await getDinozFicheRequest(dinozToFollowId, playerId);
 
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
+	if (!player_dinoz || !player_leader) {
 		throw new ErrorFormator(500, 'No player found');
 	}
+	const dinoz = player_dinoz.dinoz.find(d => d.id === dinozId);
+	const leader = player_leader.dinoz.find(d => d.id === dinozToFollowId);
 
 	if (!dinoz || !leader) {
 		throw new ErrorFormator(500, 'No dinoz found');
@@ -1074,7 +1124,7 @@ export async function followDinoz(req: Request) {
 	}
 
 	//Check if leader is not at max followers
-	const max = getMaxFollowers(toDinozFiche(leader));
+	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id));
 	if (leader.followers.length >= max) {
 		throw new ErrorFormator(500, 'Dinoz cannot be followed by any dinoz');
 	}

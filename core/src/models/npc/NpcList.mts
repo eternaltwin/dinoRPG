@@ -4,7 +4,7 @@ import { itemList } from '../item/ItemList.mjs';
 import { MissionID } from '../missions/missionList.mjs';
 import { ALPHA } from './characters/alpha.mjs';
 import { ARCHISAGE } from './characters/archisage.mjs';
-import { BAOBOB } from './characters/baoBob.mjs';
+import { BAOBOB, BOB_STAR } from './characters/baoBob.mjs';
 import { BAOFAN } from './characters/baofan.mjs';
 import { DIANKORGSEY } from './characters/dianKorgsey.mjs';
 import { FORGERON } from './characters/forgeron.mjs';
@@ -14,7 +14,7 @@ import { GARDIEN } from './characters/gardien.mjs';
 import { HULOT } from './characters/hulot.mjs';
 import { HYDARGOL } from './characters/hydargol.mjs';
 import { JOVEBOZE_RASCA } from './characters/joveboze.mjs';
-import { MERGUEZ } from './characters/merguez.mjs';
+import { MERGUEZ, MERGUEZ_STAR } from './characters/merguez.mjs';
 import { MINEUR } from './characters/mineur.mjs';
 import { MMEX } from './characters/mmex.mjs';
 import { PADAMOINE } from './characters/padamoine.mjs';
@@ -37,17 +37,11 @@ import { SPELELE } from './characters/spelele.mjs';
 import { Reward } from '../reward/RewardList.mjs';
 import { PTEROZ, ROCKY, HIPPO } from './characters/totems.mjs';
 import { VENERABLE } from './characters/vener.mjs';
+import { Scenario } from '../enums/Scenario.mjs';
+import { ALIEN_0, ALIEN_1, ALIEN_8, ALIEN_ALL } from './characters/alien.mjs';
+import { SKULLY, SKULLY_STAR } from './characters/skully.mjs';
 
 export const npcList: Record<string, Npc> = {
-	// ALPHA: {
-	// 	name: 'alpha_test',
-	// 	id: 0,
-	// 	placeId: PlaceEnum.DINOVILLE,
-	// 	data: ALPHA,
-	// 	condition: undefined,
-	// 	missions: undefined,
-	// 	flashvars: undefined
-	// },
 	// CRIEUR: {
 	// 	name: 'street_shouter',
 	// 	id: 1,
@@ -124,7 +118,14 @@ export const npcList: Record<string, Npc> = {
 		placeId: PlaceEnum.BAO_BOB,
 		missions: M_BAO_BOB,
 		data: BAOBOB,
-		condition: undefined,
+		condition: {
+			[Operator.NOT]: {
+				[Operator.AND]: [
+					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
+					{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
+				]
+			}
+		},
 		flashvars: undefined
 	},
 	BAOFAN: {
@@ -150,7 +151,14 @@ export const npcList: Record<string, Npc> = {
 		id: 12,
 		placeId: PlaceEnum.RUINES_ASHPOUK,
 		data: MERGUEZ,
-		condition: undefined,
+		condition: {
+			[Operator.NOT]: {
+				[Operator.AND]: [
+					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '='] },
+					{ [ConditionEnum.EQUIP]: itemList.CLOUD_BURGER.itemId }
+				]
+			}
+		},
 		missions: undefined,
 		flashvars: undefined
 	},
@@ -383,6 +391,119 @@ export const npcList: Record<string, Npc> = {
 		id: 29,
 		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
 		data: VENERABLE,
+		missions: undefined,
+		flashvars: undefined
+	},
+	ALIEN_O: {
+		name: 'alien_0',
+		display: 'alien',
+		id: 30,
+		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
+		data: ALIEN_0,
+		condition: {
+			[Operator.AND]: [{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 0, '='] }, { [ConditionEnum.TIME]: 30 }]
+		},
+		missions: undefined,
+		flashvars: undefined
+	},
+	ALIEN_1: {
+		name: 'alien_1',
+		display: 'alien',
+		id: 31,
+		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
+		data: ALIEN_1,
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.STAR, 1, '=']
+		},
+		missions: undefined,
+		flashvars: undefined
+	},
+	ALIEN_all: {
+		name: 'alien_all',
+		display: 'alien',
+		id: 32,
+		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
+		data: ALIEN_ALL,
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '+'] },
+				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 8, '+'] } }
+			]
+		},
+		missions: undefined,
+		flashvars: undefined
+	},
+	ALIEN_8: {
+		name: 'alien_8',
+		display: 'alien',
+		id: 33,
+		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
+		data: ALIEN_8,
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.STAR, 8, '=']
+		},
+		missions: undefined,
+		flashvars: undefined
+	},
+	MERGUEZ_STAR: {
+		name: 'merguez_star',
+		id: 34,
+		placeId: PlaceEnum.RUINES_ASHPOUK,
+		data: MERGUEZ_STAR,
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '='] },
+				{ [ConditionEnum.EQUIP]: itemList.CLOUD_BURGER.itemId }
+			]
+		},
+		display: 'merguez',
+		missions: undefined,
+		flashvars: undefined
+	},
+	SKULLY_STAR: {
+		name: 'skully_star',
+		id: 35,
+		placeId: PlaceEnum.CIMETIERE,
+		data: SKULLY_STAR,
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+				{ [ConditionEnum.EQUIP]: itemList.LITTLE_PEPPER.itemId }
+			]
+		},
+		display: 'skully',
+		missions: undefined,
+		flashvars: undefined
+	},
+	SKULLY: {
+		name: 'skully',
+		id: 36,
+		placeId: PlaceEnum.CIMETIERE,
+		data: SKULLY,
+		condition: {
+			[Operator.NOT]: {
+				[Operator.AND]: [
+					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+					{ [ConditionEnum.EQUIP]: itemList.LITTLE_PEPPER.itemId }
+				]
+			}
+		},
+		display: 'skully',
+		missions: undefined,
+		flashvars: undefined
+	},
+	BOB_STAR: {
+		name: 'bob_star',
+		id: 37,
+		placeId: PlaceEnum.BAO_BOB,
+		data: BOB_STAR,
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
+				{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
+			]
+		},
+		display: 'bob',
 		missions: undefined,
 		flashvars: undefined
 	}

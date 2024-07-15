@@ -155,7 +155,7 @@ export type transpiled =
 	| {
 			action: DinoAction.ADD;
 			fighter: {
-				props: [];
+				props: any[];
 				dino: boolean;
 				life: number | undefined;
 				maxLife: number | undefined;

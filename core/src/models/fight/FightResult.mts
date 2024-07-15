@@ -3,6 +3,7 @@ import { FighterResultFiche, FighterType } from './DetailedFighter.mjs';
 import { Monster } from './MonsterList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
+import { FightText } from '../missions/specialActions.mjs';
 
 export interface FightResult {
 	fighters: FighterRecap[];
@@ -21,6 +22,8 @@ export interface FightResult {
 		itemsUsed: number[];
 	}[];
 	place: PlaceEnum;
+	startText?: FightText;
+	endText?: FightText;
 }
 
 export interface FighterRecap {
@@ -33,6 +36,8 @@ export interface FighterRecap {
 	startingHp: number;
 	energy: number;
 	maxEnergy: number;
+	dark?: boolean;
+	size?: number;
 }
 
 export interface CatchResult {

@@ -41,6 +41,10 @@ import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import dayjs from 'dayjs';
+import { updateQuest } from '../dao/questsDao.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -116,6 +120,34 @@ export async function useItem(req: Request) {
 	const itemData = dinoz.player.items.find(item => item.itemId === itemId);
 	if (itemData === undefined || itemData.quantity <= 0) {
 		throw new ErrorFormator(400, `notEnoughItem`);
+	}
+
+	//Star quest
+	const starQuest = dinoz.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 3);
+	if (starQuest) {
+		// Current date
+		const currentDate = dayjs();
+		// Retrieve the day of the week (0 pour dimanche, 1 pour lundi, ..., 6 pour samedi)
+		const dayOfWeek = currentDate.day();
+		if (
+			(dayOfWeek === 4 || dayOfWeek === 6) &&
+			dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
+			itemId === itemList.MEAT_PIE.itemId
+		) {
+			await updateQuest(dinoz.player.id, Scenario.STAR, 4);
+			await increaseItemQuantity(dinoz.player.id, itemList.MAGIC_STAR.itemId, 1);
+			const initialLife = dinoz.life;
+			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.player.cooker ? 1.1 : 1)));
+			const lifeHealed = Math.max(0, dinoz.life - initialLife);
+			//Update stats
+			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
+			await decreaseItemQuantity(dinoz.player.id, itemData.itemId, 1);
+			await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
+			return {
+				category: ItemEffect.QUEST,
+				value: 'eat_star_found'
+			};
+		}
 	}
 
 	let feedback: ItemFeedBack;
@@ -464,7 +496,7 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		throw new ErrorFormator(500, `You don't have enought ${itemToEquip.itemId}`);
 	}
 
-	if (backpackSlot(dinoz) <= dinoz.items.length && equip) {
+	if (backpackSlot(dinoz.player.engineer, dinoz) <= dinoz.items.length && equip) {
 		throw new ErrorFormator(400, `backpackFull`);
 	}
 

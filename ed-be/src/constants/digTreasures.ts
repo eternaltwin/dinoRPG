@@ -2,6 +2,8 @@ import { DigData } from '@drpg/core/models/dinoz/DigData';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum, Operator, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export const digTreasures: Readonly<Record<string, DigData>> = {
 	BASALT: {
@@ -66,6 +68,25 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.OLD_STONE } },
 				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.ASHPOUK_TOTEM } }
 			]
+		}
+	},
+	FOURTH_STAR: {
+		name: 'FOURTH_STAR',
+		place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.STAR,
+				step: 5
+			},
+			{
+				rewardType: RewardEnum.ITEM,
+				value: itemList.MAGIC_STAR.itemId,
+				quantity: 1
+			}
+		],
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.STAR, 4, '=']
 		}
 	}
 };

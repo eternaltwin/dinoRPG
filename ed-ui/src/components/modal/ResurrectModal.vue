@@ -49,6 +49,7 @@ import EventBus from '../../events/index.js';
 import { DinozService, InventoryService } from '../../services/index.js';
 import { defineComponent } from 'vue';
 import { errorHandler } from '../../utils/index.js';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 
 export default defineComponent({
 	name: 'Resurrect',
@@ -59,7 +60,13 @@ export default defineComponent({
 		async resurrect(): Promise<void> {
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
-				await DinozService.resurrectDinoz(dinozId);
+				const rez = await DinozService.resurrectDinoz(dinozId);
+				if (rez && rez.category === ItemEffect.QUEST) {
+					EventBus.emit('toast', {
+						type: 'reward',
+						message: this.$t(`quest.${rez.value}`)
+					});
+				}
 			} catch (e) {
 				errorHandler.handle(e);
 			}

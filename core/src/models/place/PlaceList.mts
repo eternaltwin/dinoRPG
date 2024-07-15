@@ -6,6 +6,7 @@ import { Condition } from '../npc/NpcConditions.mjs';
 import { MissionID } from '../missions/missionList.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { GroundEnum } from '../enums/GroundEnum.mjs';
+import { Scenario } from '../enums/Scenario.mjs';
 
 export const placeList: Record<
 	PlaceEnum,
@@ -889,8 +890,8 @@ export const placeList: Record<
 			[Operator.OR]: [
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'monte' },
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'roif' },
-				{ [ConditionEnum.SCENARIO]: ['smog', 16] },
-				{ [ConditionEnum.SCENARIO]: ['smog', 15] }
+				{ [ConditionEnum.SCENARIO]: [Scenario.SMOG, 16, '='] },
+				{ [ConditionEnum.SCENARIO]: [Scenario.SMOG, 15, '='] }
 			]
 		},
 		map: MapZone.DARKWORLD
@@ -956,7 +957,7 @@ export const placeList: Record<
 			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.TODO } }, //'monte' } },
 				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.TODO } }, //'roif' } },
-				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: ['smog', 16] } }
+				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.SMOG, 16, '='] } }
 			]
 		},
 		alias: 105,

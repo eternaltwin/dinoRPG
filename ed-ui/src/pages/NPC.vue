@@ -9,7 +9,7 @@
 			<div class="name">{{ $t(`npc.name.${npcName}`) }} :</div>
 		</div>
 		<div class="footer">
-			<AnimatedNPC :NPC="npcSpeech.name" :flashvars="npcSpeech.flashvars" />
+			<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
 			<a class="button" @click="stop()">
 				<span v-html="formatContent($t(`npc.stop`))" />
 			</a>
@@ -38,6 +38,7 @@ import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
+import { npcList } from '@drpg/core/models/npc/NpcList';
 
 export default defineComponent({
 	name: 'NPC',
@@ -48,7 +49,8 @@ export default defineComponent({
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
 			dinozStore: dinozStore(),
-			sessionStore: sessionStore()
+			sessionStore: sessionStore(),
+			swfName: undefined as string | undefined
 		};
 	},
 	components: {
@@ -144,6 +146,14 @@ export default defineComponent({
 			errorHandler.handle(err);
 			return;
 		}
+		const npcCore = Object.values(npcList).find(npc => npc.name === this.npcName);
+		console.log(npcCore);
+		if (npcCore) {
+			this.swfName = npcCore.display ?? npcCore.name;
+		} else {
+			this.swfName = this.npcName;
+		}
+		console.log(this.swfName);
 	}
 });
 </script>

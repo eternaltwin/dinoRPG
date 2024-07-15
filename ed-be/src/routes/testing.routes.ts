@@ -29,22 +29,21 @@ routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Reques
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
-	const dinozData = await getDinozFightDataRequest(+req.params.id);
-	if (!dinozData) {
+	if (!req.auth?.playerId) {
+		throw new ErrorFormator(500, `Unauthorized`);
+	}
+	const player = await getDinozFightDataRequest(+req.params.id, req.auth.playerId);
+	if (!player) {
 		throw new ErrorFormator(500, `Player ${+req.params.id} doesn't exist.`);
 	}
-	const followers = dinozData.followers.map(follower => ({
-		...follower,
-		player: dinozData.player
-	}));
-	const team = [dinozData, ...followers];
+	const team = player.dinoz;
 
 	try {
 		const results = [];
 		for (let i = 0; i < 600; i++) {
-			const monstersGenerated = generateMonsterList(team, dinozData.placeId);
-			const fightResult = calculateFight(team, dinozData.placeId, monstersGenerated);
-			const result = await rewardFightCalculate(team, monstersGenerated, fightResult);
+			const monstersGenerated = generateMonsterList(team, player.dinoz[0].placeId);
+			const fightResult = calculateFight(team, player.dinoz[0].placeId, monstersGenerated);
+			const result = await rewardFightCalculate(team, monstersGenerated, fightResult, player);
 
 			const flattedMonsters = monstersGenerated.map(a => a.name);
 			const counter: { [key: string]: number } = {};

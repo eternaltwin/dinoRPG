@@ -33,6 +33,8 @@ export type MonsterFiche = {
 	events?: GameEvent[];
 	noMove?: boolean;
 	display?: string;
+	size?: number;
+	dark?: boolean;
 	entrance?: EntranceEffect;
 };
 

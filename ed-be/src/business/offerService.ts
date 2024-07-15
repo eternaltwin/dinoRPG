@@ -131,7 +131,7 @@ export async function createOffer(req: Request) {
 
 	// Insert offer
 	await insertOffer(dinozId, total, itemsAndIngredients, playerId);
-	console.log(itemsAndIngredients);
+	// console.log(itemsAndIngredients);
 
 	// Set Dinoz as selling
 	if (dinozId) {

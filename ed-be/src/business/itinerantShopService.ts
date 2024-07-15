@@ -27,10 +27,10 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 	const playerId = req.auth.playerId;
 	const dinozId = +req.params.dinozId;
 
-	const playerIngShopData = await getDinozItinerantShop(dinozId);
+	const player = await getDinozItinerantShop(dinozId, playerId);
 
 	// Throw an exception if the player doesn't exists
-	if (!playerIngShopData) {
+	if (!player) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist`);
 	}
 
@@ -39,7 +39,7 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
-		.find(s => checkCondition(s.condition, [playerIngShopData], itinerant));
+		.find(s => checkCondition(s.condition, player, dinozId, itinerant));
 
 	// Throw an exception if the shop does not exist
 	if (!itinerantShop) {
@@ -48,11 +48,6 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 
 	if (itinerantShop.type !== ShopType.ITINERANT) {
 		throw new ErrorFormator(500, `Wrong shop returned`);
-	}
-
-	const player = playerIngShopData.player;
-	if (!player) {
-		throw new ErrorFormator(500, `Dinoz is without player`);
 	}
 
 	return itinerantShop.listItemsSold.map(ingBuy => {
@@ -107,10 +102,10 @@ export async function sellIngredient(req: Request) {
 		throw new ErrorFormator(400, `wrongQuantity`);
 	}
 
-	const playerIngShopData = await getDinozItinerantShop(dinozId);
+	const player = await getDinozItinerantShop(dinozId, playerId);
 
 	// Throw an exception if the player doesn't exists
-	if (!playerIngShopData) {
+	if (!player) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist`);
 	}
 
@@ -119,7 +114,7 @@ export async function sellIngredient(req: Request) {
 
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
-		.find(s => checkCondition(s.condition, [playerIngShopData], itinerant));
+		.find(s => checkCondition(s.condition, player, dinozId, itinerant));
 
 	// Throw an exception if the shop doesn't exist
 	if (!itinerantShop) {
@@ -129,7 +124,6 @@ export async function sellIngredient(req: Request) {
 	if (itinerantShop.type !== ShopType.ITINERANT) {
 		throw new ErrorFormator(500, `Wrong shop returned`);
 	}
-	const player = playerIngShopData.player;
 
 	if (!player) {
 		throw new ErrorFormator(500, `Dinoz is without player`);

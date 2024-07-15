@@ -1,11 +1,11 @@
-import { DinozForConditionCheck } from '@drpg/core/constants';
+import { PlayerForConditionCheck } from '@drpg/core/constants';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Dinoz } from '@drpg/prisma';
+import { Dinoz, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import { specialActions } from '../constants/specialActions.js';
 import {
@@ -22,6 +22,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
 import { DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 export async function concentrate(req: Request) {
 	if (!req.auth || !req.auth.playerId) {
@@ -101,23 +102,37 @@ async function goDarkWorld(playerId: number, dinozList: Pick<Dinoz, 'id'>[]) {
 }
 
 export async function mouvementListener(
-	team: (DinozToGetFighter & DinozToRewardFight & DinozForConditionCheck & DinozToGetActualStep)[],
+	player: Pick<Player, 'id' | 'teacher'> & PlayerForConditionCheck,
+	team: (DinozToGetFighter & DinozToRewardFight & DinozToGetActualStep)[],
 	finalPlace: PlaceEnum
 ) {
 	//Specials actions
 	const potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
 
-	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, team)) {
+	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, player, player.dinoz[0].id)) {
 		if (potentialSpecialActions.opponents) {
 			const fightResult = calculateFight(team, finalPlace, potentialSpecialActions.opponents);
-			const result = await rewardFight(team, potentialSpecialActions.opponents, fightResult, finalPlace);
+
+			const result: FightResult = await rewardFight(
+				team,
+				potentialSpecialActions.opponents,
+				fightResult,
+				finalPlace,
+				player
+			);
 			if (fightResult.winner) {
-				await rewarder(potentialSpecialActions.reward, team);
+				await rewarder(potentialSpecialActions.reward, team, player.id);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
+			}
+			if (potentialSpecialActions.startText) {
+				result.startText = potentialSpecialActions.startText;
+			}
+			if (potentialSpecialActions.endText) {
+				result.endText = potentialSpecialActions.endText;
 			}
 			return result;
 		} else {
-			await rewarder(potentialSpecialActions.reward, team);
+			await rewarder(potentialSpecialActions.reward, team, player.id);
 			//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 		}
 	}
@@ -135,14 +150,11 @@ export async function mouvementListener(
 		if (actualStep && team.every(dinoz => getActualStep(dinoz)?.stepId === actualStep.stepId)) {
 			if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
 				const fightResult = calculateFight(team, finalPlace, actualStep.requirement.target);
-				const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace);
+				const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace, player);
 				if (fightResult.winner) {
 					const teamIds = team.map(dinoz => dinoz.id);
 
-					if (!team[0].player) {
-						throw new ErrorFormator(500, `Dinoz ${team[0].id} doesn't have a player`);
-					}
-					await updateMissionStep(team[0].player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);
+					await updateMissionStep(player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);
 					await updateMultipleDinoz(teamIds, { placeId: finalPlace });
 				}
 				return result;

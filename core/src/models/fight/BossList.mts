@@ -41,7 +41,8 @@ export enum Boss {
 	MUTATED_GRIZORG = 'MUTATED_GRIZORG',
 	ULTIMATE_GRIZORG = 'ULTIMATE_GRIZORG',
 	CHIEF_DOROGON = 'CHIEF_DOROGON',
-	SOFIA = 'SOFIA'
+	SOFIA = 'SOFIA',
+	MEGA_WOLF = 'MEGA_WOLF'
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -950,6 +951,31 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xpBonus: 10,
 		odds: 100,
 		skills: [Skill.FEU_DE_ST_ELME, Skill.FOCUS, Skill.CELERITE],
+		zones: [],
+		canBeCaptured: false
+	},
+	[Boss.MEGA_WOLF]: {
+		id: Boss.MEGA_WOLF,
+		boss: true,
+		name: 'megawf',
+		display: 'wolf',
+		level: 10,
+		elements: {
+			fire: 7,
+			wood: 7,
+			water: 7,
+			lightning: 7,
+			air: 7
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		balanced: true,
+		hp: 60,
+		xpBonus: 10,
+		odds: 100,
+		size: 150,
+		dark: true,
+		skills: [Skill.COUP_DOUBLE],
 		zones: [],
 		canBeCaptured: false
 	}

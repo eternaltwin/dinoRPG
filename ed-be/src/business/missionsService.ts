@@ -13,7 +13,7 @@ import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUti
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, DinozMission } from '@drpg/prisma';
 import { Request } from 'express';
-import { DinozWithMissionData, getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
+import { PlayerWithMissionData, getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
 import {
 	addMissionToDinoz,
 	finishMission,
@@ -28,16 +28,20 @@ import { rewarder } from '../utils/rewarder.js';
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
 	const npcName = req.params.npc;
-	const dinoz = await getDinozMissionsInfo(dinozId);
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, `Player is not authenticated`);
+	}
+	const playerId = +req.auth.playerId;
+	const player = await getDinozMissionsInfo(dinozId, playerId);
+	if (!player) {
+		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+	}
+	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
 	}
 	const currentPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const npc = Object.values(npcList).find(npc => npc.name === npcName);
-
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
-	}
 
 	if (dinoz.canChangeName) {
 		throw new ErrorFormator(500, `Dinoz has to be named.`);
@@ -59,7 +63,7 @@ export async function getMissionsList(req: Request) {
 		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
-	return missionSort(npc.missions, dinoz);
+	return missionSort(npc.missions, player, dinozId);
 }
 
 export async function updateMission(req: Request) {
@@ -72,7 +76,11 @@ export async function updateMission(req: Request) {
 		throw new ErrorFormator(500, 'No player found');
 	}
 
-	const dinoz = await getDinozMissionsInfo(dinozId);
+	const player = await getDinozMissionsInfo(dinozId, playerId);
+	if (!player) {
+		throw new ErrorFormator(500, `No player found.`);
+	}
+	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
@@ -83,14 +91,10 @@ export async function updateMission(req: Request) {
 		throw new ErrorFormator(500, `Place ${dinoz.placeId} doesn't exist.`);
 	}
 
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
-	}
-
 	if (!npc) {
 		throw new ErrorFormator(500, `This mission doesn't exist`);
 	}
-	const npcMissions = missionSort(npc.missions || [], dinoz);
+	const npcMissions = missionSort(npc.missions || [], player, dinozId);
 
 	switch (status) {
 		case 'start':
@@ -103,7 +107,7 @@ export async function updateMission(req: Request) {
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
 				throw new ErrorFormator(500, `This mission is unavailable`);
 			} else {
-				await addMissionToDinoz(req.auth.playerId, {
+				await addMissionToDinoz(playerId, {
 					dinoz: { connect: { id: dinozId } },
 					missionId: missionId,
 					step: 0,
@@ -170,7 +174,7 @@ export async function endMission(req: Request) {
 		throw new ErrorFormator(500, 'No player found');
 	}
 
-	await rewarder(mission.missionReference.rewards, [mission.dinoz]);
+	await rewarder(mission.missionReference.rewards, [mission.dinoz], playerId);
 	await finishMission(playerId, mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
 }
@@ -178,15 +182,24 @@ export async function endMission(req: Request) {
 async function checkMission(req: Request) {
 	const dinozId = +req.params.dinozId;
 	const missionId = +req.body.missionId;
+	const playerId = req.auth?.playerId;
 
-	const dinoz = await getDinozMissionsInfo(dinozId);
+	if (!playerId) {
+		throw new ErrorFormator(500, 'No player found');
+	}
+
+	const player = await getDinozMissionsInfo(dinozId, playerId);
+	if (!player) {
+		throw new ErrorFormator(500, `No player found.`);
+	}
+	const dinoz = player.dinoz.find(d => d.id === dinozId);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+	}
 	if (!dinoz) {
 		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 	}
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
-	}
 
 	if (!dinozMission) {
 		throw new ErrorFormator(500, 'This mission is not started yet');
@@ -239,7 +252,11 @@ export function getMissionAction(
 	} else return;
 }
 
-function missionSort(missions: Mission[], dinoz: DinozWithMissionData) {
+function missionSort(missions: Mission[], player: PlayerWithMissionData, activeDinoz: number) {
+	const dinoz = player.dinoz.find(d => d.id === activeDinoz);
+	if (!dinoz) {
+		throw new ErrorFormator(500, `No active dinoz.`);
+	}
 	return missions.map(missions => {
 		const missionKnown = dinoz.missions.find(element => element.missionId === missions.missionId);
 		let status;
@@ -248,7 +265,7 @@ function missionSort(missions: Mission[], dinoz: DinozWithMissionData) {
 				Si non => status = MissionsStatus.UNAVAILABLE
 				 */
 		if (!missionKnown) {
-			if (missions.condition && !checkCondition(missions.condition, [dinoz])) {
+			if (missions.condition && !checkCondition(missions.condition, player, dinoz.id)) {
 				status = MissionsStatus.UNAVAILABLE;
 			} else {
 				status = MissionsStatus.AVAILABLE;

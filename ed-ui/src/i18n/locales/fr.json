@@ -855,7 +855,15 @@
 			"pteroz": "Etrange Dinoz",
 			"hippo": "Etrange Dinoz",
 			"rocky": "Etrange Pierre",
-			"vener": "Le Vénérable"
+			"vener": "Le Vénérable",
+			"alien_0": "Etre Etrange",
+			"alien_1": "Etre Etrange",
+			"alien_8": "Etre Etrange",
+			"alien_all": "Etre Etrange",
+			"merguez_star": "Vendeur de merguez",
+			"skully_star": "Skully",
+			"skully": "Skully",
+			"bob_star": "M. Bao Bob"
 		},
 		"professor": {
 			"speech": {
@@ -903,56 +911,6 @@
 				"menu": "Retour",
 				"stone_yes": "Bien sûr, la voilà.",
 				"stone_no": "Hé, là ! Pas touche ! Avant, j'aimerais savoir quelque chose..."
-			}
-		},
-		"alpha_test": {
-			"speech": {
-				"begin": "Salut ! Bienvenue dans la matrice... Euh non dans l'alpha ! Je peux t'aider à améliorer ton dinoz sans difficulté afin de pouvoir tester ce que font les développeurs",
-				"talk": "Alors tu peux choisir l'élément de ton prochain niveau, dévérouiller les différentes contrées de Dinoland ou tout simplement manger un bonbon qui te mettra ton expérience au maximum",
-				"element": "Je te laisse choisir le prochain élément de ton niveau donc. Tu peux revenir me voir pour le changer quand tu le veux.",
-				"fire": "Et voila ! A bientôt",
-				"water": "Et voila ! A bientôt",
-				"lightning": "Et voila ! A bientôt",
-				"wood": "Et voila ! A bientôt",
-				"air": "Et voila ! A bientôt",
-				"world": "Quels lieux souhaite visiter ?",
-				"GO_TO_GRAND_TOUT_CHAUD": "Et voila ! A bientôt",
-				"GO_TO_ATLANTEINES_ISLAND": "Et voila ! A bientôt",
-				"CIMETIERE": "Et voila ! A bientôt",
-				"GO_TO_DINOPLAZA": "Et voila ! A bientôt",
-				"GO_TO_MONSTER_ISLAND": "Et voila ! A bientôt",
-				"GO_TO_FOREST": "Et voila ! A bientôt",
-				"GO_TO_DOME_SOULAFLOTTE": "Et voila ! A bientôt",
-				"GO_TO_TUNNEL": "Et voila ! A bientôt",
-				"JUNGLE_SAUVAGE": "Et voila ! A bientôt",
-				"GO_TO_STEPPES": "Et voila ! A bientôt",
-				"nothing": "Désolé mais tu as déjà de quoi faire quelques tours du monde. Reviens me voir quand de nouveaux mondes seront ajoutés.",
-				"experience": "Ouvre grand la bouche !",
-				"maxExperience": "Yeees ! En plein dans le mille !"
-			},
-			"playerChoice": {
-				"talk": "Euh ? Que me proposez vous ?",
-				"element": "Je veux choisir l'élément de mon prochain niveau !",
-				"world": "Je veux visiter le monde !",
-				"experience": "Donne moi ce bonbon !",
-				"fire": "Je choisis le feu",
-				"water": "Je choisis l'eau",
-				"lightning": "Je choisis la foudre",
-				"wood": "Je choisis le bois",
-				"air": "Je choisis l'air",
-				"back": "Retour",
-				"GO_TO_GRAND_TOUT_CHAUD": "Le Grand Tout Chaud",
-				"GO_TO_ATLANTEINES_ISLAND": "Les îles Atlantéinées",
-				"CIMETIERE": "Le Cimetière",
-				"GO_TO_DINOPLAZA": "Dinoplaza",
-				"GO_TO_MONSTER_ISLAND": "L'île aux monstres",
-				"GO_TO_FOREST": "La forêt de Grumhel",
-				"GO_TO_DOME_SOULAFLOTTE": "Le dôme Soulaflotte",
-				"GO_TO_TUNNEL": "Le tunnel Sous la Branche",
-				"JUNGLE_SAUVAGE": "La jungle sauvage",
-				"GO_TO_STEPPES": "Les steppes magnétiques",
-				"nothing": "Surprends moi !",
-				"maxExperience": "Haaaaaaaaa"
 			}
 		},
 		"sofia": {
@@ -1513,6 +1471,111 @@
 				"chasse": "Je suis un Grand Chasseur de Dorogon, et je viens vous défier !",
 				"deal": "J'ai une affaire EN OR a vous proposer !",
 				"auto": "Pourrais-je avoir un autographe ?"
+			}
+		},
+		"alien_0": {
+			"speech": {
+				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
+				"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
+				"yes": ". . . . . Thank you . . . . very . . . Bziiiiiiiiiiiiiiiiiiit ! Ah ! Voilà ! Mon traducteur simultané est réparé ! Heureusement que j'avais emmené des batteries à la fraise de rechange ! Merci, très cher ami, merci de votre aide si aimablement proposée...",
+				"nothing": "C'est tout à votre honneur du poil ! Comme j'essayais de vous le dire à l'instant, j'ai un petit problème technicologique. Mon (SiAvUaEs) est cassé comme une noisette, et je ne peux donc pas rentrer chez moi, sur (PuOsEniLa) !",
+				"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)... Voyons voir... dans votre langage, cela devrait ressembler à des étoiles brillantes, avec l'air très appétissant !",
+				"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée, et je serais même prèt à vous récompenser avec un (CiLoJuAeDa) de chez moi !",
+				"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations, qui sont inscrites dans le Guide du Touriste Eclectik. A chaque fois je vous lirai le passage, ensuite à vous de vous débrouissailler ! Ah !",
+				"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant..."
+			},
+			"playerChoice": {
+				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
+				"no": "Pas question",
+				"yes": "Euh... oui ?",
+				"nothing": "De rien...",
+				"dom": "Effectivement, quel dommage !",
+				"star": "Des étoiles ?",
+				"how": "Et comment trouver ces étoiles ?",
+				"ah": "\"Ah\" ?"
+			}
+		},
+		"alien_1": {
+			"speech": {
+				"begin": "Le Guide a dit : \"Un mégaloup t'attends dans la capitale !\"",
+				"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !"
+			},
+			"playerChoice": {
+				"et": "Et ?"
+			}
+		},
+		"alien_8": {
+			"speech": {
+				"begin": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) ! Il ne me reste que peu de temps tant que les astres sont dans l'alignement de Rochechouart...",
+				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
+				"give": "L'Etre Etrange court dans une sorte petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
+			},
+			"playerChoice": {
+				"ok": "...",
+				"give": "Donner les 7 Etoiles"
+			}
+		},
+		"alien_all": {
+			"speech": {
+				"begin": "Ah ! Je vois que tu avances dans ta quête ! Voyons voir ce que le Guide du Touriste nous raconte ensuite....",
+				"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
+				"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
+				"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
+				"star5": "C'est écrit tout petit, je vais essayer de bien lire les mots : \"Les vieux os apprécient parait-il la vue d'un ... capsicum\" , oui... ça doit être ça... (enfin je pense)",
+				"star6": "Uhm... Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\". Tout un programme...",
+				"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\". Courage !",
+				"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !"
+			},
+			"playerChoice": {
+				"star2": "Ecouter",
+				"star3": "Ecouter",
+				"star4": "Ecouter",
+				"star5": "Ecouter",
+				"star6": "Ecouter",
+				"star7": "Ecouter",
+				"end": "..."
+			}
+		},
+		"merguez_star": {
+			"speech": {
+				"begin": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? A moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
+				"ok": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
+				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
+			},
+			"playerChoice": {
+				"ok": "...",
+				"star": "Ah ?"
+			}
+		},
+		"skully_star": {
+			"speech": {
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
+				"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
+				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
+			},
+			"playerChoice": {
+				"ok": "...",
+				"star": "Ah ?"
+			}
+		},
+		"skully": {
+			"speech": {
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Désolé mais les développeurs sont de gros fénéants et ne m'ont pas encore intégrée au jeu. Quelle honte !"
+			},
+			"playerChoice": {
+				"ok": "...",
+				"star": "Ah ?"
+			}
+		},
+		"bob_star": {
+			"speech": {
+				"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
+				"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardé pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
+				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
+			},
+			"playerChoice": {
+				"ok": "Je cherche...",
+				"star": "???"
 			}
 		}
 	},
@@ -4334,5 +4397,12 @@
 		"futureInfo3": {
 			"text1": "À venir..."
 		}
+	},
+	"quest": {
+		"fight_megawolf": "Au moment où vous approchez, un immense loup apparait !",
+		"fight_star_found": "A la fin du combat, vous apercevez un objet brillant : il s'agit d'une des 7 étoiles magiques !",
+		"eat_star_found": "Après avoir avalé la Tarte, votre Dinoz aperçoit quelquechose qui brille à quelques mètres... Félicitations ! Vous avez trouvé l'une des 7 étoiles magiques !",
+		"dig_star_found": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
+		"resurrect_star_found": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
 	}
 }

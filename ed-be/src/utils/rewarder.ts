@@ -4,28 +4,27 @@ import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.j
 import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { unlockDoubleSkills } from '../business/skillService.js';
 import { addMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } from '../dao/playerDao.js';
-import { increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
+import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ErrorFormator } from './errorFormator.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Dinoz, DinozStatus, LogType, Player } from '@drpg/prisma';
+import { Dinoz, DinozStatus, LogType } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
+import { createQuest, updateQuest } from '../dao/questsDao.js';
 
 export async function rewarder(
 	rewards: Rewarder[],
 	team: (Pick<Dinoz, 'id' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
-		player: Pick<Player, 'id'> | null;
-	})[]
+	})[],
+	playerId: number
 ) {
-	if (!team.length || !team[0].player) {
+	if (!team.length) {
 		throw new ErrorFormator(500, 'No player found');
 	}
-
-	const playerId = team[0].player.id;
 
 	for (const dinoz of team) {
 		for (const reward of rewards) {
@@ -72,11 +71,15 @@ export async function rewarder(
 					const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemRewarded.itemId);
 					const playerItemData = playerShopData.items.find(item => item.itemId === itemRewarded.itemId);
 					if (playerItemData) {
-						const quantityLimitedByMaxQuantity = itemRewarded.maxQuantity - playerItemData.quantity;
+						if (reward.reverse) {
+							await decreaseItemQuantity(playerId, itemRewarded.itemId, reward.quantity);
+						} else {
+							const quantityLimitedByMaxQuantity = itemRewarded.maxQuantity - playerItemData.quantity;
 
-						if (quantityLimitedByMaxQuantity <= 0) break;
+							if (quantityLimitedByMaxQuantity <= 0) break;
 
-						await increaseItemQuantity(playerId, itemRewarded.itemId, reward.quantity);
+							await increaseItemQuantity(playerId, itemRewarded.itemId, reward.quantity);
+						}
 					} else {
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 					}
@@ -94,8 +97,11 @@ export async function rewarder(
 					}
 					break;
 				case RewardEnum.SCENARIO:
-					//TODO: Implement scenario
-					console.log('Scenario are not implemented yet');
+					if (reward.step === 1) {
+						await createQuest(playerId, reward.value);
+					} else {
+						await updateQuest(playerId, reward.value, reward.step);
+					}
 					break;
 				case RewardEnum.TELEPORT:
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });

@@ -283,6 +283,13 @@ export default defineComponent({
 									})
 								)
 							});
+						} else if (this.digReward.rewardType === RewardEnum.SCENARIO) {
+							if (this.digReward.value === 1 && this.digReward.step === 5) {
+								EventBus.emit('toast', {
+									type: 'reward',
+									message: this.$t(`quest.dig_star_found`)
+								});
+							}
 						}
 					} catch (e) {
 						errorHandler.handle(e);

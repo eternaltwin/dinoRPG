@@ -9,7 +9,7 @@ async function main() {
 			value: "5"
 		},
 	})
-	console.log(itinerant)
+	// console.log(itinerant)
 }
 main()
 	.then(async () => {
