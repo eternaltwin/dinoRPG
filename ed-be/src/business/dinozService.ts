@@ -442,7 +442,7 @@ export async function buyDinoz(req: Request) {
 
 	// Add base skills to created dinoz
 	await addMultipleSkillToDinoz(
-		newDinoz.id,
+		dinozCreated.id,
 		skillsToAdd.map(skill => skill.id)
 	);
 
@@ -450,7 +450,7 @@ export async function buyDinoz(req: Request) {
 	await updateDinozCount(req.auth.playerId, 1);
 	await updatePoints(req.auth.playerId, 1);
 
-	return toDinozFiche(newDinoz, newDinoz.id);
+	return toDinozFiche(newDinoz, dinozCreated.id);
 }
 
 /**
