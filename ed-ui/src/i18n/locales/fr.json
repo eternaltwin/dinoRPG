@@ -3790,7 +3790,8 @@
 			"efire": "Elémental de feu",
 			"vener": "Le Vénérable",
 			"rasca": "Vieux Rascaphandre",
-			"eearth": "Elémental de Terre"
+			"eearth": "Elémental de Terre",
+			"pirask": "Pirhan-os"
 		},
 		"status": {
 			"asleep": "endormi",

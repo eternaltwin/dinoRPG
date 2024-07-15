@@ -256,7 +256,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 50,
 		bonus_defense: 30,
 		balanced: true,
-		odds: 50,
+		odds: 250,
 		level: 15,
 		zones: [MapZone.DINOLAND],
 		places: [PlaceEnum.CIMETIERE],
@@ -266,7 +266,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 2, odds: 1 }
 		],
 		canBeCaptured: true,
-		skills: [Skill.M_FLIGHT]
+		skills: [Skill.M_FLIGHT],
+		display: 'piraos'
 	},
 	[Monster.FLAM]: {
 		id: Monster.FLAM,
