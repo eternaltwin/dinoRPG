@@ -107,7 +107,7 @@ export async function rewarder(
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
 					break;
 				default:
-					console.log('Not implemented yet');
+					console.log('Not implemented yet', reward.rewardType);
 			}
 		}
 	}

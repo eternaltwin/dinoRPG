@@ -127,12 +127,12 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			if (!playerData) {
 				throw new ErrorFormator(500, `No player ${playerId} found`);
 			}
-			const dinozData = player.dinoz.find(d => d.id === dinozId);
+			const dinozData = playerData.dinoz.find(d => d.id === dinozId);
 			if (!dinozData) {
 				throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
 			}
 
-			const team = playerData.dinoz;
+			const team = [dinozData];
 			if (!isAlive(dinozData)) {
 				throw new ErrorFormator(400, 'dead');
 			}
