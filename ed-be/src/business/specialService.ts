@@ -104,7 +104,8 @@ async function goDarkWorld(playerId: number, dinozList: Pick<Dinoz, 'id'>[]) {
 export async function mouvementListener(
 	player: Pick<Player, 'id' | 'teacher'> & PlayerForConditionCheck,
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToGetActualStep)[],
-	finalPlace: PlaceEnum
+	finalPlace: PlaceEnum,
+	activeDinoz: number
 ) {
 	//Specials actions
 	const potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
@@ -113,6 +114,10 @@ export async function mouvementListener(
 		if (potentialSpecialActions.opponents) {
 			const fightResult = calculateFight(team, finalPlace, potentialSpecialActions.opponents);
 
+			const partyLeader = team.find(d => d.id === activeDinoz)
+			if (!partyLeader) {
+				throw new ErrorFormator(500, `Cannot find dinoz ${activeDinoz} in the team`)
+			}
 			const result: FightResult = await rewardFight(
 				team,
 				potentialSpecialActions.opponents,
@@ -121,7 +126,7 @@ export async function mouvementListener(
 				player
 			);
 			if (fightResult.winner) {
-				await rewarder(potentialSpecialActions.reward, team, player.id);
+				await rewarder(potentialSpecialActions.reward, [partyLeader], player.id);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 			}
 			if (potentialSpecialActions.startText) {

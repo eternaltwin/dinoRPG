@@ -93,7 +93,7 @@ export async function processFight(req: Request) {
 		throw new ErrorFormator(400, 'dead');
 	}
 
-	let fight = await mouvementListener(player, team, dinozData.placeId);
+	let fight = await mouvementListener(player, team, dinozData.placeId, dinozId);
 	if (!fight) {
 		fight = await moveFight(team, dinozData.placeId, player);
 	}
