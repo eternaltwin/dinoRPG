@@ -127,12 +127,12 @@ const chooseRandomOpponentForAssault = (
 
 	// Apply target filtering skills:
 	// Reduce the list of targets to only those with rock
-	const opponents_have_rock = opponents.some(opponent => opponent.skills.some(s => s.id === Skill.ROCK));
+	const opponents_have_rock = opponents.some(opponent => opponent.hasRock);
 	if (opponents_have_rock) {
 		// Filter based on the fighters with the ROCK skill: if the opposing team has the rock skill,
 		// then one chance out of 2 to target only the rock fighters
 		if (randomBetweenMaxExcluded(0, 2) === 0) {
-			filtered_opponents = filtered_opponents.filter(opponent => opponent.skills.some(s => s.id === Skill.ROCK));
+			filtered_opponents = filtered_opponents.filter(opponent => opponent.hasRock);
 		}
 	}
 
@@ -716,28 +716,6 @@ export const initStepFighter = (
 
 // 	});
 // };
-
-const checkSkillEvasion = (opponent: DetailedFighter) => {
-	// Some statues prevent skill evasion
-	// Note: yes a flying dinoz cannot dodge a skill
-	const statusesPreventingEvasion = [Status.ASLEEP, Status.PETRIFIED, Status.FLYING, Status.STUNNED];
-	if (statusesPreventingEvasion.some(status => hasStatus(opponent, status))) {
-		return false;
-	}
-
-	// TODO fix this: clones can inherit the super doge stat so this needs to be reworked
-	let evasion = 0;
-
-	// 15% chance to evade skills A with Skill.DEPLACEMENT_INSTANTANE
-	if (opponent.skills.find(s => s.id === Skill.DEPLACEMENT_INSTANTANE)) {
-		evasion += 0.15;
-	}
-
-	const random = Math.random();
-	const evaded = random < evasion;
-
-	return evaded;
-};
 
 // Triggers an attack of type assault, it targets a single target in close combat
 // By default, it is assumed that the assault is a normal one (not triggered from a skill)
@@ -3348,18 +3326,6 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 	});
 };
 
-const evade = (fightData: DetailedFight, opponent: DetailedFighter) => {
-	const random = Math.random();
-	const evaded = random < opponent.stats.special.evasion - 1;
-
-	// Evasion stat
-	if (evaded) {
-		updateStat(fightData, opponent, 'evasions', 1);
-	}
-
-	return evaded;
-};
-
 const miss = (fighter: DetailedFighter) => {
 	// No miss if not DAZZLED
 	if (!hasStatus(fighter, Status.DAZZLED)) return false;
@@ -3486,7 +3452,17 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 
 	const hpBeforeHeal = fighter.hp;
 
-	fighter.hp += hp;
+	let healBonus = 1;
+
+	if (fighter.attacker && fightData.attackerData.hasCook) {
+		healBonus *= 1.1;
+	}
+	else if (!fighter.attacker && fightData.defenderData.hasCook) {
+		healBonus *= 1.1;
+	}
+
+
+	fighter.hp += hp * healBonus;
 
 	if (fighter.hp > fighter.startingHp) {
 		fighter.hp = fighter.startingHp;
@@ -3649,12 +3625,19 @@ const attackTarget = (
 
 		// Check for assault dodge
 		let isDodged = false;
-		if (isAssault && !hasStatus(target, Status.PETRIFIED) && Math.random() < target.stats.special.evasion - 1) {
+		if (isAssault &&
+			!hasStatus(target, Status.PETRIFIED) &&
+			(Math.random() < (target.stats.special.evasion - 1))) {
 			isDodged = true;
 		}
 
 		// Check for skill evasion
-		const isSuperDodged = checkSkillEvasion(target);
+		let isSuperDodged = false;
+		if (!isAssault &&
+			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.FLYING) || hasStatus(target, Status.STUNNED) &&
+			(Math.random() < (target.stats.special.superEvasion - 1)))) {
+				isSuperDodged = true;
+			}
 
 		// Check for special statuses: flying, intangible, dazzled
 		// FLYING

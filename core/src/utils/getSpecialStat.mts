@@ -1,6 +1,6 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
-import { Skill } from '../models/dinoz/SkillList.mjs';
+import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { itemList } from '../models/item/ItemList.mjs';
@@ -14,6 +14,7 @@ export enum SpecialStat {
 	ARMOR = 'armor',
 	MULTIHIT = 'multihit',
 	EVASION = 'evasion',
+	SUPER_EVASION = 'superEvasion',
 	COUNTER = 'counter',
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
@@ -23,6 +24,7 @@ export enum SpecialStat {
 export enum SpecialStatAsPercent {
 	MULTIHIT = 'multihit',
 	EVASION = 'evasion',
+	SUPER_EVASION = 'superEvasion',
 	COUNTER = 'counter',
 	BUBBLE_RATE = 'bubbleRate'
 }
@@ -209,6 +211,18 @@ export const getSpecialStat = (
 		}
 	});
 
+	// Apply bonuses from priest
+	if (stat === SpecialStat.HP_REGEN && PRIEST) {
+		value++;
+		details.push({
+			type: 'skill',
+			name: skillList[Skill.PRETRE].name,
+			percent: false,
+			elements: [],
+			value: 1
+		});
+	}
+
 	// Order details by by value type (multiplier last) (base first)
 	details = details.sort((a, b) => {
 		if (a.type === b.type) {
@@ -217,10 +231,6 @@ export const getSpecialStat = (
 
 		return a.type === 'base' ? -1 : 1;
 	});
-
-	if (stat === SpecialStat.HP_REGEN && PRIEST) {
-		value++;
-	}
 
 	return {
 		name: stat,

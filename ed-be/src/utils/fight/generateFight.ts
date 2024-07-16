@@ -37,6 +37,20 @@ export type DetailedFight = {
 		caster: DetailedFighter;
 		turnsLeft: number;
 	};
+	attackerData: {
+		hasCook: boolean,
+	};
+	defenderData: {
+		hasCook: boolean,
+	};
+	rules: {
+		canUseEquipment: boolean,
+		canUsePermanentEquipmentOnly: boolean,
+		canUseCapture: boolean,
+		canDeleteObjects: boolean,
+		enableBalance: boolean,
+		enableStats: boolean,
+	};
 	timeManipulatorUsed?: boolean;
 	temporalStabilityUsed?: boolean;
 	stats: {
@@ -66,6 +80,20 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		steps: [] as FightStep[],
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
+		attackerData: {
+			hasCook: config.attacker_has_cook,
+		},
+		defenderData: {
+			hasCook: config.defender_has_cook,
+		},
+		rules: {
+			canUseEquipment: config.canUseCapture,
+			canUsePermanentEquipmentOnly: config.canUsePermanentEquipmentOnly,
+			canDeleteObjects: config.canDeleteObjects,
+			canUseCapture: config.canUseCapture,
+			enableBalance: config.enableBalance,
+			enableStats: config.enableStats,
+		},
 		protectedFighters: [],
 		time: 0,
 		lastFighterId: undefined,

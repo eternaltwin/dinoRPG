@@ -279,6 +279,7 @@
 		"armor": "Armure",
 		"multihit": "Multi-coup",
 		"evasion": "Esquive",
+		"superEvasion": "Super Esquive",
 		"counter": "Contre",
 		"bubbleRate": "Taux de bulle",
 		"torchDamage": "Dégâts du briquet",

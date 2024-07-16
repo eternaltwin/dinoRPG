@@ -18,6 +18,7 @@ export type SkillEffects = {
 	[Stat.INITIATIVE]?: number;
 	[Stat.ARMOR]?: number;
 	[Stat.EVASION]?: ['x', number];
+	[Stat.SUPER_EVASION]?: ['x', number];
 	[Stat.MULTIHIT]?: ['x', number];
 	[Stat.MAX_FOLLOWERS]?: number;
 	[Stat.ENERGY]?: ['x', number];

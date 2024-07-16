@@ -114,7 +114,7 @@ export async function processFight(req: Request) {
 export async function moveFight(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
-	player: Pick<Player, 'teacher' | 'id'>
+	player: Pick<Player, 'id' | 'teacher' | 'cooker'>
 ) {
 	const dayOfWeek = dayjs().day();
 	let monsters = generateMonsterList(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
@@ -122,7 +122,7 @@ export async function moveFight(
 	if ((dayOfWeek === 0 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
 		monsters = [];
 	}
-	const fightResult = calculateFight(team, placeId, monsters);
+	const fightResult = calculateFight(team, player, placeId, monsters);
 	// console.log(fightResult.steps[0])
 	const result = await rewardFight(team, monsters, fightResult, placeId, player);
 
@@ -140,6 +140,7 @@ export async function moveFight(
 
 export function calculateFight(
 	team: DinozToGetFighter[],
+	player: Pick<Player, 'cooker'>,
 	place: PlaceEnum,
 	monsters?: MonsterFiche[]
 ): FightProcessResult {
@@ -157,12 +158,16 @@ export function calculateFight(
 
 	const fightConfiguration: FightConfiguration = {
 		// Flags
-		is_energy_enabled: true,
-		can_use_equipment: true,
-		can_use_permanent_equipment_only: false,
-		can_use_capture: true,
-		can_delete_objects: true,
-		is_balance_enabled: true,
+		canUseEquipment: true,
+		canUsePermanentEquipmentOnly: false,
+		canUseCapture: true,
+		canDeleteObjects: true,
+		enableBalance: true,
+		enableStats: false,
+
+		// Teams
+		attacker_has_cook: player.cooker,
+		defender_has_cook: false,
 
 		// Fighters
 		initialDinozList: team,

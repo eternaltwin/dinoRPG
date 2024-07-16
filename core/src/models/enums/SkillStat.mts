@@ -5,6 +5,7 @@ export enum Stat {
 	INITIATIVE = 'initiative',
 	ARMOR = 'armor',
 	EVASION = 'evasion',
+	SUPER_EVASION = 'superEvasion',
 	MULTIHIT = 'multihit',
 	MAX_FOLLOWERS = 'maxFollowers',
 	ENERGY = 'energy',

@@ -134,7 +134,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			if (!isAlive(dinozData)) {
 				throw new ErrorFormator(400, 'dead');
 			}
-			const fightResult = calculateFight(team, dinozData.placeId, nextStepWantedData.fight);
+			const fightResult = calculateFight(team, playerData, dinozData.placeId, nextStepWantedData.fight);
 
 			const result = await rewardFight(team, nextStepWantedData.fight, fightResult, dinozData.placeId, playerData);
 			// Reward statement

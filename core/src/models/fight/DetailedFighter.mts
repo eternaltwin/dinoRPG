@@ -150,6 +150,8 @@ export interface DetailedFighter {
 	canHitFlying: boolean;
 	// Intangible
 	canHitIntangible: boolean;
+	// Rock
+	hasRock: boolean;
 	// Skill bonuses
 	skillElementalBonus: Record<ElementType, number>;
 	nextSkill?: SkillDetails;

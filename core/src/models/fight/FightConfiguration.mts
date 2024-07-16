@@ -27,12 +27,16 @@ export interface FightConfiguration {
 	seed?: number;
 
 	// Flags
-	is_energy_enabled: boolean;
-	can_use_equipment: boolean;
-	can_use_permanent_equipment_only: boolean;
-	can_use_capture: boolean;
-	can_delete_objects: boolean;
-	is_balance_enabled: boolean;
+	canUseEquipment: boolean;
+	canUsePermanentEquipmentOnly: boolean;
+	canUseCapture: boolean;
+	canDeleteObjects: boolean;
+	enableBalance: boolean;
+	enableStats: boolean;
+
+	// Teams
+	attacker_has_cook: boolean;
+	defender_has_cook: boolean;
 
 	// Fighters
 	initialDinozList: DinozToGetFighter[];

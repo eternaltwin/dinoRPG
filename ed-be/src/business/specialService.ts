@@ -102,7 +102,7 @@ async function goDarkWorld(playerId: number, dinozList: Pick<Dinoz, 'id'>[]) {
 }
 
 export async function mouvementListener(
-	player: Pick<Player, 'id' | 'teacher'> & PlayerForConditionCheck,
+	player: Pick<Player, 'id' | 'teacher' | 'cooker'> & PlayerForConditionCheck,
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToGetActualStep)[],
 	finalPlace: PlaceEnum,
 	activeDinoz: number
@@ -112,7 +112,7 @@ export async function mouvementListener(
 
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, player, player.dinoz[0].id)) {
 		if (potentialSpecialActions.opponents) {
-			const fightResult = calculateFight(team, finalPlace, potentialSpecialActions.opponents);
+			const fightResult = calculateFight(team, player, finalPlace, potentialSpecialActions.opponents);
 
 			const partyLeader = team.find(d => d.id === activeDinoz);
 			if (!partyLeader) {
@@ -154,7 +154,7 @@ export async function mouvementListener(
 
 		if (actualStep && team.every(dinoz => getActualStep(dinoz)?.stepId === actualStep.stepId)) {
 			if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
-				const fightResult = calculateFight(team, finalPlace, actualStep.requirement.target);
+				const fightResult = calculateFight(team, player, finalPlace, actualStep.requirement.target);
 				const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace, player);
 				if (fightResult.winner) {
 					const teamIds = team.map(dinoz => dinoz.id);

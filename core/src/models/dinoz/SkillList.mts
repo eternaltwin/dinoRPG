@@ -4354,7 +4354,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		raceId: [raceList.TOUFUFU.raceId],
 		isBaseSkill: true,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.SUPER_EVASION]: ['x', 1.15]
+		}
 	},
 	[Skill.NAPOMAGICIEN]: {
 		id: Skill.NAPOMAGICIEN,

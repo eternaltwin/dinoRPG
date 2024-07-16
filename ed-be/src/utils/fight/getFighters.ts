@@ -137,6 +137,7 @@ export const initializeDinoz = (
 				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
 				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
 				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
+				[SpecialStat.SUPER_EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
 				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? 0,
 				[SpecialStat.BUBBLE_RATE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
@@ -182,7 +183,8 @@ export const initializeDinoz = (
 		permanentStatusGained: [],
 		perception: false,
 		canHitFlying: false,
-		canHitIntangible: false
+		canHitIntangible: false,
+		hasRock: false,
 	};
 
 	handleSkills(team, fighter, place);
@@ -276,6 +278,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.ARMOR]: dinoz.stats.special[SpecialStat.ARMOR],
 				[SpecialStat.MULTIHIT]: dinoz.stats.special[SpecialStat.MULTIHIT],
 				[SpecialStat.EVASION]: dinoz.stats.special[SpecialStat.EVASION],
+				[SpecialStat.SUPER_EVASION]: dinoz.stats.special[SpecialStat.SUPER_EVASION],
 				[SpecialStat.COUNTER]: dinoz.stats.special[SpecialStat.COUNTER],
 				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
@@ -305,7 +308,8 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		perception: dinoz.perception,
 		canHitFlying: dinoz.canHitFlying,
 		canHitIntangible: dinoz.canHitIntangible,
-		cancelArmor: dinoz.cancelArmor
+		cancelArmor: dinoz.cancelArmor,
+		hasRock: dinoz.hasRock
 	};
 
 	// Redo the element ordering because the original dinoz may have altered elements
@@ -445,6 +449,7 @@ export const initializeMonster = (
 				[SpecialStat.ARMOR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? 0,
 				[SpecialStat.MULTIHIT]: getSpecialStat(similiDinoz, [], skills, SpecialStat.MULTIHIT)?.value ?? 0,
 				[SpecialStat.EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? 0,
+				[SpecialStat.SUPER_EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
 				[SpecialStat.COUNTER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? 0,
 				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
 				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
@@ -495,7 +500,8 @@ export const initializeMonster = (
 		permanentStatusGained: [],
 		perception: false,
 		canHitFlying: false,
-		canHitIntangible: false
+		canHitIntangible: false,
+		hasRock: false
 	};
 
 	// Handle elements (from highest to lowest)
@@ -651,6 +657,11 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 	if (fighterHas[Skill.SOUFFLE_DE_VIE]) {
 		fighter.status.push(createStatus(Status.NO_POISON));
 		fighter.status.push(createStatus(Status.NO_CURSE));
+	}
+
+	// Race
+	if (fighterHas[Skill.ROCK]) {
+		fighter.hasRock = true;
 	}
 
 	// 50% chance to get positive / negative time
@@ -878,7 +889,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 2;
 			fighter.stats.assaultBonus[ElementType.VOID] += 2;
 		}
-		// WOOD: global defense bonus of wood to the team
+		// WOOD: global wood defense bonus to the team
 		if (team[Skill.GARDE_FORESTIER]) {
 			applyGlobalDefenseBonus(fighter, ElementType.WOOD, 3);
 		}
