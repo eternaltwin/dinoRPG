@@ -118,7 +118,10 @@ export default defineComponent({
 
 				// Update store
 				if (!this.dinozStore.getDinozList) {
-					EventBus.emit('toast', { type: 'error', message: 'noDinozList' });
+					this.$toast.open({
+						message: this.$t(`toast.noDinozList`),
+						type: 'error'
+					});
 					return;
 				}
 				this.dinozStore.setDinozList(
@@ -139,7 +142,7 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		// Redirect to last page if no PDA
 		if (!this.playerStore.playerOptions.hasPDA) {
-			EventBus.emit('toast', { type: 'error', message: 'noPDA' });
+			this.$toast.open({ message: this.$t(`toast.noPDA`), type: 'error' });
 			this.$router.back();
 			EventBus.emit('isLoading', false);
 			return;

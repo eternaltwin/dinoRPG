@@ -89,7 +89,7 @@ export default defineComponent({
 			const userId = this.playerStore.playerId;
 
 			if (!userId) {
-				EventBus.emit('toast', { type: 'error', message: 'missingUser' });
+				this.$toast.open({ message: this.$t(`toast.missingUser`), type: 'error' });
 				goTo(this.$router, 'MainPage');
 				return;
 			}
@@ -111,7 +111,10 @@ export default defineComponent({
 			try {
 				OfferService.cancelOffer(this.ownOffer.id);
 				this.ownOffer = null;
-				EventBus.emit('toast', { type: 'success', message: 'market.offerCancelled' });
+				this.$toast.open({
+					message: this.$t(`toast.market.offerCancelled`),
+					type: 'success'
+				});
 			} catch (error) {
 				errorHandler.handle(error);
 				return;

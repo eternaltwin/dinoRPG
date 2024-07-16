@@ -7,6 +7,8 @@ import { mixin } from './mixin/mixin.js';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { initI18n } from './i18n/index.js';
+import ToastPlugin from 'vue-toast-notification';
+// import 'vue-toast-notification/dist/theme-bootstrap.css';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -22,10 +24,18 @@ const vueTippyProps = {
 	}
 };
 
-createApp(App)
-	.use(createPinia().use(piniaPluginPersistedstate))
-	.use(await initI18n())
-	.use(router)
-	.mixin(mixin)
-	.use(VueTippy, vueTippyProps)
-	.mount('#app');
+const vueToastProps = {
+	position: 'bottom',
+	duration: 10000
+};
+
+const app = createApp(App);
+const pnia = createPinia().use(piniaPluginPersistedstate);
+app.use(pnia);
+app.use(await initI18n());
+app.use(router);
+app.mixin(mixin);
+app.use(VueTippy, vueTippyProps);
+app.use(ToastPlugin, vueToastProps);
+
+app.mount('#app');

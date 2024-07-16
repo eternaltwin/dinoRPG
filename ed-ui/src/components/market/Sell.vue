@@ -180,9 +180,9 @@ export default defineComponent({
 
 			// Prevent too many items
 			if (item.quantity && newCount > item.quantity) {
-				EventBus.emit('toast', {
-					type: 'error',
-					message: 'market.notEnoughItems'
+				this.$toast.open({
+					message: this.$t(`toast.market.notEnoughItems`),
+					type: 'error'
 				});
 				return;
 			}
@@ -191,10 +191,9 @@ export default defineComponent({
 			const positiveItems = Object.entries(this.selectedItems).filter(([, count]) => count.count > 0);
 			if (positiveItems.length >= 5) {
 				if (value === 1 && positiveItems.every(([n]) => n !== name)) {
-					EventBus.emit('toast', {
-						type: 'error',
-						message: 'market.tooManyItems',
-						params: { items: MARKET_MAX_ITEMS }
+					this.$toast.open({
+						message: this.$t(`toast.market.tooManyItems`, { items: MARKET_MAX_ITEMS }),
+						type: 'error'
 					});
 					return;
 				}
@@ -236,12 +235,18 @@ export default defineComponent({
 			const manualValue = this.totalValue;
 
 			if (manualValue < calculatedValue) {
-				EventBus.emit('toast', { type: 'error', message: 'market.minimalValueError' });
+				this.$toast.open({
+					message: this.$t(`toast.market.minimalValueError`),
+					type: 'error'
+				});
 				return;
 			}
 
 			if (calculatedValue < MARKET_MIN_VALUE) {
-				EventBus.emit('toast', { type: 'error', message: 'market.minimalValueError' });
+				this.$toast.open({
+					message: this.$t(`toast.market.minimalValueError`),
+					type: 'error'
+				});
 				return;
 			}
 
@@ -255,7 +260,14 @@ export default defineComponent({
 
 			try {
 				await OfferService.createOffer(manualValue, ingredients, items, this.sellDinoz ? this.dinoz?.id : undefined);
-				EventBus.emit('toast', { type: 'success', message: 'market.offerCreated' });
+				this.$toast.open({
+					message: this.$t(`toast.market.offerCreated`),
+					type: 'success'
+				});
+				this.$toast.open({
+					message: this.$t(`toast.market.offerCancelled`),
+					type: 'success'
+				});
 				this.changeTab(0);
 			} catch (error) {
 				errorHandler.handle(error);
@@ -269,7 +281,7 @@ export default defineComponent({
 
 			// Check if we have a dinoz selected
 			if (!currentDinozId) {
-				EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
+				this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
 				goTo(this.$router, 'MainPage');
 				return;
 			}
@@ -277,7 +289,7 @@ export default defineComponent({
 			// Check if the dinoz exists
 			const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
 			if (!currentDinoz) {
-				EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+				this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 				goTo(this.$router, 'MainPage');
 				return;
 			}

@@ -218,9 +218,9 @@ export default defineComponent({
 					itemName: this.$t(`item.name.${itemNameList[bought.itemId]}`)
 				});
 				EventBus.emit('isLoading', false);
-				EventBus.emit('toast', {
-					type: 'notif',
-					message: message
+				this.$toast.open({
+					message: message,
+					type: 'info'
 				});
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string

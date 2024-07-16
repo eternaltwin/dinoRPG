@@ -134,9 +134,9 @@ export default defineComponent({
 					});
 					this.totalSell = 0;
 					const message = this.$t(`toast.ingredientSold`, { value: gold.gold });
-					EventBus.emit('toast', {
-						type: 'notif',
-						message: message
+					this.$toast.open({
+						message: message,
+						type: 'info'
 					});
 					this.playerStore.addMoney(gold.gold);
 					EventBus.emit('isLoading', false);

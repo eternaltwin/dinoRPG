@@ -46,7 +46,7 @@ export default defineComponent({
 	methods: {
 		displayFollow(): void {
 			if (!this.dinozStore.getDinozList) {
-				EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+				this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 				return;
 			}
 
@@ -58,7 +58,7 @@ export default defineComponent({
 			const currentDinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 
 			if (!currentDinoz) {
-				EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+				this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 				return;
 			}
 
@@ -75,7 +75,7 @@ export default defineComponent({
 				// Refresh followed and following status
 				const currentDinozList = this.dinozStore.getDinozList;
 				if (!currentDinozList) {
-					EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+					this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 					return;
 				}
 

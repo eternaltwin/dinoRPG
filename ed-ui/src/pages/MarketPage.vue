@@ -66,7 +66,7 @@ export default defineComponent({
 
 		// Check if we have a dinoz selected
 		if (!currentDinozId) {
-			EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
+			this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
 			goTo(this.$router, 'MainPage');
 			return;
 		}
@@ -74,7 +74,7 @@ export default defineComponent({
 		// Check if the dinoz exists
 		const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
 		if (!currentDinoz) {
-			EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+			this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 			goTo(this.$router, 'MainPage');
 			return;
 		}
@@ -84,7 +84,7 @@ export default defineComponent({
 			Object.values(placeList).find(place => place.placeId === currentDinoz.placeId)?.placeId ===
 			PlaceEnum.PLACE_DU_MARCHE;
 		if (!atMarket) {
-			EventBus.emit('toast', { type: 'error', message: 'selectADinozAtMarketFirst' });
+			this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
 			goTo(this.$router, 'MainPage');
 			return;
 		}

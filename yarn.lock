@@ -6497,6 +6497,7 @@ __metadata:
     vue-i18n: "npm:^9.6.5"
     vue-router: "npm:^4.2.5"
     vue-tippy: "npm:^6.3.1"
+    vue-toast-notification: "npm:^3"
   languageName: unknown
   linkType: soft
 
@@ -13525,6 +13526,15 @@ __metadata:
   peerDependencies:
     vue: ^3.2.0
   checksum: 10/730aff1ec85d9ab740100f10b20b305d5a2e971740e0c69207673a8281615c30154f7c42f35443dd666be5444fa3d4932f02636378469cac1746e8d31b0c65b1
+  languageName: node
+  linkType: hard
+
+"vue-toast-notification@npm:^3":
+  version: 3.1.2
+  resolution: "vue-toast-notification@npm:3.1.2"
+  peerDependencies:
+    vue: ^3.0
+  checksum: 10/34f0cf73b5933f95061ffdfbb5476dc760bcdbdeed905fba013aad703bf44212a8bb8aeada6219756515371582864bfa11ffd636f47e9e9509a47c8be98cca3a
   languageName: node
   linkType: hard
 

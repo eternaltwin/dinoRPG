@@ -62,9 +62,9 @@ export default defineComponent({
 			try {
 				const rez = await DinozService.resurrectDinoz(dinozId);
 				if (rez && rez.category === ItemEffect.QUEST) {
-					EventBus.emit('toast', {
-						type: 'reward',
-						message: this.$t(`quest.${rez.value}`)
+					this.$toast.open({
+						message: this.$t(`quest.${rez.value}`),
+						type: 'info'
 					});
 				}
 			} catch (e) {

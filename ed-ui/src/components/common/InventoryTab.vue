@@ -157,9 +157,9 @@ export default defineComponent({
 							break;
 					}
 
-					EventBus.emit('toast', {
-						type: 'notif',
-						message: message
+					this.$toast.open({
+						message: message,
+						type: 'info'
 					});
 				} catch (error) {
 					errorHandler.handle(error);

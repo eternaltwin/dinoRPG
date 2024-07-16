@@ -140,7 +140,7 @@ export default defineComponent({
 
 			// Check if dinoz is being sold
 			if (this.dinozData?.unavailableReason === UnavailableReasonFront.selling) {
-				EventBus.emit('toast', { type: 'error', message: 'isSelling' });
+				this.$toast.open({ message: this.$t(`toast.isSelling`), type: 'error' });
 				return;
 			}
 
@@ -154,7 +154,10 @@ export default defineComponent({
 				const place = placeList.find(place => place.placeId === placeId);
 
 				if (!dinozList || !dinozId || !place) {
-					EventBus.emit('toast', { type: 'error', message: 'missingData' });
+					this.$toast.open({
+						message: this.$t(`toast.missingData`),
+						type: 'error'
+					});
 					EventBus.emit('isLoading', false);
 					return;
 				}

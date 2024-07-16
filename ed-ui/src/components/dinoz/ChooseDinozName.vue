@@ -73,7 +73,10 @@ export default defineComponent({
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);
 			} else {
-				EventBus.emit('toast', { message: 'OnlyLettersAndNumbers', type: 'error' });
+				this.$toast.open({
+					message: this.$t(`toast.OnlyLettersAndNumbers`),
+					type: 'error'
+				});
 			}
 		}
 	},

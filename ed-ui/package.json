@@ -24,7 +24,8 @@
     "vue-chartjs": "^5.3.1",
     "vue-i18n": "^9.6.5",
     "vue-router": "^4.2.5",
-    "vue-tippy": "^6.3.1"
+    "vue-tippy": "^6.3.1",
+    "vue-toast-notification": "^3"
   },
   "devDependencies": {
     "@drpg/core": "workspace:^",

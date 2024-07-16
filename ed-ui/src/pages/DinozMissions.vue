@@ -126,7 +126,10 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		// Redirect to last page if no PDA
 		if (!this.playerStore.playerOptions.hasPMI) {
-			EventBus.emit('toast', { type: 'error', message: 'noPMI' });
+			this.$toast.open({
+				message: this.$t(`toast.noPMI`),
+				type: 'error'
+			});
 			this.$router.back();
 			return;
 		}

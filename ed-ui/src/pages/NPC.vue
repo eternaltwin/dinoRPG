@@ -93,7 +93,10 @@ export default defineComponent({
 								const dinozList = this.dinozStore.getDinozList;
 
 								if (!dinozList) {
-									EventBus.emit('toast', { type: 'error', message: 'missingData' });
+									this.$toast.open({
+										message: this.$t(`toast.missingData`),
+										type: 'error'
+									});
 									EventBus.emit('isLoading', false);
 									return;
 								}

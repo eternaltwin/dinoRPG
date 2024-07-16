@@ -2,6 +2,33 @@
 @import './_general.scss';
 @import './tooltip';
 @import './emmet';
+@import "vue-toast-notification/dist/theme-bootstrap.css";
+
+/*.v-toast__item--success{background-color:#181a6c}
+.v-toast__item--info{background-color:#181a6c}
+.v-toast__item--warning{background-color:#181a6c}
+.v-toast__item--error{background-color:#181a6c}
+.v-toast__item--default{background-color:#181a6c}*/
+
+/*.v-toast__text {
+	margin: 1em;
+}*/
+.v-toast__item .v-toast__text {
+	padding: 0; //1.5em 1em;
+}
+.v-toast__item {
+	background: rgb(201, 124, 72);
+	background: linear-gradient(0deg, rgba(201, 124, 72, 1) 15%, rgba(178, 96, 58, 1) 100%);
+	border: 1px solid #8d3e17;
+	box-shadow:
+		2px 4px 9px 0 rgba(125, 86, 36, 0.5),
+		inset 0 0 0 1px #f9c825,
+		inset 0 0 4px 1px #8d3e17;
+	cursor: pointer;
+	padding-left: 1em;
+	padding-right: 1em;
+	gap: 1em;
+}
 
 @font-face {
 	font-family: 'Berlin Sans FB Demi';
@@ -146,3 +173,4 @@ p:first-letter {
     font-size: 0pt;
     line-height: 0pt;
 }
+

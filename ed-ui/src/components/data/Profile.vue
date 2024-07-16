@@ -101,7 +101,10 @@ export default defineComponent({
 			try {
 				const irma = await PlayerService.getLBRewards(parseInt(this.$route.params.id as string));
 				EventBus.emit('isLoading', false);
-				EventBus.emit('toast', { type: 'notif', message: this.$t(`toast.labrute`, { quantity: irma.quantity }) });
+				this.$toast.open({
+					message: this.$t(`toast.labrute`, { quantity: irma.quantity }),
+					type: 'info'
+				});
 			} catch (err) {
 				errorHandler.handle(err);
 				return;

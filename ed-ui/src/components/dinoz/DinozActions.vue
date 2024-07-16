@@ -176,9 +176,9 @@ export default defineComponent({
 						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
 						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
 							const message = this.$t(`toast.${toast.category}`, { value: toast.value });
-							EventBus.emit('toast', {
-								type: 'notif',
-								message: message
+							this.$toast.open({
+								message: message,
+								type: 'info'
 							});
 						}
 					} catch (e) {
@@ -221,7 +221,10 @@ export default defineComponent({
 						const dinozList = this.dinozStore.getDinozList;
 
 						if (!dinozList) {
-							EventBus.emit('toast', { type: 'error', message: 'missingData' });
+							this.$toast.open({
+								message: this.$t(`toast.missingData`),
+								type: 'error'
+							});
 							return;
 						}
 
@@ -270,24 +273,24 @@ export default defineComponent({
 					try {
 						this.digReward = await DinozService.dig(parseInt(this.$route.params.id.toString()));
 						if (this.digReward.rewardType === RewardEnum.GOLD) {
-							EventBus.emit('toast', {
-								type: 'reward',
-								message: formatText(this.$t(`dig.gold`, { gold: this.digReward.value }))
+							this.$toast.open({
+								message: formatText(this.$t(`dig.gold`, { gold: this.digReward.value })),
+								type: 'reward'
 							});
 						} else if (this.digReward.rewardType === RewardEnum.STATUS) {
-							EventBus.emit('toast', {
-								type: 'reward',
+							this.$toast.open({
 								message: formatText(
 									this.$t(`dig.status`, {
 										item: mixin.methods.formatContent(this.$t(`status.name.${this.digReward.value}`))
 									})
-								)
+								),
+								type: 'success'
 							});
 						} else if (this.digReward.rewardType === RewardEnum.SCENARIO) {
 							if (this.digReward.value === 1 && this.digReward.step === 5) {
-								EventBus.emit('toast', {
-									type: 'reward',
-									message: this.$t(`quest.dig_star_found`)
+								this.$toast.open({
+									message: this.$t(`quest.dig_star_found`),
+									type: 'info'
 								});
 							}
 						}
@@ -325,7 +328,7 @@ export default defineComponent({
 					break;
 				case Action.FOLLOW: {
 					if (!this.dinozStore.getDinozList) {
-						EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+						this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 						return;
 					}
 					break;
@@ -337,13 +340,13 @@ export default defineComponent({
 						// Refresh followed and following status
 						let currentDinozList = this.dinozStore.getDinozList;
 						if (!currentDinozList) {
-							EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+							this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 							return;
 						}
 
 						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
 						if (!currentDinoz) {
-							EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+							this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 							return;
 						}
 
@@ -372,13 +375,13 @@ export default defineComponent({
 
 						let currentDinozList = this.dinozStore.getDinozList;
 						if (!currentDinozList) {
-							EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+							this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 							return;
 						}
 
 						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
 						if (!currentDinoz) {
-							EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+							this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 							return;
 						}
 
@@ -408,13 +411,13 @@ export default defineComponent({
 
 						const currentDinozList = this.dinozStore.getDinozList;
 						if (!currentDinozList) {
-							EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+							this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 							return;
 						}
 
 						const currentDinoz = currentDinozList.findIndex(dinoz => dinoz.id === +this.$route.params.id);
 						if (currentDinoz < 0) {
-							EventBus.emit('toast', { type: 'error', message: 'unknownDinoz' });
+							this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
 							return;
 						}
 						currentDinozList[currentDinoz].unavailableReason = UnavailableReasonFront.frozen;

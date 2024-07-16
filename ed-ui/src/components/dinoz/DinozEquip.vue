@@ -53,7 +53,10 @@ export default defineComponent({
 	methods: {
 		async unequip(item: number) {
 			if (!this.dinozData) {
-				EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+				this.$toast.open({
+					message: this.$t(`toast.dinozDataMissing`),
+					type: 'error'
+				});
 				return;
 			}
 
@@ -77,7 +80,10 @@ export default defineComponent({
 	},
 	mounted() {
 		if (!this.dinozData) {
-			EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+			this.$toast.open({
+				message: this.$t(`toast.dinozDataMissing`),
+				type: 'error'
+			});
 			return;
 		}
 		this.items = new Array(this.dinozData.maxItems);
@@ -85,7 +91,7 @@ export default defineComponent({
 
 		EventBus.on('equipItem', e => {
 			if (!this.dinozData) {
-				EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+				this.$toast.open({ message: this.$t(`toast.dinozDataMissing`), type: 'error' });
 				return;
 			}
 

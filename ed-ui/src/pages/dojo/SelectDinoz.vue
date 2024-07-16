@@ -58,7 +58,7 @@ export default defineComponent({
 			} else {
 				// Max 10
 				if (this.selectedDinoz.length >= 10) {
-					EventBus.emit('toast', { type: 'error', message: 'maxDinozSelected' });
+					this.$toast.open({ message: this.$t(`toast.maxDinozSelected`), type: 'error' });
 					return;
 				}
 
@@ -68,7 +68,7 @@ export default defineComponent({
 		async validate() {
 			// Do nothing if no dinoz selected
 			if (this.selectedDinoz.length === 0) {
-				EventBus.emit('toast', { type: 'error', message: 'noDinozSelected' });
+				this.$toast.open({ message: this.$t(`toast.noDinozSelected`), type: 'error' });
 				return;
 			}
 
@@ -83,7 +83,7 @@ export default defineComponent({
 	},
 	async mounted() {
 		if (!this.dinozStore.dinozList) {
-			EventBus.emit('toast', { type: 'error', message: 'dinozListMissing' });
+			this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
 			return;
 		}
 		this.dinozList = this.dinozStore.dinozList;

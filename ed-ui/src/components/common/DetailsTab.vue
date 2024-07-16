@@ -394,7 +394,10 @@ export default defineComponent({
 
 			const data = this.dinozData;
 			if (!data) {
-				EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+				this.$toast.open({
+					message: this.$t(`toast.dinozDataMissing`),
+					type: 'error'
+				});
 				return;
 			}
 
@@ -416,7 +419,10 @@ export default defineComponent({
 			// Refresh special stats on EventBus `refreshInventory`
 			EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
 				if (!this.dinozData) {
-					EventBus.emit('toast', { type: 'error', message: 'dinozDataMissing' });
+					this.$toast.open({
+						message: this.$t(`toast.dinozDataMissing`),
+						type: 'error'
+					});
 					return;
 				}
 
