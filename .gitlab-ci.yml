@@ -3,7 +3,6 @@ stages:
   - test
 
 before_script:
-  - cp ed-be/config_development.toml.example ed-be/config_development.toml
   - "node --version"
   - "yarn --version"
   - yarn install
