@@ -8,7 +8,6 @@
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
 			<template #fallback> <Loading /> </template>
 		</Suspense>
-		<p class="fight-history" v-html="fightHistory" />
 		<Transition name="bounce">
 			<div v-if="fightEnded" class="wrapper">
 				<div class="debrief" :class="lang">
@@ -50,6 +49,7 @@
 				<a class="button" @click="displayFight()">{{ $t(`fight.display`) }}</a>
 			</div>
 		</Transition>
+		<p v-if="fightHistory" class="fight-history" v-html="fightHistory" />
 	</div>
 </template>
 
@@ -172,6 +172,7 @@ export default defineComponent({
 		EventBus.emit('isLoading', false);
 	},
 	unmounted(): void {
+		// Comment this to replay fight with refresh
 		this.sessionStore.setFightResult(undefined);
 	}
 });
@@ -247,6 +248,12 @@ export default defineComponent({
 }
 
 .fight-history {
+	border: 1px solid black;
+	padding: 10px;
+	text-align: left;
+	overflow: auto;
+	height: 250px;
+	margin-top: 10px;
 	:deep(strong) {
 		color: inherit;
 	}
