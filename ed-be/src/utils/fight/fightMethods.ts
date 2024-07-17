@@ -3443,7 +3443,7 @@ const poison = (
 };
 
 // Helper method to heal a fighter
-export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: number) => {
+export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: number, isItem: boolean) => {
 	// No heal if fighter is dead
 	if (fighter.hp <= 0) return;
 
@@ -3454,11 +3454,14 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 
 	let healBonus = 1;
 
-	if (fighter.attacker && fightData.attackerData.hasCook) {
-		healBonus *= 1.1;
-	}
-	else if (!fighter.attacker && fightData.defenderData.hasCook) {
-		healBonus *= 1.1;
+	// Apply cook bonus only to item healing
+	if (isItem) { 
+		if (fighter.attacker && fightData.attackerData.hasCook) {
+			healBonus *= 1.1;
+		}
+		else if (!fighter.attacker && fightData.defenderData.hasCook) {
+			healBonus *= 1.1;
+		}
 	}
 
 
