@@ -1515,7 +1515,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 10 HP
-				heal(fightData, fighter, 10);
+				heal(fightData, fighter, 10, true);
 				break;
 			}
 			case Item.FIGHT_RATION: {
@@ -1529,7 +1529,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 20 HP
-				heal(fightData, fighter, 20);
+				heal(fightData, fighter, 20, true);
 				break;
 			}
 			case Item.SOS_HELMET: {
@@ -1758,7 +1758,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 40 HP
-				heal(fightData, fighter, 40);
+				heal(fightData, fighter, 40, true);
 				break;
 			}
 			default:
@@ -3443,7 +3443,7 @@ const poison = (
 };
 
 // Helper method to heal a fighter
-export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: number, isItem: boolean) => {
+export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: number, isItem?: boolean) => {
 	// No heal if fighter is dead
 	if (fighter.hp <= 0) return;
 
