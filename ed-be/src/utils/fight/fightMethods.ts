@@ -4033,8 +4033,8 @@ const checkAfterDefenseEffects = (
 		isCloseCombat &&
 		damage > 0 &&
 		target.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
-		// 1/3 chance
-		randomBetween(0, 2) === 0
+		// 1/2 chance
+		randomBetween(0, 1) === 0
 	) {
 		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
