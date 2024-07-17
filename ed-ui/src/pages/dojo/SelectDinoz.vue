@@ -27,7 +27,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-import EventBus from '../../events/index.js';
 import { dinozStore, playerStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZButton from '../../components/common/DZButton.vue';

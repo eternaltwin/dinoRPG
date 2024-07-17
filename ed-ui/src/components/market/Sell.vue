@@ -130,7 +130,6 @@ import { IngredientsService } from '../../services/IngredientsService.js';
 import { InventoryService } from '../../services/InventoryService.js';
 import { errorHandler } from '../../utils/index.js';
 import { dinozStore, playerStore } from '../../store/index.js';
-import EventBus from '../../events/index.js';
 import { goTo } from '../../utils/goTo.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Tippy } from 'vue-tippy';

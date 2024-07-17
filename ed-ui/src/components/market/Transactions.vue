@@ -52,7 +52,6 @@ import { EnhancedOffer, OfferFromGetOffers } from '@drpg/core/returnTypes/Offer'
 import { OfferService } from '../../services/OfferService.js';
 import { errorHandler, secondsToDhms } from '../../utils/index.js';
 import { playerStore } from '../../store/index.js';
-import EventBus from '../../events/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
