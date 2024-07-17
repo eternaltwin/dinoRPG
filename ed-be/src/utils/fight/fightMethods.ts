@@ -3455,7 +3455,7 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 	let healBonus = 1;
 
 	// Apply cook bonus only to item healing
-	if (isItem) { 
+	if (isItem) {
 		if (fighter.attacker && fightData.attackerData.hasCook) {
 			healBonus *= 1.1;
 		}

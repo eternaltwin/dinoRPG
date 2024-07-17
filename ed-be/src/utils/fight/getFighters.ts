@@ -641,7 +641,11 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 	if (fighterHas[Skill.SAPEUR]) {
 		// Increase item use probability by 50%
 		fighter.items.forEach(item => {
-			item.probability = (item.probability ?? 0) * 1.5;
+			let probability = (item.probability ?? 0) * 1.5;
+			if (probability > 100) {
+				probability = 100;
+			}
+			item.probability = probability;
 		});
 	}
 
