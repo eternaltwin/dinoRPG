@@ -114,9 +114,9 @@ export async function mouvementListener(
 		if (potentialSpecialActions.opponents) {
 			const fightResult = calculateFight(team, finalPlace, potentialSpecialActions.opponents);
 
-			const partyLeader = team.find(d => d.id === activeDinoz)
+			const partyLeader = team.find(d => d.id === activeDinoz);
 			if (!partyLeader) {
-				throw new ErrorFormator(500, `Cannot find dinoz ${activeDinoz} in the team`)
+				throw new ErrorFormator(500, `Cannot find dinoz ${activeDinoz} in the team`);
 			}
 			const result: FightResult = await rewardFight(
 				team,

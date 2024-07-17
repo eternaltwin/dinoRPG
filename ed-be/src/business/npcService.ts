@@ -23,7 +23,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 	const playerId = req.auth.playerId;
 
-	const player = await getDinozNPCRequest(dinozId, playerId);
+	let player = await getDinozNPCRequest(dinozId, playerId);
 
 	if (!player) {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
@@ -37,8 +37,6 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	if (dinozBase.canChangeName) {
 		throw new ErrorFormator(500, `Dinoz has to be named.`);
 	}
-
-	let dinoz = player.dinoz;
 
 	const actualPlace = Object.values(placeList).find(place => place.placeId === dinozBase.placeId);
 	const pnj = Object.values(npcList).find(pnj => pnj.name === npcName);
@@ -162,18 +160,10 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// Reward statement
 		if (nextStepWantedData.reward !== undefined) {
 			checkRedirect(nextStepWantedData.reward, npcName, nextStepWantedData.stepName);
-			await rewarder(nextStepWantedData.reward, dinoz, playerId);
+			await rewarder(nextStepWantedData.reward, player.dinoz, playerId);
 
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
-			const refreshedPlayer = await getDinozNPCRequest(dinozId, playerId);
-			if (!refreshedPlayer) {
-				throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
-			}
-			const refreshedDinoz = player.dinoz.find(d => d.id === dinozId);
-			if (!refreshedDinoz) {
-				throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
-			}
-			dinoz = player.dinoz;
+			player = await getDinozNPCRequest(dinozId, playerId);
 		}
 
 		await updateDinozStep(dinozId, pnj.id, nextStepWanted);
@@ -183,8 +173,8 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const playerChoices = nextStepWantedData.nextStep.filter(possibility => {
 		const condition = Object.values(pnj.data).find(data => data.stepName === possibility)?.condition;
 		// If there is a condition non-met, replace it with enmpty string
-		if (!dinoz) {
-			throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		if (!player) {
+			throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 		}
 		return condition === undefined || checkCondition(condition, player, dinozId);
 	});

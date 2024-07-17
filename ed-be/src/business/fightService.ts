@@ -671,6 +671,5 @@ export function generateMonsterList(
 		monsterLevel += mdelta;
 	}
 
-
 	return monsterArray;
 }
