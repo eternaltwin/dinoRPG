@@ -184,13 +184,13 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		id: Boss.ELEMENTAIRE_TERRE,
 		boss: true,
 		name: 'eearth',
-		hp: 150,
+		hp: 100,
 		elements: {
-			fire: 4,
-			wood: 14,
-			water: 4,
-			lightning: 4,
-			air: 4
+			fire: 3,
+			wood: 10,
+			water: 3,
+			lightning: 3,
+			air: 3
 		},
 		balanced: false,
 		gold: 0,
