@@ -5,7 +5,7 @@
 				<tr>
 					<td id="left"><div></div></td>
 					<td id="center">
-						<a href="/" class="linkHome"></a>
+						<a @click="goToNews()" class="linkHome"></a>
 						<div id="centerHeader" v-if="loaded">
 							<div id="menu"></div>
 							<LeftPanel />
@@ -75,16 +75,22 @@ export default defineComponent({
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
 			} catch (e) {
-				errorHandler.handle(e);
+				errorHandler.handle(e, this.$toast, this.$t);
 				return;
 			}
+		},
+		async goToNews() {
+			this.$router.push({
+				name: 'News'
+			});
+			await this.firstLoad();
 		}
 	},
 	async mounted() {
 		try {
 			await this.firstLoad();
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 		EventBus.on('refreshMoney', async e => {
@@ -105,5 +111,6 @@ a.linkHome {
 	margin-top: 25px;
 	margin-left: 240px;
 	background-color: transparent;
+	cursor: pointer;
 }
 </style>

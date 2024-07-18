@@ -83,7 +83,7 @@ export default defineComponent({
 				this.information = !this.information;
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		},
@@ -104,7 +104,7 @@ export default defineComponent({
 			this.missionList = await MissionService.getMissions(dinozId, npc);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 	}

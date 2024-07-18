@@ -32,7 +32,7 @@ export default defineComponent({
 				jwt = await OauthService.authenticateUser(this.$route.query.code as string);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 

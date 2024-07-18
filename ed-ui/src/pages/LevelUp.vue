@@ -18,16 +18,19 @@
 			@spinOver="spinOver"
 		/>
 		<div class="dinozWrapper">
-			<DinozWithoutFlash
-				:style="{
-					position: `relative`,
-					top: `45px`
-				}"
-				:display="dinozData.display"
-				:life="dinozData.life / dinozData.maxLife"
-				:flip="1"
-				:race="dinozData.race.raceId"
-			/>
+			<Suspense>
+				<DinozWithoutFlash
+					:style="{
+						position: `relative`,
+						top: `45px`
+					}"
+					:display="dinozData.display"
+					:life="dinozData.life / dinozData.maxLife"
+					:flip="1"
+					:race="dinozData.race.raceId"
+				/>
+				<template #fallback><Loading /></template>
+			</Suspense>
 		</div>
 	</div>
 	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
@@ -145,7 +148,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
@@ -157,7 +160,6 @@ import { dinozStore } from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
-import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 export default defineComponent({
@@ -166,7 +168,7 @@ export default defineComponent({
 		LevelUpGrid,
 		TitleHeader,
 		Elements,
-		DinozWithoutFlash
+		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
@@ -227,7 +229,7 @@ export default defineComponent({
 
 				this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		},
@@ -244,7 +246,7 @@ export default defineComponent({
 				this.availableSkills = await DinozService.levelUp(parseInt(dinozId), tryNumber.toString());
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		},

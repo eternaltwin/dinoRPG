@@ -273,7 +273,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				console.log(err);
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		}

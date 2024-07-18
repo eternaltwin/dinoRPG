@@ -162,7 +162,7 @@ export default defineComponent({
 						type: 'info'
 					});
 				} catch (error) {
-					errorHandler.handle(error);
+					errorHandler.handle(error, this.$toast, this.$t);
 					return;
 				}
 			}
@@ -178,7 +178,7 @@ export default defineComponent({
 					EventBus.emit('refreshDinoz', true);
 					EventBus.emit('isLoading', false);
 				} catch (error) {
-					errorHandler.handle(error);
+					errorHandler.handle(error, this.$toast, this.$t);
 					return;
 				}
 			}
@@ -194,7 +194,7 @@ export default defineComponent({
 			await this.resfreshInventory();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 		EventBus.on('refreshInventory', async () => {

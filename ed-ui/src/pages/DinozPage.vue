@@ -3,7 +3,9 @@
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</div>
 	<div class="dinoz" v-if="nameChoosen === true">
-		<DinozDisplay v-if="isReady" :dinozData="dinozData" />
+		<Suspense
+			><DinozDisplay v-if="isReady" :dinozData="dinozData" /><template #fallback> <Loading /> </template
+		></Suspense>
 	</div>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
@@ -20,14 +22,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { errorHandler } from '../utils/index.js';
 import { DinozService } from '../services/index.js';
 import EventBus from '../events/index.js';
 import { dinozStore, playerStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
-import DinozDisplay from '../components/dinoz/DinozDisplay.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanel from '../components/common/TabPanel.vue';
 import { ActionFiche } from '@drpg/core/models/dinoz/ActionList';
@@ -45,9 +46,9 @@ export default defineComponent({
 	},
 	components: {
 		ChooseDinozName,
-		DinozDisplay,
 		DinozActions,
-		TabPanel
+		TabPanel,
+		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/DinozDisplay.vue'))
 	},
 	methods: {
 		getBarSize(value: number, maxValue: number): string {
@@ -71,7 +72,7 @@ export default defineComponent({
 				this.dinozStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		},
@@ -128,7 +129,7 @@ export default defineComponent({
 			await this.getFiche();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 

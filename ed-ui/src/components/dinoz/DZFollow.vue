@@ -93,7 +93,7 @@ export default defineComponent({
 				);
 				EventBus.emit('refreshDinoz', true);
 			} catch (e) {
-				errorHandler.handle(e);
+				errorHandler.handle(e, this.$toast, this.$t);
 			}
 		}
 	}

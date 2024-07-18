@@ -151,7 +151,7 @@ export default defineComponent({
 			this.batchNews = await NewsService.getNewsFromPage(1);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 	}

@@ -226,7 +226,7 @@ export default defineComponent({
 				// Both values are forced to number to avoid them somehow being treated as a string
 				this.selectedItem.quantity = Number(this.selectedItem.quantity!) + Number(quantity);
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 
@@ -270,7 +270,7 @@ export default defineComponent({
 			this.selectedItem.itemId = 0;
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 	},
@@ -286,7 +286,7 @@ export default defineComponent({
 				this.selectedItem.itemId = 0;
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		}

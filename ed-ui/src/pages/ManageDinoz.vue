@@ -135,7 +135,7 @@ export default defineComponent({
 					})
 				);
 			} catch (error) {
-				errorHandler.handle(error);
+				errorHandler.handle(error, this.$toast, this.$t);
 			}
 		}
 	},
@@ -161,7 +161,7 @@ export default defineComponent({
 				return dinoz;
 			});
 		} catch (error) {
-			errorHandler.handle(error);
+			errorHandler.handle(error, this.$toast, this.$t);
 			return;
 		}
 	}

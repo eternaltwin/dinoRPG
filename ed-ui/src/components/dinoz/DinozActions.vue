@@ -182,7 +182,7 @@ export default defineComponent({
 							});
 						}
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					EventBus.emit('refreshDinoz', true);
 					break;
@@ -243,7 +243,7 @@ export default defineComponent({
 							params: { dinozId: this.$route.params.id.toString() }
 						});
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					break;
 				}
@@ -265,7 +265,7 @@ export default defineComponent({
 								action.prop as string
 							);
 						} catch (e) {
-							errorHandler.handle(e);
+							errorHandler.handle(e, this.$toast, this.$t);
 						}
 					}
 					break;
@@ -295,7 +295,7 @@ export default defineComponent({
 							}
 						}
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					EventBus.emit('refreshDinoz', true);
 					break;
@@ -364,7 +364,7 @@ export default defineComponent({
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					EventBus.emit('refreshDinoz', true);
 					break;
@@ -402,7 +402,7 @@ export default defineComponent({
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					break;
 				case Action.CONGEL:
@@ -424,7 +424,7 @@ export default defineComponent({
 						this.dinozStore.setDinozList(currentDinozList);
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					break;
 				case Action.STOP_CONGEL:
@@ -432,7 +432,7 @@ export default defineComponent({
 						await DinozService.unfrozeDinoz(+this.$route.params.id);
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					break;
 				case Action.REST:
@@ -440,7 +440,7 @@ export default defineComponent({
 						await DinozService.restDinoz(+this.$route.params.id, true);
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					break;
 				case Action.STOP_REST:
@@ -448,7 +448,7 @@ export default defineComponent({
 						await DinozService.restDinoz(+this.$route.params.id, false);
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
-						errorHandler.handle(e);
+						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					break;
 				default:

@@ -76,7 +76,7 @@ export default defineComponent({
 				// await DojoService.selectDinoz(this.selectedDinoz);
 				// this.$router.push({ name: 'DojoChallenge' });
 			} catch (error) {
-				errorHandler.handle(error);
+				errorHandler.handle(error, this.$toast, this.$t);
 			}
 		}
 	},

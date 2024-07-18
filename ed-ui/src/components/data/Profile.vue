@@ -106,7 +106,7 @@ export default defineComponent({
 					type: 'info'
 				});
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		},
@@ -117,7 +117,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				this.customText = message;
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 			this.isEditOn = false;
@@ -132,7 +132,7 @@ export default defineComponent({
 				const { position } = await PlayerService.getPosition(+this.$route.params.id);
 				this.playerPosition = position;
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 			}
 		}
 	},

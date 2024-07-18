@@ -2,7 +2,11 @@
 	<ul style="list-style: none">
 		<Tippy v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">
 			<li class="dinozList">
-				<DinozWithoutFlash class="dinoz" :display="dinoz.display" :life="1" :flip="1" :isFrozen="dinoz.isFrozen" />
+				<Suspense>
+					<DinozWithoutFlash class="dinoz" :display="dinoz.display" :life="1" :flip="1" :isFrozen="dinoz.isFrozen" />
+					<template #fallback><Loading /></template>
+				</Suspense>
+
 				<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
 					{{ dinoz.name }}
 				</div>
@@ -25,19 +29,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { raceList, statusList } from '../../constants/index.js';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { DinozPublicFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement } from '../../constants/index.js';
-import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
 import { playerStore } from '../../store/index.js';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'MyDinoz',
 	components: {
-		DinozWithoutFlash
+		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/DinozWithoutFlash.vue'))
 	},
 	props: {
 		accountData: {

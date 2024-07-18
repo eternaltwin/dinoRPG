@@ -7,7 +7,10 @@
 		<DZDisclaimer help :content="$t('shop.dinoz.help')" />
 		<div class="sheets">
 			<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
-				<DinozWithoutFlash class="dinoImg" :display="dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
+				<Suspense>
+					<DinozWithoutFlash class="dinoImg" :display="dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
+					<template #fallback><Loading /></template>
+				</Suspense>
 				<div class="infos">
 					<div class="row1">
 						<div class="race">
@@ -67,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { DinozShopService, DinozService } from '../services/index.js';
 import { DinozShopFicheLite } from '@drpg/core/models/shop/DinozShopFiche';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
@@ -77,9 +80,9 @@ import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import EventBus from '../events/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
-import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import Loading from 'src/components/utils/Loading.vue';
 
 export default defineComponent({
 	name: 'DinozShopPage',
@@ -94,9 +97,10 @@ export default defineComponent({
 		};
 	},
 	components: {
+		Loading,
 		TitleHeader,
 		Elements,
-		DinozWithoutFlash,
+		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue')),
 		DZDisclaimer
 	},
 	methods: {
@@ -109,7 +113,7 @@ export default defineComponent({
 					dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
 					EventBus.emit('isLoading', false);
 				} catch (err) {
-					errorHandler.handle(err);
+					errorHandler.handle(err, this.$toast, this.$t);
 					return;
 				}
 
@@ -144,7 +148,7 @@ export default defineComponent({
 			this.dinozList = await DinozShopService.getDinozFromDinozShop();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 	}

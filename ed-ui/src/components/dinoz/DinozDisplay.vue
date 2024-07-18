@@ -6,14 +6,17 @@
 	</div>
 	<a class="right" @click="goToDinozPage(1)" />
 	<Tippy theme="normal" tag="div" id="dinozVisual">
-		<DinozWithoutFlash
-			:display="dinozData.display"
-			:life="dinozData.life / dinozData.maxLife"
-			:flip="-1"
-			:race="dinozData.race.raceId"
-			:key="dinozData.display"
-			:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
-		/>
+		<Suspense>
+			<DinozWithoutFlash
+				:display="dinozData.display"
+				:life="dinozData.life / dinozData.maxLife"
+				:flip="-1"
+				:race="dinozData.race.raceId"
+				:key="dinozData.display"
+				:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
+			/>
+			<template #fallback> <Loading /> </template>
+		</Suspense>
 		<template #content>
 			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
 			<p>
@@ -28,11 +31,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement, raceList } from '../../constants/index.js';
 import { dinozStore } from '../../store/index.js';
-import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
 import DinozElements from '../../components/dinoz/DinozElements.vue';
 import DinozBars from '../../components/dinoz/DinozBars.vue';
 import DinozEquip from '../../components/dinoz/DinozEquip.vue';
@@ -43,12 +45,12 @@ import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReaso
 export default defineComponent({
 	name: 'DinozDisplay',
 	components: {
-		DinozWithoutFlash,
 		DinozElements,
 		DinozBars,
 		DinozEquip,
 		DinozStatus,
-		TitleHeader
+		TitleHeader,
+		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/DinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
@@ -99,6 +101,9 @@ export default defineComponent({
 	height: 165px;
 	position: absolute;
 	top: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .left {
 	position: absolute;

@@ -8,7 +8,7 @@ import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { initI18n } from './i18n/index.js';
 import ToastPlugin from 'vue-toast-notification';
-// import 'vue-toast-notification/dist/theme-bootstrap.css';
+import Loading from './components/utils/Loading.vue';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -37,5 +37,7 @@ app.use(router);
 app.mixin(mixin);
 app.use(VueTippy, vueTippyProps);
 app.use(ToastPlugin, vueToastProps);
+
+app.component('Loading', Loading);
 
 app.mount('#app');

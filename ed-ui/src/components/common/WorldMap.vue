@@ -187,7 +187,7 @@ export default defineComponent({
 					params: { dinozId: this.dinozData?.id?.toString() }
 				});
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		},

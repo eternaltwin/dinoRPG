@@ -231,7 +231,7 @@ export default defineComponent({
 				// Reset bid value
 				this.bidValue = 0;
 			} catch (error) {
-				errorHandler.handle(error);
+				errorHandler.handle(error, this.$toast, this.$t);
 				return;
 			}
 		}

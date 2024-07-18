@@ -8,12 +8,15 @@
 	<div id="chooseDinozName">
 		<div class="disclaimer">{{ $t('chooseDinoz.information') }}</div>
 		<div class="dinoz_display">
-			<DinozWithoutFlash
-				:display="dinozData.display"
-				:life="1"
-				:flip="-1"
-				:race="dinozData.race.raceId"
-			></DinozWithoutFlash>
+			<Suspense>
+				<DinozWithoutFlash
+					:display="dinozData.display"
+					:life="1"
+					:flip="-1"
+					:race="dinozData.race.raceId"
+				></DinozWithoutFlash>
+				<template #fallback> <Loading /> </template>
+			</Suspense>
 		</div>
 		<div class="naming">
 			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>
@@ -24,20 +27,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineAsyncComponent, defineComponent, PropType } from 'vue';
 import { errorHandler } from '../../utils/index.js';
 import { DinozService } from '../../services/index.js';
 import { dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-import DinozWithoutFlash from '../../components/dinoz/DinozWithoutFlash.vue';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
 		TitleHeader,
-		DinozWithoutFlash
+		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/DinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
@@ -59,7 +61,7 @@ export default defineComponent({
 					await DinozService.setDinozName(this.dinozData!.id!, this.name!);
 					EventBus.emit('isLoading', false);
 				} catch (err) {
-					errorHandler.handle(err);
+					errorHandler.handle(err, this.$toast, this.$t);
 					return;
 				}
 

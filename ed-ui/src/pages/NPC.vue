@@ -66,7 +66,7 @@ export default defineComponent({
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
 			} catch (e) {
-				errorHandler.handle(e);
+				errorHandler.handle(e, this.$toast, this.$t);
 			}
 			EventBus.emit('isLoading', false);
 			if (this.npcSpeech.service) {
@@ -116,7 +116,7 @@ export default defineComponent({
 									params: { dinozId: this.$route.params.id.toString() }
 								});
 							} catch (e) {
-								errorHandler.handle(e);
+								errorHandler.handle(e, this.$toast, this.$t);
 							}
 							break;
 						default:
@@ -146,7 +146,7 @@ export default defineComponent({
 			this.loaded = true;
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 		const npcCore = Object.values(npcList).find(npc => npc.name === this.npcName);

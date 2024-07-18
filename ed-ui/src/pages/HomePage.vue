@@ -43,14 +43,12 @@ import {
 	FinishState,
 	preFightLoader
 } from '@drpg/core/models/fight/transpiler';
-import Loading from '../components/utils/Loading.vue';
 
 export default defineComponent({
 	name: 'HomePage',
 	components: {
 		AuthenticationPage,
-		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue')),
-		Loading
+		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
 	data() {
 		return {

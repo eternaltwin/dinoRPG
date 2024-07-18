@@ -122,7 +122,7 @@ export default defineComponent({
 					AdminService.listAllDinozFromPlayer(playerId)
 				]);
 			} catch (err) {
-				errorHandler.handle(err);
+				errorHandler.handle(err, this.$toast, this.$t);
 			}
 
 			EventBus.emit('isLoading', false);
@@ -134,7 +134,7 @@ export default defineComponent({
 			await AdminService.getDashBoard();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err);
+			errorHandler.handle(err, this.$toast, this.$t);
 			return;
 		}
 	}
