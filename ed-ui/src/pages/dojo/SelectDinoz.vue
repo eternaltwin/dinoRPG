@@ -33,7 +33,7 @@ import DZButton from '../../components/common/DZButton.vue';
 import DinozMini from '../../components/dinoz/DinozMini.vue';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { formatText } from 'src/utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'SelectDinoz',

@@ -39,7 +39,7 @@ import { dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import { npcList } from '@drpg/core/models/npc/NpcList';
-import { formatText } from 'src/utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'NPC',

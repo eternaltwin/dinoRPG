@@ -70,7 +70,7 @@ import { getMaxXp } from '@drpg/core/utils/DinozUtils';
 import Elements from '../components/data/Elements.vue';
 import DinozMini from '../components/dinoz/DinozMini.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import { formatText } from 'src/utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'ManageDinoz',

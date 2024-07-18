@@ -99,7 +99,7 @@ import { errorHandler } from '../utils/index.js';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { IngredientsService } from '../services/IngredientsService';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
-import { formatText } from 'src/utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'ItinerantMerchantPage',

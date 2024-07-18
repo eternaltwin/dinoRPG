@@ -171,7 +171,7 @@ import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { formatText } from 'src/utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'ItemShopPage',

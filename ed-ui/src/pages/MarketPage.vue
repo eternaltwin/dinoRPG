@@ -35,7 +35,7 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import DZButton from '../components/common/DZButton.vue';
 import { goTo } from '../utils/goTo.js';
-import { formatText } from 'src/utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'MarketPage',

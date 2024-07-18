@@ -82,7 +82,6 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import Loading from 'src/components/utils/Loading.vue';
 
 export default defineComponent({
 	name: 'DinozShopPage',

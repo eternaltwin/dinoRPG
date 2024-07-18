@@ -107,7 +107,7 @@ import { npcMissions } from '@drpg/core/models/npc/NpcMissions';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../utils/errorHandler.js';
-import { formatText } from 'src/utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'DinozMissions',
