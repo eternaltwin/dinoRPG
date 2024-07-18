@@ -186,7 +186,12 @@ export const npcList: Record<string, Npc> = {
 		placeId: PlaceEnum.COLLINES_HANTEES,
 		data: FOU,
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.LANTERN }
+			[Operator.OR]: [
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.LANTERN } },
+				{
+					[ConditionEnum.STATUS]: DinozStatusId.FRETURN
+				}
+			]
 		},
 		missions: undefined,
 		flashvars: undefined
