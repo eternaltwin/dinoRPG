@@ -93,6 +93,7 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -158,7 +159,7 @@ export default defineComponent({
 					}
 
 					this.$toast.open({
-						message: message,
+						message: formatText(message),
 						type: 'info'
 					});
 				} catch (error) {

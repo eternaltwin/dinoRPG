@@ -34,6 +34,7 @@ import { dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
@@ -76,7 +77,7 @@ export default defineComponent({
 				this.$emit('setNameChoosen', this.name);
 			} else {
 				this.$toast.open({
-					message: this.$t(`toast.OnlyLettersAndNumbers`),
+					message: formatText(this.$t(`toast.OnlyLettersAndNumbers`)),
 					type: 'error'
 				});
 			}

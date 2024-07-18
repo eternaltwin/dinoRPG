@@ -58,6 +58,7 @@ import { DinozService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'WorldMap',
@@ -140,7 +141,7 @@ export default defineComponent({
 
 			// Check if dinoz is being sold
 			if (this.dinozData?.unavailableReason === UnavailableReasonFront.selling) {
-				this.$toast.open({ message: this.$t(`toast.isSelling`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.isSelling`)), type: 'error' });
 				return;
 			}
 
@@ -155,7 +156,7 @@ export default defineComponent({
 
 				if (!dinozList || !dinozId || !place) {
 					this.$toast.open({
-						message: this.$t(`toast.missingData`),
+						message: formatText(this.$t(`toast.missingData`)),
 						type: 'error'
 					});
 					EventBus.emit('isLoading', false);

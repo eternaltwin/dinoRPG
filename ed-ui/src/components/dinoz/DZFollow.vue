@@ -34,6 +34,7 @@ import { getFollowableDinoz, orderDinozList } from '@drpg/core/utils/DinozUtils'
 import { errorHandler } from '../../utils/index.js';
 import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'DZFollow',
@@ -46,7 +47,7 @@ export default defineComponent({
 	methods: {
 		displayFollow(): void {
 			if (!this.dinozStore.getDinozList) {
-				this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 				return;
 			}
 
@@ -58,7 +59,7 @@ export default defineComponent({
 			const currentDinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 
 			if (!currentDinoz) {
-				this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 				return;
 			}
 
@@ -75,7 +76,7 @@ export default defineComponent({
 				// Refresh followed and following status
 				const currentDinozList = this.dinozStore.getDinozList;
 				if (!currentDinozList) {
-					this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
+					this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 					return;
 				}
 

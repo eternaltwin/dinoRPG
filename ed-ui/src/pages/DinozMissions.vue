@@ -107,6 +107,7 @@ import { npcMissions } from '@drpg/core/models/npc/NpcMissions';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../utils/errorHandler.js';
+import { formatText } from 'src/utils/formatText.js';
 
 export default defineComponent({
 	name: 'DinozMissions',
@@ -127,7 +128,7 @@ export default defineComponent({
 		// Redirect to last page if no PDA
 		if (!this.playerStore.playerOptions.hasPMI) {
 			this.$toast.open({
-				message: this.$t(`toast.noPMI`),
+				message: formatText(this.$t(`toast.noPMI`)),
 				type: 'error'
 			});
 			this.$router.back();

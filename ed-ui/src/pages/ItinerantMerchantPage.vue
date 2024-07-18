@@ -99,6 +99,7 @@ import { errorHandler } from '../utils/index.js';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { IngredientsService } from '../services/IngredientsService';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
+import { formatText } from 'src/utils/formatText.js';
 
 export default defineComponent({
 	name: 'ItinerantMerchantPage',
@@ -135,7 +136,7 @@ export default defineComponent({
 					this.totalSell = 0;
 					const message = this.$t(`toast.ingredientSold`, { value: gold.gold });
 					this.$toast.open({
-						message: message,
+						message: formatText(message),
 						type: 'info'
 					});
 					this.playerStore.addMoney(gold.gold);

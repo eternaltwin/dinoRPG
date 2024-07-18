@@ -33,6 +33,7 @@ import { InventoryService } from '../../services/InventoryService.js';
 import EventBus from '../../events/index.js';
 import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'DinozEquip',
@@ -54,7 +55,7 @@ export default defineComponent({
 		async unequip(item: number) {
 			if (!this.dinozData) {
 				this.$toast.open({
-					message: this.$t(`toast.dinozDataMissing`),
+					message: formatText(this.$t(`toast.dinozDataMissing`)),
 					type: 'error'
 				});
 				return;
@@ -81,7 +82,7 @@ export default defineComponent({
 	mounted() {
 		if (!this.dinozData) {
 			this.$toast.open({
-				message: this.$t(`toast.dinozDataMissing`),
+				message: formatText(this.$t(`toast.dinozDataMissing`)),
 				type: 'error'
 			});
 			return;
@@ -91,7 +92,7 @@ export default defineComponent({
 
 		EventBus.on('equipItem', e => {
 			if (!this.dinozData) {
-				this.$toast.open({ message: this.$t(`toast.dinozDataMissing`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.dinozDataMissing`)), type: 'error' });
 				return;
 			}
 

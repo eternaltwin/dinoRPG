@@ -60,6 +60,7 @@ import { playerStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'Profile',
@@ -102,7 +103,7 @@ export default defineComponent({
 				const irma = await PlayerService.getLBRewards(parseInt(this.$route.params.id as string));
 				EventBus.emit('isLoading', false);
 				this.$toast.open({
-					message: this.$t(`toast.labrute`, { quantity: irma.quantity }),
+					message: formatText(this.$t(`toast.labrute`, { quantity: irma.quantity })),
 					type: 'info'
 				});
 			} catch (err) {

@@ -58,6 +58,7 @@ import DZUser from '../common/DZUser.vue';
 import OfferLine from './OfferLine.vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -88,7 +89,7 @@ export default defineComponent({
 			const userId = this.playerStore.playerId;
 
 			if (!userId) {
-				this.$toast.open({ message: this.$t(`toast.missingUser`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.missingUser`)), type: 'error' });
 				goTo(this.$router, 'MainPage');
 				return;
 			}
@@ -111,7 +112,7 @@ export default defineComponent({
 				OfferService.cancelOffer(this.ownOffer.id);
 				this.ownOffer = null;
 				this.$toast.open({
-					message: this.$t(`toast.market.offerCancelled`),
+					message: formatText(this.$t(`toast.market.offerCancelled`)),
 					type: 'success'
 				});
 			} catch (error) {

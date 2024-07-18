@@ -137,6 +137,7 @@ import DZHelp from '../common/DZHelp.vue';
 import { MARKET_MIN_VALUE, MARKET_MAX_ITEMS } from '@drpg/core/constants';
 import { OfferService } from '../../services/OfferService.js';
 import DZInput from '../common/DZInput.vue';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -180,7 +181,7 @@ export default defineComponent({
 			// Prevent too many items
 			if (item.quantity && newCount > item.quantity) {
 				this.$toast.open({
-					message: this.$t(`toast.market.notEnoughItems`),
+					message: formatText(this.$t(`toast.market.notEnoughItems`)),
 					type: 'error'
 				});
 				return;
@@ -191,7 +192,7 @@ export default defineComponent({
 			if (positiveItems.length >= 5) {
 				if (value === 1 && positiveItems.every(([n]) => n !== name)) {
 					this.$toast.open({
-						message: this.$t(`toast.market.tooManyItems`, { items: MARKET_MAX_ITEMS }),
+						message: formatText(this.$t(`toast.market.tooManyItems`, { items: MARKET_MAX_ITEMS })),
 						type: 'error'
 					});
 					return;
@@ -235,7 +236,7 @@ export default defineComponent({
 
 			if (manualValue < calculatedValue) {
 				this.$toast.open({
-					message: this.$t(`toast.market.minimalValueError`),
+					message: formatText(this.$t(`toast.market.minimalValueError`)),
 					type: 'error'
 				});
 				return;
@@ -243,7 +244,7 @@ export default defineComponent({
 
 			if (calculatedValue < MARKET_MIN_VALUE) {
 				this.$toast.open({
-					message: this.$t(`toast.market.minimalValueError`),
+					message: formatText(this.$t(`toast.market.minimalValueError`)),
 					type: 'error'
 				});
 				return;
@@ -260,11 +261,11 @@ export default defineComponent({
 			try {
 				await OfferService.createOffer(manualValue, ingredients, items, this.sellDinoz ? this.dinoz?.id : undefined);
 				this.$toast.open({
-					message: this.$t(`toast.market.offerCreated`),
+					message: formatText(this.$t(`toast.market.offerCreated`)),
 					type: 'success'
 				});
 				this.$toast.open({
-					message: this.$t(`toast.market.offerCancelled`),
+					message: formatText(this.$t(`toast.market.offerCancelled`)),
 					type: 'success'
 				});
 				this.changeTab(0);
@@ -280,7 +281,7 @@ export default defineComponent({
 
 			// Check if we have a dinoz selected
 			if (!currentDinozId) {
-				this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
 				goTo(this.$router, 'MainPage');
 				return;
 			}
@@ -288,7 +289,7 @@ export default defineComponent({
 			// Check if the dinoz exists
 			const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
 			if (!currentDinoz) {
-				this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 				goTo(this.$router, 'MainPage');
 				return;
 			}

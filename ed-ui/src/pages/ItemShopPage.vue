@@ -171,6 +171,7 @@ import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import { formatText } from 'src/utils/formatText.js';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -219,7 +220,7 @@ export default defineComponent({
 				});
 				EventBus.emit('isLoading', false);
 				this.$toast.open({
-					message: message,
+					message: formatText(message),
 					type: 'info'
 				});
 				// Update the new quantity

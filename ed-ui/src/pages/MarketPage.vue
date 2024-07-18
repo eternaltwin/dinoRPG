@@ -35,6 +35,7 @@ import { placeList } from '@drpg/core/models/place/PlaceList';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import DZButton from '../components/common/DZButton.vue';
 import { goTo } from '../utils/goTo.js';
+import { formatText } from 'src/utils/formatText.js';
 
 export default defineComponent({
 	name: 'MarketPage',
@@ -66,7 +67,7 @@ export default defineComponent({
 
 		// Check if we have a dinoz selected
 		if (!currentDinozId) {
-			this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
+			this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
 			goTo(this.$router, 'MainPage');
 			return;
 		}
@@ -74,7 +75,7 @@ export default defineComponent({
 		// Check if the dinoz exists
 		const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
 		if (!currentDinoz) {
-			this.$toast.open({ message: this.$t(`toast.unknownDinoz`), type: 'error' });
+			this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 			goTo(this.$router, 'MainPage');
 			return;
 		}
@@ -84,7 +85,7 @@ export default defineComponent({
 			Object.values(placeList).find(place => place.placeId === currentDinoz.placeId)?.placeId ===
 			PlaceEnum.PLACE_DU_MARCHE;
 		if (!atMarket) {
-			this.$toast.open({ message: this.$t(`toast.selectADinozAtMarketFirst`), type: 'error' });
+			this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
 			goTo(this.$router, 'MainPage');
 			return;
 		}

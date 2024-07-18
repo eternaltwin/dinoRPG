@@ -70,6 +70,7 @@ import { getMaxXp } from '@drpg/core/utils/DinozUtils';
 import Elements from '../components/data/Elements.vue';
 import DinozMini from '../components/dinoz/DinozMini.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import { formatText } from 'src/utils/formatText.js';
 
 export default defineComponent({
 	name: 'ManageDinoz',
@@ -119,7 +120,7 @@ export default defineComponent({
 				// Update store
 				if (!this.dinozStore.getDinozList) {
 					this.$toast.open({
-						message: this.$t(`toast.noDinozList`),
+						message: formatText(this.$t(`toast.noDinozList`)),
 						type: 'error'
 					});
 					return;
@@ -142,7 +143,7 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		// Redirect to last page if no PDA
 		if (!this.playerStore.playerOptions.hasPDA) {
-			this.$toast.open({ message: this.$t(`toast.noPDA`), type: 'error' });
+			this.$toast.open({ message: formatText(this.$t(`toast.noPDA`)), type: 'error' });
 			this.$router.back();
 			EventBus.emit('isLoading', false);
 			return;

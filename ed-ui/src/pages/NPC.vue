@@ -39,6 +39,7 @@ import { dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import { npcList } from '@drpg/core/models/npc/NpcList';
+import { formatText } from 'src/utils/formatText.js';
 
 export default defineComponent({
 	name: 'NPC',
@@ -94,7 +95,7 @@ export default defineComponent({
 
 								if (!dinozList) {
 									this.$toast.open({
-										message: this.$t(`toast.missingData`),
+										message: formatText(this.$t(`toast.missingData`)),
 										type: 'error'
 									});
 									EventBus.emit('isLoading', false);

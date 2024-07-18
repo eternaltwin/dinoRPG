@@ -305,6 +305,7 @@ import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { dinozStore, playerStore } from '../../store/index.js';
+import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -395,7 +396,7 @@ export default defineComponent({
 			const data = this.dinozData;
 			if (!data) {
 				this.$toast.open({
-					message: this.$t(`toast.dinozDataMissing`),
+					message: formatText(this.$t(`toast.dinozDataMissing`)),
 					type: 'error'
 				});
 				return;
@@ -420,7 +421,7 @@ export default defineComponent({
 			EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
 				if (!this.dinozData) {
 					this.$toast.open({
-						message: this.$t(`toast.dinozDataMissing`),
+						message: formatText(this.$t(`toast.dinozDataMissing`)),
 						type: 'error'
 					});
 					return;

@@ -33,6 +33,7 @@ import DZButton from '../../components/common/DZButton.vue';
 import DinozMini from '../../components/dinoz/DinozMini.vue';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { formatText } from 'src/utils/formatText.js';
 
 export default defineComponent({
 	name: 'SelectDinoz',
@@ -57,7 +58,7 @@ export default defineComponent({
 			} else {
 				// Max 10
 				if (this.selectedDinoz.length >= 10) {
-					this.$toast.open({ message: this.$t(`toast.maxDinozSelected`), type: 'error' });
+					this.$toast.open({ message: formatText(this.$t(`toast.maxDinozSelected`)), type: 'error' });
 					return;
 				}
 
@@ -67,7 +68,7 @@ export default defineComponent({
 		async validate() {
 			// Do nothing if no dinoz selected
 			if (this.selectedDinoz.length === 0) {
-				this.$toast.open({ message: this.$t(`toast.noDinozSelected`), type: 'error' });
+				this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
 				return;
 			}
 
@@ -82,7 +83,7 @@ export default defineComponent({
 	},
 	async mounted() {
 		if (!this.dinozStore.dinozList) {
-			this.$toast.open({ message: this.$t(`toast.dinozListMissing`), type: 'error' });
+			this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 			return;
 		}
 		this.dinozList = this.dinozStore.dinozList;
