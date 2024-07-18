@@ -9,7 +9,10 @@
 			<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
 				<Suspense>
 					<DinozWithoutFlash class="dinoImg" :display="dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
-					<template #fallback><Loading /></template>
+
+					<template #fallback
+						><div class="loading-wrapper"><Loading /></div
+					></template>
 				</Suspense>
 				<div class="infos">
 					<div class="row1">
@@ -96,7 +99,6 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Loading,
 		TitleHeader,
 		Elements,
 		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue')),
@@ -155,6 +157,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.loading-wrapper {
+	width: 190px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .sheets {
 	display: flex;
 	gap: 30px;

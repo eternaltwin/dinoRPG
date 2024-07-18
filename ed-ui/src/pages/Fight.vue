@@ -65,12 +65,10 @@ import translateFightStep from '../utils/translateFightStep.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
-import Loading from '../components/utils/Loading.vue';
 
 export default defineComponent({
 	name: 'Fight',
 	components: {
-		Loading,
 		TitleHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../components/fight/FullFightAnimation.vue'))
 	},
