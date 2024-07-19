@@ -13,6 +13,9 @@ import {
 export const MARKET_MIN_VALUE = 5000;
 export const MARKET_MAX_ITEMS = 5;
 export const MARKET_OFFER_DURATION = 2 * 24 * 60 * 60 * 1000; // 48h
+export const MARKET_OFFER_DURATION_DEBUG = 2 * 60 * 1000 // 2min
+
+
 
 export type PlayerForConditionCheck = Pick<Player, 'id'> & {
 	items: Pick<PlayerItem, 'itemId' | 'quantity'>[];

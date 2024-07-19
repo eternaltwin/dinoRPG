@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { getAllSecretsRequest } from '../dao/secretDao.js';
 import { ErrorFormator } from './errorFormator.js';
 import fs from 'fs';
+import { LOGGER } from '../context.js';
 
 export async function postError(e: ErrorFormator, res: Response) {
 	const secrets = await getAllSecretsRequest();
@@ -83,6 +84,7 @@ export async function sendDiscord(props: string) {
 	const secrets = await getAllSecretsRequest();
 	const discordToken = secrets.find(s => s.key === 'token');
 	const discordChannel = secrets.find(s => s.key === 'channel');
+	LOGGER.log(`Send Discord`);
 	try {
 		if (!(discordToken && discordChannel)) {
 			console.log(props);

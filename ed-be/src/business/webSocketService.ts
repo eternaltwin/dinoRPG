@@ -8,6 +8,7 @@ import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServ
 import { ChannelData } from '@drpg/core/models/webSocket/ChannelData';
 import { RawData, WebSocket } from 'ws';
 import { sendDiscord } from '../utils/discord.js';
+import { LOGGER } from '../context.js';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -181,7 +182,7 @@ function sendMessageToPeopleInChannel(
 		return;
 	}
 
-	sendDiscord(`Message sent to channel ${channel[0]}: ${message}`);
+	LOGGER.log(`Message sent to channel ${channel[0]}: ${message}`);
 
 	const usersInChannel = channel[1].filter(user => user.connectionId !== wsId);
 

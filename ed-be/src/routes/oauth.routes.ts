@@ -3,6 +3,7 @@ import { authenticateToET, getAuthorizationUri } from '../business/oauthService.
 import { apiRoutes } from '../constants/index.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { postError, sendDiscord } from '../utils/discord.js';
+import { LOGGER } from '../context.js';
 
 const routes: Router = Router();
 
@@ -64,7 +65,7 @@ routes.put(`${commonPath}/authenticate/eternal-twin`, async (req: Request, res: 
 	} catch (err) {
 		const e = err as ErrorFormator;
 		console.error(e.message);
-		await sendDiscord(e.message);
+		await LOGGER.log(e.message);
 		res.status(e.errorCode).send(e.message);
 	}
 });

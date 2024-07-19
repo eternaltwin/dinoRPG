@@ -317,10 +317,6 @@ export async function rewardFight(
 
 	// If attackers won
 	if (fightResult.winner) {
-		if (gold > 10000) {
-			const monsterlist = monsters.map(m => m.name).toString();
-			sendDiscord(`Player ${playerId} has been rewarded ${gold} gold when fighting ${monsterlist}.`);
-		}
 		await addMoney(playerId, gold);
 	} else if (goldLost) {
 		await removeMoney(playerId, goldLost);

@@ -19,6 +19,7 @@ import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { LOGGER } from '../context.js';
 
 /**
  * Get the list of current offers
@@ -130,7 +131,7 @@ export async function createOffer(req: Request) {
 	}
 
 	// Insert offer
-	await insertOffer(dinozId, total, itemsAndIngredients, playerId);
+	const offer = await insertOffer(dinozId, total, itemsAndIngredients, playerId);
 	// console.log(itemsAndIngredients);
 
 	// Set Dinoz as selling
@@ -152,6 +153,11 @@ export async function createOffer(req: Request) {
 	);
 
 	await Promise.all(promises);
+
+	// Schedule offer expiration
+	scheduleJob(offer.endDate, () => expireOffer(offer.id));
+	LOGGER.log(`Player ${playerId} has set an offer for ${offer.total} ending at ${offer.endDate}`)
+
 }
 
 /**
@@ -334,7 +340,7 @@ export const expireOffer = async (offerId: number) => {
 			);
 
 			// Send Discord notification
-			sendDiscord(`Offer ${offerId} won by ${winnerBid.userId}`);
+			LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 		}
 
 		// Update stats tracking
@@ -354,7 +360,7 @@ export const expireOffer = async (offerId: number) => {
 		promises.push(...ingredients.map(item => increaseIngredientQuantity(offer.seller.id, item.itemId, item.quantity)));
 
 		// Send Discord notification
-		sendDiscord(`Offer ${offerId} expired`);
+		LOGGER.log(`Offer ${offerId} expired`);
 	}
 
 	await Promise.all(promises);
@@ -379,7 +385,7 @@ export const scheduleOffersExpiration = async () => {
 	const remainingOffers = ongoingOffers.filter(offer => offer.endDate > new Date());
 
 	remainingOffers.forEach(offer => {
-		sendDiscord(`Scheduling offer ${offer.id} expiration at ${offer.endDate}`);
+		LOGGER.log(`Scheduling offer ${offer.id} expiration at ${offer.endDate}`);
 
 		scheduleJob(offer.endDate, () => expireOffer(offer.id));
 	});
