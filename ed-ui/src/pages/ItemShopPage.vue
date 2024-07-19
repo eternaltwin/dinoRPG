@@ -501,8 +501,8 @@ export default defineComponent({
 			}
 			.stock {
 				position: absolute;
-				width: 50px;
-				margin-left: 240px;
+				width: 60px;
+				margin-left: 233px;
 				padding-right: 5px;
 				text-align: right;
 				color: #ffee92;

@@ -327,7 +327,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: false,
-		maxQuantity: 1000,
+		maxQuantity: 999,
 		price: 900, // TODO double check
 		effect: {
 			category: ItemEffect.ACTION,
