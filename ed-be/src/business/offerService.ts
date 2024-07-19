@@ -70,6 +70,11 @@ export async function createOffer(req: Request) {
 		if (!owns) {
 			throw new ErrorFormator(500, 'invalidDinoz');
 		}
+
+		const offers = await getOffers(playerId, 'own', playerId, null, false);
+		if (offers && offers.some(o => o.dinoz?.id === dinozId)) {
+			throw new ErrorFormator(400, `dinozAlreadySelling`)
+		}
 		const dinozPlace = await getDinozPlace(dinozId);
 		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
 			throw new ErrorFormator(500, 'Dinoz is not at the right place to do this.');

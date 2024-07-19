@@ -87,6 +87,7 @@ export async function insertOffer(
 		data: {
 			sellerId: playerId,
 			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
+			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
 			dinozId,
 			items: {
 				create: itemsAndIngredient
