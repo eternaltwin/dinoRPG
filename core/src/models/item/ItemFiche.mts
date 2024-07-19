@@ -15,4 +15,5 @@ export interface ItemFiche {
 	effect?: ItemEffects;
 	priority?: number;
 	probability?: number;
+	sellable?: boolean;
 }

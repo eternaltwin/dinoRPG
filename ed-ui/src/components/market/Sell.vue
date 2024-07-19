@@ -303,7 +303,7 @@ export default defineComponent({
 			const items = await InventoryService.getAllItemsData();
 
 			// Limit to items that can be sold
-			this.items = items.filter(item => item.price);
+			this.items = items.filter(item => item.price && item.sellable);
 		} catch (error) {
 			errorHandler.handle(error, this.$toast, this.$t);
 			return;

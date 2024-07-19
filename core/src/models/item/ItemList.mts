@@ -328,11 +328,12 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 1000,
-		price: 450, // TODO double check
+		price: 900, // TODO double check
 		effect: {
 			category: ItemEffect.ACTION,
 			value: 1
-		}
+		},
+		sellable: false
 	},
 	// Angel potion: resurrects a dino
 	POTION_ANGEL: {
@@ -346,7 +347,8 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.RESURRECT,
 			value: 1
-		}
+		},
+		sellable: false
 	},
 	// Cloud burger: heals 10
 	CLOUD_BURGER: {
@@ -362,7 +364,8 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			value: 10
 		},
 		priority: 1,
-		probability: 50
+		probability: 50,
+		sellable: false
 	},
 	// Authentic hot bread: heals 100
 	HOT_BREAD: {
@@ -376,7 +379,8 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.HEAL,
 			value: 100
-		}
+		},
+		sellable: false
 	},
 	// Meat pie: heals 30
 	MEAT_PIE: {
@@ -390,7 +394,8 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.HEAL,
 			value: 30
-		}
+		},
+		sellable: false
 	},
 	// Fight ration: heals up to 20 during a fight
 	FIGHT_RATION: {
@@ -402,7 +407,8 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 100,
 		price: 500, // TODO double check
 		priority: 1,
-		probability: 50
+		probability: 50,
+		sellable: false
 	},
 	// Surviving ration: heals between 10 and 40 during a fight
 	SURVIVING_RATION: {
@@ -414,7 +420,8 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 100,
 		price: 500, // TODO double check
 		priority: 1,
-		probability: 50
+		probability: 50,
+		sellable: false
 	},
 	// Goblin's Merguez: heals ?? during a fight
 	GOBLIN_MERGUEZ: {
@@ -426,7 +433,8 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 20,
 		price: 500, // TODO double check
 		priority: 1,
-		probability: 20
+		probability: 20,
+		sellable: false
 	},
 	// Pampleboum: heals 15
 	PAMPLEBOUM: {
@@ -743,6 +751,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		canBeUsedNow: false, // TODO double check
 		itemType: ItemType.CLASSIC,
 		isRare: false,
+		sellable: false,
 		maxQuantity: 100, // TODO double check
 		price: 1234 // TODO double check
 	},
@@ -754,6 +763,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 3 // TODO double check
 	},
 	// Battering Ram: dinoz attacks castle twice if victorious
@@ -764,6 +774,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 5 // TODO double check
 	},
 	// Ember (braise): increases fire assault of all fighters by 30%
@@ -774,6 +785,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 5 // TODO double check
 	},
 	// Scale: an enemy dinoz will be killed if your dinoz dies during a fight
@@ -784,6 +796,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 7 // TODO double check
 	},
 	// Beer: prevents all dinoz from healing during a fight
@@ -794,6 +807,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 3 // TODO double check
 	},
 	// Encyclopedia: increases experience gain by 15%
@@ -804,6 +818,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 6 // TODO double check
 	},
 	// Antichromatic: cancels the effect of monochromatics used by the enemy
@@ -814,6 +829,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 4 // TODO double check
 	},
 	// Antidote: permanently immunize against poisons
@@ -824,6 +840,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 5 // TODO double check
 	},
 	// Time Manipulator (Temporary Manipulator?): prevents all dinoz from using E skills in a fight
@@ -834,6 +851,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 5 // TODO double check
 	},
 	// Dimensional Powder (Parallel Dimension?): if the dinoz HP falls below 10%, it will be engulfed in a black hole
@@ -845,6 +863,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 6 // TODO double check
 	},
 	// Sorcerer's Stick: reduces the hp of a random (enemy?) dinoz by 30% (It replaces an attack)
@@ -855,6 +874,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 7 // TODO double check
 	},
 	// Friendly Whistle: when the dinoz launches an assault on another dinoz, the other friendly dinoz (without whistle) will
@@ -866,6 +886,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 8 // TODO double check
 	},
 	// Dinoz Cube: allows the dinoz to redraw from the element grid when it levels up until level 10. Like Career Plan
@@ -877,6 +898,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 9 // TODO double check
 	},
 	// Temporal Reduction: reduces initiative bonuses and penalties by 50% on the equipped dinoz
@@ -887,6 +909,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 5 // TODO double check
 	},
 	// Tear of Life: gives clones 10% of the life of the casting Dinoz
@@ -897,6 +920,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 6 // TODO double check
 	},
 	// Cuzcussian Mask: makes the wearer's teammates immune to Hypnosis
@@ -907,6 +931,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 8 // TODO double check
 	},
 	// Anti-grave Suit: makes the wearer's teammates immune to Black Hole
@@ -917,6 +942,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 6 // TODO double check
 	},
 	// Enchanted Steroid: makes the equipped dinoz immune to penalties to max endurance
@@ -927,6 +953,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 6 // TODO double check
 	},
 	// Curse Locker: restricts a random enemy to using their weakest element for 3 turns
@@ -937,6 +964,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 4 // TODO double check
 	},
 	// Fear Factor (Trouillomètre): a dinoz with the Brave skill but which carries this\
@@ -948,6 +976,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 8 // TODO double check
 	},
 	// Life Stealer: when the wearer's hp falls below 20, it steals 30 hp to a random enemy
@@ -958,6 +987,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: false,
 		price: 0 // TODO double check
 	},
 	// Fire Sphere
@@ -1038,6 +1068,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 8000,
+		sellable: false,
 		price: 0
 	},
 	// Treasure Coupon
@@ -1052,6 +1083,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.GOLD,
 			value: 1000
 		},
+		sellable: false,
 		price: 0
 	},
 	// Some of those eggs may not exist, yet they should be added for consistency
@@ -1736,6 +1768,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 25,
+		sellable: false,
 		price: 0
 	},
 	// Magic Star: used for the Strange Creature quest
@@ -1746,6 +1779,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 7,
+		sellable: false,
 		price: 0
 	},
 	// Golden Napodino: currency at the Magic Shop
@@ -1756,6 +1790,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 100,
+		sellable: false,
 		price: 0
 	},
 	// Brings a little bamboo with you in each fight
@@ -1766,6 +1801,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.MAGICAL,
 		isRare: false,
 		maxQuantity: 10,
+		sellable: false,
 		price: 0 // TODO double check
 	},
 	// Anniversary tickets
@@ -1786,7 +1822,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
-		price: 0 // TODO double check
+		price: 5000 // TODO double check
 	},
 	// Tickets to use at ??
 	TICTAC_TICKET: {
@@ -1796,7 +1832,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 36,
-		price: 0 // TODO double check
+		price: 5000 // TODO double check
 	},
 	// Error
 	DOUBLE_NOT_USED: {
@@ -1805,6 +1841,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
 		isRare: false,
+		sellable: false,
 		maxQuantity: 999, // TODO double check
 		price: 0 // TODO double check
 	},
@@ -1816,7 +1853,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 999, // TODO double check
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Ticket for Batide day
 	FIRE_CRACKER: {
@@ -1836,6 +1873,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 0 // TODO double check
 	},
 	//Used for special gather
@@ -1846,6 +1884,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 100 // TODO double check
 	},
 	//Used for special gather
@@ -1856,6 +1895,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 500 // TODO double check
 	},
 	//Used for special gather
@@ -1866,6 +1906,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 1000 // TODO double check
 	},
 	//Used for special gather
@@ -1876,6 +1917,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 2000 // TODO double check
 	},
 	//Used for special gather
@@ -1886,6 +1928,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 2500 // TODO double check
 	},
 	//Used for special gather
@@ -1896,6 +1939,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 3000 // TODO double check
 	},
 	//Used for special gather
@@ -1906,6 +1950,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 5000 // TODO double check
 	},
 	//Used for special gather
@@ -1916,6 +1961,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 10000 // TODO double check
 	},
 	//Used for special gather
@@ -1926,6 +1972,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 3,
+		sellable: false,
 		price: 20000 // TODO double check
 	},
 	// Use to obtain Santaz or Trice, obtained during Christmas event
@@ -1940,7 +1987,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		},
 		isRare: false,
 		maxQuantity: 999, // TODO double check
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Ticket for Batide day
 	GODFATHER_TICKET: {
@@ -1960,6 +2007,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -1970,6 +2018,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -1980,6 +2029,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -1990,6 +2040,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -2000,6 +2051,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -2010,6 +2062,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -2020,6 +2073,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -2030,6 +2084,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -2040,6 +2095,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -2050,6 +2106,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Quest item
@@ -2060,6 +2117,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	VOID_SPHERE: {
@@ -2073,7 +2131,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.VOID
 		},
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Handler Box
 	BOX_HANDLER: {
@@ -2083,6 +2141,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 9999,
+		sellable: false,
 		price: 0
 	},
 	// Common Box
@@ -2095,6 +2154,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		maxQuantity: 100,
 		price: 0,
+		sellable: false,
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
@@ -2110,6 +2170,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		maxQuantity: 100,
 		price: 0,
+		sellable: false,
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
@@ -2125,6 +2186,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		maxQuantity: 100,
 		price: 0,
+		sellable: false,
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
@@ -2140,6 +2202,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		maxQuantity: 100,
 		price: 0,
+		sellable: false,
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
@@ -2153,6 +2216,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: false,
 		price: 0
 	},
 	// Empty item
@@ -2163,6 +2227,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 123,
+		sellable: false,
 		price: 1234 // TODO double check
 	},
 	// Undefined item
@@ -2173,6 +2238,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 123,
+		sellable: false,
 		price: 1234 // TODO double check
 	}
 };

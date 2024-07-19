@@ -104,6 +104,9 @@ export async function createOffer(req: Request) {
 			if (!itemData) {
 				throw new ErrorFormator(500, 'Ingredient not found');
 			}
+			if (itemData[1].sellable === false) {
+				throw new ErrorFormator(500, `Item ${itemData[0]} cannot be sold`)
+			}
 
 			return {
 				itemId: itemData[1].itemId,

@@ -87,7 +87,8 @@ export async function getAllItemsData(req: Request) {
 			canBeEquipped: theItem.canBeEquipped,
 			effect: theItem.effect,
 			itemType: theItem.itemType,
-			isRare: theItem.isRare
+			isRare: theItem.isRare,
+			sellable: theItem.sellable?? true
 		};
 	});
 
