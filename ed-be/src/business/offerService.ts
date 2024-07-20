@@ -73,7 +73,7 @@ export async function createOffer(req: Request) {
 
 		const offers = await getOffers(playerId, 'own', playerId, null, false);
 		if (offers && offers.some(o => o.dinoz?.id === dinozId)) {
-			throw new ErrorFormator(400, `dinozAlreadySelling`)
+			throw new ErrorFormator(400, `dinozAlreadySelling`);
 		}
 		const dinozPlace = await getDinozPlace(dinozId);
 		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
@@ -105,7 +105,7 @@ export async function createOffer(req: Request) {
 				throw new ErrorFormator(500, 'Ingredient not found');
 			}
 			if (itemData[1].sellable === false) {
-				throw new ErrorFormator(500, `Item ${itemData[0]} cannot be sold`)
+				throw new ErrorFormator(500, `Item ${itemData[0]} cannot be sold`);
 			}
 
 			return {
@@ -164,8 +164,7 @@ export async function createOffer(req: Request) {
 
 	// Schedule offer expiration
 	scheduleJob(offer.endDate, () => expireOffer(offer.id));
-	LOGGER.log(`Player ${playerId} has set an offer for ${offer.total} ending at ${offer.endDate}`)
-
+	LOGGER.log(`Player ${playerId} has set an offer for ${offer.total} ending at ${offer.endDate}`);
 }
 
 /**

@@ -3458,12 +3458,10 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 	if (isItem) {
 		if (fighter.attacker && fightData.attackerData.hasCook) {
 			healBonus *= 1.1;
-		}
-		else if (!fighter.attacker && fightData.defenderData.hasCook) {
+		} else if (!fighter.attacker && fightData.defenderData.hasCook) {
 			healBonus *= 1.1;
 		}
 	}
-
 
 	fighter.hp += hp * healBonus;
 
@@ -3628,19 +3626,23 @@ const attackTarget = (
 
 		// Check for assault dodge
 		let isDodged = false;
-		if (isAssault &&
-			!hasStatus(target, Status.PETRIFIED) &&
-			(Math.random() < (target.stats.special.evasion - 1))) {
+		if (isAssault && !hasStatus(target, Status.PETRIFIED) && Math.random() < target.stats.special.evasion - 1) {
 			isDodged = true;
 		}
 
 		// Check for skill evasion
 		let isSuperDodged = false;
-		if (!isAssault &&
-			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.FLYING) || hasStatus(target, Status.STUNNED) &&
-			(Math.random() < (target.stats.special.superEvasion - 1)))) {
-				isSuperDodged = true;
-			}
+		if (
+			!isAssault &&
+			!(
+				hasStatus(target, Status.PETRIFIED) ||
+				hasStatus(target, Status.ASLEEP) ||
+				hasStatus(target, Status.FLYING) ||
+				(hasStatus(target, Status.STUNNED) && Math.random() < target.stats.special.superEvasion - 1)
+			)
+		) {
+			isSuperDodged = true;
+		}
 
 		// Check for special statuses: flying, intangible, dazzled
 		// FLYING

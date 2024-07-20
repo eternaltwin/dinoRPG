@@ -719,7 +719,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		condition: {
 			[Operator.AND]: [
 				{
-					[ConditionEnum.DAY]: DayEnum.SATURDAY
+					[ConditionEnum.DAY]: DayEnum.SUNDAY
 				},
 				{
 					[ConditionEnum.WEEK_PLACE]: true
@@ -736,7 +736,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		condition: {
 			[Operator.AND]: [
 				{
-					[ConditionEnum.DAY]: DayEnum.SUNDAY
+					[ConditionEnum.DAY]: DayEnum.SATURDAY
 				},
 				{
 					[ConditionEnum.WEEK_PLACE]: true

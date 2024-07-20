@@ -121,13 +121,20 @@ export default defineComponent({
 		async sellIngredientPopinConfirmChoice(): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
 			const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+			const sellingItems = this.inputValues
+				.filter(i => i.quantity > 0)
+				.filter(i => (this.ingredientList.find(a => a.ingredientId === i.itemId)?.quantity ?? 0) >= i.quantity);
+			if (sellingItems.length < 1) {
+				this.$toast.open({
+					message: this.$t(`toast.needIngredientToSell`),
+					type: 'error'
+				});
+				return;
+			}
 			if (res) {
 				try {
 					EventBus.emit('isLoading', true);
-					const gold = await IngredientsService.sellIngredient(
-						currentDinozId,
-						this.inputValues.filter(i => i.quantity > 0)
-					);
+					const gold = await IngredientsService.sellIngredient(currentDinozId, sellingItems);
 					this.ingredientList = await IngredientsService.getIngredientsFromIngredientsShop(currentDinozId);
 					// reset value
 					this.inputValues = this.inputValues.map(a => {
@@ -135,6 +142,7 @@ export default defineComponent({
 					});
 					this.totalSell = 0;
 					const message = this.$t(`toast.ingredientSold`, { value: gold.gold });
+					console.log(message);
 					this.$toast.open({
 						message: formatText(message),
 						type: 'info'

@@ -38,18 +38,18 @@ export type DetailedFight = {
 		turnsLeft: number;
 	};
 	attackerData: {
-		hasCook: boolean,
+		hasCook: boolean;
 	};
 	defenderData: {
-		hasCook: boolean,
+		hasCook: boolean;
 	};
 	rules: {
-		canUseEquipment: boolean,
-		canUsePermanentEquipmentOnly: boolean,
-		canUseCapture: boolean,
-		canDeleteObjects: boolean,
-		enableBalance: boolean,
-		enableStats: boolean,
+		canUseEquipment: boolean;
+		canUsePermanentEquipmentOnly: boolean;
+		canUseCapture: boolean;
+		canDeleteObjects: boolean;
+		enableBalance: boolean;
+		enableStats: boolean;
 	};
 	timeManipulatorUsed?: boolean;
 	temporalStabilityUsed?: boolean;
@@ -81,10 +81,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		attackerData: {
-			hasCook: config.attacker_has_cook,
+			hasCook: config.attacker_has_cook
 		},
 		defenderData: {
-			hasCook: config.defender_has_cook,
+			hasCook: config.defender_has_cook
 		},
 		rules: {
 			canUseEquipment: config.canUseCapture,
@@ -92,7 +92,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 			canDeleteObjects: config.canDeleteObjects,
 			canUseCapture: config.canUseCapture,
 			enableBalance: config.enableBalance,
-			enableStats: config.enableStats,
+			enableStats: config.enableStats
 		},
 		protectedFighters: [],
 		time: 0,

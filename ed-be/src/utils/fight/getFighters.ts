@@ -137,7 +137,8 @@ export const initializeDinoz = (
 				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
 				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
 				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
-				[SpecialStat.SUPER_EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
+				[SpecialStat.SUPER_EVASION]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
 				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? 0,
 				[SpecialStat.BUBBLE_RATE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
@@ -184,7 +185,7 @@ export const initializeDinoz = (
 		perception: false,
 		canHitFlying: false,
 		canHitIntangible: false,
-		hasRock: false,
+		hasRock: false
 	};
 
 	handleSkills(team, fighter, place);

@@ -78,7 +78,11 @@ export async function rewarder(
 
 							if (quantityLimitedByMaxQuantity <= 0) break;
 
-							await increaseItemQuantity(playerId, itemRewarded.itemId, Math.min(playerItemData.quantity + reward.quantity, itemRewarded.maxQuantity) - playerItemData.quantity)
+							await increaseItemQuantity(
+								playerId,
+								itemRewarded.itemId,
+								Math.min(playerItemData.quantity + reward.quantity, itemRewarded.maxQuantity) - playerItemData.quantity
+							);
 						}
 					} else {
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });

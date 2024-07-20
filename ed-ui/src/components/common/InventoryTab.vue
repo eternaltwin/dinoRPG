@@ -131,7 +131,6 @@ export default defineComponent({
 				const dinozId = this.$route.params.id as string;
 				try {
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
-					await this.resfreshInventory();
 
 					// EventBus.emit('isLoading', false);
 					if (toast.category === ItemEffect.EGG) {

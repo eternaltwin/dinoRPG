@@ -75,6 +75,7 @@
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
 		"resting": "Tu dinoz está actualmente descansando. Il regagnera {hp} :pv: dans {min} minutes.",
 		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:.",
+		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre.",
 		"notLeader": "Ce dinoz n'est pas le leader de son groupe"
 	},
 	"dig": {
