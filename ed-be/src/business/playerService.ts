@@ -22,6 +22,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
+import sanitizeHtml from "sanitize-html";
 
 /**
  * @summary Get data from player on login
@@ -165,7 +166,9 @@ export async function setCustomText(req: Request) {
 		throw new ErrorFormator(500, `Player ${playerId} cannot edit this field`);
 	}
 
-	await setPlayer(playerId, { customText: req.body.message });
+	const sanatized = sanitizeHtml(req.body.message)
+
+	await setPlayer(playerId, { customText: sanatized });
 }
 
 /**
