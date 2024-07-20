@@ -1795,16 +1795,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/cli@npm:^0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/cli@npm:0.14.2"
+"@eternaltwin/cli@npm:^0.14.3":
+  version: 0.14.3
+  resolution: "@eternaltwin/cli@npm:0.14.3"
   dependencies:
-    "@eternaltwin/exe": "npm:0.14.2"
+    "@eternaltwin/exe": "npm:0.14.3"
     foreground-child: "npm:^3.1.1"
     tslib: "npm:^2.6.2"
   bin:
     eternaltwin: ./bin/eternaltwin.mjs
-  checksum: 10/477f1fe1275f694cffb866db958c0ad392612e915b0e5c590e40cdaef33d49dbead4d003e771bb02931a1ced9bdccafc54093e5e8d15668fc20560519bd91f76
+  checksum: 10/adfef14392e72df341d0d9dad7476876b64859b4b38756397d24e5679fa3165454574b9c8386875f525cc03369b3eeb3577de34ae348614a05686606cace00f0
   languageName: node
   linkType: hard
 
@@ -1833,50 +1833,50 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@eternaltwin/exe-x86_64-apple-darwin@npm:0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/exe-x86_64-apple-darwin@npm:0.14.2"
+"@eternaltwin/exe-x86_64-apple-darwin@npm:0.14.3":
+  version: 0.14.3
+  resolution: "@eternaltwin/exe-x86_64-apple-darwin@npm:0.14.3"
   bin:
     eternaltwin-x86_64-apple-darwin: ./eternaltwin
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.14.2"
+"@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.14.3":
+  version: 0.14.3
+  resolution: "@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.14.3"
   bin:
     eternaltwin-x86_64-pc-windows-gnu: ./eternaltwin.exe
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.14.2"
+"@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.14.3":
+  version: 0.14.3
+  resolution: "@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.14.3"
   bin:
     eternaltwin-x86_64-unknown-linux-gnu: ./eternaltwin
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.14.2"
+"@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.14.3":
+  version: 0.14.3
+  resolution: "@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.14.3"
   bin:
     eternaltwin-x86_64-unknown-linux-gnu: ./eternaltwin
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe@npm:0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/exe@npm:0.14.2"
+"@eternaltwin/exe@npm:0.14.3":
+  version: 0.14.3
+  resolution: "@eternaltwin/exe@npm:0.14.3"
   dependencies:
-    "@eternaltwin/exe-x86_64-apple-darwin": "npm:0.14.2"
-    "@eternaltwin/exe-x86_64-pc-windows-gnu": "npm:0.14.2"
-    "@eternaltwin/exe-x86_64-unknown-linux-gnu": "npm:0.14.2"
-    "@eternaltwin/exe-x86_64-unknown-linux-musl": "npm:0.14.2"
+    "@eternaltwin/exe-x86_64-apple-darwin": "npm:0.14.3"
+    "@eternaltwin/exe-x86_64-pc-windows-gnu": "npm:0.14.3"
+    "@eternaltwin/exe-x86_64-unknown-linux-gnu": "npm:0.14.3"
+    "@eternaltwin/exe-x86_64-unknown-linux-musl": "npm:0.14.3"
     furi: "npm:^3.0.0"
     tslib: "npm:^2.6.2"
   dependenciesMeta:
@@ -1888,7 +1888,7 @@ __metadata:
       optional: true
     "@eternaltwin/exe-x86_64-unknown-linux-musl":
       optional: true
-  checksum: 10/4395ec54a8e09d7a41bc763efd1800b37fc6c78cde44da728c1e08324fda5fdfd5bd4cf50d588cac5c547c2124ea1218e78414e4860608575659fbc34902c290
+  checksum: 10/2b9ef3b511bd958970df25b0b6b63307ca3460377e7a9bce0332cddcd0df3e650e784c7192aa04a3945a57ae79674bc7d142c2afef0dad7c12f4848ec083f99c
   languageName: node
   linkType: hard
 
@@ -7167,7 +7167,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "eternal-twin@workspace:Eternaltwin"
   dependencies:
-    "@eternaltwin/cli": "npm:^0.14.2"
+    "@eternaltwin/cli": "npm:^0.14.3"
   languageName: unknown
   linkType: soft
 

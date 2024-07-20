@@ -6,7 +6,7 @@
     "etwin": "etwin"
   },
   "devDependencies": {
-    "@eternaltwin/cli": "^0.14.2"
+    "@eternaltwin/cli": "^0.14.3"
   },
   "packageManager": "yarn@4.1.0"
 }
