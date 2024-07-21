@@ -170,6 +170,28 @@ function addPart(animation, name, part) {
 	return animation;
 }
 
+import { PixiHelper } from '../../src/display/PixiHelper.js';
+// Use the given object of a second animation to displace the tx/ty properties of all the objects of the first animation.
+// Probably only used for the animations of this little *%#&*@ of a ffrutx
+function displaceAnimation(animation, dispAnim, key) {
+	for (let i = 0; i < animation.length; ++i) {
+		if (dispAnim[i]?.[key]) {
+			for (const k of Object.keys(animation[i])) {
+				const matrix = PixiHelper.matrixFromObject(dispAnim[i][key]).append(
+					PixiHelper.matrixFromObject(animation[i][k])
+				);
+				animation[i][k].tx = round(matrix.tx ?? 0);
+				animation[i][k].ty = round(matrix.ty ?? 0);
+				animation[i][k].a = round(matrix.a ?? 1);
+				animation[i][k].b = round(matrix.b ?? 0);
+				animation[i][k].c = round(matrix.c ?? 0);
+				animation[i][k].d = round(matrix.d ?? 1);
+			}
+		}
+	}
+	return animation;
+}
+
 const animation = [];
 
 //const result = mirrorTo(animation, 12, 'r_f_lower_leg');
