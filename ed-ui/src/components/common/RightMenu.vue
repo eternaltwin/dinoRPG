@@ -94,18 +94,9 @@ export default defineComponent({
 		goToPage(page: string): void {
 			this.$router.push({ name: page });
 		},
-		changeTimezone(date: Date, ianatz: string) {
-			const invdate = new Date(
-				date.toLocaleString('en-US', {
-					timeZone: ianatz
-				})
-			);
-			const diff = date.getTime() - invdate.getTime();
-			return new Date(date.getTime() - diff); // needs to substract
-		},
 		getTime(): void {
-			const day = this.changeTimezone(new Date(), 'GMT');
-			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris' });
+			const day = new Date();
+			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
 		},
 		logOff(): void {
 			this.localStore.setJwt(undefined);
