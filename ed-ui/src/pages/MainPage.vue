@@ -86,7 +86,7 @@ export default defineComponent({
 			await this.firstLoad();
 		}
 	},
-	async mounted() {
+	async created() {
 		try {
 			await this.firstLoad();
 		} catch (err) {
