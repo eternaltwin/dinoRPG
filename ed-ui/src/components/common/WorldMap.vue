@@ -138,6 +138,7 @@ export default defineComponent({
 			if (!this.dinozData!.borderPlace?.includes(placeId)) {
 				return;
 			}
+			EventBus.emit('isLoading', true);
 
 			// Check if dinoz is being sold
 			if (this.dinozData?.unavailableReason === UnavailableReasonFront.selling) {
@@ -145,7 +146,6 @@ export default defineComponent({
 				return;
 			}
 
-			EventBus.emit('isLoading', true);
 			try {
 				const moveTry = await DinozService.betaMove(this.dinozData!.id!, placeId);
 				this.sessionStore.setFightResult(moveTry);
