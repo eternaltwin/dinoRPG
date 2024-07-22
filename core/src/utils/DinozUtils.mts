@@ -481,7 +481,7 @@ export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: n
 	const lifeHealed = Math.min(lifeToAdd, lifeMissing); // Utiliser le plus petit des deux nombres
 	if (lifeHealed === 0) throw new ErrorFormator(400, 'AlreadyAtMaxHealth');
 	if (dinoz.life === 0) throw new ErrorFormator(400, 'DinozIsDead');
-	dinoz.life += lifeHealed;
+	dinoz.life += Math.round(lifeHealed);
 	return {
 		id: dinoz.id,
 		life: dinoz.life
