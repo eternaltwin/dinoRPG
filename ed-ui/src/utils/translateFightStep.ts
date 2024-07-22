@@ -21,7 +21,6 @@ const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
 	let attacker: boolean;
 	if (typeof fighter === 'number') {
 		const tempo = fighters.find(f => f.id === fighter);
-		console.log(fighter, tempo);
 		if (!tempo) return name;
 		if (tempo.type === 'dinoz' || tempo.type === 'clone') {
 			name = tempo.name;

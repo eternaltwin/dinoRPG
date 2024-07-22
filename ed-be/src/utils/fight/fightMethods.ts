@@ -814,7 +814,7 @@ const attackSingleOpponent = (
 	// Add target
 	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: realOpponent.id });
 
-	let result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, stepIndex);
+	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, stepIndex);
 
 	if (protector && protector.hp > 0) {
 		// Add moveBack step
@@ -3028,7 +3028,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.BIGMAGNON: {
 			// Attack opponent with a classic assault
 			// Note: in MT code it calls directly `attackTarget` but with all descriptors of an assault and with a non-assault specific target
-			let target = getRandomOpponent(fightData, fighter);
+			const target = getRandomOpponent(fightData, fighter);
 
 			// Add moveTo step
 			fightData.steps.push({
@@ -3092,7 +3092,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.M_ABSORPTION: {
 			// Attack opponent
-			let hit = launchAssault(fightData, fighter, true, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
+			const hit = launchAssault(fightData, fighter, true, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
 
 			if (hit) {
 				heal(fightData, fighter, hit.hpLost);
@@ -3571,7 +3571,7 @@ const attackTarget = (
 	// 	updateStat(fightData, fighter, 'groupAttacks', 1);
 	// }
 
-	let realOpponent = target;
+	const realOpponent = target;
 
 	let energyCost = BASE_ENERGY_COST;
 
@@ -3638,8 +3638,9 @@ const attackTarget = (
 				hasStatus(target, Status.PETRIFIED) ||
 				hasStatus(target, Status.ASLEEP) ||
 				hasStatus(target, Status.FLYING) ||
-				(hasStatus(target, Status.STUNNED) && Math.random() < target.stats.special.superEvasion - 1)
-			)
+				hasStatus(target, Status.STUNNED)
+			) &&
+			Math.random() < target.stats.special.superEvasion - 1
 		) {
 			isSuperDodged = true;
 		}
