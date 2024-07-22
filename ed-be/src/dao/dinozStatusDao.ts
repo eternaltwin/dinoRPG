@@ -25,3 +25,9 @@ export async function removeStatusFromDinoz(dinozId: number, statusId: number) {
 		where: { statusId_dinozId: { dinozId, statusId } }
 	});
 }
+
+export async function removeAllStatusFromDinoz(dinozId: number) {
+	await prisma.dinozStatus.deleteMany({
+		where: { dinozId: dinozId }
+	});
+}

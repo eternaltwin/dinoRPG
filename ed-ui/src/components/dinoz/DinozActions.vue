@@ -453,6 +453,18 @@ export default defineComponent({
 						errorHandler.handle(e, this.$toast, this.$t);
 					}
 					break;
+				case Action.REINCARNATION:
+					try {
+						await DinozService.reincarnate(+this.$route.params.id);
+						EventBus.emit('refreshDinoz', true);
+						this.$toast.open({
+							message: this.$t('toast.reincarnation'),
+							type: 'info'
+						});
+					} catch (e) {
+						errorHandler.handle(e, this.$toast, this.$t);
+					}
+					break;
 				default:
 					console.log(action.name);
 					break;

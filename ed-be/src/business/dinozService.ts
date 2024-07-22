@@ -36,7 +36,7 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Concentration, Dinoz, DinozMission, LogType, DinozStatus, UnavailableReason } from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, LogType, DinozStatus, UnavailableReason, DinozSkill } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -87,6 +87,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { updateQuest } from '../dao/questsDao.js';
+import { GLOBAL } from '../context.js';
 
 /**
  * @summary Get available action from dinoz
@@ -110,6 +111,7 @@ export async function getAvailableActions(
 		concentration: Concentration | null;
 		followers: Pick<Dinoz, 'id'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
+		skills: Pick<DinozSkill, 'skillId'>[]
 	},
 	player: PlayerForConditionCheck
 ) {
@@ -158,6 +160,10 @@ export async function getAvailableActions(
 
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
+		// REINCARNATION
+		if (dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) && dinoz.level >= 40 && !dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)) {
+			availableActions.push(actionList[Action.REINCARNATION]);
+		}
 		return availableActions;
 	}
 
@@ -302,6 +308,8 @@ export async function getAvailableActions(
 	) {
 		availableActions.push(actionList[Action.CONGEL]);
 	}
+
+
 
 	return availableActions;
 }

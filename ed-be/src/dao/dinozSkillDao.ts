@@ -32,3 +32,9 @@ export async function removeSkillFromDinoz(dinozId: number, skillId: number) {
 		where: { skillId_dinozId: { dinozId, skillId } }
 	});
 }
+
+export async function removeAllSkillFromDinoz(dinozId: number) {
+	await prisma.dinozSkill.deleteMany({
+		where: { dinozId: dinozId }
+	});
+}

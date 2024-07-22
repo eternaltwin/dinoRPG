@@ -120,6 +120,11 @@ export interface Config {
 	 * Configuration for the Discord client used for logs (optional).
 	 */
 	readonly discordLogs: DiscordConfig | null;
+
+	/**
+	 * Salt for secret seed
+	 */
+	readonly salt: string;
 }
 
 /**
@@ -230,6 +235,8 @@ export function config(env: Record<string, string | undefined>): Config {
 
 	const administrator = env.ADMIN ?? 'eb989f16-94a4-47ab-a4bb-151c3f529fac';
 
+	const salt = env.SALT ?? 'eb989f16-94a4-47ab-a4bb-151c3f529fac';
+
 	return {
 		isProduction,
 		port,
@@ -238,7 +245,8 @@ export function config(env: Record<string, string | undefined>): Config {
 		discordNotifications,
 		discordLogs,
 		jwt,
-		administrator
+		administrator,
+		salt
 	};
 }
 

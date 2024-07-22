@@ -45,6 +45,7 @@ import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import dayjs from 'dayjs';
 import { updateQuest } from '../dao/questsDao.js';
+import { GLOBAL } from '../context.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -384,7 +385,7 @@ async function hatchEgg(item: ItemFiche, playerId: number) {
 	}
 
 	// Create a new dinoz that belongs to player
-	const dinozCreated = await createDinoz(initializeDinoz(race, playerId, randomDisplay));
+	const dinozCreated = await createDinoz(initializeDinoz(race, playerId, randomDisplay, playerId + GLOBAL.config.salt));
 
 	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
 		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill

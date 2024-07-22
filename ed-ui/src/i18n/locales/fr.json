@@ -47,6 +47,7 @@
 		"AlreadySphere": "Votre dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
 		"needToDoAllAction": "Vous avez encore des combats à faire.",
 		"labrute": "Vous avez obtenu {quantity} potions d'Irma.",
+		"reincarnation": "Votre dinoz s'est réincarné.",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
@@ -162,7 +163,8 @@
 			"stop_congel": "Vous pouvez décongeler votre Dinoz pour qu'il puisse à nouveau se déplacer et combattre.",
 			"rest": "Votre Dinoz peut **se reposer** pour regagner des points de vie. Pendant ce temps, il ne pourra effectuer aucune autre action !",
 			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
-			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant."
+			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
+			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -192,7 +194,8 @@
 			"stop_congel": "Décongeler",
 			"rest": "Se Reposer",
 			"stop_rest": "Arrêter de se reposer",
-			"itinerant_shop": "Marchand Ambulant"
+			"itinerant_shop": "Marchand Ambulant",
+			"reincarnation": "Réincarnation"
 		}
 	},
 	"button": {

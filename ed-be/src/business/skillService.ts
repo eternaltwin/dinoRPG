@@ -10,18 +10,25 @@ import { itemList } from '@drpg/core/models/item/ItemList';
 import { Dinoz, DinozItem, DinozSkill, DinozSkillUnlockable, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
-import { getDinozForLevelUp, getDinozSkillsLearnableAndUnlockable, updateDinoz } from '../dao/dinozDao.js';
-import { addSkillToDinoz } from '../dao/dinozSkillDao.js';
+import {
+	getDinozForLevelUp,
+	getDinozSkillsLearnableAndUnlockable,
+	getDinozToReincarnate,
+	updateDinoz
+} from '../dao/dinozDao.js';
+import { addSkillToDinoz, removeAllSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
-import { getMaxXp, getRandomUpElement } from '@drpg/core/utils/DinozUtils';
+import { getMaxXp, getRace, getRandomUpElement, reincarnateDinoz } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { SkillType } from '@drpg/core/models/enums/SkillType';
 import { getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { GLOBAL } from '../context.js';
+import { addStatusToDinoz, removeAllStatusFromDinoz } from '../dao/dinozStatusDao.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -192,6 +199,7 @@ function getDinozLearnableSkills(
 		| 'nbrUpLightning'
 		| 'nbrUpAir'
 		| 'raceId'
+		| 'seed'
 	> & {
 		player: Pick<Player, 'id'> | null;
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -263,6 +271,7 @@ function getNewDinozDataFromLevelUp(
 		| 'nbrUpAir'
 		| 'display'
 		| 'experience'
+		| 'seed'
 	> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
@@ -292,8 +301,8 @@ function getNewDinozDataFromLevelUp(
 		id: dinozId,
 		experience: dinozSkills.experience - maxXp,
 		level: dinozSkills.level + 1,
-		nextUpElementId: getRandomUpElement(upChance),
-		nextUpAltElementId: getRandomUpElement(upChance),
+		nextUpElementId: getRandomUpElement(upChance, dinozSkills.seed + GLOBAL.config.salt + dinozSkills.level),
+		nextUpAltElementId: getRandomUpElement(upChance, dinozSkills.seed + GLOBAL.config.salt + dinozSkills.level + 'pdc'),
 		nbrUpFire: dinozSkills.nbrUpFire,
 		nbrUpWood: dinozSkills.nbrUpWood,
 		nbrUpWater: dinozSkills.nbrUpWater,
@@ -507,4 +516,32 @@ async function applyUSkillEffect(playerId: number, skill: SkillDetails) {
 			break;
 	}
 	await setPlayer(playerId, player);
+}
+
+
+export async function reincarnate(req: Request) {
+	const dinozId: number = +req.params.id
+
+	if (!req.auth || !req.auth.playerId) {
+		throw new ErrorFormator(500, `Unauthorized`);
+	}
+
+	const dinoz = await getDinozToReincarnate(dinozId)
+
+	if (!dinoz) {
+		throw new ErrorFormator(500, `No dinoz found for reincarnation.`);
+	}
+
+	if (!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) || dinoz.level < 40) {
+		throw new ErrorFormator(500, `Dinoz cannot reincarnate`)
+	}
+
+	const race = getRace(dinoz)
+
+
+	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.id))
+	await removeAllSkillFromDinoz(dinoz.id)
+	await removeAllStatusFromDinoz(dinoz.id)
+	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION)
+
 }

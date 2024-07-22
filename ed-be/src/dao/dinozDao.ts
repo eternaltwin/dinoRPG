@@ -600,6 +600,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			nbrUpLightning: true,
 			nbrUpAir: true,
 			canChangeName: true,
+			seed: true,
 			player: {
 				select: {
 					id: true,
@@ -903,4 +904,28 @@ export async function getAllRestingAtFount() {
 			maxLife: true
 		}
 	});
+}
+
+export async function getDinozToReincarnate(dinozId: number) {
+	return await prisma.dinoz.findUnique({
+		where: {
+			id: dinozId
+		},
+		select: {
+			skills: {
+				select: { skillId: true}
+			},
+			display: true,
+			id: true,
+			raceId: true,
+			life: true,
+			level: true,
+			experience: true,
+			nbrUpAir: true,
+			nbrUpFire: true,
+			nbrUpLightning: true,
+			nbrUpWater: true,
+			nbrUpWood: true
+		}
+	})
 }

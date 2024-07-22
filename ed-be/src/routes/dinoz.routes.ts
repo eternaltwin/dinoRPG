@@ -29,6 +29,7 @@ import { apiRoutes, regex } from '../constants/index.js';
 import { postError } from '../utils/discord.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { displayPlayerGoals } from '../business/goalsService.js';
+import { reincarnate } from '../business/skillService.js';
 
 const routes: Router = Router();
 
@@ -675,6 +676,25 @@ routes.post(
 
 		try {
 			await restDinoz(req);
+			return res.status(200).send();
+		} catch (err) {
+			const e = err as ErrorFormator;
+			await postError(e, res);
+			res.status(e.errorCode).send(e.message);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/:id/reincarnate`,
+	[param('id').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await reincarnate(req);
 			return res.status(200).send();
 		} catch (err) {
 			const e = err as ErrorFormator;

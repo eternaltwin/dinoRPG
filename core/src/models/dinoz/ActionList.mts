@@ -27,7 +27,8 @@ export enum Action {
 	CONGEL = 'congel',
 	STOP_CONGEL = 'stop_congel',
 	REST = 'rest',
-	STOP_REST = 'stop_rest'
+	STOP_REST = 'stop_rest',
+	REINCARNATION = 'reincarnation'
 }
 
 export interface ActionFiche {
@@ -146,5 +147,9 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.STOP_REST]: {
 		name: Action.STOP_REST,
 		imgName: 'act_default'
+	},
+	[Action.REINCARNATION]: {
+		name: Action.REINCARNATION,
+		imgName: 'act_resurrect'
 	}
 };

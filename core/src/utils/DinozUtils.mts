@@ -31,6 +31,7 @@ import { ErrorFormator } from './errorFormator.mjs';
 import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
+import seedrandom from 'seedrandom';
 
 type Config = {
 	dinoz: {
@@ -290,9 +291,16 @@ export const possessStatus = (
 	return dinoz.status.some(status => status.statusId === statusId);
 };
 
-export const getRandomUpElement = (raceUpChance: UpChance) => {
+export const getRandomUpElement = (raceUpChance: UpChance, seed?: string) => {
 	const totalUpChance = Object.values(raceUpChance).reduce((total, currentValue) => total + currentValue, 0);
-	const randomNumber = Math.ceil(Math.random() * totalUpChance);
+	let randomNumber
+	if (seed) {
+		const rng = seedrandom(seed)
+		randomNumber = Math.ceil(rng() * totalUpChance);
+	} else {
+		randomNumber = Math.ceil(Math.random() * totalUpChance);
+	}
+	console.log(randomNumber)
 	let total = 0;
 
 	for (const [index, elementValue] of Object.values(raceUpChance).entries()) {
@@ -356,7 +364,7 @@ export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
 	};
 };
 
-export const initializeDinoz = (race: DinozRace, playerId: number, display: string): Prisma.DinozCreateInput => {
+export const initializeDinoz = (race: DinozRace, playerId: number, display: string, seed?: string): Prisma.DinozCreateInput => {
 	return {
 		name: '?',
 		unavailableReason: null,
@@ -373,11 +381,58 @@ export const initializeDinoz = (race: DinozRace, playerId: number, display: stri
 		nbrUpWater: race.nbrWater,
 		nbrUpLightning: race.nbrLightning,
 		nbrUpAir: race.nbrAir,
-		nextUpElementId: getRandomUpElement(race.upChance),
-		nextUpAltElementId: getRandomUpElement(race.upChance),
+		nextUpElementId: getRandomUpElement(race.upChance, seed),
+		nextUpAltElementId: getRandomUpElement(race.upChance, seed),
 		player: { connect: { id: playerId } }
 	};
 };
+
+export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: number): Prisma.DinozUpdateInput => {
+	const fullDisplay = [...display]
+	fullDisplay[1] = '0'
+
+	let fire = 0
+	let water = 0
+	let wood = 0
+	let lightning =0
+	let air = 0
+	for (let i = 0; i < 5; i++) {
+		const element = Math.ceil(Math.random() * 5)
+		switch (element) {
+			case 1:
+				fire++
+				break
+			case 2:
+				water++
+				break
+			case 3:
+				wood++
+				break
+			case 4:
+				lightning++
+				break
+			case 5:
+				air++
+				break
+			default:
+				break
+		}
+	}
+
+	return {
+		experience: 0,
+		level: 1,
+		nextUpElementId: getRandomUpElement(race.upChance),
+		nextUpAltElementId: getRandomUpElement(race.upChance),
+		nbrUpFire: race.nbrFire + fire,
+		nbrUpWood: race.nbrWood + wood,
+		nbrUpWater: race.nbrWater + water,
+		nbrUpLightning: race.nbrLightning + lightning,
+		nbrUpAir: race.nbrAir + air,
+		display: fullDisplay.toString().replaceAll(',','')
+	};
+
+}
 
 export const learnNextSphereSkill = (
 	dinoz: {

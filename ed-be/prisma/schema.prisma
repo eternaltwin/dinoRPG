@@ -2,7 +2,7 @@ generator client {
 	provider        = "prisma-client-js"
 	output          = "../../prisma"
 	binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
-	previewFeatures = ["relationJoins", "nativeDistinct", "tracing"]
+	previewFeatures = ["relationJoins", "nativeDistinct", "tracing", "omitApi"]
 }
 
 datasource db {
@@ -45,6 +45,7 @@ model Dinoz {
 	nbrUpWater         Int
 	nbrUpLightning     Int
 	nbrUpAir           Int
+	seed								String							@default(dbgenerated("uuid_generate_v4()"))
 	fight              Boolean                @default(true)
 	gather             Boolean                @default(true)
 	remaining          Int                    @default(2)

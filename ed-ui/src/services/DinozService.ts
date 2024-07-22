@@ -161,5 +161,11 @@ export const DinozService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	reincarnate(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/reincarnate`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
