@@ -19,7 +19,11 @@ const actions = [
 	'special',
 	'counter',
 	'dodge',
-	'guard'
+	'guard',
+	'up',
+	'upwalk',
+	'down',
+	'downwalk'
 ];
 const monsterList = [
 	'goupi',
@@ -77,6 +81,8 @@ const monsterList = [
 	'rapaca',
 	'morg',
 	'mandragore',
+	'cyclo',
+	'cyclo2',
 	'lucet',
 	'taurus'
 ];
