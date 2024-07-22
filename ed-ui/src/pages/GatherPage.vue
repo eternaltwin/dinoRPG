@@ -83,7 +83,6 @@ export default defineComponent({
 			}
 			const leftSquare = Math.pow(this.grid.grid[0].length, 2) + this.sumOfArrays(this.grid.grid);
 			if (this.grid.gatherTurn <= 0 || leftSquare - this.clickedBox.length == 0) {
-				console.log('ici');
 				EventBus.emit('isLoading', true);
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);

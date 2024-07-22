@@ -142,7 +142,6 @@ export default defineComponent({
 					});
 					this.totalSell = 0;
 					const message = this.$t(`toast.ingredientSold`, { value: gold.gold });
-					console.log(message);
 					this.$toast.open({
 						message: formatText(message),
 						type: 'info'

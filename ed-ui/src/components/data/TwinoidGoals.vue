@@ -161,9 +161,6 @@ export default defineComponent({
 			const last = dinorpg.get(stat.stat).unlocks[dinorpg.get(stat.stat).unlocks.length - 1];
 			return (last?.count ?? 0) <= stat.quantity;
 		},
-		test(stat) {
-			console.log(stat);
-		},
 		getStatDetails(stat: PlayerStats, detail: string) {
 			switch (detail) {
 				case 'name':

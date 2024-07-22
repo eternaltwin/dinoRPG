@@ -151,13 +151,11 @@ export default defineComponent({
 			return;
 		}
 		const npcCore = Object.values(npcList).find(npc => npc.name === this.npcName);
-		console.log(npcCore);
 		if (npcCore) {
 			this.swfName = npcCore.display ?? npcCore.name;
 		} else {
 			this.swfName = this.npcName;
 		}
-		console.log(this.swfName);
 	}
 });
 </script>

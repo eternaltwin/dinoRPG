@@ -323,7 +323,6 @@ export default defineComponent({
 				this.generateChart();
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				console.log(err);
 				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
