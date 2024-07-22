@@ -111,7 +111,7 @@ export async function getAvailableActions(
 		concentration: Concentration | null;
 		followers: Pick<Dinoz, 'id'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
-		skills: Pick<DinozSkill, 'skillId'>[]
+		skills: Pick<DinozSkill, 'skillId'>[];
 	},
 	player: PlayerForConditionCheck
 ) {
@@ -161,7 +161,11 @@ export async function getAvailableActions(
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
 		// REINCARNATION
-		if (dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) && dinoz.level >= 40 && !dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)) {
+		if (
+			dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) &&
+			dinoz.level >= 40 &&
+			!dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)
+		) {
 			availableActions.push(actionList[Action.REINCARNATION]);
 		}
 		return availableActions;
@@ -308,8 +312,6 @@ export async function getAvailableActions(
 	) {
 		availableActions.push(actionList[Action.CONGEL]);
 	}
-
-
 
 	return availableActions;
 }

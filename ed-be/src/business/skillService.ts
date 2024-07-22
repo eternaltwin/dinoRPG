@@ -518,30 +518,27 @@ async function applyUSkillEffect(playerId: number, skill: SkillDetails) {
 	await setPlayer(playerId, player);
 }
 
-
 export async function reincarnate(req: Request) {
-	const dinozId: number = +req.params.id
+	const dinozId: number = +req.params.id;
 
 	if (!req.auth || !req.auth.playerId) {
 		throw new ErrorFormator(500, `Unauthorized`);
 	}
 
-	const dinoz = await getDinozToReincarnate(dinozId)
+	const dinoz = await getDinozToReincarnate(dinozId);
 
 	if (!dinoz) {
 		throw new ErrorFormator(500, `No dinoz found for reincarnation.`);
 	}
 
 	if (!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) || dinoz.level < 40) {
-		throw new ErrorFormator(500, `Dinoz cannot reincarnate`)
+		throw new ErrorFormator(500, `Dinoz cannot reincarnate`);
 	}
 
-	const race = getRace(dinoz)
+	const race = getRace(dinoz);
 
-
-	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.id))
-	await removeAllSkillFromDinoz(dinoz.id)
-	await removeAllStatusFromDinoz(dinoz.id)
-	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION)
-
+	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.id));
+	await removeAllSkillFromDinoz(dinoz.id);
+	await removeAllStatusFromDinoz(dinoz.id);
+	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
 }

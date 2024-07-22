@@ -293,14 +293,14 @@ export const possessStatus = (
 
 export const getRandomUpElement = (raceUpChance: UpChance, seed?: string) => {
 	const totalUpChance = Object.values(raceUpChance).reduce((total, currentValue) => total + currentValue, 0);
-	let randomNumber
+	let randomNumber;
 	if (seed) {
-		const rng = seedrandom(seed)
+		const rng = seedrandom(seed);
 		randomNumber = Math.ceil(rng() * totalUpChance);
 	} else {
 		randomNumber = Math.ceil(Math.random() * totalUpChance);
 	}
-	console.log(randomNumber)
+	console.log(randomNumber);
 	let total = 0;
 
 	for (const [index, elementValue] of Object.values(raceUpChance).entries()) {
@@ -364,7 +364,12 @@ export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
 	};
 };
 
-export const initializeDinoz = (race: DinozRace, playerId: number, display: string, seed?: string): Prisma.DinozCreateInput => {
+export const initializeDinoz = (
+	race: DinozRace,
+	playerId: number,
+	display: string,
+	seed?: string
+): Prisma.DinozCreateInput => {
 	return {
 		name: '?',
 		unavailableReason: null,
@@ -388,34 +393,34 @@ export const initializeDinoz = (race: DinozRace, playerId: number, display: stri
 };
 
 export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: number): Prisma.DinozUpdateInput => {
-	const fullDisplay = [...display]
-	fullDisplay[1] = '0'
+	const fullDisplay = [...display];
+	fullDisplay[1] = '0';
 
-	let fire = 0
-	let water = 0
-	let wood = 0
-	let lightning =0
-	let air = 0
+	let fire = 0;
+	let water = 0;
+	let wood = 0;
+	let lightning = 0;
+	let air = 0;
 	for (let i = 0; i < 5; i++) {
-		const element = Math.ceil(Math.random() * 5)
+		const element = Math.ceil(Math.random() * 5);
 		switch (element) {
 			case 1:
-				fire++
-				break
+				fire++;
+				break;
 			case 2:
-				water++
-				break
+				water++;
+				break;
 			case 3:
-				wood++
-				break
+				wood++;
+				break;
 			case 4:
-				lightning++
-				break
+				lightning++;
+				break;
 			case 5:
-				air++
-				break
+				air++;
+				break;
 			default:
-				break
+				break;
 		}
 	}
 
@@ -429,10 +434,9 @@ export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: numb
 		nbrUpWater: race.nbrWater + water,
 		nbrUpLightning: race.nbrLightning + lightning,
 		nbrUpAir: race.nbrAir + air,
-		display: fullDisplay.toString().replaceAll(',','')
+		display: fullDisplay.toString().replaceAll(',', '')
 	};
-
-}
+};
 
 export const learnNextSphereSkill = (
 	dinoz: {

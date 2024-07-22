@@ -913,7 +913,7 @@ export async function getDinozToReincarnate(dinozId: number) {
 		},
 		select: {
 			skills: {
-				select: { skillId: true}
+				select: { skillId: true }
 			},
 			display: true,
 			id: true,
@@ -927,5 +927,5 @@ export async function getDinozToReincarnate(dinozId: number) {
 			nbrUpWater: true,
 			nbrUpWood: true
 		}
-	})
+	});
 }
