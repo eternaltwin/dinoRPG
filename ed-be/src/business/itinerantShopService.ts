@@ -39,10 +39,10 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
-		.find(s => checkCondition(s.condition, player, dinozId, itinerant));
+		.find(s => checkCondition(s.condition, player, dinozId));
 
 	// Throw an exception if the shop does not exist
-	if (!itinerantShop) {
+	if (!itinerantShop || !player.dinoz.some(d => d.placeId === +itinerant.value)) {
 		throw new ErrorFormator(500, `This dinoz cannot access itinerant shop`);
 	}
 
@@ -114,11 +114,11 @@ export async function sellIngredient(req: Request) {
 
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
-		.find(s => checkCondition(s.condition, player, dinozId, itinerant));
+		.find(s => checkCondition(s.condition, player, dinozId));
 
-	// Throw an exception if the shop doesn't exist
-	if (!itinerantShop) {
-		throw new ErrorFormator(500, `The itinerant shop does not exist`);
+	// Throw an exception if the shop does not exist
+	if (!itinerantShop || !player.dinoz.some(d => d.placeId === +itinerant.value)) {
+		throw new ErrorFormator(500, `This dinoz cannot access itinerant shop`);
 	}
 
 	if (itinerantShop.type !== ShopType.ITINERANT) {

@@ -379,14 +379,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		],
 		condition: {
-			[Operator.AND]: [
-				{
-					[ConditionEnum.DAY]: DayEnum.MONDAY
-				},
-				{
-					[ConditionEnum.WEEK_PLACE]: true
-				}
-			]
+			[ConditionEnum.DAY]: DayEnum.MONDAY
 		}
 	},
 	// ITINERANT MERCHANT ---- TUESDAY
@@ -429,14 +422,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		],
 		condition: {
-			[Operator.AND]: [
-				{
-					[ConditionEnum.DAY]: DayEnum.TUESDAY
-				},
-				{
-					[ConditionEnum.WEEK_PLACE]: true
-				}
-			]
+			[ConditionEnum.DAY]: DayEnum.TUESDAY
 		}
 	},
 	// ITINERANT MERCHANT ---- WEDNESDAY
@@ -479,14 +465,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		],
 		condition: {
-			[Operator.AND]: [
-				{
-					[ConditionEnum.DAY]: DayEnum.WEDNESDAY
-				},
-				{
-					[ConditionEnum.WEEK_PLACE]: true
-				}
-			]
+			[ConditionEnum.DAY]: DayEnum.WEDNESDAY
 		}
 	},
 	// ITINERANT MERCHANT ---- THURSDAY
@@ -525,14 +504,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		],
 		condition: {
-			[Operator.AND]: [
-				{
-					[ConditionEnum.DAY]: DayEnum.THURSDAY
-				},
-				{
-					[ConditionEnum.WEEK_PLACE]: true
-				}
-			]
+			[ConditionEnum.DAY]: DayEnum.THURSDAY
 		}
 	},
 	// ITINERANT MERCHANT ---- FRIDAY
@@ -563,14 +535,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		],
 		condition: {
-			[Operator.AND]: [
-				{
-					[ConditionEnum.DAY]: DayEnum.FRIDAY
-				},
-				{
-					[ConditionEnum.WEEK_PLACE]: true
-				}
-			]
+			[ConditionEnum.DAY]: DayEnum.FRIDAY
 		}
 	},
 	// ITINERANT MERCHANT ---- SATURDAY
@@ -717,14 +682,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		],
 		condition: {
-			[Operator.AND]: [
-				{
-					[ConditionEnum.DAY]: DayEnum.SUNDAY
-				},
-				{
-					[ConditionEnum.WEEK_PLACE]: true
-				}
-			]
+			[ConditionEnum.DAY]: DayEnum.SUNDAY
 		}
 	},
 	// ITINERANT MERCHANT ---- SUNDAY ---- SHOP CLOSED
@@ -734,14 +692,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.ITINERANT,
 		listItemsSold: [],
 		condition: {
-			[Operator.AND]: [
-				{
-					[ConditionEnum.DAY]: DayEnum.SATURDAY
-				},
-				{
-					[ConditionEnum.WEEK_PLACE]: true
-				}
-			]
+			[ConditionEnum.DAY]: DayEnum.SATURDAY
 		}
 	}
 };

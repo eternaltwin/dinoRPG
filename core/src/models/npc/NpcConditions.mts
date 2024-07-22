@@ -42,5 +42,4 @@ export type Condition = {
 	[ConditionEnum.OVERWRITE]?: string;
 	[ConditionEnum.LAUNCH_FIGHT]?: string;
 	[ConditionEnum.DAY]?: DayEnum;
-	[ConditionEnum.WEEK_PLACE]?: boolean;
 };

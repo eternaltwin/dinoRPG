@@ -6,12 +6,7 @@ import dayjs from 'dayjs';
 import { ErrorFormator } from '../utils/errorFormator.mjs';
 import prand from 'pure-rand';
 
-export function conditionParser(
-	condition: Condition,
-	player: PlayerForConditionCheck,
-	activeDinoz: number,
-	secret?: { key: string; value: string }
-): boolean {
+export function conditionParser(condition: Condition, player: PlayerForConditionCheck, activeDinoz: number): boolean {
 	let result;
 	const GOTO = condition[ConditionEnum.GOTO];
 	const PLACE_IS = condition[ConditionEnum.PLACE_IS];
@@ -28,7 +23,6 @@ export function conditionParser(
 	const DINOZ_LIFE = condition[ConditionEnum.DINOZ_LIFE];
 	const ACTIVE = condition[ConditionEnum.ACTIVE];
 	const DAY = condition[ConditionEnum.DAY];
-	const WEEK_PLACE = condition[ConditionEnum.WEEK_PLACE];
 	const TIME = condition[ConditionEnum.TIME];
 	const EQUIP = condition[ConditionEnum.EQUIP];
 	const HOUR = condition[ConditionEnum.HOUR];
@@ -113,11 +107,6 @@ export function conditionParser(
 		result = ACTIVE;
 	} else if (DAY !== undefined) {
 		result = dayjs().day() === DAY;
-	} else if (WEEK_PLACE) {
-		if (secret?.key !== 'itinerant' || isNaN(parseInt(secret.value))) {
-			throw new ErrorFormator(500, `No secret found for itinerant`);
-		}
-		result = myDinoz.placeId === parseInt(secret.value);
 	} else if (TIME) {
 		const hour = dayjs().hour();
 		const seed = hour + myDinoz.id;

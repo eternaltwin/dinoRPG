@@ -249,28 +249,32 @@ export async function getAvailableActions(
 	// Shop action: check if a shop is available where the dinoz is
 	const itinerant = await getSpecificSecret('itinerant');
 	if (!itinerant) throw new ErrorFormator(500, `No itinerant merchant place found.`);
+	const itinerantShop = Object.values(shopList)
+		.filter(shop => shop.type === ShopType.ITINERANT)
+		.find(s => checkCondition(s.condition, player, dinoz.id));
+
+	if (itinerantShop && +itinerant.value === dinoz.placeId) {
+		availableActions.push({
+			name: actionList[Action.ITINERANTSHOP].name,
+			imgName: actionList[Action.ITINERANTSHOP].imgName,
+			prop: itinerantShop.shopId
+		});
+	}
 	const shopAvailable = Object.values(shopList).filter(
 		shop =>
-			(shop.placeId === dinoz.placeId || shop.placeId === PlaceEnum.NOWHERE) &&
-			checkCondition(shop.condition, player, dinoz.id, itinerant)
+			shop.placeId === dinoz.placeId &&
+			shop.placeId !== PlaceEnum.NOWHERE &&
+			checkCondition(shop.condition, player, dinoz.id)
 	);
 	if (shopAvailable.length > 0) {
 		// Add all the shop id to the action
 		availableActions.push(
 			...shopAvailable.map(s => {
-				if (s.type === ShopType.ITINERANT) {
-					return {
-						name: actionList[Action.ITINERANTSHOP].name,
-						imgName: actionList[Action.ITINERANTSHOP].imgName,
-						prop: s.shopId
-					};
-				} else {
-					return {
-						name: actionList[Action.SHOP].name,
-						imgName: actionList[Action.SHOP].imgName,
-						prop: s.shopId
-					};
-				}
+				return {
+					name: actionList[Action.SHOP].name,
+					imgName: actionList[Action.SHOP].imgName,
+					prop: s.shopId
+				};
 			})
 		);
 	}
