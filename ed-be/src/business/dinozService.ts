@@ -1229,7 +1229,7 @@ export async function useIrma(req: Request) {
 
 	const irmaQuantity = dinoz.player.items.find(i => i.itemId === itemList.POTION_IRMA.itemId);
 
-	const neededIrma = team.filter(d => d.remaining === 0).length;
+	const neededIrma = team.filter(d => d.remaining === 0 && !d.fight).length;
 
 	if ((!irmaQuantity || (irmaQuantity && irmaQuantity.quantity < neededIrma)) && neededIrma > 0) {
 		throw new ErrorFormator(400, 'notEnoughIrma');
