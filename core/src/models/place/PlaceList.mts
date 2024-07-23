@@ -23,6 +23,7 @@ export const placeList: Record<
 		background?: string;
 		top?: number;
 		bottom?: number;
+		itinerant?: boolean;
 	}
 > = {
 	// Useful for the few things accessible from any where like the flying shop
@@ -41,7 +42,8 @@ export const placeList: Record<
 		specialGather: GatherType.ANNIV,
 		ground: GroundEnum.DIRT,
 		background: 's_port',
-		top: 140
+		top: 140,
+		itinerant: true
 	},
 	[PlaceEnum.PLACE_DU_MARCHE]: {
 		placeId: PlaceEnum.PLACE_DU_MARCHE,
@@ -50,7 +52,8 @@ export const placeList: Record<
 		map: MapZone.DINOLAND,
 		ground: GroundEnum.DIRT,
 		background: 'city2',
-		top: 155
+		top: 155,
+		itinerant: true
 	},
 	[PlaceEnum.PAPY_JOE]: {
 		placeId: PlaceEnum.PAPY_JOE,
@@ -60,7 +63,8 @@ export const placeList: Record<
 		gather: GatherType.HUNT,
 		ground: GroundEnum.DIRT,
 		background: 's_papy',
-		top: 165
+		top: 165,
+		itinerant: true
 	},
 	[PlaceEnum.FORCEBRUT]: {
 		placeId: PlaceEnum.FORCEBRUT,
@@ -70,7 +74,8 @@ export const placeList: Record<
 		gather: GatherType.ENERGY1,
 		ground: GroundEnum.DIRT,
 		background: 's_frcbrt',
-		top: 120
+		top: 120,
+		itinerant: true
 	},
 	[PlaceEnum.DINOVILLE]: {
 		placeId: PlaceEnum.DINOVILLE,
@@ -80,7 +85,8 @@ export const placeList: Record<
 		gather: GatherType.SEEK,
 		ground: GroundEnum.NONE,
 		background: 's_dnv',
-		top: 155
+		top: 155,
+		itinerant: true
 	},
 	[PlaceEnum.UNIVERSITE]: {
 		placeId: PlaceEnum.UNIVERSITE,
@@ -90,7 +96,8 @@ export const placeList: Record<
 		gather: GatherType.CUEILLE1,
 		specialGather: GatherType.DAILY,
 		ground: GroundEnum.NONE,
-		background: 's_univ'
+		background: 's_univ',
+		itinerant: true
 	},
 	[PlaceEnum.FOUTAINE_DE_JOUVENCE]: {
 		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
@@ -100,7 +107,8 @@ export const placeList: Record<
 		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.NONE,
 		background: 's_fountj',
-		top: 170
+		top: 170,
+		itinerant: true
 	},
 	[PlaceEnum.COLLINES_ESCARPEES]: {
 		placeId: PlaceEnum.COLLINES_ESCARPEES,
@@ -110,7 +118,8 @@ export const placeList: Record<
 		gather: GatherType.HUNT,
 		ground: GroundEnum.DIRT,
 		background: 's_colesc',
-		top: 130
+		top: 130,
+		itinerant: true
 	},
 	[PlaceEnum.GO_TO_GRAND_TOUT_CHAUD]: {
 		placeId: PlaceEnum.GO_TO_GRAND_TOUT_CHAUD,
@@ -303,7 +312,8 @@ export const placeList: Record<
 		gather: GatherType.FISH,
 		ground: GroundEnum.DIRT,
 		background: 's_chutes',
-		top: 110
+		top: 110,
+		itinerant: true
 	},
 	[PlaceEnum.GO_TO_DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.GO_TO_DOME_SOULAFLOTTE,
@@ -323,7 +333,8 @@ export const placeList: Record<
 		gather: GatherType.HUNT,
 		ground: GroundEnum.DIRT,
 		background: 's_baobob',
-		top: 130
+		top: 130,
+		itinerant: true
 	},
 	[PlaceEnum.DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.DOME_SOULAFLOTTE,
@@ -346,7 +357,8 @@ export const placeList: Record<
 		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.WATER,
 		background: 'swp_clear',
-		top: 160
+		top: 160,
+		itinerant: true
 	},
 	[PlaceEnum.MINES_DE_CORAIL]: {
 		placeId: PlaceEnum.MINES_DE_CORAIL,
@@ -356,7 +368,8 @@ export const placeList: Record<
 		gather: GatherType.SEEK,
 		ground: GroundEnum.DIRT,
 		background: 's_corail',
-		top: 150
+		top: 150,
+		itinerant: true
 	},
 	[PlaceEnum.ILE_WAIKIKI]: {
 		placeId: PlaceEnum.ILE_WAIKIKI,
@@ -366,7 +379,8 @@ export const placeList: Record<
 		gather: GatherType.FISH,
 		ground: GroundEnum.DIRT,
 		background: 's_ilewkk',
-		top: 110
+		top: 110,
+		itinerant: true
 	},
 	[PlaceEnum.GO_TO_PORT_DE_PRECHE]: {
 		placeId: PlaceEnum.GO_TO_PORT_DE_PRECHE,
@@ -469,7 +483,8 @@ export const placeList: Record<
 		gather: GatherType.ENERGY1,
 		ground: GroundEnum.NONE,
 		background: 's_pentes',
-		top: 130
+		top: 130,
+		itinerant: true
 	},
 	[PlaceEnum.FORGES_DU_GTC]: {
 		placeId: PlaceEnum.FORGES_DU_GTC,
@@ -479,7 +494,8 @@ export const placeList: Record<
 		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.NONE,
 		background: 's_forges',
-		top: 110
+		top: 110,
+		itinerant: true
 	},
 	[PlaceEnum.RUINES_ASHPOUK]: {
 		placeId: PlaceEnum.RUINES_ASHPOUK,
@@ -489,7 +505,8 @@ export const placeList: Record<
 		gather: GatherType.SEEK,
 		ground: GroundEnum.DIRT,
 		background: 's_rashpk',
-		top: 160
+		top: 160,
+		itinerant: true
 	},
 	[PlaceEnum.FOSSELAVE]: {
 		placeId: PlaceEnum.FOSSELAVE,
@@ -499,7 +516,8 @@ export const placeList: Record<
 		gather: GatherType.SEEK,
 		ground: GroundEnum.NONE,
 		background: 's_fosslv',
-		top: 110
+		top: 110,
+		itinerant: true
 	},
 	[PlaceEnum.REPAIRE_DU_VENERABLE]: {
 		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
@@ -509,7 +527,8 @@ export const placeList: Record<
 		gather: GatherType.HUNT,
 		ground: GroundEnum.NONE,
 		background: 's_vener',
-		top: 130
+		top: 130,
+		itinerant: true
 	},
 	[PlaceEnum.TUNNEL_SOUS_LA_BRANCHE]: {
 		placeId: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
@@ -518,7 +537,8 @@ export const placeList: Record<
 		map: MapZone.GTOUTCHAUD,
 		ground: GroundEnum.DIRT,
 		background: 's_tunel',
-		top: 130
+		top: 130,
+		itinerant: true
 	},
 	[PlaceEnum.GORGES_PROFONDES]: {
 		placeId: PlaceEnum.GORGES_PROFONDES,
