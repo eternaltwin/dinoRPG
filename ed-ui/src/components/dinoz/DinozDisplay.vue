@@ -12,7 +12,7 @@
 				:life="dinozData.life / dinozData.maxLife"
 				:flip="-1"
 				:race="dinozData.race.raceId"
-				:key="dinozData.life"
+				:key="dinozData.life || dinozData.display"
 				:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
 			/>
 			<template #fallback> <Loading /> </template>
