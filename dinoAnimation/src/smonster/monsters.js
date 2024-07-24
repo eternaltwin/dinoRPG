@@ -13,6 +13,8 @@ import { cobra } from './cobra/cobra.js';
 import { coq } from './coq/coq.js';
 import { cyclo } from './cyclo/cyclo.js';
 import { cyclo2 } from './cyclo2/cyclo2.js';
+import { doro } from './doro/doro.js';
+import { dorou } from './dorou/dorou.js';
 import { eearth } from './eearth/eearth.js';
 import { efire } from './efire/efire.js';
 import { egrllz } from './egrllz/egrllz.js';
@@ -118,6 +120,8 @@ export const monsters = {
 	groms: groms,
 	grom2: grom2,
 	grom3: grom3,
+	doro: doro,
+	dorou: dorou,
 	lucet: lucet,
 	taurus: taurus
 };
