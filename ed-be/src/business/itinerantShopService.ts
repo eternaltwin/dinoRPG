@@ -52,20 +52,21 @@ export async function getIngredientsFromItinerantShop(req: Request): Promise<Ing
 
 	return itinerantShop.listItemsSold.map(ingBuy => {
 		// Get the ingredient data if the player has it
-		const ingredientPlayer = player.ingredients.find(playerIng => playerIng.ingredientId === ingBuy.ingredientId);
+		const ingredientPlayer = player.ingredients.find(playerIng => playerIng.ingredientId === ingBuy.id);
 		// Get the reference of the ingredients from the constants
-		const ingredientReference = Object.values(ingredientList).find(ing => ing.ingredientId === ingBuy.ingredientId);
+		const ingredientReference = Object.values(ingredientList).find(ing => ing.ingredientId === ingBuy.id);
 
 		if (!ingredientReference) {
-			throw new ErrorFormator(500, `Ingredient ${ingBuy.ingredientId} doesn't exist`);
+			throw new ErrorFormator(500, `Ingredient ${ingBuy.id} doesn't exist`);
 		}
 
 		if (!ingBuy.price) {
-			throw new ErrorFormator(500, `Ingredient ${ingBuy.ingredientId} doesn't have a price`);
+			throw new ErrorFormator(500, `Ingredient ${ingBuy.id} doesn't have a price`);
 		}
 
 		// Return a new ingredient object with its properties and data
 		return {
+			name: ingredientReference.name,
 			ingredientId: ingredientReference.ingredientId,
 			price: ingredientReference.price,
 			quantity: ingredientPlayer ? ingredientPlayer.quantity : 0,
@@ -133,7 +134,7 @@ export async function sellIngredient(req: Request) {
 		const playerQuantity = player.ingredients.find(ing => ing.ingredientId === i.itemId);
 		if (!playerQuantity) throw new ErrorFormator(500, `Player doesn't have this item in stock.`);
 		return {
-			...itinerantShop?.listItemsSold.find(a => a.ingredientId === i.itemId),
+			...itinerantShop?.listItemsSold.find(a => a.id === i.itemId),
 			quantity: i.quantity,
 			playerQuantity: playerQuantity.quantity
 		};
@@ -141,12 +142,12 @@ export async function sellIngredient(req: Request) {
 
 	let gold = 0;
 	for (const ingre of mappedIngredient) {
-		if (!ingre.ingredientId || !ingre.price) throw new ErrorFormator(500, `Undefined ingredient`);
+		if (!ingre.id || !ingre.price) throw new ErrorFormator(500, `Undefined ingredient`);
 		if (ingre.playerQuantity - ingre.quantity < 0)
 			throw new ErrorFormator(500, `You cannot have less than 0 of this item.`);
 		gold += ingre.price * ingre.quantity;
-		await decreaseIngredientQuantity(playerId, ingre.ingredientId, ingre.quantity);
-		await createLog(LogType.IngredientSold, playerId, undefined, ingre.ingredientId, ingre.quantity.toString());
+		await decreaseIngredientQuantity(playerId, ingre.id, ingre.quantity);
+		await createLog(LogType.IngredientSold, playerId, undefined, ingre.id, ingre.quantity.toString());
 	}
 
 	await addMoney(playerId, gold);

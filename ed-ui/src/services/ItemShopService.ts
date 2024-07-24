@@ -1,8 +1,8 @@
 import { http } from '../utils/index.js';
-import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { ShopFeedBack } from '@drpg/core/models/shop/shopFeedBack';
+import { ItemShopFiche } from '@drpg/core/models/shop/ShopFiche';
 export const ItemShopService = {
-	getItemFromItemShop(shopId: number): Promise<Array<ItemFiche>> {
+	getItemFromItemShop(shopId: number): Promise<Array<ItemShopFiche>> {
 		return http()
 			.get(`/shop/getShop/${shopId}`)
 			.then(res => Promise.resolve(res.data))

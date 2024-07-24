@@ -1588,6 +1588,11 @@
 		"dinoz": {
 			"help": "Bienvenue dans l'enclos à Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
 		},
+		"confirm": {
+			"classic": "Désirez-vous acheter {quantity} {item} pour un total de {value} or ?",
+			"filou": "Désirez-vous acheter {quantity} bons pour un total de {sold} {item} ?",
+			"magic": "Désirez-vous acheter {item} pour un total de {sold} napodinos ?"
+		},
 		"item": {
 			"help": "Cliquez sur un objet dans la liste de gauche pour l'examiner...",
 			"advice": "**Conseil du jour :** ",
@@ -1649,6 +1654,10 @@
 				"name": "Marchand Ambulant",
 				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !",
 				"dimanche": "Le Marchand Ambulant a pris son jour de congé, il faudra patienter jusqu'à demain pour pouvoir vendre de nouveau vos ingrédients. Bien sûr, le Marchand Ambulant se sera déplacé à un lieu différent, il faudra donc le trouver avant de pouvoir vendre vos ingrédients."
+			},
+			"filou": {
+				"name": "Homme Louche",
+				"description": "C'est assez cher, mais a priori, il n'existe pas d'autre façon d'en avoir facilement..."
 			}
 		}
 	},

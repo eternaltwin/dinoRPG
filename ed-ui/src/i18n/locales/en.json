@@ -1649,6 +1649,10 @@
 				"name": "Travelling Merchant",
 				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !",
 				"dimanche": "Le Marchand Ambulant a pris son jour de congé, il faudra patienter jusqu'à demain pour pouvoir vendre de nouveau vos ingrédients. Bien sûr, le Marchand Ambulant se sera déplacé à un lieu différent, il faudra donc le trouver avant de pouvoir vendre vos ingrédients."
+			},
+			"filou": {
+				"name": "Homme Louche",
+				"description": "C'est assez cher, mais a priori, il n'existe pas d'autre façon d'en avoir facilement..."
 			}
 		}
 	},

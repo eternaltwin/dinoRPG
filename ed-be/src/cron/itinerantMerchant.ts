@@ -7,8 +7,7 @@ const itinerantMerchant = () => {
 	const CronJob = cron.CronJob;
 
 	return new CronJob('0 0 * * MON', async () => {
-		const availablePlace = Object.values(placeList)
-			.filter(p => p.itinerant === true);
+		const availablePlace = Object.values(placeList).filter(p => p.itinerant === true);
 
 		const random = Math.round(Math.random() * availablePlace.length);
 		const weekPlace = availablePlace[random];

@@ -1,61 +1,75 @@
 <template>
-	<div class="shop">
-		<TitleHeader :title="$t('pageTitle.shop') + $t(`shop.item.${shopNameList[shopId]}.name`) + ` ]`" />
+	<div class="shop" v-if="actualShop">
+		<TitleHeader :title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`" />
 		<div class="section">
 			<div class="titlePage" style="undefined" width="520" height="27" v-html="formatContent($t(`shop.item.title`))" />
 			<div
 				class="subTitlePage"
-				style="undefined"
 				width="520"
 				height="27"
-				v-html="formatContent($t(`shop.item.${shopNameList[shopId]}.name`))"
+				v-html="formatContent($t(`shop.item.${actualShop.name}.name`))"
 			/>
 		</div>
 		<div class="shopDesc">
 			<div class="contain">
 				<div class="art art_shop">
-					<img :src="getImgURL('shop', `shop_${shopNameList[shopId]}`)" :alt="shopNameList[shopId]" />
+					<img :src="getImgURL('shop', `shop_${actualShop.name}`)" :alt="actualShop.name" />
 				</div>
-				<p v-html="formatContent($t(`shop.item.${shopNameList[shopId]}.description`))" />
+				<p v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
 				<div class="clear"></div>
 			</div>
 		</div>
 		<div class="bg bg2">
 			<div class="list">
-				<Tippy
-					theme="small"
-					class="name"
-					v-for="(item, index) in itemList"
-					:id="itemNameList[item.itemId]"
-					:key="index"
-					tag="a"
-				>
-					<img
-						:src="getImgURL('item', `item_${itemNameList[item.itemId]}`)"
-						:alt="itemNameList[item.itemId]"
-						@click="selectedItem = item"
-					/>
-					<template #content>
-						<h2 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
-						<p v-if="item.itemType === 'magical'">
-							{{ formatContent($t(`shop.item.price`)) }}
-							<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-							{{ formatContent($t(`item.name.golden_napodino`)) }}
-							x {{ item.price }}
-						</p>
-						<p v-else>
-							{{ item.price }}
-							<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-						</p>
-					</template>
-				</Tippy>
+				<template v-if="itemList.length > 0">
+					<Tippy theme="small" class="name" v-for="(item, index) in itemList" :id="item.name" :key="index" tag="a">
+						<img :src="getImgURL('item', `item_${item.name}`)" :alt="item.name" @click="selectItem(item.itemId)" />
+						<template #content>
+							<h2 v-html="formatContent($t(`item.name.${item.name}`))" />
+							<p v-if="item.itemType === 'magical'">
+								{{ formatContent($t(`shop.item.price`)) }}
+								<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+								{{ formatContent($t(`item.name.golden_napodino`)) }}
+								x {{ item.price }}
+							</p>
+							<p v-else>
+								{{ item.price }}
+								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
+							</p>
+						</template>
+					</Tippy>
+				</template>
+				<template v-else>
+					<Tippy
+						theme="small"
+						class="name"
+						v-for="(item, index) in ingredientList"
+						:id="item.name"
+						:key="index"
+						tag="a"
+					>
+						<img :src="getImgURL('ingredients', item.name)" :alt="item.name" @click="selectItem(item.ingredientId)" />
+						<template #content>
+							<h2 v-html="formatContent($t(`ingredients.name.${item.name}`))" />
+							<p>
+								{{ item.price }} -> 1
+								<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
+							</p>
+						</template>
+					</Tippy>
+				</template>
 			</div>
 			<div class="details">
-				<div v-if="selectedItem.itemId === 0" id="shop_guide">
+				<div v-if="!selectedItem" id="shop_guide">
 					<p v-html="formatContent($t('shop.item.help'))" />
 					<div class="ad" v-html="formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))" />
 				</div>
-				<div v-if="selectedItem.itemId !== 0" id="item_" class="item" style="display: block">
+				<div
+					v-if="selectedItem && selectedItem.type === ItemShopType.ITEM"
+					id="item_"
+					class="item"
+					style="display: block"
+				>
 					<Tippy
 						theme="small"
 						tag="div"
@@ -63,9 +77,9 @@
 						:class="{
 							full: isFull(selectedItem)
 						}"
-						@click="buyMaxItemPopinConfirmChoice()"
+						@click="popinConfirmChoice(true)"
 					>
-						{{ selectedItem.quantity }} / {{ selectedItem.maxQuantity }}
+						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
 						<template #content>
 							<div
 								v-html="
@@ -118,8 +132,8 @@
 						<input type="number" v-model="selectedQuantity" />
 						<a
 							class="button"
-							v-if="isSelectedQuantityValid(parseFloat(selectedQuantity), selectedItem)"
-							@click="buyItemPopinConfirmChoice()"
+							v-if="isSelectedQuantityValid(parseFloat(selectedQuantity), resolveItem(selectedItem))"
+							@click="popinConfirmChoice(false)"
 						>
 							{{ $t(`shop.item.buy`) }}
 						</a>
@@ -134,15 +148,15 @@
 					<div class="header">
 						<img
 							class="icon"
-							:src="getImgURL('item', `item_${itemNameList[selectedItem.itemId]}`)"
-							:alt="itemNameList[selectedItem.itemId]"
+							:src="getImgURL('item', `item_${resolveItem(selectedItem).name}`)"
+							:alt="resolveItem(selectedItem).name"
 						/>
 						<div class="name">
-							{{ $t(`item.name.${itemNameList[selectedItem.itemId]}`) }}
+							{{ $t(`item.name.${resolveItem(selectedItem).name}`) }}
 						</div>
 						<div v-if="selectedItem.itemType !== 'magical'" class="value">
 							<span class="money">
-								{{ selectedItem.price }}
+								{{ resolveItem(selectedItem).price }}
 								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
 							</span>
 						</div>
@@ -154,7 +168,117 @@
 						{{ formatContent($t(`item.name.golden_napodino`)) }}
 						x {{ selectedItem.price }}
 					</div>
-					<div class="desc" v-html="formatContent($t(`item.description.${itemNameList[selectedItem.itemId]}`))" />
+					<div class="desc" v-html="formatContent($t(`item.description.${resolveItem(selectedItem).name}`))" />
+				</div>
+				<div
+					v-if="selectedItem && selectedItem.type === ItemShopType.INGREDIENT"
+					id="ingredient_"
+					class="item"
+					style="display: block"
+				>
+					<Tippy
+						theme="small"
+						tag="div"
+						class="stock"
+						:class="{
+							full: isFull(selectedItem)
+						}"
+						:key="selectedItem.quantity"
+						@click="popinConfirmChoice(true)"
+					>
+						{{ resolveIngredient(selectedItem).quantity }} / {{ resolveIngredient(selectedItem).maxQuantity }}
+						<template #content>
+							<div
+								v-html="
+									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
+									selectedItem.quantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
+									selectedItem.maxQuantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+								"
+							/>
+							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
+						</template>
+					</Tippy>
+					<div class="type">
+						<Tippy
+							theme="small"
+							tag="img"
+							v-if="selectedItem.canBeUsedNow"
+							:src="getImgURL('icons', 'small_use')"
+							alt="use"
+						>
+							<template #content>
+								<p v-html="formatContent($t('tooltip.item.use'))" />
+							</template>
+						</Tippy>
+						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="no use">
+							<template #content>
+								<p v-html="formatContent($t('tooltip.item.useOff'))" />
+							</template>
+						</Tippy>
+						<Tippy
+							theme="small"
+							tag="img"
+							v-if="selectedItem.canBeEquipped"
+							:src="getImgURL('icons', 'small_equip')"
+							alt="equip"
+						>
+							<template #content>
+								<p v-html="formatContent($t('tooltip.item.equip'))" />
+							</template>
+						</Tippy>
+						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="un-equip">
+							<template #content>
+								<p v-html="formatContent($t('tooltip.item.equipOff'))" />
+							</template>
+						</Tippy>
+					</div>
+					<div class="infos">
+						<label for="field_1">{{ $t('shop.item.quantity') }}</label>
+						<input type="number" v-model="selectedQuantity" />
+						<a
+							class="button"
+							v-if="selectedQuantity > 0 && selectedQuantity * selectedItem.price <= selectedItem.quantity"
+							@click="popinConfirmChoice(false)"
+						>
+							{{ $t(`shop.item.buy`) }}
+						</a>
+						<Tippy theme="small" tag="a" class="button disabled" v-else>
+							<template #content>
+								<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
+								<div v-html="formatContent($t('tooltip.shop.invalidQuantity_foot'))" />
+							</template>
+							{{ $t(`shop.item.buy`) }}
+						</Tippy>
+					</div>
+					<div class="header">
+						<img
+							class="icon"
+							:src="getImgURL('ingredients', resolveIngredient(selectedItem).name)"
+							:alt="resolveIngredient(selectedItem).name"
+						/>
+						<div class="name">
+							{{ $t(`ingredients.name.${resolveIngredient(selectedItem).name}`) }}
+						</div>
+						<div v-if="selectedItem.itemType !== 'magical'" class="value">
+							<span class="money">
+								{{ resolveItem(selectedItem).price }} -> 1
+								<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
+							</span>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
+						{{ formatContent($t(`shop.item.price`)) }}
+						<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+						{{ formatContent($t(`item.name.golden_napodino`)) }}
+						x {{ selectedItem.price }}
+					</div>
+					<div
+						class="desc"
+						v-html="formatContent($t(`ingredients.description.${resolveIngredient(selectedItem).name}`))"
+					/>
 				</div>
 			</div>
 		</div>
@@ -166,12 +290,16 @@ import { defineComponent } from 'vue';
 import { ItemShopService } from '../services/index.js';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { errorHandler } from '../utils/index.js';
-import { shopNameList } from '../constants/index.js';
 import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { formatText } from '../utils/formatText.js';
+import { shopList } from '@drpg/core/models/shop/ShopList';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { ItemShopFiche, ItemShopType } from '@drpg/core/models/shop/ShopFiche';
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -179,10 +307,12 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			itemList: [] as Array<ItemFiche>,
-			itemNameList: itemNameList,
-			shopNameList: shopNameList,
-			selectedItem: {} as ItemFiche,
-			selectedQuantity: 1 as number
+			ingredientList: [] as IngredientFiche[],
+			fullItems: [] as ItemShopFiche[],
+			shopList: shopList,
+			selectedItem: undefined as ItemShopFiche | undefined,
+			selectedQuantity: 1 as number,
+			ItemShopType: ItemShopType
 		};
 	},
 	components: {
@@ -192,7 +322,7 @@ export default defineComponent({
 		// Check if the quantity select is valid:
 		// i.e a valid number or the player has enough room
 		isSelectedQuantityValid(): {
-			(selectedQuantity: number, selectedItem: ItemFiche): boolean;
+			(selectedQuantity: number, selectedItem: ItemShop): boolean;
 		} {
 			return (selectedQuantity: number, selectedItem: ItemFiche) => {
 				return (
@@ -202,8 +332,16 @@ export default defineComponent({
 				);
 			};
 		},
-		shopId(): number {
-			return shopNameList.indexOf(this.$route.params.name?.toString());
+		actualShop() {
+			const shop = Object.values(shopList).find(s => s.name === this.$route.params.name);
+			if (!shop) {
+				this.$toast.open({
+					message: this.$t('toast.noShop'),
+					type: 'error'
+				});
+				return;
+			}
+			return shop;
 		}
 	},
 	methods: {
@@ -212,84 +350,154 @@ export default defineComponent({
 		},
 		// Buy n of the selected item
 		async buyItems(itemId: number, quantity: number): Promise<void> {
+			if (!this.actualShop || !this.selectedItem) return;
 			try {
-				const bought = await ItemShopService.buyItem(this.shopId, itemId, quantity);
-				const message = this.$t(`toast.itemBought`, {
+				const bought = await ItemShopService.buyItem(this.actualShop.shopId, itemId, quantity);
+				let message = this.$t(`toast.itemBought`, {
 					quantity: bought.quantity,
-					itemName: this.$t(`item.name.${itemNameList[bought.itemId]}`)
+					itemName: this.$t(`item.name.${this.resolveItem(this.selectedItem).name}`)
 				});
+				if (this.actualShop.type === ShopType.FILOU) {
+					message = this.$t(`toast.itemBought`, {
+						quantity: bought.quantity,
+						itemName: this.$t(`item.name.treasure_coupon`)
+					});
+				}
 				EventBus.emit('isLoading', false);
 				this.$toast.open({
 					message: formatText(message),
 					type: 'info'
 				});
-				// Update the new quantity
-				// Both values are forced to number to avoid them somehow being treated as a string
-				this.selectedItem.quantity = Number(this.selectedItem.quantity!) + Number(quantity);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 
 			// Update player's money if the item purchased is non magical
-			if (this.selectedItem.itemType !== 'magical') {
-				const newMoney = (this.playerStore.getMoney! - this.selectedItem.price! * quantity) as number;
-				this.playerStore.setMoney(newMoney);
+			if (
+				this.actualShop.type === ShopType.CLASSIC ||
+				this.actualShop.type === ShopType.CURSED ||
+				this.actualShop.type === ShopType.ITINERANT
+			) {
+				// Update the new quantity
+				// Both values are forced to number to avoid them somehow being treated as a string
+				this.selectedItem.quantity = this.selectedItem.quantity + quantity;
+				EventBus.emit('refreshMoney', true);
+			} else if (this.actualShop.type === ShopType.FILOU) {
+				this.selectedItem = undefined;
+				await this.loadPage();
 			}
 		},
-		async buyMaxItemPopinConfirmChoice(): Promise<void> {
-			const maxQuantity: number = this.selectedItem.maxQuantity! - this.selectedItem.quantity!;
-			const totalPrice: number = maxQuantity * this.selectedItem.price!;
+		async popinConfirmChoice(max: boolean): Promise<void> {
+			if (!this.selectedItem || !this.actualShop) return;
+			let quantity: number;
+			let totalPrice;
+			if (this.selectedItem.type === ItemShopType.INGREDIENT) {
+				if (max) {
+					quantity = Math.floor(this.selectedItem.quantity / this.selectedItem.price);
+				} else {
+					quantity = this.selectedQuantity;
+				}
+				if (quantity > this.selectedItem.quantity) {
+					quantity = Math.floor(this.selectedItem.quantity / this.selectedItem.price);
+				}
 
-			const res: boolean = confirm(
-				this.$t('popup.shop.buyMaxConfirm_part1') +
-					maxQuantity +
-					this.$t('popup.shop.buyMaxConfirm_part2') +
-					totalPrice +
-					(this.selectedItem.itemType === 'magical'
-						? this.$t('popup.shop.buyMaxConfirm_part3b')
-						: this.$t('popup.shop.buyMaxConfirm_part3a'))
-			);
-			if (res) {
+				totalPrice = quantity * this.selectedItem.price;
+			} else {
+				const myGolds = this.playerStore.getMoney;
+				if (max) {
+					quantity = this.resolveItem(this.selectedItem).maxQuantity - this.selectedItem.quantity;
+				} else {
+					quantity = this.selectedQuantity;
+				}
+				totalPrice = quantity * this.selectedItem.price;
+				if (totalPrice > myGolds) {
+					quantity = Math.floor(myGolds / this.selectedItem.price);
+					totalPrice = quantity * this.selectedItem.price;
+				}
+			}
+			const item =
+				this.selectedItem.type === ItemShopType.ITEM
+					? this.$t(`item.name.${this.resolveItem(this.selectedItem).name}`)
+					: this.$t(`ingredients.name.${this.resolveIngredient(this.selectedItem).name}`);
+
+			let text;
+			switch (this.actualShop.type) {
+				case ShopType.FILOU:
+					text = this.$t('shop.confirm.filou', {
+						quantity: quantity,
+						item: item,
+						sold: totalPrice
+					});
+					break;
+				case ShopType.MAGICAL:
+					text = this.$t('shop.confirm.magic', {
+						item: item,
+						sold: totalPrice
+					});
+					break;
+				default:
+					text = this.$t('shop.confirm.classic', {
+						quantity: quantity,
+						item: item,
+						value: totalPrice
+					});
+			}
+			const res: boolean = confirm(text);
+			if (res && quantity > 0) {
 				EventBus.emit('isLoading', true);
-				this.buyItems(this.selectedItem.itemId!, maxQuantity);
+				await this.buyItems(this.selectedItem.id, quantity);
 			}
 		},
-		async buyItemPopinConfirmChoice(): Promise<void> {
-			const res: boolean = confirm(this.$t('popup.confirm'));
-			if (res) {
-				EventBus.emit('isLoading', true);
-				this.buyItems(this.selectedItem.itemId!, this.selectedQuantity!);
-			}
-		}
-	},
-	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		// Get shop and its items to display
-		try {
-			this.itemList = await ItemShopService.getItemFromItemShop(this.shopId);
-			this.selectedItem.itemId = 0;
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err, this.$toast, this.$t);
-			return;
-		}
-	},
-	watch: {
-		// Reload the item list if the player go on another shop page
-		'$route.params.name': async function () {
-			if (this.shopId < 0) {
-				return;
-			}
+		resolveItem(item: ItemShopFiche): ItemFiche {
+			const realItem = Object.values(itemList).find(i => i.itemId === item.id);
+			return {
+				...realItem,
+				price: item.price,
+				quantity: item.quantity ?? 0
+			};
+		},
+		resolveIngredient(item: ItemShopFiche): IngredientFiche {
+			const realItem = Object.values(ingredientList).find(i => i.ingredientId === item.id);
+			return {
+				...realItem,
+				price: item.price,
+				quantity: item.quantity ?? 0
+			};
+		},
+		selectItem(itemId: number) {
+			this.selectedItem = this.fullItems.find(i => i.id === itemId);
+		},
+		async loadPage() {
 			EventBus.emit('isLoading', true);
+			// Get shop and its items to display
 			try {
-				this.itemList = await ItemShopService.getItemFromItemShop(this.shopId);
-				this.selectedItem.itemId = 0;
+				this.fullItems = await ItemShopService.getItemFromItemShop(this.actualShop?.shopId ?? 0);
+				this.itemList = this.fullItems
+					.filter(i => i.type === ItemShopType.ITEM)
+					.map(i => {
+						return this.resolveItem(i);
+					});
+				this.ingredientList = this.fullItems
+					.filter(i => i.type === ItemShopType.INGREDIENT)
+					.map(i => {
+						return this.resolveIngredient(i);
+					});
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
+		}
+	},
+	async mounted(): Promise<void> {
+		await this.loadPage();
+	},
+	watch: {
+		// Reload the item list if the player go on another shop page
+		'$route.params.name': async function () {
+			if (this.$route.name !== this.$options.name) return;
+			await this.loadPage();
 		}
 	}
 });

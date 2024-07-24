@@ -18,7 +18,8 @@ export const shopNameList: Array<string> = [
 	'merchant',
 	'merchant',
 	'merchant',
-	'merchant'
+	'merchant',
+	'filou'
 ];
 
 export const itinerantShopNameList: Array<string> = [

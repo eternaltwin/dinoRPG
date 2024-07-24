@@ -3,7 +3,7 @@ import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { ShopFiche } from '@drpg/core/models/shop/ShopFiche';
+import { ItemShopFiche, ItemShopType, ShopFiche } from '@drpg/core/models/shop/ShopFiche';
 import { shopList } from '@drpg/core/models/shop/ShopList';
 import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
 import { Request } from 'express';
@@ -14,6 +14,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 
 /**
  * @summary Get all items from a shop
@@ -21,7 +22,7 @@ import { StatTracking } from '@drpg/core/models/enums/statTracking';
  * @param req.params.shopId {string} ShopId
  * @return Array<ItemFiche>
  */
-export async function getItemsFromShop(req: Request): Promise<ItemFiche[]> {
+export async function getItemsFromShop(req: Request): Promise<ItemShopFiche[]> {
 	if (!req.auth?.playerId) {
 		throw new ErrorFormator(500, `Unauthorized.`);
 	}
@@ -42,45 +43,31 @@ export async function getItemsFromShop(req: Request): Promise<ItemFiche[]> {
 		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
 	}
 
-	if (tempShop.type === ShopType.ITINERANT) {
-		throw new ErrorFormator(500, `Wrong shop returned`);
-	}
-
 	checkDinozPlace(tempShop, playerShopData, shopId);
+
+	/*	if (tempShop.type === ShopType.ITINERANT) {
+		throw new ErrorFormator(500, `Wrong shop returned`);
+	}*/
 
 	// All checks passed, let's create the list of items with the proper values
 	return tempShop.listItemsSold.map(itemSold => {
 		// Get the item data if the player has it
-		const itemPlayer = playerShopData.items.find(playerItem => playerItem.itemId === itemSold.itemId);
-		// Get the reference of the items from the constants
-		const itemReference = Object.values(itemList).find(item => item.itemId === itemSold.itemId);
-
-		if (!itemReference) {
-			throw new ErrorFormator(500, `Item ${itemSold.itemId} doesn't exist.`);
-		}
-
-		if (!itemSold.price) {
-			throw new ErrorFormator(500, `Item ${itemSold.itemId} doesn't have a price.`);
+		let itemPlayer;
+		if (itemSold.type === ItemShopType.ITEM) {
+			itemPlayer = playerShopData.items.find(playerItem => playerItem.itemId === itemSold.id);
+		} else {
+			itemPlayer = playerShopData.ingredients.find(playerItem => playerItem.ingredientId === itemSold.id);
 		}
 
 		// Return a new item object with its properties set accordingly to the player's unique skills and data
 		return {
-			itemId: itemReference.itemId,
-			// Merchant works only for the flying shop also called Dinoland's shop
+			id: itemSold.id,
 			price:
 				playerShopData.merchant && tempShop.shopId === shopList.FLYING_SHOP.shopId
 					? Math.round(itemSold.price * 0.9)
 					: itemSold.price,
 			quantity: itemPlayer ? itemPlayer.quantity : 0,
-			// ShopKeeper does not work for magical items
-			maxQuantity:
-				playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
-					? Math.round(itemReference.maxQuantity * 1.5)
-					: itemReference.maxQuantity,
-			canBeUsedNow: itemReference.canBeUsedNow,
-			canBeEquipped: itemReference.canBeEquipped,
-			itemType: itemReference.itemType,
-			isRare: itemReference.isRare
+			type: itemSold.type
 		};
 	});
 }
@@ -123,14 +110,14 @@ export async function buyItem(req: Request) {
 		throw new ErrorFormator(500, `The shop ${shopId} does not exist`);
 	}
 
-	if (theShop.type === ShopType.ITINERANT) {
+	/*	if (theShop.type === ShopType.ITINERANT || theShop.type === ShopType.FILOU) {
 		throw new ErrorFormator(500, `Wrong shop returned.`);
-	}
+	}*/
 
 	checkDinozPlace(theShop, playerShopData, shopId);
 
 	// Get the item from the shop list
-	const itemSold = theShop.listItemsSold.find(item => item.itemId === itemId);
+	const itemSold = theShop.listItemsSold.find(item => item.id === itemId);
 	// Throw an exception if the item does not exist in the shop list of items
 	if (itemSold === undefined) {
 		throw new ErrorFormator(500, `The item ${itemId} does not exist in the shop ${shopId}`);
@@ -143,10 +130,6 @@ export async function buyItem(req: Request) {
 
 	if (!itemReference) {
 		throw new ErrorFormator(500, `Item ${itemId} doesn't exist.`);
-	}
-
-	if (!itemSold.price) {
-		throw new ErrorFormator(500, `Item ${itemId} doesn't have a price.`);
 	}
 
 	itemReference.price =
@@ -163,6 +146,34 @@ export async function buyItem(req: Request) {
 	// To avoid making this function bigger, use buyMagicItem if the shop is magical
 	if (theShop.type === ShopType.MAGICAL) {
 		await buyMagicItem(playerId, playerShopData, itemReference, quantityBought, playerItemData);
+	} else if (theShop.type === ShopType.FILOU) {
+		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList.TREASURE_COUPON.itemId);
+		if (!playerTreasure) {
+			await insertItem(playerId, { itemId: itemList.TREASURE_COUPON.itemId, quantity: quantityBought });
+		} else {
+			await increaseItemQuantity(playerId, itemList.TREASURE_COUPON.itemId, quantityBought);
+		}
+		await createLog(
+			LogType.ItemBought,
+			playerId,
+			undefined,
+			itemList.TREASURE_COUPON.itemId.toString(),
+			quantityBought.toString()
+		);
+
+		//Update stats
+		await setSpecificStat(StatTracking.S_BUYER, playerId, quantityBought);
+
+		const itemFromShop = shopList.FILOU.listItemsSold.find(i => i.id === itemId);
+		if (!itemFromShop) {
+			throw new ErrorFormator(500, `The item ${itemId} is not sellable for coupons!`);
+		}
+		await decreaseIngredientQuantity(playerId, itemReference.itemId, itemFromShop.price * quantityBought);
+		return {
+			itemId: itemList.TREASURE_COUPON.itemId,
+			quantity: quantityBought,
+			gold: quantityBought
+		};
 	} else {
 		// Throws an exception if player doesn't have enough money to buy the items
 		if (playerShopData.money < itemReference.price * quantityBought) {

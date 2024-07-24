@@ -577,6 +577,12 @@ export async function getPlayerShopItemsDataRequest(playerId: number) {
 					quantity: true
 				}
 			},
+			ingredients: {
+				select: {
+					ingredientId: true,
+					quantity: true
+				}
+			},
 			dinoz: {
 				select: {
 					placeId: true,
@@ -619,7 +625,7 @@ export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: 
 					quantity: true
 				},
 				where: {
-					itemId: { in: [itemId, itemList.GOLDEN_NAPODINO.itemId] }
+					itemId: { in: [itemId, itemList.GOLDEN_NAPODINO.itemId, itemList.TREASURE_COUPON.itemId] }
 				}
 			},
 			dinoz: {

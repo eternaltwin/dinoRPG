@@ -1,6 +1,6 @@
 import { Ingredient } from './ingredientList.mjs';
 export interface IngredientFiche {
-	name?: string;
+	name: string;
 	ingredientId: Ingredient;
 	maxQuantity: number;
 	price: number;

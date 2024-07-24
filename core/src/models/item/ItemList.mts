@@ -323,6 +323,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Irma's Potion: new action
 	POTION_IRMA: {
 		itemId: 1,
+		name: 'potion_irma',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -338,6 +339,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Angel potion: resurrects a dino
 	POTION_ANGEL: {
 		itemId: 2,
+		name: 'potion_angel',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -353,6 +355,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Cloud burger: heals 10
 	CLOUD_BURGER: {
 		itemId: 3,
+		name: 'cloud_burger',
 		canBeEquipped: true,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -370,6 +373,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Authentic hot bread: heals 100
 	HOT_BREAD: {
 		itemId: 4,
+		name: 'hot_bread',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -385,6 +389,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Meat pie: heals 30
 	MEAT_PIE: {
 		itemId: 5,
+		name: 'meat_pie',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -400,6 +405,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Fight ration: heals up to 20 during a fight
 	FIGHT_RATION: {
 		itemId: 6,
+		name: 'fight_ration',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -413,6 +419,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Surviving ration: heals between 10 and 40 during a fight
 	SURVIVING_RATION: {
 		itemId: 7,
+		name: 'surviving_ration',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -426,6 +433,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Goblin's Merguez: heals ?? during a fight
 	GOBLIN_MERGUEZ: {
 		itemId: 8,
+		name: 'goblin_merguez',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -439,6 +447,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Pampleboum: heals 15
 	PAMPLEBOUM: {
 		itemId: 9,
+		name: 'pampleboum',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -453,6 +462,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// SOS Helmet: increases armor by 1 in a fight
 	SOS_HELMET: {
 		itemId: 10,
+		name: 'sos_helmet',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -465,6 +475,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Little pepper: increases next assault value by 10
 	LITTLE_PEPPER: {
 		itemId: 11,
+		name: 'little_pepper',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -477,6 +488,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Zippo: Set dino on fire during a fight
 	ZIPPO: {
 		itemId: 12,
+		name: 'zippo',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -489,6 +501,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// SOS flame: summons a flame to fight with you
 	SOS_FLAME: {
 		itemId: 13,
+		name: 'sos_flame',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -501,6 +514,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Refrigerated Shield: Increases fire defense by 20 during a fight
 	REFRIGERATED_SHIELD: {
 		itemId: 14,
+		name: 'refrigerated_shield',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -513,6 +527,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Fuca Pill: increases attack speed by 50% during a fight
 	FUCA_PILL: {
 		itemId: 15,
+		name: 'fuca_pill',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -525,6 +540,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Monochromatic: all standards assault hit of the highest element of the dino during a fight (but speed follows normal rotation)
 	MONOCHROMATIC: {
 		itemId: 16,
+		name: 'monochromatic',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -537,6 +553,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Poisonite Shot: heals poison during a fight / prevents to be poisoned during a fight??
 	POISONITE_SHOT: {
 		itemId: 17,
+		name: 'poisonite_shot',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -547,6 +564,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Loris's Costume: makes an enemy attack someone else on his side during a fight
 	LORIS_COSTUME: {
 		itemId: 18,
+		name: 'loris_costume',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -559,6 +577,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Vegetox Guard's Costume: Disguise a dino into a vegetox guard
 	VEGETOX_COSTUME: {
 		itemId: 19,
+		name: 'vegetox_costume',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -569,6 +588,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Goblin's Costume: Disguise a dino into a gobelin
 	GOBLIN_COSTUME: {
 		itemId: 20,
+		name: 'goblin_costume',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -579,6 +599,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Pampleboum Pit: give a bonus to an assault (%, fixed valued??)
 	PAMPLEBOUM_PIT: {
 		itemId: 21,
+		name: 'pampleboum_pit',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -591,6 +612,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Portable Love: can attack flying dinoz
 	PORTABLE_LOVE: {
 		itemId: 22,
+		name: 'portable_love',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -603,6 +625,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Danger Detector: protects against an attack that inflicts more than 25 hp
 	DANGER_DETECTOR: {
 		itemId: 23,
+		name: 'danger_detector',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -613,6 +636,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Pirhanoz in bag: summons a pirhanoz
 	PIRHANOZ_IN_BAG: {
 		itemId: 24,
+		name: 'pirhanoz_in_bag',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CURSED,
@@ -626,6 +650,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// to gain XP during fights.
 	DEVIL_OINTMENT: {
 		itemId: 25,
+		name: 'devil_ointment',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CURSED,
@@ -642,6 +667,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// A or E for the next three turns.
 	LAND_OF_ASHES: {
 		itemId: 26,
+		name: 'land_of_ashes',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -656,6 +682,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// of their attacks and assaults drop by 25% for the next three turns.
 	ABYSS: {
 		itemId: 27,
+		name: 'abyss',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -670,6 +697,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// next three turns unless they are subjected to an attack which causes them to lose 10 HP.
 	AMAZON: {
 		itemId: 28,
+		name: 'amazon',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -684,6 +712,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// their HP for the next three turns.
 	ST_ELMAS_FIRE: {
 		itemId: 29,
+		name: 'st_elmas_fire',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -698,6 +727,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// their speed for the next three turns.
 	UVAVU: {
 		itemId: 30,
+		name: 'uvavu',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -710,6 +740,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Strong Tea: allows you to cancel the effects of beer on the opposing team.
 	STRONG_TEA: {
 		itemId: 31,
+		name: 'strong_tea',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -722,6 +753,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Temporal Stabiliser: ??
 	TEMPORAL_STABILISER: {
 		itemId: 32,
+		name: 'temporal_stabiliser',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -732,6 +764,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Elixir: heals 200, Chen's shop
 	ELIXIR: {
 		itemId: 33,
+		name: 'elixir',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -747,6 +780,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Elixir of Life: quest item to heal the Venerable Dragon
 	ELIXIR_OF_LIFE: {
 		itemId: 34,
+		name: 'elixir_of_life',
 		canBeEquipped: false, // TODO double check
 		canBeUsedNow: false, // TODO double check
 		itemType: ItemType.CLASSIC,
@@ -758,6 +792,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Banishement: prevents a dinoz from calling reinforcements during a battle
 	BANISHMENT: {
 		itemId: 35,
+		name: 'banishement',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -769,6 +804,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Battering Ram: dinoz attacks castle twice if victorious
 	BATTERING_RAM: {
 		itemId: 36,
+		name: 'battering_ram',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -780,6 +816,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Ember (braise): increases fire assault of all fighters by 30%
 	EMBER: {
 		itemId: 37,
+		name: 'ember',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -791,6 +828,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Scale: an enemy dinoz will be killed if your dinoz dies during a fight
 	SCALE: {
 		itemId: 38,
+		name: 'scale',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -802,6 +840,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Beer: prevents all dinoz from healing during a fight
 	BEER: {
 		itemId: 39,
+		name: 'beer',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -813,6 +852,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Encyclopedia: increases experience gain by 15%
 	ENCYCLOPEDIA: {
 		itemId: 40,
+		name: 'encyclopedia',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -824,6 +864,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Antichromatic: cancels the effect of monochromatics used by the enemy
 	ANTICHROMATIC: {
 		itemId: 41,
+		name: 'antichromatic',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -835,6 +876,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Antidote: permanently immunize against poisons
 	ANTIDOTE: {
 		itemId: 42,
+		name: 'antidote',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -846,6 +888,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Time Manipulator (Temporary Manipulator?): prevents all dinoz from using E skills in a fight
 	TIME_MANIPULATOR: {
 		itemId: 43,
+		name: 'time_manipulator',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -858,6 +901,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// and leave the fight
 	DIMENSIONAL_POWDER: {
 		itemId: 44,
+		name: 'dimensional_powder',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -869,6 +913,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Sorcerer's Stick: reduces the hp of a random (enemy?) dinoz by 30% (It replaces an attack)
 	SORCERERS_STICK: {
 		itemId: 45,
+		name: 'sorcerers_stick',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -881,6 +926,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// attack it too
 	FRIENDLY_WHISTLE: {
 		itemId: 46,
+		name: 'friendly_whistle',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -893,6 +939,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// (Does not cumulate though with Career Plan though)
 	DINOZ_CUBE: {
 		itemId: 47,
+		name: 'dinoz_cube',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -904,6 +951,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Temporal Reduction: reduces initiative bonuses and penalties by 50% on the equipped dinoz
 	TEMPORAL_REDUCTION: {
 		itemId: 48,
+		name: 'temporal_reduction',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -915,6 +963,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Tear of Life: gives clones 10% of the life of the casting Dinoz
 	TEAR_OF_LIFE: {
 		itemId: 49,
+		name: 'tear_of_life',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -926,6 +975,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Cuzcussian Mask: makes the wearer's teammates immune to Hypnosis
 	CUZCUSSIAN_MASK: {
 		itemId: 50,
+		name: 'cuzcussian_mask',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -937,6 +987,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Anti-grave Suit: makes the wearer's teammates immune to Black Hole
 	ANTI_GRAVE_SUIT: {
 		itemId: 51,
+		name: 'anti_grave_suit',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -948,6 +999,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Enchanted Steroid: makes the equipped dinoz immune to penalties to max endurance
 	ENCHANTED_STEROID: {
 		itemId: 52,
+		name: 'enchanted_steroid',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -959,6 +1011,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Curse Locker: restricts a random enemy to using their weakest element for 3 turns
 	CURSE_LOCKER: {
 		itemId: 53,
+		name: 'curse_locker',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -971,6 +1024,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// object can now form groups with dinoz with the same key element as they do
 	FEAR_FACTOR: {
 		itemId: 54,
+		name: 'fear_factor',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -982,6 +1036,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Life Stealer: when the wearer's hp falls below 20, it steals 30 hp to a random enemy
 	LIFE_STEALER: {
 		itemId: 55,
+		name: 'life_stealer',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -993,6 +1048,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Fire Sphere
 	FIRE_SPHERE: {
 		itemId: 56,
+		name: 'fire_sphere',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1007,6 +1063,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Wood Sphere
 	WOOD_SPHERE: {
 		itemId: 57,
+		name: 'wood_sphere',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1021,6 +1078,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Water Sphere
 	WATER_SPHERE: {
 		itemId: 58,
+		name: 'water_sphere',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1035,6 +1093,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Lightning Sphere
 	LIGHTNING_SPHERE: {
 		itemId: 59,
+		name: 'lightning_sphere',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1049,6 +1108,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Air Sphere
 	AIR_SPHERE: {
 		itemId: 60,
+		name: 'air_sphere',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1063,6 +1123,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Demon Ticket
 	DEMON_TICKET: {
 		itemId: 61,
+		name: 'demon_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -1074,6 +1135,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Treasure Coupon
 	TREASURE_COUPON: {
 		itemId: 62,
+		name: 'treasure_coupon',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1091,6 +1153,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Moueffe Egg
 	MOUEFFE_EGG: {
 		itemId: 63,
+		name: 'moueffe_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1105,6 +1168,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Moueffe Egg
 	MOUEFFE_EGG_RARE: {
 		itemId: 64,
+		name: 'moueffe_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1119,6 +1183,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Pigmou Egg
 	PIGMOU_EGG: {
 		itemId: 65,
+		name: 'pigmou_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1133,6 +1198,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Pigmou Egg
 	PIGMOU_EGG_RARE: {
 		itemId: 66,
+		name: 'pigmou_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1147,6 +1213,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Winks Egg
 	WINKS_EGG: {
 		itemId: 67,
+		name: 'winks_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1161,6 +1228,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Winks Egg
 	WINKS_EGG_RARE: {
 		itemId: 68,
+		name: 'winks_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1175,6 +1243,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Planaille Egg
 	PLANAILLE_EGG: {
 		itemId: 69,
+		name: 'planaille_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1189,6 +1258,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Planaille Egg
 	PLANAILLE_EGG_RARE: {
 		itemId: 70,
+		name: 'planaille_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1203,6 +1273,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Castivore Egg
 	CASTIVORE_EGG: {
 		itemId: 71,
+		name: 'castivore_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1217,6 +1288,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Castivore Egg
 	CASTIVORE_EGG_RARE: {
 		itemId: 72,
+		name: 'castivore_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1231,6 +1303,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rocky Egg
 	ROCKY_EGG: {
 		itemId: 73,
+		name: 'rocky_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1245,6 +1318,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Rocky Egg
 	ROCKY_EGG_RARE: {
 		itemId: 74,
+		name: 'rocky_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1259,6 +1333,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Pteroz Egg
 	PTEROZ_EGG: {
 		itemId: 75,
+		name: 'pteroz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1273,6 +1348,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Pteroz Egg
 	PTEROZ_EGG_RARE: {
 		itemId: 76,
+		name: 'pteroz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1287,6 +1363,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Nuagoz Egg
 	NUAGOZ_EGG: {
 		itemId: 77,
+		name: 'nuagoz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1301,6 +1378,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Nuagoz Egg
 	NUAGOZ_EGG_RARE: {
 		itemId: 78,
+		name: 'nuagoz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1315,6 +1393,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Sirain Egg
 	SIRAIN_EGG: {
 		itemId: 79,
+		name: 'sirain_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1329,6 +1408,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Sirain Egg
 	SIRAIN_EGG_RARE: {
 		itemId: 80,
+		name: 'sirain_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1343,6 +1423,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Hippoclamp Egg
 	HIPPOCLAMP_EGG: {
 		itemId: 81,
+		name: 'hippoclamp_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1357,6 +1438,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Hippoclamp Egg
 	HIPPOCLAMP_EGG_RARE: {
 		itemId: 82,
+		name: 'hippoclamp_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1371,6 +1453,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Gorilloz Egg
 	GORILLOZ_EGG: {
 		itemId: 83,
+		name: 'gorilloz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1385,6 +1468,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Gorilloz Egg
 	GORILLOZ_EGG_RARE: {
 		itemId: 84,
+		name: 'gorilloz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1399,6 +1483,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Wanwan Egg
 	WANWAN_EGG: {
 		itemId: 85,
+		name: 'wanwan_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1413,6 +1498,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Wanwan Egg
 	WANWAN_EGG_RARE: {
 		itemId: 86,
+		name: 'wanwan_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1427,6 +1513,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Wanwan Baby
 	WANWAN_BABY_RARE: {
 		itemId: 87,
+		name: 'wanwan_baby_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1441,6 +1528,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Santaz Egg
 	SANTAZ_EGG: {
 		itemId: 88,
+		name: 'santaz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1455,6 +1543,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Santaz Egg
 	SANTAZ_EGG_RARE: {
 		itemId: 89,
+		name: 'santaz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1469,6 +1558,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Feross Egg
 	FEROSS_EGG: {
 		itemId: 90,
+		name: 'feross_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1483,6 +1573,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Feross Egg
 	FEROSS_EGG_RARE: {
 		itemId: 91,
+		name: 'feross_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1497,6 +1588,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Christmas Feross Egg
 	FEROSS_EGG_CHRISTMAS: {
 		itemId: 92,
+		name: 'feross_egg_christmas',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1511,6 +1603,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Kabuki Egg
 	KABUKI_EGG: {
 		itemId: 93,
+		name: 'kabuki_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1525,6 +1618,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Kabuki Egg
 	RARE_KABUKI_EGG: {
 		itemId: 94,
+		name: 'kabuki_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1539,6 +1633,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Mahamuti Egg
 	MAHAMUTI_EGG: {
 		itemId: 95,
+		name: 'mahamuti_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1553,6 +1648,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Mahamuti Egg
 	RARE_MAHAMUTI_EGG: {
 		itemId: 96,
+		name: 'mahamuti_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1567,6 +1663,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Soufflet Egg
 	SOUFFLET_EGG: {
 		itemId: 97,
+		name: 'souffet_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1581,6 +1678,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Soufflet Egg
 	SOUFFLET_EGG_RARE: {
 		itemId: 98,
+		name: 'soufflet_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1595,6 +1693,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Toufufu Baby
 	TOUFUFU_BABY: {
 		itemId: 99,
+		name: 'toufufu_baby',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1609,6 +1708,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Toufufu Baby
 	TOUFUFU_BABY_RARE: {
 		itemId: 100,
+		name: 'toufufu_baby_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1623,6 +1723,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quetzu Egg
 	QUETZU_EGG: {
 		itemId: 101,
+		name: 'quetzu_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1637,6 +1738,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Quetzu Egg
 	QUETZU_EGG_RARE: {
 		itemId: 102,
+		name: 'quetzu_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1651,6 +1753,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Smog Egg
 	SMOG_EGG: {
 		itemId: 103,
+		name: 'smog_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1665,6 +1768,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Smog Rare Egg
 	SMOG_EGG_RARE: {
 		itemId: 144,
+		name: 'smog_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1679,6 +1783,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Anniversary Smog Egg
 	SMOG_EGG_ANNIVERSARY: {
 		itemId: 104,
+		name: 'smog_egg_anniversary',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1693,6 +1798,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Christmas Blue Smog Egg
 	SMOG_EGG_CHRISTMAS_BLUE: {
 		itemId: 105,
+		name: 'smog_egg_christmas_blue',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1707,6 +1813,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Christmas Blue Smog Egg
 	SMOG_EGG_CHRISTMAS_GREEN: {
 		itemId: 106,
+		name: 'smog_egg_christmas_green',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1721,6 +1828,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Triceragnon Baby
 	TRICERAGNON_BABY: {
 		itemId: 107,
+		name: 'triceragnon_baby',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1735,6 +1843,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Rare Triceragnon Baby
 	TRICERAGNON_EGG_BABY: {
 		itemId: 108,
+		name: 'triceragnon_baby_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1749,6 +1858,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Amnesic Rice
 	AMNESIC_RICE: {
 		itemId: 109,
+		name: 'amnesic_rice',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -1763,6 +1873,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Tik Bracelet: heals 10 to the wearer each day
 	TIK_BRACELET: {
 		itemId: 110,
+		name: 'tik_bracelet',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -1774,6 +1885,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Magic Star: used for the Strange Creature quest
 	MAGIC_STAR: {
 		itemId: 111,
+		name: 'magic_star',
 		canBeEquipped: false,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -1785,6 +1897,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Golden Napodino: currency at the Magic Shop
 	GOLDEN_NAPODINO: {
 		itemId: 112,
+		name: 'golden_napodino',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -1796,6 +1909,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Brings a little bamboo with you in each fight
 	BAMBOO_FRIEND: {
 		itemId: 113,
+		name: 'bamboo_friend',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,
@@ -1807,6 +1921,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Anniversary tickets
 	CANDLE_CARD: {
 		itemId: 114,
+		name: 'candle_card',
 		canBeEquipped: false,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -1817,6 +1932,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Tickets to use at the Christmas grid event
 	CHRISTMAS_TICKET: {
 		itemId: 115,
+		name: 'christmas_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1827,6 +1943,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Tickets to use at ??
 	TICTAC_TICKET: {
 		itemId: 116,
+		name: 'tictac_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1837,6 +1954,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Error
 	DOUBLE_NOT_USED: {
 		itemId: 117,
+		name: 'anniversary_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1848,6 +1966,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Use to obtain ??, obtained during Easter event
 	EASTER_EGG: {
 		itemId: 118,
+		name: 'easter_egg',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1858,6 +1977,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Ticket for Batide day
 	FIRE_CRACKER: {
 		itemId: 119,
+		name: 'fire_cracker',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1868,6 +1988,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Like an irma potion, would be obtained daily from the monthly subscription
 	SPECIAL_IRMA_POTION: {
 		itemId: 120,
+		name: 'special_potion_irma',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1879,6 +2000,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD100: {
 		itemId: 121,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1890,6 +2012,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD500: {
 		itemId: 122,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1901,6 +2024,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD1000: {
 		itemId: 123,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1912,6 +2036,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD2000: {
 		itemId: 124,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1923,6 +2048,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD2500: {
 		itemId: 125,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1934,6 +2060,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD3000: {
 		itemId: 126,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1945,6 +2072,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD5000: {
 		itemId: 127,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1956,6 +2084,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD10000: {
 		itemId: 128,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1967,6 +2096,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	//Used for special gather
 	GOLD20000: {
 		itemId: 129,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1978,6 +2108,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Use to obtain Santaz or Trice, obtained during Christmas event
 	CHRISTMAS_EGG: {
 		itemId: 130,
+		name: 'christmas_egg',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -1992,6 +2123,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Ticket for Batide day
 	GODFATHER_TICKET: {
 		itemId: 131,
+		name: 'godfather_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2002,6 +2134,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	SAGE_POINT: {
 		itemId: 132,
+		name: 'sage_point',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2013,6 +2146,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	FRAGMENT_A: {
 		itemId: 133,
+		name: 'fragment_a',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2024,6 +2158,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	FRAGMENT_B: {
 		itemId: 134,
+		name: 'fragment_b',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2035,6 +2170,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	FRAGMENT_C: {
 		itemId: 135,
+		name: 'fragment_c',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2046,6 +2182,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	FRAGMENT_D: {
 		itemId: 136,
+		name: 'fragment_d',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2057,6 +2194,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	FRAGMENT_E: {
 		itemId: 137,
+		name: 'fragment_e',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2068,6 +2206,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	FRAGMENT_F: {
 		itemId: 138,
+		name: 'fragment_f',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2079,6 +2218,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	FRAGMENT_G: {
 		itemId: 139,
+		name: 'fragment_g',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2090,6 +2230,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	STEPPE_METAL: {
 		itemId: 140,
+		name: 'steppe_metal',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2101,6 +2242,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	ICE_SHRED: {
 		itemId: 141,
+		name: 'ice_shred',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2112,6 +2254,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Quest item
 	BATTERY: {
 		itemId: 142,
+		name: 'battery',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
@@ -2122,6 +2265,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	},
 	VOID_SPHERE: {
 		itemId: 143,
+		name: 'void_sphere',
 		canBeEquipped: false,
 		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
@@ -2136,6 +2280,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Handler Box
 	BOX_HANDLER: {
 		itemId: 992,
+		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -2211,6 +2356,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Daily ticket
 	DAILY_TICKET: {
 		itemId: 997,
+		name: 'daily_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -2222,6 +2368,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Empty item
 	EMPTY: {
 		itemId: 998,
+		name: 'empty',
 		canBeEquipped: false,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
@@ -2233,6 +2380,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Undefined item
 	UNDEFINED: {
 		itemId: 999,
+		name: 'undefined',
 		canBeEquipped: false,
 		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,

@@ -1,8 +1,8 @@
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { ShopType } from '../enums/ShopType.mjs';
-import { ShopFiche } from './ShopFiche.mjs';
+import { ItemShopType, ShopFiche } from './ShopFiche.mjs';
 import { itemList } from '../item/ItemList.mjs';
-import { ConditionEnum, Operator } from '../enums/Parser.mjs';
+import { ConditionEnum } from '../enums/Parser.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { ingredientList } from '../ingredient/ingredientList.mjs';
 import { DayEnum } from '../enums/dayEnum.mjs';
@@ -11,154 +11,188 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Flying Shop
 	FLYING_SHOP: {
 		shopId: 1,
+		name: 'flying',
 		placeId: PlaceEnum.ANYWHERE,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			// Irma's potion sold for 900 gold
 			{
-				itemId: itemList.POTION_IRMA.itemId,
-				price: 900
+				id: itemList.POTION_IRMA.itemId,
+				price: 900,
+				type: ItemShopType.ITEM
 			},
 			// Angel's potion sold for 2000 gold
 			{
-				itemId: itemList.POTION_ANGEL.itemId,
-				price: 2000
+				id: itemList.POTION_ANGEL.itemId,
+				price: 2000,
+				type: ItemShopType.ITEM
 			},
 			// Cloud burger sold for 700 gold
 			{
-				itemId: itemList.CLOUD_BURGER.itemId,
-				price: 700
+				id: itemList.CLOUD_BURGER.itemId,
+				price: 700,
+				type: ItemShopType.ITEM
 			},
 			// Meat pie sold for 2000 gold
 			{
-				itemId: itemList.MEAT_PIE.itemId,
-				price: 2000
+				id: itemList.MEAT_PIE.itemId,
+				price: 2000,
+				type: ItemShopType.ITEM
 			},
 			// Authentic hot bread sold for 6000 gold
 			{
-				itemId: itemList.HOT_BREAD.itemId,
-				price: 6000
+				id: itemList.HOT_BREAD.itemId,
+				price: 6000,
+				type: ItemShopType.ITEM
 			},
 			// Fighting ration sold for 1000 gold
 			{
-				itemId: itemList.FIGHT_RATION.itemId,
-				price: 1000
+				id: itemList.FIGHT_RATION.itemId,
+				price: 1000,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Forges Shop
 	FORGE_SHOP: {
+		name: 'forge',
 		shopId: 2,
 		placeId: PlaceEnum.FORGES_DU_GTC,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.REFRIGERATED_SHIELD.itemId,
-				price: 300
+				id: itemList.REFRIGERATED_SHIELD.itemId,
+				price: 300,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ZIPPO.itemId,
-				price: 300
+				id: itemList.ZIPPO.itemId,
+				price: 300,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.LITTLE_PEPPER.itemId,
-				price: 300
+				id: itemList.LITTLE_PEPPER.itemId,
+				price: 300,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.SOS_FLAME.itemId,
-				price: 300
+				id: itemList.SOS_FLAME.itemId,
+				price: 300,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.SOS_HELMET.itemId,
-				price: 300
+				id: itemList.SOS_HELMET.itemId,
+				price: 300,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Magic Shop, price is in golden napodino instead of gold
 	MAGIC_SHOP: {
 		shopId: 3,
+		name: 'magic',
 		placeId: PlaceEnum.DINOVILLE,
 		type: ShopType.MAGICAL,
 		listItemsSold: [
 			{
-				itemId: itemList.BANISHMENT.itemId,
-				price: 3
+				id: itemList.BANISHMENT.itemId,
+				price: 3,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.BATTERING_RAM.itemId,
-				price: 3
+				id: itemList.BATTERING_RAM.itemId,
+				price: 3,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.EMBER.itemId,
-				price: 5
+				id: itemList.EMBER.itemId,
+				price: 5,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.SCALE.itemId,
-				price: 7
+				id: itemList.SCALE.itemId,
+				price: 7,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.BEER.itemId,
-				price: 3
+				id: itemList.BEER.itemId,
+				price: 3,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ENCYCLOPEDIA.itemId,
-				price: 6
+				id: itemList.ENCYCLOPEDIA.itemId,
+				price: 6,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ANTICHROMATIC.itemId,
-				price: 4
+				id: itemList.ANTICHROMATIC.itemId,
+				price: 4,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ANTIDOTE.itemId,
-				price: 5
+				id: itemList.ANTIDOTE.itemId,
+				price: 5,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.TIME_MANIPULATOR.itemId,
-				price: 5
+				id: itemList.TIME_MANIPULATOR.itemId,
+				price: 5,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.DIMENSIONAL_POWDER.itemId,
-				price: 6
+				id: itemList.DIMENSIONAL_POWDER.itemId,
+				price: 6,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.SORCERERS_STICK.itemId,
-				price: 7
+				id: itemList.SORCERERS_STICK.itemId,
+				price: 7,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.FRIENDLY_WHISTLE.itemId,
-				price: 8
+				id: itemList.FRIENDLY_WHISTLE.itemId,
+				price: 8,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.DINOZ_CUBE.itemId,
-				price: 9
+				id: itemList.DINOZ_CUBE.itemId,
+				price: 9,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.TEMPORAL_REDUCTION.itemId,
-				price: 5
+				id: itemList.TEMPORAL_REDUCTION.itemId,
+				price: 5,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.TEAR_OF_LIFE.itemId,
-				price: 6
+				id: itemList.TEAR_OF_LIFE.itemId,
+				price: 6,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.CUZCUSSIAN_MASK.itemId,
-				price: 8
+				id: itemList.CUZCUSSIAN_MASK.itemId,
+				price: 8,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ANTI_GRAVE_SUIT.itemId,
-				price: 6
+				id: itemList.ANTI_GRAVE_SUIT.itemId,
+				price: 6,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ENCHANTED_STEROID.itemId,
-				price: 6
+				id: itemList.ENCHANTED_STEROID.itemId,
+				price: 6,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.CURSE_LOCKER.itemId,
-				price: 4
+				id: itemList.CURSE_LOCKER.itemId,
+				price: 4,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.FEAR_FACTOR.itemId,
-				price: 8
+				id: itemList.FEAR_FACTOR.itemId,
+				price: 8,
+				type: ItemShopType.ITEM
 			}
 		],
 		condition: {
@@ -168,16 +202,19 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Cursed Shop, only accessible by cursed dinoz
 	CURSED_SHOP: {
 		shopId: 4,
+		name: 'cursed',
 		placeId: PlaceEnum.RUINES_ASHPOUK,
 		type: ShopType.CURSED,
 		listItemsSold: [
 			{
-				itemId: itemList.DEVIL_OINTMENT.itemId,
-				price: 6000
+				id: itemList.DEVIL_OINTMENT.itemId,
+				price: 6000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.PIRHANOZ_IN_BAG.itemId,
-				price: 1200
+				id: itemList.PIRHANOZ_IN_BAG.itemId,
+				price: 1200,
+				type: ItemShopType.ITEM
 			}
 		],
 		condition: {
@@ -187,12 +224,14 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Fruity Shop
 	FRUITY_SHOP: {
 		shopId: 5,
+		name: 'fruity',
 		placeId: PlaceEnum.PORTE_DE_SYLVENOIRE,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.PAMPLEBOUM.itemId,
-				price: 1800
+				id: itemList.PAMPLEBOUM.itemId,
+				price: 1800,
+				type: ItemShopType.ITEM
 			}
 		],
 		condition: {
@@ -202,180 +241,217 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// Razad's Shop
 	RAZADS_SHOP: {
 		shopId: 6,
+		name: 'razad',
 		placeId: PlaceEnum.AVANT_POSTE_ROCKY,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.PORTABLE_LOVE.itemId,
-				price: 300
+				id: itemList.PORTABLE_LOVE.itemId,
+				price: 300,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.POISONITE_SHOT.itemId,
-				price: 900
+				id: itemList.POISONITE_SHOT.itemId,
+				price: 900,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Souk Lightning Sales
 	SOUK_LIGHTNING_SALES: {
 		shopId: 7,
+		name: 'souk',
 		placeId: PlaceEnum.PYLONES_DE_MAGNETITES,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.FUCA_PILL.itemId,
-				price: 1000
+				id: itemList.FUCA_PILL.itemId,
+				price: 1000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.MONOCHROMATIC.itemId,
-				price: 15000
+				id: itemList.MONOCHROMATIC.itemId,
+				price: 15000,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Purveyor of Neerhel
 	PURVEYOR_OF_NEERHEL: {
 		shopId: 8,
+		name: 'neerhel',
 		placeId: PlaceEnum.SENTIER_DE_TOUTEMBA,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.POISONITE_SHOT.itemId,
-				price: 300
+				id: itemList.POISONITE_SHOT.itemId,
+				price: 300,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.FUCA_PILL.itemId,
-				price: 3000
+				id: itemList.FUCA_PILL.itemId,
+				price: 3000,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Barbarian Trader
 	BARBARIAN_TRADER: {
 		shopId: 9,
+		name: 'barbarian',
 		placeId: PlaceEnum.CAMP_DES_EMMEMMA,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.LORIS_COSTUME.itemId,
-				price: 400
+				id: itemList.LORIS_COSTUME.itemId,
+				price: 400,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.PORTABLE_LOVE.itemId,
-				price: 900
+				id: itemList.PORTABLE_LOVE.itemId,
+				price: 900,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Steps Secret Shop
 	STEPS_SECRET_SHOP: {
 		shopId: 10,
+		name: 'secret',
 		placeId: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.PORTABLE_LOVE.itemId,
-				price: 320
+				id: itemList.PORTABLE_LOVE.itemId,
+				price: 320,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.POISONITE_SHOT.itemId,
-				price: 320
+				id: itemList.POISONITE_SHOT.itemId,
+				price: 320,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.LORIS_COSTUME.itemId,
-				price: 450
+				id: itemList.LORIS_COSTUME.itemId,
+				price: 450,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.FUCA_PILL.itemId,
-				price: 1100
+				id: itemList.FUCA_PILL.itemId,
+				price: 1100,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.MONOCHROMATIC.itemId,
-				price: 5200
+				id: itemList.MONOCHROMATIC.itemId,
+				price: 5200,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Elite Camp
 	ELITE_CAMP: {
 		shopId: 11,
+		name: 'elit',
 		placeId: PlaceEnum.CAMP_D_ELITE,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.VEGETOX_COSTUME.itemId,
-				price: 1000
+				id: itemList.VEGETOX_COSTUME.itemId,
+				price: 1000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.GOBLIN_COSTUME.itemId,
-				price: 1000
+				id: itemList.GOBLIN_COSTUME.itemId,
+				price: 1000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.DANGER_DETECTOR.itemId,
-				price: 2000
+				id: itemList.DANGER_DETECTOR.itemId,
+				price: 2000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.SURVIVING_RATION.itemId,
-				price: 2500
+				id: itemList.SURVIVING_RATION.itemId,
+				price: 2500,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// Chen's Skillshack
 	CHENS_SKILLSHACK: {
 		shopId: 12,
+		name: 'chens',
 		placeId: PlaceEnum.CITE_ARBORIS,
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				itemId: itemList.LAND_OF_ASHES.itemId,
-				price: 3000
+				id: itemList.LAND_OF_ASHES.itemId,
+				price: 3000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ABYSS.itemId,
-				price: 3000
+				id: itemList.ABYSS.itemId,
+				price: 3000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.AMAZON.itemId,
-				price: 3000
+				id: itemList.AMAZON.itemId,
+				price: 3000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.ST_ELMAS_FIRE.itemId,
-				price: 3000
+				id: itemList.ST_ELMAS_FIRE.itemId,
+				price: 3000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.UVAVU.itemId,
-				price: 3000
+				id: itemList.UVAVU.itemId,
+				price: 3000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.STRONG_TEA.itemId,
-				price: 3000
+				id: itemList.STRONG_TEA.itemId,
+				price: 3000,
+				type: ItemShopType.ITEM
 			},
 			{
-				itemId: itemList.TEMPORAL_STABILISER.itemId,
-				price: 4000
+				id: itemList.TEMPORAL_STABILISER.itemId,
+				price: 4000,
+				type: ItemShopType.ITEM
 			}
 		]
 	},
 	// ITINERANT MERCHANT ---- MONDAY
 	ITINERANT_MERCHANT_MONDAY: {
 		shopId: 13,
+		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				ingredientId: ingredientList.ENERGIE_FOUDRE.ingredientId,
-				price: 300
+				id: ingredientList.ENERGIE_FOUDRE.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_AIR.ingredientId,
-				price: 1000
+				id: ingredientList.ENERGIE_AIR.ingredientId,
+				price: 1000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_EAU.ingredientId,
-				price: 4000
+				id: ingredientList.ENERGIE_EAU.ingredientId,
+				price: 4000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_FEU.ingredientId,
-				price: 4000
+				id: ingredientList.ENERGIE_FEU.ingredientId,
+				price: 4000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_BOIS.ingredientId,
-				price: 300
+				id: ingredientList.ENERGIE_BOIS.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			}
 		],
 		condition: {
@@ -385,40 +461,49 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// ITINERANT MERCHANT ---- TUESDAY
 	ITINERANT_MERCHANT_TUESDAY: {
 		shopId: 14,
+		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				ingredientId: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
-				price: 75
+				id: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
+				price: 75,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
-				price: 130
+				id: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
+				price: 130,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
-				price: 230
+				id: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
+				price: 230,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
-				price: 230
+				id: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
+				price: 230,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SADIQUAE_MORDICUS.ingredientId,
-				price: 230
+				id: ingredientList.SADIQUAE_MORDICUS.ingredientId,
+				price: 230,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.FLAUREOLE.ingredientId,
-				price: 500
+				id: ingredientList.FLAUREOLE.ingredientId,
+				price: 500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SPORE_ETHERAL.ingredientId,
-				price: 150
+				id: ingredientList.SPORE_ETHERAL.ingredientId,
+				price: 150,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.POUSSE_SOMBRE.ingredientId,
-				price: 300
+				id: ingredientList.POUSSE_SOMBRE.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			}
 		],
 		condition: {
@@ -428,40 +513,49 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// ITINERANT MERCHANT ---- WEDNESDAY
 	ITINERANT_MERCHANT_WEDNESDAY: {
 		shopId: 15,
+		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				ingredientId: ingredientList.SILEX_TAILLE.ingredientId,
-				price: 150
+				id: ingredientList.SILEX_TAILLE.ingredientId,
+				price: 150,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
-				price: 1000
+				id: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
+				price: 1000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
-				price: 8000
+				id: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
+				price: 8000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.CALICE_CISELE.ingredientId,
-				price: 8000
+				id: ingredientList.CALICE_CISELE.ingredientId,
+				price: 8000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.COLLIER_KARAT.ingredientId,
-				price: 8000
+				id: ingredientList.COLLIER_KARAT.ingredientId,
+				price: 8000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
-				price: 30000
+				id: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
+				price: 30000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
-				price: 40000
+				id: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
+				price: 40000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.BRAS_MECANIQUE.ingredientId,
-				price: 23000
+				id: ingredientList.BRAS_MECANIQUE.ingredientId,
+				price: 23000,
+				type: ItemShopType.INGREDIENT
 			}
 		],
 		condition: {
@@ -471,36 +565,44 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// ITINERANT MERCHANT ---- THURSDAY
 	ITINERANT_MERCHANT_THURSDAY: {
 		shopId: 16,
+		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				ingredientId: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
-				price: 350
+				id: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
+				price: 350,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ROCHE_RADIO_ACTIVE.ingredientId,
-				price: 500
+				id: ingredientList.ROCHE_RADIO_ACTIVE.ingredientId,
+				price: 500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.GRIFFES_ACEREES.ingredientId,
-				price: 750
+				id: ingredientList.GRIFFES_ACEREES.ingredientId,
+				price: 750,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.CORNE_EN_CHOCOLAT.ingredientId,
-				price: 1000
+				id: ingredientList.CORNE_EN_CHOCOLAT.ingredientId,
+				price: 1000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.OEIL_VISQUEUX.ingredientId,
-				price: 1300
+				id: ingredientList.OEIL_VISQUEUX.ingredientId,
+				price: 1300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.LANGUE_MONSTRUEUSE.ingredientId,
-				price: 10000
+				id: ingredientList.LANGUE_MONSTRUEUSE.ingredientId,
+				price: 10000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.DENT_DE_DOROGON.ingredientId,
-				price: 12000
+				id: ingredientList.DENT_DE_DOROGON.ingredientId,
+				price: 12000,
+				type: ItemShopType.INGREDIENT
 			}
 		],
 		condition: {
@@ -510,28 +612,34 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// ITINERANT MERCHANT ---- FRIDAY
 	ITINERANT_MERCHANT_FRIDAY: {
 		shopId: 17,
+		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				ingredientId: ingredientList.MEROU_LUJIDANE.ingredientId,
-				price: 100
+				id: ingredientList.MEROU_LUJIDANE.ingredientId,
+				price: 100,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.POISSON_VENGEUR.ingredientId,
-				price: 300
+				id: ingredientList.POISSON_VENGEUR.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.AN_GUILI_GUILILLE.ingredientId,
-				price: 1500
+				id: ingredientList.AN_GUILI_GUILILLE.ingredientId,
+				price: 1500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.GLOBULOS.ingredientId,
-				price: 1500
+				id: ingredientList.GLOBULOS.ingredientId,
+				price: 1500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SUPER_POISSON.ingredientId,
-				price: 1500
+				id: ingredientList.SUPER_POISSON.ingredientId,
+				price: 1500,
+				type: ItemShopType.INGREDIENT
 			}
 		],
 		condition: {
@@ -541,158 +649,227 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 	// ITINERANT MERCHANT ---- SATURDAY
 	ITINERANT_MERCHANT_SATURDAY: {
 		shopId: 18,
+		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				ingredientId: ingredientList.MEROU_LUJIDANE.ingredientId,
-				price: 100
+				id: ingredientList.MEROU_LUJIDANE.ingredientId,
+				price: 100,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.POISSON_VENGEUR.ingredientId,
-				price: 300
+				id: ingredientList.POISSON_VENGEUR.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.AN_GUILI_GUILILLE.ingredientId,
-				price: 1500
+				id: ingredientList.AN_GUILI_GUILILLE.ingredientId,
+				price: 1500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.GLOBULOS.ingredientId,
-				price: 1500
+				id: ingredientList.GLOBULOS.ingredientId,
+				price: 1500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SUPER_POISSON.ingredientId,
-				price: 1500
+				id: ingredientList.SUPER_POISSON.ingredientId,
+				price: 1500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
-				price: 350
+				id: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
+				price: 350,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ROCHE_RADIO_ACTIVE.ingredientId,
-				price: 500
+				id: ingredientList.ROCHE_RADIO_ACTIVE.ingredientId,
+				price: 500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.GRIFFES_ACEREES.ingredientId,
-				price: 750
+				id: ingredientList.GRIFFES_ACEREES.ingredientId,
+				price: 750,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.CORNE_EN_CHOCOLAT.ingredientId,
-				price: 1000
+				id: ingredientList.CORNE_EN_CHOCOLAT.ingredientId,
+				price: 1000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.OEIL_VISQUEUX.ingredientId,
-				price: 1300
+				id: ingredientList.OEIL_VISQUEUX.ingredientId,
+				price: 1300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.LANGUE_MONSTRUEUSE.ingredientId,
-				price: 10000
+				id: ingredientList.LANGUE_MONSTRUEUSE.ingredientId,
+				price: 10000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.DENT_DE_DOROGON.ingredientId,
-				price: 12000
+				id: ingredientList.DENT_DE_DOROGON.ingredientId,
+				price: 12000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_FOUDRE.ingredientId,
-				price: 300
+				id: ingredientList.ENERGIE_FOUDRE.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_AIR.ingredientId,
-				price: 1000
+				id: ingredientList.ENERGIE_AIR.ingredientId,
+				price: 1000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_EAU.ingredientId,
-				price: 4000
+				id: ingredientList.ENERGIE_EAU.ingredientId,
+				price: 4000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_FEU.ingredientId,
-				price: 4000
+				id: ingredientList.ENERGIE_FEU.ingredientId,
+				price: 4000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ENERGIE_BOIS.ingredientId,
-				price: 300
+				id: ingredientList.ENERGIE_BOIS.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SILEX_TAILLE.ingredientId,
-				price: 150
+				id: ingredientList.SILEX_TAILLE.ingredientId,
+				price: 150,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
-				price: 1000
+				id: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
+				price: 1000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
-				price: 8000
+				id: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
+				price: 8000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.CALICE_CISELE.ingredientId,
-				price: 8000
+				id: ingredientList.CALICE_CISELE.ingredientId,
+				price: 8000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.COLLIER_KARAT.ingredientId,
-				price: 8000
+				id: ingredientList.COLLIER_KARAT.ingredientId,
+				price: 8000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
-				price: 30000
+				id: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
+				price: 30000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
-				price: 40000
+				id: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
+				price: 40000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.BRAS_MECANIQUE.ingredientId,
-				price: 23000
+				id: ingredientList.BRAS_MECANIQUE.ingredientId,
+				price: 23000,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
-				price: 75
+				id: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
+				price: 75,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
-				price: 130
+				id: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
+				price: 130,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
-				price: 230
+				id: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
+				price: 230,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
-				price: 230
+				id: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
+				price: 230,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SADIQUAE_MORDICUS.ingredientId,
-				price: 230
+				id: ingredientList.SADIQUAE_MORDICUS.ingredientId,
+				price: 230,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.FLAUREOLE.ingredientId,
-				price: 500
+				id: ingredientList.FLAUREOLE.ingredientId,
+				price: 500,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.SPORE_ETHERAL.ingredientId,
-				price: 150
+				id: ingredientList.SPORE_ETHERAL.ingredientId,
+				price: 150,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.POUSSE_SOMBRE.ingredientId,
-				price: 300
+				id: ingredientList.POUSSE_SOMBRE.ingredientId,
+				price: 300,
+				type: ItemShopType.INGREDIENT
 			},
 			{
-				ingredientId: ingredientList.GRAINE_DE_DEVOREUSE.ingredientId,
-				price: 15000
+				id: ingredientList.GRAINE_DE_DEVOREUSE.ingredientId,
+				price: 15000,
+				type: ItemShopType.INGREDIENT
 			}
 		],
 		condition: {
-			[ConditionEnum.DAY]: DayEnum.SUNDAY
+			[ConditionEnum.DAY]: DayEnum.SATURDAY
 		}
 	},
 	// ITINERANT MERCHANT ---- SUNDAY ---- SHOP CLOSED
 	ITINERANT_MERCHANT_SUNDAY: {
 		shopId: 19,
+		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [],
 		condition: {
-			[ConditionEnum.DAY]: DayEnum.SATURDAY
+			[ConditionEnum.DAY]: DayEnum.SUNDAY
 		}
+	},
+	FILOU: {
+		shopId: 20,
+		name: 'filou',
+		placeId: PlaceEnum.PLACE_DU_MARCHE,
+		type: ShopType.FILOU,
+		listItemsSold: [
+			{
+				id: ingredientList.MEROU_LUJIDANE.ingredientId,
+				price: 11,
+				type: ItemShopType.INGREDIENT
+			},
+			{
+				id: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
+				price: 18,
+				type: ItemShopType.INGREDIENT
+			},
+			{
+				id: ingredientList.ENERGIE_FOUDRE.ingredientId,
+				price: 4,
+				type: ItemShopType.INGREDIENT
+			},
+			{
+				id: ingredientList.SILEX_TAILLE.ingredientId,
+				price: 6,
+				type: ItemShopType.INGREDIENT
+			},
+			{
+				id: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
+				price: 4,
+				type: ItemShopType.INGREDIENT
+			}
+		]
 	}
 };
