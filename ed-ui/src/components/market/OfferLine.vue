@@ -228,13 +228,19 @@ export default defineComponent({
 					]
 				});
 
-				// Reset bid value
-				this.bidValue = 0;
+				// Increment bidValue
+				this.bidValue++;
 			} catch (error) {
 				errorHandler.handle(error, this.$toast, this.$t);
 				return;
 			}
 		}
+	},
+	mounted() {
+		this.bidValue = Math.max(
+			Math.ceil(this.offer.total / 1000),
+			this.offer.bids.length > 0 ? this.offer.bids[this.offer.bids.length - 1].value : 0
+		);
 	}
 });
 </script>

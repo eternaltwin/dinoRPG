@@ -10,11 +10,9 @@ import {
 	getAllIngredientsDataRequest,
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
-import { sendDiscord } from '../utils/discord.js';
-import { ownsDinoz } from '../dao/playerDao.js';
+import { addMoney, ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -350,6 +348,7 @@ export const expireOffer = async (offerId: number) => {
 			LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 		}
 
+		await addMoney(offer.seller.id, winnerBid.value * 1000)
 		// Update stats tracking
 		await setSpecificStat(StatTracking.MARKET, offer.seller.id, 1);
 	} else {
