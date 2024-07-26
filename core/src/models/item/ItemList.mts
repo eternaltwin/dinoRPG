@@ -1163,7 +1163,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.MOUEFFE
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Moueffe Egg
 	MOUEFFE_EGG_RARE: {
@@ -1193,7 +1193,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.PIGMOU
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Pigmou Egg
 	PIGMOU_EGG_RARE: {
@@ -1223,7 +1223,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.WINKS
 		},
 		maxQuantity: 8, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Winks Egg
 	WINKS_EGG_RARE: {
@@ -1253,7 +1253,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.PLANAILLE
 		},
 		maxQuantity: 8, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Planaille Egg
 	PLANAILLE_EGG_RARE: {
@@ -1283,7 +1283,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.CASTIVORE
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Castivore Egg
 	CASTIVORE_EGG_RARE: {
@@ -1298,7 +1298,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.CASTIVORE
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rocky Egg
 	ROCKY_EGG: {
@@ -1313,7 +1313,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.ROCKY
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Rocky Egg
 	ROCKY_EGG_RARE: {
@@ -1343,7 +1343,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.PTEROZ
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Pteroz Egg
 	PTEROZ_EGG_RARE: {
@@ -1358,7 +1358,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.PTEROZ
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Nuagoz Egg
 	NUAGOZ_EGG: {
@@ -1373,7 +1373,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.NUAGOZ
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Nuagoz Egg
 	NUAGOZ_EGG_RARE: {
@@ -1403,7 +1403,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.SIRAIN
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Sirain Egg
 	SIRAIN_EGG_RARE: {
@@ -1433,7 +1433,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.HIPPOCLAMP
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Hippoclamp Egg
 	HIPPOCLAMP_EGG_RARE: {
@@ -1448,7 +1448,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.HIPPOCLAMP
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Gorilloz Egg
 	GORILLOZ_EGG: {
@@ -1463,7 +1463,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.GORILLOZ
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Gorilloz Egg
 	GORILLOZ_EGG_RARE: {
@@ -1493,7 +1493,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.WANWAN
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Wanwan Egg
 	WANWAN_EGG_RARE: {
@@ -1523,7 +1523,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.WANWAN
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Santaz Egg
 	SANTAZ_EGG: {
@@ -1688,7 +1688,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.SOUFFLET
 		},
 		maxQuantity: 10,
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Toufufu Baby
 	TOUFUFU_BABY: {
@@ -1733,7 +1733,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.QUETZU
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Rare Quetzu Egg
 	QUETZU_EGG_RARE: {
@@ -1853,7 +1853,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.TRICERAGNON
 		},
 		maxQuantity: 10, // TODO double check
-		price: 0 // TODO double check
+		price: 30000 // TODO double check
 	},
 	// Amnesic Rice
 	AMNESIC_RICE: {
