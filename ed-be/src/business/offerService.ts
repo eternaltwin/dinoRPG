@@ -336,17 +336,18 @@ export const expireOffer = async (offerId: number) => {
 			await updateDinozCount(winnerBid.userId, 1);
 			await updatePoints(winnerBid.userId, offer.dinoz.level);
 
-			// Add items to winner inventory
-			promises.push(...items.map(item => increaseItemQuantity(winnerBid.userId, item.itemId, item.quantity)));
-
-			// Add ingredients to winner inventory
-			promises.push(
-				...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity))
-			);
-
-			// Send Discord notification
-			LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 		}
+
+		// Add items to winner inventory
+		promises.push(...items.map(item => increaseItemQuantity(winnerBid.userId, item.itemId, item.quantity)));
+
+		// Add ingredients to winner inventory
+		promises.push(
+			...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity))
+		);
+
+		// Send Discord notification
+		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 
 		await addMoney(offer.seller.id, winnerBid.value * 1000)
 		// Update stats tracking
