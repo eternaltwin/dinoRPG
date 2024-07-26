@@ -434,7 +434,9 @@ export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: numb
 		nbrUpWater: race.nbrWater + water,
 		nbrUpLightning: race.nbrLightning + lightning,
 		nbrUpAir: race.nbrAir + air,
-		display: fullDisplay.toString().replaceAll(',', '')
+		display: fullDisplay.toString().replaceAll(',', ''),
+		maxLife: 100,
+		life: 1
 	};
 };
 

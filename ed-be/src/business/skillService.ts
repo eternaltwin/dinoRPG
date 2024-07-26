@@ -17,7 +17,11 @@ import {
 	updateDinoz
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, removeAllSkillFromDinoz } from '../dao/dinozSkillDao.js';
-import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
+import {
+	addMultipleUnlockableSkills,
+	removeAllUnlockableSkillsFromDinoz,
+	removeUnlockableSkillsFromDinoz
+} from '../dao/dinozSkillUnlockableDao.js';
 import { ErrorFormator } from '../utils/errorFormator.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
 import { getMaxXp, getRace, getRandomUpElement, reincarnateDinoz } from '@drpg/core/utils/DinozUtils';
@@ -29,6 +33,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { GLOBAL } from '../context.js';
 import { addStatusToDinoz, removeAllStatusFromDinoz } from '../dao/dinozStatusDao.js';
+import { removeAllMissionsFromDinoz } from '../dao/dinozMissionDao.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -540,5 +545,7 @@ export async function reincarnate(req: Request) {
 	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.id));
 	await removeAllSkillFromDinoz(dinoz.id);
 	await removeAllStatusFromDinoz(dinoz.id);
+	await removeAllMissionsFromDinoz(dinoz.id);
+	await removeAllUnlockableSkillsFromDinoz(dinoz.id);
 	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
 }

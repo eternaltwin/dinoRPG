@@ -55,3 +55,9 @@ export const removeMissionFromDinoz = async (playerId: number, dinozId: number, 
 
 	await createLog(LogType.MissionCanceled, playerId, dinozId, missionId.toString());
 };
+
+export async function removeAllMissionsFromDinoz(dinozId: number) {
+	await prisma.dinozMission.deleteMany({
+		where: { dinozId: dinozId }
+	});
+}
