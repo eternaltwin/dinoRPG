@@ -102,7 +102,14 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			!actualStep.nextStep.includes(nextStepWantedData.stepName) &&
 			!actualStep.nextStep.includes(nextStepWantedData.alias || '')
 		) {
-			throw new ExpectedError(`This step is not reachable.`);
+			await updateDinozStep(dinozId, pnj.id, 'begin');
+			const beginStep = Object.values(pnj.data).find(pnj => pnj.initialStep);
+			if (!beginStep) throw new ExpectedError(`Begin step did not exist for NPC ${pnj.name}`)
+			return {
+				name: npcName,
+				speech: beginStep.stepName,
+				playerChoice: beginStep.nextStep
+			};
 		}
 		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, player, dinozId)) {
 			throw new ExpectedError(`The dinoz doesn't fullfill the conditions.`);
